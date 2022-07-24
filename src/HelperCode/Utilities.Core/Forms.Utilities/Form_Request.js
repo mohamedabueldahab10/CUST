@@ -1,4 +1,11 @@
-window.kpiCodeResult = ''
+window.kpiCodeResult = '';
+
+////////////
+var allFileIndex = 0
+
+/////////////
+var filesUrls = [];
+var deleteAllAttachRelated = false;
 var NIssues = 0,
   NRisks = 0,
   getfolderurl,
@@ -3216,27 +3223,72 @@ window.Delete_Item_Submit = {
         $("button.btn-delete").removeClass("loader-action");
         $("button.btn-delete").addClass("loader-action-success");
 
-        if (
-          listkey == "projects" ||
-          listkey == "ideas" ||
-          listkey == "portfolio" ||
-          listkey == "budgetitems"
-        ) {
-          window.location =
-            _spPageContextInfo.webAbsoluteUrl +
-            "/SitePages/Listing.aspx?ListKey=" +
-            listkey;
+        // console.log(filesUrls, "fffffffffffffffffffffffffff")
+        // debugger
+        deleteAllAttachRelated = true
+        // for (var i = 0; i < filesUrls.length; i++) {
+        //   var url = filesUrls[i].url
+        //   // deleteFile.init(url);
+        //   deleteAllFileFromDoc.init(url)
+        // }
+
+        if (filesUrls.length) {
+          // filesUrls.forEach(el => {
+
+          for (let i = 0; i < filesUrls.length; i++) {
+            deleteAllFileFromDoc.init(filesUrls[i].url)
+          }
+
+
+
+
+
+          // })
         } else {
-          if (listkey == 'mainkpi') {
-            Delete_Kpi_Results.init() // to delete the kpi from kpi results
-          } else {
+          if (
+            listkey == "projects" ||
+            listkey == "ideas" ||
+            listkey == "portfolio" ||
+            listkey == "budgetitems"
+          ) {
             window.location =
               _spPageContextInfo.webAbsoluteUrl +
               "/SitePages/Listing.aspx?ListKey=" +
-              listkey +
-              PCODE_STRING;
+              listkey;
+          } else {
+            if (listkey == 'mainkpi') {
+              Delete_Kpi_Results.init() // to delete the kpi from kpi results
+            } else {
+              window.location =
+                _spPageContextInfo.webAbsoluteUrl +
+                "/SitePages/Listing.aspx?ListKey=" +
+                listkey +
+                PCODE_STRING;
+            }
           }
         }
+
+        // if (
+        //   listkey == "projects" ||
+        //   listkey == "ideas" ||
+        //   listkey == "portfolio" ||
+        //   listkey == "budgetitems"
+        // ) {
+        //   window.location =
+        //     _spPageContextInfo.webAbsoluteUrl +
+        //     "/SitePages/Listing.aspx?ListKey=" +
+        //     listkey;
+        // } else {
+        //   if (listkey == 'mainkpi') {
+        //     Delete_Kpi_Results.init() // to delete the kpi from kpi results
+        //   } else {
+        //     window.location =
+        //       _spPageContextInfo.webAbsoluteUrl +
+        //       "/SitePages/Listing.aspx?ListKey=" +
+        //       listkey +
+        //       PCODE_STRING;
+        //   }
+        // }
       }),
       Function.createDelegate(this, function (sender, args) {
         $("button.btn-delete").removeClass("loader-action");
@@ -3359,7 +3411,8 @@ window.ViewAllFiles = {
     );
   },
   success: function () {
-    var filesUrls = [];
+    // var filesUrls = [];
+    filesUrls = [];
     var ListEnumerator = ViewAllFiles.g.allItems.getEnumerator();
     while (ListEnumerator.moveNext()) {
       var currentFile = ListEnumerator.get_current();
@@ -3538,7 +3591,8 @@ window.ViewAllFiles_Main_Strategy = {
     );
   },
   success: function () {
-    var filesUrls = [];
+    // var filesUrls = [];
+    filesUrls = [];
     var ListEnumerator = ViewAllFiles_Main_Strategy.g.allItems.getEnumerator();
 
 
@@ -3901,7 +3955,6 @@ window.ViewAllFiles_Main_Strategy = {
     ) {
       if (window.confirm(" هل أنت متأكد أنك تريد حذف" + fileTodelete)) {
         // They clicked Yes
-
         deleteFile.init(url);
       } else {
         // They clicked no
@@ -4263,9 +4316,9 @@ var equationKPI = {
         }
       });
 
-      
+
       kpiEquation = kpiEquation.replaceAll(',', '') // remove , from high number
-      
+
 
       kpiEquation =
         eval(kpiEquation) % 1 != 0
@@ -4508,3 +4561,90 @@ window.Update_Kpi_Results = {
     )
   }
 }
+
+///////////////////
+
+var deleteAllFileFromDoc = {
+  init: function (fileurl) {
+    // var dfd = $.Deferred();
+    console.log(fileurl, "SSSSSSSSSSSSSSSSSSSSSSSSSSss")
+
+    var clientContext;
+    var oWebsite;
+    window.hreftodelete = fileurl;
+    clientContext = new SP.ClientContext.get_current();
+    oWebsite = clientContext.get_web();
+    clientContext.load(oWebsite);
+    clientContext.executeQueryAsync(function () {
+      this.fileToDelete = oWebsite.getFileByServerRelativeUrl(fileurl);
+      this.fileToDelete.deleteObject();
+
+      $('.File-Link[href="' + fileurl + '"]')
+        .parent()
+        .fadeOut();
+
+      clientContext.executeQueryAsync(
+        Function.createDelegate(this, deleteAllFileFromDoc.success),
+        Function.createDelegate(this, deleteAllFileFromDoc.error)
+      );
+    }, deleteAllFileFromDoc.error);
+  },
+  success: function () {
+    console.log("INSIDE OMN CSSSCADAS")
+    debugger
+    if (allFileIndex == filesUrls.length - 1) {
+      if (
+        listkey == "projects" ||
+        listkey == "ideas" ||
+        listkey == "portfolio" ||
+        listkey == "budgetitems"
+      ) {
+        window.location =
+          _spPageContextInfo.webAbsoluteUrl +
+          "/SitePages/Listing.aspx?ListKey=" +
+          listkey;
+      } else {
+        if (listkey == 'mainkpi') {
+          Delete_Kpi_Results.init() // to delete the kpi from kpi results
+        } else {
+          window.location =
+            _spPageContextInfo.webAbsoluteUrl +
+            "/SitePages/Listing.aspx?ListKey=" +
+            listkey +
+            PCODE_STRING;
+        }
+      }
+    }
+    allFileIndex++
+
+
+    // $('.File-Link[href="' + hreftodelete + '"]')
+    //   .parent()
+    //   .fadeOut();
+    // if (
+    //   listkey == "projects" ||
+    //   listkey == "ideas" ||
+    //   listkey == "portfolio" ||
+    //   listkey == "budgetitems"
+    // ) {
+    //   window.location =
+    //     _spPageContextInfo.webAbsoluteUrl +
+    //     "/SitePages/Listing.aspx?ListKey=" +
+    //     listkey;
+    // } else {
+    //   if (listkey == 'mainkpi') {
+    //     Delete_Kpi_Results.init() // to delete the kpi from kpi results
+    //   } else {
+    //     window.location =
+    //       _spPageContextInfo.webAbsoluteUrl +
+    //       "/SitePages/Listing.aspx?ListKey=" +
+    //       listkey +
+    //       PCODE_STRING;
+    //   }
+    // }
+    // console.log('File Deleted Successfully - ');
+  },
+  error: function (sender, args) {
+    // console.log('Request failed with error message');
+  },
+};

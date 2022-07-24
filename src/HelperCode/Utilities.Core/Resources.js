@@ -624,7 +624,8 @@
         "saudiriyal": " ريال سعودي",
         "generalattachements": "مرفقات عامة",
         "remainperc":"- [النسبة المتبقية هي:",
-        "nofilterdata":"لا يوجد معلومات بالفلاتر المختارة"
+        "nofilterdata":"لا يوجد معلومات بالفلاتر المختارة",
+        "Initiativerisks":"المخاطر"
 
     },
     "en": {
@@ -1265,7 +1266,8 @@
         "volunteerhour": "Volunteer hour",
         "generalattachements": "General Attachements",
         "remainperc":"- [Remaining Percent is:",
-        "nofilterdata":"No data on the selected filters"
+        "nofilterdata":"No data on the selected filters",
+        "Initiativerisks":"Risks"
 
     }
 };

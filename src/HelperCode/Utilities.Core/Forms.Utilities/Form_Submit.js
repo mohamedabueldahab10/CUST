@@ -2262,6 +2262,7 @@ function _uploadFile() {
 //file delete
 window.deleteFile = {
   init: function (fileurl) {
+    console.log("HERE TO DELETE FILE")
     var clientContext;
     var oWebsite;
     window.hreftodelete = fileurl;

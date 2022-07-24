@@ -1,5 +1,5 @@
 var Folders_Files_Array = [],
-  PCODE, listkey, SP_ListName, PageTitle, KeysFolders = [],
+  PCODE,ICODE, listkey, SP_ListName, PageTitle, KeysFolders = [],
   NRisks = 0,
   NIssues = 0,
   Fileelements, fileCount = 0,
@@ -9,6 +9,11 @@ var Folders_Files_Array = [],
 if (window.location.href.indexOf('PCODE=') > -1) {
   PCODE = window.location.href.split('PCODE=')[1].split('&')[0];
 }
+
+if(window.location.href.indexOf('ICODE=') > -1){
+  ICODE = window.location.href.split('ICODE=')[1].split('&')[0];
+}
+
 if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
   var No_Data = 'لا يوجد ملفات'
   // $('.back').html(`<i class="fas fa-arrow-left"></i>`)
@@ -19,6 +24,7 @@ if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar
 if (window.location.href.indexOf('ListKey') > -1) {
   listkey = window.location.href.split('ListKey=')[1].split('&')[0];
   for (var i = 0; i < ListArray.length; i++) {
+     
     var obj = ListArray[i];
     if (obj.subfolder)
       KeysFolders.push(Object.keys(obj)[0]);
@@ -28,6 +34,10 @@ if (window.location.href.indexOf('ListKey') > -1) {
         PageTitle = obj['ListingTitle'];
       }
     }
+  }
+  if(ICODE){
+    SP_ListName = 'Initiative Documents'
+    PageTitle = 'مستندات المبادرة'
   }
 }
 
@@ -49,14 +59,23 @@ var GetFilesFromFolder = {
     var context = new SP.ClientContext.get_current();
     var web = context.get_web();
     var list = web.get_lists().getByTitle(SP_ListName);
+    console.log(SP_ListName,"SP_ListName SP_ListName")
+    debugger
     // Use createAllItemsQuery to get items inside subfolders as well. Otherwise use new SP.CamlQuery() to get items from a single folder only
     var camlQuery = SP.CamlQuery.createAllItemsQuery();
+
+    var handleCode = ''
+    if(PCODE){
+      handleCode=PCODE
+    }else if(ICODE){
+      handleCode = ICODE
+    }
     camlQuery.set_viewXml('<View Scope="RecursiveAll"> \
         <Query> \
         <Where> \
                     <Contains> \
                         <FieldRef Name="Title" /> \
-                        <Value Type="Text">' + PCODE + '</Value> \
+                        <Value Type="Text">' + handleCode + '</Value> \
                     </Contains> \
                 </Where> \
             </Query> \
@@ -74,7 +93,7 @@ var GetFilesFromFolder = {
   },
   OnSuccessGetFilesFromFolder: function () {
     // console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
-
+    console.log("INSIDE ON SUCCCCCCCCCCCESSs")
     var listItemEnumerator = GetFilesFromFolder.g.allItems.getEnumerator();
     var index = 0,
       passed = false,
@@ -86,6 +105,7 @@ var GetFilesFromFolder = {
         var file = currentItem.get_file();
         if (file != null) { 
           console.log(file.get_serverRelativeUrl().split('/'),"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+          debugger
           // console.log('File Name: ' + file.get_name() + '\n' + 'File Url: ' + file.get_serverRelativeUrl());
           FolderName = file.get_serverRelativeUrl().split('/')[3].charAt(0).toUpperCase() + file.get_serverRelativeUrl().split('/')[3].slice(1);
           // FolderName = file.get_serverRelativeUrl().split('/')[5].charAt(0).toUpperCase() + file.get_serverRelativeUrl().split('/')[5].slice(1);
@@ -142,7 +162,13 @@ var GetFilesFromFolder = {
       FolderHTML = '<div class="folder-wrap level-current scrolling" >',
       FilesHTML = '';
     for (var i = 0; i < newarrayforfolder.length; i++) {
+      console.log(newarrayforfolder[i].Folder,"ffffffffffffffffff")
+      if(PCODE){
       FolderHTML += '<div class="tile folder" data-target="#' + newarrayforfolder[i].Folder + '"><i class="fas fa-folder"></i><h3 data-trans-' + newarrayforfolder[i].Folder + ' class="Resources"></h3><p>' + PCODE + '</p></div><!-- .tile.folder -->';
+      }else if(ICODE){
+        FolderHTML += '<div class="tile folder" data-target="#' + newarrayforfolder[i].Folder + '"><i class="fas fa-folder"></i><h3 data-trans-' + newarrayforfolder[i].Folder + ' class="Resources"></h3><p>' + ICODE + '</p></div><!-- .tile.folder -->';
+      }
+
       if (i == newarrayforfolder.length - 1) {
         FolderHTML += '</div><!-- .folder-wrap -->'
       }
