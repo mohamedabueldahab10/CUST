@@ -5,7 +5,6 @@ var allFileIndex = 0
 
 /////////////
 var filesUrls = [];
-var deleteAllAttachRelated = false;
 var NIssues = 0,
   NRisks = 0,
   getfolderurl,
@@ -3223,27 +3222,10 @@ window.Delete_Item_Submit = {
         $("button.btn-delete").removeClass("loader-action");
         $("button.btn-delete").addClass("loader-action-success");
 
-        // console.log(filesUrls, "fffffffffffffffffffffffffff")
-        // debugger
-        deleteAllAttachRelated = true
-        // for (var i = 0; i < filesUrls.length; i++) {
-        //   var url = filesUrls[i].url
-        //   // deleteFile.init(url);
-        //   deleteAllFileFromDoc.init(url)
-        // }
-
         if (filesUrls.length) {
-          // filesUrls.forEach(el => {
-
           for (let i = 0; i < filesUrls.length; i++) {
             deleteAllFileFromDoc.init(filesUrls[i].url)
           }
-
-
-
-
-
-          // })
         } else {
           if (
             listkey == "projects" ||
@@ -4566,9 +4548,6 @@ window.Update_Kpi_Results = {
 
 var deleteAllFileFromDoc = {
   init: function (fileurl) {
-    // var dfd = $.Deferred();
-    console.log(fileurl, "SSSSSSSSSSSSSSSSSSSSSSSSSSss")
-
     var clientContext;
     var oWebsite;
     window.hreftodelete = fileurl;

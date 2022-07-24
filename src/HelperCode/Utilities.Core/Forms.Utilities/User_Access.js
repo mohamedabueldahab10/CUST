@@ -2859,7 +2859,7 @@ var Access_Project_Info_Request = {
               USERPageTitle +
               ""
             );
-          } else if (listkey == 'documents') {
+          } else if (USERlistkey == 'documents') {
             if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
               USERPageTitle = 'مستندات المبادرة'
             } else {
@@ -3195,7 +3195,7 @@ var Access_Initiative_Info_Request = {
               USERPageTitle +
               ""
             );
-          } else if (listkey == 'documents') {
+          } else if (USERlistkey == 'documents') {
             if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
               USERPageTitle = 'مستندات المبادرة'
             } else {
