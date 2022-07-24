@@ -43,9 +43,9 @@ if (window.location.href.indexOf('ListKey') > -1) {
       PageTitle = 'Initiative Documents'
     }
   }
+
 }
 
-$(".title-item:first-child").html(PageTitle)
 
 console.log("HEEEEEEEEEEEEEEEEEEEEEEEEEEERE")
 

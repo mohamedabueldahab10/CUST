@@ -904,7 +904,7 @@ window.userCalls = {
           "initiativecards",
           "projectcharter",
           "kpiequations",
-         
+
           "milestones",
           "invoices",
           "contracts",
@@ -2859,10 +2859,36 @@ var Access_Project_Info_Request = {
               USERPageTitle +
               ""
             );
+          } else if (listkey == 'documents') {
+            if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+              USERPageTitle = 'مستندات المبادرة'
+            } else {
+              USERPageTitle = 'Initiative Documents'
+            }
+
+            $(".page-title").html(
+              '<a href="' +
+              _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/InitiativeHome.aspx?ICODE=" +
+              UserICode +
+              '">' +
+              //
+              InitiativeTitle +
+              "</a>"
+            );
+            $(".title-item:first-child").html(
+              '<a href="' +
+              _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/Listing.aspx?ListKey=" +
+              USERlistkey +
+              "&ICODE=" +
+              UserICode +
+              '">' +
+              USERPageTitle +
+              ""
+            );
           } else {
             //   
-            console.log('InitiativeTitleInitiativeTitle', InitiativeTitle);
-            debugger;
             $(".page-title").html(
               '<a href="' +
               _spPageContextInfo.webAbsoluteUrl +
@@ -3169,7 +3195,35 @@ var Access_Initiative_Info_Request = {
               USERPageTitle +
               ""
             );
-          } else {
+          } else if (listkey == 'documents') {
+            if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+              USERPageTitle = 'مستندات المبادرة'
+            } else {
+              USERPageTitle = 'Initiative Documents'
+            }
+
+            $(".page-title").html(
+              '<a href="' +
+              _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/InitiativeHome.aspx?ICODE=" +
+              UserICode +
+              '">' +
+              //
+              InitiativeTitle +
+              "</a>"
+            );
+            $(".title-item:first-child").html(
+              '<a href="' +
+              _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/Listing.aspx?ListKey=" +
+              USERlistkey +
+              "&ICODE=" +
+              UserICode +
+              '">' +
+              USERPageTitle +
+              ""
+            );
+          }  else {
 
             $(".page-title").html(
               '<a href="' +
