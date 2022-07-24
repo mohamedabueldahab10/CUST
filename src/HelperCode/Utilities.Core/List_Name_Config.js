@@ -1,0 +1,569 @@
+var ListArray = [
+    //first entry is always projects always
+    {
+        projects: "Projects",
+        ListingTitle: "المشاريع",
+        FormTitle: "المشاريع",
+        TitleEn: "Projects",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    //second is always project stages
+    {
+        projectstages: "Project Stages",
+        ListingTitle: "Project Stages Listing",
+        FormTitle: "Project Stages Details",
+        TitleEn: "Project Stages",
+        projnav: "Project Navigation",
+        projectrelated: true,
+        subfolder: true
+    },
+    //third is always projects documents
+    {
+        documents: "Projects Documents",
+        ListingTitle: "مستندات المشروع",
+        FormTitle: "مستندات المشروع",
+        TitleEn: "Projects Documents",
+        projnav: "Project Navigation",
+        projectrelated: true,
+        subfolder: false
+    },
+    //fourth is always tasks
+    {
+        tasks: "Tasks",
+        ListingTitle: "المهام",
+        FormTitle: "المهام",
+        TitleEn: "Tasks",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    //fifth is always initiatives
+    {
+        initiatives: "Initiatives",
+        ListingTitle: "ادارة المبادرات",
+        FormTitle: "ادارة المبادرات",
+        TitleEn: "Initiatives",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        contracts: "Contracts",
+        ListingTitle: "العقود",
+        FormTitle: "العقود",
+        TitleEn: "Contracts",
+        projnav: "Project Navigation",
+        projectrelated: true,
+        subfolder: true
+    },
+    {
+        lessonslearned: "Lessons Learned",
+        ListingTitle: "الدروس المستفادة",
+        FormTitle: "الدروس المستفادة",
+        TitleEn: "Lessons Learned",
+        projnav: "Project Navigation",
+        projectrelated: true,
+        subfolder: true
+    },
+    {
+        portfolio: "Portfolio",
+        ListingTitle: "المحافظ",
+        FormTitle: "المحافظ",
+        TitleEn: "Portfolio",
+        projnav: "Project Navigation",
+        subfolder: false,
+        // projectrelated: true,
+    },
+    {
+        changerequest: "Change Request",
+        ListingTitle: "طلبات التغيير",
+        FormTitle: "طلبات التغيير",
+        TitleEn: "Change Request",
+        projnav: "Project Navigation",
+        projectrelated: true,
+        subfolder: true
+    },
+    {
+        risks: "Risks",
+        ListingTitle: "المخاطر",
+        FormTitle: "المخاطر",
+        TitleEn: "Risks",
+        projnav: "Project Navigation",
+        projectrelated: true,
+        subfolder: true
+    },
+    {
+        issues: "Issues",
+        ListingTitle: "التحديات",
+        FormTitle: "التحديات",
+        TitleEn: "Issues",
+        projnav: "Project Navigation",
+        projectrelated: true,
+        subfolder: true
+    },
+    {
+        phase: "Phase",
+        ListingTitle: "Phase Listing",
+        FormTitle: "Phase Details",
+        TitleEn: "Phase",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        phasegate: "Phase Gate",
+        ListingTitle: "Phase Gate Listing",
+        FormTitle: "Phase Gate Details",
+        TitleEn: "Phase Gate",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        Initiatives: "Initiatives",
+        ListingTitle: "Initiatives Listing",
+        FormTitle: "Initiatives Details",
+        TitleEn: "Initiatives",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        invoices: "Invoices",
+        ListingTitle: "الفواتير",
+        FormTitle: "الفواتير",
+        TitleEn: "Invoices",
+        projnav: "Project Navigation",
+        projectrelated: true,
+        subfolder: true
+    },
+    {
+        deliverables: "Deliverables",
+        ListingTitle: "المخرجات",
+        FormTitle: "المخرجات",
+        TitleEn: "Deliverables",
+        projnav: "Project Navigation",
+        projectrelated: true,
+        subfolder: true
+    },
+    {
+        projectcharter: "Projects",
+        ListingTitle: "ميثاق المشروع",
+        FormTitle: "ميثاق المشروع",
+        TitleEn: "Project Charter",
+        projnav: "Project Navigation",
+        projectrelated: true,
+        subfolder: true
+    },
+    {
+        deliveries: "Deliveries",
+        ListingTitle: "التسليمات",
+        FormTitle: "التسليمات",
+        TitleEn: "Deliveries",
+        projnav: "Project Navigation",
+        projectrelated: true,
+        subfolder: true
+    },
+    {
+        opkpis: "OPKPIs",
+        ListingTitle: "OP KPI Listing",
+        FormTitle: "OP KPI Details",
+        TitleEn: "OPKPIs",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        kpiinput: "KPI Input",
+        ListingTitle: "KPI Input Listing",
+        FormTitle: "KPI Input Details",
+        TitleEn: "KPI Input",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        sos: "SOs",
+        ListingTitle: "الاهداف الاستراتيجية",
+        FormTitle: "الاهداف الاستراتيجية",
+        TitleEn: "Strategy Objective ",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        projectarchivingdocs: "Project Archiving Docs",
+        ListingTitle: "Project Archiving Docs Listing",
+        FormTitle: "Project Archiving Docs Details",
+        TitleEn: "Project Archiving Docs",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        stage: "Stage",
+        ListingTitle: "Stage Listing",
+        FormTitle: "Stage Details",
+        TitleEn: "Stage",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+
+    {
+        milestones: "Milestones",
+        ListingTitle: "المعالم",
+        FormTitle: "المعالم",
+        TitleEn: "Milestones",
+        projnav: "Project Navigation",
+        projectrelated: true,
+        subfolder: true
+    },
+    {
+        closureform: "Closure Form",
+        ListingTitle: "إغلاق المشروع",
+        FormTitle: "إغلاق المشروع",
+        TitleEn: "Project Closure",
+        projnav: "Project Navigation",
+        projectrelated: true,
+        subfolder: true
+    },
+    {
+        closureinitiative: "Closure Form",
+        ListingTitle: "إغلاق المبادرة",
+        FormTitle: "إغلاق المبادرة",
+        TitleEn: "Initiative Closure",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        skpis: "SKPIs",
+        ListingTitle: "المؤشرات الاستراتجية",
+        FormTitle: "المؤشرات الاستراتجية",
+        TitleEn: "SKPIs",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    //
+    {
+        budgetitems: "Budget Items",
+        ListingTitle: "البنود المالية",
+        FormTitle: "البنود المالية",
+        TitleEn: "Budget Items",
+        projnav: "Project Navigation",
+        subfolder: true
+
+    },
+
+    {
+        instrumentexpenditures: "Instrument Expenditures",
+        ListingTitle: "",
+        FormTitle: "",
+        TitleEn: "Instrument Expenditures",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        instrumentrelatedbudget: "Instrument Related Budget",
+        ListingTitle: "",
+        FormTitle: "",
+        TitleEn: "Instrument Related Budget",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        instruments: "Instruments",
+        ListingTitle: "البرامج",
+        FormTitle: "البرامج",
+        TitleEn: "Programs",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        benefits: "Benefits",
+        ListingTitle: "المنافع",
+        FormTitle: "المنافع",
+        TitleEn: "Benefits",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        benefitmatrix: "BenefitMatrix",
+        ListingTitle: "مصفوفة المنافع",
+        FormTitle: "مصفوفة المنافع",
+        TitleEn: "Benefit Matrix",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        deliverablemetrics: "DeliverableMetrics",
+        ListingTitle: "مقاييس المخرجات",
+        FormTitle: "مقاييس المخرجات",
+        TitleEn: "Deliverable Metrics",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        benefitmetrics: "BenefitMetrics",
+        ListingTitle: "مقاييس المنافع",
+        FormTitle: "مقاييس المنافع",
+        TitleEn: "Benefit Metrics",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+
+    {
+        regioninput: "Region Input",
+        ListingTitle: "",
+        FormTitle: "",
+        TitleEn: "Region Input",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        ideas: "Ideas",
+        ListingTitle: "الأفكار",
+        FormTitle: "الأفكار",
+        TitleEn: "Ideas",
+        projnav: "Project Navigation",
+        projectrelated: false,
+        subfolder: true
+    },
+    {
+        stakeholders: "Stakeholders",
+        ListingTitle: "أصحاب المصلحة",
+        FormTitle: "أصحاب المصلحة",
+        TitleEn: "Stakeholders",
+        projnav: "Project Navigation",
+        projectrelated: true,
+        subfolder: true
+    },
+    {
+        mom: "MOM",
+        ListingTitle: "محاضر الاجتماع",
+        FormTitle: "محاضر الاجتماع",
+        TitleEn: "MOM",
+        projnav: "Project Navigation",
+        projectrelated: true,
+        subfolder: true
+    },
+    {
+        vendors: "Vendors",
+        ListingTitle: "المتعهدون",
+        FormTitle: "المتعهدون",
+        TitleEn: "Vendors",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        communicationplans: "Communication Plans",
+        ListingTitle: "خطط التواصل",
+        FormTitle: "خطط التواصل",
+        TitleEn: "Communication Plans",
+        projnav: "Project Navigation",
+        subfolder: true,
+        projectrelated: true
+    },
+    {
+        taskdetails: "Task Details",
+        ListingTitle: "أرشيف المهام",
+        FormTitle: "أرشيف المهام",
+        TitleEn: "Task History",
+        projnav: "Project Navigation",
+        projectrelated: true,
+        subfolder: true
+    },
+    {
+        mainkpi: "MainKPI",
+        ListingTitle: "إدارة المؤشرات",
+        FormTitle: "إدارة المؤشرات",
+        TitleEn: "KPIs Management",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        kpiequations: "KPIEquations",
+        ListingTitle: "معادلات المؤشرات",
+        FormTitle: "معادلات المؤشرات",
+        TitleEn: "KPI Equation",
+        projnav: "Project Navigation",
+        projectrelated: true,
+    },
+    
+    {
+        goalstrategy: "GoalStrategy",
+        ListingTitle: "ادارة الأستراتيجيات",
+        FormTitle: "ادارة الأستراتيجيات",
+        TitleEn: "Strategy",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        initiativeskpi: "InitiativeKPI",
+        ListingTitle: "مؤشرات المبادرات",
+        FormTitle: "مؤشرات المبادرات",
+        TitleEn: "Initiative KPI",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        instrumentskpi: "InstrumentKPI",
+        ListingTitle: "مؤشرات البرامج",
+        FormTitle: "مؤشرات البرامج",
+        TitleEn: "Instrument KPI",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        dimensions: "Dimensions",
+        ListingTitle: "الأبعاد",
+        FormTitle: "الأبعاد",
+        TitleEn: "Dimensions",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        spillars: "SPillars",
+        ListingTitle: "المحاور الاستراتيجية",
+        FormTitle: "المحاور الاستراتيجية",
+        TitleEn: "Strategic Pillars",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        spillars: "SPillars",
+        ListingTitle: "المحاور الاستراتيجية",
+        FormTitle: "المحاور الاستراتيجية",
+        TitleEn: "Strategic Pillars",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        initiativecards: "Initiatives",
+        ListingTitle: "بطاقات المبادرات",
+        FormTitle: "بطاقات المبادرات",
+        TitleEn: "Initiatives Cards",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        initiativeexecution: "Initiatives",
+        ListingTitle: "خطة تنفيذ المبادرة",
+        FormTitle: "خطة تنفيذ المبادرة",
+        TitleEn: "Initiatives Execution",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        initiativedeliverablesacceptance: "InitiativeDeliverables",
+        ListingTitle: " قبول مخرجات المبادرة",
+        FormTitle: " قبول مخرجات المبادرة",
+        TitleEn: "Deliverables of Initiative",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        initiativemilestonesacceptance: "InitiativeMilestones",
+        ListingTitle: " قبول معالم المبادرة",
+        FormTitle: " قبول معالم المبادرة",
+        TitleEn: "Milestones of Initiative",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        initiativesample: "Initiatives",
+        ListingTitle: "نموذج توثيق مخرجات ومعالم المبادرة",
+        FormTitle: "نموذج توثيق مخرجات ومعالم المبادرة",
+        TitleEn: "Initiatives Sample",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        initiativedeliverables: "InitiativeDeliverables",
+        ListingTitle: "مخرجات المبادرة",
+        FormTitle: "مخرجات المبادرة",
+        TitleEn: "Initiative Deliverables",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        initiativemilestones: "InitiativeMilestones",
+        ListingTitle: "معالم المبادرة",
+        FormTitle: "معالم المبادرة",
+        TitleEn: "Initiative Milestones",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        initiativeissues: "Issues",
+        ListingTitle: "عوائق المبادرة",
+        FormTitle: "عوائق المبادرة",
+        TitleEn: "Initiative Issues",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        initiativemom: "MOM",
+        ListingTitle: "محاضر اجتماع المبادرة",
+        FormTitle: "محاضر اجتماع المبادرة",
+        TitleEn: "Initiative MOM",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        initiativerisks: "Risks",
+        ListingTitle: "مخاطر المبادرة",
+        FormTitle: "مخاطر المبادرة",
+        TitleEn: "Initiative Risks",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        instrumentexpenditures: "Instrument Expenditures",
+        ListingTitle: "",
+        FormTitle: "",
+        TitleEn: "Instrument Expenditures",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+    {
+        instrumentrelatedbudget: "Instrument Related Budget",
+        ListingTitle: "",
+        FormTitle: "",
+        TitleEn: "Instrument Related Budget",
+        projnav: "Project Navigation",
+        subfolder: true
+    },
+];
+var PageArray = [{
+            pagename: "OperationalIndicators.aspx",
+            Title: "المؤشرات التشغيلية",
+            TitleEn: "Operational Indicators",
+        },
+        {
+            pagename: "StrategicIndicators.aspx",
+            Title: "المؤشرات الاستراتجية",
+            TitleEn: "Strategic Indicators"
+        },
+        {
+            pagename: "MainStrategy.aspx",
+            Title: "استراتجية هدف",
+            TitleEn: "Main Strategy"
+        },
+        {
+            pagename: "Programs.aspx",
+            Title: "المؤشرات البرامج",
+            TitleEn: "Programs"
+        },
+        {
+            pagename: "MainIndicators.aspx",
+            Title: "المؤشرات الرئيسية",
+            TitleEn: "Main Indicators"
+        },
+        {
+            pagename: "Initiatives.aspx",
+            Title: "المؤشرات المبادرات",
+            TitleEn: "Initiatives"
+        },
+        {
+            pagename: "Targets.aspx",
+            Title: "المستهدفات",
+            TitleEn: "Targets"
+        }
+    ]
+    // research enumerator
+    // research query url index
+
+
+var FilesExtensions = ['jpeg', 'png', 'svg', 'xlsx', 'docx','pdf','pptx','rar'];

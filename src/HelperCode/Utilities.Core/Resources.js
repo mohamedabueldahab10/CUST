@@ -1,0 +1,1579 @@
+﻿var Resources = {
+    "ar": {
+        "clearfilter": "مسح التصفية",
+        "title1": "راعي المشروع",
+        "title2": "الاحصائيات",
+        "title3": "المشاريع",
+        "title4": "الإجراء المطلوب",
+        "notifications": "التنبيهات",
+        "filter1": "المرحلة",
+        "filter2": "الأهمية",
+        "filter3": "حالة الإنجاز",
+        "filter4": "استراتيجي",
+        "filter5": "الوكالة",
+        "filterkpisname": "الهدف",
+        "filterkpissector": "القطاع",
+        "filterkpisdepartment": "الوكالة",
+        "filterkpisstrategy": "الاستراتيجية",
+        "more": "المزيد",
+        "true": "نعم",
+        "yes": "نعم",
+        "noneed": "لا يلزم",
+        "false": "لا",
+        "no": "لا",
+        "projectlbl": "مشروع",
+        "task": "مهمة",
+        "project": "مشروع",
+        "idea": "فكرة",
+        "error": "يرجى تعبئة المعلومات أعلاه",
+        "support": "دعم",
+        "escalation": "تصعيد",
+        "rejection": "رفض",
+        "accept": "الموافقة",
+        "beencompleted": "تم الانتهاء من:",
+        "resend": "إعادة إرسال",
+        "postponereferences": "تعليق المراجع",
+        "requirementsspecifications": "كراسة الشروط والمواصفات",
+        "attachment": "المستندات",
+        "documents": "المرفقات",
+        "document": "مرفقات :",
+        "auditquestionnaire": "استبيان المراجعة",
+        "projecthascard": "هل تم اعداد بطاقة المشروع؟",
+        "confirmbrochure": "هل تم التأكد من تحديد نوع كراسة يتوافق مع طبيعة المشروع؟",
+        "companiesidentified": "هل تم تحديد الشركات في حال كانت منافسة محدودة؟",
+        "explainscopeterms": "هل تم مراجعة وتوضيح نطاق العمل بشكل تفصيلي وشرح المصطلحات الغير واضحة للمتلقي؟",
+        "durationappropriate": "هل مدة المشروع مناسبة للنطاق؟",
+        "durationeachtask": "هل تم ذكر المدة الزمنية لتنفيذ كل مهمة رئيسية في نطاق العمل؟",
+        "deliverablesappropriate": " هل تم صياغة المخرجات بطريقة مناسبة؟",
+        "budgetdistrubtion": "هل تم التحقق من توزيع مبلغ الموازنة على مدة المشروع بطريقة مناسبة؟",
+        "datedeletedbrochure": "هل تم حذف تاريخ الطرح ورقم الكراسة من الصفحة الرئيسية للكراسة؟",
+        "numberphoneputed": "هل تم التأكد من وضع رقم الهاتف العام للصندوق، وصف دقيق لمكان تنفيذ العمل (موقع الصندوق)؟",
+        "deleteexamples": "هل تم التأكد من حذف الأمثلة والتوجيهات الارشادية في الكراسة؟",
+        "standardnotebook": "هل تم التأكد من توحيد تنسيق الكراسة؟",
+        "notes": "ملاحظات",
+        "fillnotes": "يرجى تعبئة الملاحظات",
+        "send": "إرسال",
+        "commissioner": "المفوض",
+        "noitems": "لا توجد عناصر",
+        //Budget Item
+        "remaining": "المتبقية",
+        "assignedbudget": "المعتمدة",
+        "cost": " المصروفة",
+        "domainmanagement": "إدارة النطاق",
+        "concerned": "المعنيين",
+        "communication": "التواصل",
+        "purchaseplan": "خطة الشراء",
+        "change": "التغيير",
+        "pattr56": "نسبة التنفيذ الفعلية (الجدول الزمني)",
+        "schedsystem": "المخرجات",
+        "schedepm": "الجدول الزمني",
+        //Priority
+        "pr01veryimportant": "مُلحة",
+        "pr02important": "عالي",
+        "pr03medium": "متوسط",
+        "pr04low": "منخفض",
+        //lesson leanred type
+        "strongpoint": "  نقطة قوة تم إثباتها",
+        "improvementopportunity": "فرصة تحسين تم اكتشافها",
+        //Project Type
+        "internal": "مطور داخليًا",
+        "external": "مطور خارجيًا ",
+        "stackholderinternal": "داخلي",
+        "stackholderexternal": "خارجي",
+
+        //Project category
+        "strategyproject": "استراتيجي",
+        "transformativeproject": "تحولي",
+        "operationalproject": "تشغيلي",
+        // Program Type
+        //budget type
+        "opex": "تشغيلي",
+        "capex": "رأسمالي",
+        "operationally": "تشغيلي",
+        "transformationally": "تحولي",
+        "strategically": "استراتيجي",
+
+        "ministry": "وزارة",
+
+        //IsStrategicProject
+        "strategy": "استراتيجي",
+        "nonstrategy": "غير استراتيجي",
+        //IsStrategicProject
+        "strategy": "استراتيجي",
+        "nonstrategy": "غير استراتيجي",
+
+        //Budget Status
+        "onbudget": "حسب الميزانية",
+        "underbudget": "أقل من الميزانية",
+        "overbudget": "تجاوز الميزانية",
+
+        //Change Request Form
+        //Impact On
+        "budget": "التكلفة",
+        "scopeofwork": "نطاق العمل",
+        "others": "أخرى",
+
+        //Imact On Duration
+        "contractstartdate": "تاريخ بداية العقد",
+        "contractenddate": "تاريخ نهاية العقد",
+        "extensionperiod": "مدة التمديد",
+        "contractperiodbeforeamendment": "مدة العقد قبل التعديل",
+        "contracttermafteramendment": "مدة العقد بعد التعديل",
+
+        //Impact On Contract
+        "originalcontractvalue": "قيمة العقد الاصلية",
+        "canceledstages": "قيمة المراحل الملغاة او المضافة",
+        "increasepercentage": "نسبة التخفيض أو الزيادة",
+        "finalcontractvalue": "قيمة العقد بعد الغاء او إضافة المراحل",
+
+        //Priority Values
+        "hight": "مرتفع",
+        "high": "مرتفع",
+        "medium": "متوسط",
+        "low": "منخفض",
+        "critical": "حرج",
+        "cancelled3": "ملغاة",
+        //Change Request Status
+        "open": "مفتوح",
+        //budget item
+        "support": "الدعم",
+        "operational": "التشغيل",
+        "implementation": "التنفيذ",
+        //Request Status
+        "submitted": "مقدم",
+        "approved": "موافق عليه",
+        "forapproval": "للموافقة عليها",
+        "reject": "رفض",
+        "rejected": "مرفوض",
+        "deferred": "مؤجل",
+        "expectedbud": "الصرف المستحق",
+        "approve": "إعتماد",
+        "reject": "رفض",
+        "submit": "موافق",
+
+        //lesson learned source
+        "sector": "قطاع",
+        "department": "الإدارات",
+        "budgetitem": "البند المرتبط",
+        "pmo": "مكتب تحكم إدارة المشاريع",
+        "nodata": "لا يوجد",
+        //Contract Type
+        "main": "رئيسي",
+        "sub": "فرعي",
+        "target": "المستهدف",
+        "actual": "الفعلي",
+
+        //initiativeStatus
+        "undercontrol": "تحت السيطرة",
+        //kpi classification
+        "kpiassigned": "مؤشر مسند بأمر سامي",
+        "kpivision": "مؤشرات رؤية",
+        "kpisuscomp": "مؤشرات الاستدامة والتنافسية",
+        "kpistrategic": "مؤشرات استراتيجية",
+        //Delivrbles Status
+        "pending": "قيد الموافقة",
+        "completed": "مكتملة",
+        "completed1": "مكتمل",
+        "completed3": "مكتملة",
+        "pending2": "معلق",
+        "pending3": "معلقة",
+        //status milestons
+        "late": "متأخرة",
+        //projecttype
+        "etude": "دراسة",
+        "legislation": "تشريع",
+        "technical": "تقني",
+        //Invoices Status
+        "paid": "تم الدفع",
+        "notpaid": "لم يتم الدفع",
+
+        //Issues + Risks Category
+        "financial": "مالي",
+        "legal": "قانوني",
+        "contractual": "تعاقدي",
+
+        //risk
+        "mitigationstatus": "حالة الاستجابة",
+        "completed": "مكتمل",
+        "inprogress": "قيد التنفيذ",
+        "onhold": "في الانتظار",
+        //argreedaction
+
+        "mitigate": "التخفيف",
+        "move": "النقل",
+        "avoid": "التجنب",
+        "assumption": "الافتراض",
+        "monitor": "المراقبة",
+        "leave": "الترك",
+
+        //Issues Type
+        "issue": "تحدي",
+        "risk": "خطر",
+        "newrequest": "طلب جديد",
+        //milestones
+        "onschedule": "وفق الخطة",
+
+        //Closure initative
+        "initiativecancelled": "الغاء المبادرة",
+        "initiativecompleted": "اكتمال المبادرة/مرحلة الإغلاق",
+        //Closure Form
+        "projectcancelled": "الغاء المشروع",
+        "projectcompleted": "اكتمال المشروع",
+        "ownerchange": "تغير الجهة المالكة",
+        "others": "أخرى",
+        "mersurable": "يقاس",
+        "unmersurable": "لا يقاس",
+        "unspecific": "غير محدد",
+
+        "toissue": "نقل إلى عائق",
+
+        //Resolution Status
+        "new": "جديد",
+        "notstarted": "لم يبدأ",
+        "notstarted1": "لم تبدأ",
+        "inprogress": "التنفيذ",
+        "closed": "مغلق",
+        "cancelled": "ملغى",
+        "stat1": "متأخر جدا",
+        "stat2": "متأخر",
+        "stat3": "على المسار",
+        "stat4": "متقدم",
+        "rsupport1": "اعتمادات",
+        "rsupport2": "تحديات",
+        "rsupport3": "مخاطر",
+        "rsupport4": "مهام",
+        "rsupport5": "إشعارات",
+        "updateprogress": "تحديث الإنجاز",
+        "progressdate": "تاريخ آخر تحديث:",
+        "ptitle1": "المشاريع",
+        "ptitle2": "الجدول الزمني",
+        "ptitle3": "قائمة مراحل المشروع",
+        "ptitle4": "معلومات المشروع",
+        "ptitle5": "ميزانية المشروع",
+        "ptitle6": "التحديات",
+        "ptitle7": "المخاطر",
+        "ptitle8": "التسليمات",
+        "ptitle9": "المخرجات",
+        "ptitle10": "العقود",
+        "ptitle11": "الدروس المستفادة",
+        "ptitle12": "المؤشرات الرئيسية",
+        "subkpi": "المؤشرات الفرعية",
+        "year2": "2022",
+        "year3": "2023",
+        "year4": "2024",
+        "year5": "2025",
+        "pattr1": "تاريخ البدء: ",
+        "pattr2": "تاريخ الإنتهاء: ",
+        "pattr3": "القطاع",
+        "pattr4": "رمز المشروع",
+        "pattr5": "المرحلة",
+        "pattr60": "الخطوة",
+        "pattr6": "نسبة التنفيذ المخططة",
+        "pattr7": "نسبة التنفيذ الفعلية",
+        "pattr8": "حالة الإنجاز",
+        "quarter1": "الربع الأول",
+        "quarter2": "الربع الثاني",
+        "quarter3": "الربع الثالث",
+        "quarter4": "الربع الرابع",
+        // "pattr9": "Jan",
+        "pattr9": "يناير",
+        // "pattr10": "Feb",
+        "pattr10": "فبراير",
+        // "pattr11": "Mar",
+        "pattr11": "مارس",
+        // "pattr12": "Apr",
+        "pattr12": "أبريل",
+        // "pattr13": "May",
+        "pattr13": "مايو",
+        // "pattr14": "Jun",
+        "pattr14": "يونيو",
+        // "pattr15": "Jul",
+        "pattr15": "يوليو",
+        // "pattr16": "Aug",
+        "pattr16": "أغسطس",
+        // "pattr17": "Sep",
+        "pattr17": "سبتمبر",
+        // "pattr18": "Oct",
+        "pattr18": "أكتوبر",
+        // "pattr19": "Nov",
+        "pattr19": "نوفمبر",
+        // "pattr20": "Dec",
+        "pattr20": "ديسمبر",
+        "pattr21": "الحالة: ",
+        "pattr22": "تاريخ الإغلاق",
+        "dateclosure": "تاريخ اغلاق التحدي",
+        "riskdateident": "التاريخ المخطط للاستجابة",
+        "riskdateclos": "تاريخ الانتهاء من الاستجابة",
+        "pattr23": "المسؤول",
+        "pattr24": "الحالة: ",
+        "pattr25": "تاريخ الإغلاق",
+        "pattr26": "المسؤول",
+        "pattr27": "الحالة: ",
+        "pattr28": "تاريخ الطلب",
+        "pattr29": "طالب التغيير",
+        "pattr30": "الحالة: ",
+        "pattr31": "تاريخ التسليم",
+        "pattr32": "تم التسليم؟",
+        "deliveredyesno": "تم التسليم",
+        "pattr33": "حالة المشروع",
+        "pattr34": "أهمية المشروع",
+        "pattr35": "فريق العمل",
+        "pattr36": "راعي المشروع",
+        "pattr37": "مالك المشروع",
+        "pattr38": "مدير المشروع",
+        "pattr39": "ممثل مكتب تحكم إدارة المشاريع",
+        "pattr40": "مدة المشروع",
+        "pattr41": "مبادرة تحسين جودة المبنى",
+        "pattr42": "ر.س",
+        "pattr43": "قيمة المشروع",
+        "pattr44": "الصرف المستحق",
+        "pattr45": "الميزانية المتبقية",
+        "amountpaid": "القيمة المدفوعة",
+        "amount": "المبلغ",
+        "pattr46": "الرمز",
+        "pattr47": "التاريخ المحدد",
+        "pattr48": "نسبة التسليم",
+        "pattr49": "الرمز",
+        "pattr50": "تاريخ الاكتمال المخطط",
+        "pattr51": "نوع العقد",
+        "pattr52": "رقم المرجع",
+        "pattr53": "التاريخ",
+        "pattr54": "المصدر",
+        "pattr55": "الطور",
+        "dateend": "تاريخ الاكتمال الفعلي",
+        "benefscale": "مقياس المنفعة",
+        //
+        "home": "الصفحة الرئيسية",
+        "projectdetails": "تفاصيل المشروع",
+        "projectphase": "مرحلة المشروع",
+        "projectreport": "تقرير المشروع",
+        //check list
+        "phasename1": "مرحلة البدء",
+        "phasename2": "مرحلة التخطيط",
+        "phasename3": "مرحلة التنفيذ",
+        "phasename4": "مرحلة الإغلاق",
+        "phasename5": "مرحلة الاعداد",
+
+        "dateraised": "تاريخ تحديد التحدي",
+        "initiation": "مرحلة البدء",
+        "execution": "مرحلة التنفيذ",
+        "planning": "مرحلة التخطيط",
+        "closure": "مرحلة الإغلاق",
+        "preinitation": "مرحلة الاعداد",
+
+        //Listing
+        "sort": "التصنيف حسب: ",
+        "chooseData": "ااختر عنصرًا",
+        "ascending": "تصاعدي",
+        "descending": "تنازلي",
+        "filterTitle": "تصنيف",
+        "search": "بحث ...",
+        "clear": "إلغاء التصنيف",
+        "delegate": "تفويض",
+        "taskaction": "العمل عليها",
+        "postponement": "تأجيل",
+        //Forms
+        'printscreen': 'طباعة',
+        "editbutton": "التعديل",
+        "backbutton": "العودة",
+        "savebutton": "حفظ",
+        "editequation": "المعادلة",
+        "cancelbutton": "إلغاء",
+        "integrationbutton": "الربط مع نظام الأرشفة",
+        "deletebutton": "حذف البيانات",
+        "submitsuccessMsg": "تم الإرسال",
+        "completionstatus": "حالة الإنجاز",
+        "stage": "المرحلة",
+        "importance": "الأهمية",
+        "issues": "التحديات",
+        "risks": "المخاطر",
+        "projects": "المشاريع",
+        "completionpercentage": "نسبة الإنجاز",
+        "budgetexpenditure": "الصرف من الميزانية",
+        "portfolio": "المحفظة",
+        "section": "القسم",
+        "canselselections": "إلغاء الإختيارات",
+        "viewmore": "عرض المزيد",
+        "viewless": "عرض أقل",
+        "budget": "الميزانية",
+        "portfolios": "المحافظ",
+        "sectors": "القطاعات",
+        "create": "إنشاء",
+        "projectclosure": "إغلاق المشروع",
+        "addition": "إضافة",
+        "edit": "تعديل",
+        "details": "تفاصيل",
+        "enternameemail": "أدخل اسم أو بريد الكتروني...",
+        "weight": "الوزن / القيمة",
+        "sorrynoaccess": "عذرا، ليس لديك صلاحية لرؤية البيانات",
+        "contactsystmadmin": "الرجاء التواصل مع مسؤول النظام للمزيد من المعلومات",
+        "homepage": "الصفحة الرئيسية",
+        "fileuploading": "يتم تحميل الملف..",
+        "signout": "تسجيل الخروج",
+        //ResultType
+        "number": "عدد",
+        "numeric": "رقمي",
+        "percentage": "نسبة مئوية",
+        //people picker
+        "usermultierror": "بإمكانكم إدخال إسم واحد فقط",
+        "invaliduserpicker": "الاسم المدخل غير موجود",
+        "choosefile": "اختر ملف",
+        "nofile": "لا يوجد ملفات",
+        "notallowed": "غير مسموح به",
+        "file": "ملف",
+        "acceptedfiles": "الملفات المسموح بها :",
+        "filesize": "حجم الملف المسموح به هو : 5MB ",
+        "milestones": "المعالم",
+        "deliverables": "المخرجات",
+        "issues": "التحديات",
+        "risks": "المخاطر",
+        "changerequest": "طلبات التغيير",
+        "invoices": "الفواتير",
+        "stakeholders": "أصحاب المصلحة",
+        "mom": "محاضر الاجتماع",
+        "lessonslearned": "الدروس المستفادة",
+        "contracts": "العقود",
+        "communicationplans": "خطط التواصل",
+        "closureform": "إغلاق المشروع",
+        "movetoissue": "هل أنت متأكد أنك تريد نقل هذا الخطر إلى عائق ؟",
+        "movedtoissue": "متحول إلى عائق",
+        "viewhistory": "عرض سجل المهام",
+        "taskdetails": "سجل المهام",
+        "taskname": "إسم المهمة",
+        "modifiedby": "من قبل",
+        "modifieddate": "تاريخ الإجراء",
+        "taskcomment": "تعليق",
+        "taskstatus": "الحالة",
+        "takenaction": "الإجراء المتخذ",
+        "createddate": "تاريخ الإنشاء",
+        "comment": "التعليق",
+        "relatedproject": "المشروع المرتبط بالفكرة",
+        "delegationreason": "سبب التفويض : ",
+        "delegationmsg": "تم تفويض هذه المهمة من قبل : ",
+        "datetime": "وقت الإجتماع",
+        "editablebyowneronly": "فقط مالك هذا العنصر لديه صلاحية تعديله",
+        "notEditableItem": "لا يمكنك تعديل هذا العنصر",
+        // committed date
+        "committeddate": "تاريخ الإلتزام",
+        "closurestatus": "حالة الاغلاق",
+        "failed": "فشل",
+        "jobmarket": "سوق عمل",
+        "cancelled": "الغاء",
+        "postponed": "تأجيل",
+        "succeeded": "تنفيذ كل المخرجات",
+        "pleasefill": "يرجى تعبئة حالت الإغلاق",
+        "closeproject": "إغلاق المشروع",
+        "deleteconfirmation": "هل أنت متأكد أنك تريد حذف البيانات؟",
+        "vision": "الرؤية",
+        "sectorial": "قطاعية",
+        "visiondata": "موارد بشرية وطنية مبادرة ومنتجة",
+        "goals": "الأهداف الاستراتيجية",
+        "kpimanagement": "المؤشرات",
+        "goalsdata": "تمكين القطاع الخاص من التوظيف لوظائف مستدامة للسعوديين",
+        "message": "الرسالة",
+        "messagedata": "تنمية وتطوير الموارد البشرية الوطنية من خلال مبادرات فعالة عالية التأثير تقدم بالشراكة مع الاطراف المعنية الرئيسية بمنظومة سوق العمل",
+        "values": "القيم",
+        "executionspeed": "سرعة الانجاز",
+        "speedprogressdata": "شرح بسطرين فقط عن سرعة الانجاز",
+        "teamspirit": "روح الفريق",
+        "teamspiritdata": "شرح بسطرين فقط عن روح الفريق",
+        "transparency": "الشفافية",
+        "transparencydata": "شرح بسطرين فقط عن الشفافية",
+        "exellence": "التميز",
+        "exellencedata": "شرح بسطرين فقط عن التميز",
+        "focusresult": "التركيز على النتائج",
+        "focusresultdata": "شرح بسطرين فقط عن التركيز على النتائج",
+        "quarter": "ربع",
+        "year": "سنة",
+        "yearly": "سنوي",
+        "ActualY": "سنوي",
+        "actualy": "سنوي",
+        "monthly": "شهري",
+        "midterm": "نصف سنوي",
+        "datacomplete": "اكتمال البيانات",
+        "requiredbusiness": "الاعمال المطلوبة",
+        "plzfillquarter": " الرجاء تعبئة الأرباع أدناه (%) ",
+        "pointertype": "نوع المؤشر",
+        "yeartype": "السنة",
+        "repeatmeas": "تكرار القياس",
+        "operationalindicator": "المؤشر التشغيلي",
+        "kpi": "المؤشر",
+        "programname": "اسم البرنامج",
+        "total": "الإجمالي",
+        "quart1": "الربع 1",
+        "quart2": "الربع 2",
+        "quart3": "الربع 3",
+        "quart4": "الربع 4",
+        "midterm1": "النصف 1",
+        "ActualMid1": "النصف 1",
+        "actualmid1": "النصف 1",
+        "midterm2": "النصف 2",
+        "ActualMid2": "النصف 2",
+        "actualmid2": "النصف 2",
+        "month1": "يناير",
+        "month2": "فبراير",
+        "month3": "الربع الأول",
+        "month4": "ابريل",
+        "month5": "مايو",
+        "month6": "الربع الثاني",
+        "month7": "يوليو",
+        "month8": "اغسطس",
+        "month9": "الربع الثالث",
+        "month10": "اكتوبر",
+        "month11": "نوفمبر",
+        "month12": "الربع الرابع",
+        "ActualM1": "يناير",
+        "actualm1": "يناير",
+        "ActualM2": "فبراير",
+        "actualm2": "فبراير",
+        "ActualM3": "الربع الأول",
+        "actualm3": "الربع الأول",
+        "ActualM4": "ابريل",
+        "actualm4": "ابريل",
+        "ActualM5": "مايو",
+        "actualm5": "مايو",
+        "ActualM6": "الربع الثاني",
+        "actualm6": "الربع الثاني",
+        "ActualM7": "يوليو",
+        "actualm7": "يوليو",
+        "ActualM8": "اغسطس",
+        "actualm8": "اغسطس",
+        "ActualM9": "الربع الثالث",
+        "actualm9": "الربع الثالث",
+        "ActualM10": "اكتوبر",
+        "actualm10": "اكتوبر",
+        "ActualM11": "نوفمبر",
+        "actualm11": "نوفمبر",
+        "ActualM12": "الربع الرابع",
+        "actualm12": "الربع الرابع",
+        "dataprovider": "مزود البيانات",
+        "datasource": "مصدر البيانات",
+        "businesssector": "قطاع الأعمال",
+        "cumulative": "تراكمي",
+        "complition": "الإمتثال",
+        "strategic": "الاستراتيجية",
+        "targeted": "المستهدف",
+        "ownername": "اسم المالك",
+        "baseline": "الحدود",
+        "basestart": "تاريخ بدء الأساس",
+        "basefinish": "تاريخ إنهاء الأساس",
+        "frequencymeas": "قياسات التردد",
+        "indexgenperform": "فهرس الأداء العام",
+        "cumulativeinvestigator": "المحقق التراكمي",
+        "investigator": "المحقق",
+        "quartinvest": "محقق الربع السنوي",
+        "instrumentowner": "مالك الجهاز",
+        "pattrstatus": "حالة الاكتمال",
+        "pattrweight": "الوزن",
+        //Initiative Home
+        "inpattr4": "رمز المبادرة",
+        "inptitle3": "مراحل المبادرة",
+        "inptitle4": " تفاصيل المبادرة",
+        "inpattr33": "حالة المبادرة",
+        "inpattr34": "البرنامج المرتبط",
+        "inpattr36": " مالك المبادرة",
+        "inpattr38": " مدير المبادرة",
+        "inpattr40": "مدة المبادرة",
+        "inptitle5": " ميزانية المبادرة",
+        "inpattr43": "التكلفة التقديرية",
+        "intype": "نوع المبادرة",
+        "instatus": "حالة المبادرة",
+        "inportfolio": "المحفظة",
+        "inclassif": "تصنيف المبادرة",
+        "inapprstatus": "حالة توثيق المبادرة",
+        "inrelatedkpi": "المؤشر الفرعي المرتبط",
+        "inproAttr45": "إجمالي كلفة البرنامج",
+        "incurrentbudget": "الميزانية الحالية",
+        "instage": "المرحلة",
+        "relatedstratobj": "الهدف التابع له",
+        "inptitle6": "المشاريع",
+        "inptitle10": "المعالم",
+        "inptitle11": "المنافع",
+        "inptitle12": "التحديات",
+        "delinioutput": "المخرجات",
+        //initiativeMainHome
+        "instrategy": "استراتيجي",
+        "initiatives": "المبادرات",
+        "finance": "ممول",
+        "notfinanced": "غير ممول",
+        "nofinance": "بلا تمويل",
+        "externalfinance": "تمويل خارجي",
+        "strategymainkpi": "الاستراتيجيات",
+        "inactive": "غير نشطة",
+        "implementationnotstarted": "لم يبدأ التنفيذ",
+        "executioninitiative": "التنفيذ",
+        "complete": "مكتمل",
+        "canceled": "ملغية",
+        "closureinitiative": "الإغلاق",
+        "relatedstrategy": "الاستراتيجية المرتبطة",
+        "pillersname": "اسم المحور / البرنامج",
+        "relatedobjective": "الهدف المرتبط",
+        "relatedstrategyobjictave": "الهدف الاستراتيجي المرتبط",
+        "relatedinitiativedelevrable": "مخرج المبادرة المرتبط",
+        "relatedinitiativemilestone": "معلم المبادرة المرتبط",
+        "result": "نتيجة",
+        "reason": "سبب",
+        "beneficiary": "مستفيد",
+        "million": "مليون",
+        "month": "شهر",
+        "side": "جهة",
+        "volunteer": "متطوع",
+        "partnership": "شراكة",
+        "organizationalstructure": "هيكل تنظيمي",
+        "volunteerhour": "ساعة تطوعية",
+        "saudiriyal": " ريال سعودي",
+        "generalattachements": "مرفقات عامة",
+        "remainperc":"- [النسبة المتبقية هي:",
+        "nofilterdata":"لا يوجد معلومات بالفلاتر المختارة"
+
+    },
+    "en": {
+        "clearfilter": "Clear Filter",
+        "title1": "Project Sponsor",
+        "title2": "Statistics",
+        "title3": "Projects",
+        "title4": "Required Actions",
+        "notifications": "Notifications",
+        "filter1": "Phase",
+        "filter2": "Importance",
+        "filter3": "Status",
+        "filter4": "Strategic Project",
+        "filter5": "Department",
+        "filterkpisname": "Goal",
+        "filterkpissector": "Sector",
+        "filterkpisdepartment": "Department",
+        "filterkpisstrategy": "Strategic",
+        "more": "More",
+        "true": "Yes",
+        "yes": "Yes",
+        "noneed": "No Need",
+        "false": "No",
+        "no": "No",
+        "projectlbl": "Project",
+        "task": "Task",
+        "project": "Project",
+        "idea": "Idea",
+        "support": "Support",
+        "error": "Please fill info above",
+        "escalation": "Escalation",
+        "rejection": "Reject",
+        "accept": "Accept",
+        "beencompleted": "Been Completed:",
+        "resend": "Resend",
+        "postponereferences": "Postpone References",
+        "requirementsspecifications": "Requirements And Specifications",
+        "documents": "Documents",
+        "document": "Documents : ",
+        "attachment": "Documents",
+        "auditquestionnaire": "Audit Questionnaire",
+        "projecthascard": "Has the project card been prepared?",
+        "confirmbrochure": "Has it been confirmed to determine the type of brochure that corresponds to the nature of projects?",
+        "companiesidentified": "Are companies identified if there is limited competition?",
+        "explainscopeterms": "Has the scope of work been reviewed and explained in details, and terms that are unclear to the recipient explained?",
+        "durationappropriate": "Does the duration of the project are appropriate for domain?",
+        "durationeachtask": "Is the duration to implement each major task mentioned in the scope of work?",
+        "deliverablesappropriate": "Is the deliverables mentioned in an appropriate manner?",
+        "budgetdistrubtion": "Has the budget amount been appropriately distributed over the project period?",
+        "datedeletedbrochure": "Have the date of the offering and the number of the bruchure been removed from the main page of the brochure?",
+        "numberphoneputed": "Has it been confirmed that the public phone number of the fund, and an accurate description of where the work is carried out (the location of the fund)?",
+        "deleteexamples": "Was it ensured that the examples and instructionnal directions were deleted in the handbook?",
+        "standardnotebook": "Has it been ascertained that the notebook is standardized",
+        "notes": "Notes",
+        "fillnotes": "Please Fill Notes",
+        "send": "Send",
+        "commissioner": "Commissioner",
+        "noitems": "No Items",
+
+        //Budget Item
+        "remaining": "Remaining",
+        "assignedbudget": "Assigned",
+        "cost": "Cost",
+        //ResultType
+        "number": "Number",
+        "numeric": "Numeric",
+        "percentage": "Percentage",
+        //Priority
+        "pr01veryimportant": "Very Important",
+        "pr02important": "High",
+        "pr03medium": "Medium",
+        "pr04low": "Low",
+        //Classification lesson learned
+        "domainmanagement": "Domain management",
+        "concerned": "Concerned",
+        "communication": "Communication",
+        "purchaseplan": "Purchase plan",
+        "change": "Change",
+
+
+        //Project Type
+        "internal": "In-House",
+        "external": "External",
+        "stackholderinternal": "Internal",
+        "stackholderexternal": "External",
+
+        //Project category
+        "strategyproject": "Strategy",
+        "transformativeproject": "Transformative",
+        "operationalproject": "Operational",
+
+        //IsStrategicProject
+        "strategy": "Strategic Project",
+        "nonstrategy": "Non Strategic Project",
+        //initiativeStatus
+        "undercontrol": "Under control",
+        //Budget Status
+        "onbudget": "On Budget",
+        "underbudget": "Under Budget",
+        "overbudget": "Over Budget",
+
+        //Change Request Form
+
+        //Impact On
+        "budget": "Budget",
+        "scopeofwork": "Scope Of Work",
+        "others": "Others",
+
+        //Imact On Duration
+        "contractstartdate": "Contract Start Date",
+        "contractenddate": "Contract End Date",
+        "extensionperiod": "Extension Period",
+        "contractperiodbeforeamendment": "Contract Period Before Amendment",
+        "contracttermafteramendment": "Contract Term After Amendment",
+
+        //Impact On Contract
+        "originalcontractvalue": "Original contract value",
+        "canceledstages": "Value of canceled or added stages",
+        "increasepercentage": "Reduction or Increase percentage",
+        "finalcontractvalue": "Contract value after canceling or adding stages",
+
+        //program type
+        "operationally": "Operational",
+        "transformationally": "Transformative",
+        "strategically": "Strategic",
+
+        //Priority Values
+        "hight": "High",
+        "high": "High",
+        "medium": "Medium",
+        "low": "Low",
+        "critical": "Critical",
+        //budget item
+        "support": "Support",
+        "operational": "Operational",
+        "implementation": "Implementation",
+        //Change Request Status,
+        "open": "Open",
+
+        //Request Status
+        "submitted": "Submitted",
+        "approved": "Approved",
+        "forapproval": "For Approval",
+        "reject": "reject",
+        "rejected": "Rejected",
+        "deferred": "Deferred",
+
+        //Contract Type
+        "main": "Main",
+        "sub": "Sub",
+        "target": "Target",
+        "actual": "Actual",
+        //Delivrbles Status
+        "pending": "Pending",
+        "pending2": "Pending",
+        "completed": "Completed",
+        "completed1": "Completed",
+        "completed3": "Completed",
+
+
+        //Invoices Status
+        "paid": "Paid",
+        "notpaid": "Not Paid",
+
+        //Issues Category
+        "financial": "Financial",
+        "legal": "Legal",
+        "contractual": "Contractual",
+
+        //Issues Type
+        "issue": "Issue",
+        "risk": "Risk",
+        "projects": "projects",
+        "newrequest": "New Request",
+
+        //Resolution Status
+        "new": "New",
+        "inprogress": "In Progress",
+        "inprogress2": "In Progress",
+        "inprogress3": "In Progress",
+        "onhold": "On Hold",
+        "closed": "Closed",
+        "cancelled": "Cancelled",
+        "pending3": "Pending",
+        //budget type
+        "opex": "OPEX",
+        "capex": "CAPEX",
+
+
+        //lesson learned source
+        "department": "Departments",
+        "budgetitem": "Budget Item",
+        "sector": "Sector",
+        "pmo": "PMO",
+        // "nodata": "Not Found",
+        "nodata": "No Data",
+
+        //Status milestons
+        "late": "Late",
+        "onschedule": "On Schedule",
+        //projecttype
+        "etude": "Etude",
+        "legislation": "Legislation",
+        "technical": "Technical",
+
+        "ministry": "Ministry",
+
+        //Closure Form
+        "projectcancelled": "Project Cancelled",
+        "projectcompleted": "Project Completed",
+        "ownerchange": "Owner Change",
+        "others": "Others",
+        //Closure initative
+        "initiativecancelled": "Initiative cancelled ",
+        "initiativecompleted": "Initiative completed",
+        //risks
+
+        "toissue": "Move to Issue",
+        "mitigate": "Mitigate",
+        "monitor": "Monitor",
+        "move": "Move",
+        "avoid": "Avoid",
+        "leave": "Leave",
+        "assumption": "Assumption",
+        "expectedbud": "Expected Disbursement",
+        "approve": "Approve",
+        "reject": "Reject",
+        "submit": "Submit",
+        "enternameemail": "Enter a name or an email...",
+
+        "dateclosure": "Issue Closure Date",
+        "riskdateident": "Mitigation Target Date",
+        "riskdateclos": "Mitigation Actual Completion Date",
+
+
+
+        "progressdate": "Last Updated Date",
+
+
+        "stat1": "Too late",
+        "stat2": "Late",
+        "stat3": "On plan",
+        "stat4": "Advanced",
+        "rsupport1": "Reliance",
+        "rsupport2": "Issues",
+        "rsupport3": "Risks",
+        "rsupport4": "Tasks",
+        "rsupport5": "Notifications",
+        "updateprogress": "Update Progress",
+        "ptitle1": "Projects",
+        "ptitle2": "Timeline",
+        "ptitle3": "Project Stages",
+        "ptitle4": "Project Details",
+        "ptitle5": "Project Budget",
+        "ptitle6": "Issues",
+        "ptitle7": "Risks",
+        "ptitle8": "Deliveries",
+        "ptitle9": "Deliverables",
+        "ptitle10": "Contracts",
+        "ptitle11": "Lessons Learned",
+        "ptitle12": "Main KPI",
+        "subkpi": "Sub KPI",
+        "year2": "2022",
+        "year3": "2023",
+        "year4": "2024",
+        "year5": "2025",
+        "pattr1": "Start Date: ",
+        "pattr2": "End Date: ",
+        "pattr3": "Sector",
+        "pattr4": "Project Code",
+        "pattr5": "Phase",
+        "pattr60": "Stage",
+        "pattr6": "Percentage of planned implementation",
+        "pattr7": "Percentage of actual implementation",
+        "pattr8": "Completation Status",
+        "pattr9": "Jan",
+        // PAttr9: "يناير",
+        "pattr10": "Feb",
+        // PAttr10: "فبراير",
+        "pattr11": "Mar",
+        // PAttr11: "مارس",
+        "pattr12": "Apr",
+        // PAttr12: "أبريل",
+        "pattr13": "May",
+        // PAttr13: "مايو",
+        "pattr14": "Jun",
+        // PAttr14: "يونيو",
+        "pattr15": "Jul",
+        // PAttr15: "يوليو",
+        "pattr16": "Aug",
+        // PAttr16: "أغسطس",
+        "pattr17": "Sep",
+        // PAttr17: "سبتمبر",
+        "pattr18": "Oct",
+        // PAttr18: "أكتوبر",
+        "pattr19": "Nov",
+        // PAttr19: "نوفمبر",
+        "pattr20": "Dec",
+        // PAttr20: "ديسمبر",
+        "pattr21": "Status: ",
+        "pattr22": "Closure Date",
+        "pattr23": "Responsible",
+        "pattr24": "Status: ",
+        "pattr25": "Closure Date",
+        "pattr26": "Responsible",
+        "pattr27": "Status: ",
+        "pattr28": "Request Date",
+        "pattr29": "Change Applicant",
+        "pattr30": "Status",
+        "pattr31": "Delivery Date",
+        "pattr32": "Is it delivered?",
+        "deliveredyesno": "Delivered",
+        "pattr33": "Project Status",
+        "pattr34": "Importance",
+        "pattr35": "Staff",
+        "pattr36": "Project Sponsor",
+        "pattr37": "Project Owner",
+        "pattr38": "Project Manager",
+        "pattr39": "Project management Office representative",
+        "pattr40": "Project Duration",
+        "pattr41": "Structures quality improvement initiative",
+        "pattr42": "SAR",
+        "pattr43": "Project cost",
+        "pattr44": "Expected Disbursement",
+        "pattr45": "Remaining Budget",
+        "amountpaid": "Amount Paid",
+        "pattr46": "Code",
+        "pattr47": "Selected Date",
+        "pattr48": "Delivery Rate",
+        "pattr49": "Code",
+        "pattr50": "Planned Completed Date",
+        "pattr51": "Contract Type",
+        "pattr52": "Reference Number",
+        "pattr53": "Date",
+        "pattr54": "Source",
+        "pattr55": "Phase",
+        "notstarted": "Not Started",
+        "notstarted1": "Not Started",
+        "dateend": "Actual Completed Date",
+        //
+        "mersurable": "Mersurable",
+        "unmersurable": "Unmersurable",
+        "unspecific": "Unspecific",
+        "quarter1": "Quarter 1",
+        "ActualQ1": "Quarter 1",
+        "quarter2": "Qarter 2",
+        "ActualQ2": "Qarter 2",
+        "quarter3": "Qarter 3",
+        "ActualQ3": "Qarter 3",
+        "quarter4": "Qarter 4",
+        "ActualQ4": "Qarter 4",
+
+        "home": "Home",
+        "projectdetails": "Project Details",
+        "projectphase": "Project Phase",
+        "projectreport": "Project Report",
+        //check list
+        "phasename1": "Initiation Phase",
+        "phasename2": "Planning Phase",
+        "phasename3": "Execution Phase",
+        "phasename4": "Closure Phase",
+        "phasename5": "Pre-Initiation Phase",
+        "dateraised": "Date Raised",
+
+        "initiation": "Initiation",
+        "execution": "Execution",
+        "planning": "Planning",
+        "closure": "Closure",
+        "preInitiation": "Pre-Initiation",
+        //kpi classification
+        "kpiassigned": "KPI assigned to a supreme command",
+        "kpivision": "KPI vision",
+        "kpisuscomp": "KPIs of sustainability and competitiveness",
+        "kpistrategic": "KPI strategic",
+        //Listing
+        "sort": "Sort By: ",
+        "choosedata": "Select a Field",
+        "ascending": "Ascending",
+        "descending": "Descending",
+        "filtertitle": "Filter",
+        "search": "Search...",
+        "clear": "Clear Filter",
+        "delegate": "Delegate",
+        "taskaction": "Task Action",
+        "postponement": "Postponement",
+        //Forms
+        "printscreen": "Print",
+        "editbutton": "Edit",
+        "backbutton": "Back",
+        "savebutton": "Save",
+        "editequation": "Equation",
+        "cancelbutton": "Cancel",
+        "integrationbutton": "Integration With Achive",
+        "deletebutton": "Delete",
+        "submitsuccessMsg": "Submitted Successfully",
+        "completionstatus": "Completion Status",
+        "sorrynoaccess": "Sorry, you don't have permission to view the data",
+        "contactsystmadmin": "Please contact the system administrator for more information",
+        "homepage": "Home Page",
+        "fileuploading": "File Uploading..",
+        "stage": "Stage",
+        "importance": "Importance",
+        "strategy": "Is Strategic Project",
+        "issues": "Issues",
+        "risks": "Risks",
+        "completionpercentage": "Completion Percentage",
+        "budgetexpenditure": "Expenditure from the Budget",
+        "portfolio": "Portfolio",
+        "section": "Section",
+        "canselselections": "Clear Filter",
+        "viewmore": "View More",
+        "viewless": "View Less",
+        "budget": "Budget",
+        "portfolios": "Portfolios",
+        "sectors": "Sectors",
+        "create": "Create",
+        "projectclosure": "Project Closure",
+        "addition": "Addition",
+        "edit": "Edit",
+        "schedepm": "Schedule",
+        "schedsystem": "Deliverables",
+        "details": "Details",
+        "weight": "Weight",
+        "amount": "Amount",
+        "signout": "Sign Out",
+        "usermultierror": "You can only enter one name.",
+        "invaliduserpicker": "user not found",
+        "choosefile": "Choose File",
+        "nofile": "No file chosen",
+        "notallowed": "is not allowed",
+        "file": "file extension(s)",
+        "acceptedfiles": "accepted file extension(s) :",
+        "filesize": "Accepted File size is 5 Mb",
+        "milestones": "Milestones",
+        "deliverables": "Deliverables",
+        "issues": "Issues",
+        "risks": "Risks",
+        "changerequest": "Change Request",
+        "invoices": "Invoices",
+        "stakeholders": "Stakeholders",
+        "mom": "Minutes Of meeting",
+        "lessonslearned": "Lessons Learned",
+        "contracts": "Contracts",
+        "communicationplans": "Communication Plans",
+        "closureform": "Project Closure",
+        "movetoissue": "Are you sure you need to move this risk to issue?",
+        "movedtoissue": "Moved To Issue",
+        "viewhistory": "View History",
+        "taskdetails": "Tasks History",
+        "taskname": "Task Name",
+        "modifiedby": "By",
+        "modifieddate": "Action date",
+        "taskcomment": "Comments",
+        "taskstatus": "Status",
+        "takenaction": "Action Taken",
+        "createddate": "Created",
+        "comment": "Comment",
+        "relatedproject": "Related Project",
+        "delegationreason": "Delegation Reason : ",
+        "delegationmsg": "This Task was delegated from : ",
+        "datetime": "Meeting Time",
+        "editablebyowneronly": "Only Owner Of This Item Can Edit",
+        "notEditableItem": "You Can't Edit This Item",
+        // committed date
+        "committeddate": "Committed Date",
+        "closurestatus": "Closure Status",
+        "failed": "Failed",
+        "cancelled": "Cancel",
+        "postponed": "Postponed",
+        "succeeded": "Execute all Deilvrables",
+        "pleasefill": "Please fill in the closure status",
+        "closeproject": "Close Project",
+        "deleteconfirmation": "Are you sure you want to delete this Item ?",
+        "vision": "Vision",
+        "sectorial": "Sectorial",
+        "visiondata": "National Human Resources Initiative and Product",
+        "goals": "Strategic Objectives",
+        "kpimanagement": "KPIs",
+        "goalsdata": "Enabling the private sector to employ sustainable jobs for Saudis",
+        "message": "Message",
+        "messagedata": "Develop national human resources through effective, high-impact initiatives presented in partnership with the main stakeholders in the labor market system",
+        "values": "Values",
+        "executionspeed": "Execution Speed",
+        "speedprogressdata": "Explanation of two lines only about the speed of completion",
+        "teamspirit": "Team spirit",
+        "teamspiritdata": "Explanation of two lines only about the Team Spirit",
+        "transparency": "Transparency",
+        "transparencydata": "Explanation of two lines only about the Transparency",
+        "exellence": "Exellence",
+        "exellencedata": "Explanation of two lines only about Exellence",
+        "focusresult": "Focus on results",
+        "focusresultdata": "Explanation of two lines only about Focus on results",
+        "quarter": "Quarter",
+        "year": "Year",
+        "yearly": "Yearly",
+        "ActualY": "Yearly",
+        "actualy": "Yearly",
+        "monthly": "Monthly",
+        "midterm": "Half year",
+        "datacomplete": "Data complete",
+        "requiredbusiness": "Required business",
+        "plzfillquarter": " Please fill in the quadrants below (%) ",
+        "pointertype": "Period Type",
+        "yeartype": "Year",
+        "repeatmeas": "Repeat measurement",
+        "operationalindicator": "Operational Indicator",
+        "programname": "Program Name",
+        "total": "Total",
+        "quart1": "Quarter 1",
+        "quart2": "Quarter 2",
+        "quart3": "Quarter 3",
+        "quart4": "Quarter 4",
+        "midterm1": 'Midterm 1',
+        "ActualMid1": 'Midterm 1',
+        "actualmid1": 'Midterm 1',
+        "midterm2": "Midterm 2",
+        "ActualMid2": "Midterm 2",
+        "actualmid2": "Midterm 2",
+        "month1": "Jan",
+        "month2": "Feb",
+        "month3": "Quarter 1",
+        "month4": "April",
+        "month5": "May",
+        "month6": "Quarter 2",
+        "month7": "July",
+        "month8": "August",
+        "month9": "Quarter 3",
+        "month10": "October",
+        "month11": "November",
+        "month12": "Quarter 4",
+        "ActualM1": "Jan",
+        "actualm1": "Jan",
+        "ActualM2": "Feb",
+        "actualm2": "Feb",
+        "ActualM3": "Quarter 1",
+        "actualm3": "Quarter 1",
+        "ActualM4": "April",
+        "actualm4": "April",
+        "ActualM5": "May",
+        "actualm5": "May",
+        "ActualM6": "Quarter 2",
+        "actualm6": "Quarter 2",
+        "ActualM7": "July",
+        "actualm7": "July",
+        "ActualM8": "August",
+        "actualm8": "August",
+        "ActualM9": "Quarter 3",
+        "actualm9": "Quarter 3",
+        "ActualM10": "October",
+        "actualm10": "October",
+        "ActualM11": "November",
+        "actualm11": "November",
+        "ActualM12": "Quarter 4",
+        "actualm12": "Quarter 4",
+        "dataprovider": "Data Provider",
+        "datasource": "Data Source",
+        "businesssector": "Business sector",
+        "cumulative": "Cumulative",
+        "complition": "Complition",
+        "strategic": "Strategic",
+        "targeted": "Targeted",
+        "ownername": "Owner Name",
+        "jobmarket": "Job market",
+        "baseline": "Baseline",
+        "basestart": "Baseline Start Date",
+        "basefinish": "Baseline Finish Date",
+        "frequencymeas": "Frequency Measurement",
+        "indexgenperform": "Index General Performance",
+        "cumulativeinvestigator": "Cumulative Investigator",
+        "investigator": "Investigator",
+        "quartinvest": "Quarterly Investigator",
+        "instrumentowner": "Instrument Owner",
+        "pattr56": "% of actual implementation (Schedule)",
+        //lesson leanrd types
+        "strongpoint": "Proven strong point",
+        "improvementopportunity": "Improvement opportunity discovered",
+        //Initiative Home
+        "inpattr4": "Initiative Code",
+        "inptitle3": "Initiative Stages",
+        "inptitle4": "Initiative Details",
+        "inpattr33": "Initiative Status",
+        "inpattr34": "Related Program",
+        "inpattr36": " Initiative Owner",
+        "inpattr38": " Initiative Manager",
+        "inpattr40": " Initiative Duration",
+        "inptitle5": " Initiative Budget",
+        "inpattr43": "Estimated cost",
+        "pattrstatus": "Status",
+        "pattrweight": "Weight",
+
+        "kpi": "KPI",
+        "intype": "Initiative Type",
+        "instatus": "Initiative Status",
+        "inportfolio": "Portfolio",
+        "inclassif": "Initiative Classification",
+        "inapprstatus": "Initiative Documentation Status",
+        "inrelatedkpi": "Related KPI",
+        "inproAttr45": "Program Total Cost",
+        "incurrentbudget": "Current Budget",
+        "instage": "Stage",
+        "relatedstratobj": "Related Objective",
+        "inptitle6": "Projects",
+        "inptitle10": "Milestones",
+        "inptitle11": "Benefits",
+        "inptitle12": "Issues",
+        "delinioutput": "Outputs",
+        //initiativeMainHome
+        "instrategy": "Strategic",
+        "initiatives": "Initiatives",
+        "benefscale": "Benefit Scale",
+        "finance": "Financed",
+        "notfinanced": "Not Financed",
+        "nofinance": "No Finance",
+        "externalfinance": "External Finance",
+        "strategymainkpi": "strategiec",
+        "inactive": "Inactive",
+        "implementationnotstarted": "Implementation not started",
+        "executioninitiative": "Execution",
+        "complete": "Complete",
+        "canceled": "Canceled",
+        "closureinitiative": "Closure",
+        "relatedstrategy": "Related Strategy",
+        "pillersname": "Piller / Program Name",
+        "relatedobjective": "Related Objective",
+        "relatedstrategyobjictave": "Related Strategy Objective",
+        "relatedinitiativedelevrable": "Related Initiative Delevrable",
+        "relatedinitiativemilestone": "Related Initiative Milestone",
+        "result": "Result",
+        "reason": "Reason",
+        "saudiriyal": "Saudi Riyal",
+        "beneficiary": "Beneficiary",
+        "million": "Million",
+        "month": "Month",
+        "side": "Side",
+        "partnership": "Partnership",
+        "volunteer": "Volunteer",
+        "organizationalstructure": "Organizational structure",
+        "volunteerhour": "Volunteer hour",
+        "generalattachements": "General Attachements",
+        "remainperc":"- [Remaining Percent is:",
+        "nofilterdata":"No data on the selected filters"
+
+    }
+};
+
+function changeResources() {
+    jQuery.fn.translate = function (opt) {
+        var sett = $.extend({
+            default_lang: "ar",
+            langs: "#langs",
+            source: "text"
+        }, opt),
+            attributes = {},
+            el = this;
+
+        function init(lang) {
+            $(sett.langs + " option[value='" + lang + "']").attr("selected", "selected");
+            set_lang(sett.source[lang]);
+            $('body').removeClass();
+            $('body').addClass(lang);
+        }
+
+        function set_lang(t) {
+            $(el).text(function () {
+                var myAttr = this.attributes;
+                var nod = '';
+                for (var i = 0; i < myAttr.length; i++) {
+                    if (myAttr[i].nodeName.indexOf('data-trans') === 0) {
+                        nod = myAttr[i].nodeName;
+                        // var key = nod.slice(11);
+                        // var key = /(?<=([^-]*-){2}).*/.exec(nod)[0];
+                        // var key = nod.indexOf('-') > -1 ? nod.split('-')[2] : '';
+                        var key = nod.indexOf('data-trans-') > -1 ? nod.split('data-trans-')[1] : '';
+                        if (t.hasOwnProperty(key)) {
+                            return t[key];
+                        }
+                        break;
+                    }
+                }
+
+            });
+        }
+        $(sett.langs).children().on("click", function () {
+            var lang = $(this).attr("id");
+            if (sett.source.hasOwnProperty(lang)) {
+                localStorage.setItem("lng", lang);
+            }
+            window.location.reload();
+        });
+        if (localStorage.getItem("lng")) return init(localStorage.getItem("lng"));
+        else return init(sett.default_lang);
+    };
+    $('.Resources').translate({
+        default_lang: "ar",
+        langs: "#langs",
+        source: Resources
+    });
+};
+
+
+
+//LocalStorage solution for configuration codes ****************************
+//array of data
+window.Dynamo_Data = [ // List Names + Fields Internal Names; Note: all entries need to have same attr names (and same number of attr)
+    {
+        ListName: 'Phases',
+        Name: 'Name',
+        NameEn: 'PhaseNameEn',
+        Code: 'Title'
+    },
+    {
+        ListName: 'Stages',
+        Name: 'StageName',
+        NameEn: 'StageNameEn',
+        Code: 'Title'
+    },
+    {
+        ListName: 'Internal Entities',
+        Name: 'Name',
+        NameEn: 'NameEn',
+        Code: 'Title',
+        Owner: 'Manager'
+    },
+    {
+        ListName: 'IStages',
+        Name: 'StageName',
+        NameEn: 'StageNameEn',
+        Code: 'Title'
+    },
+    {
+        ListName: 'Portfolio',
+        Name: 'Name',
+        NameEn: 'NameEn',
+        Code: 'Title'
+    },
+    {
+        ListName: 'Tasks Configuration',
+        Name: 'TaskNameAr',
+        NameEn: 'TaskNameEn',
+        Code: 'RelatedItemCode',
+        Group: 'AssignedToGroup',
+        ActionButtonTitleAr: 'ActionButtonTitleAr',
+        ActionButtonTitleEn: 'ActionButtonTitleEn'
+    },
+    {
+        ListName: 'Initiatives',
+        Name: 'Types',
+        NameEn: 'Types',
+        Code: 'Title'
+    },
+];
+
+function setLocalStorage(name, value) {
+    return localStorage.setItem(name, value);
+}
+
+function getLocalStorage(name) {
+    return localStorage.getItem(name);
+}
+
+window.Dynamo_Values = { //gets values from sp list and assign LocalStorage
+    // The main Initialization function
+    init: function (LN, FName, FNameEn, FCode, FGroup, FOwner, ActionButtonTitleAr, ActionButtonTitleEn) {
+        var clientContext = new SP.ClientContext.get_current();
+        var oList = clientContext.get_web().get_lists().getByTitle(LN);
+        var camlQuery = new SP.CamlQuery();
+        Dynamo_Values.g.LN = LN;
+        Dynamo_Values.g.FName = FName;
+        Dynamo_Values.g.FNameEn = FNameEn;
+        Dynamo_Values.g.FCode = FCode;
+        Dynamo_Values.g.FGroup = FGroup;
+        Dynamo_Values.g.FOwner = FOwner;
+        Dynamo_Values.g.ActionButtonTitleAr = ActionButtonTitleAr;
+        Dynamo_Values.g.ActionButtonTitleEn = ActionButtonTitleEn;
+        camlQuery.set_viewXml('<View><Query><OrderBy><FieldRef Name=\'Created\' Ascending=\'True\' /></OrderBy></Query></View>');
+        Dynamo_Values.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+        clientContext.load(Dynamo_Values.g.collListItem);
+        clientContext.executeQueryAsync(
+            Function.createDelegate(this, Dynamo_Values.onSuccess),
+            Function.createDelegate(this, Dynamo_Values.onError)
+        );
+    },
+    onSuccess: function (sender, args) {
+        var collListItem = Dynamo_Values.g.collListItem;
+        var listItemEnum = collListItem.getEnumerator();
+        window.Dynamo_Array = [];
+        while (listItemEnum.moveNext()) {
+            var oListItem = listItemEnum.get_current();
+            if (Dynamo_Values.g.FNameEn) {
+                var NameEn;
+                NameEn = oListItem.get_item(Dynamo_Values.g.FNameEn);
+            }
+            if (Dynamo_Values.g.FGroup) {
+                var Group;
+                Group = oListItem.get_item(Dynamo_Values.g.FGroup);
+            }
+            if (Dynamo_Values.g.FOwner) {
+                var Owner;
+                Owner = oListItem.get_item(Dynamo_Values.g.FOwner);
+            }
+
+
+
+
+            if (Dynamo_Values.g.ActionButtonTitleAr) {
+                var ActionButtonTitleAr;
+                ActionButtonTitleAr = oListItem.get_item(Dynamo_Values.g.ActionButtonTitleAr);
+            }
+
+            if (Dynamo_Values.g.ActionButtonTitleEn) {
+                var ActionButtonTitleEn;
+                ActionButtonTitleEn = oListItem.get_item(Dynamo_Values.g.ActionButtonTitleEn);
+            }
+            Dynamo_Array.push({
+                name: oListItem.get_item(Dynamo_Values.g.FName),
+                nameEn: NameEn,
+                code: oListItem.get_item(Dynamo_Values.g.FCode),
+                group: Group,
+                owner: Owner,
+                actionButtonTitleAr: ActionButtonTitleAr,
+                actionButtonTitleEn: ActionButtonTitleEn,
+                timeset: new Date().getTime()
+            });
+        }
+
+        setLocalStorage("Dynamo_" + Dynamo_Values.g.LN, JSON.stringify(Dynamo_Array));
+        for (var y = 0; y < Dynamo_Data.length; y++) {
+            //remove if expired to get fresh data + set global var with values
+            if (getLocalStorage('Dynamo_' + Dynamo_Data[y].ListName) != null) {
+                var ListName_Nospace = Dynamo_Data[y].ListName.replaceAll(' ', '');
+                //set array in var
+                var LSArray = $.parseJSON(getLocalStorage('Dynamo_' + Dynamo_Data[y].ListName));
+                // get how many days since ls is set
+                var days_Set = Math.trunc((new Date().getTime() - LSArray[0].timeset) / (1000 * 60 * 60 * 24));
+                if (days_Set > 0) {
+                    localStorage.removeItem('Dynamo_' + Dynamo_Data[y].ListName);
+                } else { //declare global var with values from ls
+                    window['Dynamo_Src_' + ListName_Nospace] = LSArray;
+                }
+            }
+            if (getLocalStorage('Dynamo_' + Dynamo_Data[y].ListName) == null) {
+                Dynamo_Values.init(
+                    Dynamo_Data[y].ListName,
+                    Dynamo_Data[y].Name,
+                    Dynamo_Data[y].NameEn,
+                    Dynamo_Data[y].Code,
+                    Dynamo_Data[y].Group,
+                    Dynamo_Data[y].Owner,
+                    Dynamo_Data[y].ActionButtonTitleAr,
+                    Dynamo_Data[y].ActionButtonTitleEn,
+                );
+                // Dynamo_Data.splice(y, 1);
+                break;
+            }
+        }
+    },
+    onError: function (sender, args) {
+        console.log("IN ERRRRRRRRRRRRRRRRRRRRRRRRRRRRR")
+        console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+    },
+    // Global variables
+    g: {}
+};
+
+//start the call
+for (var y = 0; y < Dynamo_Data.length; y++) {
+    //
+    //remove if expired to get fresh data + set global var with values
+    if (getLocalStorage('Dynamo_' + Dynamo_Data[y].ListName) != null) {
+        //set array in var
+        var LSArray = $.parseJSON(getLocalStorage('Dynamo_' + Dynamo_Data[y].ListName));
+        // get how many days since ls is set
+        var days_Set = Math.trunc((new Date().getTime() - LSArray[0].timeset) / (1000 * 60 * 60 * 24));
+        if (days_Set > 0) {
+            localStorage.removeItem('Dynamo_' + Dynamo_Data[y].ListName);
+        } else {
+            window['Dynamo_Src_' + Dynamo_Data[y].ListName] = LSArray;
+        }
+    }
+    //initiate call if not found
+    if (getLocalStorage('Dynamo_' + Dynamo_Data[y].ListName) == null) {
+        //
+        SP.SOD.executeFunc('sp.js', 'SP.ClientContext', function () {
+            //
+            // console.log('Dynamo', Dynamo_Data);
+            Dynamo_Values.init(
+                Dynamo_Data[y].ListName,
+                Dynamo_Data[y].Name,
+                Dynamo_Data[y].NameEn,
+                Dynamo_Data[y].Code,
+                Dynamo_Data[y].Group,
+                Dynamo_Data[y].ActionButtonTitleAr,
+                Dynamo_Data[y].ActionButtonTitleEn,
+            );
+            // Dynamo_Data.splice(y, 1); //remove so that we dont call it again
+        });
+        break;
+    }
+}
+
+
+var handleMainMenu = {
+
+    init: function () {
+        try {
+            handleMainMenu.setup();
+        } catch (err) {
+
+            console.log("Error: " + err);
+        }
+    },
+    setup: function () {
+        $(".js-close-layer").on("click", function () {
+            $("#navbarsParent").removeClass("nav-open");
+            $("body").removeClass("nav-open");
+            $(".close-layer").removeClass("visible");
+        })
+        $(".js-menu-click").on("click", function () {
+            if ($("#navbarsParent").hasClass("nav-open")) {
+                $("#navbarsParent").removeClass("nav-open");
+                $("body").removeClass("nav-open");
+                $(".close-layer").removeClass("visible");
+
+            } else {
+
+                $("#navbarsParent").addClass("nav-open");
+                $("body").addClass("nav-open");
+                $(".close-layer").addClass("visible");
+
+
+            }
+        })
+    },
+    close: function () {
+        $("#navbarsParent").removeClass("nav-open");
+        $("body").removeClass("nav-open");
+        $(".close-layer").removeClass("visible");
+    },
+    open: function () {
+        if ($("#navbarsParent").hasClass("nav-open")) {
+            $("#navbarsParent").removeClass("nav-open");
+            $("body").removeClass("nav-open");
+            $(".close-layer").removeClass("visible");
+
+        } else {
+
+            $("#navbarsParent").addClass("nav-open");
+            $("body").addClass("nav-open");
+            $(".close-layer").addClass("visible");
+        }
+    }
+}

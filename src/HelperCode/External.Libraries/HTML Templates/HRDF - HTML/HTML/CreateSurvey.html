@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <title>Human Resources Development Fund</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" sizes="180x180" href="./img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="./img/favicon/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/jquery.fancybox.css">
+    <link rel="stylesheet" href="./css/fontello.css">
+    <link rel="stylesheet" href="./css/jquery-ui.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/jquery-ui.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/jquery.fancybox.js"></script>
+    <script src="./js/ResizeSensor.js"></script>
+    <script src="./js/sticky-sidebar.js"></script>
+
+    <script src="./js/scripts.js"></script>
+</head>
+
+<body>
+    <div class="wrapper d-flex" id="navbarsParent">
+        <nav class="sidebar d-inline-block">
+            <div class="sidebar-sticky">
+                <div class="main-logo">
+                    <a>
+                        <img css="w-100" src="./img/main-logo.png">
+                    </a>
+                </div>
+                <ul class="nav flex-column">
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="../chat.html">
+                            <div class="d-flex align-items-center">
+                                <div class="nav-icon">
+                                    <img src="./img/nav-home.png">
+                                </div>
+
+                                <span class="nav-link-text px-2">Home</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="../chat.html">
+                            <div class="d-flex align-items-center">
+                                <div class="nav-icon">
+                                    <img src="./img/nav-sections.png">
+                                </div>
+                                <span class="nav-link-text px-2">Stratigic Sections</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="../chat.html">
+                            <div class="d-flex align-items-center">
+                                <div class="nav-icon">
+                                    <img src="./img/nav-initiatives.png">
+                                </div>
+                                <span class="nav-link-text px-2">Initiatives</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="../chat.html">
+                            <div class="d-flex align-items-center">
+                                <div class="nav-icon">
+                                    <img src="./img/nav-projects.png">
+                                </div>
+                                <span class="nav-link-text px-2">Projects</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+        </nav>
+
+        <div class="main-panel">
+            <nav class="navbar px-0">
+                <div class="container-fluid">
+                    <div class="navbar-wrapper">
+
+                        <div class="navbar-toggle">
+                            <button class="navbar-toggler js-menu-click d-xl-none" type="button" onClick="handleMainMenu.open()">
+                                <span _ngcontent-c3="" class="navbar-toggler-bar bar1"></span>
+                                <span _ngcontent-c3="" class="navbar-toggler-bar bar2"></span>
+                                <span _ngcontent-c3="" class="navbar-toggler-bar bar3"></span>
+                            </button>
+                        </div>
+                        <h2 class="page-title">Managing Operational Indicators</h2>
+                        <div class="page-breadcrumb">
+                            <div class="title-item firsttitle">
+                                Create Survey
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="nav-settings justify-content-end">
+
+                        <div class="btn-toolbar mb-2 mb-md-0">
+
+                            <div class="btn-group mx-3">
+                                <button class="bbtn btn-lg w-5 fnt-14 d-inline-flex align-items-center" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="icon-bell d-inline-flex align-items-center text-center">
+                                        <img src="./img/icon-bell.png" class="mx-3">
+                                        <span class="bell-value">3</span>
+                                    </span>Notifications
+                                </button>
+                                <div class="dropdown-menu border-0 dropdown-menu-center">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <a>
+                                                <h3 class="title-13">Credits</h3>
+                                                <div class="des-12 text-nowrap">A new accreditation has been added</div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="btn-group" id="userGroup">
+                                <button class="btn btn-lg dropdown-toggle w-5 fnt-14" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="icon-user d-inline-flex align-items-center text-center mx-3">
+                                        <span class="user-name w-100">AM</span>
+                                    </span>User Name
+                                </button>
+                                <div class="dropdown-menu border-0 dropdown-menu-right">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <a>
+                                                <h3 class="title-13">Credits</h3>
+                                                <div class="des-12 text-nowrap">A new accreditation has been added</div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="container-ctx">
+                <div class="container-body">
+                    <div class="form-survey-provided py-5 border-bottom">
+                        <div class="form-row">
+                            <div class="col-md-4 mb-4">
+                                <h3>Survey Provided</h3>
+                                <span class="font-14">A small explanation for this paragraph</span>
+
+                            </div>
+                            <div class="col-md-8 white-box p-4">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <label for="formStrategicIndicator">Strategic Indicator</label>
+                                        <input type="text" class="form-control" id="formStrategicIndicator">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="formGroupTypeOfIndicator">Type of indicator</label>
+                                        <input type="text" class="form-control" id="formGroupTypeOfIndicator">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <label for="formDatePicker">Index Owner</label>
+                                        <input type="text" class="form-control datepicker" id="formDatePicker">
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-index-details py-5 border-bottom">
+                        <div class="form-row">
+                            <div class="col-md-4 mb-4">
+                                <h3>Attachments</h3>
+                                <span class="font-14">A small explanation for this paragraph</span>
+
+                            </div>
+                            <div class="col-md-8 white-box p-4">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <label for="file-upload" class="custom-file-upload">
+                                             Upload
+                                        </label>
+                                        <input id="file-upload" type="file" />
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="py-5">
+                        <div class="form-row justify-content-end">
+
+                            <button class="btn btn-action cancel" type="submit">Cancel</button>
+                            <button class="btn btn-action" type="submit">Submit</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="close-layer js-close-layer" onClick="handleMainMenu.close()"></div>
+        </div>
+
+
+    </div>
+
+</body>
+
+</html>
