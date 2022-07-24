@@ -93,6 +93,8 @@ var mizania = require('../../../HelperRessources/img/mizania.svg');
 // var progress = '';
 // var mizania = '';
 
+// new repo 
+
 //filter vars
 var PQuery = '<View><Query><Where><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>',
     originalstate = true,
