@@ -625,7 +625,7 @@
         "generalattachements": "مرفقات عامة",
         "remainperc":"- [النسبة المتبقية هي:",
         "nofilterdata":"لا يوجد معلومات بالفلاتر المختارة",
-        "Initiativerisks":"المخاطر"
+        "initiativerisks":"المخاطر"
 
     },
     "en": {
@@ -1267,7 +1267,7 @@
         "generalattachements": "General Attachements",
         "remainperc":"- [Remaining Percent is:",
         "nofilterdata":"No data on the selected filters",
-        "Initiativerisks":"Risks"
+        "initiativerisks":"Risks"
 
     }
 };
