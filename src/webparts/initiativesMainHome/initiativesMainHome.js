@@ -326,7 +326,7 @@ window.initiativeRequest = {
           phasename +
           "</h4>" +
           "</div>" +
-          '<div class="d-inline-flex flex-column mx-2 ' + ProgressStatus + ' ">' + //deliv-status
+          '<div style="display:none !important" class="d-inline-flex flex-column mx-2 ' + ProgressStatus + ' ">' + //deliv-status
           // "<h4 data-trans-" + ProgressStatus + '  data-prname="' + initiativeCode + '" class="Resources"></h4>' +
           '<span class="des-13 d-flex"><img src="' +
           iconstatustimesm +
@@ -394,7 +394,7 @@ window.initiativeRequest = {
           "</span>" +
           "</a>" +
           "</div>" +
-          '<div class="d-inline-flex flex-row mx-2">' +
+          '<div style="display:none !important" class="d-inline-flex flex-row mx-2">' +
           '<span class="project-inner inner-data3">' +
           '<img src="' +
           progress +
