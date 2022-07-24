@@ -37,9 +37,15 @@ if (window.location.href.indexOf('ListKey') > -1) {
   }
   if(ICODE){
     SP_ListName = 'Initiative Documents'
-    PageTitle = 'مستندات المبادرة'
+    if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+      PageTitle = 'مستندات المبادرة'
+    }else{
+      PageTitle = 'Initiative Documents'
+    }
   }
 }
+
+$(".title-item:first-child").html(PageTitle)
 
 console.log("HEEEEEEEEEEEEEEEEEEEEEEEEEEERE")
 
@@ -50,6 +56,7 @@ var GetFilesFromFolder = {
       SP.SOD.executeFunc('sp.js', 'SP.ClientContext', function () {
         GetFilesFromFolder.init();
         GetProject_Info.init();
+        debugger
         $('h2.DahsFormTitle').text(PageTitle);
         changeResources();
       });

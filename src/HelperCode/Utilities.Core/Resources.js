@@ -625,7 +625,13 @@
         "generalattachements": "مرفقات عامة",
         "remainperc":"- [النسبة المتبقية هي:",
         "nofilterdata":"لا يوجد معلومات بالفلاتر المختارة",
-        "initiativerisks":"المخاطر"
+        "initiativerisks":"المخاطر",
+        "initiativedeliverables":"المخرجات",
+        "initiativemilestones":"المعالم",
+        "initiativeissues":"التحديات",
+        "benefits":"المنافع",
+        "benefitmetrics":"مقاييس المنافع",
+        "initiativemom":"محاضر الاجتماع"
 
     },
     "en": {
@@ -1267,7 +1273,13 @@
         "generalattachements": "General Attachements",
         "remainperc":"- [Remaining Percent is:",
         "nofilterdata":"No data on the selected filters",
-        "initiativerisks":"Risks"
+        "initiativerisks":"Risks",
+        "initiativedeliverables":"Delivrables",
+        "initiativemilestones":"Milestones",
+        "initiativeissues":"Issues",
+        "benefits":"Benefits",
+        "benefitmetrics":"Benefit Metrics",
+        "initiativemom":"MoM"
 
     }
 };
