@@ -192,15 +192,7 @@ export default class MainPageWebPart extends BaseClientSideWebPart<IMainPageWebP
                                         <div class="dropdown-menu Filter-2">
                                             <!-- filter labels go here -->
                                         </div>
-                                    </div>
-                                    <div class="dropdown mx-3">
-                                        <a data-trans-filter3 href="#"
-                                            class="dropdown-toggle fnt-14 w-1 black Resources" data-toggle="dropdown"
-                                            role="button"></a>
-                                        <div class="dropdown-menu Filter-3">
-                                            <!-- filter labels go here -->
-                                        </div>
-                                    </div>
+                                    </div>                                    
                                     <div class="dropdown" id="isStrategic">
                                         <a data-trans-filter4 href="#"
                                             class="dropdown-toggle fnt-14 w-1 black Resources" data-toggle="dropdown"
