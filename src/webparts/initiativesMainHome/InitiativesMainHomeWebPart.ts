@@ -402,7 +402,7 @@ export default class InitiativesMainHomeWebPart extends BaseClientSideWebPart<II
                                                 </ul>
                                             </div>
                                         </div>
-                                        <div class="card-body">
+                                        <div style="display:none" class="card-body">
                                             <canvas id="statusChart" width="200" height="196"></canvas>
                                         </div>
                                         <!-- end row-->

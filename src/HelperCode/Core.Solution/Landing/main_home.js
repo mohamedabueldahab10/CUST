@@ -261,9 +261,9 @@ window.Project_Info_Request = {
                     '<span class="des-13 d-flex"><img src="' + iconstagesm + '" class="h-100" data-themekey="#"><span data-trans-filter1 class="state-val mx-2 Resources"></span></span>' +
                     '<h4 class="text-warning">' + phasename + '</h4>' +
                     '</div>' +
-                    '<div class="d-inline-flex flex-column mx-2 ' + ProgressStatus + ' ">' + //deliv-status
+                    '<div style="display:none !important" class="d-inline-flex flex-column mx-2 ' + ProgressStatus + ' ">' + //deliv-status
                     // '<h4 data-trans-' + ProgressStatus + '  data-prname="' + projectcode + '" class="Resources"></h4>' +
-                    '<span class="des-13 d-flex"><img src="' + iconstatustimesm + '" class="h-100" data-themekey="#"><span data-trans-completionstatus class="complition-val mx-2 Resources"></span></span>' +
+                    '<span class="des-13 d-flex " ><img src="' + iconstatustimesm + '" class="h-100" data-themekey="#"><span data-trans-completionstatus class="complition-val mx-2 Resources"></span></span>' +
                     '<h4 data-trans-' + ProgressStatus + '  data-prname="' + projectcode + '" class="Resources"></h4>' +
                     '</div>' +
                     '<div class="d-inline-flex flex-column mx-2">' +
@@ -301,7 +301,7 @@ window.Project_Info_Request = {
                     '</span>' +
                     '</a>' +
                     '</div>' +
-                    '<div class="d-inline-flex flex-row mx-2">' +
+                    '<div class="d-inline-flex flex-row mx-2" style="display:none !important">' +
                     '<span class="project-inner inner-data3">' +
                     '<img src="' + progress + '" class="" data-themekey="#">' +
                     '<span data-trans-CompletionPercentage class="mx-2 inner-title des-12 reg Resources"></span>' +
