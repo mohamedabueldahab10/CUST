@@ -1588,7 +1588,7 @@ window.ListInfo = {
         htmlBody =
           '<div class="col-md-6 CFIELD multiline ' + element.className + ' " ' + thistip + ' ' + hidestagesIDs + ' ' + editableBy + ' ' + showstagesIDs + '  ' + disablestagesIDs + '  ' + enablestagesIDs + '   ' + isWfhidestagesIDs + ' ' + requireOnWfTaskstagesIDs + ' ' + isWfshowstagesIDs + '  ' + isWfdisablestagesIDs + '  ' + isWfenablestagesIDs + '        data-groups="' + groups + '" style="display:' + element.display + '">' +
           '<label for="' + element.InternalName + '" ' + element.validation + '>' + displayName + '</label>' +
-          '<textarea ' + ToggleName + ' type="multiline" maxlength="' + element.maxchar + '" rows="3" value="" placeholder="' + displayName + '" ' + dynamic + ' class="form-control SPIField" id="' + element.InternalName + '" ' + element.state + ' ' + element.validation + '></textarea>' +
+          '<textarea ' + ToggleName + ' type="multiline" maxlength="1000" rows="3" value="" placeholder="' + displayName + '" ' + dynamic + ' class="form-control SPIField" id="' + element.InternalName + '" ' + element.state + ' ' + element.validation + '></textarea>' +
           '<div class="inputInfo ' + isexist + '">' + descPhrase + '</div>' +
           '</div>';
         OnSuccess(flag, htmlBody);

@@ -1411,11 +1411,6 @@ window.userCalls = {
         //CRUD
         Create_Access = [];
         Read_Access = [
-          // "budgetitems",
-          // "Targets.aspx",
-          // "goalstrategy",
-          // "spillars",
-          // "sos",
           "initiatives",
           "initiativesmain.aspx",
           "InitiativeHome.aspx",
@@ -1425,15 +1420,7 @@ window.userCalls = {
           // "mainkpi",
           "lessonslearned",
           "deliverables",
-          // "closureinitiative",
-          // "initiativeexecution",
-          // "benefits",
-          // "initiativemilestonesacceptance",
-          // "initiativedeliverablesacceptance",
-          // "initiativecards",
           "projectcharter",
-          // "kpiequations",
-          // "deliveries",
           "risks",
           "issues",
           "milestones",
@@ -1446,12 +1433,18 @@ window.userCalls = {
           "stakeholders",
           "documents",
           "tasks",
-          // "portfolio",
-          // "ideas",
           "closureform",
           "TaskHistory.aspx",
           "home.aspx", "deliverablemetrics",
-          // "benefitmatrix", "benefitmetrics",
+          //for initiative
+          "initiativedeliverables",
+          "initiativemilestones",
+          "initiativerisks",
+          "initiativeissues",
+          "initiativemom",
+          "benefits",
+          "benefitmetrics",
+          "closureinitiative"
         ];
         Edit_Access = [];
         break;
