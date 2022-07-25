@@ -999,7 +999,7 @@ var Milestones_Info_Request = {
       itemhtml.push('<h3>' + No_Data + '</h3>')
     }
     $('div#pills-fifth > ul.list-group').html(itemhtml.join(''));
-    if (isMinisterAssistant || isSectorHead || isViceMinister || isSubSectorHead || isGeneralManager || isMinister || isInOwner) {
+    if (isMinisterAssistant || isSectorHead || isViceMinister || isSubSectorHead || isGeneralManager || isMinister || isInOwner || isSPMO) {
       debugger
       $('a.btn-add').attr('style', 'display: none!important;');
 

@@ -1417,7 +1417,7 @@ window.userCalls = {
           "projects",
           "projecthome.aspx",
           "mom",
-          // "mainkpi",
+          "mainkpi",
           "lessonslearned",
           "deliverables",
           "projectcharter",
@@ -2590,7 +2590,7 @@ var Access_Project_Info_Request = {
           AccessQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type="Choice">vision</Value></Eq></And></Where></Query></View>';
         }
         else if (USERisListing && USERlistkey == 'mainkpi') {
-          if (!isAdmin && !isMinister && !isSPMTeam && !isVROP && !isSPMAdmin && !isDU && !isSubSectorHead && !isGeneralManager && !isMinisterAssistant && !isViceMinister && !isSectorHead) {
+          if (!isAdmin && !isMinister && !isSPMTeam && !isVROP && !isSPMAdmin && !isDU && !isSubSectorHead && !isGeneralManager && !isMinisterAssistant && !isViceMinister && !isSectorHead && !isSPMO) {
             AccessQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Or><Or><Eq><FieldRef Name="PerformanceLeader" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq><Eq><FieldRef Name="PerformanceLeader2" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq></Or><Eq><FieldRef Name="Owner" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq></Or></And></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>';
           }
           // else if (isSPMAdmin || isSPMTeam){
@@ -2600,7 +2600,7 @@ var Access_Project_Info_Request = {
           else if (isVROP) {
             AccessQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="RelatedStrategyType" /><Value Type=\'Text\'>vision</Value></Eq></And></Where></Query></View>';
           }
-          else if (isDU || isMinisterAssistant || isSectorHead || isViceMinister || isSubSectorHead || isGeneralManager) {
+          else if (isDU || isMinisterAssistant || isSectorHead || isViceMinister || isSubSectorHead || isGeneralManager || isSPMO ) {
             //debugger
             AccessQuery = SectorHeadQuery
           }

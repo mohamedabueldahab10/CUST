@@ -152,6 +152,8 @@ window.Project_Info_Request = {
             //**** End*/check user rule and buld query to get projects;
         }
 
+        // PQuery = PQuery.replace('</Query>', '</Query>' + '<ViewFields><FieldRef Name="Phase" /><FieldRef Name="Status" /></ViewFields>')
+
         var clientContext = new SP.ClientContext.get_current();
         var oList = clientContext.get_web().get_lists().getByTitle(ListArray[0].projects);
         var camlQuery = new SP.CamlQuery();
@@ -2350,18 +2352,19 @@ function handleCircleRiskChart() {
         },
         plugins: {
             datalabels: {
-                display: true,
-                color: 'white',
-                align: 'center',
-                // backgroundColor: '#ccc',
-                // borderRadius: 3,
-                // borderColor: 'white',
-                // borderRadius: 25,
-                // borderWidth: 2,
-                padding: 30,
-                font: {
-                  size: 14,
-                }
+                display:false
+                // display: true,
+                // color: 'white',
+                // align: 'center',
+                // // backgroundColor: '#ccc',
+                // // borderRadius: 3,
+                // // borderColor: 'white',
+                // // borderRadius: 25,
+                // // borderWidth: 2,
+                // padding: 30,
+                // font: {
+                //   size: 14,
+                // }
             }
         },
     };
@@ -2491,18 +2494,19 @@ function handleCirclePortfoliosChart() {
         },
         plugins: {
             datalabels: {
-                display: true,
-                color: 'white',
-                align: 'center',
-                // backgroundColor: '#ccc',
-                // borderRadius: 3,
-                // borderColor: 'white',
-                // borderRadius: 25,
-                // borderWidth: 2,
-                padding: 30,
-                font: {
-                  size: 14,
-                }
+                display:false
+                // display: true,
+                // color: 'white',
+                // align: 'center',
+                // // backgroundColor: '#ccc',
+                // // borderRadius: 3,
+                // // borderColor: 'white',
+                // // borderRadius: 25,
+                // // borderWidth: 2,
+                // padding: 30,
+                // font: {
+                //   size: 14,
+                // }
                 
             }
         }
@@ -2621,18 +2625,19 @@ function handleCircleDepartmentsChart() {
         },
         plugins: {
             datalabels: {
-                display: true,
-                color: 'white',
-                align: 'center',
-                // backgroundColor: '#ccc',
-                // borderRadius: 3,
-                // borderColor: 'white',
-                // borderRadius: 25,
-                // borderWidth: 2,
-                padding: 30,
-                font: {
-                  size: 14,
-                }
+                display:false
+                // display: true,
+                // color: 'white',
+                // align: 'center',
+                // // backgroundColor: '#ccc',
+                // // borderRadius: 3,
+                // // borderColor: 'white',
+                // // borderRadius: 25,
+                // // borderWidth: 2,
+                // padding: 30,
+                // font: {
+                //   size: 14,
+                // }
                 
             }
         }

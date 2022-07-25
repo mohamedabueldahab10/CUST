@@ -945,7 +945,7 @@ window.ListingData = {
         if (isVROP && USERisListing && USERlistkey == 'goalstrategy') {
           PQuery = '<View><Query><Where><Eq><FieldRef Name="Types" /><Value Type="Choice">vision</Value></Eq></Where></Query></View>';
         } else if (!isDU && !isGeneralManager && !isMinisterAssistant && !isSectorHead && !isViceMinister && !isSubSectorHead && USERisListing && USERlistkey == 'mainkpi') {
-          if (!isAdmin && !isMinister && !isSPMTeam && !isVROP && !isSPMAdmin) {
+          if (!isAdmin && !isMinister && !isSPMTeam && !isVROP && !isSPMAdmin && !isSPMO) {
             PQuery = '<View><Query><Where><Or><Eq><FieldRef Name="PerformanceLeader" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq><Eq><FieldRef Name="Owner" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq></Or></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>';
           }
           else if (isVROP) {
