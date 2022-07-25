@@ -76,22 +76,22 @@ if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar
     var No_Data = 'Not Found'
 }
 window.UProjects = [];
-var iconstagesm = require('../../../HelperRessources/img/icon-stage-sm.png');
-var iconstatustimesm = require('../../../HelperRessources/img/icon-status-time-sm.png');
-var calendar = require('../../../HelperRessources/img/calendar.svg');
-var iconimportantsm = require('../../../HelperRessources/img/icon-important-sm.png');
-var iconstrategysm = require('../../../HelperRessources/img/analysis.png');
-var risk = require('../../../HelperRessources/img/risk.svg');
-var progress = require('../../../HelperRessources/img/progress.svg');
-var mizania = require('../../../HelperRessources/img/mizania.svg');
-// var iconstagesm = '';
-// var iconstatustimesm = '';
-// var calendar = '';
-// var iconimportantsm = '';
-// var iconstrategysm = '';
-// var risk = '';
-// var progress = '';
-// var mizania = '';
+// var iconstagesm = require('../../../HelperRessources/img/icon-stage-sm.png');
+// var iconstatustimesm = require('../../../HelperRessources/img/icon-status-time-sm.png');
+// var calendar = require('../../../HelperRessources/img/calendar.svg');
+// var iconimportantsm = require('../../../HelperRessources/img/icon-important-sm.png');
+// var iconstrategysm = require('../../../HelperRessources/img/analysis.png');
+// var risk = require('../../../HelperRessources/img/risk.svg');
+// var progress = require('../../../HelperRessources/img/progress.svg');
+// var mizania = require('../../../HelperRessources/img/mizania.svg');
+var iconstagesm = '';
+var iconstatustimesm = '';
+var calendar = '';
+var iconimportantsm = '';
+var iconstrategysm = '';
+var risk = '';
+var progress = '';
+var mizania = '';
 
 // new repo 
 
@@ -142,7 +142,7 @@ window.Project_Info_Request = {
     },
     // The main Initialization function
     init: function () {
-     console.log("inside init Project_Info_Request")
+        console.log("inside init Project_Info_Request")
         if (originalstate) {
             //*****call charts filteration */
             PQuery = AccessQuery;
@@ -569,7 +569,7 @@ window.Project_Info_Request = {
                 console.log("inside filter trigger  in main home")
 
                 $('.page-filter .dropdown-menu').each(function () { //looping through filters
-                    
+
                     var internalName = $(this).find('input:checkbox').data("internal");
                     var fieldType = $(this).find('input:checkbox').data("type");
                     var BooleanfieldType = $(this).find('input:checkbox').data("columntype");
@@ -711,7 +711,7 @@ window.Project_Info_Request = {
 
 
                 if ($('.page-filter .dropdown-menu').find('input:checkbox:checked').length) {
-   
+
                     $('.page-filter .dropdown-menu:not(#forQueryAccess)').find('input:checkbox').prop({ // add:not(#forQueryAccess) to get only the related project not all when clear all filter 
                         "checked": false,
                         "disabled": true
@@ -1086,7 +1086,7 @@ var Risks_Info_Request = {
         //*****start */Risk,task and issues card
         RisksCount = Riskarray.length;
 
-
+        Issues_Info_Request.init();
         //*****end */Risk,task and issues card
         $('div#accordionRequiredSupport > .card:nth-child(3) ul.list-group').html(riskshtml);
         for (var i = 0; i < UProjects.length; i++) {
@@ -1096,7 +1096,7 @@ var Risks_Info_Request = {
         // $('.Rsupprot').text(RSupport);
         changeResources();
 
-        Issues_Info_Request.init();
+        
     },
     onError: function (sender, args) {
         console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
@@ -1216,6 +1216,7 @@ var Deliverables_Info_Request = {
     },
     onSuccess: function (sender, args) {
         console.log("INSIDE Delevrable")
+        console.time()
 
         var collListItem = Deliverables_Info_Request.g.collListItem;
         var listItemEnum = collListItem.getEnumerator();
@@ -1265,11 +1266,11 @@ var Deliverables_Info_Request = {
         var NoD, NoDY, NoDarray, statustxt, statusnum, statusclass, ProgressNamearray = [];
         for (var i = 0; i < UProjects.length; i++) {
             //future deliverables
-            var dforthisprojFut = FutDeliverablesarray.filter((v) => (v.pcode === UProjects[i]));
-            var numberofyesFut = dforthisprojFut.filter((v) => (v.delivered === 'yes' || v.delivered === 'Yes'));
+            // var dforthisprojFut = FutDeliverablesarray.filter((v) => (v.pcode === UProjects[i]));
+            // var numberofyesFut = dforthisprojFut.filter((v) => (v.delivered === 'yes' || v.delivered === 'Yes'));
             //expired deliverables
-            var dforthisprojExp = ExpDeliverablesarray.filter((v) => (v.pcode === UProjects[i]));
-            var numberofyesExp = dforthisprojExp.filter((v) => (v.delivered === 'yes' || v.delivered === 'Yes'));
+            // var dforthisprojExp = ExpDeliverablesarray.filter((v) => (v.pcode === UProjects[i]));
+            // var numberofyesExp = dforthisprojExp.filter((v) => (v.delivered === 'yes' || v.delivered === 'Yes'));
             //all deliverables
             var dforthisproj = Deliverablesarray.filter((v) => (v.pcode === UProjects[i]));
             var toatlamount = dforthisproj.reduce((accum, item) => accum + item.ammount, 0);
@@ -1283,98 +1284,98 @@ var Deliverables_Info_Request = {
                 pcode: UProjects[i],
                 progress: POD
             });
-            if (dforthisprojExp.length > 0) {
-                if (numberofyesExp.length == dforthisprojExp.length) //all expired are done
-                {
-                    if (numberofyesFut.length > 0) {
-                        statusclass = 'text-success';
-                        statustxt = 'متقدم';
-                        statusnum = 4;
-                        ProgressNamearray.push({
-                            name: statustxt
-                        });
-                    } else {
-                        statusclass = 'text-warning';
-                        statustxt = 'حسب الخطة';
-                        ProgressNamearray.push({
-                            name: statustxt
-                        });
-                        statusnum = 3;
-                    }
-                } else if (numberofyesExp.length == dforthisprojExp.length - 1) {
-                    statusclass = 'text-danger';
-                    statustxt = 'متأخر';
-                    statusnum = 2;
-                    ProgressNamearray.push({
-                        name: statustxt
-                    });
-                } else if (numberofyesExp.length < dforthisprojExp.length - 1) {
-                    statusclass = 'text-super-danger';
-                    statustxt = 'متأخر جدا';
-                    statusnum = 1;
+            // if (dforthisprojExp.length > 0) {
+            //     if (numberofyesExp.length == dforthisprojExp.length) //all expired are done
+            //     {
+            //         if (numberofyesFut.length > 0) {
+            //             statusclass = 'text-success';
+            //             statustxt = 'متقدم';
+            //             statusnum = 4;
+            //             ProgressNamearray.push({
+            //                 name: statustxt
+            //             });
+            //         } else {
+            //             statusclass = 'text-warning';
+            //             statustxt = 'حسب الخطة';
+            //             ProgressNamearray.push({
+            //                 name: statustxt
+            //             });
+            //             statusnum = 3;
+            //         }
+            //     } else if (numberofyesExp.length == dforthisprojExp.length - 1) {
+            //         statusclass = 'text-danger';
+            //         statustxt = 'متأخر';
+            //         statusnum = 2;
+            //         ProgressNamearray.push({
+            //             name: statustxt
+            //         });
+            //     } else if (numberofyesExp.length < dforthisprojExp.length - 1) {
+            //         statusclass = 'text-super-danger';
+            //         statustxt = 'متأخر جدا';
+            //         statusnum = 1;
 
-                    ProgressNamearray.push({
-                        name: statustxt
-                    });
-                }
-            } else {
-                if (numberofyesFut.length == 0) //on plan because no deliverable is expired
-                {
-                    statusclass = 'text-warning';
-                    statustxt = 'حسب الخطة';
-                    statusnum = 3;
-                    ProgressNamearray.push({
-                        name: statustxt
-                    });
-                } else if (numberofyesFut.length > 0) //one or more fute deliverables are done
-                {
-                    statusclass = 'text-success';
-                    statustxt = 'متقدم';
-                    statusnum = 4;
-                    ProgressNamearray.push({
-                        name: statustxt
-                    });
-                }
-            }
+            //         ProgressNamearray.push({
+            //             name: statustxt
+            //         });
+            //     }
+            // } else {
+            //     if (numberofyesFut.length == 0) //on plan because no deliverable is expired
+            //     {
+            //         statusclass = 'text-warning';
+            //         statustxt = 'حسب الخطة';
+            //         statusnum = 3;
+            //         ProgressNamearray.push({
+            //             name: statustxt
+            //         });
+            //     } else if (numberofyesFut.length > 0) //one or more fute deliverables are done
+            //     {
+            //         statusclass = 'text-success';
+            //         statustxt = 'متقدم';
+            //         statusnum = 4;
+            //         ProgressNamearray.push({
+            //             name: statustxt
+            //         });
+            //     }
+            // }
             //
             //fill divs by id for order it
-            var x = document.getElementsByClassName("ProjectCards")[i];
-            if (x)
-                x.id = statusnum;
+            // var x = document.getElementsByClassName("ProjectCards")[i];
+            // if (x)
+            //     x.id = statusnum;
 
             $('.deliv-status h4[data-prname="' + UProjects[i] + '"]').addClass(statusclass).text(statustxt);
             $('.inner-data3 .inner-val[data-prname="' + UProjects[i] + '"]').text(POD + '%');
         }
         //progress stats
 
-        Noverylate = progressstatusarrayALL.filter((v) => (v == 'متأخر جدا' || v.toLowerCase() == 'too late')).length;
-        // console.log('Noverylate', Noverylate);
-        var Noverylatepercent = (Noverylate * 100) / numberofProjects ? (Noverylate * 100) / numberofProjects : 0;
+        // Noverylate = progressstatusarrayALL.filter((v) => (v == 'متأخر جدا' || v.toLowerCase() == 'too late')).length;
+        // // console.log('Noverylate', Noverylate);
+        // var Noverylatepercent = (Noverylate * 100) / numberofProjects ? (Noverylate * 100) / numberofProjects : 0;
 
-        Nolate = progressstatusarrayALL.filter((v) => (v == 'متأخر' || v.toLowerCase() == 'late')).length;
-        // console.log('Nolate', Nolate);
-        var Nolatepercent = (Nolate * 100) / numberofProjects ? (Nolate * 100) / numberofProjects : 0;
+        // Nolate = progressstatusarrayALL.filter((v) => (v == 'متأخر' || v.toLowerCase() == 'late')).length;
+        // // console.log('Nolate', Nolate);
+        // var Nolatepercent = (Nolate * 100) / numberofProjects ? (Nolate * 100) / numberofProjects : 0;
 
-        Noonplan = progressstatusarrayALL.filter((v) => (v == 'حسب الخطة' || v.toLowerCase() == 'according to plan')).length;
-        // console.log('Noonplan', Noonplan);
-        var Noonplanpercent = (Noonplan * 100) / numberofProjects ? (Noonplan * 100) / numberofProjects : 0;
+        // Noonplan = progressstatusarrayALL.filter((v) => (v == 'حسب الخطة' || v.toLowerCase() == 'according to plan')).length;
+        // // console.log('Noonplan', Noonplan);
+        // var Noonplanpercent = (Noonplan * 100) / numberofProjects ? (Noonplan * 100) / numberofProjects : 0;
 
-        Noahead = progressstatusarrayALL.filter((v) => (v == 'متقدم' || v.toLowerCase() == 'ahead of plan')).length;
-        var Noaheadpercent = (Noahead * 100) / numberofProjects ? (Noahead * 100) / numberofProjects : 0;
+        // Noahead = progressstatusarrayALL.filter((v) => (v == 'متقدم' || v.toLowerCase() == 'ahead of plan')).length;
+        // var Noaheadpercent = (Noahead * 100) / numberofProjects ? (Noahead * 100) / numberofProjects : 0;
 
 
-        $('.ctx-block.row.mx-n2 > div:nth-child(2)  .card-body .media:nth-child(1) .d-flex span:nth-child(2)').text(Project_Info_Request.g.kFormatter(Noverylate));
-        $('.ctx-block.row.mx-n2 > div:nth-child(2) .card-body .media:nth-child(1) .progress-bar').css('width', Noverylatepercent + '%');
-        //
-        $('.ctx-block.row.mx-n2 > div:nth-child(2)  .card-body .media:nth-child(2) .d-flex span:nth-child(2)').text(Project_Info_Request.g.kFormatter(Nolate));
-        $('.ctx-block.row.mx-n2 > div:nth-child(2) .card-body .media:nth-child(2) .progress-bar').css('width', Nolatepercent + '%');
-        //
-        $('.ctx-block.row.mx-n2 > div:nth-child(2)  .card-body .media:nth-child(3) .d-flex span:nth-child(2)').text(Project_Info_Request.g.kFormatter(Noonplan));
-        $('.ctx-block.row.mx-n2 > div:nth-child(2) .card-body .media:nth-child(3) .progress-bar').css('width', Noonplanpercent + '%');
-        //
-        $('.ctx-block.row.mx-n2 > div:nth-child(2)  .card-body .media:nth-child(4) .d-flex span:nth-child(2)').text(Project_Info_Request.g.kFormatter(Noahead));
-        $('.ctx-block.row.mx-n2 > div:nth-child(2) .card-body .media:nth-child(4) .progress-bar').css('width', Noaheadpercent + '%');
-        $('.ctx-block.row.mx-n2 > div:nth-child(2) .card-body .media:nth-child(3) .progress-bar').css('width', Noonplanpercent + '%');
+        // $('.ctx-block.row.mx-n2 > div:nth-child(2)  .card-body .media:nth-child(1) .d-flex span:nth-child(2)').text(Project_Info_Request.g.kFormatter(Noverylate));
+        // $('.ctx-block.row.mx-n2 > div:nth-child(2) .card-body .media:nth-child(1) .progress-bar').css('width', Noverylatepercent + '%');
+        // //
+        // $('.ctx-block.row.mx-n2 > div:nth-child(2)  .card-body .media:nth-child(2) .d-flex span:nth-child(2)').text(Project_Info_Request.g.kFormatter(Nolate));
+        // $('.ctx-block.row.mx-n2 > div:nth-child(2) .card-body .media:nth-child(2) .progress-bar').css('width', Nolatepercent + '%');
+        // //
+        // $('.ctx-block.row.mx-n2 > div:nth-child(2)  .card-body .media:nth-child(3) .d-flex span:nth-child(2)').text(Project_Info_Request.g.kFormatter(Noonplan));
+        // $('.ctx-block.row.mx-n2 > div:nth-child(2) .card-body .media:nth-child(3) .progress-bar').css('width', Noonplanpercent + '%');
+        // //
+        // $('.ctx-block.row.mx-n2 > div:nth-child(2)  .card-body .media:nth-child(4) .d-flex span:nth-child(2)').text(Project_Info_Request.g.kFormatter(Noahead));
+        // $('.ctx-block.row.mx-n2 > div:nth-child(2) .card-body .media:nth-child(4) .progress-bar').css('width', Noaheadpercent + '%');
+        // $('.ctx-block.row.mx-n2 > div:nth-child(2) .card-body .media:nth-child(3) .progress-bar').css('width', Noonplanpercent + '%');
 
         handleStatusBarChart();
         //
@@ -1397,7 +1398,7 @@ var Deliverables_Info_Request = {
 
 
 
-        ProjectsOrder.init();
+        // ProjectsOrder.init();
         Project_Info_Request.g.showprojectonclick();
         Invoices_Info_Request.init();
 
@@ -1456,6 +1457,7 @@ var Main_Stages_Data_Request = {
 var Invoices_Info_Request = {
     // The main Initialization function
     init: function () {
+
         var clientContext = new SP.ClientContext.get_current();
         var oList = clientContext.get_web().get_lists().getByTitle('Invoices');
         var camlQuery = new SP.CamlQuery();
@@ -1471,6 +1473,7 @@ var Invoices_Info_Request = {
         var collListItem = Invoices_Info_Request.g.collListItem;
         var listItemEnum = collListItem.getEnumerator();
         Amount = 0, Deliverable = '';
+
         // console.log(Deliverablesarray);
         while (listItemEnum.moveNext()) {
             var oListItem = listItemEnum.get_current();
@@ -1481,6 +1484,7 @@ var Invoices_Info_Request = {
             //console.log(Status);
             //console.log(Amount+','+Deliverable);
             for (i = 0; i < Deliverablesarray.length; i++) {
+
                 // console.log(Deliverablesarray[i].pcode +','+ Deliverable);
                 if (Deliverablesarray[i].Code == Deliverable && Status == 'paid') {
                     // console.log(Status);
@@ -1493,18 +1497,22 @@ var Invoices_Info_Request = {
         }
 
 
-        $('.ctx-block.row.mx-n2 .carditem1  .card-body .media:nth-child(2) .d-flex span:nth-child(2)').text(Project_Info_Request.g.kFormatter(TheCost));
+
+        // $('.ctx-block.row.mx-n2 .carditem1  .card-body .media:nth-child(2) .d-flex span:nth-child(2)').text(Project_Info_Request.g.kFormatter(TheCost));
         //$('.ctx-block.row.mx-n2 .carditem4  .card-body .media:nth-child(3) .d-flex span:nth-child(2)').text(RisksCount);
         var TheCostPercentage = (TheCost / AssignedBudget) * 100;
-        $('.ctx-block.row.mx-n2 .carditem1 .card-body .media:nth-child(2) .progress-bar').css('width', TheCostPercentage + '%');
+        // $('.ctx-block.row.mx-n2 .carditem1 .card-body .media:nth-child(2) .progress-bar').css('width', TheCostPercentage + '%');
         //
         // console.log(toatlamountAllofProjectminusspercent);
         budgetLast = AssignedBudget - TheCost;
-        $('.ctx-block.row.mx-n2 .carditem1 .card-body .media:nth-child(3) .d-flex span:nth-child(2)').text(Project_Info_Request.g.kFormatter(AssignedBudget - TheCost));
-        $('.ctx-block.row.mx-n2 .carditem1 .card-body .media:nth-child(3) .progress-bar').css('width', Math.abs(toatlamountAllofProjectminusspercent) + '%');
+        // $('.ctx-block.row.mx-n2 .carditem1 .card-body .media:nth-child(3) .d-flex span:nth-child(2)').text(Project_Info_Request.g.kFormatter(AssignedBudget - TheCost));
+        // $('.ctx-block.row.mx-n2 .carditem1 .card-body .media:nth-child(3) .progress-bar').css('width', Math.abs(toatlamountAllofProjectminusspercent) + '%');
+
 
 
         handleBudgetBarChart();
+        console.timeEnd()
+
         //console.log(ExpectedExchange);
         //LastCost=AssignedBudget-TheCost;
         // $('.project-budget-ctx .card-body > div:nth-child(3) > div:nth-child(2) > div:nth-child(2)').html('<span>'+LastCost+' SAR</span> <span>/</span> <span>'+TheCost+' SAR</span>');
@@ -2352,7 +2360,7 @@ function handleCircleRiskChart() {
         },
         plugins: {
             datalabels: {
-                display:false
+                display: false
                 // display: true,
                 // color: 'white',
                 // align: 'center',
@@ -2494,7 +2502,7 @@ function handleCirclePortfoliosChart() {
         },
         plugins: {
             datalabels: {
-                display:false
+                display: false
                 // display: true,
                 // color: 'white',
                 // align: 'center',
@@ -2507,7 +2515,7 @@ function handleCirclePortfoliosChart() {
                 // font: {
                 //   size: 14,
                 // }
-                
+
             }
         }
     };
@@ -2625,7 +2633,7 @@ function handleCircleDepartmentsChart() {
         },
         plugins: {
             datalabels: {
-                display:false
+                display: false
                 // display: true,
                 // color: 'white',
                 // align: 'center',
@@ -2638,7 +2646,7 @@ function handleCircleDepartmentsChart() {
                 // font: {
                 //   size: 14,
                 // }
-                
+
             }
         }
     };
