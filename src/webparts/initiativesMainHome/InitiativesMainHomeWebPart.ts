@@ -184,14 +184,7 @@ export default class InitiativesMainHomeWebPart extends BaseClientSideWebPart<II
                                         </div>
                                     </div>
       
-                                    <div class="dropdown mx-3">
-                                        <a data-trans-filter3 href="#"
-                                            class="dropdown-toggle fnt-14 w-1 black Resources" data-toggle="dropdown"
-                                            role="button"></a>
-                                        <div class="dropdown-menu Filter-3">
-                                            <!-- filter labels go here -->
-                                        </div>
-                                    </div>
+                                  
                                     <div class="dropdown" id="depfilter">
                                     <a data-trans-filter5 href="#"
                                         class="dropdown-toggle fnt-14 w-1 black Resources" data-toggle="dropdown"
@@ -216,8 +209,7 @@ export default class InitiativesMainHomeWebPart extends BaseClientSideWebPart<II
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right CardDivall" id="">
 
-                                                    <a data-trans-CompletionStatus href="javascript:void(0);"
-                                                        id="CardDiv2" class="dropdown-item Resources"></a>
+                                                   
 
                                                     <!--<a data-trans-ScheduleCompletionStatus href="javascript:void(0);"
                                                         id="CardDiv8" class="dropdown-item Resources"></a>-->
@@ -258,8 +250,7 @@ export default class InitiativesMainHomeWebPart extends BaseClientSideWebPart<II
                                                     <a data-trans-Budget href="javascript:void(0);" id="CardDiv1"
                                                         class="dropdown-item Resources"></a>
 
-                                                    <a data-trans-CompletionStatus href="javascript:void(0);"
-                                                        id="CardDiv2" class="dropdown-item Resources"></a>
+                                                   
 
                                                     <!--<a data-trans-ScheduleCompletionStatus href="javascript:void(0);"
                                                         id="CardDiv8" class="dropdown-item Resources"></a>-->
@@ -298,8 +289,7 @@ export default class InitiativesMainHomeWebPart extends BaseClientSideWebPart<II
                                                     <!-- item-->
                                                     <a data-trans-Budget href="javascript:void(0);" id="CardDiv1"
                                                         class="dropdown-item Resources"></a>
-                                                    <a data-trans-CompletionStatus href="javascript:void(0);"
-                                                        id="CardDiv2" class="dropdown-item Resources"></a>
+                                                   
                                                     <!-- item-->
                                                     <!-- <a data-trans-ScheduleCompletionStatus href="javascript:void(0);"
                                                         id="CardDiv8" class="dropdown-item Resources"></a> -->
@@ -428,8 +418,7 @@ export default class InitiativesMainHomeWebPart extends BaseClientSideWebPart<II
 
                                                         <a data-trans-Budget href="javascript:void(0);" id="CardDiv1"
                                                             class="dropdown-item Resources"></a>
-                                                        <a data-trans-CompletionStatus href="javascript:void(0);"
-                                                            id="CardDiv2" class="dropdown-item Resources"></a>
+                                                       
 
                                                         <a data-trans-filter1 href="javascript:void(0);" id="CardDiv3"
                                                             class="dropdown-item Resources"></a>
@@ -551,8 +540,7 @@ export default class InitiativesMainHomeWebPart extends BaseClientSideWebPart<II
                                                     <a data-trans-Budget href="javascript:void(0);" id="CardDiv1"
                                                         class="dropdown-item Resources"></a>
 
-                                                    <a data-trans-CompletionStatus href="javascript:void(0);"
-                                                        id="CardDiv2" class="dropdown-item Resources"></a>
+                                                  
 
                                                     <!--<a data-trans-ScheduleCompletionStatus href="javascript:void(0);"
                                                         id="CardDiv8" class="dropdown-item Resources"></a>-->
@@ -592,8 +580,7 @@ export default class InitiativesMainHomeWebPart extends BaseClientSideWebPart<II
                                                     <a data-trans-Budget href="javascript:void(0);" id="CardDiv1"
                                                         class="dropdown-item Resources"></a>
 
-                                                    <a data-trans-CompletionStatus href="javascript:void(0);"
-                                                        id="CardDiv2" class="dropdown-item Resources"></a>
+                                                    
 
                                                     <!--<a data-trans-ScheduleCompletionStatus href="javascript:void(0);"
                                                         id="CardDiv8" class="dropdown-item Resources"></a>-->
@@ -633,8 +620,7 @@ export default class InitiativesMainHomeWebPart extends BaseClientSideWebPart<II
                                                     <a data-trans-Budget href="javascript:void(0);" id="CardDiv1"
                                                         class="dropdown-item Resources"></a>
 
-                                                    <a data-trans-CompletionStatus href="javascript:void(0);"
-                                                        id="CardDiv2" class="dropdown-item Resources"></a>
+                                                  
 
                                                     <!--<a data-trans-ScheduleCompletionStatus href="javascript:void(0);"
                                                         id="CardDiv8" class="dropdown-item Resources"></a>-->
