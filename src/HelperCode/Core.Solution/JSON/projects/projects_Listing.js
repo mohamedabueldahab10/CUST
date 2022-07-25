@@ -61,6 +61,15 @@ var Listing_Info = [{
     infilter: false
 },
 {
+    "InternalName": "Sector",
+    "DisplayName": "القطاع",
+    "DisplayNameEn": "Sector",
+    "type": "lookup",
+    "localStorageVariable":"Dynamo_Internal Entities",
+    inlisting: false,
+    infilter: true
+},
+{
     "InternalName": "SubSector",
     "DisplayName": "الوكالات",
     "DisplayNameEn": "Departments",
