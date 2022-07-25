@@ -2350,7 +2350,18 @@ function handleCircleRiskChart() {
         },
         plugins: {
             datalabels: {
-                display: false
+                display: true,
+                color: 'white',
+                align: 'center',
+                // backgroundColor: '#ccc',
+                // borderRadius: 3,
+                // borderColor: 'white',
+                // borderRadius: 25,
+                // borderWidth: 2,
+                padding: 30,
+                font: {
+                  size: 14,
+                }
             }
         },
     };
@@ -2480,7 +2491,19 @@ function handleCirclePortfoliosChart() {
         },
         plugins: {
             datalabels: {
-                display: false
+                display: true,
+                color: 'white',
+                align: 'center',
+                // backgroundColor: '#ccc',
+                // borderRadius: 3,
+                // borderColor: 'white',
+                // borderRadius: 25,
+                // borderWidth: 2,
+                padding: 30,
+                font: {
+                  size: 14,
+                }
+                
             }
         }
     };
@@ -2598,7 +2621,19 @@ function handleCircleDepartmentsChart() {
         },
         plugins: {
             datalabels: {
-                display: false
+                display: true,
+                color: 'white',
+                align: 'center',
+                // backgroundColor: '#ccc',
+                // borderRadius: 3,
+                // borderColor: 'white',
+                // borderRadius: 25,
+                // borderWidth: 2,
+                padding: 30,
+                font: {
+                  size: 14,
+                }
+                
             }
         }
     };
