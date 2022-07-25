@@ -1722,9 +1722,10 @@ function program_BulkEdit(state) {
         if (!ismultistage) // 1 active stage
         {
           if (state) {
-            items.set_item("Stage", nxtstageid);
-            if (prjstage == 'S42') {
-              items.set_item("Status", 'completed1');
+            debugger
+            items.set_item("Stage", nxtstageid); //set status competed
+            if (stageid == 'S21' || stageid == ' ') {
+              items.set_item("Status", 'completed');
             }
           } else if (!state) {
             items.set_item("Stage", prvstageid);
