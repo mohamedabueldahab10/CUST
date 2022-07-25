@@ -283,7 +283,7 @@ var Information_Form = [
             },
             {
                 "DisplayName": "أرشفة كافة الوثائق الداعمة لمخرجات المبادرة المتحققة",
-                "DisplayNameEn": "Archive all documents supporting the achieved outputs of the initiative",
+                "DisplayNameEn": "Archive all documents supporting the achieved deliverables of the initiative",
                 "InternalName": "InitiativeDecision7",
                 "type": "dropdownValues",
                 options: {

@@ -1237,7 +1237,7 @@
         "inptitle10": "Milestones",
         "inptitle11": "Benefits",
         "inptitle12": "Issues",
-        "delinioutput": "Outputs",
+        "delinioutput": "Deliverables",
         //initiativeMainHome
         "instrategy": "Strategic",
         "initiatives": "Initiatives",
