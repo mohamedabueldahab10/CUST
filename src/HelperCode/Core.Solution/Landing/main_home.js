@@ -76,22 +76,22 @@ if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar
     var No_Data = 'Not Found'
 }
 window.UProjects = [];
-// var iconstagesm = require('../../../HelperRessources/img/icon-stage-sm.png');
-// var iconstatustimesm = require('../../../HelperRessources/img/icon-status-time-sm.png');
-// var calendar = require('../../../HelperRessources/img/calendar.svg');
-// var iconimportantsm = require('../../../HelperRessources/img/icon-important-sm.png');
-// var iconstrategysm = require('../../../HelperRessources/img/analysis.png');
-// var risk = require('../../../HelperRessources/img/risk.svg');
-// var progress = require('../../../HelperRessources/img/progress.svg');
-// var mizania = require('../../../HelperRessources/img/mizania.svg');
-var iconstagesm = '';
-var iconstatustimesm = '';
-var calendar = '';
-var iconimportantsm = '';
-var iconstrategysm = '';
-var risk = '';
-var progress = '';
-var mizania = '';
+var iconstagesm = require('../../../HelperRessources/img/icon-stage-sm.png');
+var iconstatustimesm = require('../../../HelperRessources/img/icon-status-time-sm.png');
+var calendar = require('../../../HelperRessources/img/calendar.svg');
+var iconimportantsm = require('../../../HelperRessources/img/icon-important-sm.png');
+var iconstrategysm = require('../../../HelperRessources/img/analysis.png');
+var risk = require('../../../HelperRessources/img/risk.svg');
+var progress = require('../../../HelperRessources/img/progress.svg');
+var mizania = require('../../../HelperRessources/img/mizania.svg');
+// var iconstagesm = '';
+// var iconstatustimesm = '';
+// var calendar = '';
+// var iconimportantsm = '';
+// var iconstrategysm = '';
+// var risk = '';
+// var progress = '';
+// var mizania = '';
 
 // new repo 
 
@@ -1203,6 +1203,8 @@ var Noverylate = 0,
 var Deliverables_Info_Request = {
     // The main Initialization function
     init: function () {
+        console.time()
+
         var clientContext = new SP.ClientContext.get_current();
         var oList = clientContext.get_web().get_lists().getByTitle('Deliverables');
         var camlQuery = new SP.CamlQuery();
@@ -1216,7 +1218,6 @@ var Deliverables_Info_Request = {
     },
     onSuccess: function (sender, args) {
         console.log("INSIDE Delevrable")
-        console.time()
 
         var collListItem = Deliverables_Info_Request.g.collListItem;
         var listItemEnum = collListItem.getEnumerator();
