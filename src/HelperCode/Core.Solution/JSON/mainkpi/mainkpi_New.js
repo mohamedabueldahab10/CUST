@@ -212,7 +212,7 @@ var Information_Form = [{
             }
         },
         {
-            InternalName: "SubRelatedObjective",
+            InternalName: "SubRelatedObjective", // = هدف الوكالة hadaf al wikala 
             DisplayNameEn: " Related Sub Objective",
             DisplayName: "الهدف الفرعي المرتبط",
             ToggleName: "SubRelatedObjective",
@@ -244,7 +244,7 @@ var Information_Form = [{
         },
        
         {
-            InternalName: "RelatedObjective",
+            InternalName: "RelatedObjective", //هدف الوكالة = hadaf al wikala 
             DisplayNameEn: "Strategy Related Objective",
             DisplayName: "الهدف الاستراتيجي المرتبط",
             ToggleName: "StrategyRelatedObjective",
@@ -280,7 +280,7 @@ var Information_Form = [{
         {
             InternalName: "RelatedStrategyObjective",
             DisplayNameEn: "Related Main Objective",
-            DisplayName: "الهدف الرئيسي المرتبط ",
+            DisplayName: "الهدف الرئيسي المرتبط ",//hada al wizara  هدف الوزارة =
             ToggleName: "RelatedMainObjective",
             type: "lookupWithQuery",
             queryField: "Types",
