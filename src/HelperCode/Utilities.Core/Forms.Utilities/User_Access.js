@@ -284,6 +284,7 @@ window.userCalls = {
     });
   },
   isMember: function (groupName, userLoginName, fieldID) {
+
     $.ajax({
       url:
         _spPageContextInfo.webAbsoluteUrl +

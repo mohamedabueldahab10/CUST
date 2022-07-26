@@ -1694,10 +1694,10 @@ window.delegatedtaskcode,
   window.ppp,
   window.ProjectCode,
   window.TaskDelegatedFrom;
-// window.assignedToGroup,
+window.assignedToGroup,
   window.userName,
   window.taskId;
-  var assignedToGroup = ''
+  // var assignedToGroup = ''
 window.Delegate_Data_Submit = {
   onSuccess: function (sender, args) {
     var collListItem = Delegate_Data_Submit.g.collListItem;
@@ -1722,7 +1722,10 @@ window.Delegate_Data_Submit = {
       ProjectCode = currentItem.get_item('ProjectCode');
       TaskDelegatedFrom = currentItem.get_item('AssignedTo');
 
-      if (Workflowname == "Project" || Workflowname == "Idea") {
+      // if (Workflowname == "Project" || Workflowname == "Idea") {
+        // console.log(wo\\)
+        // if(Workflowname == 'Project' || Workflowname == 'DV'){
+          // debugger
         if (localStorage.getItem('Dynamo_Tasks Configuration') != null) {
           stages = JSON.parse(localStorage.getItem("Dynamo_Tasks Configuration") || "[]");
           stages = stages.filter(function (item) {
@@ -1730,7 +1733,7 @@ window.Delegate_Data_Submit = {
           });
           assignedToGroup = stages[0].group;
         }
-      }
+      // }
       if ($('#AssignedTo').find('span.sp-peoplepicker-userSpan').length) {
         var id = $('#AssignedTo').attr('id');
         ppp = ($('#AssignedTo').find('span.sp-peoplepicker-userSpan').attr('sid') == undefined) ? '' : SP.FieldUserValue.fromUser($('#AssignedTo').find('span.sp-peoplepicker-userSpan').attr('sid')); //.split('|').slice(-1)[0]
