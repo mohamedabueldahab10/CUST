@@ -508,4 +508,17 @@ var Information_Form = [
 
         ]
     },
+    {
+        label: 'المرفقات', 
+        labelEn: 'Attachments',
+        description: "",
+        descriptionEn: "",
+        subFields: [{
+            "InternalName": "getfile",
+            "DisplayName": "المرفقات",
+            "DisplayNameEn": "Attachments",
+            "type": "file",
+            "withAddBtn":"true"
+        }]
+    }
 ];

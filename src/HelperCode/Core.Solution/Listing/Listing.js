@@ -730,6 +730,7 @@ window.ListingData = {
           }
 
           // one item can create to close the initiative and project
+          
           if (records.length && (listkey == 'closureinitiative' || listkey == 'closureform')) {
             $("body").append(
               "<style>" +
@@ -1693,9 +1694,10 @@ window.delegatedtaskcode,
   window.ppp,
   window.ProjectCode,
   window.TaskDelegatedFrom;
-window.assignedToGroup,
+// window.assignedToGroup,
   window.userName,
   window.taskId;
+  var assignedToGroup = ''
 window.Delegate_Data_Submit = {
   onSuccess: function (sender, args) {
     var collListItem = Delegate_Data_Submit.g.collListItem;

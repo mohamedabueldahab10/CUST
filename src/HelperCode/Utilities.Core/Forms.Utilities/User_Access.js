@@ -1351,7 +1351,6 @@ window.userCalls = {
           "benefitmetrics",
           "milestones",
           "closureform"
-
         ];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
@@ -2036,6 +2035,7 @@ window.userCalls = {
       (Edit_Access = Edit_Access.map((name) => name.toLowerCase())),
       (Delete_Access = Delete_Access.map((name) => name.toLowerCase()));
 
+  
     switch (
     true //Create Access
     ) {
@@ -2049,9 +2049,10 @@ window.userCalls = {
           userCalls.g.Security_Msg();
           console.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         }
+        
         //create btn
         //disable
-
+        
         $("body").append(
           "<style>" +
           ".btn-add{opacity: .6;pointer-events: none;display:none}" +
@@ -2060,6 +2061,7 @@ window.userCalls = {
 
         // reenable if has access
         Create_Access.forEach(function (o, i, a) {
+          console.log()
           $("body").append(
             "<style>" +
             '.btn-add[href*="ListKey=' +
@@ -2673,6 +2675,7 @@ var Access_Project_Info_Request = {
     ) {
       if (USERlistkey == "issues" && (USERisListing || USERisNew)) {
       } else {
+        
         $("body").append(
           "<style>" +
           ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
