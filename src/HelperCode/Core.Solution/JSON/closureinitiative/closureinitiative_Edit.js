@@ -502,7 +502,7 @@ var Information_Form = [
         {
             "InternalName": "Comments",
             "DisplayName": "الملاحظات",
-            "DisplayNameEn": "Comments",
+            "DisplayNameEn": "Comments", 
             "type": "string",
         },
 

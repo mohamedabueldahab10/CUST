@@ -386,7 +386,7 @@ var Information_Form = [{
         "InternalName": "getfile",
         "DisplayName": "المرفقات",
         "DisplayNameEn": "Attachments",
-        "type": "file",
+        "type": "file", 
         "withAddBtn":"true"
     }]
 }

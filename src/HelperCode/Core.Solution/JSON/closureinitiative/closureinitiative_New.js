@@ -454,8 +454,8 @@ var Information_Form = [
                     value: 'improvementopportunity'
                 }
                 ]
-            }
-        },
+            } 
+        }, 
         {
             "InternalName": "Comments",
             "DisplayName": "ملاحظات إضافية",
