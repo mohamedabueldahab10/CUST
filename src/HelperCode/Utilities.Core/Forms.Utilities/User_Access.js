@@ -1341,13 +1341,16 @@ window.userCalls = {
           "initiativemom",
           "initiativerisks",
           // "mom",
-          // "risks",
-          "milestones",
+          "risks",
           // "portfolio",
           "initiativedeliverables",
           "initiativemilestones",
-          // "issues",
-          "deliverablemetrics", "benefitmatrix", "benefitmetrics",
+          "issues",
+          "deliverablemetrics",
+          "benefitmatrix",
+          "benefitmetrics",
+          "milestones",
+          "closureform"
 
         ];
         Read_Access = AllListKeys;
@@ -1364,7 +1367,7 @@ window.userCalls = {
           "benefits",
           // "mom",
           // "mom",
-          // "risks",
+          "risks",
           "initiativeissues",
           "initiativemom",
           "initiativerisks",
@@ -1372,12 +1375,13 @@ window.userCalls = {
           // "portfolio",
           "initiativedeliverables",
           "initiativemilestones",
-          // "issues",
+          "issues",
           "deliverablemetrics",
           "benefitmatrix",
           "benefitmetrics",
           "projectcharter",
           "projects",
+          "closureform"
         ];
         Delete_Access = [];
         break;
@@ -2600,7 +2604,7 @@ var Access_Project_Info_Request = {
           else if (isVROP) {
             AccessQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="RelatedStrategyType" /><Value Type=\'Text\'>vision</Value></Eq></And></Where></Query></View>';
           }
-          else if (isDU || isMinisterAssistant || isSectorHead || isViceMinister || isSubSectorHead || isGeneralManager || isSPMO ) {
+          else if (isDU || isMinisterAssistant || isSectorHead || isViceMinister || isSubSectorHead || isGeneralManager || isSPMO) {
             //debugger
             AccessQuery = SectorHeadQuery
           }
@@ -3216,7 +3220,7 @@ var Access_Initiative_Info_Request = {
               USERPageTitle +
               ""
             );
-          }  else {
+          } else {
 
             $(".page-title").html(
               '<a href="' +
