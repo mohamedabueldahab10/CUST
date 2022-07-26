@@ -138,19 +138,30 @@ var Information_Form = [{
             }
         },
         {
+            // InternalName: "SubRelatedObjective",
+            // DisplayNameEn: " Related Sub Objective",
+            // DisplayName: "الهدف الفرعي المرتبط",
+            // ToggleName: "SubRelatedObjective",
+            // type: "string",
+            // // queryField: "Types",
+            // // queryFieldType: "dropdownValues", //ex: "Choice"
+            // // queryFieldValue: "sub",
+            // // //from other list:
+            // // source: "SOs",
+            // // Dispfieldkey: "Name",
+            // // valfieldkey: "Title",
+            // // display: "none",
             InternalName: "SubRelatedObjective",
-            DisplayNameEn: " Related Sub Objective",
-            DisplayName: "الهدف الفرعي المرتبط",
-            ToggleName: "SubRelatedObjective",
-            type: "string",
-            // queryField: "Types",
-            // queryFieldType: "dropdownValues", //ex: "Choice"
-            // queryFieldValue: "sub",
-            // //from other list:
-            // source: "SOs",
-            // Dispfieldkey: "Name",
-            // valfieldkey: "Title",
-            // display: "none",
+            DisplayNameEn: "Related Sub Objective",
+            DisplayName: "الهدف الفرعي المرتبط ",
+            // ToggleName: "RelatedMainObjective",
+            type: "lookupWithQuery",
+            queryField: "Types",
+            queryFieldType: "dropdownValues", //ex: "Choice"
+            queryFieldValue: "sub",
+            source: "SOs",
+            Dispfieldkey: "Name",
+            valfieldkey: "Title",
         },
         {
             InternalName: "RelatedMainKpis",
