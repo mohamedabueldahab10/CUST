@@ -178,7 +178,7 @@ var Information_Form = [{
                 "DisplayName": "المسؤول عن الاستجابة",
                 "DisplayNameEn": "Mitigation Owner",
                 "type": "picker",
-                "validation": "required"
+                // "validation": "required"
             },
             {
                 "InternalName": "MitigationTargetDate",
