@@ -1724,7 +1724,7 @@ window.Delegate_Data_Submit = {
 
       // if (Workflowname == "Project" || Workflowname == "Idea") {
         // console.log(wo\\)
-        // if(Workflowname == 'Project' || Workflowname == 'DV'){
+        if(Workflowname == 'Project' || Workflowname == 'DV'){ // should change after mah fix tsk configration list
           // debugger
         if (localStorage.getItem('Dynamo_Tasks Configuration') != null) {
           stages = JSON.parse(localStorage.getItem("Dynamo_Tasks Configuration") || "[]");
@@ -1733,7 +1733,7 @@ window.Delegate_Data_Submit = {
           });
           assignedToGroup = stages[0].group;
         }
-      // }
+      }
       if ($('#AssignedTo').find('span.sp-peoplepicker-userSpan').length) {
         var id = $('#AssignedTo').attr('id');
         ppp = ($('#AssignedTo').find('span.sp-peoplepicker-userSpan').attr('sid') == undefined) ? '' : SP.FieldUserValue.fromUser($('#AssignedTo').find('span.sp-peoplepicker-userSpan').attr('sid')); //.split('|').slice(-1)[0]

@@ -870,7 +870,7 @@ var Information_Form = [
             InternalName: "A",
             DisplayName: "المكون الأول (A)",
             DisplayNameEn: "A",
-            type: "float",
+            type: "number",
             //editableBy: "PerformanceLeader",
             security: {
                 groups: [
@@ -882,7 +882,7 @@ var Information_Form = [
             InternalName: "B",
             DisplayName: "المكون الثاني (B)",
             DisplayNameEn: "B",
-            type: "float",
+            type: "number",
             //editableBy: "PerformanceLeader",
             security: {
                 groups: [
@@ -894,7 +894,7 @@ var Information_Form = [
             InternalName: "CC",
             DisplayName: "المكون الثالث (C)",
             DisplayNameEn: "C",
-            type: "float",
+            type: "number",
             //editableBy: "PerformanceLeader",
             security: {
                 groups: [
@@ -906,7 +906,7 @@ var Information_Form = [
             InternalName: "D",
             DisplayName: "المكون الرابع (D)",
             DisplayNameEn: "D",
-            type: "float",
+            type: "number",
             //editableBy: "PerformanceLeader",
             security: {
                 groups: [
@@ -918,7 +918,7 @@ var Information_Form = [
             InternalName: "E",
             DisplayName: "المكون الخامس (E)",
             DisplayNameEn: "E",
-            type: "float",
+            type: "number",
             //editableBy: "PerformanceLeader",
             security: {
                 groups: [
@@ -930,7 +930,7 @@ var Information_Form = [
             InternalName: "F",
             DisplayName: "المكون السادس (F)",
             DisplayNameEn: "F",
-            type: "float",
+            type: "number",
             //editableBy: "PerformanceLeader",
             security: {
                 groups: [
@@ -942,7 +942,7 @@ var Information_Form = [
             InternalName: "G",
             DisplayName: "المكون السابع (G)",
             DisplayNameEn: "G",
-            type: "float",
+            type: "number",
             //editableBy: "PerformanceLeader",
             security: {
                 groups: [
@@ -954,7 +954,7 @@ var Information_Form = [
             InternalName: "Equation",
             DisplayNameEn: "Actual value",
             DisplayName: "القيمة الفعلية",
-            type: "float",
+            type: "number",
             state: "disabled",
             //editableBy: "PerformanceLeader",
             security: {

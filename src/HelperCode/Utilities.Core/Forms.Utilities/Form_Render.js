@@ -351,6 +351,21 @@ window.ListInfo = {
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             });
           });
+          // $('input.numberWithComma').keyup(function (event) {
+          //   // skip for arrow keys
+          //   // format number
+          //   // debugger
+          //   $(this).val(function (index, value) {
+          //     return value.split('') // flip the entire string so that we can break every
+          //       .reverse() //   3rd digit, starting from the end
+          //       .join('')
+          //       .split(/(...)/) // split on every 3rd
+          //       .reverse()      // flip the string again, though now each group of 3 is
+          //       .join(',')      //   backwards
+          //       .replace(/,(?=,)|,$|^,/g, '') // remove extra ,
+          //       .replace(/(,|^)(\d)(\d)?(\d)?/g, '$1$4$3$2')
+          //   });
+          // });
           //hide show fields based on selection & onload
           $("[data-togglevalues]").on("change", function () {
             ListInfo.g.toggleFields($(this));
@@ -467,6 +482,7 @@ window.ListInfo = {
 
 
             }
+
             //
           } else {
             //custom
@@ -491,7 +507,10 @@ window.ListInfo = {
                 }
               })
             }
-
+            if (listkey == 'deliverables') {
+              console.log("IN NEEEEEEEEEEEEEEW")
+              ListInfo.g.DeliverablesDelivered();
+            }
             if (listkey == 'goalstrategy') {
               ListInfo.g.requiredSpillarsName()
             }
@@ -1074,7 +1093,7 @@ window.ListInfo = {
         htmlBody =
           '<div class="col-md-6 CFIELD ' + element.className + ' " ' + thistip + ' ' + hidestagesIDs + ' ' + editableBy + ' ' + showstagesIDs + '  ' + disablestagesIDs + '  ' + enablestagesIDs + '   ' + isWfhidestagesIDs + ' ' + requireOnWfTaskstagesIDs + ' ' + isWfshowstagesIDs + '  ' + isWfdisablestagesIDs + '  ' + isWfenablestagesIDs + '        data-groups="' + groups + '" style="display:' + element.display + '">' +
           '<label for="' + element.InternalName + '" ' + element.validation + '>' + displayName + '</label>' +
-          '<input ' + ToggleName + ' type="number" step="any" placeholder="' + displayName + '" ' + dynamic + ' class="form-control SPIField" id="' + element.InternalName + '" ' + element.state + ' ' + element.validation + '>' +
+          '<input ' + ToggleName + ' type="number" step="any" placeholder="' + displayName + '" ' + dynamic + ' class="form-control SPIField " id="' + element.InternalName + '" ' + element.state + ' ' + element.validation + '>' +
           '<div class="inputInfo ' + isexist + '">' + descPhrase + '</div>' +
           '</div>';
         OnSuccess(flag, htmlBody);
@@ -4411,38 +4430,6 @@ function getBase64(file) {
 }
 
 //////////////////
-window.Get_ProjectData_ByCode = {
-  onSuccess: function (sender, args) {
-    var collListItem = Get_ProjectData_ByCode.g.collListItem;
-    var listItemEnum = collListItem.getEnumerator();
-    var relatedInitCode = ''
-    while (listItemEnum.moveNext()) {
-      var oListItem = listItemEnum.get_current();
-      relatedInitCode = oListItem.get_item("RelatedInitiative") ? oListItem.get_item("RelatedInitiative") : ''
-    }
-    console.log("INSIDE INIT getPRoj")
-    debugger
-    ProjectInitiativeMilestone.init('InitiativeMilestones', relatedInitCode)
-  },
-  onError: function (sender, args) {
-    console.log(
-      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
-    );
-  },
-  init: function () {
-    var clientContext = new SP.ClientContext.get_current();
-    var oList = clientContext.get_web().get_lists().getByTitle(ListArray[0].projects);
-    var camlQuery = new SP.CamlQuery();
 
-    camlQuery.set_viewXml('<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' + PCODE + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query><RowLimit>1</RowLimit></View>');
-    Get_ProjectData_ByCode.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
-    clientContext.load(Get_ProjectData_ByCode.g.collListItem);
-    clientContext.executeQueryAsync(
-      Function.createDelegate(this, Get_ProjectData_ByCode.onSuccess),
-      Function.createDelegate(this, Get_ProjectData_ByCode.onError)
-    );
-  },
-  g: {}
-}
 
 // end  working on integration btn

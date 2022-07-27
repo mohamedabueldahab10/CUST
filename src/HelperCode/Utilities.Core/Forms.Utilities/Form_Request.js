@@ -30,7 +30,7 @@ var kpiFromYear = '',
 
 var kpiName = ''
 
-var projRelatedInit = '', initiativeDelevrableArr = [];
+var projRelatedInit = '', initiativeDelevrableArr = [], initiativeMilestoneVal = '';
 
 var relatedMainGoal = '', relatedSubGoal = '', indexTypekpi = '', relatedStrategyKpi = '';
 
@@ -391,8 +391,7 @@ window.Edit_Data_Request = {
     }
     if (listkey == 'deliverables' && PCODE) {
       var Delivered = $('#Delivered:checked').val();
-      console.log(Delivered, "ddddddddddddd")
-      debugger
+
       if (Delivered == 'yes') {
         $('#DeliveredDate').attr('required', 'required');
         $('#DeliveredDate').parent().attr('required', 'required');
@@ -482,6 +481,12 @@ window.Edit_Data_Request = {
       ProjectInitiativeDelevrable.init('InitiativeDeliverables', projRelatedInit) // to get the related delivravle initiative on ;oad the edit page
 
     }
+
+    if (listkey == 'milestones' && PCODE) {
+      initiativeMilestoneVal = oListItem.get_item('RelatedInitiativeMilestone') ? oListItem.get_item('RelatedInitiativeMilestone') : ''
+      Get_ProjectData_ByCode.init()
+    }
+
     if (isVROE) {
       if (listkey == "initiatives") {
         $('#Types').val('vision');
@@ -2906,6 +2911,9 @@ window.ProjectInitiativeMilestone = {
       );
     });
     changeResources();
+    if (isEdit) {
+      $("#RelatedInitiativeMilestone").val(initiativeMilestoneVal)
+    }
   },
   onError: function (sender, args) {
     console.log(
@@ -4628,3 +4636,37 @@ var deleteAllFileFromDoc = {
   },
 };
 
+/////////////////
+window.Get_ProjectData_ByCode = {
+  onSuccess: function (sender, args) {
+    var collListItem = Get_ProjectData_ByCode.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    var relatedInitCode = ''
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      relatedInitCode = oListItem.get_item("RelatedInitiative") ? oListItem.get_item("RelatedInitiative") : ''
+    }
+    console.log("INSIDE INIT getPRoj")
+    debugger
+    ProjectInitiativeMilestone.init('InitiativeMilestones', relatedInitCode)
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  init: function () {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle(ListArray[0].projects);
+    var camlQuery = new SP.CamlQuery();
+
+    camlQuery.set_viewXml('<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' + PCODE + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query><RowLimit>1</RowLimit></View>');
+    Get_ProjectData_ByCode.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(Get_ProjectData_ByCode.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Get_ProjectData_ByCode.onSuccess),
+      Function.createDelegate(this, Get_ProjectData_ByCode.onError)
+    );
+  },
+  g: {}
+}
