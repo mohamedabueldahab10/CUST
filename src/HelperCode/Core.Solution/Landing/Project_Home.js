@@ -380,6 +380,9 @@ var Project_Home_Info_Request = {
     },
     kFormatter: function (num) {
       return Math.abs(num) > 999 ? Math.sign(num) * ((Math.abs(num) / 1000).toFixed(1)) + 'k' : Math.sign(num) * Math.abs(num)
+    },
+    updatProject: function (startDate) {
+      $('.start-date .px-2').text(startDate)
     }
   },
 };
@@ -1646,12 +1649,14 @@ var ProgressStatus_Data_Submit = {
     ProgressStatus_Data_Submit.g.oListItem.set_item('ProgressLastUpdatedBy', SP.FieldUserValue.fromUser(UserN.LoginName));
 
     ProgressStatus_Data_Submit.g.oListItem.set_item('ProjectProgressStatus', projectprogress);
-    console.log(PlannedStartDate,"PlannedStartDate ddsfds")
-    console.log(PlannedFinishDate,"PlannedFinishDate d3dfsfd")
+    console.log(PlannedStartDate, "PlannedStartDate ddsfds")
+    console.log(PlannedFinishDate, "PlannedFinishDate d3dfsfd")
     debugger
     ProgressStatus_Data_Submit.g.oListItem.set_item('PlannedStartDate', PlannedStartDate);
     ProgressStatus_Data_Submit.g.oListItem.set_item('PlannedFinishDate', PlannedFinishDate);
 
+    var PSDate = Project_Home_Info_Request.g.dateConvert2(PlannedStartDate)
+    Project_Home_Info_Request.g.updatProject(PSDate)
     ProgressStatus_Data_Submit.g.oListItem.set_item('ScheduleProjectPercentageComplet0', ScheduleProjectPercentageComplete);
     $('.myCompletionStatus').removeAttr('data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4')
     $('.myCompletionStatus').attr('data-trans-' + projectprogress, '');
@@ -2051,7 +2056,7 @@ var EPM_Project_Data_Request = {
 
     projectlength = Math.round(PlannedFinishDate - PlannedStartDate) / (1000 * 60 * 60 * 24);
     //to calculate months only
-    console.log(projectlength,"projectlength")
+    console.log(projectlength, "projectlength")
     if (Math.trunc((projectlength / 30)) > 0) {
       months = Math.trunc((projectlength) / 30);
       duration += ' ';
