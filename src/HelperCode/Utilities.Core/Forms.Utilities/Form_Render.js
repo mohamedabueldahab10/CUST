@@ -269,9 +269,10 @@ window.ListInfo = {
             ); //remove duplicates
             MasterDetailsArrayNew = MasterDetailsArrayRequest;
             MasterDetailsArrayEdit = MasterDetailsArrayRequest;
-            if (isNew){
+            if (isNew) {
               ListInfo.g.newDetail();
-          }}
+            }
+          }
           //handle people picker inputs
           $("div[type=picker]").each(function () {
             var mp = new MyPeoplePicker();
@@ -371,7 +372,7 @@ window.ListInfo = {
             if (listkey == 'deliverables') {
               ListInfo.g.DeliverablesDelivered();
             }
-            if(listkey == 'goalstrategy'){
+            if (listkey == 'goalstrategy') {
               ListInfo.g.requiredSpillarsName()
             }
             if (listkey == 'projectcharter') {
@@ -438,7 +439,7 @@ window.ListInfo = {
               // Goal_Strategy_Info.init(relatedStrategyCode)
               // Kpi_Related_Goal.init(relatedStrategyCode, indexType)
 
-              $("select#Types").change(function(){
+              $("select#Types").change(function () {
                 var relatedStrategyCode = $('#RelatedStrategy').val()
                 var indexType = $(this).val();
                 Goal_Strategy_Info.init(relatedStrategyCode)
@@ -491,7 +492,7 @@ window.ListInfo = {
               })
             }
 
-            if(listkey == 'goalstrategy'){
+            if (listkey == 'goalstrategy') {
               ListInfo.g.requiredSpillarsName()
             }
             if (USERisWF || (UserHaveLicense == false)) {
@@ -614,7 +615,12 @@ window.ListInfo = {
 
             }
             //
-
+            //to get the milestones related to initiative that assigned to project
+            if (listkey == 'milestones' && PCODE) {
+              Get_ProjectData_ByCode.init()
+              // ProjectInitiativeMilestone.init('InitiativeMilestones', initiativeCode) //to get related initiativeMilestone
+            }
+            //
 
             New_Data_Submit.g.clickbait();
             New_Data_Submit.g.Cancel();
@@ -728,10 +734,10 @@ window.ListInfo = {
           // to handle the title change and the master details section show and hide
           if (listkey == 'initiativedeliverables') {
             deliverabeInitiativePercent.init();
-        }
-        if (listkey == 'benefitmetrics') {
-          benefitmetricsPercent.init();
-      }
+          }
+          if (listkey == 'benefitmetrics') {
+            benefitmetricsPercent.init();
+          }
           if (listkey == 'goalstrategy') {
             $("#Types").on('change', function () {
               if ($(this).val() == 'vision') {
@@ -856,7 +862,7 @@ window.ListInfo = {
     );
   },
   RenderForm: function (element, flag, OnSuccess) {
-    if(listkey == 'goalstrategy'){
+    if (listkey == 'goalstrategy') {
       ListInfo.g.requiredSpillarsName()
     }
     // console.log('render', element.InternalName);
@@ -1158,7 +1164,7 @@ window.ListInfo = {
         htmlBody =
           '<div class="col-md-6 CFIELD dateTime' + element.className + ' " ' + thistip + ' ' + hidestagesIDs + ' ' + editableBy + ' ' + showstagesIDs + '  ' + disablestagesIDs + '  ' + enablestagesIDs + '   ' + isWfhidestagesIDs + ' ' + requireOnWfTaskstagesIDs + ' ' + isWfshowstagesIDs + '  ' + isWfdisablestagesIDs + '  ' + isWfenablestagesIDs + '        data-groups="' + groups + '" style="display:' + element.display + '">' +
           '<label for="' + element.InternalName + '" ' + element.validation + '>' + displayName + '</label>' +
-          '<div ' + ToggleName + ' class="datetimeinputs"><input type="datetime-local" placeholder="' + displayName + '" ' + dynamic + ' class="form-control SPIField withTime" id="' + element.InternalName + '" ' + element.state + ' ' + element.validation + ' minimumdate="' + element.min + '" maximumdate="' + element.max + '"  max="'+max+'" min=' + min + '>' +
+          '<div ' + ToggleName + ' class="datetimeinputs"><input type="datetime-local" placeholder="' + displayName + '" ' + dynamic + ' class="form-control SPIField withTime" id="' + element.InternalName + '" ' + element.state + ' ' + element.validation + ' minimumdate="' + element.min + '" maximumdate="' + element.max + '"  max="' + max + '" min=' + min + '>' +
           '</div>' +
           '<div class="inputInfo ' + isexist + '">' + descPhrase + '</div>' +
           '</div>';
@@ -1960,13 +1966,13 @@ window.ListInfo = {
       $('.radioLabelField').change(function () {
         var Delivered = $('#Delivered:checked').val();
         if (Delivered == 'yes') {
-          $('#DeliveredDate').attr('disabled', false); 
+          $('#DeliveredDate').attr('disabled', false);
           $('#DeliveredDate').attr('required', 'required');
           $('#DeliveredDate').parent().attr('required', 'required');
           $('#DeliveredDate').prev('label').attr('required', 'required');
         } else {
           $('#DeliveredDate').val('')
-          $('#DeliveredDate').attr('disabled',true); 
+          $('#DeliveredDate').attr('disabled', true);
           $('#DeliveredDate').removeAttr('required');
           $('#DeliveredDate').parent().removeAttr('required');
           $('#DeliveredDate').prev('label').removeAttr('required');
@@ -3380,7 +3386,7 @@ var GetProject_Info = {
   onSuccess: function (sender, args) {
     if (listkey == 'deliverables') {
       deliverabePercent.init();
-  }
+    }
     var collListItem = GetProject_Info.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var PID, stage, ismultistage;
@@ -3533,196 +3539,196 @@ var GetProject_Info = {
 var deliverabePercent = {
   onSuccess: function (sender, args) {
 
-      var collListItem = deliverabePercent.g.collListItem;
-      var listItemEnum = collListItem.getEnumerator();
-      while (listItemEnum.moveNext()) {
-          var oListItem = listItemEnum.get_current();
-          debugger;
-          console.warn('weight value!!!!!!!!!',oListItem.get_item('Weight'));
-          RevenuesAmount += oListItem.get_item('Weight') || 0;
-      }
-      console.warn(RevenuesAmount);
-      deliverabePercent.g.revenueBudget();
+    var collListItem = deliverabePercent.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      debugger;
+      console.warn('weight value!!!!!!!!!', oListItem.get_item('Weight'));
+      RevenuesAmount += oListItem.get_item('Weight') || 0;
+    }
+    console.warn(RevenuesAmount);
+    deliverabePercent.g.revenueBudget();
   },
   onError: function (sender, args) {
-      console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+    console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
   },
   // Pre-initialization functions ensure scripts, SharePoint dependencies are loaded
   preinit: function () {
-      if ($('.Container').length) {
-          clearInterval(checkStatusHtml);
-          SP.SOD.executeFunc('sp.js', 'SP.ClientContext', function () {
-              deliverabePercent.init();
-          });
-      }
+    if ($('.Container').length) {
+      clearInterval(checkStatusHtml);
+      SP.SOD.executeFunc('sp.js', 'SP.ClientContext', function () {
+        deliverabePercent.init();
+      });
+    }
   },
   // The main Initialization function
   init: function () {
-      var clientContext = new SP.ClientContext.get_current();
-      var oList = clientContext.get_web().get_lists().getByTitle('Deliverables');
-      var camlQuery = new SP.CamlQuery();
-      var ReQUERY;
-      ReQUERY = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="ProjectCode" /><Value Type="Text">' + PCODE + '</Value></Eq></And></Where></Query></View>';
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle('Deliverables');
+    var camlQuery = new SP.CamlQuery();
+    var ReQUERY;
+    ReQUERY = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="ProjectCode" /><Value Type="Text">' + PCODE + '</Value></Eq></And></Where></Query></View>';
 
-      debugger;
-      camlQuery.set_viewXml(ReQUERY);
-      deliverabePercent.g.collListItem = oList.getItems(camlQuery);//declared inside object scope only
-      clientContext.load(deliverabePercent.g.collListItem);
-      clientContext.executeQueryAsync(
-          Function.createDelegate(this, deliverabePercent.onSuccess),
-          Function.createDelegate(this, deliverabePercent.onError)
-      );
+    debugger;
+    camlQuery.set_viewXml(ReQUERY);
+    deliverabePercent.g.collListItem = oList.getItems(camlQuery);//declared inside object scope only
+    clientContext.load(deliverabePercent.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, deliverabePercent.onSuccess),
+      Function.createDelegate(this, deliverabePercent.onError)
+    );
   },
   // Global variables
   g: {
-      revenueBudget: function () {
-          if ($('input#Weight').length) {
-              //clearInterval(checkWeightValueHTML);
-              RemainingBudget = 100 - RevenuesAmount;
-              var newVal;
-              var inpVal = parseInt($('input#Weight').val()) || 0;
-              // if($('input#WeightValue').val() < RemainingBudget){
-                  newVal = RemainingBudget+inpVal >=100 ? inpVal : RemainingBudget+inpVal;
-                  RemainingBudget == 100 ? $('input#Weight').attr('max', RemainingBudget) : $('input#Weight').attr('max', newVal);
-              // }
-              // else{
-              //     newVal = parseInt($('input#WeightValue').val())
-              //     $('input#WeightValue').attr('max', $('input#WeightValue').val());
-              // }
-              $('input#Weight').parent().find(' > label').append('<span data-trans-remainperc class="Resources remainpercstyle"></span><span class="remainpercstyle">' + RemainingBudget + ']</span>');
-              changeResources();
-          }
+    revenueBudget: function () {
+      if ($('input#Weight').length) {
+        //clearInterval(checkWeightValueHTML);
+        RemainingBudget = 100 - RevenuesAmount;
+        var newVal;
+        var inpVal = parseInt($('input#Weight').val()) || 0;
+        // if($('input#WeightValue').val() < RemainingBudget){
+        newVal = RemainingBudget + inpVal >= 100 ? inpVal : RemainingBudget + inpVal;
+        RemainingBudget == 100 ? $('input#Weight').attr('max', RemainingBudget) : $('input#Weight').attr('max', newVal);
+        // }
+        // else{
+        //     newVal = parseInt($('input#WeightValue').val())
+        //     $('input#WeightValue').attr('max', $('input#WeightValue').val());
+        // }
+        $('input#Weight').parent().find(' > label').append('<span data-trans-remainperc class="Resources remainpercstyle"></span><span class="remainpercstyle">' + RemainingBudget + ']</span>');
+        changeResources();
       }
+    }
   }
 };
 var deliverabeInitiativePercent = {
   onSuccess: function (sender, args) {
 
-      var collListItem = deliverabeInitiativePercent.g.collListItem;
-      var listItemEnum = collListItem.getEnumerator();
-      while (listItemEnum.moveNext()) {
-          var oListItem = listItemEnum.get_current();
-          debugger;
-          console.warn('weight value!!!!!!!!!',oListItem.get_item('Weight'));
-          RevenuesAmountInit += oListItem.get_item('Weight') || 0;
-      }
-      console.warn(RevenuesAmountInit);
-      deliverabeInitiativePercent.g.revenueBudget();
+    var collListItem = deliverabeInitiativePercent.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      debugger;
+      console.warn('weight value!!!!!!!!!', oListItem.get_item('Weight'));
+      RevenuesAmountInit += oListItem.get_item('Weight') || 0;
+    }
+    console.warn(RevenuesAmountInit);
+    deliverabeInitiativePercent.g.revenueBudget();
   },
   onError: function (sender, args) {
-      console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+    console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
   },
   // Pre-initialization functions ensure scripts, SharePoint dependencies are loaded
   preinit: function () {
-      if ($('.Container').length) {
-          clearInterval(checkStatusHtml);
-          SP.SOD.executeFunc('sp.js', 'SP.ClientContext', function () {
-              deliverabeInitiativePercent.init();
-          });
-      }
+    if ($('.Container').length) {
+      clearInterval(checkStatusHtml);
+      SP.SOD.executeFunc('sp.js', 'SP.ClientContext', function () {
+        deliverabeInitiativePercent.init();
+      });
+    }
   },
   // The main Initialization function
   init: function () {
-      var clientContext = new SP.ClientContext.get_current();
-      var oList = clientContext.get_web().get_lists().getByTitle('InitiativeDeliverables');
-      var camlQuery = new SP.CamlQuery();
-      var ReQUERY;
-      ReQUERY = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + ICODE + '</Value></Eq></And></Where></Query></View>';
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle('InitiativeDeliverables');
+    var camlQuery = new SP.CamlQuery();
+    var ReQUERY;
+    ReQUERY = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + ICODE + '</Value></Eq></And></Where></Query></View>';
 
-      debugger;
-      camlQuery.set_viewXml(ReQUERY);
-      deliverabeInitiativePercent.g.collListItem = oList.getItems(camlQuery);//declared inside object scope only
-      clientContext.load(deliverabeInitiativePercent.g.collListItem);
-      clientContext.executeQueryAsync(
-          Function.createDelegate(this, deliverabeInitiativePercent.onSuccess),
-          Function.createDelegate(this, deliverabeInitiativePercent.onError)
-      );
+    debugger;
+    camlQuery.set_viewXml(ReQUERY);
+    deliverabeInitiativePercent.g.collListItem = oList.getItems(camlQuery);//declared inside object scope only
+    clientContext.load(deliverabeInitiativePercent.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, deliverabeInitiativePercent.onSuccess),
+      Function.createDelegate(this, deliverabeInitiativePercent.onError)
+    );
   },
   // Global variables
   g: {
-      revenueBudget: function () {
-          if ($('input#Weight').length) {
-              //clearInterval(checkWeightValueHTML);
-              RemainingBudget = 100 - RevenuesAmountInit;
-              var newVal;
-              var inpVal = parseInt($('input#Weight').val()) || 0;
-              // if($('input#WeightValue').val() < RemainingBudget){
-                  newVal = RemainingBudget+inpVal >=100 ? inpVal : RemainingBudget+inpVal;
-                  RemainingBudget == 100 ? $('input#Weight').attr('max', RemainingBudget) : $('input#Weight').attr('max', newVal);
-              // }
-              // else{
-              //     newVal = parseInt($('input#WeightValue').val())
-              //     $('input#WeightValue').attr('max', $('input#WeightValue').val());
-              // }
-              $('input#Weight').parent().find(' > label').append('<span data-trans-remainperc class="Resources remainpercstyle"></span><span class="remainpercstyle">' + RemainingBudget + ']</span>');
-              changeResources();
-          }
+    revenueBudget: function () {
+      if ($('input#Weight').length) {
+        //clearInterval(checkWeightValueHTML);
+        RemainingBudget = 100 - RevenuesAmountInit;
+        var newVal;
+        var inpVal = parseInt($('input#Weight').val()) || 0;
+        // if($('input#WeightValue').val() < RemainingBudget){
+        newVal = RemainingBudget + inpVal >= 100 ? inpVal : RemainingBudget + inpVal;
+        RemainingBudget == 100 ? $('input#Weight').attr('max', RemainingBudget) : $('input#Weight').attr('max', newVal);
+        // }
+        // else{
+        //     newVal = parseInt($('input#WeightValue').val())
+        //     $('input#WeightValue').attr('max', $('input#WeightValue').val());
+        // }
+        $('input#Weight').parent().find(' > label').append('<span data-trans-remainperc class="Resources remainpercstyle"></span><span class="remainpercstyle">' + RemainingBudget + ']</span>');
+        changeResources();
       }
+    }
   }
 };
 var benefitmetricsPercent = {
   onSuccess: function (sender, args) {
 
-      var collListItem = benefitmetricsPercent.g.collListItem;
-      var listItemEnum = collListItem.getEnumerator();
-      while (listItemEnum.moveNext()) {
-          var oListItem = listItemEnum.get_current();
-          debugger;
-          console.warn('weight value!!!!!!!!!',oListItem.get_item('Weight'));
-          RevenuesAmount += oListItem.get_item('Weight') || 0;
-      }
-      console.warn(RevenuesAmount);
-      benefitmetricsPercent.g.revenueBudget();
+    var collListItem = benefitmetricsPercent.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      debugger;
+      console.warn('weight value!!!!!!!!!', oListItem.get_item('Weight'));
+      RevenuesAmount += oListItem.get_item('Weight') || 0;
+    }
+    console.warn(RevenuesAmount);
+    benefitmetricsPercent.g.revenueBudget();
   },
   onError: function (sender, args) {
-      console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+    console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
   },
   // Pre-initialization functions ensure scripts, SharePoint dependencies are loaded
   preinit: function () {
-      if ($('.Container').length) {
-          clearInterval(checkStatusHtml);
-          SP.SOD.executeFunc('sp.js', 'SP.ClientContext', function () {
-              benefitmetricsPercent.init();
-          });
-      }
+    if ($('.Container').length) {
+      clearInterval(checkStatusHtml);
+      SP.SOD.executeFunc('sp.js', 'SP.ClientContext', function () {
+        benefitmetricsPercent.init();
+      });
+    }
   },
   // The main Initialization function
   init: function () {
-      var clientContext = new SP.ClientContext.get_current();
-      var oList = clientContext.get_web().get_lists().getByTitle('BenefitMetrics');
-      var camlQuery = new SP.CamlQuery();
-      var ReQUERY;
-      ReQUERY = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + ICODE + '</Value></Eq></And></Where></Query></View>';
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle('BenefitMetrics');
+    var camlQuery = new SP.CamlQuery();
+    var ReQUERY;
+    ReQUERY = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + ICODE + '</Value></Eq></And></Where></Query></View>';
 
-      debugger;
-      camlQuery.set_viewXml(ReQUERY);
-      benefitmetricsPercent.g.collListItem = oList.getItems(camlQuery);//declared inside object scope only
-      clientContext.load(benefitmetricsPercent.g.collListItem);
-      clientContext.executeQueryAsync(
-          Function.createDelegate(this, benefitmetricsPercent.onSuccess),
-          Function.createDelegate(this, benefitmetricsPercent.onError)
-      );
+    debugger;
+    camlQuery.set_viewXml(ReQUERY);
+    benefitmetricsPercent.g.collListItem = oList.getItems(camlQuery);//declared inside object scope only
+    clientContext.load(benefitmetricsPercent.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, benefitmetricsPercent.onSuccess),
+      Function.createDelegate(this, benefitmetricsPercent.onError)
+    );
   },
   // Global variables
   g: {
-      revenueBudget: function () {
-          if ($('input#Weight').length) {
-              //clearInterval(checkWeightValueHTML);
-              RemainingBudget = 100 - RevenuesAmount;
-              var newVal;
-              var inpVal = parseInt($('input#Weight').val()) || 0;
-              // if($('input#WeightValue').val() < RemainingBudget){
-                  newVal = RemainingBudget+inpVal >=100 ? inpVal : RemainingBudget+inpVal;
-                  RemainingBudget == 100 ? $('input#Weight').attr('max', RemainingBudget) : $('input#Weight').attr('max', newVal);
-              // }
-              // else{
-              //     newVal = parseInt($('input#WeightValue').val())
-              //     $('input#WeightValue').attr('max', $('input#WeightValue').val());
-              // }
-              $('input#Weight').parent().find(' > label').append('<span data-trans-remainperc class="Resources remainpercstyle"></span><span class="remainpercstyle">' + RemainingBudget + ']</span>');
-              changeResources();
-          }
+    revenueBudget: function () {
+      if ($('input#Weight').length) {
+        //clearInterval(checkWeightValueHTML);
+        RemainingBudget = 100 - RevenuesAmount;
+        var newVal;
+        var inpVal = parseInt($('input#Weight').val()) || 0;
+        // if($('input#WeightValue').val() < RemainingBudget){
+        newVal = RemainingBudget + inpVal >= 100 ? inpVal : RemainingBudget + inpVal;
+        RemainingBudget == 100 ? $('input#Weight').attr('max', RemainingBudget) : $('input#Weight').attr('max', newVal);
+        // }
+        // else{
+        //     newVal = parseInt($('input#WeightValue').val())
+        //     $('input#WeightValue').attr('max', $('input#WeightValue').val());
+        // }
+        $('input#Weight').parent().find(' > label').append('<span data-trans-remainperc class="Resources remainpercstyle"></span><span class="remainpercstyle">' + RemainingBudget + ']</span>');
+        changeResources();
       }
+    }
   }
 };
 // var GetStage_Info = {
@@ -4404,5 +4410,39 @@ function getBase64(file) {
   };
 }
 
+//////////////////
+window.Get_ProjectData_ByCode = {
+  onSuccess: function (sender, args) {
+    var collListItem = Get_ProjectData_ByCode.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    var relatedInitCode = ''
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      relatedInitCode = oListItem.get_item("RelatedInitiative") ? oListItem.get_item("RelatedInitiative") : ''
+    }
+    console.log("INSIDE INIT getPRoj")
+    debugger
+    ProjectInitiativeMilestone.init('InitiativeMilestones', relatedInitCode)
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  init: function () {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle(ListArray[0].projects);
+    var camlQuery = new SP.CamlQuery();
+
+    camlQuery.set_viewXml('<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' + PCODE + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query><RowLimit>1</RowLimit></View>');
+    Get_ProjectData_ByCode.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(Get_ProjectData_ByCode.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Get_ProjectData_ByCode.onSuccess),
+      Function.createDelegate(this, Get_ProjectData_ByCode.onError)
+    );
+  },
+  g: {}
+}
 
 // end  working on integration btn

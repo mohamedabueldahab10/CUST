@@ -381,8 +381,10 @@ var Project_Home_Info_Request = {
     kFormatter: function (num) {
       return Math.abs(num) > 999 ? Math.sign(num) * ((Math.abs(num) / 1000).toFixed(1)) + 'k' : Math.sign(num) * Math.abs(num)
     },
-    updatProject: function (startDate) {
+    updatProject: function (startDate, endDate, schedualPercentage) {
       $('.start-date .px-2').text(startDate)
+      $('.end-date .px-2').text(endDate)
+      $('.black.actual-complete-val').text(schedualPercentage + '%')
     }
   },
 };
@@ -1655,12 +1657,18 @@ var ProgressStatus_Data_Submit = {
     ProgressStatus_Data_Submit.g.oListItem.set_item('PlannedStartDate', PlannedStartDate);
     ProgressStatus_Data_Submit.g.oListItem.set_item('PlannedFinishDate', PlannedFinishDate);
 
-    var PSDate = Project_Home_Info_Request.g.dateConvert2(PlannedStartDate)
-    Project_Home_Info_Request.g.updatProject(PSDate)
+
     ProgressStatus_Data_Submit.g.oListItem.set_item('ScheduleProjectPercentageComplet0', ScheduleProjectPercentageComplete);
     $('.myCompletionStatus').removeAttr('data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4')
     $('.myCompletionStatus').attr('data-trans-' + projectprogress, '');
 
+
+
+    var PSDate = Project_Home_Info_Request.g.dateConvert2(PlannedStartDate)
+    var PEDate = Project_Home_Info_Request.g.dateConvert2(PlannedFinishDate)
+    var schedualPercentage = ScheduleProjectPercentageComplete ? ScheduleProjectPercentageComplete : 0
+
+    Project_Home_Info_Request.g.updatProject(PSDate, PEDate, schedualPercentage)
     //
     changeResources();
     //

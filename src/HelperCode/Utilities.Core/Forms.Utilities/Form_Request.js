@@ -2887,7 +2887,7 @@ window.ProjectInitiativeMilestone = {
       });
     }
 
-    $("#RelatedInitiativeMilestone").prop("disabled", false);
+    // $("#RelatedInitiativeMilestone").prop("disabled", false);
 
 
     $("#RelatedInitiativeMilestone").html(
@@ -4627,3 +4627,4 @@ var deleteAllFileFromDoc = {
     // console.log('Request failed with error message');
   },
 };
+
