@@ -219,15 +219,15 @@ var Project_Home_Info_Request = {
         '</div>' +
         //
         '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#" style="display:none !important">' +
-        '<h4 data-trans-pattr57 class="black Resources d-flex mx-2" style="display:none !important"></h4>' +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        '<span class="des-13"><span data-trans-pattr6 class="Resources state-val"></span></span>' +
-        '<h4 class="black"></h4>' + //
-        '</div>' +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        '<span class="des-13"><span data-trans-pattr7 class="Resources complition-val"></span></span>' +
-        '<h4 class="black"></h4>' + //
-        '</div>' +
+        '<h4 data-trans-pattr57 class="black Resources d-flex mx-2"></h4>' +
+        // '<div class="d-inline-flex flex-column mx-2">' +
+        // '<span class="des-13"><span data-trans-pattr6 class="Resources state-val"></span></span>' +
+        // '<h4 class="black"></h4>' + //
+        // '</div>' +
+        // '<div class="d-inline-flex flex-column mx-2">' +
+        // '<span class="des-13"><span data-trans-pattr7 class="Resources complition-val"></span></span>' +
+        // '<h4 class="black"></h4>' + //
+        // '</div>' +
         '<div class="d-inline-flex flex-column mx-2 ' + projectprogress + '">' +
         '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val"></span></span>' +
         '<h4 data-trans-' + projectprogress + ' class="black Resources myCompletionStatus statuscolor' + projectprogress + '"></h4>' + //
@@ -1630,27 +1630,27 @@ var ProgressStatus_Data_Submit = {
     var today = now.getFullYear() + "-" + (month) + "-" + (day);
     today = (!today) ? '' : [today.slice(5, 10), today.slice(0, 4)].join('/').replace('-', '/');
 
-    //calculation bussiness for Project Progress Status
-    var differenceBetweenDelivrablesPercet = plannedImplementationRate - actualImplementationRate
+    // calculation bussiness for Project Progress Status
+    // var differenceBetweenDelivrablesPercet = plannedImplementationRate - actualImplementationRate
+    // //
+    // if (differenceBetweenDelivrablesPercet < 0) {
+    //   projectprogress = 'stat4'; // advance
+    // } else if (differenceBetweenDelivrablesPercet == 0) {
+    //   projectprogress = 'stat3'; // in progress
+    // } else if (differenceBetweenDelivrablesPercet >= 1 && differenceBetweenDelivrablesPercet <= 10) {
+    //   projectprogress = 'stat2'; // late
+    // } else if (differenceBetweenDelivrablesPercet > 10) {
+    //   projectprogress = 'stat1'; // too late
+    // }
 
-    // console.log(differenceBetweenDelivrablesPercet, "differenceBetweenDelivrablesPercet ")
-    //
-    if (differenceBetweenDelivrablesPercet < 0) {
-      projectprogress = 'stat4'; // advance
-    } else if (differenceBetweenDelivrablesPercet == 0) {
-      projectprogress = 'stat3'; // in progress
-    } else if (differenceBetweenDelivrablesPercet >= 1 && differenceBetweenDelivrablesPercet <= 10) {
-      projectprogress = 'stat2'; // late
-    } else if (differenceBetweenDelivrablesPercet > 10) {
-      projectprogress = 'stat1'; // too late
-    }
+
     if (today) {
       $('.ProgressDate').text(today);
       ProgressStatus_Data_Submit.g.oListItem.set_item('ProgressLastModifiedDate', today);
     }
     ProgressStatus_Data_Submit.g.oListItem.set_item('ProgressLastUpdatedBy', SP.FieldUserValue.fromUser(UserN.LoginName));
 
-    ProgressStatus_Data_Submit.g.oListItem.set_item('ProjectProgressStatus', projectprogress);
+    // ProgressStatus_Data_Submit.g.oListItem.set_item('ProjectProgressStatus', projectprogress);
     console.log(PlannedStartDate, "PlannedStartDate ddsfds")
     console.log(PlannedFinishDate, "PlannedFinishDate d3dfsfd")
     debugger
@@ -1660,13 +1660,42 @@ var ProgressStatus_Data_Submit = {
 
     ProgressStatus_Data_Submit.g.oListItem.set_item('ScheduleProjectPercentageComplet0', ScheduleProjectPercentageComplete);
     $('.myCompletionStatus').removeAttr('data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4')
-    $('.myCompletionStatus').attr('data-trans-' + projectprogress, '');
+
 
 
 
     var PSDate = Project_Home_Info_Request.g.dateConvert2(PlannedStartDate)
     var PEDate = Project_Home_Info_Request.g.dateConvert2(PlannedFinishDate)
     var schedualPercentage = ScheduleProjectPercentageComplete ? ScheduleProjectPercentageComplete : 0
+
+
+
+    //////////////////////
+    var timePlannedStartDate = PlannedStartDate.getTime()
+    var timeCurrentDate = now.getTime()
+
+    var differenceTime = timePlannedStartDate - timeCurrentDate
+
+    var totalDays = Math.floor((differenceTime) / (24 * 3600 * 1000));
+
+    var plannedPercentage = 50
+
+    var differencePercentage = schedualPercentage - plannedPercentage
+    if (differencePercentage <= 5) {
+      projectprogress = 'stat3'
+    } else if (differencePercentage > 5 && differencePercentage <= 15) {
+      projectprogress = 'stat2';
+    } else if(differencePercentage > 15) {
+      projectprogress = 'stat1'
+    }
+
+    ProgressStatus_Data_Submit.g.oListItem.set_item('ProjectProgressStatus', projectprogress);
+    $('.myCompletionStatus').attr('data-trans-' + projectprogress, '');
+
+
+    console.log(PlannedStartDate.getTime(), "PlannedStartDate PlannedStartDate")
+    console.log(totalDays, "totalDays totalDays totalDays")
+    ////////////////////
 
     Project_Home_Info_Request.g.updatProject(PSDate, PEDate, schedualPercentage)
     //
