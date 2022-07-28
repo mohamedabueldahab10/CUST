@@ -17,8 +17,10 @@ var ActualBudget = 0,
   expiredDeliverablesArrayPercent = [],
   ExpDeliverablesarray = [],
   FutDeliverablesarray = [],
-  projectprogress, ScheduleSource, ProjectSPID, isDelDone = 'disabled';
+  projectprogress, listProjectProgress, ScheduleSource, ProjectSPID, isDelDone = 'disabled';
 var years, months, days, duration = '', onLoad = true;
+
+var getBaseLineStart = '', getBaseLineDuration = '';
 
 window.fullphasename;
 
@@ -181,6 +183,7 @@ var Project_Home_Info_Request = {
       // phasename = phasename.join(' ') || No_Data,
       fullphasename = oListItem.get_item('Phase') || No_Data;
       projectprogress = oListItem.get_item('ProjectProgressStatus') || No_Data;
+      listProjectProgress = oListItem.get_item('ProjectProgressStatus') || No_Data
       card1.push('<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
         '<div class="d-inline-flex flex-row align-items-center">' +
         '<span class="icon-user lg d-inline-flex align-items-center text-center">' + // circlecolor' + projectprogress + ' to change the circle color depends on status
@@ -218,8 +221,8 @@ var Project_Home_Info_Request = {
         '</div>' +
         '</div>' +
         //
-        '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#" style="display:none !important">' +
-        '<h4 data-trans-pattr57 class="black Resources d-flex mx-2"></h4>' +
+        '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
+        '<h4 data-trans-pattr57 class="black Resources d-flex mx-2" style="display:none !important"></h4>' +
         // '<div class="d-inline-flex flex-column mx-2">' +
         // '<span class="des-13"><span data-trans-pattr6 class="Resources state-val"></span></span>' +
         // '<h4 class="black"></h4>' + //
@@ -310,7 +313,7 @@ var Project_Home_Info_Request = {
     if (fullphasename == "P3") {
       // $('.navbar.page-nav.px-5').append('<div class="closebtn"><button style="float: left;color:White;text-align:center;background: #853232;" class="btn pop-green close-project" style="float: left;font-size: 17px;" type="button" onclick="ProjectClosure_Submit.g.closureappend()"><span data-trans-closeproject class="Resources"></span></button></div>');
     }
-    // EPM_Project_Data_Request.preinit(); //to avoid the update progress btn ti triggered by init the page
+
     //calling other data
     Issues_Info_Request.init();
     Risks_Info_Request.init();
@@ -1651,9 +1654,7 @@ var ProgressStatus_Data_Submit = {
     ProgressStatus_Data_Submit.g.oListItem.set_item('ProgressLastUpdatedBy', SP.FieldUserValue.fromUser(UserN.LoginName));
 
     // ProgressStatus_Data_Submit.g.oListItem.set_item('ProjectProgressStatus', projectprogress);
-    console.log(PlannedStartDate, "PlannedStartDate ddsfds")
-    console.log(PlannedFinishDate, "PlannedFinishDate d3dfsfd")
-    debugger
+
     ProgressStatus_Data_Submit.g.oListItem.set_item('PlannedStartDate', PlannedStartDate);
     ProgressStatus_Data_Submit.g.oListItem.set_item('PlannedFinishDate', PlannedFinishDate);
 
@@ -1669,29 +1670,48 @@ var ProgressStatus_Data_Submit = {
     var schedualPercentage = ScheduleProjectPercentageComplete ? ScheduleProjectPercentageComplete : 0
 
 
-
     //////////////////////
-    var timePlannedStartDate = PlannedStartDate.getTime()
+    console.log(getBaseLineStart, "getBaseLineStart")
+    console.log(getBaseLineDuration, "getBaseLineDuration")
+    debugger
+    var timeBaseLineStartDate = 0
+    var plannedPercentage = 0
+
+    if (getBaseLineDuration) {
+      getBaseLineDuration = Number(getBaseLineDuration.split("d").join(""))
+    }
+ 
+    if (getBaseLineStart) {
+      timeBaseLineStartDate = getBaseLineStart.getTime()
+    }
+
     var timeCurrentDate = now.getTime()
 
-    var differenceTime = timePlannedStartDate - timeCurrentDate
+    var differenceTime = timeCurrentDate - timeBaseLineStartDate
 
     var totalDays = Math.floor((differenceTime) / (24 * 3600 * 1000));
 
-    var plannedPercentage = 50
+  
+    if (getBaseLineDuration) {
+      plannedPercentage = totalDays / getBaseLineDuration
+    }
+
 
     var differencePercentage = schedualPercentage - plannedPercentage
+
     if (differencePercentage <= 5) {
       projectprogress = 'stat3'
     } else if (differencePercentage > 5 && differencePercentage <= 15) {
       projectprogress = 'stat2';
-    } else if(differencePercentage > 15) {
+    } else if (differencePercentage > 15) {
       projectprogress = 'stat1'
     }
 
+    $('.myCompletionStatus').removeClass('statuscolor' + listProjectProgress);
     ProgressStatus_Data_Submit.g.oListItem.set_item('ProjectProgressStatus', projectprogress);
     $('.myCompletionStatus').attr('data-trans-' + projectprogress, '');
 
+    $('.myCompletionStatus').addClass('statuscolor' + projectprogress);
 
     console.log(PlannedStartDate.getTime(), "PlannedStartDate PlannedStartDate")
     console.log(totalDays, "totalDays totalDays totalDays")
@@ -1739,7 +1759,12 @@ var GetProject_Tasks = {
     // Register the request for information that you want to run on the server.
     // This call includes an optional "Include" parameter to request fields
 
+
+    //Add baseline start and base line duration tp handle the project status
+
     GetProject_Tasks.g.projContext.load(GetProject_Tasks.g.tasks, 'Include(Id, Name, Start, Finish, IsMilestone, IsSummary, ScheduledStart, PercentComplete, OutlineLevel, Duration)');
+
+    // GetProject_Tasks.g.projContext.load(GetProject_Tasks.g.tasks);
     // Run the request on the server.
     GetProject_Tasks.g.projContext.executeQueryAsync(GetProject_Tasks.onSuccess, GetProject_Tasks.onError);
   },
@@ -1748,12 +1773,16 @@ var GetProject_Tasks = {
     var listItemEnum = GetProject_Tasks.g.tasks.getEnumerator(),
       epmTask_Html = [],
       bgclass;
+
     while (listItemEnum.moveNext()) {
       var Task = listItemEnum.get_current();
       var Task_isSummary = Task.get_isSummary();
       var Task_isMilestone = Task.get_isMilestone();
       var Task_isParent = Task.get_outlineLevel() == 1 ? true : false;
       var Task_Duration = Task.get_duration();
+
+
+
       console.log(Task.get_outlineLevel());
       if (Task_isSummary && Task_isParent && Task_Duration != '0d') {
         var Task_ID = Task.get_id().ToSerialized(),
@@ -2067,10 +2096,14 @@ var EPM_Project_Data_Request = {
   },
   onSuccess: function (sender, args) {
     duration = '';
+
+
     ScheduleProjectPercentageComplete = oProjectsItem.get_percentComplete();
+
 
     PlannedStartDate = Project_Home_Info_Request.g.dateConvert(oProjectsItem.get_startDate());
     PlannedFinishDate = Project_Home_Info_Request.g.dateConvert(oProjectsItem.get_finishDate());
+
 
     //to formate the date when use english and arabic languages // the correct one year-month-day
     if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
@@ -2139,8 +2172,55 @@ var EPM_Project_Data_Request = {
     //     duration += isArabic ? days + 'يوم' : days + ' Day ';
     // }
     $('.project-delivery-info .d-flex:nth-child(1) > span:nth-child(2)').text(duration);
+
+    EPM_Project_Summery_Task.preinit()
+
     if (!onLoad) ProgressStatus_Data_Submit.init();
+    // ProgressStatus_Data_Submit.init();
     onLoad = false;
+  },
+  // Global variables
+  g: {}
+};
+
+
+////////////////////////////////
+
+var EPM_Project_Summery_Task = {
+  preinit: function () {
+    SP.SOD.registerSod('PS.ProjectContext', SP.Utilities.Utility.getLayoutsPageUrl('ps.js'));
+    SP.SOD.loadMultiple(['PS.ProjectContext'], EPM_Project_Summery_Task.init);
+  },
+  // The main Initialization function
+  init: function () {
+
+    var projectContext = PS.ProjectContext.get_current();
+    var oProjects = projectContext.get_projects();
+    EPM_Project_Summery_Task.g.oProjectsItem = oProjects.getById(User_ProjUID); //declared inside object scope only
+
+    oProjectsItem = EPM_Project_Summery_Task.g.oProjectsItem;
+
+    EPM_Project_Summery_Task.g.testDuration = oProjectsItem.get_projectSummaryTask()
+
+    projectContext.load(EPM_Project_Summery_Task.g.testDuration);
+
+    // projectContext.load(EPM_Project_Summery_Task.g.oProjectsItem);
+    projectContext.executeQueryAsync(
+      Function.createDelegate(this, EPM_Project_Summery_Task.onSuccess),
+      Function.createDelegate(this, EPM_Project_Summery_Task.onError)
+    );
+  },
+  onError: function (sender, args) {
+    console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+  },
+  onSuccess: function (sender, args) {
+
+
+    getBaseLineStart = oProjectsItem.get_projectSummaryTask().get_baselineStart()
+    getBaseLineDuration = oProjectsItem.get_projectSummaryTask().get_baselineDuration()
+
+    console.log(getBaseLineDuration, "oProjectsItem getBaseLineDuration")
+
   },
   // Global variables
   g: {}
