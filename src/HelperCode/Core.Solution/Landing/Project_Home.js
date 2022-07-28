@@ -1660,7 +1660,7 @@ var ProgressStatus_Data_Submit = {
 
 
     ProgressStatus_Data_Submit.g.oListItem.set_item('ScheduleProjectPercentageComplet0', ScheduleProjectPercentageComplete);
-    $('.myCompletionStatus').removeAttr('data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4')
+    $('.myCompletionStatus').removeAttr('data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4 data-trans-stat5')
 
 
 
@@ -1680,7 +1680,7 @@ var ProgressStatus_Data_Submit = {
     if (getBaseLineDuration) {
       getBaseLineDuration = Number(getBaseLineDuration.split("d").join(""))
     }
- 
+
     if (getBaseLineStart) {
       timeBaseLineStartDate = getBaseLineStart.getTime()
     }
@@ -1691,20 +1691,30 @@ var ProgressStatus_Data_Submit = {
 
     var totalDays = Math.floor((differenceTime) / (24 * 3600 * 1000));
 
-  
+
     if (getBaseLineDuration) {
       plannedPercentage = totalDays / getBaseLineDuration
+
+      plannedPercentage = Number(plannedPercentage.toFixed(2))
     }
 
 
-    var differencePercentage = schedualPercentage - plannedPercentage
+    var differencePercentage =  plannedPercentage - schedualPercentage
 
-    if (differencePercentage <= 5) {
-      projectprogress = 'stat3'
-    } else if (differencePercentage > 5 && differencePercentage <= 15) {
-      projectprogress = 'stat2';
-    } else if (differencePercentage > 15) {
-      projectprogress = 'stat1'
+    console.log(plannedPercentage, "plannedPercentage")
+    console.log(schedualPercentage, "schedualPercentage")
+    console.log(differencePercentage, "differencePercentage")
+    debugger
+    if (!getBaseLineDuration) {
+      projectprogress = 'stat5'
+    } else {
+      if (differencePercentage <= 5) {
+        projectprogress = 'stat3'
+      } else if (differencePercentage > 5 && differencePercentage <= 15) {
+        projectprogress = 'stat2';
+      } else if (differencePercentage > 15) {
+        projectprogress = 'stat1'
+      }
     }
 
     $('.myCompletionStatus').removeClass('statuscolor' + listProjectProgress);

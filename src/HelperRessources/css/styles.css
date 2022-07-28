@@ -4125,6 +4125,11 @@ h4.black.Resources.myCompletionStatus.statuscolorstat3,
     color: #70AD47 !important;
 }
 
+h4.black.Resources.myCompletionStatus.statuscolorstat5,
+.stat3 h4.Resources {
+    color: #000 !important;
+}
+
 h4.black.Resources.myCompletionStatus.statuscolorstat4,
 .stat4 h4.Resources {
     color: #5B9BD5 !important;
