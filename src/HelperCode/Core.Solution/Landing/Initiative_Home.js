@@ -232,7 +232,7 @@ var initiativeHomeInfo_Request = {
 
         card1.push('<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
           '<div class="d-inline-flex flex-row align-items-center">' +
-          '<span class="icon-user lg d-inline-flex align-items-center text-center">' + // add circlecolor' + initiativeprogress + ' to change the color of circle as status color
+          '<span class="icon-user lg d-inline-flex align-items-center text-center handlecircle circlecolor' + initiativeprogress + '">' + // add circlecolor' + initiativeprogress + ' to change the color of circle as status color
           // '<span class="user-name lg w-100">' + abrinitiativename + '</span>' +
           '</span>' +
           '<div class="d-inline-flex flex-column mx-3">' +
@@ -1349,7 +1349,7 @@ var ProgressStatus_Data_Submit = {
 
 
     $('.myCompletionStatus').removeClass('statuscolor' + listInitiativeProgress);
-
+    $('.handlecircle').removeClass('circlecolor' + listInitiativeProgress)
     ProgressStatus_Data_Submit.g.oListItem.set_item('InitiativeProgressStatus', initiativeprogress);
 debugger
 
@@ -1357,6 +1357,7 @@ debugger
     $('.black.myCompletionStatus').text(initiativeprogress)
 
     $('.myCompletionStatus').addClass('statuscolor' + initiativeprogress);
+    $('.handlecircle').addClass('circlecolor' + initiativeprogress)
     // to update the percentage of initiative
 
     ProgressStatus_Data_Submit.g.oListItem.set_item('PlannedPercentageCompleted', plannedImplementationRate)

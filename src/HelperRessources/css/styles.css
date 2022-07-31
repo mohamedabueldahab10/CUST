@@ -4112,6 +4112,12 @@ a.taskButton:hover {
 .circlecolorstat4 {
     background: rgba(0,0,255,255) !important;
 }
+.circlecolorstat5 {
+    background: rgba(147,139,136,255) !important;
+}
+.circlecolorstat6 {
+    background: rgba(147,139,136,255) !important;
+}
 
 h4.black.Resources.myCompletionStatus.statuscolorstat1,
 .stat1 h4.Resources {

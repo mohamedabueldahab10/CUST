@@ -186,7 +186,7 @@ var Project_Home_Info_Request = {
       listProjectProgress = oListItem.get_item('ProjectProgressStatus') || No_Data
       card1.push('<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
         '<div class="d-inline-flex flex-row align-items-center">' +
-        '<span class="icon-user lg d-inline-flex align-items-center text-center">' + // circlecolor' + projectprogress + ' to change the circle color depends on status
+        '<span class="icon-user lg d-inline-flex align-items-center text-center handlecircle circlecolor' + projectprogress + '">' + // circlecolor' + projectprogress + ' to change the circle color depends on status
         // '<span class="user-name lg w-100">' + abrprojectname + '</span>' +
         '</span>' +
         '<div class="d-inline-flex flex-column mx-3">' +
@@ -223,10 +223,10 @@ var Project_Home_Info_Request = {
         //
         '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
         '<h4 data-trans-pattr57 class="black Resources d-flex mx-2" style="display:none !important"></h4>' +
-        // '<div class="d-inline-flex flex-column mx-2">' +
-        // '<span class="des-13"><span data-trans-pattr6 class="Resources state-val"></span></span>' +
-        // '<h4 class="black"></h4>' + //
-        // '</div>' +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<span class="des-13"><span data-trans-pattr6 class="Resources state-val"></span></span>' +
+        '<h4 class="black"></h4>' + //
+        '</div>' +
         // '<div class="d-inline-flex flex-column mx-2">' +
         // '<span class="des-13"><span data-trans-pattr7 class="Resources complition-val"></span></span>' +
         // '<h4 class="black"></h4>' + //
@@ -1052,7 +1052,7 @@ var Deliverables_Info_Request = {
     // total Amount Of Weight All Expired Delevrable >> to be approved by bachar
     plannedImplementationRate = expiredDeliverablesArrayPercent.reduce((accum, item) => accum + item.expiredDelivrableWeight, 0);
 
-    $('.project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black').text(plannedImplementationRate + '%');
+    // $('.project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black').text(plannedImplementationRate + '%');
 
     $('button.updateprogress').on('click', function () {
       EPM_Project_Data_Request.preinit();
@@ -1678,7 +1678,12 @@ var ProgressStatus_Data_Submit = {
     var plannedPercentage = 0
 
     if (getBaseLineDuration) {
-      getBaseLineDuration = Number(getBaseLineDuration.split("d").join(""))
+      getBaseLineDuration = getBaseLineDuration.toString()
+      if (getBaseLineDuration.includes('d')) {
+        getBaseLineDuration = Number(getBaseLineDuration.split("d").join(""))
+      } else {
+        getBaseLineDuration = Number(getBaseLineDuration)
+      }
     }
 
     if (getBaseLineStart) {
@@ -1697,9 +1702,13 @@ var ProgressStatus_Data_Submit = {
 
       plannedPercentage = Number(plannedPercentage.toFixed(2))
     }
+    
+    console.log(plannedPercentage,"plannedPercentage")
+
+    $('.project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black').text(plannedPercentage + '%');
 
 
-    var differencePercentage =  plannedPercentage - schedualPercentage
+    var differencePercentage = plannedPercentage - schedualPercentage
 
     if (!getBaseLineDuration) {
       projectprogress = 'stat5'
@@ -1714,10 +1723,13 @@ var ProgressStatus_Data_Submit = {
     }
 
     $('.myCompletionStatus').removeClass('statuscolor' + listProjectProgress);
+    $('.handlecircle').removeClass('circlecolor' + listProjectProgress)
+
     ProgressStatus_Data_Submit.g.oListItem.set_item('ProjectProgressStatus', projectprogress);
     $('.myCompletionStatus').attr('data-trans-' + projectprogress, '');
 
     $('.myCompletionStatus').addClass('statuscolor' + projectprogress);
+    $('.handlecircle').addClass('circlecolor' + projectprogress)
 
     ////////////////////
 
@@ -2223,7 +2235,34 @@ var EPM_Project_Summery_Task = {
     getBaseLineStart = oProjectsItem.get_projectSummaryTask().get_baselineStart()
     getBaseLineDuration = oProjectsItem.get_projectSummaryTask().get_baselineDuration()
 
-    console.log(getBaseLineDuration, "oProjectsItem getBaseLineDuration")
+    var timeBaseLineStartDate = 0
+    var plannedPercentage = 0
+    var now = new Date();
+
+    if (getBaseLineDuration) {
+      getBaseLineDuration = Number(getBaseLineDuration.split("d").join(""))
+    }
+
+    if (getBaseLineStart) {
+      timeBaseLineStartDate = getBaseLineStart.getTime()
+    }
+
+    var timeCurrentDate = now.getTime()
+
+    var differenceTime = timeCurrentDate - timeBaseLineStartDate
+
+    var totalDays = Math.floor((differenceTime) / (24 * 3600 * 1000));
+
+
+    if (getBaseLineDuration) {
+      plannedPercentage = totalDays / getBaseLineDuration
+
+      plannedPercentage = Number(plannedPercentage.toFixed(2))
+    }
+    $('.project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black').text(plannedPercentage + '%');
+
+    console.log(getBaseLineDuration, "oProjectsItem ddddddddddddddddddddddddddddddddd")
+    console.log(plannedPercentage, "plannedPercentage plannedPercentagssssssssssssssssssssssssssssssssssse")
 
   },
   // Global variables
