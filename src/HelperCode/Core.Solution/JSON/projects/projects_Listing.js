@@ -33,15 +33,15 @@ var Listing_Info = [{
     inlisting: true,
     infilter: true
 },
-// {
-//     "InternalName": "ProjectProgressStatus",
-//     "DisplayName": "حالة الإنجاز",
-//     "DisplayNameEn": "Project Progress Status",
-//     "type": "text",
-//     needTrans: true,
-//     inlisting: true,
-//     infilter: true
-// },
+{
+    "InternalName": "ProjectProgressStatus",
+    "DisplayName": "حالة الإنجاز",
+    "DisplayNameEn": "Project Progress Status",
+    "type": "text",
+    needTrans: true,
+    inlisting: true,
+    infilter: true
+},
 {
     "InternalName": "Priority",
     "DisplayName": "أهمية المشروع",

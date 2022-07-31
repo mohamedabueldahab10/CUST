@@ -76,6 +76,10 @@ var BudgetLabelsEn = [
   Resources.en["cost"],
   // Resources.en["remaining"],
 ];
+
+var statusOccuresData = ['stat3', 'stat1', 'stat6', 'stat2', 'stat4']
+
+
 if (
   localStorage.getItem("lng") == null ||
   localStorage.getItem("lng") == "ar"
@@ -497,14 +501,21 @@ window.initiativeRequest = {
     ProgressStatusarray.sort();
 
     progressOccurenceObject = arrToInstanceCountObj(ProgressStatusarray);
-    progressfilterarray.forEach(function (element) {
+
+    // progressfilterarray.forEach(function (element) {
+    //   if (progressOccurenceObject[element]) {
+    //     progressOccurence.push(progressOccurenceObject[element]);
+    //   } else progressOccurence.push(0);
+    // });
+
+    statusOccuresData.forEach(function (element) {
       if (progressOccurenceObject[element]) {
         progressOccurence.push(progressOccurenceObject[element]);
       } else progressOccurence.push(0);
     });
 
     //Get Priority Name from Resources using priority code
-    progressfilterarray.forEach(function (element) {
+    statusOccuresData.forEach(function (element) {
       if (
         localStorage.getItem("lng") == null ||
         localStorage.getItem("lng") == "ar"
@@ -512,6 +523,14 @@ window.initiativeRequest = {
         ProgressName.push(Resources.ar[element]);
       } else ProgressName.push(Resources.en[element]);
     });
+    // progressfilterarray.forEach(function (element) {
+    //   if (
+    //     localStorage.getItem("lng") == null ||
+    //     localStorage.getItem("lng") == "ar"
+    //   ) {
+    //     ProgressName.push(Resources.ar[element]);
+    //   } else ProgressName.push(Resources.en[element]);
+    // });
 
     //Sort Priority
     Priorityarray.sort();
@@ -2390,15 +2409,20 @@ function handleStatusBarChart() {
   var background_3 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
   //Yellow
   var background_4 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
-  background_1.addColorStop(0, "#80cea2");
-  background_1.addColorStop(1, "#32b474");
-  background_2.addColorStop(0, "#70abb0");
-  background_2.addColorStop(1, "#5AB74C");
-  background_3.addColorStop(0, "#688393");
-  background_3.addColorStop(1, "#15425a");
-  background_4.addColorStop(0, "#EBC866");
-  background_4.addColorStop(1, "#FCD66D");
+  var background_5 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
+
+  background_1.addColorStop(0, "rgba(0,170,0,255)");
+  background_1.addColorStop(1, "rgba(0,170,0,255)");
+  background_2.addColorStop(0, "rgba(255,255,0,255)");
+  background_2.addColorStop(1, "rgba(255,255,0,255)");
+  background_3.addColorStop(0, "rgba(245,27,7,255)");
+  background_3.addColorStop(1, "rgba(245,27,7,255)");
+  background_4.addColorStop(0, "rgba(147,139,136,255)");
+  background_4.addColorStop(1, "rgba(147,139,136,255)");
+  background_5.addColorStop(0, "rgba(0,0,255,255)");
+  background_5.addColorStop(1, "rgba(0,0,255,255)");
   var BackgroundsArray = [
+    background_5,
     background_2,
     background_4,
     background_3,

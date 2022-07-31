@@ -2017,7 +2017,7 @@ window.userCalls = {
         Read_Access = ["mainkpi",
           //  "sos", 
           "Targets.aspx", "kpiequations", "MainIndicators.aspx"];
-        Edit_Access = ["Targets.aspx", "kpiequations", "MainIndicators.aspx"];
+        Edit_Access = ["Targets.aspx","mainkpi", "kpiequations", "MainIndicators.aspx"];
         Delete_Access = [];
         break;
 

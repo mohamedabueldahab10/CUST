@@ -42,7 +42,7 @@ var Information_Form = [
                 validation: "required",
                 DisplayName: "نوع المؤشر",
                 toggleValues: [
-                    { value: "sub", fields: ["SubRelatedObjective", "RelatedMainKpis","Portfolio"] }, //we can put more than 1  field
+                    { value: "sub", fields: ["SubRelatedObjective", "RelatedMainKpis", "Portfolio"] }, //we can put more than 1  field
                     { value: "main", fields: ["RelatedMainObjective"] }, //we can put more than 1  field
                     { value: "strategically", fields: ["StrategyRelatedObjective"] },
                 ],
@@ -298,7 +298,7 @@ var Information_Form = [
                 "DisplayName": "المحفظة المرتبطة",
                 "DisplayNameEn": "Portfolio",
                 "type": "lookup",
-                "ToggleName":"Portfolio",
+                "ToggleName": "Portfolio",
                 // "validation": "required",
                 //from other list:
                 "source": "Portfolio",
@@ -617,11 +617,11 @@ var Information_Form = [
                 DisplayName: "تكرار القياس",
                 type: "dropdownValues",
                 toggleValues: [
-                    { value: "monthly", fields: [ "Months"] }, //we can put more than 1  field
+                    { value: "monthly", fields: ["Months"] }, //we can put more than 1  field
                     { value: "quarter", fields: ["Quarter"] }, //we can put more than 1  field
                     { value: "midterm", fields: ["Midterms"] },
                     { value: "year", fields: ["Years"] },
-                ],state: "disabled",
+                ], state: "disabled",
                 options: {
                     choices: [
                         { display: "monthly", value: "monthly" },
@@ -632,11 +632,11 @@ var Information_Form = [
                 },
                 security: {
                     groups: [
-                        'SPM Admin','Performance Leaders', 'SPM Team', 'VRO_P', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                        'SPM Admin', 'Performance Leaders', 'SPM Team', 'VRO_P', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
                     ]
                 },
             },
-           
+
             {
                 InternalName: "ResultType",
                 DisplayNameEn: "Result Type",
@@ -728,7 +728,7 @@ var Information_Form = [
             state: "disabled",
             security: {
                 groups: [
-                    'SPM Admin', 'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
                 ]
             },
             //editableBy: "PerformanceLeader",
@@ -737,7 +737,7 @@ var Information_Form = [
             "InternalName": "Quarter",
             "DisplayNameEn": "Quarter",
             "DisplayName": "الربع",
-             ToggleName: "Quarter",
+            ToggleName: "Quarter",
             type: "dropdownValues",
             options: {
                 choices: [
@@ -746,11 +746,11 @@ var Information_Form = [
                     { display: "quarter3", value: "ActualQ3" },
                     { display: "quarter4", value: "ActualQ4" },
                 ],
-                "display":"none"
+                "display": "none"
             },
             security: {
                 groups: [
-                    'SPM Admin', 'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
                 ]
             },
         },
@@ -758,31 +758,31 @@ var Information_Form = [
             "InternalName": "Midterms",
             "DisplayNameEn": "Midterms",
             "DisplayName": "النصف السنوي",
-             ToggleName: "Midterms",
+            ToggleName: "Midterms",
             type: "dropdownValues",
             options: {
                 choices: [
                     { display: "midterm1", value: "ActualMid1" },
                     { display: "midterm2", value: "ActualMid2" },
                 ],
-                "display":"none"
+                "display": "none"
             },
-         
+
         },
         {
             "InternalName": "Years",
             "DisplayNameEn": "Years",
             "DisplayName": "السنوي",
-             ToggleName: "Years",
+            ToggleName: "Years",
             type: "dropdownValues",
             options: {
                 choices: [
                     { display: "yearly", value: "ActualY" },
                     // { display: "midterm2", value: "ActualMid2" },
                 ],
-                "display":"none"
+                "display": "none"
             },
-         
+
         },
         {
             "InternalName": "Year",
@@ -806,10 +806,10 @@ var Information_Form = [
                     '2030',
                 ]
             },
-              "validation": "required",
+            "validation": "required",
             security: {
                 groups: [
-                    'SPM Admin', 'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
                 ]
             },
         },
@@ -821,21 +821,21 @@ var Information_Form = [
             type: "dropdownValues",
             options: {
                 choices: [
-                    { display: "month1",  value: "ActualM1" },
+                    { display: "month1", value: "ActualM1" },
                     { display: "month2", value: "ActualM2" },
                     { display: "month3", value: "ActualM3" },
                     { display: "month4", value: "ActualM4" },
-                    { display: "month5",  value: "ActualM5" },
-                    { display: "month6",  value: "ActualM6" },
-                    { display: "month7",  value: "ActualM7" },
-                    { display: "month8",  value: "ActualM8" },
-                    { display: "month9",  value: "ActualM9" },
+                    { display: "month5", value: "ActualM5" },
+                    { display: "month6", value: "ActualM6" },
+                    { display: "month7", value: "ActualM7" },
+                    { display: "month8", value: "ActualM8" },
+                    { display: "month9", value: "ActualM9" },
                     { display: "month10", value: "ActualM10" },
                     { display: "month11", value: "ActualM11" },
                     { display: "month12", value: "ActualM12" },
                 ],
             },
-           "display":"none"
+            "display": "none"
         },
         {
             "InternalName": "MesureStatus",
@@ -862,7 +862,7 @@ var Information_Form = [
             },
             security: {
                 groups: [
-                    'SPM Admin', 'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                 'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
                 ]
             },
         },
@@ -874,7 +874,7 @@ var Information_Form = [
             //editableBy: "PerformanceLeader",
             security: {
                 groups: [
-                    'SPM Admin', 'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
                 ]
             },
         },
@@ -886,7 +886,7 @@ var Information_Form = [
             //editableBy: "PerformanceLeader",
             security: {
                 groups: [
-                    'SPM Admin', 'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                   'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
                 ]
             },
         },
@@ -898,7 +898,7 @@ var Information_Form = [
             //editableBy: "PerformanceLeader",
             security: {
                 groups: [
-                    'SPM Admin', 'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                   'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
                 ]
             },
         },
@@ -910,7 +910,7 @@ var Information_Form = [
             //editableBy: "PerformanceLeader",
             security: {
                 groups: [
-                    'SPM Admin', 'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                   'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
                 ]
             },
         },
@@ -922,7 +922,7 @@ var Information_Form = [
             //editableBy: "PerformanceLeader",
             security: {
                 groups: [
-                    'SPM Admin', 'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
                 ]
             },
         },
@@ -934,7 +934,7 @@ var Information_Form = [
             //editableBy: "PerformanceLeader",
             security: {
                 groups: [
-                    'SPM Admin', 'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                     'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
                 ]
             },
         },
@@ -946,7 +946,7 @@ var Information_Form = [
             //editableBy: "PerformanceLeader",
             security: {
                 groups: [
-                    'SPM Admin', 'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                   'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
                 ]
             },
         },
@@ -959,7 +959,7 @@ var Information_Form = [
             //editableBy: "PerformanceLeader",
             security: {
                 groups: [
-                    'SPM Admin', 'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
                 ]
             },
         },
@@ -971,7 +971,7 @@ var Information_Form = [
             type: "multiline",
             security: {
                 groups: [
-                    'SPM Admin', 'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
                 ]
             },
         },
@@ -992,7 +992,7 @@ var Information_Form = [
                     'SPM Admin', 'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
                 ]
             },
-            "withAddBtn":"true"
+            "withAddBtn": "true"
         }]
     }
 ];

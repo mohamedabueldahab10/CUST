@@ -30,8 +30,8 @@ if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar
 
 var projectTypeFilterQuery = '', typeClicked = 'Internal';
 
-var emptyData = require('../../../HelperRessources/img/empty-data.png');
-// var emptyData = ''
+// var emptyData = require('../../../HelperRessources/img/empty-data.png');
+var emptyData = ''
 //all data filter array
 allDataFilterArr = []
 //
@@ -507,7 +507,9 @@ window.ListingData = {
                 //First column
                 if (Field_In_Use[0].InternalName == Listing_Info[0].InternalName) {
                   if (!isTasks) {
+             
                     if (Field_In_Use[0].needTrans == true && obj[key] != No_Data) {
+                 
                       html += '<div class="d-inline-flex flex-column" style="width:25%!important">' +
                         '<h4 data-trans-' + obj[key] + ' class="acc-title d-inline-flex black Resources" style="margin:0px!important;margin-bottom:.5rem!important"></h4>';
                       if (records[i].ProjectType == 'Internal') {
@@ -534,6 +536,9 @@ window.ListingData = {
                 //Second column
                 else if (Field_In_Use[0].InternalName == Listing_Info[1].InternalName) {
                   if (!isTasks) {
+                    console.log(obj[key],"obj[key]")
+                    console.log(Field_In_Use[0],"Field_In_Use[0]")
+                    debugger
                     if (Field_In_Use[0].needTrans == true && obj[key] != No_Data) {
                       // console.log('obj[key]', obj[key]);
                       html += '<span data-trans-' + obj[key] + ' class="des-13 Resources"></span>' +
@@ -659,7 +664,7 @@ window.ListingData = {
 
                   if (Field_In_Use[0].needTrans == true && obj[key] != No_Data) {
                     var isHTML = USERPCODE && Field_In_Use[0].InternalName == "ProjectCode" ? '' :
-                      '<div class="d-inline-flex wordBreak flex-column mx-2  " style="width:20%!important" ' + PrjRelated_Behavior + '>' +
+                      '<div class="d-inline-flex wordBreak flex-column mx-2  ' + obj[key] + '  " style="width:20%!important" ' + PrjRelated_Behavior + '>' +
                       // '<h4 data-trans-' + obj[key] + ' class="text-warning Resources"></h4>' +
                       '<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
                       '<h4 data-trans-' + obj[key] + ' class="text-warning Resources"></h4>' +

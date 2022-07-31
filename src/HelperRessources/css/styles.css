@@ -4098,50 +4098,50 @@ a.taskButton:hover {
 
 
 .circlecolorstat1 {
-    background: #FF0000 !important;
+    background: rgba(245,27,7,255) !important;
 }
 
 .circlecolorstat2 {
-    background: #ED7D31 !important;
+    background: rgba(255,255,0,255) !important;
 }
 
 .circlecolorstat3 {
-    background: #70AD47 !important;
+    background: rgba(0,170,0,255) !important;
 }
 
 .circlecolorstat4 {
-    background: #5B9BD5 !important;
+    background: rgba(0,0,255,255) !important;
 }
 
 h4.black.Resources.myCompletionStatus.statuscolorstat1,
 .stat1 h4.Resources {
-    color: #FF0000 !important;
+    color: rgba(245,27,7,255) !important;
 }
 
 h4.black.Resources.myCompletionStatus.statuscolorstat2,
 .stat2 h4.Resources {
-    color: #ED7D31 !important;
+    color: rgba(255,255,0,255) !important;
 }
 
 h4.black.Resources.myCompletionStatus.statuscolorstat3,
 .stat3 h4.Resources {
-    color: #70AD47 !important;
+    color: rgba(0,170,0,255) !important;
 }
 
 h4.black.Resources.myCompletionStatus.statuscolorstat5,
-.stat3 h4.Resources {
-    color: #000 !important;
+.stat5 h4.Resources {
+    color: rgba(147,139,136,255) !important;
 }
 
 h4.black.Resources.myCompletionStatus.statuscolorstat6,
-.stat3 h4.Resources {
-    color: #808080 !important;
+.stat6 h4.Resources {
+    color: rgba(147,139,136,255) !important; 
 }
 
 
 h4.black.Resources.myCompletionStatus.statuscolorstat4,
 .stat4 h4.Resources {
-    color: #5B9BD5 !important;
+    color: rgba(0,0,255,255) !important;
 }
 
 .control-ctx.project-info-ctx.projects .project-status-info span,

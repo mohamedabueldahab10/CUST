@@ -26,6 +26,15 @@ var Listing_Info = [
 	// 	infilter: true
 	
 	// },
+	{
+		"InternalName": "InitiativeProgressStatus",
+		"DisplayName": "حالة الإنجاز",
+		"DisplayNameEn": "Initiative Progress Status",
+		"type": "text",
+		needTrans: true,
+		inlisting: true,
+		infilter: true
+	},
     {
 		"InternalName": "Types",
 		"DisplayNameEn": "Types",

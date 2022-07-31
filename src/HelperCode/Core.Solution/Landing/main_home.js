@@ -63,6 +63,9 @@ var budgetData = [];
 var axeposition;
 var BudgetLabelsAr = [Resources.ar["remaining"], Resources.ar["assignedbudget"], Resources.ar["cost"]];
 var BudgetLabelsEn = [Resources.en["assignedbudget"], Resources.en["cost"], Resources.en["remaining"]];
+
+var statusOccuresData = ['stat3', 'stat1', 'stat5', 'stat2', 'stat4']
+
 if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
     BudgetLabels = BudgetLabelsAr;
     axeposition = "right";
@@ -75,6 +78,8 @@ if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar
 } else {
     var No_Data = 'Not Found'
 }
+
+
 window.UProjects = [];
 var iconstagesm = require('../../../HelperRessources/img/icon-stage-sm.png');
 var iconstatustimesm = require('../../../HelperRessources/img/icon-status-time-sm.png');
@@ -384,20 +389,31 @@ window.Project_Info_Request = {
         //Sort Priority
         ProgressStatusarray.sort();
 
-
+        console.log(progressfilterarray, "progressfilterarray")
         progressOccurenceObject = arrToInstanceCountObj(ProgressStatusarray);
-        progressfilterarray.forEach(function (element) {
+        // progressfilterarray.forEach(function (element) {
+        //     if (progressOccurenceObject[element]) {
+        //         progressOccurence.push(progressOccurenceObject[element]);
+        //     } else progressOccurence.push(0);
+        // });
+        //////////////////////////////////////////
+        statusOccuresData.forEach(function (element) {
             if (progressOccurenceObject[element]) {
                 progressOccurence.push(progressOccurenceObject[element]);
             } else progressOccurence.push(0);
-        });
-
+        })
+        ///////////////////////
         //Get Priority Name from Resources using priority code
-        progressfilterarray.forEach(function (element) {
+        statusOccuresData.forEach(function (element) {
             if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
                 ProgressName.push(Resources.ar[element])
             } else ProgressName.push(Resources.en[element])
         });
+        // progressfilterarray.forEach(function (element) {
+        //     if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+        //         ProgressName.push(Resources.ar[element])
+        //     } else ProgressName.push(Resources.en[element])
+        // });
 
 
 
@@ -1403,7 +1419,7 @@ var Deliverables_Info_Request = {
 
 
 
-        // ProjectsOrder.init();
+        ProjectsOrder.init();
         Project_Info_Request.g.showprojectonclick();
         Invoices_Info_Request.init();
 
@@ -1894,15 +1910,31 @@ function handleStatusBarChart() {
     var background_3 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
     //Yellow
     var background_4 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
-    background_1.addColorStop(0, '#80cea2');
-    background_1.addColorStop(1, '#32b474');
-    background_2.addColorStop(0, '#70abb0');
-    background_2.addColorStop(1, '#5AB74C');
-    background_3.addColorStop(0, '#688393');
-    background_3.addColorStop(1, '#15425a');
-    background_4.addColorStop(0, '#EBC866');
-    background_4.addColorStop(1, '#FCD66D');
-    var BackgroundsArray = [background_2, background_4, background_3, background_1];
+    var background_5 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
+
+
+    // background_1.addColorStop(0, 'rgba(245,27,7,255)');
+    // background_1.addColorStop(1, 'rgba(245,27,7,255)');
+    // background_2.addColorStop(0, 'rgba(0,0,255,255)');
+    // background_2.addColorStop(1, 'rgba(0,0,255,255)');
+    // background_3.addColorStop(0, '#f00987');
+    // background_3.addColorStop(1, '#f00987');
+    // background_4.addColorStop(0, '#000');
+    // background_4.addColorStop(1, '#000');
+    // background_5.addColorStop(0, 'rgba(0,170,0,255)');
+    // background_5.addColorStop(1, 'rgba(0,170,0,255)');
+    background_1.addColorStop(0, 'rgba(0,170,0,255)');
+    background_1.addColorStop(1, 'rgba(0,170,0,255)');
+    background_2.addColorStop(0, 'rgba(255,255,0,255)');
+    background_2.addColorStop(1, 'rgba(255,255,0,255)');
+    background_3.addColorStop(0, 'rgba(245,27,7,255)');
+    background_3.addColorStop(1, 'rgba(245,27,7,255)');
+    background_4.addColorStop(0, 'rgba(147,139,136,255)');
+    background_4.addColorStop(1, 'rgba(147,139,136,255)');
+    background_5.addColorStop(0, 'rgba(0,0,255,255)');
+    background_5.addColorStop(1, 'rgba(0,0,255,255)');
+    var BackgroundsArray = [background_5,background_2, background_4, background_3, background_1];
+
     if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
         progressOccurence = progressOccurence.reverse();
         ProgressName = ProgressName.reverse();
@@ -1910,7 +1942,9 @@ function handleStatusBarChart() {
         BackgroundsArray = BackgroundsArray.reverse();
     }
 
-
+    console.log(progressOccurence, "progressOccurence")
+    console.log(BackgroundsArray, "BackgroundsArray")
+    debugger
     var ProgressNameLabels;
 
     if (_.sum(progressOccurence) == 0) {
@@ -1933,6 +1967,8 @@ function handleStatusBarChart() {
             hoverBackgroundColor: BackgroundsArray,
             //data: [33, 33, 21, 25],
             data: progressOccurence
+            // data: [2,0,3,5,157]
+
         }]
     };
     //
