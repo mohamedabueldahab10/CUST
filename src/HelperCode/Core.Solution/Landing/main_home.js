@@ -183,6 +183,7 @@ window.Project_Info_Request = {
         var Priorityarray = [];
         var ProgressStatusarray = [];
         var subsectorCodeArray = [];
+        var projectPercentageSchedual = 0;
         while (Project_Info_Request.g.listItemEnum.moveNext()) {
             var oListItem = Project_Info_Request.g.listItemEnum.get_current();
             var ScheduleProjectPercentageComplete;
@@ -192,6 +193,9 @@ window.Project_Info_Request = {
                 ActualBudget += oListItem.get_item('ActualBudget') || 0; //masroufa
                 AssignedBudget += oListItem.get_item('AssignedBudget') || 0; // total budget
                 EstimatedBudget += oListItem.get_item('EstimatedCost') || 0; //mutabakia
+
+                projectPercentageSchedual = oListItem.get_item('ScheduleProjectPercentageComplet0') || 0
+
                 numberofProjects++;
                 //projects listing
                 projectname = oListItem.get_item('Name') || No_Data;
@@ -263,7 +267,7 @@ window.Project_Info_Request = {
                     '<span class="des-13 d-flex"><img src="' + iconstagesm + '" class="h-100" data-themekey="#"><span data-trans-filter1 class="state-val mx-2 Resources"></span></span>' +
                     '<h4 class="text-warning">' + phasename + '</h4>' +
                     '</div>' +
-                    '<div style="display:none !important" class="d-inline-flex flex-column mx-2 ' + ProgressStatus + ' ">' + //deliv-status
+                    '<div class="d-inline-flex flex-column mx-2 ' + ProgressStatus + ' ">' + //deliv-status
                     // '<h4 data-trans-' + ProgressStatus + '  data-prname="' + projectcode + '" class="Resources"></h4>' +
                     '<span class="des-13 d-flex " ><img src="' + iconstatustimesm + '" class="h-100" data-themekey="#"><span data-trans-completionstatus class="complition-val mx-2 Resources"></span></span>' +
                     '<h4 data-trans-' + ProgressStatus + '  data-prname="' + projectcode + '" class="Resources"></h4>' +
@@ -303,11 +307,11 @@ window.Project_Info_Request = {
                     '</span>' +
                     '</a>' +
                     '</div>' +
-                    '<div class="d-inline-flex flex-row mx-2" style="display:none !important">' +
+                    '<div class="d-inline-flex flex-row mx-2">' +
                     '<span class="project-inner inner-data3">' +
                     '<img src="' + progress + '" class="" data-themekey="#">' +
                     '<span data-trans-CompletionPercentage class="mx-2 inner-title des-12 reg Resources"></span>' +
-                    '<span data-prname="' + projectcode + '" class="inner-val fnt-14 bold">12</span>' +
+                    '<span data-prname="' + projectcode + '" class="inner-val fnt-14 bold"> ' + projectPercentageSchedual + ' %</span>' +
                     '</span>' +
                     '</div>' +
                     '<div class="d-inline-flex flex-row mx-2">' +
@@ -1096,7 +1100,7 @@ var Risks_Info_Request = {
         // $('.Rsupprot').text(RSupport);
         changeResources();
 
-        
+
     },
     onError: function (sender, args) {
         console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
@@ -1345,7 +1349,7 @@ var Deliverables_Info_Request = {
             //     x.id = statusnum;
 
             $('.deliv-status h4[data-prname="' + UProjects[i] + '"]').addClass(statusclass).text(statustxt);
-            $('.inner-data3 .inner-val[data-prname="' + UProjects[i] + '"]').text(POD + '%');
+            // $('.inner-data3 .inner-val[data-prname="' + UProjects[i] + '"]').text(POD + '%'); // commint it because nesbat elenjaz come from project schedual 
         }
         //progress stats
 

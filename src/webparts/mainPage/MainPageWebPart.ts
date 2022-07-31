@@ -186,6 +186,14 @@ export default class MainPageWebPart extends BaseClientSideWebPart<IMainPageWebP
                                         </div>
                                     </div>
                                     <div class="dropdown mx-3">
+                                    <a data-trans-filter3 href="#"
+                                        class="dropdown-toggle fnt-14 w-1 black Resources" data-toggle="dropdown"
+                                        role="button"></a>
+                                    <div class="dropdown-menu Filter-3">
+                                        <!-- filter labels go here -->
+                                    </div>
+                                </div>
+                                    <div class="dropdown mx-3">
                                         <a data-trans-filter2 href="#"
                                             class="dropdown-toggle fnt-14 w-1 black Resources" data-toggle="dropdown"
                                             role="button"></a>
@@ -225,7 +233,8 @@ export default class MainPageWebPart extends BaseClientSideWebPart<IMainPageWebP
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right CardDivall" id="">
                                                     <!-- item-->
-                                                    
+                                                        <a data-trans-CompletionStatus href="javascript:void(0);"
+                                                        id="CardDiv2" class="dropdown-item Resources"></a>
                                                     <!-- item-->
                                                     <!--<a data-trans-ScheduleCompletionStatus href="javascript:void(0);"
                                                         id="CardDiv8" class="dropdown-item Resources"></a>-->
@@ -268,7 +277,8 @@ export default class MainPageWebPart extends BaseClientSideWebPart<IMainPageWebP
                                                     <a data-trans-Budget href="javascript:void(0);" id="CardDiv1"
                                                         class="dropdown-item Resources"></a>
                                                     <!-- item-->
-                                                   
+                                                    <a data-trans-CompletionStatus href="javascript:void(0);"
+                                                    id="CardDiv2" class="dropdown-item Resources"></a>
                                                     <!-- item-->
                                                     <!--<a data-trans-ScheduleCompletionStatus href="javascript:void(0);"
                                                         id="CardDiv8" class="dropdown-item Resources"></a>-->
@@ -298,13 +308,21 @@ export default class MainPageWebPart extends BaseClientSideWebPart<IMainPageWebP
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="inner-title d-flex justify-content-between align-items-center">
-
+                                            <a href="#"
+                                                class="dropdown-toggle arrow-none card-drop h3 light-gray"
+                                                data-toggle="dropdown" aria-expanded="false">
+                                                <img src="${status}" class="mx-3"><span
+                                                    data-trans-CompletionStatus class="Resources"></span>
+                                            </a>
                                                 <div class="dropdown">
                                                     
                                                     <div class="dropdown-menu dropdown-menu-right CardDivall" id="">
                                                         <!-- item-->
                                                         <a data-trans-Budget href="javascript:void(0);" id="CardDiv1"
                                                             class="dropdown-item Resources"></a>
+
+                                                        <a data-trans-CompletionStatus href="javascript:void(0);"
+                                                            id="CardDiv2" class="dropdown-item Resources"></a>
                                                          <!-- item-->
                                                         <!-- <a data-trans-ScheduleCompletionStatus href="javascript:void(0);"
                                                             id="CardDiv8" class="dropdown-item Resources"></a> -->
@@ -409,7 +427,7 @@ export default class MainPageWebPart extends BaseClientSideWebPart<IMainPageWebP
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div style="display:none" class="card-body">
+                                            <div class="card-body">
                                                 <canvas id="statusChart" width="200" height="196"></canvas>
                                             </div>
                                             <!-- end row-->
@@ -435,7 +453,10 @@ export default class MainPageWebPart extends BaseClientSideWebPart<IMainPageWebP
 
                                                         <a data-trans-Budget href="javascript:void(0);" id="CardDiv1"
                                                             class="dropdown-item Resources"></a>
-                                                        
+
+                                                        <a data-trans-CompletionStatus href="javascript:void(0);"
+                                                            id="CardDiv2" class="dropdown-item Resources"></a>
+
                                                         <a data-trans-filter1 href="javascript:void(0);" id="CardDiv3"
                                                             class="dropdown-item Resources"></a>
 
@@ -558,7 +579,8 @@ export default class MainPageWebPart extends BaseClientSideWebPart<IMainPageWebP
                                                     <a data-trans-Budget href="javascript:void(0);" id="CardDiv1"
                                                         class="dropdown-item Resources"></a>
                                                     <!-- item-->
-                                                   
+                                                    <a data-trans-CompletionStatus href="javascript:void(0);"
+                                                        id="CardDiv2" class="dropdown-item Resources"></a>
                                                     <!-- item-->
                                                     <!--<a data-trans-ScheduleCompletionStatus href="javascript:void(0);"
                                                         id="CardDiv8" class="dropdown-item Resources"></a>-->
@@ -599,7 +621,9 @@ export default class MainPageWebPart extends BaseClientSideWebPart<IMainPageWebP
                                                     <a data-trans-Budget href="javascript:void(0);" id="CardDiv1"
                                                         class="dropdown-item Resources"></a>
                                                     <!-- item-->
-                                                   
+                                                    <a data-trans-CompletionStatus href="javascript:void(0);"
+                                                    id="CardDiv2" class="dropdown-item Resources"></a>
+                                                    <!-- item-->
                                                     <!--<a data-trans-ScheduleCompletionStatus href="javascript:void(0);"
                                                         id="CardDiv8" class="dropdown-item Resources"></a>-->
                                                     <!-- item-->
@@ -638,7 +662,9 @@ export default class MainPageWebPart extends BaseClientSideWebPart<IMainPageWebP
                                                     <a data-trans-Budget href="javascript:void(0);" id="CardDiv1"
                                                         class="dropdown-item Resources"></a>
                                                     <!-- item-->
-                                                   
+                                                    <a data-trans-CompletionStatus href="javascript:void(0);"
+                                                    id="CardDiv2" class="dropdown-item Resources"></a>
+                                                    <!-- item-->
                                                     <!--<a data-trans-ScheduleCompletionStatus href="javascript:void(0);"
                                                         id="CardDiv8" class="dropdown-item Resources"></a>-->
                                                     <!-- item-->
@@ -679,7 +705,9 @@ export default class MainPageWebPart extends BaseClientSideWebPart<IMainPageWebP
                                                     <a data-trans-Budget href="javascript:void(0);" id="CardDiv1"
                                                         class="dropdown-item Resources"></a>
                                                     <!-- item-->
-                                                   
+                                                    <a data-trans-CompletionStatus href="javascript:void(0);"
+                                                    id="CardDiv2" class="dropdown-item Resources"></a>
+                                                     <!-- item-->
                                                     <!--<a data-trans-ScheduleCompletionStatus href="javascript:void(0);"
                                                         id="CardDiv8" class="dropdown-item Resources"></a>-->
                                                     <!-- item-->

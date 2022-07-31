@@ -28,7 +28,7 @@ var actualImplementationRate = 0,
 //
 var lstMonthCLicked = '';
 
-var completedRatio = 0, plannedRatio = 0, plannedDate = '', remain = 0, milestoneCount = 0;
+var completedRatio = 0, plannedRatio = 0, plannedDate = '', remain = 0, milestoneCount = 0, listInitiativeProgress = '';
 
 if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
   var No_Data = 'لا يوجد'
@@ -225,7 +225,7 @@ var initiativeHomeInfo_Request = {
 
         // projectprogress = oListItem.get_item('Title') || No_Data,
         initiativeprogress = oListItem.get_item('InitiativeProgressStatus') || No_Data,
-
+        listInitiativeProgress = oListItem.get_item('InitiativeProgressStatus') || No_Data,
 
 
 
@@ -997,6 +997,8 @@ var Milestones_Info_Request = {
         '</a>' +
         '</li>');
 
+      debugger
+
       if (plannedDate) {
         plannedDate = plannedDate.getTime()
         dateNow = dateNow.getTime()
@@ -1297,7 +1299,6 @@ var ProgressStatus_Data_Submit = {
 
     //calculation bussiness for Project Progress Status
     // var differenceBetweenDelivrablesPercet = plannedImplementationRate - actualImplementationRate
-    console.log("initiativeSTatus")
 
     // if (differenceBetweenDelivrablesPercet < 0) {
     //   initiativeprogress = 'stat4'; // advance
@@ -1308,19 +1309,34 @@ var ProgressStatus_Data_Submit = {
     // } else if (differenceBetweenDelivrablesPercet > 10) {
     //   initiativeprogress = 'stat1'; // too late
     // }
+    console.log("initiativeSTatus")
+
+    debugger
 
     if (completedRatio == 0) {
       initiativeprogress = 'stat6'
-    } else if (completedRatio == 1) {
+    }
+    if (completedRatio == 1) {
       initiativeprogress = 'stat4'
-    } else if (remain <= 0.05) {
+    }
+    if (remain <= 0.05) {
       initiativeprogress = 'stat3'
-    } else if (remain > 0.05 && remain <= 0.15) {
+    }
+    if (remain > 0.05 && remain <= 0.15) {
       initiativeprogress = 'stat2'
-    } else if (remain > 0.15) {
+    }
+    if (remain > 0.15) {
       initiativeprogress = 'stat1'
     }
 
+
+    // $('.myCompletionStatus').removeClass('statuscolor' + listProjectProgress);
+    // ProgressStatus_Data_Submit.g.oListItem.set_item('ProjectProgressStatus', projectprogress);
+    // $('.myCompletionStatus').attr('data-trans-' + projectprogress, '');
+
+    // $('.myCompletionStatus').addClass('statuscolor' + projectprogress);
+
+    $('.myCompletionStatus').removeAttr('data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4 data-trans-stat5 data-trans-stat6')
 
 
     if (today) {
@@ -1329,13 +1345,28 @@ var ProgressStatus_Data_Submit = {
     }
     ProgressStatus_Data_Submit.g.oListItem.set_item('ProgressLastUpdatedBy', SP.FieldUserValue.fromUser(UserN.LoginName));
 
-    ProgressStatus_Data_Submit.g.oListItem.set_item('InitiativeProgressStatus', initiativeprogress);
 
+
+
+    $('.myCompletionStatus').removeClass('statuscolor' + listInitiativeProgress);
+
+    ProgressStatus_Data_Submit.g.oListItem.set_item('InitiativeProgressStatus', initiativeprogress);
+debugger
+
+    $('.myCompletionStatus').attr('data-trans-' + initiativeprogress, '');
+    $('.black.myCompletionStatus').text(initiativeprogress)
+
+    $('.myCompletionStatus').addClass('statuscolor' + initiativeprogress);
     // to update the percentage of initiative
 
     ProgressStatus_Data_Submit.g.oListItem.set_item('PlannedPercentageCompleted', plannedImplementationRate)
 
     ProgressStatus_Data_Submit.g.oListItem.set_item('ActualPercentageCompleted', actualImplementationRate)
+
+    changeResources();
+
+
+
 
 
     ProgressStatus_Data_Submit.g.oListItem.update();

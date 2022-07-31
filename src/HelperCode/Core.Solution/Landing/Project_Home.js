@@ -1701,10 +1701,6 @@ var ProgressStatus_Data_Submit = {
 
     var differencePercentage =  plannedPercentage - schedualPercentage
 
-    console.log(plannedPercentage, "plannedPercentage")
-    console.log(schedualPercentage, "schedualPercentage")
-    console.log(differencePercentage, "differencePercentage")
-    debugger
     if (!getBaseLineDuration) {
       projectprogress = 'stat5'
     } else {
@@ -1723,8 +1719,6 @@ var ProgressStatus_Data_Submit = {
 
     $('.myCompletionStatus').addClass('statuscolor' + projectprogress);
 
-    console.log(PlannedStartDate.getTime(), "PlannedStartDate PlannedStartDate")
-    console.log(totalDays, "totalDays totalDays totalDays")
     ////////////////////
 
     Project_Home_Info_Request.g.updatProject(PSDate, PEDate, schedualPercentage)

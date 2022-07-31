@@ -502,7 +502,7 @@ window.New_Data_Submit = {
         var RelatedObjective = $('#RelatedObjective').val()
         New_Data_Submit.g.oListItem.set_item("RelatedStrategyObjective", RelatedObjective);
       }
-      New_Data_Submit.g.oListItem.set_item("InitiativeProgressStatus", "stat3");
+      New_Data_Submit.g.oListItem.set_item("InitiativeProgressStatus", "stat6");
 
     }
     New_Data_Submit.g.oListItem.update();

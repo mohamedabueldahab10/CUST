@@ -326,7 +326,7 @@ window.initiativeRequest = {
           phasename +
           "</h4>" +
           "</div>" +
-          '<div style="display:none !important" class="d-inline-flex flex-column mx-2 ' + ProgressStatus + ' ">' + //deliv-status
+          '<div class="d-inline-flex flex-column mx-2 ' + ProgressStatus + ' ">' + //deliv-status
           // "<h4 data-trans-" + ProgressStatus + '  data-prname="' + initiativeCode + '" class="Resources"></h4>' +
           '<span class="des-13 d-flex"><img src="' +
           iconstatustimesm +
@@ -2372,7 +2372,8 @@ function handleBudgetBarChart() {
 }
 
 function handleStatusBarChart() {
-
+  console.log("handle status bar")
+  debugger
   if ("#statusChart") {
     $("#statusChart").remove(); // this is my <canvas> element
     $("#carditem2 .chartjs-size-monitor").remove();
@@ -2412,6 +2413,7 @@ function handleStatusBarChart() {
   } else {
     BackgroundsArray = BackgroundsArray.reverse();
   }
+  console.log(progressOccurence,"progressOccurence progressOccurence")
   /* data */
   var data1 = {
     labels: ProgressName,
