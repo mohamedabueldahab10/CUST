@@ -305,7 +305,7 @@ body.nav-open {
     margin-left: auto;
     background: #f8f9fb;
     min-height: 90vh;
-    padding-bottom:10% !important;
+    padding-bottom: 10% !important;
 }
 
 .card {
@@ -390,7 +390,7 @@ body.nav-open {
     right: 20px !important;
     width: 20px !important;
     height: 20px !important;
-    margin-top: -19px !important; 
+    margin-top: -19px !important;
     margin-right: -10px !important;
     border-radius: 0% !important;
     border: 0px !important;
@@ -608,6 +608,7 @@ label {
     background-position: right calc(.375em + .1875rem) center;
     background-size: calc(.75em + .375rem) calc(.75em + .375rem);
 }
+
 /* //multipickererr */
 .was-validated .picker-error[type=multipicker][required] {
     border-color: #dc3545;
@@ -2352,17 +2353,19 @@ button.btn.btn-action.updateprogress.Resources {
         padding: 0;
         transition: all .5s cubic-bezier(.685, .0473, .346, 1);
     }
-/*ghufran nav en responsive*/
-.en nav.sidebar.d-inline-block {
-    visibility:hidden;
-    transition:none;
-}
 
-.en .nav-open nav.sidebar{
-    visibility:visible;
-    left:0
-}
-/*end ghufran nav en responsive*/
+    /*ghufran nav en responsive*/
+    .en nav.sidebar.d-inline-block {
+        visibility: hidden;
+        transition: none;
+    }
+
+    .en .nav-open nav.sidebar {
+        visibility: visible;
+        left: 0
+    }
+
+    /*end ghufran nav en responsive*/
     .ar .nav-open .main-panel {
         right: 0;
         -webkit-transform: translate3d(236px, 0, 0);
@@ -4094,19 +4097,19 @@ a.taskButton:hover {
 }
 
 
-.circlecolorstat1{
-    background:#FF0000 !important ;
+.circlecolorstat1 {
+    background: #FF0000 !important;
 }
 
-.circlecolorstat2{
+.circlecolorstat2 {
     background: #ED7D31 !important;
 }
 
-.circlecolorstat3{
+.circlecolorstat3 {
     background: #70AD47 !important;
 }
 
-.circlecolorstat4{
+.circlecolorstat4 {
     background: #5B9BD5 !important;
 }
 
@@ -4130,6 +4133,12 @@ h4.black.Resources.myCompletionStatus.statuscolorstat5,
     color: #000 !important;
 }
 
+h4.black.Resources.myCompletionStatus.statuscolorstat6,
+.stat3 h4.Resources {
+    color: #808080 !important;
+}
+
+
 h4.black.Resources.myCompletionStatus.statuscolorstat4,
 .stat4 h4.Resources {
     color: #5B9BD5 !important;
@@ -4151,10 +4160,12 @@ span.textintofilter {
 a.view-more.d-block.text-center.py-2.Resources.disabled {
     display: none !important;
 }
+
 .remainpercstyle {
-    font-size:12px;
+    font-size: 12px;
     color: #f8ae3a;
 }
+
 /* ghufran end style */
 
 .CFIELD.radioLabelField .radiolabel {
@@ -4854,7 +4865,7 @@ border-top:1px solid #e5e5e5 */
 .WF-btn {
     display: contents;
     /* position:absolute; */
-    align-items:'flex-start';
+    align-items: 'flex-start';
     padding: 0;
     /* justify-content: space-between; commented to solve samer comment on wf when the screen become 80%*/
     /* align-items: flex-start; */
@@ -5718,7 +5729,7 @@ div#MainKPIsList {
 
         /* to handle the print page on multi page */
 
-        break-inside: avoid-page;   
+        break-inside: avoid-page;
         page-break-inside: avoid-page;
     }
 
@@ -5734,7 +5745,7 @@ div#MainKPIsList {
         display: none !important;
     }
 
-    #myModal{
+    #myModal {
         display: none !important;
     }
 
@@ -5890,7 +5901,7 @@ li.ms-core-menu-footer {
 
 
 .ar .overflow-ellipsis .tooltiptext {
-    background:#148282;
+    background: #148282;
     visibility: hidden;
     color: #fff;
     text-align: center;
@@ -5914,12 +5925,12 @@ li.ms-core-menu-footer {
     margin-left: -10px;
     border-width: 7px;
     border-style: solid;
-    border-color:  transparent transparent #148282 transparent;
- }
+    border-color: transparent transparent #148282 transparent;
+}
 
 .en .overflow-ellipsis .tooltiptext {
 
-    background:#148282;
+    background: #148282;
     visibility: hidden;
     color: #fff;
     text-align: center;
@@ -5942,14 +5953,14 @@ li.ms-core-menu-footer {
     margin-left: -10px;
     border-width: 7px;
     border-style: solid;
-    border-color:  transparent transparent #148282 transparent;
- }
+    border-color: transparent transparent #148282 transparent;
+}
 
 .overflow-ellipsis:hover .tooltiptext {
     visibility: visible;
 }
 
 
-.ul-bullet-remove{
+.ul-bullet-remove {
     list-style: none;
 }

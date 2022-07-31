@@ -28,6 +28,7 @@ var actualImplementationRate = 0,
 //
 var lstMonthCLicked = '';
 
+var completedRatio = 0, plannedRatio = 0, plannedDate = '', remain = 0, milestoneCount = 0;
 
 if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
   var No_Data = 'لا يوجد'
@@ -271,9 +272,8 @@ var initiativeHomeInfo_Request = {
           '<span class="des-13"><span data-trans-sector class="Resources state-val"></span></span>' +
           '<h4 class="black">' + projectSector + '</h4>' + //
           '</div>' +
-          '</div>' 
-          //+
-          // '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
+          '</div>' +
+          '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
 
           //   '<div class="d-inline-flex flex-column mx-2">' +
           //   '<span class="des-13"><span data-trans-pattr6 class="Resources state-val"></span></span>' +
@@ -284,11 +284,11 @@ var initiativeHomeInfo_Request = {
           //   '<span class="des-13"><span data-trans-pattr7 class="Resources state-val"></span></span>' +
           //   '<h4 class="black">' + actualPercentageFromList + '%' + '</h4>' + //
           //   '</div>' +
-          //   '<div class="d-inline-flex flex-column mx-2 ' + initiativeprogress + '">' +
-          //   '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val"></span></span>' +
-          //   '<h4 data-trans-' + initiativeprogress + ' class="black Resources myCompletionStatus statuscolor' + initiativeprogress + '"></h4>' + //
-          //   '</div>' +
-          // '</div>'
+          '<div class="d-inline-flex flex-column mx-2 ' + initiativeprogress + '">' +
+          '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val"></span></span>' +
+          '<h4 data-trans-' + initiativeprogress + ' class="black Resources myCompletionStatus statuscolor' + initiativeprogress + '"></h4>' + //
+          '</div>' +
+          '</div>'
         ),
 
 
@@ -453,7 +453,7 @@ var Get_RelatedObjective = {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle('SOs');
     var camlQuery = new SP.CamlQuery();
-    
+
     camlQuery.set_viewXml('<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Title" /><Value Type="Text">' + RelatedObjective + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>');
     Get_RelatedObjective.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Get_RelatedObjective.g.collListItem);
@@ -808,10 +808,10 @@ var Deliverables_Info_Request = {
     console.log(plannedImplementationRate, "plannedImplementationRate plannedImplementationRate")
 
     //continue initiative progress
-    $('button.updateprogress').on('click', function () {
-      ProgressStatus_Data_Submit.init();
-    })
-    $('button.updateprogress').prop('disabled', false);
+    // $('button.updateprogress').on('click', function () {
+    //   ProgressStatus_Data_Submit.init();
+    // })
+    // $('button.updateprogress').prop('disabled', false);
 
     //
     //Time Line
@@ -948,6 +948,8 @@ var Milestones_Info_Request = {
   },
   onSuccess: function (sender, args) {
     console.log("INISDE MILESTONE")
+    var dateNow = new Date();
+
     var collListItem = Milestones_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var itemhtml = ['<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' + _spPageContextInfo.webAbsoluteUrl + '/sitepages/new.aspx?ListKey=initiativemilestones&ICODE=' + initiativeHomeInfo_Request.g.ICODE + '"><i class="icon-plus"></i></a></li>'],
@@ -958,9 +960,10 @@ var Milestones_Info_Request = {
       itemProjectCode = oListItem.get_item('InitiativeCode') || No_Data;
       item1 = oListItem.get_item('Name') || No_Data;
       item2 = oListItem.get_item('Title') || No_Data;
-      Status = oListItem.get_item('Completed') || No_Data;
+      Status = oListItem.get_item('Completed') || '';
       Weight = oListItem.get_item('Weight') || No_Data;
       item3 = initiativeHomeInfo_Request.g.dateConvert(oListItem.get_item('PlannedCompletedDate'));
+      plannedDate = oListItem.get_item('PlannedCompletedDate') ? oListItem.get_item('PlannedCompletedDate') : ""
       item3date2 = initiativeHomeInfo_Request.g.dateConvert(oListItem.get_item('ActualCompletedDate'));
       // item4 = oListItem.get_item('Status') || No_Data;
       itemhtml.push('<li class="list-group-item link-arrow px-0">' +
@@ -993,7 +996,31 @@ var Milestones_Info_Request = {
         '</div>' +
         '</a>' +
         '</li>');
+
+      if (plannedDate) {
+        plannedDate = plannedDate.getTime()
+        dateNow = dateNow.getTime()
+      }
+
+      if (Status == 'yes') {
+        completedRatio++
+      }
+      if ((plannedDate <= dateNow) && Status == 'no') {
+        plannedRatio++
+      }
+
+      milestoneCount++
+
     }
+
+    remain = (plannedRatio - completedRatio) / milestoneCount
+
+
+    $('button.updateprogress').on('click', function () {
+      ProgressStatus_Data_Submit.init();
+    })
+    $('button.updateprogress').prop('disabled', false);
+
 
     if (itemhtml.length == 1) {
       itemhtml.push('<h3>' + No_Data + '</h3>')
@@ -1269,18 +1296,33 @@ var ProgressStatus_Data_Submit = {
     today = (!today) ? '' : [today.slice(5, 10), today.slice(0, 4)].join('/').replace('-', '/');
 
     //calculation bussiness for Project Progress Status
-    var differenceBetweenDelivrablesPercet = plannedImplementationRate - actualImplementationRate
+    // var differenceBetweenDelivrablesPercet = plannedImplementationRate - actualImplementationRate
     console.log("initiativeSTatus")
 
-    if (differenceBetweenDelivrablesPercet < 0) {
-      initiativeprogress = 'stat4'; // advance
-    } else if (differenceBetweenDelivrablesPercet == 0) {
-      initiativeprogress = 'stat3'; // in progress
-    } else if (differenceBetweenDelivrablesPercet >= 1 && differenceBetweenDelivrablesPercet <= 10) {
-      initiativeprogress = 'stat2'; // late
-    } else if (differenceBetweenDelivrablesPercet > 10) {
-      initiativeprogress = 'stat1'; // too late
+    // if (differenceBetweenDelivrablesPercet < 0) {
+    //   initiativeprogress = 'stat4'; // advance
+    // } else if (differenceBetweenDelivrablesPercet == 0) {
+    //   initiativeprogress = 'stat3'; // in progress
+    // } else if (differenceBetweenDelivrablesPercet >= 1 && differenceBetweenDelivrablesPercet <= 10) {
+    //   initiativeprogress = 'stat2'; // late
+    // } else if (differenceBetweenDelivrablesPercet > 10) {
+    //   initiativeprogress = 'stat1'; // too late
+    // }
+
+    if (completedRatio == 0) {
+      initiativeprogress = 'stat6'
+    } else if (completedRatio == 1) {
+      initiativeprogress = 'stat4'
+    } else if (remain <= 0.05) {
+      initiativeprogress = 'stat3'
+    } else if (remain > 0.05 && remain <= 0.15) {
+      initiativeprogress = 'stat2'
+    } else if (remain > 0.15) {
+      initiativeprogress = 'stat1'
     }
+
+
+
     if (today) {
       $('.ProgressDate').text(today);
       ProgressStatus_Data_Submit.g.oListItem.set_item('ProgressLastModifiedDate', today);
