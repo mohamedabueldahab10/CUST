@@ -2838,7 +2838,9 @@ window.MultiSelect_View = { // use it for invoices cause we need to save the del
         relatedDelevrableName += el.name + '<br>'
       })
 
-      console.log(relatedDelevrableName, "relatedDelevrableName relatedDelevrableName relatedDelevrableName")
+      if(listkey  == 'invoices'){
+        $("#Deliverable").html(relatedDelevrableName)
+      }
     }
   },
   onError: function (sender, args) {
