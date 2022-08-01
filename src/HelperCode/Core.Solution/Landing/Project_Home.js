@@ -1579,12 +1579,15 @@ var Invoices_Info_Request = {
       Status = oListItem.get_item('Status');
       // console.log(Deliverable);
       //console.log(Amount+','+Deliverable);
-
+      console.log("track mult delivrable")
+      debugger
       //This can be done also by Caml query . we can passe all delivrables code there
-      for (i = 0; i < Deliverablesarray.length; i++) {
-        if (Deliverablesarray[i].Code == Deliverable && Status == 'paid') {
+      for (i = 0; i < Deliverablesarray.length; i++) { 
+        var myselections = Deliverable ? Deliverable.split(":::") : [] // add myselection to handle mult delivrable in invoices
+
+        if (Deliverablesarray[i].Code == myselections[0] && Status == 'paid') {
+          debugger
           TheCost += Amount;
-          // console.log(Amount + ',' + Deliverablesarray[i].Code + ',' + Deliverable);
         }
       }
 

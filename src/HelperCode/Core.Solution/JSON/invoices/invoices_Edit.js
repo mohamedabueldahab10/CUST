@@ -42,15 +42,26 @@ var Information_Form  = [
                 "type": "float",
                 "state":"disabled"
             },
+            // {
+            //     "InternalName": "Deliverable",
+            //     "DisplayName":"المخرج المرتبط",
+            //     "DisplayNameEn": "Deliverable",
+            //     "type": "lookup",
+            //     //from other list:
+            //     "source": "Deliverables",
+            //     "Dispfieldkey": "Name",
+            //     "valfieldkey": "Title"
+            // },
             {
                 "InternalName": "Deliverable",
-                "DisplayName":"المخرج المرتبط",
+                "DisplayName": "المخرج المرتبط",
                 "DisplayNameEn": "Deliverable",
-                "type": "lookup",
-                //from other list:
+                "type": "lookupmultiselect",
+                //from other list:ma
                 "source": "Deliverables",
                 "Dispfieldkey": "Name",
-                "valfieldkey": "Title"
+                "valfieldkey": "Title",
+                "grpfieldkey": "Title"
             },
             {
                 "InternalName": "Status",

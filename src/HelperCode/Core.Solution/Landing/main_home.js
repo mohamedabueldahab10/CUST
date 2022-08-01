@@ -81,22 +81,22 @@ if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar
 
 
 window.UProjects = [];
-var iconstagesm = require('../../../HelperRessources/img/icon-stage-sm.png');
-var iconstatustimesm = require('../../../HelperRessources/img/icon-status-time-sm.png');
-var calendar = require('../../../HelperRessources/img/calendar.svg');
-var iconimportantsm = require('../../../HelperRessources/img/icon-important-sm.png');
-var iconstrategysm = require('../../../HelperRessources/img/analysis.png');
-var risk = require('../../../HelperRessources/img/risk.svg');
-var progress = require('../../../HelperRessources/img/progress.svg');
-var mizania = require('../../../HelperRessources/img/mizania.svg');
-// var iconstagesm = '';
-// var iconstatustimesm = '';
-// var calendar = '';
-// var iconimportantsm = '';
-// var iconstrategysm = '';
-// var risk = '';
-// var progress = '';
-// var mizania = '';
+// var iconstagesm = require('../../../HelperRessources/img/icon-stage-sm.png');
+// var iconstatustimesm = require('../../../HelperRessources/img/icon-status-time-sm.png');
+// var calendar = require('../../../HelperRessources/img/calendar.svg');
+// var iconimportantsm = require('../../../HelperRessources/img/icon-important-sm.png');
+// var iconstrategysm = require('../../../HelperRessources/img/analysis.png');
+// var risk = require('../../../HelperRessources/img/risk.svg');
+// var progress = require('../../../HelperRessources/img/progress.svg');
+// var mizania = require('../../../HelperRessources/img/mizania.svg');
+var iconstagesm = '';
+var iconstatustimesm = '';
+var calendar = '';
+var iconimportantsm = '';
+var iconstrategysm = '';
+var risk = '';
+var progress = '';
+var mizania = '';
 
 // new repo 
 
@@ -955,6 +955,7 @@ window.Project_Info_Request = {
 
 
             $(".CardDivall a").on("click", function (event) {
+                
                 ClickedChart = $(this).closest('div[id*="carditem"]').attr('id');
                 //  console.log(ClickedChart);
                 //clicked div //will hide
@@ -969,7 +970,7 @@ window.Project_Info_Request = {
                     $('div#carditem' + lastChar1).before($('div#carditem' + lastChar));
                 }
                 $('div#carditem' + lastChar).show();
-                if ($('.cardIemClass:not([style*="display: none"])').length > 3) {
+                if ($('.cardIemClass:not([style*="display: none"])').length > 2) { // to toggle the charts in two charts only
                     $('div#carditem' + lastChar1).hide();
                 }
 
@@ -992,6 +993,7 @@ window.Project_Info_Request = {
 
             //hide unvisible dropdown lists
             $('div[id*=carditem]').each(function () {
+         
                 var chartid = $(this).attr('id');
                 chartid = chartid.substr(chartid.length - 1);
                 //console.log(chartid)
@@ -1012,6 +1014,7 @@ window.Project_Info_Request = {
         ChartsFilterationLink: function () { //to be removed
 
             $("#CardDivall a").on("click", function (event) {
+                console.log("SCONED")
                 ClickedChart = $(this).closest('div[id*="carditem"]').attr('id');
                 // console.log(ClickedChart);
                 //clicked div //will hide
@@ -1026,7 +1029,7 @@ window.Project_Info_Request = {
                     $('div#carditem' + lastChar1).before($('div#carditem' + lastChar));
                 }
                 $('div#carditem' + lastChar).show();
-                if ($('.cardIemClass:not([style*="display: none"])').length > 3) {
+                if ($('.cardIemClass:not([style*="display: none"])').length > 2) { // to toggle the charts in two charts only
                     $('div#carditem' + lastChar1).hide();
                 }
             });
@@ -1505,9 +1508,12 @@ var Invoices_Info_Request = {
             //console.log(Status);
             //console.log(Amount+','+Deliverable);
             for (i = 0; i < Deliverablesarray.length; i++) {
+                var myselections = Deliverable ? Deliverable.split(":::") : [] // add myselection to handle mult delivrable in invoices
+                console.log(myselections,"myselections myselections")
+                // console.log(Deliverablesarray[i].pcode +','+ Deliverable); // chamge to mySelection to handle The Cose on Multi delivrable 
+                if (Deliverablesarray[i].Code == myselections[0] && Status == 'paid') {
+                    debugger
 
-                // console.log(Deliverablesarray[i].pcode +','+ Deliverable);
-                if (Deliverablesarray[i].Code == Deliverable && Status == 'paid') {
                     // console.log(Status);
                     TheCost += Amount;
                     // console.log(Amount+','+Deliverablesarray[i].Code+','+Deliverable);
@@ -1517,8 +1523,8 @@ var Invoices_Info_Request = {
             //
         }
 
-
-
+        console.log(TheCost,"TheCost TheCostTheCost")
+     
         // $('.ctx-block.row.mx-n2 .carditem1  .card-body .media:nth-child(2) .d-flex span:nth-child(2)').text(Project_Info_Request.g.kFormatter(TheCost));
         //$('.ctx-block.row.mx-n2 .carditem4  .card-body .media:nth-child(3) .d-flex span:nth-child(2)').text(RisksCount);
         var TheCostPercentage = (TheCost / AssignedBudget) * 100;
@@ -1942,9 +1948,7 @@ function handleStatusBarChart() {
         BackgroundsArray = BackgroundsArray.reverse();
     }
 
-    console.log(progressOccurence, "progressOccurence")
-    console.log(BackgroundsArray, "BackgroundsArray")
-    debugger
+
     var ProgressNameLabels;
 
     if (_.sum(progressOccurence) == 0) {
@@ -2378,7 +2382,8 @@ function handleCircleRiskChart() {
                     });
                     var currentValue = dataset.data[tooltipItem.index];
                     var percentage = Math.floor(((currentValue / total) * 100) + 0.5);
-                    return percentage + "%";
+                    return [percentage + '%', currentValue]
+                    // return percentage + "%";
                 }
             }
 
@@ -2521,7 +2526,8 @@ function handleCirclePortfoliosChart() {
                     });
                     var currentValue = dataset.data[tooltipItem.index];
                     var percentage = Math.floor(((currentValue / total) * 100) + 0.5);
-                    return percentage + "%";
+                    return [percentage + '%', currentValue]
+                    // return percentage + "%";
                 }
             }
 
@@ -2651,7 +2657,8 @@ function handleCircleDepartmentsChart() {
                     });
                     var currentValue = dataset.data[tooltipItem.index];
                     var percentage = Math.floor(((currentValue / total) * 100) + 0.5);
-                    return percentage + "%";
+                    return [percentage + '%', currentValue]
+                    // return percentage + "%";
                 }
             }
 

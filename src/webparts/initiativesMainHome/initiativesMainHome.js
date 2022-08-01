@@ -42,8 +42,8 @@ var ActualBudget = 0,
   ExistVar,
   ExistVar2,
   ExistVar1;
-  var totalforhidstrat = 0;
-  var totalforhidvis = 0;
+var totalforhidstrat = 0;
+var totalforhidvis = 0;
 var myFont = isArabic ? "LTBukra" : "Effra";
 window.SectorsData = [];
 var ScheduleProgressStatusarray = [];
@@ -151,7 +151,7 @@ window.initiativeRequest = {
   // Pre-initialization functions ensure scripts, SharePoint dependencies are loaded
   preinit: function () {
     if ($(".d-flex").length) {
-      debugger
+
       clearInterval(checkInitiativeHomeHtml);
       if (checkHomeInitiativeStatus) {
         clearInterval(checkHomeInitiativeStatus)
@@ -167,21 +167,20 @@ window.initiativeRequest = {
   },
   // The main Initialization function
   init: function () {
-  debugger
-    console.log('inside init')
+
     if (originalstate) {
       //*****call charts filteration */
       if (isInManager || isInOwner) {
         PQuery = InitiativeAccessQuery
-      } else if (isDU || isMinisterAssistant || isViceMinister || isSectorHead || isSubSectorHead || isGeneralManager){
-        debugger
-        console.log('mmmmmmmmmmmmmmmmmmm',UserAccessSectorCode)
+      } else if (isDU || isMinisterAssistant || isViceMinister || isSectorHead || isSubSectorHead || isGeneralManager) {
+
         PQuery = SubSectorInitiativeAccessQuery
-      }else {
+      } else {
         PQuery = "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
       }
       //**** Start*/check user rule and buld query to get projects;
       $(ChartHide).hide();
+      $('.required-support-ctx').show() // to show the alejra2 elmatloob section after moved to up
       //**** End*/check user rule and buld query to get projects;
     }
 
@@ -218,7 +217,7 @@ window.initiativeRequest = {
     var Priorityarray = [];
     var ProgressStatusarray = [];
     var subsectorCodeArray = [];
-    
+
     while (initiativeRequest.g.listItemEnum.moveNext()) {
       var oListItem = initiativeRequest.g.listItemEnum.get_current();
       var ScheduleProjectPercentageComplete;
@@ -226,7 +225,7 @@ window.initiativeRequest = {
       var relatedFilterSubSector = (oListItem.get_item("SubSector") && oListItem.get_item("SubSector") == UserAccessSectorCode)
       var relatedFilterbSector = (oListItem.get_item("Sector") && oListItem.get_item("Sector") == UserAccessSectorCode)
 
-      if ((isVROE  && oListItem.get_item('Types') == "vision") || (isDU && relatedFilterSubSector) || (isMinisterAssistant && relatedFilterbSector) || (isViceMinister && relatedFilterbSector) || (isSectorHead && relatedFilterbSector) || (isSubSectorHead && relatedFilterSubSector) || (isGeneralManager && relatedFilterSubSector) || isEPMO || isAdmin || isMinister || (isInManager && oListItem.get_item("InitiativePM") && (oListItem.get_item("InitiativePM").get_lookupId() == UserN.Id)) || (isInOwner && oListItem.get_item("InitiativeOwner") && (oListItem.get_item("InitiativeOwner").get_lookupId() == UserN.Id))) {
+      if ((isVROE && oListItem.get_item('Types') == "vision") || (isDU && relatedFilterSubSector) || (isMinisterAssistant && relatedFilterbSector) || (isViceMinister && relatedFilterbSector) || (isSectorHead && relatedFilterbSector) || (isSubSectorHead && relatedFilterSubSector) || (isGeneralManager && relatedFilterSubSector) || isEPMO || isAdmin || isMinister || (isInManager && oListItem.get_item("InitiativePM") && (oListItem.get_item("InitiativePM").get_lookupId() == UserN.Id)) || (isInOwner && oListItem.get_item("InitiativeOwner") && (oListItem.get_item("InitiativeOwner").get_lookupId() == UserN.Id))) {
         //getting 1st stats data
         EstimatedCost += oListItem.get_item("EstimatedCost") || 0; //masroufa
         // ActualBudget += oListItem.get_item("InitiativeBudget") || 0; //masroufa
@@ -494,8 +493,8 @@ window.initiativeRequest = {
     //projectTypecount
     $("#internalProjectCount").html(initiativesStratigalCount);
     $("#externalProjectCount").html(initiativesVisionCount);
-    totalforhidstrat=initiativesStratigalCount;
-    totalforhidvis=initiativesVisionCount;
+    totalforhidstrat = initiativesStratigalCount;
+    totalforhidvis = initiativesVisionCount;
     //Project Progress
     //Sort Priority
     ProgressStatusarray.sort();
@@ -1356,11 +1355,13 @@ window.initiativeRequest = {
           $("div#carditem" + lastChar1).before($("div#carditem" + lastChar));
         }
         $("div#carditem" + lastChar).show();
-        if ($('.cardIemClass:not([style*="display: none"])').length > 3) {
+        if ($('.cardIemClass:not([style*="display: none"])').length > 2) {// to toggle the charts in two charts only
           $("div#carditem" + lastChar1).hide();
         }
 
         $("div[id*=carditem]").each(function () {
+
+
           var chartid = $(this).attr("id");
           chartid = chartid.substr(chartid.length - 1);
           if ($(this).is(":hidden")) {
@@ -1999,14 +2000,14 @@ var ProjectsOrder = {
       '<a data-trans-ViewLess class="view-less d-block text-center py-2 Resources" style="display:none!important"></a>';
 
     $("div#accordionProject").append(htmltest);
-    if (totalforhidstrat <4){
+    if (totalforhidstrat < 4) {
       $('div#InternalProjects a.view-more.d-block.text-center.py-2.Resources').addClass("disabled");
-  }
-  if (totalforhidvis <4){
+    }
+    if (totalforhidvis < 4) {
       $('div#ExternalProjects a.view-more.d-block.text-center.py-2.Resources').addClass("disabled");
-  }
+    }
 
-  changeResources()
+    changeResources()
   },
 };
 
@@ -2391,8 +2392,7 @@ function handleBudgetBarChart() {
 }
 
 function handleStatusBarChart() {
-  console.log("handle status bar")
-  debugger
+
   if ("#statusChart") {
     $("#statusChart").remove(); // this is my <canvas> element
     $("#carditem2 .chartjs-size-monitor").remove();
@@ -2437,7 +2437,7 @@ function handleStatusBarChart() {
   } else {
     BackgroundsArray = BackgroundsArray.reverse();
   }
-  console.log(progressOccurence,"progressOccurence progressOccurence")
+  console.log(progressOccurence, "progressOccurence progressOccurence")
   /* data */
   var data1 = {
     labels: ProgressName,
@@ -2982,6 +2982,7 @@ if (
 } else ImpactLabel = ImpactLabelsEn;
 
 function handleCircleRiskChart() {
+  
   $("#riskChart").remove(); // this is my <canvas> element
   $("#carditem4 .chartjs-size-monitor").remove();
   $("#carditem4 .card-body .card-body").append(
@@ -3044,7 +3045,8 @@ function handleCircleRiskChart() {
           });
           var currentValue = dataset.data[tooltipItem.index];
           var percentage = Math.floor((currentValue / total) * 100 + 0.5);
-          return percentage + "%";
+          return [percentage + '%', currentValue]
+          // return percentage + "%";
         },
       },
     },
@@ -3064,7 +3066,7 @@ function handleCircleRiskChart() {
     },
     plugins: {
       datalabels: {
-        display:false
+        display: false
         // display: true,
         // color: 'white',
         // align: 'center',
@@ -3204,7 +3206,8 @@ function handleCirclePortfoliosChart() {
           });
           var currentValue = dataset.data[tooltipItem.index];
           var percentage = Math.floor((currentValue / total) * 100 + 0.5);
-          return percentage + "%";
+          return [percentage + '%', currentValue]
+          // return percentage + "%";
         },
       },
     },
@@ -3224,7 +3227,7 @@ function handleCirclePortfoliosChart() {
     },
     plugins: {
       datalabels: {
-        display:false
+        display: false
         // display: true,
         // color: 'white',
         // align: 'center',
@@ -3348,7 +3351,8 @@ function handleCircleDepartmentsChart() {
           });
           var currentValue = dataset.data[tooltipItem.index];
           var percentage = Math.floor((currentValue / total) * 100 + 0.5);
-          return percentage + "%";
+          return [percentage + '%', currentValue]
+          // return percentage + "%";
         },
       },
     },
@@ -3368,7 +3372,7 @@ function handleCircleDepartmentsChart() {
     },
     plugins: {
       datalabels: {
-        display:false
+        display: false
         // display: true,
         // color: 'white',
         // align: 'center',

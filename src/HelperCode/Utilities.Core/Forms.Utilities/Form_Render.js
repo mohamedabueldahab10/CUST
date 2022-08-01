@@ -1308,7 +1308,9 @@ window.ListInfo = {
 
       case 'lookupmultiselect':
         var customQuery;
-        if (PCODE && element.source != 'Vendors' && element.source != 'InitiativeDeliverables') { // to avoid the error on edit page for multi select
+        if (PCODE && listkey == "invoices") { // get only delevered yes from delivrable
+          customQuery = '<View><Query><Where><And><Eq><FieldRef Name="Delivered" /><Value Type="Choice">yes</Value></Eq><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="ProjectCode" /><Value Type="Text">' + PCODE + '</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
+        } else if (PCODE && element.source != 'Vendors' && element.source != 'InitiativeDeliverables') { // to avoid the error on edit page for multi select
           customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="ProjectCode" /><Value Type="Text">' + PCODE + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
         } else {
           customQuery = '<View><Query><Where><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';

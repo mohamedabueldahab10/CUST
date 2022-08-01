@@ -539,10 +539,8 @@ var Information_Form = [{
         InternalName: "Polarity",
         DisplayNameEn: "Polarity",
         DisplayName: "قطبية المؤشر",
-        type: "dropdown",
-        options: {
-            choices: ["+", "-"],
-        },
+        type: "string",
+
     },
     {
         InternalName: "PeriodType",

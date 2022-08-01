@@ -42,7 +42,7 @@ var Information_Form = [
               // dynamic:"mainfield",//controls others data
              
           },          
-          {
+          { 
             "InternalName": "RelatedBenefitMetrics",
             "DisplayNameEn": "Related Benefit Metrics",
             "DisplayName": "مقاييس المنافع",

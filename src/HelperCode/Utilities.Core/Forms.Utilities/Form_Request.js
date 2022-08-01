@@ -460,6 +460,9 @@ window.Edit_Data_Request = {
       equationKPI.init();
 
 
+      if (isSPMAdmin) {
+        $('#Year').prop('disabled', true);
+      }
 
 
       // to handle the relates strategy
@@ -1226,6 +1229,18 @@ window.View_Data_Request = {
 
       equationKPI.init();
 
+      $('#Year,#Months,#Quarter,#Midterms,#Years').removeAttr('required');
+
+      if (PeriodType == 'monthly') {
+        $('#Quarter,#Midterms,#Years').parent().hide();
+      } else if (PeriodType == 'quarter') {
+        $('#Months,#Midterms,#Years').parent().hide();
+      } else if (PeriodType == 'midterm') {
+        $('#Months,#Quarter,#Years').parent().hide();
+      } else if (PeriodType == 'year') {
+        $('#Months,#Quarter,#Midterms').parent().hide();
+      }
+
     }
     if (listkey == "goalstrategy") {
       if (isVROP) {
@@ -1237,6 +1252,13 @@ window.View_Data_Request = {
       // if(types == 'sub' || types == 'sectorial'){ // to hide the PillersExist
       //   $('#PillarsExist').parent().hide()
       // }
+    }
+    if (listkey == 'invoices' && PCODE) {
+      DeliverableRelatedToInvoice = oListItem.get_item('Deliverable'); 
+      if (DeliverableRelatedToInvoice) {
+        var myselections = DeliverableRelatedToInvoice ? DeliverableRelatedToInvoice.split(":::") : [] // add myselection to handle mult delivrable in invoices
+        MultiSelect_View.init('Deliverables',myselections)
+      }
     }
     if (isVROE) {
       if (listkey == "initiatives") {
@@ -2795,6 +2817,61 @@ window.Initiative_Strategy_Sos = {
   },
 }
 
+
+window.MultiSelect_View = { // use it for invoices cause we need to save the delivrable code to use it in chart elmezaneyah in project home
+  onSuccess: function (sender, args) {
+    MultiSelect_View.g.array = [];
+    var collListItem = MultiSelect_View.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      MultiSelect_View.g.array.push({
+        name: oListItem.get_item("Name"),
+        code: oListItem.get_item("Title"),
+        id: oListItem.get_id(),
+      });
+    }
+
+    if (isView) { // to get the name of delivrable over the code
+      var relatedDelevrableName = ''
+      MultiSelect_View.g.array.forEach(el => {
+        relatedDelevrableName += el.name + '<br>'
+      })
+
+      console.log(relatedDelevrableName, "relatedDelevrableName relatedDelevrableName relatedDelevrableName")
+    }
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  init: function (listName, array) {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle(listName);
+    var camlQuery = new SP.CamlQuery();
+    var query = ''
+    query = '<View><Query><Where><And><In><FieldRef Name="Title" /><Values>';
+    array.forEach(function (item) {
+      query += '<Value Type="Text">' + item + '</Value>';
+    });
+    query += '</Values></In><Neq><FieldRef Name=\'DeletionStatus\'/><Value Type=\'Text\'>Deleted</Value></Neq></And></Where></Query></View>';
+
+    // var query = '<View><Query><Where><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + code + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
+
+    camlQuery.set_viewXml(query);
+    MultiSelect_View.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(MultiSelect_View.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, MultiSelect_View.onSuccess),
+      Function.createDelegate(this, MultiSelect_View.onError)
+    );
+  },
+  g: {
+    array: [],
+  }
+}
+
 //get ProjectInitiativeDelevrable
 window.ProjectInitiativeDelevrable = {
   onSuccess: function (sender, args) {
@@ -4324,10 +4401,13 @@ var equationKPI = {
         $("p#Equation").text(kpiEquation || 0);
       }
     }
-    if (isAdmin || isSPMAdmin || isPerformanceLeader || isVROP) {
+    if (isAdmin || isSPMAdmin || isVROP) { // remove attr disabled for this roles in equation
       $(".savecancelBtns > div, .btnactionrow > .rightBtns").append(
         '<button data-trans-editequation class="btn btn-action Resources btn-edit-equation bg-warning" type="button"></button>'
       );
+
+    }
+    if (isAdmin || isPerformanceLeader || isVROP) {
       $("input#KPIEquation, input#Equation ,input#B, input#A, input#CC , input#D ,input#E,input#F,input#G").removeAttr('disabled');
     }
 

@@ -5970,3 +5970,7 @@ li.ms-core-menu-footer {
 .ul-bullet-remove {
     list-style: none;
 }
+
+.chartHeight{
+    max-height: 355px;
+}

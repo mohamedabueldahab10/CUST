@@ -222,7 +222,7 @@ export default class MainPageWebPart extends BaseClientSideWebPart<IMainPageWebP
 
                             </div>
                             <div class="ctx-block row mx-n2">
-                                <div class="col-12 col-lg-4 px-2 mb-3 cardIemClass" id="carditem1">
+                                <div class="col-12 col-lg-4 px-2 mb-3 cardIemClass chartHeight" id="carditem1">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="dropdown">
@@ -263,7 +263,7 @@ export default class MainPageWebPart extends BaseClientSideWebPart<IMainPageWebP
                                     </div>
 
                                 </div>
-                                <div class="col-12 col-lg-4 px-2 mb-3 cardIemClass" id="carditem3">
+                                <div class="col-12 col-lg-4 px-2 mb-3 cardIemClass chartHeight" id="carditem3">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="dropdown">
@@ -304,7 +304,7 @@ export default class MainPageWebPart extends BaseClientSideWebPart<IMainPageWebP
                                     </div>
 
                                 </div>
-                                <div class="col-12 col-lg-4 px-2 mb-3 cardIemClass" id="carditem2">
+                                <div class="col-12 col-lg-4 px-2 mb-3 cardIemClass chartHeight" id="carditem2">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="inner-title d-flex justify-content-between align-items-center">
@@ -437,7 +437,7 @@ export default class MainPageWebPart extends BaseClientSideWebPart<IMainPageWebP
                                     </div>
 
                                 </div>
-                                <!-- <div style="display:none" class="col-12 col-lg-4 px-2 mb-3 cardIemClass" id="carditem8">
+                                <!-- <div style="display:none" class="col-12 col-lg-4 px-2 mb-3 cardIemClass chartHeight" id="carditem8">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="inner-title d-flex justify-content-between align-items-center">
@@ -565,7 +565,8 @@ export default class MainPageWebPart extends BaseClientSideWebPart<IMainPageWebP
                                     </div>
 
                                 </div> -->
-                                <div class="col-12 col-lg-4 px-2 mb-3 cardIemClass" id="carditem4">
+                                
+                                <div class="col-12 col-lg-4 px-2 mb-3 cardIemClass chartHeight" id="carditem4" style="display:none">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="dropdown">
@@ -606,8 +607,9 @@ export default class MainPageWebPart extends BaseClientSideWebPart<IMainPageWebP
                                         <!-- end card body-->
                                     </div>
 
-                                </div>
-                                <div class="col-12 col-lg-4 px-2 mb-3 cardIemClass" id="carditem5">
+                                </div> 
+                               
+                                <div class="col-12 col-lg-4 px-2 mb-3 cardIemClass chartHeight" id="carditem5">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="dropdown">
@@ -648,7 +650,7 @@ export default class MainPageWebPart extends BaseClientSideWebPart<IMainPageWebP
                                     </div>
 
                                 </div>
-                                <div class="col-12 col-lg-4 px-2 mb-3 cardIemClass" id="carditem6">
+                                <div class="col-12 col-lg-4 px-2 mb-3 cardIemClass chartHeight" id="carditem6">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="dropdown">
@@ -691,7 +693,7 @@ export default class MainPageWebPart extends BaseClientSideWebPart<IMainPageWebP
                                     </div>
 
                                 </div>
-                                <div class="col-12 col-lg-4 px-2 mb-3 cardIemClass" id="carditem7">
+                                <div class="col-12 col-lg-4 px-2 mb-3 cardIemClass chartHeight" id="carditem7">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="dropdown">
@@ -734,12 +736,84 @@ export default class MainPageWebPart extends BaseClientSideWebPart<IMainPageWebP
                                     </div>
 
                                 </div>
+                                <div class="col-12 col-lg-4 px-2 mb-3 control-ctx required-support-ctx">
+                                <div
+                                    class="content-list-head d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3">
+                            
+                                    <div class="d-flex align-items-center">
+                                        <img src="${tasks}">
+                                        <h2 data-trans-title4 class="mb-0 mx-3 py-1 Resources" class="Resources"></h2>
+                                        <span class="badge badge-pill bg-gold px-3 white Rsupprot">0</span>
+                            
+                                    </div>
+                            
+                            
+                            
+                                </div>
+                                <div class="accordion" id="accordionRequiredSupport">
+                                    <div class="card">
+                                        <div class="card-header bg-white" id="headingOne">
+                                            <h3 data-trans-rsupport1 class="acc-header mb-0 py-3 px-2 Resources"
+                                                data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                                                aria-controls="collapseOne">
+                            
+                                            </h3>
+                                        </div>
+                            
+                                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                                            data-parent="#accordionRequiredSupport">
+                                            <div class="card-body">
+                                                <ul class="list-group">
+                            
+                            
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header bg-white" id="headingTwo">
+                                            <h3 data-trans-rsupport2 class="acc-header mb-0 py-3 px-2 Resources"
+                                                data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                                                aria-controls="collapseTwo">
+                            
+                                            </h3>
+                                        </div>
+                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                            data-parent="#accordionRequiredSupport">
+                                            <div class="card-body">
+                                                <ul class="list-group">
+                            
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header bg-white" id="headingThree">
+                                            <h3 data-trans-rsupport3 class="acc-header mb-0 py-3 px-2 Resources"
+                                                data-toggle="collapse" data-target="#collapseThree"
+                                                aria-expanded="false" aria-controls="collapseThree">
+                            
+                                            </h3>
+                                        </div>
+                                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                                            data-parent="#accordionRequiredSupport">
+                                            <div class="card-body">
+                                                <ul class="list-group">
+                            
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                                
                             </div>
                         </div>
                     </div>
                     <div class="col-12 col-lg-12">
                         <div class="ctx-block row mx-n2">
-                            <div class="col-12 col-lg-8 px-2 mb-3 control-ctx projects-ctx ">
+                            <div class="col-12 col-lg-12 px-2 mb-3 control-ctx projects-ctx ">
                                 <div
                                     class="content-list-head d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4 mb-3">
                                     <div class="d-flex align-items-center">
@@ -820,76 +894,7 @@ export default class MainPageWebPart extends BaseClientSideWebPart<IMainPageWebP
 
 
                             </div>
-                            <div class="col-12 col-lg-4 px-2 mb-3 control-ctx required-support-ctx">
-                                <div
-                                    class="content-list-head d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4 mb-3">
-
-                                    <div class="d-flex align-items-center">
-                                        <img src="${tasks}">
-                                        <h2 data-trans-title4 class="mb-0 mx-3 py-1 Resources" class="Resources"></h2>
-                                        <span class="badge badge-pill bg-gold px-3 white Rsupprot">0</span>
-
-                                    </div>
-
-
-
-                                </div>
-                                <div class="accordion" id="accordionRequiredSupport">
-                                    <div class="card">
-                                        <div class="card-header bg-white" id="headingOne">
-                                            <h3 data-trans-rsupport1 class="acc-header mb-0 py-3 px-2 Resources"
-                                                data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
-                                                aria-controls="collapseOne">
-
-                                            </h3>
-                                        </div>
-
-                                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
-                                            data-parent="#accordionRequiredSupport">
-                                            <div class="card-body">
-                                                <ul class="list-group">
-
-
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-header bg-white" id="headingTwo">
-                                            <h3 data-trans-rsupport2 class="acc-header mb-0 py-3 px-2 Resources"
-                                                data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
-                                                aria-controls="collapseTwo">
-
-                                            </h3>
-                                        </div>
-                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                                            data-parent="#accordionRequiredSupport">
-                                            <div class="card-body">
-                                                <ul class="list-group">
-
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-header bg-white" id="headingThree">
-                                            <h3 data-trans-rsupport3 class="acc-header mb-0 py-3 px-2 Resources"
-                                                data-toggle="collapse" data-target="#collapseThree"
-                                                aria-expanded="false" aria-controls="collapseThree">
-
-                                            </h3>
-                                        </div>
-                                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-                                            data-parent="#accordionRequiredSupport">
-                                            <div class="card-body">
-                                                <ul class="list-group">
-
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <!-- item ejraa matloob removed from here-->
                         </div>
 
                     </div>
