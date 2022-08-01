@@ -9,7 +9,7 @@ var Information_Form = [{
             "DisplayName": "المحفظة",
             "DisplayNameEn": "Portfolio",
             "type": "lookup",
-            "validation": "required",
+            // "validation": "required",
             //from other list:
             "source": "Portfolio",
             "Dispfieldkey": "Name",
