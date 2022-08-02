@@ -33,6 +33,11 @@ var Information_Form  = [
                 "DisplayName":"الوزن المكافئ للإنجاز %",
                 "type":"floatpercentage",
                 "validation": "required",
+                security: {
+                    groups: [
+                      'EPMO'
+                    ]
+                },
             },
            
             {
@@ -50,7 +55,12 @@ var Information_Form  = [
                             value: 'no'
                         }
                     ]
-                }
+                },
+                security: {
+                    groups: [
+                      'EPMO'
+                    ]
+                },
             },
             {
                 "InternalName": "ActualCompletedDate",

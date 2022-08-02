@@ -993,7 +993,7 @@ var Information_Form = [{
         "DisplayName": "المرفقات",
         "DisplayNameEn": "Attachments",
         "type": "file",
-        "fileExtensions": "png,jpeg,svg,xlsx,docx,jpg,txt,pdf",
+        "fileExtensions": "png,jpeg,svg,xlsx,docx,jpg,txt,pdf,rar,msg",
         "withAddBtn":"true"
     }]
 }

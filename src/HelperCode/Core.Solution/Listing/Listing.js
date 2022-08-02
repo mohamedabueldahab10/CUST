@@ -473,11 +473,11 @@ window.ListingData = {
             } else if (ICODE) {
               html += '<li class="list-group-item link-arrow">' +
                 '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&ICODE=" + ICODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">';
-            } else if (USERlistkey == 'closureform' && PCODE){
+            } else if (USERlistkey == 'closureform' && PCODE) {
               debugger
               html += '<li class="list-group-item link-arrow">' +
                 '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&PCODE=" + PCODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">';
-            
+
             } else {
               html += '<li class="list-group-item link-arrow">' +
                 '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&PCODE=" + records[i].ProjectCode + "&IID=" + RecordsWithID[i].ID + isWFs + '">';
@@ -507,9 +507,9 @@ window.ListingData = {
                 //First column
                 if (Field_In_Use[0].InternalName == Listing_Info[0].InternalName) {
                   if (!isTasks) {
-             
+
                     if (Field_In_Use[0].needTrans == true && obj[key] != No_Data) {
-                 
+
                       html += '<div class="d-inline-flex flex-column" style="width:25%!important">' +
                         '<h4 data-trans-' + obj[key] + ' class="acc-title d-inline-flex black Resources" style="margin:0px!important;margin-bottom:.5rem!important"></h4>';
                       if (records[i].ProjectType == 'Internal') {
@@ -536,8 +536,8 @@ window.ListingData = {
                 //Second column
                 else if (Field_In_Use[0].InternalName == Listing_Info[1].InternalName) {
                   if (!isTasks) {
-                    console.log(obj[key],"obj[key]")
-                    console.log(Field_In_Use[0],"Field_In_Use[0]")
+                    console.log(obj[key], "obj[key]")
+                    console.log(Field_In_Use[0], "Field_In_Use[0]")
                     debugger
                     if (Field_In_Use[0].needTrans == true && obj[key] != No_Data) {
                       // console.log('obj[key]', obj[key]);
@@ -702,7 +702,7 @@ window.ListingData = {
           }
 
           var projectsListing = '';
-   
+
           if (originalstate || (!isLoadMore)) { // fix project list tabs to show
             if (typeClicked == 'Internal') {
               projectsListing = '<ul class="nav nav-tabs" id="projectType" role="tablist"><li class="nav-item"><a data-trans-Internal class="nav-link active Resources" id="Internal" data-toggle="tab" href="#InternalProjects" role="tab" aria-controls="InternalProjects" aria-selected="true"></a></li ><li class="nav-item"><a data-trans-External class="nav-link Resources" id="External" data-toggle="tab" href="#ExternalProjects" role="tab" aria-controls="ExternalProjects" aria-selected="false"></a></li></ul>'
@@ -735,7 +735,7 @@ window.ListingData = {
           }
 
           // one item can create to close the initiative and project
-          
+
           if (records.length && (listkey == 'closureinitiative' || listkey == 'closureform')) {
             $("body").append(
               "<style>" +
@@ -747,9 +747,9 @@ window.ListingData = {
           // add illustration when there is no item on list
 
           if (records.length == 0 && !originalstate) {
-            if(listkey == 'projects'){
+            if (listkey == 'projects') {
               $('ul.list-group.w-100 .tab-content').html(`<div style="text-align:center;background:#fff"><img css="w-100" src="${emptyData}" style="height:40vh;width:40vh;"/><p data-trans-nofilterdata class="Resources" style="text-align:center;font-size:13px;padding-bottom:13px"></p></div>`)
-            }else{
+            } else {
               $('ul.list-group.w-100').html(`<div style="text-align:center;background:#fff"><img css="w-100" src="${emptyData}" style="height:40vh;width:40vh;"/><p data-trans-nofilterdata class="Resources" style="text-align:center;font-size:13px;padding-bottom:13px"></p></div>`)
             }
           }
@@ -1702,7 +1702,7 @@ window.delegatedtaskcode,
 window.assignedToGroup,
   window.userName,
   window.taskId;
-  // var assignedToGroup = ''
+// var assignedToGroup = ''
 window.Delegate_Data_Submit = {
   onSuccess: function (sender, args) {
     var collListItem = Delegate_Data_Submit.g.collListItem;
@@ -1728,9 +1728,10 @@ window.Delegate_Data_Submit = {
       TaskDelegatedFrom = currentItem.get_item('AssignedTo');
 
       // if (Workflowname == "Project" || Workflowname == "Idea") {
-        // console.log(wo\\)
-        if(Workflowname == 'Project' || Workflowname == 'DV'){ // should change after mah fix tsk configration list
-          // debugger
+      // console.log(wo\\)
+      // if(Workflowname == 'Project' || Workflowname == 'DV'){ // should change after mah fix tsk configration list
+      // debugger
+      if (Workflowname) {
         if (localStorage.getItem('Dynamo_Tasks Configuration') != null) {
           stages = JSON.parse(localStorage.getItem("Dynamo_Tasks Configuration") || "[]");
           stages = stages.filter(function (item) {
@@ -1739,6 +1740,7 @@ window.Delegate_Data_Submit = {
           assignedToGroup = stages[0].group;
         }
       }
+      // } 
       if ($('#AssignedTo').find('span.sp-peoplepicker-userSpan').length) {
         var id = $('#AssignedTo').attr('id');
         ppp = ($('#AssignedTo').find('span.sp-peoplepicker-userSpan').attr('sid') == undefined) ? '' : SP.FieldUserValue.fromUser($('#AssignedTo').find('span.sp-peoplepicker-userSpan').attr('sid')); //.split('|').slice(-1)[0]

@@ -284,7 +284,9 @@ window.userCalls = {
     });
   },
   isMember: function (groupName, userLoginName, fieldID) {
-
+    console.log(groupName,"groupName groupName")
+    console.log(userLoginName,"userLoginName")
+    console.log(fieldID,"fieldID")
     $.ajax({
       url:
         _spPageContextInfo.webAbsoluteUrl +

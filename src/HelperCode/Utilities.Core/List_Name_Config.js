@@ -566,4 +566,4 @@ var PageArray = [{
     // research query url index
 
 
-var FilesExtensions = ['jpeg', 'png', 'svg', 'xlsx', 'docx','pdf','pptx','rar'];
+var FilesExtensions = ['jpeg', 'png', 'svg', 'xlsx', 'docx','pdf','pptx','rar','msg'];
