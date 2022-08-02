@@ -2312,7 +2312,6 @@ window.Department_Sector_Info = {
 var typeOfIndex = ''
 window.Kpi_Related_Goal = {
   onSuccess: function (sender, args) {
-    console.log("inside Kpi_Related_Goal")
     Kpi_Related_Goal.g.array = [];
     var collListItem = Kpi_Related_Goal.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
@@ -2372,12 +2371,14 @@ window.Kpi_Related_Goal = {
     var oList = clientContext.get_web().get_lists().getByTitle("SOs");
     var camlQuery = new SP.CamlQuery();
     typeOfIndex = indexType
-    // camlQuery.set_viewXml("<View><Query></Query></View>");
-    // var query = ''
-    // if (indexType == 'main') {
-    var query = '<View><Query><Where><And><Eq><FieldRef Name="RelatedStrategy" /><Value Type="Text">' + SosCode + '</Value></Eq><Eq><FieldRef Name="Types" /><Value Type="Choice">' + indexType + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
-    // camlQuery.set_viewXml('<View><Query><Where><Eq><FieldRef Name="RelatedStrategy" /><Value Type="Text">' + SosCode + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>');
-    // }
+
+    // var query = '<View><Query><Where><And><Eq><FieldRef Name="RelatedStrategy" /><Value Type="Text">' + SosCode + '</Value></Eq><Eq><FieldRef Name="Types" /><Value Type="Choice">' + indexType + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
+    
+  //add FieldRef Name and Acending tru to sorth the data alphabetical
+    var query = '<View><Query><Where><And><Eq><FieldRef Name="RelatedStrategy" /><Value Type="Text">' + SosCode + '</Value></Eq><Eq><FieldRef Name="Types" /><Value Type="Choice">' + indexType + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>'
+
+    console.log("inside Kpi_Related_Goal",query)
+
     camlQuery.set_viewXml(query);
     Kpi_Related_Goal.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Kpi_Related_Goal.g.collListItem);
@@ -2941,7 +2942,7 @@ window.ProjectInitiativeDelevrable = {
     var oList = clientContext.get_web().get_lists().getByTitle(listName);
     var camlQuery = new SP.CamlQuery();
 
-    var query = '<View><Query><Where><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + code + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
+    var query = '<View><Query><Where><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + code + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>'
 
     camlQuery.set_viewXml(query);
     ProjectInitiativeDelevrable.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only

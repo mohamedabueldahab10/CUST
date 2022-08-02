@@ -462,7 +462,7 @@ window.ListInfo = {
               })
 
               $("select#RelatedStrategy").change(function () {
-                debugger
+
                 var relatedStrategyCode = $(this).val()
                 var indexType = $('#Types').val();
                 Goal_Strategy_Info.init(relatedStrategyCode)
@@ -985,7 +985,7 @@ window.ListInfo = {
     }
     var max;
     if (element.max == "today") {
-      debugger;
+
       max = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
     } else {
       max = "9999-12-31";
@@ -1307,9 +1307,11 @@ window.ListInfo = {
         break;
 
       case 'lookupmultiselect':
+        debugger
         var customQuery;
         if (PCODE && listkey == "invoices") { // get only delevered yes from delivrable
-          customQuery = '<View><Query><Where><And><Eq><FieldRef Name="Delivered" /><Value Type="Choice">yes</Value></Eq><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="ProjectCode" /><Value Type="Text">' + PCODE + '</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
+          //change FieldRef to Name and Acending True to can sort alphapetics arabic and english
+          customQuery = '<View><Query><Where><And><Eq><FieldRef Name="Delivered" /><Value Type="Choice">yes</Value></Eq><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="ProjectCode" /><Value Type="Text">' + PCODE + '</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>';
         } else if (PCODE && element.source != 'Vendors' && element.source != 'InitiativeDeliverables') { // to avoid the error on edit page for multi select
           customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="ProjectCode" /><Value Type="Text">' + PCODE + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
         } else {
@@ -1453,11 +1455,9 @@ window.ListInfo = {
         } else if (PCODE && listkey == "invoices") {
           customQuery = '<View><Query><Where><And><Eq><FieldRef Name="Delivered" /><Value Type="Choice">yes</Value></Eq><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="ProjectCode" /><Value Type="Text">' + PCODE + '</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
         }
-        // else if (PCODE && element.source != 'Vendors') {
-        //   customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="ProjectCode" /><Value Type="Text">' + PCODE + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
-        // }
         else {
-          customQuery = '<View><Query><Where><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
+          //change FieldRef to Name and Acending True to can sort alphapetics arabic and english
+          customQuery = '<View><Query><Where><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>';
         }
 
         if ((listkey == 'sos' && element.InternalName == 'RelatedStrategy') || (listkey == 'mainkpi' && element.InternalName == 'RelatedStrategy')) { // to get the related strategy type based on user Role
@@ -1470,10 +1470,12 @@ window.ListInfo = {
 
         //if ICODE and listkey = 'initiativedeli'
         if (ICODE && element.source == 'Benefits') {
-          customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + ICODE + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
+          //change FieldRef to Name and Acending True to can sort alphapetics arabic and english
+          customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + ICODE + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>';
         }
         if (ICODE && element.source == 'InitiativeDeliverables' && listkey == 'initiativemilestones') {
-          customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + ICODE + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
+          //change FieldRef to Name and Acending True to can sort alphapetics arabic and english
+          customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + ICODE + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>';
         }
         //ghufran User dropdown security
         if (isEPMO || isSPMAdmin || isSPMTeam) {
@@ -2003,7 +2005,7 @@ window.ListInfo = {
     requiredSpillarsName: function () {
       var PillarsExist = $('#PillarsExist:checked').val();
       // console.log(Delivered, "ddddddddddddd")
-      debugger
+
       if (PillarsExist == 'yes') {
         $('[data-target_list="SPillars"] #Name').attr('required', 'required');
         $('[data-target_list="SPillars"] #Name').parent().attr('required', 'required');
@@ -3564,7 +3566,7 @@ var deliverabePercent = {
     var listItemEnum = collListItem.getEnumerator();
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
-      debugger;
+
       console.warn('weight value!!!!!!!!!', oListItem.get_item('Weight'));
       RevenuesAmount += oListItem.get_item('Weight') || 0;
     }
@@ -3591,7 +3593,7 @@ var deliverabePercent = {
     var ReQUERY;
     ReQUERY = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="ProjectCode" /><Value Type="Text">' + PCODE + '</Value></Eq></And></Where></Query></View>';
 
-    debugger;
+
     camlQuery.set_viewXml(ReQUERY);
     deliverabePercent.g.collListItem = oList.getItems(camlQuery);//declared inside object scope only
     clientContext.load(deliverabePercent.g.collListItem);
@@ -3629,7 +3631,7 @@ var deliverabeInitiativePercent = {
     var listItemEnum = collListItem.getEnumerator();
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
-      debugger;
+
       console.warn('weight value!!!!!!!!!', oListItem.get_item('Weight'));
       RevenuesAmountInit += oListItem.get_item('Weight') || 0;
     }
@@ -3656,7 +3658,7 @@ var deliverabeInitiativePercent = {
     var ReQUERY;
     ReQUERY = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + ICODE + '</Value></Eq></And></Where></Query></View>';
 
-    debugger;
+
     camlQuery.set_viewXml(ReQUERY);
     deliverabeInitiativePercent.g.collListItem = oList.getItems(camlQuery);//declared inside object scope only
     clientContext.load(deliverabeInitiativePercent.g.collListItem);
@@ -3694,7 +3696,7 @@ var benefitmetricsPercent = {
     var listItemEnum = collListItem.getEnumerator();
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
-      debugger;
+
       console.warn('weight value!!!!!!!!!', oListItem.get_item('Weight'));
       RevenuesAmount += oListItem.get_item('Weight') || 0;
     }
@@ -3721,7 +3723,7 @@ var benefitmetricsPercent = {
     var ReQUERY;
     ReQUERY = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + ICODE + '</Value></Eq></And></Where></Query></View>';
 
-    debugger;
+
     camlQuery.set_viewXml(ReQUERY);
     benefitmetricsPercent.g.collListItem = oList.getItems(camlQuery);//declared inside object scope only
     clientContext.load(benefitmetricsPercent.g.collListItem);
