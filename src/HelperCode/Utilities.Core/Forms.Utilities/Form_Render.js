@@ -1561,9 +1561,10 @@ window.ListInfo = {
         break;
 
       case 'lookupWithQuery':
-        var customQuery;
 
-        customQuery = '<View><Query><Where><Eq><FieldRef Name="' + element.queryField + '" /><Value Type="' + element.queryFieldType + '">' + element.queryFieldValue + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>';
+        var customQuery;
+        //change FieldRef to Name and Acending True to can sort alphapetics arabic and english
+        customQuery = '<View><Query><Where><Eq><FieldRef Name="' + element.queryField + '" /><Value Type="' + element.queryFieldType + '">' + element.queryFieldValue + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>';
         htmlBody = '<div class="col-md-6 CFIELD ' + element.className + ' " ' + thistip + ' ' + hidestagesIDs + ' ' + editableBy + ' ' + showstagesIDs + '  ' + disablestagesIDs + '  ' + enablestagesIDs + '   ' + isWfhidestagesIDs + ' ' + requireOnWfTaskstagesIDs + ' ' + isWfshowstagesIDs + '  ' + isWfdisablestagesIDs + '  ' + isWfenablestagesIDs + '    data-groups="' + groups + '" style="display:' + element.display + '">' +
           '<label for="' + element.InternalName + '" ' + element.validation + '>' + displayName + '</label>' +
           '<select ' + ToggleName + '  ' + element.validation + ' ' + dynamic + ' data-listname="' + element.source + '" data-valfieldkey="' + element.valfieldkey + '" data-Dispfieldkey="' + element.Dispfieldkey + '" class="form-control" type="dropdown" id="' + element.InternalName + '" value="" placeholder="' + displayName + '" ' + element.state + '><option value="" ' + selected + ' disabled>' + displayName + '</option>';
