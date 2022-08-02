@@ -948,7 +948,6 @@ var Milestones_Info_Request = {
   },
   onSuccess: function (sender, args) {
     console.log("INISDE MILESTONE")
-    var dateNow = new Date();
 
     var collListItem = Milestones_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
@@ -998,16 +997,18 @@ var Milestones_Info_Request = {
         '</li>');
 
       debugger
+      var dateNowToday = new Date();
 
       if (plannedDate) {
+        console.log(plannedDate,"plannedDate plannedDate ")
         plannedDate = plannedDate.getTime()
-        dateNow = dateNow.getTime()
+        dateNowToday = dateNowToday.getTime()
       }
 
       if (Status == 'yes') {
         completedRatio++
       }
-      if ((plannedDate <= dateNow) && Status == 'no') {
+      if ((plannedDate <= dateNowToday) && Status == 'no') {
         plannedRatio++
       }
 
