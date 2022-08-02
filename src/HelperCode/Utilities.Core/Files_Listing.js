@@ -14,6 +14,8 @@ if(window.location.href.indexOf('ICODE=') > -1){
   ICODE = window.location.href.split('ICODE=')[1].split('&')[0];
 }
 
+console.log('Correct File listing')
+
 if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
   var No_Data = 'لا يوجد ملفات'
   // $('.back').html(`<i class="fas fa-arrow-left"></i>`)
@@ -217,7 +219,7 @@ var GetFilesFromFolder = {
     });
     $('.stage-folders').append(phasesFilesHTML);
     // Folder on click
-    // GetFilesFromFolder.g.folderBehavior();
+    GetFilesFromFolder.g.folderBehavior(); // enable here to can enter the folder after create the folders
     $('.loader-box').fadeOut();
   },
   OnFailureGetFilesFromFolder: function (sender, args) {
@@ -248,6 +250,9 @@ var GetFilesFromFolder = {
     },
     folderBehavior: function () {
       $('.folder,.custom-phased').on("click", function () {
+        console.log("CLICKEEEEEEEEED")
+        debugger
+
         if ($(this).hasClass('custom-phased')) {
           $(this).addClass('show');
           $('.custom-folder').removeClass('show');
@@ -392,7 +397,7 @@ var Phases_Data_Request = {
     Phases_Data_Request.g.phasesSelect();
     GetFilesFromFolder.g.submitPhaseGate();
     $('.folder-wrap#Phasegate').html(phasesFoldersHtml);
-    GetFilesFromFolder.g.folderBehavior();
+    // GetFilesFromFolder.g.folderBehavior();
 
   },
   onError: function (sender, args) {
