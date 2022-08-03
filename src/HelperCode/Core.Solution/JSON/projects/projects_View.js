@@ -454,44 +454,44 @@ var Information_Form = [{
         //     "DisplayNameEn": "Schedule",
         //     "type": "string"
         // },
-        {
-            "InternalName": "ProjectExecutiveSummary",
-            "DisplayName": "الملخص التنفيذي للمشروع",
-            "DisplayNameEn": "Project Executive Summary",
-            "type": "multiline"
-        },
+        // {
+        //     "InternalName": "ProjectExecutiveSummary",
+        //     "DisplayName": "الملخص التنفيذي للمشروع",
+        //     "DisplayNameEn": "Project Executive Summary",
+        //     "type": "multiline"
+        // },
         {
             "InternalName": "ProjectOverview",
             "DisplayName": "ملخص المشروع",
             "DisplayNameEn": "Project Overview",
             "type": "multiline"
         },
-        {
-            "InternalName": "EstimatedCost",
-            "DisplayName": "التقدير عند الاكتمال",
-            "DisplayNameEn": "Estimated Cost",
-            "type": "float",
-            //"state": "disabled"
-        },
-        {
-            "InternalName": "EstimatedEffortHours",
-            "DisplayName": "ساعات العمل المتوقعة",
-            "DisplayNameEn": "Estimated Effort Hours",
-            "type": "float"
-        },
-        {
-            "InternalName": "EstimatedDuration",
-            "DisplayName": "المدة المتوقعة",
-            "DisplayNameEn": "Estimated Duration",
-            "type": "float"
-        },
-        {
-            "InternalName": "ActualDuration",
-            "DisplayName": "المدة الفعلية",
-            "DisplayNameEn": "Acual Duration",
-            "type": "float",
-            // "state": "disabled"
-        },
+        // {
+        //     "InternalName": "EstimatedCost",
+        //     "DisplayName": "التقدير عند الاكتمال",
+        //     "DisplayNameEn": "Estimated Cost",
+        //     "type": "float",
+        //     //"state": "disabled"
+        // },
+        // {
+        //     "InternalName": "EstimatedEffortHours",
+        //     "DisplayName": "ساعات العمل المتوقعة",
+        //     "DisplayNameEn": "Estimated Effort Hours",
+        //     "type": "float"
+        // },
+        // {
+        //     "InternalName": "EstimatedDuration",
+        //     "DisplayName": "المدة المتوقعة",
+        //     "DisplayNameEn": "Estimated Duration",
+        //     "type": "float"
+        // },
+        // {
+        //     "InternalName": "ActualDuration",
+        //     "DisplayName": "المدة الفعلية",
+        //     "DisplayNameEn": "Acual Duration",
+        //     "type": "float",
+        //     // "state": "disabled"
+        // },
        
         // {
         //     "InternalName": "ProjectApproach",
@@ -499,18 +499,18 @@ var Information_Form = [{
         //     "DisplayNameEn": "Project Approach",
         //     "type": "multiline"
         // },
-        {
-            "InternalName": "ProjectOrganization",
-            "DisplayName": "منظمة المشروع",
-            "DisplayNameEn": "Project Organization",
-            "type": "multiline"
-        },
-        {
-            "InternalName": "Assumptions",
-            "DisplayName": " إفتراضات المشروع",
-            "DisplayNameEn": "Project Assumptions",
-            "type": "multiline"
-        },
+        // {
+        //     "InternalName": "ProjectOrganization",
+        //     "DisplayName": "منظمة المشروع",
+        //     "DisplayNameEn": "Project Organization",
+        //     "type": "multiline"
+        // },
+        // {
+        //     "InternalName": "Assumptions",
+        //     "DisplayName": " إفتراضات المشروع",
+        //     "DisplayNameEn": "Project Assumptions",
+        //     "type": "multiline"
+        // },
         {
             "InternalName": "Status",
             "DisplayName": "مرحلة المشروع",

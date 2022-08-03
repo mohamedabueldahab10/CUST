@@ -65,19 +65,19 @@ var Information_Form = [{
             },
             // hideonstage: "1"
         },
-        {
-            "InternalName": "Comments",
-            "DisplayName": "ملاحظات",
-            "DisplayNameEn": "Comments",
-            "type": "multiline",
-            "maxchar": 5000,
-            security: {
-                groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App', 'SPMO','Development Unit'
-                ]
-            },
-            // hideonstage: "1"
-        },
+        // {
+        //     "InternalName": "Comments",
+        //     "DisplayName": "ملاحظات",
+        //     "DisplayNameEn": "Comments",
+        //     "type": "multiline",
+        //     "maxchar": 5000,
+        //     security: {
+        //         groups: [
+        //             'EPMO', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App', 'SPMO','Development Unit'
+        //         ]
+        //     },
+        //     // hideonstage: "1"
+        // },
         {
             "InternalName": "PMNotes",
             "DisplayName": "ملاحظات مدير المشروع",
@@ -503,14 +503,14 @@ var Information_Form = [{
         //     "type": "string",
         //     //"state": "disabled"
         // },
-        {
-            "InternalName": "ProjectExecutiveSummary",
-            "DisplayName": "الملخص التنفيذي للمشروع",
-            "DisplayNameEn": "Project Executive Summary",
-            "type": "multiline",
-            "maxchar": 5000,
-            //"state": "disabled"
-        },
+        // {
+        //     "InternalName": "ProjectExecutiveSummary",
+        //     "DisplayName": "الملخص التنفيذي للمشروع",
+        //     "DisplayNameEn": "Project Executive Summary",
+        //     "type": "multiline",
+        //     "maxchar": 5000,
+        //     //"state": "disabled"
+        // },
         {
             "InternalName": "ProjectOverview",
             "DisplayName": "ملخص المشروع",
@@ -519,51 +519,51 @@ var Information_Form = [{
             "maxchar": 5000,
             //"state": "disabled"
         },
-        {
-            "InternalName": "EstimatedCost",
-            "DisplayName": "التقدير عند الاكتمال",
-            "DisplayNameEn": "Estimated Cost",
-            "type": "float",
-            //"state": "disabled"
-        },
-        {
-            "InternalName": "EstimatedEffortHours",
-            "DisplayName": "ساعات العمل المتوقعة",
-            "DisplayNameEn": "Estimated Effort Hours",
-            "type": "float",
-            // //"state": "disabled"
-        },
-        {
-            "InternalName": "EstimatedDuration",
-            "DisplayName": "المدة المتوقعة",
-            "DisplayNameEn": "Estimated Duration",
-            "type": "float",
-            // "state": "disabled"
-        },
-        {
-            "InternalName": "ActualDuration",
-            "DisplayName": "المدة الفعلية",
-            "DisplayNameEn": "Acual Duration",
-            "type": "float",
-            // "state": "disabled"
-        },
+        // {
+        //     "InternalName": "EstimatedCost",
+        //     "DisplayName": "التقدير عند الاكتمال",
+        //     "DisplayNameEn": "Estimated Cost",
+        //     "type": "float",
+        //     //"state": "disabled"
+        // },
+        // {
+        //     "InternalName": "EstimatedEffortHours",
+        //     "DisplayName": "ساعات العمل المتوقعة",
+        //     "DisplayNameEn": "Estimated Effort Hours",
+        //     "type": "float",
+        //     // //"state": "disabled"
+        // },
+        // {
+        //     "InternalName": "EstimatedDuration",
+        //     "DisplayName": "المدة المتوقعة",
+        //     "DisplayNameEn": "Estimated Duration",
+        //     "type": "float",
+        //     // "state": "disabled"
+        // },
+        // {
+        //     "InternalName": "ActualDuration",
+        //     "DisplayName": "المدة الفعلية",
+        //     "DisplayNameEn": "Acual Duration",
+        //     "type": "float",
+        //     // "state": "disabled"
+        // },
 
-        {
-            "InternalName": "ProjectOrganization",
-            "DisplayName": "منظمة المشروع",
-            "DisplayNameEn": "Project Organization",
-            "type": "multiline",
-            "maxchar": 5000,
-            //"state": "disabled"
-        },
-        {
-            "InternalName": "Assumptions",
-            "DisplayName": " إفتراضات المشروع",
-            "DisplayNameEn": "Project Assumptions",
-            "type": "multiline",
-            "maxchar": 5000,
-            //"state": "disabled"
-        },
+        // {
+        //     "InternalName": "ProjectOrganization",
+        //     "DisplayName": "منظمة المشروع",
+        //     "DisplayNameEn": "Project Organization",
+        //     "type": "multiline",
+        //     "maxchar": 5000,
+        //     //"state": "disabled"
+        // },
+        // {
+        //     "InternalName": "Assumptions",
+        //     "DisplayName": " إفتراضات المشروع",
+        //     "DisplayNameEn": "Project Assumptions",
+        //     "type": "multiline",
+        //     "maxchar": 5000,
+        //     //"state": "disabled"
+        // },
         // {
         //     "InternalName": "CreatedDate",
         //     "DisplayName": "تاريخ الإنشاء",

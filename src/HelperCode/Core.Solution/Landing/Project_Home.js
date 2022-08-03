@@ -1054,10 +1054,10 @@ var Deliverables_Info_Request = {
 
     // $('.project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black').text(plannedImplementationRate + '%');
 
-    $('button.updateprogress').on('click', function () {
-      EPM_Project_Data_Request.preinit();
-    });
-    $('button.updateprogress').prop('disabled', false);
+    // $('button.updateprogress').on('click', function () {
+    //   EPM_Project_Data_Request.preinit();
+    // });
+    // $('button.updateprogress').prop('disabled', false);
     //sarf mutawaka3
     numberofyesExp = ExpDeliverablesarray.filter((v) => (v.delivered === 'yes'));
 
@@ -2194,9 +2194,8 @@ var EPM_Project_Data_Request = {
 
     EPM_Project_Summery_Task.preinit()
 
-    if (!onLoad) ProgressStatus_Data_Submit.init();
-    // ProgressStatus_Data_Submit.init();
-    onLoad = false;
+    // if (!onLoad) ProgressStatus_Data_Submit.init();
+    // onLoad = false;
   },
   // Global variables
   g: {}
@@ -2264,8 +2263,11 @@ var EPM_Project_Summery_Task = {
     }
     $('.project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black').text(plannedPercentage + '%');
 
-    console.log(getBaseLineDuration, "oProjectsItem ddddddddddddddddddddddddddddddddd")
-    console.log(plannedPercentage, "plannedPercentage plannedPercentagssssssssssssssssssssssssssssssssssse")
+    console.log(getBaseLineDuration, "getBaseLineDuration")
+    console.log(plannedPercentage, "plannedPercentage")
+
+   ProgressStatus_Data_Submit.init(); // update the project auto when open the page
+ 
 
   },
   // Global variables

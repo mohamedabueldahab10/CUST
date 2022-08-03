@@ -784,7 +784,7 @@ button.btn.pop-green.cancelbutton.Resources {
 .page-title,
 #relatedItemTitle {
     padding: 1.6rem 0;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: 500;
     margin: 0;
 }
@@ -2802,7 +2802,7 @@ select.schedule-src {
     font-size: 22px !important;
     box-sizing: border-box !important;
     position: absolute !important;
-    top: 58% !important;
+    top: 87% !important;
     left: 20px !important;
     width: 20px !important;
     height: 20px !important;
@@ -2838,7 +2838,7 @@ select.schedule-src {
     font-size: 22px !important;
     box-sizing: border-box !important;
     position: absolute !important;
-    top: 58% !important;
+    top: 89% !important;
     right: 20px !important;
     left: auto !important;
     width: 20px !important;

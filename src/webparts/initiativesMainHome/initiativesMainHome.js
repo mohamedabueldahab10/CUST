@@ -1617,7 +1617,7 @@ var Issues_Info_Request = {
   },
 };
 //Risks
-var budgetItemRequest = {
+var budgetItemRequest = { 
   // The main Initialization function
   init: function () {
     var clientContext = new SP.ClientContext.get_current();

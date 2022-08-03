@@ -997,7 +997,7 @@ var Milestones_Info_Request = {
         '</li>');
 
       totalMilesDelivrable++
-      debugger
+
       var dateNowToday = new Date();
 
       if (plannedDate) {
@@ -1020,10 +1020,10 @@ var Milestones_Info_Request = {
     remain = (plannedRatio - completedRatio) / milestoneCount
 
 
-    $('button.updateprogress').on('click', function () {
-      ProgressStatus_Data_Submit.init();
-    })
-    $('button.updateprogress').prop('disabled', false);
+    // $('button.updateprogress').on('click', function () {
+    //   ProgressStatus_Data_Submit.init();
+    // })
+    // $('button.updateprogress').prop('disabled', false);
 
 
     if (itemhtml.length == 1) {
@@ -1031,10 +1031,11 @@ var Milestones_Info_Request = {
     }
     $('div#pills-fifth > ul.list-group').html(itemhtml.join(''));
     if (isMinisterAssistant || isSectorHead || isViceMinister || isSubSectorHead || isGeneralManager || isMinister || isInOwner || isSPMO) {
-      debugger
       $('a.btn-add').attr('style', 'display: none!important;');
 
     }
+    ProgressStatus_Data_Submit.init(); // update the initiative status when open the page auto
+
     changeResources();
   },
   onError: function (sender, args) {
@@ -1299,21 +1300,7 @@ var ProgressStatus_Data_Submit = {
     var today = now.getFullYear() + "-" + (month) + "-" + (day);
     today = (!today) ? '' : [today.slice(5, 10), today.slice(0, 4)].join('/').replace('-', '/');
 
-    //calculation bussiness for Project Progress Status
-    // var differenceBetweenDelivrablesPercet = plannedImplementationRate - actualImplementationRate
 
-    // if (differenceBetweenDelivrablesPercet < 0) {
-    //   initiativeprogress = 'stat4'; // advance
-    // } else if (differenceBetweenDelivrablesPercet == 0) {
-    //   initiativeprogress = 'stat3'; // in progress
-    // } else if (differenceBetweenDelivrablesPercet >= 1 && differenceBetweenDelivrablesPercet <= 10) {
-    //   initiativeprogress = 'stat2'; // late
-    // } else if (differenceBetweenDelivrablesPercet > 10) {
-    //   initiativeprogress = 'stat1'; // too late
-    // }
-    console.log("initiativeSTatus")
-
-    debugger
 
     if (completedRatio == 0) {
       initiativeprogress = 'stat6'
@@ -1327,14 +1314,6 @@ var ProgressStatus_Data_Submit = {
       initiativeprogress = 'stat1'
     }
 
-
-
-
-    // $('.myCompletionStatus').removeClass('statuscolor' + listProjectProgress);
-    // ProgressStatus_Data_Submit.g.oListItem.set_item('ProjectProgressStatus', projectprogress);
-    // $('.myCompletionStatus').attr('data-trans-' + projectprogress, '');
-
-    // $('.myCompletionStatus').addClass('statuscolor' + projectprogress);
 
     $('.myCompletionStatus').removeAttr('data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4 data-trans-stat5 data-trans-stat6 data-trans-stat7')
 
@@ -1351,7 +1330,7 @@ var ProgressStatus_Data_Submit = {
     $('.myCompletionStatus').removeClass('statuscolor' + listInitiativeProgress);
     $('.handlecircle').removeClass('circlecolor' + listInitiativeProgress)
     ProgressStatus_Data_Submit.g.oListItem.set_item('InitiativeProgressStatus', initiativeprogress);
-    debugger
+    
 
     $('.myCompletionStatus').attr('data-trans-' + initiativeprogress, '');
     $('.black.myCompletionStatus').text(initiativeprogress)
@@ -1365,9 +1344,6 @@ var ProgressStatus_Data_Submit = {
     ProgressStatus_Data_Submit.g.oListItem.set_item('ActualPercentageCompleted', actualImplementationRate)
 
     changeResources();
-
-
-
 
 
     ProgressStatus_Data_Submit.g.oListItem.update();
@@ -1388,64 +1364,3 @@ var ProgressStatus_Data_Submit = {
   },
   g: {}
 }
-// var update_initiative_progress ={
-//   init: function (InitId) {
-//     $('button.updateprogress').removeClass('loader-action-success');
-//     $('button.updateprogress').removeClass('loader-action-error');
-//     $('button.updateprogress').addClass('loader-action');
-//     var clientContext = new SP.ClientContext.get_current();
-//     var oList = clientContext.get_web().get_lists().getByTitle(ListArray[4].initiatives);
-//     update_initiative_progress.g.oListItem = oList.getItemById(InitId); //declared inside object scope only
-//     //
-//     var now = new Date();
-//     var day = ("0" + now.getDate()).slice(-2);
-//     var month = ("0" + (now.getMonth() + 1)).slice(-2);
-//     var today = now.getFullYear() + "-" + (month) + "-" + (day);
-//     today = (!today) ? '' : [today.slice(5, 10), today.slice(0, 4)].join('/').replace('-', '/');
-
-//     //calculation bussiness for Project Progress Status
-//     var differenceBetweenDelivrablesPercet = plannedImplementationRate - actualImplementationRate
-
-//     // console.log(differenceBetweenDelivrablesPercet, "differenceBetweenDelivrablesPercet ")
-//     //
-//     if (differenceBetweenDelivrablesPercet < 0) {
-//         projectprogress = 'stat4'; // advance
-//     } else if (differenceBetweenDelivrablesPercet == 0) {
-//         projectprogress = 'stat3'; // in progress
-//     } else if (differenceBetweenDelivrablesPercet >= 1 && differenceBetweenDelivrablesPercet <= 10) {
-//         projectprogress = 'stat2'; // late
-//     } else if (differenceBetweenDelivrablesPercet > 10) {
-//         projectprogress = 'stat1'; // too late
-//     }
-//     if (today) {
-//         $('.ProgressDate').text(today);
-//         // update_initiative_progress.g.oListItem.set_item('ProgressLastModifiedDate', today);
-//     }
-//     // update_initiative_progress.g.oListItem.set_item('ProgressLastUpdatedBy', SP.FieldUserValue.fromUser(UserN.LoginName));
-
-//     update_initiative_progress.g.oListItem.set_item('InitiativeProgressStatus', 'stat1');
-//     // update_initiative_progress.g.oListItem.set_item('PlannedStartDate', PlannedStartDate);
-//     // update_initiative_progress.g.oListItem.set_item('PlannedFinishDate', PlannedFinishDate);
-
-//     // update_initiative_progress.g.oListItem.set_item('ScheduleProjectPercentageComplet0', ScheduleProjectPercentageComplete);
-//     // $('.myCompletionStatus').removeAttr('data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4')
-//     // $('.myCompletionStatus').attr('data-trans-' + projectprogress, '');
-//     // changeResources();
-//     //
-//     update_initiative_progress.g.oListItem.update();
-//     clientContext.load(update_initiative_progress.g.oListItem);
-//     clientContext.executeQueryAsync(
-//         Function.createDelegate(this, function () {
-//             $('button.updateprogress').removeClass('loader-action');
-//             $('button.updateprogress').addClass('loader-action-success');
-//             // console.log('Progress Status Updated Successfully');
-//         }),
-//         Function.createDelegate(this, function (sender, args) {
-//             $('button.updateprogress').removeClass('loader-action');
-//             $('button.updateprogress').addClass('loader-action-error');
-//             console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
-//         })
-//     );
-// },
-// g: {}
-// }
