@@ -22,6 +22,8 @@ var years, months, days, duration = '', onLoad = true;
 
 var getBaseLineStart = '', getBaseLineDuration = '';
 
+var checkEpmProjectHtml=''
+
 window.fullphasename;
 
 //to handle Project Progress Status
@@ -318,7 +320,7 @@ var Project_Home_Info_Request = {
     Issues_Info_Request.init();
     Risks_Info_Request.init();
     Deliverables_Info_Request.init();
-    GetProject_Tasks.preinit();
+    // GetProject_Tasks.preinit(); // comment it
     StagesConfiguration_Info_Request.init();
     Contracts_Info_Request.init();
     LessonsLearned_Info_Request.init();
@@ -327,7 +329,9 @@ var Project_Home_Info_Request = {
     Tasks_Info_Request.init();
     Invoices_Info_Request.init();
     // DeliveredYesInvoices_Info_Request.init();
-    EPM_Project_Data_Request.preinit();
+    checkEpmProjectHtml = setInterval(function () {
+      EPM_Project_Data_Request.preinit();
+    }, 2000);
     changeResources();
     $('div#particles-foreground, div#particles-background, .vertical-centered-box').animate({
       opacity: 0
@@ -1582,7 +1586,7 @@ var Invoices_Info_Request = {
       console.log("track mult delivrable")
       debugger
       //This can be done also by Caml query . we can passe all delivrables code there
-      for (i = 0; i < Deliverablesarray.length; i++) { 
+      for (i = 0; i < Deliverablesarray.length; i++) {
         var myselections = Deliverable ? Deliverable.split(":::") : [] // add myselection to handle mult delivrable in invoices
 
         if (Deliverablesarray[i].Code == myselections[0] && Status == 'paid') {
@@ -1705,8 +1709,8 @@ var ProgressStatus_Data_Submit = {
 
       plannedPercentage = Number(plannedPercentage.toFixed(2))
     }
-    
-    console.log(plannedPercentage,"plannedPercentage")
+
+    console.log(plannedPercentage, "plannedPercentage")
 
     $('.project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black').text(plannedPercentage + '%');
 
@@ -1744,6 +1748,7 @@ var ProgressStatus_Data_Submit = {
     clientContext.load(ProgressStatus_Data_Submit.g.oListItem);
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
+        console.log("onLOAAAAAAAAAAAAAAAAAAAD ProgressStatus_Data_Submit")
         $('button.updateprogress').removeClass('loader-action');
         $('button.updateprogress').addClass('loader-action-success');
         GetProject_Tasks.preinit();
@@ -2094,6 +2099,7 @@ var GetProject_Tasks = {
 //epm api call
 var EPM_Project_Data_Request = {
   preinit: function () {
+    clearInterval(checkEpmProjectHtml);
     SP.SOD.registerSod('PS.ProjectContext', SP.Utilities.Utility.getLayoutsPageUrl('ps.js'));
     SP.SOD.loadMultiple(['PS.ProjectContext'], EPM_Project_Data_Request.init);
   },
@@ -2114,6 +2120,8 @@ var EPM_Project_Data_Request = {
     console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
   },
   onSuccess: function (sender, args) {
+
+    console.log("EPM_Project_Data_Request EPM_Project_Data_Request")
     duration = '';
 
 
@@ -2233,6 +2241,7 @@ var EPM_Project_Summery_Task = {
   },
   onSuccess: function (sender, args) {
 
+    console.log("EPM_Project_Summery_Task")
 
     getBaseLineStart = oProjectsItem.get_projectSummaryTask().get_baselineStart()
     getBaseLineDuration = oProjectsItem.get_projectSummaryTask().get_baselineDuration()
@@ -2266,8 +2275,8 @@ var EPM_Project_Summery_Task = {
     console.log(getBaseLineDuration, "getBaseLineDuration")
     console.log(plannedPercentage, "plannedPercentage")
 
-   ProgressStatus_Data_Submit.init(); // update the project auto when open the page
- 
+    ProgressStatus_Data_Submit.init(); // update the project auto when open the page
+
 
   },
   // Global variables
