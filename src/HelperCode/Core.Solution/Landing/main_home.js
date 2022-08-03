@@ -81,22 +81,22 @@ if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar
 
 
 window.UProjects = [];
-// var iconstagesm = require('../../../HelperRessources/img/icon-stage-sm.png');
-// var iconstatustimesm = require('../../../HelperRessources/img/icon-status-time-sm.png');
-// var calendar = require('../../../HelperRessources/img/calendar.svg');
-// var iconimportantsm = require('../../../HelperRessources/img/icon-important-sm.png');
-// var iconstrategysm = require('../../../HelperRessources/img/analysis.png');
-// var risk = require('../../../HelperRessources/img/risk.svg');
-// var progress = require('../../../HelperRessources/img/progress.svg');
-// var mizania = require('../../../HelperRessources/img/mizania.svg');
-var iconstagesm = '';
-var iconstatustimesm = '';
-var calendar = '';
-var iconimportantsm = '';
-var iconstrategysm = '';
-var risk = '';
-var progress = '';
-var mizania = '';
+var iconstagesm = require('../../../HelperRessources/img/icon-stage-sm.png');
+var iconstatustimesm = require('../../../HelperRessources/img/icon-status-time-sm.png');
+var calendar = require('../../../HelperRessources/img/calendar.svg');
+var iconimportantsm = require('../../../HelperRessources/img/icon-important-sm.png');
+var iconstrategysm = require('../../../HelperRessources/img/analysis.png');
+var risk = require('../../../HelperRessources/img/risk.svg');
+var progress = require('../../../HelperRessources/img/progress.svg');
+var mizania = require('../../../HelperRessources/img/mizania.svg');
+// var iconstagesm = '';
+// var iconstatustimesm = '';
+// var calendar = '';
+// var iconimportantsm = '';
+// var iconstrategysm = '';
+// var risk = '';
+// var progress = '';
+// var mizania = '';
 
 // new repo 
 
@@ -1851,7 +1851,8 @@ function handleBudgetBarChart() {
         tooltips: {
             callbacks: {
                 label: function (tooltipItem) {
-                    return Number(tooltipItem.yLabel) + "K";
+                    return Project_Info_Request.g.kFormatter(tooltipItem.yLabel)
+                    // return Number(tooltipItem.yLabel) + "K";
                 }
             },
             displayColors: false,
@@ -1882,7 +1883,10 @@ function handleBudgetBarChart() {
                     fontSize: 10,
                     fontStyle: "bold",
                     beginAtZero: true,
-                    max: Math.max(...budgetData),
+                    callback: function(label, index, labels) {
+                        return Project_Info_Request.g.kFormatter(label)
+                    }
+                    // max: Math.max(...budgetData),
                     //stepSize: Math.ceil(Math.max(...costsArray) / 5 )
                 },
                 gridLines: {

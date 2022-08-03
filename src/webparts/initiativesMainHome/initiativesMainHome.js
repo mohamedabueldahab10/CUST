@@ -2275,7 +2275,9 @@ var PortfoliosInfoRequest = {
 };
 
 function handleBudgetBarChart() {
+
   var remainingCost = AssignedBudget - TheCost;
+
   if (
     localStorage.getItem("lng") == null ||
     localStorage.getItem("lng") == "ar"
@@ -2293,6 +2295,8 @@ function handleBudgetBarChart() {
       '<canvas width="200" height="196" id="budgetChart"><canvas>'
     );
   }
+
+  var maximumNumber =  Math.max(...budgetData)
 
   var bar_ctx = document.getElementById("budgetChart").getContext("2d");
   //Bordeau
@@ -2340,7 +2344,8 @@ function handleBudgetBarChart() {
     tooltips: {
       callbacks: {
         label: function (tooltipItem) {
-          return Number(tooltipItem.yLabel) + "K";
+          return initiativeRequest.g.kFormatter(tooltipItem.yLabel)
+          // return Number(tooltipItem.yLabel) + "K";
         },
       },
       displayColors: false,
@@ -2362,7 +2367,7 @@ function handleBudgetBarChart() {
             fontFamily: myFont,
             fontSize: 9,
             fontStyle: "bold",
-          },
+          }, 
         },
       ],
       yAxes: [
@@ -2373,7 +2378,11 @@ function handleBudgetBarChart() {
             fontSize: 10,
             fontStyle: "bold",
             beginAtZero: true,
-            max: Math.max(...budgetData),
+            callback: function(label, index, labels) {
+              // return label/1000+'k';
+              return initiativeRequest.g.kFormatter(label)
+            }
+            // max: maximumNumber,
             //stepSize: Math.ceil(Math.max(...costsArray) / 5 )
           },
           gridLines: {

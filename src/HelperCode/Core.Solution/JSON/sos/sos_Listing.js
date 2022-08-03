@@ -1,12 +1,5 @@
 var Listing_Info = [
-    {
-        "InternalName": "Title",
-        "DisplayNameEn": "Code",
-        "DisplayName":"رمز الهدف",
-        "type":"text",
-        inlisting: true,
-        infilter: true
-    },
+
     {
         "InternalName": "Name",
         "DisplayNameEn": "Name",
@@ -15,7 +8,14 @@ var Listing_Info = [
         inlisting: true,
         infilter: true
     },
- 
+    {
+        "InternalName": "Title",
+        "DisplayNameEn": "Code",
+        "DisplayName":"رمز الهدف",
+        "type":"text",
+        inlisting: true,
+        infilter: true
+    },
     {
         "InternalName": "ObjectiveOwner",
         "DisplayName": "مالك الهدف",

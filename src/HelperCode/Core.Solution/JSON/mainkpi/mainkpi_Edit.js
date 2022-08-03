@@ -851,7 +851,7 @@ var Information_Form = [
             //   dynamic: "Initiative",
             options: {
                 choices: [
-                    {
+                    { 
                         display: 'mersurable',
                         value: 'mersurable'
                     },
@@ -862,6 +862,10 @@ var Information_Form = [
                     {
                         display: 'unspecific',
                         value: 'unspecific'
+                    },
+                    {
+                        display: 'completed',
+                        value: 'completed' 
                     },
                 ]
             },

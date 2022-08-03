@@ -6,15 +6,32 @@ var Listing_Info = [
 		"type":"text",
 		inlisting: true,
 		infilter: true
-	},
+	}, 
 	{
-		"InternalName": "Name",
+		"InternalName": "Name", 
 		"DisplayNameEn": "Name",
 		"DisplayName":"المخرج",
-		"type":"text",
+		"type":"text", 
 		inlisting: true,
 		infilter: true
 	},	
+	{
+		"InternalName": "PlannedCompletedDate",
+		"DisplayNameEn": "Planned Completed Date",
+		"DisplayName":"تاريخ الاكتمال المخطط",
+		"type":"date",
+		inlisting: true,
+		infilter: false
+	},
+	{
+		"InternalName": "Completed",
+		"DisplayNameEn": "Completed",
+		"DisplayName":"حالة الاكتمال",
+		"type": "text",
+		needTrans: true,
+		inlisting: true,
+		infilter: false
+	},
 	{
 		"InternalName": "Weight",
 		"DisplayNameEn": "Weight",

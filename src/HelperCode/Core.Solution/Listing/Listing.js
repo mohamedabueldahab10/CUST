@@ -30,8 +30,8 @@ if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar
 
 var projectTypeFilterQuery = '', typeClicked = 'Internal';
 
-// var emptyData = require('../../../HelperRessources/img/empty-data.png');
-var emptyData = ''
+var emptyData = require('../../../HelperRessources/img/empty-data.png');
+// var emptyData = ''
 //all data filter array
 allDataFilterArr = []
 //

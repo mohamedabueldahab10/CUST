@@ -746,6 +746,10 @@ var Information_Form = [{
                     display: 'unspecific',
                     value: 'unspecific'
                 },
+                {
+                    display: 'completed',
+                    value: 'completed' 
+                },
               ]
             }
           },
