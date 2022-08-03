@@ -28,7 +28,7 @@ var actualImplementationRate = 0,
 //
 var lstMonthCLicked = '';
 
-var completedRatio = 0, plannedRatio = 0, plannedDate = '', remain = 0, milestoneCount = 0, listInitiativeProgress = '';
+var completedRatio = 0, totalMilesDelivrable = 0, plannedRatio = 0, plannedDate = '', remain = 0, milestoneCount = 0, listInitiativeProgress = '';
 
 if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
   var No_Data = 'لا يوجد'
@@ -996,11 +996,12 @@ var Milestones_Info_Request = {
         '</a>' +
         '</li>');
 
+      totalMilesDelivrable++
       debugger
       var dateNowToday = new Date();
 
       if (plannedDate) {
-        console.log(plannedDate,"plannedDate plannedDate ")
+        console.log(plannedDate, "plannedDate plannedDate ")
         plannedDate = plannedDate.getTime()
         dateNowToday = dateNowToday.getTime()
       }
@@ -1316,19 +1317,17 @@ var ProgressStatus_Data_Submit = {
 
     if (completedRatio == 0) {
       initiativeprogress = 'stat6'
-    }
-    if (completedRatio == 1) {
-      initiativeprogress = 'stat4'
-    }
-    if (remain <= 0.05) {
+    }else if(completedRatio == totalMilesDelivrable){
+      initiativeprogress = 'stat7'
+    } else if (remain <= 0.05) {
       initiativeprogress = 'stat3'
-    }
-    if (remain > 0.05 && remain <= 0.15) {
+    }else if (remain > 0.05 && remain <= 0.15) {
       initiativeprogress = 'stat2'
-    }
-    if (remain > 0.15) {
+    }else if (remain > 0.15) {
       initiativeprogress = 'stat1'
     }
+
+
 
 
     // $('.myCompletionStatus').removeClass('statuscolor' + listProjectProgress);
@@ -1337,7 +1336,7 @@ var ProgressStatus_Data_Submit = {
 
     // $('.myCompletionStatus').addClass('statuscolor' + projectprogress);
 
-    $('.myCompletionStatus').removeAttr('data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4 data-trans-stat5 data-trans-stat6')
+    $('.myCompletionStatus').removeAttr('data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4 data-trans-stat5 data-trans-stat6 data-trans-stat7')
 
 
     if (today) {
@@ -1352,7 +1351,7 @@ var ProgressStatus_Data_Submit = {
     $('.myCompletionStatus').removeClass('statuscolor' + listInitiativeProgress);
     $('.handlecircle').removeClass('circlecolor' + listInitiativeProgress)
     ProgressStatus_Data_Submit.g.oListItem.set_item('InitiativeProgressStatus', initiativeprogress);
-debugger
+    debugger
 
     $('.myCompletionStatus').attr('data-trans-' + initiativeprogress, '');
     $('.black.myCompletionStatus').text(initiativeprogress)

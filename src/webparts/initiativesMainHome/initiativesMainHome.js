@@ -77,7 +77,7 @@ var BudgetLabelsEn = [
   // Resources.en["remaining"],
 ];
 
-var statusOccuresData = ['stat3', 'stat1', 'stat6', 'stat2', 'stat4']
+var statusOccuresData = ['stat3', 'stat1', 'stat6', 'stat2', 'stat7']
 
 
 if (
