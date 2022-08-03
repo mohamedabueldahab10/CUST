@@ -320,7 +320,7 @@ var Project_Home_Info_Request = {
     Issues_Info_Request.init();
     Risks_Info_Request.init();
     Deliverables_Info_Request.init();
-    // GetProject_Tasks.preinit(); // comment it
+    // GetProject_Tasks.preinit(); // comment it and called in ProgressStatus_Data_Submit to get the status and duration of project auto when open the page
     StagesConfiguration_Info_Request.init();
     Contracts_Info_Request.init();
     LessonsLearned_Info_Request.init();
@@ -329,7 +329,7 @@ var Project_Home_Info_Request = {
     Tasks_Info_Request.init();
     Invoices_Info_Request.init();
     // DeliveredYesInvoices_Info_Request.init();
-    checkEpmProjectHtml = setInterval(function () {
+    checkEpmProjectHtml = setInterval(function () { // call the function on set interval to can get the data from project center and not get the err
       EPM_Project_Data_Request.preinit();
     }, 2000);
     changeResources();
