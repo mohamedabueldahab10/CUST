@@ -860,12 +860,16 @@ var Information_Form = [
                         value: 'unmersurable'
                     },
                     {
-                        display: 'unspecific',
-                        value: 'unspecific'
+                        display: 'novalue',
+                        value: 'novalue'
                     },
                     {
                         display: 'completed',
                         value: 'completed' 
+                    },
+                    {
+                        display: 'unspecific',
+                        value: 'unspecific'
                     },
                 ]
             },

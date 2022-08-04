@@ -223,8 +223,8 @@
         "others": "أخرى",
         "mersurable": "يقاس",
         "unmersurable": "لا يقاس",
-        "unspecific": "غير محدد",
-
+        "unspecific": "محذوف",
+        "novalue": "لا توجد له قيمة",
         "toissue": "نقل إلى عائق",
 
         //Resolution Status
@@ -238,9 +238,9 @@
         "stat2": "متأخر",
         "stat3": "على المسار",
         "stat4": "متقدم",
-        "stat5":"لا يوجد خط اساس",
-        "stat6":"لم يبدأ",
-        "stat7":"مكتمل",
+        "stat5": "لا يوجد خط اساس",
+        "stat6": "لم يبدأ",
+        "stat7": "مكتمل",
         "rsupport1": "اعتمادات",
         "rsupport2": "تحديات",
         "rsupport3": "مخاطر",
@@ -626,15 +626,15 @@
         "volunteerhour": "ساعة تطوعية",
         "saudiriyal": " ريال سعودي",
         "generalattachements": "مرفقات عامة",
-        "remainperc":"- [النسبة المتبقية هي:",
-        "nofilterdata":"لا يوجد معلومات بالفلاتر المختارة",
-        "initiativerisks":"المخاطر",
-        "initiativedeliverables":"المخرجات",
-        "initiativemilestones":"المعالم",
-        "initiativeissues":"التحديات",
-        "benefits":"المنافع",
-        "benefitmetrics":"مقاييس المنافع",
-        "initiativemom":"محاضر الاجتماع"
+        "remainperc": "- [النسبة المتبقية هي:",
+        "nofilterdata": "لا يوجد معلومات بالفلاتر المختارة",
+        "initiativerisks": "المخاطر",
+        "initiativedeliverables": "المخرجات",
+        "initiativemilestones": "المعالم",
+        "initiativeissues": "التحديات",
+        "benefits": "المنافع",
+        "benefitmetrics": "مقاييس المنافع",
+        "initiativemom": "محاضر الاجتماع"
 
     },
     "en": {
@@ -878,9 +878,9 @@
         "stat2": "Late",
         "stat3": "On plan",
         "stat4": "Advanced",
-        "stat5":"No BaseLine",
-        "stat6":"Not Started",
-        "stat7":"Completed",
+        "stat5": "No BaseLine",
+        "stat6": "Not Started",
+        "stat7": "Completed",
         "rsupport1": "Reliance",
         "rsupport2": "Issues",
         "rsupport3": "Risks",
@@ -980,7 +980,8 @@
         //
         "mersurable": "Mersurable",
         "unmersurable": "Unmersurable",
-        "unspecific": "Unspecific",
+        "unspecific": "Deleted",
+        "novalue": "No Value",
         "quarter1": "Quarter 1",
         "ActualQ1": "Quarter 1",
         "quarter2": "Qarter 2",
@@ -1277,15 +1278,15 @@
         "organizationalstructure": "Organizational structure",
         "volunteerhour": "Volunteer hour",
         "generalattachements": "General Attachements",
-        "remainperc":"- [Remaining Percent is:",
-        "nofilterdata":"No data on the selected filters",
-        "initiativerisks":"Risks",
-        "initiativedeliverables":"Delivrables",
-        "initiativemilestones":"Milestones",
-        "initiativeissues":"Issues",
-        "benefits":"Benefits",
-        "benefitmetrics":"Benefit Metrics",
-        "initiativemom":"MoM"
+        "remainperc": "- [Remaining Percent is:",
+        "nofilterdata": "No data on the selected filters",
+        "initiativerisks": "Risks",
+        "initiativedeliverables": "Delivrables",
+        "initiativemilestones": "Milestones",
+        "initiativeissues": "Issues",
+        "benefits": "Benefits",
+        "benefitmetrics": "Benefit Metrics",
+        "initiativemom": "MoM"
 
     }
 };
