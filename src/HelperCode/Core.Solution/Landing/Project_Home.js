@@ -128,6 +128,7 @@ var Project_Home_Info_Request = {
         } else projectsector = projectsectorarr[0].nameEn;
       }
       stagename = oListItem.get_item('Stage') || No_Data;
+      console.log(stagename,"HEEEEEEEEEEEEEEEETS")
       var stagenamearr = stagename.replaceAll("__", "").split(";");
       var stagenamearrwithoutunderscoreten = stagename.replace(/__S10;| __S22;| __S31;/g, "").split(";");
       // console.log('stagenamearrwithoutunderscoreten', stagenamearrwithoutunderscoreten);
@@ -1723,7 +1724,7 @@ var ProgressStatus_Data_Submit = {
       if (differencePercentage <= 5) {
         projectprogress = 'stat3'
       } else if (differencePercentage > 5 && differencePercentage <= 15) {
-        projectprogress = 'stat2';
+        projectprogress = 'stat2'; 
       } else if (differencePercentage > 15) {
         projectprogress = 'stat1'
       }

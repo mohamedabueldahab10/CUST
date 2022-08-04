@@ -1963,21 +1963,34 @@ window.ListInfo = {
         } else {
           $("#To")
             .val("")
-            .attr("max", "")
+            .attr("max", "") 
             .attr("min", "")
             .prop("disabled", true);
           $("[id^=Cost]").parent().hide();
-          $("[id^=Cost]").val("");
+          $("[id^=Cost]").val(""); 
           $("#Amount").val("");
         }
-      });
+      }); 
     },
     InvoicesTotal: function () {
-      $('#Amount, #TVA').on("change", function () {
-        var amount = $('#Amount').val() ? parseInt(($('#Amount').val()).replaceAll(',', '')) : 0;
-        var TVA = $('#TVA').val() ? parseInt(($('#TVA').val()).replaceAll(',', '')) : 0;
-        var Sum = amount + ((TVA * amount) / 100);
-        $('#TotalAmount').val(Sum);
+      // $('#Amount, #TVA').on("change", function () {
+      //   var amount = $('#Amount').val() ? parseInt(($('#Amount').val()).replaceAll(',', '')) : 0;
+      //   var TVA = $('#TVA').val() ? parseInt(($('#TVA').val()).replaceAll(',', '')) : 0;
+      //   var Sum = amount + ((TVA * amount) / 100);
+      //   $('#TotalAmount').val(Sum);
+      // });
+      $('#TotalAmount').on("change", function () {
+
+        var totalAmount = $('#TotalAmount').val() ? parseInt(($('#TotalAmount').val()).replaceAll(',', '')) : 0;
+        var tax = totalAmount * 0.15
+        var amount = totalAmount - tax
+
+        $('#Amount').val(amount);
+        $('#TVA').val(tax);
+
+        // var TVA = $('#TVA').val() ? parseInt(($('#TVA').val()).replaceAll(',', '')) : 0;
+        // var Sum = amount + ((TVA * amount) / 100);
+        // $('#TotalAmount').val(Sum);
       });
     },
     DeliverablesDelivered: function () {

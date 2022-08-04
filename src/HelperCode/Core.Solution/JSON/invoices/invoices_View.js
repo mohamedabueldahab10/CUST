@@ -28,8 +28,8 @@ var Information_Form  = [
             },
             {
                 "InternalName": "TVA",
-                "DisplayName":"القيمة المضافة",
-                "DisplayNameEn": "TVA",
+                "DisplayName":"الضريبة",
+                "DisplayNameEn": "Tax",
                 "type":"float"
             },
             {
@@ -54,7 +54,7 @@ var Information_Form  = [
                 "DisplayNameEn": "Deliverable",
                 "DisplayName":"المخرج المرتبط",
                 "type": "multiselectstring",
-                  
+                 
             },
             {
                 "InternalName": "Status",

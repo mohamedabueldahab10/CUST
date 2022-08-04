@@ -22,26 +22,28 @@ var Information_Form  = [
             
             },
             {
-                "InternalName": "Amount",
-                "DisplayName":"القيمة",
-                "DisplayNameEn": "Amount",
-                "type":"float",
-                "validation": "required"
-            
-            },
-            {
-                "InternalName": "TVA",
-                "DisplayName":"القيمة المضافة",
-                "DisplayNameEn": "TVA",
-                "type":"float"
-            },
-            {
                 "InternalName": "TotalAmount",
                 "DisplayName": "اجمالي المبلغ",
                 "DisplayNameEn": "Total Amount",
                 "type": "float",
+                "validation": "required"
+            },
+            {
+                "InternalName": "Amount",
+                "DisplayName":"القيمة",
+                "DisplayNameEn": "Amount",
+                "type":"float",
+                "state":"disabled"
+            
+            },
+            {
+                "InternalName": "TVA",
+                "DisplayName":"الضريبة",
+                "DisplayNameEn": "Tax",
+                "type":"float",
                 "state":"disabled"
             },
+    
             // {
             //     "InternalName": "Deliverable",
             //     "DisplayName":"المخرج المرتبط",
