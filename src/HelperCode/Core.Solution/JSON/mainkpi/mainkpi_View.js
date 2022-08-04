@@ -617,6 +617,38 @@ var Information_Form = [{
         "type": "datetime",
         // validation: "required",
     },
+    {
+        "InternalName": "MesureStatus",
+        "DisplayNameEn": "MesureStatus",
+        "DisplayName": "حالة القياس",
+          "type": "dropdownValues",
+        //   "state": "disabled",
+        //   dynamic: "Initiative",
+        options: {
+          choices: [
+            {
+                display: 'mersurable',
+                value: 'mersurable'
+            },
+            {
+                display: 'unmersurable',
+                value: 'unmersurable'
+            },
+            // {
+            //     display: 'novalue',
+            //     value: 'novalue'
+            // },
+            {
+                display: 'completed',
+                value: 'completed' 
+            },
+            {
+                display: 'unspecific',
+                value: 'unspecific'
+            },
+          ]
+        }
+      },
 
   ]
 },
@@ -637,6 +669,7 @@ var Information_Form = [{
             "InternalName": "Quarter",
             "DisplayNameEn": "Quarter",
             "DisplayName": "الربع",
+            ToggleName: "Quarter",
             type: "dropdownValues",
             options: {
                 choices: [
@@ -725,38 +758,38 @@ var Information_Form = [{
             },
         //    "display":"none"
         },
-          {
-            "InternalName": "MesureStatus",
-            "DisplayNameEn": "MesureStatus",
-            "DisplayName": "حالة القياس",
-              "type": "dropdownValues",
-            //   "state": "disabled",
-            //   dynamic: "Initiative",
-            options: {
-              choices: [
-                {
-                    display: 'mersurable',
-                    value: 'mersurable'
-                },
-                {
-                    display: 'unmersurable',
-                    value: 'unmersurable'
-                },
-                {
-                    display: 'novalue',
-                    value: 'novalue'
-                },
-                {
-                    display: 'completed',
-                    value: 'completed' 
-                },
-                {
-                    display: 'unspecific',
-                    value: 'unspecific'
-                },
-              ]
-            }
-          },
+        //   {
+        //     "InternalName": "MesureStatus",
+        //     "DisplayNameEn": "MesureStatus",
+        //     "DisplayName": "حالة القياس",
+        //       "type": "dropdownValues",
+        //     //   "state": "disabled",
+        //     //   dynamic: "Initiative",
+        //     options: {
+        //       choices: [
+        //         {
+        //             display: 'mersurable',
+        //             value: 'mersurable'
+        //         },
+        //         {
+        //             display: 'unmersurable',
+        //             value: 'unmersurable'
+        //         },
+        //         // {
+        //         //     display: 'novalue',
+        //         //     value: 'novalue'
+        //         // },
+        //         {
+        //             display: 'completed',
+        //             value: 'completed' 
+        //         },
+        //         {
+        //             display: 'unspecific',
+        //             value: 'unspecific'
+        //         },
+        //       ]
+        //     }
+        //   },
         {
             InternalName: "A",
             DisplayName: "المكون الأول (A)",

@@ -712,6 +712,43 @@ var Information_Form = [
                 "type": "datetime",
                 // validation: "required",
             },
+            {
+                "InternalName": "MesureStatus",
+                "DisplayNameEn": "MesureStatus",
+                "DisplayName": "حالة القياس",
+                "type": "dropdownValues",
+                //   "state": "disabled",
+                //   dynamic: "Initiative",
+                options: {
+                    choices: [
+                        { 
+                            display: 'mersurable',
+                            value: 'mersurable'
+                        },
+                        {
+                            display: 'unmersurable',
+                            value: 'unmersurable'
+                        },
+                        // {
+                        //     display: 'novalue',
+                        //     value: 'novalue'
+                        // },
+                        {
+                            display: 'completed',
+                            value: 'completed' 
+                        },
+                        {
+                            display: 'unspecific',
+                            value: 'unspecific'
+                        },
+                    ]
+                },
+                security: {
+                    groups: [
+                        'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    ]
+                },
+            },
 
         ]
     },
@@ -842,43 +879,43 @@ var Information_Form = [
             },
             "display": "none"
         },
-        {
-            "InternalName": "MesureStatus",
-            "DisplayNameEn": "MesureStatus",
-            "DisplayName": "حالة القياس",
-            "type": "dropdownValues",
-            //   "state": "disabled",
-            //   dynamic: "Initiative",
-            options: {
-                choices: [
-                    { 
-                        display: 'mersurable',
-                        value: 'mersurable'
-                    },
-                    {
-                        display: 'unmersurable',
-                        value: 'unmersurable'
-                    },
-                    {
-                        display: 'novalue',
-                        value: 'novalue'
-                    },
-                    {
-                        display: 'completed',
-                        value: 'completed' 
-                    },
-                    {
-                        display: 'unspecific',
-                        value: 'unspecific'
-                    },
-                ]
-            },
-            security: {
-                groups: [
-                    'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
-                ]
-            },
-        },
+        // {
+        //     "InternalName": "MesureStatus",
+        //     "DisplayNameEn": "MesureStatus",
+        //     "DisplayName": "حالة القياس",
+        //     "type": "dropdownValues",
+        //     //   "state": "disabled",
+        //     //   dynamic: "Initiative",
+        //     options: {
+        //         choices: [
+        //             { 
+        //                 display: 'mersurable',
+        //                 value: 'mersurable'
+        //             },
+        //             {
+        //                 display: 'unmersurable',
+        //                 value: 'unmersurable'
+        //             },
+        //             // {
+        //             //     display: 'novalue',
+        //             //     value: 'novalue'
+        //             // },
+        //             {
+        //                 display: 'completed',
+        //                 value: 'completed' 
+        //             },
+        //             {
+        //                 display: 'unspecific',
+        //                 value: 'unspecific'
+        //             },
+        //         ]
+        //     },
+        //     security: {
+        //         groups: [
+        //             'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+        //         ]
+        //     },
+        // },
         {
             InternalName: "A",
             DisplayName: "المكون الأول (A)",
