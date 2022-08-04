@@ -10,6 +10,7 @@ var ActualBudget = 0,
   NTasks = 0,
   RSupport = 0,
   ScheduleProjectPercentageComplete,
+  ScheduleBLPercentageCompleteList,
   projectTypes, numberofyesExp,
   //project vars
   projectname, abrprojectname, phasename, stagename, projectcode, projectimportance, Pstartdate, Pfinishdate, standardisedPstartdate, PlannedStartDate, PlannedFinishDate, standardisedPfinishdate, ProgressLastModifiedDate, projectlength, projectsector, projectstatus, ProjectSponsor, ProjectOwner, ProjectManager, PMORepresentative, Deliverablesarray = [],
@@ -22,7 +23,7 @@ var years, months, days, duration = '', onLoad = true;
 
 var getBaseLineStart = '', getBaseLineDuration = '';
 
-var checkEpmProjectHtml=''
+var checkEpmProjectHtml = ''
 
 window.fullphasename;
 
@@ -110,6 +111,8 @@ var Project_Home_Info_Request = {
       numberofProjects++;
       ScheduleProjectPercentageComplete = oListItem.get_item('ScheduleProjectPercentageComplet0') == null ? 0 : oListItem.get_item('ScheduleProjectPercentageComplet0'),
 
+      ScheduleBLPercentageCompleteList = oListItem.get_item('ScheduleBLPercentageComplete') == null ? 0 : oListItem.get_item('ScheduleBLPercentageComplete'),
+
         //project card1
         projectname = oListItem.get_item('Name') || No_Data,
         // console.log(projectname);
@@ -128,7 +131,7 @@ var Project_Home_Info_Request = {
         } else projectsector = projectsectorarr[0].nameEn;
       }
       stagename = oListItem.get_item('Stage') || No_Data;
-      console.log(stagename,"HEEEEEEEEEEEEEEEETS")
+      console.log(stagename, "HEEEEEEEEEEEEEEEETS")
       var stagenamearr = stagename.replaceAll("__", "").split(";");
       var stagenamearrwithoutunderscoreten = stagename.replace(/__S10;| __S22;| __S31;/g, "").split(";");
       // console.log('stagenamearrwithoutunderscoreten', stagenamearrwithoutunderscoreten);
@@ -228,8 +231,9 @@ var Project_Home_Info_Request = {
         '<h4 data-trans-pattr57 class="black Resources d-flex mx-2" style="display:none !important"></h4>' +
         '<div class="d-inline-flex flex-column mx-2">' +
         '<span class="des-13"><span data-trans-pattr6 class="Resources state-val"></span></span>' +
-        '<h4 class="black"></h4>' + //
+        '<h4 class="black"> ' + ScheduleBLPercentageCompleteList + '%</h4>' + //
         '</div>' +
+        // ScheduleBLPercentageComplete
         // '<div class="d-inline-flex flex-column mx-2">' +
         // '<span class="des-13"><span data-trans-pattr7 class="Resources complition-val"></span></span>' +
         // '<h4 class="black"></h4>' + //
@@ -1668,6 +1672,8 @@ var ProgressStatus_Data_Submit = {
 
 
     ProgressStatus_Data_Submit.g.oListItem.set_item('ScheduleProjectPercentageComplet0', ScheduleProjectPercentageComplete);
+
+
     $('.myCompletionStatus').removeAttr('data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4 data-trans-stat5')
 
 
@@ -1713,6 +1719,8 @@ var ProgressStatus_Data_Submit = {
 
     console.log(plannedPercentage, "plannedPercentage")
 
+    ProgressStatus_Data_Submit.g.oListItem.set_item('ScheduleBLPercentageComplete', plannedPercentage); // save the percentage 
+
     $('.project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black').text(plannedPercentage + '%');
 
 
@@ -1724,7 +1732,7 @@ var ProgressStatus_Data_Submit = {
       if (differencePercentage <= 5) {
         projectprogress = 'stat3'
       } else if (differencePercentage > 5 && differencePercentage <= 15) {
-        projectprogress = 'stat2'; 
+        projectprogress = 'stat2';
       } else if (differencePercentage > 15) {
         projectprogress = 'stat1'
       }

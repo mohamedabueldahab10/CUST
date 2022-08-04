@@ -4,7 +4,7 @@ var Listing_Info = [
 		"DisplayNameEn": "Title",
 		"DisplayName": "رمز المعلم",
 		"type": "text",
-		inlisting: true,
+		inlisting: true, 
 		infilter: true
 	},
 	{
@@ -15,6 +15,14 @@ var Listing_Info = [
 		inlisting: true,
 		infilter: true
 	},
+	{
+        "InternalName": "PlannedCompletedDate",
+        "DisplayName": "تاريخ الاكتمال المخطط",
+        "DisplayNameEn": "Planned Completed Date",
+        "type": "date",
+        inlisting: true,
+        infilter: true
+    },
 	{
 		"InternalName": "Weight",
 		"DisplayNameEn": "Weight",

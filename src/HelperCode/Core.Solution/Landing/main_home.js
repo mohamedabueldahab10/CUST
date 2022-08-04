@@ -64,7 +64,8 @@ var axeposition;
 var BudgetLabelsAr = [Resources.ar["remaining"], Resources.ar["assignedbudget"], Resources.ar["cost"]];
 var BudgetLabelsEn = [Resources.en["assignedbudget"], Resources.en["cost"], Resources.en["remaining"]];
 
-var statusOccuresData = ['stat3', 'stat1', 'stat5', 'stat2', 'stat4']
+// var statusOccuresData = ['stat3', 'stat1', 'stat5', 'stat2', 'stat4']
+var statusOccuresData = ['stat3', 'stat1', 'stat5', 'stat2']
 
 if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
     BudgetLabels = BudgetLabelsAr;
@@ -1943,7 +1944,7 @@ function handleStatusBarChart() {
     background_4.addColorStop(1, 'rgba(147,139,136,255)');
     background_5.addColorStop(0, 'rgba(0,0,255,255)');
     background_5.addColorStop(1, 'rgba(0,0,255,255)');
-    var BackgroundsArray = [background_5,background_2, background_4, background_3, background_1];
+    var BackgroundsArray = [background_2, background_4, background_3, background_1];
 
     if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
         progressOccurence = progressOccurence.reverse();
