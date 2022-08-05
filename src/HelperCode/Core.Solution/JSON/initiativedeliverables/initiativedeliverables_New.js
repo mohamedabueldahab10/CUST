@@ -43,7 +43,7 @@ var Information_Form  = [
                 "InternalName": "Target",
                 "DisplayNameEn": "Target",
                 "DisplayName":"المستهدف (إن وجد)",
-                "type":"float"
+                "type":"string"
             },
             {
                 "InternalName": "Weight",
