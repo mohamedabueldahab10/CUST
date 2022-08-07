@@ -107,7 +107,7 @@ var Information_Form = [{
                 "InternalName": "Impact",
                 "DisplayName": "الأثر",
                 "DisplayNameEn": "Impact",
-                "validation": "required",
+                // "validation": "required",
                 "type": "dropdownValues",
                 options: {
                     choices: [
