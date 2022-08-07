@@ -1,5 +1,6 @@
 window.kpiCodeResult = '';
-
+window.projectBuildTeamArr = [];
+window.projectManagerPickerToEpm='';
 ////////////
 var allFileIndex = 0
 
@@ -482,6 +483,39 @@ window.Edit_Data_Request = {
 
       projRelatedInit = oListItem.get_item("RelatedInitiative");
       ProjectInitiativeDelevrable.init('InitiativeDeliverables', projRelatedInit) // to get the related delivravle initiative on ;oad the edit page
+
+
+      //to get the ppicker value to update them on Epm build team 
+      var projectOwnerPicker = currentItem.get_item("ProjectOwner") ? currentItem.get_item("ProjectOwner") : ''
+      projectManagerPickerToEpm = currentItem.get_item("ProjectManager") ? currentItem.get_item("ProjectManager") : ''
+      var projectSponsorPicker = currentItem.get_item("ProjectSponsor") ? currentItem.get_item("ProjectSponsor") : ''
+      var projectDirectorUnit = currentItem.get_item("DirectorUnit") ? currentItem.get_item("DirectorUnit") : ''
+      var projectObjectiveOwner = currentItem.get_item("ObjectiveOwner") ? currentItem.get_item("ObjectiveOwner") : ''
+      var projectResponsible = currentItem.get_item("ProjectResponsible") ? currentItem.get_item("ProjectResponsible") : ''
+      var projectQualityOfficer = currentItem.get_item("QualityOfficer") ? currentItem.get_item("QualityOfficer") : ''
+
+      if (projectOwnerPicker && !projectBuildTeamArr.includes(projectOwnerPicker.get_lookupValue())) {
+        projectBuildTeamArr.push(projectOwnerPicker.get_lookupValue())
+      }
+      if (projectSponsorPicker && !projectBuildTeamArr.includes(projectSponsorPicker.get_lookupValue())) {
+        projectBuildTeamArr.push(projectSponsorPicker.get_lookupValue())
+      }
+      if (projectDirectorUnit && !projectBuildTeamArr.includes(projectDirectorUnit.get_lookupValue())) {
+        projectBuildTeamArr.push(projectDirectorUnit.get_lookupValue())
+      }
+
+      if (projectObjectiveOwner && !projectBuildTeamArr.includes(projectObjectiveOwner.get_lookupValue())) {
+        projectBuildTeamArr.push(projectObjectiveOwner.get_lookupValue())
+      }
+
+      if (projectResponsible && !projectBuildTeamArr.includes(projectResponsible.get_lookupValue())) {
+        projectBuildTeamArr.push(projectResponsible.get_lookupValue())
+      }
+
+      if (projectQualityOfficer && !projectBuildTeamArr.includes(projectQualityOfficer.get_lookupValue())) {
+        projectBuildTeamArr.push(projectQualityOfficer.get_lookupValue())
+      }
+      //
 
     }
 
@@ -1254,10 +1288,10 @@ window.View_Data_Request = {
       // }
     }
     if (listkey == 'invoices' && PCODE) {
-      DeliverableRelatedToInvoice = oListItem.get_item('Deliverable'); 
+      DeliverableRelatedToInvoice = oListItem.get_item('Deliverable');
       if (DeliverableRelatedToInvoice) {
         var myselections = DeliverableRelatedToInvoice ? DeliverableRelatedToInvoice.split(":::") : [] // add myselection to handle mult delivrable in invoices
-        MultiSelect_View.init('Deliverables',myselections)
+        MultiSelect_View.init('Deliverables', myselections)
       }
     }
     if (isVROE) {
@@ -2373,11 +2407,11 @@ window.Kpi_Related_Goal = {
     typeOfIndex = indexType
 
     // var query = '<View><Query><Where><And><Eq><FieldRef Name="RelatedStrategy" /><Value Type="Text">' + SosCode + '</Value></Eq><Eq><FieldRef Name="Types" /><Value Type="Choice">' + indexType + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
-    
-  //add FieldRef Name and Acending tru to sorth the data alphabetical
+
+    //add FieldRef Name and Acending tru to sorth the data alphabetical
     var query = '<View><Query><Where><And><Eq><FieldRef Name="RelatedStrategy" /><Value Type="Text">' + SosCode + '</Value></Eq><Eq><FieldRef Name="Types" /><Value Type="Choice">' + indexType + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>'
 
-    console.log("inside Kpi_Related_Goal",query)
+    console.log("inside Kpi_Related_Goal", query)
 
     camlQuery.set_viewXml(query);
     Kpi_Related_Goal.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -2839,7 +2873,7 @@ window.MultiSelect_View = { // use it for invoices cause we need to save the del
         relatedDelevrableName += el.name + '<br>'
       })
 
-      if(listkey  == 'invoices'){
+      if (listkey == 'invoices') {
         $("#Deliverable").html(relatedDelevrableName)
       }
     }

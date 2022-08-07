@@ -10,7 +10,7 @@ window.IdeaId;
 
 var kpiName = '', kpiType = '', kpiSector = '', kpiSubSector = '', kpiMainGoalRelated = '', kpiSubGoalRelated = '', kpiPortfolio = '';
 
-
+var allEnterpriseResources = [];
 
 if (
   localStorage.getItem("lng") == null ||
@@ -1244,13 +1244,13 @@ window.Edit_Data_Submit = {
           fileCount += document.querySelector("#" + $(this).attr("id")).files
             .length;
         });
+
         if (fileCount) _uploadFile();
         // readFiles();
         else {
-          debugger
+
           if ($(".Details-Item.NewItem").length > 0) {
             console.log("in master detaiiiiiiiiiiiiiils")
-            debugger
             //calling new master submit
             New_Data_Submit.g.checkNewMasterDetails();
           } else if ($(".Details-Item.EditItem").length > 0) {
@@ -1266,6 +1266,8 @@ window.Edit_Data_Submit = {
                 PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
             } else if (listkey == 'mainkpi') {
               Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated)
+            } else if (listkey == 'projects' && PCODE) {
+              Update_Project_Center.getAllResources()
             } else {
               window.location =
                 _spPageContextInfo.webAbsoluteUrl +
@@ -2681,7 +2683,7 @@ var InternalEntities_Request = {
       "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
     );
   },
-  // Global variables
+  // Global variables 
   g: {
     //for tasks functions
   },
@@ -2966,86 +2968,92 @@ window.Archive_Data_Submit = {
 
 //
 
+var Update_Project_Center = {
+  getAllResources: function () {
+    $.ajax({
+      url: _spPageContextInfo.webAbsoluteUrl + "/_api/ProjectServer/EnterpriseResources",
+      method: "GET",
+      headers: { "Accept": "application/json; odata=verbose" },
+      success: function (data) {
+        allEnterpriseResources = data.d.results
+        console.log(allEnterpriseResources, "allEnterpriseResources allEnterpriseResources allEnterpriseResources")
+        SP.SOD.registerSod('PS.ProjectContext', SP.Utilities.Utility.getLayoutsPageUrl('ps.js'));
+        SP.SOD.loadMultiple(['PS.ProjectContext'], EPMProjectToUpdate);
+      }
+    });
+  }
+}
 
+var editProjectContext = '', epmProjects;
 
+function EPMProjectToUpdate() {
 
-// change the Project Owner Name in Project Server
+  editProjectContext = PS.ProjectContext.get_current();
+  epmProjects = editProjectContext.get_projects();
+  editProjectContext.load(epmProjects, 'Include(Name, Id)');
+  editProjectContext.executeQueryAsync(EPMProjectEdit, QueryFailedCenter);
 
-// function ChangeProjectOwner() {
-//   console.log(PGUID,"PGUIIIIIIIIIIIIIIIIIIIIID")
-//   console.log("projectManagerID",projectManagerId)
-//
-//   var project = projects.getById(PGUID);
-//   var draftProject = project.checkOut();
-//   var web = projContext.get_web()
-//   var userPicked = web.getUserById(projectManagerId) //147
-//   draftProject.set_owner(userPicked)
-//   var publishJob = draftProject.publish(true);
-//   $('.wfLoader').hide();
-//   projContext.waitForQueueAsync(publishJob, 100, QueueJobSentOwner);
-// }
+}
 
-// function QueueJobSentOwner(response) {
-//   // WFuserCalls.get_CurrentUserGroupColl(data.d.Id);
-//   console.log(response, "THIS IS response in Queue Sent Owner")
-//   // window.location = _spPageContextInfo.webAbsoluteUrl + '/SitePages/Listing.aspx?ListKey=' + listkey + PCODE_STRING;
-//   // $get("spanMessage").innerText = 'JobState = ' + response + '. Wait a few seconds, then refresh the page to see your changes.';
-// }
+function QueryFailedCenter(sender, args) {
+  console.log('Request failed: ' + args.get_message());
+}
 
-// window.getUserId_Data_Request = {
+function EPMProjectEdit() {
+  //
+  var draftProject;
+  var project = epmProjects.getById(User_ProjUID); //User_ProjUID it's the GUID for Project
+  draftProject = project.checkOut();
 
-//   onSuccess: function (sender, args) {
-//     console.log("onSuccess Outside Looooop loop")
+  console.log(projectBuildTeamArr, "projectBuildTeamArr projectBuildTeamArr projectBuildTeamArr")
+  debugger
+  for (var i = 0; i < projectBuildTeamArr.length; i++) {
+    allEnterpriseResources.forEach((el) => {
+      if (projectBuildTeamArr[i] == el.Name) {
 
-//     $('.section-container:not([data-target_list]) .CFIELD> input:not([type=file]), .section-container:not([data-target_list]) .CFIELD> input[type=checkbox], .section-container:not([data-target_list]) .CFIELD> div[type=picker], .section-container:not([data-target_list]) .CFIELD> select[type=dropdown], .section-container:not([data-target_list]) .CFIELD>  textarea, .section-container:not([data-target_list]) .CFIELD > .multiselect-container').each(function () {
-//       console.log("onSuccess iside loop")
-//       if ($(this).attr('type') == 'picker') {
-//         if ($(this).attr('id') == 'ProjectManager') {
-//           if (oListItem.get_item('' + $(this).attr('id') + '') != null) {
-//             projectManagerId = oListItem.get_item('' + $(this).attr('id') + '').get_lookupId()
-//           }
-//         }
-//         // else if ($(this).attr('id') == 'Vendor') {
-//         //   PPLPickerVendorName = oListItem.get_item('' + $(this).attr('id') + '') ? oListItem.get_item('' + $(this).attr('id') + '').get_lookupValue() : ''
-//         //   if (PPLPickerVendorName) {
-//         //     buildTeamResourcesArr.push(PPLPickerVendorName)
-//         //   }
-//         // } else if ($(this).attr('id') == 'PMORepresentative') {
-//         //   PPLPickerSupervisorName = oListItem.get_item('' + $(this).attr('id') + '') ? oListItem.get_item('' + $(this).attr('id') + '').get_lookupValue() : ''
-//         //   if (PPLPickerSupervisorName) {
-//         //     buildTeamResourcesArr.push(PPLPickerSupervisorName)
-//         //   }
-//         // }
+        var new_resource_id = el.Id;
+        var new_resource = new PS.ProjectResourceCreationInformation();
+        new_resource.set_name(projectBuildTeamArr[i]);
+        new_resource.set_id(new_resource_id);
+        var project_resources_list = draftProject.get_projectResources();
+        var project_resource = project_resources_list.add(new_resource);
+        draftProject.get_projectResources().add(new_resource);
+      }
 
-//       }
+    });
 
-//     });
+  }
+  var publishJob = draftProject.update();
+  editProjectContext.waitForQueueAsync(publishJob, 100, ChangeProjectOwnerEpm);
+}
 
-//     ChangeProjectOwner();
+function ChangeProjectOwnerEpm() {
+  var project = epmProjects.getById(User_ProjUID);
+  var draftProject = project.checkOut();
+  var web = editProjectContext.get_web()
+  var projectManagerId = projectManagerPickerToEpm.get_lookupId()
+  var userPicked = web.getUserById(projectManagerId) //76
 
-//   },
-//   onError: function (sender, args) {
-//     console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
-//   },
+  console.log(projectManagerPickerToEpm, "projectManagerPickerToEpm")
+  console.log(projectManagerId, "projectManagerId")
 
-//   // The main Initialization function
-//   init: function () {
-//     var clientContext = new SP.ClientContext.get_current();
-//     var oList = clientContext.get_web().get_lists().getByTitle('Projects');
-//     getUserId_Data_Request.g.oListItem = oList.getItemById(IID);//declared inside object scope only
-//     oListItem = getUserId_Data_Request.g.oListItem;
-//     clientContext.load(getUserId_Data_Request.g.oListItem);
-//     clientContext.executeQueryAsync(
-//       Function.createDelegate(this, getUserId_Data_Request.onSuccess),
-//       Function.createDelegate(this, getUserId_Data_Request.onError)
-//     );
-//   },
-//   // Global variables
-//   g: {
+  draftProject.set_owner(userPicked)
+  var publishJob = draftProject.publish(true);
+  // $('.wfLoader').hide();
 
-//   }
-// };
+  editProjectContext.waitForQueueAsync(publishJob, 100, QueueJobSentOwnerEpm);
+}
 
+function QueueJobSentOwnerEpm(response) {
+  window.location =
+    _spPageContextInfo.webAbsoluteUrl +
+    "/SitePages/View.aspx?ListKey=" +
+    listkey +
+    "&IID=" +
+    IID +
+    PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+  // const myTimeout = setTimeout(function () {
+  //   location.reload();
+  // }, 3000);
 
-//editKpiResults
-
+}
