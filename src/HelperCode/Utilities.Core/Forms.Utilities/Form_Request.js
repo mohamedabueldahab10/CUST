@@ -1,6 +1,4 @@
 window.kpiCodeResult = '';
-window.projectBuildTeamArr = [];
-window.projectManagerPickerToEpm='';
 ////////////
 var allFileIndex = 0
 
@@ -483,39 +481,6 @@ window.Edit_Data_Request = {
 
       projRelatedInit = oListItem.get_item("RelatedInitiative");
       ProjectInitiativeDelevrable.init('InitiativeDeliverables', projRelatedInit) // to get the related delivravle initiative on ;oad the edit page
-
-
-      //to get the ppicker value to update them on Epm build team 
-      var projectOwnerPicker = currentItem.get_item("ProjectOwner") ? currentItem.get_item("ProjectOwner") : ''
-      projectManagerPickerToEpm = currentItem.get_item("ProjectManager") ? currentItem.get_item("ProjectManager") : ''
-      var projectSponsorPicker = currentItem.get_item("ProjectSponsor") ? currentItem.get_item("ProjectSponsor") : ''
-      var projectDirectorUnit = currentItem.get_item("DirectorUnit") ? currentItem.get_item("DirectorUnit") : ''
-      var projectObjectiveOwner = currentItem.get_item("ObjectiveOwner") ? currentItem.get_item("ObjectiveOwner") : ''
-      var projectResponsible = currentItem.get_item("ProjectResponsible") ? currentItem.get_item("ProjectResponsible") : ''
-      var projectQualityOfficer = currentItem.get_item("QualityOfficer") ? currentItem.get_item("QualityOfficer") : ''
-
-      if (projectOwnerPicker && !projectBuildTeamArr.includes(projectOwnerPicker.get_lookupValue())) {
-        projectBuildTeamArr.push(projectOwnerPicker.get_lookupValue())
-      }
-      if (projectSponsorPicker && !projectBuildTeamArr.includes(projectSponsorPicker.get_lookupValue())) {
-        projectBuildTeamArr.push(projectSponsorPicker.get_lookupValue())
-      }
-      if (projectDirectorUnit && !projectBuildTeamArr.includes(projectDirectorUnit.get_lookupValue())) {
-        projectBuildTeamArr.push(projectDirectorUnit.get_lookupValue())
-      }
-
-      if (projectObjectiveOwner && !projectBuildTeamArr.includes(projectObjectiveOwner.get_lookupValue())) {
-        projectBuildTeamArr.push(projectObjectiveOwner.get_lookupValue())
-      }
-
-      if (projectResponsible && !projectBuildTeamArr.includes(projectResponsible.get_lookupValue())) {
-        projectBuildTeamArr.push(projectResponsible.get_lookupValue())
-      }
-
-      if (projectQualityOfficer && !projectBuildTeamArr.includes(projectQualityOfficer.get_lookupValue())) {
-        projectBuildTeamArr.push(projectQualityOfficer.get_lookupValue())
-      }
-      //
 
     }
 

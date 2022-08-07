@@ -10,7 +10,7 @@ window.IdeaId;
 
 var kpiName = '', kpiType = '', kpiSector = '', kpiSubSector = '', kpiMainGoalRelated = '', kpiSubGoalRelated = '', kpiPortfolio = '';
 
-var allEnterpriseResources = [];
+var allEnterpriseResources = [], projectBuildTeamArr = [], projectManagerPickerToEpm;
 
 if (
   localStorage.getItem("lng") == null ||
@@ -1267,7 +1267,9 @@ window.Edit_Data_Submit = {
             } else if (listkey == 'mainkpi') {
               Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated)
             } else if (listkey == 'projects' && PCODE) {
-              Update_Project_Center.getAllResources()
+              console.log("BEFORE START")
+              debugger
+              getProjectInfoToUpdateEPM()
             } else {
               window.location =
                 _spPageContextInfo.webAbsoluteUrl +
@@ -1710,13 +1712,17 @@ var New_Master_Details_Submit = {
             $(".successmsg").show();
             $(".btn-save").addClass("success");
             if (listkey == "projects") {
-              window.location =
-                _spPageContextInfo.webAbsoluteUrl +
-                "/SitePages/View.aspx?ListKey=" +
-                listkey +
-                "&IID=" +
-                IID +
-                PCODE_STRING;
+              console.log("IN MASTER DETAILS")
+              debugger
+              getProjectInfoToUpdateEPM()
+
+              // window.location =
+              //   _spPageContextInfo.webAbsoluteUrl +
+              //   "/SitePages/View.aspx?ListKey=" +
+              //   listkey +
+              //   "&IID=" +
+              //   IID +
+              //   PCODE_STRING;
             }
             else {
               if (listkey == "initiativecards" && ICODE) {
@@ -2203,13 +2209,14 @@ function _uploadFile() {
                   } else {
                     $(".btn-save").addClass("success");
                     if (listkey == "projects") {
-                      window.location =
-                        _spPageContextInfo.webAbsoluteUrl +
-                        "/SitePages/View.aspx?ListKey=" +
-                        listkey +
-                        "&IID=" +
-                        IID +
-                        PCODE_STRING;
+                      getProjectInfoToUpdateEPM()
+                      // window.location =
+                      //   _spPageContextInfo.webAbsoluteUrl +
+                      //   "/SitePages/View.aspx?ListKey=" +
+                      //   listkey +
+                      //   "&IID=" +
+                      //   IID +
+                      //   PCODE_STRING;
                     }
                     else {
                       if (listkey == 'mainkpi') { // to update the kpi result list
@@ -2968,6 +2975,71 @@ window.Archive_Data_Submit = {
 
 //
 
+
+
+function getProjectInfoToUpdateEPM() {
+  var context = SP.ClientContext.get_current();
+  var dfd = $.Deferred();
+  //Get list from host web
+  var programList = context.get_web().get_lists().getByTitle('Projects');
+  var camlQuery = new SP.CamlQuery();
+  camlQuery.set_viewXml("<View><Query><Where><Eq><FieldRef Name=\'Title\'/><Value Type=\'Text\'>" + PCODE + "</Value></Eq></Where></Query></View>");
+  //Get items by Query
+  var progColl = programList.getItems(camlQuery);
+  //Load item collection
+  context.load(progColl);
+  context.executeQueryAsync(function () {
+    var currentItemArray = [];
+    if (progColl.get_count() > 0) {
+      var progEnum = progColl.getEnumerator();
+      while (progEnum.moveNext()) {
+        var currentItem = progEnum.get_current();
+        var projectOwnerPicker = currentItem.get_item("ProjectOwner") ? currentItem.get_item("ProjectOwner") : ''
+        projectManagerPickerToEpm = currentItem.get_item("ProjectManager") ? currentItem.get_item("ProjectManager") : ''
+        var projectSponsorPicker = currentItem.get_item("ProjectSponsor") ? currentItem.get_item("ProjectSponsor") : ''
+        var projectDirectorUnit = currentItem.get_item("DirectorUnit") ? currentItem.get_item("DirectorUnit") : ''
+        var projectObjectiveOwner = currentItem.get_item("ObjectiveOwner") ? currentItem.get_item("ObjectiveOwner") : ''
+        var projectResponsible = currentItem.get_item("ProjectResponsible") ? currentItem.get_item("ProjectResponsible") : ''
+        var projectQualityOfficer = currentItem.get_item("QualityOfficer") ? currentItem.get_item("QualityOfficer") : ''
+
+      }
+      if (projectOwnerPicker && !projectBuildTeamArr.includes(projectOwnerPicker.get_lookupValue())) {
+        projectBuildTeamArr.push(projectOwnerPicker.get_lookupValue())
+      }
+      if (projectSponsorPicker && !projectBuildTeamArr.includes(projectSponsorPicker.get_lookupValue())) {
+        projectBuildTeamArr.push(projectSponsorPicker.get_lookupValue())
+      }
+      if (projectDirectorUnit && !projectBuildTeamArr.includes(projectDirectorUnit.get_lookupValue())) {
+        projectBuildTeamArr.push(projectDirectorUnit.get_lookupValue())
+      }
+
+      if (projectObjectiveOwner && !projectBuildTeamArr.includes(projectObjectiveOwner.get_lookupValue())) {
+        projectBuildTeamArr.push(projectObjectiveOwner.get_lookupValue())
+      }
+
+      if (projectResponsible && !projectBuildTeamArr.includes(projectResponsible.get_lookupValue())) {
+        projectBuildTeamArr.push(projectResponsible.get_lookupValue())
+      }
+
+      if (projectQualityOfficer && !projectBuildTeamArr.includes(projectQualityOfficer.get_lookupValue())) {
+        projectBuildTeamArr.push(projectQualityOfficer.get_lookupValue())
+      }
+
+
+      context.executeQueryAsync(function () {
+
+        Update_Project_Center.getAllResources()
+
+      }, function (sender, args) {
+        //Item updated fail
+        console.log("Request Failed to get projectlist Items :" + args.get_message());
+      })
+    }
+  })
+}
+
+
+
 var Update_Project_Center = {
   getAllResources: function () {
     $.ajax({
@@ -3052,8 +3124,5 @@ function QueueJobSentOwnerEpm(response) {
     "&IID=" +
     IID +
     PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
-  // const myTimeout = setTimeout(function () {
-  //   location.reload();
-  // }, 3000);
 
 }
