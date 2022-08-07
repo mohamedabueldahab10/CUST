@@ -79,7 +79,7 @@ if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar
 } else {
     var No_Data = 'Not Found'
 }
-
+ 
 
 window.UProjects = [];
 var iconstagesm = require('../../../HelperRessources/img/icon-stage-sm.png');
