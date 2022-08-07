@@ -99,9 +99,9 @@ window.sphttp = {
     var oListsp = clientContext.get_web().get_lists().getByTitle(listDisplayName);
     // var fields=IN.join(', ');
 
-    if (isLoadMore || isEmptyFilter || filterValue)
+    if (isLoadMore || isEmptyFilter || filterValue) {
       camelQuery = camelQuery.replace('</Query></View>', '</Query><RowLimit>30</RowLimit></View>');
-
+    }
     var fieldsToGet = '<ViewFields>'; // get all data on filter in listing page
     internalFieldNames.forEach(function (o, i, a) {
       fieldsToGet += '<FieldRef Name="' + o + '" />';
@@ -113,6 +113,7 @@ window.sphttp = {
     camelQuery = camelQuery.replace('</Query>', '</Query>' + fieldsToGet);
 
 
+    console.log(camelQuery, "camelQuery camelQuery camelQuery in sphhtp")
     if (!isLoadMore || isOnload) { // remove isEmptyFilter
       sphttp.g.camlQuery = new SP.CamlQuery();
       sphttp.g.camlQuery.set_viewXml(camelQuery);
@@ -399,12 +400,18 @@ window.ListingData = {
 
     if (!isTasks && originalstate) {
       if (UserICode != null && UserICode != '') {
-        PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In></And></Where></Query></View>';
-        PQueryFilteration = '<In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In>';
+        if (listkey == 'initiativemilestones') { // to arrange the card depends on planned completed Date
+          PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In></And></Where><OrderBy><FieldRef Name=\'PlannedCompletedDate\' Ascending=\'False\' /></OrderBy></Query></View>';
+          PQueryFilteration = '<In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In>';
+        } else {
+          PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In></And></Where></Query></View>';
+          PQueryFilteration = '<In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In>';
+        }
       }
       else {
         PQuery = AccessQuery;
       }
+
     }
 
     console.log(PQuery, "INNNNNNNNNNNNNNNNNNNNNNN LISTING")
@@ -937,6 +944,8 @@ window.ListingData = {
       }
 
       if (FilterChoices.length == 0) {
+        // console.log("BOOOOOOOOOOOOOOOOH")
+        // debugger
         isEmptyFilter = true;
         filterValue = false
         if (isTasks) {
@@ -982,7 +991,13 @@ window.ListingData = {
         }
         else {
           if ((PCODE != null && PCODE != '') || (ICODE != null && ICODE != '')) { // add and in query to handle the correct query if there is PCODE or ICODE
-            PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>' + PQueryFilteration + '</And></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
+            if (listkey == 'initiativemilestones') { // to arrange the card depends on planned completed Date
+              PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>' + PQueryFilteration + '</And></Where><OrderBy><FieldRef Name="PlannedCompletedDate" Ascending="False" /></OrderBy></Query></View>';
+            } else if (listkey == 'milestones') {
+              PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>' + PQueryFilteration + '</And></Where><OrderBy><FieldRef Name="PlannedDate" Ascending="False" /></OrderBy></Query></View>';
+            } else {
+              PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>' + PQueryFilteration + '</And></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
+            }
           } else {
             PQuery = '<View><Query><Where><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>' + PQueryFilteration + '</Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
           }

@@ -284,9 +284,9 @@ window.userCalls = {
     });
   },
   isMember: function (groupName, userLoginName, fieldID) {
-    console.log(groupName,"groupName groupName")
-    console.log(userLoginName,"userLoginName")
-    console.log(fieldID,"fieldID")
+    console.log(groupName, "groupName groupName")
+    console.log(userLoginName, "userLoginName")
+    console.log(fieldID, "fieldID")
     $.ajax({
       url:
         _spPageContextInfo.webAbsoluteUrl +
@@ -1103,7 +1103,7 @@ window.userCalls = {
         //CRUD
         Create_Access = ["mainkpi", "sos", "benefits", "Targets.aspx", "kpiequations", "deliverablemetrics", "benefitmatrix", "benefitmetrics",];
 
-        Read_Access = ["initiatives", "InitiativeHome.aspx", "mainkpi", "sos", "benefits", "Targets.aspx", "portfolio", "home.aspx", "kpiequations", "MainIndicators.aspx", "deliverablemetrics", "benefitmatrix", "benefitmetrics",];
+        Read_Access = ["initiatives", "InitiativeHome.aspx", "mainkpi", "sos", "benefits", "Targets.aspx", "portfolio", "home.aspx", "kpiequations", "MainIndicators.aspx", "deliverablemetrics", "benefitmatrix", "benefitmetrics"];
 
         Edit_Access = ["mainkpi", "sos", "benefits", "Targets.aspx", "kpiequations", "deliverablemetrics", "benefitmatrix", "benefitmetrics",];
         Delete_Access = ["mainkpi", "sos", "benefits", "Targets.aspx", "kpiequations", "deliverablemetrics", "benefitmatrix", "benefitmetrics",];
@@ -2019,7 +2019,7 @@ window.userCalls = {
         Read_Access = ["mainkpi",
           //  "sos", 
           "Targets.aspx", "kpiequations", "MainIndicators.aspx"];
-        Edit_Access = ["Targets.aspx","mainkpi", "kpiequations", "MainIndicators.aspx"];
+        Edit_Access = ["Targets.aspx", "mainkpi", "kpiequations", "MainIndicators.aspx"];
         Delete_Access = [];
         break;
 
@@ -2038,7 +2038,7 @@ window.userCalls = {
       (Edit_Access = Edit_Access.map((name) => name.toLowerCase())),
       (Delete_Access = Delete_Access.map((name) => name.toLowerCase()));
 
-  
+
     switch (
     true //Create Access
     ) {
@@ -2052,10 +2052,10 @@ window.userCalls = {
           userCalls.g.Security_Msg();
           console.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         }
-        
+
         //create btn
         //disable
-        
+
         $("body").append(
           "<style>" +
           ".btn-add{opacity: .6;pointer-events: none;display:none}" +
@@ -2464,6 +2464,8 @@ var Access_Project_Info_Request = {
 
       userCalls.g.Security_Msg();
     }
+    debugger
+    console.log("debuuge on query")
     if (!isAdmin && !isMinister && !isITSteering && !isEPMO) {
       //Access caml query for home page and listing pages
       //
@@ -2580,10 +2582,17 @@ var Access_Project_Info_Request = {
       }
       //if there is pcode (on project level) get current project's data [for now this is specifically for listing pages]
       else if (istherePCODE) {
-        AccessQuery =
+        if (USERlistkey == 'milestones'){ // to arrange the milestone depends on PlannedDate
+          AccessQuery =
+          '<View><Query><Where><And><In><FieldRef Name="ProjectCode" /><Values><Value Type="Text">' +
+          USERPCODE +
+          "</Value></Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='PlannedDate' Ascending='False' /></OrderBy></Query></View>";
+        }else{
+          AccessQuery =
           '<View><Query><Where><And><In><FieldRef Name="ProjectCode" /><Values><Value Type="Text">' +
           USERPCODE +
           "</Value></Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
+        }
         if (USERisListing && !isfileListing) {
           window.checkListingStatusHtml = setInterval(function () {
             ListingData.preinit();
@@ -2656,10 +2665,17 @@ var Access_Project_Info_Request = {
     else {
       //if there is pcode (on project level) get current project's data [for now this is specifically for listing pages]
       if (istherePCODE) {
-        AccessQuery =
-          '<View><Query><Where><And><In><FieldRef Name="ProjectCode" /><Values><Value Type="Text">' +
-          USERPCODE +
-          "</Value></Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
+        if (USERlistkey == 'milestones') { // to arrange the data in milestone depends on  planned date
+          AccessQuery =
+            '<View><Query><Where><And><In><FieldRef Name="ProjectCode" /><Values><Value Type="Text">' +
+            USERPCODE +
+            "</Value></Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='PlannedDate' Ascending='False' /></OrderBy></Query></View>";
+        } else {
+          AccessQuery =
+            '<View><Query><Where><And><In><FieldRef Name="ProjectCode" /><Values><Value Type="Text">' +
+            USERPCODE +
+            "</Value></Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
+        }
       }
       if (USERisHome) {
         window.checkHomeStatusHtml = setInterval(function () {
@@ -2678,7 +2694,7 @@ var Access_Project_Info_Request = {
     ) {
       if (USERlistkey == "issues" && (USERisListing || USERisNew)) {
       } else {
-        
+
         $("body").append(
           "<style>" +
           ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +

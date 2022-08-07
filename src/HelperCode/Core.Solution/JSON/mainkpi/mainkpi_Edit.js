@@ -710,6 +710,11 @@ var Information_Form = [
                 "DisplayNameEn": "Mesure Period",
                 "min": "FromDate",
                 "type": "datetime",
+                security: {
+                    groups: [
+                        'VRO_P', 'System Admin Group', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    ]
+                },
                 // validation: "required",
             },
             {
@@ -721,7 +726,7 @@ var Information_Form = [
                 //   dynamic: "Initiative",
                 options: {
                     choices: [
-                        { 
+                        {
                             display: 'mersurable',
                             value: 'mersurable'
                         },
@@ -735,7 +740,7 @@ var Information_Form = [
                         // },
                         {
                             display: 'completed',
-                            value: 'completed' 
+                            value: 'completed'
                         },
                         {
                             display: 'unspecific',
@@ -745,7 +750,7 @@ var Information_Form = [
                 },
                 security: {
                     groups: [
-                        'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                        'VRO_P', 'System Admin Group', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
                     ]
                 },
             },
@@ -765,7 +770,7 @@ var Information_Form = [
             state: "disabled",
             security: {
                 groups: [
-                    'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'VRO_P', 'Performance Leaders', 'OPMO', 'System Admin Group', 'Project Managers for Project Web App'
                 ]
             },
             //editableBy: "PerformanceLeader",
@@ -787,7 +792,7 @@ var Information_Form = [
             },
             security: {
                 groups: [
-                   'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'VRO_P', 'Performance Leaders', 'System Admin Group', 'OPMO', 'Project Managers for Project Web App'
                 ]
             },
         },
@@ -804,6 +809,11 @@ var Information_Form = [
                 ],
                 "display": "none"
             },
+            security: {
+                groups: [
+                    'VRO_P', 'Performance Leaders', 'System Admin Group', 'OPMO', 'Project Managers for Project Web App'
+                ]
+            },
 
         },
         {
@@ -818,6 +828,11 @@ var Information_Form = [
                     // { display: "midterm2", value: "ActualMid2" },
                 ],
                 "display": "none"
+            },
+            security: {
+                groups: [
+                    'VRO_P', 'Performance Leaders', 'OPMO', 'System Admin Group', 'Project Managers for Project Web App'
+                ]
             },
 
         },
@@ -846,7 +861,7 @@ var Information_Form = [
             "validation": "required",
             security: {
                 groups: [
-                   'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'VRO_P', 'Performance Leaders', 'OPMO', 'System Admin Group', 'Project Managers for Project Web App'
                 ]
             },
         },
@@ -874,7 +889,7 @@ var Information_Form = [
             },
             security: {
                 groups: [
-                    'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'SPM Team', 'VRO_P', 'Performance Leaders', 'System Admin Group', 'OPMO', 'Project Managers for Project Web App'
                 ]
             },
             "display": "none"
@@ -924,7 +939,7 @@ var Information_Form = [
             //editableBy: "PerformanceLeader",
             security: {
                 groups: [
-                   'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'VRO_P', 'Performance Leaders', 'OPMO', 'System Admin Group', 'Project Managers for Project Web App'
                 ]
             },
         },
@@ -936,7 +951,7 @@ var Information_Form = [
             //editableBy: "PerformanceLeader",
             security: {
                 groups: [
-                  'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'VRO_P', 'Performance Leaders', 'OPMO', 'System Admin Group', 'Project Managers for Project Web App'
                 ]
             },
         },
@@ -948,7 +963,7 @@ var Information_Form = [
             //editableBy: "PerformanceLeader",
             security: {
                 groups: [
-                 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'VRO_P', 'Performance Leaders', 'OPMO', 'System Admin Group', 'Project Managers for Project Web App'
                 ]
             },
         },
@@ -960,7 +975,7 @@ var Information_Form = [
             //editableBy: "PerformanceLeader",
             security: {
                 groups: [
-                  'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'VRO_P', 'Performance Leaders', 'OPMO', 'System Admin Group', 'Project Managers for Project Web App'
                 ]
             },
         },
@@ -972,7 +987,7 @@ var Information_Form = [
             //editableBy: "PerformanceLeader",
             security: {
                 groups: [
-                   'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'VRO_P', 'Performance Leaders', 'OPMO', 'System Admin Group', 'Project Managers for Project Web App'
                 ]
             },
         },
@@ -984,7 +999,7 @@ var Information_Form = [
             //editableBy: "PerformanceLeader",
             security: {
                 groups: [
-                   'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'VRO_P', 'Performance Leaders', 'OPMO', 'System Admin Group', 'Project Managers for Project Web App'
                 ]
             },
         },
@@ -996,7 +1011,7 @@ var Information_Form = [
             //editableBy: "PerformanceLeader",
             security: {
                 groups: [
-                  'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'VRO_P', 'Performance Leaders', 'OPMO', 'System Admin Group', 'Project Managers for Project Web App'
                 ]
             },
         },
@@ -1009,7 +1024,7 @@ var Information_Form = [
             //editableBy: "PerformanceLeader",
             security: {
                 groups: [
-                  'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'VRO_P', 'Performance Leaders', 'OPMO', 'System Admin Group', 'Project Managers for Project Web App'
                 ]
             },
         },
@@ -1021,7 +1036,7 @@ var Information_Form = [
             type: "multiline",
             security: {
                 groups: [
-                  'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'VRO_P', 'Performance Leaders', 'OPMO', 'System Admin Group', 'Project Managers for Project Web App'
                 ]
             },
         },
@@ -1039,7 +1054,7 @@ var Information_Form = [
             "type": "file",
             security: {
                 groups: [
-                    'SPM Admin', 'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'SPM Admin', 'SPM Team', 'VRO_P', 'Performance Leaders', 'System Admin Group', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
                 ]
             },
             "withAddBtn": "true"
