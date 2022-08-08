@@ -8,6 +8,22 @@ var Listing_Info = [{
     infilter: true
 },
 {
+    "InternalName": "ProjectManager",
+    "DisplayName": "مدير المشروع",
+    "DisplayNameEn": "Project Manager",
+    "type": "picker",
+    inlisting: false,
+    infilter: true
+},
+{
+    "InternalName": "ProjectOwner",
+    "DisplayName": "مالك المشروع",
+    "DisplayNameEn": "Project Owner",
+    "type": "picker",
+    inlisting: false,
+    infilter: true
+},
+{
     "InternalName": "Title",
     "DisplayName": "رمز المشروع",
     "DisplayNameEn": "Project Code",

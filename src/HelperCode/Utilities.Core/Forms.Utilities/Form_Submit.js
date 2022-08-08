@@ -8,7 +8,7 @@ var isuploaddone = 0,
   Documents_Library;
 window.IdeaId;
 
-var kpiName = '', kpiType = '', kpiSector = '', kpiSubSector = '', kpiMainGoalRelated = '', kpiSubGoalRelated = '', kpiPortfolio = '';
+var kpiName = '', kpiType = '', kpiSector = '', kpiSubSector = '', kpiMainGoalRelated = '', kpiSubGoalRelated = '', kpiPortfolio = '', kpiPerformanceAnalysis = '', kpiYearPicked = '';
 
 var allEnterpriseResources = [], projectBuildTeamArr = [], projectManagerPickerToEpm;
 
@@ -510,7 +510,9 @@ window.New_Data_Submit = {
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
         IID = New_Data_Submit.g.oListItem.get_id();
+
         Set_Code_Submit.init();
+
         if (listkey == "mainkpi") {
           var dateFrom = $('#FromDate').val()
           var dateFromTime = new Date(dateFrom); // when use normal date time
@@ -1206,7 +1208,8 @@ window.Edit_Data_Submit = {
       kpiMainGoalRelated = $('#RelatedStrategyObjective').val() ? $('#RelatedStrategyObjective').val() : ''
       kpiSubGoalRelated = $('#SubRelatedObjective').val() ? $('#SubRelatedObjective').val() : ''
       kpiPortfolio = $('#Portfolio').val() ? $('#Portfolio').val() : ''
-
+      kpiPerformanceAnalysis = $('#PerformanceAnalysis').val() ? $('#PerformanceAnalysis').val() : ''
+      kpiYearPicked = $('#Year').val() ? $('#Year').val() : ''
       if (kpiType == 'main') { // remove portfolio and alhadaf elfer3e when change to main cause main don't have portfolio
         Edit_Data_Submit.g.oListItem.set_item('Portfolio', '');
         Edit_Data_Submit.g.oListItem.set_item('SubRelatedObjective', '');
@@ -1265,7 +1268,7 @@ window.Edit_Data_Submit = {
                 $('#KPI option[value="' + $('#KPI').val() + '"]').attr('option-id') +
                 PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
             } else if (listkey == 'mainkpi') {
-              Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated)
+              Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis)
             } else if (listkey == 'projects' && PCODE) {
               console.log("BEFORE START")
               debugger
@@ -1395,7 +1398,7 @@ var kpiResults = {
 
 // Edit Kpi Results list when edit on main kpi to make the target page updated
 var Edit_KPI_Results = {
-  init: function (Name, Types, Sector, SubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated) {
+  init: function (Name, Types, Sector, SubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis) {
 
     var context = SP.ClientContext.get_current();
     var dfd = $.Deferred();
@@ -1416,12 +1419,18 @@ var Edit_KPI_Results = {
           while (progEnum.moveNext()) {
             var currentItem = progEnum.get_current();
             var currentId = currentItem.get_item("ID");
+            var yearItem = currentItem.get_item("Year");
+
             //Get Item by current ID
             var items = programList.getItemById(currentId);
             items.set_item('Name', Name);
             items.set_item('Types', Types);
             items.set_item('Sector', Sector)
             items.set_item('SubSector', SubSector)
+
+            if (yearItem == kpiYearPicked) {
+              items.set_item('PerformanceAnalysis', kpiPerformanceAnalysis)
+            }
             if (Types == 'main') {
               items.set_item("RelatedGoal", kpiMainGoalRelated)
               items.set_item('Portfolio', '')
@@ -1910,7 +1919,7 @@ var Edit_Master_Details_Submit = {
         $(".btn-save").addClass("success");
 
         if (listkey == 'mainkpi') { // to update the kpi result list
-          Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated)
+          Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis)
         } else {
           window.location =
             _spPageContextInfo.webAbsoluteUrl +
@@ -2220,7 +2229,7 @@ function _uploadFile() {
                     }
                     else {
                       if (listkey == 'mainkpi') { // to update the kpi result list
-                        Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated)
+                        Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis)
                       } else {
 
                         window.location =

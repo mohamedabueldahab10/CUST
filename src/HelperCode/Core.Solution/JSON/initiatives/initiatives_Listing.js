@@ -11,10 +11,26 @@ var Listing_Info = [
 	},
 	{
 		"InternalName": "Name",
-		"DisplayNameEn": "Name",
+		"DisplayNameEn": "Name", 
 		"DisplayName":"اسم المبادرة",
         "type":"text",
 		inlisting: true,
+		infilter: true
+	},
+	{
+		"InternalName": "InitiativePM",
+		"DisplayName": "مدير المبادرة",
+		"DisplayNameEn": "Initiative Manager",
+		"type": "picker",
+		inlisting: false,
+		infilter: true
+	},
+	{
+		"InternalName": "InitiativeOwner",
+		"DisplayName": "مالك المبادرة",
+		"DisplayNameEn": "Initiative Owner",
+		"type": "picker",
+		inlisting: false,
 		infilter: true
 	},
     // {

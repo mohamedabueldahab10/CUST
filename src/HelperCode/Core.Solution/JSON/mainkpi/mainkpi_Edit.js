@@ -10,7 +10,7 @@ var Information_Form = [
             //   "DisplayNameEn": "KPI code",
             //   "DisplayName": "رمز المؤشر",
             //   "type": "string",
-            //   "maxchar": "250",
+            //   "maxchar": "250", 
             //   "validation": "required"
             // },
             // {

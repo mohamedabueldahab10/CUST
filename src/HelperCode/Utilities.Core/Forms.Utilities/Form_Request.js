@@ -1227,7 +1227,7 @@ window.View_Data_Request = {
       PeriodType = oListItem.get_item("PeriodType") ? oListItem.get_item("PeriodType") : ''
 
       equationKPI.init();
-
+      View_Current_Kpi.init(); // show the kpi result for current time (extra section of view)
       $('#Year,#Months,#Quarter,#Midterms,#Years').removeAttr('required');
 
       if (PeriodType == 'monthly') {
@@ -3504,7 +3504,7 @@ window.ViewAllFiles = {
     console.log(filesUrls);
     if (filesUrls.length > 0) {
       var FilesLink =
-        '<div class="py-5 border-bottom section-container " data-groups="">' +
+        '<div class="py-5 border-bottom section-container " id="files_container" data-groups="">' +
         '<div class="form-row"><div class="col-lg-3 col-md-4 mb-4"><h3 data-trans-documents class="Resources"></h3><span class="font-14"></span></div>' +
         '<div class="col-lg-9 col-md-8 white-box p-4 fieldset-container"><div class="col-md-6 multiline"><label data-trans-document class="Resources">مرفقات: </label>';
       for (var i = 0; i < filesUrls.length; i++) {
@@ -4751,4 +4751,159 @@ window.Get_ProjectData_ByCode = {
     );
   },
   g: {}
+}
+///////////////
+var View_Current_Kpi = {
+  onSuccess: function (sender, args) {
+    var collListItem = View_Current_Kpi.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+
+    var relatedKpiYear, relatedPerformanceAnalysis, relatedPeriodType, relatedActualValue;
+    var periodType = ''
+
+    var currentMonth = new Date().getMonth() + 1;
+
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      console.log(oListItem.get_item('PerformanceAnalysis'), "PERFORMANCE ANALYsis")
+      relatedKpiYear = oListItem.get_item('Year') == null ? No_Data : oListItem.get_item('Year');
+      relatedPeriodType = oListItem.get_item('PeriodType') == null ? No_Data : oListItem.get_item('PeriodType');
+
+      ////////////////////////////
+      if (relatedPeriodType == 'year') {
+
+        relatedActualValue = oListItem.get_item('ActualY') || 0
+
+        periodType += '<label data-trans-yearkpitype class="Resources"></label>'
+        periodType += '<p data-trans-actualy class="viewmode-value Resources" id="Years"></p>'
+
+      } else if (relatedPeriodType == 'midterm') {
+
+
+        periodType += '<label data-trans-midkpitype class="Resources"></label>'
+
+        if (currentMonth >= 1 && currentMonth <= 6) {
+          relatedActualValue = oListItem.get_item('ActualMid1') || 0
+          periodType += '<p data-trans-actualmid1 class="viewmode-value Resources" id="Midterms"></p>'
+        } else if (currentMonth > 6 && currentMonth <= 12) {
+          relatedActualValue = oListItem.get_item('ActualMid2') || 0
+          periodType += '<p data-trans-actualmid2 class="viewmode-value Resources" id="Midterms"></p>'
+        }
+
+      } else if (relatedPeriodType == 'quarter') {
+
+        periodType += '<label data-trans-quarterkpitype class="Resources"></label>'
+
+        if (currentMonth >= 1 && currentMonth <= 3) {
+          relatedActualValue = oListItem.get_item('ActualQ1') || 0
+          periodType += '<p data-trans-actualq1 class="viewmode-value Resources" id="Quarter"></p>'
+        } else if (currentMonth > 3 && currentMonth <= 6) {
+          relatedActualValue = oListItem.get_item('ActualQ2') || 0
+          periodType += '<p data-trans-actualq2 class="viewmode-value Resources" id="Quarter"></p>'
+        } else if (currentMonth > 6 && currentMonth <= 9) {
+          relatedActualValue = oListItem.get_item('ActualQ3') || 0
+          periodType += '<p data-trans-actualq3 class="viewmode-value Resources" id="Quarter"></p>'
+        } else if (currentMonth > 9 && currentMonth <= 12) {
+          relatedActualValue = oListItem.get_item('ActualQ4') || 0
+          periodType += '<p data-trans-actualq4 class="viewmode-value Resources" id="Quarter"></p>'
+        }
+
+      } else if (relatedPeriodType == 'monthly') {
+        relatedActualValue = oListItem.get_item(`ActualM${currentMonth}`) || 0
+        periodType += '<label data-trans-monthlykpitype class="Resources"></label>'
+        periodType += `<p data-trans-month${currentMonth} class="viewmode-value Resources" id="Months"></p>`
+
+      }
+
+      ////////////////////////////
+
+    }
+
+
+
+    // if (relatedPeriodType == 'year') {
+
+    //   periodType += '<label data-trans-yearkpitype class="Resources"></label>'
+    //   periodType += '<p data-trans-actualy class="viewmode-value Resources" id="Years"></p>'
+
+    // } else if (relatedPeriodType == 'midterm') {
+
+    //   periodType += '<label data-trans-midkpitype class="Resources"></label>'
+
+    //   if (currentMonth >= 1 && currentMonth <= 6) {
+    //     periodType += '<p data-trans-actualmid1 class="viewmode-value Resources" id="Midterms"></p>'
+    //   } else if (currentMonth > 6 && currentMonth <= 12) {
+    //     periodType += '<p data-trans-actualmid2 class="viewmode-value Resources" id="Midterms"></p>'
+    //   }
+
+    // } else if (relatedPeriodType == 'quarter') {
+
+    //   periodType += '<label data-trans-quarterkpitype class="Resources"></label>'
+
+    //   if (currentMonth >= 1 && currentMonth <= 3) {
+    //     periodType += '<p data-trans-actualq1 class="viewmode-value Resources" id="Quarter"></p>'
+    //   } else if (currentMonth > 3 && currentMonth <= 6) {
+    //     periodType += '<p data-trans-actualq2 class="viewmode-value Resources" id="Quarter"></p>'
+    //   } else if (currentMonth > 6 && currentMonth <= 9) {
+    //     periodType += '<p data-trans-actualq3 class="viewmode-value Resources" id="Quarter"></p>'
+    //   } else if (currentMonth > 9 && currentMonth <= 12) {
+    //     periodType += '<p data-trans-actualq4 class="viewmode-value Resources" id="Quarter"></p>'
+    //   }
+
+    // } else if (relatedPeriodType == 'monthly') {
+    //   periodType += '<label data-trans-monthlykpitype class="Resources"></label>'
+    //   periodType += `<p data-trans-month${currentMonth} class="viewmode-value Resources" id="Months"></p>`
+
+    // }
+
+
+    var currentKpiView =
+      '<div class="py-5 border-bottom section-container " data-groups="">' +
+      '<div class="form-row"><div class="col-lg-3 col-md-4 mb-4"><h3 data-trans-currentkpi class="Resources"></h3><span class="font-14"></span></div>' +
+      '<div class="col-lg-9 col-md-8 white-box p-4 fieldset-container">' +
+      '<div class="col-md-6 multiline">' +
+      '<label data-trans-yeartype class="Resources"></label>' +
+      '<p class="viewmode-value" id="Year">' + relatedKpiYear + '</p>' +
+      '</div>' +
+      '<div class="col-md-6 multiline">' +
+      periodType +
+      '</div>' +
+      '<div class="col-md-6 multiline">' +
+      '<label data-trans-actualkpivalue class="Resources"></label>' +
+      '<p class="viewmode-value" id="Equation">' + relatedActualValue + '</p>' +
+      '</div>' +
+      '</div>'
+
+    console.log(currentKpiView, "currentKpiView ")
+
+    $(currentKpiView).insertBefore(
+      $("button.btn.btn-action.btn-cancel").parent().parent()
+    );
+
+    changeResources()
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  init: function () {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("KPIResults");
+    var camlQuery = new SP.CamlQuery();
+    var currentYear = new Date().getFullYear()
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And><Eq><FieldRef Name='KPI'/><Value Type='Text'>" + KPICode + "</Value></Eq><Eq><FieldRef Name='Year'/><Value Type='Text'>" + currentYear + "</Value></Eq></And></And></Where></Query></View>"
+    );
+
+    View_Current_Kpi.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(View_Current_Kpi.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, View_Current_Kpi.onSuccess),
+      Function.createDelegate(this, View_Current_Kpi.onError)
+    );
+
+  },
+  g: {
+  }
 }

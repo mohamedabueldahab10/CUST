@@ -36,6 +36,7 @@
         "requirementsspecifications": "كراسة الشروط والمواصفات",
         "attachment": "المستندات",
         "documents": "المرفقات",
+        'currentkpi':'المؤشر الحالي',
         "document": "مرفقات :",
         "auditquestionnaire": "استبيان المراجعة",
         "projecthascard": "هل تم اعداد بطاقة المشروع؟",
@@ -638,7 +639,13 @@
         "initiativeissues": "التحديات",
         "benefits": "المنافع",
         "benefitmetrics": "مقاييس المنافع",
-        "initiativemom": "محاضر الاجتماع"
+        "initiativemom": "محاضر الاجتماع",
+        //view current kpi
+        "yearkpitype":"السنوي",
+        "midkpitype":"النصف السنوي",
+        "quarterkpitype":"الربع",
+        "monthlykpitype":"الشهر",
+        "actualkpivalue":"القيمة الفعلية"
 
     },
     "en": {
@@ -677,6 +684,7 @@
         "postponereferences": "Postpone References",
         "requirementsspecifications": "Requirements And Specifications",
         "documents": "Documents",
+        "currentkpi":"Current KPI",
         "document": "Documents : ",
         "attachment": "Documents",
         "auditquestionnaire": "Audit Questionnaire",
@@ -1294,7 +1302,13 @@
         "initiativeissues": "Issues",
         "benefits": "Benefits",
         "benefitmetrics": "Benefit Metrics",
-        "initiativemom": "MoM"
+        "initiativemom": "MoM",
+        //view current kpi
+        "yearkpitype":"Years",
+        "midkpitype":"Midterms",
+        "quarterkpitype":"Quarter",
+        "monthlykpitype":"Month",
+        "actualkpivalue":"Actual value"
 
     }
 };

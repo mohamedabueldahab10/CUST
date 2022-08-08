@@ -14,7 +14,7 @@ var Information_Form = [{
             "source": "Portfolio",
             "Dispfieldkey": "Name",
             "valfieldkey": "Title",
-            "BIlanguage" : true, //added to handle portfolio bilangual
+            "BIlanguage": true, //added to handle portfolio bilangual
             "DispfieldkeyEn": "NameEn",//added to handle portfolio bilangual
             security: {
                 groups: [
@@ -106,7 +106,7 @@ var Information_Form = [{
             },
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App', 'SPMO','Development Unit'
+                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App', 'SPMO', 'Development Unit'
                 ]
             },
         },
@@ -129,7 +129,7 @@ var Information_Form = [{
             },
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO','Development Unit'
+                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO', 'Development Unit'
                 ]
             },
         },
@@ -140,7 +140,7 @@ var Information_Form = [{
             "type": "string",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App', 'SPMO','Development Unit'
+                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App', 'SPMO', 'Development Unit'
                 ]
             },
             // "maxchar": 5000,
@@ -157,7 +157,7 @@ var Information_Form = [{
             "valfieldkey": "Title",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO','Development Unit'
+                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO', 'Development Unit'
                 ]
             },
             // "state": "disabled",
@@ -172,7 +172,7 @@ var Information_Form = [{
         //     "source": "InitiativeDeliverables",
         //     "Dispfieldkey": "Name",
         //     "valfieldkey": "Title",
-          
+
         //     "state": "disabled",
         //     // "className":"autofill"
         // },
@@ -185,7 +185,7 @@ var Information_Form = [{
             "source": "InitiativeDeliverables",
             "Dispfieldkey": "Name",
             "valfieldkey": "Title",
-            "grpfieldkey":"Title",
+            "grpfieldkey": "Title",
             "state": "disabled",
         },
         {
@@ -207,7 +207,7 @@ var Information_Form = [{
         {
             "InternalName": "InitiativeProgram",
             "DisplayName": "البرنامج",
-            "DisplayNameEn": "Program", 
+            "DisplayNameEn": "Program",
             "DisplayName": "اسم البرنامج",
             "type": "lookup",
             "source": "Instruments",
@@ -232,7 +232,7 @@ var Information_Form = [{
             "valfieldkey": "Title",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO','Development Unit', 'Project Managers for Project Web App'
+                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO', 'Development Unit', 'Project Managers for Project Web App'
                 ]
             },
             // "maxchar": 5000,
@@ -245,7 +245,7 @@ var Information_Form = [{
             "type": "multiline",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO','Development Unit','Project Managers for Project Web App'
+                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO', 'Development Unit', 'Project Managers for Project Web App'
                 ]
             },
             // "maxchar": 5000,
@@ -269,7 +269,7 @@ var Information_Form = [{
             },
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 
+                    'EPMO', 'Administrators for Project Web App',
                 ]
             },
         },
@@ -356,6 +356,12 @@ var Information_Form = [{
             "DisplayNameEn": "Baseline Start Date",
             "type": "datetime",
             "max": "BaselineFinishDate",
+            security: {
+                groups: [
+                    'EPMO', 'System Admin Group'
+                ]
+            },
+
             // "state": "disabled"
         },
         {
@@ -364,6 +370,11 @@ var Information_Form = [{
             "DisplayNameEn": "Baseline Finish Date",
             "type": "datetime",
             "min": "BaselineStartDate",
+            security: {
+                groups: [
+                    'EPMO', 'System Admin Group'
+                ]
+            },
             // "state": "disabled"
         },
         // {
@@ -461,7 +472,7 @@ var Information_Form = [{
             "validation": "required",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO','Development Unit','Project Managers for Project Web App'
+                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO', 'Development Unit', 'Project Managers for Project Web App'
                 ]
             },
             // "state": "disabled",
@@ -696,6 +707,11 @@ var Information_Form = [{
         "DisplayName": "الميزانية",
         "DisplayNameEn": "Actual Budget",
         "type": "float",
+        security: {
+            groups: [
+                'EPMO', 'System Admin Group'
+            ]
+        }
         // "state": "disabled"
     },
     {
@@ -776,12 +792,12 @@ var Information_Form = [{
         },
         security: {
             groups: [
-                'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO','Development Unit','Project Managers for Project Web App'
+                'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO', 'Development Unit', 'Project Managers for Project Web App'
             ]
         },
         //"state": "disabled"
     }
-    
+
 
     ]
 },
@@ -824,28 +840,28 @@ var Information_Form = [{
             "validation": "required",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO','Development Unit','Project Managers for Project Web App'
+                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO', 'Development Unit', 'Project Managers for Project Web App'
                 ]
             },
 
         },
-        { 
-            
+        {
+
             "InternalName": "ProjectManager",
-            "DisplayName":"مدير المشروع",
-            "DisplayNameEn":"Project Manager",
-            "type":"picker",
+            "DisplayName": "مدير المشروع",
+            "DisplayNameEn": "Project Manager",
+            "type": "picker",
             "validation": "required",
-           
+
         },
         // { 
-            
+
         //     "InternalName": "DirectorUnit",
         //     "DisplayName":" مدير وحدة الانجاز",
         //     "DisplayNameEn":"Director Unit",
         //     "type":"picker",
         //     "validation": "required",
-           
+
         // },
         {
             "InternalName": "ProjectSponsor",
@@ -855,7 +871,7 @@ var Information_Form = [{
             "validation": "required",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO','Development Unit','Project Managers for Project Web App'
+                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO', 'Development Unit', 'Project Managers for Project Web App'
                 ]
             },
         },
@@ -979,7 +995,7 @@ var Information_Form = [{
         "DisplayNameEn": "Attachments",
         "type": "file",
         "fileExtensions": "png,jpeg,svg,xlsx,docx,jpg,txt,pdf,rar,msg",
-        "withAddBtn":"true"
+        "withAddBtn": "true"
     }]
 }
 ];

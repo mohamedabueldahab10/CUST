@@ -228,7 +228,7 @@ var Information_Form = [
                 "DisplayNameEn": "Initiative Owner",
                 "DisplayName": "مالك المبادرة ",
                 "type": "picker",
-                "validation": "required"
+                "validation": "required" 
             },
             {
                 "InternalName": "OwnerEmail",
@@ -382,6 +382,11 @@ var Information_Form = [
                 "DisplayNameEn": "InitiativeBudget",
                 // "state": "disabled",
                 "type": "float",
+                security: {
+                    groups: [
+                        'EPMO', 'System Admin Group'
+                    ]
+                }
             },
             {
                 "InternalName": "ProgramTotalCost",
