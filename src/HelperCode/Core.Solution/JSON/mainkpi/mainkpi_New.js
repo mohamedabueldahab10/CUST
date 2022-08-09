@@ -67,7 +67,7 @@ var Information_Form = [{
             validation: "required",
             security: {
                 groups: [
-                    'SPM Admin', 'SPM Team', 'VRO_P', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO'
                 ]
             },
         },
@@ -308,7 +308,7 @@ var Information_Form = [{
             "state": "disabled",
             // security: {
             //     groups: [
-            //         'EPMO', 'Administrators for Project Web App'
+            //         'EPMO', 'System Admin Group'
             //     ]
             // },
         },
@@ -611,7 +611,7 @@ var Information_Form = [{
             },
             security: {
                 groups: [
-                    'SPM Admin', 'SPM Team', 'VRO_P', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO'
                 ]
             },
         },
