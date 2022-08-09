@@ -1449,6 +1449,7 @@ window.ListInfo = {
 
       case 'lookup':
         var customQuery;
+     
 
         if (element.isSector == 'True') {
           customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="EntityType" /><Value Type="Choice">' + element.EntityType + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
@@ -2418,6 +2419,7 @@ var View_ListInfo = {
         // console.log('Finishing label ' + Label + ' - IsDone: ' + isDone);
         htmlBuilder += "</div></div></div>";
         if (isDone) {
+
           console.log('btnDeleteLabel', btnDeleteLabel);
           htmlBuilder +=
             '<div class="py-5 btnactionrow">' +

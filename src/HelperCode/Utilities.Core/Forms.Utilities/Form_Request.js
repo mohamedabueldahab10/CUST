@@ -33,6 +33,8 @@ var projRelatedInit = '', initiativeDelevrableArr = [], initiativeMilestoneVal =
 
 var relatedMainGoal = '', relatedSubGoal = '', indexTypekpi = '', relatedStrategyKpi = '';
 
+var globalInitiativeCode = ''
+
 window.kpiEquationsComponents = [];
 // window.portfolioCreatedBy;
 var relatedPiller = ''
@@ -480,7 +482,9 @@ window.Edit_Data_Request = {
     if (listkey == "projects" && PCODE) {
 
       projRelatedInit = oListItem.get_item("RelatedInitiative");
-      ProjectInitiativeDelevrable.init('InitiativeDeliverables', projRelatedInit) // to get the related delivravle initiative on ;oad the edit page
+      globalInitiativeCode = projRelatedInit
+      Check_Item_Deleted.init('Initiatives', projRelatedInit, 'Title') // check if initiative deleted hide the related delev
+      // ProjectInitiativeDelevrable.init('InitiativeDeliverables', projRelatedInit) // to get the related delivravle initiative on ;oad the edit page
 
     }
 
@@ -1158,7 +1162,10 @@ window.View_Data_Request = {
       initiativeDelevrableArr = myselections // to use it in view page to get the deliv Name 
 
       if (initiativeCode) {
-        ProjectInitiativeDelevrable.init('InitiativeDeliverables', initiativeCode)
+        globalInitiativeCode = initiativeCode // to use it after check if initiative deleted or not
+        Check_Item_Deleted.init('Initiatives', initiativeCode, 'Title')
+
+        // ProjectInitiativeDelevrable.init('InitiativeDeliverables', initiativeCode) // ocomment moved after check if initiative deleted or not
       }
     }
 
@@ -1259,6 +1266,11 @@ window.View_Data_Request = {
         MultiSelect_View.init('Deliverables', myselections)
       }
     }
+    if (listkey == 'milestones' && PCODE) { // add it on view to update the milestone when delete 
+      initiativeMilestoneVal = oListItem.get_item('RelatedInitiativeMilestone') ? oListItem.get_item('RelatedInitiativeMilestone') : ''
+      Get_ProjectData_ByCode.init()
+    }
+
     if (isVROE) {
       if (listkey == "initiatives") {
         $('#Types').val('vision');
@@ -2941,7 +2953,7 @@ window.ProjectInitiativeDelevrable = {
     var oList = clientContext.get_web().get_lists().getByTitle(listName);
     var camlQuery = new SP.CamlQuery();
 
-    var query = '<View><Query><Where><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + code + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>'
+    var query = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + code + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>'
 
     camlQuery.set_viewXml(query);
     ProjectInitiativeDelevrable.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -2959,6 +2971,7 @@ window.ProjectInitiativeDelevrable = {
 //get ProjectInitiativeMilestone
 window.ProjectInitiativeMilestone = {
   onSuccess: function (sender, args) {
+    debugger
     ProjectInitiativeMilestone.g.array = [];
     var collListItem = ProjectInitiativeMilestone.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
@@ -2973,26 +2986,34 @@ window.ProjectInitiativeMilestone = {
 
     // $("#RelatedInitiativeMilestone").prop("disabled", false);
 
-
-    $("#RelatedInitiativeMilestone").html(
-      '<option data-trans-relatedinitiativemilestone class="Resources" value="" selected="" disabled=""></option>'
-    );
-
-    ProjectInitiativeMilestone.g.array.forEach(function (item, i, arr) {
-      $("#RelatedInitiativeMilestone").append(
-        '<option option-id="' +
-        ProjectInitiativeMilestone.g.array[i].id +
-        '" value="' +
-        ProjectInitiativeMilestone.g.array[i].code +
-        '">' +
-        ProjectInitiativeMilestone.g.array[i].name +
-        "</option>"
+    if (!isView) {
+      $("#RelatedInitiativeMilestone").html(
+        '<option data-trans-relatedinitiativemilestone class="Resources" value="" selected="" disabled=""></option>'
       );
-    });
-    changeResources();
+
+
+      ProjectInitiativeMilestone.g.array.forEach(function (item, i, arr) {
+        $("#RelatedInitiativeMilestone").append(
+          '<option option-id="' +
+          ProjectInitiativeMilestone.g.array[i].id +
+          '" value="' +
+          ProjectInitiativeMilestone.g.array[i].code +
+          '">' +
+          ProjectInitiativeMilestone.g.array[i].name +
+          "</option>"
+        );
+      });
+    }
     if (isEdit) {
       $("#RelatedInitiativeMilestone").val(initiativeMilestoneVal)
     }
+
+    if (isView) {
+      Check_Item_Deleted.init('InitiativeMilestones', initiativeMilestoneVal, 'Title')
+    }
+
+    changeResources();
+
   },
   onError: function (sender, args) {
     console.log(
@@ -3003,8 +3024,7 @@ window.ProjectInitiativeMilestone = {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(listName);
     var camlQuery = new SP.CamlQuery();
-
-    var query = '<View><Query><Where><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + code + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
+    var query = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + code + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
 
     camlQuery.set_viewXml(query);
     ProjectInitiativeMilestone.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -4901,6 +4921,70 @@ var View_Current_Kpi = {
     clientContext.executeQueryAsync(
       Function.createDelegate(this, View_Current_Kpi.onSuccess),
       Function.createDelegate(this, View_Current_Kpi.onError)
+    );
+
+  },
+  g: {
+  }
+}
+
+
+
+var Check_Item_Deleted = {
+  onSuccess: function (sender, args) {
+    var collListItem = Check_Item_Deleted.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    var deleted = true
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      deleted = false
+    }
+    debugger
+    if (deleted) {
+      if (isView) {
+        if (listkey == 'milestones') {
+          $('#RelatedInitiativeMilestone').html(No_Data)
+        }
+        if (listkey == 'projects') {
+          $('#RelatedInitiative').html(No_Data)
+          $('#RelatedInitiativeDeliverable').html(No_Data)
+        }
+      }else if(isEdit){
+        if (listkey == 'projects') {
+          $('#RelatedInitiativeDeliverable').html('')
+        }
+      }
+    } else {
+      if (isView) {
+        if (listkey == 'projects') {
+          ProjectInitiativeDelevrable.init('InitiativeDeliverables', globalInitiativeCode)
+        }
+      } else if (isEdit) {
+        ProjectInitiativeDelevrable.init('InitiativeDeliverables', globalInitiativeCode)
+
+      }
+    }
+
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  init: function (listName, code, fielRef) {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle(listName);
+    var camlQuery = new SP.CamlQuery();
+    var currentYear = new Date().getFullYear()
+    camlQuery.set_viewXml(
+      '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name=' + fielRef + ' /><Value Type="Text">' + code + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
+    );
+
+    Check_Item_Deleted.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(Check_Item_Deleted.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Check_Item_Deleted.onSuccess),
+      Function.createDelegate(this, Check_Item_Deleted.onError)
     );
 
   },

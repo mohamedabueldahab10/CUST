@@ -206,7 +206,7 @@ export default class InitiativesMainHomeWebPart extends BaseClientSideWebPart<II
 
                             </div>
                             <div class="ctx-block row mx-n2">
-                                <div class="col-12 col-lg-4 px-2 mb-3 cardIemClass chartHeight" id="carditem1">
+                                <div class="col-12 col-lg-4 px-2 mb-3 cardIemClass chartHeight" id="carditem1" style="display:none">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="dropdown">
@@ -540,7 +540,7 @@ export default class InitiativesMainHomeWebPart extends BaseClientSideWebPart<II
                                     </div>
 
                                 </div> -->
-                                <div class="col-12 col-lg-4 px-2 mb-3 cardIemClass chartHeight" id="carditem4" style="display:none">
+                                <div class="col-12 col-lg-4 px-2 mb-3 cardIemClass chartHeight" id="carditem4">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <div class="dropdown">

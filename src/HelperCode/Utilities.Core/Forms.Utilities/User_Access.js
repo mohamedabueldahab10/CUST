@@ -612,7 +612,7 @@ window.userCalls = {
           (SecondLevel_FirstLevel_Field = "Sector"),
           (SecondLevel_FirstLevel_FieldType = "Text");
         ChartHide =
-          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(4),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
         ar_UserRole = " مدير  ";
         en_UserRole = "Sector Head of ";
 
@@ -957,38 +957,39 @@ window.userCalls = {
           "benefitmatrix",
           "benefitmetrics"];
         Delete_Access = [
-          "initiatives",
-          "initiativemilestones",
-          "initiativedeliverables",
-          "projects",
-          "initiativeissues",
-          "initiativemom",
-          "initiativerisks",
-          "lessonslearned",
-          "deliverables",
-          "closureinitiative",
-          "initiativeexecution",
-          "benefits",
-          "initiativemilestonesacceptance",
-          "initiativedeliverablesacceptance",
-          "initiativecards",
-          "projectcharter",
-          "kpiequations",
-          "risks",
-          "issues",
-          "milestones",
-          "invoices",
-          "contracts",
-          "changerequest",
-          "communicationplans",
-          "stakeholders",
-          "documents",
-          "tasks",
-          "closureform",
-          "TaskHistory.aspx",
-          "deliverablemetrics",
-          "benefitmatrix",
-          "benefitmetrics"];
+          // "initiatives",
+          // "initiativemilestones",
+          // "initiativedeliverables",
+          // "projects",
+          // "initiativeissues",
+          // "initiativemom",
+          // "initiativerisks",
+          // "lessonslearned",
+          // "deliverables",
+          // "closureinitiative",
+          // "initiativeexecution",
+          // "benefits",
+          // "initiativemilestonesacceptance",
+          // "initiativedeliverablesacceptance",
+          // "initiativecards",
+          // "projectcharter",
+          // "kpiequations",
+          // "risks",
+          // "issues",
+          // "milestones",
+          // "invoices",
+          // "contracts",
+          // "changerequest",
+          // "communicationplans",
+          // "stakeholders",
+          // "documents",
+          // "tasks",
+          // "closureform",
+          // "TaskHistory.aspx",
+          // "deliverablemetrics",
+          // "benefitmatrix",
+          // "benefitmetrics"
+        ];
         break;
 
       case "InitiativeOwner":
@@ -1106,7 +1107,9 @@ window.userCalls = {
         Read_Access = ["initiatives", "InitiativeHome.aspx", "mainkpi", "sos", "benefits", "Targets.aspx", "portfolio", "home.aspx", "kpiequations", "MainIndicators.aspx", "deliverablemetrics", "benefitmatrix", "benefitmetrics"];
 
         Edit_Access = ["mainkpi", "sos", "benefits", "Targets.aspx", "kpiequations", "deliverablemetrics", "benefitmatrix", "benefitmetrics",];
-        Delete_Access = ["mainkpi", "sos", "benefits", "Targets.aspx", "kpiequations", "deliverablemetrics", "benefitmatrix", "benefitmetrics",];
+        Delete_Access = [
+          // "mainkpi", "sos", "benefits", "Targets.aspx", "kpiequations", "deliverablemetrics", "benefitmatrix", "benefitmetrics",
+        ];
         break;
       case "VROP":
         if (USERisHome)
@@ -1139,10 +1142,9 @@ window.userCalls = {
           , 'sos', "Targets.aspx", "kpiequations"
           // , "goalstrategy"
         ];
-        Delete_Access = ["mainkpi",
-          //  "deliverablemetrics", "benefitmatrix", "benefitmetrics"
-          , 'sos', "Targets.aspx", "kpiequations"
-          // , "goalstrategy"
+        Delete_Access = [
+          // "mainkpi",
+          // , 'sos', "Targets.aspx", "kpiequations"
         ];
         break;
       // case "StrategyTeam":
@@ -1326,7 +1328,7 @@ window.userCalls = {
         isEPMO = true;
         //***** */
         ChartHide =
-          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(4),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
         ar_UserRole = "مكتب ادارة المشروع المؤسسي";
         en_UserRole = "Institutional Project Management Office";
         //CRUD
@@ -1385,7 +1387,9 @@ window.userCalls = {
           "projects",
           "closureform"
         ];
-        Delete_Access = [];
+        Delete_Access = AllListKeys;
+        Delete_Access = Delete_Access.concat(SP_Page_Name); // to can delete everything
+        // Delete_Access = [];
         break;
       case "SPMO":
         isSPMO = true;
@@ -1410,7 +1414,7 @@ window.userCalls = {
           (SecondLevel_FirstLevel_Field = "Sector"),
           (SecondLevel_FirstLevel_FieldType = "Text");
         ChartHide =
-          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(4),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
         ar_UserRole = "مكتب إدارة المشاريع القطاعي";
         en_UserRole = "Sectoral Project Management Office";
 
@@ -1477,7 +1481,7 @@ window.userCalls = {
           (SecondLevel_FirstLevel_Field = "Sector"),
           (SecondLevel_FirstLevel_FieldType = "Text");
         ChartHide =
-          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(4),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
         ar_UserRole = "معالى مساعد الوزير";
         en_UserRole = "Minister Assistant";
 
@@ -1642,7 +1646,7 @@ window.userCalls = {
           (SecondLevel_FirstLevel_Field = "SubSector"),
           (SecondLevel_FirstLevel_FieldType = "Text");
         ChartHide =
-          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(4),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
         ar_UserRole = "مدير وحدة التنفيذ";
         en_UserRole = "Development Unit";
 
@@ -1775,7 +1779,7 @@ window.userCalls = {
           (SecondLevel_FirstLevel_Field = "SubSector"),
           (SecondLevel_FirstLevel_FieldType = "Text");
         ChartHide =
-          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(4),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
         ar_UserRole = "وكيل ";
         en_UserRole = "SubSector Head of ";
 
@@ -1858,7 +1862,7 @@ window.userCalls = {
           (SecondLevel_FirstLevel_Field = "SubSector"),
           (SecondLevel_FirstLevel_FieldType = "Text");
         ChartHide =
-          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(4),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
         ar_UserRole = " مدير إدارة ";
         en_UserRole = "General Manager of ";
 
@@ -1964,7 +1968,9 @@ window.userCalls = {
         Edit_Access = ["goalstrategy", "spillars", "sos",
           //  "portfolio"
         ];
-        Delete_Access = ["goalstrategy", "spillars", "sos"];
+        Delete_Access = [
+          // "goalstrategy", "spillars", "sos"
+        ];
         break;
       case "KPIOwner":
         if (USERisHome)
