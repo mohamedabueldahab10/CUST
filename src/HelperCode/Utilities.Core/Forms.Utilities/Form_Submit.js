@@ -8,7 +8,7 @@ var isuploaddone = 0,
   Documents_Library;
 window.IdeaId;
 
-var kpiName = '', kpiType = '', kpiSector = '', kpiSubSector = '', kpiMainGoalRelated = '', kpiSubGoalRelated = '', kpiPortfolio = '', kpiPerformanceAnalysis = '', kpiYearPicked = '';
+var kpiName = '', kpiType = '', kpiSector = '', kpiSubSector = '', kpiMainGoalRelated = '', kpiSubGoalRelated = '', kpiPortfolio = '', kpiPerformanceAnalysis = '', kpiYearPicked = '', kpiMidPicked = '', kpiQuarterPicked = '', kpiMonthPicked = '', kpiPeriodTypeUpdate = '';
 
 var allEnterpriseResources = [], projectBuildTeamArr = [], projectManagerPickerToEpm;
 
@@ -1209,7 +1209,12 @@ window.Edit_Data_Submit = {
       kpiSubGoalRelated = $('#SubRelatedObjective').val() ? $('#SubRelatedObjective').val() : ''
       kpiPortfolio = $('#Portfolio').val() ? $('#Portfolio').val() : ''
       kpiPerformanceAnalysis = $('#PerformanceAnalysis').val() ? $('#PerformanceAnalysis').val() : ''
+      kpiPeriodTypeUpdate = $('#PeriodType').val() ? $('#PeriodType').val() : ''
       kpiYearPicked = $('#Year').val() ? $('#Year').val() : ''
+      kpiMidPicked = $('#Midterms').val() ? $('#Midterms').val() : ''
+      kpiQuarterPicked = $('#Quarter').val() ? $('#Quarter').val() : ''
+      kpiMonthPicked = $('#Months').val() ? $('#Months').val() : ''
+
       if (kpiType == 'main') { // remove portfolio and alhadaf elfer3e when change to main cause main don't have portfolio
         Edit_Data_Submit.g.oListItem.set_item('Portfolio', '');
         Edit_Data_Submit.g.oListItem.set_item('SubRelatedObjective', '');
@@ -1428,8 +1433,17 @@ var Edit_KPI_Results = {
             items.set_item('Sector', Sector)
             items.set_item('SubSector', SubSector)
 
-            if (yearItem == kpiYearPicked) {
-              items.set_item('PerformanceAnalysis', kpiPerformanceAnalysis)
+            if (yearItem == kpiYearPicked) { // to update performance analysis
+              if (kpiPeriodTypeUpdate == 'monthly') {
+                items.set_item(`PerformanceAnalysis${kpiMonthPicked}`, kpiPerformanceAnalysis)
+              } else if (kpiPeriodTypeUpdate == 'quarter') {
+                items.set_item(`PerformanceAnalysis${kpiQuarterPicked}`, kpiPerformanceAnalysis)
+              } else if (kpiPeriodTypeUpdate == 'midterm') {
+                items.set_item(`PerformanceAnalysis${kpiMidPicked}`, kpiPerformanceAnalysis)
+              } else if (kpiPeriodTypeUpdate == 'year') {
+                items.set_item('PerformanceAnalysisActualY', kpiPerformanceAnalysis)
+              }
+
             }
             if (Types == 'main') {
               items.set_item("RelatedGoal", kpiMainGoalRelated)
@@ -3097,6 +3111,9 @@ function EPMProjectEdit() {
         new_resource.set_name(projectBuildTeamArr[i]);
         new_resource.set_id(new_resource_id);
         var project_resources_list = draftProject.get_projectResources();
+        console.log(new_resource,"new_resource new_resource")
+        console.log(project_resources_list,"project_resources_list project_resources_list")
+        debugger
         var project_resource = project_resources_list.add(new_resource);
         draftProject.get_projectResources().add(new_resource);
       }

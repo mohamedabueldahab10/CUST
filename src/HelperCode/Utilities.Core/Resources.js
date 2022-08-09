@@ -36,7 +36,7 @@
         "requirementsspecifications": "كراسة الشروط والمواصفات",
         "attachment": "المستندات",
         "documents": "المرفقات",
-        'currentkpi':'المؤشر الحالي',
+        'currentkpi':'معلومات الفترة الحالية من السنة',
         "document": "مرفقات :",
         "auditquestionnaire": "استبيان المراجعة",
         "projecthascard": "هل تم اعداد بطاقة المشروع؟",
@@ -645,7 +645,8 @@
         "midkpitype":"النصف السنوي",
         "quarterkpitype":"الربع",
         "monthlykpitype":"الشهر",
-        "actualkpivalue":"القيمة الفعلية"
+        "actualkpivalue":"القيمة الفعلية",
+        "performanceanalysis":"تحليل الأداء"
 
     },
     "en": {
@@ -684,7 +685,7 @@
         "postponereferences": "Postpone References",
         "requirementsspecifications": "Requirements And Specifications",
         "documents": "Documents",
-        "currentkpi":"Current KPI",
+        "currentkpi":"Current KPI of this year",
         "document": "Documents : ",
         "attachment": "Documents",
         "auditquestionnaire": "Audit Questionnaire",
@@ -1308,7 +1309,8 @@
         "midkpitype":"Midterms",
         "quarterkpitype":"Quarter",
         "monthlykpitype":"Month",
-        "actualkpivalue":"Actual value"
+        "actualkpivalue":"Actual value",
+        "performanceanalysis":"Performance Analysis"
 
     }
 };

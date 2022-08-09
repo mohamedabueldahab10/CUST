@@ -1234,7 +1234,6 @@ window.View_Data_Request = {
       PeriodType = oListItem.get_item("PeriodType") ? oListItem.get_item("PeriodType") : ''
 
       equationKPI.init();
-      View_Current_Kpi.init(); // show the kpi result for current time (extra section of view)
       $('#Year,#Months,#Quarter,#Midterms,#Years').removeAttr('required');
 
       if (PeriodType == 'monthly') {
@@ -3727,7 +3726,7 @@ window.ViewAllFiles_Main_Strategy = {
     if (filesUrls.length > 0) {
 
       var FilesLink =
-        '<div class="py-5 border-bottom section-container " data-groups="">' +
+        '<div class="py-5 border-bottom section-container " id="file_container" data-groups="">' +
         '<div class="form-row"><div class="col-lg-3 col-md-4 mb-4"><h3 data-trans-documents class="Resources"></h3><span class="font-14"></span></div>' +
         '<div class="col-lg-9 col-md-8 white-box p-4 fieldset-container"><div class="col-md-6 multiline"><label data-trans-document class="Resources">مرفقات: </label>';
 
@@ -3871,6 +3870,7 @@ window.ViewAllFiles_Main_Strategy = {
       $(FilesLink).insertBefore(
         $("button.btn.btn-action.btn-cancel").parent().parent()
       );
+
 
 
       if (listkey == 'mainkpi') {
@@ -4023,15 +4023,18 @@ window.ViewAllFiles_Main_Strategy = {
           $(`#general-attach .card-body #general-attach-content`).html(generalAttach);
 
         }
+
+        View_Current_Kpi.init(); // show the kpi result for current time (extra section of view) before the attachment container
+
       }
-
-
-
 
       // $(collapse).insertBefore(
       //   $("button.btn.btn-action.btn-cancel").parent().parent()
       // );
       changeResources();
+    }
+    if(filesUrls.length == 0 && listkey == 'mainkpi'){
+      View_Current_Kpi.init(); // show the kpi result for current time (extra section of view) to invoke the func if there is no attach
     }
   },
   failed: function (sender, args) {
@@ -4778,7 +4781,7 @@ var View_Current_Kpi = {
     var collListItem = View_Current_Kpi.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
 
-    var relatedKpiYear, relatedPerformanceAnalysis, relatedPeriodType, relatedActualValue;
+    var relatedKpiYear, relatedPerformanceAnalysis, relatedPeriodType, relatedActualValue,relatedPerformanceAnalysis;
     var periodType = ''
 
     var currentMonth = new Date().getMonth() + 1;
@@ -4793,6 +4796,7 @@ var View_Current_Kpi = {
       if (relatedPeriodType == 'year') {
 
         relatedActualValue = oListItem.get_item('ActualY') || 0
+        relatedPerformanceAnalysis = oListItem.get_item('PerformanceAnalysisActualY') || No_Data
 
         periodType += '<label data-trans-yearkpitype class="Resources"></label>'
         periodType += '<p data-trans-actualy class="viewmode-value Resources" id="Years"></p>'
@@ -4803,11 +4807,17 @@ var View_Current_Kpi = {
         periodType += '<label data-trans-midkpitype class="Resources"></label>'
 
         if (currentMonth >= 1 && currentMonth <= 6) {
+
+          relatedPerformanceAnalysis = oListItem.get_item('PerformanceAnalysisActualMid1') || No_Data
           relatedActualValue = oListItem.get_item('ActualMid1') || 0
           periodType += '<p data-trans-actualmid1 class="viewmode-value Resources" id="Midterms"></p>'
+
         } else if (currentMonth > 6 && currentMonth <= 12) {
+
+          relatedPerformanceAnalysis = oListItem.get_item('PerformanceAnalysisActualMid2') || No_Data
           relatedActualValue = oListItem.get_item('ActualMid2') || 0
           periodType += '<p data-trans-actualmid2 class="viewmode-value Resources" id="Midterms"></p>'
+
         }
 
       } else if (relatedPeriodType == 'quarter') {
@@ -4815,20 +4825,27 @@ var View_Current_Kpi = {
         periodType += '<label data-trans-quarterkpitype class="Resources"></label>'
 
         if (currentMonth >= 1 && currentMonth <= 3) {
+          relatedPerformanceAnalysis = oListItem.get_item('PerformanceAnalysisActualQ1') || No_Data
           relatedActualValue = oListItem.get_item('ActualQ1') || 0
           periodType += '<p data-trans-actualq1 class="viewmode-value Resources" id="Quarter"></p>'
         } else if (currentMonth > 3 && currentMonth <= 6) {
+          relatedPerformanceAnalysis = oListItem.get_item('PerformanceAnalysisActualQ2') || No_Data
           relatedActualValue = oListItem.get_item('ActualQ2') || 0
           periodType += '<p data-trans-actualq2 class="viewmode-value Resources" id="Quarter"></p>'
         } else if (currentMonth > 6 && currentMonth <= 9) {
+          relatedPerformanceAnalysis = oListItem.get_item('PerformanceAnalysisActualQ3') || No_Data
           relatedActualValue = oListItem.get_item('ActualQ3') || 0
           periodType += '<p data-trans-actualq3 class="viewmode-value Resources" id="Quarter"></p>'
         } else if (currentMonth > 9 && currentMonth <= 12) {
+
+          relatedPerformanceAnalysis = oListItem.get_item('PerformanceAnalysisActualQ4') || No_Data
           relatedActualValue = oListItem.get_item('ActualQ4') || 0
           periodType += '<p data-trans-actualq4 class="viewmode-value Resources" id="Quarter"></p>'
         }
 
       } else if (relatedPeriodType == 'monthly') {
+
+        relatedPerformanceAnalysis = oListItem.get_item(`PerformanceAnalysisActualM${currentMonth}`) || No_Data
         relatedActualValue = oListItem.get_item(`ActualM${currentMonth}`) || 0
         periodType += '<label data-trans-monthlykpitype class="Resources"></label>'
         periodType += `<p data-trans-month${currentMonth} class="viewmode-value Resources" id="Months"></p>`
@@ -4838,43 +4855,6 @@ var View_Current_Kpi = {
       ////////////////////////////
 
     }
-
-
-
-    // if (relatedPeriodType == 'year') {
-
-    //   periodType += '<label data-trans-yearkpitype class="Resources"></label>'
-    //   periodType += '<p data-trans-actualy class="viewmode-value Resources" id="Years"></p>'
-
-    // } else if (relatedPeriodType == 'midterm') {
-
-    //   periodType += '<label data-trans-midkpitype class="Resources"></label>'
-
-    //   if (currentMonth >= 1 && currentMonth <= 6) {
-    //     periodType += '<p data-trans-actualmid1 class="viewmode-value Resources" id="Midterms"></p>'
-    //   } else if (currentMonth > 6 && currentMonth <= 12) {
-    //     periodType += '<p data-trans-actualmid2 class="viewmode-value Resources" id="Midterms"></p>'
-    //   }
-
-    // } else if (relatedPeriodType == 'quarter') {
-
-    //   periodType += '<label data-trans-quarterkpitype class="Resources"></label>'
-
-    //   if (currentMonth >= 1 && currentMonth <= 3) {
-    //     periodType += '<p data-trans-actualq1 class="viewmode-value Resources" id="Quarter"></p>'
-    //   } else if (currentMonth > 3 && currentMonth <= 6) {
-    //     periodType += '<p data-trans-actualq2 class="viewmode-value Resources" id="Quarter"></p>'
-    //   } else if (currentMonth > 6 && currentMonth <= 9) {
-    //     periodType += '<p data-trans-actualq3 class="viewmode-value Resources" id="Quarter"></p>'
-    //   } else if (currentMonth > 9 && currentMonth <= 12) {
-    //     periodType += '<p data-trans-actualq4 class="viewmode-value Resources" id="Quarter"></p>'
-    //   }
-
-    // } else if (relatedPeriodType == 'monthly') {
-    //   periodType += '<label data-trans-monthlykpitype class="Resources"></label>'
-    //   periodType += `<p data-trans-month${currentMonth} class="viewmode-value Resources" id="Months"></p>`
-
-    // }
 
 
     var currentKpiView =
@@ -4892,13 +4872,21 @@ var View_Current_Kpi = {
       '<label data-trans-actualkpivalue class="Resources"></label>' +
       '<p class="viewmode-value" id="Equation">' + relatedActualValue + '</p>' +
       '</div>' +
+      '<div class="col-md-12 multiline">' +
+      '<label data-trans-performanceanalysis class="Resources"></label>' +
+      '<p class="viewmode-value" id="PerformanceAnalysis">' + relatedPerformanceAnalysis + '</p>' +
+      '</div>' +
       '</div>'
 
-    console.log(currentKpiView, "currentKpiView ")
-
+    if(filesUrls.length > 0){ // add view before attachement
     $(currentKpiView).insertBefore(
-      $("button.btn.btn-action.btn-cancel").parent().parent()
+      $("#file_container")
     );
+    }else{ // add view before cancel btn
+      $(currentKpiView).insertBefore(
+        $("button.btn.btn-action.btn-cancel").parent().parent()
+      );
+    }
 
     changeResources()
   },
