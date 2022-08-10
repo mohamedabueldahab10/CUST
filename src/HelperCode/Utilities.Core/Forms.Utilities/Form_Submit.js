@@ -3079,16 +3079,123 @@ var Update_Project_Center = {
   }
 }
 
-var editProjectContext = '', epmProjects;
+var editProjectContext = '', epmProjects, deleteProjectContext = '';
 
 function EPMProjectToUpdate() {
 
   editProjectContext = PS.ProjectContext.get_current();
   epmProjects = editProjectContext.get_projects();
   editProjectContext.load(epmProjects, 'Include(Name, Id)');
-  editProjectContext.executeQueryAsync(EPMProjectEdit, QueryFailedCenter);
+  // editProjectContext.executeQueryAsync(EPMProjectEdit, QueryFailedCenter);
+  editProjectContext.executeQueryAsync(delete_resources.preinit, QueryFailedCenter);
+
 
 }
+
+var ResourcesEnterprise = ''
+var resourcesArrDelete = []
+var globresArr =[]
+var delete_resources = {
+  preinit: function () {
+    SP.SOD.registerSod('PS.ProjectContext', SP.Utilities.Utility.getLayoutsPageUrl('ps.js'));
+    SP.SOD.loadMultiple(['PS.ProjectContext'], delete_resources.init);
+  },
+  init: function () {
+
+    deleteProjectContext = PS.ProjectContext.get_current();
+    var oProjects = deleteProjectContext.get_projects();
+    delete_resources.g.oProjectsItem = oProjects.getById(User_ProjUID); //declared inside object scope only
+
+    // Resources = delete_resources.g.oProjectsItem.publish(true);
+    ResourcesEnterprise = delete_resources.g.oProjectsItem.checkOut();
+
+
+    // oProjectsItem = delete_resources.g.oProjectsItem;
+
+    delete_resources.g.testDuration = ResourcesEnterprise.get_projectResources()
+
+    deleteProjectContext.load(delete_resources.g.testDuration);
+
+    // deleteProjectContext.load(delete_resources.g.oProjectsItem);
+    deleteProjectContext.executeQueryAsync(
+      Function.createDelegate(this, delete_resources.onSuccess),
+      Function.createDelegate(this, delete_resources.onError)
+    );
+  },
+  onError: function (sender, args) {
+    console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+  },
+  onSuccess: function (sender, args) {
+
+
+    console.log(delete_resources.g.testDuration, "oProjectsItem")
+    resourcesArrDelete = delete_resources.g.testDuration.get_data()
+
+    console.log(resourcesArrDelete, "resourcesArrDelete ")
+    debugger
+
+
+    Promise.all(
+      resourcesArrDelete.map(function (item) {
+        globresArr.push(item)
+        console.log(item.get_name(),"item")
+      })
+    ).then(function (files) { 
+
+      delete_resourcesForupdate.init()
+    }).catch(function(err){
+
+    })
+
+    // for (var i = 0; i < resourcesArrDelete.length; i++) {
+    //   resourcesArrDelete[i].deleteObject()
+    // }
+
+
+    // var checkinJobd = ResourcesEnterprise
+
+    // SP.SOD.registerSod('PS.ProjectContext', SP.Utilities.Utility.getLayoutsPageUrl('ps.js'));
+    // SP.SOD.loadMultiple(['PS.ProjectContext'], delete_resourcesForupdate.init);
+
+    // setTimeout(function(){
+    //   delete_resourcesForupdate.init()
+    // },3000)
+    // deleteProjectContext.waitForQueueAsync(1000, delete_resourcesForupdate.init);
+
+  },
+  // Global variables
+  g: {}
+}
+
+var delete_resourcesForupdate = {
+
+  init: function () {
+
+    console.log(globresArr,"globresArr globresArr globresArr")
+    deleteProjectContext.executeQueryAsync(
+      Function.createDelegate(this, delete_resourcesForupdate.onSuccess),
+      Function.createDelegate(this, delete_resourcesForupdate.onError)
+    );
+
+  },
+  onError: function (sender, args) {
+    console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+  },
+  onSuccess: async function (sender, args) {
+
+
+    for (var i = 0; i < globresArr.length; i++) {
+      globresArr[i].deleteObject()
+    }
+
+
+    var checkinJob = ResourcesEnterprise.update();
+
+
+    deleteProjectContext.waitForQueueAsync(checkinJob, 100, EPMProjectEdit);
+  }
+}
+
 
 function QueryFailedCenter(sender, args) {
   console.log('Request failed: ' + args.get_message());
@@ -3111,8 +3218,8 @@ function EPMProjectEdit() {
         new_resource.set_name(projectBuildTeamArr[i]);
         new_resource.set_id(new_resource_id);
         var project_resources_list = draftProject.get_projectResources();
-        console.log(new_resource,"new_resource new_resource")
-        console.log(project_resources_list,"project_resources_list project_resources_list")
+        console.log(new_resource, "new_resource new_resource")
+        console.log(project_resources_list, "project_resources_list project_resources_list")
         debugger
         var project_resource = project_resources_list.add(new_resource);
         draftProject.get_projectResources().add(new_resource);

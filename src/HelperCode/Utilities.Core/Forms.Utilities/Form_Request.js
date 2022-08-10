@@ -36,6 +36,8 @@ var relatedMainGoal = '', relatedSubGoal = '', indexTypekpi = '', relatedStrateg
 var globalInitiativeCode = ''
 
 window.kpiEquationsComponents = [];
+
+window.buildTeamArrToRemove = [];
 // window.portfolioCreatedBy;
 var relatedPiller = ''
 if (
@@ -421,8 +423,6 @@ window.Edit_Data_Request = {
         // $('#Types').val('vision'); // comminted to get the value as saved on list (for Vrop value saved Main)
         $('#Types').prop('disabled', true);
       }
-
-
       KPICode = oListItem.get_item("Title");
       kpiCodeResult = oListItem.get_item("Title")
       KPIYear = oListItem.get_item("Year")
@@ -485,6 +485,19 @@ window.Edit_Data_Request = {
       globalInitiativeCode = projRelatedInit
       Check_Item_Deleted.init('Initiatives', projRelatedInit, 'Title') // check if initiative deleted hide the related delev
       // ProjectInitiativeDelevrable.init('InitiativeDeliverables', projRelatedInit) // to get the related delivravle initiative on ;oad the edit page
+
+      // build team section
+      var projectOwnerPicker = oListItem.get_item("ProjectOwner") ? oListItem.get_item("ProjectOwner") : ''
+      var projectSponsorPicker = oListItem.get_item("ProjectSponsor") ? oListItem.get_item("ProjectSponsor") : ''
+      var projectDirectorUnit = oListItem.get_item("DirectorUnit") ? oListItem.get_item("DirectorUnit") : ''
+      var projectObjectiveOwner = oListItem.get_item("ObjectiveOwner") ? oListItem.get_item("ObjectiveOwner") : ''
+      var projectResponsible = oListItem.get_item("ProjectResponsible") ? oListItem.get_item("ProjectResponsible") : ''
+      var projectQualityOfficer = oListItem.get_item("QualityOfficer") ? oListItem.get_item("QualityOfficer") : ''
+
+      if (projectOwnerPicker && !buildTeamArrToRemove.includes(projectOwnerPicker.get_lookupValue())) {
+        buildTeamArrToRemove.push(projectOwnerPicker.get_lookupValue())
+      }
+      //
 
     }
 
@@ -4033,7 +4046,7 @@ window.ViewAllFiles_Main_Strategy = {
       // );
       changeResources();
     }
-    if(filesUrls.length == 0 && listkey == 'mainkpi'){
+    if (filesUrls.length == 0 && listkey == 'mainkpi') {
       View_Current_Kpi.init(); // show the kpi result for current time (extra section of view) to invoke the func if there is no attach
     }
   },
@@ -4781,7 +4794,7 @@ var View_Current_Kpi = {
     var collListItem = View_Current_Kpi.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
 
-    var relatedKpiYear, relatedPerformanceAnalysis, relatedPeriodType, relatedActualValue,relatedPerformanceAnalysis;
+    var relatedKpiYear, relatedPerformanceAnalysis, relatedPeriodType, relatedActualValue, relatedPerformanceAnalysis;
     var periodType = ''
 
     var currentMonth = new Date().getMonth() + 1;
@@ -4878,11 +4891,11 @@ var View_Current_Kpi = {
       '</div>' +
       '</div>'
 
-    if(filesUrls.length > 0){ // add view before attachement
-    $(currentKpiView).insertBefore(
-      $("#file_container")
-    );
-    }else{ // add view before cancel btn
+    if (filesUrls.length > 0) { // add view before attachement
+      $(currentKpiView).insertBefore(
+        $("#file_container")
+      );
+    } else { // add view before cancel btn
       $(currentKpiView).insertBefore(
         $("button.btn.btn-action.btn-cancel").parent().parent()
       );
@@ -4937,7 +4950,7 @@ var Check_Item_Deleted = {
           $('#RelatedInitiative').html(No_Data)
           $('#RelatedInitiativeDeliverable').html(No_Data)
         }
-      }else if(isEdit){
+      } else if (isEdit) {
         if (listkey == 'projects') {
           $('#RelatedInitiativeDeliverable').html('')
         }
