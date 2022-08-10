@@ -28,7 +28,7 @@ var Information_Form = [{
             "validation": "required",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App'
+                    'EPMO', 
                 ]
             },
         },
