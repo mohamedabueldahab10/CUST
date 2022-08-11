@@ -1185,6 +1185,7 @@ window.View_Data_Request = {
       }
     }
 
+
     if (isView && listkey == "ideas") {
       RelatedIdeaProject.preinit();
     }
@@ -4939,7 +4940,7 @@ var View_Current_Kpi = {
 }
 
 
-
+ 
 var Check_Item_Deleted = {
   onSuccess: function (sender, args) {
     var collListItem = Check_Item_Deleted.g.collListItem;
