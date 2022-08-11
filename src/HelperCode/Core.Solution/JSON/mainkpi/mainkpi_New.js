@@ -219,7 +219,7 @@ var Information_Form = [{
             type: "lookupWithQuery",
             queryField: "Types",
             queryFieldType: "dropdownValues", //ex: "Choice"
-            queryFieldValue: "sub",
+            queryFieldValue: "sub", 
             //from other list:
             source: "SOs",
             Dispfieldkey: "Name",

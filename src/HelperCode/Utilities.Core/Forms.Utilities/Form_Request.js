@@ -33,7 +33,7 @@ var projRelatedInit = '', initiativeDelevrableArr = [], initiativeMilestoneVal =
 
 var relatedMainGoal = '', relatedSubGoal = '', indexTypekpi = '', relatedStrategyKpi = '';
 
-var globalInitiativeCode = ''
+var globalInitiativeCode = '';
 
 window.kpiEquationsComponents = [];
 
@@ -439,8 +439,12 @@ window.Edit_Data_Request = {
       relatedStrategyKpi = oListItem.get_item("RelatedStrategy") ? oListItem.get_item("RelatedStrategy") : '';
       indexTypekpi = oListItem.get_item("Types") ? oListItem.get_item("Types") : '';
 
+      // if (relatedStrategyKpi && indexTypekpi) { // return it after test
+      //   Goal_Strategy_Info.init(relatedStrategyKpi)
+      //   Kpi_Related_Goal.init(relatedStrategyKpi, indexTypekpi)
+      // }
       if (relatedStrategyKpi && indexTypekpi) {
-        Goal_Strategy_Info.init(relatedStrategyKpi)
+        Check_Item_Deleted.init('GoalStrategy', relatedStrategyKpi, 'Title') // check if GoalStrategy deleted hide the related val
         Kpi_Related_Goal.init(relatedStrategyKpi, indexTypekpi)
       }
 
@@ -1114,7 +1118,6 @@ window.View_Data_Request = {
 
         $(this).text(value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
       } else if ($(this).attr("type") == "multiselect") {
-
         var value =
           oListItem.get_item("" + $(this).attr("id") + "") == null
             ? No_Data
@@ -1139,11 +1142,11 @@ window.View_Data_Request = {
           // }
         } else {
           customquery =
-            '<View><Query><Where><Eq><FieldRef Name="' +
+            '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="' +
             $(this).data("valfieldkey") +
             '" /><Value Type="Text">' +
             oListItem.get_item($(this).attr("id")) +
-            "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
 
           sphttp.get(
             _spPageContextInfo.siteServerRelativeUrl,
@@ -1246,6 +1249,12 @@ window.View_Data_Request = {
       kpiToYear = oListItem.get_item("ToDate") ? oListItem.get_item("ToDate") : ''
       PeriodType = oListItem.get_item("PeriodType") ? oListItem.get_item("PeriodType") : ''
 
+
+      relatedStrategyKpi = oListItem.get_item("RelatedStrategy") ? oListItem.get_item("RelatedStrategy") : '';
+      indexTypekpi = oListItem.get_item("Types") ? oListItem.get_item("Types") : '';
+      if (relatedStrategyKpi && indexTypekpi) {
+        Check_Item_Deleted.init('GoalStrategy', relatedStrategyKpi, 'Title') // check if GoalStrategy deleted hide the related item
+      }
       equationKPI.init();
       $('#Year,#Months,#Quarter,#Midterms,#Years').removeAttr('required');
 
@@ -2398,7 +2407,7 @@ window.Kpi_Related_Goal = {
     // var query = '<View><Query><Where><And><Eq><FieldRef Name="RelatedStrategy" /><Value Type="Text">' + SosCode + '</Value></Eq><Eq><FieldRef Name="Types" /><Value Type="Choice">' + indexType + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
 
     //add FieldRef Name and Acending tru to sorth the data alphabetical
-    var query = '<View><Query><Where><And><Eq><FieldRef Name="RelatedStrategy" /><Value Type="Text">' + SosCode + '</Value></Eq><Eq><FieldRef Name="Types" /><Value Type="Choice">' + indexType + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>'
+    var query = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name="RelatedStrategy" /><Value Type="Text">' + SosCode + '</Value></Eq><Eq><FieldRef Name="Types" /><Value Type="Choice">' + indexType + '</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>'
 
     console.log("inside Kpi_Related_Goal", query)
 
@@ -2507,7 +2516,7 @@ window.Goal_Strategy_Info = {
     var oList = clientContext.get_web().get_lists().getByTitle("GoalStrategy");
     var camlQuery = new SP.CamlQuery();
     // camlQuery.set_viewXml("<View><Query></Query></View>");
-    camlQuery.set_viewXml('<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' + StrategyTitle + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query><RowLimit>1</RowLimit></View>');
+    camlQuery.set_viewXml('<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Title" /><Value Type="Text">' + StrategyTitle + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query><RowLimit>1</RowLimit></View>');
 
     Goal_Strategy_Info.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Goal_Strategy_Info.g.collListItem);
@@ -4942,27 +4951,92 @@ var Check_Item_Deleted = {
     }
     debugger
     if (deleted) {
-      if (isView) {
+      if (isView) {// to remove the child from view
         if (listkey == 'milestones') {
           $('#RelatedInitiativeMilestone').html(No_Data)
-        }
-        if (listkey == 'projects') {
+        } else if (listkey == 'projects') {
           $('#RelatedInitiative').html(No_Data)
           $('#RelatedInitiativeDeliverable').html(No_Data)
+        } else if (listkey == 'mainkpi') { // to remove the child from view
+          $('#RelatedStrategyType').html(No_Data)
+          if (indexTypekpi == 'main') {
+            var sosVal = $('#RelatedStrategyObjective').html()
+            if (!sosVal) {
+              $('#Sector').html(No_Data)
+              $('#SubSector').html(No_Data)
+            }
+          } else if (indexTypekpi == 'sub') {
+            var sosVal = $('#SubRelatedObjective').html()
+            if (!sosVal) {
+              $('#Sector').html(No_Data)
+              $('#SubSector').html(No_Data)
+              $('#Portfolio').html(No_Data)
+            }
+          }
         }
-      } else if (isEdit) {
+
+      } else if (isEdit) { // to remove the child from view
         if (listkey == 'projects') {
           $('#RelatedInitiativeDeliverable').html('')
+        } else if (listkey == 'mainkpi') {
+          $('#RelatedStrategyType').val('')
+          if (indexTypekpi == 'main') {
+            var sosVal = $('#RelatedStrategyObjective').val()
+            if (!sosVal) {
+              $('#Sector').val('')
+              $('#SubSector').val('')
+            }
+          } else if (indexTypekpi == 'sub') {
+            var sosVal = $('#SubRelatedObjective').val()
+            if (!sosVal) {
+              $('#Sector').val('')
+              $('#SubSector').val('')
+              $('#Portfolio').val('')
+            }
+          }
         }
       }
     } else {
       if (isView) {
         if (listkey == 'projects') {
           ProjectInitiativeDelevrable.init('InitiativeDeliverables', globalInitiativeCode)
+        } else if (listkey == 'mainkpi') { // to remove the child from view
+          if (indexTypekpi == 'main') {
+            var sosVal = $('#RelatedStrategyObjective').html()
+            if (!sosVal) {
+              $('#Sector').html(No_Data)
+              $('#SubSector').html(No_Data)
+            }
+          } else if (indexTypekpi == 'sub') {
+            var sosVal = $('#SubRelatedObjective').html()
+            if (!sosVal) {
+              $('#Sector').html(No_Data)
+              $('#SubSector').html(No_Data)
+              $('#Portfolio').html(No_Data)
+            }
+          }
         }
       } else if (isEdit) {
-        ProjectInitiativeDelevrable.init('InitiativeDeliverables', globalInitiativeCode)
-
+        if (listkey == 'projects') {
+          ProjectInitiativeDelevrable.init('InitiativeDeliverables', globalInitiativeCode)
+        } else if (listkey == 'mainkpi') {
+          Goal_Strategy_Info.init(relatedStrategyKpi)
+          if (indexTypekpi == 'main') {
+            var sosVal = $('#RelatedStrategyObjective').val()
+            if (!sosVal) {
+              $('#Sector').val(No_Data)
+              $('#SubSector').val(No_Data)
+            }
+          } else if (indexTypekpi == 'sub') {
+            var sosVal = $('#SubRelatedObjective').val()
+            if (!sosVal) {
+              $('#Sector').val(No_Data)
+              $('#SubSector').val(No_Data)
+              $('#Portfolio').val(No_Data)
+            }
+          }
+          // Kpi_Related_Goal.init(relatedStrategyKpi, indexTypekpi)
+        }
       }
     }
 
@@ -4973,6 +5047,7 @@ var Check_Item_Deleted = {
     );
   },
   init: function (listName, code, fielRef) {
+    // globalListName = listName
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(listName);
     var camlQuery = new SP.CamlQuery();

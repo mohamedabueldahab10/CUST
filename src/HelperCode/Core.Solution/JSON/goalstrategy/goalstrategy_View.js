@@ -60,7 +60,7 @@ var Information_Form = [
                 "source": "GoalStrategy",
                 "Dispfieldkey": "Name",
                 "valfieldkey": "Title",
-                "display": "none"
+                // "display": "none"
             },
             {
                 "InternalName": "Vision",

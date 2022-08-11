@@ -32,6 +32,16 @@ if (
   window.notEditableItem = Resources.en["notEditableItem"];
   window.editablebyowneronly = Resources.en["editablebyowneronly"];
 }
+
+if (
+  localStorage.getItem("lng") == null ||
+  localStorage.getItem("lng") == "ar"
+) {
+  var No_Data = "لا يوجد";
+} else {
+  var No_Data = "No Data";
+}
+
 // Url Parameters
 (window.IID = ""),
   window.SP_ListName,
@@ -1449,7 +1459,7 @@ window.ListInfo = {
 
       case 'lookup':
         var customQuery;
-     
+
 
         if (element.isSector == 'True') {
           customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="EntityType" /><Value Type="Choice">' + element.EntityType + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
@@ -1565,7 +1575,7 @@ window.ListInfo = {
 
         var customQuery;
         //change FieldRef to Name and Acending True to can sort alphapetics arabic and english
-        customQuery = '<View><Query><Where><Eq><FieldRef Name="' + element.queryField + '" /><Value Type="' + element.queryFieldType + '">' + element.queryFieldValue + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>';
+        customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="' + element.queryField + '" /><Value Type="' + element.queryFieldType + '">' + element.queryFieldValue + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>';
         htmlBody = '<div class="col-md-6 CFIELD ' + element.className + ' " ' + thistip + ' ' + hidestagesIDs + ' ' + editableBy + ' ' + showstagesIDs + '  ' + disablestagesIDs + '  ' + enablestagesIDs + '   ' + isWfhidestagesIDs + ' ' + requireOnWfTaskstagesIDs + ' ' + isWfshowstagesIDs + '  ' + isWfdisablestagesIDs + '  ' + isWfenablestagesIDs + '    data-groups="' + groups + '" style="display:' + element.display + '">' +
           '<label for="' + element.InternalName + '" ' + element.validation + '>' + displayName + '</label>' +
           '<select ' + ToggleName + '  ' + element.validation + ' ' + dynamic + ' data-listname="' + element.source + '" data-valfieldkey="' + element.valfieldkey + '" data-Dispfieldkey="' + element.Dispfieldkey + '" class="form-control" type="dropdown" id="' + element.InternalName + '" value="" placeholder="' + displayName + '" ' + element.state + '><option value="" ' + selected + ' disabled>' + displayName + '</option>';
@@ -1964,14 +1974,14 @@ window.ListInfo = {
         } else {
           $("#To")
             .val("")
-            .attr("max", "") 
+            .attr("max", "")
             .attr("min", "")
             .prop("disabled", true);
           $("[id^=Cost]").parent().hide();
-          $("[id^=Cost]").val(""); 
+          $("[id^=Cost]").val("");
           $("#Amount").val("");
         }
-      }); 
+      });
     },
     InvoicesTotal: function () {
       // $('#Amount, #TVA').on("change", function () {
@@ -2667,7 +2677,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD" ' + thistip + ' ' + hidestagesIDs + ' ' + showstagesIDs + '  ' + disablestagesIDs + '  ' + enablestagesIDs + '   ' + isWfhidestagesIDs + ' ' + requireOnWfTaskstagesIDs + ' ' + isWfshowstagesIDs + '  ' + isWfdisablestagesIDs + '  ' + isWfenablestagesIDs + '    data-groups="' + groups + '" style="display:' + element.display + '">' +
             '<label for="' + element.InternalName + '" ' + element.validation + '>' + displayName + '</label>' +
-            '<p type="multiselect" class="viewmode-value" id="' + element.InternalName + '" ></p>' +
+            '<p type="multiselect" class="viewmode-value" id="' + element.InternalName + '" ></p>' + 
             '</div>';
           OnSuccess(flag, htmlBody);
           break;
@@ -2797,6 +2807,11 @@ var View_ListInfo = {
           break;
 
         case 'lookup':
+
+
+
+
+          ///////////////////////////////////////////////
           if (element.BIlanguage == true) {
             if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
               dispfieldkey = element.Dispfieldkey
@@ -2810,6 +2825,7 @@ var View_ListInfo = {
             '<p type="lookup" data-listname="' + element.source + '" data-valfieldkey="' + element.valfieldkey + '" data-Dispfieldkey="' + dispfieldkey + '" class="viewmode-value" id="' + element.InternalName + '" ></p>' +
             '</div>';
           OnSuccess(flag, htmlBody);
+          ///////////////////////////////////////////////
           break;
         case 'lookupWithQuery':
           htmlBody = '<div class="col-md-6 CFIELD" ' + thistip + ' ' + hidestagesIDs + ' ' + showstagesIDs + '  ' + disablestagesIDs + '  ' + enablestagesIDs + '   ' + isWfhidestagesIDs + ' ' + requireOnWfTaskstagesIDs + ' ' + isWfshowstagesIDs + '  ' + isWfdisablestagesIDs + '  ' + isWfenablestagesIDs + '    data-groups="' + groups + '" style="display:' + element.display + '">' +
