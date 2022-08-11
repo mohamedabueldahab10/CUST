@@ -1459,8 +1459,6 @@ window.ListInfo = {
 
       case 'lookup':
         var customQuery;
-
-
         if (element.isSector == 'True') {
           customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="EntityType" /><Value Type="Choice">' + element.EntityType + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
         } else if (PCODE && listkey == "invoices") {
