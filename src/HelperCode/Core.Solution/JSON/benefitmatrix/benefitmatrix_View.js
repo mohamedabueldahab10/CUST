@@ -34,7 +34,7 @@ var Information_Form = [
                
             },
             {// hol dynamic 3ala l lookup 
-              "InternalName": "RelatedBenefit", 
+              "InternalName": "RelatedBenefit",
               "DisplayNameEn": "Benefits",
               "DisplayName": "المنفعة المرتبطة",
               "type": "multiselectstring",
