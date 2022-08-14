@@ -37,8 +37,10 @@ var Information_Form = [
               "InternalName": "RelatedBenefit",
               "DisplayNameEn": "Benefits",
               "DisplayName": "المنفعة المرتبطة",
-              "type": "multiselectstring",
-             
+              "type": "multiselectstring", 
+              "Dispfieldkey": "Name",
+              "valfieldkey": "Name",
+              "source": "Benefits",
               // dynamic:"mainfield",//controls others data
              
           },          
@@ -47,6 +49,9 @@ var Information_Form = [
             "DisplayNameEn": "Related Benefit Metrics",
             "DisplayName": "مقاييس المنافع",
             "type": "multiselectstring",
+            "Dispfieldkey": "Name",
+            "valfieldkey": "Name",
+            "source": "BenefitMetrics",
             // "source": "BenefitMetrics",
             // "Dispfieldkey": "Name",
             // "valfieldkey": "Title"

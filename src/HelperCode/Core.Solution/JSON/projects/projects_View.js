@@ -126,6 +126,9 @@ var Information_Form = [{
             "DisplayNameEn": "Related Initiative Deliverable",
             "DisplayName":"مخرج المبادرة المرتبط",
             "type": "multiselectstring",
+            "Dispfieldkey": "Name",
+            "valfieldkey": "Title",
+            "source": "InitiativeDeliverables",
              
         },
         // {

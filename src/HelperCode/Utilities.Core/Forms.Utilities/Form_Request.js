@@ -37,7 +37,6 @@ var globalInitiativeCode = '';
 
 window.kpiEquationsComponents = [];
 
-window.buildTeamArrToRemove = [];
 // window.portfolioCreatedBy;
 var relatedPiller = ''
 if (
@@ -488,20 +487,7 @@ window.Edit_Data_Request = {
       projRelatedInit = oListItem.get_item("RelatedInitiative");
       globalInitiativeCode = projRelatedInit
       Check_Item_Deleted.init('Initiatives', projRelatedInit, 'Title') // check if initiative deleted hide the related delev
-      // ProjectInitiativeDelevrable.init('InitiativeDeliverables', projRelatedInit) // to get the related delivravle initiative on ;oad the edit page
 
-      // build team section
-      var projectOwnerPicker = oListItem.get_item("ProjectOwner") ? oListItem.get_item("ProjectOwner") : ''
-      var projectSponsorPicker = oListItem.get_item("ProjectSponsor") ? oListItem.get_item("ProjectSponsor") : ''
-      var projectDirectorUnit = oListItem.get_item("DirectorUnit") ? oListItem.get_item("DirectorUnit") : ''
-      var projectObjectiveOwner = oListItem.get_item("ObjectiveOwner") ? oListItem.get_item("ObjectiveOwner") : ''
-      var projectResponsible = oListItem.get_item("ProjectResponsible") ? oListItem.get_item("ProjectResponsible") : ''
-      var projectQualityOfficer = oListItem.get_item("QualityOfficer") ? oListItem.get_item("QualityOfficer") : ''
-
-      if (projectOwnerPicker && !buildTeamArrToRemove.includes(projectOwnerPicker.get_lookupValue())) {
-        buildTeamArrToRemove.push(projectOwnerPicker.get_lookupValue())
-      }
-      //
 
     }
 
@@ -1118,15 +1104,55 @@ window.View_Data_Request = {
 
         $(this).text(value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
       } else if ($(this).attr("type") == "multiselect") {
-        var value =
-          oListItem.get_item("" + $(this).attr("id") + "") == null
-            ? No_Data
-            : oListItem
-              .get_item("" + $(this).attr("id") + "")
-              .split(":::")
-              .join("; <br>");
+          var valfieldkey = $(this).data("valfieldkey"),
+          Dispfieldkey = $(this).data("dispfieldkey"),
+            listname = $(this).data("listname"),
+            $this = $(this);
 
-        $(this).html(value);
+          var value =
+            oListItem.get_item("" + $(this).attr("id") + "") == null
+              ? No_Data
+              : oListItem
+                .get_item("" + $(this).attr("id") + "")
+                .split(":::")
+
+          var customquerymulti =
+            '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="' + valfieldkey + '" /><Values>';
+          for (var i = 0; i <= value.length; i++) {
+            customquerymulti += '<Value Type="Text">' + value[i] + '</Value>';
+          }
+          customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
+
+          console.log(customquerymulti,"customquerymulti customquerymulti")
+
+          sphttp.get(
+            _spPageContextInfo.siteServerRelativeUrl,
+            listname,
+            customquerymulti,
+            [valfieldkey, Dispfieldkey],
+            function (records, record, listItem, isDone) {
+              if (isDone) {
+                var items = ''
+                console.log("ASddsadasdsadas")
+                records.forEach(function (el, index) {
+                  console.log(records, "RECOOOOOORED in render")
+                  items += el[Dispfieldkey] + '<br>'
+
+                });
+                $this.html(items);
+              }
+            }
+          );
+        //   var value =
+        //     oListItem.get_item("" + $(this).attr("id") + "") == null
+        //       ? No_Data
+        //       : oListItem
+        //         .get_item("" + $(this).attr("id") + "")
+        //         .split(":::")
+        //         .join("; <br>");
+
+        //   $(this).html(value);
+      
       } else if ($(this).attr("type") == "lookup") {
         var valfieldkey = $(this).data("valfieldkey"),
           Dispfieldkey = $(this).data("dispfieldkey"),
@@ -1285,7 +1311,7 @@ window.View_Data_Request = {
       DeliverableRelatedToInvoice = oListItem.get_item('Deliverable');
       if (DeliverableRelatedToInvoice) {
         var myselections = DeliverableRelatedToInvoice ? DeliverableRelatedToInvoice.split(":::") : [] // add myselection to handle mult delivrable in invoices
-        MultiSelect_View.init('Deliverables', myselections)
+        // MultiSelect_View.init('Deliverables', myselections)
       }
     }
     if (listkey == 'milestones' && PCODE) { // add it on view to update the milestone when delete 
@@ -2851,62 +2877,62 @@ window.Initiative_Strategy_Sos = {
   },
 }
 
+// comment it cause we handle it from json view type multiselectstring
+// window.MultiSelect_View = { // use it for invoices cause we need to save the delivrable code to use it in chart elmezaneyah in project home
+//   onSuccess: function (sender, args) {
+//     MultiSelect_View.g.array = [];
+//     var collListItem = MultiSelect_View.g.collListItem;
+//     var listItemEnum = collListItem.getEnumerator();
+//     while (listItemEnum.moveNext()) {
+//       var oListItem = listItemEnum.get_current();
+//       MultiSelect_View.g.array.push({
+//         name: oListItem.get_item("Name"),
+//         code: oListItem.get_item("Title"),
+//         id: oListItem.get_id(),
+//       });
+//     }
 
-window.MultiSelect_View = { // use it for invoices cause we need to save the delivrable code to use it in chart elmezaneyah in project home
-  onSuccess: function (sender, args) {
-    MultiSelect_View.g.array = [];
-    var collListItem = MultiSelect_View.g.collListItem;
-    var listItemEnum = collListItem.getEnumerator();
-    while (listItemEnum.moveNext()) {
-      var oListItem = listItemEnum.get_current();
-      MultiSelect_View.g.array.push({
-        name: oListItem.get_item("Name"),
-        code: oListItem.get_item("Title"),
-        id: oListItem.get_id(),
-      });
-    }
+//     if (isView) { // to get the name of delivrable over the code
+//       var relatedDelevrableName = ''
+//       MultiSelect_View.g.array.forEach(el => {
+//         relatedDelevrableName += el.name + '<br>'
+//       })
 
-    if (isView) { // to get the name of delivrable over the code
-      var relatedDelevrableName = ''
-      MultiSelect_View.g.array.forEach(el => {
-        relatedDelevrableName += el.name + '<br>'
-      })
+//       if (listkey == 'invoices') {
+//         $("#Deliverable").html(relatedDelevrableName)
+//       }
+//     }
+//   },
+//   onError: function (sender, args) {
+//     console.log(
+//       "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+//     );
+//   },
+//   init: function (listName, array) {
+//     var clientContext = new SP.ClientContext.get_current();
+//     var oList = clientContext.get_web().get_lists().getByTitle(listName);
+//     var camlQuery = new SP.CamlQuery();
+//     var query = ''
+//     query = '<View><Query><Where><And><In><FieldRef Name="Title" /><Values>';
+//     array.forEach(function (item) {
+//       query += '<Value Type="Text">' + item + '</Value>';
+//     });
+//     query += '</Values></In><Neq><FieldRef Name=\'DeletionStatus\'/><Value Type=\'Text\'>Deleted</Value></Neq></And></Where></Query></View>';
 
-      if (listkey == 'invoices') {
-        $("#Deliverable").html(relatedDelevrableName)
-      }
-    }
-  },
-  onError: function (sender, args) {
-    console.log(
-      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
-    );
-  },
-  init: function (listName, array) {
-    var clientContext = new SP.ClientContext.get_current();
-    var oList = clientContext.get_web().get_lists().getByTitle(listName);
-    var camlQuery = new SP.CamlQuery();
-    var query = ''
-    query = '<View><Query><Where><And><In><FieldRef Name="Title" /><Values>';
-    array.forEach(function (item) {
-      query += '<Value Type="Text">' + item + '</Value>';
-    });
-    query += '</Values></In><Neq><FieldRef Name=\'DeletionStatus\'/><Value Type=\'Text\'>Deleted</Value></Neq></And></Where></Query></View>';
+//     // var query = '<View><Query><Where><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + code + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
 
-    // var query = '<View><Query><Where><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + code + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
-
-    camlQuery.set_viewXml(query);
-    MultiSelect_View.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
-    clientContext.load(MultiSelect_View.g.collListItem);
-    clientContext.executeQueryAsync(
-      Function.createDelegate(this, MultiSelect_View.onSuccess),
-      Function.createDelegate(this, MultiSelect_View.onError)
-    );
-  },
-  g: {
-    array: [],
-  }
-}
+//     camlQuery.set_viewXml(query);
+//     MultiSelect_View.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+//     clientContext.load(MultiSelect_View.g.collListItem);
+//     clientContext.executeQueryAsync(
+//       Function.createDelegate(this, MultiSelect_View.onSuccess),
+//       Function.createDelegate(this, MultiSelect_View.onError)
+//     );
+//   },
+//   g: {
+//     array: [],
+//   }
+// }
 
 //get ProjectInitiativeDelevrable
 window.ProjectInitiativeDelevrable = {
@@ -2950,13 +2976,13 @@ window.ProjectInitiativeDelevrable = {
 
     if (isView) { // to get the name of delivrable over the code
 
-      var relatedDelevrableName = ''
-      ProjectInitiativeDelevrable.g.array.forEach(el => {
-        if (initiativeDelevrableArr.indexOf(el.code) > -1) {
-          relatedDelevrableName += el.name + '<br>'
-        }
-      })
-      $('#RelatedInitiativeDeliverable').html(relatedDelevrableName)
+      // var relatedDelevrableName = ''
+      // ProjectInitiativeDelevrable.g.array.forEach(el => {
+      //   if (initiativeDelevrableArr.indexOf(el.code) > -1) {
+      //     relatedDelevrableName += el.name + '<br>'
+      //   }
+      // })
+      // $('#RelatedInitiativeDeliverable').html(relatedDelevrableName)
 
     } else if (isEdit) // checked the value from list on multi select
       for (var i = 0; i < initiativeDelevrableArr.length; i++) {
@@ -4940,7 +4966,7 @@ var View_Current_Kpi = {
 }
 
 
- 
+
 var Check_Item_Deleted = {
   onSuccess: function (sender, args) {
     var collListItem = Check_Item_Deleted.g.collListItem;
@@ -5000,7 +5026,7 @@ var Check_Item_Deleted = {
     } else {
       if (isView) {
         if (listkey == 'projects') {
-          ProjectInitiativeDelevrable.init('InitiativeDeliverables', globalInitiativeCode)
+          // ProjectInitiativeDelevrable.init('InitiativeDeliverables', globalInitiativeCode) // no needed cause in view we use field multiselectstring
         } else if (listkey == 'mainkpi') { // to remove the child from view
           if (indexTypekpi == 'main') {
             var sosVal = $('#RelatedStrategyObjective').html()

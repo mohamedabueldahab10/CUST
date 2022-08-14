@@ -2675,7 +2675,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD" ' + thistip + ' ' + hidestagesIDs + ' ' + showstagesIDs + '  ' + disablestagesIDs + '  ' + enablestagesIDs + '   ' + isWfhidestagesIDs + ' ' + requireOnWfTaskstagesIDs + ' ' + isWfshowstagesIDs + '  ' + isWfdisablestagesIDs + '  ' + isWfenablestagesIDs + '    data-groups="' + groups + '" style="display:' + element.display + '">' +
             '<label for="' + element.InternalName + '" ' + element.validation + '>' + displayName + '</label>' +
-            '<p type="multiselect" class="viewmode-value" id="' + element.InternalName + '" ></p>' + 
+            '<p type="multiselect" data-listname="' + element.source + '" data-valfieldkey="' + element.valfieldkey + '" data-Dispfieldkey="' + dispfieldkey + '" class="viewmode-value" id="' + element.InternalName + '" ></p>' + 
             '</div>';
           OnSuccess(flag, htmlBody);
           break;

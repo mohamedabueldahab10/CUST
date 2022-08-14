@@ -54,6 +54,9 @@ var Information_Form  = [
                 "DisplayNameEn": "Deliverable",
                 "DisplayName":"المخرج المرتبط",
                 "type": "multiselectstring",
+                "Dispfieldkey": "Name",
+                "valfieldkey": "Title",
+                "source": "Deliverables",
                  
             },
             {
