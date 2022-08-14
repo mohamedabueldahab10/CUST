@@ -21,7 +21,7 @@ var ActualBudget = 0,
   projectprogress, listProjectProgress, ScheduleSource, ProjectSPID, isDelDone = 'disabled';
 var years, months, days, duration = '', onLoad = true;
 
-var getBaseLineStart = '', getBaseLineDuration = '';
+var getBaseLineStart = '', getBaseLineFinish = '', getBaseLineDuration = '';
 
 var checkEpmProjectHtml = ''
 
@@ -111,7 +111,7 @@ var Project_Home_Info_Request = {
       numberofProjects++;
       ScheduleProjectPercentageComplete = oListItem.get_item('ScheduleProjectPercentageComplet0') == null ? 0 : oListItem.get_item('ScheduleProjectPercentageComplet0'),
 
-      ScheduleBLPercentageCompleteList = oListItem.get_item('ScheduleBLPercentageComplete') == null ? 0 : oListItem.get_item('ScheduleBLPercentageComplete'),
+        ScheduleBLPercentageCompleteList = oListItem.get_item('ScheduleBLPercentageComplete') == null ? 0 : oListItem.get_item('ScheduleBLPercentageComplete'),
 
         //project card1
         projectname = oListItem.get_item('Name') || No_Data,
@@ -255,6 +255,8 @@ var Project_Home_Info_Request = {
       ProjectManager = oListItem.get_item('ProjectManager') ? oListItem.get_item('ProjectManager').get_lookupValue() : No_Data;
       PMORepresentative = oListItem.get_item('PMORepresentative') ? oListItem.get_item('PMORepresentative').get_lookupValue() : No_Data;
 
+      getBaseLineStart = oListItem.get_item('BaselineStartDate') ? oListItem.get_item('BaselineStartDate') : '';
+      getBaseLineFinish = oListItem.get_item('BaselineFinishDate') ? oListItem.get_item('BaselineFinishDate') : '';
       // standardisedPstartdate = Project_Home_Info_Request.g.dateConvert2(oListItem.get_item('PlannedStartDate')),
       //     standardisedPfinishdate = Project_Home_Info_Request.g.dateConvert2(oListItem.get_item('PlannedFinishDate')),
       //     projectlength = Math.round((new Date(standardisedPfinishdate) - new Date(standardisedPstartdate)) / (1000 * 60 * 60 * 24 * 30));
@@ -1685,39 +1687,38 @@ var ProgressStatus_Data_Submit = {
 
 
     //////////////////////
-    console.log(getBaseLineStart, "getBaseLineStart")
-    console.log(getBaseLineDuration, "getBaseLineDuration")
+
     debugger
     var timeBaseLineStartDate = 0
     var plannedPercentage = 0
+    var timeCurrentDate = ''
 
-    if (getBaseLineDuration) {
-      getBaseLineDuration = getBaseLineDuration.toString()
-      if (getBaseLineDuration.includes('d')) {
-        getBaseLineDuration = Number(getBaseLineDuration.split("d").join(""))
-      } else {
-        getBaseLineDuration = Number(getBaseLineDuration)
-      }
-    }
+    timeBaseLineStartDate = new Date(getBaseLineStart);
+    timeBaseLineFinishDate = new Date(getBaseLineFinish);
 
-    if (getBaseLineStart) {
-      timeBaseLineStartDate = getBaseLineStart.getTime()
-    }
+    timeCurrentDate = now.getTime()
+    timeBaseLineStartDate = timeBaseLineStartDate.getTime();
+    timeBaseLineFinishDate = timeBaseLineFinishDate.getTime();
 
-    var timeCurrentDate = now.getTime()
+    var differenceTimeFromToday = timeCurrentDate - timeBaseLineStartDate // current date - base line start date
+    var differenceDaysFromToday = Math.floor((differenceTimeFromToday) / (24 * 3600 * 1000));
 
-    var differenceTime = timeCurrentDate - timeBaseLineStartDate
+    var diffTimeBaseLine = Math.abs(timeBaseLineFinishDate - timeBaseLineStartDate);
+    var diffDaysBaseline = Math.ceil(diffTimeBaseLine / (1000 * 60 * 60 * 24));
 
-    var totalDays = Math.floor((differenceTime) / (24 * 3600 * 1000));
+    plannedPercentage = differenceDaysFromToday / diffDaysBaseline
+
+    plannedPercentage = plannedPercentage * 100
+    plannedPercentage = Number(plannedPercentage.toFixed(2))
 
 
-    if (getBaseLineDuration) {
-      plannedPercentage = totalDays / getBaseLineDuration
 
-      plannedPercentage = Number(plannedPercentage.toFixed(2))
-    }
+    console.log(differenceDaysFromToday, "differenceDaysFromToday differenceDaysFromToday")
+    console.log(diffDaysBaseline, "diffDaysBaseline diffDaysBaseline")
 
     console.log(plannedPercentage, "plannedPercentage")
+
+
 
     ProgressStatus_Data_Submit.g.oListItem.set_item('ScheduleBLPercentageComplete', plannedPercentage); // save the percentage 
 
@@ -1726,7 +1727,10 @@ var ProgressStatus_Data_Submit = {
 
     var differencePercentage = plannedPercentage - schedualPercentage
 
-    if (!getBaseLineDuration) {
+
+    console.log(differencePercentage, "differencePercentage")
+
+    if (!diffDaysBaseline) {
       projectprogress = 'stat5'
     } else {
       if (differencePercentage <= 5) {
@@ -2250,39 +2254,39 @@ var EPM_Project_Summery_Task = {
   },
   onSuccess: function (sender, args) {
 
-    console.log("EPM_Project_Summery_Task")
+    // console.log("EPM_Project_Summery_Task")
 
-    getBaseLineStart = oProjectsItem.get_projectSummaryTask().get_baselineStart()
-    getBaseLineDuration = oProjectsItem.get_projectSummaryTask().get_baselineDuration()
+    // getBaseLineStart = oProjectsItem.get_projectSummaryTask().get_baselineStart()
+    // getBaseLineDuration = oProjectsItem.get_projectSummaryTask().get_baselineDuration()
 
-    var timeBaseLineStartDate = 0
-    var plannedPercentage = 0
-    var now = new Date();
+    // var timeBaseLineStartDate = 0
+    // var plannedPercentage = 0
+    // var now = new Date();
 
-    if (getBaseLineDuration) {
-      getBaseLineDuration = Number(getBaseLineDuration.split("d").join(""))
-    }
+    // if (getBaseLineDuration) {
+    //   getBaseLineDuration = Number(getBaseLineDuration.split("d").join(""))
+    // }
 
-    if (getBaseLineStart) {
-      timeBaseLineStartDate = getBaseLineStart.getTime()
-    }
+    // if (getBaseLineStart) {
+    //   timeBaseLineStartDate = getBaseLineStart.getTime()
+    // }
 
-    var timeCurrentDate = now.getTime()
+    // var timeCurrentDate = now.getTime()
 
-    var differenceTime = timeCurrentDate - timeBaseLineStartDate
+    // var differenceTime = timeCurrentDate - timeBaseLineStartDate
 
-    var totalDays = Math.floor((differenceTime) / (24 * 3600 * 1000));
+    // var totalDays = Math.floor((differenceTime) / (24 * 3600 * 1000));
 
 
-    if (getBaseLineDuration) {
-      plannedPercentage = totalDays / getBaseLineDuration
+    // if (getBaseLineDuration) {
+    //   plannedPercentage = totalDays / getBaseLineDuration
 
-      plannedPercentage = Number(plannedPercentage.toFixed(2))
-    }
-    $('.project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black').text(plannedPercentage + '%');
+    //   plannedPercentage = Number(plannedPercentage.toFixed(2))
+    // }
+    // $('.project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black').text(plannedPercentage + '%');
 
-    console.log(getBaseLineDuration, "getBaseLineDuration")
-    console.log(plannedPercentage, "plannedPercentage")
+    // console.log(getBaseLineDuration, "getBaseLineDuration")
+    // console.log(plannedPercentage, "plannedPercentage")
 
     ProgressStatus_Data_Submit.init(); // update the project auto when open the page
 
