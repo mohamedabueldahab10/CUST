@@ -1030,7 +1030,7 @@ var Milestones_Info_Request = {
       itemhtml.push('<h3>' + No_Data + '</h3>')
     }
     $('div#pills-fifth > ul.list-group').html(itemhtml.join(''));
-    if (isMinisterAssistant || isSectorHead || isViceMinister || isSubSectorHead || isGeneralManager || isMinister || isInOwner || isSPMO) {
+    if (isMinisterAssistant || isSectorHead || isViceMinister || isSubSectorHead || isGeneralManager || isMinister || isBITeam || isInOwner || isSPMO) {
       $('a.btn-add').attr('style', 'display: none!important;');
 
     }
@@ -1304,13 +1304,13 @@ var ProgressStatus_Data_Submit = {
 
     if (completedRatio == 0) {
       initiativeprogress = 'stat6'
-    }else if(completedRatio == totalMilesDelivrable){
+    } else if (completedRatio == totalMilesDelivrable) {
       initiativeprogress = 'stat7'
     } else if (remain <= 0.05) {
       initiativeprogress = 'stat3'
-    }else if (remain > 0.05 && remain <= 0.15) {
+    } else if (remain > 0.05 && remain <= 0.15) {
       initiativeprogress = 'stat2'
-    }else if (remain > 0.15) {
+    } else if (remain > 0.15) {
       initiativeprogress = 'stat1'
     }
 
@@ -1330,7 +1330,7 @@ var ProgressStatus_Data_Submit = {
     $('.myCompletionStatus').removeClass('statuscolor' + listInitiativeProgress);
     $('.handlecircle').removeClass('circlecolor' + listInitiativeProgress)
     ProgressStatus_Data_Submit.g.oListItem.set_item('InitiativeProgressStatus', initiativeprogress);
-    
+
 
     $('.myCompletionStatus').attr('data-trans-' + initiativeprogress, '');
     $('.black.myCompletionStatus').text(initiativeprogress)

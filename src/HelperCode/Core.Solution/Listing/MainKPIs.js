@@ -24,7 +24,7 @@ var originalstate = true,
 var startegyIdClicked = '', sosIdClicked = '';
 var SoQuery = '';
 
-  SoQuery = "<View><Query><OrderBy><FieldRef Name='Title' Ascending='True' /></OrderBy></Query></View>"
+SoQuery = "<View><Query><OrderBy><FieldRef Name='Title' Ascending='True' /></OrderBy></Query></View>"
 
 
 var goalKpiQuery = '';
@@ -34,7 +34,7 @@ if (isVROP) {
 }
 
 
-else if (!isGeneralManager){
+else if (!isGeneralManager) {
   goalKpiQuery = "<View><Query><OrderBy><FieldRef Name='Title' Ascending='True' /></OrderBy></Query></View>"
 }
 //
@@ -89,7 +89,7 @@ var MainKPIs_Info_Request = {
         ? oListItem.get_item("PerformanceLeader2").get_lookupValue()
         : UserNo_Data;
       //to get the kpi owner for related user if is not admin
-      if ((!isAdmin && !isMinister && !isSPMAdmin && !isSPMTeam && !isVROP && (UserN.Title == Owner || UserN.Title == perfromanceLeader || UserN.Title == performanceLeader2)) || isAdmin || isMinister || isSPMAdmin || isSPMTeam || isVROP) {
+      if ((!isAdmin && !isMinister && !isBITeam && !isSPMAdmin && !isSPMTeam && !isVROP && (UserN.Title == Owner || UserN.Title == perfromanceLeader || UserN.Title == performanceLeader2)) || isAdmin || isMinister || isBITeam || isSPMAdmin || isSPMTeam || isVROP) {
 
         var name = oListItem.get_item("Name") || UserNo_Data,
           code = oListItem.get_item("Title") || UserNo_Data,
@@ -508,13 +508,13 @@ var stratigicObjectivesRequest = {
     var oList = clientContext.get_web().get_lists().getByTitle("SOs");
     var camlQuery = new SP.CamlQuery();
     // camlQuery.set_viewXml(
-      if (isGeneralManager || isDU || isMinisterAssistant || isViceMinister || isSectorHead || isSubSectorHead) {
-        debugger
-        SoQuery = SectorHeadQuery
-       
-          $('body').append('<style>.mainindecatorfilter {height: 150px!important</style>');
-       
-      } 
+    if (isGeneralManager || isDU || isMinisterAssistant || isViceMinister || isSectorHead || isSubSectorHead) {
+      debugger
+      SoQuery = SectorHeadQuery
+
+      $('body').append('<style>.mainindecatorfilter {height: 150px!important</style>');
+
+    }
     //   "<View><Query>\
     //     <OrderBy><FieldRef Name='Title' Ascending='True' /></OrderBy></Query></View>"
     // );
@@ -787,17 +787,17 @@ var GoalsKPIs_Info_Request = {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("GoalStrategy");
     var camlQuery = new SP.CamlQuery();
-    if  (isGeneralManager || isDU || isMinisterAssistant || isViceMinister || isSectorHead || isSubSectorHead) {
+    if (isGeneralManager || isDU || isMinisterAssistant || isViceMinister || isSectorHead || isSubSectorHead) {
       debugger
       goalKpiQueryG = '<View><Query><Where><And><In><FieldRef Name="Title" /><Values>';
       strategyArray.forEach(function (item) {
-          goalKpiQueryG += '<Value Type="Text">' + item + '</Value>';
+        goalKpiQueryG += '<Value Type="Text">' + item + '</Value>';
       });
       goalKpiQueryG += '</Values></In><Neq><FieldRef Name=\'DeletionStatus\'/><Value Type=\'Text\'>Deleted</Value></Neq></And></Where></Query></View>';
       goalKpiQuery = goalKpiQueryG
     }
     camlQuery.set_viewXml(goalKpiQuery);
-    
+
     GoalsKPIs_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
 
     clientContext.load(GoalsKPIs_Info_Request.g.collListItem);

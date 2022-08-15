@@ -2465,14 +2465,14 @@ var Access_Project_Info_Request = {
     }
 
 
-    if (istherePCODE && Access_Project_Info_Request.g.User_Projects.indexOf(Access_Project_Info_Request.g.PCODE) == -1 && !isWF && !isAdmin && !isMinister && !isITSteering) {
+    if (istherePCODE && Access_Project_Info_Request.g.User_Projects.indexOf(Access_Project_Info_Request.g.PCODE) == -1 && !isWF && !isAdmin && !isMinister && !isITSteering && !isBITeam) {
       //in pages related to project if user is not related to the current project
 
       userCalls.g.Security_Msg();
     }
     debugger
     console.log("debuuge on query")
-    if (!isAdmin && !isMinister && !isITSteering && !isEPMO) {
+    if (!isAdmin && !isMinister && !isITSteering && !isEPMO && !isBITeam) {
       //Access caml query for home page and listing pages
       //
 
@@ -2552,7 +2552,7 @@ var Access_Project_Info_Request = {
             //
 
             AccessQuery = SectorHeadQuery;
-          } else if (isAdmin || isMinister || isITSteering || isEPMO) { // to can see everything
+          } else if (isAdmin || isMinister || isITSteering || isEPMO || isBITeam) { // to can see everything
             AccessQuery =
               "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where></Query><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></View>";
           } else if (isStrategySpecialist) {
@@ -2588,16 +2588,16 @@ var Access_Project_Info_Request = {
       }
       //if there is pcode (on project level) get current project's data [for now this is specifically for listing pages]
       else if (istherePCODE) {
-        if (USERlistkey == 'milestones'){ // to arrange the milestone depends on PlannedDate
+        if (USERlistkey == 'milestones') { // to arrange the milestone depends on PlannedDate
           AccessQuery =
-          '<View><Query><Where><And><In><FieldRef Name="ProjectCode" /><Values><Value Type="Text">' +
-          USERPCODE +
-          "</Value></Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='PlannedDate' Ascending='False' /></OrderBy></Query></View>";
-        }else{
+            '<View><Query><Where><And><In><FieldRef Name="ProjectCode" /><Values><Value Type="Text">' +
+            USERPCODE +
+            "</Value></Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='PlannedDate' Ascending='False' /></OrderBy></Query></View>";
+        } else {
           AccessQuery =
-          '<View><Query><Where><And><In><FieldRef Name="ProjectCode" /><Values><Value Type="Text">' +
-          USERPCODE +
-          "</Value></Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
+            '<View><Query><Where><And><In><FieldRef Name="ProjectCode" /><Values><Value Type="Text">' +
+            USERPCODE +
+            "</Value></Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
         }
         if (USERisListing && !isfileListing) {
           window.checkListingStatusHtml = setInterval(function () {
@@ -2614,7 +2614,7 @@ var Access_Project_Info_Request = {
           AccessQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type="Choice">vision</Value></Eq></And></Where></Query></View>';
         }
         else if (USERisListing && USERlistkey == 'mainkpi') {
-          if (!isAdmin && !isMinister && !isSPMTeam && !isVROP && !isSPMAdmin && !isDU && !isSubSectorHead && !isGeneralManager && !isMinisterAssistant && !isViceMinister && !isSectorHead && !isSPMO) {
+          if (!isAdmin && !isMinister && !isBITeam && !isSPMTeam && !isVROP && !isSPMAdmin && !isDU && !isSubSectorHead && !isGeneralManager && !isMinisterAssistant && !isViceMinister && !isSectorHead && !isSPMO) {
             AccessQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Or><Or><Eq><FieldRef Name="PerformanceLeader" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq><Eq><FieldRef Name="PerformanceLeader2" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq></Or><Eq><FieldRef Name="Owner" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq></Or></And></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>';
           }
           // else if (isSPMAdmin || isSPMTeam){
@@ -2754,7 +2754,7 @@ var Access_Project_Info_Request = {
     if (isSectionHead || isPortfolioManager || isSectorHead || isSPMO || isGeneralManager || isSubSectorHead || isDU || isMinisterAssistant || isViceMinister) {
       camlQuery.set_viewXml(SectorHeadQuery);
 
-    } else if (isAdmin || isMinister || isITSteering || isEPMO) { // to can see everything
+    } else if (isAdmin || isMinister || isBITeam || isITSteering || isEPMO) { // to can see everything
       camlQuery.set_viewXml(
         "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where></Query><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></View>"
       );

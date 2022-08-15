@@ -225,7 +225,7 @@ window.initiativeRequest = {
       var relatedFilterSubSector = (oListItem.get_item("SubSector") && oListItem.get_item("SubSector") == UserAccessSectorCode)
       var relatedFilterbSector = (oListItem.get_item("Sector") && oListItem.get_item("Sector") == UserAccessSectorCode)
 
-      if ((isVROE && oListItem.get_item('Types') == "vision") || (isDU && relatedFilterSubSector) || (isMinisterAssistant && relatedFilterbSector) || (isViceMinister && relatedFilterbSector) || (isSectorHead && relatedFilterbSector) || (isSubSectorHead && relatedFilterSubSector) || (isGeneralManager && relatedFilterSubSector) || isEPMO || isAdmin || isMinister || (isInManager && oListItem.get_item("InitiativePM") && (oListItem.get_item("InitiativePM").get_lookupId() == UserN.Id)) || (isInOwner && oListItem.get_item("InitiativeOwner") && (oListItem.get_item("InitiativeOwner").get_lookupId() == UserN.Id))) {
+      if ((isVROE && oListItem.get_item('Types') == "vision") || (isDU && relatedFilterSubSector) || (isMinisterAssistant && relatedFilterbSector) || (isViceMinister && relatedFilterbSector) || (isSectorHead && relatedFilterbSector) || (isSubSectorHead && relatedFilterSubSector) || (isGeneralManager && relatedFilterSubSector) || isEPMO || isAdmin || isMinister || isBITeam || (isInManager && oListItem.get_item("InitiativePM") && (oListItem.get_item("InitiativePM").get_lookupId() == UserN.Id)) || (isInOwner && oListItem.get_item("InitiativeOwner") && (oListItem.get_item("InitiativeOwner").get_lookupId() == UserN.Id))) {
         //getting 1st stats data
         EstimatedCost += oListItem.get_item("EstimatedCost") || 0; //masroufa
         // ActualBudget += oListItem.get_item("InitiativeBudget") || 0; //masroufa
@@ -1617,7 +1617,7 @@ var Issues_Info_Request = {
   },
 };
 //Risks
-var budgetItemRequest = { 
+var budgetItemRequest = {
   // The main Initialization function
   init: function () {
     var clientContext = new SP.ClientContext.get_current();
@@ -2296,7 +2296,7 @@ function handleBudgetBarChart() {
     );
   }
 
-  var maximumNumber =  Math.max(...budgetData)
+  var maximumNumber = Math.max(...budgetData)
 
   var bar_ctx = document.getElementById("budgetChart").getContext("2d");
   //Bordeau
@@ -2367,7 +2367,7 @@ function handleBudgetBarChart() {
             fontFamily: myFont,
             fontSize: 9,
             fontStyle: "bold",
-          }, 
+          },
         },
       ],
       yAxes: [
@@ -2378,7 +2378,7 @@ function handleBudgetBarChart() {
             fontSize: 10,
             fontStyle: "bold",
             beginAtZero: true,
-            callback: function(label, index, labels) {
+            callback: function (label, index, labels) {
               // return label/1000+'k';
               return initiativeRequest.g.kFormatter(label)
             }
@@ -2991,7 +2991,7 @@ if (
 } else ImpactLabel = ImpactLabelsEn;
 
 function handleCircleRiskChart() {
-  
+
   $("#riskChart").remove(); // this is my <canvas> element
   $("#carditem4 .chartjs-size-monitor").remove();
   $("#carditem4 .card-body .card-body").append(

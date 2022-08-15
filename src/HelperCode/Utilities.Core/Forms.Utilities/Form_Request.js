@@ -90,7 +90,7 @@ window.Edit_Data_Request = {
     if (listkey == 'kpiequations') {
       //  (!isAdmin || !isSPMTeam )? window.location = _spPageContextInfo.webAbsoluteUrl : '';
 
-      if (isAdmin || isMinister || isSPMTeam || isPerformanceLeader || isSPMAdmin || isVROP) {
+      if (isAdmin || isMinister || isBITeam || isSPMTeam || isPerformanceLeader || isSPMAdmin || isVROP) {
       } else {
         window.location = _spPageContextInfo.webAbsoluteUrl
       }
@@ -304,7 +304,7 @@ window.Edit_Data_Request = {
     $('[data-editableby]').each(function () {
       let keyOwner = $(this).data('editableby');
       let itemOwner = oListItem.get_item(keyOwner) ? oListItem.get_item(keyOwner).get_lookupValue() : null;
-      let isItDisabled = (itemOwner != UserN.Title) && !isAdmin && !isMinister && !isSPMTeam ? true : false;
+      let isItDisabled = (itemOwner != UserN.Title) && !isAdmin && !isMinister && !isBITeam && !isSPMTeam ? true : false;
       $(this).find('>*').prop('disabled', isItDisabled);
     });
     $("input[type=date]:not([minimumdate=undefined])").each(function () {
@@ -1104,45 +1104,45 @@ window.View_Data_Request = {
 
         $(this).text(value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
       } else if ($(this).attr("type") == "multiselect") {
-          var valfieldkey = $(this).data("valfieldkey"),
+        var valfieldkey = $(this).data("valfieldkey"),
           Dispfieldkey = $(this).data("dispfieldkey"),
-            listname = $(this).data("listname"),
-            $this = $(this);
+          listname = $(this).data("listname"),
+          $this = $(this);
 
-          var value =
-            oListItem.get_item("" + $(this).attr("id") + "") == null
-              ? No_Data
-              : oListItem
-                .get_item("" + $(this).attr("id") + "")
-                .split(":::")
+        var value =
+          oListItem.get_item("" + $(this).attr("id") + "") == null
+            ? No_Data
+            : oListItem
+              .get_item("" + $(this).attr("id") + "")
+              .split(":::")
 
-          var customquerymulti =
-            '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="' + valfieldkey + '" /><Values>';
-          for (var i = 0; i <= value.length; i++) {
-            customquerymulti += '<Value Type="Text">' + value[i] + '</Value>';
-          }
-          customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
+        var customquerymulti =
+          '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="' + valfieldkey + '" /><Values>';
+        for (var i = 0; i <= value.length; i++) {
+          customquerymulti += '<Value Type="Text">' + value[i] + '</Value>';
+        }
+        customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
 
-          console.log(customquerymulti,"customquerymulti customquerymulti")
+        console.log(customquerymulti, "customquerymulti customquerymulti")
 
-          sphttp.get(
-            _spPageContextInfo.siteServerRelativeUrl,
-            listname,
-            customquerymulti,
-            [valfieldkey, Dispfieldkey],
-            function (records, record, listItem, isDone) {
-              if (isDone) {
-                var items = ''
-                console.log("ASddsadasdsadas")
-                records.forEach(function (el, index) {
-                  console.log(records, "RECOOOOOORED in render")
-                  items += el[Dispfieldkey] + '<br>'
+        sphttp.get(
+          _spPageContextInfo.siteServerRelativeUrl,
+          listname,
+          customquerymulti,
+          [valfieldkey, Dispfieldkey],
+          function (records, record, listItem, isDone) {
+            if (isDone) {
+              var items = ''
+              console.log("ASddsadasdsadas")
+              records.forEach(function (el, index) {
+                console.log(records, "RECOOOOOORED in render")
+                items += el[Dispfieldkey] + '<br>'
 
-                });
-                $this.html(items);
-              }
+              });
+              $this.html(items);
             }
-          );
+          }
+        );
         //   var value =
         //     oListItem.get_item("" + $(this).attr("id") + "") == null
         //       ? No_Data
@@ -1152,7 +1152,7 @@ window.View_Data_Request = {
         //         .join("; <br>");
 
         //   $(this).html(value);
-      
+
       } else if ($(this).attr("type") == "lookup") {
         var valfieldkey = $(this).data("valfieldkey"),
           Dispfieldkey = $(this).data("dispfieldkey"),
@@ -1245,7 +1245,7 @@ window.View_Data_Request = {
       $(".btn-to-issue").hide();
       $(".form-row.justify-content-end button").addClass("disablebtns");
     }
-    if (!PCODE || isMinister) { // add isMinister to hide the btn for this role
+    if (!PCODE || isMinister || isBITeam) { // add isMinister to hide the btn for this role
       $(".btn-to-issue").hide();
     }
     if (listkey == "portfolio" || listkey == "budgetitems") {

@@ -62,7 +62,7 @@ var MainKPIs_Info_Request = {
     } else {
       if (filteredValue == "year" || filteredValue === "quarter" || filteredValue == "midterm" || filteredValue == 'monthly') {
         if (isGeneralManager || isDU || isMinisterAssistant || isViceMinister || isSectorHead || isSubSectorHead) {
-          camlQuery.set_viewXml('<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name=\'PeriodType\' /> <Value Type="Choice">' + filteredValue + "</Value></Eq><And><Eq><FieldRef Name=\'Year\' /> <Value Type=\'Text\'>" + kpiYear + "</Value ></Eq><Eq><FieldRef Name=\'"+SecondLevel_FirstLevel_Field+"\' /> <Value Type=\'Text\'>"+ UserAccessSectorCode+"</Value ></Eq></And></And></And></Where ><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query ></View >")
+          camlQuery.set_viewXml('<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name=\'PeriodType\' /> <Value Type="Choice">' + filteredValue + "</Value></Eq><And><Eq><FieldRef Name=\'Year\' /> <Value Type=\'Text\'>" + kpiYear + "</Value ></Eq><Eq><FieldRef Name=\'" + SecondLevel_FirstLevel_Field + "\' /> <Value Type=\'Text\'>" + UserAccessSectorCode + "</Value ></Eq></And></And></And></Where ><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query ></View >")
         }
 
         // if (indexType == 'main' || indexType == 'sub') {
@@ -173,7 +173,7 @@ var MainKPIs_Info_Request = {
       var SubectorCode = oListItem.get_item("SubSector") ? oListItem.get_item("SubSector") : '';
       var SectorCode = oListItem.get_item("Sector") ? oListItem.get_item("Sector") : '';
       // debugger
-      if ((!isAdmin && !isMinister && !isSectorHead && !isViceMinister && !isMinisterAssistant && !isDU &&  !isGeneralManager && !isSubSectorHead && performanceleader == UserN.Title) || isAdmin || isMinister || ((isGeneralManager || isSubSectorHead) && (SubectorCode == UserAccessSectorCode)) || ((isDU || isMinisterAssistant || isViceMinister || isSectorHead) && (SectorCode == UserAccessSectorCode))) {
+      if ((!isAdmin && !isMinister && !isBITeam && !isSectorHead && !isViceMinister && !isMinisterAssistant && !isDU && !isGeneralManager && !isSubSectorHead && performanceleader == UserN.Title) || isAdmin || isMinister || isBITeam || ((isGeneralManager || isSubSectorHead) && (SubectorCode == UserAccessSectorCode)) || ((isDU || isMinisterAssistant || isViceMinister || isSectorHead) && (SectorCode == UserAccessSectorCode))) {
         countRec = countRec + 1;
         //sample getting field data  : oListItem.get_item('InternalName')
         var name = oListItem.get_item("Name") || UserNo_Data;
@@ -677,7 +677,7 @@ var MainKPIs_Info_Request = {
       $('td input[data-internal*="Target"]').prop('disabled', true);
     }
 
-    if (isMinister) {
+    if (isMinister || isBITeam) {
       $("body").append(
         "<style>" +
         ".btn-save{display:none}" +
