@@ -712,7 +712,7 @@ var Information_Form = [
                 "type": "datetime",
                 security: {
                     groups: [
-                        'VRO_P', 'System Admin Group', 'System Admin Group', 'OPMO', 
+                        'VRO_P', 'System Admin Group', 'SPM Admin', 'OPMO', 
                     ]
                 },
                 // validation: "required",
@@ -750,7 +750,7 @@ var Information_Form = [
                 },
                 security: {
                     groups: [
-                        'VRO_P', 'System Admin Group', 'System Admin Group', 'OPMO', 
+                        'VRO_P', 'System Admin Group', 'SPM Admin', 'OPMO', 
                     ]
                 },
             },
