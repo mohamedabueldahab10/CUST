@@ -35,6 +35,8 @@ var relatedMainGoal = '', relatedSubGoal = '', indexTypekpi = '', relatedStrateg
 
 var globalInitiativeCode = '';
 
+// var currentStageForItem = ''
+
 window.kpiEquationsComponents = [];
 
 // window.portfolioCreatedBy;
@@ -1196,6 +1198,11 @@ window.View_Data_Request = {
         $(this).text(value);
       }
     });
+
+
+    // if (listkey=='deliverables') { // tocheck where stage
+    //   currentStageForItem = oListItem.get_item("Stage") ? oListItem.get_item("Stage") : ''
+    // }
 
     if (listkey == 'projects') {
 
@@ -5094,3 +5101,85 @@ var Check_Item_Deleted = {
   g: {
   }
 }
+
+
+
+//function to delete the task from wf
+// var Delete_Wf_Task = {
+//   init: function () {
+//     console.log("INSIDE DELETE")
+//     var fieldNameRef = '', fieldValue = '';
+
+//     if (PCODE) {
+//       fieldNameRef = 'ProjectCode'
+//       fieldValue = PCODE
+//     } else if (ICODE) {
+//       fieldNameRef = 'InitiativeCode'
+//       fieldValue = ICODE
+//     }
+    
+//     var context = SP.ClientContext.get_current();
+//     var dfd = $.Deferred();
+//     var programList = context.get_web().get_lists().getByTitle('Tasks');
+//     var camlQuery = new SP.CamlQuery();
+//     camlQuery.set_viewXml("<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And><Eq><FieldRef Name=" + fieldNameRef + "/><Value Type='Text'>" + fieldValue + "</Value></Eq><Eq><FieldRef Name='StageID'/><Value Type='Text'>" + currentStageForItem + "</Value></Eq></And></And></Where></Query></View>")
+
+//     //Get items by Query
+//     var progColl = programList.getItems(camlQuery);
+//     //Load item collection
+//     context.load(progColl);
+
+//     context.executeQueryAsync(
+//       function () {
+//         var currentItemArray = [];
+//         if (progColl.get_count() > 0) {
+//           var progEnum = progColl.getEnumerator();
+//           while (progEnum.moveNext()) {
+//             var currentItem = progEnum.get_current();
+//             var currentId = currentItem.get_item("ID");
+
+//             //Get Item by current ID
+//             var items = programList.getItemById(currentId);
+//             items.set_item('DeletionStatus', 'Deleted');
+
+//             //Update the item
+//             items.update();
+//             currentItemArray.push(items);
+//             context.load(currentItemArray[currentItemArray.length - 1]);
+//           }
+//           context.executeQueryAsync(
+//             function () {
+//               console.log("after remove task")
+//               debugger
+//               if (
+//                 listkey == "projects" ||
+//                 listkey == "ideas" ||
+//                 listkey == "portfolio" ||
+//                 listkey == "budgetitems"
+//               ) {
+//                 window.location =
+//                   _spPageContextInfo.webAbsoluteUrl +
+//                   "/SitePages/Listing.aspx?ListKey=" +
+//                   listkey;
+//               } else {
+//                 window.location =
+//                   _spPageContextInfo.webAbsoluteUrl +
+//                   "/SitePages/Listing.aspx?ListKey=" +
+//                   listkey +
+//                   PCODE_STRING;
+//               }
+//               dfd.resolve();
+//             },
+//             function (sender, args) {
+//               //Item updated fail
+//               console.log(
+//                 "Request Failed to delete Item Items :" + args.get_message()
+//               );
+//             }
+//           );
+//         }
+//       })
+
+//   }
+// }
+
