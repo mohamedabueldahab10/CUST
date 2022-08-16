@@ -34,7 +34,13 @@ var Information_Form  = [
                 "type":"floatpercentage",
                 "validation": "required",
             },
-           
+            // {
+            //     "InternalName": "Weight",
+            //     "DisplayNameEn": "Weight",
+            //     "DisplayName":"الوزن المكافئ للإنجاز %",
+            //     "type":"decimalpercentage",
+            //     "validation": "required",
+            // },
             {
                 "InternalName": "Completed",
                 "DisplayNameEn": "Completed",

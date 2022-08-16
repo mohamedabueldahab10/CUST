@@ -20,30 +20,55 @@ var Information_Form  = [
                 "type":"string",
                 "maxchar": "250",
                 "validation": "required",
+                security: {
+                    groups: [
+                        'EPMO', 'System Admin Group'
+                    ]
+                },
             },
             {
                 "InternalName": "PlannedCompletedDate",
                 "DisplayNameEn": "Planned Completed Date",
                 "DisplayName":"تاريخ الاكتمال المخطط",
-                "type":"datetime"
+                "type":"datetime",
+                security: {
+                    groups: [
+                        'EPMO', 'System Admin Group'
+                    ]
+                },
             },
             {
                 "InternalName": "DeliverableSuccessKPI",
                 "DisplayNameEn": "Deliverable Success KPI",
                 "DisplayName":"مقياس نجاح المخرج  (إن وجد)",
-                "type":"string"
+                "type":"string",
+                security: {
+                    groups: [
+                        'EPMO', 'System Admin Group'
+                    ]
+                },
             },
             {
                 "InternalName": "Target",
                 "DisplayNameEn": "Target",
                 "DisplayName":"المستهدف (إن وجد)",
-                "type":"string"
+                "type":"string",
+                security: {
+                    groups: [
+                        'EPMO', 'System Admin Group'
+                    ]
+                },
             },
             {
                 "InternalName": "CommittedDate",
                 "DisplayName": "تاريخ الالتزام",
                 "DisplayNameEn": "Committed Date",
                 "type": "datetime",
+                security: {
+                    groups: [
+                        'EPMO', 'System Admin Group'
+                    ]
+                },
             },
             {
                 "InternalName": "Weight",
@@ -51,6 +76,11 @@ var Information_Form  = [
                 "DisplayName":"القيمة",
                 "type":"floatpercentage",
                 "validation": "required",
+                security: {
+                    groups: [
+                        'EPMO', 'System Admin Group'
+                    ]
+                },
             },
             {
                 "InternalName": "Completed",
@@ -67,7 +97,12 @@ var Information_Form  = [
                             value: 'no'
                         }
                     ]
-                }
+                },
+                security: {
+                    groups: [
+                        'EPMO', 'System Admin Group'
+                    ]
+                },
             },
             {
                 "InternalName": "ActualCompletedDate",
@@ -84,6 +119,11 @@ var Information_Form  = [
                 "source": "Benefits",
                 "Dispfieldkey": "Name",
                 "valfieldkey": "Title",
+                security: {
+                    groups: [
+                        'EPMO', 'System Admin Group'
+                    ]
+                },
             }
         ]
     },

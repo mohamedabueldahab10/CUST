@@ -1,5 +1,5 @@
-var logo = require('../../../HelperRessources/img/print-logo.png');
-// var logo = '';
+// var logo = require('../../../HelperRessources/img/print-logo.png');
+var logo = '';
 //= isArabic ? require('../../../HelperRessources/img/main-logo.svg') : require('../../../HelperRessources/img/main-logo-en.svg');
 (window.isNew = window.location.href.toLowerCase().indexOf("new.aspx") > -1),
   (window.isEdit =
@@ -20,6 +20,7 @@ var printDate;
 var pluseAttachCount = 0
 var RevenuesAmount = 0;
 var RevenuesAmountInit = 0;
+var revenuesAmountInitMiles = 0;
 if (
   localStorage.getItem("lng") == null ||
   localStorage.getItem("lng") == "ar"
@@ -355,6 +356,7 @@ window.ListInfo = {
             // skip for arrow keys
             if (event.which >= 37 && event.which <= 40) return;
             // format number
+
             $(this).val(function (index, value) {
               return value
                 .replace(/\D/g, "")
@@ -764,6 +766,9 @@ window.ListInfo = {
           if (listkey == 'initiativedeliverables') {
             deliverabeInitiativePercent.init();
           }
+          if (listkey == 'initiativemilestones') {
+            initMilestPercent.init()
+          }
           if (listkey == 'benefitmetrics') {
             benefitmetricsPercent.init();
           }
@@ -1164,6 +1169,16 @@ window.ListInfo = {
           '<div class="col-md-6 CFIELD ' + element.className + ' " ' + thistip + ' ' + hidestagesIDs + ' ' + editableBy + ' ' + showstagesIDs + '  ' + disablestagesIDs + '  ' + enablestagesIDs + '   ' + isWfhidestagesIDs + ' ' + requireOnWfTaskstagesIDs + ' ' + isWfshowstagesIDs + '  ' + isWfdisablestagesIDs + '  ' + isWfenablestagesIDs + '        data-groups="' + groups + '" style="display:' + element.display + '">' +
           '<label for="' + element.InternalName + '" ' + element.validation + '>' + displayName + '</label>' +
           '<input ' + ToggleName + ' type="number" title="Please enter value between 0 and 100" step="any" placeholder="' + displayName + '" ' + dynamic + ' class="form-control SPIField" id="' + element.InternalName + '" ' + element.state + ' ' + element.validation + ' oninput="this.value = (this.value && Math.abs(this.value) >= 0) && (this.value && Math.abs(this.value) <= 100) ? Math.abs(this.value) : null">' +
+          '<div class="inputInfo ' + isexist + '">' + descPhrase + '</div>' +
+          '</div>';
+        OnSuccess(flag, htmlBody);
+        break;
+
+      case 'decimalpercentage':
+        htmlBody =
+          '<div class="col-md-6 CFIELD ' + element.className + ' " ' + thistip + ' ' + hidestagesIDs + ' ' + editableBy + ' ' + showstagesIDs + '  ' + disablestagesIDs + '  ' + enablestagesIDs + '   ' + isWfhidestagesIDs + ' ' + requireOnWfTaskstagesIDs + ' ' + isWfshowstagesIDs + '  ' + isWfdisablestagesIDs + '  ' + isWfenablestagesIDs + '        data-groups="' + groups + '" style="display:' + element.display + '">' +
+          '<label for="' + element.InternalName + '" ' + element.validation + '>' + displayName + '</label>' +
+          '<input ' + ToggleName + ' type="number" title="Please enter value between 0 and 100" step="any" placeholder="' + displayName + '" ' + dynamic + ' class="form-control SPIField" id="' + element.InternalName + '" ' + element.state + ' ' + element.validation + ' oninput="console.log(this.value)">' +
           '<div class="inputInfo ' + isexist + '">' + descPhrase + '</div>' +
           '</div>';
         OnSuccess(flag, htmlBody);
@@ -2675,7 +2690,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD" ' + thistip + ' ' + hidestagesIDs + ' ' + showstagesIDs + '  ' + disablestagesIDs + '  ' + enablestagesIDs + '   ' + isWfhidestagesIDs + ' ' + requireOnWfTaskstagesIDs + ' ' + isWfshowstagesIDs + '  ' + isWfdisablestagesIDs + '  ' + isWfenablestagesIDs + '    data-groups="' + groups + '" style="display:' + element.display + '">' +
             '<label for="' + element.InternalName + '" ' + element.validation + '>' + displayName + '</label>' +
-            '<p type="multiselect" data-listname="' + element.source + '" data-valfieldkey="' + element.valfieldkey + '" data-Dispfieldkey="' + dispfieldkey + '" class="viewmode-value" id="' + element.InternalName + '" ></p>' + 
+            '<p type="multiselect" data-listname="' + element.source + '" data-valfieldkey="' + element.valfieldkey + '" data-Dispfieldkey="' + dispfieldkey + '" class="viewmode-value" id="' + element.InternalName + '" ></p>' +
             '</div>';
           OnSuccess(flag, htmlBody);
           break;
@@ -2719,6 +2734,13 @@ var View_ListInfo = {
             '</div>';
           OnSuccess(flag, htmlBody);
           break;
+
+        case 'decimalpercentage':
+          htmlBody = '<div class="col-md-6 CFIELD ' + element.className + ' " ' + thistip + ' ' + hidestagesIDs + ' ' + showstagesIDs + '  ' + disablestagesIDs + '  ' + enablestagesIDs + '   ' + isWfhidestagesIDs + ' ' + requireOnWfTaskstagesIDs + ' ' + isWfshowstagesIDs + '  ' + isWfdisablestagesIDs + '  ' + isWfenablestagesIDs + '        data-groups="' + groups + '" style="display:' + element.display + '">' +
+            '<label for="' + element.InternalName + '" ' + element.validation + '>' + displayName + '</label>' +
+            '<p type="number" class="viewmode-value" id="' + element.InternalName + '" ></p>' +
+            '</div>';
+          OnSuccess(flag, htmlBody);
 
         case 'percentage':
           htmlBody = '<div class="col-md-6 CFIELD ' + element.className + ' " ' + thistip + ' ' + hidestagesIDs + ' ' + showstagesIDs + '  ' + disablestagesIDs + '  ' + enablestagesIDs + '   ' + isWfhidestagesIDs + ' ' + requireOnWfTaskstagesIDs + ' ' + isWfshowstagesIDs + '  ' + isWfdisablestagesIDs + '  ' + isWfenablestagesIDs + '        data-groups="' + groups + '" style="display:' + element.display + '">' +
@@ -3719,6 +3741,56 @@ var deliverabeInitiativePercent = {
     }
   }
 };
+
+var initMilestPercent = {
+  onSuccess: function (sender, args) {
+
+    var collListItem = initMilestPercent.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      revenuesAmountInitMiles += oListItem.get_item('Weight') || 0;
+    }
+    console.log(revenuesAmountInitMiles, "revenuesAmountInitMiles revenuesAmountInitMiles")
+    initMilestPercent.g.revenueBudget();
+  },
+  onError: function (sender, args) {
+    console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+  },
+  init: function () {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle('InitiativeMilestones');
+    var camlQuery = new SP.CamlQuery();
+    var ReQUERY;
+    ReQUERY = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + ICODE + '</Value></Eq></And></Where></Query></View>';
+
+
+    camlQuery.set_viewXml(ReQUERY);
+    initMilestPercent.g.collListItem = oList.getItems(camlQuery);//declared inside object scope only
+    clientContext.load(initMilestPercent.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, initMilestPercent.onSuccess),
+      Function.createDelegate(this, initMilestPercent.onError)
+    );
+  },
+  g: {
+    revenueBudget: function () {
+      if ($('input#Weight').length) {
+        //clearInterval(checkWeightValueHTML);
+        RemainingBudget = 100 - revenuesAmountInitMiles;
+        var newVal;
+        var inpVal = parseInt($('input#Weight').val()) || 0;
+        newVal = RemainingBudget + inpVal >= 100 ? inpVal : RemainingBudget + inpVal;
+        RemainingBudget == 100 ? $('input#Weight').attr('max', RemainingBudget) : $('input#Weight').attr('max', newVal);
+
+        $('input#Weight').parent().find(' > label').append('<span data-trans-remainperc class="Resources remainpercstyle"></span><span class="remainpercstyle">' + RemainingBudget + ']</span>');
+        changeResources();
+
+      }
+    }
+  }
+}
+
 var benefitmetricsPercent = {
   onSuccess: function (sender, args) {
 
@@ -4464,6 +4536,34 @@ function getBase64(file) {
 }
 
 //////////////////
-
-
 // end  working on integration btn
+
+///////////////////////////////////////////////
+//decimal number percentage 
+function ForNumbers(evt) {
+  var charCode = (evt.which) ? evt.which : event.keyCode;
+
+  if (
+    //0~9
+    charCode >= 48 && charCode <= 57 ||
+    //number pad 0~9
+    charCode >= 96 && charCode <= 105 ||
+    //backspace
+    charCode == 8 ||
+    //tab
+    charCode == 9 ||
+    //enter
+    charCode == 13 ||
+    //left, right, delete..
+    charCode >= 35 && charCode <= 46
+  ) {
+    //make sure the new value below 20
+    if (parseInt(this.value + String.fromCharCode(charCode), 10) <= 30)
+      return true;
+  }
+
+  evt.preventDefault();
+  evt.stopPropagation();
+
+  return false;
+} 

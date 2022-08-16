@@ -18,7 +18,7 @@ var Information_Form = [{
             "DispfieldkeyEn": "NameEn",//added to handle portfolio bilangual
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'EPMO', 'System Admin Group', 'OPMO', 'Project Managers for Project Web App',
                 ]
             },
             // "state": "disabled",
@@ -33,7 +33,7 @@ var Information_Form = [{
             "validation": "required",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App'
+                    'EPMO', 'System Admin Group'
                 ]
             },
         },
@@ -46,7 +46,7 @@ var Information_Form = [{
             "maxchar": 5000,
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'EPMO', 'System Admin Group', 'OPMO', 'Project Managers for Project Web App'
                 ]
             },
             // hideonstage: "1"
@@ -60,7 +60,7 @@ var Information_Form = [{
             "validation": "required",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'EPMO', 'System Admin Group', 'OPMO', 'Project Managers for Project Web App'
                 ]
             },
             // hideonstage: "1"
@@ -106,7 +106,7 @@ var Information_Form = [{
             },
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App', 'SPMO', 'Development Unit'
+                    'EPMO', 'System Admin Group', 'OPMO', 'Project Managers for Project Web App', 'SPMO', 'Development Unit'
                 ]
             },
         },
@@ -129,7 +129,7 @@ var Information_Form = [{
             },
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO', 'Development Unit'
+                    'EPMO', 'System Admin Group',
                 ]
             },
         },
@@ -140,7 +140,7 @@ var Information_Form = [{
             "type": "string",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App', 'SPMO', 'Development Unit'
+                    'EPMO', 'System Admin Group', 'OPMO', 'Project Managers for Project Web App', 'SPMO', 'Development Unit'
                 ]
             },
             // "maxchar": 5000,
@@ -157,7 +157,7 @@ var Information_Form = [{
             "valfieldkey": "Title",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO', 'Development Unit'
+                    'EPMO', 'System Admin Group'
                 ]
             },
             // "state": "disabled",
@@ -187,6 +187,11 @@ var Information_Form = [{
             "valfieldkey": "Title",
             "grpfieldkey": "Title",
             "state": "disabled",
+            security: {
+                groups: [
+                    'EPMO', 'System Admin Group'
+                ]
+            },
         },
         {
             "InternalName": "InitiativeVision",
@@ -201,6 +206,11 @@ var Information_Form = [{
             "source": "Initiatives",
             "Dispfieldkey": "Name",
             "valfieldkey": "Title",
+            security: {
+                groups: [
+                    'EPMO', 'System Admin Group'
+                ]
+            },
             // "display":"none"
 
         },
@@ -232,7 +242,7 @@ var Information_Form = [{
             "valfieldkey": "Title",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO', 'Development Unit', 'Project Managers for Project Web App'
+                    'EPMO', 'System Admin Group',
                 ]
             },
             // "maxchar": 5000,
@@ -269,7 +279,7 @@ var Information_Form = [{
             },
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App',
+                    'EPMO', 'System Admin Group',
                 ]
             },
         },
@@ -284,7 +294,12 @@ var Information_Form = [{
                     { display: 'internal', value: 'Internal' },
                     { display: 'external', value: 'External' }
                 ]
-            }
+            },
+            security: {
+                groups: [
+                    'EPMO', 'System Admin Group',
+                ]
+            },
         },
         {
             "InternalName": "Category",
@@ -299,7 +314,12 @@ var Information_Form = [{
                     { display: 'transformativeproject', value: 'transformativeproject' },
                     { display: 'operationalproject', value: 'operationalproject' }
                 ]
-            }
+            },
+            security: {
+                groups: [
+                    'EPMO', 'System Admin Group',
+                ]
+            },
         },
         {
             "InternalName": "IsStrategicProject",
@@ -312,7 +332,12 @@ var Information_Form = [{
                     { display: 'no', value: 'false' }
                 ]
             },
-            "validation": "required"
+            "validation": "required",
+            security: {
+                groups: [
+                    'EPMO', 'System Admin Group',
+                ]
+            },
         },
         // {
         //     "InternalName": "PlannedStartDate",
@@ -417,7 +442,7 @@ var Information_Form = [{
             "valfieldkey": "Title",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App'
+                    'EPMO', 'System Admin Group'
                 ]
             },
         },
@@ -435,7 +460,7 @@ var Information_Form = [{
             "valfieldkey": "Title",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App'
+                    'EPMO', 'System Admin Group'
                 ]
             },
             // "state": "disabled"
@@ -472,7 +497,7 @@ var Information_Form = [{
             "validation": "required",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO', 'Development Unit', 'Project Managers for Project Web App'
+                    'EPMO', 'System Admin Group'
                 ]
             },
             // "state": "disabled",
@@ -792,7 +817,7 @@ var Information_Form = [{
         },
         security: {
             groups: [
-                'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO', 'Development Unit', 'Project Managers for Project Web App'
+                'EPMO', 'System Admin Group', 'OPMO', 'SPMO', 'Development Unit', 'Project Managers for Project Web App'
             ]
         },
         //"state": "disabled"
@@ -840,7 +865,7 @@ var Information_Form = [{
             "validation": "required",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO', 'Development Unit', 'Project Managers for Project Web App'
+                    'EPMO', 'System Admin Group'
                 ]
             },
 
@@ -852,7 +877,11 @@ var Information_Form = [{
             "DisplayNameEn": "Project Manager",
             "type": "picker",
             "validation": "required",
-
+            security: {
+                groups: [
+                    'EPMO', 'System Admin Group'
+                ]
+            },
         },
         // { 
 
@@ -871,7 +900,7 @@ var Information_Form = [{
             "validation": "required",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO', 'Development Unit', 'Project Managers for Project Web App'
+                    'EPMO', 'System Admin Group'
                 ]
             },
         },
@@ -879,19 +908,34 @@ var Information_Form = [{
             "InternalName": "ObjectiveOwner",
             "DisplayName": "مالك الهدف (الهدف الفرعي)",
             "DisplayNameEn": "Objective Owner",
-            "type": "picker"
+            "type": "picker",
+            security: {
+                groups: [
+                    'EPMO', 'System Admin Group'
+                ]
+            },
         },
         {
             "InternalName": "QualityOfficer",
             "DisplayName": "ضابط الجودة",
             "DisplayNameEn": "Quality Officer",
-            "type": "picker"
+            "type": "picker",
+            security: {
+                groups: [
+                    'EPMO', 'System Admin Group'
+                ]
+            },
         },
         {
             "InternalName": "ProjectResponsible",
             "DisplayName": "مسؤول عن المشروع",
             "DisplayNameEn": "Project Responsible",
-            "type": "picker"
+            "type": "picker",
+            security: {
+                groups: [
+                    'EPMO', 'System Admin Group'
+                ]
+            },
         },
         // ,
         // {

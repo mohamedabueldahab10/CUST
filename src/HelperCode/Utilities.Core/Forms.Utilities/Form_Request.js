@@ -487,7 +487,9 @@ window.Edit_Data_Request = {
     if (listkey == "projects" && PCODE) {
 
       projRelatedInit = oListItem.get_item("RelatedInitiative");
+
       globalInitiativeCode = projRelatedInit
+
       Check_Item_Deleted.init('Initiatives', projRelatedInit, 'Title') // check if initiative deleted hide the related delev
 
 
@@ -2944,6 +2946,7 @@ window.Initiative_Strategy_Sos = {
 //get ProjectInitiativeDelevrable
 window.ProjectInitiativeDelevrable = {
   onSuccess: function (sender, args) {
+    var isDisabled = ''
     ProjectInitiativeDelevrable.g.array = [];
     var collListItem = ProjectInitiativeDelevrable.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
@@ -2958,6 +2961,9 @@ window.ProjectInitiativeDelevrable = {
 
     // $("#RelatedInitiativeDeliverable").prop("disabled", false);
 
+if(isDU || isPManager || isInManager){ // to disabled the checkbox for this role 
+  isDisabled = 'disabled'
+}
     if (!isView) {
       var multiSelectHtml =
         '<li class="dropdown ul-bullet-remove">' +
@@ -2970,7 +2976,7 @@ window.ProjectInitiativeDelevrable = {
           '<li>' +
           '<div class="checkbox">' +
           '<label>' +
-          '<input value="' + item.code + '" id="RelatedInitiativeDeliverable" type="checkbox">' + item.name +
+          '<input value="' + item.code + '" id="RelatedInitiativeDeliverable" type="checkbox" '+ isDisabled+' ">' + item.name +
           '</label>' +
           '</div>' +
           '</li>'

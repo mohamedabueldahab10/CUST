@@ -856,7 +856,7 @@ window.userCalls = {
         //CRUD
         Create_Access = [
           "initiativemilestones",
-          "initiativedeliverables",
+          // "initiativedeliverables",
           // "projects",
           "initiativemom",
           "lessonslearned",
@@ -1672,7 +1672,7 @@ window.userCalls = {
           "projecthome.aspx",
           //initiative
           "initiativemilestones",
-          "initiativedeliverables",
+          // "initiativedeliverables",
           "initiativeissues",
           "initiativemom",
           "initiativerisks",
@@ -1796,7 +1796,6 @@ window.userCalls = {
           "initiatives",
           "InitiativeHome.aspx",
           "initiativemilestones",
-          "initiativedeliverables",
           "initiativeissues",
           "initiativemom",
           "initiativerisks",
@@ -1872,7 +1871,6 @@ window.userCalls = {
           // "budgetitems",
           "Targets.aspx",
           // "goalstrategy",
-          "initiativedeliverables",
           "benefits",
           "benefitmetrics",
           "closureinitiative",
