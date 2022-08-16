@@ -31,7 +31,7 @@ var Information_Form  = [
                 "InternalName": "Weight",
                 "DisplayNameEn": "Weight",
                 "DisplayName":"الوزن المكافئ للإنجاز %",
-                "type":"floatpercentage",
+                "type":"decimalpercentage",
                 "validation": "required",
                 security: {
                     groups: [

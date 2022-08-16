@@ -66,6 +66,7 @@ window.New_Data_Submit = {
     $(".errormsg").remove();
     $(".container-body").addClass("was-validated");
     var isCheckMember = false;
+    debugger
     if (
       listkey == "portfolio" &&
       $("#Manager").find("span.sp-peoplepicker-userSpan").attr("sid")

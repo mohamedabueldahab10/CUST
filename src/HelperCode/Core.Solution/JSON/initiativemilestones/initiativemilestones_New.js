@@ -27,20 +27,20 @@ var Information_Form  = [
                 "DisplayName":"تاريخ الاكتمال المخطط",
                 "type":"datetime"
             },
-            {
-                "InternalName": "Weight",
-                "DisplayNameEn": "Weight",
-                "DisplayName":"الوزن المكافئ للإنجاز %",
-                "type":"floatpercentage",
-                "validation": "required",
-            },
             // {
             //     "InternalName": "Weight",
             //     "DisplayNameEn": "Weight",
             //     "DisplayName":"الوزن المكافئ للإنجاز %",
-            //     "type":"decimalpercentage",
+            //     "type":"floatpercentage",
             //     "validation": "required",
             // },
+            {
+                "InternalName": "Weight",
+                "DisplayNameEn": "Weight",
+                "DisplayName":"الوزن المكافئ للإنجاز %",
+                "type":"decimalpercentage",
+                "validation": "required",
+            },
             {
                 "InternalName": "Completed",
                 "DisplayNameEn": "Completed",

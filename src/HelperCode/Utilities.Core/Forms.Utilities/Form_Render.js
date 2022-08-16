@@ -1,5 +1,5 @@
-// var logo = require('../../../HelperRessources/img/print-logo.png');
-var logo = '';
+var logo = require('../../../HelperRessources/img/print-logo.png');
+// var logo = '';
 //= isArabic ? require('../../../HelperRessources/img/main-logo.svg') : require('../../../HelperRessources/img/main-logo-en.svg');
 (window.isNew = window.location.href.toLowerCase().indexOf("new.aspx") > -1),
   (window.isEdit =
@@ -82,6 +82,21 @@ if (window.location.href.indexOf("ListKey") > -1) {
     }
   }
 }
+var validate = function (e) {
+  var t = e.value;
+
+  // console.log(parseFloat(t).toFixed(2),"Sadsa")
+  // e.value = parseFloat(t).toFixed(2)
+  // t = parseFloat(t).toFixed(2)
+  t = Number(t)
+  console.log(typeof (t), "tttttttttttttttt")
+  console.log(t, "aaaaaaaaaaaaaaaaaa")
+  if (t >= 0 && t <= 100) {
+    e.value = t
+  }
+  // e.value = (t.indexOf(".") >= 0) ? (t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 3)) : t;
+}
+
 if (window.location.href.indexOf("PCODE=") > -1) {
   PCODE = window.location.href.split("PCODE=")[1].split("&")[0];
   PCODE_STRING = "&PCODE=" + PCODE;
@@ -363,21 +378,26 @@ window.ListInfo = {
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             });
           });
-          // $('input.numberWithComma').keyup(function (event) {
-          //   // skip for arrow keys
-          //   // format number
-          //   // debugger
-          //   $(this).val(function (index, value) {
-          //     return value.split('') // flip the entire string so that we can break every
-          //       .reverse() //   3rd digit, starting from the end
-          //       .join('')
-          //       .split(/(...)/) // split on every 3rd
-          //       .reverse()      // flip the string again, though now each group of 3 is
-          //       .join(',')      //   backwards
-          //       .replace(/,(?=,)|,$|^,/g, '') // remove extra ,
-          //       .replace(/(,|^)(\d)(\d)?(\d)?/g, '$1$4$3$2')
-          //   });
-          // });
+
+          $('body').on('change','.decimalnumber', function (event) { // add this to handle the num with dots in weight in initiative milestone
+            // var input = $(this);
+   
+            var val = event.target.value
+     
+            var splitVal = val.split('.');
+
+            if (splitVal.length == 2 && splitVal[1].length > 1) {
+              return event.target.value = splitVal[0] + '.' + splitVal[1].substr(0, 1);
+            }
+
+            if ((val >= 0 && val <= 100)) {
+              event.target.value = val
+            } else {
+              event.target.value = ''
+            }
+          });
+          //////////////////////////////////////////////////////////////
+
           //hide show fields based on selection & onload
           $("[data-togglevalues]").on("change", function () {
             ListInfo.g.toggleFields($(this));
@@ -1178,7 +1198,7 @@ window.ListInfo = {
         htmlBody =
           '<div class="col-md-6 CFIELD ' + element.className + ' " ' + thistip + ' ' + hidestagesIDs + ' ' + editableBy + ' ' + showstagesIDs + '  ' + disablestagesIDs + '  ' + enablestagesIDs + '   ' + isWfhidestagesIDs + ' ' + requireOnWfTaskstagesIDs + ' ' + isWfshowstagesIDs + '  ' + isWfdisablestagesIDs + '  ' + isWfenablestagesIDs + '        data-groups="' + groups + '" style="display:' + element.display + '">' +
           '<label for="' + element.InternalName + '" ' + element.validation + '>' + displayName + '</label>' +
-          '<input ' + ToggleName + ' type="number" title="Please enter value between 0 and 100" step="any" placeholder="' + displayName + '" ' + dynamic + ' class="form-control SPIField" id="' + element.InternalName + '" ' + element.state + ' ' + element.validation + ' oninput="console.log(this.value)">' +
+          '<input ' + ToggleName + ' type="number" title="Please enter value between 0 and 100" step="any" placeholder="' + displayName + '" ' + dynamic + ' class="form-control SPIField decimalnumber" id="' + element.InternalName + '" ' + element.state + ' ' + element.validation + ' pattern="^\d*(\.\d{0,2})?$">' +
           '<div class="inputInfo ' + isexist + '">' + descPhrase + '</div>' +
           '</div>';
         OnSuccess(flag, htmlBody);
@@ -3778,6 +3798,7 @@ var initMilestPercent = {
       if ($('input#Weight').length) {
         //clearInterval(checkWeightValueHTML);
         RemainingBudget = 100 - revenuesAmountInitMiles;
+        RemainingBudget = Number(RemainingBudget.toFixed(1))
         var newVal;
         var inpVal = parseInt($('input#Weight').val()) || 0;
         newVal = RemainingBudget + inpVal >= 100 ? inpVal : RemainingBudget + inpVal;
@@ -4566,4 +4587,7 @@ function ForNumbers(evt) {
   evt.stopPropagation();
 
   return false;
-} 
+}
+
+//////////
+
