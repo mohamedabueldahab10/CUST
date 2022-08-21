@@ -228,7 +228,7 @@ var Information_Form = [
                 "DisplayNameEn": "Initiative Owner",
                 "DisplayName": "مالك المبادرة ",
                 "type": "picker",
-                "validation": "required" 
+                "validation": "required"
             },
             {
                 "InternalName": "OwnerEmail",
@@ -419,5 +419,18 @@ var Information_Form = [
                 "type": "float",
             },
         ]
+    },
+    {
+        label: 'المرفقات',
+        labelEn: 'Attachments',
+        description: "",
+        descriptionEn: "",
+        subFields: [{
+            "InternalName": "getfile",
+            "DisplayName": "المرفقات",
+            "DisplayNameEn": "Attachments",
+            "type": "file",
+            "withAddBtn": "true"
+        }]
     }
 ];

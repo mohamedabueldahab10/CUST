@@ -82,20 +82,7 @@ if (window.location.href.indexOf("ListKey") > -1) {
     }
   }
 }
-var validate = function (e) {
-  var t = e.value;
 
-  // console.log(parseFloat(t).toFixed(2),"Sadsa")
-  // e.value = parseFloat(t).toFixed(2)
-  // t = parseFloat(t).toFixed(2)
-  t = Number(t)
-  console.log(typeof (t), "tttttttttttttttt")
-  console.log(t, "aaaaaaaaaaaaaaaaaa")
-  if (t >= 0 && t <= 100) {
-    e.value = t
-  }
-  // e.value = (t.indexOf(".") >= 0) ? (t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 3)) : t;
-}
 
 if (window.location.href.indexOf("PCODE=") > -1) {
   PCODE = window.location.href.split("PCODE=")[1].split("&")[0];
@@ -168,12 +155,11 @@ window.ListInfo = {
           targetList = "",
           sectionType = "",
           rendersection = true;
-
         if (item.hasOwnProperty("security")) {
           if (item.security.groups.length > 0) {
-            // element.security.groups.forEach(function(item.security.groups[z]){
             for (var z = 0; z < item.security.groups.length; z++) {
-              groups.push(item.security.groups[z]); //.replace(/\s/g, '')
+              groups.push(item.security.groups[z]);
+
               if (Groups.indexOf(item.security.groups[z]) == -1) {
                 rendersection = false;
               } else {
@@ -379,11 +365,11 @@ window.ListInfo = {
             });
           });
 
-          $('body').on('change','.decimalnumber', function (event) { // add this to handle the num with dots in weight in initiative milestone
+          $('body').on('change', '.decimalnumber', function (event) { // add this to handle the num with dots in weight in initiative milestone
             // var input = $(this);
-   
+
             var val = event.target.value
-     
+
             var splitVal = val.split('.');
 
             if (splitVal.length == 2 && splitVal[1].length > 1) {
@@ -945,9 +931,9 @@ window.ListInfo = {
     window.acceptedExtensions;
     if (element.hasOwnProperty("security")) {
       if (element.security.groups.length > 0) {
-        // element.security.groups.forEach(function(element.security.groups[z]){
         for (var z = 0; z < element.security.groups.length; z++) {
           groups.push(element.security.groups[z]); //.replace(/\s/g, '')
+
           if (Groups.indexOf(element.security.groups[z]) == -1) {
             renderfield = false;
           } else {
@@ -1352,7 +1338,7 @@ window.ListInfo = {
         break;
 
       case 'lookupmultiselect':
-        debugger
+
         var customQuery;
         if (PCODE && listkey == "invoices") { // get only delevered yes from delivrable
           //change FieldRef to Name and Acending True to can sort alphapetics arabic and english
@@ -2295,7 +2281,7 @@ var View_ListInfo = {
           rendersection = true;
         if (item.hasOwnProperty("security")) {
           if (item.security.groups.length > 0) {
-            // element.security.groups.forEach(function(item.security.groups[z]){
+
             for (var z = 0; z < item.security.groups.length; z++) {
               groups.push(item.security.groups[z]); //.replace(/\s/g, '')
               if (Groups.indexOf(item.security.groups[z]) == -1) {
@@ -2564,7 +2550,7 @@ var View_ListInfo = {
       renderfield = true;
     if (element.hasOwnProperty("security")) {
       if (element.security.groups.length > 0) {
-        // element.security.groups.forEach(function(element.security.groups[z]){
+
         for (var z = 0; z < element.security.groups.length; z++) {
           groups.push(element.security.groups[z]); //.replace(/\s/g, '')
           if (Groups.indexOf(element.security.groups[z]) == -1) {
@@ -2628,6 +2614,7 @@ var View_ListInfo = {
     if ((localStorage.getItem("lng") == "en") && element.DispfieldkeyEn) {
       dispfieldkey = element.DispfieldkeyEn;
     } else dispfieldkey = element.Dispfieldkey;
+
 
     if (renderfield) {
       switch (element.type) {

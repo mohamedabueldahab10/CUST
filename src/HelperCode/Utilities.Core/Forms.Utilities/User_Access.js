@@ -398,9 +398,9 @@ window.userCalls = {
               <i class="fas fa-user-tag" style="font-size: 24px;"></i>
             </li>`)
             : "";
-
+          // localStorage.setItem('userGroup', '${T.groupsName}');
           myRolesHtml += `<li class="list-group-item">
-            <a href="javascript:" class="d-flex justify-content-between align-items-center" onclick="localStorage.setItem('userRole', '${T.Role}');location.reload();" title="${T.Role}">
+            <a href="javascript:" class="d-flex justify-content-between align-items-center" onclick="localStorage.setItem('userRole', '${T.Role}');localStorage.setItem('userGroup', '${T.groupsName}');location.reload();" title="${T.Role}">
               <h3 data-trans-${T.Role} class="title-13 Resources m-0">${T.Role}</h3>
               <div class="circle-radio d-flex justify-content-center align-items-center">
                 <div class="dot-radio ${isActiveRole}" data-role="${T.Role}"></div>
@@ -1107,7 +1107,7 @@ window.userCalls = {
         Read_Access = ["initiatives", "InitiativeHome.aspx", "mainkpi", "sos", "benefits", "Targets.aspx", "portfolio", "home.aspx", "kpiequations", "MainIndicators.aspx", "deliverablemetrics", "benefitmatrix", "benefitmetrics"];
 
         Edit_Access = ["mainkpi", "sos", "benefits", "Targets.aspx", "kpiequations", "deliverablemetrics", "benefitmatrix", "benefitmetrics",];
-        Delete_Access = [
+        Delete_Access = ["mainkpi", "sos"
           // "mainkpi", "sos", "benefits", "Targets.aspx", "kpiequations", "deliverablemetrics", "benefitmatrix", "benefitmetrics",
         ];
         break;
@@ -2352,19 +2352,32 @@ window.userCalls = {
     checkFieldsHtml: function () {
       if ($(".section-container .CFIELD").length) {
         clearInterval(UsercheckFieldsHtml);
+        var currentUserGroup = '', currentUserGroupArr = [];
+        if (localStorage.getItem("userGroup") == null) { // to get the current group for user and based on it enable and disable the field
+          currentUserGroup = GroupItem[0].groupsName;
+          currentUserGroupArr = currentUserGroup
+        } else {
+          currentUserGroup = localStorage.getItem("userGroup") ? localStorage.getItem("userGroup") : '';
+          currentUserGroupArr.push(currentUserGroup)
+        }
 
         function findCommonElements(arr1, arr2) {
           return arr1.some((item) => arr2.includes(item));
         }
+
         $(".section-container .CFIELD").each(function () {
           $(this).val($(this).attr("data-groups"));
           var dataGroups = $(this).attr("data-groups");
           var dataGroupsArray = dataGroups ? dataGroups.split(",") : []; // to avoid the error in console
+          //change Groups with currentUserGroupArr to render the fields based on  role group not all groups 
+       
           if (
-            findCommonElements(Groups, dataGroupsArray) == false &&
+            findCommonElements(currentUserGroupArr, dataGroupsArray) == false &&
             $(this).attr("data-groups") != ""
           ) {
-            $(this).find("*").attr("disabled", true);
+            if (!isAdmin) { // allow to admin to create and edit all fields in system
+              $(this).find("*").attr("disabled", true);
+            }
           }
           // if ((GroupItem[0].groupsName != $(this).attr('data-groups')) && ($(this).attr("data-groups") != "")) {
           //     $(this).find('*').attr('disabled', true);
@@ -4506,6 +4519,8 @@ if (istherePCODE || isthereICODE) {
 // remove the userRole from local storage and redirect to SignOut 
 function logOutHandler() {
   localStorage.removeItem("userRole")
+  localStorage.removeItem("userGroup")
+
   window.location = _spPageContextInfo.siteAbsoluteUrl + '/_layouts/15/SignOut.aspx'
 
 }

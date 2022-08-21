@@ -27,8 +27,8 @@ var Information_Form = [{
             "type": "string",
             "validation": "required",
             security: {
-                groups: [
-                    'EPMO', 
+                groups: [ 
+                    'EPMO', 'System Admin Group'
                 ]
             },
         },
@@ -41,7 +41,7 @@ var Information_Form = [{
             "maxchar": 5000,
             security: {
                 groups: [
-                    'EPMO','Development Unit' ,'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'EPMO','Development Unit' ,'System Admin Group', 'OPMO', 'Project Managers for Project Web App'
                 ]
             },
             // hideonstage: "1"
@@ -55,7 +55,7 @@ var Information_Form = [{
             "maxchar": 5000,
             security: {
                 groups: [
-                    'EPMO', 'Development Unit','Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                    'EPMO', 'Development Unit','System Admin Group', 'OPMO', 'Project Managers for Project Web App'
                 ]
             },
             // hideonstage: "1"
@@ -68,7 +68,7 @@ var Information_Form = [{
         //     "maxchar": 5000,
         //     security: {
         //         groups: [
-        //             'EPMO', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App', 'SPMO','Development Unit',
+        //             'EPMO', 'System Admin Group', 'OPMO', 'Project Managers for Project Web App', 'SPMO','Development Unit',
         //         ]
         //     },
         //     // hideonstage: "1"
@@ -110,7 +110,7 @@ var Information_Form = [{
             },
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App', 'SPMO','Development Unit',
+                    'EPMO', 'System Admin Group', 'OPMO', 'Project Managers for Project Web App', 'SPMO','Development Unit',
                 ]
             },
         },
@@ -133,7 +133,7 @@ var Information_Form = [{
             },
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO','Development Unit',
+                    'EPMO', 'System Admin Group', 'OPMO', 'SPMO','Development Unit',
                 ]
             },
         },
@@ -144,7 +144,7 @@ var Information_Form = [{
             "type": "string",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App', 'SPMO','Development Unit',
+                    'EPMO', 'System Admin Group', 'OPMO', 'Project Managers for Project Web App', 'SPMO','Development Unit',
                 ]
             },
             // "maxchar": 5000,
@@ -161,7 +161,7 @@ var Information_Form = [{
             "valfieldkey": "Title",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO','Development Unit',
+                    'EPMO', 'System Admin Group', 'OPMO', 'SPMO','Development Unit',
                 ]
             },
             // "state": "disabled",
@@ -248,7 +248,7 @@ var Information_Form = [{
             "valfieldkey": "Title",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO','Development Unit', 'Project Managers for Project Web App'
+                    'EPMO', 'System Admin Group', 'OPMO', 'SPMO','Development Unit', 'Project Managers for Project Web App'
                 ]
             },
             // "maxchar": 5000,
@@ -261,7 +261,7 @@ var Information_Form = [{
             "type": "multiline",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO','Development Unit', 'Project Managers for Project Web App'
+                    'EPMO', 'System Admin Group', 'OPMO', 'SPMO','Development Unit', 'Project Managers for Project Web App'
                 ]
             },
             // "maxchar": 5000,
@@ -285,7 +285,7 @@ var Information_Form = [{
             },
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App',
+                    'EPMO', 'System Admin Group',
                 ]
             },
         },
@@ -403,7 +403,7 @@ var Information_Form = [{
         //     "valfieldkey": "Title",
         //     security: {
         //         groups: [
-        //             'EPMO', 'Administrators for Project Web App'
+        //             'EPMO', 'System Admin Group'
         //         ]
         //     },
         // },
@@ -422,7 +422,7 @@ var Information_Form = [{
             "valfieldkey": "Title",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App'
+                    'EPMO', 'System Admin Group'
                 ]
             },
         },
@@ -440,7 +440,7 @@ var Information_Form = [{
             "valfieldkey": "Title",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App'
+                    'EPMO', 'System Admin Group'
                 ]
             },
         },
@@ -477,7 +477,7 @@ var Information_Form = [{
             "validation": "required",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO','Development Unit', 'Project Managers for Project Web App'
+                    'EPMO', 'System Admin Group', 'OPMO', 'SPMO','Development Unit', 'Project Managers for Project Web App'
                 ]
             },
             // "state": "disabled",
@@ -792,7 +792,7 @@ var Information_Form = [{
         },
         security: {
             groups: [
-                'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO','Development Unit', 'Project Managers for Project Web App'
+                'EPMO', 'System Admin Group', 'OPMO', 'SPMO','Development Unit', 'Project Managers for Project Web App'
             ]
         },
         //"state": "disabled"
@@ -826,7 +826,7 @@ var Information_Form = [{
         //     "type": "picker",
         //     security: {
         //         groups: [
-        //            'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO','Development Unit',
+        //            'EPMO', 'System Admin Group', 'OPMO', 'SPMO','Development Unit',
         //         ]
         //     },
 
@@ -839,7 +839,7 @@ var Information_Form = [{
             "validation": "required",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO','Development Unit', 'Project Managers for Project Web App'
+                    'EPMO', 'System Admin Group', 'OPMO', 'SPMO','Development Unit', 'Project Managers for Project Web App'
                 ]
             },
 
@@ -870,7 +870,7 @@ var Information_Form = [{
             "validation": "required",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO','Development Unit', 'Project Managers for Project Web App'
+                    'EPMO', 'System Admin Group', 'OPMO', 'SPMO','Development Unit', 'Project Managers for Project Web App'
                 ]
             },
         },

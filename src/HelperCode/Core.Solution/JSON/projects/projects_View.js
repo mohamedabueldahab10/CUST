@@ -115,7 +115,7 @@ var Information_Form = [{
             "valfieldkey": "Title",
             security: {
                 groups: [
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO'
+                    'EPMO', 'System Admin Group', 'OPMO', 'SPMO'
                 ]
             },
             // "state": "disabled",
