@@ -10,6 +10,7 @@ var ActualBudget = 0,
   NTasks = 0,
   RSupport = 0,
   ScheduleProjectPercentageComplete,
+  projectRelatedInitiative,
   ScheduleBLPercentageCompleteList,
   projectTypes, numberofyesExp,
   //project vars
@@ -21,7 +22,7 @@ var ActualBudget = 0,
   projectprogress, listProjectProgress, ScheduleSource, ProjectSPID, isDelDone = 'disabled';
 var years, months, days, duration = '', onLoad = true;
 
-var getBaseLineStart, getBaseLineFinish, getBaseLineDuration;
+var getBaseLineStart, getBaseLineFinish, getBaseLineDuration, baselineStartDate, baselineFinishDate;
 
 var checkEpmProjectHtml = ''
 
@@ -113,8 +114,11 @@ var Project_Home_Info_Request = {
 
         ScheduleBLPercentageCompleteList = oListItem.get_item('ScheduleBLPercentageComplete') == null ? 0 : oListItem.get_item('ScheduleBLPercentageComplete'),
 
-        //project card1
-        projectname = oListItem.get_item('Name') || No_Data,
+
+        projectRelatedInitiative = oListItem.get_item('RelatedInitiative') ? oListItem.get_item('RelatedInitiative') : No_Data
+
+      //project card1
+      projectname = oListItem.get_item('Name') || No_Data,
         // console.log(projectname);
 
         projectsector = oListItem.get_item('Sector') || No_Data;
@@ -185,6 +189,35 @@ var Project_Home_Info_Request = {
         Pfinishdate = Project_Home_Info_Request.g.dateConvert2(oListItem.get_item('PlannedFinishDate'));
       }
 
+
+      // to deploy status of projects depends on form field baseline
+      getBaseLineStart = oListItem.get_item('BaselineStartDate') ? oListItem.get_item('BaselineStartDate') : '';
+      getBaseLineFinish = oListItem.get_item('BaselineFinishDate') ? oListItem.get_item('BaselineFinishDate') : '';
+      //
+
+      // baselineStartDate = Project_Home_Info_Request.g.dateConvert2(oListItem.get_item('BaselineStartDate'));
+      // baselineFinishDate = Project_Home_Info_Request.g.dateConvert2(oListItem.get_item('BaselineFinishDate'));
+
+      // var projectlengthBaseLine = Math.round(getBaseLineFinish - getBaseLineStart) / (1000 * 60 * 60 * 24);
+
+      var projDuration = '',numOfMonths='';
+
+      // if (Math.trunc((projectlengthBaseLine / 30)) > 0) {
+      //   numOfMonths = Math.trunc((projectlengthBaseLine) / 30);
+      //   projDuration += ' ';
+      //   if (numOfMonths > 1)
+      //     projDuration += isArabic ? (numOfMonths + ' ' + 'شهر') : (numOfMonths + ' Months ');
+      //   else
+      //     projDuration += isArabic ? (numOfMonths + ' ' + 'شهر') : (numOfMonths + ' Month ');
+  
+      //   projDuration += ' ';
+      // } else {
+      //   numOfMonths = 0;
+      // }
+
+      // $('.project-delivery-info .d-flex:nth-child(1) > span:nth-child(2)').text();
+
+      // console.log(projectlengthBaseLine,"projectlengthBaseLine projectlengthBaseLineprojectlengthBaseLine")
       // phasename.shift(),
       // phasename = phasename.join(' ') || No_Data,
       fullphasename = oListItem.get_item('Phase') || No_Data;
@@ -221,14 +254,18 @@ var Project_Home_Info_Request = {
         '<span data-trans-pattr60 class="Resources des-13"></span>' + //resourcekey="pattr5"
         '<h4 class="acc-title d-inline-flex black">' + stageNamestr + '</h4>' +
         '</div>' +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        '<span class="des-13"><span data-trans-pattr56 class="Resources complition-val"></span> ' +
-        '<h4 class="black actual-complete-val">' + ScheduleProjectPercentageComplete + '%</h4></span>' +
-        '</div>' +
+        // '<div class="d-inline-flex flex-column mx-2">' +
+        // '<h3 data-trans-relatedinitiative class="Resources black"></h3>' +
+        // '<span class="des-13"><span>' + projectRelatedInitiative + '</span></span>' +
+        // '</div>' +
         '</div>' +
         //
         '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
         '<h4 data-trans-pattr57 class="black Resources d-flex mx-2" style="display:none !important"></h4>' +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<span class="des-13"><span data-trans-pattr56 class="Resources complition-val"></span> ' +
+        '<h4 class="black actual-complete-val">' + ScheduleProjectPercentageComplete + '%</h4></span>' +
+        '</div>' +
         '<div class="d-inline-flex flex-column mx-2">' +
         '<span class="des-13"><span data-trans-pattr6 class="Resources state-val"></span></span>' +
         '<h4 class="black"> ' + ScheduleBLPercentageCompleteList + '%</h4>' + //
@@ -254,11 +291,6 @@ var Project_Home_Info_Request = {
       ProjectOwner = oListItem.get_item('ProjectOwner') ? oListItem.get_item('ProjectOwner').get_lookupValue() : No_Data;
       ProjectManager = oListItem.get_item('ProjectManager') ? oListItem.get_item('ProjectManager').get_lookupValue() : No_Data;
       PMORepresentative = oListItem.get_item('PMORepresentative') ? oListItem.get_item('PMORepresentative').get_lookupValue() : No_Data;
-
-      // to deploy status of projects depends on form field baseline
-      getBaseLineStart = oListItem.get_item('BaselineStartDate') ? oListItem.get_item('BaselineStartDate') : '';
-      getBaseLineFinish = oListItem.get_item('BaselineFinishDate') ? oListItem.get_item('BaselineFinishDate') : '';
-      //
 
 
       // standardisedPstartdate = Project_Home_Info_Request.g.dateConvert2(oListItem.get_item('PlannedStartDate')),
@@ -400,8 +432,8 @@ var Project_Home_Info_Request = {
       return Math.abs(num) > 999 ? Math.sign(num) * ((Math.abs(num) / 1000).toFixed(1)) + 'k' : Math.sign(num) * Math.abs(num)
     },
     updatProject: function (startDate, endDate, schedualPercentage) {
-      $('.start-date .px-2').text(startDate)
-      $('.end-date .px-2').text(endDate)
+      // $('.start-date .px-2').text(startDate) // to make start date and finish date value from form
+      // $('.end-date .px-2').text(endDate)
       $('.black.actual-complete-val').text(schedualPercentage + '%')
     }
   },
@@ -2270,7 +2302,7 @@ var EPM_Project_Data_Request = {
     //   else
     //     duration += isArabic ? days + 'يوم' : days + ' Day ';
     // }
-    $('.project-delivery-info .d-flex:nth-child(1) > span:nth-child(2)').text(duration);
+    // $('.project-delivery-info .d-flex:nth-child(1) > span:nth-child(2)').text(duration); assign the duration from schedual
 
     EPM_Project_Summery_Task.preinit()
 

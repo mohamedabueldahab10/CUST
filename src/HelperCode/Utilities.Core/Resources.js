@@ -36,7 +36,7 @@
         "requirementsspecifications": "كراسة الشروط والمواصفات",
         "attachment": "المستندات",
         "documents": "المرفقات",
-        'currentkpi':'معلومات الفترة الحالية من السنة',
+        'currentkpi': 'معلومات الفترة الحالية من السنة',
         "document": "مرفقات :",
         "auditquestionnaire": "استبيان المراجعة",
         "projecthascard": "هل تم اعداد بطاقة المشروع؟",
@@ -511,7 +511,7 @@
         "actualq1": "الربع 1",
         "actualq2": "الربع 2",
         "actualq3": "الربع 3",
-        "actualq4":"الربع 4",
+        "actualq4": "الربع 4",
         "midterm1": "النصف 1",
         "ActualMid1": "النصف 1",
         "actualmid1": "النصف 1",
@@ -619,6 +619,7 @@
         "relatedstrategyobjictave": "الهدف الاستراتيجي المرتبط",
         "relatedinitiativedelevrable": "مخرج المبادرة المرتبط",
         "relatedinitiativemilestone": "معلم المبادرة المرتبط",
+        "relatedinitiative": "المبادرة المرتبطة",
         "result": "نتيجة",
         "reason": "سبب",
         "beneficiary": "مستفيد",
@@ -641,12 +642,12 @@
         "benefitmetrics": "مقاييس المنافع",
         "initiativemom": "محاضر الاجتماع",
         //view current kpi
-        "yearkpitype":"السنوي",
-        "midkpitype":"النصف السنوي",
-        "quarterkpitype":"الربع",
-        "monthlykpitype":"الشهر",
-        "actualkpivalue":"القيمة الفعلية",
-        "performanceanalysis":"تحليل الأداء"
+        "yearkpitype": "السنوي",
+        "midkpitype": "النصف السنوي",
+        "quarterkpitype": "الربع",
+        "monthlykpitype": "الشهر",
+        "actualkpivalue": "القيمة الفعلية",
+        "performanceanalysis": "تحليل الأداء"
 
     },
     "en": {
@@ -685,7 +686,7 @@
         "postponereferences": "Postpone References",
         "requirementsspecifications": "Requirements And Specifications",
         "documents": "Documents",
-        "currentkpi":"Current KPI of this year",
+        "currentkpi": "Current KPI of this year",
         "document": "Documents : ",
         "attachment": "Documents",
         "auditquestionnaire": "Audit Questionnaire",
@@ -1002,7 +1003,7 @@
         "actualq1": "Quarter 1",
         "actualq2": "Qarter 2",
         "actualq3": "Qarter 3",
-        "actualq4":"Quarter 4",
+        "actualq4": "Quarter 4",
         "quarter3": "Qarter 3",
         "ActualQ3": "Qarter 3",
         "quarter4": "Qarter 4",
@@ -1283,6 +1284,7 @@
         "relatedstrategyobjictave": "Related Strategy Objective",
         "relatedinitiativedelevrable": "Related Initiative Delevrable",
         "relatedinitiativemilestone": "Related Initiative Milestone",
+        "relatedinitiative":"Related Initiative",
         "result": "Result",
         "reason": "Reason",
         "saudiriyal": "Saudi Riyal",
@@ -1305,12 +1307,12 @@
         "benefitmetrics": "Benefit Metrics",
         "initiativemom": "MoM",
         //view current kpi
-        "yearkpitype":"Years",
-        "midkpitype":"Midterms",
-        "quarterkpitype":"Quarter",
-        "monthlykpitype":"Month",
-        "actualkpivalue":"Actual value",
-        "performanceanalysis":"Performance Analysis"
+        "yearkpitype": "Years",
+        "midkpitype": "Midterms",
+        "quarterkpitype": "Quarter",
+        "monthlykpitype": "Month",
+        "actualkpivalue": "Actual value",
+        "performanceanalysis": "Performance Analysis"
 
     }
 };
