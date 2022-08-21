@@ -99,6 +99,7 @@ window.Edit_Data_Request = {
     }
 
     if (listkey == "initiatives") {
+      debugger
       var typeValue = $("#Types option:selected").val();
       if (typeValue == "vision") {
         $("#RelatedBudgetItem , #ProgramTotalCost ,#RelatedKPI")
@@ -107,12 +108,7 @@ window.Edit_Data_Request = {
       } else {
         $("#RelatedBudgetItem , #ProgramTotalCost, #RelatedKPI").parent().css("display", "none");
       }
-      // if (isNew){
-      //   var PillarsExist = $('#PillarsExist:checked').val();
-      //   if((PillarsExist == 'no')||(PillarsExist == '')){
-      //     $(".py-5.border-bottom.section-container.goalstrategy[data-target_list=SPillars]").css('display', 'none');
-      //   }
-      // }
+
       if (isNew || isEdit) {
 
         $("#Types").on("change", function () {
@@ -820,11 +816,11 @@ window.Edit_Data_Request = {
     showFieldsIfInitiativeVision: function () {
       var typeValue = $("#Types option:selected").val();
       if (typeValue == "vision") {
-        $("#RelatedBudgetItem , #ProgramTotalCost, , #RelatedKPI")
+        $("#RelatedBudgetItem , #ProgramTotalCost,#RelatedKPI")
           .parent()
           .css("display", "block");
       } else {
-        $("#RelatedBudgetItem , #ProgramTotalCost, , #RelatedKPI").parent().css("display", "none");
+        $("#RelatedBudgetItem , #ProgramTotalCost,#RelatedKPI").parent().css("display", "none");
       }
       if (isNew || isEdit) {
 
@@ -1660,7 +1656,7 @@ window.View_Data_Request = {
     },
     showFieldsIfInitiativeVision: function () {
       var typeValue = $("#Types").text();
-      if (typeValue == "Vision" || typeValue == "الرؤية") {
+      if (typeValue == "vision") {
         $("#RelatedBudgetItem , #ProgramTotalCost , #RelatedKPI")
           .parent()
           .css("display", "block");
@@ -3663,6 +3659,8 @@ window.ViewAllFiles = {
 // we use the ViewAllFiles_Main_Strategy to handle the threshold error so we create a query to RecursiveAll files based on ItedID and Title on  the Projects Document Library
 window.ViewAllFiles_Main_Strategy = {
   init: function () {
+    console.log("INISDE ALL FILES INITiative")
+    debugger
     var context = new SP.ClientContext.get_current();
     var web = context.get_web();
     var list = web.get_lists().getByTitle(DocumentLibraryName);
