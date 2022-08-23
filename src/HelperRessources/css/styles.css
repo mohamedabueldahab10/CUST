@@ -4099,64 +4099,67 @@ a.taskButton:hover {
 
 
 .circlecolorstat1 {
-    background: rgba(245,27,7,255) !important;
+    background: rgba(245, 27, 7, 255) !important;
 }
 
 .circlecolorstat2 {
-    background: rgba(255,255,0,255) !important;
+    background: rgba(255, 255, 0, 255) !important;
 }
 
 .circlecolorstat3 {
-    background: rgba(0,170,0,255) !important;
+    background: rgba(0, 170, 0, 255) !important;
 }
 
 .circlecolorstat4 {
-    background: rgba(0,0,255,255) !important;
+    background: rgba(0, 0, 255, 255) !important;
 }
+
 .circlecolorstat7 {
-    background: rgba(0,0,255,255) !important;
+    background: rgba(0, 0, 255, 255) !important;
 }
+
 .circlecolorstat5 {
-    background: rgba(147,139,136,255) !important;
+    background: rgba(147, 139, 136, 255) !important;
 }
+
 .circlecolorstat6 {
-    background: rgba(147,139,136,255) !important;
+    background: rgba(147, 139, 136, 255) !important;
 }
 
 h4.black.Resources.myCompletionStatus.statuscolorstat1,
 .stat1 h4.Resources {
-    color: rgba(245,27,7,255) !important;
+    color: rgba(245, 27, 7, 255) !important;
 }
 
 h4.black.Resources.myCompletionStatus.statuscolorstat2,
 .stat2 h4.Resources {
-    color: rgba(255,255,0,255) !important;
+    color: rgba(255, 255, 0, 255) !important;
 }
 
 h4.black.Resources.myCompletionStatus.statuscolorstat3,
 .stat3 h4.Resources {
-    color: rgba(0,170,0,255) !important;
+    color: rgba(0, 170, 0, 255) !important;
 }
 
 h4.black.Resources.myCompletionStatus.statuscolorstat5,
 .stat5 h4.Resources {
-    color: rgba(147,139,136,255) !important;
+    color: rgba(147, 139, 136, 255) !important;
 }
 
 h4.black.Resources.myCompletionStatus.statuscolorstat6,
 .stat6 h4.Resources {
-    color: rgba(147,139,136,255) !important; 
+    color: rgba(147, 139, 136, 255) !important;
 }
 
 
 h4.black.Resources.myCompletionStatus.statuscolorstat4,
 .stat4 h4.Resources {
-    color: rgba(0,0,255,255) !important;
+    color: rgba(0, 0, 255, 255) !important;
 }
 
 h4.black.Resources.myCompletionStatus.statuscolorstat7,
 .stat7 h4.Resources {
-    color: rgba(0,0,255,255) !important;
+    color: rgba(0, 0, 255, 255) !important;
 }
 
 
@@ -5907,6 +5910,77 @@ li.ms-core-menu-footer {
     padding: 10px 0px
 }
 
+
+.overflow-ellipsis-black {
+    max-width: 15em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ar .overflow-ellipsis-black .tooltiptextblack {
+    background: #148282;
+    visibility: hidden;
+    /* color: #fff; */
+    text-align: center;
+    border-radius: 6px;
+    padding: 7px;
+    /* height: 70px; */
+    width: 20%;
+    position: absolute;
+    z-index: 1;
+    top: 70%;
+    left: 9%;
+    font-size: 12px;
+    color: #fff;
+    white-space: initial;
+}
+
+.ar .overflow-ellipsis-black .tooltiptextblack:after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -10px;
+    border-width: 7px;
+    border-style: solid;
+    border-color: transparent transparent #148282 transparent;
+}
+
+.en .overflow-ellipsis-black .tooltiptextblack {
+
+    background: #148282;
+    visibility: hidden;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 7px;
+    width: 20%;
+    position: absolute;
+    z-index: 1;
+    top: 70%;
+    right: 7%;
+    font-size: 12px;
+    white-space: initial;
+}
+
+.en .overflow-ellipsis-black .tooltiptextblack:after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -10px;
+    border-width: 7px;
+    border-style: solid;
+    border-color: transparent transparent #148282 transparent;
+}
+
+.overflow-ellipsis-black:hover .tooltiptextblack {
+    visibility: visible;
+}
+
+
+
 .overflow-ellipsis {
     max-width: 15em;
     overflow: hidden;
@@ -5981,6 +6055,6 @@ li.ms-core-menu-footer {
     list-style: none;
 }
 
-.chartHeight{
+.chartHeight {
     max-height: 600px;
 }

@@ -1107,9 +1107,9 @@ window.userCalls = {
         Read_Access = ["initiatives", "InitiativeHome.aspx", "mainkpi", "sos", "benefits", "Targets.aspx", "portfolio", "home.aspx", "kpiequations", "MainIndicators.aspx", "deliverablemetrics", "benefitmatrix", "benefitmetrics"];
 
         Edit_Access = ["mainkpi", "sos", "benefits", "Targets.aspx", "kpiequations", "deliverablemetrics", "benefitmatrix", "benefitmetrics",];
-        Delete_Access = ["mainkpi", "sos"
-          // "mainkpi", "sos", "benefits", "Targets.aspx", "kpiequations", "deliverablemetrics", "benefitmatrix", "benefitmetrics",
-        ];
+        Delete_Access = ["mainkpi", "sos","goalstrategy"
+          // "mainkpi", "sos",  "benefits", "Targets.aspx", "kpiequations", "deliverablemetrics", "benefitmatrix", "benefitmetrics", //check
+        ]; 
         break;
       case "VROP":
         if (USERisHome)
@@ -1387,9 +1387,9 @@ window.userCalls = {
           "projects",
           "closureform"
         ];
-        Delete_Access = AllListKeys;
-        Delete_Access = Delete_Access.concat(SP_Page_Name); // to can delete everything
-        // Delete_Access = [];
+        Delete_Access = ['projects','benefitmatrix','deliverables','issues','risks','changerequest','invoices','stakeholders','milestones','mom','lessonslearned','contracts','communicationplans','closureform','initiativedeliverables','initiativemilestones','initiativeissues','initiativerisks','benefits','benefitmetrics','initiativemom','closureinitiative','initiatives']
+        // Delete_Access = AllListKeys;
+        // Delete_Access = Delete_Access.concat(SP_Page_Name); // to can delete everything
         break;
       case "SPMO":
         isSPMO = true;
@@ -2353,6 +2353,7 @@ window.userCalls = {
       if ($(".section-container .CFIELD").length) {
         clearInterval(UsercheckFieldsHtml);
         var currentUserGroup = '', currentUserGroupArr = [];
+        
         if (localStorage.getItem("userGroup") == null) { // to get the current group for user and based on it enable and disable the field
           currentUserGroup = GroupItem[0].groupsName;
           currentUserGroupArr = currentUserGroup
@@ -2365,12 +2366,17 @@ window.userCalls = {
           return arr1.some((item) => arr2.includes(item));
         }
 
+        console.log(currentUserGroupArr,"currentUserGroupArr")
+
         $(".section-container .CFIELD").each(function () {
           $(this).val($(this).attr("data-groups"));
           var dataGroups = $(this).attr("data-groups");
           var dataGroupsArray = dataGroups ? dataGroups.split(",") : []; // to avoid the error in console
           //change Groups with currentUserGroupArr to render the fields based on  role group not all groups 
        
+
+          console.log(dataGroupsArray,"dataGroupsArray")
+          console.log(currentUserGroupArr,"currentUserGroupArr currentUserGroupArr")
           if (
             findCommonElements(currentUserGroupArr, dataGroupsArray) == false &&
             $(this).attr("data-groups") != ""

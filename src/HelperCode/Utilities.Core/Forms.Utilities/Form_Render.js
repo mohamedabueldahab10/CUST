@@ -1,5 +1,5 @@
-var logo = require('../../../HelperRessources/img/print-logo.png');
-// var logo = '';
+// var logo = require('../../../HelperRessources/img/print-logo.png');
+var logo = '';
 //= isArabic ? require('../../../HelperRessources/img/main-logo.svg') : require('../../../HelperRessources/img/main-logo-en.svg');
 (window.isNew = window.location.href.toLowerCase().indexOf("new.aspx") > -1),
   (window.isEdit =
@@ -157,6 +157,8 @@ window.ListInfo = {
           rendersection = true;
         if (item.hasOwnProperty("security")) {
           if (item.security.groups.length > 0) {
+            console.log("SECURITY1")
+            debugger
             for (var z = 0; z < item.security.groups.length; z++) {
               groups.push(item.security.groups[z]);
 
@@ -164,7 +166,7 @@ window.ListInfo = {
                 rendersection = false;
               } else {
                 rendersection = true;
-                break;
+                // break; // to save all groups in data-groups to can open and close the fields
               }
             }
             groups = groups.join(" ");
@@ -938,7 +940,7 @@ window.ListInfo = {
             renderfield = false;
           } else {
             renderfield = true;
-            break;
+            // break; // to save all groups in data-groups to can open and close the fields
           }
         }
         groups = groups.join(",");
@@ -2288,7 +2290,7 @@ var View_ListInfo = {
                 rendersection = false;
               } else {
                 rendersection = true;
-                break;
+                break;  // to save all groups in data-groups to can open and close the fields
               }
             }
             groups = groups.join(" ");
@@ -2557,7 +2559,7 @@ var View_ListInfo = {
             renderfield = false;
           } else {
             renderfield = true;
-            break;
+            break;  // to save all groups in data-groups to can open and close the fields
           }
         }
         groups = groups.join(" ");

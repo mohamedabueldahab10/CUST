@@ -113,7 +113,10 @@ var initiativeHomeInfo_Request = {
       if ((initfinishdate != null) && (initstartdate != null)) {
         var diff = (initfinishdate.getTime() - initstartdate.getTime()) / 1000;
         diff /= (60 * 60 * 24 * 7 * 4);
-        var months = Math.abs(Math.round(diff));
+        // var months = Math.abs(Math.round(diff));
+
+        var months = Math.trunc(diff);
+
         if (months > 0) {
 
           if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {

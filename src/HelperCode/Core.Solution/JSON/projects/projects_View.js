@@ -113,11 +113,11 @@ var Information_Form = [{
             "source": "Initiatives",
             "Dispfieldkey": "Name",
             "valfieldkey": "Title",
-            security: {
-                groups: [
-                    'EPMO', 'System Admin Group', 'OPMO', 'SPMO'
-                ]
-            },
+            // security: {
+            //     groups: [
+            //         'EPMO', 'System Admin Group', 'OPMO', 'SPMO'
+            //     ]
+            // },
             // "state": "disabled",
             // "className":"autofill"
         },

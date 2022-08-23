@@ -123,6 +123,7 @@ var Project_Home_Info_Request = {
 
         projectsector = oListItem.get_item('Sector') || No_Data;
       projectTypes = oListItem.get_item('ProjectType') || No_Data;
+
       var projectsectorarr = [];
 
       if (localStorage.getItem('Dynamo_Internal Entities') != null) {
@@ -135,10 +136,10 @@ var Project_Home_Info_Request = {
         } else projectsector = projectsectorarr[0].nameEn;
       }
       stagename = oListItem.get_item('Stage') || No_Data;
-      console.log(stagename, "HEEEEEEEEEEEEEEEETS")
+
       var stagenamearr = stagename.replaceAll("__", "").split(";");
       var stagenamearrwithoutunderscoreten = stagename.replace(/__S10;| __S22;| __S31;/g, "").split(";");
-      // console.log('stagenamearrwithoutunderscoreten', stagenamearrwithoutunderscoreten);
+
       var stageName = [],
         stageNamestr = '';
       phasename = oListItem.get_item('Phase') || No_Data;
@@ -177,6 +178,10 @@ var Project_Home_Info_Request = {
         } else phasename = phasearr.length ? phasearr[0].nameEn : '';
       }
 
+      if (projectRelatedInitiative && projectRelatedInitiative != No_Data) {
+        Get_RelatedInitiative.init()
+      }
+
       // abrprojectname = projectname.match(/(?<!\p{L}\p{M}*)\p{L}\p{M}*/gu).join('.');
       abrprojectname = projectname.split(' ').map(word => word[0]).join('.');
       projectcode = oListItem.get_item('Title') || No_Data;
@@ -195,44 +200,41 @@ var Project_Home_Info_Request = {
       getBaseLineFinish = oListItem.get_item('BaselineFinishDate') ? oListItem.get_item('BaselineFinishDate') : '';
       //
 
-      // baselineStartDate = Project_Home_Info_Request.g.dateConvert2(oListItem.get_item('BaselineStartDate'));
-      // baselineFinishDate = Project_Home_Info_Request.g.dateConvert2(oListItem.get_item('BaselineFinishDate'));
+      baselineStartDate = Project_Home_Info_Request.g.dateConvert(oListItem.get_item('BaselineStartDate'));
+      baselineFinishDate = Project_Home_Info_Request.g.dateConvert(oListItem.get_item('BaselineFinishDate'));
 
-      // var projectlengthBaseLine = Math.round(getBaseLineFinish - getBaseLineStart) / (1000 * 60 * 60 * 24);
+      var projectlengthBaseLine = Math.round(getBaseLineFinish - getBaseLineStart) / (1000 * 60 * 60 * 24);
 
-      var projDuration = '',numOfMonths='';
+      var projDuration = '', numOfMonths = 0;
 
-      // if (Math.trunc((projectlengthBaseLine / 30)) > 0) {
-      //   numOfMonths = Math.trunc((projectlengthBaseLine) / 30);
-      //   projDuration += ' ';
-      //   if (numOfMonths > 1)
-      //     projDuration += isArabic ? (numOfMonths + ' ' + 'شهر') : (numOfMonths + ' Months ');
-      //   else
-      //     projDuration += isArabic ? (numOfMonths + ' ' + 'شهر') : (numOfMonths + ' Month ');
-  
-      //   projDuration += ' ';
-      // } else {
-      //   numOfMonths = 0;
-      // }
+      if (Math.trunc((projectlengthBaseLine / 30)) > 0) {
+        numOfMonths = Math.trunc((projectlengthBaseLine) / 30);
+        projDuration += ' ';
+        if (numOfMonths > 1)
+          projDuration += isArabic ? (numOfMonths + ' ' + 'شهرا') : (numOfMonths + ' Months ');
+        else {
+          projDuration += isArabic ? (numOfMonths + ' ' + 'شهرا') : (numOfMonths + ' Month ');
+        }
+        projDuration += ' ';
+      } else {
+        numOfMonths = 0;
+      }
 
-      // $('.project-delivery-info .d-flex:nth-child(1) > span:nth-child(2)').text();
+      $('.project-delivery-info .d-flex:nth-child(1) > span:nth-child(2)').text(projDuration);
 
-      // console.log(projectlengthBaseLine,"projectlengthBaseLine projectlengthBaseLineprojectlengthBaseLine")
-      // phasename.shift(),
-      // phasename = phasename.join(' ') || No_Data,
+
       fullphasename = oListItem.get_item('Phase') || No_Data;
       projectprogress = oListItem.get_item('ProjectProgressStatus') || No_Data;
       listProjectProgress = oListItem.get_item('ProjectProgressStatus') || No_Data
       card1.push('<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
         '<div class="d-inline-flex flex-row align-items-center">' +
-        '<span class="icon-user lg d-inline-flex align-items-center text-center handlecircle circlecolor' + projectprogress + '">' + // circlecolor' + projectprogress + ' to change the circle color depends on status
-        // '<span class="user-name lg w-100">' + abrprojectname + '</span>' +
+        '<span class="icon-user lg d-inline-flex align-items-center text-center handlecircle circlecolor' + projectprogress + '">' +
         '</span>' +
         '<div class="d-inline-flex flex-column mx-3">' +
         '<h3 class="acc-title d-inline-flex black">' + projectname + '</h3>' +
         '<span class="des-13 project-date">' +
-        '<span class="start-date"><span data-trans-pattr1 class="Resources"></span><span class="px-2">' + Pstartdate + '</span></span>' +
-        '<span class="end-date"><span data-trans-pattr2 class="Resources"></span><span class="px-2">' + Pfinishdate + '</span></span>' +
+        '<span class="start-date"><span data-trans-basestart class="Resources"></span><span class="px-2">' + baselineStartDate + '</span></span>' +
+        '<span class="end-date"><span data-trans-basefinish class="Resources"></span><span class="px-2">' + baselineFinishDate + '</span></span>' +
         '</span>' +
         '</div>' +
         '</div>' +
@@ -251,13 +253,13 @@ var Project_Home_Info_Request = {
         '<h4 class="acc-title d-inline-flex black">' + phasename + '</h4>' +
         '</div>' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        '<span data-trans-pattr60 class="Resources des-13"></span>' + //resourcekey="pattr5"
+        '<span data-trans-pattr60 class="Resources des-13"></span>' +
         '<h4 class="acc-title d-inline-flex black">' + stageNamestr + '</h4>' +
         '</div>' +
-        // '<div class="d-inline-flex flex-column mx-2">' +
-        // '<h3 data-trans-relatedinitiative class="Resources black"></h3>' +
-        // '<span class="des-13"><span>' + projectRelatedInitiative + '</span></span>' +
-        // '</div>' +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<h3 data-trans-relatedinitiative class="Resources black"></h3>' +
+        '<span class="des-13 overflow-ellipsis-black" ><span id="relatedinit" style="cursor:pointer">'+projectRelatedInitiative+'</span><span class="tooltiptextblack" id="relatedinitchild">' + projectRelatedInitiative + '</span></span>' +
+        '</div>' +
         '</div>' +
         //
         '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
@@ -270,11 +272,6 @@ var Project_Home_Info_Request = {
         '<span class="des-13"><span data-trans-pattr6 class="Resources state-val"></span></span>' +
         '<h4 class="black"> ' + ScheduleBLPercentageCompleteList + '%</h4>' + //
         '</div>' +
-        // ScheduleBLPercentageComplete
-        // '<div class="d-inline-flex flex-column mx-2">' +
-        // '<span class="des-13"><span data-trans-pattr7 class="Resources complition-val"></span></span>' +
-        // '<h4 class="black"></h4>' + //
-        // '</div>' +
         '<div class="d-inline-flex flex-column mx-2 ' + projectprogress + '">' +
         '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val"></span></span>' +
         '<h4 data-trans-' + projectprogress + ' class="black Resources myCompletionStatus statuscolor' + projectprogress + '"></h4>' + //
@@ -293,19 +290,12 @@ var Project_Home_Info_Request = {
       PMORepresentative = oListItem.get_item('PMORepresentative') ? oListItem.get_item('PMORepresentative').get_lookupValue() : No_Data;
 
 
-      // standardisedPstartdate = Project_Home_Info_Request.g.dateConvert2(oListItem.get_item('PlannedStartDate')),
-      //     standardisedPfinishdate = Project_Home_Info_Request.g.dateConvert2(oListItem.get_item('PlannedFinishDate')),
-      //     projectlength = Math.round((new Date(standardisedPfinishdate) - new Date(standardisedPstartdate)) / (1000 * 60 * 60 * 24 * 30));
+
 
     }
-    // $('.project-Title-Name').text(projectname);
+
     $('.project-details-ctx .card.h-100').html(card1.join('')); // attaching card 1
-    //attaching card 5
-    // $('.project-info-ctx .project-status-info .row > div:nth-child(1) > span.badge').text(projectstatus);
 
-    // $('.project-info-ctx .project-status-info .row > div:nth-child(1) > span.badge').html('<span data-trans-' + projectstatus + ' class="Resources"></span>');
-
-    // $('.project-info-ctx .project-status-info .row > div:nth-child(2) > span.badge').text(projectimportance);
     $('#PjPriority').append('<span data-trans-' + projectimportance + ' class="Resources"></span>');
 
     $('.project-info-ctx .media-body:nth-of-type(1) .icon-user > .user-name').text(ProjectSponsor.split(' ').map(word => word[0]).join('.'));
@@ -325,11 +315,6 @@ var Project_Home_Info_Request = {
     }
     $('.project-info-ctx .media-body:nth-of-type(4) p.fnt-14.reg.mx-3').text(PMORepresentative);
 
-    // if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
-    //     $('.project-delivery-info .d-flex:nth-child(1) > span:nth-child(2)').text(projectlength + ' شهر ');
-    // } else {
-    //     $('.project-delivery-info .d-flex:nth-child(1) > span:nth-child(2)').text(projectlength + ' Month ');
-    // }
 
 
 
@@ -441,6 +426,38 @@ var Project_Home_Info_Request = {
 var checkHomeStatusHtml = setInterval(function () {
   Project_Home_Info_Request.preinit();
 }, 1000);
+
+var Get_RelatedInitiative = {
+  init: function () {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle('Initiatives');
+    var camlQuery = new SP.CamlQuery();
+
+    camlQuery.set_viewXml('<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Title" /><Value Type="Text">' + projectRelatedInitiative + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>');
+    Get_RelatedInitiative.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(Get_RelatedInitiative.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Get_RelatedInitiative.onSuccess),
+      Function.createDelegate(this, Get_RelatedInitiative.onError)
+    );
+  },
+  onSuccess: function (sender, args) {
+    var collListItem = Get_RelatedInitiative.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    var initName = ''
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      initName = oListItem.get_item('Name') || No_Data;
+    }
+    $('#relatedinit').html(initName)
+    $('#relatedinitchild').html(initName)
+  },
+  onError: function (sender, args) {
+    console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+  },
+  g: {}
+}
+
 //epm api call
 // var EPM_Project_Data_Request = {
 //     preinit: function()
@@ -1090,7 +1107,7 @@ var Deliverables_Info_Request = {
     var numberofyesAll = ExpDeliverablesarray.filter((v) => (v.delivered === 'yes'));
     var All_numberofyesAll = Deliverablesarray.filter((v) => (v.delivered === 'Yes'));
 
-    $('.project-details-ctx .card.h-100 > .scnd-row > div:nth-child(3) > h4.black').text(actualImplementationRate + '%');
+    // $('.project-details-ctx .card.h-100 > .scnd-row > div:nth-child(3) > h4.black').text(actualImplementationRate + '%');
 
     // if (actualImplementationRate == 100) {
     //   $('.container-body').append('<div class="row closureform"><button data-trans-projectclosure style="float: left;margin: 0 3px;color:White;padding: 2px;text-align:center;;width:200px;background: #853232;" class="pop-green Resources" style="float: left;font-size: 17px;" type="button"></button></div>');
@@ -1204,7 +1221,7 @@ var Deliverables_Info_Request = {
 
       $('.tlContainer').html('') // container of data
 
-      console.log(Deliverablesarray, "Deliverablesarray Deliverablesarray Deliverablesarray")
+
 
       monthsArr.forEach(el => {
         $(`.fromDeliverables .month-list-ctx #month-${el}`).click(function () {
@@ -1713,6 +1730,7 @@ var ProgressStatus_Data_Submit = {
     var plannedPercentage = 0
     var timeCurrentDate = ''
 
+
     if (getBaseLineStart) {
       timeBaseLineStartDate = new Date(getBaseLineStart);
       timeBaseLineStartDate = timeBaseLineStartDate.getTime();
@@ -1730,12 +1748,13 @@ var ProgressStatus_Data_Submit = {
     var diffTimeBaseLine = Math.abs(timeBaseLineFinishDate - timeBaseLineStartDate);
     var diffDaysBaseline = Math.ceil(diffTimeBaseLine / (1000 * 60 * 60 * 24));
 
+
+    debugger
     if (diffDaysBaseline > 0) {
       plannedPercentage = differenceDaysFromToday / diffDaysBaseline
     }
     plannedPercentage = plannedPercentage * 100
 
-    console.log(plannedPercentage, "plannedPercentage plannedPercentage")
 
     if (plannedPercentage > 100) {
       plannedPercentage = 100
@@ -1748,9 +1767,9 @@ var ProgressStatus_Data_Submit = {
 
     $('.project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black').text(plannedPercentage + '%');
 
+
     var differencePercentage = plannedPercentage - schedualPercentage
 
-    console.log(differencePercentage, "differencePercentage")
 
     if (!diffDaysBaseline) {
       projectprogress = 'stat5'
@@ -1774,89 +1793,21 @@ var ProgressStatus_Data_Submit = {
     $('.handlecircle').addClass('circlecolor' + projectprogress)
 
 
-    ///// status depends on project schedual
-    // var timeBaseLineStartDate = 0
-    // var plannedPercentage = 0
 
-    // if (getBaseLineDuration) {
-    //   getBaseLineDuration = getBaseLineDuration.toString()
-    //   if (getBaseLineDuration.includes('d')) {
-    //     getBaseLineDuration = Number(getBaseLineDuration.split("d").join(""))
-    //   } else {
-    //     getBaseLineDuration = Number(getBaseLineDuration)
-    //   }
-    // }
-
-    // if (getBaseLineStart) {
-    //   timeBaseLineStartDate = getBaseLineStart.getTime()
-    // }
-
-    // var timeCurrentDate = now.getTime()
-
-    // var differenceTime = timeCurrentDate - timeBaseLineStartDate
-
-    // var totalDays = Math.floor((differenceTime) / (24 * 3600 * 1000));
-
-    // console.log(totalDays, "totalDays")
-    // console.log(getBaseLineDuration, "getBaseLineDuration")
-    // debugger
-
-    // if (getBaseLineDuration) {
-    //   plannedPercentage = totalDays / getBaseLineDuration
-    //   plannedPercentage = plannedPercentage * 100;
-
-    //   if (plannedPercentage > 100) {
-    //     plannedPercentage = 100
-    //   }
-    //   plannedPercentage = Number(plannedPercentage.toFixed(2))
-    // }
-
-    // console.log(plannedPercentage, "plannedPercentage")
-
-    // ProgressStatus_Data_Submit.g.oListItem.set_item('ScheduleBLPercentageComplete', plannedPercentage); // save the percentage 
-
-    // $('.project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black').text(plannedPercentage + '%');
-
-
-    // var differencePercentage = plannedPercentage - schedualPercentage
-
-    // if (!getBaseLineDuration) {
-    //   projectprogress = 'stat5'
-    // } else {
-    //   if (differencePercentage <= 5) {
-    //     projectprogress = 'stat3'
-    //   } else if (differencePercentage > 5 && differencePercentage <= 15) {
-    //     projectprogress = 'stat2';
-    //   } else if (differencePercentage > 15) {
-    //     projectprogress = 'stat1'
-    //   }
-    // }
-
-    // $('.myCompletionStatus').removeClass('statuscolor' + listProjectProgress);
-    // $('.handlecircle').removeClass('circlecolor' + listProjectProgress)
-
-    // ProgressStatus_Data_Submit.g.oListItem.set_item('ProjectProgressStatus', projectprogress);
-    // $('.myCompletionStatus').attr('data-trans-' + projectprogress, '');
-
-    // $('.myCompletionStatus').addClass('statuscolor' + projectprogress);
-    // $('.handlecircle').addClass('circlecolor' + projectprogress)
-    //// end status depends on schedual 
-
-    ////////////////////
 
     Project_Home_Info_Request.g.updatProject(PSDate, PEDate, schedualPercentage)
-    //
+
     changeResources();
-    //
+
     ProgressStatus_Data_Submit.g.oListItem.update();
     clientContext.load(ProgressStatus_Data_Submit.g.oListItem);
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
-        console.log("onLOAAAAAAAAAAAAAAAAAAAD ProgressStatus_Data_Submit")
+
         $('button.updateprogress').removeClass('loader-action');
         $('button.updateprogress').addClass('loader-action-success');
         GetProject_Tasks.preinit();
-        // console.log('Progress Status Updated Successfully');
+
       }),
       Function.createDelegate(this, function (sender, args) {
         $('button.updateprogress').removeClass('loader-action');
@@ -2225,16 +2176,12 @@ var EPM_Project_Data_Request = {
   },
   onSuccess: function (sender, args) {
 
-    console.log("EPM_Project_Data_Request EPM_Project_Data_Request")
     duration = '';
-
 
     ScheduleProjectPercentageComplete = oProjectsItem.get_percentComplete();
 
-
     PlannedStartDate = Project_Home_Info_Request.g.dateConvert(oProjectsItem.get_startDate());
     PlannedFinishDate = Project_Home_Info_Request.g.dateConvert(oProjectsItem.get_finishDate());
-
 
     //to formate the date when use english and arabic languages // the correct one year-month-day
     if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
@@ -2255,21 +2202,21 @@ var EPM_Project_Data_Request = {
 
 
 
-    projectlength = Math.round(PlannedFinishDate - PlannedStartDate) / (1000 * 60 * 60 * 24);
-    //to calculate months only
-    console.log(projectlength, "projectlength")
-    if (Math.trunc((projectlength / 30)) > 0) {
-      months = Math.trunc((projectlength) / 30);
-      duration += ' ';
-      if (months > 1)
-        duration += isArabic ? (months + ' ' + 'شهر') : (months + ' Months ');
-      else
-        duration += isArabic ? (months + ' ' + 'شهر') : (months + ' Month ');
+    // projectlength = Math.round(PlannedFinishDate - PlannedStartDate) / (1000 * 60 * 60 * 24);
+    // //to calculate months only
 
-      duration += ' ';
-    } else {
-      months = 0;
-    }
+    // if (Math.trunc((projectlength / 30)) > 0) {
+    //   months = Math.trunc((projectlength) / 30);
+    //   duration += ' ';
+    //   if (months > 1)
+    //     duration += isArabic ? (months + ' ' + 'شهر') : (months + ' Months ');
+    //   else
+    //     duration += isArabic ? (months + ' ' + 'شهر') : (months + ' Month ');
+
+    //   duration += ' ';
+    // } else {
+    //   months = 0;
+    // }
 
     /////////////////////////////////////////////
     //to calculate years and months and days
@@ -2306,8 +2253,6 @@ var EPM_Project_Data_Request = {
 
     EPM_Project_Summery_Task.preinit()
 
-    // if (!onLoad) ProgressStatus_Data_Submit.init();
-    // onLoad = false;
   },
   // Global variables
   g: {}
