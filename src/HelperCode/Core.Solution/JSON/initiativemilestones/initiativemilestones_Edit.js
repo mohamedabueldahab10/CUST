@@ -1,11 +1,11 @@
-var Information_Form  = [
+var Information_Form = [
     {
         label: 'المعلم المبادرة',
         labelEn: 'Initiative Milestone',
         description: "التفاصيل",
         descriptionEn: "Details",
         subFields: [
-            
+
             // {
             //     "InternalName": "Title",
             //     "DisplayNameEn": "Title",
@@ -16,67 +16,74 @@ var Information_Form  = [
             {
                 "InternalName": "Name",
                 "DisplayNameEn": "Name",
-                "DisplayName":"اسم المعلم",
-                "type":"string",
+                "DisplayName": "اسم المعلم",
+                "type": "string",
                 "maxchar": "250",
                 "validation": "required",
             },
             {
                 "InternalName": "PlannedCompletedDate",
                 "DisplayNameEn": "Planned Completed Date",
-                "DisplayName":"تاريخ الاكتمال المخطط",
-                "type":"datetime"
+                "DisplayName": "تاريخ الاكتمال المخطط",
+                "type": "datetime"
             },
             {
                 "InternalName": "Weight",
                 "DisplayNameEn": "Weight",
-                "DisplayName":"الوزن المكافئ للإنجاز %",
-                "type":"decimalpercentage",
+                "DisplayName": "الوزن المكافئ للإنجاز %",
+                "type": "decimalpercentage",
                 "validation": "required",
                 security: {
                     groups: [
-                      'EPMO'
+                        'EPMO'
                     ]
                 },
             },
-           
+
             {
                 "InternalName": "Completed",
                 "DisplayNameEn": "Completed",
-                "DisplayName":"حالة الاكتمال",
+                "DisplayName": "حالة الاكتمال",
                 "type": "yesnoradio",
                 options: {
                     choices: [{
-                            display: 'yes',
-                            value: 'yes'
-                        },
-                        {
-                            display: 'no',
-                            value: 'no'
-                        }
+                        display: 'yes',
+                        value: 'yes'
+                    },
+                    {
+                        display: 'no',
+                        value: 'no'
+                    }
                     ]
                 },
                 security: {
                     groups: [
-                      'EPMO'
+                        'EPMO'
                     ]
                 },
             },
             {
                 "InternalName": "ActualCompletedDate",
                 "DisplayNameEn": "Actual Completed Date",
-                "DisplayName":"تاريخ الاكتمال الفعلي",
-                "type":"datetime",
-                "max":"today"
+                "DisplayName": "تاريخ الاكتمال الفعلي",
+                "type": "datetime",
+                "max": "today"
             },
             {
                 "InternalName": "RelatedInitiativeDeliverable",
                 "DisplayNameEn": "Related Initiative Deliverable",
-                "DisplayName":"مخرج المبادرة المرتبط",
+                "DisplayName": "مخرج المبادرة المرتبط",
                 "type": "lookup",
                 "source": "InitiativeDeliverables",
                 "Dispfieldkey": "Name",
                 "valfieldkey": "Title",
+            },
+            {
+                "InternalName": "SupportDocumentsDescription",
+                "DisplayNameEn": "Support Documents Description",
+                "DisplayName": "وصف الوثائق الداعمة",
+                "type": "multiline",
+                "maxchar": "500",
             }
         ]
     },
@@ -85,13 +92,13 @@ var Information_Form  = [
         labelEn: 'Documents',
         description: "",
         descriptionEn: "",
-        subFields:[
+        subFields: [
             {
                 "InternalName": "getfile",
-                "DisplayName":"المستندات",                
+                "DisplayName": "المستندات",
                 "DisplayNameEn": "Documents",
-                "type":"file",
-                "withAddBtn":"true"
+                "type": "file",
+                "withAddBtn": "true"
             }
         ]
     }

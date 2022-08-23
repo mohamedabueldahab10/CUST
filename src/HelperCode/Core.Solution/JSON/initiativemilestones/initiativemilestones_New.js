@@ -73,7 +73,14 @@ var Information_Form  = [
                 "source": "InitiativeDeliverables",
                 "Dispfieldkey": "Name",
                 "valfieldkey": "Title",
-            }
+            },
+            {
+                "InternalName": "SupportDocumentsDescription",
+                "DisplayNameEn": "Support Documents Description",
+                "DisplayName": "وصف الوثائق الداعمة",
+                "type": "multiline",
+                "maxchar": "500",
+              },
         ]
     },
     {
