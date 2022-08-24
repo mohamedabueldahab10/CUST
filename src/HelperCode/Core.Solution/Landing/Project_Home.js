@@ -1759,6 +1759,9 @@ var ProgressStatus_Data_Submit = {
     if (plannedPercentage > 100) {
       plannedPercentage = 100
     }
+    if(differenceDaysFromToday < 0){
+      plannedPercentage = 0
+    }
 
     plannedPercentage = Number(plannedPercentage.toFixed(2))
 

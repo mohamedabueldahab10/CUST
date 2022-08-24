@@ -658,22 +658,22 @@ var Information_Form = [{
             "state": "disabled",
             dynamic: "BudgetItem"
         },
-        {
-            "InternalName": "Cost4",
-            "DisplayName": "التكلفة المخصصة لعام",
-            "DisplayNameEn": "Cost 4",
-            "type": "float",
-            "state": "disabled",
-            dynamic: "BudgetItem"
-        },
-        {
-            "InternalName": "Cost5",
-            "DisplayName": "التكلفة المخصصة لعام",
-            "DisplayNameEn": "Cost 5",
-            "type": "float",
-            "state": "disabled",
-            dynamic: "BudgetItem"
-        },
+        // {
+        //     "InternalName": "Cost4",
+        //     "DisplayName": "التكلفة المخصصة لعام",
+        //     "DisplayNameEn": "Cost 4",
+        //     "type": "float",
+        //     "state": "disabled",
+        //     dynamic: "BudgetItem"
+        // },
+        // {
+        //     "InternalName": "Cost5",
+        //     "DisplayName": "التكلفة المخصصة لعام",
+        //     "DisplayNameEn": "Cost 5",
+        //     "type": "float",
+        //     "state": "disabled",
+        //     dynamic: "BudgetItem"
+        // },
         {
             "InternalName": "ExpectedBudget",
             "DisplayName": "الموازنة المتوقعة",
@@ -723,13 +723,6 @@ var Information_Form = [{
             "DisplayName": "الارتباطات التعاقدية",
             "DisplayNameEn": "ContractualEngagements",
             "type": "float",
-            // "state": "disabled"
-        },
-        {
-            "InternalName": "EngagementPercentage",
-            "DisplayName": "نسبة الارتباط من التكاليف ",
-            "DisplayNameEn": "Engagement Percentage",
-            "type": "floatpercentage",
             // "state": "disabled"
         },
         {

@@ -5004,7 +5004,7 @@ var View_Current_Kpi = {
       );
     }
 
-    // View_Previous_kpi.init() // should return it when need to show the previous info of kpi
+    View_Previous_kpi.init() // should return it when need to show the previous info of kpi
 
     changeResources()
   },
