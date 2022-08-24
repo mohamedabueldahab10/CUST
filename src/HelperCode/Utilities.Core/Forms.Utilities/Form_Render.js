@@ -884,6 +884,7 @@ window.ListInfo = {
           }
           // end arabic and english fields
 
+          
           //calcul amount from Sum of all costs
           if (listkey == "budgetitems") {
             $('[id^="Cost"]').keyup(function () {

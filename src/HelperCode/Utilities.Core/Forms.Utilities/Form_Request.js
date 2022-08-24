@@ -35,7 +35,9 @@ var relatedMainGoal = '', relatedSubGoal = '', indexTypekpi = '', relatedStrateg
 
 var globalInitiativeCode = '';
 
-// var currentStageForItem = ''
+// handle previous kpi info
+var targetYear=new Date().getFullYear(),targetActualValue='',targetPerformanceAnalysis='',targetPerioudType='',targetPerioudTypeValue=''; 
+//
 
 window.kpiEquationsComponents = [];
 
@@ -4084,8 +4086,9 @@ window.ViewAllFiles_Main_Strategy = {
 
         }
 
+        if(isView){
         View_Current_Kpi.init(); // show the kpi result for current time (extra section of view) before the attachment container
-
+        }
       }
 
       // $(collapse).insertBefore(
@@ -4093,7 +4096,7 @@ window.ViewAllFiles_Main_Strategy = {
       // );
       changeResources();
     }
-    if (filesUrls.length == 0 && listkey == 'mainkpi') {
+    if (filesUrls.length == 0 && listkey == 'mainkpi' && isView) {
       View_Current_Kpi.init(); // show the kpi result for current time (extra section of view) to invoke the func if there is no attach
     }
   },
@@ -4842,13 +4845,14 @@ var View_Current_Kpi = {
     var listItemEnum = collListItem.getEnumerator();
 
     var relatedKpiYear, relatedPerformanceAnalysis, relatedPeriodType, relatedActualValue, relatedPerformanceAnalysis;
-    var periodType = ''
+    var periodType = '';
+
 
     var currentMonth = new Date().getMonth() + 1;
 
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
-      console.log(oListItem.get_item('PerformanceAnalysis'), "PERFORMANCE ANALYsis")
+     
       relatedKpiYear = oListItem.get_item('Year') == null ? No_Data : oListItem.get_item('Year');
       relatedPeriodType = oListItem.get_item('PeriodType') == null ? No_Data : oListItem.get_item('PeriodType');
 
@@ -4861,46 +4865,84 @@ var View_Current_Kpi = {
         periodType += '<label data-trans-yearkpitype class="Resources"></label>'
         periodType += '<p data-trans-actualy class="viewmode-value Resources" id="Years"></p>'
 
+        targetYear = targetYear -1
+        targetActualValue ='ActualY'
+        targetPerformanceAnalysis = 'PerformanceAnalysisActualY'
+        targetPerioudType = '<label data-trans-yearkpitype class="Resources"></label>'
+        targetPerioudType += '<p data-trans-actualy class="viewmode-value Resources" id="Years_Previous"></p>'
+
+
       } else if (relatedPeriodType == 'midterm') {
 
 
         periodType += '<label data-trans-midkpitype class="Resources"></label>'
+        targetPerioudType = '<label data-trans-midkpitype class="Resources"></label>'
+
 
         if (currentMonth >= 1 && currentMonth <= 6) {
 
           relatedPerformanceAnalysis = oListItem.get_item('PerformanceAnalysisActualMid1') || No_Data
           relatedActualValue = oListItem.get_item('ActualMid1') || 0
           periodType += '<p data-trans-actualmid1 class="viewmode-value Resources" id="Midterms"></p>'
+          
+          targetPerioudType += '<p data-trans-actualmid2 class="viewmode-value Resources" id="Midterms_Previous"></p>'
+          targetYear = targetYear -1
+          targetActualValue ='ActualMid2'
+          targetPerformanceAnalysis = 'PerformanceAnalysisActualMid2'
 
         } else if (currentMonth > 6 && currentMonth <= 12) {
 
           relatedPerformanceAnalysis = oListItem.get_item('PerformanceAnalysisActualMid2') || No_Data
           relatedActualValue = oListItem.get_item('ActualMid2') || 0
           periodType += '<p data-trans-actualmid2 class="viewmode-value Resources" id="Midterms"></p>'
+          targetPerioudType += '<p data-trans-actualmid1 class="viewmode-value Resources" id="Midterms_Previous"></p>'
 
+          targetActualValue ='ActualMid1'
+          targetPerformanceAnalysis = 'PerformanceAnalysisActualMid1'
         }
 
       } else if (relatedPeriodType == 'quarter') {
 
         periodType += '<label data-trans-quarterkpitype class="Resources"></label>'
+        targetPerioudType = '<label data-trans-quarterkpitype class="Resources"></label>'
 
         if (currentMonth >= 1 && currentMonth <= 3) {
           relatedPerformanceAnalysis = oListItem.get_item('PerformanceAnalysisActualQ1') || No_Data
           relatedActualValue = oListItem.get_item('ActualQ1') || 0
           periodType += '<p data-trans-actualq1 class="viewmode-value Resources" id="Quarter"></p>'
+          
+          targetPerioudType += '<p data-trans-actualq4 class="viewmode-value Resources" id="Quarter_Previous"></p>'
+          targetYear = targetYear -1
+          targetActualValue ='ActualQ4'
+          targetPerformanceAnalysis = 'PerformanceAnalysisActualQ4'
+          
         } else if (currentMonth > 3 && currentMonth <= 6) {
           relatedPerformanceAnalysis = oListItem.get_item('PerformanceAnalysisActualQ2') || No_Data
           relatedActualValue = oListItem.get_item('ActualQ2') || 0
           periodType += '<p data-trans-actualq2 class="viewmode-value Resources" id="Quarter"></p>'
+
+          targetPerioudType +=  '<p data-trans-actualq1 class="viewmode-value Resources" id="Quarter_Previous"></p>'
+          targetActualValue ='ActualQ1'
+          targetPerformanceAnalysis = 'PerformanceAnalysisActualQ1'
+
         } else if (currentMonth > 6 && currentMonth <= 9) {
           relatedPerformanceAnalysis = oListItem.get_item('PerformanceAnalysisActualQ3') || No_Data
           relatedActualValue = oListItem.get_item('ActualQ3') || 0
           periodType += '<p data-trans-actualq3 class="viewmode-value Resources" id="Quarter"></p>'
+
+          targetPerioudType +='<p data-trans-actualq2 class="viewmode-value Resources" id="Quarter_Previous"></p>'
+          targetActualValue ='ActualQ2'
+          targetPerformanceAnalysis = 'PerformanceAnalysisActualQ2'
+
         } else if (currentMonth > 9 && currentMonth <= 12) {
 
           relatedPerformanceAnalysis = oListItem.get_item('PerformanceAnalysisActualQ4') || No_Data
           relatedActualValue = oListItem.get_item('ActualQ4') || 0
           periodType += '<p data-trans-actualq4 class="viewmode-value Resources" id="Quarter"></p>'
+
+          targetPerioudType += '<p data-trans-actualq3 class="viewmode-value Resources" id="Quarter_Previous"></p>'
+          targetActualValue ='ActualQ3'
+          targetPerformanceAnalysis = 'PerformanceAnalysisActualQ3'
         }
 
       } else if (relatedPeriodType == 'monthly') {
@@ -4910,6 +4952,20 @@ var View_Current_Kpi = {
         periodType += '<label data-trans-monthlykpitype class="Resources"></label>'
         periodType += `<p data-trans-month${currentMonth} class="viewmode-value Resources" id="Months"></p>`
 
+        targetPerioudType = '<label data-trans-monthlykpitype class="Resources"></label>'
+
+        if(currentMonth == 1){
+          targetPerioudType += `<p data-trans-month12 class="viewmode-value Resources" id="Months_Previous"></p>`
+          targetYear = targetYear -1
+          targetActualValue ='ActualM12'
+          targetPerformanceAnalysis = 'PerformanceAnalysisActualM12'
+        }else{
+          targetPerioudType += `<p data-trans-month${currentMonth -1} class="viewmode-value Resources" id="Months_Previous"></p>`
+          targetActualValue =`ActualM${currentMonth - 1}`
+          targetPerformanceAnalysis = `PerformanceAnalysisActualM${currentMonth - 1}`
+        }
+
+
       }
 
       ////////////////////////////
@@ -4918,7 +4974,7 @@ var View_Current_Kpi = {
 
 
     var currentKpiView =
-      '<div class="py-5 border-bottom section-container " data-groups="">' +
+      '<div class="py-5 border-bottom section-container current_kpi" data-groups="">' +
       '<div class="form-row"><div class="col-lg-3 col-md-4 mb-4"><h3 data-trans-currentkpi class="Resources"></h3><span class="font-14"></span></div>' +
       '<div class="col-lg-9 col-md-8 white-box p-4 fieldset-container">' +
       '<div class="col-md-6 multiline">' +
@@ -4948,6 +5004,8 @@ var View_Current_Kpi = {
       );
     }
 
+    // View_Previous_kpi.init() // should return it when need to show the previous info of kpi
+
     changeResources()
   },
   onError: function (sender, args) {
@@ -4976,7 +5034,67 @@ var View_Current_Kpi = {
   }
 }
 
+var View_Previous_kpi={
+  onSuccess: function (sender, args) {
+    var collListItem = View_Previous_kpi.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    var targetValue='',targetAnalysis='';
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      targetValue = oListItem.get_item(targetActualValue) || 0
+      targetAnalysis = oListItem.get_item(targetPerformanceAnalysis) || No_Data
+    }
 
+    var previousKpiView =
+    '<div class="py-5 border-bottom section-container " data-groups="">' +
+        '<div class="form-row"><div class="col-lg-3 col-md-4 mb-4"><h3 data-trans-previouskpi class="Resources"></h3><span class="font-14"></span></div>' +
+        '<div class="col-lg-9 col-md-8 white-box p-4 fieldset-container">' +
+              '<div class="col-md-6 multiline">' +
+              '<label data-trans-yeartype class="Resources"></label>' +
+              '<p class="viewmode-value" id="Year_Previous">' + targetYear + '</p>' +
+              '</div>' +
+              '<div class="col-md-6 multiline">' +
+              targetPerioudType +
+              '</div>' +
+              '<div class="col-md-6 multiline">' +
+              '<label data-trans-actualkpivalue class="Resources"></label>' +
+              '<p class="viewmode-value" id="Equation_Previous">' + targetValue + '</p>' +
+              '</div>' +
+              '<div class="col-md-12 multiline">' +
+              '<label data-trans-performanceanalysis class="Resources"></label>' +
+              '<p class="viewmode-value" id="PerformanceAnalysis_Previous">' + targetAnalysis + '</p>' +
+              '</div>' +
+          '</div>'+
+    '</div>'
+
+    $(previousKpiView).insertBefore(
+      $(".current_kpi")
+    );
+    changeResources()
+
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  init: function () {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("KPIResults");
+    var camlQuery = new SP.CamlQuery();
+    var currentYear = new Date().getFullYear()
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And><Eq><FieldRef Name='KPI'/><Value Type='Text'>" + KPICode + "</Value></Eq><Eq><FieldRef Name='Year'/><Value Type='Text'>" + targetYear + "</Value></Eq></And></And></Where></Query></View>"
+    );
+    View_Previous_kpi.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(View_Previous_kpi.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, View_Previous_kpi.onSuccess),
+      Function.createDelegate(this, View_Previous_kpi.onError)
+    );
+  },
+  g: {}
+}
 
 var Check_Item_Deleted = {
   onSuccess: function (sender, args) {
