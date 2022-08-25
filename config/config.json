@@ -185,6 +185,14 @@
           "manifest": "./src/webparts/projectCenterEdit/ProjectCenterEditWebPart.manifest.json"
         }
       ]
+    },
+    "admin-panel-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/adminPanel/AdminPanelWebPart.js",
+          "manifest": "./src/webparts/adminPanel/AdminPanelWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {
@@ -376,7 +384,6 @@
         "stickysidebar"
       ]
     }
-
   },
   "localizedResources": {
     "EditFormWebPartStrings": "lib/webparts/editForm/loc/{locale}.js",
@@ -401,6 +408,8 @@
     "SystemSecurityApplicationCustomizerStrings": "lib/extensions/systemSecurity/loc/{locale}.js",
     "InitiativeHomeWebPartStrings": "lib/webparts/initiativeHome/loc/{locale}.js",
     "InitiativesMainHomeWebPartStrings": "lib/webparts/initiativesMainHome/loc/{locale}.js",
-    "ProjectCenterEditWebPartStrings": "lib/webparts/projectCenterEdit/loc/{locale}.js"
+    "ProjectCenterEditWebPartStrings": "lib/webparts/projectCenterEdit/loc/{locale}.js",
+    "AdminPanelWebPartStrings": "lib/webparts/adminPanel/loc/{locale}.js",
+    "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js"
   }
 }
