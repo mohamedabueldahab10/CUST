@@ -252,7 +252,7 @@ export default class InitiativeHomeWebPart extends BaseClientSideWebPart<IInitia
                     <div class="control-ctx project-delivery-plan-ctx mt-4">
                         <div class="card h-100">
                             <div class="sched-head card-header bg-white border-bottom px-4 py-4 justify-content-between">
-                                <h2 data-trans-PTitle2 class="black Resources">
+                                <h2 data-trans-ptitle9 class="black Resources">
                                 </h2>
 
                             </div>
