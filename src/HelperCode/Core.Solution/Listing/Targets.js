@@ -677,7 +677,7 @@ var MainKPIs_Info_Request = {
       $('td input[data-internal*="Target"]').prop('disabled', true);
     }
 
-    if (isMinister || isBITeam) {
+    if (isMinister || isBITeam || isPerformanceLeader) {
       $("body").append(
         "<style>" +
         ".btn-save{display:none}" +
