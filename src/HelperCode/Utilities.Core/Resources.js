@@ -648,7 +648,9 @@
         "quarterkpitype": "الربع",
         "monthlykpitype": "الشهر",
         "actualkpivalue": "القيمة الفعلية",
-        "performanceanalysis": "تحليل الأداء"
+        "performanceanalysis": "تحليل الأداء",
+        "mytasks":"مهامي",
+        'othertasks':"المهام الأخرى"
 
     },
     "en": {
@@ -1314,8 +1316,9 @@
         "quarterkpitype": "Quarter",
         "monthlykpitype": "Month",
         "actualkpivalue": "Actual value",
-        "performanceanalysis": "Performance Analysis"
-
+        "performanceanalysis": "Performance Analysis",
+        "mytasks":"My Tasks",
+        'othertasks':"Other Tasks"
     }
 };
 

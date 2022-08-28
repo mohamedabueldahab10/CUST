@@ -30,8 +30,10 @@ if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar
 
 var projectTypeFilterQuery = '', typeClicked = 'Internal';
 
-var emptyData = require('../../../HelperRessources/img/empty-data.png');
-// var emptyData = ''
+var taskClicked = 'relatedTasks', allTasksClicked = false, getNewFilterTask = false, isViewMoreClicked = false;
+
+// var emptyData = require('../../../HelperRessources/img/empty-data.png');
+var emptyData = ''
 //all data filter array
 allDataFilterArr = []
 //
@@ -77,12 +79,6 @@ else if (UserICode != null && UserICode != '') {
   PQueryFilteration = '<Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + UserICode + '</Value></Eq>';
 }
 else if (isTasks) {
-
-  //old Query
-  // PQuery = '<View><Query><Where><And><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>';
-
-  // PQueryFilteration = '<And><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And>';
-
   PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>';
 
   PQueryFilteration = '<And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And>';
@@ -93,15 +89,15 @@ window.sphttp = {
   get: function (listUrl, listDisplayName, camelQuery, internalFieldNames, isGetDdl, onEach, onError) {
     console.log("SPHTTTp")
     // console.log(FilterChoices,"FilterChoices FilterChoices")
-    debugger
+
     sphttp.g.isGetDdl = isGetDdl;
     var clientContext = new SP.ClientContext(listUrl);
     var oListsp = clientContext.get_web().get_lists().getByTitle(listDisplayName);
     // var fields=IN.join(', ');
-
-    if (isLoadMore || isEmptyFilter || filterValue) {
+    if (isLoadMore || isEmptyFilter || filterValue || allTasksClicked) {
       camelQuery = camelQuery.replace('</Query></View>', '</Query><RowLimit>30</RowLimit></View>');
     }
+
     var fieldsToGet = '<ViewFields>'; // get all data on filter in listing page
     internalFieldNames.forEach(function (o, i, a) {
       fieldsToGet += '<FieldRef Name="' + o + '" />';
@@ -113,7 +109,6 @@ window.sphttp = {
     camelQuery = camelQuery.replace('</Query>', '</Query>' + fieldsToGet);
 
 
-    console.log(camelQuery, "camelQuery camelQuery camelQuery in sphhtp")
     if (!isLoadMore || isOnload) { // remove isEmptyFilter
       sphttp.g.camlQuery = new SP.CamlQuery();
       sphttp.g.camlQuery.set_viewXml(camelQuery);
@@ -310,6 +305,7 @@ window.sphttp = {
 
           }
 
+
           if (!sphttp.g.isGetDdl) sphttp.g.position = SPHTTPitemsEnumerable.get_listItemCollectionPosition();
           onEach(records, null, null, true); //true if no more items
         }),
@@ -322,8 +318,12 @@ window.sphttp = {
     loadMore: function () {
       //Position will be null if all the items in the collection are fetched and there are no more items to be fetched.
       // debugger
+      if (isTasks) {
+        isViewMoreClicked = true
+        getNewFilterTask = true
+      }
       if (sphttp.g.position != null) {
-        console.log("INSIDE LOAD MOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOORE")
+
         isLoadMore = true;
         //If more items are to be fetched, make a second call to the server and fetch the next group of items.
         sphttp.g.camlQuery.set_listItemCollectionPosition(sphttp.g.position);
@@ -349,6 +349,8 @@ var Stages_Data_Request = {
         stageid: oListItem.get_id(),
       });
     }
+
+
   },
   onError: function (sender, args) {
     console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
@@ -377,9 +379,25 @@ window.ListingData = {
 
     if ($('ul.list-group.w-100').length) {
       clearInterval(checkListingStatusHtml);
-      // $('.project-Title-Name').text(PageTitle);
+
       $('.user-name').text(UserN.Title.match(/(?<!\p{L}\p{M}*)\p{L}\p{M}*/gu).join(''));
       $('.user-name-full').text(UserN.Title);
+      debugger
+      if (isAdmin || isEPMO) {
+        if (isTasks && allTasksClicked) {
+
+          PQuery = '<View><Query><Where><And><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq><Neq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Neq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
+
+        } else if (isTasks && !allTasksClicked) {
+
+
+
+          PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>';
+
+          PQueryFilteration = '<And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And>';
+        }
+      }
+
       //call function by get JSON confugration files from style Library
       $.getScript(_spPageContextInfo.webAbsoluteUrl + "/Style%20Library/spm/JSON/" + listkey + "/" + JSON_File_Name).done(function (script, textStatus) {
 
@@ -425,7 +443,6 @@ window.ListingData = {
     } else {
 
       sphttp.get(ListURL, SP_ListName, PQuery, IN, false, function (records, record, listItem, isDone) {
-
         records.forEach((element, i) => {
           if (element.ProjectCode && !isthereICODE) {
             if (!userProjects.includes(element.ProjectCode)) {
@@ -463,8 +480,8 @@ window.ListingData = {
                   return item.code == taskcode
                 });
                 if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
-                  taskname = tasktitlearr[0].name;
-                } else taskname = tasktitlearr[0].nameEn;
+                  taskname = tasktitlearr[0] ? tasktitlearr[0].name : '';
+                } else taskname = tasktitlearr[0] ? tasktitlearr[0].nameEn : '';
               }
 
               html += '<div class="d-inline-flex flex-column" style="width:25%!important">' +
@@ -481,7 +498,7 @@ window.ListingData = {
               html += '<li class="list-group-item link-arrow">' +
                 '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&ICODE=" + ICODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">';
             } else if (USERlistkey == 'closureform' && PCODE) {
-              debugger
+
               html += '<li class="list-group-item link-arrow">' +
                 '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&PCODE=" + PCODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">';
 
@@ -543,9 +560,8 @@ window.ListingData = {
                 //Second column
                 else if (Field_In_Use[0].InternalName == Listing_Info[1].InternalName) {
                   if (!isTasks) {
-                    console.log(obj[key], "obj[key]")
-                    console.log(Field_In_Use[0], "Field_In_Use[0]")
-                    debugger
+
+
                     if (Field_In_Use[0].needTrans == true && obj[key] != No_Data) {
                       // console.log('obj[key]', obj[key]);
                       html += '<span data-trans-' + obj[key] + ' class="des-13 Resources"></span>' +
@@ -695,7 +711,7 @@ window.ListingData = {
             if (isTasks) {
               html += '</a><div class="task-Action">' +
                 '<button class="btn btn-action delegate-btn" style="display: block;" type="button"  onclick="Delegatepopup.init(\'' + RecordsWithID[i].ID + '\')"><span data-trans-delegate class="Resources"></span></button>' +
-                '<button class="btn btn-action" style="display: block;" type="button" onclick="ListingData.g.handleids(\'' + RecordsWithID[i].pcode + '\',\'' + RecordsWithID[i].icode + '\',\'' + RecordsWithID[i].ID + '\',\'' + RecordsWithID[i].tasktype + '\',\'' + RecordsWithID[i].stageid + '\',\'' + RecordsWithID[i].ritemid + '\',\'' + RecordsWithID[i].sourceitemid + '\',\'' + RecordsWithID[i].wfname + '\',\'' + RecordsWithID[i].puid + '\',\'' + RecordsWithID[i].relatedurl + '\')"><span data-trans-taskaction class="Resources"></span></button>' +
+                '<button class="btn btn-action task_action_btn" style="display: block;" type="button" onclick="ListingData.g.handleids(\'' + RecordsWithID[i].pcode + '\',\'' + RecordsWithID[i].icode + '\',\'' + RecordsWithID[i].ID + '\',\'' + RecordsWithID[i].tasktype + '\',\'' + RecordsWithID[i].stageid + '\',\'' + RecordsWithID[i].ritemid + '\',\'' + RecordsWithID[i].sourceitemid + '\',\'' + RecordsWithID[i].wfname + '\',\'' + RecordsWithID[i].puid + '\',\'' + RecordsWithID[i].relatedurl + '\')"><span data-trans-taskaction class="Resources"></span></button>' +
                 '</li>';
             } else {
               html += '</a></li>';
@@ -717,32 +733,121 @@ window.ListingData = {
               projectsListing = '<ul class="nav nav-tabs" id="projectType" role="tablist"><li class="nav-item"><a data-trans-Internal class="nav-link  Resources" id="Internal" data-toggle="tab" href="#InternalProjects" role="tab" aria-controls="InternalProjects" aria-selected="true"></a></li ><li class="nav-item"><a data-trans-External class="nav-link active Resources" id="External" data-toggle="tab" href="#ExternalProjects" role="tab" aria-controls="ExternalProjects" aria-selected="false"></a></li></ul>'
             }
           }
+
           if (typeClicked == 'Internal') {
             projectsListing += '<div class="tab-content" id="projectTypeContent"><div class="tab-pane fade show active" id="InternalProjects" role="tabpanel" aria-labelledby="Internal">' + InternalProjectsHtml + '</div><div class="tab-pane fade" id="ExternalProjects" role="tabpanel" aria-labelledby="External">' + ExternalProjectsHtml + '</div></div>'
           } else if (typeClicked == 'External') {
             projectsListing += '<div class="tab-content" id="projectTypeContent"><div class="tab-pane fade" id="InternalProjects" role="tabpanel" aria-labelledby="Internal">' + InternalProjectsHtml + '</div><div class="tab-pane fade show active" id="ExternalProjects" role="tabpanel" aria-labelledby="External">' + ExternalProjectsHtml + '</div></div>'
           }
-          if (records.length == 0 && originalstate) {
+
+
+          //// for tasks
+          var tasksListing = ''
+          // if (isAdmin || isEPMO) {
+          if (originalstate || (!isLoadMore)) { // fix project list tabs to show
+            if (taskClicked == 'relatedTasks') {
+              $('.task_action_btn').css('display', 'block')
+              tasksListing = '<ul class="nav nav-tabs" id="projectType" role="tablist"><li class="nav-item"><a data-trans-mytasks class="nav-link active Resources" id="relatedTasks" data-toggle="tab" href="#relatedTasks" role="tab" aria-controls="relatedTasks" aria-selected="true"></a></li ><li class="nav-item"><a data-trans-othertasks class="nav-link Resources" id="allTasks" data-toggle="tab" href="#allTasks" role="tab" aria-controls="allTasks" aria-selected="false"></a></li></ul>'
+
+            } else if (taskClicked == 'allTasks') {
+              tasksListing = '<ul class="nav nav-tabs" id="projectType" role="tablist"><li class="nav-item"><a data-trans-mytasks class="nav-link Resources" id="relatedTasks" data-toggle="tab" href="#relatedTasks" role="tab" aria-controls="relatedTasks" aria-selected="true"></a></li ><li class="nav-item"><a data-trans-othertasks class="nav-link active Resources" id="allTasks" data-toggle="tab" href="#allTasks" role="tab" aria-controls="allTasks" aria-selected="false"></a></li></ul>'
+            }
+          }
+
+
+
+          if (taskClicked == 'relatedTasks') {
+            tasksListing += '<div class="tab-content" id="taskTypeContent"><div class="tab-pane fade show active" id="relatedTasks" role="tabpanel" aria-labelledby="relatedTasks">' + html + '</div><div class="tab-pane fade" id="allTasks" role="tabpanel" aria-labelledby="allTasks">' + '' + '</div></div>'
+          } else if (taskClicked == 'allTasks') {
+            tasksListing += '<div class="tab-content" id="taskTypeContent"><div class="tab-pane fade" id="relatedTasks" role="tabpanel" aria-labelledby="relatedTasks">' + '' + '</div><div class="tab-pane fade show active" id="allTasks" role="tabpanel" aria-labelledby="allTasks">' + html + '</div></div>'
+          }
+
+          // }
+
+          /////
+
+
+          if (records.length == 0 && originalstate && !isTasks) {
             $('ul.list-group.w-100').html('<p data-trans-noitems class="Resources noItems"></p>');
             $('ul.list-group.w-100').addClass('noItemsDiv');
             $('.page-filter').addClass('noItemsFilter');
-          } else {
+
+          }
+          else if (records.length == 0 && originalstate && isTasks) {
+            if (isAdmin || isEPMO) {
+              $('ul.list-group.w-100').html(tasksListing);
+            } else {
+              $('ul.list-group.w-100').html('<p data-trans-noitems class="Resources noItems"></p>');
+              $('ul.list-group.w-100').addClass('noItemsDiv');
+              $('.page-filter').addClass('noItemsFilter');
+
+            }
+          }
+          else {
             if ((!isLoadMore || isOnload) && listkey == 'projects') {
               $('ul.list-group.w-100').html(projectsListing);
             }
-            if ((!isLoadMore || isOnload) && listkey != 'projects') {
+            if ((!isLoadMore || isOnload) && isTasks) {
+              if (isAdmin || isEPMO) {
+                $('ul.list-group.w-100').html(tasksListing);
+              } else {
+                $('ul.list-group.w-100').html(html);
+              }
+            }
+
+            if ((!isLoadMore || isOnload) && listkey != 'projects' && listkey != 'tasks') {
               $('ul.list-group.w-100').html(html);
             } else if ((isLoadMore && !isOnload) && listkey == 'projects') {
               $('ul.list-group.w-100 #InternalProjects').append(InternalProjectsHtml)
               $('ul.list-group.w-100 #ExternalProjects').append(ExternalProjectsHtml)
               // $('ul.list-group.w-100').append(projectsListing); // comment to avoid the issue that when click on show more the data internal shown in external also
+            } else if ((isLoadMore && !isOnload) && listkey == 'tasks' && (isAdmin || isEPMO)) {
+              $('ul.list-group.w-100').append(tasksListing);
             } else if ((isLoadMore && !isOnload) && listkey != 'projects') {
               $('ul.list-group.w-100').append(html);
             }
           }
 
-          // one item can create to close the initiative and project
+          // for tasks
+          if (isTasks && (isAdmin || isEPMO)) {
+            // to handle my tasks and other tasks in tasks list
+            $('#relatedTasks').on("click", function (e) {
+              console.log("RELATED TASK TABS")
+              // if (isAdmin || isPortManager) {
+              // $('.task_action_btn').css('display', 'block')
 
+              taskClicked = 'relatedTasks'
+              getNewFilterTask = true
+              allTasksClicked = false
+              isViewMoreClicked = false
+              ListingData.preinit()
+              // ListingData.Get_DDL.init();
+
+              // } else {
+              //   $('#ExternalProjects').html('<p style="text-align:center">' + No_Data + '</p>');
+              // }
+            });
+            // to handle my tasks and other tasks in tasks list
+            $('#allTasks').on("click", function (e) {
+
+              console.log("ALL TASKS TABS")
+
+              taskClicked = 'allTasks'
+              getNewFilterTask = true
+              allTasksClicked = true
+              isViewMoreClicked = false
+              ListingData.preinit()
+
+            });
+            // if (!allTasksClicked) {
+            //   $('#internalProjectCount').html(records.length);
+            // }
+          }
+
+          //
+
+
+          // one item can create to close the initiative and project
           if (records.length && (listkey == 'closureinitiative' || listkey == 'closureform')) {
             $("body").append(
               "<style>" +
@@ -754,7 +859,7 @@ window.ListingData = {
           // add illustration when there is no item on list
 
           if (records.length == 0 && !originalstate) {
-            if (listkey == 'projects') {
+            if (listkey == 'projects' || isTasks) {
               $('ul.list-group.w-100 .tab-content').html(`<div style="text-align:center;background:#fff"><img css="w-100" src="${emptyData}" style="height:40vh;width:40vh;"/><p data-trans-nofilterdata class="Resources" style="text-align:center;font-size:13px;padding-bottom:13px"></p></div>`)
             } else {
               $('ul.list-group.w-100').html(`<div style="text-align:center;background:#fff"><img css="w-100" src="${emptyData}" style="height:40vh;width:40vh;"/><p data-trans-nofilterdata class="Resources" style="text-align:center;font-size:13px;padding-bottom:13px"></p></div>`)
@@ -782,6 +887,18 @@ window.ListingData = {
 
           changeResources();
 
+          if (isTasks) {
+            if (taskClicked == 'relatedTasks') {
+              $('.task_action_btn').css('display', 'block')
+
+            } else if (taskClicked == 'allTasks') {
+              $('.task_action_btn').css('display', 'none')
+
+            }
+          }
+
+
+
           if (!originalstate) {
             //remove opacity after filteration
             $('body').animate({
@@ -795,6 +912,14 @@ window.ListingData = {
               }
             });
           }
+          //
+          if (isAdmin || isEPMO) {
+            if (isTasks && getNewFilterTask) { // to get relate tasks for every tab
+              ListingData.Get_DDL.init();
+            }
+            getNewFilterTask = false
+          }
+          //
           if (isOnload) {
             //hiding the loader and showing the page after all data is in place
             $('div#particles-foreground, div#particles-background, .vertical-centered-box').animate({
@@ -808,6 +933,10 @@ window.ListingData = {
             });
             $('a.view-more.text-center.py-2').on("click", sphttp.g.loadMore);
           }
+
+
+
+
           isOnload = false;
           isLoadMore = false;
           if (originalstate || isLoadMore) // isLoadMore
@@ -861,8 +990,7 @@ window.ListingData = {
                 }
               }
             }
-            debugger
-            console.log("bffffffffffffffffff")
+
             FilterChoices.push({
               internalName: internalName,
               Type: fieldType,
@@ -884,8 +1012,7 @@ window.ListingData = {
 
       Query_Body = '', Where_Body = '', ViewFields = '';
 
-      console.log(FilterChoices, "FilterChoices FilterChoices deb")
-      debugger
+
       $('body').animate({
         opacity: .5
       }, {
@@ -900,7 +1027,13 @@ window.ListingData = {
         PQueryFilteration = '<In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In>';
       }
       else if (isTasks) {
-        PQueryFilteration = '<And><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And>';
+        console.log("INSIDE ALLL TASK REMOBE")
+        debugger
+        if (allTasksClicked) {
+          PQueryFilteration = '<And><Neq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Neq><In><FieldRef Name="Status" /><Values><Value Type="Choice">Open</Value></Values></In></And>';
+        } else {
+          PQueryFilteration = '<And><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And>';
+        }
       } else if (isInManager || isInOwner) {
         if (listkey == 'projects') {
           if (isInManager) {
@@ -948,8 +1081,10 @@ window.ListingData = {
         // debugger
         isEmptyFilter = true;
         filterValue = false
+        debugger
         if (isTasks) {
           PQuery = '<View><Query><Where>' + PQueryFilteration + '</Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
+
         }
         if (PCODE != null && PCODE != '') {
           PQuery = '<View><Query><Where><In><FieldRef Name="ProjectCode" /><Values><Value Type="Text">' + PCODE + '</Value></Values></In></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
@@ -987,7 +1122,9 @@ window.ListingData = {
           // && USERlistkey == 'sos' || USERlistkey == 'mainkpi'
           PQuery = SectorHeadQuery
         } else if (isPManager || isPOwner || isInManager || isInOwner) {
+          if(!isTasks){ // task has special query that related to user
           PQuery = AccessQuery
+          }
         }
         else {
           if ((PCODE != null && PCODE != '') || (ICODE != null && ICODE != '')) { // add and in query to handle the correct query if there is PCODE or ICODE
@@ -999,11 +1136,12 @@ window.ListingData = {
               PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>' + PQueryFilteration + '</And></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
             }
           } else {
-            PQuery = '<View><Query><Where><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>' + PQueryFilteration + '</Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
+            if (!isTasks) {
+              PQuery = '<View><Query><Where><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>' + PQueryFilteration + '</Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
+            }
           }
         }
 
-        console.log(PQuery, "PQQQQQQQQQQQQQQQ in initiative manager")
 
         ListingData.init();
       } else //if there are choices build caml query
@@ -1106,7 +1244,8 @@ window.ListingData = {
               '</Query>' +
               '</View>';
             PQuery = Query_Body;
-            console.log('PQuery', PQuery);
+
+            console.log(Query_Body, "Query_Body Query_Body Query_Body")
             ListingData.init();
           }
         }
@@ -1204,6 +1343,8 @@ window.ListingData = {
   //fill filteration DDLs data
   Get_DDL: {
     init: function () {
+      console.log("IN GET DDDL INIT")
+      debugger
       cmlQ = PQuery;
       sphttp.get(ListURL, SP_ListName, cmlQ, IN, true, function (recordsddl, recordddl, listItem, isDone) {
         if (isDone) {
@@ -1216,9 +1357,34 @@ window.ListingData = {
           TypsFields = [];
           // to add the new data when click show more to the filters dropdown in listing
           console.log('recordsddl', recordsddl);
-          if (originalstate) {
+          console.log('allDataFilterArr', allDataFilterArr)
+          if (originalstate) { // add isTasks to not add to filter when change tabs
             allDataFilterArr = recordsddl
-          } else {
+          }
+          else if (isTasks) {
+            if (isAdmin || isEPMO) {
+              debugger
+              if (allTasksClicked && !isViewMoreClicked) {
+                allDataFilterArr = []
+                recordsddl = [...recordsddl, ...allDataFilterArr]
+                allDataFilterArr = [...recordsddl, ...allDataFilterArr]
+              } else if (allTasksClicked && isViewMoreClicked) {
+                recordsddl = [...recordsddl, ...allDataFilterArr]
+                allDataFilterArr = [...recordsddl, ...allDataFilterArr]
+              }else if(!allTasksClicked && !isViewMoreClicked){
+                allDataFilterArr = []
+                recordsddl = [...recordsddl, ...allDataFilterArr]
+                allDataFilterArr = [...recordsddl, ...allDataFilterArr]
+              }else{
+                recordsddl = [...recordsddl, ...allDataFilterArr]
+                allDataFilterArr = [...recordsddl, ...allDataFilterArr]
+              }
+            } else {
+              recordsddl = [...recordsddl, ...allDataFilterArr]
+              allDataFilterArr = [...recordsddl, ...allDataFilterArr]
+            }
+          }
+          else {
             recordsddl = [...recordsddl, ...allDataFilterArr]
             allDataFilterArr = [...recordsddl, ...allDataFilterArr]
           }
@@ -1632,6 +1798,9 @@ window.ListingData = {
     }
   }
 }
+
+
+
 //not used
 var ProjectStages_Data_Request = {
   onSuccess: function (sender, args) {
