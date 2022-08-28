@@ -193,6 +193,7 @@ window.sphttp = {
                     assignedto: oListItem.get_item('AssignedTo'),
                     relatedurl: oListItem.get_item('RelatedURL')
                   });
+                  console.log(record,"record record")
                   records.push(record);
                   onEach(records, record, oListItem, false); //false if having item
                 }
@@ -382,15 +383,13 @@ window.ListingData = {
 
       $('.user-name').text(UserN.Title.match(/(?<!\p{L}\p{M}*)\p{L}\p{M}*/gu).join(''));
       $('.user-name-full').text(UserN.Title);
-      debugger
+      
       if (isAdmin || isEPMO) {
         if (isTasks && allTasksClicked) {
 
           PQuery = '<View><Query><Where><And><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq><Neq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Neq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
 
         } else if (isTasks && !allTasksClicked) {
-
-
 
           PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>';
 
@@ -443,13 +442,16 @@ window.ListingData = {
     } else {
 
       sphttp.get(ListURL, SP_ListName, PQuery, IN, false, function (records, record, listItem, isDone) {
+
         records.forEach((element, i) => {
-          if (element.ProjectCode && !isthereICODE) {
+          if ((element.ProjectCode && element.ProjectCode != No_Data ) && !isthereICODE) { // add element.projectCode !=No_Data to show the initiative in task list
             if (!userProjects.includes(element.ProjectCode)) {
               records.splice(i, 1);
             }
           }
         });
+
+
         if (isDone) {
           var html = '';
 
