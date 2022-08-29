@@ -95,6 +95,15 @@ export default class AdminPanel extends React.Component<
 
 		await this.fetchData(1);
 
+		$('div#particles-foreground, div#particles-background, .vertical-centered-box').animate({
+            opacity: 0
+        }, {
+            duration: 333,
+            complete: function () {
+                $('div#particles-foreground, div#particles-background, .vertical-centered-box').remove();
+
+            }
+        });
 
 		// this.state.web.siteGroups.add({
 		// 	Title: "To be removed",
@@ -127,7 +136,7 @@ export default class AdminPanel extends React.Component<
 				: await this.getHTML([], [], callApi);
 			this.setState({ HTML: html, Loader: false });
 
-			await this.getAllEnterpriseResources() // to get All Enterprise Resources
+			// await this.getAllEnterpriseResources() // to get All Enterprise Resources
 
 		} catch (e) {
 			console.error(e);
@@ -386,8 +395,8 @@ export default class AdminPanel extends React.Component<
 						Loader: false,
 						addRoleMessage: `Success!  ${succMsg}  ${errorMsg}`,
 					});
-					debugger
-					this.getDigestValue()
+					// debugger
+					// this.getDigestValue()
 					this.getRoleUsers()
 				} else {
 					this.setState({
@@ -417,78 +426,78 @@ export default class AdminPanel extends React.Component<
 	}
 
 
-	public async getAllEnterpriseResources() {
-		var that = this
-		$.ajax({
-			url: "/_api/ProjectServer/EnterpriseResources",
-			method: "GET",
-			headers: { "Accept": "application/json; odata=verbose" },
-			success: function (data) {
-				console.log(data.d.results,"data.d.results")
-				that.setState({
-					allEnterpriseResourcesArr: data.d.results
-				})
-			}
-		});
-	}
+	// public async getAllEnterpriseResources() {
+	// 	var that = this
+	// 	$.ajax({
+	// 		url: "/_api/ProjectServer/EnterpriseResources",
+	// 		method: "GET",
+	// 		headers: { "Accept": "application/json; odata=verbose" },
+	// 		success: function (data) {
+	// 			console.log(data.d.results,"data.d.results")
+	// 			that.setState({
+	// 				allEnterpriseResourcesArr: data.d.results
+	// 			})
+	// 		}
+	// 	});
+	// }
 
 
-	getDigestValue = () => {
+	// getDigestValue = () => {
 
-		debugger
-		var userSelected = this.state.selectedUserName
-		var userEmail = this.state.selectedUserEmail
-		var nameExist = false
-		this.state.allEnterpriseResourcesArr.forEach(el => {
+	// 	debugger
+	// 	var userSelected = this.state.selectedUserName
+	// 	var userEmail = this.state.selectedUserEmail
+	// 	var nameExist = false
+	// 	this.state.allEnterpriseResourcesArr.forEach(el => {
 
-			if (el.Name == userSelected) {
-				return nameExist = true
-			}
-		})
-		if (!nameExist) {
-			$.ajax({
-				url: `/_api/contextinfo`,
-				method: "POST",
-				contentType: "application/json;odata=verbose",
-				headers: {
-					Accept: "application/json; odata=verbose",
-					"X-HTTP-Method": "POST",
-					"if-Match": "*"
-				},
-				success: function (data: any) {
-					console.log(data.d.GetContextWebInformation.FormDigestValue,"DIGEEEEEEEEEEEEEE")
-					debugger
-					var digest = data.d.GetContextWebInformation.FormDigestValue
+	// 		if (el.Name == userSelected) {
+	// 			return nameExist = true
+	// 		}
+	// 	})
+	// 	if (!nameExist) {
+	// 		$.ajax({
+	// 			url: `/_api/contextinfo`,
+	// 			method: "POST",
+	// 			contentType: "application/json;odata=verbose",
+	// 			headers: {
+	// 				Accept: "application/json; odata=verbose",
+	// 				"X-HTTP-Method": "POST",
+	// 				"if-Match": "*"
+	// 			},
+	// 			success: function (data: any) {
+	// 				console.log(data.d.GetContextWebInformation.FormDigestValue,"DIGEEEEEEEEEEEEEE")
+	// 				debugger
+	// 				var digest = data.d.GetContextWebInformation.FormDigestValue
 
-					var requestData = { '__metadata': { 'type': 'PS.EnterpriseResource' }, 'Name': userSelected, 'ResourceType': '0', 'Email': userEmail }
-					var stringData = JSON.stringify(requestData)
+	// 				var requestData = { '__metadata': { 'type': 'PS.EnterpriseResource' }, 'Name': userSelected, 'ResourceType': '0', 'Email': userEmail }
+	// 				var stringData = JSON.stringify(requestData)
 
-					$.ajax({
-						url: `/_api/ProjectServer/EnterpriseResources`,
-						method: "POST",
-						contentType: "application/json;odata=verbose",
-						data: stringData,
-						headers: {
-							Accept: "application/json; odata=verbose",
-							"X-requestDigest": digest,
-							"X-HTTP-Method": "POST",
-							"if-Match": "*"
-						},
-						success: function (data: any) {
-							console.log(data, "data added successfully")
-						},
-						error: function (err) {
-							console.log("call failed", err);
-						},
-					});
+	// 				$.ajax({
+	// 					url: `/_api/ProjectServer/EnterpriseResources`,
+	// 					method: "POST",
+	// 					contentType: "application/json;odata=verbose",
+	// 					data: stringData,
+	// 					headers: {
+	// 						Accept: "application/json; odata=verbose",
+	// 						"X-requestDigest": digest,
+	// 						"X-HTTP-Method": "POST",
+	// 						"if-Match": "*"
+	// 					},
+	// 					success: function (data: any) {
+	// 						console.log(data, "data added successfully")
+	// 					},
+	// 					error: function (err) {
+	// 						console.log("call failed", err);
+	// 					},
+	// 				});
 
-				},
-				error: function (err) {
-					console.log("call failed", err);
-				},
-			});
-		}
-	}
+	// 			},
+	// 			error: function (err) {
+	// 				console.log("call failed", err);
+	// 			},
+	// 		});
+	// 	}
+	// }
 
 
 	public render(): React.ReactElement<IAdminPanelProps> {

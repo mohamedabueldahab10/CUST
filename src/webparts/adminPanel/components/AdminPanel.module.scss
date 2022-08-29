@@ -57,10 +57,15 @@
 		text-align: center;
 		font-weight: 500;
 		overflow: auto;
+		font-size: 10px;
+		// max-width: 60px;
+
 	}
 	table.dataTable td {
 		font-weight: 600;
-		max-width: 160px;
+		// max-width: 160px;
+		max-width: 60px;
+		font-size: 10px;
 		/* word-break: inherit; */
 		min-width: auto;
 	}

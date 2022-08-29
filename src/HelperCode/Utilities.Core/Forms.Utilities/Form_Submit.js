@@ -512,7 +512,6 @@ window.New_Data_Submit = {
       Function.createDelegate(this, function () {
         IID = New_Data_Submit.g.oListItem.get_id();
 
-        Set_Code_Submit.init();
 
         if (listkey == "mainkpi") {
           var dateFrom = $('#FromDate').val()
@@ -551,13 +550,10 @@ window.New_Data_Submit = {
             var Portfolio = $('#Portfolio').val()
             kpiResults.init(Name, PeriodType, Types, KpiYear, Sector, SubSector, Portfolio, MainGoalRelated, subGoalRelated)
           }
-
-
-          newKPIEquation.init();
-          // handle kpi targets
-          // kpiResults.init()
-          //
+        }else{
+          Set_Code_Submit.init();
         }
+
         if (USERisWF && listkey == "projects") {
           Edit_Item_Field.init("Ideas", "Status", "completed", "Title", IdeaId);
         }
@@ -1391,6 +1387,8 @@ var kpiResults = {
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
         console.log("Results KPI added");
+        newKPIEquation.init();
+
       }),
       Function.createDelegate(this, function (sender, args) {
         console.log(
@@ -1509,6 +1507,7 @@ var newKPIEquation = {
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
         console.log("equation added");
+        Set_Code_Submit.init();
       }),
       Function.createDelegate(this, function (sender, args) {
         console.log(
