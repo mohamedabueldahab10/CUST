@@ -4,7 +4,7 @@ var NAVPID_Root,
     NavItemsArray = [];
 var NavItems = [];
 var customNavHtml_Root = setInterval(function () {
-    console.log("INSIDE Set interval in side nbavigatiooln")
+    
     Custom_Nav_Request_Root.preinit();
 
     // if( window.location.href.indexOf('PCODE=') == -1 )

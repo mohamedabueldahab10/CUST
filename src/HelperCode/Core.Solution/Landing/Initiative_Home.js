@@ -793,7 +793,7 @@ var Deliverables_Info_Request = {
       NDelivrables++;
     }
 
-    console.log(itemhtml.length, "itemhtml.length")
+    
 
     if (itemhtml.length == 1) {
       itemhtml.push('<h3>' + No_Data + '</h3>')
@@ -807,8 +807,7 @@ var Deliverables_Info_Request = {
 
     plannedImplementationRate = expiredDeliverablesArrayPercent.reduce((accum, item) => accum + item.expiredDelivrableWeight, 0);
 
-    console.log(actualImplementationRate, "actualImplementationRate actualImplementationRate")
-    console.log(plannedImplementationRate, "plannedImplementationRate plannedImplementationRate")
+
 
     //continue initiative progress
     // $('button.updateprogress').on('click', function () {
@@ -950,8 +949,7 @@ var Milestones_Info_Request = {
     );
   },
   onSuccess: function (sender, args) {
-    console.log("INISDE MILESTONE")
-
+    
     var collListItem = Milestones_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var itemhtml = ['<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' + _spPageContextInfo.webAbsoluteUrl + '/sitepages/new.aspx?ListKey=initiativemilestones&ICODE=' + initiativeHomeInfo_Request.g.ICODE + '"><i class="icon-plus"></i></a></li>'],

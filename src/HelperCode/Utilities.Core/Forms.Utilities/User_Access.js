@@ -1635,7 +1635,7 @@ window.userCalls = {
       case "DU":
         isDU = true;
         // console.log('dddddddddddd')
-        debugger
+        
         (SecondLevel_List = "Internal Entities"),
           (SecondLevel_FieldtoQuery = "SPMO"),
           (SecondLevel_FieldtoQueryType = "Choice");
@@ -2162,7 +2162,7 @@ window.userCalls = {
         break;
     }
     //end CRUD
-    debugger
+    
     if ((!isInitiativesHomePage && !isInManager && !isInOwner) || isDU || isMinisterAssistant || isViceMinister || isSectorHead || isSubSectorHead || isGeneralManager) {
       if (!isSectionHead && !isPortfolioManager && !isSectorHead && !isSPMO && !isDU && !isGeneralManager && !isSubSectorHead && !isMinisterAssistant && !isViceMinister) {
         // IF Data directly getting from project list
@@ -2499,8 +2499,7 @@ var Access_Project_Info_Request = {
 
       userCalls.g.Security_Msg();
     }
-    debugger
-    console.log("debuuge on query")
+
     if (!isAdmin && !isMinister && !isITSteering && !isEPMO && !isBITeam) {
       //Access caml query for home page and listing pages
       //
@@ -2574,8 +2573,7 @@ var Access_Project_Info_Request = {
             }
           }
         }
-        console.log(Access_Project_Info_Request.g.User_Projects.length, "llllllllllll")
-        //debugger
+
         if (Access_Project_Info_Request.g.User_Projects.length == 0) {
           if (isSectionHead || isPortfolioManager || isSectorHead || isSPMO || isSubSectorHead || isGeneralManager || isDU || isMinisterAssistant || isViceMinister) {
             //
@@ -2679,7 +2677,7 @@ var Access_Project_Info_Request = {
           AccessQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type="Choice">sub</Value></Eq></And></Where></Query></View>';
         } else if (isMinisterAssistant || isSectorHead || isViceMinister || isSubSectorHead || isGeneralManager && USERlistkey == 'sos') {
           AccessQuery = SectorHeadQuery
-          debugger
+          
         } else {
           AccessQuery =
             "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
@@ -3387,7 +3385,7 @@ var Access_Sector_Info_Request = {
         });
 
         if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
-          debugger
+          
           // subsectorname = subsectorArray.length ? subsectorArray[0].name : '';
           ar_UserRole += subsectorArray[0].name
 
@@ -4551,7 +4549,7 @@ var GetInitiativeTitle_Request = {
     var collListItem = GetInitiativeTitle_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     while (listItemEnum.moveNext()) {
-      debugger;
+      
       var oListItem = listItemEnum.get_current();
       InitiativeTitle = oListItem.get_item("Name") ? oListItem.get_item("Name") : UserNo_Data;
       console.log('titleinti', InitiativeTitle)
@@ -4576,7 +4574,7 @@ var GetInitiativeTitle_Request = {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle('Initiatives');
     var camlQuery = new SP.CamlQuery();
-    debugger;
+    
     camlQuery.set_viewXml('<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' + UserICode + '</Value></Eq></Where></Query></View>');
     GetInitiativeTitle_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(GetInitiativeTitle_Request.g.collListItem);

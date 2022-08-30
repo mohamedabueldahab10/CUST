@@ -37,7 +37,7 @@
         "attachment": "المستندات",
         "documents": "المرفقات",
         'currentkpi': 'معلومات الفترة الحالية من السنة',
-        'previouskpi':'معلومات الفترة السابقة',
+        'previouskpi': 'معلومات الفترة السابقة',
         "document": "مرفقات :",
         "auditquestionnaire": "استبيان المراجعة",
         "projecthascard": "هل تم اعداد بطاقة المشروع؟",
@@ -649,8 +649,8 @@
         "monthlykpitype": "الشهر",
         "actualkpivalue": "القيمة الفعلية",
         "performanceanalysis": "تحليل الأداء",
-        "mytasks":"مهامي",
-        'othertasks':"المهام الأخرى"
+        "mytasks": "مهامي",
+        'othertasks': "المهام الأخرى"
 
     },
     "en": {
@@ -690,7 +690,7 @@
         "requirementsspecifications": "Requirements And Specifications",
         "documents": "Documents",
         "currentkpi": "Current KPI of this year",
-        "previouskpi":"Previous KPI",
+        "previouskpi": "Previous KPI",
         "document": "Documents : ",
         "attachment": "Documents",
         "auditquestionnaire": "Audit Questionnaire",
@@ -1288,7 +1288,7 @@
         "relatedstrategyobjictave": "Related Strategy Objective",
         "relatedinitiativedelevrable": "Related Initiative Delevrable",
         "relatedinitiativemilestone": "Related Initiative Milestone",
-        "relatedinitiative":"Related Initiative",
+        "relatedinitiative": "Related Initiative",
         "result": "Result",
         "reason": "Reason",
         "saudiriyal": "Saudi Riyal",
@@ -1317,8 +1317,8 @@
         "monthlykpitype": "Month",
         "actualkpivalue": "Actual value",
         "performanceanalysis": "Performance Analysis",
-        "mytasks":"My Tasks",
-        'othertasks':"Other Tasks"
+        "mytasks": "My Tasks",
+        'othertasks': "Other Tasks"
     }
 };
 
@@ -1427,15 +1427,15 @@ window.Dynamo_Data = [ // List Names + Fields Internal Names; Note: all entries 
         NameEn: 'Types',
         Code: 'Title'
     },
-    // {
-	// 	ListName: "User Activity Configuration",
-	// 	Name: "Title",
-	// 	Code: "ModuleCode",
-	// 	ModuleType:"ModuleType",
-	// 	ModuleIdentifier:"ModuleIdentifier",
-	// 	ModuleURL:"ModuleURL"
-	// 	// loadOn: [],// all pages if empty
-	// },
+    {
+        ListName: "User Activity Configuration",
+        Name: "Title",
+        Code: "ModuleCode",
+        ModuleType: "ModuleType",
+        ModuleIdentifier: "ModuleIdentifier",
+        ModuleURL: "ModuleURL"
+        // loadOn: [],// all pages if empty
+    },
 ];
 
 function setLocalStorage(name, value) {
@@ -1448,7 +1448,7 @@ function getLocalStorage(name) {
 
 window.Dynamo_Values = { //gets values from sp list and assign LocalStorage
     // The main Initialization function
-    init: function (LN, FName, FNameEn, FCode, FGroup, FOwner, ActionButtonTitleAr, ActionButtonTitleEn) {
+    init: function (LN, FName, FNameEn, FCode, FGroup, FOwner, ActionButtonTitleAr, ActionButtonTitleEn, ModuleType, ModuleIdentifier, ModuleURL) {
         var clientContext = new SP.ClientContext.get_current();
         var oList = clientContext.get_web().get_lists().getByTitle(LN);
         var camlQuery = new SP.CamlQuery();
@@ -1460,6 +1460,10 @@ window.Dynamo_Values = { //gets values from sp list and assign LocalStorage
         Dynamo_Values.g.FOwner = FOwner;
         Dynamo_Values.g.ActionButtonTitleAr = ActionButtonTitleAr;
         Dynamo_Values.g.ActionButtonTitleEn = ActionButtonTitleEn;
+        Dynamo_Values.g.ModuleType = ModuleType;
+        Dynamo_Values.g.ModuleIdentifier = ModuleIdentifier;
+        Dynamo_Values.g.ModuleURL = ModuleURL;
+
         camlQuery.set_viewXml('<View><Query><OrderBy><FieldRef Name=\'Created\' Ascending=\'True\' /></OrderBy></Query></View>');
         Dynamo_Values.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
         clientContext.load(Dynamo_Values.g.collListItem);
@@ -1487,9 +1491,6 @@ window.Dynamo_Values = { //gets values from sp list and assign LocalStorage
                 Owner = oListItem.get_item(Dynamo_Values.g.FOwner);
             }
 
-
-
-
             if (Dynamo_Values.g.ActionButtonTitleAr) {
                 var ActionButtonTitleAr;
                 ActionButtonTitleAr = oListItem.get_item(Dynamo_Values.g.ActionButtonTitleAr);
@@ -1499,6 +1500,22 @@ window.Dynamo_Values = { //gets values from sp list and assign LocalStorage
                 var ActionButtonTitleEn;
                 ActionButtonTitleEn = oListItem.get_item(Dynamo_Values.g.ActionButtonTitleEn);
             }
+
+            if (Dynamo_Values.g.ModuleType) {
+                var ModuleType;
+                ModuleType = oListItem.get_item(Dynamo_Values.g.ModuleType);
+            }
+
+            if (Dynamo_Values.g.ModuleIdentifier) {
+                var ModuleIdentifier;
+                ModuleIdentifier = oListItem.get_item(Dynamo_Values.g.ModuleIdentifier);
+            }
+
+            if (Dynamo_Values.g.ModuleURL) {
+                var ModuleURL;
+                ModuleURL = oListItem.get_item(Dynamo_Values.g.ModuleURL);
+            }
+
             Dynamo_Array.push({
                 name: oListItem.get_item(Dynamo_Values.g.FName),
                 nameEn: NameEn,
@@ -1507,6 +1524,9 @@ window.Dynamo_Values = { //gets values from sp list and assign LocalStorage
                 owner: Owner,
                 actionButtonTitleAr: ActionButtonTitleAr,
                 actionButtonTitleEn: ActionButtonTitleEn,
+                ModuleType: ModuleType,
+                ModuleIdentifier: ModuleIdentifier,
+                ModuleURL:ModuleURL,
                 timeset: new Date().getTime()
             });
         }
@@ -1536,6 +1556,9 @@ window.Dynamo_Values = { //gets values from sp list and assign LocalStorage
                     Dynamo_Data[y].Owner,
                     Dynamo_Data[y].ActionButtonTitleAr,
                     Dynamo_Data[y].ActionButtonTitleEn,
+                    Dynamo_Data[y].ModuleType,
+                    Dynamo_Data[y].ModuleIdentifier,
+                    Dynamo_Data[y].ModuleURL
                 );
                 // Dynamo_Data.splice(y, 1);
                 break;
@@ -1579,6 +1602,9 @@ for (var y = 0; y < Dynamo_Data.length; y++) {
                 Dynamo_Data[y].Group,
                 Dynamo_Data[y].ActionButtonTitleAr,
                 Dynamo_Data[y].ActionButtonTitleEn,
+                Dynamo_Data[y].ModuleType,
+                Dynamo_Data[y].ModuleIdentifier,
+                Dynamo_Data[y].ModuleURL,
             );
             // Dynamo_Data.splice(y, 1); //remove so that we dont call it again
         });

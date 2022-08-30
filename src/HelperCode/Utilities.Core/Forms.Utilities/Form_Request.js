@@ -3663,8 +3663,7 @@ window.ViewAllFiles = {
 // we use the ViewAllFiles_Main_Strategy to handle the threshold error so we create a query to RecursiveAll files based on ItedID and Title on  the Projects Document Library
 window.ViewAllFiles_Main_Strategy = {
   init: function () {
-    console.log("INISDE ALL FILES INITiative")
-    debugger
+
     var context = new SP.ClientContext.get_current();
     var web = context.get_web();
     var list = web.get_lists().getByTitle(DocumentLibraryName);

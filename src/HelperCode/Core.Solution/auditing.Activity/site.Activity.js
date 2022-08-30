@@ -5,11 +5,11 @@ let monthFileName = new Date().toString().split(" ")[1],
 	excelFilePath = "",
 	excelFileExtension = ".csv",
 	filePrefix = "";
-	console.log("INSIDE SITE ACTIVITy")
-	debugger
+console.log("INSIDE SITE ACTIVITy")
+debugger
 let activityConfig =
-		JSON.parse(localStorage.getItem("Dynamo_User Activity Configuration")) ||
-		[],
+	JSON.parse(localStorage.getItem("Dynamo_User Activity Configuration")) ||
+	[],
 	trackCountClicks = {},
 	trackCountViews = {},
 	activeModuleType,
@@ -17,6 +17,7 @@ let activityConfig =
 		"Site Id,Module Type,Item Type,User Id,User Full Name,User Email,Document Location,Occurred (GMT),Event,Event Source,Role Name, SP Group(s) Ids, SP Group(s),Platform,Device,Browser,Language \n";
 let userBrowser = "";
 let handleModuleActivity = (el) => {
+	console.log("INSIIIIIIIIIIIIIIIIIIIIIIDE handleModuleActivity")
 	var context = SP.ClientContext.get_current();
 	var dfd = $.Deferred();
 	//Get list from host web
@@ -35,13 +36,16 @@ let handleModuleActivity = (el) => {
 	context.executeQueryAsync(
 		function () {
 			var currentItemArray = [];
-
+			debugger
 			//Check itemcollection count greater than 0
 			if (activityColl.get_count() > 0) {
+				console.log("INSIDE ACTIVITY Coll loop")
 				activeModuleType = el.ModuleType;
 				readExcelReport(); //!update excel report
 				var activityEnum = activityColl.getEnumerator();
 				while (activityEnum.moveNext()) {
+					console.log("WGIIIIIIII")
+					debugger
 					var currentItem = activityEnum.get_current();
 					var currentId = currentItem.get_item("ID");
 					var hits = currentItem.get_item("Hits") || 0;
@@ -145,6 +149,7 @@ let countClicks = (el) => {
 		// 	}
 		// }, 7000);
 	} else {
+		
 		let element = document.querySelector(el.ModuleIdentifier);
 		if (element) {
 			element.addEventListener("click", () => {
@@ -159,15 +164,19 @@ let countClicks = (el) => {
 };
 //loop through configuration
 let loopAuditingConfig = async () => {
+	console.log("BFFFFFFFFFFFFFF",activityConfig)
+	debugger
 	await Promise.all(
 		activityConfig.map(async (el, i, a) => {
 			if (el.ModuleType == "Page") {
 				if (window.location.href.indexOf(el.ModuleURL) > -1) {
 					// countClicks(el);
+
 					handleModuleActivity(el);
 				}
 			} else if (el.ModuleType == "Button") {
 				if (window.location.href.indexOf(el.ModuleURL) > -1) {
+
 					countClicks(el);
 				}
 			} else if (el.ModuleType == "Component") {
@@ -186,7 +195,7 @@ function elementInViewport(element) {
 		rect.top >= 0 &&
 		rect.left >= 0 &&
 		rect.bottom <=
-			(window.innerHeight || document.documentElement.clientHeight) &&
+		(window.innerHeight || document.documentElement.clientHeight) &&
 		rect.right <= (window.innerWidth || document.documentElement.clientWidth)
 	);
 }
@@ -384,7 +393,7 @@ else if (
 		return p.toString() === "[object SafariRemoteNotification]";
 	})(
 		!window["safari"] ||
-			(typeof safari !== "undefined" && window["safari"].pushNotification)
+		(typeof safari !== "undefined" && window["safari"].pushNotification)
 	)
 )
 	userBrowser = "Safari";
