@@ -560,6 +560,11 @@ var PageArray = [{
             pagename: "Targets.aspx",
             Title: "المستهدفات",
             TitleEn: "Targets"
+        },
+        {
+            pagename: "AdminPanel.aspx",
+            Title: "لوحة الادارة",
+            TitleEn: "Admin Panel"
         }
     ]
     // research enumerator

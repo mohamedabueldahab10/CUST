@@ -904,6 +904,7 @@ window.View_Data_Request = {
   onSuccess: function (sender, args) {
     var strategyType = ''
     var pillersRadio = ''
+
     $(
       ".section-container:not([data-target_list]) .CFIELD > .viewmode-value"
     ).each(function () {
@@ -1198,6 +1199,7 @@ window.View_Data_Request = {
         $(this).text(value);
       }
     });
+
 
 
     // if (listkey=='deliverables') { // tocheck where stage

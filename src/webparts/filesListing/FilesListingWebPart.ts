@@ -1,6 +1,8 @@
 require("Resources");
 require("ListNameConfig");
 require('UserAccess');
+
+require('../../HelperCode/Core.Solution/auditing.Activity/site.Activity.js');
 ///////
 require('../../HelperCode/Utilities.Core/Project_Navigation.js');
 require('../../HelperCode/Utilities.Core/Side_Navigation.js');

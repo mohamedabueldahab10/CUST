@@ -1427,6 +1427,15 @@ window.Dynamo_Data = [ // List Names + Fields Internal Names; Note: all entries 
         NameEn: 'Types',
         Code: 'Title'
     },
+    // {
+	// 	ListName: "User Activity Configuration",
+	// 	Name: "Title",
+	// 	Code: "ModuleCode",
+	// 	ModuleType:"ModuleType",
+	// 	ModuleIdentifier:"ModuleIdentifier",
+	// 	ModuleURL:"ModuleURL"
+	// 	// loadOn: [],// all pages if empty
+	// },
 ];
 
 function setLocalStorage(name, value) {

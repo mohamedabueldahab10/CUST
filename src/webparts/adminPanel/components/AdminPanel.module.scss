@@ -11,6 +11,9 @@
 	}
 
 	.tableContainer {
+		position: absolute;
+		max-width: 98%;
+		// max-height: 117vh;
 		overflow: auto;
 		.roleMessage {
 			white-space: pre-wrap;
@@ -39,7 +42,7 @@
 		display: inline-block;
 		width: 100%;
 		margin: 15px 10px;
-		text-align: center;
+		text-align: center !important;
 	}
 	.btngroup > div {
 		display: inline;
@@ -64,7 +67,7 @@
 	table.dataTable td {
 		font-weight: 600;
 		// max-width: 160px;
-		max-width: 60px;
+		max-width: 8rem;
 		font-size: 10px;
 		/* word-break: inherit; */
 		min-width: auto;

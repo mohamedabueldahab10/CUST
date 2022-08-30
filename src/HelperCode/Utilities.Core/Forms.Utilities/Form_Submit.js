@@ -2411,6 +2411,9 @@ var New_ProjectStages_Submit = {
       .get_web()
       .get_lists()
       .getByTitle("Project Stages");
+      
+      console.log("INSIDE project stages")
+      debugger
     for (var i = 0; i < Stages_Data_Request.g.StagesArray.length; i++) {
       var itemCreateInfo = new SP.ListItemCreationInformation();
       New_ProjectStages_Submit.g.oListItem = oList.addItem(itemCreateInfo);

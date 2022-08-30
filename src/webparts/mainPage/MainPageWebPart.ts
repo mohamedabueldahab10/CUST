@@ -4,6 +4,8 @@ require('ListNameConfig');
 // require('../../HelperCode/Utilities.Core/List_Name_Config.js')
 require('UserAccess');
 // require('../../HelperCode/Utilities.Core/Forms.Utilities/User_Access.js')
+require('../../HelperCode/Core.Solution/auditing.Activity/site.Activity.js');
+
 require('../../HelperCode/Utilities.Core/Side_Navigation.js');
 require('../../HelperCode/Core.Solution/Landing/main_home.js');
 require('../../HelperRessources/css/Styles.css');

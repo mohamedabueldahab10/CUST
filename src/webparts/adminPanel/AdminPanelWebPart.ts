@@ -315,7 +315,7 @@ export default class AdminPanelWebPart extends BaseClientSideWebPart<IAdminPanel
 						</div>
 					</nav>
 				</div>
-				<div class="container-body" id="admin_container">
+				<div class="container-body" id="admin_container" style="padding:10px">
 
 				</div>
 

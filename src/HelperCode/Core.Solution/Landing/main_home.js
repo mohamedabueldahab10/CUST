@@ -1510,7 +1510,7 @@ var Invoices_Info_Request = {
             //console.log(Amount+','+Deliverable);
             for (i = 0; i < Deliverablesarray.length; i++) {
                 var myselections = Deliverable ? Deliverable.split(":::") : [] // add myselection to handle mult delivrable in invoices
-                console.log(myselections,"myselections myselections")
+               
                 // console.log(Deliverablesarray[i].pcode +','+ Deliverable); // chamge to mySelection to handle The Cose on Multi delivrable 
                 if (Deliverablesarray[i].Code == myselections[0] && Status == 'paid') {
                     debugger

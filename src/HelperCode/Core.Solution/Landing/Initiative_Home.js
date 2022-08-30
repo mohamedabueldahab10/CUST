@@ -328,7 +328,7 @@ var initiativeHomeInfo_Request = {
     if (ProjectOwner) {
       $('.project-info-ctx .media-body:nth-of-type(2) .icon-user > .user-name').text(ProjectManager.split(' ').map(word => word[0]).join('.'));
     } if (isMinisterAssistant) {
-      debugger
+
       $('a.btn-add.Resources').attr('style', 'display: none!important;');
 
     }

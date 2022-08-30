@@ -76,6 +76,7 @@ var UserRole,
   AllListKeys = [],
   AllPageNames = [],
   isMainIndicator = window.location.href.indexOf("MainIndicators.aspx") > -1,
+  isAdminPanel = window.location.href.indexOf("AdminPanel.aspx") > -1,
   istherePCODE = window.location.href.toLowerCase().indexOf("pcode=") > -1,
   isthereICODE = window.location.href.indexOf("ICODE=") > -1,
   UserICode = isthereICODE
@@ -525,6 +526,14 @@ window.userCalls = {
         else {
           document.title = "Task History";
         } break;
+      case "adminpanel.aspx":
+        if (isArabic) {
+          document.title = "لوحة الادارة";
+        }
+        else {
+          document.title = "Admin Panel";
+        } 
+        break;
       default: document.title = USERPageTitle;
 
     }
@@ -2833,6 +2842,7 @@ var Access_Project_Info_Request = {
         $(".navbar .user-name").text(UserN.Title.match(/(?<!\p{L}\p{M}*)\p{L}\p{M}*/gu).join(""));
         $(".user-name-full").text(UserN.Title);
         //breadcrumbs
+        
         if (isTaskDetails) {
           $(".page-breadcrumb .title-item").html(
             '<span data-trans-taskdetails class="Resources"></span>'
@@ -2957,7 +2967,7 @@ var Access_Project_Info_Request = {
             );
           }
         } else {
-          if (!isInitiativesHomePage && !isTarget && !isMainIndicator) {
+          if (!isInitiativesHomePage && !isTarget && !isMainIndicator && !isAdminPanel) {
             $(".page-title").html(
               '<a href="' +
               _spPageContextInfo.webAbsoluteUrl +
@@ -2968,7 +2978,7 @@ var Access_Project_Info_Request = {
               ""
             );
             $(".firsttitle").hide();
-          } else if (isTarget || isMainIndicator) {
+          } else if (isTarget || isMainIndicator || isAdminPanel) {
             $(".page-title").html(`<span style="color:#fff">${USERPageTitle}</span>`)
             $(".firsttitle").hide();
 

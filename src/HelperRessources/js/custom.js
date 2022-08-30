@@ -1,3 +1,143 @@
+//event logging 
+var correlationId = randomUID(),
+	errorArray = [];
+    
+var writeToEventViewer = {
+	preinit: function (
+		msg,
+		category,
+		level,
+		fileURL,
+		lineNo,
+		columnNo,
+		errorStack
+	) {
+        
+		let lat, long;
+		navigator.geolocation.getCurrentPosition(function (position) {
+			lat = position.coords.latitude;
+			long = position.coords.longitude;
+			errorArray.indexOf(msg) == -1 //NOTE don't log same error in case of repeating setinterval errors.
+				? SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
+						writeToEventViewer.init(
+							msg,
+							category,
+							level,
+							fileURL,
+							lineNo,
+							columnNo,
+							errorStack,
+							lat,
+							long
+						);
+				  })
+				: "";
+			errorArray.push(msg);
+		});
+	},
+	init: function (
+		msg,
+		category,
+		level,
+		fileURL,
+		lineNo,
+		columnNo,
+		errorStack,
+		lat,
+		long
+	) {
+		var clientContext = new SP.ClientContext.get_current();
+		var oList = clientContext.get_web().get_lists().getByTitle("Event Logging");
+		var itemCreateInfo = new SP.ListItemCreationInformation();
+		writeToEventViewer.g.oListItem = oList.addItem(itemCreateInfo);
+
+		writeToEventViewer.g.oListItem.set_item(
+			"Date",
+			new Date().toLocaleString().split(",")[0]
+		);
+		writeToEventViewer.g.oListItem.set_item(
+			"Time",
+			new Date().toLocaleString().split(",")[1]
+		);
+		writeToEventViewer.g.oListItem.set_item("Title", msg); // Message
+		writeToEventViewer.g.oListItem.set_item("Category", category);
+		writeToEventViewer.g.oListItem.set_item("Level", level);
+		writeToEventViewer.g.oListItem.set_item("PageURL", window.location.href);
+		writeToEventViewer.g.oListItem.set_item("Correlation", correlationId);
+		writeToEventViewer.g.oListItem.set_item("UID", randomUID());
+		writeToEventViewer.g.oListItem.set_item("UserAgent", navigator.userAgent);
+		writeToEventViewer.g.oListItem.set_item(
+			"Language",
+			localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar"
+				? "ar"
+				: "en"
+		);
+		writeToEventViewer.g.oListItem.set_item("StackTrace", msg);
+		writeToEventViewer.g.oListItem.set_item(
+			"ActiveUser",
+			`${_spPageContextInfo.userDisplayName}, ${_spPageContextInfo.userEmail}, ${_spPageContextInfo.userLoginName}, ${_spPageContextInfo.userId}`
+		);
+		writeToEventViewer.g.oListItem.set_item(
+			"Location",
+			`https://www.google.com/maps/search/?api=1&query=${lat}%2C${long}`
+		);
+		fileURL ? writeToEventViewer.g.oListItem.set_item("FileURL", fileURL) : "";
+		lineNo ? writeToEventViewer.g.oListItem.set_item("LineNo", lineNo) : "";
+		columnNo
+			? writeToEventViewer.g.oListItem.set_item("ColumnNo", columnNo)
+			: "";
+		errorStack
+			? writeToEventViewer.g.oListItem.set_item(
+					"InnerExceptionStackTrace",
+					errorStack
+			  )
+			: "";
+
+		writeToEventViewer.g.oListItem.update();
+		clientContext.load(writeToEventViewer.g.oListItem);
+		clientContext.executeQueryAsync(
+			Function.createDelegate(this, function () {
+				// asdasd;
+			}),
+			Function.createDelegate(this, function (sender, args) {
+				var errormessage =
+					"Request failed. " +
+					args.get_message() +
+					"\n" +
+					args.get_stackTrace();
+				console.log(errormessage);
+			})
+		);
+	},
+	g: {},
+};
+window.onerror = function (msg, url, lineNo, columnNo, error) {
+	var string = msg.toLowerCase();
+	var substring = "script error";
+	if (string.indexOf(substring) > -1) {
+		console.log("Script Error: See Browser Console for Detail");
+	} else {
+		writeToEventViewer.preinit(
+			msg,
+			"JS Error",
+			"Medium",
+			url,
+			lineNo,
+			columnNo,
+			error.stack
+		);
+	}
+	return false;
+};
+function randomUID() {
+	return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
+		(
+			c ^
+			(crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+		).toString(16)
+	);
+}
+// end event logging
 //system Access classic pages
 var System_Groups = [],
     System_UserN,
