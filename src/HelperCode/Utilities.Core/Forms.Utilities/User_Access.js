@@ -553,7 +553,7 @@ window.userCalls = {
 
     //Add permission for default chart view on home Page + User Title Role
 
-    console.log(currentUserRole, "currentUserRole currentUserRole")
+    
     switch (
     currentUserRole //we need first role for user
     ) {

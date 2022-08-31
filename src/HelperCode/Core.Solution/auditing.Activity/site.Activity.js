@@ -5,8 +5,7 @@ let monthFileName = new Date().toString().split(" ")[1],
 	excelFilePath = "",
 	excelFileExtension = ".csv",
 	filePrefix = "";
-console.log("INSIDE SITE ACTIVITy")
-debugger
+
 let activityConfig =
 	JSON.parse(localStorage.getItem("Dynamo_User Activity Configuration")) ||
 	[],
@@ -166,10 +165,10 @@ let loopAuditingConfig = async () => {
 	await Promise.all(
 		activityConfig.map(async (el, i, a) => {
 			if (el.ModuleType == "Page") {
-				console.log("before module url")
+				
 				if (window.location.href.indexOf(el.ModuleURL) > -1) {
 					// countClicks(el);
-					console.log("INSIDE MODULE url")
+					
 					handleModuleActivity(el);
 				}
 			} else if (el.ModuleType == "Button") {

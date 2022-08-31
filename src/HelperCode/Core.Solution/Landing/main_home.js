@@ -148,7 +148,7 @@ window.Project_Info_Request = {
     },
     // The main Initialization function
     init: function () {
-        console.log("inside init Project_Info_Request")
+       
         if (originalstate) {
             //*****call charts filteration */
             PQuery = AccessQuery;
@@ -390,7 +390,7 @@ window.Project_Info_Request = {
         //Sort Priority
         ProgressStatusarray.sort();
 
-        console.log(progressfilterarray, "progressfilterarray")
+        
         progressOccurenceObject = arrToInstanceCountObj(ProgressStatusarray);
         // progressfilterarray.forEach(function (element) {
         //     if (progressOccurenceObject[element]) {
@@ -1053,7 +1053,7 @@ var Risks_Info_Request = {
         );
     },
     onSuccess: function (sender, args) {
-        console.log("INSIDE RISK")
+        
         var collListItem = Risks_Info_Request.g.collListItem;
         var listItemEnum = collListItem.getEnumerator();
         var NRisks = 0,
@@ -1097,7 +1097,7 @@ var Risks_Info_Request = {
 
             }
         }
-        console.log("INSIDE RISK after while")
+        
 
         // console.log('Low', Low);
         // console.log('Medium', Medium);
@@ -1241,7 +1241,7 @@ var Deliverables_Info_Request = {
         );
     },
     onSuccess: function (sender, args) {
-        console.log("INSIDE Delevrable")
+        
 
         var collListItem = Deliverables_Info_Request.g.collListItem;
         var listItemEnum = collListItem.getEnumerator();
@@ -1285,7 +1285,7 @@ var Deliverables_Info_Request = {
             }
 
         }
-        console.log("INSIDE Delevrable after while")
+        
 
         // console.log(Deliverablesarray.length);
         var NoD, NoDY, NoDarray, statustxt, statusnum, statusclass, ProgressNamearray = [];
@@ -1441,7 +1441,7 @@ var Deliverables_Info_Request = {
 
 var Main_Stages_Data_Request = {
     onSuccess: function (sender, args) {
-        console.log("stages on success")
+        
         var collListItem = Main_Stages_Data_Request.g.collListItem;
         var listItemEnum = collListItem.getEnumerator();
         while (listItemEnum.moveNext()) {
@@ -1453,7 +1453,7 @@ var Main_Stages_Data_Request = {
                 stageid: oListItem.get_id(),
             });
         }
-        console.log("stages on  success after while")
+       
 
     },
     onError: function (sender, args) {
@@ -1524,7 +1524,7 @@ var Invoices_Info_Request = {
             //
         }
 
-        console.log(TheCost,"TheCost TheCostTheCost")
+        
      
         // $('.ctx-block.row.mx-n2 .carditem1  .card-body .media:nth-child(2) .d-flex span:nth-child(2)').text(Project_Info_Request.g.kFormatter(TheCost));
         //$('.ctx-block.row.mx-n2 .carditem4  .card-body .media:nth-child(3) .d-flex span:nth-child(2)').text(RisksCount);
