@@ -17,7 +17,7 @@ let activityConfig =
 		"Site Id,Module Type,Item Type,User Id,User Full Name,User Email,Document Location,Occurred (GMT),Event,Event Source,Role Name, SP Group(s) Ids, SP Group(s),Platform,Device,Browser,Language \n";
 let userBrowser = "";
 let handleModuleActivity = (el) => {
-	console.log("INSIIIIIIIIIIIIIIIIIIIIIIDE handleModuleActivity")
+	
 	var context = SP.ClientContext.get_current();
 	var dfd = $.Deferred();
 	//Get list from host web
@@ -39,21 +39,20 @@ let handleModuleActivity = (el) => {
 			debugger
 			//Check itemcollection count greater than 0
 			if (activityColl.get_count() > 0) {
-				console.log("INSIDE ACTIVITY Coll loop")
+			
 				activeModuleType = el.ModuleType;
 				readExcelReport(); //!update excel report
 				var activityEnum = activityColl.getEnumerator();
 				while (activityEnum.moveNext()) {
-					console.log("WGIIIIIIII")
-					debugger
+			
 					var currentItem = activityEnum.get_current();
 					var currentId = currentItem.get_item("ID");
 					var hits = currentItem.get_item("Hits") || 0;
 					var numberOfClicks = currentItem.get_item("NumberOfClicks") || 0;
 					var numberOfViews = currentItem.get_item("NumberOfViews") || 0;
 					debugger;
-					var visitedBy = currentItem.get_item("VisitedBy") || [];
-					visitedBy.push(SP.FieldUserValue.fromUser(UserN.LoginName));
+					// var visitedBy = currentItem.get_item("VisitedBy") || [];
+					// visitedBy.push(SP.FieldUserValue.fromUser(UserN.LoginName));
 					// click count
 					let temp = JSON.parse(sessionStorage.getItem("clickCounts"));
 					let temp1 = temp ? temp[`${el.code}`] : 0;
@@ -64,7 +63,7 @@ let handleModuleActivity = (el) => {
 					//Get Item by current ID
 					var activityObject = programList.getItemById(currentId);
 					//set
-					activityObject.set_item("VisitedBy", visitedBy);
+					// activityObject.set_item("VisitedBy", visitedBy);
 					if (el.ModuleType == "Page")
 						activityObject.set_item("Hits", hits + 1);
 
@@ -164,14 +163,13 @@ let countClicks = (el) => {
 };
 //loop through configuration
 let loopAuditingConfig = async () => {
-	console.log("BFFFFFFFFFFFFFF",activityConfig)
-	debugger
 	await Promise.all(
 		activityConfig.map(async (el, i, a) => {
 			if (el.ModuleType == "Page") {
+				console.log("before module url")
 				if (window.location.href.indexOf(el.ModuleURL) > -1) {
 					// countClicks(el);
-
+					console.log("INSIDE MODULE url")
 					handleModuleActivity(el);
 				}
 			} else if (el.ModuleType == "Button") {

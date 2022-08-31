@@ -1,3 +1,5 @@
+window.currentUserRole;
+window.GroupsIds =[];
 window.UserN;
 window.checkHomeInitiativeStatus = '';
 var UserRole,
@@ -275,6 +277,7 @@ window.userCalls = {
         var results = data.d.results;
         for (var i = 0; i < results.length; i++) {
           Groups.push(results[i].Title);
+          GroupsIds.push(results[i].Id);//add to use in auditing feature
         }
         if (Groups.indexOf("System Admin Group") == -1) {
           $("#ms-designer-ribbon").remove();
@@ -543,7 +546,7 @@ window.userCalls = {
       (Delete_Access = Delete_Access.map((name) => name.toLowerCase()));
 
     //check if user has chosen a certain role or if it is by default
-    var currentUserRole;
+    // var currentUserRole; // define as a window to use it in auditing feature
     if (localStorage.getItem("userRole") == null)
       currentUserRole = GroupItem[0].Role;
     else currentUserRole = localStorage.getItem("userRole");
