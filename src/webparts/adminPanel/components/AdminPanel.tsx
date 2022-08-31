@@ -31,6 +31,7 @@ import * as $ from "jquery";
 // import "datatables.net-buttons/js/dataTables.buttons.min";
 // import "datatables.net-buttons/js/buttons.flash.min";
 // import "datatables.net-buttons/js/buttons.html5.min";
+
 export default class AdminPanel extends React.Component<
 	IAdminPanelProps,
 	{
@@ -59,6 +60,7 @@ export default class AdminPanel extends React.Component<
 > {
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			web: Web(this.props.webURL),
 			Users: [],
@@ -96,14 +98,14 @@ export default class AdminPanel extends React.Component<
 		await this.fetchData(1);
 
 		$('div#particles-foreground, div#particles-background, .vertical-centered-box').animate({
-            opacity: 0
-        }, {
-            duration: 333,
-            complete: function () {
-                $('div#particles-foreground, div#particles-background, .vertical-centered-box').remove();
+			opacity: 0
+		}, {
+			duration: 333,
+			complete: function () {
+				$('div#particles-foreground, div#particles-background, .vertical-centered-box').remove();
 
-            }
-        });
+			}
+		});
 
 		// this.state.web.siteGroups.add({
 		// 	Title: "To be removed",
@@ -330,14 +332,18 @@ export default class AdminPanel extends React.Component<
 					{this.state.roleUsers &&
 						this.state.roleUsers.map((item, i) => {
 							return [
-								<Persona
-									primaryText={item.Title}
-									secondaryText={`Email: ${item.Email} - ID: ${item.Id}`}
-									tertiaryText={`${item.LoginName} - ${item.IsSiteAdmin ? "Site Admin" : "Not Site Admin"
-										}`}
-									imageUrl={`/_layouts/15/userphoto.aspx?size=L&username=${item.Email}`}
-									size={5}
-								/>,
+								<div className="col-md-6" style={{padding:"5px 0px"}}>
+									<Persona
+										primaryText={item.Title}
+										secondaryText={`Email: ${item.Email} - ID: ${item.Id}`}
+										tertiaryText={`${item.LoginName} - ${item.IsSiteAdmin ? "Site Admin" : "Not Site Admin"
+											}`}
+										imageUrl={`/_layouts/15/userphoto.aspx?size=L&username=${item.Email}`}
+										size={5}
+										className={styles.personaContainer}
+
+									/>
+								</div>
 							];
 						})}
 				</div>
