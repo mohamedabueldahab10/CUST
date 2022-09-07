@@ -1202,6 +1202,8 @@ window.userCalls = {
           "initiativemilestonesacceptance",
           "closureinitiative",
           "benefits",
+          "initiativemilestones",
+          "initiativedeliverables",
           // "mom",
           // "risks",
           "deliverablemetrics", "benefitmatrix", "benefitmetrics", "initiativeissues",
@@ -1213,6 +1215,8 @@ window.userCalls = {
           "initiatives",
           "initiativesmain.aspx",
           "InitiativeHome.aspx",
+          "initiativemilestones",
+          "initiativedeliverables",
           // "home.aspx",
           "initiativecards",
           "initiativecards",
@@ -1266,6 +1270,8 @@ window.userCalls = {
           "initiativeissues",
           "initiativemom",
           "initiativerisks",
+          "initiativemilestones",
+          "initiativedeliverables",
           "deliverablemetrics", "benefitmatrix", "benefitmetrics",
         ];
         Delete_Access = [];
