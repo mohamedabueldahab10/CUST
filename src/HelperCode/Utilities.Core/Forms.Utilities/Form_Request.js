@@ -1,7 +1,7 @@
 window.kpiCodeResult = '';
 ////////////
 var allFileIndex = 0
-
+var relatedObjInit = '';
 /////////////
 var filesUrls = [];
 var NIssues = 0,
@@ -384,6 +384,8 @@ window.Edit_Data_Request = {
       if (type == "vision") {
         Initiative_Strategy_Sos.init("SOs")
       }
+
+      relatedObjInit =  oListItem.get_item("RelatedObjective")?oListItem.get_item("RelatedObjective") :'' 
     }
     if (listkey == 'sos') {
       var relatedStrategy = $('#RelatedStrategy').val()
@@ -1161,7 +1163,8 @@ window.View_Data_Request = {
           Dispfieldkey = $(this).data("dispfieldkey"),
           listname = $(this).data("listname"),
           $this = $(this);
-
+        console.log($(this).attr("id"),"IDDDDDDDDDDDDDD")
+          debugger
         if (oListItem.get_item($(this).attr("id")) == null) {
           // if (listkey == 'goalstrategy' && $(this).attr("id").toLowerCase() == 'ministry') {
           //   $(`#${ $(this).attr("id")}`).closest("div")
@@ -2791,6 +2794,11 @@ window.Initiative_Sos = {
         "</option>"
       );
     });
+
+    if (isEdit) {
+      $("#RelatedObjective").val(relatedObjInit)
+    }
+
     changeResources();
 
   },
@@ -2804,12 +2812,18 @@ window.Initiative_Sos = {
     var oList = clientContext.get_web().get_lists().getByTitle(listName);
     var camlQuery = new SP.CamlQuery();
 
-    var query = ''
+    var query = '' 
     if (type == 'vision') {
-      query = '<View><Query><Where><And><Eq><FieldRef Name="Types" /><Value Type="Choice">main</Value></Eq><Eq><FieldRef Name="RelatedStrategyType" /><Value Type="Text">vision</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
+      query = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type="Choice">main</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
     } else if (type == 'strategically') {
-      query = '<View><Query><Where><And><Eq><FieldRef Name="Types" /><Value Type="Choice">sub</Value></Eq><Eq><FieldRef Name="RelatedStrategyType" /><Value Type="Text">ministry</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
+      query = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type="Choice">sub</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
     }
+    //////////////////////////////////
+    // if (type == 'vision') {
+    //   query = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name="Types" /><Value Type="Choice">main</Value></Eq><Eq><FieldRef Name="RelatedStrategyType" /><Value Type="Text">vision</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
+    // } else if (type == 'strategically') {
+    //   query = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name="Types" /><Value Type="Choice">sub</Value></Eq><Eq><FieldRef Name="RelatedStrategyType" /><Value Type="Text">ministry</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
+    // }
 
     camlQuery.set_viewXml(query);
     Initiative_Sos.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only

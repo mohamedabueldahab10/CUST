@@ -92,6 +92,15 @@ var Information_Form = [
 
             },
             {
+                "InternalName": "RelatedStrategy",
+                "DisplayNameEn": "Related Strategy",
+                "DisplayName": "الاستراتيجية المرتبطة",
+                "type": "lookup",
+                "source": "GoalStrategy",
+                "Dispfieldkey": "Name",
+                "valfieldkey": "Title"
+             },
+            {
                 "InternalName": "RelatedObjective",
                 "DisplayNameEn": "Related Objective",
                 "DisplayName": "الهدف المرتبط",
@@ -139,25 +148,17 @@ var Information_Form = [
                 // "Dispfieldkey": "Title",
                 // "valfieldkey": "Title"
             },
-            {
-                "InternalName": "RelatedObjectiveAgency",
-                "DisplayNameEn": "Objective Name",
-                "DisplayName": "الارتباط بهدف الوكالة ",
-                "type": "lookup",
-                "source": "SOs",
-                // "state": "disabled",
-                "Dispfieldkey": "Name",
-                "valfieldkey": "Title"
-            },
-            {
-                "InternalName": "RelatedStrategy",
-                "DisplayNameEn": "Related Strategy",
-                "DisplayName": "الاستراتيجية المرتبطة",
-                "type": "lookup",
-                "source": "GoalStrategy",
-                "Dispfieldkey": "Name",
-                "valfieldkey": "Title"
-             },
+            // {
+            //     "InternalName": "RelatedObjectiveAgency",
+            //     "DisplayNameEn": "Objective Name",
+            //     "DisplayName": "الارتباط بهدف الوكالة ",
+            //     "type": "lookup",
+            //     "source": "SOs",
+            //     // "state": "disabled",
+            //     "Dispfieldkey": "Name",
+            //     "valfieldkey": "Title"
+            // },
+   
             // {
             //     "InternalName": "Portfolio",
             //     "DisplayName": "المحفظة",
