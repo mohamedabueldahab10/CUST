@@ -550,6 +550,7 @@ window.New_Data_Submit = {
             var Portfolio = $('#Portfolio').val()
             kpiResults.init(Name, PeriodType, Types, KpiYear, Sector, SubSector, Portfolio, MainGoalRelated, subGoalRelated)
           }
+          newKPIEquation.init();
         }else{
           Set_Code_Submit.init();
         }
@@ -1387,7 +1388,6 @@ var kpiResults = {
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
         console.log("Results KPI added");
-        newKPIEquation.init();
 
       }),
       Function.createDelegate(this, function (sender, args) {

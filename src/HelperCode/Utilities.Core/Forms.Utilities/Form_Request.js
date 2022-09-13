@@ -1163,8 +1163,7 @@ window.View_Data_Request = {
           Dispfieldkey = $(this).data("dispfieldkey"),
           listname = $(this).data("listname"),
           $this = $(this);
-        console.log($(this).attr("id"),"IDDDDDDDDDDDDDD")
-          debugger
+
         if (oListItem.get_item($(this).attr("id")) == null) {
           // if (listkey == 'goalstrategy' && $(this).attr("id").toLowerCase() == 'ministry') {
           //   $(`#${ $(this).attr("id")}`).closest("div")
@@ -4428,6 +4427,7 @@ var equationKPI = {
     var listItemEnum = collListItem.getEnumerator();
 
     while (listItemEnum.moveNext()) {
+
       var oListItem = listItemEnum.get_current();
       kpiEquationID = oListItem.get_id();
       kpiEquation = oListItem.get_item("KPIInput") || "";
@@ -4446,6 +4446,7 @@ var equationKPI = {
       $('p#KPIEquation').text(oListItem.get_item("Equation") || '');
     }
 
+ 
     var myCKeys =
       kpiEquationsComponents.length > 0
         ? Object.keys(kpiEquationsComponents[0])
@@ -4464,6 +4465,7 @@ var equationKPI = {
       // set display text
 
       myCKeys.forEach((o) => {
+        console.log(kpiEquationsComponents[0][o],'oooooooooooooooooo')
         kpiEquationsComponents[0][o]
           ? $(`input#${o},p#${o}`)
             .parent()
@@ -4489,7 +4491,7 @@ var equationKPI = {
 
       kpiEquation = kpiEquation.replaceAll(',', '') // remove , from high number
 
-
+    
       kpiEquation =
         eval(kpiEquation) % 1 != 0
           ? eval(kpiEquation).toFixed(2)
@@ -4532,7 +4534,8 @@ var equationKPI = {
     );
   },
   init: function () {
-
+    console.log("HERERERRE")
+    debugger
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("KPIEquations");
     var camlQuery = new SP.CamlQuery();
@@ -5120,7 +5123,7 @@ var Check_Item_Deleted = {
       var oListItem = listItemEnum.get_current();
       deleted = false
     }
-    debugger
+    
     if (deleted) {
       if (isView) {// to remove the child from view
         if (listkey == 'milestones') {
