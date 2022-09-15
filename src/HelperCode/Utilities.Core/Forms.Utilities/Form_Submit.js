@@ -66,7 +66,7 @@ window.New_Data_Submit = {
     $(".errormsg").remove();
     $(".container-body").addClass("was-validated");
     var isCheckMember = false;
-    debugger
+
     if (
       listkey == "portfolio" &&
       $("#Manager").find("span.sp-peoplepicker-userSpan").attr("sid")
@@ -551,7 +551,7 @@ window.New_Data_Submit = {
             kpiResults.init(Name, PeriodType, Types, KpiYear, Sector, SubSector, Portfolio, MainGoalRelated, subGoalRelated)
           }
           newKPIEquation.init();
-        }else{
+        } else {
           Set_Code_Submit.init();
         }
 
@@ -565,6 +565,21 @@ window.New_Data_Submit = {
           args.get_message() +
           "\n" +
           args.get_stackTrace();
+
+        var msg = args.get_message();
+        var stack = args.get_stackTrace();
+        var url = window.location.href;
+
+        writeToEventViewer.preinit(
+          msg,
+          "JS Api Error",
+          "High",
+          url,
+          '580',
+          '14',
+          stack
+        );
+
         if (errormessage.indexOf("duplicate values") > -1) {
           $(".CSformbuttons button").attr("disabled", false);
           $(".CSformbuttons").prepend(
@@ -830,7 +845,7 @@ window.Edit_Data_Submit = {
         $(this).removeClass("picker-valid");
       }
     })
-    debugger
+
     ////////////////////////for multi picker
     $("[type=multipicker][required]").each(function () {
       if ($(this).find("span.sp-peoplepicker-userSpan").length == 0 && ($(this).attr('data-email') == enternameemail)) {
@@ -865,8 +880,7 @@ window.Edit_Data_Submit = {
       }
     }
     if ($(".was-validated .form-control:invalid").length == 0 && pickervalid && !isCheckMember) {
-      console.log("insid debbbb")
-      debugger
+
       if (listkey == "risks") {
         if (
           showpopup == false ||
@@ -921,8 +935,7 @@ window.Edit_Data_Submit = {
       var $container = $("#s4-workspace"),
         $scrollTo = $(".was-validated .form-control:invalid");
       if ($scrollTo.length == 0) {
-        console.log($scrollTo, "$scrollTo $scrollTo")
-        debugger
+
         if (listkey == 'sos') {
           $scrollTo = $("[type=multipicker][required]");
         } else {
@@ -943,15 +956,21 @@ window.Edit_Data_Submit = {
     }
   },
   init: function () {
+    // if(listkey == 'projects'){
+    //   console.log(User_ProjUID,"User_ProjUID")
+    //   checkinProjectEditSubnit.checkin(User_ProjUID);
+
+    // }
     // $('div.CSformbuttons').prepend('<div class="loading-wait">  Please Wait... <div class="cust-loader"></div></div>');
     $(".btn-save").attr("disabled", true);
     $("#preloader,#formloader").css("display", "block");
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(SP_ListName);
     Edit_Data_Submit.g.oListItem = oList.getItemById(IID); //declared inside object scope only
-
     $(".section-container:not([data-target_list]) .CFIELD> input[type=text], .section-container:not([data-target_list]) .CFIELD> input[type=number],.section-container:not([data-target_list]) .CFIELD> input[type=email] ,.section-container:not([data-target_list]) .CFIELD> input[type=float], .section-container:not([data-target_list]) .CFIELD>  input[type=date],.section-container:not([data-target_list]) .CFIELD> .datetimeinputs input[type=date],.section-container:not([data-target_list]) .CFIELD> .datetimeinputs input[type=datetime-local],.section-container:not([data-target_list]) .CFIELD> input[type=radio], .section-container:not([data-target_list]) .CFIELD> input[type=checkbox], .section-container:not([data-target_list]) .CFIELD> div[type=multipicker],.section-container:not([data-target_list]) .CFIELD> div[type=picker], .section-container:not([data-target_list]) .CFIELD> select[type=dropdown], .section-container:not([data-target_list]) .CFIELD>  textarea, .section-container:not([data-target_list]) .CFIELD > .multiselect-container"
     ).each(function () {
+      console.log($(this).attr("id"),"while id")
+
       if ($(this).attr("type") == "picker") {
         if ($(this).find("span.sp-peoplepicker-userSpan").length) {
           var id = $(this).attr("INppicker");
@@ -1141,14 +1160,16 @@ window.Edit_Data_Submit = {
           myselections
         );
       } else {
-        console.log($(this).attr("id"), "ID")
-        console.log($(this).val(), "VAAAAAAAAL")
         Edit_Data_Submit.g.oListItem.set_item(
           $(this).attr("id"),
           $(this).val()
         );
       }
     });
+
+    console.log("edit form submit")
+    debugger
+
 
     if (listkey == "issues") {
       if ($("#ResolutionStatus").val() == "Closed") {
@@ -1273,8 +1294,7 @@ window.Edit_Data_Submit = {
             } else if (listkey == 'mainkpi') {
               Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis)
             } else if (listkey == 'projects' && PCODE) {
-              console.log("BEFORE START")
-              debugger
+
               getProjectInfoToUpdateEPM()
             } else {
               window.location =
@@ -1296,6 +1316,22 @@ window.Edit_Data_Submit = {
         console.log(
           "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
         );
+
+        // to save the error in event logging list while submit
+        var msg = args.get_message();
+        var stack = args.get_stackTrace();
+        var url = window.location.href;
+
+        writeToEventViewer.preinit(
+          msg,
+          "JS Api Error",
+          "High",
+          url,
+          '580',
+          '14',
+          stack
+        );
+
       })
     );
   },
@@ -1510,8 +1546,23 @@ var newKPIEquation = {
         Set_Code_Submit.init();
       }),
       Function.createDelegate(this, function (sender, args) {
+
         console.log(
           "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+        );
+        // to save the error in event logging list while submit
+        var msg = args.get_message();
+        var stack = args.get_stackTrace();
+        var url = window.location.href;
+
+        writeToEventViewer.preinit(
+          msg,
+          "JS Api Error",
+          "High",
+          url,
+          '580',
+          '14',
+          stack
         );
       })
     );
@@ -1735,8 +1786,7 @@ var New_Master_Details_Submit = {
             $(".successmsg").show();
             $(".btn-save").addClass("success");
             if (listkey == "projects") {
-              console.log("IN MASTER DETAILS")
-              debugger
+
               getProjectInfoToUpdateEPM()
 
               // window.location =
@@ -2098,7 +2148,7 @@ function _uploadFile() {
     // })
   });
   console.log(attachments, 'attachments')
-  debugger
+
   // retrive file from INPUT
   files = attachments;
   // console.log('files', files);
@@ -2411,9 +2461,8 @@ var New_ProjectStages_Submit = {
       .get_web()
       .get_lists()
       .getByTitle("Project Stages");
-      
-      console.log("INSIDE project stages")
-      debugger
+
+
     for (var i = 0; i < Stages_Data_Request.g.StagesArray.length; i++) {
       var itemCreateInfo = new SP.ListItemCreationInformation();
       New_ProjectStages_Submit.g.oListItem = oList.addItem(itemCreateInfo);
@@ -2474,7 +2523,7 @@ var projects;
 function CreateProject() {
   // Initialize the current client context.
   console.log("before")
-  debugger
+
   var projContext = PS.ProjectContext.get_current();
   // Initialize a ProjectCreationInformation object and specify properties
   // for the new project.
@@ -2535,7 +2584,7 @@ function GetProjects() {
 // Iterate through the projects collection.
 function IterateThroughProjects(response) {
   // Get the enumerator and iterate through the collection.
-  debugger
+
   console.log("IterateThroughProjects in")
 
   var enumerator = projects.getEnumerator();
@@ -2606,7 +2655,7 @@ var Edit_PInfo_Submit = {
             $(".btn-save").addClass("success");
             newprojectsubmitted = true;
             console.log("inside GUID")
-            debugger
+
             projectowner = Edit_PInfo_Submit.g.oListItem
               .get_item("ProjectOwner")
               .get_lookupValue();
@@ -2693,7 +2742,7 @@ var InternalEntities_Request = {
     var collListItem = InternalEntities_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     console.log("inside internal entity")
-    debugger
+
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       Entitytype = oListItem.get_item("EntityType");
@@ -2730,9 +2779,7 @@ function ChangeProject() {
   draftProject = project.checkOut();
   for (var i = 0; i < buildTeamResourcesArr.length; i++) {
     allResourcesArr.forEach((el) => {
-      console.log(buildTeamResourcesArr, "buildTeamResourcesArr")
-      console.log(el.name, "el.nammmmme")
-      debugger
+
       if (buildTeamResourcesArr[i] == el.Name) {
         var new_resource_id = el.Id;
         var new_resource = new PS.ProjectResourceCreationInformation();
@@ -2781,6 +2828,8 @@ var checkinProject = {
   },
   g: {},
 };
+
+
 //*****edit task list when create new project */
 window.NewProjectTask_Edit_Data = {
   init: function () {
@@ -3097,7 +3146,7 @@ function EPMProjectToUpdate() {
 
 var ResourcesEnterprise = ''
 var resourcesArrDelete = []
-var globresArr =[]
+var globresArr = []
 var delete_resources = {
   preinit: function () {
     SP.SOD.registerSod('PS.ProjectContext', SP.Utilities.Utility.getLayoutsPageUrl('ps.js'));
@@ -3108,12 +3157,9 @@ var delete_resources = {
     deleteProjectContext = PS.ProjectContext.get_current();
     var oProjects = deleteProjectContext.get_projects();
     delete_resources.g.oProjectsItem = oProjects.getById(User_ProjUID); //declared inside object scope only
+  
 
-    // Resources = delete_resources.g.oProjectsItem.publish(true);
     ResourcesEnterprise = delete_resources.g.oProjectsItem.checkOut();
-
-
-    // oProjectsItem = delete_resources.g.oProjectsItem;
 
     delete_resources.g.testDuration = ResourcesEnterprise.get_projectResources()
 
@@ -3134,19 +3180,17 @@ var delete_resources = {
     console.log(delete_resources.g.testDuration, "oProjectsItem")
     resourcesArrDelete = delete_resources.g.testDuration.get_data()
 
-    console.log(resourcesArrDelete, "resourcesArrDelete ")
-    debugger
 
 
     Promise.all(
       resourcesArrDelete.map(function (item) {
         globresArr.push(item)
-        console.log(item.get_name(),"item")
+        console.log(item.get_name(), "item")
       })
-    ).then(function (files) { 
+    ).then(function (files) {
 
       delete_resourcesForupdate.init()
-    }).catch(function(err){
+    }).catch(function (err) {
 
     })
 
@@ -3174,7 +3218,7 @@ var delete_resourcesForupdate = {
 
   init: function () {
 
-    console.log(globresArr,"globresArr globresArr globresArr")
+    console.log(globresArr, "globresArr globresArr globresArr")
     deleteProjectContext.executeQueryAsync(
       Function.createDelegate(this, delete_resourcesForupdate.onSuccess),
       Function.createDelegate(this, delete_resourcesForupdate.onError)
@@ -3210,8 +3254,7 @@ function EPMProjectEdit() {
   var project = epmProjects.getById(User_ProjUID); //User_ProjUID it's the GUID for Project
   draftProject = project.checkOut();
 
-  console.log(projectBuildTeamArr, "projectBuildTeamArr projectBuildTeamArr projectBuildTeamArr")
-  debugger
+
   for (var i = 0; i < projectBuildTeamArr.length; i++) {
     allEnterpriseResources.forEach((el) => {
       if (projectBuildTeamArr[i] == el.Name) {
@@ -3223,7 +3266,7 @@ function EPMProjectEdit() {
         var project_resources_list = draftProject.get_projectResources();
         console.log(new_resource, "new_resource new_resource")
         console.log(project_resources_list, "project_resources_list project_resources_list")
-        debugger
+
         var project_resource = project_resources_list.add(new_resource);
         draftProject.get_projectResources().add(new_resource);
       }
@@ -3262,3 +3305,34 @@ function QueueJobSentOwnerEpm(response) {
     PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
 
 }
+
+var checkinProjectEditSubnit = { // create this function to check in the project on project center before edit on project
+  checkin: function (ProjGuid) {
+    $.ajax({
+      url:
+        _spPageContextInfo.siteAbsoluteUrl +
+        "/_api/ProjectServer/Projects('" +
+        ProjGuid +
+        "')/draft/checkIn(true)",
+      method: "POST",
+      contentType: "application/json;odata=verbose",
+      headers: {
+        Accept: "application/json; odata=verbose",
+        "X-requestDigest": $("#__REQUESTDIGEST").val(),
+        "X-HTTP-Method": "POST",
+        "if-Match": "*",
+      },
+      success: function (data) {
+        console.log("Project checked in successfully")
+        // window.location =
+        //   _spPageContextInfo.siteAbsoluteUrl +
+        //   "/SitePages/ProjectHome.aspx?PCODE=" +
+        //   PNAME;
+      },
+      error: function (data) {
+        console.log("call failed", data);
+      },
+    });
+  },
+  g: {},
+};
