@@ -8,6 +8,8 @@ var isuploaddone = 0,
   Documents_Library;
 window.IdeaId;
 
+var projectManagerPickedToProjectCenter = '';
+
 var kpiName = '', kpiType = '', kpiSector = '', kpiSubSector = '', kpiMainGoalRelated = '', kpiSubGoalRelated = '', kpiPortfolio = '', kpiPerformanceAnalysis = '', kpiYearPicked = '', kpiMidPicked = '', kpiQuarterPicked = '', kpiMonthPicked = '', kpiPeriodTypeUpdate = '';
 
 var allEnterpriseResources = [], projectBuildTeamArr = [], projectManagerPickerToEpm;
@@ -511,7 +513,9 @@ window.New_Data_Submit = {
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
         IID = New_Data_Submit.g.oListItem.get_id();
-
+        if (listkey == 'projects') {
+          projectManagerPickedToProjectCenter = New_Data_Submit.g.oListItem.get_item("ProjectManager")
+        }
 
         if (listkey == "mainkpi") {
           var dateFrom = $('#FromDate').val()
@@ -956,11 +960,11 @@ window.Edit_Data_Submit = {
     }
   },
   init: function () {
-    // if(listkey == 'projects'){
-    //   console.log(User_ProjUID,"User_ProjUID")
-    //   checkinProjectEditSubnit.checkin(User_ProjUID);
+    if (listkey == 'projects') {
+      console.log(User_ProjUID, "User_ProjUID")
+      checkinProjectEditSubmit.checkin(User_ProjUID);
 
-    // }
+    }
     // $('div.CSformbuttons').prepend('<div class="loading-wait">  Please Wait... <div class="cust-loader"></div></div>');
     $(".btn-save").attr("disabled", true);
     $("#preloader,#formloader").css("display", "block");
@@ -969,7 +973,7 @@ window.Edit_Data_Submit = {
     Edit_Data_Submit.g.oListItem = oList.getItemById(IID); //declared inside object scope only
     $(".section-container:not([data-target_list]) .CFIELD> input[type=text], .section-container:not([data-target_list]) .CFIELD> input[type=number],.section-container:not([data-target_list]) .CFIELD> input[type=email] ,.section-container:not([data-target_list]) .CFIELD> input[type=float], .section-container:not([data-target_list]) .CFIELD>  input[type=date],.section-container:not([data-target_list]) .CFIELD> .datetimeinputs input[type=date],.section-container:not([data-target_list]) .CFIELD> .datetimeinputs input[type=datetime-local],.section-container:not([data-target_list]) .CFIELD> input[type=radio], .section-container:not([data-target_list]) .CFIELD> input[type=checkbox], .section-container:not([data-target_list]) .CFIELD> div[type=multipicker],.section-container:not([data-target_list]) .CFIELD> div[type=picker], .section-container:not([data-target_list]) .CFIELD> select[type=dropdown], .section-container:not([data-target_list]) .CFIELD>  textarea, .section-container:not([data-target_list]) .CFIELD > .multiselect-container"
     ).each(function () {
-      console.log($(this).attr("id"),"while id")
+      console.log($(this).attr("id"), "while id")
 
       if ($(this).attr("type") == "picker") {
         if ($(this).find("span.sp-peoplepicker-userSpan").length) {
@@ -2702,6 +2706,7 @@ var projectsection,
   ProjectSectorHead,
   ProjectSectionHead,
   ProjectDepartmentHead;
+
 var Entitytype;
 var InternalEntities_Request = {
   // Pre-initialization functions ensure scripts, SharePoint dependencies are loaded
@@ -2792,8 +2797,47 @@ function ChangeProject() {
     });
   }
   var publishJob = draftProject.update();
-  projContext.waitForQueueAsync(publishJob, 100, QueueJobSent);
+  console.log(PGUID, "User_ProjUID in new proj")
+  debugger
+  // projContext.waitForQueueAsync(publishJob, 100, QueueJobSent); // comment and write a new function to change the owner on project center when create a project
+  projContext.waitForQueueAsync(publishJob, 100, GetProjectsCreate);
+
+
 }
+///////////////////////////  work to change the owner on project center when create a project
+function GetProjectsCreate() {
+  projContext = PS.ProjectContext.get_current();
+  projects = projContext.get_projects();
+  projContext.load(projects, 'Include(Name, Id)'); //, Description, StartDate, Id, Owner
+  projContext.executeQueryAsync(ChangeProjectOwnerEpmCreateProj, QueryFailed);
+}
+
+
+function ChangeProjectOwnerEpmCreateProj() { // change the owner on project center when create a project
+  var project = projects.getById(PGUID);
+  var draftProject = project.checkOut();
+  var web = projContext.get_web()
+
+  console.log(projectManagerPickedToProjectCenter, "projectManagerPickedToProjectCenter")
+  console.log(projectManagerId, "projectManagerId")
+  var projectManagerId = projectManagerPickedToProjectCenter.get_lookupId()
+  var userPicked = web.getUserById(projectManagerId) //147
+
+
+  draftProject.set_owner(userPicked)
+  var publishJob = draftProject.publish(true);
+  projContext.waitForQueueAsync(publishJob, 100, QueueJobSentOwnerEpmCreateProj);
+
+}
+
+function QueueJobSentOwnerEpmCreateProj(response) {
+  window.location =
+    _spPageContextInfo.siteAbsoluteUrl +
+    "/SitePages/ProjectHome.aspx?PCODE=" +
+    PNAME;
+
+}
+//////////////////////////
 
 function QueueJobSent(response) {
   checkinProject.checkin();
@@ -3157,7 +3201,7 @@ var delete_resources = {
     deleteProjectContext = PS.ProjectContext.get_current();
     var oProjects = deleteProjectContext.get_projects();
     delete_resources.g.oProjectsItem = oProjects.getById(User_ProjUID); //declared inside object scope only
-  
+
 
     ResourcesEnterprise = delete_resources.g.oProjectsItem.checkOut();
 
@@ -3306,7 +3350,7 @@ function QueueJobSentOwnerEpm(response) {
 
 }
 
-var checkinProjectEditSubnit = { // create this function to check in the project on project center before edit on project
+var checkinProjectEditSubmit = { // create this function to check in the project on project center before edit on project
   checkin: function (ProjGuid) {
     $.ajax({
       url:
