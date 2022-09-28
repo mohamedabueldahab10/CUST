@@ -834,7 +834,7 @@ export default class InitiativesMainHomeWebPart extends BaseClientSideWebPart<II
 
 
                         </div>
-                        <div class="col-12 col-lg-4 px-2 mb-3 control-ctx required-support-ctx">
+                        <!-- <div class="col-12 col-lg-4 px-2 mb-3 control-ctx required-support-ctx">
                             <div
                                 class="content-list-head d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4 mb-3">
 
@@ -903,7 +903,7 @@ export default class InitiativesMainHomeWebPart extends BaseClientSideWebPart<II
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                                 </div>
 
 

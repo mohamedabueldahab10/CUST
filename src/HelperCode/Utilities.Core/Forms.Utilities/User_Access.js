@@ -5329,6 +5329,24 @@ var GetInitiativeTitle_Request = {
 			console.log("titleinti", InitiativeTitle);
 		}
 
+		if (USERlistkey == "initiativemilestones" && (isEdit || isNew)) {
+			// set min max date on planned date for milestones
+			if (InitiativeStartDate) {
+				let initFinishDate = new Date(InitiativeFinishDate)
+				.toISOString()
+				.split("T")[0];
+
+			$("input#PlannedCompletedDate").attr("max", initFinishDate);
+		}
+		if (InitiativeFinishDate) {
+			let initStartDate = new Date(InitiativeStartDate)
+				.toISOString()
+				.split("T")[0];
+
+			$("input#PlannedCompletedDate").attr("min", initStartDate);
+		}
+		}
+
 		window.checkBreadCrumbsStatusHtml = setInterval(function () {
 			Access_Project_Info_Request.g.handleBreadcrumbs();
 		}, 333);

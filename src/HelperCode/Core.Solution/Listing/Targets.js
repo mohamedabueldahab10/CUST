@@ -665,6 +665,7 @@ var MainKPIs_Info_Request = {
       // $('.custom-table').css({'background': '#f8f9fa'});
       $(".custom-table").html(`<div style="text-align:center"><img css="w-100" src="${emptyData}" style="height:40vh;width:40vh;"/><p data-trans-nofilterdata class="Resources" style="text-align:center;font-size:13px;padding-bottom:13px"></p></div>`)
     }
+    $('input[data-internal*="Actual"]').prop('disabled', true);
 
     if (!isAdmin && !isSPMAdmin) { // to can the spmAdmin change on  targets
       $('td input[data-internal*="Target"]').prop('disabled', true);
