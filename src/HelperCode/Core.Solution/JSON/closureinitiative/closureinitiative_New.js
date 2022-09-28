@@ -95,14 +95,14 @@ var Information_Form = [
                 "maxchar": "250"
 
             },
-            {
-                "InternalName": "Description",
-                "DisplayNameEn": "Initiative Completion Check list",
-                "DisplayName": "قائمة تحقق اكتمال المبادرة  ",
-                "type": "string",
-                "maxchar": "250"
+            // {
+            //     "InternalName": "Description",
+            //     "DisplayNameEn": "Initiative Completion Check list",
+            //     "DisplayName": "قائمة تحقق اكتمال المبادرة  ",
+            //     "type": "string",
+            //     "maxchar": "250"
 
-            },
+            // },
 
 
         ]
@@ -454,8 +454,8 @@ var Information_Form = [
                     value: 'improvementopportunity'
                 }
                 ]
-            } 
-        }, 
+            }
+        },
         {
             "InternalName": "Comments",
             "DisplayName": "ملاحظات إضافية",
@@ -509,7 +509,7 @@ var Information_Form = [
         ]
     },
     {
-        label: 'المرفقات', 
+        label: 'المرفقات',
         labelEn: 'Attachments',
         description: "",
         descriptionEn: "",

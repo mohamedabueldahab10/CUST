@@ -5,7 +5,7 @@ var Information_Form  = [
         description: "التفاصيل",
         descriptionEn: "Details",
         subFields: [
-            
+
             // {
             //     "InternalName": "Title",
             //     "DisplayNameEn": "Title",
@@ -21,7 +21,7 @@ var Information_Form  = [
                 "maxchar": "250",
                 "validation": "required",
                 security: {
-                    groups: [
+                    groups: ['VRO_E','LMS_E',
                         'EPMO', 'System Admin Group'
                     ]
                 },
@@ -32,7 +32,7 @@ var Information_Form  = [
                 "DisplayName":"تاريخ الاكتمال المخطط",
                 "type":"datetime",
                 security: {
-                    groups: [
+                    groups: ['VRO_E','LMS_E',
                         'EPMO', 'System Admin Group'
                     ]
                 },
@@ -43,7 +43,7 @@ var Information_Form  = [
                 "DisplayName":"مقياس نجاح المخرج  (إن وجد)",
                 "type":"string",
                 security: {
-                    groups: [
+                    groups: ['VRO_E','LMS_E',
                         'EPMO', 'System Admin Group'
                     ]
                 },
@@ -54,7 +54,7 @@ var Information_Form  = [
                 "DisplayName":"المستهدف (إن وجد)",
                 "type":"string",
                 security: {
-                    groups: [
+                    groups: ['VRO_E','LMS_E',
                         'EPMO', 'System Admin Group'
                     ]
                 },
@@ -65,7 +65,7 @@ var Information_Form  = [
                 "DisplayNameEn": "Committed Date",
                 "type": "datetime",
                 security: {
-                    groups: [
+                    groups: ['VRO_E','LMS_E',
                         'EPMO', 'System Admin Group'
                     ]
                 },
@@ -77,7 +77,7 @@ var Information_Form  = [
                 "type":"floatpercentage",
                 "validation": "required",
                 security: {
-                    groups: [
+                    groups: ['VRO_E','LMS_E',
                         'EPMO', 'System Admin Group'
                     ]
                 },
@@ -99,7 +99,7 @@ var Information_Form  = [
                     ]
                 },
                 security: {
-                    groups: [
+                    groups: ['VRO_E','LMS_E',
                         'EPMO', 'System Admin Group'
                     ]
                 },
@@ -120,7 +120,7 @@ var Information_Form  = [
                 "Dispfieldkey": "Name",
                 "valfieldkey": "Title",
                 security: {
-                    groups: [
+                    groups: ['VRO_E','LMS_E',
                         'EPMO', 'System Admin Group'
                     ]
                 },
@@ -135,7 +135,7 @@ var Information_Form  = [
         subFields:[
             {
                 "InternalName": "getfile",
-                "DisplayName":"المستندات",                
+                "DisplayName":"المستندات",
                 "DisplayNameEn": "Documents",
                 "type":"file",
                 "withAddBtn":"true"

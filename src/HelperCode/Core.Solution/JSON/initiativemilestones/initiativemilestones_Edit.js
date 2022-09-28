@@ -20,12 +20,22 @@ var Information_Form = [
                 "type": "string",
                 "maxchar": "250",
                 "validation": "required",
+                security: {
+                    groups: ['VRO_E','LMS_E','System Admin Group',
+                        'EPMO'
+                    ]
+                },
             },
             {
                 "InternalName": "PlannedCompletedDate",
                 "DisplayNameEn": "Planned Completed Date",
                 "DisplayName": "تاريخ الاكتمال المخطط",
-                "type": "datetime"
+                "type": "datetime",
+                security: {
+                    groups: ['VRO_E','LMS_E','System Admin Group',
+                        'EPMO'
+                    ]
+                },
             },
             {
                 "InternalName": "Weight",
@@ -34,7 +44,7 @@ var Information_Form = [
                 "type": "decimalpercentage",
                 "validation": "required",
                 security: {
-                    groups: [
+                    groups: ['VRO_E','LMS_E','System Admin Group',
                         'EPMO'
                     ]
                 },
@@ -57,7 +67,7 @@ var Information_Form = [
                     ]
                 },
                 security: {
-                    groups: [
+                    groups: ['VRO_E','LMS_E','System Admin Group',
                         'EPMO'
                     ]
                 },

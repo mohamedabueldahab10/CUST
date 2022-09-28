@@ -109,6 +109,8 @@ var UserRole,
 	USERPName,
 	USERIName,
 	InitiativeTitle,
+	InitiativeStartDate,
+	InitiativeFinishDate,
 	USERPID,
 	USERisHome = window.location.href.toLowerCase().indexOf("/home.aspx") > -1,
 	isInitiativesHomePage =
@@ -1199,9 +1201,9 @@ window.userCalls = {
 					//  "deliverablemetrics", "benefitmatrix", "benefitmetrics"
 					"sos",
 					"Targets.aspx",
-          "kpiequations",
-          "goalstrategy",
-          "MainIndicators.aspx"
+					"kpiequations",
+					"goalstrategy",
+					"MainIndicators.aspx",
 					// , "goalstrategy"
 				];
 				Read_Access = [
@@ -1212,7 +1214,8 @@ window.userCalls = {
 					"Targets.aspx",
 					"kpiequations",
 					"MainIndicators.aspx",
-					, "goalstrategy"
+					,
+					"goalstrategy",
 				];
 				Edit_Access = [
 					"mainkpi",
@@ -1221,11 +1224,18 @@ window.userCalls = {
 					"sos",
 					"Targets.aspx",
 					"kpiequations",
-					, "goalstrategy"
+					,
+					"goalstrategy",
 				];
 				Delete_Access = [
-					// "mainkpi",
-					// , 'sos', "Targets.aspx", "kpiequations"
+					"mainkpi",
+					,
+					//  "deliverablemetrics", "benefitmatrix", "benefitmetrics"
+					"sos",
+					"Targets.aspx",
+					"kpiequations",
+					,
+					"goalstrategy",
 				];
 				break;
 			// case "StrategyTeam":
@@ -1280,8 +1290,8 @@ window.userCalls = {
 					"benefitmetrics",
 					"initiativeissues",
 					"initiativemom",
-          "initiativerisks",
-          "projects"
+					"initiativerisks",
+					"projects",
 				];
 				Read_Access = [
 					"initiativeHome.aspx",
@@ -1303,7 +1313,7 @@ window.userCalls = {
 					"initiativeissues",
 					"initiativemom",
 					"initiativerisks",
-					// "home.aspx",
+					"home.aspx",
 					"sos",
 					"MainIndicators.aspx",
 					"mainkpi",
@@ -1355,9 +1365,28 @@ window.userCalls = {
 					"deliverablemetrics",
 					"benefitmatrix",
 					"benefitmetrics",
-          "projects"
+					"projects",
 				];
-				Delete_Access = [];
+				Delete_Access = [
+					"initiativeHome.aspx",
+					"initiatives",
+					"initiativecards",
+					"initiativecards",
+					"initiativeexecution",
+					"initiativedeliverablesacceptance",
+					"initiativemilestonesacceptance",
+					"closureinitiative",
+					"benefits",
+					// "mom",
+					// "risks",
+					"initiativeissues",
+					"initiativemom",
+					"initiativerisks",
+					"deliverablemetrics",
+					"benefitmatrix",
+					"benefitmetrics",
+					"projects",
+				];
 				break;
 			//VRO For get Back ///Ghufran
 			// case "VROE":
@@ -1417,7 +1446,7 @@ window.userCalls = {
 			//   ];
 			//   Delete_Access = [];
 			//   break;
-      case "LMSE":
+			case "LMSE":
 				// for get it back
 				if (USERisHome)
 					window.location =
@@ -1430,8 +1459,8 @@ window.userCalls = {
 				isLMSE = true;
 				ChartHide =
 					".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-					ar_UserRole = "مكتب ضمان التنفيذ لسوق العمل";
-					en_UserRole = "Execution Guarantee Office";
+				ar_UserRole = "مكتب ضمان التنفيذ لسوق العمل";
+				en_UserRole = "Execution Guarantee Office";
 				//CRUD
 				Create_Access = [
 					"initiativeHome.aspx",
@@ -1450,14 +1479,14 @@ window.userCalls = {
 					"initiativeissues",
 					"initiativemom",
 					"initiativerisks",
-					"projects"
+					"projects",
 				];
 				Read_Access = [
 					"initiativeHome.aspx",
 					"initiatives",
 					"initiativesmain.aspx",
 					"InitiativeHome.aspx",
-					// "home.aspx",
+					"home.aspx",
 					"initiativecards",
 					"initiativecards",
 					"initiativeexecution",
@@ -1520,7 +1549,7 @@ window.userCalls = {
 					"deliverablemetrics",
 					"benefitmatrix",
 					"benefitmetrics",
-					"projects"
+					"projects",
 				];
 				Delete_Access = [
 					"initiativeHome.aspx",
@@ -1540,64 +1569,67 @@ window.userCalls = {
 					"deliverablemetrics",
 					"benefitmatrix",
 					"benefitmetrics",
-					"projects"
+					"projects",
 				];
 				break;
-				case "LMSP":
-					// for get it back
-					if (USERisHome)
-						window.location =
-							_spPageContextInfo.webAbsoluteUrl +
-							"/sitepages/MainIndicators.aspx";
-					$("body").append(
-						"<style>" + ".Progress-Action {display:block!important;}" + "</style>"
-					);
-					//***** */
-					isLMSP = true;
-					ChartHide =
-						".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-					ar_UserRole = "مكتب التخطيط الإستراتيجي لسوق العمل";
-					en_UserRole = "Strategic Planning Office";
-					//CRUD
-					Create_Access = [
-						"mainkpi",
-						"sos",
-						"Targets.aspx",
-						"kpiequations",
-						, "goalstrategy",
-						"MainIndicators.aspx",
-						//  "deliverablemetrics", "benefitmatrix", "benefitmetrics"
-
-					];
-					Read_Access = [
-						"mainkpi",
-						"benefits",
-						//  "deliverablemetrics", "benefitmatrix", "benefitmetrics",
-						"sos",
-						"Targets.aspx",
-						"kpiequations",
-						"MainIndicators.aspx",
-						, "goalstrategy"
-					];
-					Edit_Access = [
-						"mainkpi",
-						,
-						//  "deliverablemetrics", "benefitmatrix", "benefitmetrics"
-						"sos",
-						"Targets.aspx",
-						"kpiequations",
-						, "goalstrategy"
-					];
-					Delete_Access = [
-						"mainkpi",
-						,
-						//  "deliverablemetrics", "benefitmatrix", "benefitmetrics"
-						"sos",
-						"Targets.aspx",
-						"kpiequations",
-						, "goalstrategy"
-					];
-					break;
+			case "LMSP":
+				// for get it back
+				if (USERisHome)
+					window.location =
+						_spPageContextInfo.webAbsoluteUrl +
+						"/sitepages/MainIndicators.aspx";
+				$("body").append(
+					"<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+				);
+				//***** */
+				isLMSP = true;
+				ChartHide =
+					".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+				ar_UserRole = "مكتب التخطيط الإستراتيجي لسوق العمل";
+				en_UserRole = "Strategic Planning Office";
+				//CRUD
+				Create_Access = [
+					"mainkpi",
+					"sos",
+					"Targets.aspx",
+					"kpiequations",
+					,
+					"goalstrategy",
+					"MainIndicators.aspx",
+					//  "deliverablemetrics", "benefitmatrix", "benefitmetrics"
+				];
+				Read_Access = [
+					"mainkpi",
+					"benefits",
+					//  "deliverablemetrics", "benefitmatrix", "benefitmetrics",
+					"sos",
+					"Targets.aspx",
+					"kpiequations",
+					"MainIndicators.aspx",
+					,
+					"goalstrategy",
+				];
+				Edit_Access = [
+					"mainkpi",
+					,
+					//  "deliverablemetrics", "benefitmatrix", "benefitmetrics"
+					"sos",
+					"Targets.aspx",
+					"kpiequations",
+					,
+					"goalstrategy",
+				];
+				Delete_Access = [
+					"mainkpi",
+					,
+					//  "deliverablemetrics", "benefitmatrix", "benefitmetrics"
+					"sos",
+					"Targets.aspx",
+					"kpiequations",
+					,
+					"goalstrategy",
+				];
+				break;
 
 			case "EPMO":
 				// if (USERisHome)
@@ -2609,8 +2641,8 @@ window.userCalls = {
 			},
 			{
 				Role: "SPMTeam",
-        groupsName: ["SPM Team"],
-        dataFilter: {
+				groupsName: ["SPM Team"],
+				dataFilter: {
 					hierarchies: [
 						{
 							level: 1,
@@ -2625,7 +2657,7 @@ window.userCalls = {
 										"new.aspx",
 										"edit.aspx?ListKey=projects",
 									],
-								}
+								},
 							],
 							subRelation: {
 								level: 2,
@@ -2655,7 +2687,7 @@ window.userCalls = {
 										"new.aspx",
 										"edit.aspx?ListKey=projects",
 									],
-								}
+								},
 							],
 							subRelation: {
 								level: 2,
@@ -2681,8 +2713,8 @@ window.userCalls = {
 			},
 			{
 				Role: "VROE",
-        groupsName: ["VRO_E"],
-        // currently supporting only 2 conditions
+				groupsName: ["VRO_E"],
+				// currently supporting only 2 conditions
 				dataFilter: {
 					hierarchies: [
 						{
@@ -2698,7 +2730,7 @@ window.userCalls = {
 										"new.aspx",
 										"edit.aspx?ListKey=projects",
 									],
-								}
+								},
 							],
 							subRelation: {
 								level: 2,
@@ -2728,7 +2760,7 @@ window.userCalls = {
 										"new.aspx",
 										"edit.aspx?ListKey=projects",
 									],
-								}
+								},
 							],
 							subRelation: {
 								level: 2,
@@ -2750,8 +2782,8 @@ window.userCalls = {
 			},
 			{
 				Role: "VROP",
-        groupsName: ["VRO_P"],
-        dataFilter: {
+				groupsName: ["VRO_P"],
+				dataFilter: {
 					hierarchies: [
 						{
 							level: 1,
@@ -2766,7 +2798,7 @@ window.userCalls = {
 										"new.aspx",
 										"edit.aspx?ListKey=projects",
 									],
-								}
+								},
 							],
 							subRelation: {
 								level: 2,
@@ -2796,7 +2828,7 @@ window.userCalls = {
 										"new.aspx",
 										"edit.aspx?ListKey=projects",
 									],
-								}
+								},
 							],
 							subRelation: {
 								level: 2,
@@ -2835,7 +2867,7 @@ window.userCalls = {
 										"new.aspx",
 										"edit.aspx?ListKey=projects",
 									],
-								}
+								},
 							],
 							subRelation: {
 								level: 2,
@@ -2873,7 +2905,7 @@ window.userCalls = {
 										"new.aspx",
 										"edit.aspx?ListKey=projects",
 									],
-								}
+								},
 							],
 							subRelation: {
 								level: 2,
@@ -2903,7 +2935,7 @@ window.userCalls = {
 										"new.aspx",
 										"edit.aspx?ListKey=projects",
 									],
-								}
+								},
 							],
 							subRelation: {
 								level: 2,
@@ -5292,6 +5324,8 @@ var GetInitiativeTitle_Request = {
 			InitiativeTitle = oListItem.get_item("Name")
 				? oListItem.get_item("Name")
 				: UserNo_Data;
+			InitiativeStartDate = oListItem.get_item("StartDate");
+			InitiativeFinishDate = oListItem.get_item("FinishDate");
 			console.log("titleinti", InitiativeTitle);
 		}
 
@@ -5332,7 +5366,7 @@ var GetInitiativeTitle_Request = {
 //
 
 // data level access
-function initiateDataLevelAccess () {
+function initiateDataLevelAccess() {
 	try {
 		if (myRoleConfig[0].hasOwnProperty("dataFilter")) {
 			isRoleDataLevelAccess = true;
@@ -5343,13 +5377,28 @@ function initiateDataLevelAccess () {
 				let isListConditional3 =
 					el.subRelation.subRelation.listName == currentMainList;
 				if (isListConditional1) {
-					data_Level1_Access.buildCamlQuery(el.listName, accessConditions, 1, i);
+					data_Level1_Access.buildCamlQuery(
+						el.listName,
+						accessConditions,
+						1,
+						i
+					);
 					throw BreakException;
 				} else if (isListConditional2) {
-					data_Level1_Access.buildCamlQuery(el.listName, accessConditions, 2, i);
+					data_Level1_Access.buildCamlQuery(
+						el.listName,
+						accessConditions,
+						2,
+						i
+					);
 					throw BreakException;
 				} else if (isListConditional3) {
-					data_Level1_Access.buildCamlQuery(el.listName, accessConditions, 3, i);
+					data_Level1_Access.buildCamlQuery(
+						el.listName,
+						accessConditions,
+						3,
+						i
+					);
 					throw BreakException;
 				}
 			});
@@ -5367,7 +5416,9 @@ let data_Level1_Access = {
 		hierarchyIndex
 	) {
 		data_Level1_Access.g.hierarchyIndex = hierarchyIndex;
-		let whereBody = ``, queryBody=``, whereBodyFinal= ``;
+		let whereBody = ``,
+			queryBody = ``,
+			whereBodyFinal = ``;
 		//dynamic query building
 		fieldsConditionConfig.forEach((el, i, a) => {
 			//Two choices
@@ -5478,7 +5529,7 @@ let data_Level1_Access = {
 		dataLevelQuery: ``,
 		fieldsConditionConfig: [],
 		relationField: ``,
-		relationFieldData: []
+		relationFieldData: [],
 	},
 	//currenty handles one field not more
 	dynamicCamlQueryBuilder: function (levelConfig, valuesArray) {
@@ -5487,7 +5538,9 @@ let data_Level1_Access = {
 		let fieldToQuery = levelConfig.RelationField;
 		let fieldType = levelConfig.RelationFieldType;
 		let level = levelConfig.level;
-		let whereBody = ``, queryBody=``, whereBodyFinal= ``;
+		let whereBody = ``,
+			queryBody = ``,
+			whereBodyFinal = ``;
 		//dynamic query building
 		whereBody += `<In><FieldRef Name="${fieldToQuery}" /><Values>`;
 		valuesArray.forEach((el, i, a) => {
@@ -5510,8 +5563,7 @@ let data_Level1_Access = {
 					</View>`;
 				data_Level2_Access.g.dataLevelQuery = queryBody;
 				dataLevelAccessQuery = queryBody;
-				if (data_Level1_Access.g.dataLevel > 2)
-				{
+				if (data_Level1_Access.g.dataLevel > 2) {
 					data_Level2_Access.init(listName);
 				}
 				console.log("Data 2nd level access query", queryBody);
@@ -5562,7 +5614,9 @@ let data_Level2_Access = {
 		let fieldToQuery = levelConfig.RelationField;
 		let fieldType = levelConfig.RelationFieldType;
 		let level = levelConfig.level;
-		let whereBody = ``, queryBody=``, whereBodyFinal= ``;
+		let whereBody = ``,
+			queryBody = ``,
+			whereBodyFinal = ``;
 		//dynamic query building
 		whereBody += `<In><FieldRef Name="${fieldToQuery}" /><Values>`;
 		valuesArray.forEach((el, i, a) => {
@@ -5599,6 +5653,6 @@ let data_Level2_Access = {
 		dataLevelQuery: ``,
 		fieldsConditionConfig: [],
 		relationField: ``,
-		relationFieldData: []
+		relationFieldData: [],
 	},
 };

@@ -1476,7 +1476,6 @@ var Milestones_Info_Request = {
 				(new Date() - new Date(delevrableDateExpired)) / (1000 * 60 * 60 * 24)
 			); //difference in days
 			// to get sum of weight of all Expired delevrables that are expired
-			debugger;
 			if (delevrableDateExpired > 0) {
 				// expired deliverables
 				expiredDeliverablesArrayPercent.push({
@@ -1555,6 +1554,30 @@ var Milestones_Info_Request = {
 		) {
 			$("a.btn-add").attr("style", "display: none!important;");
 		}
+		actualImplementationRate = deliveredDeliverablesArrayPercent.reduce(
+			(accum, item) => accum + item.deliveredDelivrableWeight,
+			0
+		);
+		var numberofyesAll = expiredDeliverablesArrayPercent.filter(
+			(v) => v.delivered === "yes"
+		);
+		var All_numberofyesAll = Deliverablesarray.filter(
+			(v) => v.delivered === "yes"
+		);
+
+		plannedImplementationRate = expiredDeliverablesArrayPercent.reduce(
+			(accum, item) => accum + item.expiredDelivrableWeight,
+			0
+		);
+
+		console.log(
+			actualImplementationRate,
+			"actualImplementationRate actualImplementationRate"
+		);
+		console.log(
+			plannedImplementationRate,
+			"plannedImplementationRate plannedImplementationRate"
+		);
 		ProgressStatus_Data_Submit.init(); // update the initiative status when open the page auto
 
 		changeResources();
@@ -1931,14 +1954,15 @@ var ProgressStatus_Data_Submit = {
 		//calculation bussiness for Project Progress Status
 		var differenceBetweenDelivrablesPercet =
 			plannedImplementationRate - actualImplementationRate;
+		debugger;
 		if (
 			!ProgressStatus_Data_Submit.g.dateInPastArrow(
 				new Date(initstartdate),
 				new Date()
-			)
+			) || !initstartdate
 		) {
 			//not started
-			initiativeprogress = "notstarted";
+			initiativeprogress = "stat6";
 		} else if (actualImplementationRate == 100) {
 			//complete
 			initiativeprogress = "complete";

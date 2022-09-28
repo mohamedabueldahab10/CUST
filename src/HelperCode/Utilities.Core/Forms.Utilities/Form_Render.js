@@ -800,7 +800,12 @@ window.ListInfo = {
             deliverabeInitiativePercent.init();
           }
           if (listkey == 'initiativemilestones') {
-            initMilestPercent.init()
+            initMilestPercent.init();
+            // set min max date on planned date for milestones
+            let initStartDate = new Date(InitiativeStartDate).toISOString().split('T')[0];
+            let initFinishDate = new Date(InitiativeFinishDate).toISOString().split('T')[0];
+            $("input#PlannedCompletedDate").attr("max", initFinishDate)
+            $("input#PlannedCompletedDate").attr("min", initStartDate)
           }
           if (listkey == 'benefitmetrics') {
             benefitmetricsPercent.init();
