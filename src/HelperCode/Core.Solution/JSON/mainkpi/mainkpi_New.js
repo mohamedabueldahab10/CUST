@@ -33,7 +33,7 @@ var Information_Form = [{
         {
             InternalName: "Types",
             DisplayNameEn: "Types",
-            validation: "required", 
+            validation: "required",
             DisplayName: "نوع المؤشر",
             toggleValues: [
                 { value: "sub", fields: ["SubRelatedObjective", "RelatedMainKpis","Portfolio"] }, //we can put more than 1  field
@@ -95,7 +95,7 @@ var Information_Form = [{
             //     ]
             // },
             validation: "required",
-           
+
         },
         {
             "InternalName": "ToDate",
@@ -182,7 +182,7 @@ var Information_Form = [{
 
 
 
-        { // 
+        { //
             "InternalName": "RelatedStrategy",
             "DisplayNameEn": "Related Vision Strategy",
             "DisplayName": "الاستراتيجية المرتبطة",
@@ -193,10 +193,54 @@ var Information_Form = [{
             "source": "GoalStrategy",
             "Dispfieldkey": "Name",
             "valfieldkey": "Title",
-            "validation": "required"
+            "validation": "required",
+            security: {
+                groups: [
+                    'SPM Admin', 'SPM Team', 'VRO_P', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                ]
+            },
+            //role access
+            accessFilter: [
+                {
+                    role: "VROE",
+                    conditions: [{
+                        field: "Types",
+                        type: "Choice",
+                        values: ["vision"],
+                    }],
+                },
+                {
+                    role: "VROP",
+                    conditions: [{
+                        field: "Types",
+                        type: "Choice",
+                        values: ["vision"],
+                    }],
+                },
+                {
+                    role: "LMSE",
+                        conditions: [
+                            {
+                                field: "Types",
+                                type: "Choice",
+                                values: ["lms"],
+                            }
+                        ]
+                },
+                {
+                    role: "LMSP",
+                        conditions: [
+                            {
+                                field: "Types",
+                                type: "Choice",
+                                values: ["lms"],
+                            }
+                        ]
+                }
+            ]
             // "display":"none"
         },
-        { // 
+        { //
             "InternalName": "RelatedStrategyType",
             "DisplayNameEn": "Strategy Type",
             "DisplayName": "نوع  الاستراتيجية",
@@ -212,14 +256,14 @@ var Information_Form = [{
             }
         },
         {
-            InternalName: "SubRelatedObjective", // = هدف الوكالة hadaf al wikala 
+            InternalName: "SubRelatedObjective", // = هدف الوكالة hadaf al wikala
             DisplayNameEn: " Related Sub Objective",
             DisplayName: "الهدف الفرعي المرتبط",
             ToggleName: "SubRelatedObjective",
             type: "lookupWithQuery",
             queryField: "Types",
             queryFieldType: "dropdownValues", //ex: "Choice"
-            queryFieldValue: "sub", 
+            queryFieldValue: "sub",
             //from other list:
             source: "SOs",
             Dispfieldkey: "Name",
@@ -242,9 +286,9 @@ var Information_Form = [{
             valfieldkey: "Title",
             display: "none",
         },
-       
+
         {
-            InternalName: "RelatedObjective", //هدف الوكالة = hadaf al wikala 
+            InternalName: "RelatedObjective", //هدف الوكالة = hadaf al wikala
             DisplayNameEn: "Strategy Related Objective",
             DisplayName: "الهدف الاستراتيجي المرتبط",
             ToggleName: "StrategyRelatedObjective",
@@ -587,7 +631,7 @@ var Information_Form = [{
                 choices: ["+", "-"],
             },
         },
-       
+
         {
             InternalName: "ResultType",
             DisplayNameEn: "Result Type",

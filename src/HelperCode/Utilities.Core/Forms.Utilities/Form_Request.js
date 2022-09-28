@@ -36,7 +36,7 @@ var relatedMainGoal = '', relatedSubGoal = '', indexTypekpi = '', relatedStrateg
 var globalInitiativeCode = '';
 
 // handle previous kpi info
-var targetYear=new Date().getFullYear(),targetActualValue='',targetPerformanceAnalysis='',targetPerioudType='',targetPerioudTypeValue=''; 
+var targetYear=new Date().getFullYear(),targetActualValue='',targetPerformanceAnalysis='',targetPerioudType='',targetPerioudTypeValue='';
 //
 
 window.kpiEquationsComponents = [];
@@ -385,7 +385,7 @@ window.Edit_Data_Request = {
         Initiative_Strategy_Sos.init("SOs")
       }
 
-      relatedObjInit =  oListItem.get_item("RelatedObjective")?oListItem.get_item("RelatedObjective") :'' 
+      relatedObjInit =  oListItem.get_item("RelatedObjective")?oListItem.get_item("RelatedObjective") :''
     }
     if (listkey == 'sos') {
       var relatedStrategy = $('#RelatedStrategy').val()
@@ -1212,7 +1212,7 @@ window.View_Data_Request = {
 
       var myselections = oListItem.get_item("RelatedInitiativeDeliverable") ? oListItem.get_item("RelatedInitiativeDeliverable").split(":::") : [] // to get the name of delivrable over the code
       var initiativeCode = oListItem.get_item("RelatedInitiative")
-      initiativeDelevrableArr = myselections // to use it in view page to get the deliv Name 
+      initiativeDelevrableArr = myselections // to use it in view page to get the deliv Name
 
       if (initiativeCode) {
         globalInitiativeCode = initiativeCode // to use it after check if initiative deleted or not
@@ -1325,7 +1325,7 @@ window.View_Data_Request = {
         // MultiSelect_View.init('Deliverables', myselections)
       }
     }
-    if (listkey == 'milestones' && PCODE) { // add it on view to update the milestone when delete 
+    if (listkey == 'milestones' && PCODE) { // add it on view to update the milestone when delete
       initiativeMilestoneVal = oListItem.get_item('RelatedInitiativeMilestone') ? oListItem.get_item('RelatedInitiativeMilestone') : ''
       Get_ProjectData_ByCode.init()
     }
@@ -1672,7 +1672,13 @@ window.View_Data_Request = {
     }
   },
 };
-
+// data related Access
+let checkDataAccess = (oListItem) => {
+  //for now handling text values
+  // if (!el.value.includes(oListItem.get_item(el.field))) {
+  //   window.location = "/";
+  // }
+}
 //risk to issue*******
 window.showpopup = true;
 window.Risk_To_Issue_Submit = {
@@ -2811,7 +2817,7 @@ window.Initiative_Sos = {
     var oList = clientContext.get_web().get_lists().getByTitle(listName);
     var camlQuery = new SP.CamlQuery();
 
-    var query = '' 
+    var query = ''
     if (type == 'vision') {
       query = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type="Choice">main</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
     } else if (type == 'strategically') {
@@ -2974,7 +2980,7 @@ window.ProjectInitiativeDelevrable = {
 
     // $("#RelatedInitiativeDeliverable").prop("disabled", false);
 
-if(isDU || isPManager || isInManager){ // to disabled the checkbox for this role 
+if(isDU || isPManager || isInManager){ // to disabled the checkbox for this role
   isDisabled = 'disabled'
 }
     if (!isView) {
@@ -4446,7 +4452,7 @@ var equationKPI = {
       $('p#KPIEquation').text(oListItem.get_item("Equation") || '');
     }
 
- 
+
     var myCKeys =
       kpiEquationsComponents.length > 0
         ? Object.keys(kpiEquationsComponents[0])
@@ -4491,7 +4497,7 @@ var equationKPI = {
 
       kpiEquation = kpiEquation.replaceAll(',', '') // remove , from high number
 
-    
+
       kpiEquation =
         eval(kpiEquation) % 1 != 0
           ? eval(kpiEquation).toFixed(2)
@@ -4870,7 +4876,7 @@ var View_Current_Kpi = {
 
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
-     
+
       relatedKpiYear = oListItem.get_item('Year') == null ? No_Data : oListItem.get_item('Year');
       relatedPeriodType = oListItem.get_item('PeriodType') == null ? No_Data : oListItem.get_item('PeriodType');
 
@@ -4902,7 +4908,7 @@ var View_Current_Kpi = {
           relatedPerformanceAnalysis = oListItem.get_item('PerformanceAnalysisActualMid1') || No_Data
           relatedActualValue = oListItem.get_item('ActualMid1') || 0
           periodType += '<p data-trans-actualmid1 class="viewmode-value Resources" id="Midterms"></p>'
-          
+
           targetPerioudType += '<p data-trans-actualmid2 class="viewmode-value Resources" id="Midterms_Previous"></p>'
           targetYear = targetYear -1
           targetActualValue ='ActualMid2'
@@ -4928,12 +4934,12 @@ var View_Current_Kpi = {
           relatedPerformanceAnalysis = oListItem.get_item('PerformanceAnalysisActualQ1') || No_Data
           relatedActualValue = oListItem.get_item('ActualQ1') || 0
           periodType += '<p data-trans-actualq1 class="viewmode-value Resources" id="Quarter"></p>'
-          
+
           targetPerioudType += '<p data-trans-actualq4 class="viewmode-value Resources" id="Quarter_Previous"></p>'
           targetYear = targetYear -1
           targetActualValue ='ActualQ4'
           targetPerformanceAnalysis = 'PerformanceAnalysisActualQ4'
-          
+
         } else if (currentMonth > 3 && currentMonth <= 6) {
           relatedPerformanceAnalysis = oListItem.get_item('PerformanceAnalysisActualQ2') || No_Data
           relatedActualValue = oListItem.get_item('ActualQ2') || 0
@@ -5123,7 +5129,7 @@ var Check_Item_Deleted = {
       var oListItem = listItemEnum.get_current();
       deleted = false
     }
-    
+
     if (deleted) {
       if (isView) {// to remove the child from view
         if (listkey == 'milestones') {
@@ -5257,7 +5263,7 @@ var Check_Item_Deleted = {
 //       fieldNameRef = 'InitiativeCode'
 //       fieldValue = ICODE
 //     }
-    
+
 //     var context = SP.ClientContext.get_current();
 //     var dfd = $.Deferred();
 //     var programList = context.get_web().get_lists().getByTitle('Tasks');

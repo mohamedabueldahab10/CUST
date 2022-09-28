@@ -320,6 +320,31 @@ window.ListInfo = {
               );
             }
           });
+          // this affectes on lookup selects
+          $("select[dynamic=parent]").on('change', function () {
+            let parentFieldName = $(this).attr("id");
+            let parentFieldValue = $(this).val();
+            let affectedSelectsInfo = [];
+            $("[dynamic=" + parentFieldName + "]").each(function () {
+              let affectedFieldName = $(this).attr("id");
+              let listName = $(this).data("listname");
+              let filterField = $(this).data("filterfield");
+              let filterFieldType = $(this).data("filterfieldtype");
+              let valFieldKey = $(this).data("valfieldkey");
+              let dispFieldKey = $(this).data("dispfieldkey");
+              affectedSelectsInfo.push({
+                affectedFieldName: affectedFieldName,
+                listName: listName,
+                filterField: filterField,
+                filterFieldType: filterField,
+                parentFieldValue: parentFieldValue,
+                filterFieldType: filterFieldType,
+                valFieldKey: valFieldKey,
+                dispFieldKey: dispFieldKey,
+              })
+            });
+            dynamicAffectSelect.init(affectedSelectsInfo);
+          });
           //max min dates
           $("input[type=date]:not([minimumdate=undefined])").change(
             function () {
@@ -546,9 +571,9 @@ window.ListInfo = {
             //disable types dropdowns ghufran
             if (isVROP) {
               if (listkey == "mainkpi") {
-                $('#Types').val('main');
-                $('#Types').prop('disabled', true);
-                ListInfo.g.toggleFields($("#Types")); // call the toggle fied when field is disabled
+                // $('#Types').val('main');
+                // $('#Types').prop('disabled', true);
+                // ListInfo.g.toggleFields($("#Types")); // call the toggle fied when field is disabled
               } else if (listkey == 'goalstrategy') {
                 $('#Types').val('vision');
                 $('#Types').prop('disabled', true);
@@ -860,7 +885,7 @@ window.ListInfo = {
           // arabic and english field on portfolio listkey
           if (listkey == 'portfolio') {
             var arabicVal = '', englishVal = '';
-            $('#Name').keyup(function (e) {//once u press out form keyboard 
+            $('#Name').keyup(function (e) {//once u press out form keyboard
               var isArabic = /^([\u0600-\u06ff]|[\u0750-\u077f]|[\ufb50-\ufbc1]|[\ufbd3-\ufd3f]|[\ufd50-\ufd8f]|[\ufd92-\ufdc7]|[\ufe70-\ufefc]|[\ufdf0-\ufdfd]|[\u0621-\u064A\s0-9]|[ ])*$/g;
               if (isArabic.test(e.target.value)) {
                 $(this).val(e.target.value)
@@ -870,7 +895,7 @@ window.ListInfo = {
                 $(this).val(arabicVal)
               }
             })
-            $('#NameEn').keyup(function (e) { //to stop writing Arabic language in English Field 
+            $('#NameEn').keyup(function (e) { //to stop writing Arabic language in English Field
               var isEnglish = /^([A-Za-z0-9]|[ ])*$/;
               if (e.target.value.match(isEnglish)) {
                 $(this).val(e.target.value)
@@ -884,7 +909,7 @@ window.ListInfo = {
           }
           // end arabic and english fields
 
-          
+
           //calcul amount from Sum of all costs
           if (listkey == "budgetitems") {
             $('[id^="Cost"]').keyup(function () {
@@ -904,7 +929,7 @@ window.ListInfo = {
       }
     );
   },
-  RenderForm: function (element, flag, OnSuccess) {
+  RenderForm: async function (element, flag, OnSuccess) {
     if (listkey == 'goalstrategy') {
       ListInfo.g.requiredSpillarsName()
     }
@@ -1117,7 +1142,7 @@ window.ListInfo = {
         htmlBody =
           '<div class="col-md-6 CFIELD ' + element.className + ' " ' + thistip + ' ' + hidestagesIDs + ' ' + editableBy + ' ' + showstagesIDs + '  ' + disablestagesIDs + '  ' + enablestagesIDs + '   ' + isWfhidestagesIDs + ' ' + requireOnWfTaskstagesIDs + ' ' + isWfshowstagesIDs + '  ' + isWfdisablestagesIDs + '  ' + isWfenablestagesIDs + '        data-groups="' + groups + '" style="display:' + element.display + '">' +
           '<label for="' + element.InternalName + '" ' + element.validation + '>' + displayName + '</label>' +
-          '<input ' + ToggleName + ' type="number" step="any" placeholder="' + displayName + '" ' + dynamic + ' class="form-control SPIField " id="' + element.InternalName + '" ' + element.state + ' ' + element.validation + '>' +
+          '<input ' + ToggleName + ' type="number" step="any" placeholder="' + displayName + '" ' + dynamic + ' class="form-control SPIField" id="' + element.InternalName + '" ' + element.state + ' ' + element.validation + '>' +
           '<div class="inputInfo ' + isexist + '">' + descPhrase + '</div>' +
           '</div>';
         OnSuccess(flag, htmlBody);
@@ -1182,7 +1207,6 @@ window.ListInfo = {
           '</div>';
         OnSuccess(flag, htmlBody);
         break;
-
       case 'decimalpercentage':
         htmlBody =
           '<div class="col-md-6 CFIELD ' + element.className + ' " ' + thistip + ' ' + hidestagesIDs + ' ' + editableBy + ' ' + showstagesIDs + '  ' + disablestagesIDs + '  ' + enablestagesIDs + '   ' + isWfhidestagesIDs + ' ' + requireOnWfTaskstagesIDs + ' ' + isWfshowstagesIDs + '  ' + isWfdisablestagesIDs + '  ' + isWfenablestagesIDs + '        data-groups="' + groups + '" style="display:' + element.display + '">' +
@@ -1276,7 +1300,15 @@ window.ListInfo = {
           '<label for="' + element.InternalName + '" ' + element.validation + '>' + displayName + '</label>' +
           '<select ' + toggleValues + ' ' + ToggleName + ' type="dropdown" value="" placeholder="' + displayName + '" ' + dynamic + ' class="form-control SPIField" id="' + element.InternalName + '" ' + element.state + ' ' + element.validation + '><option value="" ' + selected + ' disabled>' + displayName + '</option>';
         for (var i = 0; i < element.options.choices.length; i++) {
-          htmlBody += '<option data-trans-' + element.options.choices[i].display + ' class="Resources" value="' + element.options.choices[i].value + '" ' + element.options.choices[i].selected + '></option>'
+          let isRenderOption = true;
+          let optionHasRole = element.options.choices[i].hasOwnProperty("roles");
+          if (optionHasRole && !element.options.choices[i].roles.includes(myRoleConfig[0].Role)) {
+            isRenderOption = false;
+          }
+          if (isRenderOption) {
+            htmlBody += '<option data-trans-' + element.options.choices[i].display + ' class="Resources" value="' + element.options.choices[i].value + '" ' + element.options.choices[i].selected + '></option>'
+          }
+
         }
         htmlBody += '</select>' +
           '<div class="inputInfo ' + isexist + '">' + descPhrase + '</div>' +
@@ -1483,59 +1515,44 @@ window.ListInfo = {
 
       case 'lookup':
         var customQuery;
-        if (element.isSector == 'True') {
-          customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="EntityType" /><Value Type="Choice">' + element.EntityType + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
-        } else if (PCODE && listkey == "invoices") {
-          customQuery = '<View><Query><Where><And><Eq><FieldRef Name="Delivered" /><Value Type="Choice">yes</Value></Eq><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="ProjectCode" /><Value Type="Text">' + PCODE + '</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
+        // filter data based on role access
+        if (element.hasOwnProperty("accessFilter")) {
+          let roleAccess = element.accessFilter.filter(el => {
+            return el.role == myRoleConfig[0].Role
+          });
+          if (roleAccess.length > 0) {
+            customQuery = await ListInfo.roleQuery(roleAccess[0].conditions);
+          }
         }
         else {
-          //change FieldRef to Name and Acending True to can sort alphapetics arabic and english
-          customQuery = '<View><Query><Where><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>';
-        }
-
-        if ((listkey == 'sos' && element.InternalName == 'RelatedStrategy') || (listkey == 'mainkpi' && element.InternalName == 'RelatedStrategy')) { // to get the related strategy type based on user Role
-          if (isVROP) {
-            customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type="Text">vision</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
-          } else {
-            // customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Neq><FieldRef Name="Types" /><Value Type="Text">vision</Value></Neq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
+          if (element.isSector == 'True') {
+            customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="EntityType" /><Value Type="Choice">' + element.EntityType + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
+          } else if (PCODE && listkey == "invoices") {
+            customQuery = '<View><Query><Where><And><Eq><FieldRef Name="Delivered" /><Value Type="Choice">yes</Value></Eq><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="ProjectCode" /><Value Type="Text">' + PCODE + '</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
           }
-        }
-
-        //if ICODE and listkey = 'initiativedeli'
-        if (ICODE && element.source == 'Benefits') {
-          //change FieldRef to Name and Acending True to can sort alphapetics arabic and english
-          customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + ICODE + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>';
-        }
-        if (ICODE && element.source == 'InitiativeDeliverables' && listkey == 'initiativemilestones') {
-          //change FieldRef to Name and Acending True to can sort alphapetics arabic and english
-          customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + ICODE + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>';
-        }
-        //ghufran User dropdown security
-        if (isEPMO || isSPMAdmin || isSPMTeam) {
-          if ((listkey == 'benefitmetrics' && element.InternalName == 'RelatedBenefit') || (listkey == 'benefitmatrix' && element.InternalName == 'RelatedBenefit') || (listkey == 'deliverablemetrics' && element.InternalName == 'RelatedInitiativeDeliverable')) {
-            if (localStorage.getItem('Dynamo_Initiatives') != null) {
-              var visionarr = JSON.parse(localStorage.getItem("Dynamo_Initiatives") || "[]");
-              visionarr = visionarr.filter(function (item) { return item.name == 'vision' });
-              var strategicallyarr = JSON.parse(localStorage.getItem("Dynamo_Initiatives") || "[]");
-              strategicallyarr = strategicallyarr.filter(function (item) { return item.name == 'strategically' });
-              console.log('visionarr', visionarr);
-              console.log('strategic', strategicallyarr)
+          else {
+            //change FieldRef to Name and Acending True to can sort alphapetics arabic and english
+            customQuery = '<View><Query><Where><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>';
+          }
+          if ((listkey == 'sos' && element.InternalName == 'RelatedStrategy') || (listkey == 'mainkpi' && element.InternalName == 'RelatedStrategy')) { // to get the related strategy type based on user Role
+            if (isVROP) {
+              customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type="Text">vision</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
+            } else {
+              // customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Neq><FieldRef Name="Types" /><Value Type="Text">vision</Value></Neq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
             }
-            customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="InitiativeCode" /><Values>';
-            strategicallyarr.forEach(function (item) {
-              customQuery += '<Value Type="Text">' + item.code + '</Value>';
-            });
-            customQuery += '</Values></In></And></Where></Query><RowLimit>100</RowLimit></View>';
-          } else if ((listkey == 'Benefits' && element.InternalName == 'InitiativeCode') || (listkey == 'BenefitMatrix' && element.InternalName == 'RelatedInitiative')) {
-            customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type="Text">strategically</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
-          } else if ('benefitmatrix' && element.InternalName == 'RelatedKPI') {
-            customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\'/><Value Type=\'Text\'>Deleted</Value></Neq><Or><Eq><FieldRef Name="Types" /><Value Type="Text">strategically</Value></Eq><Eq><FieldRef Name="Types" /><Value Type="Text">sub</Value></Eq></Or></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
           }
-        }
-        if (isVROE || isVROP) {
-          if ((listkey == 'Benefits' && element.InternalName == 'InitiativeCode') || (listkey == 'BenefitMatrix' && element.InternalName == 'RelatedInitiative')) {
-            customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type="Text">vision</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
-          } else
+
+          //if ICODE and listkey = 'initiativedeli'
+          if (ICODE && element.source == 'Benefits') {
+            //change FieldRef to Name and Acending True to can sort alphapetics arabic and english
+            customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + ICODE + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>';
+          }
+          if (ICODE && element.source == 'InitiativeDeliverables' && listkey == 'initiativemilestones') {
+            //change FieldRef to Name and Acending True to can sort alphapetics arabic and english
+            customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + ICODE + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>';
+          }
+          //ghufran User dropdown security
+          if (isEPMO || isSPMAdmin || isSPMTeam) {
             if ((listkey == 'benefitmetrics' && element.InternalName == 'RelatedBenefit') || (listkey == 'benefitmatrix' && element.InternalName == 'RelatedBenefit') || (listkey == 'deliverablemetrics' && element.InternalName == 'RelatedInitiativeDeliverable')) {
               if (localStorage.getItem('Dynamo_Initiatives') != null) {
                 var visionarr = JSON.parse(localStorage.getItem("Dynamo_Initiatives") || "[]");
@@ -1546,14 +1563,42 @@ window.ListInfo = {
                 console.log('strategic', strategicallyarr)
               }
               customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="InitiativeCode" /><Values>';
-              visionarr.forEach(function (item) {
+              strategicallyarr.forEach(function (item) {
                 customQuery += '<Value Type="Text">' + item.code + '</Value>';
               });
               customQuery += '</Values></In></And></Where></Query><RowLimit>100</RowLimit></View>';
+            } else if ((listkey == 'Benefits' && element.InternalName == 'InitiativeCode') || (listkey == 'BenefitMatrix' && element.InternalName == 'RelatedInitiative')) {
+              customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type="Text">strategically</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
             } else if ('benefitmatrix' && element.InternalName == 'RelatedKPI') {
-              customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type="Text">vision</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
+              customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\'/><Value Type=\'Text\'>Deleted</Value></Neq><Or><Eq><FieldRef Name="Types" /><Value Type="Text">strategically</Value></Eq><Eq><FieldRef Name="Types" /><Value Type="Text">sub</Value></Eq></Or></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
             }
+          }
+          if (isVROE || isVROP) {
+            if ((listkey == 'Benefits' && element.InternalName == 'InitiativeCode') || (listkey == 'BenefitMatrix' && element.InternalName == 'RelatedInitiative')) {
+              customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type="Text">vision</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
+            } else
+              if ((listkey == 'benefitmetrics' && element.InternalName == 'RelatedBenefit') || (listkey == 'benefitmatrix' && element.InternalName == 'RelatedBenefit') || (listkey == 'deliverablemetrics' && element.InternalName == 'RelatedInitiativeDeliverable')) {
+                if (localStorage.getItem('Dynamo_Initiatives') != null) {
+                  var visionarr = JSON.parse(localStorage.getItem("Dynamo_Initiatives") || "[]");
+                  visionarr = visionarr.filter(function (item) { return item.name == 'vision' });
+                  var strategicallyarr = JSON.parse(localStorage.getItem("Dynamo_Initiatives") || "[]");
+                  strategicallyarr = strategicallyarr.filter(function (item) { return item.name == 'strategically' });
+                  console.log('visionarr', visionarr);
+                  console.log('strategic', strategicallyarr)
+                }
+                customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="InitiativeCode" /><Values>';
+                visionarr.forEach(function (item) {
+                  customQuery += '<Value Type="Text">' + item.code + '</Value>';
+                });
+                customQuery += '</Values></In></And></Where></Query><RowLimit>100</RowLimit></View>';
+              } else if ('benefitmatrix' && element.InternalName == 'RelatedKPI') {
+                customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type="Text">vision</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
+              }
+          }
         }
+
+
+
         //to handle lookup field bilangual like Portfolio
         if (element.BIlanguage == true) {
           if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
@@ -1565,7 +1610,7 @@ window.ListInfo = {
 
         htmlBody = '<div class="col-md-6 CFIELD ' + element.className + ' " ' + thistip + ' ' + hidestagesIDs + ' ' + editableBy + ' ' + showstagesIDs + '  ' + disablestagesIDs + '  ' + enablestagesIDs + '   ' + isWfhidestagesIDs + ' ' + requireOnWfTaskstagesIDs + ' ' + isWfshowstagesIDs + '  ' + isWfdisablestagesIDs + '  ' + isWfenablestagesIDs + '        data-groups="' + groups + '" style="display:' + element.display + '">' +
           '<label for="' + element.InternalName + '" ' + element.validation + '>' + displayName + '</label>' +
-          '<select ' + ToggleName + ' ' + element.validation + ' ' + dynamic + ' data-listname="' + element.source + '" data-valfieldkey="' + element.valfieldkey + '" data-Dispfieldkey="' + dispfieldkey + '" class="form-control" type="dropdown" id="' + element.InternalName + '" value="" placeholder="' + displayName + '" ' + element.state + '><option value="" ' + selected + ' disabled>' + displayName + '</option>';
+          '<select ' + ToggleName + ' ' + element.validation + ' ' + dynamic + ' data-listname="' + element.source + '" data-valfieldkey="' + element.valfieldkey + '" data-Dispfieldkey="' + dispfieldkey + '"data-filterfield="' + element.filterField + '" data-filterfieldtype="' + element.filterFieldType + '" class="form-control" type="dropdown" id="' + element.InternalName + '" value="" placeholder="' + displayName + '" ' + element.state + '><option value="" ' + selected + ' disabled>' + displayName + '</option>';
 
 
         var itemsID = [];
@@ -1600,7 +1645,7 @@ window.ListInfo = {
         customQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="' + element.queryField + '" /><Value Type="' + element.queryFieldType + '">' + element.queryFieldValue + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>';
         htmlBody = '<div class="col-md-6 CFIELD ' + element.className + ' " ' + thistip + ' ' + hidestagesIDs + ' ' + editableBy + ' ' + showstagesIDs + '  ' + disablestagesIDs + '  ' + enablestagesIDs + '   ' + isWfhidestagesIDs + ' ' + requireOnWfTaskstagesIDs + ' ' + isWfshowstagesIDs + '  ' + isWfdisablestagesIDs + '  ' + isWfenablestagesIDs + '    data-groups="' + groups + '" style="display:' + element.display + '">' +
           '<label for="' + element.InternalName + '" ' + element.validation + '>' + displayName + '</label>' +
-          '<select ' + ToggleName + '  ' + element.validation + ' ' + dynamic + ' data-listname="' + element.source + '" data-valfieldkey="' + element.valfieldkey + '" data-Dispfieldkey="' + element.Dispfieldkey + '" class="form-control" type="dropdown" id="' + element.InternalName + '" value="" placeholder="' + displayName + '" ' + element.state + '><option value="" ' + selected + ' disabled>' + displayName + '</option>';
+          '<select ' + ToggleName + '  ' + element.validation + ' ' + dynamic + ' data-listname="' + element.source + '" data-valfieldkey="' + element.valfieldkey + '" data-Dispfieldkey="' + element.Dispfieldkey + '"  data-filterfield="' + element.filterField + '" data-filterfieldtype="' + element.filterFieldType + '" class="form-control" type="dropdown" id="' + element.InternalName + '" value="" placeholder="' + displayName + '" ' + element.state + '><option value="" ' + selected + ' disabled>' + displayName + '</option>';
 
         var itemsID = [];
         sphttp.get(_spPageContextInfo.siteServerRelativeUrl, element.source, customQuery, [element.valfieldkey, element.Dispfieldkey], function (records, record, listItem, isDone) {
@@ -1629,7 +1674,7 @@ window.ListInfo = {
 
         htmlBody = '<div class="col-md-6 CFIELD ' + element.className + ' " ' + thistip + ' ' + hidestagesIDs + ' ' + editableBy + ' ' + showstagesIDs + '  ' + disablestagesIDs + '  ' + enablestagesIDs + '   ' + isWfhidestagesIDs + ' ' + requireOnWfTaskstagesIDs + ' ' + isWfshowstagesIDs + '  ' + isWfdisablestagesIDs + '  ' + isWfenablestagesIDs + '    data-groups="' + groups + '" style="display:' + element.display + '">' +
           '<label for="' + element.InternalName + '" ' + element.validation + '>' + displayName + '</label>' +
-          '<select ' + ToggleName + ' ' + element.validation + ' ' + dynamic + ' data-listname="' + element.source + '" data-valfieldkey="' + element.valfieldkey + '" data-Dispfieldkey="' + element.Dispfieldkey + '" class="form-control" type="dropdown" id="' + element.InternalName + '" value="" placeholder="' + displayName + '" ' + element.state + '><option value="" ' + selected + ' disabled>' + displayName + '</option>';
+          '<select ' + ToggleName + ' ' + element.validation + ' ' + dynamic + ' data-listname="' + element.source + '" data-valfieldkey="' + element.valfieldkey + '" data-Dispfieldkey="' + element.Dispfieldkey + '" data-filterfield="' + element.filterField + '" data-filterfieldtype="' + element.filterFieldType + ' " class="form-control" type="dropdown" id="' + element.InternalName + '" value="" placeholder="' + displayName + '" ' + element.state + '><option value="" ' + selected + ' disabled>' + displayName + '</option>';
 
         var itemsID = [];
         sphttp.get(_spPageContextInfo.siteServerRelativeUrl, element.source, customQuery, [element.valfieldkey, element.Dispfieldkey], function (records, record, listItem, isDone) {
@@ -2233,6 +2278,68 @@ window.ListInfo = {
       // }
     }
   },
+  roleQuery: async function (
+		fieldsConditionConfig,
+	) {
+		let whereBody = ``, queryBody=``, whereBodyFinal= ``;
+		//dynamic query building
+		await Promise.all(fieldsConditionConfig.map(async(el, i, a) => {
+			//Two choices
+			if (fieldsConditionConfig.length == 1) {
+				if (i == 0) {
+					whereBody += `<And><In><FieldRef Name="${el.field}"/><Values>`;
+					for (var j = 0; j < el.values.length; j++) {
+						whereBody += `<Value Type="${el.type}">${el.values[j]}</Value>`;
+					}
+					whereBody += `</Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And>`;
+				}
+			}
+			//More than two choices
+			else if (fieldsConditionConfig.length > 2) {
+				//two Eqs in last And
+				if (i == fieldsConditionConfig.length - 1) {
+					whereBody += `<And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>`;
+					whereBody += `<In><FieldRef Name="${el.field}"/><Values>`;
+					for (var j = 0; j < el.values.length; j++) {
+						whereBody += `<Value Type="${el.type}">${el.values[j]}</Value>`;
+					}
+					whereBody += `</Values></In>`;
+
+					//appending And closure
+					var count = (whereBody.match(/<And>/g) || []).length;
+					var ANDC = `</And>`.repeat(count);
+					whereBody += ANDC;
+				}
+				//normal And
+				else {
+					whereBody += `<And><In><FieldRef Name="${el.field}"/><Values>`;
+					for (var j = 0; j < el.values.length; j++) {
+						whereBody += `<Value Type="${el.type}">${el.values[j]}</Value>`;
+					}
+					whereBody += `</Values></In>`;
+				}
+			}
+			//Finish Line, make last changes and build query
+			if (i == fieldsConditionConfig.length - 1) {
+				// console.log(PQueryFilteration);
+				whereBody = whereBody.replaceAll(
+					`Type="date"`,
+					`IncludeTimeValue="TRUE" Type="DateTime"`
+				);
+				whereBodyFinal = `<Where>${whereBody}
+					</Where>`;
+				queryBody = `<View>
+						<Query>
+						${whereBodyFinal}
+						<OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
+						</Query>
+					</View>`;
+        console.log(`query for dropdown menu`, queryBody);
+			}
+    })
+    );
+    return queryBody;
+	},
 };
 // for view
 var View_ListInfo = {
@@ -3145,6 +3252,60 @@ var Dynamic_Data_Request = {
       }
       return d;
     },
+  },
+};
+dynamicAffectSelect = {
+  // The main Initialization function
+  init: function (affectedSelectsInfo) {
+    dynamicAffectSelect.g.affectedSelectsInfo = affectedSelectsInfo;
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle(affectedSelectsInfo[0].listName);
+    var camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(
+      `<View><Query>
+        <Where><And>
+          <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
+          <Eq><FieldRef Name="${affectedSelectsInfo[0].filterField}"/><Value Type="${affectedSelectsInfo[0].filterFieldType}">${affectedSelectsInfo[0].parentFieldValue}</Value></Eq>
+        </And></Where>
+      <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`
+    );
+    dynamicAffectSelect.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(dynamicAffectSelect.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, dynamicAffectSelect.onSuccess),
+      Function.createDelegate(this, dynamicAffectSelect.onError)
+    );
+  },
+  onSuccess: function (sender, args) {
+    var collListItem = dynamicAffectSelect.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    let affectedSelectsInfo = dynamicAffectSelect.g.affectedSelectsInfo[0];
+    $(`select#${affectedSelectsInfo.affectedFieldName}`).html("");
+    let optionsBody = "";
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      let dispfieldkey = oListItem.get_item(`${affectedSelectsInfo.dispFieldKey}`);
+      let valfieldkey = oListItem.get_item(`${affectedSelectsInfo.valFieldKey}`);
+      if (dispfieldkey && dispfieldkey.length > 100) {
+        var optionText = dispfieldkey.substr(0, 100) + '...'
+      } else {
+        var optionText = dispfieldkey
+      }
+      optionsBody += '<option option-id="' + oListItem.get_id() + '" value="' + valfieldkey + '">' + optionText + '</option>';
+    }
+    $(`select#${affectedSelectsInfo.affectedFieldName}`).html(optionsBody);
+    dynamicAffectSelect.g.affectedSelectsInfo = dynamicAffectSelect.g.affectedSelectsInfo.shift();
+    dynamicAffectSelect.g.affectedSelectsInfo.length && dynamicAffectSelect.init(dynamicAffectSelect.g.affectedSelectsInfo);
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+
+  // Global variables
+  g: {
+    PhasesArray: [],
   },
 };
 //phases-stages
@@ -4476,7 +4637,7 @@ var Integration_Handler = {
       "DocMngRq": {
         "MsgRqHdr": {
           "RqUID": RqUID, // should be unique
-          "SCId": "ESPRTL", // will change to Hemma after walid updated 
+          "SCId": "ESPRTL", // will change to Hemma after walid updated
           "SubSCId": "", // as mohammad request data > TADHALUMAT
           "SvcId": "DocMng", // for post request DocMng for get DocsInq
           "FuncId": "11700000", // fixed
@@ -4510,7 +4671,7 @@ var Integration_Handler = {
 
 
 
-    // window.Archive_Data_Submit.init(RqUID,"E000127") 
+    // window.Archive_Data_Submit.init(RqUID,"E000127")
 
     $.ajax({
       url: "http://172.28.3.16:7901/v1/documents/manage",
@@ -4550,7 +4711,7 @@ function getBase64(file) {
 // end  working on integration btn
 
 ///////////////////////////////////////////////
-//decimal number percentage 
+//decimal number percentage
 function ForNumbers(evt) {
   var charCode = (evt.which) ? evt.which : event.keyCode;
 

@@ -27,7 +27,7 @@ var Information_Form = [{
             "type": "string",
             "validation": "required",
             security: {
-                groups: [ 
+                groups: ['VRO_E','LMS_E',
                     'EPMO', 'System Admin Group'
                 ]
             },
@@ -40,7 +40,7 @@ var Information_Form = [{
             "validation": "required",
             "maxchar": 5000,
             security: {
-                groups: [
+                groups: ['VRO_E','LMS_E',
                     'EPMO','Development Unit' ,'System Admin Group', 'OPMO', 'Project Managers for Project Web App'
                 ]
             },
@@ -54,7 +54,7 @@ var Information_Form = [{
             "validation": "required",
             "maxchar": 5000,
             security: {
-                groups: [
+                groups: ['VRO_E','LMS_E',
                     'EPMO', 'Development Unit','System Admin Group', 'OPMO', 'Project Managers for Project Web App'
                 ]
             },
@@ -67,7 +67,7 @@ var Information_Form = [{
         //     "type": "multiline",
         //     "maxchar": 5000,
         //     security: {
-        //         groups: [
+        //         groups: ['VRO_E','LMS_E',
         //             'EPMO', 'System Admin Group', 'OPMO', 'Project Managers for Project Web App', 'SPMO','Development Unit',
         //         ]
         //     },
@@ -109,7 +109,7 @@ var Information_Form = [{
                 ]
             },
             security: {
-                groups: [
+                groups: ['VRO_E','LMS_E',
                     'EPMO', 'System Admin Group', 'OPMO', 'Project Managers for Project Web App', 'SPMO','Development Unit',
                 ]
             },
@@ -132,7 +132,7 @@ var Information_Form = [{
                 ]
             },
             security: {
-                groups: [
+                groups: ['VRO_E','LMS_E',
                     'EPMO', 'System Admin Group', 'OPMO', 'SPMO','Development Unit',
                 ]
             },
@@ -143,7 +143,7 @@ var Information_Form = [{
             "DisplayNameEn": "Committees",
             "type": "string",
             security: {
-                groups: [
+                groups: ['VRO_E','LMS_E',
                     'EPMO', 'System Admin Group', 'OPMO', 'Project Managers for Project Web App', 'SPMO','Development Unit',
                 ]
             },
@@ -160,10 +160,48 @@ var Information_Form = [{
             "Dispfieldkey": "Name",
             "valfieldkey": "Title",
             security: {
-                groups: [
+                groups: ['VRO_E','LMS_E',
                     'EPMO', 'System Admin Group', 'OPMO', 'SPMO','Development Unit',
                 ]
             },
+            accessFilter: [
+                {
+                    role: "VROE",
+                    conditions: [{
+                        field: "Types",
+                        type: "Text",
+                        values: ["vision"],
+                    }],
+                },
+                {
+                    role: "VROP",
+                    conditions: [{
+                        field: "Types",
+                        type: "Text",
+                        values: ["vision"],
+                    }],
+                },
+                {
+                    role: "LMSE",
+                        conditions: [
+                            {
+                                field: "Types",
+                                type: "Text",
+                                values: ["lms"],
+                            }
+                        ]
+                },
+                {
+                    role: "LMSP",
+                        conditions: [
+                            {
+                                field: "Types",
+                                type: "Text",
+                                values: ["lms"],
+                            }
+                        ]
+                }
+            ]
             // "state": "disabled",
             // "className":"autofill"
         },
@@ -188,7 +226,7 @@ var Information_Form = [{
         //     "source": "InitiativeDeliverables",
         //     "Dispfieldkey": "Name",
         //     "valfieldkey": "Title",
-          
+
         //     "state": "disabled",
         // },
         // {
@@ -200,7 +238,7 @@ var Information_Form = [{
         //     "source": "InitiativeMilestones",
         //     "Dispfieldkey": "Name",
         //     "valfieldkey": "Title",
-          
+
         //     "state": "disabled",
         //     // "className":"autofill"
         // },
@@ -247,7 +285,7 @@ var Information_Form = [{
             "Dispfieldkey": "Name",
             "valfieldkey": "Title",
             security: {
-                groups: [
+                groups: ['VRO_E','LMS_E',
                     'EPMO', 'System Admin Group', 'OPMO', 'SPMO','Development Unit', 'Project Managers for Project Web App'
                 ]
             },
@@ -260,7 +298,7 @@ var Information_Form = [{
             "DisplayNameEn": "Corrective Plan",
             "type": "multiline",
             security: {
-                groups: [
+                groups: ['VRO_E','LMS_E',
                     'EPMO', 'System Admin Group', 'OPMO', 'SPMO','Development Unit', 'Project Managers for Project Web App'
                 ]
             },
@@ -284,7 +322,7 @@ var Information_Form = [{
                 ]
             },
             security: {
-                groups: [
+                groups: ['VRO_E','LMS_E',
                     'EPMO', 'System Admin Group',
                 ]
             },
@@ -402,7 +440,7 @@ var Information_Form = [{
         //     "Dispfieldkey": "Name",
         //     "valfieldkey": "Title",
         //     security: {
-        //         groups: [
+        //         groups: ['VRO_E','LMS_E',
         //             'EPMO', 'System Admin Group'
         //         ]
         //     },
@@ -421,7 +459,7 @@ var Information_Form = [{
             "DispfieldkeyEn": "NameEn",
             "valfieldkey": "Title",
             security: {
-                groups: [
+                groups: ['VRO_E','LMS_E',
                     'EPMO', 'System Admin Group'
                 ]
             },
@@ -439,7 +477,7 @@ var Information_Form = [{
             "DispfieldkeyEn": "NameEn",
             "valfieldkey": "Title",
             security: {
-                groups: [
+                groups: ['VRO_E','LMS_E',
                     'EPMO', 'System Admin Group'
                 ]
             },
@@ -459,7 +497,7 @@ var Information_Form = [{
         //     "valfieldkey": "Title",
         //     // "state": "disabled" hide this field based on 24-03-2022 - EPMO
         // },
-        
+
         {
             "InternalName": "Priority",
             "DisplayName": "أهمية المشروع",
@@ -476,7 +514,7 @@ var Information_Form = [{
             },
             "validation": "required",
             security: {
-                groups: [
+                groups: ['VRO_E','LMS_E',
                     'EPMO', 'System Admin Group', 'OPMO', 'SPMO','Development Unit', 'Project Managers for Project Web App'
                 ]
             },
@@ -784,7 +822,7 @@ var Information_Form = [{
             ]
         },
         security: {
-            groups: [
+            groups: ['VRO_E','LMS_E',
                 'EPMO', 'System Admin Group', 'OPMO', 'SPMO','Development Unit', 'Project Managers for Project Web App'
             ]
         },
@@ -818,7 +856,7 @@ var Information_Form = [{
         //     "DisplayNameEn": "Owner",
         //     "type": "picker",
         //     security: {
-        //         groups: [
+        //         groups: ['VRO_E','LMS_E',
         //            'EPMO', 'System Admin Group', 'OPMO', 'SPMO','Development Unit',
         //         ]
         //     },
@@ -831,7 +869,7 @@ var Information_Form = [{
             "type": "picker",
             "validation": "required",
             security: {
-                groups: [
+                groups: ['VRO_E','LMS_E',
                     'EPMO', 'System Admin Group', 'OPMO', 'SPMO','Development Unit', 'Project Managers for Project Web App'
                 ]
             },
@@ -862,7 +900,7 @@ var Information_Form = [{
             "type": "picker",
             "validation": "required",
             security: {
-                groups: [
+                groups: ['VRO_E','LMS_E',
                     'EPMO', 'System Admin Group', 'OPMO', 'SPMO','Development Unit', 'Project Managers for Project Web App'
                 ]
             },

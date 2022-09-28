@@ -669,7 +669,7 @@ var MainKPIs_Info_Request = {
     if (!isAdmin && !isSPMAdmin) { // to can the spmAdmin change on  targets
       $('td input[data-internal*="Target"]').prop('disabled', true);
     }
-    if (!isAdmin && !isPerformanceLeader) { // to can the spmAdmin change on  targets
+    if (!isAdmin && !isPerformanceLeader && isLMSP) { // to can the spmAdmin change on  targets
       $('input[data-internal*="Actual"]').prop('disabled', true);
     }
     if (isPerformanceLeader) {

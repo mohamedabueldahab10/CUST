@@ -383,7 +383,7 @@ window.ListingData = {
 
       $('.user-name').text(UserN.Title.match(/(?<!\p{L}\p{M}*)\p{L}\p{M}*/gu).join(''));
       $('.user-name-full').text(UserN.Title);
-      
+
       if (isAdmin || isEPMO) {
         if (isTasks && allTasksClicked) {
 
@@ -416,19 +416,22 @@ window.ListingData = {
   init: function () {
 
     if (!isTasks && originalstate) {
-      if (UserICode != null && UserICode != '') {
-        if (listkey == 'initiativemilestones') { // to arrange the card depends on planned completed Date
-          PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In></And></Where><OrderBy><FieldRef Name=\'PlannedCompletedDate\' Ascending=\'False\' /></OrderBy></Query></View>';
-          PQueryFilteration = '<In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In>';
-        } else {
-          PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In></And></Where></Query></View>';
-          PQueryFilteration = '<In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In>';
+      if (isRoleDataLevelAccess && (!UserICode && !USERPCODE)) {
+        PQuery = dataLevelAccessQuery;
+      } else {
+        if (UserICode != null && UserICode != '') {
+          if (listkey == 'initiativemilestones') { // to arrange the card depends on planned completed Date
+            PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In></And></Where><OrderBy><FieldRef Name=\'PlannedCompletedDate\' Ascending=\'False\' /></OrderBy></Query></View>';
+            PQueryFilteration = '<In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In>';
+          } else {
+            PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In></And></Where></Query></View>';
+            PQueryFilteration = '<In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In>';
+          }
+        }
+        else {
+          PQuery = AccessQuery;
         }
       }
-      else {
-        PQuery = AccessQuery;
-      }
-
     }
 
     console.log(PQuery, "INNNNNNNNNNNNNNNNNNNNNNN LISTING")
@@ -1112,7 +1115,7 @@ window.ListingData = {
           }
           // else if (isEPMO) {
           //   PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type=\'Text\'>strategically</Value></Eq></And></Where></Query></View>';
-          // } 
+          // }
           else {
             PQuery = AccessQuery // added it to return all cards in listing after clear filters
           }
@@ -1926,7 +1929,7 @@ window.Delegate_Data_Submit = {
           assignedToGroup = stages[0].group;
         }
       }
-      // } 
+      // }
       if ($('#AssignedTo').find('span.sp-peoplepicker-userSpan').length) {
         var id = $('#AssignedTo').attr('id');
         ppp = ($('#AssignedTo').find('span.sp-peoplepicker-userSpan').attr('sid') == undefined) ? '' : SP.FieldUserValue.fromUser($('#AssignedTo').find('span.sp-peoplepicker-userSpan').attr('sid')); //.split('|').slice(-1)[0]

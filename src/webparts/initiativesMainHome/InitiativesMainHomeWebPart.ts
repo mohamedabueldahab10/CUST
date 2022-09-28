@@ -195,7 +195,7 @@ export default class InitiativesMainHomeWebPart extends BaseClientSideWebPart<II
                                             <!-- filter labels go here -->
                                         </div>
                                     </div>
-                                  
+
                                     <div class="dropdown" id="depfilter">
                                     <a data-trans-filter5 href="#"
                                         class="dropdown-toggle fnt-14 w-1 black Resources" data-toggle="dropdown"
@@ -600,7 +600,7 @@ export default class InitiativesMainHomeWebPart extends BaseClientSideWebPart<II
 
                                                     <a data-trans-CompletionStatus href="javascript:void(0);"
                                                         id="CardDiv2" class="dropdown-item Resources"></a>
-                                                    
+
 
                                                     <!--<a data-trans-ScheduleCompletionStatus href="javascript:void(0);"
                                                         id="CardDiv8" class="dropdown-item Resources"></a>-->
@@ -642,7 +642,7 @@ export default class InitiativesMainHomeWebPart extends BaseClientSideWebPart<II
 
                                                     <a data-trans-CompletionStatus href="javascript:void(0);"
                                                         id="CardDiv2" class="dropdown-item Resources"></a>
-                                                  
+
 
                                                     <!--<a data-trans-ScheduleCompletionStatus href="javascript:void(0);"
                                                         id="CardDiv8" class="dropdown-item Resources"></a>-->
@@ -768,7 +768,7 @@ export default class InitiativesMainHomeWebPart extends BaseClientSideWebPart<II
                                                     Components</a>
                                             </div>
                                         </div>
-                   
+
                                         <div class="dropdown">
                                             <a data-trans-filter3 href="#"
                                                 class="dropdown-toggle fnt-14 w-1 black Resources"
@@ -782,7 +782,7 @@ export default class InitiativesMainHomeWebPart extends BaseClientSideWebPart<II
                                         </div>
                                     </div>
                                 </div>
-                                <ul class="nav nav-tabs" id="projectType" role="tablist">
+                                <ul class="nav nav-tabs initiatives-ctx" id="projectType" role="tablist">
                                     <li class="nav-item">
                                         <a  class="nav-link active " id="Internal"
                                             data-toggle="tab" href="#InternalProjects" role="tab"
@@ -801,6 +801,15 @@ export default class InitiativesMainHomeWebPart extends BaseClientSideWebPart<II
                                         </a>
 
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="LMS"
+                                            data-toggle="tab" href="#LMSProjects" role="tab"
+                                            aria-controls="LMSProjects" aria-selected="false">
+                                            <span data-trans-lms class="Resources"></span>
+                                            <span id="LMSProjectCount"></span>
+                                        </a>
+
+                                    </li>
                                 </ul>
                                 <div class="tab-content" id="projectTypeContent">
                                     <div class="tab-pane fade show active" id="InternalProjects" role="tabpanel"
@@ -815,11 +824,91 @@ export default class InitiativesMainHomeWebPart extends BaseClientSideWebPart<II
 
                                         </div>
                                     </div>
+                                    <div class="tab-pane fade" id="LMSProjects" role="tabpanel"
+                                    aria-labelledby="LMS">
+                                    <div class="accordion LMSAccordion" id="accordionProject">
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-12 col-lg-4 px-2 mb-3 control-ctx required-support-ctx">
+                            <div
+                                class="content-list-head d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4 mb-3">
+
+                                <div class="d-flex align-items-center">
+                                    <img src="${tasks}">
+                                    <h2 data-trans-title4 class="mb-0 mx-3 py-1 Resources" class="Resources"></h2>
+                                    <span class="badge badge-pill bg-gold px-3 white Rsupprot">0</span>
+
+                                </div>
+
+
+
+                            </div>
+                            <div class="accordion" id="accordionRequiredSupport">
+                                <div class="card">
+                                    <div class="card-header bg-white" id="headingOne">
+                                        <h3 data-trans-rsupport1 class="acc-header mb-0 py-3 px-2 Resources"
+                                            data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                                            aria-controls="collapseOne">
+
+                                        </h3>
+                                    </div>
+
+                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                                        data-parent="#accordionRequiredSupport">
+                                        <div class="card-body">
+                                            <ul class="list-group">
+
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header bg-white" id="headingTwo">
+                                        <h3 data-trans-rsupport2 class="acc-header mb-0 py-3 px-2 Resources"
+                                            data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                                            aria-controls="collapseTwo">
+
+                                        </h3>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                        data-parent="#accordionRequiredSupport">
+                                        <div class="card-body">
+                                            <ul class="list-group">
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header bg-white" id="headingThree">
+                                        <h3 data-trans-rsupport3 class="acc-header mb-0 py-3 px-2 Resources"
+                                            data-toggle="collapse" data-target="#collapseThree"
+                                            aria-expanded="false" aria-controls="collapseThree">
+
+                                        </h3>
+                                    </div>
+                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                                        data-parent="#accordionRequiredSupport">
+                                        <div class="card-body">
+                                            <ul class="list-group">
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                                 </div>
 
 
                             </div>
-                     
+
                         </div>
 
                     </div>

@@ -94,6 +94,7 @@
         "operationally": "تشغيلي",
         "transformationally": "تحولي",
         "strategically": "استراتيجي",
+        "lms": "سوق العمل",
 
         "ministry": "وزارة",
 
@@ -778,6 +779,7 @@
         "operationally": "Operational",
         "transformationally": "Transformative",
         "strategically": "Strategic",
+        "lms": "LMS",
 
         //Priority Values
         "hight": "High",

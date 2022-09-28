@@ -61,9 +61,13 @@ var MainKPIs_Info_Request = {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("MainKPI");
     var camlQuery = new SP.CamlQuery();
+    let myQuery = `<View><Query>\
+    <OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>`;
+    if (isRoleDataLevelAccess) {
+      myQuery = dataLevelAccessQuery;
+    }
     camlQuery.set_viewXml(
-      "<View><Query>\
-        <OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>"
+      myQuery
     );
     MainKPIs_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
 
@@ -324,7 +328,7 @@ var MainKPIs_Info_Request = {
             '"><h2 class="card-title my-4 light-gray">' +
             name +
             "</h2></a>" +
-            //Main_Array[k].name 
+            //Main_Array[k].name
 
             // '<a href="https://hrdf.netways1.com/SitePages/OperationalIndicators.aspx?code='+code+'&name='+name+'&type='+category+'"><h2 class="card-title my-4 light-gray">'+Main_Array[k].name+'</h2></a>'+
 
@@ -413,7 +417,7 @@ var MainKPIs_Info_Request = {
             '<span class="qrt-label fnt-12 reg">Q1</span>' +
             '<span class="qrt-val fnt-12 bold px-2">' +
             MainKPIs_Array[0].totalActualQ1 +
-            "</span>" + //MainKPIs_Array[0] to remove the error from console 
+            "</span>" + //MainKPIs_Array[0] to remove the error from console
             "</span>" +
             "</div>" +
             '<div class="d-inline-flex">' +

@@ -32,10 +32,11 @@ var Information_Form = [
                 "type": "dropdownValues",
                 options: {
                     choices: [
-                        { display: 'vision', value: 'vision' },
-                        { display: 'strategically', value: 'strategically' },
+                        { display: "vision", value: "vision", roles:["Administrator","VROE","VROP"] },
+						{ display: "strategically", value: "strategically", roles:["Administrator","EPMO"] },
+						{ display: "lms", value: "lms" , roles:["Administrator","LMSE","LMSP"]},
                         // { display: 'others', value: 'others' },
-                    ] 
+                    ]
                 }
             },
             {
@@ -52,7 +53,7 @@ var Information_Form = [
                 "valfieldkey": "Title",
                 "display":"none"
 
-                
+
 
             },
             {
@@ -123,8 +124,8 @@ var Information_Form = [
                 "DisplayNameEn": "Program Vision",
                 "DisplayName": "برنامج تحقيق الرؤية",
                 "type": "string",
-         
-    
+
+
             },
             {
                 "InternalName": "RelatedStrategy",
@@ -133,7 +134,49 @@ var Information_Form = [
                 "type": "lookup",
                 "source": "GoalStrategy",
                 "Dispfieldkey": "Name",
-                "valfieldkey": "Title"
+                "valfieldkey": "Title",
+                // dynamically affected by other dropdown
+				dynamic: "parent", //"parentInternalName" or "parent" // if parent it will affect other fields
+				//in case not parent add below attrs
+                //role access
+                accessFilter: [
+                    {
+                        role: "VROE",
+                        conditions: [{
+                            field: "Types",
+                            type: "Choice",
+                            values: ["vision"],
+                        }],
+                    },
+                    {
+                        role: "VROP",
+                        conditions: [{
+                            field: "Types",
+                            type: "Choice",
+                            values: ["vision"],
+                        }],
+                    },
+                    {
+                        role: "LMSE",
+                            conditions: [
+                                {
+                                    field: "Types",
+                                    type: "Choice",
+                                    values: ["lms"],
+                                }
+                            ]
+                    },
+                    {
+                        role: "LMSP",
+                            conditions: [
+                                {
+                                    field: "Types",
+                                    type: "Choice",
+                                    values: ["lms"],
+                                }
+                            ]
+                    }
+                ]
              },
             {
 
@@ -143,9 +186,51 @@ var Information_Form = [
                 "type": "lookup",
                 "source": "SOs",
                 "Dispfieldkey": "Name",
-                "valfieldkey": "Title",               
+                "valfieldkey": "Title",
                 // "state": "disabled"
                 // "validation":"required"
+                dynamic: "RelatedStrategy",
+				filterField:"RelatedStrategy",
+                filterFieldType: "Text",
+                //
+                accessFilter: [
+                    {
+                        role: "VROE",
+                        conditions: [{
+                            field: "Types",
+                            type: "Text",
+                            values: ["vision"],
+                        }],
+                    },
+                    {
+                        role: "VROP",
+                        conditions: [{
+                            field: "Types",
+                            type: "Text",
+                            values: ["vision"],
+                        }],
+                    },
+                    {
+                        role: "LMSE",
+                            conditions: [
+                                {
+                                    field: "Types",
+                                    type: "Text",
+                                    values: ["lms"],
+                                }
+                            ]
+                    },
+                    {
+                        role: "LMSP",
+                            conditions: [
+                                {
+                                    field: "Types",
+                                    type: "Text",
+                                    values: ["lms"],
+                                }
+                            ]
+                    }
+                ]
             },
             {
                 "InternalName": "RelatedStrategyObjective",
@@ -155,9 +240,47 @@ var Information_Form = [
                 "type": "lookup",
                 "source": "SOs",
                 "Dispfieldkey": "Name",
-                "valfieldkey": "Title",               
+                "valfieldkey": "Title",
                 // "state": "disabled",
-                 "display":"none"
+                "display": "none",
+                accessFilter: [
+                    {
+                        role: "VROE",
+                        conditions: [{
+                            field: "Types",
+                            type: "Text",
+                            values: ["vision"],
+                        }],
+                    },
+                    {
+                        role: "VROP",
+                        conditions: [{
+                            field: "Types",
+                            type: "Text",
+                            values: ["vision"],
+                        }],
+                    },
+                    {
+                        role: "LMSE",
+                            conditions: [
+                                {
+                                    field: "Types",
+                                    type: "Text",
+                                    values: ["lms"],
+                                }
+                            ]
+                    },
+                    {
+                        role: "LMSP",
+                            conditions: [
+                                {
+                                    field: "Types",
+                                    type: "Text",
+                                    values: ["lms"],
+                                }
+                            ]
+                    }
+                ]
             },
 
             // {
@@ -208,7 +331,7 @@ var Information_Form = [
                 "Dispfieldkey": "Name",
                 "DispfieldkeyEn": "NameEn",
                 "valfieldkey": "Title",
-               
+
             },
             {
                 "InternalName": "SubSector",
@@ -287,7 +410,7 @@ var Information_Form = [
                 "DisplayNameEn": "Classification",
                 "type": "string",
             },
-       
+
             // {
             //     "InternalName": "InitiativeStatus",
             //     "DisplayName": "حالة توثيق المبادرة",
@@ -392,7 +515,7 @@ var Information_Form = [
                 "DisplayNameEn": "Estimated Cost",
                 "type": "float",
             },
-          
+
             {
                 "InternalName": "ActualCost",
                 "DisplayName": "التكاليف الكلية المعتمدة ",

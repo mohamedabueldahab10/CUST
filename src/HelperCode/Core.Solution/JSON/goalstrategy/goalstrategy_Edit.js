@@ -19,7 +19,7 @@ var Information_Form = [
                 "DisplayNameEn": "Strategy Type",
                 "DisplayName": "نوع  الاستراتيجية",
                 "validation": "required",
-                // "toggleValues": ['sub'], 
+                // "toggleValues": ['sub'],
                 // "toggleFields": ['Ministry'],
                 "toggleValues": [
                     { value: 'sub', fields: ['Ministry'] },
@@ -32,9 +32,10 @@ var Information_Form = [
                     choices: [
                         // { display: 'main', value: 'main' },
                         { display: 'sub', value: 'sub' },
-                        { display: 'vision', value: 'vision' },
-                        { display: 'ministry', value: 'ministry' },
-                        { display: 'sectorial', value: 'sectorial' },
+                        { display: 'vision', value: 'vision', roles:["Administrator","VROE","VROP"] },
+                        { display: 'ministry', value: 'ministry', roles:["Administrator","EPMO","SPM"] },
+                        { display: 'sectorial', value: 'sectorial', roles:["Administrator","VROE","VROP","EPMO","SPM","LMSE","LMSP"] },
+                        { display: 'lms', value: 'lms', roles:["Administrator","LMSE","LMSP"]},
                         // { display: 'jobmarket', value: 'jobmarket' },
                         // { display: 'transformationally', value: 'transformationally' },
                     ]
@@ -114,7 +115,7 @@ var Information_Form = [
                     }
                     ]
                 },
-             
+
             },
         ]
     },
@@ -143,7 +144,7 @@ var Information_Form = [
             },
             // {
             //     "InternalName": "RelatedStrategy",
-            //     "DisplayNameEn": "Related Strategy",//uat comment 
+            //     "DisplayNameEn": "Related Strategy",//uat comment
             //     "DisplayName": "الاستراتيجية المرتبطة",
             //     // "ToggleName": "Ministry",
             //     "type": "lookupWithQuery",

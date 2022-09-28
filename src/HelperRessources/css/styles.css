@@ -901,7 +901,7 @@ label.dropdown-item.main-action-filter {
 }
 
 .nav-settings li.list-group-item:hover {
-    background-color: #e7eaf07d;
+    background-color: #e7eaf0;
 }
 
 .dropdown-menu label {
@@ -4118,6 +4118,10 @@ a.taskButton:hover {
     background: rgba(0, 0, 255, 255) !important;
 }
 
+.circlecolorcomplete {
+    background: #5B9BD5 !important;
+}
+
 .circlecolorstat5 {
     background: rgba(147, 139, 136, 255) !important;
 }
@@ -5037,7 +5041,8 @@ button.btn.btn-action.btn-save.Resources.disablebtns:before {
 }
 
 .ar #projectType .nav-item .nav-link #internalProjectCount,
-.ar #projectType .nav-item .nav-link #externalProjectCount {
+.ar #projectType .nav-item .nav-link #externalProjectCount
+.ar #projectType .nav-item .nav-link #LMSProjectCount {
     border: 1px solid #148287;
     width: 30px;
     height: 20px;
@@ -5050,7 +5055,8 @@ button.btn.btn-action.btn-save.Resources.disablebtns:before {
 }
 
 .en #projectType .nav-item .nav-link #internalProjectCount,
-.en #projectType .nav-item .nav-link #externalProjectCount {
+.en #projectType .nav-item .nav-link #externalProjectCount,
+.en #projectType .nav-item .nav-link #LMSProjectCount {
     border: 1px solid #148287;
     width: 30px;
     padding: 3px;
@@ -5206,7 +5212,7 @@ h4.text-warning[data-trans-completed] {
 }
 
 /* .project-status-info .col.h-100 {
-  
+
 } */
 
 .relatedcode {
@@ -5325,6 +5331,25 @@ select[disabled] {
     width: 100%;
     padding: 0.5rem 1rem;
     background-color: transparent;
+}
+
+.circle-radio {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #148282;
+    border-radius: 50%;
+}
+
+.dot-radio {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    transition: background .3s ease;
+}
+
+.dot-radio.activeRole,
+.list-group-item:hover .dot-radio {
+    background: #148282;
 }
 
 .autofill.PPField.SPIField[disabled] * {
