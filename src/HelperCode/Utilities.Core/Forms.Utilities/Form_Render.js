@@ -4096,7 +4096,7 @@ window.ListInfo = {
 					}
 				}
 				//More than two choices
-				else if (fieldsConditionConfig.length > 2) {
+				else if (fieldsConditionConfig.length > 1) {
 					//two Eqs in last And
 					if (i == fieldsConditionConfig.length - 1) {
 						whereBody += `<And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>`;

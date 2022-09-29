@@ -79,7 +79,7 @@ if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar
 } else {
     var No_Data = 'Not Found'
 }
- 
+
 
 window.UProjects = [];
 var iconstagesm = require('../../../HelperRessources/img/icon-stage-sm.png');
@@ -99,7 +99,7 @@ var mizania = require('../../../HelperRessources/img/mizania.svg');
 // var progress = '';
 // var mizania = '';
 
-// new repo 
+// new repo
 
 //filter vars
 var PQuery = '<View><Query><Where><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>',
@@ -148,10 +148,17 @@ window.Project_Info_Request = {
     },
     // The main Initialization function
     init: function () {
-       
+
         if (originalstate) {
             //*****call charts filteration */
-            PQuery = AccessQuery;
+            if (isRoleDataLevelAccess) {
+                PQuery = dataLevelAccessQuery;
+            } else {
+                PQuery = AccessQuery;
+            }
+            PQuery = PQuery.replace("</View>",'<ViewFields> <FieldRef Name="Status"/> <FieldRef Name="ActualBudget"/> <FieldRef Name="AssignedBudget"/> <FieldRef Name="EstimatedCost"/> <FieldRef Name="ScheduleProjectPercentageComplet0"/> <FieldRef Name="Name"/> <FieldRef Name="Title"/> <FieldRef Name="Phase"/> <FieldRef Name="Priority"/> <FieldRef Name="SubSector"/> <FieldRef Name="ProjectProgressStatus"/> <FieldRef Name="Portfolio"/> <FieldRef Name="Sector"/> <FieldRef Name="ProjectType"/> <FieldRef Name="IsStrategicProject"/> </ViewFields></View>')
+
+
             // console.log('Acces Queryyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy',AccessQuery);
             //**** Start*/check user rule and buld query to get projects;
             $(ChartHide).hide();
@@ -390,7 +397,7 @@ window.Project_Info_Request = {
         //Sort Priority
         ProgressStatusarray.sort();
 
-        
+
         progressOccurenceObject = arrToInstanceCountObj(ProgressStatusarray);
         // progressfilterarray.forEach(function (element) {
         //     if (progressOccurenceObject[element]) {
@@ -733,7 +740,7 @@ window.Project_Info_Request = {
 
                 if ($('.page-filter .dropdown-menu').find('input:checkbox:checked').length) {
 
-                    $('.page-filter .dropdown-menu:not(#forQueryAccess)').find('input:checkbox').prop({ // add:not(#forQueryAccess) to get only the related project not all when clear all filter 
+                    $('.page-filter .dropdown-menu:not(#forQueryAccess)').find('input:checkbox').prop({ // add:not(#forQueryAccess) to get only the related project not all when clear all filter
                         "checked": false,
                         "disabled": true
                     });
@@ -956,7 +963,7 @@ window.Project_Info_Request = {
 
 
             $(".CardDivall a").on("click", function (event) {
-                
+
                 ClickedChart = $(this).closest('div[id*="carditem"]').attr('id');
                 //  console.log(ClickedChart);
                 //clicked div //will hide
@@ -994,7 +1001,7 @@ window.Project_Info_Request = {
 
             //hide unvisible dropdown lists
             $('div[id*=carditem]').each(function () {
-         
+
                 var chartid = $(this).attr('id');
                 chartid = chartid.substr(chartid.length - 1);
                 //console.log(chartid)
@@ -1053,7 +1060,7 @@ var Risks_Info_Request = {
         );
     },
     onSuccess: function (sender, args) {
-        
+
         var collListItem = Risks_Info_Request.g.collListItem;
         var listItemEnum = collListItem.getEnumerator();
         var NRisks = 0,
@@ -1097,7 +1104,7 @@ var Risks_Info_Request = {
 
             }
         }
-        
+
 
         // console.log('Low', Low);
         // console.log('Medium', Medium);
@@ -1241,7 +1248,7 @@ var Deliverables_Info_Request = {
         );
     },
     onSuccess: function (sender, args) {
-        
+
 
         var collListItem = Deliverables_Info_Request.g.collListItem;
         var listItemEnum = collListItem.getEnumerator();
@@ -1285,7 +1292,7 @@ var Deliverables_Info_Request = {
             }
 
         }
-        
+
 
         // console.log(Deliverablesarray.length);
         var NoD, NoDY, NoDarray, statustxt, statusnum, statusclass, ProgressNamearray = [];
@@ -1369,7 +1376,7 @@ var Deliverables_Info_Request = {
             //     x.id = statusnum;
 
             $('.deliv-status h4[data-prname="' + UProjects[i] + '"]').addClass(statusclass).text(statustxt);
-            // $('.inner-data3 .inner-val[data-prname="' + UProjects[i] + '"]').text(POD + '%'); // commint it because nesbat elenjaz come from project schedual 
+            // $('.inner-data3 .inner-val[data-prname="' + UProjects[i] + '"]').text(POD + '%'); // commint it because nesbat elenjaz come from project schedual
         }
         //progress stats
 
@@ -1441,7 +1448,7 @@ var Deliverables_Info_Request = {
 
 var Main_Stages_Data_Request = {
     onSuccess: function (sender, args) {
-        
+
         var collListItem = Main_Stages_Data_Request.g.collListItem;
         var listItemEnum = collListItem.getEnumerator();
         while (listItemEnum.moveNext()) {
@@ -1453,7 +1460,7 @@ var Main_Stages_Data_Request = {
                 stageid: oListItem.get_id(),
             });
         }
-       
+
 
     },
     onError: function (sender, args) {
@@ -1510,8 +1517,8 @@ var Invoices_Info_Request = {
             //console.log(Amount+','+Deliverable);
             for (i = 0; i < Deliverablesarray.length; i++) {
                 var myselections = Deliverable ? Deliverable.split(":::") : [] // add myselection to handle mult delivrable in invoices
-               
-                // console.log(Deliverablesarray[i].pcode +','+ Deliverable); // chamge to mySelection to handle The Cose on Multi delivrable 
+
+                // console.log(Deliverablesarray[i].pcode +','+ Deliverable); // chamge to mySelection to handle The Cose on Multi delivrable
                 if (Deliverablesarray[i].Code == myselections[0] && Status == 'paid') {
                     debugger
 
@@ -1524,8 +1531,8 @@ var Invoices_Info_Request = {
             //
         }
 
-        
-     
+
+
         // $('.ctx-block.row.mx-n2 .carditem1  .card-body .media:nth-child(2) .d-flex span:nth-child(2)').text(Project_Info_Request.g.kFormatter(TheCost));
         //$('.ctx-block.row.mx-n2 .carditem4  .card-body .media:nth-child(3) .d-flex span:nth-child(2)').text(RisksCount);
         var TheCostPercentage = (TheCost / AssignedBudget) * 100;

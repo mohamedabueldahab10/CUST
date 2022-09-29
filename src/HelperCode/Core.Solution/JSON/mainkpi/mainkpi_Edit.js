@@ -31,7 +31,7 @@ var Information_Form = [
                 maxchar: "250",
                 validation: "required",
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO'
                     ]
                 },
@@ -58,7 +58,7 @@ var Information_Form = [
 
                 },
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO',
                     ]
                 },
@@ -75,7 +75,7 @@ var Information_Form = [
                     ]
                 },
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO',
                     ]
                 },
@@ -96,7 +96,7 @@ var Information_Form = [
                 },
                 validation: "required",
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO',
                     ]
                 },
@@ -108,7 +108,7 @@ var Information_Form = [
                 maxchar: "500",
                 type: "multiline",
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO',
                     ]
                 },
@@ -120,7 +120,7 @@ var Information_Form = [
                 maxchar: "500",
                 type: "multiline",
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO',
                     ]
                 },
@@ -139,7 +139,7 @@ var Information_Form = [
                 "validation": "required",
                 // "display":"none"
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'SPM Admin', 'SPM Team', 'VRO_P', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
                     ]
                 },
@@ -195,6 +195,7 @@ var Information_Form = [
                         { display: 'vision', value: 'vision' },
                         { display: 'ministry', value: 'ministry' },
                         { display: 'sectorial', value: 'sectorial' },
+                        { display: 'lms', value: 'lms' },
                     ]
                 }
             },
@@ -214,7 +215,7 @@ var Information_Form = [
                 display: "none",
                 // "state": "disabled",
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO',
                     ]
                 },
@@ -224,7 +225,7 @@ var Information_Form = [
                 ToggleName: "RelatedMainKpis",
                 DisplayNameEn: "Related Main Kpis",
                 DisplayName: "الربط بالمؤشرات الرئيسية",
-                type: "lookupWithQuery",
+                type: "lookup",
                 queryField: "Types",
                 queryFieldType: "dropdownValues", //ex: "Choice"
                 queryFieldValue: "main",
@@ -234,10 +235,42 @@ var Information_Form = [
                 valfieldkey: "Title",
                 display: "none",
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO',
                     ]
                 },
+                accessFilter: [
+					{
+						role: "VROE",
+						conditions: [
+							{
+								field: "RelatedStrategyType",
+								type: "Choice",
+								values: ["vision"],
+							},
+							{
+								field: "Types",
+								type: "Choice",
+								values: ["main"],
+							},
+						],
+					},
+					{
+						role: "LMSP",
+						conditions: [
+							{
+								field: "RelatedStrategyType",
+								type: "Choice",
+								values: ["lms"],
+							},
+							{
+								field: "Types",
+								type: "Choice",
+								values: ["main"],
+							},
+						],
+					},
+				],
             },
             {
                 InternalName: "RelatedObjective",
@@ -254,7 +287,7 @@ var Information_Form = [
                 valfieldkey: "Title",
                 display: "none",
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO',
                     ]
                 },
@@ -292,7 +325,7 @@ var Information_Form = [
                 display: "none",
                 // "state": "disabled",
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO',
                     ]
                 },
@@ -312,7 +345,7 @@ var Information_Form = [
                 "valfieldkey": "Title",
                 "state": "disabled",
                 // security: {
-                //     groups: [
+                //     groups: ["LMS_P",
                 //         'EPMO', 'System Admin Group'
                 //     ]
                 // },
@@ -550,7 +583,7 @@ var Information_Form = [
             //     "DisplayName": "اسم مالك المؤشر",
             //     "type": "string",
             //     security: {
-            //         groups: [
+            //         groups: ["LMS_P",
             //             'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO', 'Project Managers for Project Web App'
             //         ]
             //     },
@@ -562,7 +595,7 @@ var Information_Form = [
                 type: "picker",
                 validation: "required",
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO',
                     ]
                 },
@@ -574,7 +607,7 @@ var Information_Form = [
                 type: "picker",
                 validation: "required",
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO',
                     ]
                 },
@@ -586,7 +619,7 @@ var Information_Form = [
                 type: "picker",
                 validation: "required",
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO',
                     ]
                 },
@@ -598,7 +631,7 @@ var Information_Form = [
                 type: "string",
                 maxchar: "500",
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO',
                     ]
                 },
@@ -610,7 +643,7 @@ var Information_Form = [
                 "type": "string",
                 "maxchar": "500",
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO',
                     ]
                 },
@@ -622,7 +655,7 @@ var Information_Form = [
                 "type": "email", //in view should be string
                 //   "maxchar": "500",
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO',
                     ]
                 },
@@ -645,7 +678,7 @@ var Information_Form = [
                     choices: ["+", "-"],
                 },
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO',
                     ]
                 },
@@ -670,7 +703,7 @@ var Information_Form = [
                     ],
                 },
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'SPM Admin', 'Performance Leaders', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO',
                     ]
                 },
@@ -698,7 +731,7 @@ var Information_Form = [
                     ],
                 },
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO',
                     ]
                 },
@@ -715,7 +748,7 @@ var Information_Form = [
                     ],
                 },
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO',
                     ]
                 },
@@ -727,7 +760,7 @@ var Information_Form = [
                 DisplayName: "وزن المؤشر",
                 type: "floatpercentage",
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO',
                     ]
                 },
@@ -738,7 +771,7 @@ var Information_Form = [
                 "DisplayName": "خط الأساس",
                 "type": "number",
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO',
                     ]
                 },
@@ -750,7 +783,7 @@ var Information_Form = [
                 "min": "FromDate",
                 "type": "datetime",
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'VRO_P', 'System Admin Group', 'SPM Admin', 'OPMO',
                     ]
                 },
@@ -788,7 +821,7 @@ var Information_Form = [
                     ]
                 },
                 security: {
-                    groups: [
+                    groups: ["LMS_P",
                         'VRO_P', 'System Admin Group', 'SPM Admin', 'OPMO',
                     ]
                 },
@@ -808,7 +841,7 @@ var Information_Form = [
             type: "string",
             state: "disabled",
             security: {
-                groups: [
+                groups: ["LMS_P",
                     'VRO_P', 'Performance Leaders', 'OPMO', 'System Admin Group',
                 ]
             },
@@ -830,7 +863,7 @@ var Information_Form = [
                 "display": "none"
             },
             security: {
-                groups: [
+                groups: ["LMS_P",
                     'VRO_P', 'Performance Leaders', 'System Admin Group', 'OPMO',
                 ]
             },
@@ -849,7 +882,7 @@ var Information_Form = [
                 "display": "none"
             },
             security: {
-                groups: [
+                groups: ["LMS_P",
                     'VRO_P', 'Performance Leaders', 'System Admin Group', 'OPMO',
                 ]
             },
@@ -869,7 +902,7 @@ var Information_Form = [
                 "display": "none"
             },
             security: {
-                groups: [
+                groups: ["LMS_P",
                     'VRO_P', 'Performance Leaders', 'OPMO', 'System Admin Group',
                 ]
             },
@@ -899,7 +932,7 @@ var Information_Form = [
             },
             "validation": "required",
             security: {
-                groups: [
+                groups: ["LMS_P",
                     'VRO_P', 'Performance Leaders', 'OPMO', 'System Admin Group',
                 ]
             },
@@ -927,7 +960,7 @@ var Information_Form = [
                 ],
             },
             security: {
-                groups: [
+                groups: ["LMS_P",
                     'SPM Team', 'VRO_P', 'Performance Leaders', 'System Admin Group', 'OPMO',
                 ]
             },
@@ -965,7 +998,7 @@ var Information_Form = [
         //         ]
         //     },
         //     security: {
-        //         groups: [
+        //         groups: ["LMS_P",
         //             'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO',
         //         ]
         //     },
@@ -977,7 +1010,7 @@ var Information_Form = [
             type: "number",
             //editableBy: "PerformanceLeader",
             security: {
-                groups: [
+                groups: ["LMS_P",
                     'VRO_P', 'Performance Leaders', 'OPMO', 'System Admin Group',
                 ]
             },
@@ -989,7 +1022,7 @@ var Information_Form = [
             type: "number",
             //editableBy: "PerformanceLeader",
             security: {
-                groups: [
+                groups: ["LMS_P",
                     'VRO_P', 'Performance Leaders', 'OPMO', 'System Admin Group',
                 ]
             },
@@ -1001,7 +1034,7 @@ var Information_Form = [
             type: "number",
             //editableBy: "PerformanceLeader",
             security: {
-                groups: [
+                groups: ["LMS_P",
                     'VRO_P', 'Performance Leaders', 'OPMO', 'System Admin Group',
                 ]
             },
@@ -1013,7 +1046,7 @@ var Information_Form = [
             type: "number",
             //editableBy: "PerformanceLeader",
             security: {
-                groups: [
+                groups: ["LMS_P",
                     'VRO_P', 'Performance Leaders', 'OPMO', 'System Admin Group',
                 ]
             },
@@ -1025,7 +1058,7 @@ var Information_Form = [
             type: "number",
             //editableBy: "PerformanceLeader",
             security: {
-                groups: [
+                groups: ["LMS_P",
                     'VRO_P', 'Performance Leaders', 'OPMO', 'System Admin Group',
                 ]
             },
@@ -1037,7 +1070,7 @@ var Information_Form = [
             type: "number",
             //editableBy: "PerformanceLeader",
             security: {
-                groups: [
+                groups: ["LMS_P",
                     'VRO_P', 'Performance Leaders', 'OPMO', 'System Admin Group',
                 ]
             },
@@ -1049,7 +1082,7 @@ var Information_Form = [
             type: "number",
             //editableBy: "PerformanceLeader",
             security: {
-                groups: [
+                groups: ["LMS_P",
                     'VRO_P', 'Performance Leaders', 'OPMO', 'System Admin Group',
                 ]
             },
@@ -1062,7 +1095,7 @@ var Information_Form = [
             state: "disabled",
             //editableBy: "PerformanceLeader",
             security: {
-                groups: [
+                groups: ["LMS_P",
                     'VRO_P', 'Performance Leaders', 'OPMO', 'System Admin Group',
                 ]
             },
@@ -1074,7 +1107,7 @@ var Information_Form = [
             maxchar: "500",
             type: "multiline",
             security: {
-                groups: [
+                groups: ["LMS_P",
                     'VRO_P', 'Performance Leaders', 'OPMO', 'System Admin Group',
                 ]
             },
@@ -1092,7 +1125,7 @@ var Information_Form = [
             "DisplayNameEn": "Attachments",
             "type": "file",
             security: {
-                groups: [
+                groups: ["LMS_P",
                     'SPM Admin', 'SPM Team', 'VRO_P', 'Performance Leaders', 'System Admin Group', 'OPMO',
                 ]
             },

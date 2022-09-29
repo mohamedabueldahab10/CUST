@@ -1258,10 +1258,10 @@ window.userCalls = {
 
 			case "VROE":
 				// for get it back
-				if (USERisHome)
-					window.location =
-						_spPageContextInfo.webAbsoluteUrl +
-						"/sitepages/initiativesmain.aspx";
+				// if (USERisHome)
+				// 	window.location =
+				// 		_spPageContextInfo.webAbsoluteUrl +
+				// 		"/sitepages/initiativesmain.aspx";
 				$("body").append(
 					"<style>" + ".Progress-Action {display:block!important;}" + "</style>"
 				);
@@ -1448,10 +1448,10 @@ window.userCalls = {
 			//   break;
 			case "LMSE":
 				// for get it back
-				if (USERisHome)
-					window.location =
-						_spPageContextInfo.webAbsoluteUrl +
-						"/sitepages/initiativesmain.aspx";
+				// if (USERisHome)
+				// 	window.location =
+				// 		_spPageContextInfo.webAbsoluteUrl +
+				// 		"/sitepages/initiativesmain.aspx";
 				$("body").append(
 					"<style>" + ".Progress-Action {display:block!important;}" + "</style>"
 				);
@@ -1465,6 +1465,8 @@ window.userCalls = {
 				Create_Access = [
 					"initiativeHome.aspx",
 					"initiatives",
+					"initiativemilestones",
+					"initiativedeliverables",
 					"initiativecards",
 					"initiativeexecution",
 					"initiativedeliverablesacceptance",
@@ -1484,6 +1486,8 @@ window.userCalls = {
 				Read_Access = [
 					"initiativeHome.aspx",
 					"initiatives",
+					"initiativemilestones",
+					"initiativedeliverables",
 					"initiativesmain.aspx",
 					"InitiativeHome.aspx",
 					"home.aspx",
@@ -1534,6 +1538,8 @@ window.userCalls = {
 				Edit_Access = [
 					"initiativeHome.aspx",
 					"initiatives",
+					"initiativemilestones",
+					"initiativedeliverables",
 					"initiativecards",
 					"initiativecards",
 					"initiativeexecution",
@@ -1554,6 +1560,8 @@ window.userCalls = {
 				Delete_Access = [
 					"initiativeHome.aspx",
 					"initiatives",
+					"initiativemilestones",
+					"initiativedeliverables",
 					"initiativecards",
 					"initiativecards",
 					"initiativeexecution",
@@ -5494,7 +5502,9 @@ let data_Level1_Access = {
 				data_Level1_Access.g.fieldsConditionConfig = fieldsConditionConfig;
 				data_Level1_Access.g.dataLevel = level;
 				if (level > 1) {
-					data_Level1_Access.init(dataListName);
+					SP.SOD.executeFunc('sp.js', 'SP.ClientContext', function(){
+						data_Level1_Access.init(dataListName);
+					});
 				}
 				console.log("Data 1st level access query", queryBody);
 			}
