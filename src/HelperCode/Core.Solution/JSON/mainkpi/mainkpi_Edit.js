@@ -138,6 +138,7 @@ var Information_Form = [
                 "valfieldkey": "Title",
                 "validation": "required",
                 // "display":"none"
+                dynamic: "parent", //"parentInternalName" or "parent" // if parent it will affect other fields
                 security: {
                     groups: ["LMS_P",
                         'SPM Admin', 'SPM Team', 'VRO_P', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
@@ -234,6 +235,9 @@ var Information_Form = [
                 Dispfieldkey: "Name",
                 valfieldkey: "Title",
                 display: "none",
+                dynamic: "RelatedStrategy",
+				filterField:"RelatedStrategy",
+                filterFieldType: "Text",
                 security: {
                     groups: ["LMS_P",
                         'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO',

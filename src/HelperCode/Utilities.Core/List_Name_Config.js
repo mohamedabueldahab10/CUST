@@ -575,6 +575,7 @@ var PageArray = [
 		pagename: "Targets.aspx",
 		Title: "المستهدفات",
 		TitleEn: "Targets",
+		listName: "KPIResults"
 	},
 	{
 		pagename: "AdminPanel.aspx",

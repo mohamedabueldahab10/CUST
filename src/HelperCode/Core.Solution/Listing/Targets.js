@@ -60,7 +60,13 @@ var MainKPIs_Info_Request = {
         `</Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>`
 
     } else {
-      if (filteredValue == "year" || filteredValue === "quarter" || filteredValue == "midterm" || filteredValue == 'monthly') {
+      if (isRoleDataLevelAccess) {
+        camlQuery.set_viewXml(
+          dataLevelAccessQuery
+        );
+        isRoleDataLevelAccess = false;
+      }
+      else if (filteredValue == "year" || filteredValue === "quarter" || filteredValue == "midterm" || filteredValue == 'monthly') {
         if (isGeneralManager || isDU || isMinisterAssistant || isViceMinister || isSectorHead || isSubSectorHead) {
           camlQuery.set_viewXml('<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name=\'PeriodType\' /> <Value Type="Choice">' + filteredValue + "</Value></Eq><And><Eq><FieldRef Name=\'Year\' /> <Value Type=\'Text\'>" + kpiYear + "</Value ></Eq><Eq><FieldRef Name=\'" + SecondLevel_FirstLevel_Field + "\' /> <Value Type=\'Text\'>" + UserAccessSectorCode + "</Value ></Eq></And></And></And></Where ><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query ></View >")
         }

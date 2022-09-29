@@ -195,6 +195,7 @@ var Information_Form = [
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
 				validation: "required",
+				dynamic: "parent", //"parentInternalName" or "parent" // if parent it will affect other fields
 				security: {
 					groups: [
 						"LMS_P",
@@ -298,6 +299,9 @@ var Information_Form = [
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
 				display: "none",
+				dynamic: "RelatedStrategy",
+				filterField:"RelatedStrategy",
+                filterFieldType: "Text",
 				//role access
 				accessFilter: [
 					{
