@@ -44,6 +44,7 @@ var ActualBudget = 0,
 	ExistVar1;
 var totalforhidstrat = 0;
 var totalforhidvis = 0;
+var totalforhidvisLMS = 0;
 var myFont = isArabic ? "LTBukra" : "Effra";
 window.SectorsData = [];
 var ScheduleProgressStatusarray = [];
@@ -552,6 +553,7 @@ window.initiativeRequest = {
     $("#LMSProjectCount").html(initiativesLMSCount);
 		totalforhidstrat = initiativesStratigalCount;
 		totalforhidvis = initiativesVisionCount;
+		totalforhidvisLMS = initiativesLMSCount;
 		//Project Progress
 		//Sort Priority
 		ProgressStatusarray.sort();
@@ -1369,6 +1371,143 @@ window.initiativeRequest = {
 					);
 				}
 			);
+			//
+			$(".accordion#accordionProject.LMSAccordion a.view-more").on(
+				"click",
+				function () {
+					var externalselector = $(
+						".accordion#accordionProject.LMSAccordion > .card"
+					).not(":visible");
+					externalselector.prevObject.length = 5;
+					var externalvisiblelength = $(
+						".accordion#accordionProject.LMSAccordion > .card:visible"
+					).length;
+					var externaltt = externalvisiblelength + 6;
+					var externaltoshow = $(
+						".accordion#accordionProject.LMSAccordion > .card:hidden:nth-child(-n+" +
+							externaltt +
+							")"
+					);
+					setTimeout(function () {
+						externaltoshow.each(function () {
+							$(this)
+								.css("display", "block")
+								.animate(
+									{
+										opacity: 1,
+										height: 75.5,
+									},
+									{
+										duration: 333,
+										complete: function () {
+											$(this).attr(
+												"style",
+												"display: block; opacity: 1; height: auto;"
+											);
+										},
+									}
+								);
+						});
+						//rechecking visibility
+						externalvisiblelength = $(
+							".accordion#accordionProject.LMSAccordion > .card:visible"
+						).length;
+						externaltt = externalvisiblelength + 6;
+						externaltoshow = $(
+							".accordion#accordionProject.LMSAccordion > .card:hidden:nth-child(-n+" +
+								externaltt +
+								")"
+						);
+						if (externaltoshow.length == 0) {
+							$(
+								".accordion#accordionProject.LMSAccordion a.view-more"
+							).animate(
+								{
+									opacity: 0,
+									height: 0,
+								},
+								{
+									duration: 333,
+									complete: function () {
+										$(
+											".accordion#accordionProject.LMSAccordion a.view-more"
+										).attr("style", "display: none!important;");
+									},
+								}
+							);
+							$(
+								".accordion#accordionProject.LMSAccordion a.view-less"
+							).animate(
+								{
+									opacity: 1,
+									height: 34,
+								},
+								{
+									duration: 333,
+									complete: function () {
+										$(
+											".accordion#accordionProject.LMSAccordion a.view-less"
+										).attr("style", "display: block;");
+									},
+								}
+							);
+						}
+					}, 133);
+				}
+			);
+			$(".accordion#accordionProject.LMSAccordion a.view-less").on(
+				"click",
+				function () {
+					var tohide = $(
+						".accordion#accordionProject.LMSAccordion > .card:nth-child(n+4)"
+					);
+					setTimeout(function () {
+						tohide.each(function () {
+							$(this).animate(
+								{
+									opacity: 0,
+									height: 0,
+								},
+								{
+									duration: 333,
+									complete: function () {
+										$(this).attr("style", "display: none;");
+									},
+								}
+							);
+						});
+					}, 133);
+					$(
+						".accordion#accordionProject.LMSAccordion a.view-less"
+					).animate(
+						{
+							opacity: 0,
+							height: 0,
+						},
+						{
+							duration: 333,
+							complete: function () {
+								$(
+									".accordion#accordionProject.LMSAccordion a.view-more"
+								).animate(
+									{
+										opacity: 1,
+										height: 34,
+									},
+									{
+										duration: 333,
+										complete: function () {
+											$(
+												".accordion#accordionProject.LMSAccordion a.view-more"
+											).attr("style", "display: block;");
+										},
+									}
+								);
+							},
+						}
+					);
+				}
+			);
 		},
 		dateConvert: function (date) {
 			if (date) {
@@ -2095,6 +2234,11 @@ var ProjectsOrder = {
 		if (totalforhidvis < 4) {
 			$(
 				"div#ExternalProjects a.view-more.d-block.text-center.py-2.Resources"
+			).addClass("disabled");
+		}
+		if (totalforhidvisLMS < 4) {
+			$(
+				"div#LMSProjects a.view-more.d-block.text-center.py-2.Resources"
 			).addClass("disabled");
 		}
 
