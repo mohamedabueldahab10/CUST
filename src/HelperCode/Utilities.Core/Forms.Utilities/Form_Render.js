@@ -441,6 +441,7 @@ window.ListInfo = {
 					//remove require on disbaled fields
 					$(".CFIELD .disabled").removeAttr("required");
 					$(".CFIELD :disabled").removeAttr("required");
+					$('.CFIELD [disabled="disabled"]').removeAttr("required");
 					//
 					if (isEdit) {
 						Idea_Info.init();
