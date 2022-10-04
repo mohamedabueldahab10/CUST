@@ -6591,6 +6591,7 @@ var deliverabePercent = {
 				}				// if($('input#WeightValue').val() < RemainingBudget){
 				newVal =
 					RemainingBudget + inpVal >= 100 ? inpVal : RemainingBudget + inpVal;
+				newVal = Number(newVal.toFixed("2"));
 				RemainingBudget == 100
 					? $("input#Weight").attr("max", RemainingBudget)
 					: $("input#Weight").attr("max", newVal);
@@ -6678,6 +6679,7 @@ var deliverabeInitiativePercent = {
 				}				// if($('input#WeightValue').val() < RemainingBudget){
 				newVal =
 					RemainingBudget + inpVal >= 100 ? inpVal : RemainingBudget + inpVal;
+				newVal = Number(newVal.toFixed("2"));
 				RemainingBudget == 100
 					? $("input#Weight").attr("max", RemainingBudget)
 					: $("input#Weight").attr("max", newVal);
@@ -6756,6 +6758,8 @@ var initMilestPercent = {
 
 				newVal =
 					RemainingBudget + inpVal >= 100 ? inpVal : RemainingBudget + inpVal;
+				newVal = Number(newVal.toFixed("2"));
+				newVal = Number(newVal.toFixed("2"));
 				RemainingBudget == 100
 					? $("input#Weight").attr("max", RemainingBudget)
 					: $("input#Weight").attr("max", newVal);
@@ -6840,6 +6844,7 @@ var benefitmetricsPercent = {
 				}				// if($('input#WeightValue').val() < RemainingBudget){
 				newVal =
 					RemainingBudget + inpVal >= 100 ? inpVal : RemainingBudget + inpVal;
+				newVal = Number(newVal.toFixed("2"));
 				RemainingBudget == 100
 					? $("input#Weight").attr("max", RemainingBudget)
 					: $("input#Weight").attr("max", newVal);
