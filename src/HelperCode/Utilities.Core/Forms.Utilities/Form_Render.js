@@ -439,9 +439,11 @@ window.ListInfo = {
 						ListInfo.g.toggleFields($(this));
 					});
 					//remove require on disbaled fields
-					$(".CFIELD .disabled").removeAttr("required");
-					$(".CFIELD :disabled").removeAttr("required");
-					$('.CFIELD [disabled="disabled"]').removeAttr("required");
+					setTimeout(function () {
+						$(".CFIELD .disabled").removeAttr("required");
+						$(".CFIELD :disabled").removeAttr("required");
+						$('.CFIELD [disabled="disabled"]').removeAttr("required");
+					}, 2000);
 					//
 					if (isEdit) {
 						Idea_Info.init();
