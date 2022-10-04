@@ -3862,8 +3862,8 @@ window.ListInfo = {
 				var totalAmount = $("#TotalAmount").val()
 					? parseInt($("#TotalAmount").val().replaceAll(",", ""))
 					: 0;
-				var tax = totalAmount * 0.15;
-				var amount = totalAmount - tax;
+				var amount = Number((totalAmount / 1.15).toFixed("2"));
+				var tax = Number((totalAmount - amount).toFixed("2"));
 
 				$("#Amount").val(amount);
 				$("#TVA").val(tax);
