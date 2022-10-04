@@ -248,7 +248,7 @@ window.New_Data_Submit = {
       $(".CSformbuttons").prepend(
         '<p class="errormsg">Please check info above</p>'
       );
-      // console.log('check form for errors'); 
+      // console.log('check form for errors');
       var $container = $("#s4-workspace"),
         $scrollTo = $(".was-validated .form-control:invalid");
       if ($scrollTo.length == 0) {
@@ -311,7 +311,7 @@ window.New_Data_Submit = {
                 : SP.FieldUserValue.fromUser(
                   $(this).attr("sid").split("|").slice(-1)[0]
                 );
-            debugger;
+
             console.log('aaaa', ppp);
             users.push(ppp)
           })
@@ -437,7 +437,7 @@ window.New_Data_Submit = {
         myselections = myselections.join(':::');
         New_Data_Submit.g.oListItem.set_item($(this).attr('myfield'), myselections);
         // console.log("inside multiselect")
-        //   debugger
+        //
         //   var myselections = [];
         //   $(this)
         //     .find("input#Revenue:checked")
@@ -999,7 +999,7 @@ window.Edit_Data_Submit = {
                 : SP.FieldUserValue.fromUser(
                   $(this).attr("sid").split("|").slice(-1)[0]
                 );
-            debugger;
+
             console.log('aaaa', ppp);
             users.push(ppp)
           })
@@ -1172,7 +1172,7 @@ window.Edit_Data_Submit = {
     });
 
     console.log("edit form submit")
-    debugger
+
 
 
     if (listkey == "issues") {
@@ -1633,7 +1633,7 @@ var New_Master_Details_Submit = {
                       : SP.FieldUserValue.fromUser(
                         $(this).attr("sid").split("|").slice(-1)[0]
                       );
-                  debugger;
+
                   console.log('aaaa', ppp);
                   users.push(ppp)
                 })
@@ -1894,7 +1894,7 @@ var Edit_Master_Details_Submit = {
                   : SP.FieldUserValue.fromUser(
                     $(this).attr("sid").split("|").slice(-1)[0]
                   );
-              debugger;
+
               console.log('aaaa', ppp);
               users.push(ppp)
             })
@@ -2136,7 +2136,7 @@ function _uploadFile() {
 
     // filesArr.forEach(el => {
     // console.log(el, " inside filesArr EEEEEEEEEEEEE")
-    // debugger
+    //
     // var myfiles = el.files
     var myfiles = document.querySelector("#" + $(this).attr("id")).files;
     console.log(validattachments, "validattachments")
@@ -2770,7 +2770,7 @@ var InternalEntities_Request = {
       "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
     );
   },
-  // Global variables 
+  // Global variables
   g: {
     //for tasks functions
   },
@@ -2798,7 +2798,7 @@ function ChangeProject() {
   }
   var publishJob = draftProject.update();
   console.log(PGUID, "User_ProjUID in new proj")
-  debugger
+
   // projContext.waitForQueueAsync(publishJob, 100, QueueJobSent); // comment and write a new function to change the owner on project center when create a project
   projContext.waitForQueueAsync(publishJob, 100, GetProjectsCreate);
 

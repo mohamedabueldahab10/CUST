@@ -513,7 +513,7 @@ var stratigicObjectivesRequest = {
     var camlQuery = new SP.CamlQuery();
     // camlQuery.set_viewXml(
     if (isGeneralManager || isDU || isMinisterAssistant || isViceMinister || isSectorHead || isSubSectorHead) {
-      debugger
+
       SoQuery = SectorHeadQuery
 
       $('body').append('<style>.mainindecatorfilter {height: 150px!important</style>');
@@ -792,7 +792,7 @@ var GoalsKPIs_Info_Request = {
     var oList = clientContext.get_web().get_lists().getByTitle("GoalStrategy");
     var camlQuery = new SP.CamlQuery();
     if (isGeneralManager || isDU || isMinisterAssistant || isViceMinister || isSectorHead || isSubSectorHead) {
-      debugger
+
       goalKpiQueryG = '<View><Query><Where><And><In><FieldRef Name="Title" /><Values>';
       strategyArray.forEach(function (item) {
         goalKpiQueryG += '<Value Type="Text">' + item + '</Value>';
@@ -809,7 +809,7 @@ var GoalsKPIs_Info_Request = {
       Function.createDelegate(this, GoalsKPIs_Info_Request.onSuccess),
       Function.createDelegate(this, GoalsKPIs_Info_Request.onError)
     );
-    debugger
+
     console.log(strategyArray, 'strategyArraystrategyArraystrategyArray')
   },
   onSuccess: function (sender, args) {
@@ -885,7 +885,7 @@ var GoalsKPIs_Info_Request = {
     var counter = 1
     $(".quick-links-ctx .link-items-goal").on('click', function () {
 
-      debugger
+
       var dataid = $(this).attr("goal-id");
 
       if (dataid == startegyIdClicked) {

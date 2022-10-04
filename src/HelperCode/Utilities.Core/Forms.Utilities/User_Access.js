@@ -3,7 +3,7 @@ window.GroupsIds = [];
 window.UserN;
 window.checkHomeInitiativeStatus = "";
 window.myRoleConfig = [];
-window.isRoleDataLevelAccess = [];
+window.isRoleDataLevelAccess = false;
 window.currentMainList = "";
 var BreakException = {};
 var UserRole,
@@ -3548,7 +3548,7 @@ var Access_Project_Info_Request = {
 			}
 			//
 			else if (isShowAll) {
-				//debugger
+				//
 				///////Ghufran Listing Query
 				//if on listing pages other then projects and its child data (risks, issues...)
 				if (isVROP && USERisListing && USERlistkey == "goalstrategy") {
@@ -3590,11 +3590,11 @@ var Access_Project_Info_Request = {
 						isGeneralManager ||
 						isSPMO
 					) {
-						//debugger
+						//
 						AccessQuery = SectorHeadQuery;
 					}
 				} else if (USERisListing && USERlistkey == "initiatives") {
-					//debugger
+					//
 					if (isVROE) {
 						AccessQuery =
 							"<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type='Text'>vision</Value></Eq></And></Where></Query></View>";
@@ -3624,7 +3624,7 @@ var Access_Project_Info_Request = {
 					isInitiativesHomePage
 				) {
 					SubSectorInitiativeAccessQuery = SectorHeadQuery;
-					//debugger
+					//
 				} else if (
 					(isSPMAdmin && USERisListing && USERlistkey == "sos") ||
 					(isSPMTeam && USERisListing && USERlistkey == "sos")
@@ -3719,7 +3719,7 @@ var Access_Project_Info_Request = {
 		//mahmoud
 		// var listName = '';
 		// if (isDU && USERisListing) {
-		//debugger
+		//
 		//   if (USERlistkey == 'mainkpi') {
 		//     listName = 'MainKPI';
 		//   }
@@ -4050,7 +4050,7 @@ var Access_Initiative_Info_Request = {
 						if (USERlistkey == "initiatives") {
 							AccessQuery = PermissionQuery;
 							console.log("ODYES");
-							//debugger
+							//
 							window.checkListingStatusHtml = setInterval(function () {
 								ListingData.preinit();
 							}, 1000);
@@ -4089,7 +4089,7 @@ var Access_Initiative_Info_Request = {
 					if (USERlistkey == "initiatives") {
 						AccessQuery = noDataQuery;
 						console.log("ODYES");
-						//debugger
+						//
 						window.checkListingStatusHtml = setInterval(function () {
 							ListingData.preinit();
 						}, 1000);
@@ -4355,7 +4355,7 @@ var Access_Sector_Info_Request = {
 		SectorHeadQuery += "</Values></In></And></Where></Query></View>";
 		if (isGeneralManager || isSubSectorHead || isSectorHead) {
 			console.log(UserAccessSectorCode);
-			debugger;
+
 			var subsectorname, substorcode;
 			if (localStorage.getItem("Dynamo_Internal Entities") != null) {
 				subsectorArray = JSON.parse(
@@ -4383,7 +4383,7 @@ var Access_Sector_Info_Request = {
 		}
 		// if target
 		// if (isTarget){
-		//   debugger
+		//
 		//   window.checkTargetStatusHtml = setInterval(function () {
 		//     MainKPIs_Info_Request.preinit();
 		//   }, 333); //initiate the call
@@ -4427,7 +4427,7 @@ var Access_Sector_Info_Request = {
 	},
 	// The main Initialization function
 	init: function () {
-		//debugger
+		//
 		// console.log('mmmmmmmmmmmmmmmmmmmmmmmmmmm')
 		var clientContext = new SP.ClientContext.get_current();
 
@@ -5634,6 +5634,7 @@ function initiateDataLevelAccess() {
 	}
 }
 let dataLevelAccessQuery = "";
+let dataLevelAccessInQuery = "";
 let data_Level1_Access = {
 	buildCamlQuery: function (
 		dataListName,
@@ -5761,7 +5762,7 @@ let data_Level1_Access = {
 	},
 	//currenty handles one field not more
 	dynamicCamlQueryBuilder: function (levelConfig, valuesArray) {
-		debugger;
+
 		let listName = levelConfig.listName;
 		let fieldToQuery = levelConfig.RelationField;
 		let fieldType = levelConfig.RelationFieldType;

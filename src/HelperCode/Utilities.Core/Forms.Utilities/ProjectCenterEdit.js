@@ -249,7 +249,7 @@ function getProjectInfo(ProjectCode) {
         // ProjectResponsible = currentItem.get_item("ProjectResponsible") ? currentItem.get_item("ProjectResponsible") : ''
         // console.log(ProjectDirectorUnit, "ProjectDirectorUnit")
         // console.log(ProjectResponsible, "ProjectResponsible")
-        // debugger
+        //
         projectGuid = currentItem.get_item("ProjectGUID") ? currentItem.get_item("ProjectGUID") : ''
       }
       if (ProjectOwnerPicker) {
@@ -328,7 +328,7 @@ function ChangeProjectEdit() {
 
   for (var i = 0; i < buildTeamResourcesArr.length; i++) {
     allResourcesArr.forEach((el) => {
-      debugger
+
       if (buildTeamResourcesArr[i] == el.Name) {
 
         var new_resource_id = el.Id;

@@ -26,7 +26,7 @@ if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar
 if (window.location.href.indexOf('ListKey') > -1) {
   listkey = window.location.href.split('ListKey=')[1].split('&')[0];
   for (var i = 0; i < ListArray.length; i++) {
-     
+
     var obj = ListArray[i];
     if (obj.subfolder)
       KeysFolders.push(Object.keys(obj)[0]);
@@ -58,7 +58,7 @@ var GetFilesFromFolder = {
       SP.SOD.executeFunc('sp.js', 'SP.ClientContext', function () {
         GetFilesFromFolder.init();
         GetProject_Info.init();
-        debugger
+
         $('h2.DahsFormTitle').text(PageTitle);
         changeResources();
       });
@@ -69,7 +69,7 @@ var GetFilesFromFolder = {
     var web = context.get_web();
     var list = web.get_lists().getByTitle(SP_ListName);
     console.log(SP_ListName,"SP_ListName SP_ListName")
-    debugger
+
     // Use createAllItemsQuery to get items inside subfolders as well. Otherwise use new SP.CamlQuery() to get items from a single folder only
     var camlQuery = SP.CamlQuery.createAllItemsQuery();
 
@@ -112,9 +112,9 @@ var GetFilesFromFolder = {
       var currentItem = listItemEnumerator.get_current();
       if (currentItem.get_fileSystemObjectType() == "0") {
         var file = currentItem.get_file();
-        if (file != null) { 
+        if (file != null) {
           console.log(file.get_serverRelativeUrl().split('/'),"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-          debugger
+
           // console.log('File Name: ' + file.get_name() + '\n' + 'File Url: ' + file.get_serverRelativeUrl());
           FolderName = file.get_serverRelativeUrl().split('/')[3].charAt(0).toUpperCase() + file.get_serverRelativeUrl().split('/')[3].slice(1);
           // FolderName = file.get_serverRelativeUrl().split('/')[5].charAt(0).toUpperCase() + file.get_serverRelativeUrl().split('/')[5].slice(1);
@@ -251,7 +251,7 @@ var GetFilesFromFolder = {
     folderBehavior: function () {
       $('.folder,.custom-phased').on("click", function () {
         console.log("CLICKEEEEEEEEED")
-        debugger
+
 
         if ($(this).hasClass('custom-phased')) {
           $(this).addClass('show');

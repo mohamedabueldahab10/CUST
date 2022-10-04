@@ -14,7 +14,7 @@ var PQuery = '',
   FilterChoices = [],
   filterValue = false,
   isOnload = true,
-  isEmptyFilter, SPHTTPitemsEnumerable;
+  isEmptyFilter = true, SPHTTPitemsEnumerable;
 if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
   var search = "بحث ...";
   var No_Data = 'لا يوجد'
@@ -102,7 +102,7 @@ window.sphttp = {
     internalFieldNames.forEach(function (o, i, a) {
       fieldsToGet += '<FieldRef Name="' + o + '" />';
       if (i == internalFieldNames.length - 1) {
-        fieldsToGet += '</ViewFields>';
+        fieldsToGet += '<FieldRef Name="DeletionStatus" /></ViewFields>';
       }
     });
 
@@ -318,7 +318,7 @@ window.sphttp = {
   g: {
     loadMore: function () {
       //Position will be null if all the items in the collection are fetched and there are no more items to be fetched.
-      // debugger
+      //
       if (isTasks) {
         isViewMoreClicked = true
         getNewFilterTask = true
@@ -416,7 +416,7 @@ window.ListingData = {
   init: function () {
 
     if (!isTasks && originalstate) {
-      if (isRoleDataLevelAccess && (!UserICode && !USERPCODE)) {
+      if (isRoleDataLevelAccess && (!UserICode && !USERPCODE && isEmptyFilter)) {
         PQuery = dataLevelAccessQuery;
       } else {
         if (UserICode != null && UserICode != '') {
@@ -1033,7 +1033,7 @@ window.ListingData = {
       }
       else if (isTasks) {
         console.log("INSIDE ALLL TASK REMOBE")
-        debugger
+
         if (allTasksClicked) {
           PQueryFilteration = '<And><Neq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Neq><In><FieldRef Name="Status" /><Values><Value Type="Choice">Open</Value></Values></In></And>';
         } else {
@@ -1083,10 +1083,10 @@ window.ListingData = {
 
       if (FilterChoices.length == 0) {
         // console.log("BOOOOOOOOOOOOOOOOH")
-        // debugger
+        //
         isEmptyFilter = true;
         filterValue = false
-        debugger
+
         if (isTasks) {
           PQuery = '<View><Query><Where>' + PQueryFilteration + '</Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
 
@@ -1349,7 +1349,7 @@ window.ListingData = {
   Get_DDL: {
     init: function () {
       console.log("IN GET DDDL INIT")
-      debugger
+
       cmlQ = PQuery;
       sphttp.get(ListURL, SP_ListName, cmlQ, IN, true, function (recordsddl, recordddl, listItem, isDone) {
         if (isDone) {
@@ -1368,7 +1368,7 @@ window.ListingData = {
           }
           else if (isTasks) {
             if (isAdmin || isEPMO) {
-              debugger
+
               if (allTasksClicked && !isViewMoreClicked) {
                 allDataFilterArr = []
                 recordsddl = [...recordsddl, ...allDataFilterArr]
@@ -1515,7 +1515,9 @@ window.ListingData = {
       $('div#StatusFilterationHTMLid').html(htmlFilter); // move it from inside the originalstate to here to can add the new items to filter after showmore
       if (originalstate) {
         // $('div#StatusFilterationHTMLid').html(htmlFilter);
-        $('.btn-toolbar.mb-2.mb-md-0.mx-2.page-filter').append(forfilterQuery);
+        if (!isRoleDataLevelAccess) {
+          $('.btn-toolbar.mb-2.mb-md-0.mx-2.page-filter').append(forfilterQuery);
+        }
         //End of filters when click in clear button inside ddls
         $("body").on('click', 'button.clear-filter', function (e) {
           e.stopPropagation();
@@ -1599,179 +1601,180 @@ window.ListingData = {
               projectTypeFilterQuery += "</div></div>";
             }
           }
-
-          $('.btn-toolbar.mb-2.mb-md-0.mx-2.page-filter').append(projectTypeFilterQuery);
-
-
-
-          $("body").on('click', '#External', function (e) {
-            FilterChoices = []
-            // e.stopPropagation();
-            typeClicked = 'External'
-            $('.page-filter .dropdown-menu').find('[type="checkbox"][value="External"]').prop({
-              "checked": true,
-              "disabled": false
-            });
-            $('.page-filter .dropdown-menu').find('[type="checkbox"][value="Internal"]').prop({
-              "checked": false,
-              "disabled": false
-            });
+          if (isRoleDataLevelAccess) {
+            $('.btn-toolbar.mb-2.mb-md-0.mx-2.page-filter').append(projectTypeFilterQuery);
+          }
 
 
-            //////////////////////
-            $('.page-filter .dropdown-menu').each(function () { //looping through filters
-              var selectedchoices = $(this).find('input:checked').map(function () { //getting selected choices
-                if ($(this).attr('data-type') == 'floatpercentage')
-                  return $(this).val().replace(' %', '');
-                if ($(this).attr('data-type') == 'money')
-                  return $(this).val().replaceAll(',', '');
-                else
-                  return $(this).val();
-              }).get();
-              if (selectedchoices.length) //checking if there are choices
-              {
-                var internalName = $(this).find('input:checkbox').data("internal");
-                var fieldType = $(this).find('input:checkbox').data("type");
-                //handle date format for caml
-                if (fieldType == 'date') {
-                  for (var t = 0; t < selectedchoices.length; t++) {
-                    // console.log(selectedchoices[t], 'selected choices')
-                    if (selectedchoices[t].indexOf('/') > -1) {
-                      // console.log('true here');
-                      // selectedchoices[t] = selectedchoices[t].split('/');
-                      // selectedchoices[t] = selectedchoices[t][2] + '-' + selectedchoices[t][1] + '-' + selectedchoices[t][0] + 'T00:00:00.000Z';
-                      var myDate = selectedchoices[t].split('T');
-                      var myDate2 = myDate[0].split('/');
-                      selectedchoices[t] = myDate2[2] + '-' + myDate2[1] + '-' + myDate2[0] + 'T' + myDate[1] + '.000Z';
-                      // var timezone = selectedchoices[t].split(':::')[1];
-                      // selectedchoices[t] = selectedchoices[t].split('<span')[0].split('/');
-                      // selectedchoices[t] = selectedchoices[t][2] + '-' + selectedchoices[t][1] + '-' + selectedchoices[t][0] + 'T00:00:00.000Z';
-                      // selectedchoices[t] = selectedchoices[t][2] + '-' + selectedchoices[t][1] + '-' + selectedchoices[t][0] + 'T' + timezone + ':00:00.000Z';
-                    }
-                  }
-                }
 
-                FilterChoices.push({
-                  internalName: internalName,
-                  Type: fieldType,
-                  Values: selectedchoices
-                });
-
-                ListingData.g.camlfilterbuilder();
-              }
-            });
-            /////////////////////
+          // $("body").on('click', '#External', function (e) {
+          //   FilterChoices = []
+          //   // e.stopPropagation();
+          //   typeClicked = 'External'
+          //   $('.page-filter .dropdown-menu').find('[type="checkbox"][value="External"]').prop({
+          //     "checked": true,
+          //     "disabled": false
+          //   });
+          //   $('.page-filter .dropdown-menu').find('[type="checkbox"][value="Internal"]').prop({
+          //     "checked": false,
+          //     "disabled": false
+          //   });
 
 
-            // var selectedchoices = $('.page-filter .dropdown-menu').find('[type="checkbox"][value="External"]:checked').map(function () { //getting selected choices
-            //   if ($(this).attr('data-type') == 'floatpercentage')
-            //     return $(this).val().replace(' %', '');
-            //   if ($(this).attr('data-type') == 'money')
-            //     return $(this).val().replaceAll(',', '');
-            //   else
-            //     return $(this).val();
-            // }).get();
+          //   //////////////////////
+          //   $('.page-filter .dropdown-menu').each(function () { //looping through filters
+          //     var selectedchoices = $(this).find('input:checked').map(function () { //getting selected choices
+          //       if ($(this).attr('data-type') == 'floatpercentage')
+          //         return $(this).val().replace(' %', '');
+          //       if ($(this).attr('data-type') == 'money')
+          //         return $(this).val().replaceAll(',', '');
+          //       else
+          //         return $(this).val();
+          //     }).get();
+          //     if (selectedchoices.length) //checking if there are choices
+          //     {
+          //       var internalName = $(this).find('input:checkbox').data("internal");
+          //       var fieldType = $(this).find('input:checkbox').data("type");
+          //       //handle date format for caml
+          //       if (fieldType == 'date') {
+          //         for (var t = 0; t < selectedchoices.length; t++) {
+          //           // console.log(selectedchoices[t], 'selected choices')
+          //           if (selectedchoices[t].indexOf('/') > -1) {
+          //             // console.log('true here');
+          //             // selectedchoices[t] = selectedchoices[t].split('/');
+          //             // selectedchoices[t] = selectedchoices[t][2] + '-' + selectedchoices[t][1] + '-' + selectedchoices[t][0] + 'T00:00:00.000Z';
+          //             var myDate = selectedchoices[t].split('T');
+          //             var myDate2 = myDate[0].split('/');
+          //             selectedchoices[t] = myDate2[2] + '-' + myDate2[1] + '-' + myDate2[0] + 'T' + myDate[1] + '.000Z';
+          //             // var timezone = selectedchoices[t].split(':::')[1];
+          //             // selectedchoices[t] = selectedchoices[t].split('<span')[0].split('/');
+          //             // selectedchoices[t] = selectedchoices[t][2] + '-' + selectedchoices[t][1] + '-' + selectedchoices[t][0] + 'T00:00:00.000Z';
+          //             // selectedchoices[t] = selectedchoices[t][2] + '-' + selectedchoices[t][1] + '-' + selectedchoices[t][0] + 'T' + timezone + ':00:00.000Z';
+          //           }
+          //         }
+          //       }
 
-            // if (selectedchoices.length) {
-            //   var internalName = $('.page-filter .dropdown-menu').find('[type="checkbox"][value="External"]').data("internal");
-            //   var fieldType = $('.page-filter .dropdown-menu').find('[type="checkbox"][value="External"]').data("type");
+          //       FilterChoices.push({
+          //         internalName: internalName,
+          //         Type: fieldType,
+          //         Values: selectedchoices
+          //       });
 
-            //   FilterChoices.push({
-            //     internalName: internalName,
-            //     Type: fieldType,
-            //     Values: selectedchoices
-            //   });
-
-            //   ListingData.g.camlfilterbuilder();
-            // }
-
-
-          })
-
-
-          $("body").on('click', '#Internal', function (e) {
-            FilterChoices = []
-            typeClicked = 'Internal'
-            // e.stopPropagation();
-
-            $('.page-filter .dropdown-menu').find('[type="checkbox"][value="Internal"]').prop({
-              "checked": true,
-              "disabled": false
-            });
-            $('.page-filter .dropdown-menu').find('[type="checkbox"][value="External"]').prop({
-              "checked": false,
-              "disabled": false
-            });
-
-
-            /////////////////////////
-            $('.page-filter .dropdown-menu').each(function () { //looping through filters
-              var selectedchoices = $(this).find('input:checked').map(function () { //getting selected choices
-                if ($(this).attr('data-type') == 'floatpercentage')
-                  return $(this).val().replace(' %', '');
-                if ($(this).attr('data-type') == 'money')
-                  return $(this).val().replaceAll(',', '');
-                else
-                  return $(this).val();
-              }).get();
-              if (selectedchoices.length) //checking if there are choices
-              {
-                var internalName = $(this).find('input:checkbox').data("internal");
-                var fieldType = $(this).find('input:checkbox').data("type");
-                //handle date format for caml
-                if (fieldType == 'date') {
-                  for (var t = 0; t < selectedchoices.length; t++) {
-                    // console.log(selectedchoices[t], 'selected choices')
-                    if (selectedchoices[t].indexOf('/') > -1) {
-                      // console.log('true here');
-                      // selectedchoices[t] = selectedchoices[t].split('/');
-                      // selectedchoices[t] = selectedchoices[t][2] + '-' + selectedchoices[t][1] + '-' + selectedchoices[t][0] + 'T00:00:00.000Z';
-                      var myDate = selectedchoices[t].split('T');
-                      var myDate2 = myDate[0].split('/');
-                      selectedchoices[t] = myDate2[2] + '-' + myDate2[1] + '-' + myDate2[0] + 'T' + myDate[1] + '.000Z';
-                      // var timezone = selectedchoices[t].split(':::')[1];
-                      // selectedchoices[t] = selectedchoices[t].split('<span')[0].split('/');
-                      // selectedchoices[t] = selectedchoices[t][2] + '-' + selectedchoices[t][1] + '-' + selectedchoices[t][0] + 'T00:00:00.000Z';
-                      // selectedchoices[t] = selectedchoices[t][2] + '-' + selectedchoices[t][1] + '-' + selectedchoices[t][0] + 'T' + timezone + ':00:00.000Z';
-                    }
-                  }
-                }
-
-                FilterChoices.push({
-                  internalName: internalName,
-                  Type: fieldType,
-                  Values: selectedchoices
-                });
-
-                ListingData.g.camlfilterbuilder();
-              }
-            });
-            ////////////////////////
-
-            // var selectedchoices = $('.page-filter .dropdown-menu').find('[type="checkbox"][value="Internal"]:checked').map(function () { //getting selected choices
-            //   if ($(this).attr('data-type') == 'floatpercentage')
-            //     return $(this).val().replace(' %', '');
-            //   if ($(this).attr('data-type') == 'money')
-            //     return $(this).val().replaceAll(',', '');
-            //   else
-            //     return $(this).val();
-            // }).get();
-
-            // if (selectedchoices.length) {
-            //   var internalName = $('.page-filter .dropdown-menu').find('[type="checkbox"][value="Internal"]').data("internal");
-            //   var fieldType = $('.page-filter .dropdown-menu').find('[type="checkbox"][value="Internal"]').data("type");
-
-            //   FilterChoices.push({
-            //     internalName: internalName,
-            //     Type: fieldType,
-            //     Values: selectedchoices
-            //   });
-
-            //   ListingData.g.camlfilterbuilder();
-            // }
+          //       ListingData.g.camlfilterbuilder();
+          //     }
+          //   });
+          //   /////////////////////
 
 
-          })
+          //   // var selectedchoices = $('.page-filter .dropdown-menu').find('[type="checkbox"][value="External"]:checked').map(function () { //getting selected choices
+          //   //   if ($(this).attr('data-type') == 'floatpercentage')
+          //   //     return $(this).val().replace(' %', '');
+          //   //   if ($(this).attr('data-type') == 'money')
+          //   //     return $(this).val().replaceAll(',', '');
+          //   //   else
+          //   //     return $(this).val();
+          //   // }).get();
+
+          //   // if (selectedchoices.length) {
+          //   //   var internalName = $('.page-filter .dropdown-menu').find('[type="checkbox"][value="External"]').data("internal");
+          //   //   var fieldType = $('.page-filter .dropdown-menu').find('[type="checkbox"][value="External"]').data("type");
+
+          //   //   FilterChoices.push({
+          //   //     internalName: internalName,
+          //   //     Type: fieldType,
+          //   //     Values: selectedchoices
+          //   //   });
+
+          //   //   ListingData.g.camlfilterbuilder();
+          //   // }
+
+
+          // })
+
+
+          // $("body").on('click', '#Internal', function (e) {
+          //   FilterChoices = []
+          //   typeClicked = 'Internal'
+          //   // e.stopPropagation();
+
+          //   $('.page-filter .dropdown-menu').find('[type="checkbox"][value="Internal"]').prop({
+          //     "checked": true,
+          //     "disabled": false
+          //   });
+          //   $('.page-filter .dropdown-menu').find('[type="checkbox"][value="External"]').prop({
+          //     "checked": false,
+          //     "disabled": false
+          //   });
+
+
+          //   /////////////////////////
+          //   $('.page-filter .dropdown-menu').each(function () { //looping through filters
+          //     var selectedchoices = $(this).find('input:checked').map(function () { //getting selected choices
+          //       if ($(this).attr('data-type') == 'floatpercentage')
+          //         return $(this).val().replace(' %', '');
+          //       if ($(this).attr('data-type') == 'money')
+          //         return $(this).val().replaceAll(',', '');
+          //       else
+          //         return $(this).val();
+          //     }).get();
+          //     if (selectedchoices.length) //checking if there are choices
+          //     {
+          //       var internalName = $(this).find('input:checkbox').data("internal");
+          //       var fieldType = $(this).find('input:checkbox').data("type");
+          //       //handle date format for caml
+          //       if (fieldType == 'date') {
+          //         for (var t = 0; t < selectedchoices.length; t++) {
+          //           // console.log(selectedchoices[t], 'selected choices')
+          //           if (selectedchoices[t].indexOf('/') > -1) {
+          //             // console.log('true here');
+          //             // selectedchoices[t] = selectedchoices[t].split('/');
+          //             // selectedchoices[t] = selectedchoices[t][2] + '-' + selectedchoices[t][1] + '-' + selectedchoices[t][0] + 'T00:00:00.000Z';
+          //             var myDate = selectedchoices[t].split('T');
+          //             var myDate2 = myDate[0].split('/');
+          //             selectedchoices[t] = myDate2[2] + '-' + myDate2[1] + '-' + myDate2[0] + 'T' + myDate[1] + '.000Z';
+          //             // var timezone = selectedchoices[t].split(':::')[1];
+          //             // selectedchoices[t] = selectedchoices[t].split('<span')[0].split('/');
+          //             // selectedchoices[t] = selectedchoices[t][2] + '-' + selectedchoices[t][1] + '-' + selectedchoices[t][0] + 'T00:00:00.000Z';
+          //             // selectedchoices[t] = selectedchoices[t][2] + '-' + selectedchoices[t][1] + '-' + selectedchoices[t][0] + 'T' + timezone + ':00:00.000Z';
+          //           }
+          //         }
+          //       }
+
+          //       FilterChoices.push({
+          //         internalName: internalName,
+          //         Type: fieldType,
+          //         Values: selectedchoices
+          //       });
+
+          //       ListingData.g.camlfilterbuilder();
+          //     }
+          //   });
+          //   ////////////////////////
+
+          //   // var selectedchoices = $('.page-filter .dropdown-menu').find('[type="checkbox"][value="Internal"]:checked').map(function () { //getting selected choices
+          //   //   if ($(this).attr('data-type') == 'floatpercentage')
+          //   //     return $(this).val().replace(' %', '');
+          //   //   if ($(this).attr('data-type') == 'money')
+          //   //     return $(this).val().replaceAll(',', '');
+          //   //   else
+          //   //     return $(this).val();
+          //   // }).get();
+
+          //   // if (selectedchoices.length) {
+          //   //   var internalName = $('.page-filter .dropdown-menu').find('[type="checkbox"][value="Internal"]').data("internal");
+          //   //   var fieldType = $('.page-filter .dropdown-menu').find('[type="checkbox"][value="Internal"]').data("type");
+
+          //   //   FilterChoices.push({
+          //   //     internalName: internalName,
+          //   //     Type: fieldType,
+          //   //     Values: selectedchoices
+          //   //   });
+
+          //   //   ListingData.g.camlfilterbuilder();
+          //   // }
+
+
+          // })
         }
 
         ///////////////////////////////////////////////////////
@@ -1919,7 +1922,7 @@ window.Delegate_Data_Submit = {
       // if (Workflowname == "Project" || Workflowname == "Idea") {
       // console.log(wo\\)
       // if(Workflowname == 'Project' || Workflowname == 'DV'){ // should change after mah fix tsk configration list
-      // debugger
+      //
       if (Workflowname) {
         if (localStorage.getItem('Dynamo_Tasks Configuration') != null) {
           stages = JSON.parse(localStorage.getItem("Dynamo_Tasks Configuration") || "[]");

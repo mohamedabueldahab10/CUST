@@ -16,7 +16,7 @@ let activityConfig =
 		"Site Id,Module Type,Item Type,User Id,User Full Name,User Email,Document Location,Occurred (GMT),Event,Event Source,Role Name, SP Group(s) Ids, SP Group(s),Platform,Device,Browser,Language \n";
 let userBrowser = "";
 let handleModuleActivity = (el) => {
-	
+
 	var context = SP.ClientContext.get_current();
 	var dfd = $.Deferred();
 	//Get list from host web
@@ -35,21 +35,21 @@ let handleModuleActivity = (el) => {
 	context.executeQueryAsync(
 		function () {
 			var currentItemArray = [];
-			debugger
+
 			//Check itemcollection count greater than 0
 			if (activityColl.get_count() > 0) {
-			
+
 				activeModuleType = el.ModuleType;
 				readExcelReport(); //!update excel report
 				var activityEnum = activityColl.getEnumerator();
 				while (activityEnum.moveNext()) {
-			
+
 					var currentItem = activityEnum.get_current();
 					var currentId = currentItem.get_item("ID");
 					var hits = currentItem.get_item("Hits") || 0;
 					var numberOfClicks = currentItem.get_item("NumberOfClicks") || 0;
 					var numberOfViews = currentItem.get_item("NumberOfViews") || 0;
-					debugger;
+
 					// var visitedBy = currentItem.get_item("VisitedBy") || [];
 					// visitedBy.push(SP.FieldUserValue.fromUser(UserN.LoginName));
 					// click count
@@ -147,7 +147,7 @@ let countClicks = (el) => {
 		// 	}
 		// }, 7000);
 	} else {
-		
+
 		let element = document.querySelector(el.ModuleIdentifier);
 		if (element) {
 			element.addEventListener("click", () => {
@@ -165,10 +165,10 @@ let loopAuditingConfig = async () => {
 	await Promise.all(
 		activityConfig.map(async (el, i, a) => {
 			if (el.ModuleType == "Page") {
-				
+
 				if (window.location.href.indexOf(el.ModuleURL) > -1) {
 					// countClicks(el);
-					
+
 					handleModuleActivity(el);
 				}
 			} else if (el.ModuleType == "Button") {

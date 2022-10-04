@@ -5201,8 +5201,8 @@ h4.text-warning[data-trans-inprogress] {
     color: #A66F8E !important;
 }
 
-h4.text-warning[data-trans-completed] {
-    color: #148287 !important;
+h4.text-warning[data-trans-completed], h4.text-warning[data-trans-complete] {
+    color: rgba(0, 0, 255, 255) !important;
 }
 
 .row.closureform {

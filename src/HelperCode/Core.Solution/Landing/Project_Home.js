@@ -1644,13 +1644,13 @@ var Invoices_Info_Request = {
       // console.log(Deliverable);
       //console.log(Amount+','+Deliverable);
       console.log("track mult delivrable")
-      debugger
+
       //This can be done also by Caml query . we can passe all delivrables code there
       for (i = 0; i < Deliverablesarray.length; i++) {
         var myselections = Deliverable ? Deliverable.split(":::") : [] // add myselection to handle mult delivrable in invoices
 
         if (Deliverablesarray[i].Code == myselections[0] && Status == 'paid') {
-          debugger
+
           TheCost += Amount;
         }
       }
@@ -1749,7 +1749,7 @@ var ProgressStatus_Data_Submit = {
     var diffDaysBaseline = Math.ceil(diffTimeBaseLine / (1000 * 60 * 60 * 24));
 
 
-    debugger
+
     if (diffDaysBaseline > 0) {
       plannedPercentage = differenceDaysFromToday / diffDaysBaseline
     }
@@ -1766,7 +1766,7 @@ var ProgressStatus_Data_Submit = {
     plannedPercentage = Number(plannedPercentage.toFixed(2))
 
 
-    ProgressStatus_Data_Submit.g.oListItem.set_item('ScheduleBLPercentageComplete', plannedPercentage); // save the percentage 
+    ProgressStatus_Data_Submit.g.oListItem.set_item('ScheduleBLPercentageComplete', plannedPercentage); // save the percentage
 
     $('.project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black').text(plannedPercentage + '%');
 

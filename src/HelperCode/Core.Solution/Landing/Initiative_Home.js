@@ -1954,7 +1954,7 @@ var ProgressStatus_Data_Submit = {
 		//calculation bussiness for Project Progress Status
 		var differenceBetweenDelivrablesPercet =
 			plannedImplementationRate - actualImplementationRate;
-		debugger;
+
 		if (
 			!ProgressStatus_Data_Submit.g.dateInPastArrow(
 				new Date(initstartdate),
@@ -1965,7 +1965,7 @@ var ProgressStatus_Data_Submit = {
 			initiativeprogress = "stat6";
 		} else if (actualImplementationRate == 100) {
 			//complete
-			initiativeprogress = "complete";
+			initiativeprogress = "stat7";
 		} else if (differenceBetweenDelivrablesPercet < 5) {
 			//onplan
 			initiativeprogress = "stat3";

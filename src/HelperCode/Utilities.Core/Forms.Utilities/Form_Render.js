@@ -159,7 +159,7 @@ window.ListInfo = {
 				if (item.hasOwnProperty("security")) {
 					if (item.security.groups.length > 0) {
 						console.log("SECURITY1");
-						debugger;
+
 						for (var z = 0; z < item.security.groups.length; z++) {
 							groups.push(item.security.groups[z]);
 
@@ -438,7 +438,10 @@ window.ListInfo = {
 					$("[data-togglevalues]").on("change", function () {
 						ListInfo.g.toggleFields($(this));
 					});
-
+					//remove require on disbaled fields
+					$(".CFIELD .disabled").removeAttr("required");
+					$(".CFIELD :disabled").removeAttr("required");
+					//
 					if (isEdit) {
 						Idea_Info.init();
 						// $('.title-item').text('تعديل');
@@ -6577,9 +6580,15 @@ var deliverabePercent = {
 			if ($("input#Weight").length) {
 				//clearInterval(checkWeightValueHTML);
 				RemainingBudget = 100 - RevenuesAmount;
+				RemainingBudget = Number(RemainingBudget.toFixed(1));
+
 				var newVal;
-				var inpVal = parseInt($("input#Weight").val()) || 0;
-				// if($('input#WeightValue').val() < RemainingBudget){
+				var inpVal;
+				if ($("input#Weight").val().includes(".")) {
+					inpVal = parseFloat($("input#Weight").val()) || 0;
+				} else {
+					inpVal = parseInt($("input#Weight").val()) || 0;
+				}				// if($('input#WeightValue').val() < RemainingBudget){
 				newVal =
 					RemainingBudget + inpVal >= 100 ? inpVal : RemainingBudget + inpVal;
 				RemainingBudget == 100
@@ -6658,9 +6667,15 @@ var deliverabeInitiativePercent = {
 			if ($("input#Weight").length) {
 				//clearInterval(checkWeightValueHTML);
 				RemainingBudget = 100 - RevenuesAmountInit;
+				RemainingBudget = Number(RemainingBudget.toFixed(1));
+
 				var newVal;
-				var inpVal = parseInt($("input#Weight").val()) || 0;
-				// if($('input#WeightValue').val() < RemainingBudget){
+				var inpVal;
+				if ($("input#Weight").val().includes(".")) {
+					inpVal = parseFloat($("input#Weight").val()) || 0;
+				} else {
+					inpVal = parseInt($("input#Weight").val()) || 0;
+				}				// if($('input#WeightValue').val() < RemainingBudget){
 				newVal =
 					RemainingBudget + inpVal >= 100 ? inpVal : RemainingBudget + inpVal;
 				RemainingBudget == 100
@@ -6732,7 +6747,13 @@ var initMilestPercent = {
 				RemainingBudget = 100 - revenuesAmountInitMiles;
 				RemainingBudget = Number(RemainingBudget.toFixed(1));
 				var newVal;
-				var inpVal = parseInt($("input#Weight").val()) || 0;
+				var inpVal;
+				if ($("input#Weight").val().includes(".")) {
+					inpVal = parseFloat($("input#Weight").val()) || 0;
+				} else {
+					inpVal = parseInt($("input#Weight").val()) || 0;
+				}
+
 				newVal =
 					RemainingBudget + inpVal >= 100 ? inpVal : RemainingBudget + inpVal;
 				RemainingBudget == 100
@@ -6808,9 +6829,15 @@ var benefitmetricsPercent = {
 			if ($("input#Weight").length) {
 				//clearInterval(checkWeightValueHTML);
 				RemainingBudget = 100 - RevenuesAmount;
+				RemainingBudget = Number(RemainingBudget.toFixed(1));
+
 				var newVal;
-				var inpVal = parseInt($("input#Weight").val()) || 0;
-				// if($('input#WeightValue').val() < RemainingBudget){
+				var inpVal;
+				if ($("input#Weight").val().includes(".")) {
+					inpVal = parseFloat($("input#Weight").val()) || 0;
+				} else {
+					inpVal = parseInt($("input#Weight").val()) || 0;
+				}				// if($('input#WeightValue').val() < RemainingBudget){
 				newVal =
 					RemainingBudget + inpVal >= 100 ? inpVal : RemainingBudget + inpVal;
 				RemainingBudget == 100

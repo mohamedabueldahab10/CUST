@@ -404,7 +404,7 @@ var Task_PCODE_Data_Request_WFs = {
           </div>
           </div>
           </div>`;
-          
+
       $('.navbar.page-nav.px-5').after(dialogBoxHtml)
       Workflow_Note_Data_Request_WFs.init();
       changeResources();
@@ -848,7 +848,7 @@ var SubmitField_BulkEdit = {
     noteBoxVal = document.getElementById('commenttext').value;
     noteBoxVal = noteBoxVal.trim();
     if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
-      if (withNote && noteBoxVal == '') { // add RequireMsgBox to show the msg one time 
+      if (withNote && noteBoxVal == '') { // add RequireMsgBox to show the msg one time
         if ($('#RequireMsgBox').length == 0) {
           return $('.wrapcomments').append('<p id="RequireMsgBox">يرجى تعبئة الملاحظات</p>')
         } else {
@@ -898,7 +898,7 @@ var SubmitField_BulkEdit = {
     var context = SP.ClientContext.get_current();
     var dfd = $.Deferred();
     //Get list from host web
-    //debugger;
+    //
     var programList = context.get_web().get_lists().getByTitle(bulkeditlist);
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(bulkeditquery);
@@ -921,7 +921,7 @@ var SubmitField_BulkEdit = {
           // var getStage = currentItem.get_item("Stage")
 
           //Get Item by current ID
-          //debugger;
+          //
           var items = programList.getItemById(currentId);
           //set
           if (workflowname == 'Project') {
@@ -1174,7 +1174,7 @@ var SubmitField_BulkEdit = {
           //Item Updated sucess
           // console.log("Items are updated Successfully");
           dfd.resolve();
-          //debugger;
+          //
           if (workflowname == 'Project')
             BulkEdit(state);
           else if (workflowname == 'Idea') {
@@ -1296,7 +1296,7 @@ var Edit_File_Details_Submit = {
 //                 } else
 //                     WF_New_Data_Submit.g.oListItem.set_item($(this).attr('id'), checkedvalue);
 //             } else if ($(this).attr('type') == 'checkbox') {
-//                 //debugger;
+//                 //
 //                 var checkedvalue = $('input[id="' + $(this).attr('id') + '"]:checked').length;
 //                 if (checkedvalue)
 //                     WF_New_Data_Submit.g.oListItem.set_item($(this).attr('id'), true);
@@ -1328,7 +1328,7 @@ var Edit_File_Details_Submit = {
 //         if (listkey == 'projects') {
 //             // PCODE = $('input#Title').val();
 //             // WF_New_Data_Submit.g.oListItem.set_item("Title", PCODE);
-//             //debugger;
+//             //
 //             WF_New_Data_Submit.g.oListItem.set_item("Phase", Phases_Data_Request.g.PhasesArray[0].phase);
 //             WF_New_Data_Submit.g.oListItem.set_item("Stage", Stages_Data_Request.g.StagesArray[0].stage);
 //         }
@@ -1396,7 +1396,7 @@ var WF_Set_Code_Submit = {
       WF_Set_Code_Submit.g.oListItem.set_item('Title', Code);
     }
     // console.log(PCODE);
-    //debugger;
+    //
     WF_Set_Code_Submit.g.oListItem.update();
     clientContext.load(WF_Set_Code_Submit.g.oListItem);
     clientContext.executeQueryAsync(
@@ -1422,7 +1422,7 @@ var WF_Set_Code_Submit = {
 };
 //
 
-//for initiative workflow 
+//for initiative workflow
 //phase-stage update
 
 window.InitiativeBulkEdit = function (state, withNote = false) {
@@ -1495,7 +1495,7 @@ window.InitiativeBulkEdit = function (state, withNote = false) {
       context.executeQueryAsync(function () {
         //Item Updated sucess
         console.log("Initiative Stages are updated Successfully");
-        debugger
+
         //before update program bulk edit
         // Task_Edit_Data.init();
         dfd.resolve();
@@ -1688,21 +1688,21 @@ window.BulkEdit = function (state, withNote = false) {
 //end phases-stages update
 function program_BulkEdit(state) {
 
-  var context = SP.ClientContext.get_current();
-  var dfd = $.Deferred();
+  var contextP = SP.ClientContext.get_current();
+  var dfdP = $.Deferred();
   //Get list from host web
-  var programList = context.get_web().get_lists().getByTitle('Projects');
-  var camlQuery = new SP.CamlQuery();
-  camlQuery.set_viewXml("<View><Query><Where><Eq><FieldRef Name=\'Title\'/><Value Type=\'Text\'>" + peojectC + "</Value></Eq></Where></Query></View>");
+  var programListP = contextP.get_web().get_lists().getByTitle('Projects');
+  var camlQueryP = new SP.CamlQuery();
+  camlQueryP.set_viewXml("<View><Query><Where><Eq><FieldRef Name=\'Title\'/><Value Type=\'Text\'>" + peojectC + "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>");
   //Get items by Query
-  var progColl = programList.getItems(camlQuery);
+  var progCollP = programListP.getItems(camlQueryP);
   //Load item collection
-  context.load(progColl);
-  context.executeQueryAsync(function () {
+  contextP.load(progCollP);
+  contextP.executeQueryAsync(function () {
     var currentItemArray = [];
     //Check itemcollection count greater than 0
-    if (progColl.get_count() > 0) {
-      var progEnum = progColl.getEnumerator();
+    if (progCollP.get_count() > 0) {
+      var progEnum = progCollP.getEnumerator();
       while (progEnum.moveNext()) {
 
         var currentItem = progEnum.get_current();
@@ -1716,13 +1716,13 @@ function program_BulkEdit(state) {
         projectGuid = currentItem.get_item("ProjectGUID") ? currentItem.get_item("ProjectGUID") : ''
 
         //Get Item by current ID
-        var items = programList.getItemById(currentId);
+        var items = programListP.getItemById(currentId);
         //set
         items.set_item("Phase", curphaseName);
         if (!ismultistage) // 1 active stage
         {
           if (state) {
-            debugger
+
             items.set_item("Stage", nxtstageid); //set status competed
             if (stageid == 'S21' || stageid == ' ') {
               items.set_item("Status", 'completed');
@@ -1760,12 +1760,12 @@ function program_BulkEdit(state) {
         //Push item on the array
         currentItemArray.push(items);
         //Load the item Array
-        context.load(currentItemArray[currentItemArray.length - 1]);
+        contextP.load(currentItemArray[currentItemArray.length - 1]);
         if (!state) {
           UpdateProjectStages(prvstageid);
         }
       }
-      context.executeQueryAsync(function () {
+      contextP.executeQueryAsync(function () {
         //Item Updated sucess
         ProjectOwnerPicker = ProjectOwnerPicker ? ProjectOwnerPicker.get_lookupValue() : ''
         ProjectSponsorPicker = ProjectSponsorPicker ? ProjectSponsorPicker.get_lookupValue() : '';
@@ -1793,14 +1793,14 @@ function program_BulkEdit(state) {
         console.log("Request Failed to get projectlist Items :" + args.get_message());
       });
     } else {
-      dfd.resolve();
+      dfdP.resolve();
     }
   },
     function (sender, args) {
       $('.loader').hide();
       console.log("Request failed in projectlist List " + args.get_message());
     });
-  return dfd.promise();
+  return dfdP.promise();
 }
 
 //*****************Edit decision in initiative stages when we reject

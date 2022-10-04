@@ -44,7 +44,7 @@ var MainKPIs_Info_Request = {
     var oList = clientContext.get_web().get_lists().getByTitle("KPIResults"); //list name
     var camlQuery = new SP.CamlQuery(); //set query to return data
     console.log('mmmmmmmm')
-    debugger
+
 
     if (Where_Body) {
 
@@ -178,7 +178,7 @@ var MainKPIs_Info_Request = {
         : UserN.Title;
       var SubectorCode = oListItem.get_item("SubSector") ? oListItem.get_item("SubSector") : '';
       var SectorCode = oListItem.get_item("Sector") ? oListItem.get_item("Sector") : '';
-      // debugger
+      //
       if ((!isAdmin && !isMinister && !isBITeam && !isSectorHead && !isViceMinister && !isMinisterAssistant && !isDU && !isGeneralManager && !isSubSectorHead && performanceleader == UserN.Title) || isAdmin || isMinister || isBITeam || ((isGeneralManager || isSubSectorHead) && (SubectorCode == UserAccessSectorCode)) || ((isDU || isMinisterAssistant || isViceMinister || isSectorHead) && (SectorCode == UserAccessSectorCode))) {
         countRec = countRec + 1;
         //sample getting field data  : oListItem.get_item('InternalName')
@@ -771,7 +771,7 @@ var Get_All_Dynamic_Filter = {
       }
 
     }
-    // debugger
+    //
     if (RelatedGoalFilterArr.length > 0) {
       Get_Sos_Name.init();
     } else {
@@ -911,7 +911,7 @@ var Build_My_Filter = {
     var departmenthtml = ' <label class="dropdown-item main-action-filter">' + '<button data-trans-canselselections class="Resources clear-filter" type="button"></button></label>'
 
     for (var i = 0; i < DepartmentFilterArr.length; i++) {
-      // debugger
+      //
       var departmentName = DepartmentFilterArr[i]
       if (localStorage.getItem('Dynamo_Internal Entities') != null) {
         departmentNameArr = JSON.parse(localStorage.getItem('Dynamo_Internal Entities'));
@@ -1824,7 +1824,7 @@ var Target_Details_Submit = {
     $(".btn-save").attr("disabled", true);
     var clientContext = new SP.ClientContext.get_current();
     var CurrList, oList, itemID;
-    $("tbody.targetTbody tr").each(function () //loop
+    $('tbody.targetTbody tr[is-updated="true"]').each(function () //loop
     {
       CurrList = $(this).attr("data-target_list"); //list name
       oList = clientContext.get_web().get_lists().getByTitle(CurrList); //set list

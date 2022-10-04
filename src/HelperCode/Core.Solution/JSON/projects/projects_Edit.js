@@ -928,7 +928,7 @@ var Information_Form = [{
             "DisplayName": "راعي المشروع",
             "DisplayNameEn": "Project Sponsor",
             "type": "picker",
-            "validation": "required",
+            // "validation": "required",
             security: {
                 groups: ['VRO_E','LMS_E',
                     'EPMO', 'System Admin Group'

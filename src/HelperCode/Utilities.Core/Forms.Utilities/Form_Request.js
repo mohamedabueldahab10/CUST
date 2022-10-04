@@ -94,14 +94,14 @@ window.Edit_Data_Request = {
     if (listkey == 'kpiequations') {
       //  (!isAdmin || !isSPMTeam )? window.location = _spPageContextInfo.webAbsoluteUrl : '';
 
-      if (isAdmin || isMinister || isBITeam || isSPMTeam || isPerformanceLeader || isSPMAdmin || isVROP) {
+      if (isAdmin || isMinister || isBITeam || isSPMTeam || isPerformanceLeader || isSPMAdmin || isVROP || isLMSP) {
       } else {
         window.location = _spPageContextInfo.webAbsoluteUrl
       }
     }
 
     if (listkey == "initiatives") {
-      debugger
+
       var typeValue = $("#Types option:selected").val();
       if (typeValue == "vision") {
         $("#RelatedBudgetItem , #ProgramTotalCost ,#RelatedKPI")
@@ -408,7 +408,7 @@ window.Edit_Data_Request = {
     if (listkey == 'goalstrategy') {
       var PillarsExist = $('#PillarsExist:checked').val();
       // console.log(Delivered, "ddddddddddddd")
-      debugger
+
       if (PillarsExist == 'yes') {
         $('[data-target_list="SPillars"] #Name').attr('required', 'required');
         $('[data-target_list="SPillars"] #Name').parent().attr('required', 'required');
@@ -2678,8 +2678,6 @@ window.RelatedInitiative_Data_Request = {
 
       )
     }
-
-
   },
   onError: function (sender, args) {
     console.log(
@@ -3051,7 +3049,7 @@ if(isDU || isPManager || isInManager){ // to disabled the checkbox for this role
 //get ProjectInitiativeMilestone
 window.ProjectInitiativeMilestone = {
   onSuccess: function (sender, args) {
-    debugger
+
     ProjectInitiativeMilestone.g.array = [];
     var collListItem = ProjectInitiativeMilestone.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
@@ -3312,12 +3310,19 @@ window.Delete_Data_Submit = {
         $("button.btn-delete").removeClass("loader-action");
         $("button.btn-delete").addClass("loader-action-success");
 
-
-        window.location =
+        if (listkey == "initiatives" || USERisProjects) {
+          window.location =
+          _spPageContextInfo.webAbsoluteUrl +
+          "/SitePages/Listing.aspx?ListKey=" +
+          listkey;
+        } else {
+          window.location =
           _spPageContextInfo.webAbsoluteUrl +
           "/SitePages/Listing.aspx?ListKey=" +
           listkey +
           PCODE_STRING;
+        }
+
       }),
       Function.createDelegate(this, function (sender, args) {
         $("button.btn-delete").removeClass("loader-action");
@@ -3416,6 +3421,7 @@ window.Delete_Item_Submit = {
         } else {
           if (
             listkey == "projects" ||
+            listkey == "initiatives" ||
             listkey == "ideas" ||
             listkey == "portfolio" ||
             listkey == "budgetitems"
@@ -3510,7 +3516,7 @@ window.Delete_Item_Submit = {
 var Delete_Kpi_Results = {
   init: function () {
     console.log("IN DELETE")
-    debugger
+
     var context = SP.ClientContext.get_current();
     var dfd = $.Deferred();
     var programList = context.get_web().get_lists().getByTitle('KPIResults');
@@ -4512,13 +4518,13 @@ var equationKPI = {
         $("p#Equation").text(kpiEquation || 0);
       }
     }
-    if (isAdmin || isSPMAdmin || isVROP) { // remove attr disabled for this roles in equation
+    if (isAdmin || isSPMAdmin || isVROP || isLMSP) { // remove attr disabled for this roles in equation
       $(".savecancelBtns > div, .btnactionrow > .rightBtns").append(
         '<button data-trans-editequation class="btn btn-action Resources btn-edit-equation bg-warning" type="button"></button>'
       );
 
     }
-    if (isAdmin || isPerformanceLeader || isVROP) {
+    if (isAdmin || isPerformanceLeader || isVROP || isLMSP) {
       $("input#KPIEquation, input#Equation ,input#B, input#A, input#CC , input#D ,input#E,input#F,input#G").removeAttr('disabled');
     }
 
@@ -4541,7 +4547,7 @@ var equationKPI = {
   },
   init: function () {
     console.log("HERERERRE")
-    debugger
+
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("KPIEquations");
     var camlQuery = new SP.CamlQuery();
@@ -4770,7 +4776,7 @@ var deleteAllFileFromDoc = {
   },
   success: function () {
     console.log("INSIDE OMN CSSSCADAS")
-    debugger
+
     if (allFileIndex == filesUrls.length - 1) {
       if (
         listkey == "projects" ||
@@ -4839,7 +4845,7 @@ window.Get_ProjectData_ByCode = {
       relatedInitCode = oListItem.get_item("RelatedInitiative") ? oListItem.get_item("RelatedInitiative") : ''
     }
     console.log("INSIDE INIT getPRoj")
-    debugger
+
     ProjectInitiativeMilestone.init('InitiativeMilestones', relatedInitCode)
   },
   onError: function (sender, args) {
@@ -5296,7 +5302,7 @@ var Check_Item_Deleted = {
 //           context.executeQueryAsync(
 //             function () {
 //               console.log("after remove task")
-//               debugger
+//
 //               if (
 //                 listkey == "projects" ||
 //                 listkey == "ideas" ||
