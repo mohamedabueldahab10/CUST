@@ -2765,6 +2765,8 @@ window.userCalls = {
 				//if data getting from other list related to project
 
 				Access_Sector_Info_Request.preinit();
+			} else if (isthereICODE && isDU) {
+				Access_Sector_Info_Request.preinit();
 			} else {
 				window.checkBreadCrumbsStatusHtml = setInterval(function () {
 					Access_Project_Info_Request.g.handleBreadcrumbs();
@@ -5541,18 +5543,18 @@ var GetInitiativeTitle_Request = {
 			// set min max date on planned date for milestones
 			if (InitiativeStartDate) {
 				let initFinishDate = new Date(InitiativeFinishDate)
-				.toISOString()
-				.split("T")[0];
+					.toISOString()
+					.split("T")[0];
 
-			$("input#PlannedCompletedDate").attr("max", initFinishDate);
-		}
-		if (InitiativeFinishDate) {
-			let initStartDate = new Date(InitiativeStartDate)
-				.toISOString()
-				.split("T")[0];
+				$("input#PlannedCompletedDate").attr("max", initFinishDate);
+			}
+			if (InitiativeFinishDate) {
+				let initStartDate = new Date(InitiativeStartDate)
+					.toISOString()
+					.split("T")[0];
 
-			$("input#PlannedCompletedDate").attr("min", initStartDate);
-		}
+				$("input#PlannedCompletedDate").attr("min", initStartDate);
+			}
 		}
 
 		window.checkBreadCrumbsStatusHtml = setInterval(function () {
@@ -5634,7 +5636,7 @@ function initiateDataLevelAccess() {
 	}
 }
 let dataLevelAccessQuery = "";
-let dataLevelAccessInQuery = "";
+let dataLevelAccessChoicesForFilters = [];
 let data_Level1_Access = {
 	buildCamlQuery: function (
 		dataListName,
@@ -5648,6 +5650,12 @@ let data_Level1_Access = {
 			whereBodyFinal = ``;
 		//dynamic query building
 		fieldsConditionConfig.forEach((el, i, a) => {
+			//handle case of filters on pages
+			dataLevelAccessChoicesForFilters.push({
+				internalName: el.field,
+				Type: el.type,
+				Values: el.values,
+			});
 			//Two choices
 			if (fieldsConditionConfig.length == 1) {
 				if (i == 0) {
@@ -5703,7 +5711,7 @@ let data_Level1_Access = {
 				data_Level1_Access.g.fieldsConditionConfig = fieldsConditionConfig;
 				data_Level1_Access.g.dataLevel = level;
 				if (level > 1) {
-					SP.SOD.executeFunc('sp.js', 'SP.ClientContext', function(){
+					SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
 						data_Level1_Access.init(dataListName);
 					});
 				}
@@ -5762,7 +5770,6 @@ let data_Level1_Access = {
 	},
 	//currenty handles one field not more
 	dynamicCamlQueryBuilder: function (levelConfig, valuesArray) {
-
 		let listName = levelConfig.listName;
 		let fieldToQuery = levelConfig.RelationField;
 		let fieldType = levelConfig.RelationFieldType;
@@ -5772,7 +5779,15 @@ let data_Level1_Access = {
 			whereBodyFinal = ``;
 		//dynamic query building
 		whereBody += `<In><FieldRef Name="${fieldToQuery}" /><Values>`;
+		//handle case of filters on pages
+		dataLevelAccessChoicesForFilters = [];
+		dataLevelAccessChoicesForFilters.push({
+			internalName: fieldToQuery,
+			Type: fieldType,
+			Values: valuesArray,
+		});
 		valuesArray.forEach((el, i, a) => {
+
 			//only one choice
 			whereBody += `<Value Type="${fieldType}">${el}</Value>`;
 			//Finish Line, make last changes and build query
@@ -5848,6 +5863,13 @@ let data_Level2_Access = {
 			whereBodyFinal = ``;
 		//dynamic query building
 		whereBody += `<In><FieldRef Name="${fieldToQuery}" /><Values>`;
+		//handle case of filters on pages
+		dataLevelAccessChoicesForFilters = [];
+		dataLevelAccessChoicesForFilters.push({
+			internalName: fieldToQuery,
+			Type: fieldType,
+			Values: valuesArray,
+		});
 		valuesArray.forEach((el, i, a) => {
 			//only one choice
 			whereBody += `<Value Type="${fieldType}">${el}</Value>`;

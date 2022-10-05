@@ -3615,6 +3615,7 @@ window.ViewAllFiles = {
         '<div class="col-lg-9 col-md-8 white-box p-4 fieldset-container"><div class="col-md-6 multiline"><label data-trans-document class="Resources">مرفقات: </label>';
       for (var i = 0; i < filesUrls.length; i++) {
         var filename = filesUrls[i].url.split("/").slice(-1)[0];
+        filename = filename.includes("_-_SystemUploadTime_-_") ? filename.split('_-_SystemUploadTime_-_')[1] : filename;
         if (isEdit) {
           FilesLink +=
             '<div class="file-container"><a class="File-Link" file-id="' +
@@ -3623,7 +3624,7 @@ window.ViewAllFiles = {
             filesUrls[i].title +
             '"  href="' +
             filesUrls[i].url +
-            '" download title="Download ' +
+            '" download="'+filename+'" title="Download ' +
             filename +
             '"><i class="fas fa-file-download" ></i>' +
             filename +
@@ -3643,7 +3644,7 @@ window.ViewAllFiles = {
             filesUrls[i].title +
             '"  href="' +
             filesUrls[i].url +
-            '" download title="Download ' +
+            '" download="'+filename+'" title="Download ' +
             filename +
             '"><i class="fas fa-file-download"></i>' +
             filename +
@@ -3917,6 +3918,7 @@ window.ViewAllFiles_Main_Strategy = {
       }
       for (var i = 0; i < filesUrls.length; i++) {
         var filename = filesUrls[i].url.split("/").slice(-1)[0];
+        filename = filename.includes("_-_SystemUploadTime_-_") ? filename.split('_-_SystemUploadTime_-_')[1] : filename;
         if (listkey != 'mainkpi') {
           if (isEdit) {
             FilesLink +=
@@ -3926,7 +3928,7 @@ window.ViewAllFiles_Main_Strategy = {
               filesUrls[i].title +
               '"  href="' +
               filesUrls[i].url +
-              '" download title="Download ' +
+              '" download="'+filename+'" title="Download ' +
               filename +
               '"><i class="fas fa-file-download" ></i>' +
               filename +
@@ -3945,7 +3947,7 @@ window.ViewAllFiles_Main_Strategy = {
               filesUrls[i].title +
               '"  href="' +
               filesUrls[i].url +
-              '" download title="Download ' +
+              '" download="'+filename+'" title="Download ' +
               filename +
               '"><i class="fas fa-file-download"></i>' +
               filename +
@@ -4016,6 +4018,7 @@ window.ViewAllFiles_Main_Strategy = {
                 if ((ele.RelatedYear == yearVal) && (relatedType == type)) {
                   if (isEdit) {
                     var filename = ele.url.split("/").slice(-1)[0];
+                    filename = filename.includes("_-_SystemUploadTime_-_") ? filename.split('_-_SystemUploadTime_-_')[1] : filename;
 
                     attachment += '<div class="file-container"><a class="File-Link" file-id="' +
                       ele.id +
@@ -4023,7 +4026,7 @@ window.ViewAllFiles_Main_Strategy = {
                       ele.title +
                       '"  href="' +
                       ele.url +
-                      '" download title="Download ' +
+                      '" download="'+filename+'" title="Download ' +
                       filename +
                       '"><i class="fas fa-file-download" ></i>' +
                       filename +
@@ -4036,6 +4039,7 @@ window.ViewAllFiles_Main_Strategy = {
                       '\')"><i class="fas fa-times"></i></div>';
                   } else {
                     var filename = ele.url.split("/").slice(-1)[0];
+                    filename = filename.includes("_-_SystemUploadTime_-_") ? filename.split('_-_SystemUploadTime_-_')[1] : filename;
 
                     attachment +=
                       '<div class="file-container"><a class="File-Link" file-id="' +
@@ -4044,7 +4048,7 @@ window.ViewAllFiles_Main_Strategy = {
                       ele.title +
                       '"  href="' +
                       ele.url +
-                      '" download title="Download ' +
+                      '" download="'+filename+'" title="Download ' +
                       filename +
                       '"><i class="fas fa-file-download"></i>' +
                       filename +
@@ -4071,6 +4075,7 @@ window.ViewAllFiles_Main_Strategy = {
           filesUrls.forEach(el => {
             if (!el.RelatedActualY && !el.RelatedMid && !el.RelatedMonth && !el.RelatedQuarter && !el.RelatedYear) {
               var filename = el.url.split("/").slice(-1)[0];
+              filename = filename.includes("_-_SystemUploadTime_-_") ? filename.split('_-_SystemUploadTime_-_')[1] : filename;
 
               if (isEdit) {
                 generalAttach +=
@@ -4080,7 +4085,7 @@ window.ViewAllFiles_Main_Strategy = {
                   el.title +
                   '"  href="' +
                   el.url +
-                  '" download title="Download ' +
+                  '" download="'+filename+'" title="Download ' +
                   filename +
                   '"><i class="fas fa-file-download" ></i>' +
                   filename +
@@ -4099,7 +4104,7 @@ window.ViewAllFiles_Main_Strategy = {
                   el.title +
                   '"  href="' +
                   el.url +
-                  '" download title="Download ' +
+                  '" download="'+filename+'" title="Download ' +
                   filename +
                   '"><i class="fas fa-file-download"></i>' +
                   filename +

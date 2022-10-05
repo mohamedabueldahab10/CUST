@@ -32,8 +32,8 @@ var projectTypeFilterQuery = '', typeClicked = 'Internal';
 
 var taskClicked = 'relatedTasks', allTasksClicked = false, getNewFilterTask = false, isViewMoreClicked = false;
 
-// var emptyData = require('../../../HelperRessources/img/empty-data.png');
-var emptyData = ''
+var emptyData = require('../../../HelperRessources/img/empty-data.png');
+// var emptyData = ''
 //all data filter array
 allDataFilterArr = []
 //
@@ -94,7 +94,7 @@ window.sphttp = {
     var clientContext = new SP.ClientContext(listUrl);
     var oListsp = clientContext.get_web().get_lists().getByTitle(listDisplayName);
     // var fields=IN.join(', ');
-    if (isLoadMore || isEmptyFilter || filterValue || allTasksClicked) {
+    if (!isGetDdl && (isLoadMore || isEmptyFilter || filterValue || allTasksClicked)) {
       camelQuery = camelQuery.replace('</Query></View>', '</Query><RowLimit>30</RowLimit></View>');
     }
 
@@ -964,6 +964,9 @@ window.ListingData = {
     filtertrigger: function () {
       $('.page-filter .dropdown-menu label input:checkbox').change(function (e) {
         FilterChoices = [];
+        if (isRoleDataLevelAccess) {
+          FilterChoices = Array.from(dataLevelAccessChoicesForFilters)
+        }
         $('.page-filter .dropdown-menu').each(function () { //looping through filters
           var selectedchoices = $(this).find('input:checked').map(function () { //getting selected choices
             if ($(this).attr('data-type') == 'floatpercentage')
@@ -995,7 +998,6 @@ window.ListingData = {
                 }
               }
             }
-
             FilterChoices.push({
               internalName: internalName,
               Type: fieldType,
@@ -1003,8 +1005,7 @@ window.ListingData = {
             });
           }
         });
-
-
+        console.log(FilterChoices, dataLevelAccessChoicesForFilters)
         ListingData.g.camlfilterbuilder();
       });
       $('.page-filter .dropdown-menu label.dropdown-item').on("click", function (e) {
@@ -1349,8 +1350,11 @@ window.ListingData = {
   Get_DDL: {
     init: function () {
       console.log("IN GET DDDL INIT")
-
-      cmlQ = PQuery;
+      if (isRoleDataLevelAccess && (!UserICode && !USERPCODE && isEmptyFilter)) {
+        cmlQ = dataLevelAccessQuery;
+      } else {
+        cmlQ = PQuery;
+      }
       sphttp.get(ListURL, SP_ListName, cmlQ, IN, true, function (recordsddl, recordddl, listItem, isDone) {
         if (isDone) {
           FilterationItems = []; //data

@@ -1044,6 +1044,9 @@ var Build_My_Filter = {
 
     $(".filterTarget .dropdown-menu label input:checkbox").change(function (e) {
       FilterChoices = [];
+      if (isRoleDataLevelAccess) {
+        FilterChoices = Array.from(dataLevelAccessChoicesForFilters)
+      }
       $(".filterTarget .dropdown-menu").each(function () {
         //looping through filters
         var selectedchoices = $(this)

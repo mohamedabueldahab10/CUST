@@ -2207,7 +2207,7 @@ function _uploadFile() {
                     <div class="upload-progress bg-success"" style="width:0px"></div>\
                 </div>\
                 <p data-trans-fileuploading class="upload-name Resources"><span class="progress-file-name">"' +
-              file.name +
+              file.name.replaceAll('�', '') +
               '" </span><span class="upload-percent"></span></p>\
             </div>'
             );
@@ -2256,7 +2256,7 @@ function _uploadFile() {
           .list(Documents_Library)
           .createFile({
             content: file.content,
-            filename: folderdirectory + "/" + file.name,
+            filename: folderdirectory + "/"+new Date().toLocaleString().replaceAll("/","-")+'_-_SystemUploadTime_-_' + file.name.replaceAll('�', ''),
             fields: fieldsObj,
             progress: function (perc) {
               // console.log("Progress => ", perc + "%");
