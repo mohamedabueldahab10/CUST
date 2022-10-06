@@ -1966,11 +1966,11 @@ var ProgressStatus_Data_Submit = {
 		} else if (actualImplementationRate == 100) {
 			//complete
 			initiativeprogress = "stat7";
-		} else if (differenceBetweenDelivrablesPercet < 5) {
+		} else if (differenceBetweenDelivrablesPercet <= 5) {
 			//onplan
 			initiativeprogress = "stat3";
 		} else if (
-			differenceBetweenDelivrablesPercet >= 5 &&
+			differenceBetweenDelivrablesPercet > 5 &&
 			differenceBetweenDelivrablesPercet <= 15
 		) {
 			//late
