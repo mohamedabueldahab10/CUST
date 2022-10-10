@@ -36,7 +36,7 @@ var relatedMainGoal = '', relatedSubGoal = '', indexTypekpi = '', relatedStrateg
 var globalInitiativeCode = '';
 
 // handle previous kpi info
-var targetYear=new Date().getFullYear(),targetActualValue='',targetPerformanceAnalysis='',targetPerioudType='',targetPerioudTypeValue='';
+var targetYear = new Date().getFullYear(), targetActualValue = '', targetPerformanceAnalysis = '', targetPerioudType = '', targetPerioudTypeValue = '';
 //
 
 window.kpiEquationsComponents = [];
@@ -138,6 +138,7 @@ window.Edit_Data_Request = {
     $(
       ".section-container:not([data-target_list]) .CFIELD> input:not([type=file]), .section-container:not([data-target_list]) .CFIELD> input[type=checkbox],.section-container:not([data-target_list]) .CFIELD> div[type=multipicker], .section-container:not([data-target_list]) .CFIELD> div[type=picker], .section-container:not([data-target_list]) .CFIELD> select[type=dropdown], .section-container:not([data-target_list]) .CFIELD>  textarea,.section-container:not([data-target_list]) .CFIELD> .datetimeinputs input[type=date], .section-container:not([data-target_list]) .CFIELD> .datetimeinputs input[type=datetime-local], .section-container:not([data-target_list]) .CFIELD > .multiselect-container"
     ).each(function () {
+
       switch ($(this).attr("type")) {
         case "date":
           var d =
@@ -232,6 +233,8 @@ window.Edit_Data_Request = {
           $(this).val(oListItem.get_item($(this).attr("id")));
           if ($(this).attr("id") == "SubSector") {
             departmenetValue = oListItem.get_item("" + $(this).attr("id") + "");
+            console.log(departmenetValue, "assssssssssssssssssssssss")
+            debugger
           }
           if ($(this).attr("id") == "BudgetItem") {
             budgetitemValue = oListItem.get_item("" + $(this).attr("id") + "");
@@ -385,13 +388,24 @@ window.Edit_Data_Request = {
         Initiative_Strategy_Sos.init("SOs")
       }
 
-      relatedObjInit =  oListItem.get_item("RelatedObjective")?oListItem.get_item("RelatedObjective") :''
+      relatedObjInit = oListItem.get_item("RelatedObjective") ? oListItem.get_item("RelatedObjective") : ''
+
+      var sector = oListItem.get_item("Sector") ? oListItem.get_item("Sector") : '';
+      if (sector) {
+        Department_Sector_Info.init(sector);// to get the departments related to sector
+      }
+
     }
     if (listkey == 'sos') {
       var relatedStrategy = $('#RelatedStrategy').val()
       relatedPiller = oListItem.get_item("PillarName")
 
       Goal_Strategy_Info.init(relatedStrategy)
+      
+      var sector = oListItem.get_item("Sector") ? oListItem.get_item("Sector") : '';
+      if (sector) {
+        Department_Sector_Info.init(sector);// to get the departments related to sector
+      }
     }
     if (listkey == 'deliverables' && PCODE) {
       var Delivered = $('#Delivered:checked').val();
@@ -445,8 +459,10 @@ window.Edit_Data_Request = {
       //   Kpi_Related_Goal.init(relatedStrategyKpi, indexTypekpi)
       // }
       if (relatedStrategyKpi && indexTypekpi) {
-        Check_Item_Deleted.init('GoalStrategy', relatedStrategyKpi, 'Title') // check if GoalStrategy deleted hide the related val
         Kpi_Related_Goal.init(relatedStrategyKpi, indexTypekpi)
+        setTimeout(function () {
+          Check_Item_Deleted.init('GoalStrategy', relatedStrategyKpi, 'Title') // check if GoalStrategy deleted hide the related val
+        }, 2000)
       }
 
 
@@ -463,6 +479,7 @@ window.Edit_Data_Request = {
       }
 
       $('#Year').val(oListItem.get_item("Year") ? oListItem.get_item("Year") : '')
+      debugger
       equationKPI.init();
 
 
@@ -492,7 +509,10 @@ window.Edit_Data_Request = {
 
       Check_Item_Deleted.init('Initiatives', projRelatedInit, 'Title') // check if initiative deleted hide the related delev
 
-
+      var sector = oListItem.get_item("Sector") ? oListItem.get_item("Sector") : '';
+      if (sector) {
+        Department_Sector_Info.init(sector);// 
+      }
     }
 
     if (listkey == 'milestones' && PCODE) {
@@ -629,6 +649,7 @@ window.Edit_Data_Request = {
       $('input.sp-peoplepicker-editorInput').prop('disabled', true);
     }
     $(".loader-box").fadeOut();
+    debugger
   },
   onError: function (sender, args) {
     console.log(
@@ -2476,7 +2497,6 @@ window.Get_Related_Sos_Sector = {
     var collListItem = Get_Related_Sos_Sector.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     while (listItemEnum.moveNext()) {
-
       var oListItem = listItemEnum.get_current();
 
       var type = $('#Types').val()
@@ -2978,9 +2998,9 @@ window.ProjectInitiativeDelevrable = {
 
     // $("#RelatedInitiativeDeliverable").prop("disabled", false);
 
-if(isDU || isPManager || isInManager){ // to disabled the checkbox for this role
-  isDisabled = 'disabled'
-}
+    if (isDU || isPManager || isInManager) { // to disabled the checkbox for this role
+      isDisabled = 'disabled'
+    }
     if (!isView) {
       var multiSelectHtml =
         '<li class="dropdown ul-bullet-remove">' +
@@ -2993,7 +3013,7 @@ if(isDU || isPManager || isInManager){ // to disabled the checkbox for this role
           '<li>' +
           '<div class="checkbox">' +
           '<label>' +
-          '<input value="' + item.code + '" id="RelatedInitiativeDeliverable" type="checkbox" '+ isDisabled+' ">' + item.name +
+          '<input value="' + item.code + '" id="RelatedInitiativeDeliverable" type="checkbox" ' + isDisabled + ' ">' + item.name +
           '</label>' +
           '</div>' +
           '</li>'
@@ -3312,15 +3332,15 @@ window.Delete_Data_Submit = {
 
         if (listkey == "initiatives" || USERisProjects) {
           window.location =
-          _spPageContextInfo.webAbsoluteUrl +
-          "/SitePages/Listing.aspx?ListKey=" +
-          listkey;
+            _spPageContextInfo.webAbsoluteUrl +
+            "/SitePages/Listing.aspx?ListKey=" +
+            listkey;
         } else {
           window.location =
-          _spPageContextInfo.webAbsoluteUrl +
-          "/SitePages/Listing.aspx?ListKey=" +
-          listkey +
-          PCODE_STRING;
+            _spPageContextInfo.webAbsoluteUrl +
+            "/SitePages/Listing.aspx?ListKey=" +
+            listkey +
+            PCODE_STRING;
         }
 
       }),
@@ -3624,7 +3644,7 @@ window.ViewAllFiles = {
             filesUrls[i].title +
             '"  href="' +
             filesUrls[i].url +
-            '" download="'+filename+'" title="Download ' +
+            '" download="' + filename + '" title="Download ' +
             filename +
             '"><i class="fas fa-file-download" ></i>' +
             filename +
@@ -3644,7 +3664,7 @@ window.ViewAllFiles = {
             filesUrls[i].title +
             '"  href="' +
             filesUrls[i].url +
-            '" download="'+filename+'" title="Download ' +
+            '" download="' + filename + '" title="Download ' +
             filename +
             '"><i class="fas fa-file-download"></i>' +
             filename +
@@ -3928,7 +3948,7 @@ window.ViewAllFiles_Main_Strategy = {
               filesUrls[i].title +
               '"  href="' +
               filesUrls[i].url +
-              '" download="'+filename+'" title="Download ' +
+              '" download="' + filename + '" title="Download ' +
               filename +
               '"><i class="fas fa-file-download" ></i>' +
               filename +
@@ -3947,7 +3967,7 @@ window.ViewAllFiles_Main_Strategy = {
               filesUrls[i].title +
               '"  href="' +
               filesUrls[i].url +
-              '" download="'+filename+'" title="Download ' +
+              '" download="' + filename + '" title="Download ' +
               filename +
               '"><i class="fas fa-file-download"></i>' +
               filename +
@@ -4026,7 +4046,7 @@ window.ViewAllFiles_Main_Strategy = {
                       ele.title +
                       '"  href="' +
                       ele.url +
-                      '" download="'+filename+'" title="Download ' +
+                      '" download="' + filename + '" title="Download ' +
                       filename +
                       '"><i class="fas fa-file-download" ></i>' +
                       filename +
@@ -4048,7 +4068,7 @@ window.ViewAllFiles_Main_Strategy = {
                       ele.title +
                       '"  href="' +
                       ele.url +
-                      '" download="'+filename+'" title="Download ' +
+                      '" download="' + filename + '" title="Download ' +
                       filename +
                       '"><i class="fas fa-file-download"></i>' +
                       filename +
@@ -4085,7 +4105,7 @@ window.ViewAllFiles_Main_Strategy = {
                   el.title +
                   '"  href="' +
                   el.url +
-                  '" download="'+filename+'" title="Download ' +
+                  '" download="' + filename + '" title="Download ' +
                   filename +
                   '"><i class="fas fa-file-download" ></i>' +
                   filename +
@@ -4104,7 +4124,7 @@ window.ViewAllFiles_Main_Strategy = {
                   el.title +
                   '"  href="' +
                   el.url +
-                  '" download="'+filename+'" title="Download ' +
+                  '" download="' + filename + '" title="Download ' +
                   filename +
                   '"><i class="fas fa-file-download"></i>' +
                   filename +
@@ -4117,8 +4137,8 @@ window.ViewAllFiles_Main_Strategy = {
 
         }
 
-        if(isView){
-        View_Current_Kpi.init(); // show the kpi result for current time (extra section of view) before the attachment container
+        if (isView) {
+          View_Current_Kpi.init(); // show the kpi result for current time (extra section of view) before the attachment container
         }
       }
 
@@ -4438,7 +4458,7 @@ var Issues_Info_Request = {
 //KPI equations
 var equationKPI = {
   onSuccess: function (sender, args) {
-
+    debugger
     equationKPI.g.array = [];
     var collListItem = equationKPI.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
@@ -4482,7 +4502,7 @@ var equationKPI = {
       // set display text
 
       myCKeys.forEach((o) => {
-        console.log(kpiEquationsComponents[0][o],'oooooooooooooooooo')
+        console.log(kpiEquationsComponents[0][o], 'oooooooooooooooooo')
         kpiEquationsComponents[0][o]
           ? $(`input#${o},p#${o}`)
             .parent()
@@ -4900,8 +4920,8 @@ var View_Current_Kpi = {
         periodType += '<label data-trans-yearkpitype class="Resources"></label>'
         periodType += '<p data-trans-actualy class="viewmode-value Resources" id="Years"></p>'
 
-        targetYear = targetYear -1
-        targetActualValue ='ActualY'
+        targetYear = targetYear - 1
+        targetActualValue = 'ActualY'
         targetPerformanceAnalysis = 'PerformanceAnalysisActualY'
         targetPerioudType = '<label data-trans-yearkpitype class="Resources"></label>'
         targetPerioudType += '<p data-trans-actualy class="viewmode-value Resources" id="Years_Previous"></p>'
@@ -4921,8 +4941,8 @@ var View_Current_Kpi = {
           periodType += '<p data-trans-actualmid1 class="viewmode-value Resources" id="Midterms"></p>'
 
           targetPerioudType += '<p data-trans-actualmid2 class="viewmode-value Resources" id="Midterms_Previous"></p>'
-          targetYear = targetYear -1
-          targetActualValue ='ActualMid2'
+          targetYear = targetYear - 1
+          targetActualValue = 'ActualMid2'
           targetPerformanceAnalysis = 'PerformanceAnalysisActualMid2'
 
         } else if (currentMonth > 6 && currentMonth <= 12) {
@@ -4932,7 +4952,7 @@ var View_Current_Kpi = {
           periodType += '<p data-trans-actualmid2 class="viewmode-value Resources" id="Midterms"></p>'
           targetPerioudType += '<p data-trans-actualmid1 class="viewmode-value Resources" id="Midterms_Previous"></p>'
 
-          targetActualValue ='ActualMid1'
+          targetActualValue = 'ActualMid1'
           targetPerformanceAnalysis = 'PerformanceAnalysisActualMid1'
         }
 
@@ -4947,8 +4967,8 @@ var View_Current_Kpi = {
           periodType += '<p data-trans-actualq1 class="viewmode-value Resources" id="Quarter"></p>'
 
           targetPerioudType += '<p data-trans-actualq4 class="viewmode-value Resources" id="Quarter_Previous"></p>'
-          targetYear = targetYear -1
-          targetActualValue ='ActualQ4'
+          targetYear = targetYear - 1
+          targetActualValue = 'ActualQ4'
           targetPerformanceAnalysis = 'PerformanceAnalysisActualQ4'
 
         } else if (currentMonth > 3 && currentMonth <= 6) {
@@ -4956,8 +4976,8 @@ var View_Current_Kpi = {
           relatedActualValue = oListItem.get_item('ActualQ2') || 0
           periodType += '<p data-trans-actualq2 class="viewmode-value Resources" id="Quarter"></p>'
 
-          targetPerioudType +=  '<p data-trans-actualq1 class="viewmode-value Resources" id="Quarter_Previous"></p>'
-          targetActualValue ='ActualQ1'
+          targetPerioudType += '<p data-trans-actualq1 class="viewmode-value Resources" id="Quarter_Previous"></p>'
+          targetActualValue = 'ActualQ1'
           targetPerformanceAnalysis = 'PerformanceAnalysisActualQ1'
 
         } else if (currentMonth > 6 && currentMonth <= 9) {
@@ -4965,8 +4985,8 @@ var View_Current_Kpi = {
           relatedActualValue = oListItem.get_item('ActualQ3') || 0
           periodType += '<p data-trans-actualq3 class="viewmode-value Resources" id="Quarter"></p>'
 
-          targetPerioudType +='<p data-trans-actualq2 class="viewmode-value Resources" id="Quarter_Previous"></p>'
-          targetActualValue ='ActualQ2'
+          targetPerioudType += '<p data-trans-actualq2 class="viewmode-value Resources" id="Quarter_Previous"></p>'
+          targetActualValue = 'ActualQ2'
           targetPerformanceAnalysis = 'PerformanceAnalysisActualQ2'
 
         } else if (currentMonth > 9 && currentMonth <= 12) {
@@ -4976,7 +4996,7 @@ var View_Current_Kpi = {
           periodType += '<p data-trans-actualq4 class="viewmode-value Resources" id="Quarter"></p>'
 
           targetPerioudType += '<p data-trans-actualq3 class="viewmode-value Resources" id="Quarter_Previous"></p>'
-          targetActualValue ='ActualQ3'
+          targetActualValue = 'ActualQ3'
           targetPerformanceAnalysis = 'PerformanceAnalysisActualQ3'
         }
 
@@ -4989,14 +5009,14 @@ var View_Current_Kpi = {
 
         targetPerioudType = '<label data-trans-monthlykpitype class="Resources"></label>'
 
-        if(currentMonth == 1){
+        if (currentMonth == 1) {
           targetPerioudType += `<p data-trans-month12 class="viewmode-value Resources" id="Months_Previous"></p>`
-          targetYear = targetYear -1
-          targetActualValue ='ActualM12'
+          targetYear = targetYear - 1
+          targetActualValue = 'ActualM12'
           targetPerformanceAnalysis = 'PerformanceAnalysisActualM12'
-        }else{
-          targetPerioudType += `<p data-trans-month${currentMonth -1} class="viewmode-value Resources" id="Months_Previous"></p>`
-          targetActualValue =`ActualM${currentMonth - 1}`
+        } else {
+          targetPerioudType += `<p data-trans-month${currentMonth - 1} class="viewmode-value Resources" id="Months_Previous"></p>`
+          targetActualValue = `ActualM${currentMonth - 1}`
           targetPerformanceAnalysis = `PerformanceAnalysisActualM${currentMonth - 1}`
         }
 
@@ -5069,11 +5089,11 @@ var View_Current_Kpi = {
   }
 }
 
-var View_Previous_kpi={
+var View_Previous_kpi = {
   onSuccess: function (sender, args) {
     var collListItem = View_Previous_kpi.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-    var targetValue='',targetAnalysis='';
+    var targetValue = '', targetAnalysis = '';
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       targetValue = oListItem.get_item(targetActualValue) || 0
@@ -5081,26 +5101,26 @@ var View_Previous_kpi={
     }
 
     var previousKpiView =
-    '<div class="py-5 border-bottom section-container " data-groups="">' +
-        '<div class="form-row"><div class="col-lg-3 col-md-4 mb-4"><h3 data-trans-previouskpi class="Resources"></h3><span class="font-14"></span></div>' +
-        '<div class="col-lg-9 col-md-8 white-box p-4 fieldset-container">' +
-              '<div class="col-md-6 multiline">' +
-              '<label data-trans-yeartype class="Resources"></label>' +
-              '<p class="viewmode-value" id="Year_Previous">' + targetYear + '</p>' +
-              '</div>' +
-              '<div class="col-md-6 multiline">' +
-              targetPerioudType +
-              '</div>' +
-              '<div class="col-md-6 multiline">' +
-              '<label data-trans-actualkpivalue class="Resources"></label>' +
-              '<p class="viewmode-value" id="Equation_Previous">' + targetValue + '</p>' +
-              '</div>' +
-              '<div class="col-md-12 multiline">' +
-              '<label data-trans-performanceanalysis class="Resources"></label>' +
-              '<p class="viewmode-value" id="PerformanceAnalysis_Previous">' + targetAnalysis + '</p>' +
-              '</div>' +
-          '</div>'+
-    '</div>'
+      '<div class="py-5 border-bottom section-container " data-groups="">' +
+      '<div class="form-row"><div class="col-lg-3 col-md-4 mb-4"><h3 data-trans-previouskpi class="Resources"></h3><span class="font-14"></span></div>' +
+      '<div class="col-lg-9 col-md-8 white-box p-4 fieldset-container">' +
+      '<div class="col-md-6 multiline">' +
+      '<label data-trans-yeartype class="Resources"></label>' +
+      '<p class="viewmode-value" id="Year_Previous">' + targetYear + '</p>' +
+      '</div>' +
+      '<div class="col-md-6 multiline">' +
+      targetPerioudType +
+      '</div>' +
+      '<div class="col-md-6 multiline">' +
+      '<label data-trans-actualkpivalue class="Resources"></label>' +
+      '<p class="viewmode-value" id="Equation_Previous">' + targetValue + '</p>' +
+      '</div>' +
+      '<div class="col-md-12 multiline">' +
+      '<label data-trans-performanceanalysis class="Resources"></label>' +
+      '<p class="viewmode-value" id="PerformanceAnalysis_Previous">' + targetAnalysis + '</p>' +
+      '</div>' +
+      '</div>' +
+      '</div>'
 
     $(previousKpiView).insertBefore(
       $(".current_kpi")
@@ -5136,6 +5156,7 @@ var Check_Item_Deleted = {
     var collListItem = Check_Item_Deleted.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var deleted = true
+    debugger
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       deleted = false
@@ -5212,14 +5233,20 @@ var Check_Item_Deleted = {
           ProjectInitiativeDelevrable.init('InitiativeDeliverables', globalInitiativeCode)
         } else if (listkey == 'mainkpi') {
           Goal_Strategy_Info.init(relatedStrategyKpi)
+          debugger
           if (indexTypekpi == 'main') {
-            var sosVal = $('#RelatedStrategyObjective').val()
+            console.log(relatedMainGoal, "relatedMainGoalrelatedMainGoalrelatedMainGoal")
+            var sosVal = relatedMainGoal
             if (!sosVal) {
               $('#Sector').val(No_Data)
               $('#SubSector').val(No_Data)
             }
           } else if (indexTypekpi == 'sub') {
-            var sosVal = $('#SubRelatedObjective').val()
+            console.log(relatedSubGoal, "relatedSubGoal")
+            console.log($('#SubRelatedObjective').val(), "VAAAAAAAAAAAAAAAAAL")
+            // var sosVal = $('#SubRelatedObjective').val()
+            var sosVal = relatedSubGoal
+            debugger
             if (!sosVal) {
               $('#Sector').val(No_Data)
               $('#SubSector').val(No_Data)

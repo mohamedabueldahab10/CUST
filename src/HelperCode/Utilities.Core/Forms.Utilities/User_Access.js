@@ -3157,7 +3157,7 @@ window.userCalls = {
 									level: 3,
 									listName: "KPIResults",
 									parentRelationField: "Title",
-									RelationField: "RelatedMainKpis",
+									RelationField: "KPI",
 									RelationFieldType: "Text",
 								},
 							},

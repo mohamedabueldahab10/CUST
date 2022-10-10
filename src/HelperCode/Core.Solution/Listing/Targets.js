@@ -15,6 +15,10 @@ var SectorFilterArr = [], DepartmentFilterArr = [], PortfolioFilterArr = [], Rel
 var Where_Body = "",
   Query_Body = "";
 
+
+var RolePQuery = '', Role_Where_Body = "", Role_Query_Body = "";
+
+
 var MainKPIs_Info_Request = {
   preinit: function () {
     if ($(".d-flex").length) {
@@ -45,7 +49,7 @@ var MainKPIs_Info_Request = {
     var camlQuery = new SP.CamlQuery(); //set query to return data
     console.log('mmmmmmmm')
 
-
+    debugger
     if (Where_Body) {
 
 
@@ -60,11 +64,11 @@ var MainKPIs_Info_Request = {
         `</Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>`
 
     } else {
+      debugger
       if (isRoleDataLevelAccess) {
-        camlQuery.set_viewXml(
-          dataLevelAccessQuery
-        );
-        isRoleDataLevelAccess = false;
+
+        camlQuery.set_viewXml(RolePQuery)
+        // isRoleDataLevelAccess = false; 
       }
       else if (filteredValue == "year" || filteredValue === "quarter" || filteredValue == "midterm" || filteredValue == 'monthly') {
         if (isGeneralManager || isDU || isMinisterAssistant || isViceMinister || isSectorHead || isSubSectorHead) {
@@ -169,8 +173,10 @@ var MainKPIs_Info_Request = {
         "<thead>"
       );
     }
+    debugger
 
     while (listItemEnum.moveNext()) {
+      console.log("INSIDE WHILE")
       //loop through items, handle/get data/fields
       var oListItem = listItemEnum.get_current();
       var performanceleader = oListItem.get_item("PerformanceLeader")
@@ -179,10 +185,13 @@ var MainKPIs_Info_Request = {
       var SubectorCode = oListItem.get_item("SubSector") ? oListItem.get_item("SubSector") : '';
       var SectorCode = oListItem.get_item("Sector") ? oListItem.get_item("Sector") : '';
       //
+      debugger
       if ((!isAdmin && !isMinister && !isBITeam && !isSectorHead && !isViceMinister && !isMinisterAssistant && !isDU && !isGeneralManager && !isSubSectorHead && performanceleader == UserN.Title) || isAdmin || isMinister || isBITeam || ((isGeneralManager || isSubSectorHead) && (SubectorCode == UserAccessSectorCode)) || ((isDU || isMinisterAssistant || isViceMinister || isSectorHead) && (SectorCode == UserAccessSectorCode))) {
         countRec = countRec + 1;
         //sample getting field data  : oListItem.get_item('InternalName')
         var name = oListItem.get_item("Name") || UserNo_Data;
+        console.log(name, "name name name")
+
         var category = oListItem.get_item("Category") || UserNo_Data;
         var relatedInstrument =
           oListItem.get_item("RelatedInstrument") || UserNo_Data;
@@ -739,11 +748,112 @@ var MainKPIs_Info_Request = {
 };
 
 window.checkTargetStatusHtml = setInterval(function () {
-  MainKPIs_Info_Request.preinit();
+  debugger
+  if (isRoleDataLevelAccess) {
+    RoleDataLevelBuildQuery.init()
+  } else {
+    MainKPIs_Info_Request.preinit();
+  }
 }, 777); //initiate the call
 
 
+var RoleDataLevelBuildQuery = {
+  init: function () {
+    var FilterChoicesRole = Array.from(dataLevelAccessChoicesForFilters)
 
+    FilterChoicesRole.push({ internalName: 'Year', Type: 'Text', Values: [currentYear] }, { internalName: 'PeriodType', Type: 'Choice', Values: [filteredValue] })
+    console.log(FilterChoicesRole, "FilterChoicesRole FilterChoicesRoleFilterChoicesRole")
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////
+    for (var i = 0; i < FilterChoicesRole.length; i++) {
+      //only one choice
+      if (FilterChoicesRole.length == 1) {
+        // \'Year\' 
+        Where_Body += '<In><FieldRef Name="' + FilterChoicesRole[i].internalName + '" /><Values>';
+        for (var j = 0; j < FilterChoicesRole[i].Values.length; j++) {
+          Where_Body += '<Value Type="' + FilterChoicesRole[i].Type + '">' + FilterChoicesRole[i].Values[j] + '</Value>';
+        }
+        Where_Body += '</Values></In>';
+      }
+      //Two choices
+      else if (FilterChoicesRole.length == 2) {
+        if (i == 0) {
+          Where_Body += '<And><In><FieldRef Name="' + FilterChoicesRole[i].internalName + '" /><Values>';
+          for (var j = 0; j < FilterChoicesRole[i].Values.length; j++) {
+            Where_Body += '<Value Type="' + FilterChoicesRole[i].Type + '">' + FilterChoicesRole[i].Values[j] + '</Value>';
+          }
+          Where_Body += '</Values></In>';
+        } else {
+          Where_Body += '<In><FieldRef Name="' + FilterChoicesRole[i].internalName + '" /><Values>';
+          for (var j = 0; j < FilterChoicesRole[i].Values.length; j++) {
+            Where_Body += '<Value Type="' + FilterChoicesRole[i].Type + '">' + FilterChoicesRole[i].Values[j] + '</Value>';
+          }
+          Where_Body += '</Values></In></And>';
+        }
+      }
+      //More than two choices
+      else if (FilterChoicesRole.length > 2) {
+        //two Eqs in last And
+        if (i == FilterChoicesRole.length - 1) {
+          Where_Body += '<In><FieldRef Name="' + FilterChoicesRole[i].internalName + '" /><Values>';
+          for (var j = 0; j < FilterChoicesRole[i].Values.length; j++) {
+            Where_Body += '<Value Type="' + FilterChoicesRole[i].Type + '">' + FilterChoicesRole[i].Values[j] + '</Value>';
+          }
+          Where_Body += '</Values></In>';
+
+          //appending And closure
+          var count = (Where_Body.match(/<And>/g) || []).length;
+          var ANDC = "</And>".repeat(count);
+          Where_Body += ANDC;
+        }
+        //normal And
+        else {
+          Where_Body += '<And><In><FieldRef Name="' + FilterChoicesRole[i].internalName + '" /><Values>';
+          for (var j = 0; j < FilterChoicesRole[i].Values.length; j++) {
+            Where_Body += '<Value Type="' + FilterChoicesRole[i].Type + '">' + FilterChoicesRole[i].Values[j] + '</Value>';
+          }
+          Where_Body += '</Values></In>';
+        }
+      }
+      //Finish Line, make last changes and build query
+      if (i == FilterChoicesRole.length - 1) {
+
+        // console.log(PQueryFilteration);
+        Where_Body = Where_Body.replaceAll('Type="date"', 'IncludeTimeValue="TRUE" Type="DateTime"'); //IncludeTimeValue="false"
+        //alert(Where_Body.includes('Type="date"')+'00'+Where_Body);
+        //Where_Body.replace('Type="date"', '');
+        // console.log(PQueryFilteration.length > 0);
+
+        if (!(PQueryFilteration.length > 0)) {
+
+          Where_Body_Final = '<Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>' + Where_Body + PQueryFilteration + '</And></Where>';
+        } else {
+
+
+          Where_Body_Final = '<Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And>' + Where_Body + PQueryFilteration + '</And></Where>';
+
+
+
+
+        }
+
+        Query_Body = '<View>' +
+          '<Query>' +
+          Where_Body_Final +
+          '<OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>' +
+          '</Query>' +
+          '</View>';
+        RolePQuery = Query_Body;
+
+        MainKPIs_Info_Request.preinit();
+
+
+        console.log(Query_Body, "Query_Body Query_Body Query_Body  jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
+      }
+    }
+  }
+}
 var Get_All_Dynamic_Filter = {
   onSuccess: function (sender, args) {
     var collListItem = Get_All_Dynamic_Filter.g.collListItem;
@@ -1045,7 +1155,9 @@ var Build_My_Filter = {
     $(".filterTarget .dropdown-menu label input:checkbox").change(function (e) {
       FilterChoices = [];
       if (isRoleDataLevelAccess) {
+
         FilterChoices = Array.from(dataLevelAccessChoicesForFilters)
+        console.log(FilterChoices, "FilterChoices FilterChoices FilterChoices")
       }
       $(".filterTarget .dropdown-menu").each(function () {
         //looping through filters
@@ -1275,16 +1387,35 @@ var Build_My_Filter = {
 
       kpiYear = Number(kpiYear) + 1
       $('.yeartitle').html(kpiYear)
-      Where_Body = Where_Body.replace("<FieldRef Name='Year' /> <Value Type='Text'>" + currentkpiYear + "</Value >", "<FieldRef Name='Year' /> <Value Type='Text'>" + kpiYear + "</Value >")
+      if (isRoleDataLevelAccess) {
+        Where_Body = Where_Body.replace( currentkpiYear ,  kpiYear )
 
+        // Where_Body = Where_Body.replace('<Value Type="Text">' + currentkpiYear + '</Value>', '<Value Type="Text">' + kpiYear + '</Value>')
+      } else {
+        Where_Body = Where_Body.replace( currentkpiYear ,  kpiYear )
+
+        // Where_Body = Where_Body.replace("<FieldRef Name='Year' /> <Value Type='Text'>" + currentkpiYear + "</Value >", "<FieldRef Name='Year' /> <Value Type='Text'>" + kpiYear + "</Value >")
+      }
       MainKPIs_Info_Request.init(Where_Body);
     })
 
     $(".yearSlider .yearContainer .previousYear").click(function (e) {
+      debugger
       var currentkpiYear = kpiYear
       kpiYear = Number(kpiYear) - 1
       $('.yeartitle').html(kpiYear)
-      Where_Body = Where_Body.replace("<FieldRef Name='Year' /> <Value Type='Text'>" + currentkpiYear + "</Value >", "<FieldRef Name='Year' /> <Value Type='Text'>" + kpiYear + "</Value >")
+      console.log(Where_Body, "Where_Body dddddddddddddddddddddddddd")
+      debugger
+      if (isRoleDataLevelAccess) {
+        // Where_Body = Where_Body.replace('<Value Type="Text">' + currentkpiYear + '</Value>', '<Value Type="Text">' + kpiYear + '</Value>')
+        Where_Body = Where_Body.replace( currentkpiYear ,  kpiYear )
+
+      } else {
+        // Where_Body = Where_Body.replace("<FieldRef Name='Year' /> <Value Type='Text'>" + currentkpiYear + "</Value >", "<FieldRef Name='Year' /> <Value Type='Text'>" + kpiYear + "</Value >")
+        Where_Body = Where_Body.replace( currentkpiYear ,  kpiYear )
+
+      }
+      console.log(Where_Body, "Where_Body dddddddddddddddddddddddddd")
 
       MainKPIs_Info_Request.init(Where_Body)
     })

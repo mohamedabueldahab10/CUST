@@ -6153,6 +6153,7 @@ var Sectors_Info = {
 
 var GetSector_Info = {
 	onSuccess: function (sender, args) {
+
 		var collListItem = GetSector_Info.g.collListItem;
 		var listItemEnum = collListItem.getEnumerator();
 		while (listItemEnum.moveNext()) {
@@ -6160,7 +6161,6 @@ var GetSector_Info = {
 			GetSector_Info.g.PSectorArray.push(oListItem.get_item("Sector"));
 		}
 		window.Sector_Occurrence = []; //for easy debuging
-
 		var countOccurrences = (arr, val) =>
 			arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
 		for (var i = 0; i < Sectors_Info.g.SectorArray.length; i++) {
