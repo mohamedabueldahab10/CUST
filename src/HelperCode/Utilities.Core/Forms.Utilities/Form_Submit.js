@@ -1422,6 +1422,44 @@ var kpiResults = {
     } else if (Types == 'sub') {
       kpiResults.g.oListItem.set_item("RelatedGoal", subGoalRelated)
     }
+    ////////  update performance leader1 and performance leader2
+    if ($('#PerformanceLeader').find("span.sp-peoplepicker-userSpan").length) {
+      var id = $('#PerformanceLeader').attr("INppicker");
+      var ppp =
+        $('#PerformanceLeader').find("span.sp-peoplepicker-userSpan").attr("sid") ==
+          undefined
+          ? ""
+          : SP.FieldUserValue.fromUser(
+            $('#PerformanceLeader')
+              .find("span.sp-peoplepicker-userSpan")
+              .attr("sid")
+              .split("|")
+              .slice(-1)[0]
+          );
+
+          kpiResults.g.oListItem.set_item(id, ppp);
+
+          console.log(ppp,"ppppppppppppppppppppppppppppp")
+          console.log(id,"iiiiiiiiiiiiiiiiiiiiiid")
+    }
+    if ($('#PerformanceLeader2').find("span.sp-peoplepicker-userSpan").length) {
+      var id = $('#PerformanceLeader2').attr("INppicker");
+      var ppp =
+        $('#PerformanceLeader2').find("span.sp-peoplepicker-userSpan").attr("sid") ==
+          undefined
+          ? ""
+          : SP.FieldUserValue.fromUser(
+            $('#PerformanceLeader2')
+              .find("span.sp-peoplepicker-userSpan")
+              .attr("sid")
+              .split("|")
+              .slice(-1)[0]
+          );
+
+          kpiResults.g.oListItem.set_item(id, ppp);
+    }
+    /////////////////////////////////////////////////////////
+
     kpiResults.g.oListItem.update();
     clientContext.load(kpiResults.g.oListItem);
 
@@ -1471,6 +1509,41 @@ var Edit_KPI_Results = {
             items.set_item('Types', Types);
             items.set_item('Sector', Sector)
             items.set_item('SubSector', SubSector)
+
+            ///////// update performance leader1 and performance leader2
+            if ($('#PerformanceLeader').find("span.sp-peoplepicker-userSpan").length) {
+              var id = $('#PerformanceLeader').attr("INppicker");
+              var ppp =
+                $('#PerformanceLeader').find("span.sp-peoplepicker-userSpan").attr("sid") ==
+                  undefined
+                  ? ""
+                  : SP.FieldUserValue.fromUser(
+                    $('#PerformanceLeader')
+                      .find("span.sp-peoplepicker-userSpan")
+                      .attr("sid")
+                      .split("|")
+                      .slice(-1)[0]
+                  );
+              items.set_item(id, ppp);
+
+            }
+            if ($('#PerformanceLeader2').find("span.sp-peoplepicker-userSpan").length) {
+              var id = $('#PerformanceLeader2').attr("INppicker");
+              var ppp =
+                $('#PerformanceLeader2').find("span.sp-peoplepicker-userSpan").attr("sid") ==
+                  undefined
+                  ? ""
+                  : SP.FieldUserValue.fromUser(
+                    $('#PerformanceLeader2')
+                      .find("span.sp-peoplepicker-userSpan")
+                      .attr("sid")
+                      .split("|")
+                      .slice(-1)[0]
+                  );
+              items.set_item(id, ppp);
+
+            }
+            /////////
 
             if (yearItem == kpiYearPicked) { // to update performance analysis
               if (kpiPeriodTypeUpdate == 'monthly') {
@@ -2256,7 +2329,7 @@ function _uploadFile() {
           .list(Documents_Library)
           .createFile({
             content: file.content,
-            filename: folderdirectory + "/"+new Date().toLocaleString().replaceAll("/","-")+'_-_SystemUploadTime_-_' + file.name.replaceAll('�', ''),
+            filename: folderdirectory + "/" + new Date().toLocaleString().replaceAll("/", "-") + '_-_SystemUploadTime_-_' + file.name.replaceAll('�', ''),
             fields: fieldsObj,
             progress: function (perc) {
               // console.log("Progress => ", perc + "%");

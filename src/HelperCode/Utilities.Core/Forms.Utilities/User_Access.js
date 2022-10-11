@@ -264,7 +264,7 @@ window.userCalls = {
 				UserN = data.d;
 				userCalls.get_CurrentUserGroupColl(data.d.Id);
 			},
-			error: function (data) {},
+			error: function (data) { },
 		});
 	},
 	get_CurrentUserGroupColl: function (UserID) {
@@ -319,10 +319,10 @@ window.userCalls = {
 						membersGroupCheckArray.length == 0 ? true : false;
 					!pickerValidationDone
 						? userCalls.isMember(
-								membersGroupCheckArray[0].groupName,
-								membersGroupCheckArray[0].userLoginName,
-								membersGroupCheckArray[0].fieldID
-						  )
+							membersGroupCheckArray[0].groupName,
+							membersGroupCheckArray[0].userLoginName,
+							membersGroupCheckArray[0].fieldID
+						)
 						: (membersGroupCheckArray = []);
 					//
 					if (isNew && pickerValidationDone) New_Data_Submit.init();
@@ -457,14 +457,14 @@ window.userCalls = {
 			) {
 				$("body").html(
 					'<div class="popupComment access-denied"><div class="wrapcomments"><div class="denied-icon"><i class="fas fa-user-shield"></i></div><label>عذرا، ليس لديك صلاحية لرؤية البيانات</label>' +
-						'<div style="margin-bottom:15px">الرجاء التواصل مع مسؤول النظام للمزيد من المعلومات</div>' +
-						"</div></div></div>"
+					'<div style="margin-bottom:15px">الرجاء التواصل مع مسؤول النظام للمزيد من المعلومات</div>' +
+					"</div></div></div>"
 				);
 			} else {
 				$("body").html(
 					'<div class="popupComment access-denied"><div class="wrapcomments"><div class="denied-icon"><i class="fas fa-user-shield"></i></div><label>Sorry, you don\'t have permission to view the data</label>' +
-						'<div style="margin-bottom:15px">Please contact the system administrator for more information</div>' +
-						"</div></div></div>"
+					'<div style="margin-bottom:15px">Please contact the system administrator for more information</div>' +
+					"</div></div></div>"
 				);
 			}
 		}
@@ -565,13 +565,13 @@ window.userCalls = {
 		//Add permission for default chart view on home Page + User Title Role
 
 		switch (
-			currentUserRole //we need first role for user
+		currentUserRole //we need first role for user
 		) {
 			case "Administrator":
 				$("body").append(
 					"<style>" +
-						"div#s4-ribbonrow, div#O365_MainLink_Settings_container{display:block!important}html #s4-workspace {height: calc(100vh - 105px)!important;min-height:auto !important;}.Progress-Action {display:block!important;}" +
-						"</style>"
+					"div#s4-ribbonrow, div#O365_MainLink_Settings_container{display:block!important}html #s4-workspace {height: calc(100vh - 105px)!important;min-height:auto !important;}.Progress-Action {display:block!important;}" +
+					"</style>"
 				);
 				isAdmin = true;
 				//***** */
@@ -2612,7 +2612,7 @@ window.userCalls = {
 			(Delete_Access = Delete_Access.map((name) => name.toLowerCase()));
 
 		switch (
-			true //Create Access
+		true //Create Access
 		) {
 			case (USERisNew || USERisListing || USERisProjectHome) &&
 				Create_Access.indexOf(USERlistkey) == -1 &&
@@ -2633,25 +2633,25 @@ window.userCalls = {
 
 				$("body").append(
 					"<style>" +
-						".btn-add{opacity: .6;pointer-events: none;display:none}" +
-						"</style>"
+					".btn-add{opacity: .6;pointer-events: none;display:none}" +
+					"</style>"
 				);
 
 				// reenable if has access
 				Create_Access.forEach(function (o, i, a) {
 					$("body").append(
 						"<style>" +
-							'.btn-add[href*="ListKey=' +
-							o +
-							'"]{opacity: 1!important;pointer-events: auto!important;display:block}' +
-							"</style>"
+						'.btn-add[href*="ListKey=' +
+						o +
+						'"]{opacity: 1!important;pointer-events: auto!important;display:block}' +
+						"</style>"
 					);
 				});
 				break;
 		}
 
 		switch (
-			true //Read Access
+		true //Read Access
 		) {
 			case Read_Access.indexOf(USERlistkey) == -1 &&
 				Read_Access.indexOf(Page_UrlName) == -1 &&
@@ -2671,7 +2671,7 @@ window.userCalls = {
 				break;
 		}
 		switch (
-			true //Edit Access
+		true //Edit Access
 		) {
 			case (USERisEdit || USERisView) &&
 				Edit_Access.indexOf(USERlistkey.toLowerCase()) == -1 &&
@@ -2683,8 +2683,8 @@ window.userCalls = {
 					//on view pages
 					$("body").append(
 						"<style>" +
-							".btn-save{opacity: .6;pointer-events: none;display:none}" +
-							"</style>"
+						".btn-save{opacity: .6;pointer-events: none;display:none}" +
+						"</style>"
 					);
 				} else if (isSP_Page) {
 					// on restricted  page
@@ -2702,21 +2702,21 @@ window.userCalls = {
 					//on edit
 					$("body").append(
 						"<style>" +
-							".btn-save{opacity: .6;pointer-events: none;display:none}" +
-							"</style>"
+						".btn-save{opacity: .6;pointer-events: none;display:none}" +
+						"</style>"
 					);
 				}
 				break;
 		}
 		switch (
-			true //Delete Access
+		true //Delete Access
 		) {
 			case Delete_Access.indexOf(USERlistkey.toLowerCase()) == -1:
 				//Delete btn
 				$("body").append(
 					"<style>" +
-						".btn-delete{opacity: .6;pointer-events: none;display:none;}" +
-						"</style>"
+					".btn-delete{opacity: .6;pointer-events: none;display:none;}" +
+					"</style>"
 				);
 				break;
 		}
@@ -3233,14 +3233,14 @@ window.userCalls = {
 						) {
 							$("body").html(
 								'<div class="popupComment access-denied"><div class="wrapcomments"><div class="denied-icon"><i class="fas fa-user-shield"></i></div><label>عذرا، ليس لديك صلاحية لرؤية البيانات</label>' +
-									'<div style="margin-bottom:15px">الرجاء التواصل مع مسؤول النظام للمزيد من المعلومات</div>' +
-									'<button class="btn btn-action" type="button" style="margin:0px" onclick="window.location=_spPageContextInfo.webAbsoluteUrl+\'/sitepages/\'+USER_HomePage;">الصفحة الرئيسية</button></div></div></div>'
+								'<div style="margin-bottom:15px">الرجاء التواصل مع مسؤول النظام للمزيد من المعلومات</div>' +
+								'<button class="btn btn-action" type="button" style="margin:0px" onclick="window.location=_spPageContextInfo.webAbsoluteUrl+\'/sitepages/\'+USER_HomePage;">الصفحة الرئيسية</button></div></div></div>'
 							);
 						} else {
 							$("body").html(
 								'<div class="popupComment access-denied"><div class="wrapcomments"><div class="denied-icon"><i class="fas fa-user-shield"></i></div><label>Sorry, you don\'t have permission to view the data</label>' +
-									'<div style="margin-bottom:15px">Please contact the system administrator for more information</div>' +
-									'<button class="btn btn-action" type="button" style="margin:0px" onclick="window.location=_spPageContextInfo.webAbsoluteUrl+\'/sitepages/\'+USER_HomePage;">Home Page</button></div></div></div>'
+								'<div style="margin-bottom:15px">Please contact the system administrator for more information</div>' +
+								'<button class="btn btn-action" type="button" style="margin:0px" onclick="window.location=_spPageContextInfo.webAbsoluteUrl+\'/sitepages/\'+USER_HomePage;">Home Page</button></div></div></div>'
 							);
 						}
 						$("body").animate({ opacity: 1 });
@@ -3357,7 +3357,7 @@ var Access_Project_Info_Request = {
 				USERPID = oListItem.get_id();
 				User_isClosureStatus =
 					oListItem.get_item("ClosureStatus") == "Failed" ||
-					oListItem.get_item("ClosureStatus") == "Cancelled"
+						oListItem.get_item("ClosureStatus") == "Cancelled"
 						? true
 						: false;
 				User_ProjUID = oListItem.get_item("ProjectGUID") || UserNo_Data;
@@ -3693,13 +3693,13 @@ var Access_Project_Info_Request = {
 			} else {
 				$("body").append(
 					"<style>" +
-						".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
-						".form-control{color: #b1b1b1 !important;" +
-						"border-color: #e1e1e1 !important;" +
-						"background-color: #fdfdfd !important;" +
-						"background-color: #fdfdfd !important;" +
-						"opacity: .6;pointer-events: none;}" +
-						"</style>"
+					".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+					".form-control{color: #b1b1b1 !important;" +
+					"border-color: #e1e1e1 !important;" +
+					"background-color: #fdfdfd !important;" +
+					"background-color: #fdfdfd !important;" +
+					"opacity: .6;pointer-events: none;}" +
+					"</style>"
 				);
 			}
 		}
@@ -3764,29 +3764,29 @@ var Access_Project_Info_Request = {
 		} else if (isPManager || isInManager) {
 			camlQuery.set_viewXml(
 				"<View><Query><Where>" +
-					"<And>" +
-					"<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
-					'<Eq><FieldRef Name="ProjectManager" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>' +
-					"</And>" +
-					"</Where></Query></View>"
+				"<And>" +
+				"<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
+				'<Eq><FieldRef Name="ProjectManager" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>' +
+				"</And>" +
+				"</Where></Query></View>"
 			);
 		} else if (isPOwner || isInOwner) {
 			camlQuery.set_viewXml(
 				"<View><Query><Where>" +
-					"<And>" +
-					"<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
-					'<Eq><FieldRef Name="ProjectOwner" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>' +
-					"</And>" +
-					"</Where></Query></View>"
+				"<And>" +
+				"<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
+				'<Eq><FieldRef Name="ProjectOwner" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>' +
+				"</And>" +
+				"</Where></Query></View>"
 			);
 		} else if (isPSponsor) {
 			camlQuery.set_viewXml(
 				"<View><Query><Where>" +
-					"<And>" +
-					"<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
-					'<Eq><FieldRef Name="ProjectSponsor" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>' +
-					"</And>" +
-					"</Where></Query></View>"
+				"<And>" +
+				"<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
+				'<Eq><FieldRef Name="ProjectSponsor" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>' +
+				"</And>" +
+				"</Where></Query></View>"
 			);
 		} else if (isRequestorTeam && !USERisIdeas && !USERisHome) {
 			userCalls.g.Security_Msg();
@@ -3826,69 +3826,69 @@ var Access_Project_Info_Request = {
 					if (window.location.href.indexOf("projects") > -1) {
 						$(".page-title").html(
 							'<a href="' +
-								_spPageContextInfo.webAbsoluteUrl +
-								"/sitepages/ProjectHome.aspx?PCODE=" +
-								USERPCODE +
-								'">' +
-								USERPName +
-								'<span class="tooltiptext">' +
-								USERPName +
-								"</span>" + // to handle the tooltip
-								"</a>"
+							_spPageContextInfo.webAbsoluteUrl +
+							"/sitepages/ProjectHome.aspx?PCODE=" +
+							USERPCODE +
+							'">' +
+							USERPName +
+							'<span class="tooltiptext">' +
+							USERPName +
+							"</span>" + // to handle the tooltip
+							"</a>"
 						);
 						$(".title-item:first-child").html(
 							'<a href="' +
-								_spPageContextInfo.webAbsoluteUrl +
-								"/sitepages/Listing.aspx?ListKey=" +
-								USERlistkey +
-								'">' +
-								USERPageTitle +
-								""
+							_spPageContextInfo.webAbsoluteUrl +
+							"/sitepages/Listing.aspx?ListKey=" +
+							USERlistkey +
+							'">' +
+							USERPageTitle +
+							""
 						);
 					} else {
 						$(".page-title").html(
 							'<a href="' +
-								_spPageContextInfo.webAbsoluteUrl +
-								"/sitepages/ProjectHome.aspx?PCODE=" +
-								USERPCODE +
-								'">' +
-								USERPName +
-								'<span class="tooltiptext">' +
-								USERPName +
-								"</span>" + // to handle the tooltip
-								"</a>"
+							_spPageContextInfo.webAbsoluteUrl +
+							"/sitepages/ProjectHome.aspx?PCODE=" +
+							USERPCODE +
+							'">' +
+							USERPName +
+							'<span class="tooltiptext">' +
+							USERPName +
+							"</span>" + // to handle the tooltip
+							"</a>"
 						);
 						$(".title-item:first-child").html(
 							'<a href="' +
-								_spPageContextInfo.webAbsoluteUrl +
-								"/sitepages/Listing.aspx?ListKey=" +
-								USERlistkey +
-								"&PCODE=" +
-								USERPCODE +
-								'">' +
-								USERPageTitle +
-								""
+							_spPageContextInfo.webAbsoluteUrl +
+							"/sitepages/Listing.aspx?ListKey=" +
+							USERlistkey +
+							"&PCODE=" +
+							USERPCODE +
+							'">' +
+							USERPageTitle +
+							""
 						);
 					}
 				} else if (isthereICODE) {
 					if (window.location.href.indexOf("initiatives") > -1) {
 						$(".page-title").html(
 							'<a href="' +
-								_spPageContextInfo.webAbsoluteUrl +
-								"/sitepages/InitiativeHome.aspx?ICODE=" +
-								UserICode +
-								'">' +
-								InitiativeTitle +
-								"</a>"
+							_spPageContextInfo.webAbsoluteUrl +
+							"/sitepages/InitiativeHome.aspx?ICODE=" +
+							UserICode +
+							'">' +
+							InitiativeTitle +
+							"</a>"
 						);
 						$(".title-item:first-child").html(
 							'<a href="' +
-								_spPageContextInfo.webAbsoluteUrl +
-								"/sitepages/Listing.aspx?ListKey=" +
-								USERlistkey +
-								'">' +
-								USERPageTitle +
-								""
+							_spPageContextInfo.webAbsoluteUrl +
+							"/sitepages/Listing.aspx?ListKey=" +
+							USERlistkey +
+							'">' +
+							USERPageTitle +
+							""
 						);
 					} else if (USERlistkey == "documents") {
 						if (
@@ -3902,47 +3902,47 @@ var Access_Project_Info_Request = {
 
 						$(".page-title").html(
 							'<a href="' +
-								_spPageContextInfo.webAbsoluteUrl +
-								"/sitepages/InitiativeHome.aspx?ICODE=" +
-								UserICode +
-								'">' +
-								//
-								InitiativeTitle +
-								"</a>"
+							_spPageContextInfo.webAbsoluteUrl +
+							"/sitepages/InitiativeHome.aspx?ICODE=" +
+							UserICode +
+							'">' +
+							//
+							InitiativeTitle +
+							"</a>"
 						);
 						$(".title-item:first-child").html(
 							'<a href="' +
-								_spPageContextInfo.webAbsoluteUrl +
-								"/sitepages/Listing.aspx?ListKey=" +
-								USERlistkey +
-								"&ICODE=" +
-								UserICode +
-								'">' +
-								USERPageTitle +
-								""
+							_spPageContextInfo.webAbsoluteUrl +
+							"/sitepages/Listing.aspx?ListKey=" +
+							USERlistkey +
+							"&ICODE=" +
+							UserICode +
+							'">' +
+							USERPageTitle +
+							""
 						);
 					} else {
 						//
 						$(".page-title").html(
 							'<a href="' +
-								_spPageContextInfo.webAbsoluteUrl +
-								"/sitepages/InitiativeHome.aspx?ICODE=" +
-								UserICode +
-								'">' +
-								//
-								InitiativeTitle +
-								"</a>"
+							_spPageContextInfo.webAbsoluteUrl +
+							"/sitepages/InitiativeHome.aspx?ICODE=" +
+							UserICode +
+							'">' +
+							//
+							InitiativeTitle +
+							"</a>"
 						);
 						$(".title-item:first-child").html(
 							'<a href="' +
-								_spPageContextInfo.webAbsoluteUrl +
-								"/sitepages/Listing.aspx?ListKey=" +
-								USERlistkey +
-								"&ICODE=" +
-								UserICode +
-								'">' +
-								USERPageTitle +
-								""
+							_spPageContextInfo.webAbsoluteUrl +
+							"/sitepages/Listing.aspx?ListKey=" +
+							USERlistkey +
+							"&ICODE=" +
+							UserICode +
+							'">' +
+							USERPageTitle +
+							""
 						);
 					}
 				} else {
@@ -3954,12 +3954,12 @@ var Access_Project_Info_Request = {
 					) {
 						$(".page-title").html(
 							'<a href="' +
-								_spPageContextInfo.webAbsoluteUrl +
-								"/sitepages/Listing.aspx?ListKey=" +
-								USERlistkey +
-								'">' +
-								USERPageTitle +
-								""
+							_spPageContextInfo.webAbsoluteUrl +
+							"/sitepages/Listing.aspx?ListKey=" +
+							USERlistkey +
+							'">' +
+							USERPageTitle +
+							""
 						);
 						$(".firsttitle").hide();
 					} else if (isTarget || isMainIndicator || isAdminPanel) {
@@ -4128,20 +4128,20 @@ var Access_Initiative_Info_Request = {
 		if (isInManager) {
 			camlQuery.set_viewXml(
 				"<View><Query><Where>" +
-					"<And>" +
-					"<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
-					'<Eq><FieldRef Name="InitiativePM" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>' +
-					"</And>" +
-					"</Where></Query></View>"
+				"<And>" +
+				"<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
+				'<Eq><FieldRef Name="InitiativePM" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>' +
+				"</And>" +
+				"</Where></Query></View>"
 			);
 		} else if (isInOwner) {
 			camlQuery.set_viewXml(
 				"<View><Query><Where>" +
-					"<And>" +
-					"<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
-					'<Eq><FieldRef Name="InitiativeOwner" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>' +
-					"</And>" +
-					"</Where></Query></View>"
+				"<And>" +
+				"<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
+				'<Eq><FieldRef Name="InitiativeOwner" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>' +
+				"</And>" +
+				"</Where></Query></View>"
 			);
 		}
 
@@ -4169,66 +4169,66 @@ var Access_Initiative_Info_Request = {
 					if (window.location.href.indexOf("projects") > -1) {
 						$(".page-title").html(
 							'<a href="' +
-								_spPageContextInfo.webAbsoluteUrl +
-								"/sitepages/ProjectHome.aspx?PCODE=" +
-								USERPCODE +
-								'">' +
-								USERPName +
-								"</a>"
+							_spPageContextInfo.webAbsoluteUrl +
+							"/sitepages/ProjectHome.aspx?PCODE=" +
+							USERPCODE +
+							'">' +
+							USERPName +
+							"</a>"
 						);
 						$(".title-item:first-child").html(
 							'<a href="' +
-								_spPageContextInfo.webAbsoluteUrl +
-								"/sitepages/Listing.aspx?ListKey=" +
-								USERlistkey +
-								'">' +
-								USERPageTitle +
-								""
+							_spPageContextInfo.webAbsoluteUrl +
+							"/sitepages/Listing.aspx?ListKey=" +
+							USERlistkey +
+							'">' +
+							USERPageTitle +
+							""
 						);
 					} else {
 						$(".page-title").html(
 							'<a href="' +
-								_spPageContextInfo.webAbsoluteUrl +
-								"/sitepages/ProjectHome.aspx?PCODE=" +
-								USERPCODE +
-								'">' +
-								USERPName +
-								'<span class="tooltiptext">' +
-								USERPName +
-								"</span>" + // to handle the tooltip
-								"</a>"
+							_spPageContextInfo.webAbsoluteUrl +
+							"/sitepages/ProjectHome.aspx?PCODE=" +
+							USERPCODE +
+							'">' +
+							USERPName +
+							'<span class="tooltiptext">' +
+							USERPName +
+							"</span>" + // to handle the tooltip
+							"</a>"
 						);
 						$(".title-item:first-child").html(
 							'<a href="' +
-								_spPageContextInfo.webAbsoluteUrl +
-								"/sitepages/Listing.aspx?ListKey=" +
-								USERlistkey +
-								"&PCODE=" +
-								USERPCODE +
-								'">' +
-								USERPageTitle +
-								""
+							_spPageContextInfo.webAbsoluteUrl +
+							"/sitepages/Listing.aspx?ListKey=" +
+							USERlistkey +
+							"&PCODE=" +
+							USERPCODE +
+							'">' +
+							USERPageTitle +
+							""
 						);
 					}
 				} else if (isthereICODE) {
 					if (window.location.href.indexOf("initiatives") > -1) {
 						$(".page-title").html(
 							'<a href="' +
-								_spPageContextInfo.webAbsoluteUrl +
-								"/sitepages/InitiativeHome.aspx?ICODE=" +
-								UserICode +
-								'">' +
-								USERIName +
-								"</a>"
+							_spPageContextInfo.webAbsoluteUrl +
+							"/sitepages/InitiativeHome.aspx?ICODE=" +
+							UserICode +
+							'">' +
+							USERIName +
+							"</a>"
 						);
 						$(".title-item:first-child").html(
 							'<a href="' +
-								_spPageContextInfo.webAbsoluteUrl +
-								"/sitepages/Listing.aspx?ListKey=" +
-								USERlistkey +
-								'">' +
-								USERPageTitle +
-								""
+							_spPageContextInfo.webAbsoluteUrl +
+							"/sitepages/Listing.aspx?ListKey=" +
+							USERlistkey +
+							'">' +
+							USERPageTitle +
+							""
 						);
 					} else if (USERlistkey == "documents") {
 						if (
@@ -4242,34 +4242,34 @@ var Access_Initiative_Info_Request = {
 
 						$(".page-title").html(
 							'<a href="' +
-								_spPageContextInfo.webAbsoluteUrl +
-								"/sitepages/InitiativeHome.aspx?ICODE=" +
-								UserICode +
-								'">' +
-								//
-								InitiativeTitle +
-								"</a>"
+							_spPageContextInfo.webAbsoluteUrl +
+							"/sitepages/InitiativeHome.aspx?ICODE=" +
+							UserICode +
+							'">' +
+							//
+							InitiativeTitle +
+							"</a>"
 						);
 						$(".title-item:first-child").html(
 							'<a href="' +
-								_spPageContextInfo.webAbsoluteUrl +
-								"/sitepages/Listing.aspx?ListKey=" +
-								USERlistkey +
-								"&ICODE=" +
-								UserICode +
-								'">' +
-								USERPageTitle +
-								""
+							_spPageContextInfo.webAbsoluteUrl +
+							"/sitepages/Listing.aspx?ListKey=" +
+							USERlistkey +
+							"&ICODE=" +
+							UserICode +
+							'">' +
+							USERPageTitle +
+							""
 						);
 					} else {
 						$(".page-title").html(
 							'<a href="' +
-								_spPageContextInfo.webAbsoluteUrl +
-								"/sitepages/InitiativeHome.aspx?ICODE=" +
-								UserICode +
-								'">' +
-								USERIName +
-								"</a>"
+							_spPageContextInfo.webAbsoluteUrl +
+							"/sitepages/InitiativeHome.aspx?ICODE=" +
+							UserICode +
+							'">' +
+							USERIName +
+							"</a>"
 						);
 						if (USERlistkey == "initiativecards") {
 							// &IID
@@ -4280,29 +4280,29 @@ var Access_Initiative_Info_Request = {
 
 								$(".title-item:first-child").html(
 									'<a href="' +
-										_spPageContextInfo.webAbsoluteUrl +
-										"/sitepages/view.aspx?ListKey=" +
-										USERlistkey +
-										"&IID=" +
-										initCardId +
-										"&ICODE=" +
-										UserICode +
-										'">' +
-										USERPageTitle +
-										""
-								);
-							}
-						} else {
-							$(".title-item:first-child").html(
-								'<a href="' +
 									_spPageContextInfo.webAbsoluteUrl +
-									"/sitepages/Listing.aspx?ListKey=" +
+									"/sitepages/view.aspx?ListKey=" +
 									USERlistkey +
+									"&IID=" +
+									initCardId +
 									"&ICODE=" +
 									UserICode +
 									'">' +
 									USERPageTitle +
 									""
+								);
+							}
+						} else {
+							$(".title-item:first-child").html(
+								'<a href="' +
+								_spPageContextInfo.webAbsoluteUrl +
+								"/sitepages/Listing.aspx?ListKey=" +
+								USERlistkey +
+								"&ICODE=" +
+								UserICode +
+								'">' +
+								USERPageTitle +
+								""
 							);
 						}
 					}
@@ -4310,12 +4310,12 @@ var Access_Initiative_Info_Request = {
 					if (!isInitiativesHomePage) {
 						$(".page-title").html(
 							'<a href="' +
-								_spPageContextInfo.webAbsoluteUrl +
-								"/sitepages/Listing.aspx?ListKey=" +
-								USERlistkey +
-								'">' +
-								USERPageTitle +
-								""
+							_spPageContextInfo.webAbsoluteUrl +
+							"/sitepages/Listing.aspx?ListKey=" +
+							USERlistkey +
+							'">' +
+							USERPageTitle +
+							""
 						);
 						$(".firsttitle").hide();
 					}
@@ -4403,14 +4403,14 @@ var Access_Sector_Info_Request = {
 			) {
 				$("body").html(
 					'<div class="popupComment access-denied"><div class="wrapcomments"><div class="denied-icon"><i class="fas fa-user-shield"></i></div><label>عذرا، ليس لديك بيانات لرؤيتها</label>' +
-						'<div style="margin-bottom:15px">الرجاء التواصل مع مسؤول النظام للمزيد من المعلومات</div>' +
-						"</div></div></div>"
+					'<div style="margin-bottom:15px">الرجاء التواصل مع مسؤول النظام للمزيد من المعلومات</div>' +
+					"</div></div></div>"
 				);
 			} else {
 				$("body").html(
 					'<div class="popupComment access-denied"><div class="wrapcomments"><div class="denied-icon"><i class="fas fa-user-shield"></i></div><label>Sorry, you don\'t have any data to view</label>' +
-						'<div style="margin-bottom:15px">Please contact the system administrator for more information</div>' +
-						"</div></div></div>"
+					'<div style="margin-bottom:15px">Please contact the system administrator for more information</div>' +
+					"</div></div></div>"
 				);
 			}
 		}
@@ -4784,31 +4784,31 @@ var Tasks_Info_Request_User = {
 				if (mycount <= 10) {
 					HPtaskshtml.push(
 						'<li class="list-group-item">' +
-							'<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
-							pcode +
-							"','" +
-							icode +
-							"','" +
-							tasksID +
-							"','" +
-							tasktype +
-							"','" +
-							stageid +
-							"','" +
-							ritemid +
-							"','" +
-							sourceitemid +
-							"','" +
-							wfname +
-							"','" +
-							puid +
-							"')\">" +
-							'<h3 class="des-14 w-0">' +
-							tasktitle +
-							'</h3><div class="des-12 text-nowrap">' +
-							taskname +
-							'</div><div class="tasksButtons"><span data-trans-forapproval class="Resources"></span></div></a>' +
-							"</li>"
+						'<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
+						pcode +
+						"','" +
+						icode +
+						"','" +
+						tasksID +
+						"','" +
+						tasktype +
+						"','" +
+						stageid +
+						"','" +
+						ritemid +
+						"','" +
+						sourceitemid +
+						"','" +
+						wfname +
+						"','" +
+						puid +
+						"')\">" +
+						'<h3 class="des-14 w-0">' +
+						tasktitle +
+						'</h3><div class="des-12 text-nowrap">' +
+						taskname +
+						'</div><div class="tasksButtons"><span data-trans-forapproval class="Resources"></span></div></a>' +
+						"</li>"
 					);
 					UserNTasks = ++UserNTasks;
 				}
@@ -4817,31 +4817,31 @@ var Tasks_Info_Request_User = {
 				if (mycount <= 10) {
 					HPtaskshtml.push(
 						'<li class="list-group-item">' +
-							'<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
-							pcode +
-							"','" +
-							icode +
-							"','" +
-							tasksID +
-							"','" +
-							tasktype +
-							"','" +
-							stageid +
-							"','" +
-							ritemid +
-							"','" +
-							sourceitemid +
-							"','" +
-							wfname +
-							"','" +
-							puid +
-							"')\">" +
-							'<h3 class="des-14 w-0">' +
-							tasktitle +
-							'</h3><div class="des-12 text-nowrap">' +
-							taskname +
-							"</div></a>" +
-							"</li>"
+						'<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
+						pcode +
+						"','" +
+						icode +
+						"','" +
+						tasksID +
+						"','" +
+						tasktype +
+						"','" +
+						stageid +
+						"','" +
+						ritemid +
+						"','" +
+						sourceitemid +
+						"','" +
+						wfname +
+						"','" +
+						puid +
+						"')\">" +
+						'<h3 class="des-14 w-0">' +
+						tasktitle +
+						'</h3><div class="des-12 text-nowrap">' +
+						taskname +
+						"</div></a>" +
+						"</li>"
 					);
 					UserNTasks = ++UserNTasks;
 				}
@@ -4850,209 +4850,209 @@ var Tasks_Info_Request_User = {
 				if (delegateMessage) {
 					taskshtml.push(
 						'<li class="list-group-item taskitem" title="' +
-							delegateMessage +
-							'">' +
-							'<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
-							pcode +
-							"','" +
-							icode +
-							"','" +
-							tasksID +
-							"','" +
-							tasktype +
-							"','" +
-							stageid +
-							"','" +
-							ritemid +
-							"','" +
-							sourceitemid +
-							"','" +
-							wfname +
-							"','" +
-							puid +
-							"')\">" +
-							'<div><i class="fas fa-user-friends"></i></div>' +
-							'<div><h3 class="title-13">' +
-							tasktitle +
-							'</h3><div class="des-12 text-nowrap"><span data-trans-idea class="Resources ideaLabel"></span><span>: ' +
-							taskname +
-							"</span></div></div></a>" +
-							'<div id="viewhistory"><a href="' +
-							historyLinkNotification +
-							'"><i title="' +
-							taskdetails +
-							'" class="fas fa-history"></i></a></div>' +
-							"</li>"
+						delegateMessage +
+						'">' +
+						'<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
+						pcode +
+						"','" +
+						icode +
+						"','" +
+						tasksID +
+						"','" +
+						tasktype +
+						"','" +
+						stageid +
+						"','" +
+						ritemid +
+						"','" +
+						sourceitemid +
+						"','" +
+						wfname +
+						"','" +
+						puid +
+						"')\">" +
+						'<div><i class="fas fa-user-friends"></i></div>' +
+						'<div><h3 class="title-13">' +
+						tasktitle +
+						'</h3><div class="des-12 text-nowrap"><span data-trans-idea class="Resources ideaLabel"></span><span>: ' +
+						taskname +
+						"</span></div></div></a>" +
+						'<div id="viewhistory"><a href="' +
+						historyLinkNotification +
+						'"><i title="' +
+						taskdetails +
+						'" class="fas fa-history"></i></a></div>' +
+						"</li>"
 					);
 				} else {
 					taskshtml.push(
 						'<li class="list-group-item taskitem">' +
-							'<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
-							pcode +
-							"','" +
-							icode +
-							"','" +
-							tasksID +
-							"','" +
-							tasktype +
-							"','" +
-							stageid +
-							"','" +
-							ritemid +
-							"','" +
-							sourceitemid +
-							"','" +
-							wfname +
-							"','" +
-							puid +
-							"')\">" +
-							'<div><h3 class="title-13">' +
-							tasktitle +
-							'</h3><div class="des-12 text-nowrap"><span data-trans-idea class="Resources ideaLabel"></span><span>: ' +
-							taskname +
-							"</span></div></div></a>" +
-							'<div id="viewhistory"><a href="' +
-							historyLinkNotification +
-							'"><i title="' +
-							taskdetails +
-							'" class="fas fa-history"></i></a></div>' +
-							"</li>"
+						'<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
+						pcode +
+						"','" +
+						icode +
+						"','" +
+						tasksID +
+						"','" +
+						tasktype +
+						"','" +
+						stageid +
+						"','" +
+						ritemid +
+						"','" +
+						sourceitemid +
+						"','" +
+						wfname +
+						"','" +
+						puid +
+						"')\">" +
+						'<div><h3 class="title-13">' +
+						tasktitle +
+						'</h3><div class="des-12 text-nowrap"><span data-trans-idea class="Resources ideaLabel"></span><span>: ' +
+						taskname +
+						"</span></div></div></a>" +
+						'<div id="viewhistory"><a href="' +
+						historyLinkNotification +
+						'"><i title="' +
+						taskdetails +
+						'" class="fas fa-history"></i></a></div>' +
+						"</li>"
 					);
 				}
 			} else if (wfname == "Project") {
 				if (delegateMessage) {
 					taskshtml.push(
 						'<li class="list-group-item taskitem" title="' +
-							delegateMessage +
-							'">' +
-							'<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
-							pcode +
-							"','" +
-							icode +
-							"','" +
-							tasksID +
-							"','" +
-							tasktype +
-							"','" +
-							stageid +
-							"','" +
-							ritemid +
-							"','" +
-							sourceitemid +
-							"','" +
-							wfname +
-							"','" +
-							puid +
-							"')\">" +
-							'<div><i class="fas fa-user-friends"></i></div>' +
-							'<div><h3 class="title-13">' +
-							tasktitle +
-							'</h3><div class="des-12 text-nowrap">' +
-							taskname +
-							"</div></div></a>" +
-							'<div id="viewhistory"><a href="' +
-							historyLinkNotification +
-							'"><i title="' +
-							taskdetails +
-							'" class="fas fa-history"></i></a></div>' +
-							"</li>"
+						delegateMessage +
+						'">' +
+						'<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
+						pcode +
+						"','" +
+						icode +
+						"','" +
+						tasksID +
+						"','" +
+						tasktype +
+						"','" +
+						stageid +
+						"','" +
+						ritemid +
+						"','" +
+						sourceitemid +
+						"','" +
+						wfname +
+						"','" +
+						puid +
+						"')\">" +
+						'<div><i class="fas fa-user-friends"></i></div>' +
+						'<div><h3 class="title-13">' +
+						tasktitle +
+						'</h3><div class="des-12 text-nowrap">' +
+						taskname +
+						"</div></div></a>" +
+						'<div id="viewhistory"><a href="' +
+						historyLinkNotification +
+						'"><i title="' +
+						taskdetails +
+						'" class="fas fa-history"></i></a></div>' +
+						"</li>"
 					);
 				} else {
 					taskshtml.push(
 						'<li class="list-group-item taskitem">' +
-							'<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
-							pcode +
-							"','" +
-							icode +
-							"','" +
-							tasksID +
-							"','" +
-							tasktype +
-							"','" +
-							stageid +
-							"','" +
-							ritemid +
-							"','" +
-							sourceitemid +
-							"','" +
-							wfname +
-							"','" +
-							puid +
-							"')\">" +
-							'<div><h3 class="title-13">' +
-							tasktitle +
-							'</h3><div class="des-12 text-nowrap">' +
-							taskname +
-							"</div></div></a>" +
-							'<div id="viewhistory"><a href="' +
-							historyLinkNotification +
-							'"><i title="' +
-							taskdetails +
-							'" class="fas fa-history"></i></a></div>' +
-							"</li>"
+						'<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
+						pcode +
+						"','" +
+						icode +
+						"','" +
+						tasksID +
+						"','" +
+						tasktype +
+						"','" +
+						stageid +
+						"','" +
+						ritemid +
+						"','" +
+						sourceitemid +
+						"','" +
+						wfname +
+						"','" +
+						puid +
+						"')\">" +
+						'<div><h3 class="title-13">' +
+						tasktitle +
+						'</h3><div class="des-12 text-nowrap">' +
+						taskname +
+						"</div></div></a>" +
+						'<div id="viewhistory"><a href="' +
+						historyLinkNotification +
+						'"><i title="' +
+						taskdetails +
+						'" class="fas fa-history"></i></a></div>' +
+						"</li>"
 					);
 				}
 			} else {
 				if (delegateMessage) {
 					taskshtml.push(
 						'<li class="list-group-item taskitem" title="' +
-							delegateMessage +
-							'">' +
-							'<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
-							pcode +
-							"','" +
-							icode +
-							"','" +
-							tasksID +
-							"','" +
-							tasktype +
-							"','" +
-							stageid +
-							"','" +
-							ritemid +
-							"','" +
-							sourceitemid +
-							"','" +
-							wfname +
-							"','" +
-							puid +
-							"')\">" +
-							'<div><i class="fas fa-user-friends"></i></div>' +
-							'<div><h3 class="title-13">' +
-							tasktitle +
-							'</h3><div class="des-12 text-nowrap">' +
-							taskname +
-							"</div></div></a>" +
-							"</li>"
+						delegateMessage +
+						'">' +
+						'<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
+						pcode +
+						"','" +
+						icode +
+						"','" +
+						tasksID +
+						"','" +
+						tasktype +
+						"','" +
+						stageid +
+						"','" +
+						ritemid +
+						"','" +
+						sourceitemid +
+						"','" +
+						wfname +
+						"','" +
+						puid +
+						"')\">" +
+						'<div><i class="fas fa-user-friends"></i></div>' +
+						'<div><h3 class="title-13">' +
+						tasktitle +
+						'</h3><div class="des-12 text-nowrap">' +
+						taskname +
+						"</div></div></a>" +
+						"</li>"
 					);
 				} else {
 					taskshtml.push(
 						'<li class="list-group-item taskitem">' +
-							'<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
-							pcode +
-							"','" +
-							icode +
-							"','" +
-							tasksID +
-							"','" +
-							tasktype +
-							"','" +
-							stageid +
-							"','" +
-							ritemid +
-							"','" +
-							sourceitemid +
-							"','" +
-							wfname +
-							"','" +
-							puid +
-							"')\">" +
-							'<div><h3 class="title-13">' +
-							tasktitle +
-							'</h3><div class="des-12 text-nowrap">' +
-							taskname +
-							"</div></div></a>" +
-							"</li>"
+						'<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
+						pcode +
+						"','" +
+						icode +
+						"','" +
+						tasksID +
+						"','" +
+						tasktype +
+						"','" +
+						stageid +
+						"','" +
+						ritemid +
+						"','" +
+						sourceitemid +
+						"','" +
+						wfname +
+						"','" +
+						puid +
+						"')\">" +
+						'<div><h3 class="title-13">' +
+						tasktitle +
+						'</h3><div class="des-12 text-nowrap">' +
+						taskname +
+						"</div></div></a>" +
+						"</li>"
 					);
 				}
 			}
@@ -5149,14 +5149,14 @@ var Tasks_Info_Request_User = {
 
 							window.open(
 								_spPageContextInfo.webAbsoluteUrl +
-									rurl +
-									"&IID=" +
-									ritemid +
-									"&PCODE=" +
-									pcode +
-									"&TID=" +
-									taskid +
-									"&WFs",
+								rurl +
+								"&IID=" +
+								ritemid +
+								"&PCODE=" +
+								pcode +
+								"&TID=" +
+								taskid +
+								"&WFs",
 								"_self"
 							); //
 						} else if (rurl.toLowerCase().indexOf("edit") > -1) {
@@ -5165,25 +5165,25 @@ var Tasks_Info_Request_User = {
 
 							window.open(
 								_spPageContextInfo.webAbsoluteUrl +
-									rurl +
-									"&IID=" +
-									ritemid +
-									"&PCODE=" +
-									pcode +
-									"&TID=" +
-									taskid +
-									"&WFs",
+								rurl +
+								"&IID=" +
+								ritemid +
+								"&PCODE=" +
+								pcode +
+								"&TID=" +
+								taskid +
+								"&WFs",
 								"_self"
 							); //
 						} //Listing page with pcode
 						else {
 							window.open(
 								_spPageContextInfo.webAbsoluteUrl +
-									rurl +
-									pcode +
-									"&TID=" +
-									taskid +
-									"&WFs",
+								rurl +
+								pcode +
+								"&TID=" +
+								taskid +
+								"&WFs",
 								"_self"
 							);
 						}
@@ -5194,14 +5194,14 @@ var Tasks_Info_Request_User = {
 						//edit page without pcode
 						window.open(
 							_spPageContextInfo.webAbsoluteUrl +
-								rurl +
-								"&PCODE=" +
-								pcode +
-								"&IID=" +
-								ritemid +
-								"&TID=" +
-								taskid +
-								"&WFs",
+							rurl +
+							"&PCODE=" +
+							pcode +
+							"&IID=" +
+							ritemid +
+							"&TID=" +
+							taskid +
+							"&WFs",
 							"_self"
 						); //+'&TID='+taskid
 					} else if (
@@ -5211,14 +5211,14 @@ var Tasks_Info_Request_User = {
 						//view page without pcode
 						window.open(
 							_spPageContextInfo.webAbsoluteUrl +
-								rurl +
-								"&PCODE=" +
-								pcode +
-								"&IID=" +
-								ritemid +
-								"&TID=" +
-								taskid +
-								"&WFs",
+							rurl +
+							"&PCODE=" +
+							pcode +
+							"&IID=" +
+							ritemid +
+							"&TID=" +
+							taskid +
+							"&WFs",
 							"_self"
 						); //+'&TID='+taskid
 					} else if (
@@ -5228,25 +5228,25 @@ var Tasks_Info_Request_User = {
 						rurl = rurl.replace("&PCODE=", "");
 						window.open(
 							_spPageContextInfo.webAbsoluteUrl +
-								rurl +
-								puid +
-								"&PCODE=" +
-								pcode +
-								"&TID=" +
-								taskid +
-								"&WFs",
+							rurl +
+							puid +
+							"&PCODE=" +
+							pcode +
+							"&TID=" +
+							taskid +
+							"&WFs",
 							"_self"
 						); //+'&TID='+taskid
 					} else {
 						window.open(
 							_spPageContextInfo.webAbsoluteUrl +
-								rurl +
-								pcode +
-								"&IID=" +
-								ritemid +
-								"&TID=" +
-								taskid +
-								"&WFs",
+							rurl +
+							pcode +
+							"&IID=" +
+							ritemid +
+							"&TID=" +
+							taskid +
+							"&WFs",
 							"_self"
 						);
 					}
@@ -5282,24 +5282,24 @@ var Tasks_Info_Request_User = {
 						case "SubmitProject":
 							window.open(
 								_spPageContextInfo.webAbsoluteUrl +
-									"/sitepages/new.aspx?ListKey=projects&IID=" +
-									ritemid +
-									"&TID=" +
-									taskid +
-									"&IdeaId=" +
-									pcode +
-									"&WFs",
+								"/sitepages/new.aspx?ListKey=projects&IID=" +
+								ritemid +
+								"&TID=" +
+								taskid +
+								"&IdeaId=" +
+								pcode +
+								"&WFs",
 								"_self"
 							);
 							break;
 						case "SubmitField":
 							window.open(
 								_spPageContextInfo.webAbsoluteUrl +
-									"/sitepages/edit.aspx?ListKey=" +
-									keyNameParams +
-									"&IID=" +
-									ritemid +
-									"&WFs",
+								"/sitepages/edit.aspx?ListKey=" +
+								keyNameParams +
+								"&IID=" +
+								ritemid +
+								"&WFs",
 								"_self"
 							);
 							break;
@@ -5311,35 +5311,35 @@ var Tasks_Info_Request_User = {
 							) {
 								window.open(
 									_spPageContextInfo.webAbsoluteUrl +
-										"/sitepages/view.aspx?ListKey=" +
-										keyNameParams +
-										"&IID=" +
-										sourceitemid +
-										"&RID=" +
-										ritemid +
-										"&WFEs",
+									"/sitepages/view.aspx?ListKey=" +
+									keyNameParams +
+									"&IID=" +
+									sourceitemid +
+									"&RID=" +
+									ritemid +
+									"&WFEs",
 									"_self"
 								);
 							} else if (wfname == "InitiativeSample") {
 								window.open(
 									_spPageContextInfo.webAbsoluteUrl +
-										"/sitepages/view.aspx?ListKey=" +
-										keyNameParams +
-										"&IID=" +
-										ritemid +
-										"&ICODE=" +
-										icode +
-										"&WFs",
+									"/sitepages/view.aspx?ListKey=" +
+									keyNameParams +
+									"&IID=" +
+									ritemid +
+									"&ICODE=" +
+									icode +
+									"&WFs",
 									"_self"
 								);
 							} else {
 								window.open(
 									_spPageContextInfo.webAbsoluteUrl +
-										"/sitepages/view.aspx?ListKey=" +
-										keyNameParams +
-										"&IID=" +
-										ritemid +
-										"&WFs",
+									"/sitepages/view.aspx?ListKey=" +
+									keyNameParams +
+									"&IID=" +
+									ritemid +
+									"&WFs",
 									"_self"
 								);
 							}
@@ -5410,8 +5410,8 @@ window.PCODE_Stage_Data_Request = {
 			$(".btnactionrow").hide();
 			$("body").append(
 				"<style>" +
-					".btn-add{opacity: .6;pointer-events: none;display:none}" +
-					"</style>"
+				".btn-add{opacity: .6;pointer-events: none;display:none}" +
+				"</style>"
 			);
 		}
 	},
@@ -5427,8 +5427,8 @@ window.PCODE_Stage_Data_Request = {
 		var camlQuery = new SP.CamlQuery();
 		camlQuery.set_viewXml(
 			'<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
-				USERPCODE +
-				"</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
+			USERPCODE +
+			"</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
 		); //caml query
 		PCODE_Stage_Data_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
 		clientContext.load(PCODE_Stage_Data_Request.g.collListItem);
@@ -5579,8 +5579,8 @@ var GetInitiativeTitle_Request = {
 
 		camlQuery.set_viewXml(
 			'<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
-				UserICode +
-				"</Value></Eq></Where></Query></View>"
+			UserICode +
+			"</Value></Eq></Where></Query></View>"
 		);
 		GetInitiativeTitle_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
 		clientContext.load(GetInitiativeTitle_Request.g.collListItem);
@@ -5745,11 +5745,18 @@ let data_Level1_Access = {
 				data_Level1_Access.g.hierarchyIndex
 			].subRelation;
 		let fieldName = secondLevelConfig.parentRelationField;
+		debugger
 		while (listItemEnum.moveNext()) {
+			console.log("LEVEL ONE INSIDE WHILE")
 			var oListItem = listItemEnum.get_current();
 			let itemCode = oListItem.get_item(fieldName);
 			data_Level1_Access.g.relationFieldData.push(itemCode);
 		}
+		//check if there is no item in relationFieldData push null to avoid the keep loading err
+		if (data_Level1_Access.g.relationFieldData.length == 0) {
+			data_Level1_Access.g.relationFieldData.push(null);
+		}
+
 		data_Level1_Access.dynamicCamlQueryBuilder(
 			secondLevelConfig,
 			data_Level1_Access.g.relationFieldData
@@ -5847,6 +5854,12 @@ let data_Level2_Access = {
 			let itemCode = oListItem.get_item(fieldName);
 			data_Level2_Access.g.relationFieldData.push(itemCode);
 		}
+
+		//check if there is no item in relationFieldData push null to avoid the keep loading err
+		if (data_Level2_Access.g.relationFieldData.length == 0) {
+			data_Level2_Access.g.relationFieldData.push(null);
+		}
+
 		data_Level2_Access.dynamicCamlQueryBuilder(
 			thirdLevelConfig,
 			data_Level2_Access.g.relationFieldData

@@ -32,7 +32,7 @@ var Custom_Nav_Request_Root = {
                 var title = oListItem.get_item('TitleAr') || 'لا يوجد';
             } else { var title = oListItem.get_item('TitleEn') || 'No Data'; }
             //
-            var Link = oListItem.get_item('URL').$1_1 || '/';
+            var Link = oListItem.get_item('URL').$1_1 || '/'; // replace $1_1 to .get_url() if the err happen on side nav (also in proj nav the same)
             var Icon = oListItem.get_item('Icon') || 'fas fa-home';
             var type = oListItem.get_item('NavType');
             var header = oListItem.get_item('Header') ? oListItem.get_item('Header').get_lookupId() : null;

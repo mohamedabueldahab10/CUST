@@ -1,6 +1,6 @@
 var currentYear = new Date().getFullYear();
-var emptyData = require('../../../HelperRessources/img/empty-data.png');
-// var emptyData = ''
+// var emptyData = require('../../../HelperRessources/img/empty-data.png');
+var emptyData = ''
 var Operational_Array = [],
   Instrument_Array = [],
   PQueryFilteration = "",
@@ -182,11 +182,32 @@ var MainKPIs_Info_Request = {
       var performanceleader = oListItem.get_item("PerformanceLeader")
         ? oListItem.get_item("PerformanceLeader").get_lookupValue()
         : UserN.Title;
+
+      var performanceleader1 = oListItem.get_item("PerformanceLeader")
+        ? oListItem.get_item("PerformanceLeader").get_lookupValue()
+        : ''
+
+      var performanceleader2 = oListItem.get_item("PerformanceLeader2")
+        ? oListItem.get_item("PerformanceLeader2").get_lookupValue()
+        : ''
+      // : UserN.Title;
+
       var SubectorCode = oListItem.get_item("SubSector") ? oListItem.get_item("SubSector") : '';
       var SectorCode = oListItem.get_item("Sector") ? oListItem.get_item("Sector") : '';
       //
       debugger
-      if ((!isAdmin && !isMinister && !isBITeam && !isSectorHead && !isViceMinister && !isMinisterAssistant && !isDU && !isGeneralManager && !isSubSectorHead && performanceleader == UserN.Title) || isAdmin || isMinister || isBITeam || ((isGeneralManager || isSubSectorHead) && (SubectorCode == UserAccessSectorCode)) || ((isDU || isMinisterAssistant || isViceMinister || isSectorHead) && (SectorCode == UserAccessSectorCode))) {
+      if (
+        (!isAdmin && !isMinister && !isBITeam && !isSectorHead && !isViceMinister && !isVROP && !isSPMAdmin &&!isSPMTeam && !isLMSP && !isPerformanceLeader && !isMinisterAssistant && !isDU && !isGeneralManager && !isSubSectorHead && (performanceleader == UserN.Title))
+        || isAdmin
+        || isSPMAdmin
+        || isSPMTeam
+        || isVROP
+        || isLMSP
+        || (isPerformanceLeader && (performanceleader1 == UserN.Title || performanceleader2 == UserN.Title))
+        || isMinister
+        || isBITeam
+        || ((isGeneralManager || isSubSectorHead) && (SubectorCode == UserAccessSectorCode))
+        || ((isDU || isMinisterAssistant || isViceMinister || isSectorHead) && (SectorCode == UserAccessSectorCode))) {
         countRec = countRec + 1;
         //sample getting field data  : oListItem.get_item('InternalName')
         var name = oListItem.get_item("Name") || UserNo_Data;
@@ -1388,11 +1409,11 @@ var Build_My_Filter = {
       kpiYear = Number(kpiYear) + 1
       $('.yeartitle').html(kpiYear)
       if (isRoleDataLevelAccess) {
-        Where_Body = Where_Body.replace( currentkpiYear ,  kpiYear )
+        Where_Body = Where_Body.replace(currentkpiYear, kpiYear)
 
         // Where_Body = Where_Body.replace('<Value Type="Text">' + currentkpiYear + '</Value>', '<Value Type="Text">' + kpiYear + '</Value>')
       } else {
-        Where_Body = Where_Body.replace( currentkpiYear ,  kpiYear )
+        Where_Body = Where_Body.replace(currentkpiYear, kpiYear)
 
         // Where_Body = Where_Body.replace("<FieldRef Name='Year' /> <Value Type='Text'>" + currentkpiYear + "</Value >", "<FieldRef Name='Year' /> <Value Type='Text'>" + kpiYear + "</Value >")
       }
@@ -1408,11 +1429,11 @@ var Build_My_Filter = {
       debugger
       if (isRoleDataLevelAccess) {
         // Where_Body = Where_Body.replace('<Value Type="Text">' + currentkpiYear + '</Value>', '<Value Type="Text">' + kpiYear + '</Value>')
-        Where_Body = Where_Body.replace( currentkpiYear ,  kpiYear )
+        Where_Body = Where_Body.replace(currentkpiYear, kpiYear)
 
       } else {
         // Where_Body = Where_Body.replace("<FieldRef Name='Year' /> <Value Type='Text'>" + currentkpiYear + "</Value >", "<FieldRef Name='Year' /> <Value Type='Text'>" + kpiYear + "</Value >")
-        Where_Body = Where_Body.replace( currentkpiYear ,  kpiYear )
+        Where_Body = Where_Body.replace(currentkpiYear, kpiYear)
 
       }
       console.log(Where_Body, "Where_Body dddddddddddddddddddddddddd")

@@ -4550,7 +4550,9 @@ var equationKPI = {
 
     }
     if (isAdmin || isPerformanceLeader || isVROP || isLMSP) {
-      $("input#KPIEquation, input#Equation ,input#B, input#A, input#CC , input#D ,input#E,input#F,input#G").removeAttr('disabled');
+      // $("input#KPIEquation, input#Equation ,input#B, input#A, input#CC , input#D ,input#E,input#F,input#G").removeAttr('disabled');
+      $("input#B, input#A, input#CC , input#D ,input#E,input#F,input#G").removeAttr('disabled');
+
     }
 
     $(".btn-edit-equation").on("click", () => {
