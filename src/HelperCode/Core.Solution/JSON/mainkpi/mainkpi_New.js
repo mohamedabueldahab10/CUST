@@ -210,6 +210,26 @@ var Information_Form = [
 				//role access
 				accessFilter: [
 					{
+						role: "SPMTeam",
+						conditions: [
+							{
+								field: "Types",
+								type: "Choice",
+								values: ["ministry"],
+							},
+						],
+					},
+					{
+						role: "SPMAdmin",
+						conditions: [
+							{
+								field: "Types",
+								type: "Choice",
+								values: ["ministry"],
+							},
+						],
+					},
+					{
 						role: "VROE",
 						conditions: [
 							{
@@ -300,8 +320,8 @@ var Information_Form = [
 				valfieldkey: "Title",
 				display: "none",
 				dynamic: "RelatedStrategy",
-				filterField:"RelatedStrategy",
-                filterFieldType: "Text",
+				filterField: "RelatedStrategy",
+				filterFieldType: "Text",
 				//role access
 				accessFilter: [
 					{

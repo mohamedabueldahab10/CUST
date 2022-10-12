@@ -147,6 +147,26 @@ var Information_Form = [
                 //role access
                 accessFilter: [
                     {
+						role: "SPMTeam",
+						conditions: [
+							{
+								field: "Types",
+								type: "Choice",
+								values: ["ministry"],
+							},
+						],
+					},
+					{
+						role: "SPMAdmin",
+						conditions: [
+							{
+								field: "Types",
+								type: "Choice",
+								values: ["ministry"],
+							},
+						],
+					},
+                    {
                         role: "VROE",
                         conditions: [{
                             field: "Types",
