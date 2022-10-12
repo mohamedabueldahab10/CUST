@@ -120,11 +120,11 @@ window.ListInfo = {
 			//get form's json
 			$.getScript(
 				"" +
-					_spPageContextInfo.webAbsoluteUrl +
-					"/Style%20Library/spm/JSON/" +
-					listkey +
-					"/" +
-					JSON_File_Name
+				_spPageContextInfo.webAbsoluteUrl +
+				"/Style%20Library/spm/JSON/" +
+				listkey +
+				"/" +
+				JSON_File_Name
 			).done(function (script, textStatus) {
 				SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
 					ListInfo.InfoLoop();
@@ -1094,11 +1094,11 @@ window.ListInfo = {
 				toggleValues +=
 					i == 0
 						? 'data-toggleValues="' +
-						  item.value +
-						  "[" +
-						  item.fields.join(",") +
-						  "]" +
-						  seperator
+						item.value +
+						"[" +
+						item.fields.join(",") +
+						"]" +
+						seperator
 						: item.value + "[" + item.fields.join(",") + "]" + seperator;
 			});
 		}
@@ -3539,16 +3539,16 @@ window.ListInfo = {
 					.each(function () {
 						$(
 							'<div class="PPField SPIField form-control" type="picker" id="' +
-								$(this).attr("id") +
-								"+++" +
-								Math.floor(Math.random() * 1000000) +
-								'" value="" placeholder="' +
-								$(this).attr("placeholder") +
-								'" INppicker="' +
-								$(this).attr("id") +
-								"+++" +
-								Math.floor(Math.random() * 1000000) +
-								'"></div>'
+							$(this).attr("id") +
+							"+++" +
+							Math.floor(Math.random() * 1000000) +
+							'" value="" placeholder="' +
+							$(this).attr("placeholder") +
+							'" INppicker="' +
+							$(this).attr("id") +
+							"+++" +
+							Math.floor(Math.random() * 1000000) +
+							'"></div>'
 						).insertBefore($(this));
 						$(this).remove();
 					});
@@ -3654,8 +3654,8 @@ window.ListInfo = {
 				for (var i = 0; i < validattachments.length; i++) {
 					fileChosen.append(
 						"<span class='attachfilename'><i class='fas fa-file'></i><span>" +
-							validattachments[i].name +
-							"</span><button type='button' class='removeAttchment'><i class='fas fa-times'></i></button></span>"
+						validattachments[i].name +
+						"</span><button type='button' class='removeAttchment'><i class='fas fa-times'></i></button></span>"
 					);
 				}
 
@@ -3708,27 +3708,27 @@ window.ListInfo = {
 				var fileId = "getFile" + pluseAttachCount;
 				$(
 					'<div class="col-md-12 CFIELD" data-groups="" >' + //style="display: flex;align-items: center;"
-						'<label class="attlabel" for="getFile"  undefined="">' +
-						pluseAttachTitle +
-						"</label>" + //class="custom-file-upload"
-						'<input type="file" accept="' +
-						acceptedExtensions +
-						'" hidden multiple="multiple" placeholder="' +
-						pluseAttachTitle +
-						'" class="form-control SPIField" id="' +
-						fileId +
-						'" >' +
-						'<label data-trans-choosefile id="chooseFile" for="' +
-						fileId +
-						'" class="Resources"></label>' +
-						'<span id="file-chosen"><span data-trans-nofile id="nofile" class="Resources"></span></span>' +
-						'<div class="AttErrorMsg attErrorMsg" style="display:none"><span data-trans-file class="Resources"></span><span class="notacceptedext"></span><span data-trans-notallowed class="Resources"></span></div>' +
-						'<div class="attErrorMsg"><span data-trans-acceptedfiles class="Resources"></span><span class="acceptedfile"></span></div>' +
-						'<div class="attErrorMsg"><span data-trans-fileSize class="Resources"></span></div>' +
-						'<div class="col-md-6 CFIELD" data-groups="" style="visibility:hidden">' +
-						'<label for="forattach">Attachments</label>' +
-						"</div>" +
-						"</div>"
+					'<label class="attlabel" for="getFile"  undefined="">' +
+					pluseAttachTitle +
+					"</label>" + //class="custom-file-upload"
+					'<input type="file" accept="' +
+					acceptedExtensions +
+					'" hidden multiple="multiple" placeholder="' +
+					pluseAttachTitle +
+					'" class="form-control SPIField" id="' +
+					fileId +
+					'" >' +
+					'<label data-trans-choosefile id="chooseFile" for="' +
+					fileId +
+					'" class="Resources"></label>' +
+					'<span id="file-chosen"><span data-trans-nofile id="nofile" class="Resources"></span></span>' +
+					'<div class="AttErrorMsg attErrorMsg" style="display:none"><span data-trans-file class="Resources"></span><span class="notacceptedext"></span><span data-trans-notallowed class="Resources"></span></div>' +
+					'<div class="attErrorMsg"><span data-trans-acceptedfiles class="Resources"></span><span class="acceptedfile"></span></div>' +
+					'<div class="attErrorMsg"><span data-trans-fileSize class="Resources"></span></div>' +
+					'<div class="col-md-6 CFIELD" data-groups="" style="visibility:hidden">' +
+					'<label for="forattach">Attachments</label>' +
+					"</div>" +
+					"</div>"
 				).insertBefore($(this).parent());
 
 				$("#" + fileId)
@@ -3803,18 +3803,18 @@ window.ListInfo = {
 										.text()
 										.indexOf("لعام") > -1
 										? $("#Cost" + i)
-												.parent()
-												.find("label")
-												.text()
-												.split("لعام")[0] +
-										  " لعام " +
-										  yeartodisp
+											.parent()
+											.find("label")
+											.text()
+											.split("لعام")[0] +
+										" لعام " +
+										yeartodisp
 										: $("#Cost" + i)
-												.parent()
-												.find("label")
-												.text() +
-										  " لعام " +
-										  yeartodisp;
+											.parent()
+											.find("label")
+											.text() +
+										" لعام " +
+										yeartodisp;
 							} else {
 								var label =
 									$("#Cost" + i)
@@ -3823,18 +3823,18 @@ window.ListInfo = {
 										.text()
 										.indexOf("For Year") > -1
 										? $("#Cost" + i)
-												.parent()
-												.find("label")
-												.text()
-												.split("For Year")[0] +
-										  " For Year " +
-										  yeartodisp
+											.parent()
+											.find("label")
+											.text()
+											.split("For Year")[0] +
+										" For Year " +
+										yeartodisp
 										: $("#Cost" + i)
-												.parent()
-												.find("label")
-												.text() +
-										  " For Year " +
-										  yeartodisp;
+											.parent()
+											.find("label")
+											.text() +
+										" For Year " +
+										yeartodisp;
 							}
 							$("#Cost" + i)
 								.parent()
@@ -3930,6 +3930,18 @@ window.ListInfo = {
 			});
 		},
 		toggleFields: function ($this) {
+			debugger
+			//////////////////////////////////////////////////////////
+			// var checkDisabled = false
+			// if ($this.attr('disabled')) {
+			// 	checkDisabled = true
+			// 	$this.removeAttr('disabled');
+	
+			// 	console.log("DISABLEEEEEEEEEEEEEEEEED")
+			// 	console.log($this, "$this")
+			// }
+			console.log($this.val())
+			//////////////////////////////////////////////////////////
 			var myValue = $this.val(),
 				toggleValues =
 					$this.data("togglevalues").indexOf(":::") > -1
@@ -3968,8 +3980,8 @@ window.ListInfo = {
 				});
 				toggleFields.forEach(function (item, i, arr) {
 					var isHidden = $('[data-togglename="' + item + '"]')
-							.parent()
-							.is(":hidden"),
+						.parent()
+						.is(":hidden"),
 						myFieldParent = $('[data-togglename="' + item + '"]').parent();
 					if (isHidden) {
 						myFieldParent.show();
@@ -3985,6 +3997,13 @@ window.ListInfo = {
 							) {
 								myFieldParent.find(">*").attr("required", false);
 							}
+							// debugger
+							// if(isPerformanceLeader){
+							// 	console.log(toggleValues,"toggleValues")
+							// 	console.log(myFieldParent,"myFieldParent")
+							// 	console.log(allToggleFields,"allToggleFields allToggleFields")
+							// 		// $this.attr('disabled',true)
+							// }
 						}
 						if (listkey == "initiatives") {
 							if (item == "RelatedStrategyObjective") {
@@ -4022,6 +4041,9 @@ window.ListInfo = {
 				//     }
 				// });
 			}
+			// if(checkDisabled){
+			// 	console.log("inside check disabled")
+			// }
 		},
 		showFieldsIfInitiativeVision: function () {
 			var typeValue = $("#Types option:selected").val();
@@ -4162,11 +4184,11 @@ var View_ListInfo = {
 			//get form's json
 			$.getScript(
 				"" +
-					_spPageContextInfo.webAbsoluteUrl +
-					"/Style%20Library/spm/JSON/" +
-					listkey +
-					"/" +
-					JSON_File_Name
+				_spPageContextInfo.webAbsoluteUrl +
+				"/Style%20Library/spm/JSON/" +
+				listkey +
+				"/" +
+				JSON_File_Name
 			).done(function (script, textStatus) {
 				isPrint = Information_Form[0].isPrint
 					? Information_Form[0].isPrint
@@ -4263,12 +4285,10 @@ var View_ListInfo = {
 							localStorage.getItem("lng") == "ar"
 						) {
 							printBody += `<div style="display:block;padding:20px 0px" class="CFIELD">
-                        <label class="col-md-2 printTitle" for=${
-													el.InternalName
-												}>${el.DisplayName}</label>
-                        <p class="col-md-9 viewmode-value print-field" style="border-bottom:1px solid #ccc;white-space:pre-line"  type=${
-													el.type == "datetime" ? "date" : el.type
-												} id="${el.InternalName}"></p>
+                        <label class="col-md-2 printTitle" for=${el.InternalName
+								}>${el.DisplayName}</label>
+                        <p class="col-md-9 viewmode-value print-field" style="border-bottom:1px solid #ccc;white-space:pre-line"  type=${el.type == "datetime" ? "date" : el.type
+								} id="${el.InternalName}"></p>
                     </div>
                     `;
 						} else {
@@ -4284,11 +4304,10 @@ var View_ListInfo = {
 				if (item.sectiontype == "master") {
 					console.log(Label, "Label Label");
 					printHtml += `<div class="py-5 border-bottom section-container ViewPrint_Form printFooterContainer page-avoid" ${targetList} ' ' ${sectionType} ' data-groups="${groups}" style="display:none">
-                              <p class="printDescription">${
-																Description
-																	? Label + " | " + Description
-																	: Label
-															}</p>
+                              <p class="printDescription">${Description
+							? Label + " | " + Description
+							: Label
+						}</p>
                               <div class="col-md-11 p-4 fieldset-container">
                               ${printFooter}
                               </div>
@@ -4296,11 +4315,10 @@ var View_ListInfo = {
                           `;
 				} else {
 					printHtml += `<div class="py-5 border-bottom section-container ViewPrint_Form printBodyContainer page-avoid" ${targetList} ' ' ${sectionType} ' data-groups="${groups}" style="display:none">
-                              <p class="printDescription">${
-																Description
-																	? Label + " | " + Description
-																	: Label
-															}</p>
+                              <p class="printDescription">${Description
+							? Label + " | " + Description
+							: Label
+						}</p>
                               <div>
                               ${printBody}
                               </div>
@@ -5725,8 +5743,8 @@ var Dynamic_Data_Request = {
 						oListItem.get_item("" + $(this).attr("id") + "") == null
 							? "ادخل الإسم أو البريد الإلكتروني ..."
 							: oListItem
-									.get_item("" + $(this).attr("id") + "")
-									.get_lookupValue();
+								.get_item("" + $(this).attr("id") + "")
+								.get_lookupValue();
 					$(this).attr("data-email", pemail);
 					var idinternal = $(this).attr("id");
 					var mp = new MyPeoplePicker();
@@ -5739,8 +5757,8 @@ var Dynamic_Data_Request = {
 						oListItem.get_item("" + $(this).attr("id") + "") == null
 							? "ادخل الإسم أو البريد الإلكتروني ..."
 							: oListItem
-									.get_item("" + $(this).attr("id") + "")
-									.get_lookupValue();
+								.get_item("" + $(this).attr("id") + "")
+								.get_lookupValue();
 					$(this).attr("data-email", pemail);
 					var idinternal = $(this).attr("id");
 					var mp = new MyPeoplePicker();
@@ -5825,18 +5843,18 @@ var Dynamic_Data_Request = {
 								.text()
 								.indexOf("لعام") > -1
 								? $("#Cost" + i)
-										.parent()
-										.find("label")
-										.text()
-										.split("لعام")[0] +
-								  " لعام " +
-								  yeartodisp
+									.parent()
+									.find("label")
+									.text()
+									.split("لعام")[0] +
+								" لعام " +
+								yeartodisp
 								: $("#Cost" + i)
-										.parent()
-										.find("label")
-										.text() +
-								  " لعام " +
-								  yeartodisp;
+									.parent()
+									.find("label")
+									.text() +
+								" لعام " +
+								yeartodisp;
 					} else {
 						var label =
 							$("#Cost" + i)
@@ -5845,18 +5863,18 @@ var Dynamic_Data_Request = {
 								.text()
 								.indexOf("For Year") > -1
 								? $("#Cost" + i)
-										.parent()
-										.find("label")
-										.text()
-										.split("For Year")[0] +
-								  " For Year " +
-								  yeartodisp
+									.parent()
+									.find("label")
+									.text()
+									.split("For Year")[0] +
+								" For Year " +
+								yeartodisp
 								: $("#Cost" + i)
-										.parent()
-										.find("label")
-										.text() +
-								  " For Year " +
-								  yeartodisp;
+									.parent()
+									.find("label")
+									.text() +
+								" For Year " +
+								yeartodisp;
 					}
 					$("#Cost" + i)
 						.parent()
@@ -6306,64 +6324,64 @@ var GetProject_Info = {
 						$(".CFIELD[data-showstageID=" + value + "]").show();
 						$(
 							".CFIELD[data-disablestageID=" +
-								value +
-								"] input,.CFIELD[data-enablestageID=" +
-								value +
-								"] .PPField ,.CFIELD[data-disablestageID=" +
-								value +
-								"] select,.CFIELD[data-disablestageID=" +
-								value +
-								"] textarea"
+							value +
+							"] input,.CFIELD[data-enablestageID=" +
+							value +
+							"] .PPField ,.CFIELD[data-disablestageID=" +
+							value +
+							"] select,.CFIELD[data-disablestageID=" +
+							value +
+							"] textarea"
 						).attr("disabled", true);
 						$(
 							".CFIELD[data-enablestageID=" +
-								value +
-								"] input,.CFIELD[data-enablestageID=" +
-								value +
-								"] .PPField ,.CFIELD[data-enablestageID=" +
-								value +
-								"] select,.CFIELD[data-enablestageID=" +
-								value +
-								"] textarea"
+							value +
+							"] input,.CFIELD[data-enablestageID=" +
+							value +
+							"] .PPField ,.CFIELD[data-enablestageID=" +
+							value +
+							"] select,.CFIELD[data-enablestageID=" +
+							value +
+							"] textarea"
 						).attr("disabled", false);
 					} else {
 						$(".CFIELD[data-isWfhidestageID=" + value + "]").remove();
 						$(".CFIELD[data-isWfshowstageID=" + value + "]").show();
 						$(
 							".CFIELD[data-isWfdisablestageID=" +
-								value +
-								"] input,.CFIELD[data-isWfenablestageID=" +
-								value +
-								"] .PPField ,.CFIELD[data-isWfdisablestageID=" +
-								value +
-								"] select,.CFIELD[data-isWfdisablestageID=" +
-								value +
-								"] textarea"
+							value +
+							"] input,.CFIELD[data-isWfenablestageID=" +
+							value +
+							"] .PPField ,.CFIELD[data-isWfdisablestageID=" +
+							value +
+							"] select,.CFIELD[data-isWfdisablestageID=" +
+							value +
+							"] textarea"
 						).attr("disabled", true);
 						$(
 							".CFIELD[data-isWfenablestageID=" +
-								value +
-								"] input,.CFIELD[data-isWfenablestageID=" +
-								value +
-								"] .PPField ,.CFIELD[data-isWfenablestageID=" +
-								value +
-								"] select,.CFIELD[data-isWfenablestageID=" +
-								value +
-								"] textarea"
+							value +
+							"] input,.CFIELD[data-isWfenablestageID=" +
+							value +
+							"] .PPField ,.CFIELD[data-isWfenablestageID=" +
+							value +
+							"] select,.CFIELD[data-isWfenablestageID=" +
+							value +
+							"] textarea"
 						).attr("disabled", false);
 						$("[data-iswfrequirestageid=" + value + "] label").attr({
 							required: true,
 						});
 						$(
 							"[data-iswfrequirestageid=" +
-								value +
-								"] input,[data-iswfrequirestageid=" +
-								value +
-								"] select,[data-iswfrequirestageid=" +
-								value +
-								"] textarea,[data-iswfrequirestageid=" +
-								value +
-								"] .PPField"
+							value +
+							"] input,[data-iswfrequirestageid=" +
+							value +
+							"] select,[data-iswfrequirestageid=" +
+							value +
+							"] textarea,[data-iswfrequirestageid=" +
+							value +
+							"] .PPField"
 						).prop("required", true);
 					}
 				});
@@ -6373,64 +6391,64 @@ var GetProject_Info = {
 					$(".CFIELD[data-showstageID=" + stage + "]").show();
 					$(
 						".CFIELD[data-disablestageID=" +
-							stage +
-							"] input,.CFIELD[data-enablestageID=" +
-							stage +
-							"] .PPField ,.CFIELD[data-disablestageID=" +
-							stage +
-							"] select,.CFIELD[data-disablestageID=" +
-							stage +
-							"]"
+						stage +
+						"] input,.CFIELD[data-enablestageID=" +
+						stage +
+						"] .PPField ,.CFIELD[data-disablestageID=" +
+						stage +
+						"] select,.CFIELD[data-disablestageID=" +
+						stage +
+						"]"
 					).attr("disabled", true);
 					$(
 						".CFIELD[data-enablestageID=" +
-							stage +
-							"] input,.CFIELD[data-enablestageID=" +
-							stage +
-							"] .PPField ,.CFIELD[data-enablestageID=" +
-							stage +
-							"] select,.CFIELD[data-enablestageID=" +
-							stage +
-							"]"
+						stage +
+						"] input,.CFIELD[data-enablestageID=" +
+						stage +
+						"] .PPField ,.CFIELD[data-enablestageID=" +
+						stage +
+						"] select,.CFIELD[data-enablestageID=" +
+						stage +
+						"]"
 					).attr("disabled", false);
 				} else {
 					$(".CFIELD[data-isWfhidestageID=" + stage + "]").remove();
 					$(".CFIELD[data-isWfshowstageID=" + stage + "]").show();
 					$(
 						".CFIELD[data-isWfdisablestageID=" +
-							stage +
-							"] input,.CFIELD[data-isWfenablestageID=" +
-							stage +
-							"] .PPField ,.CFIELD[data-isWfdisablestageID=" +
-							stage +
-							"] select,.CFIELD[data-isWfdisablestageID=" +
-							stage +
-							"] textarea"
+						stage +
+						"] input,.CFIELD[data-isWfenablestageID=" +
+						stage +
+						"] .PPField ,.CFIELD[data-isWfdisablestageID=" +
+						stage +
+						"] select,.CFIELD[data-isWfdisablestageID=" +
+						stage +
+						"] textarea"
 					).attr("disabled", true);
 					$(
 						".CFIELD[data-isWfenablestageID=" +
-							stage +
-							"] input,.CFIELD[data-isWfenablestageID=" +
-							stage +
-							"] .PPField ,.CFIELD[data-isWfenablestageID=" +
-							stage +
-							"] select,.CFIELD[data-isWfenablestageID=" +
-							stage +
-							"] textarea"
+						stage +
+						"] input,.CFIELD[data-isWfenablestageID=" +
+						stage +
+						"] .PPField ,.CFIELD[data-isWfenablestageID=" +
+						stage +
+						"] select,.CFIELD[data-isWfenablestageID=" +
+						stage +
+						"] textarea"
 					).attr("disabled", false);
 					$("[data-iswfrequirestageid=" + stage + "] label").attr({
 						required: true,
 					});
 					$(
 						"[data-iswfrequirestageid=" +
-							stage +
-							"] input,[data-iswfrequirestageid=" +
-							stage +
-							"] select,[data-iswfrequirestageid=" +
-							stage +
-							"] textarea,[data-iswfrequirestageid=" +
-							stage +
-							"] .PPField"
+						stage +
+						"] input,[data-iswfrequirestageid=" +
+						stage +
+						"] select,[data-iswfrequirestageid=" +
+						stage +
+						"] textarea,[data-iswfrequirestageid=" +
+						stage +
+						"] .PPField"
 					).prop("required", true);
 				}
 			}
@@ -6438,13 +6456,13 @@ var GetProject_Info = {
 		if (PCODE) {
 			$(".headtwo").append(
 				'<a class="" href="' +
-					_spPageContextInfo.webAbsoluteUrl +
-					'"><span class="litem">Home</span></a>' +
-					'<a class="" href="' +
-					_spPageContextInfo.webAbsoluteUrl +
-					"/SitePages/View.aspx?ListKey=projects&IID=" +
-					PID +
-					'"><span data-trans-projectdetails class="litem Resources"></span></a>' //+
+				_spPageContextInfo.webAbsoluteUrl +
+				'"><span class="litem">Home</span></a>' +
+				'<a class="" href="' +
+				_spPageContextInfo.webAbsoluteUrl +
+				"/SitePages/View.aspx?ListKey=projects&IID=" +
+				PID +
+				'"><span data-trans-projectdetails class="litem Resources"></span></a>' //+
 				//'<a class="" href="'+_spPageContextInfo.webAbsoluteUrl+'"><span class="litem">Project Phase</span></a>'+
 				//'<a class="" href="'+_spPageContextInfo.webAbsoluteUrl+'"><span class="litem">Project Report</span></a>'
 			);
@@ -6506,26 +6524,26 @@ var GetProject_Info = {
 			if (PCODE) {
 				$("#O365_SearchBoxContainer_container").append(
 					'<div class="User-Not"><div class="SNotifications"><span class="Tasks"><i class="fas fa-tasks" data-count="0"></i><a href="' +
-						_spPageContextInfo.webAbsoluteUrl +
-						"/SitePages/Listing.aspx?ListKey=tasks&PCODE=" +
-						PCODE +
-						'">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="0"></i><a href="/sites/SPM/SitePages/Listing.aspx?ListKey=risks&PCODE=' +
-						PCODE +
-						'">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="0"></i><a href="' +
-						_spPageContextInfo.webAbsoluteUrl +
-						"/SitePages/Listing.aspx?ListKey=issues&PCODE=" +
-						PCODE +
-						'"">Issues</a></span></div><div class="UProfile"></div></div>'
+					_spPageContextInfo.webAbsoluteUrl +
+					"/SitePages/Listing.aspx?ListKey=tasks&PCODE=" +
+					PCODE +
+					'">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="0"></i><a href="/sites/SPM/SitePages/Listing.aspx?ListKey=risks&PCODE=' +
+					PCODE +
+					'">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="0"></i><a href="' +
+					_spPageContextInfo.webAbsoluteUrl +
+					"/SitePages/Listing.aspx?ListKey=issues&PCODE=" +
+					PCODE +
+					'"">Issues</a></span></div><div class="UProfile"></div></div>'
 				);
 			} else {
 				$("#O365_SearchBoxContainer_container").append(
 					'<div class="User-Not"><div class="SNotifications"><span class="Tasks"><i class="fas fa-tasks" data-count="0"></i><a href="' +
-						_spPageContextInfo.webAbsoluteUrl +
-						'/SitePages/Listing.aspx?ListKey=tasks">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="0"></i><a href="' +
-						_spPageContextInfo.webAbsoluteUrl +
-						'/SitePages/Listing.aspx?ListKey=risks">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="0"></i><a href="' +
-						_spPageContextInfo.webAbsoluteUrl +
-						'/SitePages/Listing.aspx?ListKey=issues">Issues</a></span></div><div class="UProfile"></div></div>'
+					_spPageContextInfo.webAbsoluteUrl +
+					'/SitePages/Listing.aspx?ListKey=tasks">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="0"></i><a href="' +
+					_spPageContextInfo.webAbsoluteUrl +
+					'/SitePages/Listing.aspx?ListKey=risks">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="0"></i><a href="' +
+					_spPageContextInfo.webAbsoluteUrl +
+					'/SitePages/Listing.aspx?ListKey=issues">Issues</a></span></div><div class="UProfile"></div></div>'
 				);
 			}
 		},
@@ -6608,8 +6626,8 @@ var deliverabePercent = {
 					.find(" > label")
 					.append(
 						'<span data-trans-remainperc class="Resources remainpercstyle"></span><span class="remainpercstyle">' +
-							RemainingBudget +
-							"]</span>"
+						RemainingBudget +
+						"]</span>"
 					);
 				changeResources();
 			}
@@ -6696,8 +6714,8 @@ var deliverabeInitiativePercent = {
 					.find(" > label")
 					.append(
 						'<span data-trans-remainperc class="Resources remainpercstyle"></span><span class="remainpercstyle">' +
-							RemainingBudget +
-							"]</span>"
+						RemainingBudget +
+						"]</span>"
 					);
 				changeResources();
 			}
@@ -6772,8 +6790,8 @@ var initMilestPercent = {
 					.find(" > label")
 					.append(
 						'<span data-trans-remainperc class="Resources remainpercstyle"></span><span class="remainpercstyle">' +
-							RemainingBudget +
-							"]</span>"
+						RemainingBudget +
+						"]</span>"
 					);
 				changeResources();
 			}
@@ -6861,8 +6879,8 @@ var benefitmetricsPercent = {
 					.find(" > label")
 					.append(
 						'<span data-trans-remainperc class="Resources remainpercstyle"></span><span class="remainpercstyle">' +
-							RemainingBudget +
-							"]</span>"
+						RemainingBudget +
+						"]</span>"
 					);
 				changeResources();
 			}
@@ -7116,16 +7134,16 @@ window.Idea_Info = {
 			if (CreatedBy !== UserN.Title) {
 				$(".container-body").prepend(
 					'<div class="errormsg alert"><span class="infoIcon"><i class="fas fa-info-circle"></i></span><span>' +
-						editablebyowneronly +
-						"</span></div>"
+					editablebyowneronly +
+					"</span></div>"
 				);
 			}
 
 			if (IdeaStatus != "inprogress" && IdeaStatus != "ideaRejected") {
 				$(".container-body").prepend(
 					'<div class="errormsg alert"><span class="infoIcon"><i class="fas fa-info-circle"></i></span><span>' +
-						notEditableItem +
-						"</span></div>"
+					notEditableItem +
+					"</span></div>"
 				);
 			}
 		}
@@ -7142,16 +7160,16 @@ window.Idea_Info = {
 			if (CreatedBy !== UserN.Title) {
 				$(".container-body").prepend(
 					'<div class="errormsg alert"><span class="infoIcon"><i class="fas fa-info-circle"></i></span><span>' +
-						editablebyowneronly +
-						"</span></div>"
+					editablebyowneronly +
+					"</span></div>"
 				);
 			}
 
 			if (IdeaStatus != "inprogress" && IdeaStatus != "ideaRejected") {
 				$(".container-body").prepend(
 					'<div class="errormsg alert"><span class="infoIcon"><i class="fas fa-info-circle"></i></span><span>' +
-						notEditableItem +
-						"</span></div>"
+					notEditableItem +
+					"</span></div>"
 				);
 			}
 		}
@@ -7170,8 +7188,8 @@ window.Idea_Info = {
 		var camlQuery = new SP.CamlQuery();
 		camlQuery.set_viewXml(
 			"<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='ID'/><Value Type='Text'>" +
-				IID +
-				"</Value></Eq></And></Where></Query></View>"
+			IID +
+			"</Value></Eq></And></Where></Query></View>"
 		);
 		Idea_Info.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
 		clientContext.load(Idea_Info.g.collListItem);
@@ -7309,8 +7327,8 @@ var Integration_Handler = {
 							var ydate = !dateval
 								? ""
 								: [dateval.slice(5, 10), dateval.slice(0, 4)]
-										.join("/")
-										.replace("-", "/");
+									.join("/")
+									.replace("-", "/");
 
 							if (dateval) {
 								var obj = {};
@@ -7340,8 +7358,8 @@ var Integration_Handler = {
 							var ydate = !dateval
 								? ""
 								: [dateval.slice(5, 10), dateval.slice(0, 4)]
-										.join("/")
-										.replace("-", "/");
+									.join("/")
+									.replace("-", "/");
 
 							if (dateval) {
 								var obj = {};

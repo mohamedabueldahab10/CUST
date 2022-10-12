@@ -31,9 +31,11 @@ var goalKpiQuery = '';
 var goalKpiQueryG = '';
 if (isVROP) {
   goalKpiQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type="Choice">vision</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
+}else if(isSPMAdmin || isSPMTeam){
+  goalKpiQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type="Choice">ministry</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
+}else if(isLMSP){
+  goalKpiQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type="Choice">lms</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
 }
-
-
 else if (!isGeneralManager) {
   goalKpiQuery = "<View><Query><OrderBy><FieldRef Name='Title' Ascending='True' /></OrderBy></Query></View>"
 }
@@ -93,7 +95,7 @@ var MainKPIs_Info_Request = {
         ? oListItem.get_item("PerformanceLeader2").get_lookupValue()
         : UserNo_Data;
       //to get the kpi owner for related user if is not admin
-      if ((!isAdmin && !isMinister && !isBITeam && !isSPMAdmin && !isSPMTeam && !isVROP && (UserN.Title == Owner || UserN.Title == perfromanceLeader || UserN.Title == performanceLeader2)) || isAdmin || isMinister || isBITeam || isSPMAdmin || isSPMTeam || isVROP) {
+      if ((!isAdmin && !isMinister && !isBITeam && !isSPMAdmin && !isSPMTeam && !isLMSP&& !isVROP && (UserN.Title == Owner || UserN.Title == perfromanceLeader || UserN.Title == performanceLeader2)) || isAdmin || isMinister || isBITeam || isSPMAdmin || isSPMTeam || isLMSP || isVROP) {
 
         var name = oListItem.get_item("Name") || UserNo_Data,
           code = oListItem.get_item("Title") || UserNo_Data,
@@ -945,7 +947,7 @@ var GoalsKPIs_Info_Request = {
     })
 
     /////////////////////////////////////////
-    if ((firstRender && isVROP)) {
+    if ((firstRender && (isVROP || isSPMAdmin || isSPMTeam || isLMSP))) {
       // $(".col.px-2.my-5:first-child() .link-items-goal").click();
     }
     else if (firstRender) {

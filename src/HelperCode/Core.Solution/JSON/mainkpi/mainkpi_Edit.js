@@ -59,7 +59,7 @@ var Information_Form = [
                 },
                 security: {
                     groups: ["LMS_P",
-                        'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO',
+                        'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'OPMO','Performance Leaders'
                     ]
                 },
             },

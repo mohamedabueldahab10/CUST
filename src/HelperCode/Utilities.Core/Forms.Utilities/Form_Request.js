@@ -549,6 +549,7 @@ window.Edit_Data_Request = {
         $("#RelatedObjective").parent().css("display", "block");
       }
     }
+
     ///////////////////////////
     // to handle the title change and the master details section show and hide
     if (isEdit && listkey == 'goalstrategy') {
@@ -602,6 +603,7 @@ window.Edit_Data_Request = {
     ////////////////////////
 
     //hide show fields based on selection & onload
+    // debugger
     $("[data-togglevalues]").each(function () {
       ListInfo.g.toggleFields($(this));
     });
@@ -2423,10 +2425,20 @@ window.Kpi_Related_Goal = {
     debugger
     if (typeOfIndex == 'main') {
       objectiveId = "RelatedStrategyObjective"
-      $("#RelatedStrategyObjective").prop("disabled", false);
+      if(isPerformanceLeader){
+        $("#Types").prop("disabled", true)
+        $("#RelatedStrategyObjective").prop("disabled", true);
+      }else{
+        $("#RelatedStrategyObjective").prop("disabled", false);
+      }
     } else if (typeOfIndex == 'sub') {
       objectiveId = "SubRelatedObjective"
-      $("#SubRelatedObjective").prop("disabled", false);
+      if(isPerformanceLeader){
+        $("#Types").prop("disabled", true)
+        $("#SubRelatedObjective").prop("disabled", true);
+      }else{
+        $("#SubRelatedObjective").prop("disabled", false);
+      }
 
     }
     $(`#${objectiveId}`).html(
