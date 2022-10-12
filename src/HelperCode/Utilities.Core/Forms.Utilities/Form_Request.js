@@ -233,8 +233,6 @@ window.Edit_Data_Request = {
           $(this).val(oListItem.get_item($(this).attr("id")));
           if ($(this).attr("id") == "SubSector") {
             departmenetValue = oListItem.get_item("" + $(this).attr("id") + "");
-            console.log(departmenetValue, "assssssssssssssssssssssss")
-            debugger
           }
           if ($(this).attr("id") == "BudgetItem") {
             budgetitemValue = oListItem.get_item("" + $(this).attr("id") + "");
@@ -479,7 +477,7 @@ window.Edit_Data_Request = {
       }
 
       $('#Year').val(oListItem.get_item("Year") ? oListItem.get_item("Year") : '')
-      debugger
+      
       equationKPI.init();
 
 
@@ -649,7 +647,7 @@ window.Edit_Data_Request = {
       $('input.sp-peoplepicker-editorInput').prop('disabled', true);
     }
     $(".loader-box").fadeOut();
-    debugger
+    
   },
   onError: function (sender, args) {
     console.log(
@@ -1149,7 +1147,7 @@ window.View_Data_Request = {
         }
         customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
 
-        console.log(customquerymulti, "customquerymulti customquerymulti")
+      
 
         sphttp.get(
           _spPageContextInfo.siteServerRelativeUrl,
@@ -2422,6 +2420,7 @@ window.Kpi_Related_Goal = {
     }
 
     // $("#RelatedStrategyObjective").prop("disabled", false);
+    debugger
     if (typeOfIndex == 'main') {
       objectiveId = "RelatedStrategyObjective"
       $("#RelatedStrategyObjective").prop("disabled", false);
@@ -2474,7 +2473,7 @@ window.Kpi_Related_Goal = {
     //add FieldRef Name and Acending tru to sorth the data alphabetical
     var query = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name="RelatedStrategy" /><Value Type="Text">' + SosCode + '</Value></Eq><Eq><FieldRef Name="Types" /><Value Type="Choice">' + indexType + '</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>'
 
-    console.log("inside Kpi_Related_Goal", query)
+    
 
     camlQuery.set_viewXml(query);
     Kpi_Related_Goal.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -4458,7 +4457,7 @@ var Issues_Info_Request = {
 //KPI equations
 var equationKPI = {
   onSuccess: function (sender, args) {
-    debugger
+    
     equationKPI.g.array = [];
     var collListItem = equationKPI.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
@@ -4573,7 +4572,6 @@ var equationKPI = {
     );
   },
   init: function () {
-    console.log("HERERERRE")
 
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("KPIEquations");
@@ -5158,7 +5156,7 @@ var Check_Item_Deleted = {
     var collListItem = Check_Item_Deleted.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var deleted = true
-    debugger
+    
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       deleted = false
@@ -5235,7 +5233,7 @@ var Check_Item_Deleted = {
           ProjectInitiativeDelevrable.init('InitiativeDeliverables', globalInitiativeCode)
         } else if (listkey == 'mainkpi') {
           Goal_Strategy_Info.init(relatedStrategyKpi)
-          debugger
+          
           if (indexTypekpi == 'main') {
             console.log(relatedMainGoal, "relatedMainGoalrelatedMainGoalrelatedMainGoal")
             var sosVal = relatedMainGoal
@@ -5244,11 +5242,10 @@ var Check_Item_Deleted = {
               $('#SubSector').val(No_Data)
             }
           } else if (indexTypekpi == 'sub') {
-            console.log(relatedSubGoal, "relatedSubGoal")
-            console.log($('#SubRelatedObjective').val(), "VAAAAAAAAAAAAAAAAAL")
+         
             // var sosVal = $('#SubRelatedObjective').val()
             var sosVal = relatedSubGoal
-            debugger
+            
             if (!sosVal) {
               $('#Sector').val(No_Data)
               $('#SubSector').val(No_Data)

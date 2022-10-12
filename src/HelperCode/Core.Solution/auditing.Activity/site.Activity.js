@@ -374,7 +374,10 @@ let checkMainHtmlStatus = setInterval(function () {
 }, 1000);
 // !check browser
 var isIE = /*@cc_on!@*/ false || !!document.documentMode;
+var isChrome = false || !!document.documentMode // add to avoid the err isChrome is not defined
+var isOpera = false || !!document.documentMode // add to avoid the err isOpera is not defined
 // Opera 8.0+
+debugger
 if (
 	(!!window.opr && !!opr.addons) ||
 	!!window.opera ||

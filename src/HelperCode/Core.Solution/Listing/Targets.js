@@ -1,6 +1,6 @@
 var currentYear = new Date().getFullYear();
-// var emptyData = require('../../../HelperRessources/img/empty-data.png');
-var emptyData = ''
+var emptyData = require('../../../HelperRessources/img/empty-data.png');
+// var emptyData = ''
 var Operational_Array = [],
   Instrument_Array = [],
   PQueryFilteration = "",
@@ -714,7 +714,7 @@ var MainKPIs_Info_Request = {
       $('td input[data-internal*="Target"]').prop('disabled', true);
     }
 
-    if (isMinister || isBITeam || isPerformanceLeader) {
+    if (isMinister || isBITeam || isPerformanceLeader || isSPMTeam || isEPMO) {
       $("body").append(
         "<style>" +
         ".btn-save{display:none}" +

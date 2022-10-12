@@ -1,5 +1,5 @@
-// var logo = require('../../../HelperRessources/img/print-logo.png');
-var logo = "";
+var logo = require('../../../HelperRessources/img/print-logo.png');
+// var logo = "";
 //= isArabic ? require('../../../HelperRessources/img/main-logo.svg') : require('../../../HelperRessources/img/main-logo-en.svg');
 (window.isNew = window.location.href.toLowerCase().indexOf("new.aspx") > -1),
 	(window.isEdit =

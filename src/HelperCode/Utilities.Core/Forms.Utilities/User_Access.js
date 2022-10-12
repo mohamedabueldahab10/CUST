@@ -2907,10 +2907,14 @@ window.userCalls = {
 								RelationFieldType: "Text",
 								subRelation: {
 									level: 3,
-									listName: "",
-									// parentRelationField: "Title",
-									// RelationField: "InitiativeCode",
-									// RelationFieldType: "Text",
+									listName: "KPIResults",
+									parentRelationField: "Title",
+									RelationField: "KPI",
+									RelationFieldType: "Text",
+									// listName: "",
+									// // parentRelationField: "Title",
+									// // RelationField: "InitiativeCode",
+									// // RelationFieldType: "Text",
 								},
 							},
 						},
@@ -2920,6 +2924,74 @@ window.userCalls = {
 			{
 				Role: "SPMAdmin",
 				groupsName: ["SPM Admin"],
+				dataFilter: {
+					hierarchies: [
+						{
+							level: 1,
+							listName: "GoalStrategy",
+							accessConditions: [
+								{
+									field: "Types",
+									type: "Choice",
+									values: ["ministry"],
+									targetPages: [
+										"home.aspx",
+										"new.aspx",
+										"edit.aspx?ListKey=projects",
+									],
+								},
+							],
+							subRelation: {
+								level: 2,
+								listName: "SOs",
+								parentRelationField: "Title",
+								RelationField: "RelatedStrategy",
+								RelationFieldType: "Text",
+								subRelation: {
+									level: 3,
+									listName: "",
+									// parentRelationField: "Title",
+									// RelationField: "InitiativeCode",
+									// RelationFieldType: "Text",
+								},
+							},
+						},
+						{
+							level: 1,
+							listName: "GoalStrategy",
+							accessConditions: [
+								{
+									field: "Types",
+									type: "Choice",
+									values: ["ministry"],
+									targetPages: [
+										"home.aspx",
+										"new.aspx",
+										"edit.aspx?ListKey=projects",
+									],
+								},
+							],
+							subRelation: {
+								level: 2,
+								listName: "MainKPI",
+								parentRelationField: "Title",
+								RelationField: "RelatedStrategy",
+								RelationFieldType: "Text",
+								subRelation: {
+									level: 3,
+									listName: "KPIResults",
+									parentRelationField: "Title",
+									RelationField: "KPI",
+									RelationFieldType: "Text",
+									// listName: "",
+									// // parentRelationField: "Title",
+									// // RelationField: "InitiativeCode",
+									// // RelationFieldType: "Text",
+								},
+							},
+						},
+					],
+				},
 			},
 			{
 				Role: "VROE",
