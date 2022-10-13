@@ -247,8 +247,9 @@ var Information_Form = [
                 DisplayNameEn: "Related Main Kpis",
                 DisplayName: "الربط بالمؤشرات الرئيسية",
                 type: "lookup",
+                //add queryField,type,value to can filter in spcific val on dynamic func (dynamicAffectSelect)
                 queryField: "Types",
-                queryFieldType: "dropdownValues", //ex: "Choice"
+                queryFieldType: "Choice", //ex: "Choice"
                 queryFieldValue: "main",
                 source: "MainKPI",
                 // "state": "disabled",
