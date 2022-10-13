@@ -231,6 +231,9 @@ window.Edit_Data_Request = {
         case "dropdown":
 
           $(this).val(oListItem.get_item($(this).attr("id")));
+
+          $(this).attr('value', oListItem.get_item($(this).attr("id"))) // save the value in select to use it edit select[dynamic=parent]
+
           if ($(this).attr("id") == "SubSector") {
             departmenetValue = oListItem.get_item("" + $(this).attr("id") + "");
           }
@@ -399,7 +402,7 @@ window.Edit_Data_Request = {
       relatedPiller = oListItem.get_item("PillarName")
 
       Goal_Strategy_Info.init(relatedStrategy)
-      
+
       var sector = oListItem.get_item("Sector") ? oListItem.get_item("Sector") : '';
       if (sector) {
         Department_Sector_Info.init(sector);// to get the departments related to sector
@@ -477,7 +480,7 @@ window.Edit_Data_Request = {
       }
 
       $('#Year').val(oListItem.get_item("Year") ? oListItem.get_item("Year") : '')
-      
+
       equationKPI.init();
 
 
@@ -610,6 +613,10 @@ window.Edit_Data_Request = {
 
 
 
+    // trigger the dynamic parent field to get the data in edit
+    $("select[dynamic=parent]").trigger("change")
+
+
     //getting related files
     // var host = _spPageContextInfo.webAbsoluteUrl;
     var host = (_spPageContextInfo.webServerRelativeUrl = "/"
@@ -649,7 +656,7 @@ window.Edit_Data_Request = {
       $('input.sp-peoplepicker-editorInput').prop('disabled', true);
     }
     $(".loader-box").fadeOut();
-    
+
   },
   onError: function (sender, args) {
     console.log(
@@ -1149,7 +1156,7 @@ window.View_Data_Request = {
         }
         customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
 
-      
+
 
         sphttp.get(
           _spPageContextInfo.siteServerRelativeUrl,
@@ -2425,18 +2432,18 @@ window.Kpi_Related_Goal = {
     debugger
     if (typeOfIndex == 'main') {
       objectiveId = "RelatedStrategyObjective"
-      if(isPerformanceLeader){
+      if (isPerformanceLeader) {
         $("#Types").prop("disabled", true)
         $("#RelatedStrategyObjective").prop("disabled", true);
-      }else{
+      } else {
         $("#RelatedStrategyObjective").prop("disabled", false);
       }
     } else if (typeOfIndex == 'sub') {
       objectiveId = "SubRelatedObjective"
-      if(isPerformanceLeader){
+      if (isPerformanceLeader) {
         $("#Types").prop("disabled", true)
         $("#SubRelatedObjective").prop("disabled", true);
-      }else{
+      } else {
         $("#SubRelatedObjective").prop("disabled", false);
       }
 
@@ -2485,7 +2492,7 @@ window.Kpi_Related_Goal = {
     //add FieldRef Name and Acending tru to sorth the data alphabetical
     var query = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name="RelatedStrategy" /><Value Type="Text">' + SosCode + '</Value></Eq><Eq><FieldRef Name="Types" /><Value Type="Choice">' + indexType + '</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>'
 
-    
+
 
     camlQuery.set_viewXml(query);
     Kpi_Related_Goal.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -4469,7 +4476,7 @@ var Issues_Info_Request = {
 //KPI equations
 var equationKPI = {
   onSuccess: function (sender, args) {
-    
+
     equationKPI.g.array = [];
     var collListItem = equationKPI.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
@@ -5168,7 +5175,7 @@ var Check_Item_Deleted = {
     var collListItem = Check_Item_Deleted.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var deleted = true
-    
+
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       deleted = false
@@ -5245,7 +5252,7 @@ var Check_Item_Deleted = {
           ProjectInitiativeDelevrable.init('InitiativeDeliverables', globalInitiativeCode)
         } else if (listkey == 'mainkpi') {
           Goal_Strategy_Info.init(relatedStrategyKpi)
-          
+
           if (indexTypekpi == 'main') {
             console.log(relatedMainGoal, "relatedMainGoalrelatedMainGoalrelatedMainGoal")
             var sosVal = relatedMainGoal
@@ -5254,10 +5261,10 @@ var Check_Item_Deleted = {
               $('#SubSector').val(No_Data)
             }
           } else if (indexTypekpi == 'sub') {
-         
+
             // var sosVal = $('#SubRelatedObjective').val()
             var sosVal = relatedSubGoal
-            
+
             if (!sosVal) {
               $('#Sector').val(No_Data)
               $('#SubSector').val(No_Data)

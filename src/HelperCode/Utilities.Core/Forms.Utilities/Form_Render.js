@@ -1,5 +1,5 @@
-var logo = require('../../../HelperRessources/img/print-logo.png');
-// var logo = "";
+// var logo = require('../../../HelperRessources/img/print-logo.png');
+var logo = "";
 //= isArabic ? require('../../../HelperRessources/img/main-logo.svg') : require('../../../HelperRessources/img/main-logo-en.svg');
 (window.isNew = window.location.href.toLowerCase().indexOf("new.aspx") > -1),
 	(window.isEdit =
@@ -345,14 +345,17 @@ window.ListInfo = {
 					$("select[dynamic=parent]").on("change", function () {
 						let parentFieldName = $(this).attr("id");
 						let parentFieldValue = $(this).val();
+
 						let affectedSelectsInfo = [];
 						$("[dynamic=" + parentFieldName + "]").each(function () {
+
 							let affectedFieldName = $(this).attr("id");
 							let listName = $(this).data("listname");
 							let filterField = $(this).data("filterfield");
 							let filterFieldType = $(this).data("filterfieldtype");
 							let valFieldKey = $(this).data("valfieldkey");
 							let dispFieldKey = $(this).data("dispfieldkey");
+							// console.log($(this).data("queryFieldValue"), "sssssssa")
 							affectedSelectsInfo.push({
 								affectedFieldName: affectedFieldName,
 								listName: listName,
@@ -3004,6 +3007,7 @@ window.ListInfo = {
 					}
 				}
 
+
 				htmlBody =
 					'<div class="col-md-6 CFIELD ' +
 					element.className +
@@ -3936,7 +3940,7 @@ window.ListInfo = {
 			// if ($this.attr('disabled')) {
 			// 	checkDisabled = true
 			// 	$this.removeAttr('disabled');
-	
+
 			// 	console.log("DISABLEEEEEEEEEEEEEEEEED")
 			// 	console.log($this, "$this")
 			// }
@@ -5925,6 +5929,7 @@ var Dynamic_Data_Request = {
 dynamicAffectSelect = {
 	// The main Initialization function
 	init: function (affectedSelectsInfo) {
+	
 		dynamicAffectSelect.g.affectedSelectsInfo = affectedSelectsInfo;
 		var clientContext = new SP.ClientContext.get_current();
 		var oList = clientContext
@@ -5951,8 +5956,14 @@ dynamicAffectSelect = {
 		var collListItem = dynamicAffectSelect.g.collListItem;
 		var listItemEnum = collListItem.getEnumerator();
 		let affectedSelectsInfo = dynamicAffectSelect.g.affectedSelectsInfo[0];
+
+		let selectedVal = $(`select#${affectedSelectsInfo.affectedFieldName}`).attr("value"); // get selected val to use it in edit
+
 		$(`select#${affectedSelectsInfo.affectedFieldName}`).html("");
-		let optionsBody = "";
+
+		let optionsBody = '<option class="Resources" value="" selected="" disabled=""></option>'; // to not choose the first value in dropdown
+
+
 		while (listItemEnum.moveNext()) {
 			var oListItem = listItemEnum.get_current();
 			let dispfieldkey = oListItem.get_item(
@@ -5976,6 +5987,9 @@ dynamicAffectSelect = {
 				"</option>";
 		}
 		$(`select#${affectedSelectsInfo.affectedFieldName}`).html(optionsBody);
+
+		$(`select#${affectedSelectsInfo.affectedFieldName}`).val(selectedVal);
+
 		dynamicAffectSelect.g.affectedSelectsInfo =
 			dynamicAffectSelect.g.affectedSelectsInfo.shift();
 		dynamicAffectSelect.g.affectedSelectsInfo.length &&
