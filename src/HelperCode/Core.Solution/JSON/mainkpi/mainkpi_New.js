@@ -75,8 +75,7 @@ var Information_Form = [
 						"SPM Admin",
 						"SPM Team",
 						"VRO_P",
-						"System Admin Group",
-						"OPMO",
+						"System Admin Group"
 					],
 				},
 			},
@@ -203,7 +202,6 @@ var Information_Form = [
 						"SPM Team",
 						"VRO_P",
 						"Administrators for Project Web App",
-						"OPMO",
 						"Project Managers for Project Web App",
 					],
 				},
@@ -730,8 +728,7 @@ var Information_Form = [
 						"SPM Admin",
 						"SPM Team",
 						"VRO_P",
-						"System Admin Group",
-						"OPMO",
+						"System Admin Group"
 					],
 				},
 			},

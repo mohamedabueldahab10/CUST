@@ -18,7 +18,7 @@ var Information_Form = [{
             "DispfieldkeyEn": "NameEn",//added to handle portfolio bilangual
             security: {
                 groups: ['VRO_E','LMS_E',
-                    'EPMO', 'System Admin Group', 'OPMO', 'Project Managers for Project Web App',
+                    'EPMO', 'System Admin Group', 'Project Managers for Project Web App',
                 ]
             },
             // "state": "disabled",
@@ -46,7 +46,7 @@ var Information_Form = [{
             "maxchar": 5000,
             security: {
                 groups: ['VRO_E','LMS_E',
-                    'EPMO', 'System Admin Group', 'OPMO', 'Project Managers for Project Web App'
+                    'EPMO', 'System Admin Group','Project Managers for Project Web App'
                 ]
             },
             // hideonstage: "1"
@@ -60,7 +60,7 @@ var Information_Form = [{
             "validation": "required",
             security: {
                 groups: ['VRO_E','LMS_E',
-                    'EPMO', 'System Admin Group', 'OPMO', 'Project Managers for Project Web App'
+                    'EPMO', 'System Admin Group','Project Managers for Project Web App'
                 ]
             },
             // hideonstage: "1"
@@ -73,7 +73,7 @@ var Information_Form = [{
         //     "maxchar": 5000,
         //     security: {
         //         groups: ['VRO_E','LMS_E',
-        //             'EPMO', 'System Admin Group', 'OPMO', 'Project Managers for Project Web App', 'SPMO','Development Unit'
+        //             'EPMO', 'System Admin Group','Project Managers for Project Web App', 'SPMO','Development Unit'
         //         ]
         //     },
         //     // hideonstage: "1"
@@ -106,7 +106,7 @@ var Information_Form = [{
             },
             security: {
                 groups: ['VRO_E','LMS_E',
-                    'EPMO', 'System Admin Group', 'OPMO', 'Project Managers for Project Web App', 'SPMO', 'Development Unit'
+                    'EPMO', 'System Admin Group','Project Managers for Project Web App', 'SPMO', 'Development Unit'
                 ]
             },
         },
@@ -140,7 +140,7 @@ var Information_Form = [{
             "type": "string",
             security: {
                 groups: ['VRO_E','LMS_E',
-                    'EPMO', 'System Admin Group', 'OPMO', 'Project Managers for Project Web App', 'SPMO', 'Development Unit'
+                    'EPMO', 'System Admin Group','Project Managers for Project Web App', 'SPMO', 'Development Unit'
                 ]
             },
             // "maxchar": 5000,
@@ -157,7 +157,7 @@ var Information_Form = [{
             "valfieldkey": "Title",
             security: {
                 groups: ['VRO_E','LMS_E',
-                    'EPMO', 'Administrators for Project Web App', 'OPMO', 'SPMO','Development Unit'
+                    'EPMO', 'Administrators for Project Web App','SPMO','Development Unit'
                 ]
             },
             accessFilter: [
@@ -293,7 +293,7 @@ var Information_Form = [{
             "type": "multiline",
             security: {
                 groups: ['VRO_E','LMS_E',
-                    'EPMO', 'System Admin Group', 'OPMO', 'SPMO', 'Development Unit', 'Project Managers for Project Web App'
+                    'EPMO', 'System Admin Group','SPMO', 'Development Unit', 'Project Managers for Project Web App'
                 ]
             },
             // "maxchar": 5000,
@@ -848,7 +848,7 @@ var Information_Form = [{
         },
         security: {
             groups: ['VRO_E','LMS_E',
-                'EPMO', 'System Admin Group', 'OPMO', 'SPMO', 'Development Unit', 'Project Managers for Project Web App'
+                'EPMO', 'System Admin Group','SPMO', 'Development Unit', 'Project Managers for Project Web App'
             ]
         },
         //"state": "disabled"
@@ -883,7 +883,7 @@ var Information_Form = [{
         //     "type": "picker",
         //     security: {
         //         groups: ['VRO_E','LMS_E',
-        //             'EPMO', 'System Admin Group', 'OPMO', 'SPMO','Development Unit'
+        //             'EPMO', 'System Admin Group','SPMO','Development Unit'
         //         ]
         //     },
 

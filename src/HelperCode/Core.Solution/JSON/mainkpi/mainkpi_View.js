@@ -580,7 +580,7 @@ var Information_Form = [{
         },
         security: {
             groups: [
-                'SPM Admin', 'SPM Team', 'VRO_P', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+                'SPM Admin', 'SPM Team', 'VRO_P', 'Administrators for Project Web App','Project Managers for Project Web App'
             ]
         },
     },

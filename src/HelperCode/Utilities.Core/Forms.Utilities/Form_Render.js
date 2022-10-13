@@ -5942,17 +5942,10 @@ var Dynamic_Data_Request = {
 dynamicAffectSelect = {
 	// The main Initialization function
 	init: function (affectedSelectsInfo) {
-		console.log(affectedSelectsInfo, "affectedSelectsInfo affectedSelectsInfo ooooooooooooooooooooop")
 
 		var queryFieldValue = affectedSelectsInfo[0].queryFieldValue ? affectedSelectsInfo[0].queryFieldValue : ''
 		var queryFieldName = affectedSelectsInfo[0].queryFieldName ? affectedSelectsInfo[0].queryFieldName : ''
 		var queryFieldType = affectedSelectsInfo[0].queryFieldType ? affectedSelectsInfo[0].queryFieldType : ''
-
-		console.log(affectedSelectsInfo[0].queryFieldValue, "queryFieldValue ")
-		console.log(affectedSelectsInfo[0].queryFieldName, "queryFieldName ")
-		console.log(affectedSelectsInfo[0].queryFieldType, "queryFieldType ")
-
-
 
 		dynamicAffectSelect.g.affectedSelectsInfo = affectedSelectsInfo;
 		var clientContext = new SP.ClientContext.get_current();
