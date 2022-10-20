@@ -258,7 +258,7 @@ var Project_Home_Info_Request = {
         '</div>' +
         '<div class="d-inline-flex flex-column mx-2">' +
         '<h3 data-trans-relatedinitiative class="Resources black"></h3>' +
-        '<span class="des-13 overflow-ellipsis-black" ><span id="relatedinit" style="cursor:pointer">'+projectRelatedInitiative+'</span><span class="tooltiptextblack" id="relatedinitchild">' + projectRelatedInitiative + '</span></span>' +
+        '<span class="des-13 overflow-ellipsis-black" ><span id="relatedinit" style="cursor:pointer">' + projectRelatedInitiative + '</span><span class="tooltiptextblack" id="relatedinitchild">' + projectRelatedInitiative + '</span></span>' +
         '</div>' +
         '</div>' +
         //
@@ -1759,7 +1759,7 @@ var ProgressStatus_Data_Submit = {
     if (plannedPercentage > 100) {
       plannedPercentage = 100
     }
-    if(differenceDaysFromToday < 0){
+    if (differenceDaysFromToday < 0) {
       plannedPercentage = 0
     }
 
@@ -2327,8 +2327,11 @@ var EPM_Project_Summery_Task = {
     // console.log(getBaseLineDuration, "getBaseLineDuration")
     // console.log(plannedPercentage, "plannedPercentage")
 
-    ProgressStatus_Data_Submit.init(); // update the project auto when open the page
-
+    // avoid version conflict when project wf is render
+    var isWfPage = window.location.href.toLowerCase().indexOf('&wfs') > -1
+    if (!isWfPage) {
+      ProgressStatus_Data_Submit.init(); // update the project auto when open the page // should return after budur testing project wf
+    }
 
   },
   // Global variables

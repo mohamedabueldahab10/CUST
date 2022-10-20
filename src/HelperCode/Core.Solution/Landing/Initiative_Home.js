@@ -974,39 +974,39 @@ var Projects_Info_Request = {
 				: No_Data;
 			itemhtml.push(
 				'<li class="list-group-item link-arrow px-0">' +
-					'<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
-					_spPageContextInfo.webAbsoluteUrl +
-					"/sitepages/View.aspx?ListKey=projects&IID=" +
-					itemID +
-					"&ICODE=" +
-					itemProjectCode +
-					'">' +
-					'<div class="d-inline-flex flex-column">' +
-					'<h3 class="acc-title d-inline-flex black">' +
-					itemname +
-					"</h3>" +
-					'<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
-					itemtitle +
-					"</span>" +
-					"</div>" +
-					'<div class="d-inline-flex flex-column mx-2">' +
-					// '<h4 class="text-warning">' + itemdateraised + '</h4>' +
-					'<span data-trans-basestart class="Resources des-13"></span>' +
-					'<h4 class="text-warning">' +
-					itemstartdate +
-					"</h4>" +
-					"</div>" +
-					'<div class="d-inline-flex flex-column mx-2">' +
-					// '<h4 class="black">' + itemdate + '</h4>' +
-					'<span data-trans-basefinish class="Resources des-13"></span>' +
-					'<h4 class="black">' +
-					itemfinishdate +
-					"</h4>" +
-					"</div>" +
-					'<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
-					"</div>" +
-					"</a>" +
-					"</li>"
+				'<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
+				_spPageContextInfo.webAbsoluteUrl +
+				"/sitepages/View.aspx?ListKey=projects&IID=" +
+				itemID +
+				"&PCODE=" +
+				itemtitle +
+				'">' +
+				'<div class="d-inline-flex flex-column">' +
+				'<h3 class="acc-title d-inline-flex black">' +
+				itemname +
+				"</h3>" +
+				'<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
+				itemtitle +
+				"</span>" +
+				"</div>" +
+				'<div class="d-inline-flex flex-column mx-2">' +
+				// '<h4 class="text-warning">' + itemdateraised + '</h4>' +
+				'<span data-trans-basestart class="Resources des-13"></span>' +
+				'<h4 class="text-warning">' +
+				itemstartdate +
+				"</h4>" +
+				"</div>" +
+				'<div class="d-inline-flex flex-column mx-2">' +
+				// '<h4 class="black">' + itemdate + '</h4>' +
+				'<span data-trans-basefinish class="Resources des-13"></span>' +
+				'<h4 class="black">' +
+				itemfinishdate +
+				"</h4>" +
+				"</div>" +
+				'<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
+				"</div>" +
+				"</a>" +
+				"</li>"
 			);
 
 			//
