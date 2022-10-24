@@ -32,10 +32,15 @@ var Information_Form = [
                 "type": "dropdownValues",
                 options: {
                     choices: [
-                        { display: "vision", value: "vision", roles:["Administrator","VROE","VROP"] },
-						{ display: "strategically", value: "strategically", roles:["Administrator","EPMO"] },
-						{ display: "lms", value: "lms" , roles:["Administrator","LMSE","LMSP"]},
+                        { display: "vision", value: "vision", roles:["Administrator","VROE","VROP","InitiativeManager","DU","EPMO"] },
+						{ display: "strategically", value: "strategically", roles:["Administrator","EPMO","InitiativeManager","DU"] },
+						{ display: "lms", value: "lms" , roles:["Administrator","LMSE","LMSP","InitiativeManager","DU","EPMO"]},
                         // { display: 'others', value: 'others' },
+                    ]
+                },
+                security: {
+                    groups: [
+                     'System Admin Group'
                     ]
                 }
             },

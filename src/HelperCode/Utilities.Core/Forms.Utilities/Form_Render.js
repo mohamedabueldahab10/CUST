@@ -3947,18 +3947,7 @@ window.ListInfo = {
 			});
 		},
 		toggleFields: function ($this) {
-			debugger
-			//////////////////////////////////////////////////////////
-			// var checkDisabled = false
-			// if ($this.attr('disabled')) {
-			// 	checkDisabled = true
-			// 	$this.removeAttr('disabled');
 
-			// 	console.log("DISABLEEEEEEEEEEEEEEEEED")
-			// 	console.log($this, "$this")
-			// }
-			console.log($this.val())
-			//////////////////////////////////////////////////////////
 			var myValue = $this.val(),
 				toggleValues =
 					$this.data("togglevalues").indexOf(":::") > -1
@@ -4014,13 +4003,6 @@ window.ListInfo = {
 							) {
 								myFieldParent.find(">*").attr("required", false);
 							}
-							// debugger
-							// if(isPerformanceLeader){
-							// 	console.log(toggleValues,"toggleValues")
-							// 	console.log(myFieldParent,"myFieldParent")
-							// 	console.log(allToggleFields,"allToggleFields allToggleFields")
-							// 		// $this.attr('disabled',true)
-							// }
 						}
 						if (listkey == "initiatives") {
 							if (item == "RelatedStrategyObjective") {
@@ -4046,21 +4028,9 @@ window.ListInfo = {
 						.find(">*")
 						.attr("required", false);
 				});
-				// toggleFields.forEach(function(item, i, arr)
-				// {
-				//     var isVisible = $('#'+item).parent().is(":visible"),
-				//     myFieldParent = $('#'+item).parent(),
-				//     myField = $('#'+item);
-				//     if(isVisible)
-				//     {
-				//         myFieldParent.hide();
-				//         myField.val('');
-				//     }
-				// });
+	
 			}
-			// if(checkDisabled){
-			// 	console.log("inside check disabled")
-			// }
+		
 		},
 		showFieldsIfInitiativeVision: function () {
 			var typeValue = $("#Types option:selected").val();

@@ -141,7 +141,7 @@ var Information_Form = [
                 dynamic: "parent", //"parentInternalName" or "parent" // if parent it will affect other fields
                 security: {
                     groups: ["LMS_P",
-                        'SPM Admin', 'SPM Team', 'VRO_P', 'Administrators for Project Web App', 'Project Managers for Project Web App'
+                        'SPM Admin', 'SPM Team', 'VRO_P', 'Administrators for Project Web App', 'Project Managers for Project Web App','Performance Leaders'
                     ]
                 },
                 //role access

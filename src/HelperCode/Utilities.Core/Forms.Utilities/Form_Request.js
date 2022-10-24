@@ -455,10 +455,6 @@ window.Edit_Data_Request = {
       relatedStrategyKpi = oListItem.get_item("RelatedStrategy") ? oListItem.get_item("RelatedStrategy") : '';
       indexTypekpi = oListItem.get_item("Types") ? oListItem.get_item("Types") : '';
 
-      // if (relatedStrategyKpi && indexTypekpi) { // return it after test
-      //   Goal_Strategy_Info.init(relatedStrategyKpi)
-      //   Kpi_Related_Goal.init(relatedStrategyKpi, indexTypekpi)
-      // }
       if (relatedStrategyKpi && indexTypekpi) {
         Kpi_Related_Goal.init(relatedStrategyKpi, indexTypekpi)
         setTimeout(function () {
@@ -606,15 +602,15 @@ window.Edit_Data_Request = {
     ////////////////////////
 
     //hide show fields based on selection & onload
-    // debugger
+    
     $("[data-togglevalues]").each(function () {
       ListInfo.g.toggleFields($(this));
     });
 
-
-
     // trigger the dynamic parent field to get the data in edit
     $("select[dynamic=parent]").trigger("change")
+
+    
 
 
     //getting related files
@@ -2433,6 +2429,7 @@ window.Kpi_Related_Goal = {
     if (typeOfIndex == 'main') {
       objectiveId = "RelatedStrategyObjective"
       if (isPerformanceLeader) {
+        $("#RelatedStrategy").prop("disabled", true)
         $("#Types").prop("disabled", true)
         $("#RelatedStrategyObjective").prop("disabled", true);
       } else {
@@ -2441,6 +2438,7 @@ window.Kpi_Related_Goal = {
     } else if (typeOfIndex == 'sub') {
       objectiveId = "SubRelatedObjective"
       if (isPerformanceLeader) {
+        $("#RelatedStrategy").prop("disabled", true)
         $("#Types").prop("disabled", true)
         $("#SubRelatedObjective").prop("disabled", true);
       } else {
@@ -2464,6 +2462,10 @@ window.Kpi_Related_Goal = {
       );
     });
 
+    console.log(Kpi_Related_Goal.g.array,"Kpi_Related_Goal.g.array")
+    console.log(objectiveId,"objectiveId")
+    console.log(relatedSubGoal,"relatedSubGoal relatedSubGoal")
+
     if (isEdit) {
       if (indexTypekpi == 'main') {
         $('#RelatedStrategyObjective').val(relatedMainGoal)
@@ -2486,6 +2488,9 @@ window.Kpi_Related_Goal = {
     var oList = clientContext.get_web().get_lists().getByTitle("SOs");
     var camlQuery = new SP.CamlQuery();
     typeOfIndex = indexType
+
+    console.log(indexType,"INDEX TYPE")
+    console.log(SosCode,"SOS CODE")
 
     // var query = '<View><Query><Where><And><Eq><FieldRef Name="RelatedStrategy" /><Value Type="Text">' + SosCode + '</Value></Eq><Eq><FieldRef Name="Types" /><Value Type="Choice">' + indexType + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
 
