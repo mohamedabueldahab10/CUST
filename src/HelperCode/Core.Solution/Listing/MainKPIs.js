@@ -59,7 +59,6 @@ var MainKPIs_Info_Request = {
   },
   // The main Initialization function
   init: function () {
-
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("MainKPI");
     var camlQuery = new SP.CamlQuery();
