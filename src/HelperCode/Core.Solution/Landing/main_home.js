@@ -1,4 +1,5 @@
 var ActualBudget = 0,
+	SpendFromBudget = 0,
 	AssignedBudget = 0,
 	EstimatedBudget = 0,
 	phaseNameArray = [],
@@ -233,6 +234,7 @@ window.Project_Info_Request = {
 			) {
 				//getting 1st stats data
 				ActualBudget += oListItem.get_item("ActualBudget") || 0; //masroufa
+				SpendFromBudget = oListItem.get_item("ActualBudget") || 0
 				AssignedBudget += oListItem.get_item("AssignedBudget") || 0; // total budget
 				EstimatedBudget += oListItem.get_item("EstimatedCost") || 0; //mutabakia
 
@@ -460,7 +462,7 @@ window.Project_Info_Request = {
 					'<span data-prname="' +
 					projectcode +
 					'" class="inner-val fnt-14 bold">' +
-					Project_Info_Request.g.kFormatter(ActualBudget) +
+					Project_Info_Request.g.kFormatter(SpendFromBudget) +
 					"</span>" +
 					"</span>" +
 					"</div>" +

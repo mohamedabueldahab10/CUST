@@ -1,4 +1,5 @@
 var ActualBudget = 0,
+	SpendFromBudget = 0,
 	EstimatedCost = 0,
 	AssignedBudget = 0,
 	EstimatedBudget = 0,
@@ -118,7 +119,7 @@ var mizania = require("../../HelperRessources/img/mizania.svg");
 // var mizania;// = require("../../HelperRessources/img/mizania.svg");
 //filter vars
 var PQuery =
-		"<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>",
+	"<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>",
 	originalstate = true,
 	FilterChoices = [],
 	subsectorfilterarray = [],
@@ -168,27 +169,27 @@ window.initiativeRequest = {
 	},
 	// The main Initialization function
 	init: function () {
-    if (originalstate) {
-      if (isRoleDataLevelAccess) {
-        PQuery = dataLevelAccessQuery;
+		if (originalstate) {
+			if (isRoleDataLevelAccess) {
+				PQuery = dataLevelAccessQuery;
 			} else {
-      //*****call charts filteration */
-      if (isInManager || isInOwner) {
-        PQuery = InitiativeAccessQuery;
-      } else if (
-        isDU ||
-        isMinisterAssistant ||
-        isViceMinister ||
-        isSectorHead ||
-        isSubSectorHead ||
-        isGeneralManager
-      ) {
-        PQuery = SubSectorInitiativeAccessQuery;
-      } else {
-        PQuery =
-          "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
-      }
-    }
+				//*****call charts filteration */
+				if (isInManager || isInOwner) {
+					PQuery = InitiativeAccessQuery;
+				} else if (
+					isDU ||
+					isMinisterAssistant ||
+					isViceMinister ||
+					isSectorHead ||
+					isSubSectorHead ||
+					isGeneralManager
+				) {
+					PQuery = SubSectorInitiativeAccessQuery;
+				} else {
+					PQuery =
+						"<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
+				}
+			}
 			//**** Start*/check user rule and buld query to get projects;
 			$(ChartHide).hide();
 			$(".required-support-ctx").show(); // to show the alejra2 elmatloob section after moved to up
@@ -220,11 +221,11 @@ window.initiativeRequest = {
 			intiativeType,
 			strategy;
 		var initiativesVisionHTML = "",
-      initiativesStratigalHTML = "",
-      initiativesLMSHTML = "",
+			initiativesStratigalHTML = "",
+			initiativesLMSHTML = "",
 			initiativesVisionCount = 0,
-      initiativesStratigalCount = 0;
-      initiativesLMSCount = 0;
+			initiativesStratigalCount = 0;
+		initiativesLMSCount = 0;
 		var phaseCodeArray = [];
 		var phaseNameArray2 = [];
 		var Priorityarray = [];
@@ -243,8 +244,8 @@ window.initiativeRequest = {
 				oListItem.get_item("Sector") == UserAccessSectorCode;
 
 			if (
-        (isVROE && oListItem.get_item("Types") == "vision") ||
-        (isLMSE && oListItem.get_item("Types") == "lms") ||
+				(isVROE && oListItem.get_item("Types") == "vision") ||
+				(isLMSE && oListItem.get_item("Types") == "lms") ||
 				(isDU && relatedFilterSubSector) ||
 				(isMinisterAssistant && relatedFilterbSector) ||
 				(isViceMinister && relatedFilterbSector) ||
@@ -264,6 +265,7 @@ window.initiativeRequest = {
 			) {
 				//getting 1st stats data
 				EstimatedCost += oListItem.get_item("EstimatedCost") || 0; //masroufa
+				SpendFromBudget = oListItem.get_item("EstimatedCost") || 0;
 				// ActualBudget += oListItem.get_item("InitiativeBudget") || 0; //masroufa
 				// AssignedBudget += oListItem.get_item('AssignedBudget') || 0; // total budget
 				// EstimatedBudget += oListItem.get_item('EstimatedCost') || 0; //mutabakia
@@ -472,7 +474,7 @@ window.initiativeRequest = {
 					'<span data-prname="' +
 					initiativeCode +
 					'" class="inner-val fnt-14 bold">' +
-					initiativeRequest.g.kFormatter(EstimatedCost) +
+					initiativeRequest.g.kFormatter(SpendFromBudget) +
 					"</span>" +
 					"</span>" +
 					"</div>" +
@@ -516,7 +518,7 @@ window.initiativeRequest = {
 				} else if (intiativeType === "strategically") {
 					initiativesStratigalHTML += projectshtml;
 					initiativesStratigalCount = initiativesStratigalCount + 1;
-				}else if (intiativeType === "lms") {
+				} else if (intiativeType === "lms") {
 					initiativesLMSHTML += projectshtml;
 					initiativesLMSCount = initiativesLMSCount + 1;
 				}
@@ -549,8 +551,8 @@ window.initiativeRequest = {
 
 		//projectTypecount
 		$("#internalProjectCount").html(initiativesStratigalCount);
-    $("#externalProjectCount").html(initiativesVisionCount);
-    $("#LMSProjectCount").html(initiativesLMSCount);
+		$("#externalProjectCount").html(initiativesVisionCount);
+		$("#LMSProjectCount").html(initiativesLMSCount);
 		totalforhidstrat = initiativesStratigalCount;
 		totalforhidvis = initiativesVisionCount;
 		totalforhidvisLMS = initiativesLMSCount;
@@ -629,8 +631,8 @@ window.initiativeRequest = {
 
 		$(".projects-ctx .PNumber").text(numberofInitiatives);
 		$("div#accordionProject.internalAccordion").html(initiativesStratigalHTML);
-    $("div#accordionProject.externalAccordion").html(initiativesVisionHTML);
-    $("div#accordionProject.LMSAccordion").html(initiativesLMSHTML);
+		$("div#accordionProject.externalAccordion").html(initiativesVisionHTML);
+		$("div#accordionProject.LMSAccordion").html(initiativesLMSHTML);
 
 		progressstatusarrayALL = progressstatusarray;
 
@@ -905,7 +907,7 @@ window.initiativeRequest = {
 				},
 				{
 					duration: 333,
-					complete: function () {},
+					complete: function () { },
 				}
 			);
 			if (FilterChoices.length == 0) {
@@ -1086,7 +1088,7 @@ window.initiativeRequest = {
 					}
 				});
 		},
-		statisticsbars: function () {},
+		statisticsbars: function () { },
 		handlescrollview: function () {
 			$.fn.isInViewport = function () {
 				var elementTop = $(this).offset().top;
@@ -1112,8 +1114,8 @@ window.initiativeRequest = {
 					var internaltt = internalvisiblelength + 6;
 					var internaltoshow = $(
 						".accordion#accordionProject.internalAccordion > .card:hidden:nth-child(-n+" +
-							internaltt +
-							")"
+						internaltt +
+						")"
 					);
 					setTimeout(function () {
 						internaltoshow.each(function () {
@@ -1142,8 +1144,8 @@ window.initiativeRequest = {
 						internaltt = internalvisiblelength + 6;
 						internaltoshow = $(
 							".accordion#accordionProject.internalAccordion > .card:hidden:nth-child(-n+" +
-								internaltt +
-								")"
+							internaltt +
+							")"
 						);
 						if (internaltoshow.length == 0) {
 							$(
@@ -1248,8 +1250,8 @@ window.initiativeRequest = {
 					var externaltt = externalvisiblelength + 6;
 					var externaltoshow = $(
 						".accordion#accordionProject.externalAccordion > .card:hidden:nth-child(-n+" +
-							externaltt +
-							")"
+						externaltt +
+						")"
 					);
 					setTimeout(function () {
 						externaltoshow.each(function () {
@@ -1278,8 +1280,8 @@ window.initiativeRequest = {
 						externaltt = externalvisiblelength + 6;
 						externaltoshow = $(
 							".accordion#accordionProject.externalAccordion > .card:hidden:nth-child(-n+" +
-								externaltt +
-								")"
+							externaltt +
+							")"
 						);
 						if (externaltoshow.length == 0) {
 							$(
@@ -1385,8 +1387,8 @@ window.initiativeRequest = {
 					var externaltt = externalvisiblelength + 6;
 					var externaltoshow = $(
 						".accordion#accordionProject.LMSAccordion > .card:hidden:nth-child(-n+" +
-							externaltt +
-							")"
+						externaltt +
+						")"
 					);
 					setTimeout(function () {
 						externaltoshow.each(function () {
@@ -1415,8 +1417,8 @@ window.initiativeRequest = {
 						externaltt = externalvisiblelength + 6;
 						externaltoshow = $(
 							".accordion#accordionProject.LMSAccordion > .card:hidden:nth-child(-n+" +
-								externaltt +
-								")"
+							externaltt +
+							")"
 						);
 						if (externaltoshow.length == 0) {
 							$(
