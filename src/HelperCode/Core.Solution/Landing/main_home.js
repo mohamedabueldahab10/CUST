@@ -2553,8 +2553,8 @@ function handleStatusBarChart() {
 	background_2.addColorStop(1, "rgba(255,255,0,255)");
 	background_3.addColorStop(0, "rgba(245,27,7,255)");
 	background_3.addColorStop(1, "rgba(245,27,7,255)");
-	background_4.addColorStop(0, "rgba(147,139,136,255)");
-	background_4.addColorStop(1, "rgba(147,139,136,255)");
+	background_4.addColorStop(0, "rgba(0,0,255,255)");
+	background_4.addColorStop(1, "rgba(0,0,255,255)");
 	background_5.addColorStop(0, "rgba(0,0,255,255)");
 	background_5.addColorStop(1, "rgba(0,0,255,255)");
 	var BackgroundsArray = [
