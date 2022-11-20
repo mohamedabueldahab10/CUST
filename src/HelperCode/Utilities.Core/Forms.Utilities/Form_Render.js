@@ -5003,7 +5003,7 @@ var View_ListInfo = {
 						'" ></p>' +
 						"</div>";
 					OnSuccess(flag, htmlBody);
-
+					break;
 				case "percentage":
 					htmlBody =
 						'<div class="col-md-6 CFIELD ' +
