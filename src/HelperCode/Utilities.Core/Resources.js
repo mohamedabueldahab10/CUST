@@ -652,6 +652,38 @@
         "performanceanalysis": "تحليل الأداء",
         "mytasks": "مهامي",
         'othertasks': "المهام الأخرى"
+        , "launchstraightvital": "إطلاق المبادرات الحيوية",
+        "launchesconferencesworkshopselectronicplatforms": "تدشين المرافق, مؤتمرات, ورش عمل أو المنصات والخدمات الإلكترونية",
+        "establishingimportantmeetingpartnershipsprogramlevel": " عقد اتفاقيات / شراكات ذات أهمية على مستوى البرنامج",
+        "legalmilestonesgroup": "اكتمال المعالم الرئيسية للمبادرات",
+        "achievingkeyperformancetargets": "تحقيق مستهدفات مؤشرات الأداء الرئيسية",
+        "objective": "هدف",
+        "initiative": "مبادرة",
+        "direct": "مباشر",
+        "indirect": " غير مباشر",
+        "economical": "اقتصادى",
+        "social": "إجتماعى",
+        "impactonervices": "اثر على الخدمات والبنية الحتية",
+        "memorandumofunderstanding":"مذكرة تفاهم",
+        "memorandumofcooperation":"مذكرة تعاون",
+        "acooperationagreement":"اتفاقية تعاون",
+        "integrativepartnership":"شراكة تكاملية",
+        "agencylevelpartnership":"شراكة على مستوى وكالة",
+        "tangibleimpact":"أثر ملموس حاليًا (من تاريخ إنجاز المنجز  إلى 6 أشهر)",
+        "significantimpactmediumterm6mth":" أثر ملموس على المدى المتوسط (خلال 6 أشهر - سنة كحد أقصى)",
+        "tangibleimpactmediumtermyear":"أثر ملموس على المدى المتوسط (خلال سنة إلى 3 سنوات كحد أقصى)",
+        "significantlongtermimpact":"أثر ملموس على المدى الطويل (3 إلى 5 سنوات كحد أقصى)",
+        "unknown":"غير معروف",
+        "special":"مميز",
+        "governmentsector":"حكومي",
+        "semigovernment":"شبه حكومي",
+        "privatesector":"خاص",
+        "nonprofitsector":"غير ربحي",
+        "missionwasapproved":"تم الإعتماد فى همة",
+        "waitingfortheapprovalofresources":"في انتظار اعتماد موارد",
+        "exchangehasbeendone":"تم الصرف"
+
+
 
     },
     "en": {
@@ -1321,6 +1353,38 @@
         "performanceanalysis": "Performance Analysis",
         "mytasks": "My Tasks",
         'othertasks': "Other Tasks"
+        , "launchstraightvital": "Launch Straight Vital",
+        "launchesconferencesworkshopselectronicplatforms": "launchesconferencesworkshopselectronicplatforms",
+        "establishingimportantmeetingpartnershipsprogramlevel": "Establishing Important Meeting Partnerships Program Level",
+        "legalmilestonesgroup": "Legal Milestones Grouacooperationofagreementsp",
+        "achievingkeyperformancetargets": "Achieving Key Performance Targets",
+        "objective": "Objective",
+        "initiative": "Initiative",
+        "direct": "Direct",
+        "indirect": "Indirect",
+        "economical": "Economical",
+        "social": "Social",
+        "impactonervices": "Impact on services and infrastructure",
+        "memorandumofunderstanding":"Memorandum of Understanding",
+        "memorandumofcooperation":"Memorandum of Cooperation",
+        "acooperationofagreements":"Cooperation agreement",
+        "integrativepartnership":"Integrative",
+        "agencylevelpartnership":"Agency Partnership",
+        "tangibleimpact":"Tangible Impact (6 month)",
+        "significantimpactmediumterm6mth":"Significant Medium Impact (6 month - 1 Year)",
+        "tangibleimpactmediumtermyear":"Tangible Medium Impact (1 Year - 3 Years)",
+        "significantlongtermimpact":"Significant Impact (3 Years - 5 Years)",
+        "unknown":"Unknown",
+        "special":"Special",
+        "governmentsector":"Governmental",
+        "semigovernment":"Semi-Governmental",
+        "privatesector":"Private Sector",
+        "nonprofitsector":"Non-profit-sector",
+        "missionwasapproved":"Mission Approved",
+        "waitingfortheapprovalofresources":"Waiting for the approval of resources",
+        "exchangehasbeendone":"Exchange done"
+        
+
     }
 };
 
@@ -1528,7 +1592,7 @@ window.Dynamo_Values = { //gets values from sp list and assign LocalStorage
                 actionButtonTitleEn: ActionButtonTitleEn,
                 ModuleType: ModuleType,
                 ModuleIdentifier: ModuleIdentifier,
-                ModuleURL:ModuleURL,
+                ModuleURL: ModuleURL,
                 timeset: new Date().getTime()
             });
         }
