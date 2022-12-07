@@ -20,14 +20,6 @@ var Information_Form = [
 				maxchar: "250",
 				validation: "required",
 			},
-
-			{
-				InternalName: "Description",
-				DisplayNameEn: "Description",
-				DisplayName: "وصف الهدف",
-				type: "multiline",
-				maxchar: "500",
-			},
 			{
 				InternalName: "ObjectiveOwner",
 				DisplayName: "مالك الهدف",
@@ -64,37 +56,6 @@ var Information_Form = [
 					],
 				},
 				validation: "required",
-			},
-			{
-				InternalName: "RelatedObjective",
-				DisplayNameEn: "Related Main Objective",
-				DisplayName: "الهدف الرئيسي المرتبط",
-				ToggleName: "RelatedObjective",
-				type: "lookupWithQuery",
-				queryField: "Types",
-				queryFieldType: "dropdownValues", //ex: "Choice"
-				queryFieldValue: "main",
-				//from other list:
-				source: "SOs",
-				Dispfieldkey: "Name",
-				valfieldkey: "Title",
-				display: "none",
-				//
-				dynamic: "RelatedStrategy",
-				filterField: "RelatedStrategy",
-				filterFieldType: "Text",
-			},
-			{
-				InternalName: "RelatedPortfolio",
-				DisplayNameEn: "Related Portfolio",
-				ToggleName: "RelatedPortfolio",
-				DisplayName: "المحفظة المرتبطة ",
-				type: "lookup",
-				//from other list:
-				source: "Portfolio",
-				Dispfieldkey: "Name",
-				valfieldkey: "Title",
-				display: "none",
 			},
 			// {
 			// 	"InternalName": "RelatedPillar",
@@ -167,6 +128,25 @@ var Information_Form = [
 				],
 				// "display":"none"
 			},
+			{
+				InternalName: "RelatedObjective",
+				DisplayNameEn: "Related Main Objective",
+				DisplayName: "الهدف الرئيسي المرتبط",
+				ToggleName: "RelatedObjective",
+				type: "lookupWithQuery",
+				queryField: "Types",
+				queryFieldType: "dropdownValues", //ex: "Choice"
+				queryFieldValue: "main",
+				//from other list:
+				source: "SOs",
+				Dispfieldkey: "Name",
+				valfieldkey: "Title",
+				display: "none",
+				//
+				dynamic: "RelatedStrategy",
+				filterField: "RelatedStrategy",
+				filterFieldType: "Text",
+			},
 			// {
 			// 	"InternalName": "RelatedStrategyType",
 			// 	"DisplayNameEn": "Strategy Type",
@@ -186,7 +166,8 @@ var Information_Form = [
 				InternalName: "RelatedStrategyPillars",
 				DisplayNameEn: "Is Pillar / program  Exist?",
 				DisplayName: "هل يوجد محور / برنامج ؟",
-				type: "dropdownValues",
+				// type: "dropdownValues",
+				type: "yesnoradio",
 				state: "disabled",
 				options: {
 					choices: [
@@ -194,17 +175,6 @@ var Information_Form = [
 						{ display: "no", value: "no" },
 					],
 				},
-			},
-			{
-				InternalName: "PillarName",
-				DisplayNameEn: "Pillar Name",
-				DisplayName: "اسم المحور / البرنامج",
-				type: "lookup",
-				//from other list:
-				source: "SPillars",
-				Dispfieldkey: "Name",
-				valfieldkey: "Title",
-				display: "none",
 			},
 			// {
 			// 	"InternalName": "RelatedStrategyPillars",
@@ -225,21 +195,51 @@ var Information_Form = [
 
 			// },
 			{
-				InternalName: "RelatedJobStrategy",
-				DisplayNameEn: "Related Job Market Strategy",
-				DisplayName: "استراتيجية سوق العمل المرتبطة",
-				ToggleName: "RelatedJobStrategy",
-				type: "lookupWithQuery",
-				queryField: "Types",
-				queryFieldType: "dropdownValues", //ex: "Choice"
-				queryFieldValue: "jobmarket",
+				InternalName: "PillarName",
+				DisplayNameEn: "Pillar Name",
+				DisplayName: "اسم المحور / البرنامج",
+				type: "lookup",
 				//from other list:
-
-				source: "GoalStrategy",
+				source: "SPillars",
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
 				display: "none",
 			},
+			{
+				InternalName: "Description",
+				DisplayNameEn: "Description",
+				DisplayName: "وصف الهدف",
+				type: "multiline",
+				maxchar: "500",
+			},
+			{
+				InternalName: "RelatedPortfolio",
+				DisplayNameEn: "Related Portfolio",
+				ToggleName: "RelatedPortfolio",
+				DisplayName: "المحفظة المرتبطة ",
+				type: "lookup",
+				//from other list:
+				source: "Portfolio",
+				Dispfieldkey: "Name",
+				valfieldkey: "Title",
+				display: "none",
+			},
+			// {
+			// 	InternalName: "RelatedJobStrategy",
+			// 	DisplayNameEn: "Related Job Market Strategy",
+			// 	DisplayName: "استراتيجية سوق العمل المرتبطة",
+			// 	ToggleName: "RelatedJobStrategy",
+			// 	type: "lookupWithQuery",
+			// 	queryField: "Types",
+			// 	queryFieldType: "dropdownValues", //ex: "Choice"
+			// 	queryFieldValue: "jobmarket",
+			// 	//from other list:
+
+			// 	source: "GoalStrategy",
+			// 	Dispfieldkey: "Name",
+			// 	valfieldkey: "Title",
+			// 	display: "none",
+			// },
 			{
 				InternalName: "Sector",
 				DisplayName: "القطاع",
@@ -256,8 +256,21 @@ var Information_Form = [
 			},
 			{
 				InternalName: "SubSector",
-				DisplayName: "الجهة/الوكالة",
-				DisplayNameEn: "Departments",
+				DisplayName: "الوكالة",
+				DisplayNameEn: "Deputyship",
+				type: "lookup",
+				//from other list:
+				source: "Internal Entities",
+				isSector: "True",
+				EntityType: "Department",
+				Dispfieldkey: "Name",
+				DispfieldkeyEn: "NameEn",
+				valfieldkey: "Title",
+			},
+			{
+				InternalName: "Department",
+				DisplayName: "الإدارة",
+				DisplayNameEn: "Department",
 				type: "lookup",
 				//from other list:
 				source: "Internal Entities",

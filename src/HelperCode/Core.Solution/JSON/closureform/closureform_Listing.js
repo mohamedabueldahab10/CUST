@@ -1,6 +1,6 @@
 var Listing_Info = [{
     "InternalName": "Title",
-    "DisplayNameEn": "Closure code",
+    "DisplayNameEn": "Title",
     "DisplayName": "رمز اغلاق المشروع",
     "type": "text",
     inlisting: true,
@@ -12,7 +12,7 @@ var Listing_Info = [{
     "DisplayName": "أسباب اغلاق المشروع",
     "type": "text",
     inlisting: true,
-    infilter: true,
+    infilter: false,
     needTrans:true
 },
 {
@@ -22,6 +22,6 @@ var Listing_Info = [{
     "type": "multiline",
     "maxchar": 5000,
     inlisting: true,
-    infilter: true
+    infilter: false
 }
 ];

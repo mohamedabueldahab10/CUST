@@ -1,33 +1,50 @@
 var Listing_Info = [
-
-
+    
+    {
+        "InternalName": "Title",
+        "DisplayName": "رمز صاحب المصلحة",
+        "DisplayNameEn": "Code",
+        "type": "text",
+        inlisting: true,
+        infilter: false,
+        // isLinkable: true,
+        // ShowUnderProjectListing: false
+    },
     {
         "InternalName": "Name",
-        "DisplayName": "اسم صاحب المصلحة",
-        "DisplayNameEn": "StakeHolders Name",
+        "DisplayName": "الاسم",
+        "DisplayNameEn": "Name",
         "type": "text",
         inlisting: true,
         infilter: true
     },
     {
+        "InternalName": "JobTitle",
+        "DisplayName":"المسمى الوظيفي",
+        "DisplayNameEn":"Job Title",
+        "type":"text",
+        inlisting: true,
+        infilter: false,
+    },
+    {
         "InternalName": "StakeholderType",
         "DisplayName": "النوع",
-        "DisplayNameEn": "Stakeholder Type",
+        "DisplayNameEn": "Type",
         "type": "text",
         needTrans: true,
         inlisting: true,
         infilter: true
     },
-    {
-        "InternalName": "ProjectCode",
-        "DisplayName": "رمز المشروع",
-        "DisplayNameEn": "Project Code",
-        "type": "text",
-        inlisting: true,
-        infilter: true,
-        isLinkable: true,
-        ShowUnderProjectListing: false
-    },
+    // {
+    //     "InternalName": "ProjectCode",
+    //     "DisplayName": "رمز المشروع",
+    //     "DisplayNameEn": "Project Code",
+    //     "type": "text",
+    //     inlisting: true,
+    //     infilter: true,
+    //     isLinkable: true,
+    //     ShowUnderProjectListing: false
+    // },
     {
         "InternalName": "Interest",
         "DisplayName": "الاهتمامات",
@@ -45,14 +62,14 @@ var Listing_Info = [
     // 	inlisting: true,
     // 	infilter: true
     // },
-    {
-        "InternalName": "PhoneNumber",
-        "DisplayName": "رقم الهاتف",
-        "DisplayNameEn": "Phone Number",
-        "type": "text",
-        inlisting: true,
-        infilter: true
-    }
+    // {
+    //     "InternalName": "PhoneNumber",
+    //     "DisplayName": "رقم الهاتف",
+    //     "DisplayNameEn": "Phone Number",
+    //     "type": "text",
+    //     inlisting: true,
+    //     infilter: true
+    // }
 
 
 ];

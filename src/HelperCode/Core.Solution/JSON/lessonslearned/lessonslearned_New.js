@@ -5,13 +5,13 @@ var Information_Form  = [
         description: "التفاصيل",
         descriptionEn:"Details",
         subFields: [
-            {
-                "InternalName": "ReferenceNumber",
-                "DisplayName":"رقم المرجع",
-                "DisplayNameEn": "Reference Number",
-                "type":"string" ,
-                "validation": "required"
-            },
+            // {
+            //     "InternalName": "ReferenceNumber",
+            //     "DisplayName":"رقم المرجع",
+            //     "DisplayNameEn": "Reference Number",
+            //     "type":"string" ,
+            //     "validation": "required"
+            // },
             // {
             //     "InternalName": "Title",
             //     "DisplayName":"رمز الدرس المستفاد",
@@ -28,7 +28,7 @@ var Information_Form  = [
                     choices:
                     [
                         { display: 'sector', value: 'sector' },
-                        { display: 'pmo', value: 'pmo' }
+                        { display: 'epmo', value: 'epmo' }
                     ]
                 }
             },
@@ -108,11 +108,12 @@ var Information_Form  = [
         descriptionEn:"",
         subFields:[
             {
-                "InternalName": "getfile",
+                // "InternalName": "getfile",
+                "InternalName": "Attachments",
                 "DisplayName":"المرفقات",
                 "DisplayNameEn": "Attachments",
                 "type":"file",
-            "withAddBtn":"true"
+                "withAddBtn":"true"
             }
         ]
     }

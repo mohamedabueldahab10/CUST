@@ -86,13 +86,13 @@ var Information_Form  = [
     {
         label: 'الوثائق الداعمة',
         labelEn: 'Documents',
-        description: "",
-        descriptionEn: "",
+        description: "التفاصيل",
+        descriptionEn: "Details",
         subFields:[
             {
-                "InternalName": "getfile",
-                "DisplayName":"المستندات",                
-                "DisplayNameEn": "Documents",
+                "InternalName": "Attachments",
+                "DisplayName":"المرفقات",                
+                "DisplayNameEn": "Attachments",
                 "type":"file",
                 "withAddBtn":"true"
             }

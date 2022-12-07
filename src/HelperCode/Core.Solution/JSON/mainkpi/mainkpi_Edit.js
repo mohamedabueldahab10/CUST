@@ -37,8 +37,8 @@ var Information_Form = [
                 },
             },
             {
-                InternalName: "Types",
-                DisplayNameEn: "Types",
+                InternalName: "KPIType",
+                DisplayNameEn: "KPI Type",
                 validation: "required",
                 DisplayName: "نوع المؤشر",
                 toggleValues: [
@@ -51,7 +51,9 @@ var Information_Form = [
                     choices: [
                         // { display: "strategically", value: "strategically" },
                         { display: "main", value: "main" },
-                        { display: "sub", value: "sub" },
+						{ display: "Level2", value: "Level2" },
+						{ display: "Level3", value: "Level3" },
+                        // { display: "sub", value: "sub" },
                         // { display: "vision", value: "vision" },
                         // { display: "jobmarket", value: "jobmarket" },
                     ],

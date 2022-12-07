@@ -5,30 +5,21 @@ var Listing_Info = [
 		"DisplayName":"رمز المخرج",
 		"type":"text",
 		inlisting: true,
-		infilter: true
+		infilter: false
 	}, 
 	{
 		"InternalName": "Name", 
 		"DisplayNameEn": "Name",
-		"DisplayName":"المخرج",
+		"DisplayName":"اسم المخرج",
 		"type":"text", 
 		inlisting: true,
-		infilter: true
+		infilter: false
 	},	
 	{
 		"InternalName": "PlannedCompletedDate",
 		"DisplayNameEn": "Planned Completed Date",
 		"DisplayName":"تاريخ الاكتمال المخطط",
 		"type":"date",
-		inlisting: true,
-		infilter: false
-	},
-	{
-		"InternalName": "Completed",
-		"DisplayNameEn": "Completed",
-		"DisplayName":"حالة الاكتمال",
-		"type": "text",
-		needTrans: true,
 		inlisting: true,
 		infilter: false
 	},
@@ -40,4 +31,13 @@ var Listing_Info = [
 		inlisting: true,
 		infilter: true
 	},	
+	{
+		"InternalName": "Completed",
+		"DisplayNameEn": "Completed",
+		"DisplayName":"حالة الاكتمال",
+		"type": "text",
+		needTrans: true,
+		inlisting: true,
+		infilter: false
+	},
 ];

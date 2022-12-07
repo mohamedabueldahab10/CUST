@@ -20,18 +20,18 @@ var Information_Form = [{
                 "validation": "required"
 
             },
-            {
-                "InternalName": "TypeOfContract",
-                "DisplayName": "نوع العقد",
-                "DisplayNameEn": "Type Of Contract",
-                "type": "dropdownValues",
-                options: {
-                    choices: [
-                        { display: 'main', value: 'main' },
-                        { display: 'sub', value: 'sub' }
-                    ]
-                }
-            },
+            // {
+            //     "InternalName": "TypeOfContract",
+            //     "DisplayName": "نوع العقد",
+            //     "DisplayNameEn": "Type Of Contract",
+            //     "type": "dropdownValues",
+            //     options: {
+            //         choices: [
+            //             { display: 'main', value: 'main' },
+            //             { display: 'sub', value: 'sub' }
+            //         ]
+            //     }
+            // },
             {
                 "InternalName": "StartDate",
                 "DisplayName": "تاريخ بدء العقد",
@@ -97,17 +97,33 @@ var Information_Form = [{
         ]
     },
     {
-        label: 'المرفقات',
-        labelEn: 'Attachments',
-        description: "",
-        descriptionEn: "",
-        subFields: [{
-            "InternalName": "getfile",
-            "DisplayName": "المرفقات",
-            "DisplayNameEn": "Attachments",
-            "type": "file",
-            "validation": "required",
-            "withAddBtn":"true"
-        }]
-    }
+      label: 'وثائق داعمة',
+      labelEn: 'Attachments',
+      description: 'التفاصيل',
+      descriptionEn: 'Details',
+      subFields: [
+        {
+          InternalName: 'Attachments',
+          DisplayName: 'مرفقات',
+          DisplayNameEn: 'Attachments',
+          type: 'file',
+          withAddBtn: 'true',
+          // validation: 'required',
+        },
+      ],
+    },
+    // {
+    //     label: 'المرفقات',
+    //     labelEn: 'Attachments',
+    //     description: "",
+    //     descriptionEn: "",
+    //     subFields: [{
+    //         "InternalName": "getfile",
+    //         "DisplayName": "المرفقات",
+    //         "DisplayNameEn": "Attachments",
+    //         "type": "file",
+    //         "validation": "required",
+    //         "withAddBtn":"true"
+    //     }]
+    // }
 ];

@@ -7,7 +7,7 @@ var Listing_Info = [
         "DisplayNameEn": "Contract Code",
         "type": "text",
         inlisting: true,
-        infilter: true
+        infilter: false
     },
     {
         "InternalName": "Name",
@@ -17,19 +17,19 @@ var Listing_Info = [
         inlisting: true,
         infilter: true
     },
-    {
-        "InternalName": "ProjectCode",
-        "DisplayName": "رمز المشروع",
-        "DisplayNameEn": "Project Code",
-        "type": "text",
-        inlisting: true,
-        infilter: true,
-        isLinkable: true,
-        ShowUnderProjectListing: false
-    },
+    // {
+    //     "InternalName": "ProjectCode",
+    //     "DisplayName": "رمز المشروع",
+    //     "DisplayNameEn": "Project Code",
+    //     "type": "text",
+    //     inlisting: true,
+    //     infilter: true,
+    //     isLinkable: true,
+    //     ShowUnderProjectListing: false
+    // },
     {
         "InternalName": "StartDate",
-        "DisplayName": "تاريخ البدء",
+        "DisplayName": "تاريخ بدء العقد",
         "DisplayNameEn": "Start Date",
         "type": "date",
         inlisting: true,
@@ -37,10 +37,18 @@ var Listing_Info = [
     },
     {
         "InternalName": "EndDate",
-        "DisplayName": "تاريخ الإنتهاء",
+        "DisplayName": "تاريخ إنتهاء العقد",
         "DisplayNameEn": "End Date",
         "type": "date",
         inlisting: true,
         infilter: true
-    }
+    },
+    {
+        "InternalName": "ContractualValue",
+        "DisplayName": "قيمة العقد الإجمالية",
+        "DisplayNameEn": "Contractual Value",
+        "type": "number",
+        inlisting: true,
+        infilter: false
+    },
 ];

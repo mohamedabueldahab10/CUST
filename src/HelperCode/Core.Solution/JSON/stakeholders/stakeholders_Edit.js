@@ -7,8 +7,8 @@ var Information_Form  = [
         subFields: [
             {
                 "InternalName": "Name",
-                "DisplayName":"اسم صاحب المصلحة",
-                "DisplayNameEn":"StakeHolder Name",
+                "DisplayName":"الاسم",
+                "DisplayNameEn":"Name",
                 "type":"string",
                 "validation": "required"
             },
@@ -23,7 +23,7 @@ var Information_Form  = [
                 "InternalName": "Email",
                 "DisplayName":"البريد الالكتروني",
                 "DisplayNameEn":"Email",
-                "type":"string",
+                "type":"email",
                 "validation": "required"
             },
             {
@@ -36,7 +36,7 @@ var Information_Form  = [
             {
                 "InternalName": "Role",
                 "DisplayName":"الدور في المشروع",
-                "DisplayNameEn":"Role In Project",
+                "DisplayNameEn":"Role",
                 "type":"string"
             },
             {
@@ -118,18 +118,34 @@ var Information_Form  = [
         ]
     },
     {
-        label: 'المرفقات',
-        labelEn:'Attachments',
-        description: "",
-        descriptionEn:"",
-        subFields:[
-            {
-                "InternalName": "getfile",
-                "DisplayName":"المرفقات",
-                "DisplayNameEn":"Attachments",
-                "type":"file",
-                "withAddBtn":"true"
-            }
-        ]
-    }
+        label: 'وثائق داعمة',
+        labelEn: 'Attachments',
+        description: 'التفاصيل',
+        descriptionEn: 'Details',
+        subFields: [
+          {
+            InternalName: 'Attachments',
+            DisplayName: 'مرفقات',
+            DisplayNameEn: 'Attachments',
+            type: 'file',
+            withAddBtn: 'true',
+            // validation: 'required',
+          },
+        ],
+      },
+    // {
+    //     label: 'المرفقات',
+    //     labelEn:'Attachments',
+    //     description: "",
+    //     descriptionEn:"",
+    //     subFields:[
+    //         {
+    //             "InternalName": "getfile",
+    //             "DisplayName":"المرفقات",
+    //             "DisplayNameEn":"Attachments",
+    //             "type":"file",
+    //             "withAddBtn":"true"
+    //         }
+    //     ]
+    // }
 ];

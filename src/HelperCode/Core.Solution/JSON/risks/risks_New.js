@@ -26,18 +26,17 @@ var Information_Form = [{
                 "type": "dropdownValues",
                 options: {
                     choices: [
-
                         {
                             display: 'financial',
                             value: 'financial'
                         },
                         {
-                            display: 'legal',
-                            value: 'legal'
-                        },
-                        {
                             display: 'contractual',
                             value: 'contractual'
+                        },
+                        {
+                            display: 'legal',
+                            value: 'legal'
                         },
                         {
                             display: 'others',
@@ -51,17 +50,17 @@ var Information_Form = [{
                 "DisplayName": "حالة الخطر",
                 "DisplayNameEn": "Status",
                 "type": "dropdownValues",
+                "validation": "required",
                 options: {
                     choices: [
-
-                        {
-                            display: 'closed',
-                            value: 'closed'
-                        },
                         {
                             display: 'open',
                             value: 'open',
                             selected: 'selected'
+                        },
+                        {
+                            display: 'closed',
+                            value: 'closed'
                         }
                     ]
 
@@ -92,7 +91,7 @@ var Information_Form = [{
             },
             {
                 "InternalName": "DateIdentified",
-                "DisplayName": "تاريخ تحديد الخطر",
+                "DisplayName": "تاريخ التحديد",
                 "DisplayNameEn": "Date Identified",
                 "type": "datetime"
             },
@@ -107,11 +106,10 @@ var Information_Form = [{
                 "InternalName": "Impact",
                 "DisplayName": "الأثر",
                 "DisplayNameEn": "Impact",
-                // "validation": "required",
+                "validation": "required",
                 "type": "dropdownValues",
                 options: {
                     choices: [
-
                         {
                             display: 'hight',
                             value: 'hight'
@@ -156,13 +154,21 @@ var Information_Form = [{
                 options: {
                     choices: [
 
+                        // {
+                        //     display: 'completed',
+                        //     value: 'completed'
+                        // },
                         {
-                            display: 'completed',
-                            value: 'completed'
+                            display: 'notstarted',
+                            value: 'notstarted'
                         },
                         {
                             display: 'inprogress',
                             value: 'inprogress'
+                        },
+                        {
+                            display: 'done',
+                            value: 'done'
                         }
                         // ,
                         // {
@@ -178,7 +184,7 @@ var Information_Form = [{
                 "DisplayName": "المسؤول عن الاستجابة",
                 "DisplayNameEn": "Mitigation Owner",
                 "type": "picker",
-                // "validation": "required"
+                "validation": "required"
             },
             {
                 "InternalName": "MitigationTargetDate",
@@ -205,12 +211,12 @@ var Information_Form = [{
             //     "type":"datetime",
             //     "state":"disabled"
             // },
-            {
-                "InternalName": "RiskOwner",
-                "DisplayName": "مالك الخطر",
-                "DisplayNameEn": "Risk Owner",
-                "type": "picker"
-            },
+            // {
+            //     "InternalName": "RiskOwner",
+            //     "DisplayName": "مالك الخطر",
+            //     "DisplayNameEn": "Risk Owner",
+            //     "type": "picker"
+            // },
             {
                 "InternalName": "AgreedAction",
                 "DisplayName": "الاجراءات المتفق عليها",
@@ -240,23 +246,61 @@ var Information_Form = [{
                         {
                             display: 'assumption',
                             value: 'assumption'
-                        }
+                        },
+                        {
+                          InternalName: 'MoveItToIssueList',
+                          DisplayName: 'نقلها للائحة المعوقات',
+                          DisplayNameEn: 'Move It To Issue List',
+                          type: 'yesnoradio',
+                          options: {
+                            choices: [
+                              {
+                                display: 'yes',
+                                value: 'yes',
+                              },
+                              {
+                                display: 'no',
+                                value: 'no',
+                              },
+                            ],
+                          },
+                        },
+                        // {
+                        //   InternalName: 'InitiativeEscalation',
+                        //   DisplayName: 'التصعيد لخطر مبادرة',
+                        //   DisplayNameEn: 'Escalate As Initiative Risk',
+                        //   type: 'yesnoradio',
+                        //   options: {
+                        //     choices: [
+                        //       {
+                        //         display: 'yes',
+                        //         value: 'yes',
+                        //       },
+                        //       {
+                        //         display: 'no',
+                        //         value: 'no',
+                        //       },
+                        //     ],
+                        //   },
+                        // },
                     ]
                 }
             }
         ]
     },
     {
-        label: 'المرفقات', 
-        labelEn: 'Attachments',
-        description: "",
-        descriptionEn: "",
-        subFields: [{
-            "InternalName": "getfile",
-            "DisplayName": "المرفقات",
-            "DisplayNameEn": "Attachments",
-            "type": "file",
-            "withAddBtn":"true"
-        }]
+      label: 'الوثائق الداعمة',
+      labelEn: 'Documents',
+      description: 'التفاصيل',
+      descriptionEn: 'Details',
+      subFields: [
+        {
+          InternalName: 'Attachments',
+          DisplayName: 'المرفقات',
+          DisplayNameEn: 'Attachments',
+          type: 'file',
+          withAddBtn: 'true',
+        },
+      ],
     }
 ];

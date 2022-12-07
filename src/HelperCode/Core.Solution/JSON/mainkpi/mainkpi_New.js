@@ -22,7 +22,6 @@ var Information_Form = [
 			//   "validation": "required"
 
 			// },
-
 			{
 				InternalName: "Name",
 				DisplayNameEn: "Name",
@@ -32,8 +31,8 @@ var Information_Form = [
 				validation: "required",
 			},
 			{
-				InternalName: "Types",
-				DisplayNameEn: "Types",
+				InternalName: "KPIType",
+				DisplayNameEn: "KPI Type",
 				validation: "required",
 				DisplayName: "نوع المؤشر",
 				toggleValues: [
@@ -49,11 +48,22 @@ var Information_Form = [
 					choices: [
 						// { display: "strategically", value: "strategically" },
 						{ display: "main", value: "main" },
-						{ display: "sub", value: "sub" },
+						{ display: "level2", value: "level2" },
+						{ display: "level3", value: "level3" },
+						// { display: "sub", value: "sub" },
 						// { display: "vision", value: "vision" },
 						// { display: "jobmarket", value: "jobmarket" },
 					],
 				},
+			},
+			{
+			  "InternalName": "RelatedStrategyObjective",
+			  "DisplayNameEn": "Related Strategy Objective",
+			  "DisplayName": "الهدف المرتبط",
+			  "type": "string",
+			  "source": "SOs",
+			  "Dispfieldkey": "Name",
+			  "valfieldkey": "Title"
 			},
 			{
 				InternalName: "Classification",
@@ -82,26 +92,27 @@ var Information_Form = [
 			{
 				InternalName: "FromDate",
 				DisplayName: "من سنة",
-				DisplayNameEn: "Year From",
+				DisplayNameEn: "From Date",
 				max: "ToDate",
+				// type: "datetime",
 				type: "yearInput",
 				//   "state": "disabled",
 				//   dynamic: "Initiative",
-				// options: {
-				//     choices: [
-				//         '2020',
-				//         '2021',
-				//         '2022',
-				//         '2023',
-				//         '2024',
-				//         '2025',
-				//         '2026',
-				//         '2027',
-				//         '2028',
-				//         '2029',
-				//         '2030',
-				//     ]
-				// },
+				options: {
+				    choices: [
+				        '2020',
+				        '2021',
+				        '2022',
+				        '2023',
+				        '2024',
+				        '2025',
+				        '2026',
+				        '2027',
+				        '2028',
+				        '2029',
+				        '2030',
+				    ]
+				},
 				validation: "required",
 			},
 			{
@@ -109,27 +120,27 @@ var Information_Form = [
 				DisplayName: "الى سنة",
 				DisplayNameEn: "To Year",
 				type: "yearInput",
+				// type: "datetime",
 				min: "FromDate",
 				//   "state": "disabled",
 				//   dynamic: "Initiative",
-				// options: {
-				//     choices: [
-				//         '2020',
-				//         '2021',
-				//         '2022',
-				//         '2023',
-				//         '2024',
-				//         '2025',
-				//         '2026',
-				//         '2027',
-				//         '2028',
-				//         '2029',
-				//         '2030',
-				//     ]
-				// },
+				options: {
+				    choices: [
+				        '2020',
+				        '2021',
+				        '2022',
+				        '2023',
+				        '2024',
+				        '2025',
+				        '2026',
+				        '2027',
+				        '2028',
+				        '2029',
+				        '2030',
+				    ]
+				},
 				validation: "required",
 			},
-
 			{
 				InternalName: "CategoryKPI",
 				DisplayNameEn: "Category",
@@ -164,7 +175,6 @@ var Information_Form = [
 				maxchar: "500",
 				type: "multiline",
 			},
-
 			{
 				InternalName: "Assumptions",
 				DisplayNameEn: "Assumptions",
@@ -172,142 +182,11 @@ var Information_Form = [
 				maxchar: "500",
 				type: "multiline",
 			},
-			// {
-			//   "InternalName": "KPIEquation",
-			//   "DisplayNameEn": "KPI Equation",
-			//   "DisplayName": "معادلة المؤشر",
-			//   "type": "string",
-			//   "maxchar": "500",
-			// },
-
-			//mahmoud
-
-			{
-				//
-				InternalName: "RelatedStrategy",
-				DisplayNameEn: "Related Vision Strategy",
-				DisplayName: "الاستراتيجية المرتبطة",
-				// "ToggleName": "RelatedStrategy",
-				type: "lookup",
-
-				source: "GoalStrategy",
-				Dispfieldkey: "Name",
-				valfieldkey: "Title",
-				validation: "required",
-				dynamic: "parent", //"parentInternalName" or "parent" // if parent it will affect other fields
-				security: {
-					groups: [
-						"LMS_P",
-						"SPM Admin",
-						"SPM Team",
-						"VRO_P",
-						"Administrators for Project Web App",
-						"Project Managers for Project Web App",
-					],
-				},
-				//role access
-				accessFilter: [
-					{
-						role: "SPMTeam",
-						conditions: [
-							{
-								field: "Types",
-								type: "Choice",
-								values: ["ministry"],
-							},
-						],
-					},
-					{
-						role: "SPMAdmin",
-						conditions: [
-							{
-								field: "Types",
-								type: "Choice",
-								values: ["ministry"],
-							},
-						],
-					},
-					{
-						role: "VROE",
-						conditions: [
-							{
-								field: "Types",
-								type: "Choice",
-								values: ["vision"],
-							},
-						],
-					},
-					{
-						role: "VROP",
-						conditions: [
-							{
-								field: "Types",
-								type: "Choice",
-								values: ["vision"],
-							},
-						],
-					},
-					{
-						role: "LMSE",
-						conditions: [
-							{
-								field: "Types",
-								type: "Choice",
-								values: ["lms"],
-							},
-						],
-					},
-					{
-						role: "LMSP",
-						conditions: [
-							{
-								field: "Types",
-								type: "Choice",
-								values: ["lms"],
-							},
-						],
-					},
-				],
-				// "display":"none"
-			},
-			{
-				//
-				InternalName: "RelatedStrategyType",
-				DisplayNameEn: "Strategy Type",
-				DisplayName: "نوع  الاستراتيجية",
-				type: "dropdownValues",
-				state: "disabled",
-				options: {
-					choices: [
-						{ display: "sub", value: "sub" },
-						{ display: "vision", value: "vision" },
-						{ display: "ministry", value: "ministry" },
-						{ display: "sectorial", value: "sectorial" },
-						{ display: "lms", value: "lms" },
-					],
-				},
-			},
-			{
-				InternalName: "SubRelatedObjective", // = هدف الوكالة hadaf al wikala
-				DisplayNameEn: " Related Sub Objective",
-				DisplayName: "الهدف الفرعي المرتبط",
-				ToggleName: "SubRelatedObjective",
-				type: "lookupWithQuery",
-				queryField: "Types",
-				queryFieldType: "dropdownValues", //ex: "Choice"
-				queryFieldValue: "sub",
-				//from other list:
-				source: "SOs",
-				Dispfieldkey: "Name",
-				valfieldkey: "Title",
-				display: "none",
-				state: "disabled",
-			},
 			{
 				InternalName: "RelatedMainKpis",
 				ToggleName: "RelatedMainKpis",
 				DisplayNameEn: "Related Main Kpis",
-				DisplayName: "الربط بالمؤشرات الرئيسية",
+				DisplayName: "المؤشر المرتبط",
 				type: "lookup",
 				//add queryField,type,value to can filter in spcific val on dynamic func (dynamicAffectSelect)
 				queryField: "Types",
@@ -355,22 +234,215 @@ var Information_Form = [
 					},
 				],
 			},
-
 			{
-				InternalName: "RelatedObjective", //هدف الوكالة = hadaf al wikala
-				DisplayNameEn: "Strategy Related Objective",
-				DisplayName: "الهدف الاستراتيجي المرتبط",
-				ToggleName: "StrategyRelatedObjective",
-				type: "lookupWithQuery",
-				queryField: "Types",
-				queryFieldType: "dropdownValues", //ex: "Choice"
-				queryFieldValue: "strategically",
-				//from other list:
-				source: "SOs",
-				Dispfieldkey: "Name",
-				valfieldkey: "Title",
-				display: "none",
+				InternalName: "Owner",
+				DisplayNameEn: "Owner",
+				DisplayName: "مالك المؤشر",
+				type: "picker", //user
+				validation: "required",
 			},
+			{
+				InternalName: "PerformanceLeader",
+				DisplayNameEn: "Performance Leader",
+				DisplayName: "رائد الأداء",
+				type: "picker",
+				validation: "required",
+			},
+			{
+				InternalName: "PerformanceLeader2",
+				DisplayNameEn: "Second Performance Leader",
+				DisplayName: "رائد الأداء الثاني",
+				type: "picker",
+				validation: "required",
+			},
+			{
+				InternalName: "CalculationType",
+				DisplayNameEn: "Calculation Type",
+				DisplayName: "نوع الحساب",
+				type: "dropdownValues",
+				options: {
+					choices: [
+						{ display: "leadingindicator", value: "leadingindicator" },
+						{ display: "laggingindicator", value: "laggingindicator" }
+					],
+				},
+				// security: {
+				// 	groups: [
+				// 		"LMS_P",
+				// 		"SPM Admin",
+				// 		"SPM Team",
+				// 		"VRO_P",
+				// 		"System Admin Group"
+				// 	],
+				// },
+			},
+			// {
+			// 	InternalName: "RecurrenceChanged",
+			// 	DisplayNameEn: "Recurrence Changed",
+			// 	DisplayName: "تغيير دورية القياس",
+			// 	type: "yesnoradio",
+			// 	options: {
+			// 		choices: [
+			// 			{ display: "yes", value: "yes" },
+			// 			{ display: "no", value: "no" },
+			// 		],
+			// 	},
+			// 	// security: {
+			// 	// 	groups: [
+			// 	// 		"LMS_P",
+			// 	// 		"SPM Admin",
+			// 	// 		"SPM Team",
+			// 	// 		"VRO_P",
+			// 	// 		"System Admin Group"
+			// 	// 	],
+			// 	// },
+			// },
+			// {
+			//   "InternalName": "KPIEquation",
+			//   "DisplayNameEn": "KPI Equation",
+			//   "DisplayName": "معادلة المؤشر",
+			//   "type": "string",
+			//   "maxchar": "500",
+			// },
+
+			//mahmoud
+
+			// {
+			// 	//
+			// 	InternalName: "RelatedStrategy",
+			// 	DisplayNameEn: "Related Vision Strategy",
+			// 	DisplayName: "الاستراتيجية المرتبطة",
+			// 	// "ToggleName": "RelatedStrategy",
+			// 	type: "lookup",
+
+			// 	source: "GoalStrategy",
+			// 	Dispfieldkey: "Name",
+			// 	valfieldkey: "Title",
+			// 	validation: "required",
+			// 	dynamic: "parent", //"parentInternalName" or "parent" // if parent it will affect other fields
+			// 	security: {
+			// 		groups: [
+			// 			"LMS_P",
+			// 			"SPM Admin",
+			// 			"SPM Team",
+			// 			"VRO_P",
+			// 			"Administrators for Project Web App",
+			// 			"Project Managers for Project Web App",
+			// 		],
+			// 	},
+			// 	//role access
+			// 	accessFilter: [
+			// 		{
+			// 			role: "SPMTeam",
+			// 			conditions: [
+			// 				{
+			// 					field: "Types",
+			// 					type: "Choice",
+			// 					values: ["ministry"],
+			// 				},
+			// 			],
+			// 		},
+			// 		{
+			// 			role: "SPMAdmin",
+			// 			conditions: [
+			// 				{
+			// 					field: "Types",
+			// 					type: "Choice",
+			// 					values: ["ministry"],
+			// 				},
+			// 			],
+			// 		},
+			// 		{
+			// 			role: "VROE",
+			// 			conditions: [
+			// 				{
+			// 					field: "Types",
+			// 					type: "Choice",
+			// 					values: ["vision"],
+			// 				},
+			// 			],
+			// 		},
+			// 		{
+			// 			role: "VROP",
+			// 			conditions: [
+			// 				{
+			// 					field: "Types",
+			// 					type: "Choice",
+			// 					values: ["vision"],
+			// 				},
+			// 			],
+			// 		},
+			// 		{
+			// 			role: "LMSE",
+			// 			conditions: [
+			// 				{
+			// 					field: "Types",
+			// 					type: "Choice",
+			// 					values: ["lms"],
+			// 				},
+			// 			],
+			// 		},
+			// 		{
+			// 			role: "LMSP",
+			// 			conditions: [
+			// 				{
+			// 					field: "Types",
+			// 					type: "Choice",
+			// 					values: ["lms"],
+			// 				},
+			// 			],
+			// 		},
+			// 	],
+			// 	// "display":"none"
+			// },
+			// {
+			// 	//
+			// 	InternalName: "RelatedStrategyType",
+			// 	DisplayNameEn: "Strategy Type",
+			// 	DisplayName: "نوع  الاستراتيجية",
+			// 	type: "dropdownValues",
+			// 	state: "disabled",
+			// 	options: {
+			// 		choices: [
+			// 			{ display: "sub", value: "sub" },
+			// 			{ display: "vision", value: "vision" },
+			// 			{ display: "ministry", value: "ministry" },
+			// 			{ display: "sectorial", value: "sectorial" },
+			// 			{ display: "lms", value: "lms" },
+			// 		],
+			// 	},
+			// },
+			// {
+			// 	InternalName: "SubRelatedObjective", // = هدف الوكالة hadaf al wikala
+			// 	DisplayNameEn: " Related Sub Objective",
+			// 	DisplayName: "الهدف الفرعي المرتبط",
+			// 	ToggleName: "SubRelatedObjective",
+			// 	type: "lookupWithQuery",
+			// 	queryField: "Types",
+			// 	queryFieldType: "dropdownValues", //ex: "Choice"
+			// 	queryFieldValue: "sub",
+			// 	//from other list:
+			// 	source: "SOs",
+			// 	Dispfieldkey: "Name",
+			// 	valfieldkey: "Title",
+			// 	display: "none",
+			// 	state: "disabled",
+			// },
+			// {
+			// 	InternalName: "RelatedObjective", //هدف الوكالة = hadaf al wikala
+			// 	DisplayNameEn: "Strategy Related Objective",
+			// 	DisplayName: "الهدف الاستراتيجي المرتبط",
+			// 	ToggleName: "StrategyRelatedObjective",
+			// 	type: "lookupWithQuery",
+			// 	queryField: "Types",
+			// 	queryFieldType: "dropdownValues", //ex: "Choice"
+			// 	queryFieldValue: "strategically",
+			// 	//from other list:
+			// 	source: "SOs",
+			// 	Dispfieldkey: "Name",
+			// 	valfieldkey: "Title",
+			// 	display: "none",
+			// },
 
 			// {
 			//   "InternalName": "MinistryGoal",
@@ -388,71 +460,72 @@ var Information_Form = [
 			//   // "display":"none"
 
 			// },
-			{
-				InternalName: "RelatedStrategyObjective",
-				DisplayNameEn: "Related Main Objective",
-				DisplayName: "الهدف الرئيسي المرتبط ", //hada al wizara  هدف الوزارة =
-				ToggleName: "RelatedMainObjective",
-				type: "lookupWithQuery",
-				queryField: "Types",
-				queryFieldType: "dropdownValues", //ex: "Choice"
-				queryFieldValue: "main",
-				source: "SOs",
-				Dispfieldkey: "Name",
-				valfieldkey: "Title",
-				display: "none",
-				state: "disabled",
-			},
-			{
-				InternalName: "Sector",
-				DisplayName: "القطاع المرتبط",
-				DisplayNameEn: "Sector",
-				type: "lookup",
-				// "validation": "required",
-				//from other list:
-				source: "Internal Entities",
-				isSector: "True",
-				EntityType: "Sector",
-				Dispfieldkey: "Name",
-				DispfieldkeyEn: "NameEn",
-				valfieldkey: "Title",
-				state: "disabled",
-				// security: {
-				//     groups: ["LMS_P",
-				//         'EPMO', 'System Admin Group'
-				//     ]
-				// },
-			},
-			{
-				InternalName: "SubSector",
-				DisplayName: "الادارة المرتبطة",
-				DisplayNameEn: "Departments",
-				type: "lookup",
-				//from other list:
-				source: "Internal Entities",
-				isSector: "True",
-				EntityType: "Department",
-				Dispfieldkey: "Name",
-				DispfieldkeyEn: "NameEn",
-				valfieldkey: "Title",
-				state: "disabled",
-			},
-			{
-				InternalName: "Portfolio",
-				DisplayName: "المحفظة المرتبطة",
-				DisplayNameEn: "Portfolio",
-				type: "lookup",
-				ToggleName: "Portfolio",
-				// "validation": "required",
-				//from other list:
-				source: "Portfolio",
-				Dispfieldkey: "Name",
-				valfieldkey: "Title",
-				BIlanguage: true, //added to handle portfolio bilangual
-				DispfieldkeyEn: "NameEn", //added to handle portfolio bilangual
-				state: "disabled",
-				// "className":"autofill"
-			},
+			// {
+			// 	InternalName: "RelatedStrategyObjective",
+			// 	DisplayNameEn: "Related Main Objective",
+			// 	DisplayName: "الهدف الرئيسي المرتبط ", //hada al wizara  هدف الوزارة =
+			// 	ToggleName: "RelatedMainObjective",
+			// 	type: "lookupWithQuery",
+			// 	queryField: "Types",
+			// 	queryFieldType: "dropdownValues", //ex: "Choice"
+			// 	queryFieldValue: "main",
+			// 	source: "SOs",
+			// 	Dispfieldkey: "Name",
+			// 	valfieldkey: "Title",
+			// 	display: "none",
+			// 	state: "disabled",
+			// },
+
+			// {
+			// 	InternalName: "Sector",
+			// 	DisplayName: "القطاع المرتبط",
+			// 	DisplayNameEn: "Sector",
+			// 	type: "lookup",
+			// 	// "validation": "required",
+			// 	//from other list:
+			// 	source: "Internal Entities",
+			// 	isSector: "True",
+			// 	EntityType: "Sector",
+			// 	Dispfieldkey: "Name",
+			// 	DispfieldkeyEn: "NameEn",
+			// 	valfieldkey: "Title",
+			// 	state: "disabled",
+			// 	// security: {
+			// 	//     groups: ["LMS_P",
+			// 	//         'EPMO', 'System Admin Group'
+			// 	//     ]
+			// 	// },
+			// },
+			// {
+			// 	InternalName: "SubSector",
+			// 	DisplayName: "الادارة المرتبطة",
+			// 	DisplayNameEn: "Departments",
+			// 	type: "lookup",
+			// 	//from other list:
+			// 	source: "Internal Entities",
+			// 	isSector: "True",
+			// 	EntityType: "Department",
+			// 	Dispfieldkey: "Name",
+			// 	DispfieldkeyEn: "NameEn",
+			// 	valfieldkey: "Title",
+			// 	state: "disabled",
+			// },
+			// {
+			// 	InternalName: "Portfolio",
+			// 	DisplayName: "المحفظة المرتبطة",
+			// 	DisplayNameEn: "Portfolio",
+			// 	type: "lookup",
+			// 	ToggleName: "Portfolio",
+			// 	// "validation": "required",
+			// 	//from other list:
+			// 	source: "Portfolio",
+			// 	Dispfieldkey: "Name",
+			// 	valfieldkey: "Title",
+			// 	BIlanguage: true, //added to handle portfolio bilangual
+			// 	DispfieldkeyEn: "NameEn", //added to handle portfolio bilangual
+			// 	state: "disabled",
+			// 	// "className":"autofill"
+			// },
 
 			// {
 			//   "InternalName": "ModifiedDate",
@@ -638,27 +711,14 @@ var Information_Form = [
 			//     "DisplayName": "اسم مالك المؤشر",
 			//     "type": "string"
 			// },
-			{
-				InternalName: "Owner",
-				DisplayNameEn: "Owner",
-				DisplayName: "مالك المؤشر",
-				type: "picker",
-				validation: "required",
-			},
-			{
-				InternalName: "PerformanceLeader",
-				DisplayNameEn: "Performance Leader",
-				DisplayName: "رائد الأداء",
-				type: "picker",
-				validation: "required",
-			},
-			{
-				InternalName: "PerformanceLeader2",
-				DisplayNameEn: "Second Performance Leader",
-				DisplayName: "رائد الأداء الثاني",
-				type: "picker",
-				validation: "required",
-			},
+		],
+	},
+	{
+		label: "مصدر البيانات",
+		labelEn: "Data Source",
+		description: "التفاصيل",
+		descriptionEn: "Details",
+		subFields: [
 			{
 				InternalName: "DataSource",
 				DisplayNameEn: "Data Source",
@@ -680,7 +740,7 @@ var Information_Form = [
 				type: "email", //in view should be string
 				//   "maxchar": "500",
 			},
-		],
+		]
 	},
 	{
 		label: "تفاصيل القياس",
@@ -696,6 +756,7 @@ var Information_Form = [
 				options: {
 					choices: ["+", "-"],
 				},
+				validation: "required",
 			},
 
 			{
@@ -736,6 +797,7 @@ var Information_Form = [
 				InternalName: "Cumulative",
 				DisplayNameEn: "Cumulative",
 				DisplayName: "تراكمية المؤشر",
+				// type: "dropdownValues",
 				type: "yesnoradio",
 				options: {
 					choices: [
@@ -749,13 +811,15 @@ var Information_Form = [
 				InternalName: "Weight",
 				DisplayNameEn: "Weight",
 				DisplayName: "وزن المؤشر",
-				type: "floatpercentage",
+				// type: "floatpercentage",
+				type: "float",
 			},
 			{
 				InternalName: "Baseline",
 				DisplayNameEn: "Baseline",
 				DisplayName: "خط الأساس",
-				type: "number",
+				// type: "number",
+				type: "float",
 			},
 			{
 				InternalName: "MesurePeriod",
@@ -767,4 +831,77 @@ var Information_Form = [
 			},
 		],
 	},
+	{
+		label: "مكون المعادلة",
+		labelEn: "Equation Component",
+		description: "التفاصيل",
+		descriptionEn: "Details",
+		subFields: [
+			{
+				InternalName: "A",
+				DisplayNameEn: "A",
+				DisplayName: "المكون الأول",
+				type: "number",
+				// type: "float",
+			},
+			{
+				InternalName: "B",
+				DisplayNameEn: "B",
+				DisplayName: "المكون الثاني",
+				type: "number",
+				// type: "float",
+			},
+			{
+				InternalName: "CC",
+				DisplayNameEn: "CC",
+				DisplayName: "المكون الثالث",
+				type: "number",
+				// type: "float",
+			},
+			{
+				InternalName: "D",
+				DisplayNameEn: "D",
+				DisplayName: "المكون الرابع",
+				type: "number",
+				// type: "float",
+			},
+			{
+				InternalName: "E",
+				DisplayNameEn: "E",
+				DisplayName: "المكون الخامس",
+				type: "number",
+				// type: "float",
+			},
+			{
+				InternalName: "F",
+				DisplayNameEn: "F",
+				DisplayName: "المكون السادس",
+				type: "number",
+				// type: "float",
+			},
+			{
+				InternalName: "G",
+				DisplayNameEn: "G",
+				DisplayName: "المكون السابع",
+				type: "number",
+				// type: "float",
+			},
+		]
+	},
+    {
+        label: 'الوثائق الداعمة',
+        labelEn: 'Attachments',
+        description: "التفاصيل",
+        descriptionEn: "Details",
+        subFields: [
+            {
+                "InternalName": "Attachments",
+                "DisplayName": "المرفقات",
+                "DisplayNameEn": "Attachments",
+                "type": "file",
+                "withAddBtn":"true",
+                // "validation": "required",
+            }
+        ]
+    }
 ];

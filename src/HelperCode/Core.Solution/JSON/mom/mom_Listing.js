@@ -6,27 +6,28 @@ var Listing_Info = [
         "DisplayNameEn": "Meeting Code",
         "type": "text",
         inlisting: true,
-        infilter: true
+        infilter: false
     },
 
     {
         "InternalName": "Subject",
-        "DisplayName": "موضوع الاجتماع",
+        // "DisplayName": "موضوع الاجتماع",
+        "DisplayName": "الموضوع",
         "DisplayNameEn": "Meeting Subject",
         "type": "text",
         inlisting: true,
         infilter: true
     },
-    {
-        "InternalName": "ProjectCode",
-        "DisplayName": "رمز المشروع",
-        "DisplayNameEn": "Project Code",
-        "type": "text",
-        inlisting: true,
-        infilter: true,
-        isLinkable: true,
-        ShowUnderProjectListing: false
-    },
+    // {
+    //     "InternalName": "ProjectCode",
+    //     "DisplayName": "رمز المشروع",
+    //     "DisplayNameEn": "Project Code",
+    //     "type": "text",
+    //     inlisting: true,
+    //     infilter: true,
+    //     isLinkable: true,
+    //     ShowUnderProjectListing: false
+    // },
     {
         "InternalName": "Date",
         "DisplayName": "تاريخ الاجتماع",

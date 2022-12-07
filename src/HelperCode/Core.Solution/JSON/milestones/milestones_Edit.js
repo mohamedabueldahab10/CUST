@@ -14,7 +14,7 @@ var Information_Form = [{
         {
             "InternalName": "Name",
             "DisplayName": "اسم المعلم",
-            "DisplayNameEn": "Milestone Name",
+            "DisplayNameEn": "Name",
             "type": "string",
             "validation": "required"
 
@@ -38,21 +38,28 @@ var Information_Form = [{
         // "DisplayNameEn": "Committed Date",
         //     "type":"datetime"
         // },
-        {
-            "InternalName": "ShowInProgramReport",
-            "DisplayName": "اظهار في التقرير",
-            "DisplayNameEn": "Show In Report",
-             "type": "yesnoradio",
-            options: {
-                choices: [{
-                    display: 'yes',
-                    value: 'yes'
-                }, {
-                    display: 'no',
-                    value: 'no'
-                }]
-            }
+        // {
+        //     "InternalName": "ShowInProgramReport",
+        //     "DisplayName": "اظهار في التقرير",
+        //     "DisplayNameEn": "Show In Report",
+        //      "type": "yesnoradio",
+        //     options: {
+        //         choices: [{
+        //             display: 'yes',
+        //             value: 'yes'
+        //         }, {
+        //             display: 'no',
+        //             value: 'no'
+        //         }]
+        //     }
 
+        // },
+        {
+            "InternalName": "Deliverables",
+            "DisplayName": "المخرجات",
+            "DisplayNameEn": "Deliverables",
+            "type": "multiline",
+            "maxchar": 5000,
         },
         {
             "InternalName": "Description",
@@ -68,18 +75,11 @@ var Information_Form = [{
             "type": "dropdownValues",
             options: {
                 choices: [
+                    { display: 'onschedule', value: 'onschedule' },
                     { display: 'completed', value: 'completed' },
-                    { display: 'late', value: 'late' },
-                    { display: 'onschedule', value: 'onschedule' }
+                    // { display: 'late', value: 'late' },
                 ]
             }
-        },
-        {
-            "InternalName": "Deliverables",
-            "DisplayName": "المخرجات",
-            "DisplayNameEn": "Deliverables",
-            "type": "multiline",
-            "maxchar": 5000,
         },
         {
             "InternalName": "RelatedInitiativeMilestone",
@@ -91,23 +91,41 @@ var Information_Form = [{
             "valfieldkey": "Title"
         },
         {
-            "InternalName": "SupportDocumentsDescription",
-            "DisplayNameEn": "Support Documents Description",
-            "DisplayName": "وصف الوثائق الداعمة",
-            "type": "multiline",
-            "maxchar": "500",
-        }
+            InternalName: 'ShowInProgramReport',
+            DisplayName: 'اظهار في التقرير',
+            DisplayNameEn: 'Show In Program Report',
+            type: 'yesnoradio',
+            options: {
+              choices: [
+                {
+                  display: 'yes',
+                  value: 'yes',
+                },
+                {
+                  display: 'no',
+                  value: 'no',
+                },
+              ],
+            },
+          },
+        // {
+        //     "InternalName": "SupportDocumentsDescription",
+        //     "DisplayNameEn": "Support Documents Description",
+        //     "DisplayName": "وصف الوثائق الداعمة",
+        //     "type": "multiline",
+        //     "maxchar": "500",
+        // }
     ]
 },
 {
-    label: 'المرفقات',
+    label: 'وثائق داعمة',
     labelEn: 'Attachments',
-    description: "",
-    descriptionEn: "",
+    description: 'التفاصيل',
+    descriptionEn: 'Details',
     subFields: [{
-        "InternalName": "getfile",
+        "InternalName": "Attachment",
         "DisplayName": "المرفقات",
-        "DisplayNameEn": "Attachments",
+        "DisplayNameEn": "Attachment",
         "type": "file",
         "withAddBtn":"true"
     }]

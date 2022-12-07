@@ -4,7 +4,7 @@ var Listing_Info = [{
         "DisplayNameEn": "Issue Code",
         "type": "text",
         inlisting: true,
-        infilter: true
+        infilter: false
     },
     {
         "InternalName": "Name",
@@ -46,8 +46,15 @@ var Listing_Info = [{
         "type": "date",
         inlisting: true,
         infilter: true
-    }
-
-
+    },
+    {
+        "InternalName": "Status",
+        "DisplayName": "الحالة",
+        "DisplayNameEn": "Status",
+        "type": "text",
+        inlisting: false,
+        infilter: false,
+        needTrans: true
+    },
 
 ];
