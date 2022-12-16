@@ -13,7 +13,7 @@ var Listing_Info = [
 		"DisplayName":"اسم المخرج",
 		"type":"text", 
 		inlisting: true,
-		infilter: false
+		infilter: true
 	},	
 	{
 		"InternalName": "PlannedCompletedDate",
@@ -29,7 +29,7 @@ var Listing_Info = [
 		"DisplayName":"القيمة",
 		"type":"text",
 		inlisting: true,
-		infilter: true
+		infilter: false
 	},	
 	{
 		"InternalName": "Completed",

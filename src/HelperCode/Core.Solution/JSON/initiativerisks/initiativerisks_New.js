@@ -110,16 +110,16 @@ var Information_Form = [
         options: {
           choices: [
             {
-              display: 'hight',
-              value: 'hight',
+              display: 'low',
+              value: 'low',
             },
             {
               display: 'medium',
               value: 'medium',
             },
             {
-              display: 'low',
-              value: 'low',
+              display: 'hight',
+              value: 'hight',
             },
           ],
         },

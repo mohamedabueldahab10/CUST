@@ -34,8 +34,17 @@ var Listing_Info = [
     infilter: false,
   },
   {
+    InternalName: 'Status',
+    DisplayName: 'الحالة',
+    DisplayNameEn: 'Status',
+    type: 'text',
+    needTrans: true,
+    inlisting: false,
+    infilter: true,
+  },
+  {
     InternalName: 'PlannedFinishDate',
-    DisplayName: 'تاريخ الإنتهاء المتوقع',
+    DisplayName: 'تاريخ الإنتهاء المخطط',
     DisplayNameEn: 'Planned Finish Date',
     type: 'date',
     inlisting: true,

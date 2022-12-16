@@ -197,13 +197,13 @@ var Information_Form = [
           DisplayNameEn: 'Attachments',
           type: 'file',
           withAddBtn: 'true',
-          validation: 'required',
+          // validation: 'required',
         },
         {
           DisplayName: 'ارسال للموافقة',
           DisplayNameEn: 'Submit For Approval',
           InternalName: 'SubmitForApproval',
-          validation: 'required',
+          // validation: 'required',
           type: 'yesnoradio',
           options: {
             choices: [

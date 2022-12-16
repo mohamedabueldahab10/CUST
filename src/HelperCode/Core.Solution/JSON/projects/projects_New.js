@@ -148,7 +148,12 @@ var Information_Form = [
         InternalName: 'Committees',
         DisplayName: 'اللجان',
         DisplayNameEn: 'Committees',
-        type: 'string',
+        source: 'Committees',
+        // source: 'Initiatives',
+        type: 'lookup',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        // grpfieldkey: 'Title',
         security: {
           groups: [
             'VRO_E',
@@ -291,14 +296,6 @@ var Information_Form = [
       //     "valfieldkey": "Title"
       // },
       // {
-      //     "InternalName": "BaselineDuration",
-      //     "DisplayName": "مدة الأساس",
-      //     "DisplayNameEn": "Baseline Duration",
-      //     "type": "float",
-      //     // "maxchar": 5000,
-      //     // hideonstage: "1"
-      // },
-      // {
       //     "InternalName": "KPIs",
       //     "DisplayName": "مؤشر القياس",
       //     "DisplayNameEn": "KPIs",
@@ -337,18 +334,19 @@ var Information_Form = [
         InternalName: 'Status',
         DisplayName: 'مرحلة المشروع',
         DisplayNameEn: 'Project Stage',
-        type: 'dropdownValues',
+        // type: 'dropdownValues',
+        type: 'string',
         validation: 'required',
-        options: {
-          choices: [
-            { value: 'notstarted', display: 'notstarted' },
-            { value: 'completed', display: 'completed' },
-            { value: 'inprogress', display: 'inprogress' },
-            { value: 'onhold', display: 'onhold' },
-            { value: 'cancelled', display: 'cancelled' },
-            //'لم يبدء', 'مكتمل', 'قيد التقدم', 'معلق ', 'ملغى'
-          ],
-        },
+        // options: {
+        //   choices: [
+        //     { value: 'notstarted', display: 'notstarted' },
+        //     { value: 'completed', display: 'completed' },
+        //     { value: 'inprogress', display: 'inprogress' },
+        //     { value: 'onhold', display: 'onhold' },
+        //     { value: 'cancelled', display: 'cancelled' },
+        //     //'لم يبدء', 'مكتمل', 'قيد التقدم', 'معلق ', 'ملغى'
+        //   ],
+        // },
         security: {
           groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
         },
@@ -552,10 +550,10 @@ var Information_Form = [
         DisplayNameEn: 'Project Size',
         type: 'dropdownValues',
         options: {
-          choices: [ 
-            { display: 'large', value: 'large' },
-            { display: 'medium', value: 'medium' },
+          choices: [
             { display: 'small', value: 'small' },
+            { display: 'medium', value: 'medium' },
+            { display: 'large', value: 'large' },
           ],
         },
       },
@@ -565,7 +563,7 @@ var Information_Form = [
         DisplayNameEn: 'Project Priority',
         type: 'dropdownValues',
         options: {
-          choices: [ 
+          choices: [
             { display: 'low', value: 'low' },
             { display: 'medium', value: 'medium' },
             { display: 'high', value: 'high' },
@@ -767,45 +765,6 @@ var Information_Form = [
     ],
   },
   {
-    label: 'الطرح والتعاقد',
-    labelEn: 'Tendering and Contracting',
-    description: '',
-    descriptionEn: '',
-    subFields: [
-      {
-        InternalName: 'PlannedOfferingDate',
-        DisplayName: 'التاريخ المخطط للطرح',
-        DisplayNameEn: 'Planned Date of Offering',
-        type: 'datetime'
-      },
-      {
-        InternalName: 'ActualOfferingDate',
-        DisplayName: 'تاريخ  الطرح الفعلى',
-        DisplayNameEn: 'Actual Offering Date',
-        type: 'datetime'
-      },
-      {
-          "InternalName": "AwardDate",
-          "DisplayName": "تاريخ  الترسية",
-          "DisplayNameEn": "Award Date",
-          "type": "datetime"
-      },
-      {
-          "InternalName": "ContractualDate",
-          "DisplayName": "تاريخ التعاقد",
-          "DisplayNameEn": "Contractual Date",
-          "type": "datetime"
-      },
-      {
-        InternalName: 'Attachments',
-        DisplayName: 'المرفقات',
-        DisplayNameEn: 'Attachments',
-        type: 'file',
-        withAddBtn: 'true',
-      },
-    ],
-  },
-  {
     label: 'بند الميزانية',
     labelEn: 'Budget Item',
     description: '',
@@ -985,6 +944,45 @@ var Information_Form = [
       },
     ],
   },
+  {
+    label: 'الطرح والتعاقد',
+    labelEn: 'Tendering and Contracting',
+    description: '',
+    descriptionEn: '',
+    subFields: [
+      {
+        InternalName: 'PlannedOfferingDate',
+        DisplayName: 'التاريخ المخطط للطرح',
+        DisplayNameEn: 'Planned Date of Offering',
+        type: 'datetime',
+      },
+      {
+        InternalName: 'ActualOfferingDate',
+        DisplayName: 'تاريخ  الطرح الفعلى',
+        DisplayNameEn: 'Actual Offering Date',
+        type: 'datetime',
+      },
+      {
+        InternalName: 'AwardDate',
+        DisplayName: 'تاريخ  الترسية',
+        DisplayNameEn: 'Award Date',
+        type: 'datetime',
+      },
+      {
+        InternalName: 'ContractualDate',
+        DisplayName: 'تاريخ التعاقد',
+        DisplayNameEn: 'Contractual Date',
+        type: 'datetime',
+      },
+      {
+        InternalName: 'ApprovedBrochure',
+        DisplayName: 'المرفقات',
+        DisplayNameEn: 'Attachments',
+        type: 'file',
+        withAddBtn: 'true',
+      },
+    ],
+  },
   // {
   //     label: 'المنافع المتوقعة',
   //     labelEn: 'Expected Benefits',
@@ -999,7 +997,7 @@ var Information_Form = [
   //     }]
   // },
   {
-    label: 'طاقم عمل المشروع',
+    label: 'فريق العمل',
     labelEn: 'Project Staff',
     description: '',
     descriptionEn: '',
@@ -1068,24 +1066,24 @@ var Information_Form = [
           ],
         },
       },
-    //   {
-    //     InternalName: 'ObjectiveOwner',
-    //     DisplayName: 'مالك الهدف (الهدف الفرعي)',
-    //     DisplayNameEn: 'Objective Owner',
-    //     type: 'picker',
-    //   },
-      {
-        InternalName: 'QualityOfficer',
-        DisplayName: 'ضابط الجودة',
-        DisplayNameEn: 'Quality Officer',
-        type: 'picker',
-      },
-      {
-        InternalName: 'ProjectResponsible',
-        DisplayName: 'مسؤول المشروع',
-        DisplayNameEn: 'Project Responsible',
-        type: 'picker',
-      },
+      //   {
+      //     InternalName: 'ObjectiveOwner',
+      //     DisplayName: 'مالك الهدف (الهدف الفرعي)',
+      //     DisplayNameEn: 'Objective Owner',
+      //     type: 'picker',
+      //   },
+      // {
+      //   InternalName: 'QualityOfficer',
+      //   DisplayName: 'ضابط الجودة',
+      //   DisplayNameEn: 'Quality Officer',
+      //   type: 'picker',
+      // },
+      // {
+      //   InternalName: 'ProjectResponsible',
+      //   DisplayName: 'مسؤول المشروع',
+      //   DisplayNameEn: 'Project Responsible',
+      //   type: 'picker',
+      // },
       // ,
       // {
       //     "InternalName": "PMORepresentative",

@@ -27,6 +27,7 @@ var Information_Form = [
         DisplayNameEn: 'Benefit Owner',
         DisplayName: ' مالك المنفعة ',
         type: 'picker',
+        validation: 'required',
       },
       {
         InternalName: 'Description',
@@ -34,6 +35,7 @@ var Information_Form = [
         DisplayName: 'وصف المنفعة',
         maxchar: '500',
         type: 'multiline',
+        validation: 'required',
       },
       {
         InternalName: 'Weight',
@@ -61,20 +63,21 @@ var Information_Form = [
         // "state": "disabled",
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+        validation: 'required',
       },
-			{
-				InternalName: "FromDate",
-				DisplayName: "من سنة",
-				DisplayNameEn: "From Date",
-				max: "ToDate",
-				type: "datetime",
+      {
+        InternalName: 'FromDate',
+        DisplayName: 'من تاريخ',
+        DisplayNameEn: 'From Date',
+        max: 'ToDate',
+        type: 'datetime',
       },
-			{
-				InternalName: "ToDate",
-				DisplayName: "من سنة",
-				DisplayNameEn: "From Date",
-				max: "FromDate",
-				type: "datetime",
+      {
+        InternalName: 'ToDate',
+        DisplayName: ' الى تاريخ',
+        DisplayNameEn: 'From Date',
+        min: 'FromDate',
+        type: 'datetime',
       },
       {
         InternalName: 'DataSource',
@@ -181,8 +184,10 @@ var Information_Form = [
         InternalName: 'Name',
         DisplayNameEn: 'Name',
         DisplayName: 'المخرج',
-        type: 'string',
-        maxchar: '250',
+        type: 'lookup',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        source: 'Deliverables',
       },
       {
         InternalName: 'DeliverableSuccessKPI',
@@ -200,11 +205,11 @@ var Information_Form = [
     subFields: [
       {
         InternalName: 'Attachments',
-        DisplayName: 'مرفقات',
+        DisplayName: 'المرفقات',
         DisplayNameEn: 'Attachments',
         type: 'file',
         withAddBtn: 'true',
-        validation: 'required',
+        // validation: 'required',
       },
     ],
   },

@@ -150,12 +150,12 @@ var Information_Form = [{
             //     "DisplayNameEn": "Assigned To",
             //     "type": "picker"
             // },
-            {
-                "InternalName": "ResolutionActualDate",
-                "DisplayName":"التاريخ الفعلي للحل",
-                "DisplayNameEn": "Resolution Actual Date",
-                "type":"datetime"
-            },
+            // {
+            //     "InternalName": "ResolutionActualDate",
+            //     "DisplayName":"التاريخ الفعلي للحل",
+            //     "DisplayNameEn": "Resolution Actual Date",
+            //     "type":"datetime"
+            // },
             // {
             //     "InternalName": "DueDate",
             //     "DisplayName":"تاريخ الإستحقاق",

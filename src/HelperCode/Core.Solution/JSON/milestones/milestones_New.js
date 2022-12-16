@@ -20,10 +20,20 @@ var Information_Form = [
         validation: 'required',
       },
       {
+        InternalName: 'Weight',
+        DisplayNameEn: 'Weight',
+        DisplayName: 'الوزن المكافئ للإنجاز %',
+        type: 'floatpercentage',
+        validation: 'required',
+        // "state": "disabled",
+        // dynamic: "Initiative"
+      },
+      {
         InternalName: 'PlannedDate',
         DisplayName: 'تاريخ الاكتمال المخطط',
         DisplayNameEn: 'Planned Date',
         type: 'datetime',
+        validation: 'required',
       },
       {
         InternalName: 'ActualDate',
@@ -71,9 +81,9 @@ var Information_Form = [
         type: 'dropdownValues',
         options: {
           choices: [
-            { display: 'onschedule', value: 'onschedule' },
+            { display: 'workisunderway', value: 'workisunderway' },
+            { display: 'late', value: 'late' },
             { display: 'completed', value: 'completed' },
-            // { display: 'late', value: 'late' },
           ],
         },
       },

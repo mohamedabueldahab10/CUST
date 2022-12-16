@@ -36,7 +36,7 @@ var Information_Form  = [
                 // "source": "Internal Entities",
                 // "Dispfieldkey": "Name",
                 // "valfieldkey": "Title",
-                // "validation": "required"
+                "validation": "required"
             
             },
             {

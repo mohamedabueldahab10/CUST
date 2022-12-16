@@ -215,7 +215,6 @@ var Information_Form = [
             {
               display: 'no',
               value: 'no',
-              selected: 'selected' 
             },
           ],
         },

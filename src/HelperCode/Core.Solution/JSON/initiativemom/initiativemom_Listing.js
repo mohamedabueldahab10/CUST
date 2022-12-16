@@ -6,13 +6,13 @@ var Listing_Info = [
         "DisplayNameEn": "Meeting Code",
         "type": "text",
         inlisting: true,
-        infilter: true
+        infilter: false
     },
 
     {
         "InternalName": "Subject",
-        "DisplayName": "موضوع الاجتماع",
-        "DisplayNameEn": "Meeting Subject",
+        DisplayName: 'الموضوع',
+        DisplayNameEn: 'Subject',
         "type": "text",
         inlisting: true,
         infilter: true

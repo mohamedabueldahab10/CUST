@@ -21,7 +21,7 @@ var Listing_Info = [
       "DisplayNameEn":"Impact Type",
       "type": "text",
       "inlisting":true,
-      "infilter":false,
+      "infilter":true,
       "needTrans": true,
    },
    {
@@ -32,6 +32,14 @@ var Listing_Info = [
       "inlisting":true,
       "infilter":true,
       "needTrans": true,
+   },
+   {
+     "InternalName": "ImpactDescription",
+     "DisplayNameEn": "Impact Description",
+     "DisplayName": "وصف الأثر",
+     "type": "text",
+     "inlisting":true,
+     "infilter":false,
    },
    {
       "InternalName":"ImpactDuration",

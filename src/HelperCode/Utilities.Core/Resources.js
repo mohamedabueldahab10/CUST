@@ -69,6 +69,7 @@
         "pattr56": "نسبة التنفيذ الفعلية (الجدول الزمني)",
         "pattr66": "نسبة التنفيذ الفعلية (المعالم)",
         "pattr76": "نسبة التنفيذ الفعلية (المخرجات)",
+        // "pattr66": "نسبة التنفيذ الفعلية (الجدول الزمني)",
         "schedsystem": "المخرجات",
         "schedepm": "الجدول الزمني",
         //Priority
@@ -195,6 +196,7 @@
         "completed": "مكتملة",
         "completed1": "مكتمل",
         "completed3": "مكتملة",
+        "workisunderway": "على المسار",
         "pending2": "معلق",
         "pending3": "معلقة",
         //status milestons
@@ -259,7 +261,7 @@
         "new": "جديد",
         "notstarted": "لم يبدأ",
         "notstarted1": "لم تبدأ",
-        "inprogress": "التنفيذ",
+        "progress": "التنفيذ",
         "closed": "مغلق",
         "cancelled": "ملغى",
         "stat1": "متأخر جدا",
@@ -307,6 +309,7 @@
         "pattr5": "المرحلة",
         "pattr60": "الخطوة",
         "pattr6": "نسبة التنفيذ المخططة",
+        "pattr63": "نسبة التنفيذ المخططة (الجدول الزمني)",
         "pattr61": "نسبة التنفيذ المخططة (المعالم)",
         "pattr62": "نسبة التنفيذ المخططة (المخرجات)",
         "pattr7": "نسبة التنفيذ الفعلية",
@@ -728,12 +731,15 @@
         "establishingimportantmeetingpartnershipsprogramlevel": "عقد اتفاقيات / شراكات ذات أهمية على مستوى البرنامج",
         "legalmilestonesgroup": "اكتمال المعالم الرئيسية للمبادرات",
         "achievingkeyperformancetargets": "تحقيق مستهدفات مؤشرات الأداء الرئيسية",
-        "IntegrativePartnership": "شراكة تكاملية",
-        "AgencyLevelPartnership": "شراكة على مستوى وكالة",
         "memorandumofunderstanding": "مذكرة تفاهم",
         "memorandumofcooperation": "مذكرة تعاون",
         "acooperationagreement": "اتفاقية تعاون",
-
+        "standard":"سارية",
+        "repeatedstandard":"سارية-مجددة",
+        "notstandard":"غير سارية",
+        "ontrack":"على المسار",
+        "late":"متأخر",
+        "toolate":"متأخر جدًا",
 
     },
     "en": {
@@ -1036,6 +1042,7 @@
         "pattr5": "Phase",
         "pattr60": "Stage",
         "pattr6": "Percentage of planned implementation",
+        "pattr63": "Percentage of planned implementation (Schedule)",
         "pattr61": "Percentage of planned implementation (Milestones)",
         "pattr62": "Percentage of planned implementation (Deliverables)",
         "pattr7": "Percentage of actual implementation",
@@ -1450,13 +1457,13 @@
         "establishingimportantmeetingpartnershipsprogramlevel": "Establishing Important Meeting Partnerships Program Level",
         "legalmilestonesgroup": "Legal Milestones Group",
         "achievingkeyperformancetargets": "Achieving Key Performance Targets",
-        "IntegrativePartnership": "Integrative Partnership",
-        "AgencyLevelPartnership": "Agency Level Partnership",
+        "integrativepartnership": "Integrative Partnership",
+        "agencylevelpartnership": "Agency Level Partnership",
         "memorandumofunderstanding": "Memorandum Of Understanding",
         "memorandumofcooperation": "Memorandum Of Cooperation",
         "acooperationagreement": "A Cooperation Agreement",
 
-        , "launchstraightvital": "Launch Straight Vital",
+        "launchstraightvital": "Launch Straight Vital",
         "launchesconferencesworkshopselectronicplatforms": "launchesconferencesworkshopselectronicplatforms",
         "establishingimportantmeetingpartnershipsprogramlevel": "Establishing Important Meeting Partnerships Program Level",
         "legalmilestonesgroup": "Legal Milestones Grouacooperationofagreementsp",
@@ -1471,8 +1478,8 @@
         "memorandumofunderstanding":"Memorandum of Understanding",
         "memorandumofcooperation":"Memorandum of Cooperation",
         "acooperationofagreements":"Cooperation agreement",
-        "integrativepartnership":"Integrative",
-        "agencylevelpartnership":"Agency Partnership",
+        // "integrativepartnership":"Integrative",
+        // "agencylevelpartnership":"Agency Partnership",
         "tangibleimpact":"Tangible Impact (6 month)",
         "significantimpactmediumterm6mth":"Significant Medium Impact (6 month - 1 Year)",
         "tangibleimpactmediumtermyear":"Tangible Medium Impact (1 Year - 3 Years)",
@@ -1485,10 +1492,16 @@
         "nonprofitsector":"Non-profit-sector",
         "missionwasapproved":"Mission Approved",
         "waitingfortheapprovalofresources":"Waiting for the approval of resources",
-        "exchangehasbeendone":"Exchange done"
-        
+        "exchangehasbeendone":"Exchange done",
+        "standard":"Standard",
+        "repeatedstandard":"Repeated-Standard",
+        "notstandard":"Not Standard",
+        "ontrack":"On Track",
+        "late":"Late",
+        "toolate":"Too Late",
 
     }
+
 };
 
 function changeResources() {

@@ -40,15 +40,15 @@ var Listing_Info = [
 
   // },
   // {
-  {
-    InternalName: 'Types',
-    DisplayNameEn: 'Types',
-    DisplayName: 'النوع',
-    type: 'text',
-    inlisting: true,
-    needTrans: true,
-    infilter: true,
-  },
+  // {
+  //   InternalName: 'Types',
+  //   DisplayNameEn: 'Types',
+  //   DisplayName: 'النوع',
+  //   type: 'text',
+  //   inlisting: true,
+  //   needTrans: true,
+  //   infilter: true,
+  // },
   {
     InternalName: 'Sector',
     DisplayName: 'القطاع',
@@ -66,6 +66,22 @@ var Listing_Info = [
     localStorageVariable: 'Dynamo_Internal Entities',
     inlisting: true,
     infilter: true,
+  },
+  {
+    InternalName: 'StartDate',
+    DisplayName: 'تاريخ بدء العقد',
+    DisplayNameEn: 'Start Date',
+    type: 'date',
+    inlisting: true,
+    infilter: false,
+  },
+  {
+    InternalName: 'FinishDate',
+    DisplayName: 'تاريخ نهاية المبادرة ',
+    DisplayNameEn: 'Finish Date',
+    type: 'date',
+    inlisting: true,
+    infilter: false,
   },
   {
     InternalName: 'InitiativeProgressStatus',

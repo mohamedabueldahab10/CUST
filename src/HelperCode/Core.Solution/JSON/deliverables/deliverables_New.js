@@ -44,7 +44,8 @@ var Information_Form = [
         type: 'dropdownValues',
         options: {
           choices: [
-            { display: 'workinprogress', value: 'workinprogress' },
+            { display: 'ontrack', value: 'ontrack' },
+            { display: 'late', value: 'late' },
             { display: 'completed', value: 'completed' },
           ],
         },
@@ -57,11 +58,32 @@ var Information_Form = [
         // min: 'PlannedStartDate',
         validation: 'required',
       },
+      // {
+      //   InternalName: 'Delivered',
+      //   DisplayName: 'تم التسليم',
+      //   DisplayNameEn: 'Delivered',
+      //   type: 'yesnoradio',
+      //   options: {
+      //     choices: [
+      //       { display: 'yes', value: 'yes' },
+      //       { display: 'no', value: 'no' },
+      //     ],
+      //   },
+      // },
+      // {
+      //   InternalName: 'DeliveredDate',
+      //   DisplayName: 'تاريخ التسليم',
+      //   DisplayNameEn: 'Delivered Date',
+      //   type: 'datetime',
+      //   max: 'today',
+      //   state: 'disabled',
+      // },
       {
         InternalName: 'AcceptanceCriteria',
         DisplayName: 'معايير قبول المخرج',
         DisplayNameEn: 'Acceptance Criteria',
-        type: 'string',
+        // type: 'string',
+        type: 'multiline',
       },
       // {
       //     "InternalName": "PlannedStartDate",
@@ -98,27 +120,6 @@ var Information_Form = [
       //     "type": "datetime",
       //     "min": "StartDate",
       //     "max": "today"
-      // },
-      // {
-      //     "InternalName": "Delivered",
-      //     "DisplayName": "تم التسليم",
-      //     "DisplayNameEn": "Delivered",
-      //     "type": "yesnoradio",
-      //     options: {
-      //         choices: [
-      //             { display: 'yes', value: 'yes' },
-      //             { display: 'no', value: 'no' }
-      //         ]
-      //     }
-
-      // },
-      // {
-      //     "InternalName": "DeliveredDate",
-      //     "DisplayName": "تاريخ التسليم",
-      //     "DisplayNameEn": "Delivered Date",
-      //     "type": "datetime",
-      //     "max":"today",
-      //     "state":"disabled"
       // },
       // {
       //     "InternalName": "DeliveredDate",

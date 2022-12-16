@@ -22,6 +22,13 @@ var Information_Form = [
         validation: 'required',
       },
       {
+        InternalName: 'Description',
+        DisplayName: 'وصف المقياس',
+        DisplayNameEn: 'Description',
+        type: 'multiline',
+        maxchar: 5000,
+      },
+      {
         // hol dynamic 3ala l lookup
         InternalName: 'RelatedBenefit',
         DisplayNameEn: 'RelatedBenefit',
@@ -31,6 +38,22 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         // dynamic:"mainfield",//controls others data
+      },
+      {
+        InternalName: 'PeriodType',
+        DisplayNameEn: 'Period Type',
+        DisplayName: 'دورية القياس',
+        state: 'disabled',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'year', value: 'year' },
+            { display: 'quarter', value: 'quarter' },
+            { display: 'halfyear', value: 'halfyear' },
+            { display: 'month', value: 'month' },
+          ],
+        },
+        validation: 'required',
       },
       {
         InternalName: 'Owner',
@@ -82,7 +105,7 @@ var Information_Form = [
         options: {
           choices: ['+', '-'],
         },
-        "validation": "required"
+        validation: 'required',
       },
       {
         InternalName: 'ResultType',
@@ -98,44 +121,36 @@ var Information_Form = [
           ],
         },
       },
-			{
-				InternalName: "FromDate",
-				DisplayName: "من سنة",
-				DisplayNameEn: "From Date",
-				max: "ToDate",
-				type: "datetime",
-        "validation": "required"
+      {
+        InternalName: 'FromDate',
+        DisplayName: 'من سنة',
+        DisplayNameEn: 'From Date',
+        max: 'ToDate',
+        type: 'datetime',
+        validation: 'required',
       },
-			{
-				InternalName: "ToDate",
-				DisplayName: "من سنة",
-				DisplayNameEn: "From Date",
-				max: "FromDate",
-				type: "datetime",
-        "validation": "required"
+      {
+        InternalName: 'ToDate',
+        DisplayName: 'من سنة',
+        DisplayNameEn: 'From Date',
+        max: 'FromDate',
+        type: 'datetime',
+        validation: 'required',
       },
-			{
-				InternalName: "PerformanceLeader",
-				DisplayNameEn: "Performance Leader",
-				DisplayName: "رائد الأداء",
-				type: "picker",
-				validation: "required",
-			},
-      // {
-      //   InternalName: 'PeriodType',
-      //   DisplayNameEn: 'Period Type',
-      //   DisplayName: 'دورية القياس',
-      //   state: 'disabled',
-      //   type: 'dropdownValues',
-      //   options: {
-      //     choices: [
-      //       { display: 'year', value: 'year' },
-      //       { display: 'quarter', value: 'quarter' },
-      //       { display: 'halfyear', value: 'halfyear' },
-      //       { display: 'month', value: 'month' },
-      //     ],
-      //   },
-      // },
+      {
+        InternalName: 'PerformanceLeader',
+        DisplayNameEn: 'Performance Leader',
+        DisplayName: 'رائد الأداء',
+        type: 'picker',
+        validation: 'required',
+      },
+      {
+        InternalName: 'TargetValue',
+        DisplayNameEn: 'Target Value',
+        DisplayName: 'القيمة المستهدفة',
+        type: 'float',
+        validation: 'required',
+      },
       // {
       //   InternalName: 'Quarter',
       //   DisplayNameEn: 'Quarter',
@@ -186,18 +201,18 @@ var Information_Form = [
     ],
   },
   {
-      label: 'الوثائق الداعمة',
-      labelEn: 'Attachments',
-      description: "التفاصيل",
-      descriptionEn: "Details",
-      subFields: [
-          {
-              "InternalName": "Attachments",
-              "DisplayName": "المرفقات",
-              "DisplayNameEn": "Attachments",
-              "type": "file",
-              "withAddBtn":"true"
-          }
-      ]
-  }
+    label: 'الوثائق الداعمة',
+    labelEn: 'Attachments',
+    description: 'التفاصيل',
+    descriptionEn: 'Details',
+    subFields: [
+      {
+        InternalName: 'Attachments',
+        DisplayName: 'المرفقات',
+        DisplayNameEn: 'Attachments',
+        type: 'file',
+        withAddBtn: 'true',
+      },
+    ],
+  },
 ]

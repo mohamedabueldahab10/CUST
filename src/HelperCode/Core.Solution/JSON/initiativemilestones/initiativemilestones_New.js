@@ -25,7 +25,8 @@ var Information_Form  = [
                 "InternalName": "PlannedCompletedDate",
                 "DisplayNameEn": "Planned Completed Date",
                 "DisplayName":"تاريخ الاكتمال المخطط",
-                "type":"datetime"
+                "type":"datetime",
+                "validation": "required",
             },
             // {
             //     "InternalName": "Weight",

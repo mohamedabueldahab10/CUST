@@ -2,16 +2,8 @@ var Listing_Info = [
    {
       "InternalName":"Title",
       "DisplayName":"رقم الشراكة",
-      "DisplayNameEn":"Partnership Number",
+      "DisplayNameEn":"Partnership Code",
       "type":"text",
-      "inlisting":true,
-      "infilter":false
-   },
-   {
-      "InternalName":"PartnerName",
-      "DisplayName":"اسم الشريك",
-      "DisplayNameEn":"Partner Name",
-      "type":"lookup",
       "inlisting":true,
       "infilter":false
    },
@@ -19,7 +11,7 @@ var Listing_Info = [
       "InternalName":"Sector",
       "DisplayName":"القطاع",
       "DisplayNameEn":"Sector",
-      "type": "text",
+      "type": "lookup",
       "localStorageVariable":"Dynamo_Internal Entities",
       "inlisting":true,
       "infilter":true
@@ -28,7 +20,7 @@ var Listing_Info = [
       "InternalName":"SubSector",
       "DisplayName":"الوكالة",
       "DisplayNameEn":"Deputyship",
-      "type": "text",
+      "type": "lookup",
       "localStorageVariable":"Dynamo_Internal Entities",
       "inlisting":true,
       "infilter":true
@@ -41,6 +33,24 @@ var Listing_Info = [
       "inlisting":true,
       "infilter":true,
       "needTrans": true
+   },
+   {
+      "InternalName":"PartnerName",
+      "DisplayName":"اسم الشريك",
+      "DisplayNameEn":"Partner Name",
+      "type":"lookup",
+      // "localStorageVariable":"Dynamo_Internal Entities",
+      "inlisting":true,
+      "infilter":false
+   },
+   {
+      "InternalName":"RelatedStrategyObjective",
+      "DisplayName":"الهدف الاستراتيجي المرتبط",
+      "DisplayNameEn":"Related Strategy Objective",
+      "type":"lookup",
+      // "localStorageVariable":"Dynamo_Internal Entities",
+      "inlisting":true,
+      "infilter":false
    },
    // {
    //    "InternalName": "PartnerType",
@@ -57,7 +67,8 @@ var Listing_Info = [
       "DisplayNameEn":"Status",
       "type":"text",
       "inlisting":true,
-      "infilter":true
+      "infilter":true,
+      "needTrans": true
    }
 ];
   

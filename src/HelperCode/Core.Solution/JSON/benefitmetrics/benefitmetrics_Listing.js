@@ -5,7 +5,7 @@ var Listing_Info = [
 		"DisplayName": "رمز  مقياس المنفعة",
 		"type": "text",
 		inlisting: true,
-		infilter: true
+		infilter: false
 	},
 	{
 		"InternalName": "Name",

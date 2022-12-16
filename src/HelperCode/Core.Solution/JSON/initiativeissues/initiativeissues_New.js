@@ -131,11 +131,18 @@ var Information_Form = [{
             // },
             {
                 "InternalName": "Status",
-                "DisplayName":"الحالة الكلية للتحدي",
-                "type":"dropdown",
+                "DisplayName":"الحالة",
+                "type":"dropdownValues",
                 options:{
                     choices:[ 
-                        'Closed',' Open'
+                        {
+                            display: 'open',
+                            value: 'open'
+                        },
+                        {
+                            display: 'closed',
+                            value: 'closed'
+                        },
                     ]
                 }
             },
@@ -196,19 +203,19 @@ var Information_Form = [{
             // }
         ]
     },
-    {
-        label: 'الوثائق الداعمة',
-        labelEn: 'Documents',
-        description: "التفاصيل",
-        descriptionEn: "Details",
-        subFields:[
-            {
-                "InternalName": "Attachments",
-                "DisplayName":"المرفقات",                
-                "DisplayNameEn": "Attachments",
-                "type":"file",
-                "withAddBtn":"true"
-            }
-        ]
-    }
+    // {
+    //     label: 'الوثائق الداعمة',
+    //     labelEn: 'Documents',
+    //     description: "التفاصيل",
+    //     descriptionEn: "Details",
+    //     subFields:[
+    //         {
+    //             "InternalName": "Attachments",
+    //             "DisplayName":"المرفقات",                
+    //             "DisplayNameEn": "Attachments",
+    //             "type":"file",
+    //             "withAddBtn":"true"
+    //         }
+    //     ]
+    // }
 ];

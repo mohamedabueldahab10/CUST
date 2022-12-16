@@ -21,7 +21,7 @@ var Listing_Info = [
         "DisplayNameEn": "Periodic",
         "type": "text",
         inlisting: true,
-        infilter: true
+        infilter: false
     },
     // {
     //     "InternalName": "ProjectCode",

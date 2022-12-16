@@ -2,8 +2,8 @@ var Information_Form = [
    {
       label: 'البيانات الرئيسية',
       labelEn: 'Principal data',
-      description: "التفاصيل",
-      descriptionEn: "Details",
+      description: "",
+      descriptionEn: "",
       subFields: [
          {
             "InternalName":"TargetGroup",
@@ -63,7 +63,9 @@ var Information_Form = [
             "InternalName":"ImpactDescription",
             "DisplayName":"وصف الأثر",
             "DisplayNameEn":"Impact Description",
-            "type":"multiline",
+            // "type":"string",
+            // "maxchar":"250",
+            "type": "multiline",
             "validation":"required"
          },
          {
@@ -148,8 +150,8 @@ var Information_Form = [
    {
       label: 'التفاصيل',
       labelEn: 'Details',
-      description: "التفاصيل",
-      descriptionEn: "Details",
+      description: "",
+      descriptionEn: "",
       subFields: [
          {
             "InternalName":"Comments",

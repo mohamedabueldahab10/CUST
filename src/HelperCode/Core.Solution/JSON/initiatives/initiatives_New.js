@@ -26,36 +26,36 @@ var Information_Form = [
         DisplayName: 'رمز المبادرة الرسمي',
         type: 'string',
       },
-      {
-        InternalName: 'Types',
-        DisplayNameEn: 'Types',
-        DisplayName: 'النوع',
-        validation: 'required',
-        toggleValues: [
-          { value: 'vision', fields: ['RelatedStrategyObjective'] }, //we can put more than 1  field
-        ],
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            {
-              display: 'vision',
-              value: 'vision',
-              roles: ['Administrator', 'VROE', 'VROP'],
-            },
-            {
-              display: 'strategically',
-              value: 'strategically',
-              roles: ['Administrator', 'EPMO'],
-            },
-            {
-              display: 'lms',
-              value: 'lms',
-              roles: ['Administrator', 'LMSE', 'LMSP'],
-            },
-            // { display: 'others', value: 'others' },
-          ],
-        },
-      },
+      // {
+      //   InternalName: 'Types',
+      //   DisplayNameEn: 'Types',
+      //   DisplayName: 'النوع',
+      //   validation: 'required',
+      //   toggleValues: [
+      //     { value: 'vision', fields: ['RelatedStrategyObjective'] }, //we can put more than 1  field
+      //   ],
+      //   type: 'dropdownValues',
+      //   options: {
+      //     choices: [
+      //       {
+      //         display: 'vision',
+      //         value: 'vision',
+      //         roles: ['Administrator', 'VROE', 'VROP'],
+      //       },
+      //       {
+      //         display: 'strategically',
+      //         value: 'strategically',
+      //         roles: ['Administrator', 'EPMO'],
+      //       },
+      //       {
+      //         display: 'lms',
+      //         value: 'lms',
+      //         roles: ['Administrator', 'LMSE', 'LMSP'],
+      //       },
+      //       // { display: 'others', value: 'others' },
+      //     ],
+      //   },
+      // },
       {
         InternalName: 'RelatedStrategy',
         DisplayNameEn: 'Related Strategy',
@@ -256,7 +256,7 @@ var Information_Form = [
         DisplayNameEn: 'Start Date',
         type: 'datetime',
         max: 'FinishDate',
-        // "validation": "required"
+        validation: 'required'
       },
       {
         InternalName: 'FinishDate',
@@ -264,7 +264,7 @@ var Information_Form = [
         DisplayNameEn: 'Finish Date',
         type: 'datetime',
         min: 'StartDate',
-        // "validation": "required"
+        validation: 'required'
       },
       {
         InternalName: 'Description',

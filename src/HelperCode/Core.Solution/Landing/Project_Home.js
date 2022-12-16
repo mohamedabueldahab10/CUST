@@ -280,6 +280,23 @@ var Project_Home_Info_Request = {
         //
         '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
         '<div class="d-inline-flex flex-column mx-2">' +
+        '<span class="des-13"><span data-trans-pattr63 class="Resources state-val"></span></span>' +
+        '<h4 class="black"> 60%</h4>' + //
+        '</div>' +
+        '<h4 data-trans-pattr57 class="black Resources d-flex mx-2" style="display:none !important"></h4>' +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<span class="des-13"><span data-trans-pattr56 class="Resources complition-val"></span></span>' +
+        '<h4 class="black"> 40%</h4>' +
+        '</div>' +
+        '<div class="d-inline-flex flex-column mx-2 ' + projectprogress + '">' +
+        '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val"></span></span>' +
+        '<h4 data-trans-' + projectprogress + ' class="black Resources myCompletionStatus statuscolor' + projectprogress + '"></h4>' + //
+        '</div>' +
+        '</div>' +
+        //
+        //
+        '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
+        '<div class="d-inline-flex flex-column mx-2">' +
         '<span class="des-13"><span data-trans-pattr61 class="Resources state-val"></span></span>' +
         '<h4 class="black"> 60%</h4>' + //
         '</div>' +

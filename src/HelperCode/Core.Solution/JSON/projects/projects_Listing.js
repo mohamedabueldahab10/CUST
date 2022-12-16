@@ -13,7 +13,7 @@ var Listing_Info = [
     DisplayNameEn: 'Project Name',
     type: 'text',
     inlisting: true,
-    infilter: true,
+    infilter: false,
   },
   {
     InternalName: 'ProjectType',
@@ -21,8 +21,24 @@ var Listing_Info = [
     DisplayNameEn: 'Project Type',
     type: 'text',
     needTrans: true,
-    inlisting: false,
+    inlisting: true,
     infilter: false,
+  },
+  {
+      "InternalName": "BaselineStartDate",
+      "DisplayNameEn":"Baseline Start Date",
+      "DisplayName": "تاريخ بدء الأساس",
+      "type":"date",
+      inlisting: true,
+      infilter: false
+  },
+  {
+      "InternalName": "BaselineFinishDate",
+      "DisplayNameEn":"Baseline Finish Date",
+      "DisplayName": "تاريخ إنهاء الأساس",
+      "type":"date",
+      inlisting: true,
+      infilter: false
   },
   {
     InternalName: 'Sector',
