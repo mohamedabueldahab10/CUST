@@ -3189,6 +3189,14 @@ window.ListInfo = {
 					element.Dispfieldkey +
 					'"  data-filterfield="' +
 					element.filterField +
+
+					'"data-queryfieldvalue="' + // oday
+					element.queryFieldValue +
+					'"data-queryfield="' + // oday
+					element.queryField +
+					'"data-queryfieldtype="' + // oday
+					element.queryFieldType +
+					
 					'" data-filterfieldtype="' +
 					element.filterFieldType +
 					'" class="form-control" type="dropdown" id="' +
