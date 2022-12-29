@@ -5,14 +5,13 @@ var Information_Form = [
         description: "التفاصيل",
         descriptionEn: "Details",
         subFields: [
-
-            // {
-            //     "InternalName": "Title",
-            //     "DisplayNameEn": "Title",
-            //     "DisplayName":"رمز المعلم",
-            //     "type":"string",
-            //     "maxchar": "250"
-            // },
+            {
+                "InternalName": "Title",
+                "DisplayNameEn": "Title",
+                "DisplayName":"رمز المعلم",
+                "type":"string",
+                // "maxchar": "250"
+            },
             {
                 "InternalName": "Name",
                 "DisplayNameEn": "Name",

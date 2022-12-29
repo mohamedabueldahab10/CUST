@@ -64,9 +64,9 @@ var Information_Form = [
 
             },
             {
-                "InternalName": "Comments",
-                "DisplayName": "ملاحظات",
-                "DisplayNameEn": "Comments",
+                "InternalName": "FormalAgenda",
+                "DisplayName": "جدول الأعمال الرسمي",
+                "DisplayNameEn": "Formal Agenda",
                 "type": "multiline"
 
 
@@ -80,21 +80,21 @@ var Information_Form = [
 
             },
             {
-                "InternalName": "FormalAgenda",
-                "DisplayName": "جدول الأعمال الرسمي",
-                "DisplayNameEn": "Formal Agenda",
+                "InternalName": "Comments",
+                "DisplayName": "ملاحظات",
+                "DisplayNameEn": "Comments",
                 "type": "multiline"
 
 
             },
-            {
-                "InternalName": "Author",
-                "DisplayName": "كاتب المحضر",
-                "DisplayNameEn": "Created By",
-                "type": "picker"
+            // {
+            //     "InternalName": "Author",
+            //     "DisplayName": "كاتب المحضر",
+            //     "DisplayNameEn": "Created By",
+            //     "type": "picker"
 
 
-            },
+            // },
         ]
-    }
+    },
 ];

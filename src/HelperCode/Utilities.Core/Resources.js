@@ -73,9 +73,12 @@
         "schedsystem": "المخرجات",
         "schedepm": "الجدول الزمني",
         //Priority
-        "pr01veryimportant": "مُلحة",
-        "pr02important": "عالي",
-        "pr03medium": "متوسط",
+        "pr01veryimportant": "مهم جدا",
+        "pr02important": "مهم",
+        "pr03medium": "متوسط الاهمية",
+        // "pr01veryimportant": "مُلحة",
+        // "pr02important": "عالي",
+        // "pr03medium": "متوسط",
         "pr04low": "منخفض",
         //lesson leanred type
         "strongpoint": "  نقطة قوة تم إثباتها",
@@ -271,6 +274,7 @@
         "stat5": "لا يوجد خط اساس",
         "stat6": "لم يبدأ",
         "stat7": "مكتمل",
+        "stat8": "لم تبدأ",
         "rsupport1": "اعتمادات",
         "rsupport2": "تحديات",
         "rsupport3": "مخاطر",
@@ -879,7 +883,7 @@
         "lms": "LMS",
 
         //Priority Values
-        "hight": "High",
+        "hight": "Hight",
         "high": "High",
         "medium": "Medium",
         "low": "Low",
@@ -1005,6 +1009,7 @@
         "stat5": "No BaseLine",
         "stat6": "Not Started",
         "stat7": "Completed",
+        "stat8": "Not Started",
         "rsupport1": "Reliance",
         "rsupport2": "Issues",
         "rsupport3": "Risks",

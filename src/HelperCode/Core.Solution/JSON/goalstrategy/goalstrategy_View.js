@@ -7,13 +7,26 @@ var Information_Form = [
         descriptionEn: "Details",
         subFields: [
             {
+                "InternalName": "Title",
+                "DisplayNameEn": "Strategy Code",
+                "DisplayName":"رمز  الاستراتيجية",
+                "type":"string",
+            },
+            {
                 "InternalName": "Name",
                 "DisplayNameEn": "Name",
                 "DisplayName": "الأسم",
                 "type": "string",
                 "validation": "required"
             },
+            {
+                "InternalName": "Description",
+                "DisplayNameEn": "Description",
+                "DisplayName": "الوصف",
+                "type": "multiline",
+                // "validation": "required"
 
+            },
             {
                 "InternalName": "Types",
                 "DisplayNameEn": "Strategy Type",
@@ -28,22 +41,19 @@ var Information_Form = [
                 "type": "dropdownValues",
                 options: {
                     choices: [
-                        { display: 'main', value: 'main' },
+                        { display: 'ministry', value: 'ministry'},
+                        { display: 'vision', value: 'vision'},
+                        { display: 'lms', value: 'lms'},
+                        { display: 'sectorial', value: 'sectorial'},
                         { display: 'sub', value: 'sub' },
-                        { display: 'vision', value: 'vision' },
-                        { display: 'ministry', value: 'ministry' },
-                        { display: 'jobmarket', value: 'jobmarket' },
+                        // { display: 'main', value: 'main' },
+                        // { display: 'sub', value: 'sub' },
+                        // { display: 'vision', value: 'vision' },
+                        // { display: 'ministry', value: 'ministry' },
+                        // { display: 'jobmarket', value: 'jobmarket' },
                         // { display: 'transformationally', value: 'transformationally' },
                     ]
                 }
-
-            },
-            {
-                "InternalName": "Description",
-                "DisplayNameEn": "Description",
-                "DisplayName": "الوصف",
-                "type": "multiline",
-                // "validation": "required"
 
             },
             {
@@ -92,25 +102,6 @@ var Information_Form = [
                 "DisplayNameEn": "Approval Date",
                 "type":"datetime"
             },
-            {
-                "InternalName": "PillarsExist",
-                "DisplayName": "هل يوجد محاور؟",
-                "DisplayNameEn": "Is Pillars Exist?",
-                "validation": "required",
-                "type": "yesnoradio",
-                options: {
-                    choices: [{
-                        display: 'yes',
-                        value: 'yes'
-                    },
-                    {
-                        display: 'no',
-                        value: 'no'
-                    }
-                    ]
-                },
-             
-            },
         ]
     },
     {
@@ -128,6 +119,26 @@ var Information_Form = [
             //     "type":"string",
             //      "state":"disabled"
             // },
+            
+            {
+                "InternalName": "PillarsExist",
+                "DisplayName": "هل يوجد محاور؟",
+                "DisplayNameEn": "Is Pillars Exist?",
+                // "validation": "required",
+                "type": "yesnoradio",
+                options: {
+                    choices: [{
+                        display: 'yes',
+                        value: 'yes'
+                    },
+                    {
+                        display: 'no',
+                        value: 'no'
+                    }
+                    ]
+                },
+             
+            },
             {
                 "InternalName": "Name",
                 "DisplayNameEn": "Name",

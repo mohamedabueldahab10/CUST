@@ -19,7 +19,7 @@ var Information_Form = [{
             },
             {
                 "InternalName": "Category",
-                "DisplayName": "فئة التحدي",
+                "DisplayName": "نوع التحدي",
                 "DisplayNameEn": "Category",
                 "type": "dropdownValues",
                 options: {
@@ -55,41 +55,51 @@ var Information_Form = [{
                 }
             },
             {
-                "InternalName": "ResolutionStatus",
-                "DisplayName": "الحالة",
-                "DisplayNameEn": "Resolution Status",
+                "InternalName": "Impact",
+                "DisplayName": "الأثر",
+                "DisplayNameEn": "Impact",
                 "type": "dropdownValues",
                 options: {
                     choices: [
-                        { display: 'new', value: 'new' },
-                        { display: 'inprogress', value: 'inprogress' },
-                        { display: 'closed', value: 'closed' },
-                        { display: 'cancelled', value: 'cancelled' },
+                        { display: 'hight', value: 'hight' },
+                        { display: 'medium', value: 'medium' },
+                        { display: 'low', value: 'low' },
                     ]
                 }
             },
-            // {
-            //     "InternalName": "Status",
-            //     "DisplayName":"الحالة الكلية للتحدي",
-            //     "type":"dropdown",
-            //     options:{
-            //         choices:[
-            //             'مغلق',' مفتوح'
-            //         ]
-            //     }
-            // },
+            {
+                "InternalName": "ImpactDescription",
+                "DisplayName": "وصف الأثر",
+                "DisplayNameEn": "Impact Description",
+                "type": "multiline",
+                "maxchar": 5000,
+            },
             {
                 "InternalName": "Owner",
                 "DisplayName": "مالك التحدي",
                 "DisplayNameEn": "Owner",
                 "type": "picker"
             },
-            {
-                "InternalName": "AssignedTo",
-                "DisplayName": "مسندة إلى الشخص المسؤول ",
-                "DisplayNameEn": "Assigned To",
-                "type": "picker"
-            },
+            // {
+            //     "InternalName": "ResolutionStatus",
+            //     "DisplayName": "الحالة",
+            //     "DisplayNameEn": "Resolution Status",
+            //     "type": "dropdownValues",
+            //     options: {
+            //         choices: [
+            //             { display: 'new', value: 'new' },
+            //             { display: 'inprogress', value: 'inprogress' },
+            //             { display: 'closed', value: 'closed' },
+            //             { display: 'cancelled', value: 'cancelled' },
+            //         ]
+            //     }
+            // },
+            // {
+            //     "InternalName": "AssignedTo",
+            //     "DisplayName": "مسندة إلى الشخص المسؤول ",
+            //     "DisplayNameEn": "Assigned To",
+            //     "type": "picker"
+            // },
             {
                 "InternalName": "DateRaised",
                 "DisplayName": "تاريخ تحديد التحدي",
@@ -104,12 +114,19 @@ var Information_Form = [{
                 "type": "datetime"
             },
             {
-                "InternalName": "ResolutionActualDate",
-                "DisplayName": "التاريخ الفعلي للحل",
-                "DisplayNameEn": "Resolution Actual Date",
-                "type": "datetime",
-                "max":"today"
+                "InternalName": "Resolution",
+                "DisplayName": "وصف الحل",
+                "DisplayNameEn": "Resolution",
+                "type": "multiline",
+                "maxchar": 5000,
             },
+            // {
+            //     "InternalName": "ResolutionActualDate",
+            //     "DisplayName": "التاريخ الفعلي للحل",
+            //     "DisplayNameEn": "Resolution Actual Date",
+            //     "type": "datetime",
+            //     "max":"today"
+            // },
             // {
             //     "InternalName": "DueDate",
             //     "DisplayName": "تاريخ الإستحقاق",
@@ -123,47 +140,35 @@ var Information_Form = [{
                 "type": "datetime",
                 "min": "DateRaised"
             },
-
-
+            // {
+            //     "InternalName": "ResolutionOwner",
+            //     "DisplayName": "المسؤول عن الحل",
+            //     "DisplayNameEn": "Resolution Owner",
+            //     "type": "picker"
+            // },
+            // {
+            //     "InternalName": "Description",
+            //     "DisplayName": "وصف التحدي",
+            //     "DisplayNameEn": "Description",
+            //     "type": "multiline",
+            //     "maxchar": 5000,
+            // },
             {
-                "InternalName": "Impact",
-                "DisplayName": "الأثر",
-                "DisplayNameEn": "Impact",
-                "type": "dropdownValues",
-                options: {
-                    choices: [
-                        { display: 'hight', value: 'hight' },
-                        { display: 'medium', value: 'medium' },
-                        { display: 'low', value: 'low' },
+                "InternalName": "Status",
+                "DisplayName":"الحالة الكلية للتحدي",
+                "type":"dropdownValues",
+                options:{
+                    choices:[
+                        {
+                            display: 'open',
+                            value: 'open'
+                        },
+                        {
+                            display: 'closed',
+                            value: 'closed'
+                        },
                     ]
                 }
-            },
-            {
-                "InternalName": "ResolutionOwner",
-                "DisplayName": "المسؤول عن الحل",
-                "DisplayNameEn": "Resolution Owner",
-                "type": "picker"
-            },
-            {
-                "InternalName": "ImpactDescription",
-                "DisplayName": "وصف الأثر",
-                "DisplayNameEn": "Impact Description",
-                "type": "multiline",
-                "maxchar": 5000,
-            },
-            {
-                "InternalName": "Description",
-                "DisplayName": "وصف التحدي",
-                "DisplayNameEn": "Description",
-                "type": "multiline",
-                "maxchar": 5000,
-            },
-            {
-                "InternalName": "Resolution",
-                "DisplayName": "وصف الحل",
-                "DisplayNameEn": "Resolution",
-                "type": "multiline",
-                "maxchar": 5000,
             },
             {
                 "InternalName": "Comments",

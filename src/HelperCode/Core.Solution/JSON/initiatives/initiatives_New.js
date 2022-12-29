@@ -283,6 +283,8 @@ var Information_Form = [
           choices: [
             // { value: 'notstarted', display: 'notstarted' },
             // { value: 'closureinitiative', display: 'closureinitiative' }
+            { value: 'transformativeproject', display: 'transformativeproject' },
+            { value: 'operationalproject', display: 'operationalproject' }
           ],
         },
       },
@@ -319,7 +321,7 @@ var Information_Form = [
         InternalName: 'DependencyCost',
         DisplayName: 'حجم الارتباط (منصة اعتماد) ',
         DisplayNameEn: 'Dependency Cost',
-        type: 'float',
+        type: 'floatpercentage',
       },
       // {
       //     "InternalName": "Status",
@@ -539,7 +541,7 @@ var Information_Form = [
         // "ToggleName": "RelatedBudgetItem", //ToggleName to select which field
         DisplayNameEn: 'Related Budget Item',
         DisplayName: 'البند المالي المرتبط',
-        type: 'lookup',
+        type: 'lookupmultiselect',
         //from other list:
         source: 'Budget Items',
         Dispfieldkey: 'Name',
@@ -592,17 +594,17 @@ var Information_Form = [
       },
     ],
   },
-  // {
-  //     label: 'المرفقات',
-  //     labelEn: 'Attachments',
-  //     description: "",
-  //     descriptionEn: "",
-  //     subFields: [{
-  //         "InternalName": "getfile",
-  //         "DisplayName": "المرفقات",
-  //         "DisplayNameEn": "Attachments",
-  //         "type": "file",
-  //         "withAddBtn": "true"
-  //     }]
-  // }
+  {
+      label: 'المرفقات',
+      labelEn: 'Attachments',
+      description: "",
+      descriptionEn: "",
+      subFields: [{
+          "InternalName": "Attachments",
+          "DisplayName": "المرفقات",
+          "DisplayNameEn": "Supporting Documents",
+          "type": "file",
+          "withAddBtn": "true"
+      }]
+  }
 ]

@@ -31,6 +31,7 @@ var Information_Form  = [
                 "DisplayNameEn": "Planned Completed Date",
                 "DisplayName":"تاريخ الاكتمال المخطط",
                 "type":"datetime",
+                "validation": "required",
                 security: {
                     groups: ['VRO_E','LMS_E',
                         'EPMO', 'System Admin Group'
@@ -59,17 +60,17 @@ var Information_Form  = [
                     ]
                 },
             },
-            {
-                "InternalName": "CommittedDate",
-                "DisplayName": "تاريخ الالتزام",
-                "DisplayNameEn": "Committed Date",
-                "type": "datetime",
-                security: {
-                    groups: ['VRO_E','LMS_E',
-                        'EPMO', 'System Admin Group'
-                    ]
-                },
-            },
+            // {
+            //     "InternalName": "CommittedDate",
+            //     "DisplayName": "تاريخ الالتزام",
+            //     "DisplayNameEn": "Committed Date",
+            //     "type": "datetime",
+            //     security: {
+            //         groups: ['VRO_E','LMS_E',
+            //             'EPMO', 'System Admin Group'
+            //         ]
+            //     },
+            // },
             {
                 "InternalName": "Weight",
                 "DisplayNameEn": "Weight",
@@ -81,6 +82,13 @@ var Information_Form  = [
                         'EPMO', 'System Admin Group'
                     ]
                 },
+            },
+            {
+                "InternalName": "ActualCompletedDate",
+                "DisplayNameEn": "Actual Completed Date",
+                "DisplayName":"تاريخ الاكتمال الفعلي",
+                "type":"datetime",
+                "max":"today"
             },
             {
                 "InternalName": "Completed",
@@ -104,27 +112,20 @@ var Information_Form  = [
                     ]
                 },
             },
-            {
-                "InternalName": "ActualCompletedDate",
-                "DisplayNameEn": "Actual Completed Date",
-                "DisplayName":"تاريخ الاكتمال الفعلي",
-                "type":"datetime",
-                "max":"today"
-            },
-            {
-                "InternalName": "RelatedBenefits",
-                "DisplayNameEn": "Related Benefits",
-                "DisplayName":"المنفعة المرتبطة",
-                "type": "lookup",
-                "source": "Benefits",
-                "Dispfieldkey": "Name",
-                "valfieldkey": "Title",
-                security: {
-                    groups: ['VRO_E','LMS_E',
-                        'EPMO', 'System Admin Group'
-                    ]
-                },
-            }
+            // {
+            //     "InternalName": "RelatedBenefits",
+            //     "DisplayNameEn": "Related Benefits",
+            //     "DisplayName":"المنفعة المرتبطة",
+            //     "type": "lookup",
+            //     "source": "Benefits",
+            //     "Dispfieldkey": "Name",
+            //     "valfieldkey": "Title",
+            //     security: {
+            //         groups: ['VRO_E','LMS_E',
+            //             'EPMO', 'System Admin Group'
+            //         ]
+            //     },
+            // }
         ]
     },
     {
@@ -134,9 +135,9 @@ var Information_Form  = [
         descriptionEn: "",
         subFields:[
             {
-                "InternalName": "getfile",
+                "InternalName": "Attachments",
                 "DisplayName":"المستندات",
-                "DisplayNameEn": "Documents",
+                "DisplayNameEn": "Attachments",
                 "type":"file",
                 "withAddBtn":"true"
             }

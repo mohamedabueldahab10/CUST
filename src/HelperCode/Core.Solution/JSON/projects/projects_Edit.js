@@ -143,7 +143,11 @@ var Information_Form = [
         InternalName: 'Committees',
         DisplayName: 'اللجان',
         DisplayNameEn: 'Committees',
-        type: 'string',
+        // type: 'string',
+        source: 'Committees',
+        type: 'lookup',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
         security: {
           groups: [
             'VRO_E',
@@ -350,6 +354,7 @@ var Information_Form = [
         DisplayNameEn: 'Project Type',
         validation: 'required',
         type: 'dropdownValues',
+        validation: 'required',
         options: {
           choices: [
             { display: 'internal', value: 'Internal' },
@@ -386,6 +391,7 @@ var Information_Form = [
         DisplayName: 'هل هو مشروع استراتيجي؟',
         DisplayNameEn: 'Is Strategic Project?',
         type: 'yesnoradio',
+        validation: 'required',
         options: {
           choices: [
             { display: 'yes', value: 'true' },
@@ -596,7 +602,8 @@ var Information_Form = [
         InternalName: 'ExecutionChannels',
         DisplayName: 'الجهة المنفذة',
         DisplayNameEn: 'Execution Channels',
-        type: 'string',
+        // type: 'string',
+        type: 'multiline',
       },
       // {
       //     "InternalName": "HumanResourcesRequired",
@@ -837,20 +844,19 @@ var Information_Form = [
       //     dynamic: "BudgetItem"
       // },
       {
-        InternalName: 'ExpectedBudget',
-        DisplayName: 'الموازنة المتوقعة',
-        DisplayNameEn: 'Expected Budget',
-        type: 'float',
-        state: 'disabled',
-      },
-
-      {
         InternalName: 'AssignedBudget',
         DisplayName: 'الموازنة المعتمدة',
         DisplayNameEn: 'Assigned Budget',
         type: 'float',
         //"state": "disabled"
         // "showonstage":"1"
+      },
+      {
+        InternalName: 'ExpectedBudget',
+        DisplayName: 'الموازنة المتوقعة',
+        DisplayNameEn: 'Expected Budget',
+        type: 'float',
+        state: 'disabled',
       },
       // {
       //     "InternalName": "ContractualValue",
@@ -868,13 +874,13 @@ var Information_Form = [
         },
         // "state": "disabled"
       },
-      {
-        InternalName: 'ActualCostWorkCompleted',
-        DisplayName: 'التكلفة الفعلية للعمل المنجز',
-        DisplayNameEn: 'Actual Cost Work Completed',
-        type: 'float',
-        // "state": "disabled"
-      },
+      // {
+      //   InternalName: 'ActualCostWorkCompleted',
+      //   DisplayName: 'التكلفة الفعلية للعمل المنجز',
+      //   DisplayNameEn: 'Actual Cost Work Completed',
+      //   type: 'float',
+      //   // "state": "disabled"
+      // },
 
       {
         InternalName: 'ProjectBudgetCost',
@@ -966,6 +972,45 @@ var Information_Form = [
   //     }]
   // },
   {
+    label: 'الطرح والتعاقد',
+    labelEn: 'Tendering and Contracting',
+    description: '',
+    descriptionEn: '',
+    subFields: [
+      {
+        InternalName: 'PlannedOfferingDate',
+        DisplayName: 'التاريخ المخطط للطرح',
+        DisplayNameEn: 'Planned Date of Offering',
+        type: 'datetime',
+      },
+      {
+        InternalName: 'ActualOfferingDate',
+        DisplayName: 'تاريخ  الطرح الفعلى',
+        DisplayNameEn: 'Actual Offering Date',
+        type: 'datetime',
+      },
+      {
+        InternalName: 'AwardDate',
+        DisplayName: 'تاريخ  الترسية',
+        DisplayNameEn: 'Award Date',
+        type: 'datetime',
+      },
+      {
+        InternalName: 'ContractualDate',
+        DisplayName: 'تاريخ التعاقد',
+        DisplayNameEn: 'Contractual Date',
+        type: 'datetime',
+      },
+      {
+        InternalName: 'ApprovedBrochure',
+        DisplayName: 'المرفقات',
+        DisplayNameEn: 'Attachments',
+        type: 'file',
+        withAddBtn: 'true',
+      },
+    ],
+  },
+  {
     label: 'طاقم عمل المشروع',
     labelEn: 'Project Staff',
     description: '',
@@ -1022,33 +1067,33 @@ var Information_Form = [
           groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
         },
       },
-      {
-        InternalName: 'ObjectiveOwner',
-        DisplayName: 'مالك الهدف (الهدف الفرعي)',
-        DisplayNameEn: 'Objective Owner',
-        type: 'picker',
-        security: {
-          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
-        },
-      },
-      {
-        InternalName: 'QualityOfficer',
-        DisplayName: 'ضابط الجودة',
-        DisplayNameEn: 'Quality Officer',
-        type: 'picker',
-        security: {
-          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
-        },
-      },
-      {
-        InternalName: 'ProjectResponsible',
-        DisplayName: 'مسؤول عن المشروع',
-        DisplayNameEn: 'Project Responsible',
-        type: 'picker',
-        security: {
-          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
-        },
-      },
+      // {
+      //   InternalName: 'ObjectiveOwner',
+      //   DisplayName: 'مالك الهدف (الهدف الفرعي)',
+      //   DisplayNameEn: 'Objective Owner',
+      //   type: 'picker',
+      //   security: {
+      //     groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
+      //   },
+      // },
+      // {
+      //   InternalName: 'QualityOfficer',
+      //   DisplayName: 'ضابط الجودة',
+      //   DisplayNameEn: 'Quality Officer',
+      //   type: 'picker',
+      //   security: {
+      //     groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
+      //   },
+      // },
+      // {
+      //   InternalName: 'ProjectResponsible',
+      //   DisplayName: 'مسؤول عن المشروع',
+      //   DisplayNameEn: 'Project Responsible',
+      //   type: 'picker',
+      //   security: {
+      //     groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
+      //   },
+      // },
       // ,
       // {
       //     "InternalName": "PMORepresentative",
@@ -1082,7 +1127,7 @@ var Information_Form = [
   //     ]
   // },
   {
-    label: 'الإعتمادية على مشروع اّخر',
+    label: 'المشاريع الإعتمادية',
     description: '',
     descriptionEn: '',
     labelEn: 'Dependency Project',
@@ -1105,7 +1150,7 @@ var Information_Form = [
         InternalName: 'Description',
         DisplayName: 'وصف الإعتمادية',
         DisplayNameEn: 'Description',
-        type: 'string',
+        type: 'multiline',
         //"state": "disabled"
       },
     ],
@@ -1148,7 +1193,7 @@ var Information_Form = [
     descriptionEn: '',
     subFields: [
       {
-        InternalName: 'getfile',
+        InternalName: 'Attachments',
         DisplayName: 'المرفقات',
         DisplayNameEn: 'Attachments',
         type: 'file',

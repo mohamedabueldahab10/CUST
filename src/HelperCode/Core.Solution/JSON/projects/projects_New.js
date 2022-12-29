@@ -149,7 +149,6 @@ var Information_Form = [
         DisplayName: 'اللجان',
         DisplayNameEn: 'Committees',
         source: 'Committees',
-        // source: 'Initiatives',
         type: 'lookup',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
@@ -484,9 +483,9 @@ var Information_Form = [
         options: {
           choices: [
             // { display: 'pr04low', value: 'pr04low' },
-            { display: 'pr03medium', value: 'pr03medium' },
-            { display: 'pr02important', value: 'pr02important' },
             { display: 'pr01veryimportant', value: 'pr01veryimportant' },
+            { display: 'pr02important', value: 'pr02important' },
+            { display: 'pr03medium', value: 'pr03medium' },
             //'مهم','مهم جدا','متوسط','منخفض'
           ],
         },

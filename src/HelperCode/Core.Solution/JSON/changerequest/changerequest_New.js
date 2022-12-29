@@ -4,13 +4,13 @@ var Information_Form = [{
         description: "التفاصيل",
         descriptionEn: "Details",
         subFields: [
-            {
-                "InternalName": "Title",
-                "DisplayName":"رمز طلب التغيير",
-                "DisplayNameEn": 'Title',
-                "type":"string",
-                // "validation": "required"
-            },
+            // {
+            //     "InternalName": "Title",
+            //     "DisplayName":"رمز طلب التغيير",
+            //     "DisplayNameEn": 'Title',
+            //     "type":"string",
+            //     // "validation": "required"
+            // },
             {
                 "InternalName": "WorkflowName",
                 "DisplayName": "اسم الإجراء",

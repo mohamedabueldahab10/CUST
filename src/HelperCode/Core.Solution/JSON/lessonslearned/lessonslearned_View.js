@@ -99,20 +99,20 @@ var Information_Form  = [
         ]
     
     },
-    {
-        label: 'المرفقات',
-        labelEn:'Attachments',
-        description: "",
-        descriptionEn:"",
-        subFields:[
-            {
-                // "InternalName": "getfile",
-                "InternalName": "Attachments",
-                "DisplayName":"المرفقات",
-                "DisplayNameEn": "Attachments",
-                "type":"file",
-                "withAddBtn":"true"
-            }
-        ]
-    }
+    // {
+    //     label: 'المرفقات',
+    //     labelEn:'Attachments',
+    //     description: "",
+    //     descriptionEn:"",
+    //     subFields:[
+    //         {
+    //             // "InternalName": "getfile",
+    //             "InternalName": "Attachments",
+    //             "DisplayName":"المرفقات",
+    //             "DisplayNameEn": "Attachments",
+    //             "type":"file",
+    //             "withAddBtn":"true"
+    //         }
+    //     ]
+    // }
 ];
