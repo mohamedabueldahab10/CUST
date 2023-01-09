@@ -15,13 +15,13 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
       },
-      {
-          "InternalName": "Amount",
-          "DisplayNameEn": "Amount",
-          "DisplayName":"المبلغ الإجمالى للمخرجات",
-          "type": "float"
+      // {
+      //     "InternalName": "Amount",
+      //     "DisplayNameEn": "Amount",
+      //     "DisplayName":"المبلغ الإجمالى للمخرجات",
+      //     "type": "float"
 
-      },
+      // },
       {
         InternalName: 'TAX',
         DisplayNameEn: 'TAX',
@@ -29,12 +29,12 @@ var Information_Form = [
         type: 'floatpercentage',
         validation: 'required',
       },
-      {
-          "InternalName": "TotalAmount",
-          "DisplayNameEn":"Total Amount",
-          "DisplayName": "المبلغ الإجمالى",
-          "type": "float"
-      },
+      // {
+      //     "InternalName": "TotalAmount",
+      //     "DisplayNameEn":"Total Amount",
+      //     "DisplayName": "المبلغ الإجمالى",
+      //     "type": "float"
+      // },
       {
         InternalName: 'DisbursementStatus',
         DisplayNameEn: 'Disbursement Status',

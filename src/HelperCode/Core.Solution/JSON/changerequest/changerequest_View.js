@@ -63,7 +63,7 @@ var Information_Form = [
       // },
       {
         InternalName: 'Description',
-        DisplayName: 'وصف التغيير',
+        DisplayName: 'الوصف',
         DisplayNameEn: 'Description',
         type: 'multiline',
         maxchar: 5000,
@@ -231,20 +231,20 @@ var Information_Form = [
       // }
     ],
   },
-  {
-    label: 'المرفقات',
-    labelEn: 'Attachments',
-    description: '',
-    descriptionEn: '',
-    subFields: [
-      {
-        // "InternalName": "getfile",
-        InternalName: 'Attachments',
-        DisplayName: 'المرفقات',
-        DisplayNameEn: 'Attachments',
-        type: 'file',
-        withAddBtn: 'true',
-      },
-    ],
-  },
+  // {
+  //   label: 'المرفقات',
+  //   labelEn: 'Attachments',
+  //   description: '',
+  //   descriptionEn: '',
+  //   subFields: [
+  //     {
+  //       // "InternalName": "getfile",
+  //       InternalName: 'Attachments',
+  //       DisplayName: 'المرفقات',
+  //       DisplayNameEn: 'Attachments',
+  //       type: 'file',
+  //       withAddBtn: 'true',
+  //     },
+  //   ],
+  // },
 ]

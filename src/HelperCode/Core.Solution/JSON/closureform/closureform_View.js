@@ -401,42 +401,26 @@ var Information_Form = [
       },
     ],
   },
-  {
-    label: '',
-    labelEn: '',
-    description: '',
-    descriptionEn: '',
-    subFields: [
-      {
-        InternalName: 'Status',
-        DisplayName: 'الحالة',
-        DisplayNameEn: 'Status',
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            { display: 'saved', value: 'saved' },
-            { display: 'sentforapproval', value: 'sentforapproval' },
-            { display: 'approved', value: 'approved' },
-            { display: 'returned', value: 'returned' },
-          ],
-        },
-      },
-    ],
-  },
-  {
-    label: 'المرفقات',
-    labelEn: 'Attachments',
-    description: '',
-    descriptionEn: '',
-    subFields: [
-      {
-        // "InternalName": "getfile",
-        InternalName: 'Attachments',
-        DisplayName: 'المرفقات',
-        DisplayNameEn: 'Attachments',
-        type: 'file',
-        withAddBtn: 'true',
-      },
-    ],
-  },
+  // {
+  //   label: '',
+  //   labelEn: '',
+  //   description: '',
+  //   descriptionEn: '',
+  //   subFields: [
+  //     {
+  //       InternalName: 'Status',
+  //       DisplayName: 'الحالة',
+  //       DisplayNameEn: 'Status',
+  //       type: 'dropdownValues',
+  //       options: {
+  //         choices: [
+  //           { display: 'saved', value: 'saved' },
+  //           { display: 'sentforapproval', value: 'sentforapproval' },
+  //           { display: 'approved', value: 'approved' },
+  //           { display: 'returned', value: 'returned' },
+  //         ],
+  //       },
+  //     },
+  //   ],
+  // },
 ]

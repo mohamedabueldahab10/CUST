@@ -5,100 +5,71 @@ var Information_Form = [
     description: 'التفاصيل',
     descriptionEn: 'Details',
     subFields: [
-      // {
-      //     "InternalName": "Title",
-      //     "DisplayName":"رمز المبادرة ",
-      //     "type":"string" ,
-      //     "state":"disabled"
-
-      // },
+      {
+        InternalName: 'Title',
+        DisplayName: 'رمز المبادرة ',
+        DisplayNameEn: 'Initiative Code',
+        type: 'string',
+        state: 'disabled',
+      },
       {
         InternalName: 'Name',
         DisplayNameEn: 'Name',
         DisplayName: 'اسم المبادرة',
         type: 'string',
-        maxchar: '250',
-        validation: 'required',
+        // maxchar: '250',
+        // validation: 'required',
       },
       {
-        InternalName: 'Types',
-        DisplayNameEn: 'Types',
-        DisplayName: 'النوع',
-        toggleValues: [
-          { value: 'vision', fields: ['RelatedBudgetItem'] }, //we can put more than 1  field
-        ],
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            { display: 'vision', value: 'vision' },
-            { display: 'strategically', value: 'strategically' },
-            { display: 'others', value: 'others' },
-          ],
-        },
-      },
-      {
-        InternalName: 'ERPCode',
-        DisplayNameEn: 'ERP Code',
-        DisplayName: 'ترميز موارد',
+        InternalName: 'OfficialCode',
+        DisplayNameEn: 'Official Code',
+        DisplayName: 'رمز المبادرة الرسمي',
         type: 'string',
-        maxchar: '250',
-        // "validation": "required"
       },
-      {
-        InternalName: 'RelatedKPI',
-        DisplayNameEn: 'Related KPI',
-        DisplayName: 'المؤشر الفرعي المرتبط',
-        type: 'string',
-        display: 'none',
-      },
-      {
-        InternalName: 'Status',
-        DisplayName: 'حالة المبادرة',
-        DisplayNameEn: 'Initiative Status',
-        type: 'dropdownValues',
-        validation: 'required',
-        options: {
-          choices: [
-            // { value: 'notstarted', display: 'notstarted' },
-            { value: 'inactive', display: 'inactive' },
-            {
-              value: 'implementationnotstarted',
-              display: 'implementationnotstarted',
-            },
-            { value: 'executioninitiative', display: 'executioninitiative' },
-            { value: 'complete', display: 'complete' },
-            { value: 'canceled', display: 'canceled' },
-            // { value: 'closureinitiative', display: 'closureinitiative' }
-          ],
-        },
-      },
-      {
-        InternalName: 'Description',
-        DisplayNameEn: 'Description',
-        DisplayName: 'وصف المبادرة',
-        type: 'multiline',
-        maxchar: '500',
-        validation: 'required',
-      },
-
-      //  {
-      //     "InternalName": "RelatedProgram",
-      //     "DisplayNameEn": "Related Program",
-      //     "DisplayName": "أسم البرنامج التابع له",
-      //     "type": "lookup",
-      //     "source": "Instruments",
-      //     "Dispfieldkey": "Title",
-      //     "valfieldkey": "Title"
-      //  },
-      {
-        InternalName: 'RelatedProgram',
-        DisplayNameEn: 'Related Program',
-        DisplayName: 'أسم البرنامج التابع له',
-        type: 'string',
-        // "source": "Instruments",
-        // "Dispfieldkey": "Title",
-        // "valfieldkey": "Title"
-      },
+      // {
+      //   InternalName: 'Types',
+      //   DisplayNameEn: 'Types',
+      //   DisplayName: 'النوع',
+      //   toggleValues: [
+      //     { value: 'vision', fields: ['RelatedBudgetItem'] }, //we can put more than 1  field
+      //   ],
+      //   type: 'dropdownValues',
+      //   options: {
+      //     choices: [
+      //       { display: 'vision', value: 'vision' },
+      //       { display: 'strategically', value: 'strategically' },
+      //       { display: 'others', value: 'others' },
+      //     ],
+      //   },
+      // },
+      // {
+      //   InternalName: 'RelatedKPI',
+      //   DisplayNameEn: 'Related KPI',
+      //   DisplayName: 'المؤشر الفرعي المرتبط',
+      //   type: 'string',
+      //   display: 'none',
+      // },
+      // {
+      //   InternalName: 'Status',
+      //   DisplayName: 'حالة المبادرة',
+      //   DisplayNameEn: 'Initiative Status',
+      //   type: 'dropdownValues',
+      //   validation: 'required',
+      //   options: {
+      //     choices: [
+      //       // { value: 'notstarted', display: 'notstarted' },
+      //       { value: 'inactive', display: 'inactive' },
+      //       {
+      //         value: 'implementationnotstarted',
+      //         display: 'implementationnotstarted',
+      //       },
+      //       { value: 'executioninitiative', display: 'executioninitiative' },
+      //       { value: 'complete', display: 'complete' },
+      //       { value: 'canceled', display: 'canceled' },
+      //       // { value: 'closureinitiative', display: 'closureinitiative' }
+      //     ],
+      //   },
+      // },
       // {
       //     "InternalName": "RelatedObjectiveAgency",
       //     "DisplayNameEn": "Objective Name",
@@ -109,13 +80,13 @@ var Information_Form = [
       //     "Dispfieldkey": "Name",
       //     "valfieldkey": "Title"
       // },
-      {
-        InternalName: 'InitiativeOwnerEntity',
-        DisplayNameEn: 'Initiative Owner Entity',
-        DisplayName: 'الجهة المالكة للمبادرة ',
-        type: 'picker',
-        // "state": "disabled",
-      },
+      // {
+      //   InternalName: 'InitiativeOwnerEntity',
+      //   DisplayNameEn: 'Initiative Owner Entity',
+      //   DisplayName: 'الجهة المالكة للمبادرة ',
+      //   type: 'picker',
+      //   // "state": "disabled",
+      // },
       // {
       //     "InternalName": "RelatedStrategyObjective",
       //     "DisplayNameEn": "Objective Name",
@@ -126,12 +97,12 @@ var Information_Form = [
       //     "Dispfieldkey": "Name",
       //     "valfieldkey": "Title"
       // },
-      {
-        InternalName: 'ProgramVision',
-        DisplayNameEn: 'Program Vision',
-        DisplayName: 'برنامج تحقيق الرؤية',
-        type: 'string',
-      },
+      // {
+      //   InternalName: 'ProgramVision',
+      //   DisplayNameEn: 'Program Vision',
+      //   DisplayName: 'برنامج تحقيق الرؤية',
+      //   type: 'string',
+      // },
       {
         InternalName: 'RelatedStrategy',
         DisplayNameEn: 'Related Strategy',
@@ -163,30 +134,58 @@ var Information_Form = [
             },
           ],
         },
-        validation: 'required',
+        // validation: 'required',
       },
       {
         InternalName: 'RelatedObjective',
         DisplayNameEn: 'Related Objective',
         DisplayName: 'الهدف المرتبط',
-        type: 'lookup',
+        type: 'lookupmultiselect',
+        grpfieldkey: 'Title',
         source: 'SOs',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         // "state": "disabled"
       },
       {
-        InternalName: 'RelatedStrategyObjective',
-        DisplayNameEn: 'Related Strategy Objective',
-        ToggleName: 'RelatedStrategyObjective',
-        DisplayName: 'الهدف الاستراتيجي المرتبط',
-        type: 'lookup',
-        source: 'SOs',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
-        // "state": "disabled",
-        display: 'none',
+        InternalName: 'RelatedProgram',
+        DisplayNameEn: 'Related Program',
+        DisplayName: 'اسم البرنامج التابع له',
+        type: 'string',
+        // "source": "Instruments",
+        // "Dispfieldkey": "Title",
+        // "valfieldkey": "Title"
       },
+      {
+        InternalName: 'InitiativeOwner',
+        DisplayNameEn: 'Initiative Owner',
+        DisplayName: 'مالك المبادرة ',
+        type: 'picker',
+      },
+      {
+        InternalName: 'InitiativeActualOwner',
+        DisplayNameEn: 'Initiative Actual Owner',
+        DisplayName: 'المالك الفعلي للمبادرة',
+        type: 'string',
+      },
+      {
+        InternalName: 'InitiativePM',
+        DisplayNameEn: 'Initiative manager',
+        DisplayName: 'مدير المبادرة ',
+        type: 'picker',
+      },
+      // {
+      //   InternalName: 'RelatedStrategyObjective',
+      //   DisplayNameEn: 'Related Strategy Objective',
+      //   ToggleName: 'RelatedStrategyObjective',
+      //   DisplayName: 'الهدف الاستراتيجي المرتبط',
+      //   type: 'lookup',
+      //   source: 'SOs',
+      //   Dispfieldkey: 'Name',
+      //   valfieldkey: 'Title',
+      //   // "state": "disabled",
+      //   display: 'none',
+      // },
 
       //  {
       //     "InternalName": "Portfolio",
@@ -212,7 +211,7 @@ var Information_Form = [
       },
       {
         InternalName: 'SubSector',
-        DisplayNameEn: 'Department',
+        DisplayNameEn: 'Deputyship',
         DisplayName: 'الوكالة/الجهة ',
         type: 'lookup',
         //from other list:
@@ -220,33 +219,20 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
       },
-
-      {
-        InternalName: 'InitiativeOwner',
-        DisplayNameEn: 'Initiative Owner',
-        DisplayName: 'مالك المبادرة ',
-        type: 'picker',
-      },
-      {
-        InternalName: 'OwnerEmail',
-        DisplayNameEn: 'Owner Email',
-        DisplayName: 'البريد الإلكتروني لمالك المبادرة',
-        type: 'string',
-        maxchar: '500',
-      },
-      {
-        InternalName: 'InitiativePM',
-        DisplayNameEn: 'Initiative manager',
-        DisplayName: 'مدير المبادرة ',
-        type: 'picker',
-      },
-      {
-        InternalName: 'ManagerEmail',
-        DisplayNameEn: 'Manager Email',
-        DisplayName: 'البريد الإلكتروني لمدير المبادرة',
-        type: 'string',
-        maxchar: '500',
-      },
+      // {
+      //   InternalName: 'OwnerEmail',
+      //   DisplayNameEn: 'Owner Email',
+      //   DisplayName: 'البريد الإلكتروني لمالك المبادرة',
+      //   type: 'string',
+      //   maxchar: '500',
+      // },
+      // {
+      //   InternalName: 'ManagerEmail',
+      //   DisplayNameEn: 'Manager Email',
+      //   DisplayName: 'البريد الإلكتروني لمدير المبادرة',
+      //   type: 'string',
+      //   maxchar: '500',
+      // },
       // {
       //     "InternalName": "ObjectiveOwner",
       //     "DisplayNameEn": "Objective Owner",
@@ -268,10 +254,10 @@ var Information_Form = [
         min: 'StartDate',
       },
       {
-        InternalName: 'ExpenseStartDate',
-        DisplayName: 'تاريخ بداية الصرف',
-        DisplayNameEn: 'Expense Start Date',
-        type: 'datetime',
+        InternalName: 'Description',
+        DisplayNameEn: 'Description',
+        DisplayName: 'وصف المبادرة',
+        type: 'multiline'
       },
       {
         InternalName: 'Classification',
@@ -279,14 +265,38 @@ var Information_Form = [
         DisplayNameEn: 'Classification',
         type: 'string',
       },
-
       {
-        InternalName: 'InitiativeStatus',
-        DisplayName: 'حالة توثيق المبادرة',
-        DisplayNameEn: 'Initiative Documentation Status',
-        type: 'string',
+        InternalName: 'ExpenseStartDate',
+        DisplayName: 'تاريخ بداية الصرف',
+        DisplayNameEn: 'Expense Start Date',
+        type: 'datetime',
       },
-
+      {
+        InternalName: 'ERPCode',
+        DisplayNameEn: 'ERP Code',
+        DisplayName: 'ترميز موارد',
+        type: 'string',
+        maxchar: '250',
+        // "validation": "required"
+      },
+      {
+        InternalName: 'InitiativeProgressStatus',
+        DisplayName: 'حالة الإنجاز',
+        DisplayNameEn: 'Initiative Progress Status',
+        type: 'string', //formula
+      },
+      // {
+      //   InternalName: 'InitiativeStatus',
+      //   DisplayName: 'حالة توثيق المبادرة',
+      //   DisplayNameEn: 'Initiative Documentation Status',
+      //   type: 'string',
+      // },
+      {
+        InternalName: 'DependencyCost',
+        DisplayName: 'حجم الارتباط (منصة اعتماد) ',
+        DisplayNameEn: 'Dependency Cost',
+        type: 'floatpercentage',
+      },
       {
         InternalName: 'PlannedPercentageCompleted',
         DisplayName: 'نسبة اكتمال المبادرة المخططة ',
@@ -299,18 +309,12 @@ var Information_Form = [
         DisplayNameEn: 'Actual Percentage Completed',
         type: 'floatpercentage',
       },
-      {
-        InternalName: 'DelayPercentage',
-        DisplayName: 'نسبة التأخير ',
-        DisplayNameEn: 'Delay Percentage',
-        type: 'floatpercentage',
-      },
-      {
-        InternalName: 'DependencyCost',
-        DisplayName: 'حجم الارتباط (منصة اعتماد) ',
-        DisplayNameEn: 'Dependency Cost',
-        type: 'float',
-      },
+      // {
+      //   InternalName: 'DelayPercentage',
+      //   DisplayName: 'نسبة التأخير ',
+      //   DisplayNameEn: 'Delay Percentage',
+      //   type: 'floatpercentage',
+      // },
       // {
       //     "InternalName": "StrategicPillar",
       //     "DisplayNameEn": "Strategic Pillar",
@@ -336,7 +340,7 @@ var Information_Form = [
         // "ToggleName": "RelatedBudgetItem", //ToggleName to select which field
         DisplayNameEn: 'Related Budget Item',
         DisplayName: 'البند المالي المرتبط',
-        type: 'lookup',
+        type: 'lookupmultiselect',
         //from other list:
         source: 'Budget Items',
         Dispfieldkey: 'Name',

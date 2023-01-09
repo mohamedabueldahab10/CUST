@@ -27,7 +27,7 @@ var Information_Form = [
       // },
       {
         InternalName: 'Subject',
-        DisplayName: 'موضوع الاجتماع',
+        DisplayName: 'الموضوع',
         DisplayNameEn: 'Meeting Subject',
         type: 'string',
         validation: 'required',

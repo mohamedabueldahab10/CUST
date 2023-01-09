@@ -115,20 +115,20 @@ var Information_Form = [
       // }
     ],
   },
-  {
-    label: 'وثائق داعمة',
-    labelEn: 'Attachments',
-    description: 'التفاصيل',
-    descriptionEn: 'Details',
-    subFields: [
-      {
-        InternalName: 'Attachments',
-        DisplayName: 'مرفقات',
-        DisplayNameEn: 'Attachments',
-        type: 'file',
-        withAddBtn: 'true',
-        // validation: 'required',
-      },
-    ],
-  },
+  // {
+  //   label: 'وثائق داعمة',
+  //   labelEn: 'Attachments',
+  //   description: 'التفاصيل',
+  //   descriptionEn: 'Details',
+  //   subFields: [
+  //     {
+  //       InternalName: 'Attachments',
+  //       DisplayName: 'مرفقات',
+  //       DisplayNameEn: 'Attachments',
+  //       type: 'file',
+  //       withAddBtn: 'true',
+  //       // validation: 'required',
+  //     },
+  //   ],
+  // },
 ]

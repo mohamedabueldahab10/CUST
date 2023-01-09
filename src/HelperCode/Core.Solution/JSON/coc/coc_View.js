@@ -6,6 +6,12 @@ var Information_Form = [
     descriptionEn: 'Details',
     subFields: [
       {
+        InternalName: 'Title',
+        DisplayNameEn: 'CoC Code',
+        DisplayName: 'رمز شهادة الإنجاز',
+        type: 'string',
+      },
+      {
         InternalName: 'Deliverables',
         DisplayNameEn: 'Deliverables',
         DisplayName: 'المخرجات',
@@ -16,11 +22,10 @@ var Information_Form = [
         valfieldkey: 'Title',
       },
       {
-          "InternalName": "Amount",
-          "DisplayNameEn": "Amount",
-          "DisplayName":"المبلغ الإجمالى للمخرجات",
-          "type": "float"
-
+        InternalName: 'Amount',
+        DisplayNameEn: 'Amount',
+        DisplayName: 'المبلغ الإجمالى للمخرجات',
+        type: 'float',
       },
       {
         InternalName: 'TAX',
@@ -30,10 +35,10 @@ var Information_Form = [
         validation: 'required',
       },
       {
-          "InternalName": "TotalAmount",
-          "DisplayNameEn":"Total Amount",
-          "DisplayName": "المبلغ الإجمالى",
-          "type": "float"
+        InternalName: 'TotalAmount',
+        DisplayNameEn: 'Total Amount',
+        DisplayName: 'المبلغ الإجمالى',
+        type: 'float',
       },
       {
         InternalName: 'DisbursementStatus',

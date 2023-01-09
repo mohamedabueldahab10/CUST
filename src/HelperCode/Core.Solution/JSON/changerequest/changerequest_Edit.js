@@ -58,7 +58,7 @@ var Information_Form = [{
             // },
             {
                 "InternalName": "Description",
-                "DisplayName": "وصف التغيير",
+                "DisplayName": "الوصف",
                 "DisplayNameEn": "Description",
                 "type": "multiline",
                 "maxchar": 5000

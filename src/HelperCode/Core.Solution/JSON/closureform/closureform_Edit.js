@@ -5,12 +5,12 @@ var Information_Form = [
     descriptionEn: 'Details ',
     description: 'معلومات نموذج اغلاق مشروع ',
     subFields: [
-      {
-        InternalName: 'Title',
-        DisplayNameEn: 'Title',
-        DisplayName: 'رمز اغلاق المشروع',
-        type: 'string',
-      },
+      // {
+      //   InternalName: 'Title',
+      //   DisplayNameEn: 'Title',
+      //   DisplayName: 'رمز اغلاق المشروع',
+      //   type: 'string',
+      // },
       {
         InternalName: 'ClosureReasons',
         DisplayName: 'أسباب اغلاق المشروع',

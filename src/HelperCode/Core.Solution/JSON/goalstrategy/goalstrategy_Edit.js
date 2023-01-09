@@ -13,7 +13,14 @@ var Information_Form = [
                 "type": "string",
                 "validation": "required"
             },
+            {
+                "InternalName": "Description",
+                "DisplayNameEn": "Description",
+                "DisplayName": "الوصف",
+                "type": "multiline",
+                // "validation": "required"
 
+            },
             {
                 "InternalName": "Types",
                 "DisplayNameEn": "Strategy Type",
@@ -31,23 +38,15 @@ var Information_Form = [
                 options: {
                     choices: [
                         // { display: 'main', value: 'main' },
-                        { display: 'sub', value: 'sub' },
-                        { display: 'vision', value: 'vision', roles:["Administrator","VROE","VROP"] },
                         { display: 'ministry', value: 'ministry', roles:["Administrator","EPMO","SPM"] },
-                        { display: 'sectorial', value: 'sectorial', roles:["Administrator","VROE","VROP","EPMO","SPM","LMSE","LMSP"] },
+                        { display: 'vision', value: 'vision', roles:["Administrator","VROE","VROP"] },
                         { display: 'lms', value: 'lms', roles:["Administrator","LMSE","LMSP"]},
+                        { display: 'sectorial', value: 'sectorial', roles:["Administrator","VROE","VROP","EPMO","SPM","LMSE","LMSP"] },
+                        { display: 'sub', value: 'sub' },
                         // { display: 'jobmarket', value: 'jobmarket' },
                         // { display: 'transformationally', value: 'transformationally' },
                     ]
                 }
-
-            },
-            {
-                "InternalName": "Description",
-                "DisplayNameEn": "Description",
-                "DisplayName": "الوصف",
-                "type": "multiline",
-                // "validation": "required"
 
             },
             {
@@ -97,6 +96,23 @@ var Information_Form = [
                 "type":"datetime",
                 "max":"today"
             },
+        ]
+    },
+    {
+        label: 'المحاور الاستراتيجية',
+        labelEn: 'Strategy pillars',
+        description: "التفاصيل",
+        descriptionEn: "Details",
+        sectiontype: "master",
+        targetlist: "SPillars",
+        subFields: [
+            // {
+            //     "InternalName": "Title",
+            //     "DisplayNameEn": "Title",
+            //     "DisplayName":"رمز  الركيزةالاستراتيجية",
+            //     "type":"string",
+            //      "state":"disabled"
+            // },
             {
                 "InternalName": "PillarsExist",
                 "ToggleName": "PillarsExist",
@@ -117,23 +133,6 @@ var Information_Form = [
                 },
 
             },
-        ]
-    },
-    {
-        label: 'المحاور الاستراتيجية',
-        labelEn: 'Strategy pillars',
-        description: "التفاصيل",
-        descriptionEn: "Details",
-        sectiontype: "master",
-        targetlist: "SPillars",
-        subFields: [
-            // {
-            //     "InternalName": "Title",
-            //     "DisplayNameEn": "Title",
-            //     "DisplayName":"رمز  الركيزةالاستراتيجية",
-            //     "type":"string",
-            //      "state":"disabled"
-            // },
             {
                 "InternalName": "Name",
                 "DisplayNameEn": "Name",

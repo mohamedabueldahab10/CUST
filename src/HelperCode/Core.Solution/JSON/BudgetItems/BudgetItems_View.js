@@ -14,18 +14,13 @@ var Information_Form  = [
                 "state":"disabled"
                
             },
-        
             {
-                "InternalName": "Types",
-                "DisplayNameEn": "Types",
-                "DisplayName":"النوع",
-                "type": "dropdownValues",
-                options: {
-                    choices: [
-                        { display: 'opex', value: 'opex' },
-                        { display: 'capex', value: 'capex' },
-                    ]
-                }
+                "InternalName": "Name",
+                "DisplayNameEn": "Budget Name",
+                "DisplayName":"اسم البند",
+                "type":"string",
+                "maxchar": "250",
+            
             },
             {
                 "InternalName": "Stakeholders",
@@ -36,43 +31,6 @@ var Information_Form  = [
                 "source": "Internal Entities",
                 "Dispfieldkey": "Name",
                 "valfieldkey": "Title"
-            
-            },
-            {
-                "InternalName": "Initiative",
-                "DisplayNameEn": "Initiative",
-                "DisplayName":"اسم المبادرة المرتبطة",
-                "type":"string",
-                "maxchar": "250"
-            
-            },
-            {
-                "InternalName": "Expenses1",
-                "DisplayNameEn": "Expenses1",
-                "DisplayName":"تصنيف المصروف - مستوى أول (الإدارة المالية)",
-                "type":"float"
-            
-            },
-            {
-                "InternalName": "Expenses2",
-                "DisplayNameEn": "Expenses2",
-                "DisplayName":"تصنيف المصروف - مستوى ثاني (الإدارة المالية)",
-                "type":"float"
-            
-            },
-            {
-                "InternalName": "Name",
-                "DisplayNameEn": "Budget Name",
-                "DisplayName":"اسم البند",
-                "type":"string",
-                "maxchar": "250",
-            
-            },
-            {
-                "InternalName": "Amount",
-                "DisplayNameEn": "Amount",
-                "DisplayName":"التكاليف الإجمالية (لكامل السنوات)",
-                "type":"float"
             
             },
             {
@@ -87,6 +45,43 @@ var Information_Form  = [
                 "DisplayNameEn": "To",
                 "DisplayName":"إلى تاريخ",
                 "type":"datetime"
+            
+            },
+            // {
+            //     "InternalName": "Initiative",
+            //     "DisplayNameEn": "Initiative",
+            //     "DisplayName":"اسم المبادرة المرتبطة",
+            //     "type":"string",
+            //     "maxchar": "250"
+            
+            // },
+            {
+                "InternalName": "Expenses1",
+                "DisplayNameEn": "Expenses1",
+                "DisplayName":"تصنيف المصروف - مستوى أول (الإدارة المالية)",
+                "type":"float"
+            
+            },
+            {
+                "InternalName": "Expenses2",
+                "DisplayNameEn": "Expenses2",
+                "DisplayName":"تصنيف المصروف - مستوى ثاني (الإدارة المالية)",
+                "type":"float"
+            
+            },
+            // {
+            //     "InternalName": "Name",
+            //     "DisplayNameEn": "Budget Name",
+            //     "DisplayName":"اسم البند",
+            //     "type":"string",
+            //     "maxchar": "250",
+            
+            // },
+            {
+                "InternalName": "Amount",
+                "DisplayNameEn": "Amount",
+                "DisplayName":"التكاليف الإجمالية (لكامل السنوات)",
+                "type":"float"
             
             },
             {
@@ -109,7 +104,19 @@ var Information_Form  = [
                 "DisplayName":"قيمة البند",
                 "type":"float",
                 "display":"none"
-            }
+            },
+            {
+                "InternalName": "Type",
+                "DisplayNameEn": "Type",
+                "DisplayName":"النوع",
+                "type": "dropdownValues",
+                options: {
+                    choices: [
+                        { display: 'opex', value: 'opex' },
+                        { display: 'capex', value: 'capex' },
+                    ]
+                }
+            },
         ]
     },
 ];

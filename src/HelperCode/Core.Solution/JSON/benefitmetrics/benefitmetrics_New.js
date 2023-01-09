@@ -72,6 +72,14 @@ var Information_Form = [
         // dynamic: "Initiative"
       },
       {
+        InternalName: 'Equation',
+        DisplayNameEn: 'Equation',
+        DisplayName: 'المعادلة',
+        type: 'string',
+        maxchar: '250',
+        validation: 'required',
+      },
+      {
         InternalName: 'MesureStatus',
         DisplayNameEn: 'MesureStatus',
         DisplayName: 'حالة القياس',

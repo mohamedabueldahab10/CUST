@@ -16,7 +16,7 @@ var Information_Form = [
         DisplayName: 'الفئة المستهدفة',
         DisplayNameEn: 'Target Group',
         type: 'string',
-        maxchar: '250',
+        // maxchar: '250',
         validation: 'required',
       },
       {
@@ -164,15 +164,15 @@ var Information_Form = [
         DisplayNameEn: 'Comments',
         DisplayName: 'ملاحظات',
         type: 'multiline',
-        maxchar: '500',
+        // maxchar: '500',
       },
-      {
-        InternalName: 'Attachments',
-        DisplayName: 'مرفقات',
-        DisplayNameEn: 'Attachments',
-        type: 'file',
-        withAddBtn: 'true',
-      },
+      // {
+      //   InternalName: 'Attachments',
+      //   DisplayName: 'مرفقات',
+      //   DisplayNameEn: 'Attachments',
+      //   type: 'file',
+      //   withAddBtn: 'true',
+      // },
     ],
   },
 ]

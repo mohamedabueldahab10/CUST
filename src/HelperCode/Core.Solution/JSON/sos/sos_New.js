@@ -54,7 +54,9 @@ var Information_Form = [
         options: {
           choices: [
             { display: 'main', value: 'main' },
-            { display: 'sub', value: 'sub' },
+            { display: 'level2', value: 'level2' },
+            { display: 'level3', value: 'level3' },
+            // { display: 'sub', value: 'sub' },
             // { display: 'vision', value: 'vision' },
             // { display: 'ministry', value: 'ministry' },
             // { display: 'jobmarket', value: 'jobmarket' },
@@ -154,6 +156,58 @@ var Information_Form = [
         dynamic: 'RelatedStrategy',
         filterField: 'RelatedStrategy',
         filterFieldType: 'Text',
+      },
+      {
+        InternalName: 'RelatedPortfolio',
+        DisplayNameEn: 'Related Portfolio',
+        ToggleName: 'RelatedPortfolio',
+        DisplayName: 'المحفظة المرتبطة ',
+        type: 'lookup',
+        //from other list:
+        source: 'Portfolio',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        display: 'none',
+      },
+      {
+        InternalName: 'Sector',
+        DisplayName: 'القطاع',
+        DisplayNameEn: 'Sector',
+        type: 'lookup',
+        validation: 'required',
+        //from other list:
+        source: 'Internal Entities',
+        isSector: 'True',
+        EntityType: 'Sector',
+        Dispfieldkey: 'Name',
+        DispfieldkeyEn: 'NameEn',
+        valfieldkey: 'Title',
+      },
+      {
+        InternalName: 'SubSector',
+        DisplayName: 'الوكالة',
+        DisplayNameEn: 'Deputyship',
+        type: 'lookup',
+        //from other list:
+        source: 'Internal Entities',
+        isSector: 'True',
+        EntityType: 'Department',
+        Dispfieldkey: 'Name',
+        DispfieldkeyEn: 'NameEn',
+        valfieldkey: 'Title',
+      },
+      {
+        InternalName: 'Department',
+        DisplayName: 'الإدارة',
+        DisplayNameEn: 'Department',
+        type: 'lookup',
+        //from other list:
+        source: 'Internal Entities',
+        isSector: 'True',
+        EntityType: 'Department',
+        Dispfieldkey: 'Name',
+        DispfieldkeyEn: 'NameEn',
+        valfieldkey: 'Title',
       },
       // {
       // 	"InternalName": "RelatedStrategyType",
@@ -367,64 +421,13 @@ var Information_Form = [
       },
     ],
   },
-  {
-    label: '',
-    labelEn: '',
-    description: 'التفاصيل',
-    descriptionEn: 'Details',
-    subFields: [
-      {
-        InternalName: 'RelatedPortfolio',
-        DisplayNameEn: 'Related Portfolio',
-        ToggleName: 'RelatedPortfolio',
-        DisplayName: 'المحفظة المرتبطة ',
-        type: 'lookup',
-        //from other list:
-        source: 'Portfolio',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
-        display: 'none',
-      },
-      {
-        InternalName: 'Sector',
-        DisplayName: 'القطاع',
-        DisplayNameEn: 'Sector',
-        type: 'lookup',
-        validation: 'required',
-        //from other list:
-        source: 'Internal Entities',
-        isSector: 'True',
-        EntityType: 'Sector',
-        Dispfieldkey: 'Name',
-        DispfieldkeyEn: 'NameEn',
-        valfieldkey: 'Title',
-      },
-      {
-        InternalName: 'SubSector',
-        DisplayName: 'الوكالة',
-        DisplayNameEn: 'Deputyship',
-        type: 'lookup',
-        //from other list:
-        source: 'Internal Entities',
-        isSector: 'True',
-        EntityType: 'Department',
-        Dispfieldkey: 'Name',
-        DispfieldkeyEn: 'NameEn',
-        valfieldkey: 'Title',
-      },
-      {
-        InternalName: 'Department',
-        DisplayName: 'الإدارة',
-        DisplayNameEn: 'Department',
-        type: 'lookup',
-        //from other list:
-        source: 'Internal Entities',
-        isSector: 'True',
-        EntityType: 'Department',
-        Dispfieldkey: 'Name',
-        DispfieldkeyEn: 'NameEn',
-        valfieldkey: 'Title',
-      },
-    ],
-  },
+  // {
+  //   label: '',
+  //   labelEn: '',
+  //   description: 'التفاصيل',
+  //   descriptionEn: 'Details',
+  //   subFields: [
+      
+  //   ],
+  // },
 ]

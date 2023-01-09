@@ -45,11 +45,18 @@ var Information_Form  = [
                 "type":"floatpercentage"
             },
             {
-                "InternalName": "CommittedDate",
-                "DisplayName": "تاريخ الالتزام",
-                "DisplayNameEn": "Committed Date",
-                "type": "datetime",
+                "InternalName": "ActualCompletedDate",
+                "DisplayNameEn": "Actual Completed Date",
+                "DisplayName":"تاريخ الاكتمال الفعلي",
+                "type":"datetime",
+                "max":"today"
             },
+            // {
+            //     "InternalName": "CommittedDate",
+            //     "DisplayName": "تاريخ الالتزام",
+            //     "DisplayNameEn": "Committed Date",
+            //     "type": "datetime",
+            // },
             {
                 "InternalName": "Completed",
                 "DisplayNameEn": "Completed",
@@ -67,22 +74,15 @@ var Information_Form  = [
                     ]
                 }
             },
-            {
-                "InternalName": "ActualCompletedDate",
-                "DisplayNameEn": "Actual Completed Date",
-                "DisplayName":"تاريخ الاكتمال الفعلي",
-                "type":"datetime",
-                "max":"today"
-            },
-            {
-                "InternalName": "RelatedBenefits",
-                "DisplayNameEn": "Related Benefits",
-                "DisplayName":"المنفعة المرتبطة",
-                "type": "lookup",
-                "source": "Benefits",
-                "Dispfieldkey": "Name",
-                "valfieldkey": "Title",
-            }
+            // {
+            //     "InternalName": "RelatedBenefits",
+            //     "DisplayNameEn": "Related Benefits",
+            //     "DisplayName":"المنفعة المرتبطة",
+            //     "type": "lookup",
+            //     "source": "Benefits",
+            //     "Dispfieldkey": "Name",
+            //     "valfieldkey": "Title",
+            // }
         ]
     },
     // {

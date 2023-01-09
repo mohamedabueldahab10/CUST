@@ -24,7 +24,7 @@ var Information_Form = [
       // },
       {
         InternalName: 'Subject',
-        DisplayName: 'موضوع الاجتماع',
+        DisplayName: 'الموضوع',
         DisplayNameEn: 'Meeting Subject',
         type: 'string',
       },
@@ -77,13 +77,13 @@ var Information_Form = [
       //     "type": "picker"
 
       // },
-      {
-        InternalName: 'Attachments',
-        DisplayName: 'المرفقات',
-        DisplayNameEn: 'Attachments',
-        type: 'file',
-        withAddBtn: 'true',
-      },
+      // {
+      //   InternalName: 'Attachments',
+      //   DisplayName: 'المرفقات',
+      //   DisplayNameEn: 'Attachments',
+      //   type: 'file',
+      //   withAddBtn: 'true',
+      // },
     ],
   },
 ]
