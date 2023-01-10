@@ -176,8 +176,19 @@ var initiativeHomeInfo_Request = {
 			initstartdate = oListItem.get_item("StartDate");
 			initfinishdate = oListItem.get_item("FinishDate");
 			if (initfinishdate != null && initstartdate != null) {
-				var diff = (initfinishdate.getTime() - initstartdate.getTime()) / 1000;
-				diff /= 60 * 60 * 24 * 7 * 4;
+
+				var formatteStartDate = initiativeHomeInfo_Request.g.dateConvert2(initstartdate)
+				var formatteEndDate = initiativeHomeInfo_Request.g.dateConvert2(initfinishdate)
+		
+				formatteStartDate = new Date(formatteStartDate)
+				formatteEndDate = new Date(formatteEndDate)
+
+				var diff = formatteEndDate.getMonth() -
+				formatteStartDate.getMonth() +
+				12 * (formatteEndDate.getFullYear() - formatteStartDate.getFullYear())
+				
+				// var diff = (initfinishdate.getTime() - initstartdate.getTime()) / 1000;
+				// diff /= 60 * 60 * 24 * 7 * 4;
 				// var months = Math.abs(Math.round(diff));
 
 				var months = Math.trunc(diff);
