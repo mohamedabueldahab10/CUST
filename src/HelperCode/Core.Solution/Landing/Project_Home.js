@@ -203,12 +203,28 @@ var Project_Home_Info_Request = {
       baselineStartDate = Project_Home_Info_Request.g.dateConvert(oListItem.get_item('BaselineStartDate'));
       baselineFinishDate = Project_Home_Info_Request.g.dateConvert(oListItem.get_item('BaselineFinishDate'));
 
-      var projectlengthBaseLine = Math.round(getBaseLineFinish - getBaseLineStart) / (1000 * 60 * 60 * 24);
+
+      var formatteStartDate = Project_Home_Info_Request.g.dateConvert2(getBaseLineStart)
+      var formatteEndDate = Project_Home_Info_Request.g.dateConvert2(getBaseLineFinish)
+
+      formatteStartDate = new Date(formatteStartDate)
+      formatteEndDate = new Date(formatteEndDate)
+
+      var projectlengthBaseLine = formatteEndDate.getMonth() -
+        formatteStartDate.getMonth() +
+        12 * (formatteEndDate.getFullYear() - formatteStartDate.getFullYear())
+
+
+      // var projectlengthBaseLine = Math.round(getBaseLineFinish - getBaseLineStart) / (1000 * 60 * 60 * 24);
 
       var projDuration = '', numOfMonths = 0;
 
-      if (Math.trunc((projectlengthBaseLine / 30)) > 0) {
-        numOfMonths = Math.trunc((projectlengthBaseLine) / 30);
+      // if (Math.trunc((projectlengthBaseLine / 30)) > 0) {
+      if (Math.trunc(projectlengthBaseLine) > 0) {
+        // numOfMonths = Math.trunc((projectlengthBaseLine) / 30);
+        numOfMonths = Math.trunc(projectlengthBaseLine);
+
+
         projDuration += ' ';
         if (numOfMonths > 1)
           projDuration += isArabic ? (numOfMonths + ' ' + 'شهرا') : (numOfMonths + ' Months ');
@@ -216,11 +232,30 @@ var Project_Home_Info_Request = {
           projDuration += isArabic ? (numOfMonths + ' ' + 'شهرا') : (numOfMonths + ' Month ');
         }
         projDuration += ' ';
-      } else {
-        numOfMonths = 0;
+
+        $('.project-delivery-info .d-flex:nth-child(1) > span:nth-child(2)').text(projDuration);
+
+      } else if (Math.trunc(projectlengthBaseLine) == 0) {
+
+        var Difference_In_Time =
+          getBaseLineFinish.getTime() - getBaseLineStart.getTime();
+        var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+        projDuration += ' ';
+
+        if (Difference_In_Days > 1)
+          projDuration += isArabic ? (Difference_In_Days + ' ' + 'يوما') : (Difference_In_Days + ' Days ');
+        else {
+          projDuration += isArabic ? (Difference_In_Days + ' ' + 'يوما') : (Difference_In_Days + ' Day ');
+        }
+
+        $('.project-delivery-info .d-flex:nth-child(1) > span:nth-child(2)').text(projDuration);
+
+
+        // numOfMonths = 0;
       }
 
-      $('.project-delivery-info .d-flex:nth-child(1) > span:nth-child(2)').text(projDuration);
+      // $('.project-delivery-info .d-flex:nth-child(1) > span:nth-child(2)').text(projDuration);
 
 
       fullphasename = oListItem.get_item('Phase') || No_Data;
@@ -263,19 +298,19 @@ var Project_Home_Info_Request = {
         '</div>' +
         //
         '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
-          '<h4 data-trans-pattr57 class="black Resources d-flex mx-2" style="display:none !important"></h4>' +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          '<span class="des-13"><span data-trans-pattr56 class="Resources complition-val"></span> ' +
-          '<h4 class="black actual-complete-val">' + ScheduleProjectPercentageComplete + '%</h4></span>' +
-          '</div>' +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          '<span class="des-13"><span data-trans-pattr6 class="Resources state-val"></span></span>' +
-          '<h4 class="black"> ' + ScheduleBLPercentageCompleteList + '%</h4>' + //
-          '</div>' +
-          '<div class="d-inline-flex flex-column mx-2 ' + projectprogress + '">' +
-          '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val"></span></span>' +
-          '<h4 data-trans-' + projectprogress + ' class="black Resources myCompletionStatus statuscolor' + projectprogress + '"></h4>' + //
-          '</div>' +
+        '<h4 data-trans-pattr57 class="black Resources d-flex mx-2" style="display:none !important"></h4>' +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<span class="des-13"><span data-trans-pattr56 class="Resources complition-val"></span> ' +
+        '<h4 class="black actual-complete-val">' + ScheduleProjectPercentageComplete + '%</h4></span>' +
+        '</div>' +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<span class="des-13"><span data-trans-pattr6 class="Resources state-val"></span></span>' +
+        '<h4 class="black"> ' + ScheduleBLPercentageCompleteList + '%</h4>' + //
+        '</div>' +
+        '<div class="d-inline-flex flex-column mx-2 ' + projectprogress + '">' +
+        '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val"></span></span>' +
+        '<h4 data-trans-' + projectprogress + ' class="black Resources myCompletionStatus statuscolor' + projectprogress + '"></h4>' + //
+        '</div>' +
         '</div>' +
         //
         // '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
