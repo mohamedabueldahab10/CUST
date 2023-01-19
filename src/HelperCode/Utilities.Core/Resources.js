@@ -745,7 +745,9 @@
         "toolate":"متأخر جدًا",
         "cocuploaded":"تم الرفع شهادة الانجاز",
         "exchanginginprogress":"جارى الصرف",
-
+        "brochureapproved":"تم اعتماد الكراسة",
+        "linkinginprogress":"جارى الارتباط",
+        "linked":"تم الارتباط",
 
     },
     "en": {
@@ -1508,6 +1510,9 @@
         "toolate":"Too Late",
         "cocuploaded":"COC uploaded",
         "exchanginginprogress":"Exchanging in progress",
+        "brochureapproved":"The brochure has been approved",
+        "linkinginprogress":"Linking in progress",
+        "linked":"Linked",
         
 
     }
