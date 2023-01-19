@@ -726,8 +726,7 @@
         "nonprofitsector":"غير ربحي",
         "missionwasapproved":"تم الإعتماد فى همة",
         "waitingfortheapprovalofresources":"في انتظار اعتماد موارد",
-        "exchangehasbeendone":"تم الصرف"
-        ,
+        "exchangehasbeendone":"تم الصرف"        ,
         "leadingindicator": "مؤشر متقدم",  
         "laggingindicator": "المؤشر مرحل",
         "launchstraightvital": "إطلاق المبادرات الحيوية",
@@ -744,6 +743,9 @@
         "ontrack":"على المسار",
         "late":"متأخر",
         "toolate":"متأخر جدًا",
+        "cocuploaded":"تم الرفع شهادة الانجاز",
+        "exchanginginprogress":"جارى الصرف",
+
 
     },
     "en": {
@@ -1504,6 +1506,9 @@
         "ontrack":"On Track",
         "late":"Late",
         "toolate":"Too Late",
+        "cocuploaded":"COC uploaded",
+        "exchanginginprogress":"Exchanging in progress",
+        
 
     }
 
