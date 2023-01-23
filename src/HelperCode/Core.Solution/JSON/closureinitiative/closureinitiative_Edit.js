@@ -91,20 +91,19 @@ var Information_Form = [
                 "InternalName": "ClosureReasonsDesc",
                 "DisplayNameEn": " Reasons Behind Canceling ",
                 "DisplayName": "أسباب إلغاء المشروع (في حالة الإلغاء)",
+                // "type": "string",
+                "type": "multiline",
+                "maxchar": "250"
+
+            },
+            {
+                "InternalName": "Description",
+                "DisplayNameEn": "Initiative Completion Check list",
+                "DisplayName": "قائمة تحقق اكتمال المبادرة  ",
                 "type": "string",
                 "maxchar": "250"
 
             },
-            // {
-            //     "InternalName": "Description",
-            //     "DisplayNameEn": "Initiative Completion Check list",
-            //     "DisplayName": "قائمة تحقق اكتمال المبادرة  ",
-            //     "type": "string",
-            //     "maxchar": "250"
-
-            // },
-
-
         ]
     },
     {
@@ -514,7 +513,8 @@ var Information_Form = [
         description: "",
         descriptionEn: "",
         subFields: [{
-            "InternalName": "getfile",
+            // "InternalName": "getfile",
+            "InternalName": "Attachments",
             "DisplayName": "المرفقات",
             "DisplayNameEn": "Attachments",
             "type": "file",

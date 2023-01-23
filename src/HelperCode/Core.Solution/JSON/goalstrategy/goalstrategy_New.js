@@ -1,8 +1,8 @@
 
 var Information_Form = [
     {
-        label: 'الاستراتيجية ',
-        labelEn: ' Strategy',
+        label: 'البيانات الرئيسية',
+        labelEn: 'Basic Info',
         description: "التفاصيل",
         descriptionEn: "Details",
         subFields: [
@@ -13,7 +13,14 @@ var Information_Form = [
                 "type": "string",
                 "validation": "required"
             },
+            {
+                "InternalName": "Description",
+                "DisplayNameEn": "Description",
+                "DisplayName": "الوصف",
+                "type": "multiline",
+                // "validation": "required"
 
+            },
             {
                 "InternalName": "Types",
                 "DisplayNameEn": "Strategy Type",
@@ -31,11 +38,11 @@ var Information_Form = [
                 options: {
                     choices: [
                         // { display: 'main', value: 'main' },
-                        { display: 'sub', value: 'sub' },
-                        { display: 'vision', value: 'vision', roles:["Administrator","VROE","VROP"] },
                         { display: 'ministry', value: 'ministry', roles:["Administrator","EPMO","SPM"] },
-                        { display: 'sectorial', value: 'sectorial', roles:["Administrator","VROE","VROP","EPMO","SPM","LMSE","LMSP"] },
+                        { display: 'vision', value: 'vision', roles:["Administrator","VROE","VROP"] },
                         { display: 'lms', value: 'lms', roles:["Administrator","LMSE","LMSP"]},
+                        { display: 'sectorial', value: 'sectorial', roles:["Administrator","VROE","VROP","EPMO","SPM","LMSE","LMSP"] },
+                        { display: 'sub', value: 'sub' },
 
                         // { display: 'jobmarket', value: 'jobmarket' },
                         // { display: 'transformationally', value: 'transformationally' },
@@ -44,22 +51,15 @@ var Information_Form = [
 
             },
             {
-                "InternalName": "Description",
-                "DisplayNameEn": "Description",
-                "DisplayName": "الوصف",
-                "type": "multiline",
-                // "validation": "required"
-
-            },
-            {
                 "InternalName": "Ministry",
-                "DisplayNameEn": "Ministry",
-                "DisplayName": "الوزارة",
+                "DisplayNameEn": "Related Ministey Startegy",
+                "DisplayName": "الاستراتيجية المرتبطة",
                 "ToggleName": "Ministry",
-                "type": "lookupWithQuery",
+                "type": "lookup",
                 "queryField": "Types",
                 "queryFieldType": "dropdownValues", //ex: "Choice"
                 "queryFieldValue": "ministry",
+                "validation": "required",
                 //from other list:
 
                 "source": "GoalStrategy",
@@ -71,45 +71,25 @@ var Information_Form = [
                 "InternalName": "Vision",
                 "DisplayNameEn": "Vision",
                 "DisplayName": "الرؤية",
-                "type": "string",
+                "type": "multiline",
             },
             {
                 "InternalName": "Value",
                 "DisplayNameEn": "Value",
                 "DisplayName":"القيم",
-                "type": "string",
+                "type": "multiline",
             },
             {
                 "InternalName": "Mission",
                 "DisplayNameEn": "Mission",
                 "DisplayName": "الرسالة",
-                "type": "string",
+                "type": "multiline",
             },
             {
                 "InternalName": "ApprovalDate",
                 "DisplayName":"تاريخ إعتماد الإستراتيجية",
                 "DisplayNameEn": "Approval Date",
                 "type":"datetime"
-            },
-            {
-                "InternalName": "PillarsExist",
-                "DisplayName": "هل يوجد محاور؟",
-                "ToggleName": "PillarsExist",
-                "DisplayNameEn": "Is Pillars Exist?",
-                "validation": "required",
-                "type": "yesnoradio",
-                options: {
-                    choices: [{
-                        display: 'yes',
-                        value: 'yes'
-                    },
-                    {
-                        display: 'no',
-                        value: 'no'
-                    }
-                    ]
-                },
-
             },
         ]
     },
@@ -128,6 +108,27 @@ var Information_Form = [
             //     "type":"string",
             //      "state":"disabled"
             // },
+            
+            {
+                "InternalName": "PillarsExist",
+                "DisplayName": "هل يوجد محاور استراتيجية / برامج الرؤية ؟",
+                "ToggleName": "PillarsExist",
+                "DisplayNameEn": "Is Stategic Pillars/Vision Programs Exist?",
+                "validation": "required",
+                "type": "yesnoradio",
+                options: {
+                    choices: [{
+                        display: 'yes',
+                        value: 'yes'
+                    },
+                    {
+                        display: 'no',
+                        value: 'no'
+                    }
+                    ]
+                },
+
+            },
             {
                 "InternalName": "Name",
                 "DisplayNameEn": "Name",

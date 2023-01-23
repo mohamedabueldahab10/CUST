@@ -4,26 +4,26 @@ var Listing_Info = [{
         "DisplayNameEn": "Issue Code",
         "type": "text",
         inlisting: true,
-        infilter: true
+        infilter: false
     },
     {
         "InternalName": "Name",
         "DisplayName": "اسم التحدي",
-        "DisplayNameEn": "Issue Name",
+        "DisplayNameEn": "Name",
         "type": "text",
         inlisting: true,
         infilter: true
     },
-    {
-        "InternalName": "ProjectCode",
-        "DisplayName": "رمز المشروع",
-        "DisplayNameEn": "Project Code",
-        "type": "text",
-        inlisting: true,
-        infilter: false,
-        isLinkable: true,
-        ShowUnderProjectListing: false
-    },
+    // {
+    //     "InternalName": "ProjectCode",
+    //     "DisplayName": "رمز المشروع",
+    //     "DisplayNameEn": "Project Code",
+    //     "type": "text",
+    //     inlisting: true,
+    //     infilter: false,
+    //     isLinkable: true,
+    //     ShowUnderProjectListing: false
+    // },
     // {
     // 	"InternalName": "Impact",
     // 	"DisplayName":"الأثر",
@@ -37,7 +37,7 @@ var Listing_Info = [{
         "DisplayNameEn": "Date Raised",
         "type": "date",
         inlisting: true,
-        infilter: true
+        infilter: false
     },
     {
         "InternalName": "IssueClosureDate",
@@ -45,8 +45,17 @@ var Listing_Info = [{
         "DisplayNameEn": "Issue Closure Date",
         "type": "date",
         inlisting: true,
+        infilter: false
+    },
+    {
+        "InternalName": "Status",
+        "DisplayName": "الحالة",
+        "DisplayNameEn": "Status",
+        "type": "text",
+        needTrans: true,
+        inlisting: true,
         infilter: true
-    }
+    },
 
 
 

@@ -12,8 +12,14 @@ var Information_Form = [{
         {
             "InternalName": "Name",
             "DisplayName": "اسم التحدي",
-            "DisplayNameEn": "Issue Name",
+            "DisplayNameEn": "Name",
             "type": "string"
+        },
+        {
+            "InternalName": "Description",
+            "DisplayName": "وصف التحدي",
+            "DisplayNameEn": "Description",
+            "type": "multiline"
         },
         {
             "InternalName": "Category",
@@ -46,26 +52,51 @@ var Information_Form = [{
             options: {
                 choices: [
                     { display: 'critical', value: 'critical' },
-                    { display: 'hight', value: 'hight' },
+                    { display: 'high', value: 'high' },
                     { display: 'medium', value: 'medium' },
                     { display: 'low', value: 'low' }
                 ]
             }
         },
         {
-            "InternalName": "ResolutionStatus",
-            "DisplayName": "الحالة",
-            "DisplayNameEn": "Resolution Status",
+            "InternalName": "Impact",
+            "DisplayName": "الأثر",
+            "DisplayNameEn": "Impact",
             "type": "dropdownValues",
             options: {
                 choices: [
-                    { display: 'new', value: 'new' },
-                    { display: 'inprogress', value: 'inprogress' },
-                    { display: 'closed', value: 'closed' },
-                    { display: 'cancelled', value: 'cancelled' },
+                    { display: 'high', value: 'high' },
+                    { display: 'medium', value: 'medium' },
+                    { display: 'low', value: 'low' },
                 ]
             }
         },
+        {
+            "InternalName": "ImpactDescription",
+            "DisplayName": "وصف الأثر",
+            "DisplayNameEn": "Impact Description",
+            "type": "multiline"
+        },
+        {
+            "InternalName": "Owner",
+            "DisplayName": "مالك التحدي",
+            "DisplayNameEn": "Owner",
+            "type": "picker"
+        },
+        // {
+        //     "InternalName": "ResolutionStatus",
+        //     "DisplayName": "الحالة",
+        //     "DisplayNameEn": "Resolution Status",
+        //     "type": "dropdownValues",
+        //     options: {
+        //         choices: [
+        //             { display: 'new', value: 'new' },
+        //             { display: 'inprogress', value: 'inprogress' },
+        //             { display: 'closed', value: 'closed' },
+        //             { display: 'cancelled', value: 'cancelled' },
+        //         ]
+        //     }
+        // },
         // {
         //     "InternalName": "Status",
         //     "DisplayName":"الحالة الكلية للتحدي",
@@ -76,18 +107,12 @@ var Information_Form = [{
         //         ]
         //     }
         // },
-        {
-            "InternalName": "Owner",
-            "DisplayName": "مالك التحدي",
-            "DisplayNameEn": "Owner",
-            "type": "picker"
-        },
-        {
-            "InternalName": "AssignedTo",
-            "DisplayName": "مسندة إلى الشخص المسؤول ",
-            "DisplayNameEn": "Assigned To",
-            "type": "picker"
-        },
+        // {
+        //     "InternalName": "AssignedTo",
+        //     "DisplayName": "مسندة إلى الشخص المسؤول ",
+        //     "DisplayNameEn": "Assigned To",
+        //     "type": "picker"
+        // },
         {
             "InternalName": "DateRaised",
             "DisplayName": "تاريخ تحديد التحدي",
@@ -108,6 +133,12 @@ var Information_Form = [{
             "type": "datetime",
             "max":"today"
         },
+        {
+            "InternalName": "Resolution",
+            "DisplayName": "وصف الحل",
+            "DisplayNameEn": "Resolution",
+            "type": "multiline"
+        },
         // {
         //     "InternalName": "DueDate",
         //     "DisplayName": "تاريخ الإستحقاق",
@@ -121,42 +152,23 @@ var Information_Form = [{
             "type": "datetime",
             "min": "DateRaised"
         },
+        // {
+        //     "InternalName": "ResolutionOwner",
+        //     "DisplayName": "المسؤول عن الحل",
+        //     "DisplayNameEn": "Resolution Owner",
+        //     "type": "picker"
+        // },
         {
-            "InternalName": "Impact",
-            "DisplayName": "الأثر",
-            "DisplayNameEn": "Impact",
-            "type": "dropdownValues",
-            options: {
-                choices: [
-                    { display: 'hight', value: 'hight' },
-                    { display: 'medium', value: 'medium' },
-                    { display: 'low', value: 'low' },
+            "InternalName": "Status",
+            "DisplayName":"الحالة",
+            "DisplayNameEn": "Status",
+            "type":"dropdown",
+            options:{
+                choices:[
+                    { display: 'open', value: 'open', selected: 'selected' },
+                    { display: 'closed', value: 'closed' }
                 ]
             }
-        },
-        {
-            "InternalName": "ResolutionOwner",
-            "DisplayName": "المسؤول عن الحل",
-            "DisplayNameEn": "Resolution Owner",
-            "type": "picker"
-        },
-        {
-            "InternalName": "ImpactDescription",
-            "DisplayName": "وصف الأثر",
-            "DisplayNameEn": "Impact Description",
-            "type": "multiline"
-        },
-        {
-            "InternalName": "Description",
-            "DisplayName": "وصف التحدي",
-            "DisplayNameEn": "Description",
-            "type": "multiline"
-        },
-        {
-            "InternalName": "Resolution",
-            "DisplayName": "وصف الحل",
-            "DisplayNameEn": "Resolution",
-            "type": "multiline"
         },
         {
             "InternalName": "Comments",
@@ -186,12 +198,12 @@ var Information_Form = [{
         //     }
         // },
 
-        {
-            "InternalName": "RaisedBy",
-            "DisplayName": "مرفوع بواسطة",
-            "DisplayNameEn": "Reported by",
-            "type": "picker"
-        }
+        // {
+        //     "InternalName": "RaisedBy",
+        //     "DisplayName": "مرفوع بواسطة",
+        //     "DisplayNameEn": "Reported by",
+        //     "type": "picker"
+        // }
 
     ]
 }];

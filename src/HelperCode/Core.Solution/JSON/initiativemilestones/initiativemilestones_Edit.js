@@ -31,6 +31,8 @@ var Information_Form = [
                 "DisplayNameEn": "Planned Completed Date",
                 "DisplayName": "تاريخ الاكتمال المخطط",
                 "type": "datetime",
+                "type": "string",
+                "validation": "required",
                 security: {
                     groups: ['VRO_E','LMS_E','System Admin Group',
                         'EPMO'
@@ -104,9 +106,10 @@ var Information_Form = [
         descriptionEn: "",
         subFields: [
             {
-                "InternalName": "getfile",
+                // "InternalName": "getfile",
+                "InternalName": "Attachments",
                 "DisplayName": "المستندات",
-                "DisplayNameEn": "Documents",
+                "DisplayNameEn": "Attachments",
                 "type": "file",
                 "withAddBtn": "true"
             }

@@ -31,4 +31,13 @@ var Listing_Info = [
 		inlisting: true,
 		infilter: true
 	},
+	{
+		"InternalName": "Completed",
+		"DisplayNameEn": "Completed",
+		"DisplayName":"حالة الاكتمال",
+		"type": "text",
+		needTrans: true,
+		inlisting: true,
+		infilter: true
+	},
 ];

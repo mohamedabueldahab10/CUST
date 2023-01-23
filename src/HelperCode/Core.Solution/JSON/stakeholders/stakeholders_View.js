@@ -8,14 +8,14 @@ var Information_Form  = [
              {
                 "InternalName": "Title",
                 "DisplayName":"رمز صاحب المصلحة",
-                "DisplayNameEn":"StakeHolder Code",
+                "DisplayNameEn":"Code",
                 "type":"string",
                
             },
             {
                 "InternalName": "Name",
-                "DisplayName":"اسم صاحب المصلحة",
-                "DisplayNameEn":"StakeHolder Name",
+                "DisplayName":"الاسم",
+                "DisplayNameEn":"Name",
                 "type":"string",
                
             },
@@ -41,13 +41,13 @@ var Information_Form  = [
             {
                 "InternalName": "Role",
                 "DisplayName":"الدور في المشروع",
-                "DisplayNameEn":"Role In Project",
+                "DisplayNameEn":"Role",
                 "type":"string"
             },
             {
                  "InternalName": "StakeholderType",
                 "DisplayName": "النوع",
-                "DisplayNameEn": "Stakeholder Type",
+                "DisplayNameEn": "Type",
                 "type": "dropdownValues",
                 options: {
                     choices: [
@@ -120,5 +120,21 @@ var Information_Form  = [
             }        
            
         ]
-    }
+    },
+    {
+        label: 'وثائق داعمة',
+        labelEn: 'Attachments',
+        description: 'التفاصيل',
+        descriptionEn: 'Details',
+        subFields: [
+          {
+            InternalName: 'Attachments',
+            DisplayName: 'مرفقات',
+            DisplayNameEn: 'Attachments',
+            type: 'file',
+            withAddBtn: 'true',
+            // validation: 'required',
+          },
+        ],
+      },
 ];

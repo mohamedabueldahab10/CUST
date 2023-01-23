@@ -1,17 +1,16 @@
 var Listing_Info = [
-
+    {
+        "InternalName": "Title",
+        "DisplayNameEn": "Objective Code",
+        "DisplayName":"رمز الهدف",
+        "type":"text",
+        inlisting: true,
+        infilter: false
+    },
     {
         "InternalName": "Name",
         "DisplayNameEn": "Name",
         "DisplayName":"اسم الهدف",
-        "type":"text",
-        inlisting: true,
-        infilter: true
-    },
-    {
-        "InternalName": "Title",
-        "DisplayNameEn": "Code",
-        "DisplayName":"رمز الهدف",
         "type":"text",
         inlisting: true,
         infilter: true
@@ -35,7 +34,7 @@ var Listing_Info = [
     // },
     {
         "InternalName": "Types",
-        "DisplayNameEn": "Objective Type",
+        "DisplayNameEn": "Types",
         "DisplayName":"نوع الهدف",
         "type":"text",
         inlisting: true,
@@ -53,10 +52,18 @@ var Listing_Info = [
     },
     {
         "InternalName": "SubSector",
-        "DisplayName": "الوكالات",
-        "DisplayNameEn": "Departments",
+        "DisplayName": "الوكالة",
+        "DisplayNameEn": "Deputyship",
         "type": "lookup",
         "localStorageVariable":"Dynamo_Internal Entities",
+        inlisting: true,
+        infilter: true
+    },
+    {
+        "InternalName": "Department",
+        "DisplayNameEn": "Department",
+        "DisplayName":"الإدارة",
+        "type":"text",
         inlisting: true,
         infilter: true
     },

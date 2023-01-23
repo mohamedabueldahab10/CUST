@@ -1,97 +1,114 @@
-var Listing_Info = [{
-
-    "InternalName": "Name",
-    "DisplayName": "اسم المشروع",
-    "DisplayNameEn": "Project Name",
-    "type": "text",
+var Listing_Info = [
+  {
+    InternalName: 'Title',
+    DisplayName: 'رمز المشروع',
+    DisplayNameEn: 'Code',
+    type: 'text',
     inlisting: true,
-    infilter: true
-},
-{
-    "InternalName": "ProjectManager",
-    "DisplayName": "مدير المشروع",
-    "DisplayNameEn": "Project Manager",
-    "type": "picker",
-    inlisting: false,
-    infilter: true
-},
-{
-    "InternalName": "ProjectOwner",
-    "DisplayName": "مالك المشروع",
-    "DisplayNameEn": "Project Owner",
-    "type": "picker",
-    inlisting: false,
-    infilter: true
-},
-{
-    "InternalName": "Title",
-    "DisplayName": "رمز المشروع",
-    "DisplayNameEn": "Project Code",
-    "type": "text",
+    infilter: false,
+  },
+  {
+    InternalName: 'Name',
+    DisplayName: 'اسم المشروع',
+    DisplayNameEn: 'Project Name',
+    type: 'text',
     inlisting: true,
-    infilter: false
-}, /////////first 2 will always show up
-// {
-//     "InternalName": "RelatedIdeaCode",
-//     "DisplayName": "رمز الفكرة",
-//     "DisplayNameEn": "Idea Code",
-//     "type": "text",
-//     isItemLinkable: true,
+    infilter: false,
+  },
+  {
+    InternalName: 'ProjectType',
+    DisplayName: 'نوع المشروع',
+    DisplayNameEn: 'Project Type',
+    type: 'text',
+    needTrans: true,
+    inlisting: true,
+    infilter: false,
+  },
+  {
+      "InternalName": "BaselineStartDate",
+      "DisplayNameEn":"Baseline Start Date",
+      "DisplayName": "تاريخ بدء الأساس",
+      "type":"date",
+      inlisting: true,
+      infilter: false
+  },
+  {
+      "InternalName": "BaselineFinishDate",
+      "DisplayNameEn":"Baseline Finish Date",
+      "DisplayName": "تاريخ إنهاء الأساس",
+      "type":"date",
+      inlisting: true,
+      infilter: false
+  },
+  {
+    InternalName: 'Sector',
+    DisplayName: 'القطاع',
+    DisplayNameEn: 'Sector',
+    type: 'lookup',
+    localStorageVariable: 'Dynamo_Internal Entities',
+    inlisting: true,
+    infilter: true,
+  },
+  {
+    InternalName: 'SubSector',
+    DisplayName: 'الوكالة',
+    DisplayNameEn: 'DeputyShip',
+    type: 'lookup',
+    localStorageVariable: 'Dynamo_Internal Entities',
+    inlisting: true,
+    infilter: true,
+  },
+  {
+    InternalName: 'ProjectManager',
+    DisplayName: 'مدير المشروع',
+    DisplayNameEn: 'Project Manager',
+    type: 'picker',
+    inlisting: true,
+    infilter: true,
+  },
+//   {
+//     InternalName: 'ProjectOwner',
+//     DisplayName: 'مالك المشروع',
+//     DisplayNameEn: 'Project Owner',
+//     type: 'picker',
+//     inlisting: false,
+//     infilter: true,
+//   },
+  /////////first 2 will always show up
+  // {
+  //     "InternalName": "RelatedIdeaCode",
+  //     "DisplayName": "رمز الفكرة",
+  //     "DisplayNameEn": "Idea Code",
+  //     "type": "text",
+  //     isItemLinkable: true,
+  //     inlisting: true,
+  //     infilter: true
+  // },
+//   {
+//     InternalName: 'Portfolio',
+//     DisplayName: 'المحفظة',
+//     DisplayNameEn: 'Portfolio',
+//     type: 'lookup',
+//     localStorageVariable: 'Dynamo_Portfolio',
 //     inlisting: true,
-//     infilter: true
-// },
-{
-    "InternalName": "Portfolio",
-    "DisplayName": "المحفظة",
-    "DisplayNameEn": "Portfolio",
-    "type": "lookup",
-    "localStorageVariable":"Dynamo_Portfolio",
-    inlisting: true,
-    infilter: true
-},
-{
-    "InternalName": "ProjectProgressStatus",
-    "DisplayName": "حالة الإنجاز",
-    "DisplayNameEn": "Project Progress Status",
-    "type": "text",
-    needTrans: true,
-    inlisting: true,
-    infilter: true
-},
-{
-    "InternalName": "Priority",
-    "DisplayName": "أهمية المشروع",
-    "DisplayNameEn": "Priority",
-    "type": "text",
-    needTrans: true,
-    inlisting: true,
-    infilter: true
-},
-{
-    "InternalName": "ProjectType",
-    "DisplayName": "نوع المشروع",
-    "DisplayNameEn": "Project Type",
-    "type": "text",
-    needTrans: true,
-    inlisting: false,
-    infilter: false
-},
-{
-    "InternalName": "Sector",
-    "DisplayName": "القطاع",
-    "DisplayNameEn": "Sector",
-    "type": "lookup",
-    "localStorageVariable":"Dynamo_Internal Entities",
-    inlisting: false,
-    infilter: true
-},
-{
-    "InternalName": "SubSector",
-    "DisplayName": "الوكالات",
-    "DisplayNameEn": "Departments",
-    "type": "lookup",
-    "localStorageVariable":"Dynamo_Internal Entities",
-    inlisting: true,
-    infilter: true
-},
-];
+//     infilter: true,
+//   },
+//   {
+//     InternalName: 'ProjectProgressStatus',
+//     DisplayName: 'حالة الإنجاز',
+//     DisplayNameEn: 'Project Progress Status',
+//     type: 'text',
+//     needTrans: true,
+//     inlisting: true,
+//     infilter: true,
+//   },
+//   {
+//     InternalName: 'Priority',
+//     DisplayName: 'أهمية المشروع',
+//     DisplayNameEn: 'Priority',
+//     type: 'text',
+//     needTrans: true,
+//     inlisting: true,
+//     infilter: true,
+//   },
+]

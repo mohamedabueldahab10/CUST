@@ -1,13 +1,13 @@
 var Listing_Info = [
       
-    // {
-    //     "InternalName": "Title",
-    //     "DisplayNameEn": "KPI Code",
-    //     "DisplayName": "رمز المؤشر",
-    //     "type": "text",
-    //     inlisting: true,
-    //     infilter: true
-    // },
+    {
+        "InternalName": "Title",
+        "DisplayNameEn": "Code",
+        "DisplayName": "رمز المؤشر",
+        "type": "text",
+        inlisting: true,
+        infilter: false
+    },
     {
         "InternalName": "Name",
         "DisplayNameEn": "Name",
@@ -17,6 +17,16 @@ var Listing_Info = [
         infilter: true
 
     },
+    {
+        "InternalName": "KPIType",
+        "DisplayNameEn": "KPI Type",
+         "DisplayName": "نوع المؤشر",
+        "type":"text",
+        inlisting: true,
+        infilter: true,
+        needTrans:true,
+       
+    } ,
     // {
     //     "InternalName": "Owner",
     //     "DisplayNameEn": "Owner",
@@ -36,15 +46,23 @@ var Listing_Info = [
 
     },
     {
-        "InternalName": "Types",
-        "DisplayNameEn": "Types",
-         "DisplayName": "نوع المؤشر",
-        "type":"text",
+        "InternalName": "PerformanceLeader",
+        "DisplayNameEn": "Performance Leader",
+        "DisplayName": "رائد الأداء",
+        "type": "picker",
         inlisting: true,
-        infilter: true,
-        needTrans:true,
-       
-    } ,
+        infilter: false
+
+    },
+    {
+        "InternalName": "PerformanceLeader2",
+        "DisplayNameEn": "Second Performance Leader",
+        "DisplayName": "رائد الأداء الثاني",
+        "type": "picker",
+        inlisting: true,
+        infilter: false
+
+    },
     // {
     //     "InternalName": "RelatedStrategyType",
     //     "DisplayNameEn": "Strategy Type",
@@ -55,33 +73,33 @@ var Listing_Info = [
     //     needTrans:true,
        
     // } ,
-    {
-        "InternalName": "PeriodType",
-        "DisplayName": "تكرار القياس",
-        "DisplayNameEn": "Period Type",
-        "type": "text",
-        inlisting: true,
-        infilter: true,
-        needTrans:true
-    },
-    {
-        "InternalName": "Sector",
-        "DisplayName": "القطاع",
-        "DisplayNameEn": "Sector",
-        "type": "lookup",
-        "localStorageVariable":"Dynamo_Internal Entities",
-        inlisting: true,
-        infilter: true
-    },
-    {
-        "InternalName": "SubSector",
-        "DisplayName": "الوكالات",
-        "DisplayNameEn": "Departments",
-        "type": "lookup",
-        "localStorageVariable":"Dynamo_Internal Entities",
-        inlisting: true,
-        infilter: true
-    },
+    // {
+    //     "InternalName": "PeriodType",
+    //     "DisplayName": "تكرار القياس",
+    //     "DisplayNameEn": "Period Type",
+    //     "type": "text",
+    //     inlisting: true,
+    //     infilter: true,
+    //     needTrans:true
+    // },
+    // {
+    //     "InternalName": "Sector",
+    //     "DisplayName": "القطاع",
+    //     "DisplayNameEn": "Sector",
+    //     "type": "lookup",
+    //     "localStorageVariable":"Dynamo_Internal Entities",
+    //     inlisting: true,
+    //     infilter: true
+    // },
+    // {
+    //     "InternalName": "SubSector",
+    //     "DisplayName": "الوكالات",
+    //     "DisplayNameEn": "Departments",
+    //     "type": "lookup",
+    //     "localStorageVariable":"Dynamo_Internal Entities",
+    //     inlisting: true,
+    //     infilter: true
+    // },
     
     // {
     //     "InternalName": "MesurePriority",

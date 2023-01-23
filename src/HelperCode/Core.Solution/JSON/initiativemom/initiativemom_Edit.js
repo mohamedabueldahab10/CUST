@@ -71,9 +71,9 @@ var Information_Form  = [
                 
             },
             {
-                "InternalName": "Comments",
-                "DisplayName":"ملاحظات",
-                "DisplayNameEn": "Comments",
+                "InternalName": "FormalAgenda",
+                "DisplayName":"جدول الأعمال الرسمي",
+                "DisplayNameEn": "Formal Agenda",
                 "type":"multiline"
                 
                 
@@ -85,13 +85,26 @@ var Information_Form  = [
                 "type":"multiline"                
             },
             {
-                "InternalName": "FormalAgenda",
-                "DisplayName":"جدول الأعمال الرسمي",
-                "DisplayNameEn": "Formal Agenda",
+                "InternalName": "Comments",
+                "DisplayName":"ملاحظات",
+                "DisplayNameEn": "Comments",
                 "type":"multiline"
                 
                 
-            }
+            },
         ]
+    },
+    {
+        label: 'المرفقات',
+        labelEn: 'Attachments',
+        description: "",
+        descriptionEn: "",
+        subFields: [{
+            "InternalName": "Attachments",
+            "DisplayName": "المرفقات",
+            "DisplayNameEn": "Attachments",
+            "type": "file",
+            "withAddBtn":"true"
+        }]
     }
 ];

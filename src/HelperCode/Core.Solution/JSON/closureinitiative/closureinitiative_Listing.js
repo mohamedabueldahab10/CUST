@@ -4,7 +4,7 @@ var Listing_Info = [{
 	"DisplayName": "رمز اغلاق المبادرة",
 	"type": "text",
 	inlisting: true,
-	infilter: true
+	infilter: false
 },
 {
 	"InternalName": "ClosureReasons",
@@ -13,15 +13,15 @@ var Listing_Info = [{
 	"type": "text",
 	inlisting: true,
 	needTrans: true,
-	infilter: true
+	infilter: false
 },
 {
 	"InternalName": "ClosureReasonsDesc",
-	"DisplayName": "شرح أسباب اغلاق المبادرة",
+	"DisplayName": "أسباب إلغاء المبادرة (في حالة الإلغاء)",
 	"DisplayNameEn": "Closure Reason Desc",
 	"type": "multiline",
 	"maxchar": 5000,
 	inlisting: true,
-	infilter: true
+	infilter: false
 }
 ];

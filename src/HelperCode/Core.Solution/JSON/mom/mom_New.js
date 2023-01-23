@@ -26,8 +26,8 @@ var Information_Form = [{
         // },
         {
             "InternalName": "Subject",
-            "DisplayName": "موضوع الاجتماع",
-            "DisplayNameEn": "Meeting Subject",
+            "DisplayName": "الموضوع",
+            "DisplayNameEn": "Subject",
             "type": "string",
             "validation": "required"
         },
@@ -68,9 +68,9 @@ var Information_Form = [{
 
         },
         {
-            "InternalName": "Comments",
-            "DisplayName": "ملاحظات",
-            "DisplayNameEn": "Comments",
+            "InternalName": "FormalAgenda",
+            "DisplayName": "جدول الأعمال الرسمي",
+            "DisplayNameEn": "Formal Agenda",
             "type": "multiline",
             "maxchar": 5000,
 
@@ -86,13 +86,20 @@ var Information_Form = [{
 
         },
         {
-            "InternalName": "FormalAgenda",
-            "DisplayName": "جدول الأعمال الرسمي",
-            "DisplayNameEn": "Formal Agenda",
+            "InternalName": "Comments",
+            "DisplayName": "ملاحظات",
+            "DisplayNameEn": "Comments",
             "type": "multiline",
             "maxchar": 5000,
 
 
+        },
+        {
+            "InternalName": "Attachments",
+            "DisplayName":"المرفقات",                
+            "DisplayNameEn": "Attachments",
+            "type":"file",
+            "withAddBtn":"true"
         }
     ]
 }];

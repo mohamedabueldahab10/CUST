@@ -1,10 +1,11 @@
-var Listing_Info = [{
+var Listing_Info = [
+    {
         "InternalName": "Title",
         "DisplayName": "رمز التحدي",
         "DisplayNameEn": "Issue Code",
         "type": "text",
         inlisting: true,
-        infilter: true
+        infilter: false
     },
     {
         "InternalName": "Name",
@@ -37,7 +38,7 @@ var Listing_Info = [{
         "DisplayNameEn": "Date Raised",
         "type": "date",
         inlisting: true,
-        infilter: true
+        infilter: false
     },
     {
         "InternalName": "IssueClosureDate",
@@ -45,9 +46,16 @@ var Listing_Info = [{
         "DisplayNameEn": "Issue Closure Date",
         "type": "date",
         inlisting: true,
-        infilter: true
-    }
-
-
+        infilter: false
+    },
+    {
+        "InternalName": "Status",
+        "DisplayName": "الحالة",
+        "DisplayNameEn": "Status",
+        "type": "text",
+        inlisting: true,
+        infilter: true,
+        needTrans: true
+    },
 
 ];

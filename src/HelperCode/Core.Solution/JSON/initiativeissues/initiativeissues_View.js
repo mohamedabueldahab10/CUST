@@ -66,61 +66,6 @@ var Information_Form = [{
                 ]
             }
         },
-        // {
-        //     "InternalName": "Status",
-        //     "DisplayName":"الحالة الكلية للتحدي",
-        //     "type":"dropdown",
-        //     options:{
-        //         choices:[
-        //             'مغلق',' مفتوح'
-        //         ]
-        //     }
-        // },
-        {
-            "InternalName": "Owner",
-            "DisplayName": "مالك التحدي",
-            "DisplayNameEn": "Owner",
-            "type": "picker"
-        },
-        {
-            "InternalName": "AssignedTo",
-            "DisplayName": "مسندة إلى الشخص المسؤول ",
-            "DisplayNameEn": "Assigned To",
-            "type": "picker"
-        },
-        {
-            "InternalName": "DateRaised",
-            "DisplayName": "تاريخ تحديد التحدي",
-            "DisplayNameEn": "Date Raised",
-            "type": "datetime",
-            "max": "IssueClosureDate"
-        },
-        {
-            "InternalName": "ResolutionTargetDate",
-            "DisplayName": "التاريخ المتوقع للحل",
-            "DisplayNameEn": "Resolution Target Date",
-            "type": "datetime"
-        },
-        {
-            "InternalName": "ResolutionActualDate",
-            "DisplayName": "التاريخ الفعلي للحل",
-            "DisplayNameEn": "Resolution Actual Date",
-            "type": "datetime",
-            "max":"today"
-        },
-        // {
-        //     "InternalName": "DueDate",
-        //     "DisplayName": "تاريخ الإستحقاق",
-        //     "DisplayNameEn": "Due Date",
-        //     "type": "datetime"
-        // },
-        {
-            "InternalName": "IssueClosureDate",
-            "DisplayName": "تاريخ اغلاق التحدي",
-            "DisplayNameEn": "Issue Closure Date",
-            "type": "datetime",
-            "min": "DateRaised"
-        },
         {
             "InternalName": "Impact",
             "DisplayName": "الأثر",
@@ -135,28 +80,90 @@ var Information_Form = [{
             }
         },
         {
-            "InternalName": "ResolutionOwner",
-            "DisplayName": "المسؤول عن الحل",
-            "DisplayNameEn": "Resolution Owner",
-            "type": "picker"
-        },
-        {
             "InternalName": "ImpactDescription",
             "DisplayName": "وصف الأثر",
             "DisplayNameEn": "Impact Description",
             "type": "multiline"
         },
         {
-            "InternalName": "Description",
-            "DisplayName": "وصف التحدي",
-            "DisplayNameEn": "Description",
-            "type": "multiline"
+            "InternalName": "Owner",
+            "DisplayName": "مالك التحدي",
+            "DisplayNameEn": "Owner",
+            "type": "picker"
+        },
+        // {
+        //     "InternalName": "AssignedTo",
+        //     "DisplayName": "مسندة إلى الشخص المسؤول ",
+        //     "DisplayNameEn": "Assigned To",
+        //     "type": "picker"
+        // },
+        {
+            "InternalName": "DateRaised",
+            "DisplayName": "تاريخ تحديد التحدي",
+            "DisplayNameEn": "Date Raised",
+            "type": "datetime",
+            "max": "IssueClosureDate"
+        },
+        {
+            "InternalName": "ResolutionTargetDate",
+            "DisplayName": "التاريخ المتوقع للحل",
+            "DisplayNameEn": "Resolution Target Date",
+            "type": "datetime"
         },
         {
             "InternalName": "Resolution",
             "DisplayName": "وصف الحل",
             "DisplayNameEn": "Resolution",
             "type": "multiline"
+        },
+        // {
+        //     "InternalName": "ResolutionActualDate",
+        //     "DisplayName": "التاريخ الفعلي للحل",
+        //     "DisplayNameEn": "Resolution Actual Date",
+        //     "type": "datetime",
+        //     "max":"today"
+        // },
+        // {
+        //     "InternalName": "DueDate",
+        //     "DisplayName": "تاريخ الإستحقاق",
+        //     "DisplayNameEn": "Due Date",
+        //     "type": "datetime"
+        // },
+        {
+            "InternalName": "IssueClosureDate",
+            "DisplayName": "تاريخ اغلاق التحدي",
+            "DisplayNameEn": "Issue Closure Date",
+            "type": "datetime",
+            "min": "DateRaised"
+        },
+        // {
+        //     "InternalName": "ResolutionOwner",
+        //     "DisplayName": "المسؤول عن الحل",
+        //     "DisplayNameEn": "Resolution Owner",
+        //     "type": "picker"
+        // },
+        // {
+        //     "InternalName": "Description",
+        //     "DisplayName": "وصف التحدي",
+        //     "DisplayNameEn": "Description",
+        //     "type": "multiline"
+        // },
+        {
+            "InternalName": "Status",
+            "DisplayName":"الحالة الكلية للتحدي",
+            "type":"dropdownValues",
+            options:{
+                choices:[
+                    {
+                        display: 'open',
+                        value: 'open'
+                    },
+                    {
+                        display: 'closed',
+                        value: 'closed'
+                    },
+                ]
+            }
         },
         {
             "InternalName": "Comments",
@@ -186,12 +193,12 @@ var Information_Form = [{
         //     }
         // },
 
-        {
-            "InternalName": "RaisedBy",
-            "DisplayName": "مرفوع بواسطة",
-            "DisplayNameEn": "Reported by",
-            "type": "picker"
-        }
+        // {
+        //     "InternalName": "RaisedBy",
+        //     "DisplayName": "مرفوع بواسطة",
+        //     "DisplayNameEn": "Reported by",
+        //     "type": "picker"
+        // }
 
     ]
 }];

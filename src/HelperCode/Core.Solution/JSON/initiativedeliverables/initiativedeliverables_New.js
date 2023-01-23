@@ -25,25 +25,26 @@ var Information_Form  = [
                 "InternalName": "PlannedCompletedDate",
                 "DisplayNameEn": "Planned Completed Date",
                 "DisplayName":"تاريخ الاكتمال المخطط",
-                "type":"datetime"
+                "type":"datetime",
+                "validation": "required",
             },
             {
                 "InternalName": "DeliverableSuccessKPI",
                 "DisplayNameEn": "Deliverable Success KPI",
                 "DisplayName":"مقياس نجاح المخرج  (إن وجد)",
-                "type":"string"
+                "type":"multiline"
             },
-            {
-                "InternalName": "CommittedDate",
-                "DisplayName": "تاريخ الالتزام",
-                "DisplayNameEn": "Committed Date",
-                "type": "datetime",
-            },
+            // {
+            //     "InternalName": "CommittedDate",
+            //     "DisplayName": "تاريخ الالتزام",
+            //     "DisplayNameEn": "Committed Date",
+            //     "type": "datetime",
+            // },
             {
                 "InternalName": "Target",
                 "DisplayNameEn": "Target",
                 "DisplayName":"المستهدف (إن وجد)",
-                "type":"string"
+                "type":"float"
             },
             {
                 "InternalName": "Weight",
@@ -52,6 +53,13 @@ var Information_Form  = [
                 "type":"floatpercentage",
                 "validation": "required",
             },
+            {
+                "InternalName": "ActualCompletedDate",
+                "DisplayNameEn": "Actual Completed Date",
+                "DisplayName":"تاريخ الاكتمال الفعلي",
+                "type":"datetime",
+                "max":"today"
+            },  
             {
                 "InternalName": "Completed",
                 "DisplayNameEn": "Completed",
@@ -68,35 +76,28 @@ var Information_Form  = [
                         }
                     ]
                 }
-            },
-            {
-                "InternalName": "ActualCompletedDate",
-                "DisplayNameEn": "Actual Completed Date",
-                "DisplayName":"تاريخ الاكتمال الفعلي",
-                "type":"datetime",
-                "max":"today"
-            },      
-            {
-                "InternalName": "RelatedBenefits",
-                "DisplayNameEn": "Related Benefits",
-                "DisplayName":"المنفعة المرتبطة",
-                "type": "lookup",
-                "source": "Benefits",
-                "Dispfieldkey": "Name",
-                "valfieldkey": "Title",
-            }
+            },    
+            // {
+            //     "InternalName": "RelatedBenefits",
+            //     "DisplayNameEn": "Related Benefits",
+            //     "DisplayName":"المنفعة المرتبطة",
+            //     "type": "lookup",
+            //     "source": "Benefits",
+            //     "Dispfieldkey": "Name",
+            //     "valfieldkey": "Title",
+            // }
         ]
     },
     {
         label: 'الوثائق الداعمة',
         labelEn: 'Documents',
-        description: "",
-        descriptionEn: "",
+        description: "التفاصيل",
+        descriptionEn: "Details",
         subFields:[
             {
-                "InternalName": "getfile",
-                "DisplayName":"المستندات",                
-                "DisplayNameEn": "Documents",
+                "InternalName": "Attachments",
+                "DisplayName":"المرفقات",                
+                "DisplayNameEn": "Attachments",
                 "type":"file",
                 "withAddBtn":"true"
             }

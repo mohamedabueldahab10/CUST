@@ -11,13 +11,12 @@ var Information_Form  = [
                 "DisplayNameEn": "Lesson Learned Code",
                 "type":"string"
             },
-            {
-                "InternalName": "ReferenceNumber",
-                "DisplayName":"رقم المرجع",
-                "DisplayNameEn": "Reference Number",
-                "type":"string" 
-            },
-           
+            // {
+            //     "InternalName": "ReferenceNumber",
+            //     "DisplayName":"رقم المرجع",
+            //     "DisplayNameEn": "Reference Number",
+            //     "type":"string" 
+            // },
             {
                 "InternalName": "Source",
                 "DisplayName":"المصدر",
@@ -27,7 +26,7 @@ var Information_Form  = [
                     choices:
                     [
                         { display: 'sector', value: 'sector' },
-                        { display: 'pmo', value: 'pmo' }
+                        { display: 'epmo', value: 'epmo' }
                     ]
                 }
             },
@@ -99,5 +98,21 @@ var Information_Form  = [
             }
         ]
     
-    }
+    },
+    // {
+    //     label: 'المرفقات',
+    //     labelEn:'Attachments',
+    //     description: "",
+    //     descriptionEn:"",
+    //     subFields:[
+    //         {
+    //             // "InternalName": "getfile",
+    //             "InternalName": "Attachments",
+    //             "DisplayName":"المرفقات",
+    //             "DisplayNameEn": "Attachments",
+    //             "type":"file",
+    //             "withAddBtn":"true"
+    //         }
+    //     ]
+    // }
 ];

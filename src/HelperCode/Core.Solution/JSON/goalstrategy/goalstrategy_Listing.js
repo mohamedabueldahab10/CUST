@@ -2,10 +2,10 @@ var Listing_Info = [
  
     {
         "InternalName": "Title",
-        "DisplayNameEn": "Code",
+        "DisplayNameEn": "Strategy Code",
         "DisplayName":"رمز  الاستراتيجية",
         "type":"text",
-        inlisting: false,
+        inlisting: true,
         infilter: false
     },
     {
@@ -29,7 +29,7 @@ var Listing_Info = [
     {
         "InternalName": "ApprovalDate",
         "DisplayName":"تاريخ إعتماد الإستراتيجية",
-        "DisplayNameEn": "ApprovalDate",
+        "DisplayNameEn": "Approval Date",
         "type":"date",
         inlisting: true,
         infilter: true

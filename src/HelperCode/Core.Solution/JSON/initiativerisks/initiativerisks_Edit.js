@@ -51,6 +51,7 @@ var Information_Form = [{
                 "DisplayName": "حالة الخطر",
                 "DisplayNameEn": "Status",
                 "type": "dropdownValues",
+                "validation": "required",
                 options: {
                     choices: [{
                             display: 'closed',
@@ -103,7 +104,7 @@ var Information_Form = [{
                 "InternalName": "Impact",
                 "DisplayName": "الأثر",
                 "DisplayNameEn": "Impact",
-                // "validation": "required",
+                "validation": "required",
                 "type": "dropdownValues",
                 options: {
                     choices: [
@@ -157,6 +158,10 @@ var Information_Form = [{
                         {
                             display: 'inprogress',
                             value: 'inprogress'
+                        },
+                        {
+                            display: 'done',
+                            value: 'done'
                         }
                         // ,
                         // {
@@ -171,7 +176,8 @@ var Information_Form = [{
                 "InternalName": "MitigationOwner",
                 "DisplayName": "المسؤول عن الاستجابة",
                 "DisplayNameEn": "Mitigation Owner",
-                "type": "picker"
+                "type": "picker",
+                "validation": "required",
             },
             {
                 "InternalName": "MitigationTargetDate",
@@ -198,27 +204,12 @@ var Information_Form = [{
             //     "type":"datetime",
             //     "state":"disabled"
             // },
-            {
-                "InternalName": "RiskOwner",
-                "DisplayName": "مالك الخطر",
-                "DisplayNameEn": "Risk Owner",
-                "type": "picker"
-            },
-            {
-                "InternalName": "MoveItToIssueList",
-                "DisplayName": "نقلها للائحة التحديات",
-                "DisplayNameEn": "Move It To Issue List",
-                "type": "yesnoradio",
-                options: {
-                    choices: [{
-                        display: 'yes',
-                        value: 'yes'
-                    }, {
-                        display: 'no',
-                        value: 'no'
-                    }]
-                }
-            },
+            // {
+            //     "InternalName": "RiskOwner",
+            //     "DisplayName": "مالك الخطر",
+            //     "DisplayNameEn": "Risk Owner",
+            //     "type": "picker"
+            // },
             {
                 "InternalName": "AgreedAction",
                 "DisplayName": "الاجراءات المتفق عليها",
@@ -251,7 +242,22 @@ var Information_Form = [{
                         }
                     ]
                 }
-            }
+            },
+            {
+                "InternalName": "MoveItToIssueList",
+                "DisplayName": "نقلها للائحة التحديات",
+                "DisplayNameEn": "Move It To Issue List",
+                "type": "yesnoradio",
+                options: {
+                    choices: [{
+                        display: 'yes',
+                        value: 'yes'
+                    }, {
+                        display: 'no',
+                        value: 'no'
+                    }]
+                }
+            },
         ]
     },
     {
@@ -260,7 +266,8 @@ var Information_Form = [{
         description: "",
         descriptionEn: "",
         subFields: [{
-            "InternalName": "getfile",
+            // "InternalName": "getfile",
+            "InternalName": "Attachments",
             "DisplayName": "المرفقات",
             "DisplayNameEn": "Attachments",
             "type": "file",

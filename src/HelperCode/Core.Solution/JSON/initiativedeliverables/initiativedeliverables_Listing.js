@@ -5,12 +5,12 @@ var Listing_Info = [
 		"DisplayName":"رمز المخرج",
 		"type":"text",
 		inlisting: true,
-		infilter: true
+		infilter: false
 	}, 
 	{
 		"InternalName": "Name", 
 		"DisplayNameEn": "Name",
-		"DisplayName":"المخرج",
+		"DisplayName":"اسم المخرج",
 		"type":"text", 
 		inlisting: true,
 		infilter: true
@@ -24,6 +24,14 @@ var Listing_Info = [
 		infilter: false
 	},
 	{
+		"InternalName": "Weight",
+		"DisplayNameEn": "Weight",
+		"DisplayName":"القيمة",
+		"type":"text",
+		inlisting: true,
+		infilter: false
+	},	
+	{
 		"InternalName": "Completed",
 		"DisplayNameEn": "Completed",
 		"DisplayName":"حالة الاكتمال",
@@ -32,12 +40,4 @@ var Listing_Info = [
 		inlisting: true,
 		infilter: false
 	},
-	{
-		"InternalName": "Weight",
-		"DisplayNameEn": "Weight",
-		"DisplayName":"القيمة",
-		"type":"text",
-		inlisting: true,
-		infilter: true
-	},	
 ];

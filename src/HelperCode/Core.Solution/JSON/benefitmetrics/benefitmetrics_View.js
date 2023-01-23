@@ -5,22 +5,20 @@ var Information_Form = [
     description: "التفاصيل",
     descriptionEn: "Details",
     subFields: [
-
-      // {
-      //     "InternalName": "Title",
-      //     "DisplayNameEn": "Title",
-      //     "DisplayName": "رمز المنفعة",
-      //     "type": "string",
-      //     "validation": "required",
-      //     "maxchar": "250"
-      // },
+      {
+          "InternalName": "Title",
+          "DisplayNameEn": "Title",
+          "DisplayName": "رمز مقياس المنفعة",
+          "type": "string",
+          // "maxchar": "250"
+      },
       {
         "InternalName": "Name",
         "DisplayNameEn": "Name",
         "DisplayName": "مقياس المنفعة",
         "type": "string",
-        "maxchar": "250",
-        "validation": "required"
+        // "maxchar": "250",
+        // "validation": "required"
       },
       {// hol dynamic 3ala l lookup 
         "InternalName": "RelatedBenefit",
@@ -34,12 +32,19 @@ var Information_Form = [
 
       },
       {
-        "InternalName": "Weight",
-        "DisplayNameEn": "Weight",
-        "DisplayName": "وزن ",
-        "type":"floatpercentage"
-        // "state": "disabled",
-        // dynamic: "Initiative"
+        InternalName: 'PeriodType',
+        DisplayNameEn: 'Period Type',
+        DisplayName: 'دورية القياس',
+        state: 'disabled',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'year', value: 'year' },
+            { display: 'quarter', value: 'quarter' },
+            { display: 'halfyear', value: 'halfyear' },
+            { display: 'month', value: 'month' },
+          ],
+        },
       },
       {
         "InternalName": "Owner",
@@ -50,51 +55,65 @@ var Information_Form = [
         // dynamic: "Initiative"
       },
       {
-        "InternalName": "Quarter",
-        "DisplayNameEn": "Quarter",
-        "DisplayName": "الربع",
-        type: "dropdownValues",
-        options: {
-          choices: [
-            { display: "quarter1", value: "quarter1" },
-            { display: "quarter2", value: "quarter2" },
-            { display: "quarter3", value: "quarter3" },
-            { display: "quarter4", value: "quarter4" },
-          ],
-        },
-        // security: {
-        //     groups: [
-        //         'SPM Admin', 'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
-        //     ]
-        // },
+        "InternalName": "Weight",
+        "DisplayNameEn": "Weight",
+        "DisplayName": "وزن ",
+        "type":"floatpercentage"
+        // "state": "disabled",
+        // dynamic: "Initiative"
       },
+      // {
+      //   "InternalName": "Quarter",
+      //   "DisplayNameEn": "Quarter",
+      //   "DisplayName": "الربع",
+      //   type: "dropdownValues",
+      //   options: {
+      //     choices: [
+      //       { display: "quarter1", value: "quarter1" },
+      //       { display: "quarter2", value: "quarter2" },
+      //       { display: "quarter3", value: "quarter3" },
+      //       { display: "quarter4", value: "quarter4" },
+      //     ],
+      //   },
+      //   // security: {
+      //   //     groups: [
+      //   //         'SPM Admin', 'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+      //   //     ]
+      //   // },
+      // },
+      // {
+      //   "InternalName": "Year",
+      //   "DisplayNameEn": "Year",
+      //   "DisplayName": "السنة",
+      //   "type": "string",
+      //   //   "state": "disabled",
+      //   //   dynamic: "Initiative",
+      //   // options: {
+      //   //   choices: [
+      //   //     '2020',
+      //   //     '2021',
+      //   //     '2022',
+      //   //     '2023',
+      //   //     '2024',
+      //   //     '2025',
+      //   //     '2026',
+      //   //     '2027',
+      //   //     '2028',
+      //   //     '2029',
+      //   //     '2030',
+      //   //   ]
+      //   // },
+      //   // security: {
+      //   //     groups: [
+      //   //         'SPM Admin', 'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
+      //   //     ]
+      //   // },
+      // },
       {
-        "InternalName": "Year",
-        "DisplayNameEn": "Year",
-        "DisplayName": "السنة",
-        "type": "string",
-        //   "state": "disabled",
-        //   dynamic: "Initiative",
-        // options: {
-        //   choices: [
-        //     '2020',
-        //     '2021',
-        //     '2022',
-        //     '2023',
-        //     '2024',
-        //     '2025',
-        //     '2026',
-        //     '2027',
-        //     '2028',
-        //     '2029',
-        //     '2030',
-        //   ]
-        // },
-        // security: {
-        //     groups: [
-        //         'SPM Admin', 'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
-        //     ]
-        // },
+        InternalName: 'Equation',
+        DisplayNameEn: 'Equation',
+        DisplayName: 'المعادلة',
+        type: 'string'
       },
       {
         "InternalName": "MesureStatus",
@@ -148,6 +167,38 @@ var Information_Form = [
           ]
         }
       },
+      {
+        InternalName: 'FromDate',
+        DisplayName: 'من سنة',
+        DisplayNameEn: 'From Date',
+        max: 'ToDate',
+        type: 'datetime',
+      },
+      {
+        InternalName: 'ToDate',
+        DisplayName: 'من سنة',
+        DisplayNameEn: 'From Date',
+        max: 'FromDate',
+        type: 'datetime',
+      },
+      {
+        InternalName: 'PerformanceLeader',
+        DisplayNameEn: 'Performance Leader',
+        DisplayName: 'رائد الأداء',
+        type: 'picker',
+      },
+      {
+        InternalName: 'TargetValue',
+        DisplayNameEn: 'Target Value',
+        DisplayName: 'القيمة المستهدفة',
+        type: 'float',
+      },
+      {
+          InternalName: 'ActualValue',
+          DisplayName:'القيمة الفعلية',
+          type:'float'
+         
+      }
 
     ]
   },

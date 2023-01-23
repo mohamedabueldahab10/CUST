@@ -25,7 +25,8 @@ var Information_Form  = [
                 "InternalName": "PlannedCompletedDate",
                 "DisplayNameEn": "Planned Completed Date",
                 "DisplayName":"تاريخ الاكتمال المخطط",
-                "type":"datetime"
+                "type":"datetime",
+                "validation": "required",
             },
             // {
             //     "InternalName": "Weight",
@@ -86,13 +87,13 @@ var Information_Form  = [
     {
         label: 'الوثائق الداعمة',
         labelEn: 'Documents',
-        description: "",
-        descriptionEn: "",
+        description: "التفاصيل",
+        descriptionEn: "Details",
         subFields:[
             {
-                "InternalName": "getfile",
-                "DisplayName":"المستندات",                
-                "DisplayNameEn": "Documents",
+                "InternalName": "Attachments",
+                "DisplayName":"المرفقات",                
+                "DisplayNameEn": "Attachments",
                 "type":"file",
                 "withAddBtn":"true"
             }

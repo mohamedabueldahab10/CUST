@@ -359,20 +359,20 @@ window.ListInfo = {
 							let queryFieldValue = $(this).data("queryfieldvalue");
 							let queryFieldName = $(this).data("queryfield");
 							let queryFieldType = $(this).data("queryfieldtype");
-								// console.log($(this).data("queryFieldValue"), "sssssssa")
-								affectedSelectsInfo.push({
-									affectedFieldName: affectedFieldName,
-									listName: listName,
-									filterField: filterField,
-									filterFieldType: filterField,
-									parentFieldValue: parentFieldValue,
-									filterFieldType: filterFieldType,
-									valFieldKey: valFieldKey,
-									dispFieldKey: dispFieldKey,
-									queryFieldValue: queryFieldValue,
-									queryFieldName:queryFieldName,
-									queryFieldType:queryFieldType
-								});
+							// console.log($(this).data("queryFieldValue"), "sssssssa")
+							affectedSelectsInfo.push({
+								affectedFieldName: affectedFieldName,
+								listName: listName,
+								filterField: filterField,
+								filterFieldType: filterField,
+								parentFieldValue: parentFieldValue,
+								filterFieldType: filterFieldType,
+								valFieldKey: valFieldKey,
+								dispFieldKey: dispFieldKey,
+								queryFieldValue: queryFieldValue,
+								queryFieldName: queryFieldName,
+								queryFieldType: queryFieldType
+							});
 						});
 						dynamicAffectSelect.init(affectedSelectsInfo);
 					});
@@ -2847,15 +2847,20 @@ window.ListInfo = {
 
 			case "lookup":
 				var customQuery;
+				let roleAccess = []
+
+
 				// filter data based on role access
 				if (element.hasOwnProperty("accessFilter")) {
-					let roleAccess = element.accessFilter.filter((el) => {
+					roleAccess = element.accessFilter.filter((el) => {
 						return el.role == myRoleConfig[0].Role;
 					});
 					if (roleAccess.length > 0) {
 						customQuery = await ListInfo.roleQuery(roleAccess[0].conditions);
 					}
-				} else {
+					console.log(roleAccess, "roleAccessss roleAccessss")
+				}
+				if (roleAccess.length == 0) { // can't put else cause when the roleAccess will be empty arrray will nor render a query so all data(deleted and not deleted will appear)
 					if (element.isSector == "True") {
 						customQuery =
 							"<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"EntityType\" /><Value Type=\"Choice\">" +
@@ -3189,6 +3194,14 @@ window.ListInfo = {
 					element.Dispfieldkey +
 					'"  data-filterfield="' +
 					element.filterField +
+
+					'"data-queryfieldvalue="' + // oday
+					element.queryFieldValue +
+					'"data-queryfield="' + // oday
+					element.queryField +
+					'"data-queryfieldtype="' + // oday
+					element.queryFieldType +
+
 					'" data-filterfieldtype="' +
 					element.filterFieldType +
 					'" class="form-control" type="dropdown" id="' +
@@ -4028,9 +4041,9 @@ window.ListInfo = {
 						.find(">*")
 						.attr("required", false);
 				});
-	
+
 			}
-		
+
 		},
 		showFieldsIfInitiativeVision: function () {
 			var typeValue = $("#Types option:selected").val();

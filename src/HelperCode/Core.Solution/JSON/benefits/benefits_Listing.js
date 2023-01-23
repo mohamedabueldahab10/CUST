@@ -5,7 +5,7 @@ var Listing_Info = [
 		"DisplayName":"رمز المنفعة",
 		"type":"text",
 		inlisting: true,
-		infilter: true
+		infilter: false
 	},
 	{
 		"InternalName": "Name",
@@ -22,5 +22,13 @@ var Listing_Info = [
 		"type": "picker",
 		inlisting: true,
 		infilter: true
+	},	
+	{
+		"InternalName": "Weight",
+		"DisplayNameEn": "Weight",
+		"DisplayName": "وزن",
+		"type": "float",
+		inlisting: true,
+		infilter: false
 	},	
 ];

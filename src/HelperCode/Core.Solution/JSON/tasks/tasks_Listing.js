@@ -4,7 +4,7 @@ var Listing_Info = [{
     "DisplayNameEn": "Task Code",
     "type": "text",
     inlisting: true,
-    infilter: true
+    infilter: false
 },
 {
     "InternalName": "WorkflowName",
@@ -31,108 +31,108 @@ var Listing_Info = [{
     inlisting: true,
     infilter: true
 },
-{
-    "InternalName": "Status",
-    "DisplayName": "الحالة",
-    "DisplayNameEn": "Status",
-    "type": "text",
-    inlisting: false,
-    infilter: false
-},
-{
-    "InternalName": "TaskType",
-    "DisplayName": "نوع المهمة",
-    "DisplayNameEn": "task type",
-    "type": "text",
-    inlisting: false,
-    infilter: false
-},
-{
-    "InternalName": "StageIDApprove",
-    "DisplayName": "قبول المرحلة",
-    "DisplayNameEn": "Stage Approve",
-    "type": "text",
-    inlisting: false,
-    infilter: false
-},
-{
-    "InternalName": "StageIDReject",
-    "DisplayName": "رفض المرحلة",
-    "DisplayNameEn": "Stage Reject",
-    "type": "text",
-    inlisting: false,
-    infilter: false
-},
-{
-    "InternalName": "StageID",
-    "DisplayName": "رمز المرحلة",
-    "DisplayNameEn": "stage id",
-    "type": "text",
-    inlisting: false,
-    infilter: false
-},
-{
-    "InternalName": "ProjectCode",
-    "DisplayName": "رمز المشروع",
-    "DisplayNameEn": "project code",
-    "type": "text",
-    inlisting: false,
-    infilter: false
-},
-{
-    "InternalName": "InitiativeCode",
-    "DisplayName": "رمز المبادرة",
-    "DisplayNameEn": "initiative code",
-    "type": "text",
-    inlisting: false,
-    infilter: false
-},
-{
-    "InternalName": "RelatedItemID",
-    "DisplayName": "العنصر المرتبط",
-    "DisplayNameEn": "related item",
-    "type": "text",
-    inlisting: false,
-    infilter: false
-},
-{
-    "InternalName": "SourceItemID",
-    "DisplayName": "مصدر العنصر",
-    "DisplayNameEn": "source item",
-    "type": "text",
-    inlisting: false,
-    infilter: false
-},
-{
-    "InternalName": "WorkflowName",
-    "DisplayName": "اسم سير العمل",
-    "DisplayNameEn": "workflow name",
-    "type": "text",
-    inlisting: false,
-    infilter: false
-},
-{
-    "InternalName": "ProjectUID",
-    "DisplayName": "رمز المشروع المميز",
-    "DisplayNameEn": "Project Guid",
-    "type": "text",
-    inlisting: false,
-    infilter: false
-},
-{
-    "InternalName": "AssignedTo",
-    "DisplayName": "مسندة الى",
-    "DisplayNameEn": "assign to",
-    "type": "text",
-    inlisting: false,
-    infilter: false
-},
-{
-    "InternalName": "RelatedURL",
-    "DisplayName": "اللنك المرتبط",
-    "DisplayNameEn": "related url",
-    "type": "text",
-    inlisting: false,
-    infilter: false
-}
+// {
+//     "InternalName": "Status",
+//     "DisplayName": "الحالة",
+//     "DisplayNameEn": "Status",
+//     "type": "text",
+//     inlisting: false,
+//     infilter: false
+// },
+// {
+//     "InternalName": "TaskType",
+//     "DisplayName": "نوع المهمة",
+//     "DisplayNameEn": "task type",
+//     "type": "text",
+//     inlisting: false,
+//     infilter: false
+// },
+// {
+//     "InternalName": "StageIDApprove",
+//     "DisplayName": "قبول المرحلة",
+//     "DisplayNameEn": "Stage Approve",
+//     "type": "text",
+//     inlisting: false,
+//     infilter: false
+// },
+// {
+//     "InternalName": "StageIDReject",
+//     "DisplayName": "رفض المرحلة",
+//     "DisplayNameEn": "Stage Reject",
+//     "type": "text",
+//     inlisting: false,
+//     infilter: false
+// },
+// {
+//     "InternalName": "StageID",
+//     "DisplayName": "رمز المرحلة",
+//     "DisplayNameEn": "stage id",
+//     "type": "text",
+//     inlisting: false,
+//     infilter: false
+// },
+// {
+//     "InternalName": "ProjectCode",
+//     "DisplayName": "رمز المشروع",
+//     "DisplayNameEn": "project code",
+//     "type": "text",
+//     inlisting: false,
+//     infilter: false
+// },
+// {
+//     "InternalName": "InitiativeCode",
+//     "DisplayName": "رمز المبادرة",
+//     "DisplayNameEn": "initiative code",
+//     "type": "text",
+//     inlisting: false,
+//     infilter: false
+// },
+// {
+//     "InternalName": "RelatedItemID",
+//     "DisplayName": "العنصر المرتبط",
+//     "DisplayNameEn": "related item",
+//     "type": "text",
+//     inlisting: false,
+//     infilter: false
+// },
+// {
+//     "InternalName": "SourceItemID",
+//     "DisplayName": "مصدر العنصر",
+//     "DisplayNameEn": "source item",
+//     "type": "text",
+//     inlisting: false,
+//     infilter: false
+// },
+// {
+//     "InternalName": "WorkflowName",
+//     "DisplayName": "اسم سير العمل",
+//     "DisplayNameEn": "workflow name",
+//     "type": "text",
+//     inlisting: false,
+//     infilter: false
+// },
+// {
+//     "InternalName": "ProjectUID",
+//     "DisplayName": "رمز المشروع المميز",
+//     "DisplayNameEn": "Project Guid",
+//     "type": "text",
+//     inlisting: false,
+//     infilter: false
+// },
+// {
+//     "InternalName": "AssignedTo",
+//     "DisplayName": "مسندة الى",
+//     "DisplayNameEn": "assign to",
+//     "type": "text",
+//     inlisting: false,
+//     infilter: false
+// },
+// {
+//     "InternalName": "RelatedURL",
+//     "DisplayName": "اللنك المرتبط",
+//     "DisplayNameEn": "related url",
+//     "type": "text",
+//     inlisting: false,
+//     infilter: false
+// }
 ];

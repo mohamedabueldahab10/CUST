@@ -15,14 +15,21 @@ var Information_Form = [{
             {
                 "InternalName": "Name",
                 "DisplayName": "اسم المخرج",
-                "DisplayNameEn": "Deliverable Name",
+                "DisplayNameEn": "Name",
                 "type": "string",
                 "validation": "required"
             },
             {
+                "InternalName": "Description",
+                "DisplayName": "الوصف",
+                "DisplayNameEn": "Description",
+                "type": "multiline",
+                "maxchar": 5000,
+            },
+            {
                 "InternalName": "Weight",
                 "DisplayName": "الوزن / القيمة (%)",
-                "DisplayNameEn": "Weight (%)",
+                "DisplayNameEn": "Weight/Value (%)",
                 "type": "floatpercentage",
                 "validation": "required",
                 
@@ -34,31 +41,25 @@ var Information_Form = [{
                 "type": "dropdownValues",
                 options: {
                     choices: [
-                        { display: 'pending', value: 'pending' },
+                        { display: 'workinprogress', value: 'workinprogress' },
                         { display: 'completed', value: 'completed' }
                     ]
                 }
             },
-
-            {
-                "InternalName": "AcceptanceCriteria",
-                "DisplayName": "معايير قبول المخرج",
-                "DisplayNameEn": "Acceptance Criteria",
-                "type": "string"
-            },
-            {
-                "InternalName": "PlannedStartDate",
-                "DisplayName": "تاريخ البدء المخطط",
-                "DisplayNameEn": "Planned Start Date",
-                "type": "datetime",
-                "max": "PlannedFinishDate"
-            },
+            // {
+            //     "InternalName": "PlannedStartDate",
+            //     "DisplayName": "تاريخ البدء المخطط",
+            //     "DisplayNameEn": "Planned Start Date",
+            //     "type": "datetime",
+            //     "max": "PlannedFinishDate"
+            // },
             {
                 "InternalName": "PlannedFinishDate",
                 "DisplayName": "تاريخ الانتهاء المخطط",
                 "DisplayNameEn": "Planned Finish Date",
                 "type": "datetime",
-                "min": "PlannedStartDate"
+                // "min": "PlannedStartDate",
+                "validation": "required",
             },
             // {
             //     "InternalName": "SupplyDate",
@@ -66,34 +67,34 @@ var Information_Form = [{
             //     "DisplayNameEn": "Supply Date",
             //     "type": "datetime"
             // },
-            {
-                "InternalName": "CommittedDate",
-                "DisplayName": "تاريخ الالتزام",
-                "DisplayNameEn": "Committed Date",
-                "type": "datetime",
-                "validation": "required"
-            },
-            {
-                "InternalName": "StartDate",
-                "DisplayName": "تاريخ البدءالفعلي",
-                "DisplayNameEn": "Actual Start Date",
-                "type": "datetime",
-                "max":"today"
-            },
-            {
-                "InternalName": "FinishDate",
-                "DisplayName": "تاريخ الانتهاء الفعلي",
-                "DisplayNameEn": "Actual Finish Date",
-                "type": "datetime",
-                "min": "StartDate",
-                "max":"today"
-            },
+            // {
+            //     "InternalName": "CommittedDate",
+            //     "DisplayName": "تاريخ الالتزام",
+            //     "DisplayNameEn": "Committed Date",
+            //     "type": "datetime",
+            //     "validation": "required"
+            // },
+            // {
+            //     "InternalName": "StartDate",
+            //     "DisplayName": "تاريخ البدءالفعلي",
+            //     "DisplayNameEn": "Actual Start Date",
+            //     "type": "datetime",
+            //     "max":"today"
+            // },
+            // {
+            //     "InternalName": "FinishDate",
+            //     "DisplayName": "تاريخ الانتهاء الفعلي",
+            //     "DisplayNameEn": "Actual Finish Date",
+            //     "type": "datetime",
+            //     "min": "StartDate",
+            //     "max":"today"
+            // },
             {
                 "InternalName": "Delivered",
                 "DisplayName": "تم التسليم",
                 "DisplayNameEn": "Delivered",
                 "type": "yesnoradio",
-                      options: {
+                 options: {
                     choices: [
                         { display: 'yes', value: 'yes' },
                         { display: 'no', value: 'no' }
@@ -109,11 +110,10 @@ var Information_Form = [{
                 "max":"today"
             },
             {
-                "InternalName": "Description",
-                "DisplayName": "الوصف",
-                "DisplayNameEn": "Description",
-                "type": "multiline",
-                "maxchar": 5000,
+                "InternalName": "AcceptanceCriteria",
+                "DisplayName": "معايير قبول المخرج",
+                "DisplayNameEn": "Acceptance Criteria",
+                "type": "string"
             },
             {
                 "InternalName": "Comments",
@@ -121,21 +121,42 @@ var Information_Form = [{
                 "DisplayNameEn": "Comments",
                 "type": "multiline",
                 "maxchar": 5000,
-            }
+            },
+            {
+              "InternalName": "ShowInProgramReport",
+              "DisplayName": "اظهار في التقرير",
+              "DisplayNameEn": "Show In Program Report",
+              "type": "yesnoradio",
+              options: {
+                choices: [
+                  {
+                    display: 'yes',
+                    value: 'yes',
+                  },
+                  {
+                    display: 'no',
+                    value: 'no',
+                  },
+                ],
+              },
+            },
 
         ]
     },
     {
-        label: 'المرفقات',
-        labelEn: 'Attachments',
-        description: "",
-        descriptionEn: "",
-        subFields: [{
-            "InternalName": "getfile",
-            "DisplayName": "المرفقات",
-            "DisplayNameEn": "Attachments",
-            "type": "file",
-            "withAddBtn":"true"
-        }]
-    }
+      label: 'وثائق داعمة',
+      labelEn: 'Attachments',
+      description: 'التفاصيل',
+      descriptionEn: 'Details',
+      subFields: [
+        {
+          InternalName: 'Attachments',
+          DisplayName: 'مرفقات',
+          DisplayNameEn: 'Attachments',
+          type: 'file',
+          withAddBtn: 'true',
+          "validation": "required",
+        },
+      ],
+    },
 ];
