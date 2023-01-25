@@ -75,7 +75,7 @@ var BudgetLabelsEn = [
 	Resources.en["cost"],
 	Resources.en["remaining"],
 ];
-
+// HRSD-R2 new branch
 // var statusOccuresData = ['stat3', 'stat1', 'stat5', 'stat2', 'stat4']
 var statusOccuresData = ["stat3", "stat1", "stat5", "stat2"];
 
