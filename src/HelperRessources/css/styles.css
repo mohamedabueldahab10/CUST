@@ -5315,7 +5315,8 @@ h4.text-warning[data-trans-inprogress] {
     color: #A66F8E !important;
 }
 
-h4.text-warning[data-trans-completed], h4.text-warning[data-trans-complete] {
+h4.text-warning[data-trans-completed],
+h4.text-warning[data-trans-complete] {
     color: rgba(0, 0, 255, 255) !important;
 }
 
@@ -6253,6 +6254,35 @@ li.ms-core-menu-footer {
     border-style: solid;
     border-color: transparent transparent #14415a transparent;
 }
+
+.priorityIconTooltip .tooltipbox {
+    display: none;
+}
+
+
+.priorityIconTooltip:hover .tooltipbox {
+    display: block !important;
+    position: absolute;
+    top: 100%;
+    background: #148282;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    z-index: 30000;
+    width: 320px
+}
+
+.priorityIconTooltip:hover .tooltipbox:after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -10px;
+    border-width: 7px;
+    border-style: solid;
+    border-color: transparent transparent #148282 transparent;
+}
+
 
 /* important links */
 .important-links-ctx {
