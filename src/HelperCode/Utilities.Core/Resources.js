@@ -789,7 +789,10 @@
         "notstartedmilestonescount":"عدد المعالم التي لم تبدأ:",
         "latemilestonescount":"عدد المعالم المتأخرة:",
         "currentyear:":"السنة الحالية: ",
-        "kpiresulttext": "بيانات المؤشر"
+        "kpiresulttext": "بيانات المؤشر",
+        "sublevel2": "فرعي مستوى ثاني",
+        "sublevel3": "فرعي مستوى ثالث",
+        "projectprioritytooltip":"هذا الحقل يبين أهمية المشروع (مرتفعة -متوسطة - منخفضة)"
 
     },
     "en": {
@@ -1597,6 +1600,9 @@
         "latemilestonescount":"Late Milestones Count:",
         "currentyear": "Current Year :",
         "kpiresulttext": "Kpi Result",
+        "sublevel2": "Sub Level 2",
+        "sublevel3": "Sub Level 3",
+        "projectprioritytooltip":"This Field show the Priority of this project (Important or Medium or High)"
     }
 
 };
