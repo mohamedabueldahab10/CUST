@@ -871,62 +871,6 @@ window.ListingData = {
           }
 
           // add illustration when there is no item on list
-          if (listkey == "initiativemilestones") {
-            var AllinitiativeMilestonesCounterContainer = "";
-            var countcompleted = 0,
-              notcompletedcount = 0,
-              countOfnostarted = 0,
-              latecount = 0;
-            var today = new Date();
-            records.forEach((item) => {
-              if (item.Completed == "yes") {
-                countcompleted += 1;
-              } else {
-                notcompletedcount += 1;
-              }
-              console.log("today", today, "actualdate", item.ActualCompletedDate);
-              var formatedactualdatemilestone = item.ActualCompletedDate.split("T").at(0);
-              var day2 = formatedactualdatemilestone.split("/").at(0);
-              var month2 = formatedactualdatemilestone.split("/").at(1);
-              var year2 = formatedactualdatemilestone.split("/").at(2);
-              var finalformatedactualdate = new Date(year2 + "-" + month2 + "-" + day2);
-              console.log(finalformatedactualdate, "finalformatedPlanneddate");
-          
-              if (today < finalformatedactualdate && item.Completed !== "yes") {
-                countOfnostarted += 1;
-                console.log("there is a nostarted project!", countOfnostarted);
-              }
-              console.log("today", today, "planneddate", item.PlannedCompletedDate);
-              var formatedplaneddatemilestone =
-                item.PlannedCompletedDate.split("T").at(0);
-              var day = formatedplaneddatemilestone.split("/").at(0);
-              var month = formatedplaneddatemilestone.split("/").at(1);
-              var year = formatedplaneddatemilestone.split("/").at(2);
-              var finalformatedPlanneddate = new Date(year + "-" + month + "-" + day);
-              console.log(finalformatedPlanneddate, "finalformatedPlanneddate");
-          
-              if (today > finalformatedPlanneddate && item.Completed !== "yes") {
-                latecount += 1;
-                console.log("there is a late project!", latecount);
-              }
-            });
-            AllinitiativeMilestonesCounterContainer +=
-              '<div class="allMilestonesCounter"><div><span data-trans-allmilestonescount class="Resources"></span>' +
-              records.length +
-              '</div><div><span data-trans-completedmilestonescount class="Resources"></span>' +
-              countcompleted +
-              '</div><div><span data-trans-notcompletedmilestonescount class="Resources"></span>' +
-              notcompletedcount +
-              '</div><div><span data-trans-notstartedmilestonescount class="Resources"></span>' +
-              countOfnostarted +
-              '</div><div><span data-trans-latemilestonescount class="Resources"></span>' +
-              latecount +
-              "</div></div>";
-            // $(AllinitiativeMilestonesCounterContainer).insertAfter(
-            //   $(".content-list-head")
-            // );
-            $('.additionalInfo').html(AllinitiativeMilestonesCounterContainer);
-          }
           if (records.length == 0 && !originalstate) {
             if (listkey == 'projects' || isTasks) {
               $('ul.list-group.w-100 .tab-content').html(`<div style="text-align:center;background:#fff"><img css="w-100" src="${emptyData}" style="height:40vh;width:40vh;"/><p data-trans-nofilterdata class="Resources" style="text-align:center;font-size:13px;padding-bottom:13px"></p></div>`)
@@ -1431,7 +1375,8 @@ window.ListingData = {
           // to add the new data when click show more to the filters dropdown in listing
           console.log('recordsddl', recordsddl,
           'total items', recordsddl.length);
-          console.log('allDataFilterArr', allDataFilterArr)
+          console.log('allDataFilterArr', allDataFilterArr);
+       
           if (originalstate) { // add isTasks to not add to filter when change tabs
             allDataFilterArr = recordsddl
           }
@@ -1461,6 +1406,62 @@ window.ListingData = {
           else {
             recordsddl = [...recordsddl, ...allDataFilterArr]
             allDataFilterArr = [...recordsddl, ...allDataFilterArr]
+          }
+          if (listkey == "initiativemilestones") {
+            var AllinitiativeMilestonesCounterContainer = "";
+            var countcompleted = 0,
+              notcompletedcount = 0,
+              countOfnostarted = 0,
+              latecount = 0;
+            var today = new Date();
+            recordsddl.forEach((item) => {
+              if (item.Completed == "yes") {
+                countcompleted += 1;
+              } else {
+                notcompletedcount += 1;
+              }
+              console.log("today", today, "actualdate", item.ActualCompletedDate);
+              var formatedactualdatemilestone = item.ActualCompletedDate.split("T").at(0);
+              var day2 = formatedactualdatemilestone.split("/").at(0);
+              var month2 = formatedactualdatemilestone.split("/").at(1);
+              var year2 = formatedactualdatemilestone.split("/").at(2);
+              var finalformatedactualdate = new Date(year2 + "-" + month2 + "-" + day2);
+              console.log(finalformatedactualdate, "finalformatedPlanneddate");
+          
+              if (today < finalformatedactualdate && item.Completed !== "yes") {
+                countOfnostarted += 1;
+                console.log("there is a nostarted project!", countOfnostarted);
+              }
+              console.log("today", today, "planneddate", item.PlannedCompletedDate);
+              var formatedplaneddatemilestone =
+                item.PlannedCompletedDate.split("T").at(0);
+              var day = formatedplaneddatemilestone.split("/").at(0);
+              var month = formatedplaneddatemilestone.split("/").at(1);
+              var year = formatedplaneddatemilestone.split("/").at(2);
+              var finalformatedPlanneddate = new Date(year + "-" + month + "-" + day);
+              console.log(finalformatedPlanneddate, "finalformatedPlanneddate");
+          
+              if (today > finalformatedPlanneddate && item.Completed !== "yes") {
+                latecount += 1;
+                console.log("there is a late project!", latecount);
+              }
+            });
+            AllinitiativeMilestonesCounterContainer +=
+              '<div class="allMilestonesCounter"><div><span data-trans-allmilestonescount class="Resources"></span>' +
+              recordsddl.length +
+              '</div><div><span data-trans-completedmilestonescount class="Resources"></span>' +
+              countcompleted +
+              '</div><div><span data-trans-notcompletedmilestonescount class="Resources"></span>' +
+              notcompletedcount +
+              '</div><div><span data-trans-notstartedmilestonescount class="Resources"></span>' +
+              countOfnostarted +
+              '</div><div><span data-trans-latemilestonescount class="Resources"></span>' +
+              latecount +
+              "</div></div>";
+            // $(AllinitiativeMilestonesCounterContainer).insertAfter(
+            //   $(".content-list-head")
+            // );
+            $('.additionalInfo').html(AllinitiativeMilestonesCounterContainer);
           }
           //
           for (var y = 0; y < Listing_Info.length; y++) {
