@@ -1447,17 +1447,17 @@ window.ListingData = {
               }
             });
             AllinitiativeMilestonesCounterContainer +=
-              '<div class="allMilestonesCounter"><div><span data-trans-allmilestonescount class="Resources"></span>' +
+              '<div class="allMilestonesCounter"><div class="intoallMilestonesCounter"><h3 data-trans-allmilestonescount class="Resources"></h3><span>' +
               recordsddl.length +
-              '</div><div><span data-trans-completedmilestonescount class="Resources"></span>' +
+              '</span></div><div class="intoallMilestonesCounter"><h3 data-trans-completedmilestonescount class="Resources"></h3><span>' +
               countcompleted +
-              '</div><div><span data-trans-notcompletedmilestonescount class="Resources"></span>' +
+              '</span></div><div class="intoallMilestonesCounter"><h3 data-trans-notcompletedmilestonescount class="Resources"></h3><span>' +
               notcompletedcount +
-              '</div><div><span data-trans-notstartedmilestonescount class="Resources"></span>' +
+              '</span></div><div class="intoallMilestonesCounter"><h3 data-trans-notstartedmilestonescount class="Resources"></h3><span>' +
               countOfnostarted +
-              '</div><div><span data-trans-latemilestonescount class="Resources"></span>' +
+              '</span></div><div class="intoallMilestonesCounter"><h3 data-trans-latemilestonescount class="Resources"></h3><span>' +
               latecount +
-              "</div></div>";
+              "</span></div></div>";
             // $(AllinitiativeMilestonesCounterContainer).insertAfter(
             //   $(".content-list-head")
             // );
