@@ -327,14 +327,14 @@ export default class MainIndicatorsWebPart extends BaseClientSideWebPart<IMainIn
                       </div>
                       <hr />
                       <div class="content-list-head d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4 mb-3">
-                          <div class="d-flex align-items-center" style="display:none !important">
+                          <div class="d-flex align-items-center">
                             <img src="${kpi}"> 
                             <h2 data-trans-kpimanagement class="mb-0 mx-3 py-1 Resources"></h2>
                           </div>
                       </div>
-                            <div class="control-ctx initiative-cards-ctx style="display:none !important" mb-5">
+                            <div class="control-ctx initiative-cards-ctx  mb-5">
                                 <div class="card-columns pb-5">
-                                    <!-- <div class="card">
+                                     <div class="card">
                                         <div class="card-body">
                                             <span class="badge badge-pill bg-primary px-3 py-2 white fnt-10 sbold">Business sector</span>
 
@@ -492,7 +492,7 @@ export default class MainIndicatorsWebPart extends BaseClientSideWebPart<IMainIn
                                             </div>
                                         </div>
                                         <a class="view-more d-block text-center bg-btn-gray py-2" onclick="handleCardCollapse.toggle(this)">View More</a>
-                                    </div> -->
+                                    </div>
 
 
                                 </div>
