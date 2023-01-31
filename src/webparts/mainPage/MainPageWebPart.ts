@@ -55,6 +55,7 @@ export default class MainPageWebPart extends BaseClientSideWebPart<IMainPageWebP
             </div>
             <ul class="nav flex-column">
             </ul>
+            
             <div class="accordion important-links-ctx" id="accordionImportantLinks">
             <div class="card bg-transparent border-0">
                 <div class="card-header" id="headingImportantLinks">
