@@ -6255,12 +6255,12 @@ li.ms-core-menu-footer {
     border-color: transparent transparent #14415a transparent;
 }
 
-.priorityIconTooltip .tooltipbox {
+.sectionsideicontooltip .tooltipbox {
     display: none;
 }
 
 
-.priorityIconTooltip:hover .tooltipbox {
+.sectionsideicontooltip:hover .tooltipbox {
     display: block !important;
     position: absolute !important;
     bottom: 0% !important;
@@ -6272,7 +6272,7 @@ li.ms-core-menu-footer {
     width: 230px !important
 }
 
-.priorityIconTooltip:hover .tooltipbox:after {
+.sectionsideicontooltip:hover .tooltipbox:after {
     content: "";
     position: absolute;
     bottom: 100%;
@@ -6281,10 +6281,10 @@ li.ms-core-menu-footer {
     border-style: solid;
     border-color: transparent transparent #148282 transparent;
 }
-.ar .priorityIconTooltip:hover .tooltipbox:after{
+.ar .sectionsideicontooltip:hover .tooltipbox:after{
 right: 3%;
 }
-.en .priorityIconTooltip:hover .tooltipbox:after{
+.en .sectionsideicontooltip:hover .tooltipbox:after{
     left:3%;
 }
 
