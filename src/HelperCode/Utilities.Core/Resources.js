@@ -788,6 +788,8 @@
         "notcompletedmilestonescount":"عدد المعالم الغير مكتملة:",
         "notstartedmilestonescount":"عدد المعالم التي لم تبدأ:",
         "latemilestonescount":"عدد المعالم المتأخرة:",
+        "currentyear:":"السنة الحالية: ",
+        "kpiresulttext": "بيانات المؤشر"
 
     },
     "en": {
@@ -1593,9 +1595,8 @@
         "notcompletedmilestonescount":"Not Completed Milestones Count:",
         "notstartedmilestonescount":"Not Started Milestones Count:",
         "latemilestonescount":"Late Milestones Count:",
- 
-        
-
+        "currentyear": "Current Year :",
+        "kpiresulttext": "Kpi Result",
     }
 
 };

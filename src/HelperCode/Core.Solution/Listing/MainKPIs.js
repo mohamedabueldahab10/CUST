@@ -61,7 +61,7 @@ var MainKPIs_Info_Request = {
       $(".btn-toolbar.mb-2.mb-md-0.mx-2.page-filter").append(forfilterQuery);
 
 
-      
+
       SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
         MainKPIs_Info_Request.init();
       });
@@ -69,7 +69,9 @@ var MainKPIs_Info_Request = {
   },
   // The main Initialization function
   init: function () {
-    
+
+    debugger
+
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("MainKPI");
     var camlQuery = new SP.CamlQuery();
@@ -96,6 +98,8 @@ var MainKPIs_Info_Request = {
     var listItemEnum = collListItem.getEnumerator();
     var KPIsHTML = [];
     while (listItemEnum.moveNext()) {
+
+      debugger
       
       var oListItem = listItemEnum.get_current();
 
@@ -111,6 +115,7 @@ var MainKPIs_Info_Request = {
         toDate = oListItem.get_item("ToDate") || UserNo_Data,
         RelatedStrategyObjective = oListItem.get_item("RelatedStrategyObjective") || UserNo_Data;
 
+        
 
       if (isRoleDataLevelAccess && dataLevelAccessQuery) {
         var relatedStrategyObj = oListItem.get_item("RelatedStrategyObjective")
@@ -119,7 +124,7 @@ var MainKPIs_Info_Request = {
         }
       }
 
-      
+
 
 
       KPIsHTML.push(
@@ -260,7 +265,7 @@ var stratigicObjectivesRequest = {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("SOs");
     var camlQuery = new SP.CamlQuery();
-
+    debugger
     if (isRoleDataLevelAccess && dataLevelAccessQuery) {
 
       if (allRelatedStrategObjArr.length) {
@@ -290,7 +295,7 @@ var stratigicObjectivesRequest = {
     var depArrBiLang = [];
 
     while (listItemEnum.moveNext()) {
-      
+
       var oListItem = listItemEnum.get_current(),
         name = oListItem.get_item("Name") || UserNo_Data,
         code = oListItem.get_item("Title") || UserNo_Data,
@@ -298,7 +303,7 @@ var stratigicObjectivesRequest = {
         sectorcode = oListItem.get_item("Sector") || UserNo_Data, // Sector
         departmentcode = "";
       console.log(name, "name")
-
+      
       if (isRoleDataLevelAccess && dataLevelAccessQuery && allRelatedStrategObjArr.length) {
         var relatedStrategy = oListItem.get_item("RelatedStrategy")
         if (relatedStrategy && !allRelatedStrategyArr.includes(relatedStrategy)) {
@@ -600,6 +605,7 @@ var GoalsKPIs_Info_Request = {
     var camlQuery = new SP.CamlQuery();
 
     //////
+
     if (allRelatedStrategyArr.length) {
       goalKpiQuery = '<View><Query><Where><And><In><FieldRef Name="Title" /><Values>';
       allRelatedStrategyArr.forEach(function (item) {
@@ -608,7 +614,7 @@ var GoalsKPIs_Info_Request = {
       goalKpiQuery += '</Values></In><Neq><FieldRef Name=\'DeletionStatus\'/><Value Type=\'Text\'>Deleted</Value></Neq></And></Where></Query></View>';
     }
 
-    
+
 
 
     /////
@@ -970,7 +976,7 @@ var update_kpi_status = {
     kpiDegree = kpiDegree > 222 ? 222 : kpiDegree;
 
     console.log(kpiStatus, "kpiStatus kpiStatus")
-    
+
 
 
 
