@@ -6262,14 +6262,14 @@ li.ms-core-menu-footer {
 
 .priorityIconTooltip:hover .tooltipbox {
     display: block !important;
-    position: absolute!important;
-    top: 100%!important;
+    position: absolute !important;
+    top: 100% !important;
     background: #148282 !important;
-    color: #fff!important;
-    text-align: center!important;
-    border-radius: 6px!important;
-    z-index: 30000!important;
-    width: 320px!important
+    color: #fff !important;
+    text-align: center !important;
+    border-radius: 6px !important;
+    z-index: 30000 !important;
+    width: 320px !important
 }
 
 .priorityIconTooltip:hover .tooltipbox:after {
@@ -6335,4 +6335,21 @@ a.a-important-link:hover>* {
 #accordionImportantLinks {
     background-color: #005c4f;
     /* padding-top: 13px; */
+}
+
+/* ghufran style */
+.allMilestonesCounter {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px
+}
+
+.intoallMilestonesCounter h3 {
+    font-size: 1.8rem;
+    font-weight: 500
+}
+
+.intoallMilestonesCounter span {
+    color: #148287;
+    font-size: 1.8rem
 }
