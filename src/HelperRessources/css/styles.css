@@ -6263,7 +6263,7 @@ li.ms-core-menu-footer {
 .priorityIconTooltip:hover .tooltipbox {
     display: block !important;
     position: absolute !important;
-    top: 100% !important;
+    bottom: 0% !important;
     background: #148282 !important;
     color: #fff !important;
     text-align: center !important;
