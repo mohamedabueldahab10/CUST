@@ -1943,3 +1943,5 @@ var handleMainMenu = {
         }
     }
 }
+
+// module.exports = Resources;
