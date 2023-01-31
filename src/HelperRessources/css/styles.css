@@ -6341,12 +6341,18 @@ a.a-important-link:hover>* {
 .allMilestonesCounter {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px
+    background: #14415a;
+    border-radius: 0.25rem;
+    border-radius: 0.25rem;
+    padding: 0.75rem 1.25rem;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
 }
 
 .intoallMilestonesCounter h3 {
     font-size: 1.8rem;
-    font-weight: 500
+    font-weight: 500;
+    color:white;
 }
 
 .intoallMilestonesCounter span {
