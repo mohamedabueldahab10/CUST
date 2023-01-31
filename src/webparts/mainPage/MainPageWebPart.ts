@@ -55,6 +55,28 @@ export default class MainPageWebPart extends BaseClientSideWebPart<IMainPageWebP
             </div>
             <ul class="nav flex-column">
             </ul>
+            <div class="accordion important-links-ctx" id="accordionImportantLinks">
+            <div class="card bg-transparent border-0">
+                <div class="card-header" id="headingImportantLinks">
+                    <h5 class="mb-0 w-100">
+                        <button class="important-links-btn btn btn-link text-white w-100 text-center Resources"
+                            type="button" data-toggle="collapse" data-target="#collapseImportantLinks"
+                            aria-expanded="false" aria-controls="collapseImportantLinks" data-trans-importantLinks>
+                            ImportantLinks
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapseImportantLinks" class="collapse" aria-labelledby="headingImportantLinks"
+                    data-parent="#accordionImportantLinks">
+                    <div class="card-body">
+                        <ul class="ul-important-links px-3">
+                            <!-- important links -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </nav>
     <div class="main-panel" id="">
