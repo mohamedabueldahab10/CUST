@@ -1,29 +1,40 @@
 import { Environment, EnvironmentType } from "@microsoft/sp-core-library";
 
-import "../../../helperResources/css/fonts.css";
-import "../../../helperResources/css/theme.css";
-import "../../../../node_modules/spm-base/system.Resources/css/Styles.css";
-import "../../../../node_modules/spm-base/system.Resources/css/style-dashboards.css";
-import "../../../../node_modules/spm-base/system.Resources/css/fontello.css";
+// import "../../../helperResources/css/fonts.css";
+// import "../../../helperResources/css/theme.css";
+// import "../../../../node_modules/spm-base/system.Resources/css/Styles.css";
+// import "../../../../node_modules/spm-base/system.Resources/css/style-dashboards.css";
+// import "../../../../node_modules/spm-base/system.Resources/css/fontello.css";
+
+debugger
+require("../../../HelperRessources/css/Styles.css");
+require('../../../HelperRessources/css/style-dashboards.css');
+require('../../../HelperRessources/css/fontello.css');
+
+debugger
 
 if (Environment.type == EnvironmentType.ClassicSharePoint) {
 	//do some stuff on classic page
-	require("mainResources");
-	require("../../../../node_modules/spm-base/system.Utilities/miscellaneous.Utilities/translate.Resources.js");
-	require("../../../../node_modules/spm-base/system.Utilities/miscellaneous.Utilities/local.Storage.Main.js");
-	require("../../../helperCode/utilities.Config/system.Config/Resources.js");
-	require("../../../../node_modules/spm-base/system.Utilities/nav.Utilities/handle.Navigation.js");
+	// require("mainResources");
+	// require("../../../../node_modules/spm-base/system.Utilities/miscellaneous.Utilities/translate.Resources.js");
+	// require("../../../../node_modules/spm-base/system.Utilities/miscellaneous.Utilities/local.Storage.Main.js");
+	// require("../../../helperCode/utilities.Config/system.Config/Resources.js");
+	// require("../../../../node_modules/spm-base/system.Utilities/nav.Utilities/handle.Navigation.js");
 
-	require("../../../helperCode/utilities.Config/system.Config/ListNameConfig.js");
-	require("../../../helperCode/utilities.Config/system.Config/access.Config/customAccess.js");
-	require("../../../../node_modules/spm-base/system.Utilities/access.Utilities/permissions.Access.Policies.js");
+	// require("../../../helperCode/utilities.Config/system.Config/ListNameConfig.js");
+	// require("../../../helperCode/utilities.Config/system.Config/access.Config/customAccess.js");
+	// require("../../../../node_modules/spm-base/system.Utilities/access.Utilities/permissions.Access.Policies.js");
 
-	require("../../../../node_modules/spm-base/system.Utilities/nav.Utilities/project.Navigation.js");
-	require("../../../../node_modules/spm-base/system.Utilities/nav.Utilities/side.Navigation.js");
+	// require("../../../../node_modules/spm-base/system.Utilities/nav.Utilities/project.Navigation.js");
+	// require("../../../../node_modules/spm-base/system.Utilities/nav.Utilities/side.Navigation.js");
+	/////////////////////////////////////////////////////////////////////
+	require("Resources");
+	require('../../../HelperCode/Utilities.Core/Side_Navigation.js');
+
 } else if (Environment.type === EnvironmentType.SharePoint) {
 	//do some stuff on modern page
 	// require("../../../../node_modules/@fortawesome/fontawesome-free/css/all.css");
-	require("../../../helperResources/css/bootstrap.css");
+	require("../../../HelperRessources/css/bootstrap.css");
 	require("jquery");
 	require("bootstrap");
 } else if (Environment.type === EnvironmentType.Local) {
@@ -42,9 +53,11 @@ import "@pnp/sp/site-users/web";
 const isArabic =
 	localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar";
 const logo: any = isArabic
-	? require("../../../helperResources/img/main-logo.png")
-	: require("../../../helperResources/img/main-logo-en.png");
-const bell: any = require("../../../../node_modules/spm-base/system.Resources/img/icon-bell.svg");
+	? require("../../../HelperRessources/img/main-logo.png")
+	: require("../../../HelperRessources/img/main-logo-en.png");
+const bell: any = require("../../../HelperRessources/img/icon-bell.svg");
+
+// const bell: any = require("../../../../node_modules/spm-base/system.Resources/img/icon-bell.svg");
 
 export default class MasterPage extends React.Component<IMasterPageProps, {
 	importantLinkCollapse: any,
