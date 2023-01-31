@@ -17,14 +17,14 @@ var Information_Form = [
         DisplayNameEn: 'Target Group',
         type: 'string',
         // maxchar: '250',
-        validation: 'required',
+        // validation: 'required',
       },
       {
         InternalName: 'ImpactType',
         DisplayName: 'نوع الأثر',
         DisplayNameEn: 'Impact Type',
         type: 'dropdownValues',
-        validation: 'required',
+        // validation: 'required',
         options: {
           choices: [
             {
@@ -43,7 +43,7 @@ var Information_Form = [
         DisplayName: 'تصنيف الأثر',
         DisplayNameEn: 'Impact Classification',
         type: 'dropdownValues',
-        validation: 'required',
+        // validation: 'required',
         options: {
           choices: [
             {
@@ -72,14 +72,14 @@ var Information_Form = [
         type: 'multiline',
       //   type: 'string',
       //   maxchar: '250',
-        validation: 'required',
+        // validation: 'required',
       },
       {
         InternalName: 'ImpactDuration',
         DisplayName: 'المدة الزمنية للأثر',
         DisplayNameEn: 'Impact Duration',
         type: 'dropdownValues',
-        validation: 'required',
+        // validation: 'required',
         options: {
           choices: [
             {
@@ -106,7 +106,7 @@ var Information_Form = [
         DisplayName: 'هل أثر المنجز مستدام (أكثر من عشر سنوات)؟',
         DisplayNameEn: 'Is Impact Sustainable (more than ten years)?',
         type: 'dropdownValues',
-        validation: 'required',
+        // validation: 'required',
         options: {
           choices: [
             {
@@ -129,7 +129,7 @@ var Information_Form = [
         DisplayName: 'مستوى الأثر',
         DisplayNameEn: 'ImpactLevel',
         type: 'dropdownValues',
-        validation: 'required',
+        // validation: 'required',
         options: {
           choices: [
             {
@@ -151,6 +151,22 @@ var Information_Form = [
           ],
         },
       },
+      {
+         InternalName:'AchievementCost',
+         DisplayName:'تكلفة المنجز',
+         DisplayNameEn:'Achievement Cost',
+         type:'string',
+         maxchar:'250',
+        // validation: 'required',
+      },
+      {
+         InternalName:'FundingSource',
+         DisplayName:'مصدر التمويل',
+         DisplayNameEn:'Funding Source',
+         type:'string',
+         maxchar:'250',
+        // validation: 'required',
+      },
     ],
   },
   {
@@ -167,9 +183,9 @@ var Information_Form = [
         // maxchar: '500',
       },
       // {
-      //   InternalName: 'Attachments',
+      //   InternalName: 'getfile',
       //   DisplayName: 'مرفقات',
-      //   DisplayNameEn: 'Attachments',
+      //    DisplayNameEn: 'Attachments',
       //   type: 'file',
       //   withAddBtn: 'true',
       // },

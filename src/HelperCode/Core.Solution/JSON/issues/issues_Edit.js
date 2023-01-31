@@ -106,6 +106,20 @@ var Information_Form = [{
             //     }
             // },
             {
+                "InternalName": "Status",
+                "DisplayName":"الحالة",
+                // "DisplayName":"الحالة الكلية للتحدي",
+                "DisplayNameEn": "Status",
+                "type":"dropdownValues",
+                options:{
+                    choices:[
+                        // 'مغلق',' مفتوح'
+                        { display: 'open', value: 'open', selected: 'selected' },
+                        { display: 'closed', value: 'closed' }
+                    ]
+                }
+            },
+            {
                 "InternalName": "Owner",
                 "DisplayName": "مالك التحدي",
                 "DisplayNameEn": "Owner",
@@ -202,12 +216,12 @@ var Information_Form = [{
     },
     {
       label: 'وثائق داعمة',
-      labelEn: 'Attachments',
+      labelEn: 'Supporting Documents',
       description: 'التفاصيل',
       descriptionEn: 'Details',
       subFields: [
         {
-          InternalName: 'Attachments',
+          InternalName: 'getfile',
           DisplayName: 'المرفقات',
           DisplayNameEn: 'Attachments',
           type: 'file',
@@ -217,8 +231,8 @@ var Information_Form = [{
       ],
     },
     // {
-    //     label: 'المرفقات',
-    //     labelEn: 'Attachments',
+    //     label: 'الوثائق الداعمة',
+    //     labelEn: 'Supporting Documents',
     //     description: "",
     //     descriptionEn: "",
     //     subFields: [{

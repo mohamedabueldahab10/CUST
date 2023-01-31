@@ -162,7 +162,7 @@ var Information_Form = [{
             "InternalName": "Status",
             "DisplayName":"الحالة",
             "DisplayNameEn": "Status",
-            "type":"dropdown",
+            "type":"dropdownValues",
             options:{
                 choices:[
                     { display: 'open', value: 'open', selected: 'selected' },

@@ -122,14 +122,14 @@ var Information_Form = [
   },
   {
     label: 'وثائق داعمة',
-    labelEn: 'Attachments',
+    labelEn: 'Supporting Documents',
     description: 'التفاصيل',
     descriptionEn: 'Details',
     subFields: [
       {
-        InternalName: 'Attachments',
+        InternalName: 'getfile',
         DisplayName: 'مرفقات',
-        DisplayNameEn: 'Attachments',
+         DisplayNameEn: 'Attachments',
         type: 'file',
         withAddBtn: 'true',
         // validation: 'required',
@@ -137,14 +137,14 @@ var Information_Form = [
     ],
   },
   // {
-  //     label: 'المرفقات',
-  //     labelEn: 'Attachments',
+  //     label: 'الوثائق الداعمة',
+  //     labelEn: 'Supporting Documents',
   //     description: "",
   //     descriptionEn: "",
   //     subFields: [{
   //         "InternalName": "getfile",
   //         "DisplayName": "المرفقات",
-  //         "DisplayNameEn": "Attachments",
+  //         "DisplayNameEn": "Supporting Data",
   //         "type": "file",
   //         "validation": "required",
   //         "withAddBtn":"true"

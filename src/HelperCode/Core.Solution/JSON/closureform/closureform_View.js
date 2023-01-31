@@ -26,14 +26,14 @@ var Information_Form = [
             // 'الغاء المشروع', 'اكتمال المشروع', 'تغير الجهة المالكة', 'أخرى'
           ],
         },
-        validation: 'required',
+        // validation: 'required',
       },
       {
         InternalName: 'ClosureReasonsDesc',
         DisplayName: 'شرح أسباب اغلاق المشروع',
         DisplayNameEn: 'Closure Reasons Desc',
         type: 'multiline',
-        validation: 'required',
+        // validation: 'required',
       },
     ],
   },

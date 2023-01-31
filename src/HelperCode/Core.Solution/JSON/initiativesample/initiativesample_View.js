@@ -20,7 +20,7 @@ var Information_Form  = [
             "DisplayName":"اسم المبادرة",
             "type":"string",
             "maxchar": "250",
-            "validation": "required"
+            // "validation": "required"
         },
        
         {
@@ -68,7 +68,7 @@ var Information_Form  = [
             "DisplayName":"اسم المخرج",
             "type":"string",
             "maxchar": "250",
-            "validation": "required"
+            // "validation": "required"
         },
         {
             "InternalName": "PlannedCompletedDate",
@@ -130,7 +130,7 @@ var Information_Form  = [
             "DisplayName":"اسم المعلم",
             "type":"string",
             "maxchar": "250",
-            "validation": "required"
+            // "validation": "required"
         },
         {
             "InternalName": "PlannedCompletedDate",

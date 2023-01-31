@@ -17,7 +17,7 @@ var Information_Form  = [
                 "DisplayNameEn": "Name",
                 "DisplayName":"اسم الأداة",
                 "type":"string",
-                "validation": "required"
+                // "validation": "required"
                 
             },
             {

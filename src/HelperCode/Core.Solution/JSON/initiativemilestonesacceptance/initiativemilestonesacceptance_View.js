@@ -272,7 +272,7 @@ var Information_Form  = [//for Initiatives List
                 "DisplayName":"رمز المعلم",
                 "type":"string",
                 "maxchar": "250",
-                "validation": "required"
+                // "validation": "required"
             },
             {
                 "InternalName": "Name",
@@ -280,7 +280,7 @@ var Information_Form  = [//for Initiatives List
                 "DisplayName":"اسم المعلم",
                 "type":"string",
                 "maxchar": "250",
-                "validation": "required"
+                // "validation": "required"
             },
             // {
             //     "InternalName": "PlannedCompletedDate",
@@ -346,7 +346,7 @@ var Information_Form  = [//for Initiatives List
     },
         // {
         //     label: 'الوثائق الداعمة',
-        //     labelEn: 'Documents',
+        //     labelEn: 'Supporting Documents',
         //     description: "",
         //     descriptionEn: "",
         //     subFields:[

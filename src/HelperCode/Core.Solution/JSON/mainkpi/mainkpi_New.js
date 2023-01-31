@@ -48,9 +48,9 @@ var Information_Form = [
           choices: [
             // { display: "strategically", value: "strategically" },
             { display: 'main', value: 'main' },
-            { display: 'level2', value: 'level2' },
-            { display: 'level3', value: 'level3' },
-            // { display: "sub", value: "sub" },
+            // { display: 'level2', value: 'level2' },
+            // { display: 'level3', value: 'level3' },
+            { display: "sub", value: "sub" },
             // { display: "vision", value: "vision" },
             // { display: "jobmarket", value: "jobmarket" },
           ],
@@ -911,12 +911,12 @@ var Information_Form = [
   },
   {
     label: 'الوثائق الداعمة',
-    labelEn: 'Attachments',
+    labelEn: 'Supporting Documents',
     description: 'التفاصيل',
     descriptionEn: 'Details',
     subFields: [
       {
-        InternalName: 'Attachments',
+        InternalName: 'getfile',
         DisplayName: 'المرفقات',
         DisplayNameEn: 'Attachments',
         type: 'file',

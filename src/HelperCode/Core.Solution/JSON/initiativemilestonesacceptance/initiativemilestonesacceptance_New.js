@@ -343,7 +343,7 @@ var Information_Form = [
   },
   {
     label: 'الوثائق الداعمة',
-    labelEn: 'Documents',
+    labelEn: 'Supporting Documents',
     description: '',
     descriptionEn: '',
     subFields: [

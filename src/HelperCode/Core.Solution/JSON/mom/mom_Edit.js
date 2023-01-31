@@ -80,9 +80,9 @@ var Information_Form = [
         type: 'multiline',
       },
       {
-        InternalName: 'Attachments',
+        InternalName: 'getfile',
         DisplayName: 'المرفقات',
-        DisplayNameEn: 'Attachments',
+         DisplayNameEn: 'Attachments',
         type: 'file',
         withAddBtn: 'true',
       },

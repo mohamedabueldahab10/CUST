@@ -17,14 +17,14 @@ var Information_Form = [
           DisplayNameEn: 'Achievement Name',
           DisplayName: 'اسم المنجز',
           type: 'string',
-          validation: 'required',
+          // validation: 'required',
         },
   
         {
           InternalName: 'AchievementType',
           DisplayNameEn: 'Achievement Type',
           DisplayName: 'نوع المنجز',
-          validation: 'required',
+          // validation: 'required',
           type: 'dropdownValues',
           options: {
             choices: [
@@ -50,13 +50,13 @@ var Information_Form = [
           DisplayNameEn: 'Achievement Date',
           DisplayName: 'تاريخ المنجز',
           type: 'datetime',
-          validation: 'required',
+          // validation: 'required',
         },
         {
           InternalName: 'AchievementCategory',
           DisplayNameEn: 'Achievement Category',
           DisplayName: 'تصنيف المنجز',
-          validation: 'required',
+          // validation: 'required',
           type: 'dropdownValues',
           options: {
             choices: [
@@ -79,13 +79,13 @@ var Information_Form = [
           DisplayNameEn: 'Description',
           DisplayName: 'وصف المنجز',
           type: 'multiline',
-          validation: 'required',
+          // validation: 'required',
         },
         {
           InternalName: 'LinkType',
           DisplayNameEn: 'Link Type',
           DisplayName: 'نوع ارتباط المنجز',
-          validation: 'required',
+          // validation: 'required',
           type: 'dropdownValues',
           options: {
             choices: [
@@ -93,6 +93,10 @@ var Information_Form = [
               { display: 'initiative', value: 'initiative' },
             ],
           },
+          "toggleValues": [
+            { value: 'objective', fields: ['RelatedObjective','RelatedKPI'] },
+            { value: 'initiative', fields: ['RelatedInitiative','RelatedMilestone',] },
+        ],
         },
         {
           InternalName: 'RelatedObjective',
@@ -102,7 +106,9 @@ var Information_Form = [
           source: 'SOs',
           Dispfieldkey: 'Name',
           valfieldkey: 'Title',
-          validation: 'required',
+          // validation: 'required',
+          ToggleName: 'RelatedObjective',
+          display: 'none'
           // "state": "disabled"
         },
         {
@@ -113,6 +119,8 @@ var Information_Form = [
           source: 'MainKPI',
           Dispfieldkey: 'Name',
           valfieldkey: 'Title',
+          ToggleName: 'RelatedKPI',
+          display: 'none'
         },
         {
           InternalName: 'RelatedInitiative',
@@ -122,7 +130,9 @@ var Information_Form = [
           source: 'Initiatives',
           Dispfieldkey: 'Name',
           valfieldkey: 'Title',
-          validation: 'required',
+          // validation: 'required',
+          ToggleName: 'RelatedInitiative',
+          display: 'none'
         },
         {
           InternalName: 'RelatedMilestone',
@@ -132,7 +142,9 @@ var Information_Form = [
           source: 'InitiativeMilestones',
           Dispfieldkey: 'Name',
           valfieldkey: 'Title',
-          validation: 'required',
+          // validation: 'required',
+          ToggleName: 'RelatedMilestone',
+          display: 'none'
         },
       ],
     },
@@ -146,7 +158,7 @@ var Information_Form = [
           InternalName: 'ImpactType',
           DisplayNameEn: 'Impact Type',
           DisplayName: 'نوع الأثر',
-          validation: 'required',
+          // validation: 'required',
           type: 'dropdownValues',
           options: {
             choices: [
@@ -159,7 +171,7 @@ var Information_Form = [
           InternalName: 'ImpactCategory',
           DisplayNameEn: 'Impact Category',
           DisplayName: 'تصنيف الأثر',
-          validation: 'required',
+          // validation: 'required',
           type: 'dropdownValues',
           options: {
             choices: [
@@ -175,20 +187,20 @@ var Information_Form = [
           DisplayNameEn: 'Impact Description',
           DisplayName: 'وصف الأثر',
           type: 'multiline',
-          validation: 'required',
+          // validation: 'required',
         },
         {
           InternalName: 'ImpactDuration',
           DisplayNameEn: 'Impact Duration',
           DisplayName: 'المدة الزمنية للأثر',
           type: 'string',
-          validation: 'required',
+          // validation: 'required',
         },
       ],
     },
     {
       label: 'الوثائق الداعمة',
-      labelEn: 'Attachments',
+      labelEn: 'Supporting Documents',
       description: 'التفاصيل',
       descriptionEn: 'Details',
       subFields: [
@@ -204,13 +216,13 @@ var Information_Form = [
           DisplayNameEn: 'Attachments',
           type: 'file',
           withAddBtn: 'true',
-          validation: 'required',
+          // validation: 'required',
         },
         {
           DisplayName: 'ارسال للموافقة',
           DisplayNameEn: 'Submit For Approval',
           InternalName: 'SubmitForApproval',
-          validation: 'required',
+          // validation: 'required',
           type: 'yesnoradio',
           options: {
             choices: [

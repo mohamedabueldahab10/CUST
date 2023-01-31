@@ -95,9 +95,9 @@ var Information_Form = [{
 
         },
         {
-            "InternalName": "Attachments",
+            "InternalName": "getfile",
             "DisplayName":"المرفقات",                
-            "DisplayNameEn": "Attachments",
+            "DisplayNameEn": "Supporting Data",
             "type":"file",
             "withAddBtn":"true"
         }

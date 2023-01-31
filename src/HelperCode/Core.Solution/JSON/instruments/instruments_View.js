@@ -12,7 +12,7 @@ var Information_Form  = [
                 "DisplayName":"اسم البرنامج",
                 "type":"string",
                 "maxchar": "250",
-                "validation": "required"
+                // "validation": "required"
                 
                
             },

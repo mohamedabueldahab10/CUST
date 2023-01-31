@@ -96,23 +96,6 @@ var Information_Form = [
                 "type":"datetime",
                 "max":"today"
             },
-        ]
-    },
-    {
-        label: 'المحاور الاستراتيجية',
-        labelEn: 'Strategy pillars',
-        description: "التفاصيل",
-        descriptionEn: "Details",
-        sectiontype: "master",
-        targetlist: "SPillars",
-        subFields: [
-            // {
-            //     "InternalName": "Title",
-            //     "DisplayNameEn": "Title",
-            //     "DisplayName":"رمز  الركيزةالاستراتيجية",
-            //     "type":"string",
-            //      "state":"disabled"
-            // },
             {
                 "InternalName": "PillarsExist",
                 "ToggleName": "PillarsExist",
@@ -133,6 +116,24 @@ var Information_Form = [
                 },
 
             },
+        ]
+    },
+    {
+        label: 'المحاور الاستراتيجية',
+        labelEn: 'Strategy pillars',
+        description: "التفاصيل",
+        descriptionEn: "Details",
+        sectiontype: "master",
+        targetlist: "SPillars",
+        subFields: [
+            // {
+            //     "InternalName": "Title",
+            //     "DisplayNameEn": "Title",
+            //     "DisplayName":"رمز  الركيزةالاستراتيجية",
+            //     "type":"string",
+            //      "state":"disabled"
+            // },
+          
             {
                 "InternalName": "Name",
                 "DisplayNameEn": "Name",

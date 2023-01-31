@@ -17,7 +17,7 @@ var Information_Form = [
                 "DisplayNameEn": "Name",
                 "DisplayName": "الأسم",
                 "type": "string",
-                "validation": "required"
+                // "validation": "required"
             },
             {
                 "InternalName": "Description",
@@ -31,7 +31,7 @@ var Information_Form = [
                 "InternalName": "Types",
                 "DisplayNameEn": "Strategy Type",
                 "DisplayName": "نوع  الاستراتيجية",
-                "validation": "required",
+                // "validation": "required",
                 // "toggleValues": ['sub'], 
                 // "toggleFields": ['Ministry'],
                 "toggleValues": [
@@ -102,24 +102,6 @@ var Information_Form = [
                 "DisplayNameEn": "Approval Date",
                 "type":"datetime"
             },
-        ]
-    },
-    {
-        label: 'المحاور الاستراتيجية',
-        labelEn: 'Strategy pillars',
-        description: "التفاصيل",
-        descriptionEn: "Details",
-        sectiontype: "master",
-        targetlist: "SPillars",
-        subFields: [
-            // {
-            //     "InternalName": "Title",
-            //     "DisplayNameEn": "Title",
-            //     "DisplayName":"رمز  الركيزةالاستراتيجية",
-            //     "type":"string",
-            //      "state":"disabled"
-            // },
-            
             {
                 "InternalName": "PillarsExist",
                 "DisplayName": "هل يوجد محاور؟",
@@ -139,6 +121,25 @@ var Information_Form = [
                 },
              
             },
+        ]
+    },
+    {
+        label: 'المحاور الاستراتيجية',
+        labelEn: 'Strategy pillars',
+        description: "التفاصيل",
+        descriptionEn: "Details",
+        sectiontype: "master",
+        targetlist: "SPillars",
+        subFields: [
+            // {
+            //     "InternalName": "Title",
+            //     "DisplayNameEn": "Title",
+            //     "DisplayName":"رمز  الركيزةالاستراتيجية",
+            //     "type":"string",
+            //      "state":"disabled"
+            // },
+            
+
             {
                 "InternalName": "Name",
                 "DisplayNameEn": "Name",

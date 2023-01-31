@@ -85,14 +85,14 @@ var Information_Form = [
   },
   {
     label: 'الوثائق الداعمة',
-    labelEn: 'Attachments',
+    labelEn: 'Supporting Documents',
     description: 'التفاصيل',
     descriptionEn: 'Details',
     subFields: [
       {
-        InternalName: 'Attachments',
+        InternalName: 'getfile',
         DisplayName: 'المرفقات',
-        DisplayNameEn: 'Attachments',
+         DisplayNameEn: 'Attachments',
         type: 'file',
         withAddBtn: 'true',
       },

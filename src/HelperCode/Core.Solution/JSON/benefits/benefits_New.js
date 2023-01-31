@@ -65,20 +65,22 @@ var Information_Form = [
         valfieldkey: 'Title',
         validation: 'required',
       },
-      {
-        InternalName: 'FromDate',
-        DisplayName: 'من تاريخ',
-        DisplayNameEn: 'From Date',
-        max: 'ToDate',
-        type: 'datetime',
-      },
-      {
-        InternalName: 'ToDate',
-        DisplayName: ' الى تاريخ',
-        DisplayNameEn: 'From Date',
-        min: 'FromDate',
-        type: 'datetime',
-      },
+      // {
+      //   InternalName: 'FromDate',
+      //   DisplayName: 'من سنة',
+      //   DisplayNameEn: 'From Date',
+      //   max: 'ToDate',
+      //   type: 'datetime',
+      //   validation: 'required',
+      // },
+      // {
+      //   InternalName: 'ToDate',
+      //   DisplayName: 'إلى سنة',
+      //   DisplayNameEn: 'To Date',
+      //   min: 'FromDate',
+      //   type: 'datetime',
+      //   validation: 'required',
+      // },
       {
         InternalName: 'DataSource',
         DisplayNameEn: 'Data Source',
@@ -199,14 +201,14 @@ var Information_Form = [
   },
   {
     label: 'وثائق داعمة',
-    labelEn: 'Attachments',
+    labelEn: 'Supporting Documents',
     description: 'التفاصيل',
     descriptionEn: 'Details',
     subFields: [
       {
-        InternalName: 'Attachments',
+        InternalName: 'getfile',
         DisplayName: 'المرفقات',
-        DisplayNameEn: 'Attachments',
+         DisplayNameEn: 'Attachments',
         type: 'file',
         withAddBtn: 'true',
         // validation: 'required',
@@ -214,7 +216,7 @@ var Information_Form = [
     ],
   },
   // {
-  //     label: 'المرفقات',
+  //     label: 'الوثائق الداعمة',
   //     description: "",
   //     subFields:[
   //         {

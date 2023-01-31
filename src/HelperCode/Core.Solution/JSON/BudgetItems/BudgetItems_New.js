@@ -115,7 +115,7 @@ var Information_Form  = [
                 "display":"none"
             },
             {
-                "InternalName": "Type",
+                "InternalName": "Types",
                 "DisplayNameEn": "Type",
                 "DisplayName":"النوع",
                 "type": "dropdownValues",

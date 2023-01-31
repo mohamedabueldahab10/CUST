@@ -244,7 +244,7 @@ var Information_Form = [
         maxchar: '500',
       },
       {
-        InternalName: 'Attachments',
+        InternalName: 'getfile',
         DisplayName: 'مرفقات',
         DisplayNameEn: 'Attachments',
         type: 'file',
@@ -253,8 +253,8 @@ var Information_Form = [
     ],
   },
   // ,{
-  //    label: 'المرفقات',
-  //    labelEn: 'Attachments',
+  //    label: 'الوثائق الداعمة',
+  //    labelEn: 'Supporting Documents',
   //    description: "",
   //    descriptionEn: "",
   //    subFields: [{

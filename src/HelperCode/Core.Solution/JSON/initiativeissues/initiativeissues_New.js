@@ -55,7 +55,7 @@ var Information_Form = [{
                 options: {
                     choices: [
                         { display: 'critical', value: 'critical' },
-                        { display: 'hight', value: 'hight' },
+                        { display: 'high', value: 'high' },
                         { display: 'medium', value: 'medium' },
                         { display: 'low', value: 'low' }
                     ]
@@ -68,7 +68,7 @@ var Information_Form = [{
                 "type": "dropdownValues",
                 options: {
                     choices: [
-                        { display: 'hight', value: 'hight' },
+                        { display: 'high', value: 'high' },
                         { display: 'medium', value: 'medium' },
                         { display: 'low', value: 'low' },
                     ]
@@ -205,12 +205,12 @@ var Information_Form = [{
     },
     // {
     //     label: 'الوثائق الداعمة',
-    //     labelEn: 'Documents',
+    //     labelEn: 'Supporting Documents',
     //     description: "التفاصيل",
     //     descriptionEn: "Details",
     //     subFields:[
     //         {
-    //             "InternalName": "Attachments",
+    //             "InternalName": "getfile",
     //             "DisplayName":"المرفقات",                
     //             "DisplayNameEn": "Attachments",
     //             "type":"file",

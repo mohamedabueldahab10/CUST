@@ -78,9 +78,9 @@ var Information_Form = [
 
       // },
       // {
-      //   InternalName: 'Attachments',
+      //   InternalName: 'getfile',
       //   DisplayName: 'المرفقات',
-      //   DisplayNameEn: 'Attachments',
+      //    DisplayNameEn: 'Attachments',
       //   type: 'file',
       //   withAddBtn: 'true',
       // },

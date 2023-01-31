@@ -237,7 +237,7 @@ var Information_Form = [
                 "DisplayName":"اسم المخرج",
                 "type":"string",
                 "maxchar": "250",
-                "validation": "required"
+                // "validation": "required"
             },//here
             {
                 "InternalName": "RelatedBenefits",
@@ -273,7 +273,7 @@ var Information_Form = [
                 "DisplayNameEn": "Target",
                 "DisplayName":"مستهدف المخرج",
                 "type":"float",
-                "validation": "required"
+                // "validation": "required"
             },
        
             {
@@ -1333,14 +1333,14 @@ var Information_Form = [
         ]
     },
     // {
-    //     label: 'المرفقات',
-    //     labelEn: 'Attachments',
+    //     label: 'الوثائق الداعمة',
+    //     labelEn: 'Supporting Documents',
     //     description: "",
     //     descriptionEn: "",
     //     subFields: [{
     //         "InternalName": "getfile",
     //         "DisplayName": "المرفقات",
-    //         "DisplayNameEn": "Attachments",
+    //         "DisplayNameEn": "Supporting Data",
     //         "type": "file",
     //         "fileExtensions": "png,jpeg,svg,xlsx,docx,jpg,txt"
     //     }]

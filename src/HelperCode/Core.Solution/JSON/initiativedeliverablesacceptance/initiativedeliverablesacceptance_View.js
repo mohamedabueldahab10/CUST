@@ -21,14 +21,14 @@ var Information_Form = [//for Initiatives List
                 "DisplayName": "اسم المخرج",
                 "type": "string",
                 "maxchar": "250",
-                "validation": "required"
+                // "validation": "required"
             },
             {
                 "InternalName": "PlannedCompletedDate",
                 "DisplayNameEn": "Planned Completed Date",
                 "DisplayName": "تاريخ الاكتمال المخطط",
                 "type": "datetime",
-                "validation": "required"
+                // "validation": "required"
             },
             {
                 "InternalName": "DeliverableSuccessKPI",
@@ -70,7 +70,7 @@ var Information_Form = [//for Initiatives List
     },
     {
         label: 'الوثائق الداعمة',
-        labelEn: 'Documents',
+        labelEn: 'Supporting Documents',
         description: "",
         descriptionEn: "",
         subFields: [

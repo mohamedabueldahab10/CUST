@@ -24,7 +24,7 @@ var Information_Form = [
       {
         // hol dynamic 3ala l lookup
         InternalName: 'RelatedBenefit',
-        DisplayNameEn: 'Benefits',
+        DisplayNameEn: 'RelatedBenefit',
         DisplayName: 'المنفعة المرتبطة',
         type: 'lookup',
         source: 'Benefits',
@@ -162,9 +162,9 @@ var Information_Form = [
       },
       {
         InternalName: 'ToDate',
-        DisplayName: 'من سنة',
-        DisplayNameEn: 'From Date',
-        max: 'FromDate',
+        DisplayName: 'إلى سنة',
+        DisplayNameEn: 'To Date',
+        min: 'FromDate',
         type: 'datetime',
         validation: 'required',
       },
@@ -191,14 +191,14 @@ var Information_Form = [
   },
   {
     label: 'الوثائق الداعمة',
-    labelEn: 'Documents',
+    labelEn: 'Supporting Documents',
     description: '',
     descriptionEn: '',
     subFields: [
       {
-        InternalName: 'Attachments',
+        InternalName: 'getfile',
         DisplayName: 'المستندات',
-        DisplayNameEn: 'Attachments',
+         DisplayNameEn: 'Attachments',
         type: 'file',
         withAddBtn: 'true',
       },

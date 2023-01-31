@@ -22,29 +22,29 @@ var Information_Form = [
         InternalName: 'Category',
         DisplayName: 'نوع الخطر',
         DisplayNameEn: 'Risk Category',
-        type: 'string',
-        // "type": "dropdownValues",
-        // options: {
-        //     choices: [
+        // type: 'string',
+        type: 'dropdownValues',
+        options: {
+            choices: [
 
-        //         {
-        //             display: 'financial',
-        //             value: 'financial'
-        //         },
-        //         {
-        //             display: 'legal',
-        //             value: 'legal'
-        //         },
-        //         {
-        //             display: 'contractual',
-        //             value: 'contractual'
-        //         },
-        //         {
-        //             display: 'others',
-        //             value: 'others'
-        //         }
-        //     ]
-        // }
+                {
+                    display: 'financial',
+                    value: 'financial'
+                },
+                {
+                    display: 'legal',
+                    value: 'legal'
+                },
+                {
+                    display: 'contractual',
+                    value: 'contractual'
+                },
+                {
+                    display: 'others',
+                    value: 'others'
+                }
+            ]
+        }
       },
       {
         InternalName: 'Status',
@@ -288,12 +288,12 @@ var Information_Form = [
   },
   {
     label: 'الوثائق الداعمة',
-    labelEn: 'Documents',
+    labelEn: 'Supporting Documents',
     description: 'التفاصيل',
     descriptionEn: 'Details',
     subFields: [
       {
-        InternalName: 'Attachments',
+        InternalName: 'getfile',
         DisplayName: 'المرفقات',
         DisplayNameEn: 'Attachments',
         type: 'file',

@@ -91,24 +91,6 @@ var Information_Form = [
                 "DisplayNameEn": "Approval Date",
                 "type":"datetime"
             },
-        ]
-    },
-    {
-        label: 'المحاور الاستراتيجية',
-        labelEn: 'Strategy pillars',
-        description: "التفاصيل",
-        descriptionEn: "Details",
-        sectiontype: "master",
-        targetlist: "SPillars",
-        subFields: [
-            // {
-            //     "InternalName": "Title",
-            //     "DisplayNameEn": "Title",
-            //     "DisplayName":"رمز  الركيزةالاستراتيجية",
-            //     "type":"string",
-            //      "state":"disabled"
-            // },
-            
             {
                 "InternalName": "PillarsExist",
                 "DisplayName": "هل يوجد محاور استراتيجية / برامج الرؤية ؟",
@@ -129,6 +111,25 @@ var Information_Form = [
                 },
 
             },
+        ]
+    },
+    {
+        label: 'المحاور الاستراتيجية',
+        labelEn: 'Strategy pillars',
+        description: "التفاصيل",
+        descriptionEn: "Details",
+        sectiontype: "master",
+        targetlist: "SPillars",
+        subFields: [
+            // {
+            //     "InternalName": "Title",
+            //     "DisplayNameEn": "Title",
+            //     "DisplayName":"رمز  الركيزةالاستراتيجية",
+            //     "type":"string",
+            //      "state":"disabled"
+            // },
+            
+         
             {
                 "InternalName": "Name",
                 "DisplayNameEn": "Name",

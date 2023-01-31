@@ -11,7 +11,7 @@ var Information_Form = [
               "DisplayNameEn": "Title",
               "DisplayName": "رمز  مقياس المخرج",
               "type": "string",
-              "validation": "required",
+              // "validation": "required",
               "maxchar": "250"
           },
           {
@@ -20,7 +20,7 @@ var Information_Form = [
               "DisplayName": "مقياس المخرج",
               "type": "string",
               "maxchar": "250",
-              "validation": "required"
+              // "validation": "required"
           },
           {
             "InternalName": "RelatedInitiativeDeliverable",

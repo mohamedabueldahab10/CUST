@@ -135,7 +135,7 @@ var Information_Form = [{
                 "DisplayName":"الحالة",
                 // "DisplayName":"الحالة الكلية للتحدي",
                 "DisplayNameEn": "Status",
-                "type":"dropdown",
+                "type":"dropdownValues",
                 options:{
                     choices:[
                         // 'مغلق',' مفتوح'
@@ -204,12 +204,12 @@ var Information_Form = [{
     },
     {
       label: 'وثائق داعمة',
-      labelEn: 'Attachments',
+      labelEn: 'Supporting Documents',
       description: 'التفاصيل',
       descriptionEn: 'Details',
       subFields: [
         {
-          InternalName: 'Attachments',
+          InternalName: 'getfile',
           DisplayName: 'المرفقات',
           DisplayNameEn: 'Attachments',
           type: 'file',
@@ -219,8 +219,8 @@ var Information_Form = [{
       ],
     },
     // {
-    //     label: 'المرفقات',
-    //     labelEn: 'Attachments',
+    //     label: 'الوثائق الداعمة',
+    //     labelEn: 'Supporting Documents',
     //     description: "",
     //     descriptionEn: "",
     //     subFields: [{

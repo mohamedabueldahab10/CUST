@@ -10,22 +10,7 @@ var Listing_Info = [
         // isLinkable: true,
         // ShowUnderProjectListing: false
     },
-    {
-        "InternalName": "Name",
-        "DisplayName": "الاسم",
-        "DisplayNameEn": "Name",
-        "type": "text",
-        inlisting: true,
-        infilter: true
-    },
-    {
-        "InternalName": "JobTitle",
-        "DisplayName":"المسمى الوظيفي",
-        "DisplayNameEn":"Job Title",
-        "type":"text",
-        inlisting: true,
-        infilter: false,
-    },
+
     {
         "InternalName": "StakeholderType",
         "DisplayName": "النوع",
@@ -35,6 +20,24 @@ var Listing_Info = [
         inlisting: true,
         infilter: true
     },
+
+    {
+        "InternalName": "Name",
+        "DisplayName": "الاسم",
+        "DisplayNameEn": "Name",
+        "type": "text",
+        inlisting: true,
+        infilter: false
+    },
+    {
+        "InternalName": "JobTitle",
+        "DisplayName":"المسمى الوظيفي",
+        "DisplayNameEn":"Job Title",
+        "type":"text",
+        inlisting: true,
+        infilter: false,
+    },
+    
     // {
     //     "InternalName": "ProjectCode",
     //     "DisplayName": "رمز المشروع",

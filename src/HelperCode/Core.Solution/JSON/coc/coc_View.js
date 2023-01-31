@@ -15,11 +15,13 @@ var Information_Form = [
         InternalName: 'Deliverables',
         DisplayNameEn: 'Deliverables',
         DisplayName: 'المخرجات',
+        // type: 'lookup',
         type: 'lookupmultiselect',
         validation: 'required',
         source: 'Deliverables',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+        grpfieldkey: 'Title',
       },
       {
         InternalName: 'Amount',
@@ -32,7 +34,7 @@ var Information_Form = [
         DisplayNameEn: 'TAX',
         DisplayName: 'نسبة الضريبة',
         type: 'floatpercentage',
-        validation: 'required',
+        // validation: 'required',
       },
       {
         InternalName: 'TotalAmount',
@@ -44,14 +46,19 @@ var Information_Form = [
         InternalName: 'DisbursementStatus',
         DisplayNameEn: 'Disbursement Status',
         DisplayName: 'حالة الصرف',
-        validation: 'required',
+        // validation: 'required',
         type: 'dropdownValues',
         options: {
           choices: [
-            { display: 'missionwasapproved', value: 'missionwasapproved' },
+            // { display: 'missionwasapproved', value: 'missionwasapproved' },
+            // {
+            //   display: 'waitingfortheapprovalofresources',
+            //   value: 'waitingfortheapprovalofresources',
+            // },
+            { display: 'cocuploaded', value: 'cocuploaded' },
             {
-              display: 'waitingfortheapprovalofresources',
-              value: 'waitingfortheapprovalofresources',
+              display: 'exchanginginprogress',
+              value: 'exchanginginprogress',
             },
             { display: 'exchangehasbeendone', value: 'exchangehasbeendone' },
           ],
@@ -61,7 +68,7 @@ var Information_Form = [
   },
   {
     label: 'الوثائق الداعمة',
-    labelEn: 'Attachments',
+    labelEn: 'Supporting Documents',
     description: 'التفاصيل',
     descriptionEn: 'Details',
     subFields: [
@@ -72,9 +79,9 @@ var Information_Form = [
         type: 'multiline',
       },
       {
-        InternalName: 'Attachments',
+        InternalName: 'getfile',
         DisplayName: 'مرفقات',
-        DisplayNameEn: 'Attachments',
+         DisplayNameEn: 'Attachments',
         type: 'file',
         withAddBtn: 'true',
       },

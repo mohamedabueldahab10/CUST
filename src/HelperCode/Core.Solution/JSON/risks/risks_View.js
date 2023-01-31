@@ -254,21 +254,21 @@ var Information_Form = [
           ],
         },
       },
-      {
-        label: 'الوثائق الداعمة',
-        labelEn: 'Documents',
-        description: 'التفاصيل',
-        descriptionEn: 'Details',
-        subFields: [
-          {
-            InternalName: 'Attachments',
-            DisplayName: 'المرفقات',
-            DisplayNameEn: 'Attachments',
-            type: 'file',
-            withAddBtn: 'true',
-          },
-        ],
-      }
+      // {
+      //   label: 'الوثائق الداعمة',
+      //   labelEn: 'Supporting Documents',
+      //   description: 'التفاصيل',
+      //   descriptionEn: 'Details',
+      //   subFields: [
+      //     {
+      //       InternalName: 'getfile',
+      //       DisplayName: 'المرفقات',
+      //       DisplayNameEn: 'Attachments',
+      //       type: 'file',
+      //       withAddBtn: 'true',
+      //     },
+      //   ],
+      // }
     ],
   },
 ]

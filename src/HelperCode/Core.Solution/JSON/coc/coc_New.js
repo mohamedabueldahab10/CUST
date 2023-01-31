@@ -44,10 +44,15 @@ var Information_Form = [
         type: 'dropdownValues',
         options: {
           choices: [
-            { display: 'missionwasapproved', value: 'missionwasapproved' },
+            // { display: 'missionwasapproved', value: 'missionwasapproved' },
+            // {
+            //   display: 'waitingfortheapprovalofresources',
+            //   value: 'waitingfortheapprovalofresources',
+            // },
+            { display: 'cocuploaded', value: 'cocuploaded' },
             {
-              display: 'waitingfortheapprovalofresources',
-              value: 'waitingfortheapprovalofresources',
+              display: 'exchanginginprogress',
+              value: 'exchanginginprogress',
             },
             { display: 'exchangehasbeendone', value: 'exchangehasbeendone' },
           ],
@@ -57,7 +62,7 @@ var Information_Form = [
   },
   {
     label: 'الوثائق الداعمة',
-    labelEn: 'Attachments',
+    labelEn: 'Supporting Documents',
     description: 'التفاصيل',
     descriptionEn: 'Details',
     subFields: [
@@ -68,9 +73,9 @@ var Information_Form = [
         type: 'multiline',
       },
       {
-        InternalName: 'Attachments',
+        InternalName: 'getfile',
         DisplayName: 'مرفقات',
-        DisplayNameEn: 'Attachments',
+         DisplayNameEn: 'Attachments',
         type: 'file',
         withAddBtn: 'true',
       },

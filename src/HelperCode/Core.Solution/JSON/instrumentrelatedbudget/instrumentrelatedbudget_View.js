@@ -21,7 +21,7 @@ var Information_Form  = [
                 "source": "Instruments",
                 "Dispfieldkey": "Title",
                 "valfieldkey": "Title",
-                "validation": "required"
+                // "validation": "required"
                 
                
             },
@@ -34,7 +34,7 @@ var Information_Form  = [
                 "source": "Budget Items",
                 "Dispfieldkey": "Title",
                 "valfieldkey": "Title",
-                "validation": "required"
+                // "validation": "required"
                 
             },
             {

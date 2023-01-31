@@ -11,7 +11,7 @@ var Information_Form = [
               "DisplayNameEn": "Title",
               "DisplayName": "رمز مصفوفة المنفعة",
               "type": "string",
-              "validation": "required",
+              // "validation": "required",
               "maxchar": "250"
           },
           // {

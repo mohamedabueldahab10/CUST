@@ -86,6 +86,10 @@ var Information_Form = [
             { display: 'initiative', value: 'initiative' },
           ],
         },
+        "toggleValues": [
+          { value: 'objective', fields: ['RelatedObjective','RelatedKPI'] },
+          { value: 'initiative', fields: ['RelatedInitiative','RelatedMilestone',] },
+      ],
       },
       {
         InternalName: 'RelatedObjective',
@@ -96,6 +100,8 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         validation: 'required',
+        ToggleName: 'RelatedObjective',
+        display: 'none'
         // "state": "disabled"
       },
       {
@@ -106,6 +112,8 @@ var Information_Form = [
         source: 'MainKPI',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+        ToggleName: 'RelatedKPI',
+        display: 'none'
       },
       {
         InternalName: 'RelatedInitiative',
@@ -116,6 +124,8 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         validation: 'required',
+        ToggleName: 'RelatedInitiative',
+        display: 'none'
       },
       {
         InternalName: 'RelatedMilestone',
@@ -126,6 +136,8 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         validation: 'required',
+        ToggleName: 'RelatedMilestone',
+        display: 'none'
       },
     ],
   },
@@ -181,7 +193,7 @@ var Information_Form = [
   },
   {
     label: 'الوثائق الداعمة',
-    labelEn: 'Attachments',
+    labelEn: 'Supporting Documents',
     description: 'التفاصيل',
     descriptionEn: 'Details',
     subFields: [

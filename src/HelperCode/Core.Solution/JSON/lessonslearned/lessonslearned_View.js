@@ -100,16 +100,16 @@ var Information_Form  = [
     
     },
     // {
-    //     label: 'المرفقات',
+    //     label: 'الوثائق الداعمة',
     //     labelEn:'Attachments',
     //     description: "",
     //     descriptionEn:"",
     //     subFields:[
     //         {
     //             // "InternalName": "getfile",
-    //             "InternalName": "Attachments",
+    //             "InternalName": "getfile",
     //             "DisplayName":"المرفقات",
-    //             "DisplayNameEn": "Attachments",
+    //             "DisplayNameEn": "Supporting Data",
     //             "type":"file",
     //             "withAddBtn":"true"
     //         }

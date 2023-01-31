@@ -12,7 +12,7 @@ var Information_Form = [
                 "DisplayName": "رمز المبادرة الموحد ",
                 "DisplayNameEn": "Code",
                 "type": "string",
-                "validation": "required"
+                // "validation": "required"
 
             },
             {
@@ -21,7 +21,7 @@ var Information_Form = [
                 "DisplayName": "اسم المبادرة",
                 "type": "string",
                 "maxchar": "250",
-                "validation": "required"
+                // "validation": "required"
             },
             {
                 "InternalName": "InitiativeOwnerEntity",
@@ -139,7 +139,7 @@ var Information_Form = [
                 "DisplayName":"اسم المخرج",
                 "type":"string",
                 "maxchar": "250",
-                "validation": "required"
+                // "validation": "required"
             },//here
             {
                 "InternalName": "RelatedBenefits",
@@ -162,7 +162,7 @@ var Information_Form = [
                 "DisplayNameEn": "Deliverable Success KPI",
                 "DisplayName":"مقياس نجاح المخرج",
                 "type":"string",
-                "validation": "required"
+                // "validation": "required"
             },
     
             {
@@ -170,7 +170,7 @@ var Information_Form = [
                 "DisplayNameEn": "Target",
                 "DisplayName":"مستهدف المخرج",
                 "type":"float",
-                "validation": "required"
+                // "validation": "required"
             },
             {
                 "InternalName": "Weight",
@@ -225,7 +225,7 @@ var Information_Form = [
                 "DisplayName":"اسم المعلم",
                 "type":"string",
                 "maxchar": "250",
-                "validation": "required"
+                // "validation": "required"
             },
             {
                 "InternalName": "PlannedCompletedDate",
@@ -302,7 +302,7 @@ var Information_Form = [
                 "DisplayName": "اسم المشروع",
                 "DisplayNameEn": "Project Name",
                 "type": "string",
-                "validation": "required"
+                // "validation": "required"
             },
             // {
             //     "InternalName": "Title",
@@ -352,7 +352,7 @@ var Information_Form = [
                 "DisplayNameEn": "Planned End Date ",
                 "type": "datetime",
                 "min": "PlannedStartDate",
-                "validation": "required",
+                // "validation": "required",
                 // "state": "disabled",
                 // "className":"autofill"
             },
@@ -819,14 +819,14 @@ var Information_Form = [
         ]
     },
     // {
-    //     label: 'المرفقات',
-    //     labelEn: 'Attachments',
+    //     label: 'الوثائق الداعمة',
+    //     labelEn: 'Supporting Documents',
     //     description: "",
     //     descriptionEn: "",
     //     subFields: [{
     //         "InternalName": "getfile",
     //         "DisplayName": "المرفقات",
-    //         "DisplayNameEn": "Attachments",
+    //         "DisplayNameEn": "Supporting Data",
     //         "type": "file",
     //         "fileExtensions": "png,jpeg,svg,xlsx,docx,jpg,txt"
     //     }]

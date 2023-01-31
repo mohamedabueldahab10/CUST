@@ -130,6 +130,15 @@ var Information_Form = [
         type: 'multiline',
       },
       {
+        InternalName: 'RelatedInitiativeDeliverable',
+        DisplayNameEn: 'Related Initiative Deliverable',
+        DisplayName:'مخرج المبادرة المرتبط',
+        type: 'lookup',
+        source: 'InitiativeDeliverables',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+      },
+      {
         InternalName: 'ShowInProgramReport',
         DisplayName: 'اظهار في التقرير',
         DisplayNameEn: 'Show In Program Report',
@@ -149,20 +158,20 @@ var Information_Form = [
       },
     ],
   },
-  {
-    label: 'وثائق داعمة',
-    labelEn: 'Attachments',
-    description: 'التفاصيل',
-    descriptionEn: 'Details',
-    subFields: [
-      {
-        InternalName: 'Attachments',
-        DisplayName: 'مرفقات',
-        DisplayNameEn: 'Attachments',
-        type: 'file',
-        withAddBtn: 'true',
-        "validation": "required",
-      },
-    ],
-  }
+  // {
+  //   label: 'وثائق داعمة',
+  //   labelEn: 'Supporting Documents',
+  //   description: 'التفاصيل',
+  //   descriptionEn: 'Details',
+  //   subFields: [
+  //     {
+  //       InternalName: 'getfile',
+  //       DisplayName: 'مرفقات',
+  //       DisplayNameEn: 'Attachments',
+  //       type: 'file',
+  //       withAddBtn: 'true',
+  //       // "validation": "required",
+  //     },
+  //   ],
+  // }
 ]

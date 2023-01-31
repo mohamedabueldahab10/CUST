@@ -27,12 +27,12 @@ var Information_Form = [
         DisplayName: 'المؤشر ',
         type: 'string',
         maxchar: '250',
-        validation: 'required',
+        // validation: 'required',
       },
       {
         InternalName: 'KPIType',
         DisplayNameEn: 'KPI Type',
-        validation: 'required',
+        // validation: 'required',
         DisplayName: 'نوع المؤشر',
         toggleValues: [
           { value: 'sub', fields: ['SubRelatedObjective', 'RelatedMainKpis'] }, //we can put more than 1  field
@@ -44,9 +44,9 @@ var Information_Form = [
           choices: [
             // { display: "strategically", value: "strategically" },
             { display: 'main', value: 'main' },
-            { display: 'Level2', value: 'Level2' },
-            { display: 'Level3', value: 'Level3' },
-            // { display: "sub", value: "sub" },
+            // { display: 'Level2', value: 'Level2' },
+            // { display: 'Level3', value: 'Level3' },
+            { display: "sub", value: "sub" },
             // { display: "vision", value: "vision" },
             // { display: "jobmarket", value: "jobmarket" },
           ],
@@ -65,7 +65,7 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         // display: "none",
-        validation: 'required',
+        // validation: 'required',
       },
       {
         InternalName: 'Classification',
@@ -80,7 +80,7 @@ var Information_Form = [
             { display: 'kpistrategic', value: 'kpistrategic' },
           ],
         },
-        validation: 'required',
+        // validation: 'required',
       },
       {
         InternalName: 'FromDate',
@@ -179,7 +179,7 @@ var Information_Form = [
         DisplayName: 'مالك المؤشر',
         type: 'picker',
         state: 'disabled',
-        validation: 'required',
+        // validation: 'required',
       },
       {
         InternalName: 'PerformanceLeader',
@@ -187,7 +187,7 @@ var Information_Form = [
         DisplayName: 'رائد الأداء',
         type: 'picker',
         state: 'disabled',
-        validation: 'required',
+        // validation: 'required',
       },
       {
         InternalName: 'PerformanceLeader2',
@@ -195,7 +195,7 @@ var Information_Form = [
         DisplayName: 'رائد الأداء الثاني',
         type: 'picker',
         state: 'disabled',
-        validation: 'required',
+        // validation: 'required',
       },
       {
         InternalName: 'CalculationType',
@@ -223,7 +223,7 @@ var Information_Form = [
         DisplayNameEn: 'Recurrence Changed',
         DisplayName: 'تغيير دورية القياس',
         type: 'yesnoradio',
-        validation: 'required',
+        // validation: 'required',
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
@@ -240,12 +240,12 @@ var Information_Form = [
         // 	],
         // },
       },
-      // {
-      //   InternalName: 'ProgressStatus',
-      //   DisplayName: 'حالة الإنجاز',
-      //   DisplayNameEn: 'Progress Status',
-      //   type: 'string',
-      // },
+      {
+        InternalName: 'ProgressStatus',
+        DisplayName: 'حالة الإنجاز',
+        DisplayNameEn: 'Progress Status',
+        type: 'string',
+      },
       // {
       //     InternalName: "Types",
       //     DisplayNameEn: "Types",
@@ -641,8 +641,8 @@ var Information_Form = [
   {
     label: 'تفاصيل القياس',
     labelEn: 'Baseline',
-    description: 'التفاصيل',
-    descriptionEn: 'Details',
+    description: '',
+    descriptionEn: '',
     subFields: [
       {
         InternalName: 'Polarity',
@@ -655,7 +655,7 @@ var Information_Form = [
             { display: 'no', value: 'no' },
           ],
         },
-        validation: 'required',
+        // validation: 'required',
       },
       // {
       //   InternalName: 'Polarity',
@@ -982,8 +982,8 @@ var Information_Form = [
     ],
   },
   // {
-  //     label: 'المرفقات',
-  //     labelEn: 'Attachments',
+  //     label: 'الوثائق الداعمة',
+  //     labelEn: 'Supporting Documents',
   //     description: "",
   //     descriptionEn: "",
   //     subFields: [{

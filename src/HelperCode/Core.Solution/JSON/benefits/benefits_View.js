@@ -79,20 +79,22 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
       },
-      {
-        InternalName: 'FromDate',
-        DisplayName: 'من سنة',
-        DisplayNameEn: 'From Date',
-        max: 'ToDate',
-        type: 'datetime',
-      },
-      {
-        InternalName: 'ToDate',
-        DisplayName: 'من سنة',
-        DisplayNameEn: 'From Date',
-        max: 'FromDate',
-        type: 'datetime',
-      },
+      // {
+      //   InternalName: 'FromDate',
+      //   DisplayName: 'من سنة',
+      //   DisplayNameEn: 'From Date',
+      //   max: 'ToDate',
+      //   type: 'datetime',
+      //   validation: 'required',
+      // },
+      // {
+      //   InternalName: 'ToDate',
+      //   DisplayName: 'إلى سنة',
+      //   DisplayNameEn: 'To Date',
+      //   min: 'FromDate',
+      //   type: 'datetime',
+      //   validation: 'required',
+      // },
       {
         InternalName: 'DataSource',
         DisplayNameEn: 'Data Source',
@@ -193,7 +195,7 @@ var Information_Form = [
     ],
   },
   // {
-  //     label: 'المرفقات',
+  //     label: 'الوثائق الداعمة',
   //     description: "",
   //     subFields:[
   //         {

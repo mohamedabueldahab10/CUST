@@ -6,6 +6,28 @@ var Information_Form = [
     descriptionEn: 'Details',
     subFields: [
       {
+        InternalName: 'StakeholderType',
+        DisplayName: 'النوع',
+        DisplayNameEn: 'Type',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'stackholderinternal', value: 'stackholderinternal' },
+            { display: 'stackholderexternal', value: 'stackholderexternal' },
+          ],
+        },
+        "toggleValues": [{ value: 'Username', fields: ['stackholderinternal'] }],
+      },
+      {
+        InternalName: 'Username',
+        DisplayNameEn: 'Username',
+        DisplayName: 'اسم المستخدم',
+        type: 'picker', //user
+        validation: 'required',
+        ToggleName: 'Username',
+        display: 'none'
+      },
+      {
         InternalName: 'Name',
         DisplayName: 'الاسم',
         DisplayNameEn: 'Name',
@@ -39,18 +61,7 @@ var Information_Form = [
         DisplayNameEn: 'Role',
         type: 'string',
       },
-      {
-        InternalName: 'StakeholderType',
-        DisplayName: 'النوع',
-        DisplayNameEn: 'Type',
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            { display: 'stackholderinternal', value: 'stackholderinternal' },
-            { display: 'stackholderexternal', value: 'stackholderexternal' },
-          ],
-        },
-      },
+
       {
         InternalName: 'Department',
         DisplayName: 'الإدارة',
@@ -111,18 +122,26 @@ var Information_Form = [
         InternalName: 'TypeOfEngagement',
         DisplayName: 'نوع المشاركة',
         DisplayNameEn: 'Type Of Engagement',
-        type: 'multiline',
+        // type: 'multiline',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'pr02important', value: 'pr02important' },
+            { display: 'pr03medium', value: 'pr03medium' },
+            { display: 'pr04low', value: 'pr04low' },
+          ],
+        },
       },
     ],
   },
   {
     label: 'وثائق داعمة',
-    labelEn: 'Attachments',
+    labelEn: 'Supporting Documents',
     description: 'التفاصيل',
     descriptionEn: 'Details',
     subFields: [
       {
-        InternalName: 'Attachments',
+        InternalName: 'getfile',
         DisplayName: 'مرفقات',
         DisplayNameEn: 'Attachments',
         type: 'file',
@@ -132,7 +151,7 @@ var Information_Form = [
     ],
   },
   // {
-  //     label: 'المرفقات',
+  //     label: 'الوثائق الداعمة',
   //     labelEn:'Attachments',
   //     description: "",
   //     descriptionEn:"",

@@ -81,9 +81,9 @@ var Information_Form = [
         type: 'dropdownValues',
         options: {
           choices: [
-            { display: 'workisunderway', value: 'workisunderway' },
-            { display: 'late', value: 'late' },
+            { display: 'onschedule', value: 'onschedule' },
             { display: 'completed', value: 'completed' },
+            { display: 'late', value: 'late' },
           ],
         },
       },
@@ -126,12 +126,12 @@ var Information_Form = [
 
   {
     label: 'وثائق داعمة',
-    labelEn: 'Attachments',
+    labelEn: 'Supporting Documents',
     description: 'التفاصيل',
     descriptionEn: 'Details',
     subFields: [
       {
-        InternalName: 'Attachments',
+        InternalName: 'getfile',
         DisplayName: 'مرفقات',
         DisplayNameEn: 'Attachments',
         type: 'file',

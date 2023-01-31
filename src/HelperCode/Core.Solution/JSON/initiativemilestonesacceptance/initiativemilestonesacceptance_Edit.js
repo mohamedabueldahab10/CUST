@@ -346,7 +346,7 @@ var Information_Form  = [//for Initiatives List
 },
     {
         label: 'الوثائق الداعمة',
-        labelEn: 'Documents',
+        labelEn: 'Supporting Documents',
         description: "",
         descriptionEn: "",
         subFields:[

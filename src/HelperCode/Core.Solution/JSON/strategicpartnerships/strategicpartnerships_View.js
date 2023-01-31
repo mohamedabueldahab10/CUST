@@ -24,7 +24,7 @@ var Information_Form = [
         DisplayName: 'القطاع',
         DisplayNameEn: 'Sector',
         type: 'lookup',
-        validation: 'required',
+        // validation: 'required',
         source: 'Internal Entities',
         // source: 'SOs',
         isSector: 'True',
@@ -51,7 +51,7 @@ var Information_Form = [
         DisplayName: 'نوع الشراكة',
         DisplayNameEn: 'Partnership Type',
         type: 'dropdownValues',
-        validation: 'required',
+        // validation: 'required',
         options: {
           choices: [
             {
@@ -70,7 +70,7 @@ var Information_Form = [
         DisplayName: 'تصنيف الشراكة',
         DisplayNameEn: 'Partnership Classification',
         type: 'dropdownValues',
-        validation: 'required',
+        // validation: 'required',
         options: {
           choices: [
             {
@@ -97,7 +97,7 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         source: 'SP Vendors',
-        validation: 'required',
+        // validation: 'required',
       },
       // {
       //    "InternalName":"PartnerType",
@@ -264,14 +264,14 @@ var Information_Form = [
         DisplayName: 'وصف الشراكة',
         type: 'multiline',
         maxchar: '500',
-        validation: 'required',
+        // validation: 'required',
       },
       {
         InternalName: 'PartnershipManager',
         DisplayName: 'مدير العلاقة',
         DisplayNameEn: 'Partnership Manager',
         type: 'multipicker',
-        validation: 'required',
+        // validation: 'required',
       },
       {
         InternalName: 'Actual',
@@ -317,14 +317,14 @@ var Information_Form = [
         source: 'SOs',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        validation: 'required',
+        // validation: 'required',
       },
       {
         InternalName: 'StartDate',
         DisplayName: 'تاريخ بداية الشراكة',
         DisplayNameEn: 'Start Date',
         type: 'datetime',
-        validation: 'required',
+        // validation: 'required',
         max: 'FinishDate'
       },
       {
@@ -332,11 +332,11 @@ var Information_Form = [
         DisplayName: 'مدة الشراكة (شهر)',
         DisplayNameEn: 'Duration (Month)',
         type: 'float',
-        validation: 'required',
+        // validation: 'required',
       },
       {
          InternalName: 'FinishDate',
-         DisplayName: 'تاريخ نهاية المبادرة',
+         DisplayName: 'تاريخ نهاية الشراكة',
          DisplayNameEn: 'Finish Date',
          type: 'datetime',
          // state: 'disabled',
@@ -372,7 +372,7 @@ var Information_Form = [
         DisplayNameEn: 'Status',
         // "type":"string"
         type: 'dropdownValues',
-        validation: 'required',
+        // validation: 'required',
         options: {
           choices: [
             {
@@ -394,7 +394,21 @@ var Information_Form = [
         InternalName: 'EscalationNeeded',
         DisplayName: 'بحاجة للتصعيد ؟',
         DisplayNameEn: 'Escalation Needed ?',
-        type: 'string',
+        // type: 'string',
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            {
+              display: 'yes',
+              value: 'yes',
+            },
+
+            {
+              display: 'no',
+              value: 'no',
+            },
+          ],
+        },
       },
       {
         InternalName: 'Comments',
@@ -403,13 +417,13 @@ var Information_Form = [
         type: 'multiline',
         maxchar: '500',
       },
-      {
-        InternalName: 'Attachments',
-        DisplayName: 'مرفقات',
-        DisplayNameEn: 'Attachments',
-        type: 'file',
-        withAddBtn: 'true',
-      },
+      // {
+      //   InternalName: 'getfile',
+      //   DisplayName: 'مرفقات',
+      //   DisplayNameEn: 'Attachments',
+      //   type: 'file',
+      //   withAddBtn: 'true',
+      // },
     ],
   },
 ]

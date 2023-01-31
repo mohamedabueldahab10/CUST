@@ -6,6 +6,16 @@ var Information_Form = [
     descriptionEn: '',
     subFields: [
       {
+        InternalName: 'Name',
+        DisplayName: 'اسم المشروع',
+        DisplayNameEn: 'Project Name',
+        type: 'string',
+        validation: 'required',
+        security: {
+          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
+        },
+      },
+      {
         InternalName: 'Portfolio',
         DisplayName: 'المحفظة',
         DisplayNameEn: 'Portfolio',
@@ -17,31 +27,9 @@ var Information_Form = [
         valfieldkey: 'Title',
         BIlanguage: true, //added to handle portfolio bilangual
         DispfieldkeyEn: 'NameEn', //added to handle portfolio bilangual
-        security: {
-          groups: [
-            'VRO_E',
-            'LMS_E',
-            'EPMO',
-            'System Admin Group',
-            'Project Managers for Project Web App',
-          ],
-        },
         // "state": "disabled",
         // "className":"autofill"
       },
-
-      // {
-      //     "InternalName": "Name",
-      //     "DisplayName": "اسم المشروع",
-      //     "DisplayNameEn": "Project Name",
-      //     "type": "string",
-      //     "validation": "required",
-      //     security: {
-      //         groups: ['VRO_E','LMS_E',
-      //             'EPMO', 'System Admin Group'
-      //         ]
-      //     },
-      // },
       {
         InternalName: 'Description',
         DisplayName: 'وصف المشروع والتحديات التي يعالجها',
@@ -54,6 +42,7 @@ var Information_Form = [
             'VRO_E',
             'LMS_E',
             'EPMO',
+            'Development Unit',
             'System Admin Group',
             'Project Managers for Project Web App',
           ],
@@ -62,21 +51,38 @@ var Information_Form = [
       },
       {
         InternalName: 'ScopeOfWork',
-        DisplayName: 'نطاق المشروع',
-        DisplayNameEn: 'ScopeOfWork',
+        DisplayName: 'نطاق العمل',
+        DisplayNameEn: 'Scope Of Work',
         type: 'multiline',
-        maxchar: 5000,
         validation: 'required',
+        maxchar: 5000,
         security: {
           groups: [
             'VRO_E',
             'LMS_E',
             'EPMO',
+            'Development Unit',
             'System Admin Group',
             'Project Managers for Project Web App',
           ],
         },
         // hideonstage: "1"
+      },
+      {
+        InternalName: 'OutOfScope',
+        DisplayName: 'خارج نطاق العمل',
+        DisplayNameEn: 'Out Of Scope',
+        type: 'multiline',
+        maxchar: 5000,
+        //"state": "disabled"
+      },
+      {
+        InternalName: 'Assumptions',
+        DisplayName: ' إفتراضات المشروع',
+        DisplayNameEn: 'Project Assumptions',
+        type: 'multiline',
+        maxchar: 5000,
+        //"state": "disabled"
       },
       {
         InternalName: 'PMNotes',
@@ -136,18 +142,25 @@ var Information_Form = [
           ],
         },
         security: {
-          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
+          groups: [
+            'VRO_E',
+            'LMS_E',
+            'EPMO',
+            'System Admin Group',
+            'SPMO',
+            'Development Unit',
+          ],
         },
       },
       {
         InternalName: 'Committees',
         DisplayName: 'اللجان',
         DisplayNameEn: 'Committees',
-        // type: 'string',
         source: 'Committees',
         type: 'lookup',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+        // grpfieldkey: 'Title',
         security: {
           groups: [
             'VRO_E',
@@ -176,7 +189,7 @@ var Information_Form = [
             'VRO_E',
             'LMS_E',
             'EPMO',
-            'Administrators for Project Web App',
+            'System Admin Group',
             'SPMO',
             'Development Unit',
           ],
@@ -226,19 +239,6 @@ var Information_Form = [
         // "state": "disabled",
         // "className":"autofill"
       },
-      // {
-      //     "InternalName": "RelatedInitiativeDeliverable",
-      //     "DisplayName": " مخرج المبادرة المرتبط",
-      //     "DisplayNameEn": "Related Initiative Deliverable",
-      //     "type": "lookup",
-      //     //from other list:ma
-      //     "source": "InitiativeDeliverables",
-      //     "Dispfieldkey": "Name",
-      //     "valfieldkey": "Title",
-
-      //     "state": "disabled",
-      //     // "className":"autofill"
-      // },
       {
         InternalName: 'RelatedInitiativeDeliverable',
         DisplayName: ' مخرج المبادرة المرتبط',
@@ -250,10 +250,32 @@ var Information_Form = [
         valfieldkey: 'Title',
         grpfieldkey: 'Title',
         state: 'disabled',
-        security: {
-          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
-        },
       },
+      // {
+      //     "InternalName": "RelatedInitiativeDeliverable",
+      //     "DisplayName": " مخرج المبادرة المرتبط",
+      //     "DisplayNameEn": "Related Initiative Deliverable",
+      //     "type": "lookup",
+      //     //from other list:ma
+      //     "source": "InitiativeDeliverables",
+      //     "Dispfieldkey": "Name",
+      //     "valfieldkey": "Title",
+
+      //     "state": "disabled",
+      // },
+      // {
+      //     "InternalName": "RelatedInitiativeMilestone",
+      //     "DisplayName": " معلم المبادرة المرتبط",
+      //     "DisplayNameEn": "Related Initiative Milestone",
+      //     "type": "lookup",
+      //     //from other list:ma
+      //     "source": "InitiativeMilestones",
+      //     "Dispfieldkey": "Name",
+      //     "valfieldkey": "Title",
+
+      //     "state": "disabled",
+      //     // "className":"autofill"
+      // },
       // {
       //     "InternalName": "InitiativeVision",
       //     "DisplayNameEn": "Initiative Vision",
@@ -267,11 +289,6 @@ var Information_Form = [
       //     "source": "Initiatives",
       //     "Dispfieldkey": "Name",
       //     "valfieldkey": "Title",
-      //     security: {
-      //         groups: ['VRO_E','LMS_E',
-      //             'EPMO', 'System Admin Group'
-      //         ]
-      //     },
       //     // "display":"none"
 
       // },
@@ -286,14 +303,6 @@ var Information_Form = [
       //     "valfieldkey": "Title"
       // },
       // {
-      //     "InternalName": "BaselineDuration",
-      //     "DisplayName": "مدة الأساس",
-      //     "DisplayNameEn": "Baseline Duration",
-      //     "type": "float",
-      //     // "maxchar": 5000,
-      //     // hideonstage: "1"
-      // },
-      // {
       //     "InternalName": "KPIs",
       //     "DisplayName": "مؤشر القياس",
       //     "DisplayNameEn": "KPIs",
@@ -303,7 +312,7 @@ var Information_Form = [
       //     "valfieldkey": "Title",
       //     security: {
       //         groups: ['VRO_E','LMS_E',
-      //             'EPMO', 'System Admin Group',
+      //             'EPMO', 'System Admin Group','SPMO','Development Unit', 'Project Managers for Project Web App'
       //         ]
       //     },
       //     // "maxchar": 5000,
@@ -329,42 +338,39 @@ var Information_Form = [
         // hideonstage: "1"
       },
       {
-        InternalName: 'Status',
-        DisplayName: 'مرحلة المشروع',
-        DisplayNameEn: 'Project Stage',
-        type: 'dropdownValues',
-        validation: 'required',
-        options: {
-          choices: [
-            { value: 'notstarted', display: 'notstarted' },
-            { value: 'completed', display: 'completed' },
-            { value: 'inprogress', display: 'inprogress' },
-            { value: 'onhold', display: 'onhold' },
-            { value: 'cancelled', display: 'cancelled' },
-            //'لم يبدء', 'مكتمل', 'قيد التقدم', 'معلق ', 'ملغى'
-          ],
-        },
-        security: {
-          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
-        },
-      },
-      {
         InternalName: 'ProjectType',
         DisplayName: 'نوع المشروع',
         DisplayNameEn: 'Project Type',
         validation: 'required',
         type: 'dropdownValues',
-        validation: 'required',
         options: {
           choices: [
             { display: 'internal', value: 'Internal' },
             { display: 'external', value: 'External' },
           ],
         },
-        security: {
-          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
-        },
       },
+      // {
+      //   InternalName: 'Status',
+      //   DisplayName: 'مرحلة المشروع',
+      //   DisplayNameEn: 'Project Stage',
+      //   // type: 'dropdownValues',
+      //   // type: 'string',
+      //   validation: 'required',
+      //   options: {
+      //     choices: [
+      //       { value: 'notstarted', display: 'notstarted' },
+      //       { value: 'completed', display: 'completed' },
+      //       { value: 'inprogress', display: 'inprogress' },
+      //       { value: 'onhold', display: 'onhold' },
+      //       { value: 'cancelled', display: 'cancelled' },
+      //       //'لم يبدء', 'مكتمل', 'قيد التقدم', 'معلق ', 'ملغى'
+      //     ],
+      //   },
+      //   security: {
+      //     groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
+      //   },
+      // },
       {
         InternalName: 'Category',
         DisplayName: 'تصنيف  المشروع',
@@ -382,16 +388,12 @@ var Information_Form = [
             { display: 'operationalproject', value: 'operationalproject' },
           ],
         },
-        security: {
-          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
-        },
       },
       {
         InternalName: 'IsStrategicProject',
         DisplayName: 'هل هو مشروع استراتيجي؟',
         DisplayNameEn: 'Is Strategic Project?',
         type: 'yesnoradio',
-        validation: 'required',
         options: {
           choices: [
             { display: 'yes', value: 'true' },
@@ -399,15 +401,159 @@ var Information_Form = [
           ],
         },
         validation: 'required',
+      },
+      {
+        InternalName: 'BaselineStartDate',
+        DisplayName: 'تاريخ بدء الأساس',
+        DisplayNameEn: 'Baseline Start Date',
+        type: 'datetime',
+        max: 'BaselineFinishDate',
+        // "state": "disabled"
+      },
+      {
+        InternalName: 'BaselineFinishDate',
+        DisplayName: 'تاريخ إنهاء الأساس',
+        DisplayNameEn: 'Baseline Finish Date',
+        type: 'datetime',
+        min: 'BaselineStartDate',
+        // "state": "disabled"
+      },
+
+      {
+        InternalName: 'Sector',
+        DisplayName: 'القطاع',
+        DisplayNameEn: 'Sector',
+        type: 'lookup',
+        validation: 'required',
+        //from other list:
+        source: 'Internal Entities',
+        isSector: 'True',
+        EntityType: 'Sector',
+        Dispfieldkey: 'Name',
+        DispfieldkeyEn: 'NameEn',
+        valfieldkey: 'Title',
         security: {
           groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
         },
+      },
+      {
+        InternalName: 'SubSector',
+        DisplayName: 'الوكالة',
+        DisplayNameEn: 'DeputyShip',
+        type: 'lookup',
+        //from other list:
+        source: 'Internal Entities',
+        isSector: 'True',
+        EntityType: 'Department',
+        Dispfieldkey: 'Name',
+        DispfieldkeyEn: 'NameEn',
+        valfieldkey: 'Title',
+        security: {
+          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
+        },
+      },
+
+      {
+        InternalName: 'Priority',
+        DisplayName: 'أهمية المشروع',
+        DisplayNameEn: 'Priority',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            // { display: 'pr04low', value: 'pr04low' },
+            { display: 'pr01veryimportant', value: 'pr01veryimportant' },
+            { display: 'pr02important', value: 'pr02important' },
+            { display: 'pr03medium', value: 'pr03medium' },
+            //'مهم','مهم جدا','متوسط','منخفض'
+          ],
+        },
+        validation: 'required',
+        security: {
+          groups: [
+            'VRO_E',
+            'LMS_E',
+            'EPMO',
+            'System Admin Group',
+            'SPMO',
+            'Development Unit',
+            'Project Managers for Project Web App',
+          ],
+        },
+        // "state": "disabled",
+        // "className":"autofill"
+      },
+      {
+        InternalName: 'ExecutionChannels',
+        DisplayName: 'الجهة المنفذة',
+        DisplayNameEn: 'Execution Channels',
+        type: 'multiline',
+      },
+      {
+        InternalName: 'ProjectOverview',
+        DisplayName: 'ملخص المشروع',
+        DisplayNameEn: 'Project Overview',
+        type: 'multiline',
+        maxchar: 5000,
+        //"state": "disabled"
+      },
+      {
+        InternalName: 'Comments',
+        DisplayName: 'ملاحظات',
+        DisplayNameEn: 'Comments',
+        type: 'multiline',
+        maxchar: 5000,
+        security: {
+          groups: [
+            'VRO_E',
+            'LMS_E',
+            'EPMO',
+            'System Admin Group',
+            'Project Managers for Project Web App',
+            'SPMO',
+            'Development Unit',
+          ],
+        },
+        // hideonstage: "1"
+      },
+
+      {
+        InternalName: 'ProjectSize',
+        DisplayName: 'حجم المشروع',
+        DisplayNameEn: 'Project Size',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'small', value: 'small' },
+            { display: 'medium', value: 'medium' },
+            { display: 'large', value: 'large' },
+          ],
+        },
+      },
+      {
+        InternalName: 'ProjectPriority',
+        DisplayName: 'أولوية المشروع',
+        DisplayNameEn: 'Project Priority',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'low', value: 'low' },
+            { display: 'medium', value: 'medium' },
+            { display: 'high', value: 'high' },
+          ],
+        },
+      },
+      {
+        InternalName: 'CompanyName',
+        DisplayName: 'اسم الشركة المنفذة',
+        DisplayNameEn: 'Company Name',
+        type: 'string',
       },
       {
         InternalName: 'IsZeroBudgetProject',
         DisplayName: 'هل هو مشروع صفرى؟',
         DisplayNameEn: 'Is Zero Budget Project ?',
         type: 'yesnoradio',
+        validation: 'required',
         options: {
           choices: [
             { display: 'yes', value: 'true' },
@@ -416,26 +562,6 @@ var Information_Form = [
         },
       },
 
-      {
-        InternalName: 'FundingSources',
-        DisplayName: 'مصادر التمويل',
-        DisplayNameEn: 'Funding Sources',
-        type: 'string',
-      },
-      {
-        InternalName: 'FundingStatus',
-        DisplayName: 'حالة التمويل',
-        DisplayNameEn: 'Funding Status',
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            { display: 'funded', value: 'funded' },
-            { display: 'unfunded', value: 'unfunded' },
-            { display: 'partiallyfunded', value: 'partiallyfunded' },
-            { display: 'zero', value: 'zero' },
-          ],
-        },
-      },
       // {
       //     "InternalName": "PlannedStartDate",
       //     "DisplayName": "تاريخ بداية المشروع المتوقع",
@@ -472,34 +598,11 @@ var Information_Form = [
       //     "min": "ActualStartDate",
       //     "state": "disabled"
       // },
-      {
-        InternalName: 'BaselineStartDate',
-        DisplayName: 'تاريخ بدء الأساس',
-        DisplayNameEn: 'Baseline Start Date',
-        type: 'datetime',
-        max: 'BaselineFinishDate',
-        security: {
-          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
-        },
-
-        // "state": "disabled"
-      },
-      {
-        InternalName: 'BaselineFinishDate',
-        DisplayName: 'تاريخ إنهاء الأساس',
-        DisplayNameEn: 'Baseline Finish Date',
-        type: 'datetime',
-        min: 'BaselineStartDate',
-        security: {
-          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
-        },
-        // "state": "disabled"
-      },
       // {
       //     "InternalName": "BaselineBudget",
       //     "DisplayName": "تكلفة الأساس",
       //     "DisplayNameEn": "Baseline Budget",
-      //     "type": "float",
+      //     "type": "float",  hide this field based on 24-03-2022 - EPMO
       //     // "state": "disabled"
       // },
       // {
@@ -520,40 +623,6 @@ var Information_Form = [
       //         ]
       //     },
       // },
-      {
-        InternalName: 'Sector',
-        DisplayName: 'القطاع',
-        DisplayNameEn: 'Sector',
-        type: 'lookup',
-        validation: 'required',
-        //from other list:
-        source: 'Internal Entities',
-        isSector: 'True',
-        EntityType: 'Sector',
-        Dispfieldkey: 'Name',
-        DispfieldkeyEn: 'NameEn',
-        valfieldkey: 'Title',
-        security: {
-          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
-        },
-      },
-      {
-        InternalName: 'SubSector',
-        DisplayName: 'الوكالات',
-        DisplayNameEn: 'DeputyShip',
-        type: 'lookup',
-        //from other list:
-        source: 'Internal Entities',
-        isSector: 'True',
-        EntityType: 'Department',
-        Dispfieldkey: 'Name',
-        DispfieldkeyEn: 'NameEn',
-        valfieldkey: 'Title',
-        security: {
-          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
-        },
-        // "state": "disabled"
-      },
       // {
       //     "InternalName": "Section",
       //     "DisplayName": "القسم ذو الصلة",
@@ -567,30 +636,8 @@ var Information_Form = [
       //     "Dispfieldkey": "Name",
       //     "DispfieldkeyEn": "NameEn",
       //     "valfieldkey": "Title",
-      //     // "state": "disabled"
-      // }, hide this field based on 24-03-2022 - EPMO
-      {
-        InternalName: 'Priority',
-        DisplayName: 'أهمية المشروع',
-        DisplayNameEn: 'Priority',
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            // { display: 'pr04low', value: 'pr04low' },
-            { display: 'pr03medium', value: 'pr03medium' },
-            { display: 'pr02important', value: 'pr02important' },
-            { display: 'pr01veryimportant', value: 'pr01veryimportant' },
-            //'مهم','مهم جدا','متوسط','منخفض'
-          ],
-        },
-        validation: 'required',
-        security: {
-          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
-        },
-        // "state": "disabled",
-        // "className":"autofill"
-      },
-
+      //     // "state": "disabled" hide this field based on 24-03-2022 - EPMO
+      // },
       // {
       //     "InternalName": "TargetSegments",
       //     "DisplayName": "الشرائح المستهدفة (ان وجد)",
@@ -598,13 +645,6 @@ var Information_Form = [
       //     "type": "string",
       //     "state": "disabled"
       // },
-      {
-        InternalName: 'ExecutionChannels',
-        DisplayName: 'الجهة المنفذة',
-        DisplayNameEn: 'Execution Channels',
-        // type: 'string',
-        type: 'multiline',
-      },
       // {
       //     "InternalName": "HumanResourcesRequired",
       //     "DisplayName": "موارد بشرية مطلوبة",
@@ -634,65 +674,6 @@ var Information_Form = [
       //     "maxchar": 5000,
       //     //"state": "disabled"
       // },
-      {
-        InternalName: 'ProjectOverview',
-        DisplayName: 'ملخص المشروع',
-        DisplayNameEn: 'Project Overview',
-        type: 'multiline',
-        maxchar: 5000,
-        //"state": "disabled"
-      },
-      {
-        InternalName: 'Comments',
-        DisplayName: 'ملاحظات',
-        DisplayNameEn: 'Comments',
-        type: 'multiline',
-        maxchar: 5000,
-        security: {
-          groups: [
-            'VRO_E',
-            'LMS_E',
-            'EPMO',
-            'System Admin Group',
-            'Project Managers for Project Web App',
-            'SPMO',
-            'Development Unit',
-          ],
-        },
-        // hideonstage: "1"
-      },
-      {
-        InternalName: 'PRCode',
-        DisplayName: 'رمز المشتريات',
-        DisplayNameEn: 'Purchase code',
-        type: 'string',
-      },
-      {
-        InternalName: 'ProjectSize',
-        DisplayName: 'حجم المشروع',
-        DisplayNameEn: 'Project Size',
-        type: 'dropdownValues',
-        options: {
-          choices: [ 
-            { display: 'large', value: 'large' },
-            { display: 'medium', value: 'medium' },
-            { display: 'small', value: 'small' },
-          ],
-        },
-      },
-      {
-        InternalName: 'ProjectPriority',
-        DisplayName: 'أولوية المشروع',
-        DisplayNameEn: 'Project Priority',
-        type: 'dropdownValues',
-        options: {
-          choices: [ 
-            { display: 'low', value: 'low' },
-            { display: 'medium', value: 'medium' },
-            { display: 'high', value: 'high' },
-          ],
-        },
-      },
       // {
       //     "InternalName": "EstimatedCost",
       //     "DisplayName": "التقدير عند الاكتمال",
@@ -726,14 +707,6 @@ var Information_Form = [
       //     "InternalName": "ProjectOrganization",
       //     "DisplayName": "منظمة المشروع",
       //     "DisplayNameEn": "Project Organization",
-      //     "type": "multiline",
-      //     "maxchar": 5000,
-      //     //"state": "disabled"
-      // },
-      // {
-      //     "InternalName": "Assumptions",
-      //     "DisplayName": " إفتراضات المشروع",
-      //     "DisplayNameEn": "Project Assumptions",
       //     "type": "multiline",
       //     "maxchar": 5000,
       //     //"state": "disabled"
@@ -776,11 +749,53 @@ var Information_Form = [
     ],
   },
   {
-    label: 'الموازنة',
-    labelEn: 'Budget',
+    label: 'التمويل',
+    labelEn: 'Funding',
     description: '',
     descriptionEn: '',
     subFields: [
+      {
+        InternalName: 'FundingSources',
+        DisplayName: 'مصادر التمويل',
+        DisplayNameEn: 'Funding Sources',
+        type: 'string',
+      },
+      {
+        InternalName: 'FundingStatus',
+        DisplayName: 'حالة التمويل',
+        DisplayNameEn: 'Funding Status',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'funded', value: 'funded' },
+            { display: 'unfunded', value: 'unfunded' },
+            { display: 'partiallyfunded', value: 'partiallyfunded' },
+            { display: 'zero', value: 'zero' },
+          ],
+        },
+      },
+    ]
+  },
+  {
+    label: 'بند الميزانية',
+    labelEn: 'Budget Item',
+    description: '',
+    descriptionEn: '',
+    subFields: [
+      {
+        InternalName: 'PRCode',
+        DisplayName: 'رمز المشتريات',
+        DisplayNameEn: 'Purchase code',
+        type: 'string',
+      },
+      {
+        InternalName: 'ERPCode',
+        DisplayNameEn: 'ERP Code',
+        DisplayName: 'ترميز موارد',
+        type: 'string',
+        maxchar: '250',
+        // "validation": "required"
+      },
       {
         InternalName: 'BudgetItem',
         DisplayName: 'البند المرتبط',
@@ -827,6 +842,28 @@ var Information_Form = [
         state: 'disabled',
         dynamic: 'BudgetItem',
       },
+      {
+        InternalName: 'AssignedBudget',
+        DisplayName: 'الميزانية المعتمدة',
+        DisplayNameEn: 'Assigned Budget',
+        type: 'float',
+        //"state": "disabled"
+        // "showonstage":"1"
+      },
+      {
+        InternalName: 'ExpectedBudget',
+        DisplayName: 'الموازنة المتوقعة',
+        DisplayNameEn: 'Expected Budget',
+        type: 'float',
+        state: 'disabled',
+      },
+      {
+        InternalName: 'ActualBudget',
+        DisplayName: 'الميزانية',
+        DisplayNameEn: 'Actual Budget',
+        type: 'float',
+        // "state": "disabled"
+      },
       // {
       //     "InternalName": "Cost4",
       //     "DisplayName": "التكلفة المخصصة لعام",
@@ -843,37 +880,12 @@ var Information_Form = [
       //     "state": "disabled",
       //     dynamic: "BudgetItem"
       // },
-      {
-        InternalName: 'AssignedBudget',
-        DisplayName: 'الموازنة المعتمدة',
-        DisplayNameEn: 'Assigned Budget',
-        type: 'float',
-        //"state": "disabled"
-        // "showonstage":"1"
-      },
-      {
-        InternalName: 'ExpectedBudget',
-        DisplayName: 'الموازنة المتوقعة',
-        DisplayNameEn: 'Expected Budget',
-        type: 'float',
-        state: 'disabled',
-      },
       // {
       //     "InternalName": "ContractualValue",
       //     "DisplayName":"قيمة العقد (قيمة المشروع)",
       //     "DisplayNameEn":"Contractual Value",
       //     "type":"float"
       // },
-      {
-        InternalName: 'ActualBudget',
-        DisplayName: 'الميزانية',
-        DisplayNameEn: 'Actual Budget',
-        type: 'float',
-        security: {
-          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
-        },
-        // "state": "disabled"
-      },
       // {
       //   InternalName: 'ActualCostWorkCompleted',
       //   DisplayName: 'التكلفة الفعلية للعمل المنجز',
@@ -882,13 +894,13 @@ var Information_Form = [
       //   // "state": "disabled"
       // },
 
-      {
-        InternalName: 'ProjectBudgetCost',
-        DisplayName: 'تكلفة ميزانية المشروع',
-        DisplayNameEn: 'Project Budget Cost',
-        type: 'float',
-        // "state": "disabled"
-      },
+      // {
+      //   InternalName: 'ProjectBudgetCost',
+      //   DisplayName: 'تكلفة ميزانية المشروع',
+      //   DisplayNameEn: 'Project Budget Cost',
+      //   type: 'float',
+      //   // "state": "disabled"
+      // },
       {
         InternalName: 'ContractualEngagements',
         DisplayName: 'الارتباطات التعاقدية',
@@ -958,19 +970,6 @@ var Information_Form = [
       },
     ],
   },
-  // {
-  //     label: 'المنافع المتوقعة',
-  //     labelEn: 'Expected Benefits',
-  //     description: "",
-  //     descriptionEn: "",
-  //     subFields: [{
-  //         "InternalName": "ExpectedBenefits",
-  //         "DisplayName": "المنافع المتوقعة",
-  //         "DisplayNameEn": "Expected Benefits",
-  //         "type": "string",
-  //         "state": "disabled"
-  //     }]
-  // },
   {
     label: 'الطرح والتعاقد',
     labelEn: 'Tendering and Contracting',
@@ -1001,17 +1000,43 @@ var Information_Form = [
         DisplayNameEn: 'Contractual Date',
         type: 'datetime',
       },
+      // {
+      //   InternalName: 'ApprovedBrochure',
+      //   DisplayName: 'المرفقات',
+      //   DisplayNameEn: 'Attachments',
+      //   type: 'file',
+      //   withAddBtn: 'true',
+      // },
       {
-        InternalName: 'ApprovedBrochure',
-        DisplayName: 'المرفقات',
-        DisplayNameEn: 'Attachments',
-        type: 'file',
-        withAddBtn: 'true',
+        InternalName: 'RFPStatus',
+        DisplayName: 'حالة الكراسة',
+        DisplayNameEn: 'RFP Status',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'brochureapproved', value: 'brochureapproved' },
+            { display: 'linkinginprogress', value: 'linkinginprogress' },
+            { display: 'linked', value: 'linked' },
+          ],
+        },
       },
     ],
   },
+  // {
+  //     label: 'المنافع المتوقعة',
+  //     labelEn: 'Expected Benefits',
+  //     description: "",
+  //     descriptionEn: "",
+  //     subFields: [{
+  //         "InternalName": "ExpectedBenefits",
+  //         "DisplayName": "المنافع المتوقعة",
+  //         "DisplayNameEn": "Expected Benefits",
+  //         "type": "string",
+  //         "state": "disabled"
+  //     }]
+  // },
   {
-    label: 'طاقم عمل المشروع',
+    label: 'فريق العمل',
     labelEn: 'Project Staff',
     description: '',
     descriptionEn: '',
@@ -1023,7 +1048,7 @@ var Information_Form = [
       //     "type": "picker",
       //     security: {
       //         groups: ['VRO_E','LMS_E',
-      //             'EPMO', 'System Admin Group','SPMO','Development Unit'
+      //            'EPMO', 'System Admin Group','SPMO','Development Unit',
       //         ]
       //     },
 
@@ -1035,7 +1060,15 @@ var Information_Form = [
         type: 'picker',
         validation: 'required',
         security: {
-          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
+          groups: [
+            'VRO_E',
+            'LMS_E',
+            'EPMO',
+            'System Admin Group',
+            'SPMO',
+            'Development Unit',
+            'Project Managers for Project Web App',
+          ],
         },
       },
       {
@@ -1044,16 +1077,13 @@ var Information_Form = [
         DisplayNameEn: 'Project Manager',
         type: 'picker',
         validation: 'required',
-        security: {
-          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
-        },
       },
       // {
 
       //     "InternalName": "DirectorUnit",
-      //     "DisplayName":" مدير وحدة الانجاز",
-      //     "DisplayNameEn":"Director Unit",
-      //     "type":"picker",
+      //     "DisplayName": " مدير وحدة الانجاز",
+      //     "DisplayNameEn": "Director Unit",
+      //     "type": "picker",
       //     "validation": "required",
 
       // },
@@ -1062,37 +1092,36 @@ var Information_Form = [
         DisplayName: 'راعي المشروع',
         DisplayNameEn: 'Project Sponsor',
         type: 'picker',
-        // "validation": "required",
+        validation: 'required',
         security: {
-          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
+          groups: [
+            'VRO_E',
+            'LMS_E',
+            'EPMO',
+            'System Admin Group',
+            'SPMO',
+            'Development Unit',
+            'Project Managers for Project Web App',
+          ],
         },
       },
-      // {
-      //   InternalName: 'ObjectiveOwner',
-      //   DisplayName: 'مالك الهدف (الهدف الفرعي)',
-      //   DisplayNameEn: 'Objective Owner',
-      //   type: 'picker',
-      //   security: {
-      //     groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
+      //   {
+      //     InternalName: 'ObjectiveOwner',
+      //     DisplayName: 'مالك الهدف (الهدف الفرعي)',
+      //     DisplayNameEn: 'Objective Owner',
+      //     type: 'picker',
       //   },
-      // },
       // {
       //   InternalName: 'QualityOfficer',
       //   DisplayName: 'ضابط الجودة',
       //   DisplayNameEn: 'Quality Officer',
       //   type: 'picker',
-      //   security: {
-      //     groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
-      //   },
       // },
       // {
       //   InternalName: 'ProjectResponsible',
-      //   DisplayName: 'مسؤول عن المشروع',
+      //   DisplayName: 'مسؤول المشروع',
       //   DisplayNameEn: 'Project Responsible',
       //   type: 'picker',
-      //   security: {
-      //     groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
-      //   },
       // },
       // ,
       // {
@@ -1151,6 +1180,7 @@ var Information_Form = [
         DisplayName: 'وصف الإعتمادية',
         DisplayNameEn: 'Description',
         type: 'multiline',
+        // type: 'string',
         //"state": "disabled"
       },
     ],
@@ -1187,19 +1217,19 @@ var Information_Form = [
   //     ]
   // },
   {
-    label: 'المرفقات',
-    labelEn: 'Attachments',
-    description: '',
-    descriptionEn: '',
+    label: 'الوثائق الداعمة',
+    labelEn: 'Supporting Documents',
+    description: 'التفاصيل',
+    descriptionEn: 'Details',
     subFields: [
       {
-        InternalName: 'Attachments',
+        InternalName: 'getfile',
         DisplayName: 'المرفقات',
         DisplayNameEn: 'Attachments',
         type: 'file',
-        fileExtensions: 'png,jpeg,svg,xlsx,docx,jpg,txt,pdf,rar,msg',
         withAddBtn: 'true',
       },
     ],
   },
 ]
+

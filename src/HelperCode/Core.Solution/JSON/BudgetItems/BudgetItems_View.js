@@ -7,6 +7,7 @@ var Information_Form  = [
         subFields: [
             {
                 "InternalName": "Title",
+                "DisplayNameEn": "Item Code",
                 "DisplayName":"رمز البند",
                 "type":"string",
                 "DisplayNameEn": "Code",
@@ -106,7 +107,7 @@ var Information_Form  = [
                 "display":"none"
             },
             {
-                "InternalName": "Type",
+                "InternalName": "Types",
                 "DisplayNameEn": "Type",
                 "DisplayName":"النوع",
                 "type": "dropdownValues",

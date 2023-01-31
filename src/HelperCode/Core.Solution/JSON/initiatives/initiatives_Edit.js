@@ -192,7 +192,7 @@ var Information_Form = [
         InternalName: 'RelatedObjective',
         DisplayNameEn: 'Related Objective',
         DisplayName: 'الهدف المرتبط',
-        type: 'lookupmultiselect',
+        type: 'lookup',
         source: 'SOs',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
@@ -558,7 +558,7 @@ var Information_Form = [
         // "ToggleName": "RelatedBudgetItem", //ToggleName to select which field
         DisplayNameEn: 'Related Budget Item',
         DisplayName: 'البند المالي المرتبط',
-        type: 'lookupmultiselect',
+        type: 'lookup',
         //from other list:
         source: 'Budget Items',
         Dispfieldkey: 'Name',
@@ -614,15 +614,15 @@ var Information_Form = [
     ],
   },
   {
-    label: 'المرفقات',
-    labelEn: 'Attachments',
+    label: 'الوثائق الداعمة',
+    labelEn: 'Supporting Documents',
     description: '',
     descriptionEn: '',
     subFields: [
       {
-        InternalName: 'Attachments',
+        InternalName: 'getfile',
         DisplayName: 'المرفقات',
-        DisplayNameEn: 'Supporting Documents',
+        DisplayNameEn: 'Attachments',
         type: 'file',
         withAddBtn: 'true',
       },

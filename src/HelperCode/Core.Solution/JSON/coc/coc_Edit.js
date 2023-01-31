@@ -9,11 +9,13 @@ var Information_Form = [
         InternalName: 'Deliverables',
         DisplayNameEn: 'Deliverables',
         DisplayName: 'المخرجات',
+        // type: 'lookup',
         type: 'lookupmultiselect',
         validation: 'required',
         source: 'Deliverables',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+        grpfieldkey: 'Title',
       },
       // {
       //     "InternalName": "Amount",
@@ -43,10 +45,15 @@ var Information_Form = [
         type: 'dropdownValues',
         options: {
           choices: [
-            { display: 'missionwasapproved', value: 'missionwasapproved' },
+            // { display: 'missionwasapproved', value: 'missionwasapproved' },
+            // {
+            //   display: 'waitingfortheapprovalofresources',
+            //   value: 'waitingfortheapprovalofresources',
+            // },
+            { display: 'cocuploaded', value: 'cocuploaded' },
             {
-              display: 'waitingfortheapprovalofresources',
-              value: 'waitingfortheapprovalofresources',
+              display: 'exchanginginprogress',
+              value: 'exchanginginprogress',
             },
             { display: 'exchangehasbeendone', value: 'exchangehasbeendone' },
           ],
@@ -56,7 +63,7 @@ var Information_Form = [
   },
   {
     label: 'الوثائق الداعمة',
-    labelEn: 'Attachments',
+    labelEn: 'Supporting Documents',
     description: 'التفاصيل',
     descriptionEn: 'Details',
     subFields: [
@@ -67,7 +74,7 @@ var Information_Form = [
         type: 'multiline',
       },
       {
-        InternalName: 'Attachments',
+        InternalName: 'getfile',
         DisplayName: 'مرفقات',
         DisplayNameEn: 'Attachments',
         type: 'file',

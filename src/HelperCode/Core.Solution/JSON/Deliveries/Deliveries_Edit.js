@@ -70,7 +70,7 @@ var Information_Form  = [
         ]
     },
     {
-        label: 'المرفقات',
+        label: 'الوثائق الداعمة',
         labelEn:'Attachments',
         description: "",
         descriptionEn:"",
@@ -78,7 +78,7 @@ var Information_Form  = [
             {
                 "InternalName": "getfile",
                 "DisplayName":"المرفقات",
-                "DisplayNameEn": "Attachments",
+                "DisplayNameEn": "Supporting Data",
                 "type":"file",
                 "withAddBtn":"true"
             }

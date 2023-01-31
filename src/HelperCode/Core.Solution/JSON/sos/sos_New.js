@@ -46,6 +46,8 @@ var Information_Form = [
         DisplayName: 'نوع الهدف',
         toggleValues: [
           { value: 'sub', fields: ['RelatedObjective', 'RelatedPortfolio'] },
+          // { value: 'level2', fields: ['RelatedObjective', 'RelatedPortfolio'] },
+          // { value: 'level3', fields: ['RelatedObjective', 'RelatedPortfolio'] },
           { value: 'main', fields: ['RelatedPillar'] },
           { value: 'jobmarket', fields: ['RelatedJobStrategy'] },
           // {value:'strategically', fields:['StrategyRelatedObjective']}
@@ -54,9 +56,9 @@ var Information_Form = [
         options: {
           choices: [
             { display: 'main', value: 'main' },
-            { display: 'level2', value: 'level2' },
-            { display: 'level3', value: 'level3' },
-            // { display: 'sub', value: 'sub' },
+            // { display: 'level2', value: 'level2' },
+            // { display: 'level3', value: 'level3' },
+            { display: 'sub', value: 'sub' },
             // { display: 'vision', value: 'vision' },
             // { display: 'ministry', value: 'ministry' },
             // { display: 'jobmarket', value: 'jobmarket' },

@@ -144,7 +144,23 @@ var Information_Form = [
                   }
                ]
             }
-         }
+         },
+         {
+            InternalName:'AchievementCost',
+            DisplayName:'تكلفة المنجز',
+            DisplayNameEn:'Achievement Cost',
+            type:'string',
+            maxchar:'250',
+           validation: 'required',
+         },
+         {
+            InternalName:'FundingSource',
+            DisplayName:'مصدر التمويل',
+            DisplayNameEn:'Funding Source',
+            type:'string',
+            maxchar:'250',
+           validation: 'required',
+         },
       ]
    },
    {
@@ -161,9 +177,9 @@ var Information_Form = [
             "maxchar":"500"
          },
          {
-            "InternalName": "Attachments",
+            "InternalName": "getfile",
             "DisplayName": "مرفقات",
-            "DisplayNameEn": "Attachments",
+            "DisplayNameEn": "Supporting Data",
             "type": "file",
             "withAddBtn":"true"
          }
@@ -172,14 +188,14 @@ var Information_Form = [
 
    
    // ,{
-   //    label: 'المرفقات',
-   //    labelEn: 'Attachments',
+   //    label: 'الوثائق الداعمة',
+   //    labelEn: 'Supporting Documents',
    //    description: "",
    //    descriptionEn: "",
    //    subFields: [{
    //       "InternalName": "getfile",
    //       "DisplayName": "المرفقات",
-   //       "DisplayNameEn": "Attachments",
+   //       "DisplayNameEn": "Supporting Data",
    //       "type": "file",
    //       "withAddBtn":"true"
    //    }]

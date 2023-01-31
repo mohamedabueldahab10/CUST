@@ -46,7 +46,7 @@ var Information_Form = [
         DisplayNameEn: 'Objective Type',
         DisplayName: 'نوع الهدف',
         toggleValues: [
-          //   { value: 'sub', fields: ['RelatedObjective', 'RelatedPortfolio'] },
+            { value: 'sub', fields: ['RelatedObjective', 'RelatedPortfolio'] },
           { value: 'main', fields: ['RelatedPillar'] },
           //   { value: 'vision', fields: ['RelatedStrategy'] },
           //   { value: 'jobmarket', fields: ['RelatedJobStrategy'] },
@@ -56,9 +56,9 @@ var Information_Form = [
         options: {
           choices: [
             { display: 'main', value: 'main' },
-            { display: 'level2', value: 'level2' },
-            { display: 'level3', value: 'level3' },
-            // { display: 'sub', value: 'sub' },
+            // { display: 'level2', value: 'level2' },
+            // { display: 'level3', value: 'level3' },
+            { display: 'sub', value: 'sub' },
             // { display: 'vision', value: 'vision' },
             // { display: 'ministry', value: 'ministry' },
             // { display: 'jobmarket', value: 'jobmarket' },
@@ -115,7 +115,7 @@ var Information_Form = [
         DisplayName: 'القطاع',
         DisplayNameEn: 'Sector',
         type: 'lookup',
-        validation: 'required',
+        // validation: 'required',
         //from other list:
         source: 'Internal Entities',
         isSector: 'True',

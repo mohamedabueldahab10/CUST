@@ -46,26 +46,26 @@ var Information_Form = [{
             options: {
                 choices: [
                     { display: 'critical', value: 'critical' },
-                    { display: 'hight', value: 'hight' },
+                    { display: 'high', value: 'high' },
                     { display: 'medium', value: 'medium' },
                     { display: 'low', value: 'low' }
                 ]
             }
         },
-        {
-            "InternalName": "ResolutionStatus",
-            "DisplayName": "الحالة",
-            "DisplayNameEn": "Resolution Status",
-            "type": "dropdownValues",
-            options: {
-                choices: [
-                    { display: 'new', value: 'new' },
-                    { display: 'inprogress', value: 'inprogress' },
-                    { display: 'closed', value: 'closed' },
-                    { display: 'cancelled', value: 'cancelled' },
-                ]
-            }
-        },
+        // {
+        //     "InternalName": "ResolutionStatus",
+        //     "DisplayName": "الحالة",
+        //     "DisplayNameEn": "Resolution Status",
+        //     "type": "dropdownValues",
+        //     options: {
+        //         choices: [
+        //             { display: 'new', value: 'new' },
+        //             { display: 'inprogress', value: 'inprogress' },
+        //             { display: 'closed', value: 'closed' },
+        //             { display: 'cancelled', value: 'cancelled' },
+        //         ]
+        //     }
+        // },
         {
             "InternalName": "Impact",
             "DisplayName": "الأثر",
@@ -73,7 +73,7 @@ var Information_Form = [{
             "type": "dropdownValues",
             options: {
                 choices: [
-                    { display: 'hight', value: 'hight' },
+                    { display: 'high', value: 'high' },
                     { display: 'medium', value: 'medium' },
                     { display: 'low', value: 'low' },
                 ]

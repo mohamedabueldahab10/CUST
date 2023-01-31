@@ -20,14 +20,14 @@ var Information_Form = [
         DisplayNameEn: 'Partner Name',
         type: 'string',
         maxchar: '250',
-        validation: 'required',
+        // validation: 'required',
       },
       {
         InternalName: 'Classification',
         DisplayName: 'تصنيف الشريك',
         DisplayNameEn: 'Classification',
         type: 'dropdownValues',
-        validation: 'required',
+        // validation: 'required',
         options: {
           choices: [
             {
@@ -46,7 +46,7 @@ var Information_Form = [
         DisplayName: 'نوع الشريك الخارجي',
         DisplayNameEn: 'Type',
         type: 'dropdownValues',
-        validation: 'required',
+        // validation: 'required',
         options: {
           choices: [
             {
@@ -250,11 +250,11 @@ var Information_Form = [
       {
         //   InternalName: 'PartnerRepresentativeName',
         InternalName: 'RepresentativeName',
-        DisplayName: 'اسم ممثل الشريك',
+        DisplayName: 'اسم الممثل للشريك',
         DisplayNameEn: 'Representative Name',
         type: 'string',
         maxchar: '250',
-        validation: 'required',
+        // validation: 'required',
       },
       {
         //   InternalName: 'PartnerRepresentativeEmail',
@@ -263,7 +263,7 @@ var Information_Form = [
         DisplayNameEn: 'Representative Email',
         type: 'string',
         maxchar: '250',
-        validation: 'required',
+        // validation: 'required',
       },
       {
         //   InternalName: 'PartnerRepresentativePhone',
@@ -272,14 +272,14 @@ var Information_Form = [
         DisplayNameEn: 'Representative Phone',
         type: 'string',
         maxchar: '250',
-        validation: 'required',
+        // validation: 'required',
       },
       {
         InternalName: 'JobTitle',
         DisplayName: 'المسمى الوظيفي',
         DisplayNameEn: 'Job Title',
         type: 'string',
-        validation: 'required',
+        // validation: 'required',
       },
     ],
   },
@@ -296,9 +296,9 @@ var Information_Form = [
         type: 'multiline',
       },
       {
-        InternalName: 'Attachments',
+        InternalName: 'getfile',
         DisplayName: 'مرفقات',
-        DisplayNameEn: 'Attachments',
+         DisplayNameEn: 'Attachments',
         type: 'file',
         withAddBtn: 'true',
       },

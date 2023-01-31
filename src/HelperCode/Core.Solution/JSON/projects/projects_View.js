@@ -29,18 +29,18 @@ var Information_Form = [
         BIlanguage: true, //added to handle portfolio bilangual
         DispfieldkeyEn: 'NameEn', //added to handle portfolio bilangual
       },
-    //   {
-    //     InternalName: 'Name',
-    //     DisplayName: 'اسم المشروع',
-    //     DisplayNameEn: 'Project Name',
-    //     type: 'string',
-    //   },
-    //   {
-    //     InternalName: 'Title',
-    //     DisplayName: 'رمز المشروع',
-    //     DisplayNameEn: 'Project Code',
-    //     type: 'code',
-    //   },
+      //   {
+      //     InternalName: 'Name',
+      //     DisplayName: 'اسم المشروع',
+      //     DisplayNameEn: 'Project Name',
+      //     type: 'string',
+      //   },
+      //   {
+      //     InternalName: 'Title',
+      //     DisplayName: 'رمز المشروع',
+      //     DisplayNameEn: 'Project Code',
+      //     type: 'code',
+      //   },
       {
         InternalName: 'Description',
         DisplayName: 'وصف المشروع والتحديات التي يعالجها',
@@ -50,19 +50,27 @@ var Information_Form = [
       },
       {
         InternalName: 'ScopeOfWork',
-        DisplayName: 'نطاق المشروع',
+        DisplayName: 'نطاق العمل',
         DisplayNameEn: 'ScopeOfWork',
         type: 'multiline',
         maxchar: 5000,
         // hideonstage: "1"
       },
       {
-        InternalName: 'ERPCode',
-        DisplayNameEn: 'ERP Code',
-        DisplayName: 'ترميز موارد',
-        type: 'string',
-        maxchar: '250',
-        // "validation": "required"
+        InternalName: 'OutOfScope',
+        DisplayName: 'خارج نطاق العمل',
+        DisplayNameEn: 'Out Of Scope',
+        type: 'multiline',
+        maxchar: 5000,
+        //"state": "disabled"
+      },
+      {
+        InternalName: 'Assumptions',
+        DisplayName: ' إفتراضات المشروع',
+        DisplayNameEn: 'Project Assumptions',
+        type: 'multiline',
+        maxchar: 5000,
+        //"state": "disabled"
       },
       {
         InternalName: 'PMNotes',
@@ -76,7 +84,7 @@ var Information_Form = [
         InternalName: 'FlaggedProjects',
         DisplayName: 'مشروع مشار اليه؟',
         DisplayNameEn: 'Is Flagged Project?',
-        validation: 'required',
+        // validation: 'required',
         type: 'yesnoradio',
         options: {
           choices: [
@@ -95,7 +103,7 @@ var Information_Form = [
         InternalName: 'NTP',
         DisplayName: 'NTP',
         DisplayNameEn: 'NTP',
-        validation: 'required',
+        // validation: 'required',
         type: 'yesnoradio',
         options: {
           choices: [
@@ -156,41 +164,11 @@ var Information_Form = [
         // hideonstage: "1"
       },
       {
-        InternalName: 'Status',
-        DisplayName: 'مرحلة المشروع',
-        DisplayNameEn: 'Project Stage',
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            {
-              display: 'cancelled',
-              value: 'cancelled',
-            },
-            {
-              display: 'pending',
-              value: 'pending',
-            },
-            {
-              display: 'inprogress',
-              value: 'inprogress',
-            },
-            {
-              display: 'notstarted',
-              value: 'notstarted',
-            },
-            {
-              display: 'completed',
-              value: 'completed',
-            },
-          ],
-        },
-      },
-      {
         InternalName: 'ProjectType',
         DisplayName: 'نوع المشروع',
         DisplayNameEn: 'Project Type',
         type: 'dropdownValues',
-        validation: 'required',
+        // validation: 'required',
         options: {
           choices: [
             {
@@ -208,7 +186,7 @@ var Information_Form = [
         InternalName: 'Category',
         DisplayName: 'تصنيف  المشروع',
         DisplayNameEn: 'Category',
-        validation: 'required',
+        // validation: 'required',
         type: 'dropdownValues',
         options: {
           choices: [
@@ -227,7 +205,7 @@ var Information_Form = [
         DisplayName: 'هل هو مشروع استراتيجي؟',
         DisplayNameEn: 'Is Strategic Project?',
         type: 'yesnoradio',
-        validation: 'required',
+        // validation: 'required',
         options: {
           choices: [
             {
@@ -241,38 +219,36 @@ var Information_Form = [
           ],
         },
       },
-      {
-        InternalName: 'IsZeroBudgetProject',
-        DisplayName: 'هل هو مشروع صفرى؟',
-        DisplayNameEn: 'Is Zero Budget Project ?',
-        type: 'yesnoradio',
-        options: {
-          choices: [
-            { display: 'yes', value: 'true' },
-            { display: 'no', value: 'false' },
-          ],
-        },
-      },
-      {
-        InternalName: 'FundingSources',
-        DisplayName: 'مصادر التمويل',
-        DisplayNameEn: 'Funding Sources',
-        type: 'string',
-      },
-      {
-        InternalName: 'FundingStatus',
-        DisplayName: 'حالة التمويل',
-        DisplayNameEn: 'Funding Status',
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            { display: 'funded', value: 'funded' },
-            { display: 'unfunded', value: 'unfunded' },
-            { display: 'partiallyfunded', value: 'partiallyfunded' },
-            { display: 'zero', value: 'zero' },
-          ],
-        },
-      },
+      // {
+      //   InternalName: 'Status',
+      //   DisplayName: 'مرحلة المشروع',
+      //   DisplayNameEn: 'Project Stage',
+      //   type: 'dropdownValues',
+      //   options: {
+      //     choices: [
+      //       {
+      //         display: 'cancelled',
+      //         value: 'cancelled',
+      //       },
+      //       {
+      //         display: 'pending',
+      //         value: 'pending',
+      //       },
+      //       {
+      //         display: 'inprogress',
+      //         value: 'inprogress',
+      //       },
+      //       {
+      //         display: 'notstarted',
+      //         value: 'notstarted',
+      //       },
+      //       {
+      //         display: 'completed',
+      //         value: 'completed',
+      //       },
+      //     ],
+      //   },
+      // },
       {
         InternalName: 'BaselineStartDate',
         DisplayName: 'تاريخ بدء الأساس',
@@ -289,12 +265,13 @@ var Information_Form = [
         min: 'BaselineStartDate',
         // "state": "disabled"
       },
+
       {
         InternalName: 'Sector',
         DisplayName: 'القطاع',
         DisplayNameEn: 'Sector',
         type: 'lookup',
-        validation: 'required',
+        // validation: 'required',
         //from other list:
         source: 'Internal Entities',
         isSector: 'True',
@@ -303,6 +280,7 @@ var Information_Form = [
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
       },
+
       {
         InternalName: 'SubSector',
         DisplayName: 'الوكالات',
@@ -315,12 +293,13 @@ var Information_Form = [
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
       },
+
       {
         InternalName: 'Priority',
         DisplayName: 'أهمية المشروع',
         DisplayNameEn: 'Priority',
         type: 'dropdownValues',
-        validation: 'required',
+        // validation: 'required',
         options: {
           choices: [
             // {
@@ -343,6 +322,7 @@ var Information_Form = [
           ],
         },
       },
+
       {
         InternalName: 'ExecutionChannels',
         DisplayName: 'الجهة المنفذة',
@@ -357,14 +337,15 @@ var Information_Form = [
         type: 'multiline',
         // type: 'string',
       },
-      {
-          "InternalName": "BaselineDuration",
-          "DisplayName": "مدة الأساس",
-          "DisplayNameEn": "Baseline Duration",
-          "type": "float",
-          // "maxchar": 5000,
-          // hideonstage: "1"
-      },
+      // {
+      //     "InternalName": "BaselineDuration",
+      //     "DisplayName": "مدة الأساس",
+      //     "DisplayNameEn": "Baseline Duration",
+      //     "type": "float",
+      //     // "maxchar": 5000,
+      //     // hideonstage: "1"
+      // },
+
       {
         InternalName: 'Comments',
         DisplayName: 'ملاحظات',
@@ -384,21 +365,14 @@ var Information_Form = [
         },
         // hideonstage: "1"
       },
-      {
-        InternalName: 'PRCode',
-        DisplayName: 'رمز المشتريات',
-        DisplayNameEn: 'Purchase code',
-        // type: 'float',
-        type: 'string',
 
-      },
       {
         InternalName: 'ProjectSize',
         DisplayName: 'حجم المشروع',
         DisplayNameEn: 'Project Size',
         type: 'dropdownValues',
         options: {
-          choices: [ 
+          choices: [
             { display: 'large', value: 'large' },
             { display: 'medium', value: 'medium' },
             { display: 'small', value: 'small' },
@@ -411,13 +385,73 @@ var Information_Form = [
         DisplayNameEn: 'Project Priority',
         type: 'dropdownValues',
         options: {
-          choices: [ 
+          choices: [
             { display: 'low', value: 'low' },
             { display: 'medium', value: 'medium' },
             { display: 'high', value: 'high' },
           ],
         },
       },
+
+      {
+        InternalName: 'IsZeroBudgetProject',
+        DisplayName: 'هل هو مشروع صفرى؟',
+        DisplayNameEn: 'Is Zero Budget Project ?',
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            { display: 'yes', value: 'true' },
+            { display: 'no', value: 'false' },
+          ],
+        },
+      },
+      {
+        InternalName: 'ActualCostWorkCompleted',
+        DisplayName: 'التكلفة الفعلية للعمل المنجز',
+        DisplayNameEn: 'Actual Cost Work Completed',
+        type: 'float',
+        // "state": "disabled"
+      },
+
+      {
+        InternalName: 'ProjectBudgetCost',
+        DisplayName: 'تكلفة ميزانية المشروع',
+        DisplayNameEn: 'Project Budget Cost',
+        type: 'float',
+        // "state": "disabled"
+      },
+
+      {
+        InternalName: 'Stage',
+        DisplayName: 'الطور',
+        DisplayNameEn: 'Stage',
+        type: 'lookup',
+        //from other list:
+        source: 'Stages',
+        Dispfieldkey: 'StageName',
+        DispfieldkeyEn: 'StageNameEn',
+        valfieldkey: 'Title',
+      },
+
+      {
+        InternalName: 'Phase',
+        DisplayName: 'المرحلة',
+        DisplayNameEn: 'Phase',
+        type: 'lookup',
+        //from other list:
+        source: 'Phases',
+        Dispfieldkey: 'Name',
+        DispfieldkeyEn: 'PhaseNameEn',
+        valfieldkey: 'Title',
+      },
+
+      // {
+      //     "InternalName": "SpentBudget",
+      //     "DisplayName": "المبالغ المصروفة",
+      //     "DisplayNameEn": "Spent Budget",
+      //     "type": "float"
+      // },
+
       // {
       //     "InternalName": "RelatedInitiativeDeliverable",
       //     "DisplayName": " مخرج المبادرة المرتبط",
@@ -456,49 +490,49 @@ var Information_Form = [
       //     "Dispfieldkey": "Name",
       //     "valfieldkey": "Title"
       // },
-    //   {
-    //     InternalName: 'InitiativeVision',
-    //     DisplayNameEn: 'Initiative Vision',
-    //     DisplayName: 'مبادرة تحقيق الرؤية',
-    //     // "ToggleName":"SubRelatedObjective",
-    //     type: 'lookupWithQuery',
-    //     queryField: 'Types',
-    //     queryFieldType: 'Choices', //ex: "Choice"
-    //     queryFieldValue: 'vision',
-    //     //from other list:
-    //     source: 'Initiatives',
-    //     Dispfieldkey: 'Name',
-    //     valfieldkey: 'Title',
-    //     // "display":"none"
-    //   },
-    //   {
-    //     InternalName: 'InitiativeProgram',
-    //     DisplayName: 'البرنامج',
-    //     DisplayNameEn: 'Initiative Program',
-    //     type: 'string',
-    //     // "maxchar": 5000,
-    //     // hideonstage: "1"
-    //   },
-    //   {
-    //     InternalName: 'BaselineDuration',
-    //     DisplayName: 'مدة الأساس بالأيام',
-    //     DisplayNameEn: 'Baseline Duration in Days',
-    //     type: 'float',
-    //     // "maxchar": 5000,
-    //     // hideonstage: "1"
-    //   },
-    //   {
-    //     InternalName: 'KPIs',
-    //     DisplayName: 'مؤشر القياس',
-    //     DisplayNameEn: 'KPIs',
-    //     type: 'lookup',
-    //     source: 'MainKPI',
-    //     Dispfieldkey: 'Name',
-    //     valfieldkey: 'Title',
+      //   {
+      //     InternalName: 'InitiativeVision',
+      //     DisplayNameEn: 'Initiative Vision',
+      //     DisplayName: 'مبادرة تحقيق الرؤية',
+      //     // "ToggleName":"SubRelatedObjective",
+      //     type: 'lookupWithQuery',
+      //     queryField: 'Types',
+      //     queryFieldType: 'Choices', //ex: "Choice"
+      //     queryFieldValue: 'vision',
+      //     //from other list:
+      //     source: 'Initiatives',
+      //     Dispfieldkey: 'Name',
+      //     valfieldkey: 'Title',
+      //     // "display":"none"
+      //   },
+      //   {
+      //     InternalName: 'InitiativeProgram',
+      //     DisplayName: 'البرنامج',
+      //     DisplayNameEn: 'Initiative Program',
+      //     type: 'string',
+      //     // "maxchar": 5000,
+      //     // hideonstage: "1"
+      //   },
+      //   {
+      //     InternalName: 'BaselineDuration',
+      //     DisplayName: 'مدة الأساس بالأيام',
+      //     DisplayNameEn: 'Baseline Duration in Days',
+      //     type: 'float',
+      //     // "maxchar": 5000,
+      //     // hideonstage: "1"
+      //   },
+      //   {
+      //     InternalName: 'KPIs',
+      //     DisplayName: 'مؤشر القياس',
+      //     DisplayNameEn: 'KPIs',
+      //     type: 'lookup',
+      //     source: 'MainKPI',
+      //     Dispfieldkey: 'Name',
+      //     valfieldkey: 'Title',
 
-    //     // "maxchar": 5000,
-    //     // hideonstage: "1"
-    //   },
+      //     // "maxchar": 5000,
+      //     // hideonstage: "1"
+      //   },
       // {
       //     "InternalName": "ProjectStatus",
       //     "DisplayName": "حالة المشروع",
@@ -574,29 +608,6 @@ var Information_Form = [
       //     "DisplayNameEn": "Execution Requirements",
       //     "type": "string"
       // },
-      {
-        InternalName: 'Stage',
-        DisplayName: 'الطور',
-        DisplayNameEn: 'Stage',
-        type: 'lookup',
-        //from other list:
-        source: 'Stages',
-        Dispfieldkey: 'StageName',
-        DispfieldkeyEn: 'StageNameEn',
-        valfieldkey: 'Title',
-      },
-      {
-        InternalName: 'Phase',
-        DisplayName: 'المرحلة',
-        DisplayNameEn: 'Phase',
-        type: 'lookup',
-        //from other list:
-        source: 'Phases',
-        Dispfieldkey: 'Name',
-        DispfieldkeyEn: 'PhaseNameEn',
-        valfieldkey: 'Title',
-      },
-
 
       //   {
       //     "InternalName": "SubSector",
@@ -725,11 +736,56 @@ var Information_Form = [
     ],
   },
   {
+    label: 'التمويل',
+    labelEn: 'Funding',
+    description: '',
+    descriptionEn: '',
+    subFields: [
+      {
+        InternalName: 'FundingSources',
+        DisplayName: 'مصادر التمويل',
+        DisplayNameEn: 'Funding Sources',
+        type: 'string',
+      },
+
+      {
+        InternalName: 'FundingStatus',
+        DisplayName: 'حالة التمويل',
+        DisplayNameEn: 'Funding Status',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'funded', value: 'funded' },
+            { display: 'unfunded', value: 'unfunded' },
+            { display: 'partiallyfunded', value: 'partiallyfunded' },
+            { display: 'zero', value: 'zero' },
+          ],
+        },
+      },
+    ],
+  },
+  {
     label: 'الموازنة',
     labelEn: 'Budget',
     description: '',
     descriptionEn: '',
     subFields: [
+      {
+        InternalName: 'PRCode',
+        DisplayName: 'رمز المشتريات',
+        DisplayNameEn: 'Purchase code',
+        // type: 'float',
+        type: 'string',
+      },
+    
+      {
+        InternalName: 'ERPCode',
+        DisplayNameEn: 'ERP Code',
+        DisplayName: 'ترميز موارد',
+        type: 'string',
+        maxchar: '250',
+        // "validation": "required"
+      },
       {
         InternalName: 'BudgetItem',
         DisplayName: 'البند المرتبط',
@@ -820,21 +876,7 @@ var Information_Form = [
         type: 'float',
         // "state": "disabled"
       },
-      {
-        InternalName: 'ActualCostWorkCompleted',
-        DisplayName: 'التكلفة الفعلية للعمل المنجز',
-        DisplayNameEn: 'Actual Cost Work Completed',
-        type: 'float',
-        // "state": "disabled"
-      },
 
-      {
-        InternalName: 'ProjectBudgetCost',
-        DisplayName: 'تكلفة ميزانية المشروع',
-        DisplayNameEn: 'Project Budget Cost',
-        type: 'float',
-        // "state": "disabled"
-      },
       {
         InternalName: 'ContractualEngagements',
         DisplayName: 'الارتباطات التعاقدية',
@@ -842,6 +884,7 @@ var Information_Form = [
         type: 'float',
         // "state": "disabled"
       },
+
       {
         InternalName: 'EngagementPercentage',
         DisplayName: 'نسبة الارتباط من التكاليف ',
@@ -849,6 +892,7 @@ var Information_Form = [
         type: 'floatpercentage',
         // "state": "disabled"
       },
+
       {
         InternalName: 'ExpensesDate',
         DisplayName: 'المنصرف حتى تاريخه',
@@ -870,12 +914,7 @@ var Information_Form = [
         type: 'float',
         // "state": "disabled"
       },
-      // {
-      //     "InternalName": "SpentBudget",
-      //     "DisplayName": "المبالغ المصروفة",
-      //     "DisplayNameEn": "Spent Budget",
-      //     "type": "float"
-      // },
+
       {
         InternalName: 'BudgetStatus',
         DisplayName: 'حالة تمويل المشروع (حسب الحوكمة)',
@@ -893,6 +932,149 @@ var Information_Form = [
       },
     ],
   },
+  {
+    label: 'الطرح والتعاقد',
+    labelEn: 'Tendering and Contracting',
+    description: '',
+    descriptionEn: '',
+    subFields: [
+      {
+        InternalName: 'PlannedOfferingDate',
+        DisplayName: 'التاريخ المخطط للطرح',
+        DisplayNameEn: 'Planned Date of Offering',
+        type: 'datetime',
+      },
+      {
+        InternalName: 'ActualOfferingDate',
+        DisplayName: 'تاريخ  الطرح الفعلى',
+        DisplayNameEn: 'Actual Offering Date',
+        type: 'datetime',
+      },
+      {
+        InternalName: 'AwardDate',
+        DisplayName: 'تاريخ  الترسية',
+        DisplayNameEn: 'Award Date',
+        type: 'datetime',
+      },
+      {
+        InternalName: 'ContractualDate',
+        DisplayName: 'تاريخ التعاقد',
+        DisplayNameEn: 'Contractual Date',
+        type: 'datetime',
+      },
+      // {
+      //   InternalName: 'ApprovedBrochure',
+      //   DisplayName: 'المرفقات',
+      //   DisplayNameEn: 'Attachments',
+      //   type: 'file',
+      //   withAddBtn: 'true',
+      // },
+      {
+        InternalName: 'RFPStatus',
+        DisplayName: 'حالة الكراسة',
+        DisplayNameEn: 'RFP Status',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'brochureapproved', value: 'brochureapproved' },
+            { display: 'linkinginprogress', value: 'linkinginprogress' },
+            { display: 'linked', value: 'linked' },
+          ],
+        },
+      },
+    ],
+  },
+  {
+    label: 'طاقم عمل المشروع',
+    labelEn: 'Project Staff',
+    description: '',
+    descriptionEn: '',
+    subFields: [
+      // {
+      //     "InternalName": "Owner",
+      //     "DisplayName": "المالك",
+      //     "DisplayNameEn": "Owner",
+      //     "type": "picker",
+      //     // "showonstage": "2"
+      // },
+      {
+        InternalName: 'ProjectOwner',
+        DisplayName: 'مالك المشروع',
+        DisplayNameEn: 'Project Owner',
+        type: 'picker',
+        // validation: 'required',
+      },
+      {
+        InternalName: 'ProjectManager',
+        DisplayName: 'مدير المشروع',
+        DisplayNameEn: 'Project Manager',
+        type: 'picker',
+        showonstage: '2',
+      },
+      // {
+
+      //     "InternalName": "DirectorUnit",
+      //     "DisplayName":" مدير وحدة الانجاز",
+      //     "DisplayNameEn":"Director Unit",
+      //     "type":"picker",
+
+      // },
+      {
+        InternalName: 'ProjectSponsor',
+        DisplayName: 'راعي المشروع',
+        DisplayNameEn: 'Project Sponsor',
+        type: 'picker',
+      },
+      //   {
+      //     InternalName: 'QualityOfficer',
+      //     DisplayName: 'ضابط الجودة',
+      //     DisplayNameEn: 'Quality Officer',
+      //     type: 'picker',
+      //   },
+      //   {
+      //     InternalName: 'ProjectResponsible',
+      //     DisplayName: 'مسؤول عن المشروع',
+      //     DisplayNameEn: 'Project Responsible',
+      //     type: 'picker',
+      //   },
+      // ,
+      // {
+      //     "InternalName": "PMORepresentative",
+      //     "DisplayName": "ممثل مكتب تحكم إدارة المشاريع",
+      //     "DisplayNameEn": "PMO Representative",
+      //     "type": "picker",
+      //     "showonstage": "3"
+      // }
+    ],
+  },
+  {
+    label: 'المشاريع الإعتمادية',
+    description: '',
+    labelEn: 'Dependency Project',
+    descriptionEn: '',
+    sectiontype: 'master',
+    targetlist: 'Dependency Projects',
+    subFields: [
+      {
+        InternalName: 'ProjectCode',
+        DisplayName: 'إعتمادية على مشروع اّخر',
+        DisplayNameEn: 'Dependency Project',
+        type: 'lookup',
+        //from other list:
+        source: 'Projects',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+      },
+      {
+        InternalName: 'Description',
+        DisplayName: 'وصف الإعتمادية',
+        DisplayNameEn: 'Description',
+        type: 'multiline',
+        // type: 'string',
+      },
+    ],
+  },
+
   // {
   //     label: 'المنافع المتوقعة',
   //     labelEn: 'Expected Benefits',
@@ -943,108 +1125,7 @@ var Information_Form = [
   //         },
   //     ]
   // },
-  {
-    label: 'الطرح والتعاقد',
-    labelEn: 'Tendering and Contracting',
-    description: '',
-    descriptionEn: '',
-    subFields: [
-      {
-        InternalName: 'PlannedOfferingDate',
-        DisplayName: 'التاريخ المخطط للطرح',
-        DisplayNameEn: 'Planned Date of Offering',
-        type: 'datetime',
-      },
-      {
-        InternalName: 'ActualOfferingDate',
-        DisplayName: 'تاريخ  الطرح الفعلى',
-        DisplayNameEn: 'Actual Offering Date',
-        type: 'datetime',
-      },
-      {
-        InternalName: 'AwardDate',
-        DisplayName: 'تاريخ  الترسية',
-        DisplayNameEn: 'Award Date',
-        type: 'datetime',
-      },
-      {
-        InternalName: 'ContractualDate',
-        DisplayName: 'تاريخ التعاقد',
-        DisplayNameEn: 'Contractual Date',
-        type: 'datetime',
-      },
-      {
-        InternalName: 'ApprovedBrochure',
-        DisplayName: 'المرفقات',
-        DisplayNameEn: 'Attachments',
-        type: 'file',
-        withAddBtn: 'true',
-      },
-    ],
-  },
-  {
-    label: 'طاقم عمل المشروع',
-    labelEn: 'Project Staff',
-    description: '',
-    descriptionEn: '',
-    subFields: [
-      // {
-      //     "InternalName": "Owner",
-      //     "DisplayName": "المالك",
-      //     "DisplayNameEn": "Owner",
-      //     "type": "picker",
-      //     // "showonstage": "2"
-      // },
-      {
-        InternalName: 'ProjectOwner',
-        DisplayName: 'مالك المشروع',
-        DisplayNameEn: 'Project Owner',
-        type: 'picker',
-        // validation: 'required',
-      },
-      {
-        InternalName: 'ProjectManager',
-        DisplayName: 'مدير المشروع',
-        DisplayNameEn: 'Project Manager',
-        type: 'picker',
-        showonstage: '2',
-      },
-      // {
 
-      //     "InternalName": "DirectorUnit",
-      //     "DisplayName":" مدير وحدة الانجاز",
-      //     "DisplayNameEn":"Director Unit",
-      //     "type":"picker",
-
-      // },
-      {
-        InternalName: 'ProjectSponsor',
-        DisplayName: 'راعي المشروع',
-        DisplayNameEn: 'Project Sponsor',
-        type: 'picker',
-      },
-    //   {
-    //     InternalName: 'QualityOfficer',
-    //     DisplayName: 'ضابط الجودة',
-    //     DisplayNameEn: 'Quality Officer',
-    //     type: 'picker',
-    //   },
-    //   {
-    //     InternalName: 'ProjectResponsible',
-    //     DisplayName: 'مسؤول عن المشروع',
-    //     DisplayNameEn: 'Project Responsible',
-    //     type: 'picker',
-    //   },
-      // ,
-      // {
-      //     "InternalName": "PMORepresentative",
-      //     "DisplayName": "ممثل مكتب تحكم إدارة المشاريع",
-      //     "DisplayNameEn": "PMO Representative",
-      //     "type": "picker",
-      //     "showonstage": "3"
-      // }
-    ],
-  },
   // {
   //     label: 'الجهات المشاركة الأساسية',
   //     labelEn: 'The Main Participants',
@@ -1066,33 +1147,7 @@ var Information_Form = [
   //         }
   //     ]
   // },
-  {
-    label: 'المشاريع الإعتمادية',
-    description: '',
-    labelEn: 'Dependency Project',
-    descriptionEn: '',
-    sectiontype: 'master',
-    targetlist: 'Dependency Projects',
-    subFields: [
-      {
-        InternalName: 'ProjectCode',
-        DisplayName: 'إعتمادية على مشروع اّخر',
-        DisplayNameEn: 'Dependency Project',
-        type: 'lookup',
-        //from other list:
-        source: 'Projects',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
-      },
-      {
-        InternalName: 'Description',
-        DisplayName: 'وصف الإعتمادية',
-        DisplayNameEn: 'Description',
-        type: 'multiline',
-        // type: 'string',
-      },
-    ],
-  },
+
   // {
   //     label: 'مخاطر المشروع',
   //     labelEn: 'Project Risks',
@@ -1120,18 +1175,18 @@ var Information_Form = [
   //         }
   //     ]
   // },
-//   {
-//     label: 'البدء بعملية المشتريات',
-//     labelEn: 'Purchase Start',
-//     description: '',
-//     descriptionEn: '',
-//     subFields: [
-//     //   {
-//     //     InternalName: 'PRCode',
-//     //     DisplayName: 'رمز المشتريات',
-//     //     DisplayNameEn: 'Purchase code',
-//     //     type: 'float',
-//     //   },
-//     ],
-//   },
+  //   {
+  //     label: 'البدء بعملية المشتريات',
+  //     labelEn: 'Purchase Start',
+  //     description: '',
+  //     descriptionEn: '',
+  //     subFields: [
+  //     //   {
+  //     //     InternalName: 'PRCode',
+  //     //     DisplayName: 'رمز المشتريات',
+  //     //     DisplayNameEn: 'Purchase code',
+  //     //     type: 'float',
+  //     //   },
+  //     ],
+  //   },
 ]

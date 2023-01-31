@@ -345,7 +345,21 @@ var Information_Form = [
          "InternalName":"EscalationNeeded",
          "DisplayName":"بحاجة للتصعيد ؟",
          "DisplayNameEn":"Escalation Needed ?",
-         "type":"string"
+        //  "type":"string"
+        "type": "yesnoradio",
+        "options": {
+          "choices": [
+            {
+              "display": "yes",
+              "value": "yes",
+            },
+
+            {
+              "display": "no",
+              "value": "no",
+            },
+          ],
+        },
       },
       {
          "InternalName":"Comments",
@@ -355,7 +369,7 @@ var Information_Form = [
          "maxchar":"500"
       },
       {
-         "InternalName": "Attachments",
+         "InternalName": "getfile",
          "DisplayName": "مرفقات",
          "DisplayNameEn": "Attachments",
          "type": "file",
@@ -364,14 +378,14 @@ var Information_Form = [
     ],
   },
 //   {
-//     label: 'المرفقات',
-//     labelEn: 'Attachments',
+//     label: 'الوثائق الداعمة',
+//     labelEn: 'Supporting Documents',
 //     description: '',
 //     descriptionEn: '',
 //     subFields: [
 //       {
 //         //   InternalName: 'getfile',
-//         InternalName: 'Attachments',
+//         InternalName: 'getfile',
 //         DisplayName: 'المرفقات',
 //         DisplayNameEn: 'Attachments',
 //         type: 'file',

@@ -31,7 +31,6 @@ var Information_Form = [
                 "DisplayNameEn": "Planned Completed Date",
                 "DisplayName": "تاريخ الاكتمال المخطط",
                 "type": "datetime",
-                "type": "string",
                 "validation": "required",
                 security: {
                     groups: ['VRO_E','LMS_E','System Admin Group',
@@ -101,14 +100,14 @@ var Information_Form = [
     },
     {
         label: 'الوثائق الداعمة',
-        labelEn: 'Documents',
+        labelEn: 'Supporting Documents',
         description: "",
         descriptionEn: "",
         subFields: [
             {
                 // "InternalName": "getfile",
-                "InternalName": "Attachments",
-                "DisplayName": "المستندات",
+                "InternalName": "getfile",
+                "DisplayName": "المرفقات",
                 "DisplayNameEn": "Attachments",
                 "type": "file",
                 "withAddBtn": "true"

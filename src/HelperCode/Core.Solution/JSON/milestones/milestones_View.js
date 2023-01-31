@@ -53,7 +53,7 @@ var Information_Form = [
           choices: [
             { display: 'onschedule', value: 'onschedule' },
             { display: 'completed', value: 'completed' },
-            // { display: 'late', value: 'late' },
+            { display: 'late', value: 'late' },
           ],
         },
       },
@@ -83,7 +83,7 @@ var Information_Form = [
   },
   {
     label: 'وثائق داعمة',
-    labelEn: 'Attachments',
+    labelEn: 'Supporting Documents',
     description: 'التفاصيل',
     descriptionEn: 'Details',
     subFields: [

@@ -140,7 +140,7 @@ var Information_Form = [
         InternalName: 'RelatedObjective',
         DisplayNameEn: 'Related Objective',
         DisplayName: 'الهدف المرتبط',
-        type: 'lookupmultiselect',
+        type: 'lookup',
         grpfieldkey: 'Title',
         source: 'SOs',
         Dispfieldkey: 'Name',
@@ -340,7 +340,7 @@ var Information_Form = [
         // "ToggleName": "RelatedBudgetItem", //ToggleName to select which field
         DisplayNameEn: 'Related Budget Item',
         DisplayName: 'البند المالي المرتبط',
-        type: 'lookupmultiselect',
+        type: 'lookup',
         //from other list:
         source: 'Budget Items',
         Dispfieldkey: 'Name',

@@ -10,7 +10,7 @@ var Information_Form  = [
       "DisplayNameEn": "Title",
       "DisplayName": "رمز مؤشر المبادرة",
       "type": "string",
-      "validation": "required"
+      // "validation": "required"
 },
 
 {
@@ -21,7 +21,7 @@ var Information_Form  = [
     "source": "Initiatives",
     "Dispfieldkey": "Name",
     "valfieldkey": "Title",
-    "validation": "required"
+    // "validation": "required"
 },
 {
       "InternalName": "Name",
@@ -29,7 +29,7 @@ var Information_Form  = [
       "DisplayName": "المؤشر",
       "type": "string",
       "maxchar": "250",
-      "validation": "required"
+      // "validation": "required"
 
 },
 {

@@ -14,7 +14,7 @@ var Information_Form  = [
       "source": "InitiativeKPI",
       "Dispfieldkey": "Name",
       "valfieldkey": "Title",
-      "validation": "required"
+      // "validation": "required"
     },
     {
       "InternalName": "RelatedInstrument",
