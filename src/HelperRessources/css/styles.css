@@ -6116,3 +6116,50 @@ li.ms-core-menu-footer {
 .paddingEnd16px {
     padding-inline-end: 1.25rem;
 }
+/* oday style */
+
+
+.overflow_textrole {
+    max-width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+
+.overflow_text {
+    max-width: 22vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tooltiptextkpi {
+    visibility: hidden;
+    position: absolute;
+    text-align: center !important;
+    z-index: 1;
+    font-size: 12px;
+    white-space: initial;
+    background: #14415a;
+    color: #fff;
+    border-radius: 6px;
+    padding: 3px 1px;
+    margin-top: 3px
+}
+
+.overflow_text:hover .tooltiptextkpi {
+    visibility: visible;
+}
+
+.tooltiptextkpi:after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -10px;
+    border-width: 7px;
+    border-style: solid;
+    border-color: transparent transparent #14415a transparent;
+}
