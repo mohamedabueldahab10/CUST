@@ -719,7 +719,10 @@ export default class InitiativeHomeWebPart extends BaseClientSideWebPart<IInitia
                                     <div class="row">
                                         <div class="col-auto h-100">
                                             <div class="d-flex flex-row align-items-center mb-4">
+                                                <span class="initiativetypetooltip">
                                                 <img src="${statustime}" class="">
+                                                <p data-trans-projectprioritytooltip class="Resources tooltipbox"></p>
+                                                </span>
                                                 <h3 data-trans-intype class="mx-2 m-0 text-nowrap Resources"></h3>
                                             </div>
                                             <span class="badge bg-primary white p-3 font-13 bold">
@@ -728,7 +731,10 @@ export default class InitiativeHomeWebPart extends BaseClientSideWebPart<IInitia
                                         </div>
                                         <div class="col h-100">
                                             <div class="d-flex flex-row align-items-center mb-4">
-                                                <img src="${important}" class="">
+                                            <span class="priorityIconTooltip">
+                                            <img src="${statustime}" class="">
+                                            <p data-trans-initiativestatustooltip class="Resources tooltipbox"></p>
+                                            </span>
                                                 <h3 data-trans-instatus class="mx-2 m-0 text-nowrap Resources"></h3>
                                             </div>
                                             <span id="PjPriority"

@@ -6269,20 +6269,24 @@ li.ms-core-menu-footer {
     text-align: center !important;
     border-radius: 6px !important;
     z-index: 30000 !important;
-    width: 320px !important
+    width: 230px !important
 }
 
 .priorityIconTooltip:hover .tooltipbox:after {
     content: "";
     position: absolute;
     bottom: 100%;
-    left: 50%;
     margin-left: -10px;
     border-width: 7px;
     border-style: solid;
     border-color: transparent transparent #148282 transparent;
 }
-
+.ar .priorityIconTooltip:hover .tooltipbox:after{
+right: 3%;
+}
+.en .priorityIconTooltip:hover .tooltipbox:after{
+    left:3%;
+}
 
 /* important links */
 .important-links-ctx {
