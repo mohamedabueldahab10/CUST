@@ -176,11 +176,11 @@ var Information_Form = [
   },
   {
     label: 'المخرجات المرتبطة بالمنفعة',
-    labelEn: 'Initiative Deliverables',
+    labelEn: 'Deliverables',
     description: 'التفاصيل',
     descriptionEn: 'Details',
     sectiontype: 'master',
-    targetlist: 'InitiativeDeliverables',
+    targetlist: 'Deliverables',
     subFields: [
       {
         InternalName: 'Name',
@@ -195,7 +195,8 @@ var Information_Form = [
         InternalName: 'DeliverableSuccessKPI',
         DisplayNameEn: 'Deliverable Success KPI',
         DisplayName: 'المقياس',
-        type: 'multiline',
+        type: 'multiline',         
+        "state": "disabled",
       },
     ],
   },

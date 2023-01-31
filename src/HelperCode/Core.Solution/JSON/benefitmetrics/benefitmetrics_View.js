@@ -23,7 +23,7 @@ var Information_Form = [
       {// hol dynamic 3ala l lookup 
         "InternalName": "RelatedBenefit",
         "DisplayNameEn": "RelatedBenefit",
-        "DisplayName": "المنفعةالمرتبطة",
+        "DisplayName": "المنفعة المرتبطة",
         "type": "lookup",
         "source": "Benefits",
         "Dispfieldkey": "Name",
@@ -184,6 +184,15 @@ var Information_Form = [
         validation: 'required',
       },
       {
+        InternalName: 'DataSource',
+        DisplayNameEn: 'Data Source',
+        DisplayName: 'مصدر البيانات',
+        type: 'string',
+        maxchar: '500',
+        // "state": "disabled",
+        // dynamic: "Initiative"
+      },
+      {
         InternalName: 'PerformanceLeader',
         DisplayNameEn: 'Performance Leader',
         DisplayName: 'رائد الأداء',
@@ -198,6 +207,7 @@ var Information_Form = [
       {
           InternalName: 'ActualValue',
           DisplayName:'القيمة الفعلية',
+          DisplayNameEn: 'ActualValue',
           type:'float'
          
       }
