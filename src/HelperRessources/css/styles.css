@@ -48,6 +48,7 @@
     font-weight: normal;
     font-style: normal;
 }
+
 @font-face {
     font-family: 'HRSD-FONT';
     src: url('../fonts/HRSD-FONTS/HRSD-Medium.ttf');
@@ -106,7 +107,7 @@ body.ar,
 .ar button {
     /* font-size: .875rem; */
     /* font-family: 'LTBukra', Fallback, sans-serif !important; */
-    font-family: 'HRSD-FONT'!important;
+    font-family: 'HRSD-FONT' !important;
 }
 
 body.en,
@@ -127,7 +128,7 @@ body.en,
 .en button {
     /* font-size: .875rem; */
     /* font-family: 'Effra', Fallback, sans-serif !important; */
-    font-family: 'HRSD-FONT'!important;
+    font-family: 'HRSD-FONT' !important;
 
 }
 
@@ -281,7 +282,7 @@ body.nav-open {
 }
 
 
-.bg-advanced{
+.bg-advanced {
     background: rgb(2, 133, 46);
     background: -moz-linear-gradient(90deg, rgba(2, 133, 46, 1) 47%, rgba(2, 133, 46, 1) 86%) !important;
     background: -webkit-linear-gradient(90deg, rgba(2, 133, 46, 1) 47%, rgba(2, 133, 46, 1) 86%) !important;
@@ -305,15 +306,15 @@ body.nav-open {
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="gray", endColorstr="#D1D1CB", GradientType=1);
 }
 
-.bg-canceled{
-    background: rgb(153,50,204);
-    background: -moz-linear-gradient(90deg, rgba(153,50,204, 1) 47%, rgba(153,50,204, 1) 86%) !important;
-    background: -webkit-linear-gradient(90deg, rgba(153,50,204, 1) 47%, rgba(153,50,204, 1) 86%) !important;
-    background: linear-gradient(90deg, rgba(153,50,204, 1) 47%, rgba(153,50,204, 1) 86%) !important;
+.bg-canceled {
+    background: rgb(153, 50, 204);
+    background: -moz-linear-gradient(90deg, rgba(153, 50, 204, 1) 47%, rgba(153, 50, 204, 1) 86%) !important;
+    background: -webkit-linear-gradient(90deg, rgba(153, 50, 204, 1) 47%, rgba(153, 50, 204, 1) 86%) !important;
+    background: linear-gradient(90deg, rgba(153, 50, 204, 1) 47%, rgba(153, 50, 204, 1) 86%) !important;
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#9932CC", endColorstr="#663399", GradientType=1);
 }
 
-.bg-completed{
+.bg-completed {
     background: rgb(0, 0, 255);
     background: -moz-linear-gradient(90deg, rgba(0, 0, 255, 1) 47%, rgba(0, 0, 255, 1) 86%) !important;
     background: -webkit-linear-gradient(90deg, rgba(0, 0, 255, 1) 47%, rgba(0, 0, 255, 1) 86%) !important;
@@ -2227,23 +2228,25 @@ ul[disabled],
     border-bottom-color: rgba(147, 139, 136, 255);
     border-right-color: rgba(147, 139, 136, 255);
 }
-.kpistatus.stat1{
+
+.kpistatus.stat1 {
     color: rgba(245, 27, 7, 255);
 }
-.kpistatus.stat2{
-    color:rgba(255, 255, 0, 255);
+
+.kpistatus.stat2 {
+    color: rgba(255, 255, 0, 255);
 }
 
-.kpistatus.stat3{
+.kpistatus.stat3 {
     color: rgb(90, 183, 76);
 }
 
-.kpistatus.stat6{
-    color:rgba(126, 126, 126);
+.kpistatus.stat6 {
+    color: rgba(126, 126, 126);
 }
 
-.kpistatus.stat8{
-    color:  rgba(147, 139, 136, 255);
+.kpistatus.stat8 {
+    color: rgba(147, 139, 136, 255);
 }
 
 
@@ -6202,6 +6205,7 @@ li.ms-core-menu-footer {
 .paddingEnd16px {
     padding-inline-end: 1.25rem;
 }
+
 /* oday style */
 
 
@@ -6248,4 +6252,34 @@ li.ms-core-menu-footer {
     border-width: 7px;
     border-style: solid;
     border-color: transparent transparent #14415a transparent;
+}
+
+.priorityIconTooltip {
+    position: relative;
+}
+
+.priorityIconTooltip .tooltipbox {
+    display: none;
+}
+
+.priorityIconTooltip:hover .tooltipbox {
+    display: block !important;
+    position: absolute;
+    top: 100%;
+    background: #148282;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    z-index: 30000;
+    width: 320px
+}
+.priorityIconTooltip:hover .tooltipbox:after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -10px;
+    border-width: 7px;
+    border-style: solid;
+    border-color: transparent transparent #148282 transparent;
 }
