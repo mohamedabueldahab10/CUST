@@ -243,6 +243,7 @@ export default class ListingWebPart extends BaseClientSideWebPart<IListingWebPar
                                         </div>
                                     </div>
                                 </div>
+                                <div class="additionalInfo"></div>
                                 <div class="ctx-block Listing-wrapper">
                                     <ul class="list-group w-100">
 

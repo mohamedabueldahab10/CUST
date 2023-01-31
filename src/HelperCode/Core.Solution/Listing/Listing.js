@@ -461,18 +461,21 @@ window.ListingData = {
           var InternalProjectsHtml = '';
           var ExternalProjectsHtml = '';
           for (var i = 0; i < records.length; i++) { //looping items
+            var index =i +1;
+            debugger
+            // ghufranChange
             //  console.log(records[i], 'records')
             if (listkey == 'projects') {
               if (records[i].ProjectType == 'Internal') {
                 InternalProjectsHtml += '<li class="list-group-item link-arrow">' +
-                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">';
+                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' +'<span class="acc-title d-inline-flex black paddingEnd16px">'+index+'</span>';
               } else if (records[i].ProjectType == 'External') {
                 ExternalProjectsHtml += '<li class="list-group-item link-arrow">' +
-                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">';
+                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">'  +'<span class="acc-title d-inline-flex black paddingEnd16px">'+index+'</span>';
               }
             } else if (listkey == 'initiatives') {
               html += '<li class="list-group-item link-arrow">' +
-                '<a  style="cursor: pointer;" id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/initiativeHome.aspx?ICODE=" + records[i].Title + '">';
+                '<a  style="cursor: pointer;" id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/initiativeHome.aspx?ICODE=" + records[i].Title + '">' +'<span class="acc-title d-inline-flex black paddingEnd16px">'+index+'</span>';
             } else if (isTasks) {
               html += '<li class="list-group-item tasksPage ">' + //link-arrow
                 '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="javascript:" onclick="ListingData.g.handleids(\'' + RecordsWithID[i].pcode + '\',\'' + RecordsWithID[i].icode + '\',\'' + RecordsWithID[i].ID + '\',\'' + RecordsWithID[i].tasktype + '\',\'' + RecordsWithID[i].stageid + '\',\'' + RecordsWithID[i].ritemid + '\',\'' + RecordsWithID[i].sourceitemid + '\',\'' + RecordsWithID[i].wfname + '\',\'' + RecordsWithID[i].puid + '\',\'' + RecordsWithID[i].relatedurl + '\')">';
@@ -495,21 +498,27 @@ window.ListingData = {
             } else if (listkey == 'deliverables' & !PCODE) {
               PCODE_STRING = '&PCODE=' + RecordsWithPCode[i].PrCODE;
               html += '<li class="list-group-item link-arrow">' +
-                '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + PCODE_STRING + "&IID=" + RecordsWithID[i].ID + isWFs + '">';
+                '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + PCODE_STRING + "&IID=" + RecordsWithID[i].ID + isWFs + '">'  +'<span class="acc-title d-inline-flex black paddingEnd16px">'+index+'</span>'
             } else if (!PCODE && !ICODE) {
               html += '<li class="list-group-item link-arrow">' +
-                '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + PCODE_STRING + "&IID=" + RecordsWithID[i].ID + isWFs + '">';
+                '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + PCODE_STRING + "&IID=" + RecordsWithID[i].ID + isWFs + '">'  +'<span class="acc-title d-inline-flex black paddingEnd16px">'+index+'</span>'
             } else if (ICODE) {
               html += '<li class="list-group-item link-arrow">' +
-                '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&ICODE=" + ICODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">';
-            } else if (USERlistkey == 'closureform' && PCODE) {
+                '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&ICODE=" + ICODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">'  +'<span class="acc-title d-inline-flex black paddingEnd16px">'+index+'</span>'
+            }
+            else if (ICODE && listkey=='initiativemilestones') {
+              html += '<li class="list-group-item link-arrow">' +
+                '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&ICODE=" + ICODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">'  +'<span class="acc-title d-inline-flex black paddingEnd16px">'+index+'</span>'
+            }
+            
+            else if (USERlistkey == 'closureform' && PCODE) {
 
               html += '<li class="list-group-item link-arrow">' +
-                '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&PCODE=" + PCODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">';
+                '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&PCODE=" + PCODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">'  +'<span class="acc-title d-inline-flex black paddingEnd16px">'+index+'</span>'
 
             } else {
               html += '<li class="list-group-item link-arrow">' +
-                '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&PCODE=" + records[i].ProjectCode + "&IID=" + RecordsWithID[i].ID + isWFs + '">';
+                '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&PCODE=" + PCODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">'  +'<span class="acc-title d-inline-flex black paddingEnd16px">'+index+'</span>'
             }
 
             var obj = records[i];
@@ -862,7 +871,62 @@ window.ListingData = {
           }
 
           // add illustration when there is no item on list
-
+          if (listkey == "initiativemilestones") {
+            var AllinitiativeMilestonesCounterContainer = "";
+            var countcompleted = 0,
+              notcompletedcount = 0,
+              countOfnostarted = 0,
+              latecount = 0;
+            var today = new Date();
+            records.forEach((item) => {
+              if (item.Completed == "yes") {
+                countcompleted += 1;
+              } else {
+                notcompletedcount += 1;
+              }
+              console.log("today", today, "actualdate", item.ActualCompletedDate);
+              var formatedactualdatemilestone = item.ActualCompletedDate.split("T").at(0);
+              var day2 = formatedactualdatemilestone.split("/").at(0);
+              var month2 = formatedactualdatemilestone.split("/").at(1);
+              var year2 = formatedactualdatemilestone.split("/").at(2);
+              var finalformatedactualdate = new Date(year2 + "-" + month2 + "-" + day2);
+              console.log(finalformatedactualdate, "finalformatedPlanneddate");
+          
+              if (today < finalformatedactualdate && item.Completed !== "yes") {
+                countOfnostarted += 1;
+                console.log("there is a nostarted project!", countOfnostarted);
+              }
+              console.log("today", today, "planneddate", item.PlannedCompletedDate);
+              var formatedplaneddatemilestone =
+                item.PlannedCompletedDate.split("T").at(0);
+              var day = formatedplaneddatemilestone.split("/").at(0);
+              var month = formatedplaneddatemilestone.split("/").at(1);
+              var year = formatedplaneddatemilestone.split("/").at(2);
+              var finalformatedPlanneddate = new Date(year + "-" + month + "-" + day);
+              console.log(finalformatedPlanneddate, "finalformatedPlanneddate");
+          
+              if (today > finalformatedPlanneddate && item.Completed !== "yes") {
+                latecount += 1;
+                console.log("there is a late project!", latecount);
+              }
+            });
+            AllinitiativeMilestonesCounterContainer +=
+              '<div class="allMilestonesCounter"><div><span data-trans-allmilestonescount class="Resources"></span>' +
+              records.length +
+              '</div><div><span data-trans-completedmilestonescount class="Resources"></span>' +
+              countcompleted +
+              '</div><div><span data-trans-notcompletedmilestonescount class="Resources"></span>' +
+              notcompletedcount +
+              '</div><div><span data-trans-notstartedmilestonescount class="Resources"></span>' +
+              countOfnostarted +
+              '</div><div><span data-trans-latemilestonescount class="Resources"></span>' +
+              latecount +
+              "</div></div>";
+            // $(AllinitiativeMilestonesCounterContainer).insertAfter(
+            //   $(".content-list-head")
+            // );
+            $('.additionalInfo').html(AllinitiativeMilestonesCounterContainer);
+          }
           if (records.length == 0 && !originalstate) {
             if (listkey == 'projects' || isTasks) {
               $('ul.list-group.w-100 .tab-content').html(`<div style="text-align:center;background:#fff"><img css="w-100" src="${emptyData}" style="height:40vh;width:40vh;"/><p data-trans-nofilterdata class="Resources" style="text-align:center;font-size:13px;padding-bottom:13px"></p></div>`)
@@ -1365,7 +1429,8 @@ window.ListingData = {
           localStorageVar = [];
           TypsFields = [];
           // to add the new data when click show more to the filters dropdown in listing
-          console.log('recordsddl', recordsddl);
+          console.log('recordsddl', recordsddl,
+          'total items', recordsddl.length);
           console.log('allDataFilterArr', allDataFilterArr)
           if (originalstate) { // add isTasks to not add to filter when change tabs
             allDataFilterArr = recordsddl

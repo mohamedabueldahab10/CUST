@@ -170,8 +170,9 @@
         "submit": "موافق",
 
         //lesson learned source
-        "sector": "قطاع",
+        "sector": "القطاع",
         "department": "الإدارات",
+        "subsector":"الوكالة",
         "budgetitem": "البند المرتبط",
         "pmo": "مكتب تحكم إدارة المشاريع",
         "epmo":"مكتب إدارة مشروع المؤسسة",
@@ -780,6 +781,13 @@
         "brochureapproved":"تم اعتماد الكراسة",
         "linkinginprogress":"جارى الارتباط",
         "linked":"تم الارتباط",
+        "cocuploaded":"تم الرفع شهادة الانجاز",
+        "exchanginginprogress":"جارى الصرف",
+        "allmilestonescount":"إجمالي عدد المعالم:",
+        "completedmilestonescount":"عدد المعالم المكتملة:",
+        "notcompletedmilestonescount":"عدد المعالم الغير مكتملة:",
+        "notstartedmilestonescount":"عدد المعالم التي لم تبدأ:",
+        "latemilestonescount":"عدد المعالم المتأخرة:",
 
     },
     "en": {
@@ -989,6 +997,7 @@
 
         //lesson learned source
         "department": "Departments",
+        "subsector":"Subsector",
         "budgetitem": "Budget Item",
         "sector": "Sector",
         "pmo": "PMO",
@@ -1577,6 +1586,14 @@
         "brochureapproved":"The brochure has been approved",
         "linkinginprogress":"Linking in progress",
         "linked":"Linked",
+        "cocuploaded":"COC Uploaded",
+        "exchanginginprogress":"Exchanging In Progress",
+        "allmilestonescount":"All Milestones Count:",
+        "completedmilestonescount":"Completed Milestones Count:",
+        "notcompletedmilestonescount":"Not Completed Milestones Count:",
+        "notstartedmilestonescount":"Not Started Milestones Count:",
+        "latemilestonescount":"Late Milestones Count:",
+ 
         
 
     }

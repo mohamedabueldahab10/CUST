@@ -48,6 +48,12 @@
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family: 'HRSD-FONT';
+    src: url('../fonts/HRSD-FONTS/HRSD-Medium.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
 
 
 /*Aicha begin style */
@@ -99,7 +105,8 @@ body.ar,
 .ar input[type=submit],
 .ar button {
     /* font-size: .875rem; */
-    font-family: 'LTBukra', Fallback, sans-serif !important;
+    /* font-family: 'LTBukra', Fallback, sans-serif !important; */
+    font-family: 'HRSD-FONT'!important;
 }
 
 body.en,
@@ -119,7 +126,9 @@ body.en,
 .en input[type=submit],
 .en button {
     /* font-size: .875rem; */
-    font-family: 'Effra', Fallback, sans-serif !important;
+    /* font-family: 'Effra', Fallback, sans-serif !important; */
+    font-family: 'HRSD-FONT'!important;
+
 }
 
 div#navbarsParent,
@@ -2951,7 +2960,12 @@ body {
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     /* font-family: "proxima-nova-soft", sans-serif; */
-    -webkit-user-select: none;
+    /* -webkit-user-select: none; */
+    -webkit-user-select: auto;
+    -webkit-touch-callout: auto;
+    -moz-user-select: auto;
+    -ms-user-select: auto;
+    user-select: auto;
     overflow: hidden;
 }
 
@@ -3825,11 +3839,15 @@ h3.Resources.acc-header.mb-0.py-3.px-2 {
 }
 
 .ar .taskButton a {
-    font-family: 'LTBukra', Fallback, sans-serif;
+    /* font-family: 'LTBukra', Fallback, sans-serif; */
+    font-family: 'HRSD-FONT';
+
 }
 
 .en .taskButton a {
-    font-family: 'Effra', Fallback, sans-serif;
+    /* font-family: 'Effra', Fallback, sans-serif; */
+    font-family: 'HRSD-FONT';
+
 }
 
 .tasksButtons {
@@ -4043,11 +4061,15 @@ a.taskButton:link {
 }
 
 .ar a.taskButton:link {
-    font-family: 'LTBukra', Fallback, sans-serif;
+    /* font-family: 'LTBukra', Fallback, sans-serif; */
+    font-family: 'HRSD-FONT';
+
 }
 
 .en a.taskButton:link {
-    font-family: 'Effra', Fallback, sans-serif;
+    /* font-family: 'Effra', Fallback, sans-serif; */
+    font-family: 'HRSD-FONT';
+
 }
 
 a.taskButton:visited {
@@ -4447,11 +4469,15 @@ ul.list-group.w-100.noItemsDiv {
 }
 
 .ar .tasksButtons {
-    font-family: 'LTBukra', Fallback, sans-serif;
+    /* font-family: 'LTBukra', Fallback, sans-serif; */
+    font-family: 'HRSD-FONT';
+
 }
 
 .en .tasksButtons {
-    font-family: 'Effra', Fallback, sans-serif;
+    /* font-family: 'Effra', Fallback, sans-serif; */
+    font-family: 'HRSD-FONT';
+
 }
 
 .modal-body.scrollBarStyle::-webkit-scrollbar {
@@ -5041,8 +5067,7 @@ button.btn.btn-action.btn-save.Resources.disablebtns:before {
 }
 
 .ar #projectType .nav-item .nav-link #internalProjectCount,
-.ar #projectType .nav-item .nav-link #externalProjectCount
-.ar #projectType .nav-item .nav-link #LMSProjectCount {
+.ar #projectType .nav-item .nav-link #externalProjectCount .ar #projectType .nav-item .nav-link #LMSProjectCount {
     border: 1px solid #148287;
     width: 30px;
     height: 20px;
@@ -5624,11 +5649,15 @@ a.btn-addTarget {
 }
 
 .ar a.btn-addTarget {
-    font-family: 'LTBukra', Fallback, sans-serif;
+    /* font-family: 'LTBukra', Fallback, sans-serif; */
+    font-family: 'HRSD-FONT';
+
 }
 
 .en a.btn-addTarget {
-    font-family: 'Effra', Fallback, sans-serif;
+    /* font-family: 'Effra', Fallback, sans-serif; */
+    font-family: 'HRSD-FONT';
+
 }
 
 .targetTable {
@@ -6082,4 +6111,8 @@ li.ms-core-menu-footer {
 
 .chartHeight {
     max-height: 600px;
+}
+
+.paddingEnd16px {
+    padding-inline-end: 1.25rem;
 }

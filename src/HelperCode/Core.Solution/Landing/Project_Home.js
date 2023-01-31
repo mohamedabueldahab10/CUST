@@ -14,7 +14,7 @@ var ActualBudget = 0,
   ScheduleBLPercentageCompleteList,
   projectTypes, numberofyesExp,
   //project vars
-  projectname, abrprojectname, phasename, stagename, projectcode, projectimportance, Pstartdate, Pfinishdate, standardisedPstartdate, PlannedStartDate, PlannedFinishDate, standardisedPfinishdate, ProgressLastModifiedDate, projectlength, projectsector, projectstatus, ProjectSponsor, ProjectOwner, ProjectManager, PMORepresentative, Deliverablesarray = [],
+  projectname, abrprojectname, phasename, stagename, projectcode, projectimportance, Pstartdate, Pfinishdate, standardisedPstartdate, PlannedStartDate, PlannedFinishDate, standardisedPfinishdate, ProgressLastModifiedDate, projectlength, projectsector,projectSubsector, projectstatus, ProjectSponsor, ProjectOwner, ProjectManager, PMORepresentative, Deliverablesarray = [],
   deliveredDeliverablesArrayPercent = [],
   expiredDeliverablesArrayPercent = [],
   ExpDeliverablesarray = [],
@@ -122,6 +122,7 @@ var Project_Home_Info_Request = {
         // console.log(projectname);
 
         projectsector = oListItem.get_item('Sector') || No_Data;
+        projectSubsector= oListItem.get_item('SubSector') || No_Data;
       projectTypes = oListItem.get_item('ProjectType') || No_Data;
 
       var projectsectorarr = [];
@@ -134,6 +135,17 @@ var Project_Home_Info_Request = {
         if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
           projectsector = projectsectorarr[0].name;
         } else projectsector = projectsectorarr[0].nameEn;
+      }
+      var projectSubsectorarr = [];
+
+      if (localStorage.getItem('Dynamo_Internal Entities') != null) {
+        projectSubsectorarr = JSON.parse(localStorage.getItem('Dynamo_Internal Entities'));
+        projectSubsectorarr = projectSubsectorarr.filter(function (a) {
+          return a.code === projectSubsector
+        });
+        if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+          projectSubsector = projectSubsectorarr[0].name;
+        } else projectSubsector = projectSubsectorarr[0].nameEn;
       }
       stagename = oListItem.get_item('Stage') || No_Data;
 
@@ -267,20 +279,24 @@ var Project_Home_Info_Request = {
         '</span>' +
         '<div class="d-inline-flex flex-column mx-3">' +
         '<h3 class="acc-title d-inline-flex black">' + projectname + '</h3>' +
-        '<span class="des-13 project-date">' +
-        '<span class="start-date"><span data-trans-basestart class="Resources"></span><span class="px-2">' + baselineStartDate + '</span></span>' +
-        '<span class="end-date"><span data-trans-basefinish class="Resources"></span><span class="px-2">' + baselineFinishDate + '</span></span>' +
-        '</span>' +
-        '</div>' +
-        '</div>' +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        '<h3 data-trans-pattr3 class="Resources black"></h3>' +
-        '<span class="des-13"><span class="state-val">' + projectsector + '</span></span>' +
-        '</div>' +
         '<div class="d-inline-flex flex-column mx-2">' +
         '<h3 data-trans-pattr4 class="Resources black"></h3>' +
         '<span class="des-13"><span class="complition-val">' + projectcode + '</span></span>' +
         '</div>' +
+        '</div>' +
+        '</div>' +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<h3 data-trans-sector class="Resources black"></h3>' +
+        '<span class="des-13"><span class="state-val">' + projectsector + '</span></span>' +
+        '</div>' +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<h3 data-trans-subsector class="Resources black"></h3>' +
+        '<span class="des-13"><span class="state-val">' + projectSubsector + '</span></span>' +
+        '</div>' +
+        '<span class="des-13 project-date">' +
+        '<span class="start-date"><span data-trans-basestart class="Resources"></span><span class="px-2">' + baselineStartDate + '</span></span>' +
+        '<span class="end-date"><span data-trans-basefinish class="Resources"></span><span class="px-2">' + baselineFinishDate + '</span></span>' +
+        '</span>' +
         '</div>' +
         '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
         '<div class="d-inline-flex flex-column mx-2 ' + phase + '">' +

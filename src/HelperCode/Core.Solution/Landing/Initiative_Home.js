@@ -43,6 +43,7 @@ var ActualBudget = 0,
 	ExpDeliverablesarray = [],
 	FutDeliverablesarray = [],
 	projectSector,
+	projectSubsector,
 	initiativeprogress,
 	ScheduleSource,
 	ProjectSPID,
@@ -172,6 +173,7 @@ var initiativeHomeInfo_Request = {
 			projectTypes = oListItem.get_item("Types") || No_Data;
 			stagename = oListItem.get_item("Stage") || No_Data;
 			projectSector = oListItem.get_item("Sector") || No_Data;
+			projectSubsector = oListItem.get_item("SubSector") || No_Data;
 			//Ghufran Calculated duration
 			initstartdate = oListItem.get_item("StartDate");
 			initfinishdate = oListItem.get_item("FinishDate");
@@ -312,6 +314,27 @@ var initiativeHomeInfo_Request = {
 						: No_Data;
 			}
 
+			var initiativeSubSectorarr = [];
+			if (localStorage.getItem("Dynamo_Internal Entities") != null) {
+				initiativeSubSectorarr = JSON.parse(
+					localStorage.getItem("Dynamo_Internal Entities")
+				);
+				initiativeSubSectorarr = initiativeSubSectorarr.filter(function (a) {
+					return a.code === projectSubsector;
+				});
+				if (
+					localStorage.getItem("lng") == null ||
+					localStorage.getItem("lng") == "ar"
+				) {
+					projectSubsector = initiativeSubSectorarr.length
+						? initiativeSubSectorarr[0].name
+						: No_Data;
+				} else
+				projectSubsector = initiativeSubSectorarr.length
+						? initiativeSubSectorarr[0].nameEn
+						: No_Data;
+			}
+
 			// for initiative stage bilangual
 			var initiativeStagearr = [];
 			if (localStorage.getItem("Dynamo_IStages") != null) {
@@ -371,88 +394,94 @@ var initiativeHomeInfo_Request = {
 					oListItem.get_item("InitiativeProgressStatus") || No_Data),
 				(listInitiativeProgress =
 					oListItem.get_item("InitiativeProgressStatus") || No_Data),
-				card1.push(
-					'<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
-						'<div class="d-inline-flex flex-row align-items-center">' +
-						'<span class="icon-user lg d-inline-flex align-items-center text-center handlecircle circlecolor' +
-						initiativeprogress +
-						'">' + // add circlecolor' + initiativeprogress + ' to change the color of circle as status color
-						// '<span class="user-name lg w-100">' + abrinitiativename + '</span>' +
-						"</span>" +
-						'<div class="d-inline-flex flex-column mx-3">' +
-						'<h3 class="acc-title d-inline-flex black">' +
-						initiativename +
-						"</h3>" +
-						'<span class="des-13 project-date">' +
-						'<span class="start-date"><span data-trans-pattr1 class="Resources"></span><span class="px-2">' +
-						Pstartdate +
-						"</span></span>" +
-						'<span class="end-date"><span data-trans-pattr2 class="Resources"></span><span class="px-2">' +
-						Pfinishdate +
-						"</span></span>" +
-						"</span>" +
-						"</div>" +
-						"</div>" +
-						'<div class="d-inline-flex flex-column mx-2">' +
-						'<h3 data-trans-relatedstratobj class="Resources black"></h3>' +
-						'<span class="des-13"><span class="state-val" id="relatedSos">' +
-						RelatedObjective +
-						"</span></span>" +
-						"</div>" +
-						'<div class="d-inline-flex flex-column mx-2">' +
-						'<h3 data-trans-inpattr4 class="Resources black"></h3>' +
-						'<span class="des-13"><span class="complition-val">' +
-						projectcode +
-						"</span></span>" +
-						"</div>" +
-						"</div>" +
+					card1.push(
 						'<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
-						'<div class="d-inline-flex flex-column mx-2">' +
-						'<span data-trans-inportfolio class="Resources des-13"></span>' + //resourcekey="pattr5"
-						'<h4 class="acc-title d-inline-flex black">' +
-						initiativeportfolio +
-						"</h4>" +
-						"</div>" +
-						'<div class="d-inline-flex flex-column mx-2">' +
-						'<span data-trans-instage class="Resources des-13"></span>' +
-						// '<h4 data-trans-' + initiativetype + ' class="Resources acc-title d-inline-flex black"></h4>' +
-						'<h4  class="Resources acc-title d-inline-flex black"> ' +
-						instage +
-						"</h4>" +
-						"</div>" +
-						// '<div class="d-inline-flex flex-column mx-2">' +
-						// '<span class="des-13"><span data-trans-inclassif class="Resources complition-val"></span> ' +
-						// '<h4 class="black actual-complete-val">' + initiativeclassification + '</h4></span>' +
-						// '</div>' +
-						'<div class="d-inline-flex flex-column mx-2">' +
-						'<span class="des-13"><span data-trans-sector class="Resources state-val"></span></span>' +
-						'<h4 class="black">' +
-						projectSector +
-						"</h4>" + //
-						"</div>" +
-						"</div>" +
-						'<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
-						//   '<div class="d-inline-flex flex-column mx-2">' +
-						//   '<span class="des-13"><span data-trans-pattr6 class="Resources state-val"></span></span>' +
-						//   '<h4 class="black">' + plannedPercentageFromList + '%' + '</h4>' +
-						//   '</div>' +
-
-						//   '<div class="d-inline-flex flex-column mx-2">' +
-						//   '<span class="des-13"><span data-trans-pattr7 class="Resources state-val"></span></span>' +
-						//   '<h4 class="black">' + actualPercentageFromList + '%' + '</h4>' + //
-						//   '</div>' +
-						'<div class="d-inline-flex flex-column mx-2 ' +
-						initiativeprogress +
-						'">' +
-						'<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val"></span></span>' +
-						"<h4 data-trans-" +
-						initiativeprogress +
-						' class="black Resources myCompletionStatus statuscolor' +
-						initiativeprogress +
-						'"></h4>' + //
-						"</div>" +
-						"</div>"
-				),
+						  '<div class="d-inline-flex flex-row align-items-center">' +
+						  '<span class="icon-user lg d-inline-flex align-items-center text-center handlecircle circlecolor' +
+						  initiativeprogress +
+						  '">' + // add circlecolor' + initiativeprogress + ' to change the color of circle as status color
+						  // '<span class="user-name lg w-100">' + abrinitiativename + '</span>' +
+						  "</span>" +
+						  '<div class="d-inline-flex flex-column mx-3">' +
+						  '<h3 class="acc-title d-inline-flex black">' +
+						  initiativename +
+						  "</h3>" +
+							 '<h3 data-trans-inpattr4 class="Resources black"></h3>' +
+						  '<span class="des-13"><span class="complition-val">' +
+						  projectcode +
+						  "</span></span>" +
+						  "</div>" +
+						  "</div>" +
+						  '<div class="d-inline-flex flex-column mx-2">' +
+						  '<h3 data-trans-relatedstratobj class="Resources black"></h3>' +
+						  '<span class="des-13"><span class="state-val" id="relatedSos">' +
+						  RelatedObjective +
+						  "</span></span>" +
+						  "</div>" +
+						  '<div class="d-inline-flex flex-column mx-2">' +
+						  '<span class="des-13 project-date">' +
+						  '<span class="start-date"><span data-trans-pattr1 class="Resources"></span><span class="px-2">' +
+						  Pstartdate +
+						  "</span></span>" +
+						  '<span class="end-date"><span data-trans-pattr2 class="Resources"></span><span class="px-2">' +
+						  Pfinishdate +
+						  "</span></span>" +
+						  "</span>" +
+						  "</div>" +
+						  "</div>" +
+						  '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
+						  '<div class="d-inline-flex flex-column mx-2">' +
+						  '<span data-trans-inportfolio class="Resources des-13"></span>' + //resourcekey="pattr5"
+						  '<h4 class="acc-title d-inline-flex black">' +
+						  initiativeportfolio +
+						  "</h4>" +
+						  "</div>" +
+						  '<div class="d-inline-flex flex-column mx-2">' +
+						  '<span data-trans-instage class="Resources des-13"></span>' +
+						  // '<h4 data-trans-' + initiativetype + ' class="Resources acc-title d-inline-flex black"></h4>' +
+						  '<h4  class="Resources acc-title d-inline-flex black"> ' +
+						  instage +
+						  "</h4>" +
+						  "</div>" +
+						  // '<div class="d-inline-flex flex-column mx-2">' +
+						  // '<span class="des-13"><span data-trans-inclassif class="Resources complition-val"></span> ' +
+						  // '<h4 class="black actual-complete-val">' + initiativeclassification + '</h4></span>' +
+						  // '</div>' +
+						  '<div class="d-inline-flex flex-column mx-2 ' +
+						  initiativeprogress +
+						  '">' +
+						  '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val"></span></span>' +
+						  "<h4 data-trans-" +
+						  initiativeprogress +
+						  ' class="black Resources myCompletionStatus statuscolor' +
+						  initiativeprogress +
+						  '"></h4>' + //
+						  "</div>" +
+						  "</div>" +
+						  '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
+						  //   '<div class="d-inline-flex flex-column mx-2">' +
+						  //   '<span class="des-13"><span data-trans-pattr6 class="Resources state-val"></span></span>' +
+						  //   '<h4 class="black">' + plannedPercentageFromList + '%' + '</h4>' +
+						  //   '</div>' +
+			  
+						  //   '<div class="d-inline-flex flex-column mx-2">' +
+						  //   '<span class="des-13"><span data-trans-pattr7 class="Resources state-val"></span></span>' +
+						  //   '<h4 class="black">' + actualPercentageFromList + '%' + '</h4>' + //
+						  //   '</div>' +
+						  '<div class="d-inline-flex flex-column mx-2">' +
+						  '<span class="des-13"><span data-trans-sector class="Resources state-val"></span></span>' +
+						  '<h4 class="black">' +
+						  projectSector +
+						  "</h4>" + //
+						  "</div>" +
+						  '<div class="d-inline-flex flex-column mx-2">' +
+						  '<span class="des-13"><span data-trans-subsector class="Resources state-val"></span></span>' +
+						  '<h4 class="black">' +
+						  projectSubsector +
+						  "</h4>" + //
+						  "</div>" +
+						  "</div>"
+					  ),
 				//project card 5
 				(projectimportance = oListItem.get_item("RelatedProgram") || "nodata");
 
