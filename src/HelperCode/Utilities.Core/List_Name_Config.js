@@ -639,6 +639,11 @@ var PageArray = [
 		Title: "لوحة الادارة",
 		TitleEn: "Admin Panel",
 	},
+	{
+		pagename: "KnowledgeBase.aspx",
+		Title: "أسس المعرفة",
+		TitleEn: "Knowledge Base",
+	},
 ];
 // research enumerator
 // research query url index

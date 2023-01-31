@@ -6,12 +6,12 @@ import { Environment, EnvironmentType } from "@microsoft/sp-core-library";
 // import "../../../../node_modules/spm-base/system.Resources/css/style-dashboards.css";
 // import "../../../../node_modules/spm-base/system.Resources/css/fontello.css";
 
-debugger
+
 require("../../../HelperRessources/css/Styles.css");
 require('../../../HelperRessources/css/style-dashboards.css');
 require('../../../HelperRessources/css/fontello.css');
 
-debugger
+
 
 if (Environment.type == EnvironmentType.ClassicSharePoint) {
 	//do some stuff on classic page
@@ -29,11 +29,15 @@ if (Environment.type == EnvironmentType.ClassicSharePoint) {
 	// require("../../../../node_modules/spm-base/system.Utilities/nav.Utilities/side.Navigation.js");
 	/////////////////////////////////////////////////////////////////////
 	require("Resources");
+	require('ListNameConfig');
+	require('UserAccess');
+
 	require('../../../HelperCode/Utilities.Core/Side_Navigation.js');
+	require('../../../HelperCode/Utilities.Core/Project_Navigation.js');
+
 
 } else if (Environment.type === EnvironmentType.SharePoint) {
 	//do some stuff on modern page
-	// require("../../../../node_modules/@fortawesome/fontawesome-free/css/all.css");
 	require("../../../HelperRessources/css/bootstrap.css");
 	require("jquery");
 	require("bootstrap");

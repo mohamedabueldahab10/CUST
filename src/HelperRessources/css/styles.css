@@ -6249,3 +6249,56 @@ li.ms-core-menu-footer {
     border-style: solid;
     border-color: transparent transparent #14415a transparent;
 }
+
+/* important links */
+.important-links-ctx {
+    position: sticky;
+    width: 100%;
+    bottom: 0;
+}
+
+#headingImportantLinks {
+    border-radius: 30px 30px 0px 0;
+    background-color: #81bb38;
+    color: #fff;
+    transition: background-color .3s ease;
+}
+
+#headingImportantLinks:hover {
+    background-color: #41BA83;
+}
+
+.important-links-ctx .important-links-btn {
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none !important;
+    background-color: transparent;
+    border: 0;
+}
+
+a.a-important-link {
+    display: block;
+}
+
+a.a-important-link>* {
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+a.a-important-link:hover>* {
+    color: #00c38e !important;
+}
+
+.ul-important-links {
+    list-style: none;
+}
+
+.li-important-links {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#accordionImportantLinks {
+    background-color: #005c4f;
+    /* padding-top: 13px; */
+}
