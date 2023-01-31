@@ -693,7 +693,10 @@ export default class ProjectHomeWebPart extends BaseClientSideWebPart<IProjectHo
                            
                                         <div class="col h-100">
                                             <div class="d-flex flex-row align-items-center mb-4">
+                                                <span class="priorityIconTooltip">
                                                 <img src="${important}" class="">
+                                                <span data-trans-projectprioritytooltip class="Resources tooltip"></span>
+                                                </span>
                                                 <h3 data-trans-PAttr34 class="mx-2 m-0 text-nowrap Resources"></h3>
                                             </div>
                                             <span id="PjPriority"
