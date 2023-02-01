@@ -316,16 +316,16 @@ var Project_Home_Info_Request = {
         '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
         '<h4 data-trans-pattr57 class="black Resources d-flex mx-2" style="display:none !important"></h4>' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        '<span class="des-13"><span data-trans-pattr56 class="Resources complition-val"></span> ' +
-        '<h4 class="black actual-complete-val">' + ScheduleProjectPercentageComplete + '%</h4></span>' +
+        '<span class="des-13"><h3 data-trans-pattr56 class="Resources complition-valacc-title d-inline-flex black"></h3>' +
+        '<span class="black actual-complete-val">' + ScheduleProjectPercentageComplete + '%</span></span>' +
         '</div>' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        '<span class="des-13"><span data-trans-pattr6 class="Resources state-val"></span></span>' +
-        '<h4 class="black"> ' + ScheduleBLPercentageCompleteList + '%</h4>' + //
+        '<span class="des-13"><h3 data-trans-pattr6 class="Resources state-valacc-title d-inline-flex black"></h3></span>' +
+        '<span class="black"> ' + ScheduleBLPercentageCompleteList + '%</span>' + //
         '</div>' +
         '<div class="d-inline-flex flex-column mx-2 ' + projectprogress + '">' +
-        '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val"></span></span>' +
-        '<h4 data-trans-' + projectprogress + ' class="black Resources myCompletionStatus statuscolor' + projectprogress + '"></h4>' + //
+        '<span class="des-13"><h3 data-trans-pattr8 class="Resources v-important-val acc-title d-inline-flex black"></h3></span>' +
+        '<span data-trans-' + projectprogress + ' class="black Resources myCompletionStatus statuscolor' + projectprogress + '"></span>' + //
         '</div>' +
         '</div>' +
         //

@@ -406,8 +406,8 @@ var initiativeHomeInfo_Request = {
 						  '<h3 class="acc-title d-inline-flex black">' +
 						  initiativename +
 						  "</h3>" +
-							 '<h3 data-trans-inpattr4 class="Resources black"></h3>' +
-						  '<span class="des-13"><span class="complition-val">' +
+							 '<h3 data-trans-inpattr4 class="Resources acc-title d-inline-flex black"></h3>' +
+						  '<span class="des-13"><span class="">' +
 						  projectcode +
 						  "</span></span>" +
 						  "</div>" +
@@ -420,10 +420,10 @@ var initiativeHomeInfo_Request = {
 						  "</div>" +
 						  '<div class="d-inline-flex flex-column mx-2">' +
 						  '<span class="des-13 project-date">' +
-						  '<span class="start-date"><span data-trans-pattr1 class="Resources"></span><span class="px-2">' +
+						  '<span class="start-date"><h3 data-trans-pattr1 class="Resources acc-title d-inline-flex black"></h3><span class="px-2">' +
 						  Pstartdate +
 						  "</span></span>" +
-						  '<span class="end-date"><span data-trans-pattr2 class="Resources"></span><span class="px-2">' +
+						  '<span class="end-date"><h3 data-trans-pattr2 class="Resources acc-title d-inline-flex black"></h3><span class="px-2">' +
 						  Pfinishdate +
 						  "</span></span>" +
 						  "</span>" +
@@ -431,17 +431,17 @@ var initiativeHomeInfo_Request = {
 						  "</div>" +
 						  '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
 						  '<div class="d-inline-flex flex-column mx-2">' +
-						  '<span data-trans-inportfolio class="Resources des-13"></span>' + //resourcekey="pattr5"
-						  '<h4 class="acc-title d-inline-flex black">' +
+						  '<h3 data-trans-inportfolio class="Resources acc-title d-inline-flex black"></h3>' + //resourcekey="pattr5"
+						  '<span class="acc-title d-inline-flex black">' +
 						  initiativeportfolio +
-						  "</h4>" +
+						  "</span>" +
 						  "</div>" +
 						  '<div class="d-inline-flex flex-column mx-2">' +
-						  '<span data-trans-instage class="Resources des-13"></span>' +
+						  '<h3 data-trans-instage class="Resources acc-title d-inline-flex black"></h3>' +
 						  // '<h4 data-trans-' + initiativetype + ' class="Resources acc-title d-inline-flex black"></h4>' +
-						  '<h4  class="Resources acc-title d-inline-flex black"> ' +
+						  '<span  class="Resources acc-title d-inline-flex black"> ' +
 						  instage +
-						  "</h4>" +
+						  "</span>" +
 						  "</div>" +
 						  // '<div class="d-inline-flex flex-column mx-2">' +
 						  // '<span class="des-13"><span data-trans-inclassif class="Resources complition-val"></span> ' +
@@ -450,7 +450,7 @@ var initiativeHomeInfo_Request = {
 						  '<div class="d-inline-flex flex-column mx-2 ' +
 						  initiativeprogress +
 						  '">' +
-						  '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val"></span></span>' +
+						  '<span class="des-13"><h3 data-trans-pattr8 class="Resources v-important-val acc-title d-inline-flex black"></h3></span>' +
 						  "<h4 data-trans-" +
 						  initiativeprogress +
 						  ' class="black Resources myCompletionStatus statuscolor' +
@@ -469,16 +469,16 @@ var initiativeHomeInfo_Request = {
 						  //   '<h4 class="black">' + actualPercentageFromList + '%' + '</h4>' + //
 						  //   '</div>' +
 						  '<div class="d-inline-flex flex-column mx-2">' +
-						  '<span class="des-13"><span data-trans-sector class="Resources state-val"></span></span>' +
-						  '<h4 class="black">' +
+						  '<span class="des-13"><h3 data-trans-sector class="Resources acc-title d-inline-flex black"></h3></span>' +
+						  '<span class="black">' +
 						  projectSector +
-						  "</h4>" + //
+						  "</span>" + //
 						  "</div>" +
 						  '<div class="d-inline-flex flex-column mx-2">' +
-						  '<span class="des-13"><span data-trans-subsector class="Resources state-val"></span></span>' +
-						  '<h4 class="black">' +
+						  '<span class="des-13"><h3 data-trans-subsector class="Resources acc-title d-inline-flex black"></h3></span>' +
+						  '<span class="black">' +
 						  projectSubsector +
-						  "</h4>" + //
+						  "</span>" + //
 						  "</div>" +
 						  "</div>"
 					  ),

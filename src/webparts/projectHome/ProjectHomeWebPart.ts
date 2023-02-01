@@ -721,7 +721,7 @@ export default class ProjectHomeWebPart extends BaseClientSideWebPart<IProjectHo
                                                 <h3 data-trans-PAttr34 class="mx-2 m-0 text-nowrap Resources"></h3>
                                             </div>
                                             <span id="PjPriority"
-                                                class="badge bg-success white py-3 px-4 font-13 bold">
+                                                class="badge bg-success white py-3 font-13 bold">
                                             </span>
                                         </div>
                                     </div>
