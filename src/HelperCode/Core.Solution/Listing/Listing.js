@@ -305,6 +305,12 @@ window.sphttp = {
                 onEach(records, record, oListItem, false); //false if having item
               }
             }
+            isLoadMore
+            ? RecordsWithID.map(function (a) {
+              // stack results
+              AllRecordsWithID.push(a);
+            })
+            : (AllRecordsWithID = RecordsWithID); //get only filtered results
 
           }
 
