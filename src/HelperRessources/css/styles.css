@@ -6371,7 +6371,8 @@ a.a-important-link:hover>* {
 .btn.btn-excel {
     background:unset!important;
     border:1px solid #148287;
-    padding:6px;
+    padding:5px;
     border-radius: 4px;
-    margin-inline-start:7px
+    margin-inline-start:7px;
+    font-size: 16px;
 }
