@@ -51,20 +51,34 @@ var Information_Form = [
       //   DisplayName: 'معادلة المقياس',
       //   type: 'string'
       // },
+      // {
+      //   InternalName: 'RelatedSubKpis',
+      //   DisplayNameEn: 'Related Sub Kpis',
+      //   DisplayName: 'الربط بالمؤشرات الفرعية',
+      //   type: 'lookupWithQuery',
+      //   queryField: 'Types',
+      //   queryFieldType: 'dropdownValues', //ex: "Choice"
+      //   queryFieldValue: 'sub',
+      //   source: 'MainKPI',
+      //   // "state": "disabled",
+      //   Dispfieldkey: 'Name',
+      //   valfieldkey: 'Title',
+      //   validation: 'required',
+      // },
       {
         InternalName: 'RelatedSubKpis',
         DisplayNameEn: 'Related Sub Kpis',
         DisplayName: 'الربط بالمؤشرات الفرعية',
-        type: 'lookupWithQuery',
-        queryField: 'Types',
-        queryFieldType: 'dropdownValues', //ex: "Choice"
-        queryFieldValue: 'sub',
+        type: 'lookupwithoutrepeat',
+        listname: 'Benefits',
+        targetelement: 'RelatedSubKpis',
         source: 'MainKPI',
-        // "state": "disabled",
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        validation: 'required',
-      },
+        queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
+        queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
+        queryFieldValue: 'sub', // if i need to make the field with filter should add this
+      }, //inview should be a lookup type
       // {
       //   InternalName: 'FromDate',
       //   DisplayName: 'من سنة',
@@ -202,8 +216,8 @@ var Information_Form = [
         InternalName: 'DeliverableSuccessKPI',
         DisplayNameEn: 'Deliverable Success KPI',
         DisplayName: 'المقياس',
-        type: 'multiline',         
-        "state": "disabled",
+        type: 'multiline',
+        state: 'disabled',
       },
     ],
   },
@@ -216,7 +230,7 @@ var Information_Form = [
       {
         InternalName: 'getfile',
         DisplayName: 'المرفقات',
-         DisplayNameEn: 'Attachments',
+        DisplayNameEn: 'Attachments',
         type: 'file',
         withAddBtn: 'true',
         // validation: 'required',

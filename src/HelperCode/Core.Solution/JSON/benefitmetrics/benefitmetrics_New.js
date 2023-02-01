@@ -39,11 +39,11 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         // dynamic:"mainfield",//controls others data
-        listname:'benefitmetrics',
+        listname:'BenefitMetrics',
         targetelement: '',
-        // queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
-        // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
-        // queryFieldValue: 'sub',// if i need to make the field with filter should add this
+        queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
+        queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
+        queryFieldValue: 'sub',// if i need to make the field with filter should add this
       },
       {
         InternalName: 'PeriodType',
