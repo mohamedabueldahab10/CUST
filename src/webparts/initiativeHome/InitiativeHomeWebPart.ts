@@ -725,7 +725,7 @@ export default class InitiativeHomeWebPart extends BaseClientSideWebPart<IInitia
                                                 </span>
                                                 <h3 data-trans-intype class="mx-2 m-0 text-nowrap Resources"></h3>
                                             </div>
-                                            <span class="badge bg-primary white p-3 font-13 bold">
+                                            <span class="badge bg-primary white  py-3 font-13 bold">
 
                                             </span>
                                         </div>
@@ -738,7 +738,7 @@ export default class InitiativeHomeWebPart extends BaseClientSideWebPart<IInitia
                                                 <h3 data-trans-instatus class="mx-2 m-0 text-nowrap Resources"></h3>
                                             </div>
                                             <span id="PjPriority"
-                                                class="badge bg-success white py-3 px-4 font-13 bold">
+                                                class="badge bg-success white py-3 font-13 bold">
                                             </span>
                                         </div>
                                     </div>
