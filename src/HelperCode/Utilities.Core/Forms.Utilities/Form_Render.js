@@ -3228,6 +3228,171 @@ window.ListInfo = {
         );
         break;
 
+      case "lookupwithoutrepeat":
+        var customQuery;
+        var sourcelistQuery;
+        var RelatedItemUsed = [];
+        console.log("in lookupwithoutrepeat")
+        debugger
+        customQuery =
+          "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+
+        sourcelistQuery =
+          "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+
+
+        if (element.queryField && element.queryField != "undefined" &&
+          element.queryFieldType && element.queryFieldType != "undefined" &&
+          element.queryFieldValue && element.queryFieldValue != "undefined") {
+
+          sourcelistQuery = '<View><Query><Where><Eq><FieldRef Name="' +
+            element.queryField +
+            '" /><Value Type="' +
+            element.queryFieldType +
+            '">' +
+            element.queryFieldValue +
+            "</Value></Eq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
+        }
+
+        var itemIDlist = [],
+          itemsID = [];
+        var listItemId = "";
+
+        sphttp.get(
+          _spPageContextInfo.siteServerRelativeUrl,
+          element.listname,
+          customQuery,
+          [element.valfieldkey, element.targetelement, element.Dispfieldkey],
+          function (records, record, listItem, isDone) {
+            if (listItem) itemIDlist.push(listItem.get_id());
+            if (isDone) {
+              records.forEach(function (el, index) {
+                if (el[element.targetelement]) {
+                  if (!RelatedItemUsed.includes(el[element.targetelement])) {
+                    if (itemIDlist[index] != IID) {
+                      RelatedItemUsed.push(el[element.targetelement]);
+                    }
+                  }
+                }
+              });
+
+              htmlBody =
+                '<div class="col-md-6 CFIELD ' +
+                dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+                " " +
+                element.className +
+                ' " ' +
+                thistip +
+                " " +
+                hidestagesIDs +
+                " " +
+                editableBy +
+                " " +
+                showstagesIDs +
+                "  " +
+                disablestagesIDs +
+                "  " +
+                enablestagesIDs +
+                "   " +
+                isWfhidestagesIDs +
+                " " +
+                requireOnWfTaskstagesIDs +
+                " " +
+                isWfshowstagesIDs +
+                "  " +
+                isWfdisablestagesIDs +
+                "  " +
+                isWfenablestagesIDs +
+                '        data-groups="' +
+                groups +
+                '" style="display:' +
+                element.display +
+                '">' +
+                '<label for="' +
+                element.InternalName +
+                '" ' +
+                element.validation +
+                ">" +
+                displayName +
+                "</label>" +
+                "<select " +
+                ToggleName +
+                " " +
+                RequiredName +
+                " " +
+                inputLisKey +
+                element.validation +
+                " " +
+                dynamic +
+                ' data-listname="' +
+                element.source +
+                '" data-valfieldkey="' +
+                element.valfieldkey +
+                '" data-Dispfieldkey="' +
+                dispfieldkey +
+                '" data-filterfield="' +
+                element.filterField +
+                '" data-queryfieldvalue="' +
+                element.queryFieldValue +
+                '"data-queryfield="' +
+                element.queryField +
+                '"data-queryfieldtype="' +
+                element.queryFieldType +
+                '" data-filterfieldtype="' +
+                element.filterFieldType +
+                '" class="form-control" type="dropdown" id="' +
+                element.InternalName +
+                '" value="" placeholder="' +
+                displayName +
+                '" ' +
+                element.state +
+                '><option value="" ' +
+                selected +
+                " disabled>" +
+                displayName +
+                "</option>";
+
+              sphttp.get(
+                _spPageContextInfo.siteServerRelativeUrl,
+                element.source,
+                sourcelistQuery,
+                [element.valfieldkey, element.Dispfieldkey],
+                function (records, record, listItem, isDone) {
+                  if (isDone) {
+                    records.forEach(function (el, index) {
+                      if (!RelatedItemUsed.includes(el[element.valfieldkey])) {
+                        htmlBody +=
+                          '<option option-id="' +
+                          itemsID[index] +
+                          '" value="' +
+                          el[element.valfieldkey] +
+                          '">' +
+                          el[dispfieldkey] +
+                          "</option>";
+                      }
+                    });
+
+                    htmlBody +=
+                      "</select>" +
+                      "<span data-trans-" +
+                      Errmsgkey +
+                      ' class="errMsgField Resources"></span>' +
+                      '<div class="inputInfo ' +
+                      isexist +
+                      '">' +
+                      descPhrase +
+                      "</div>" +
+                      "</div>";
+                    //console.log(`htmlBody from lookup success`, htmlBody);
+                    OnSuccess(flag, htmlBody);
+                  }
+                }
+              );
+            }
+          }
+        );
+
+        break;
 
       case "lookup":
         var customQuery;
@@ -6037,153 +6202,6 @@ var View_ListInfo = {
           OnSuccess(flag, htmlBody);
           break;
 
-        case "lookupwithoutrepeat":
-          var customQuery;
-          var RelatedItemUsed = [];
-          console.log("in lookupwithoutrepeat")
-          debugger
-          customQuery =
-            "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
-
-          var itemIDlist = [],
-            itemsID = [];
-          var listItemId = "";
-
-          sphttp.get(
-            _spPageContextInfo.siteServerRelativeUrl,
-            element.listname,
-            customQuery,
-            [element.valfieldkey, element.targetelement, element.Dispfieldkey],
-            function (records, record, listItem, isDone) {
-              if (listItem) itemIDlist.push(listItem.get_id());
-              if (isDone) {
-                records.forEach(function (el, index) {
-                  if (el[element.targetelement]) {
-                    if (!RelatedItemUsed.includes(el[element.targetelement])) {
-                      if (itemIDlist[index] != IID) {
-                        RelatedItemUsed.push(el[element.targetelement]);
-                      }
-                    }
-                  }
-                });
-
-                htmlBody =
-                  '<div class="col-md-6 CFIELD ' +
-                  dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-                  " " +
-                  element.className +
-                  ' " ' +
-                  thistip +
-                  " " +
-                  hidestagesIDs +
-                  " " +
-                  editableBy +
-                  " " +
-                  showstagesIDs +
-                  "  " +
-                  disablestagesIDs +
-                  "  " +
-                  enablestagesIDs +
-                  "   " +
-                  isWfhidestagesIDs +
-                  " " +
-                  requireOnWfTaskstagesIDs +
-                  " " +
-                  isWfshowstagesIDs +
-                  "  " +
-                  isWfdisablestagesIDs +
-                  "  " +
-                  isWfenablestagesIDs +
-                  '        data-groups="' +
-                  groups +
-                  '" style="display:' +
-                  element.display +
-                  '">' +
-                  '<label for="' +
-                  element.InternalName +
-                  '" ' +
-                  element.validation +
-                  ">" +
-                  displayName +
-                  "</label>" +
-                  "<select " +
-                  ToggleName +
-                  " " +
-                  RequiredName +
-                  " " +
-                  inputLisKey +
-                  element.validation +
-                  " " +
-                  dynamic +
-                  ' data-listname="' +
-                  element.source +
-                  '" data-valfieldkey="' +
-                  element.valfieldkey +
-                  '" data-Dispfieldkey="' +
-                  dispfieldkey +
-                  '" data-filterfield="' +
-                  element.filterField +
-                  '" data-queryfieldvalue="' +
-                  element.queryFieldValue +
-                  '"data-queryfield="' +
-                  element.queryField +
-                  '"data-queryfieldtype="' +
-                  element.queryFieldType +
-                  '" data-filterfieldtype="' +
-                  element.filterFieldType +
-                  '" class="form-control" type="dropdown" id="' +
-                  element.InternalName +
-                  '" value="" placeholder="' +
-                  displayName +
-                  '" ' +
-                  element.state +
-                  '><option value="" ' +
-                  selected +
-                  " disabled>" +
-                  displayName +
-                  "</option>";
-
-                sphttp.get(
-                  _spPageContextInfo.siteServerRelativeUrl,
-                  element.source,
-                  customQuery,
-                  [element.valfieldkey, element.Dispfieldkey],
-                  function (records, record, listItem, isDone) {
-                    if (isDone) {
-                      records.forEach(function (el, index) {
-                        if (!RelatedItemUsed.includes(el[element.valfieldkey])) {
-                          htmlBody +=
-                            '<option option-id="' +
-                            itemsID[index] +
-                            '" value="' +
-                            el[element.valfieldkey] +
-                            '">' +
-                            el[dispfieldkey] +
-                            "</option>";
-                        }
-                      });
-
-                      htmlBody +=
-                        "</select>" +
-                        "<span data-trans-" +
-                        Errmsgkey +
-                        ' class="errMsgField Resources"></span>' +
-                        '<div class="inputInfo ' +
-                        isexist +
-                        '">' +
-                        descPhrase +
-                        "</div>" +
-                        "</div>";
-                      //console.log(`htmlBody from lookup success`, htmlBody);
-                      OnSuccess(flag, htmlBody);
-                    }
-                  }
-                );
-              }
-            }
-          );
-
-          break;
         case "lookup":
           ///////////////////////////////////////////////
           if (element.BIlanguage == true) {

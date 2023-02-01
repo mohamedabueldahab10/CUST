@@ -51,20 +51,36 @@ var Information_Form = [
       //   DisplayName: 'معادلة المقياس',
       //   type: 'string'
       // },
+
       {
-        InternalName: 'RelatedSubKpis',
-        DisplayNameEn: 'Related Sub Kpis',
-        DisplayName: 'الربط بالمؤشرات الفرعية',
-        type: 'lookupWithQuery',
+        "InternalName": "RelatedSubKpis",
+        "DisplayNameEn": "Related Sub Kpis",
+        "DisplayName": "الربط بالمؤشرات الفرعية",
+        "type": "lookupwithoutrepeat",
+        "listname": "Benefits",
+        "targetelement": "RelatedSubKpis",
+        "source": "MainKPI",
+        "Dispfieldkey": "Name",
+        "valfieldkey": "Title",
         queryField: 'Types',
         queryFieldType: 'dropdownValues', //ex: "Choice"
         queryFieldValue: 'sub',
-        source: 'MainKPI',
-        // "state": "disabled",
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
-        validation: 'required',
       },
+      // {
+      //   InternalName: 'RelatedSubKpis',
+      //   DisplayNameEn: 'Related Sub Kpis',
+      //   DisplayName: 'الربط بالمؤشرات الفرعية',
+      //   type: 'lookupWithQuery',
+      //   queryField: 'Types',
+      //   queryFieldType: 'dropdownValues', //ex: "Choice"
+      //   queryFieldValue: 'sub',
+      //   source: 'MainKPI',
+      //   // "state": "disabled",
+      //   Dispfieldkey: 'Name',
+      //   valfieldkey: 'Title',
+      //   validation: 'required',
+      // },
+
       // {
       //   InternalName: 'FromDate',
       //   DisplayName: 'من سنة',
@@ -195,7 +211,7 @@ var Information_Form = [
         InternalName: 'DeliverableSuccessKPI',
         DisplayNameEn: 'Deliverable Success KPI',
         DisplayName: 'المقياس',
-        type: 'multiline',         
+        type: 'multiline',
         "state": "disabled",
       },
     ],
@@ -209,7 +225,7 @@ var Information_Form = [
       {
         InternalName: 'getfile',
         DisplayName: 'المرفقات',
-         DisplayNameEn: 'Attachments',
+        DisplayNameEn: 'Attachments',
         type: 'file',
         withAddBtn: 'true',
         // validation: 'required',
