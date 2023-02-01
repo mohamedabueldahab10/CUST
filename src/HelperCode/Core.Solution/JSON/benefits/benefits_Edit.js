@@ -97,18 +97,7 @@ var Information_Form = [
       //   type: 'datetime',
       //   validation: 'required',
       // },
-      {
-          InternalName: "DataSource",
-          DisplayNameEn: "Data Source",
-          DisplayName: "مصدر البيانات",
-          type: "string",
-          maxchar: "500",
-          security: {
-              groups: ["LMS_P",
-                  'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group'
-              ]
-          },
-      },
+   
       // {
       //   InternalName: 'RelatedStrategyObjective',
       //   DisplayNameEn: 'Objective Name',
