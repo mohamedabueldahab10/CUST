@@ -579,7 +579,7 @@ var initiativeHomeInfo_Request = {
 		$(".project-budget-value.h4").text(ActualBudget + " " + SAR_Currency);
 		// $('.card-body.project-status-info.border-bottom.pb-4 span.badge.bg-primary.white.p-3.font-13.bold').text(instage);
 		$(
-			".card-body.project-status-info.border-bottom.pb-4 span.badge.bg-primary.white.p-3.font-13.bold"
+			".card-body.project-status-info.border-bottom.pb-4 span.badge.bg-primary.white.py-3.font-13.bold"
 		).html("<p data-trans-" + initiativetype + ' class="Resources"></p>');
 		$(
 			".card-body.project-status-info.border-bottom.pb-4 span.badge.bg-success.white.font-13.bold"
