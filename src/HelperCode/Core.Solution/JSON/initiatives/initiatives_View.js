@@ -26,22 +26,22 @@ var Information_Form = [
         DisplayName: 'رمز المبادرة الرسمي',
         type: 'string',
       },
-      // {
-      //   InternalName: 'Types',
-      //   DisplayNameEn: 'Types',
-      //   DisplayName: 'النوع',
-      //   toggleValues: [
-      //     { value: 'vision', fields: ['RelatedBudgetItem'] }, //we can put more than 1  field
-      //   ],
-      //   type: 'dropdownValues',
-      //   options: {
-      //     choices: [
-      //       { display: 'vision', value: 'vision' },
-      //       { display: 'strategically', value: 'strategically' },
-      //       { display: 'others', value: 'others' },
-      //     ],
-      //   },
-      // },
+      {
+        InternalName: 'Types',
+        DisplayNameEn: 'Types',
+        DisplayName: 'النوع',
+        toggleValues: [
+          { value: 'vision', fields: ['RelatedBudgetItem'] }, //we can put more than 1  field
+        ],
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'vision', value: 'vision' },
+            { display: 'strategically', value: 'strategically' },
+            { display: 'others', value: 'others' },
+          ],
+        },
+      },
       // {
       //   InternalName: 'RelatedKPI',
       //   DisplayNameEn: 'Related KPI',

@@ -148,6 +148,18 @@ var Information_Form = [
         maxchar: 5000,
       },
       {
+        InternalName: 'RelatedInitiativeDeliverable',
+        DisplayName: 'مخرج المبادرة المرتبط',
+        DisplayNameEn: 'Related Initiative Deliverable',
+        type: 'lookuptoparentchild',
+        parentlist: 'Projects', //parent list name
+        parentinternalname: 'RelatedInitiative', // internal name in parent list
+        source: 'Deliverables', // target list
+        sourceinternalname: 'InitiativeCode', // column in target list
+        Dispfieldkey: 'Name', //display in dropdown
+        valfieldkey: 'Title', // value in dropdown
+      },
+      {
         InternalName: 'ShowInProgramReport',
         DisplayName: 'اظهار في التقرير',
         DisplayNameEn: 'Show In Program Report',
@@ -176,7 +188,7 @@ var Information_Form = [
       {
         InternalName: 'getfile',
         DisplayName: 'مرفقات',
-         DisplayNameEn: 'Attachments',
+        DisplayNameEn: 'Attachments',
         type: 'file',
         withAddBtn: 'true',
         validation: 'required',

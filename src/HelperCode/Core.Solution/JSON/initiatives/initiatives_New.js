@@ -26,36 +26,36 @@ var Information_Form = [
         DisplayName: 'رمز المبادرة الرسمي',
         type: 'string',
       },
-      // {
-      //   InternalName: 'Types',
-      //   DisplayNameEn: 'Types',
-      //   DisplayName: 'النوع',
-      //   validation: 'required',
-      //   toggleValues: [
-      //     { value: 'vision', fields: ['RelatedStrategyObjective'] }, //we can put more than 1  field
-      //   ],
-      //   type: 'dropdownValues',
-      //   options: {
-      //     choices: [
-      //       {
-      //         display: 'vision',
-      //         value: 'vision',
-      //         roles: ['Administrator', 'VROE', 'VROP'],
-      //       },
-      //       {
-      //         display: 'strategically',
-      //         value: 'strategically',
-      //         roles: ['Administrator', 'EPMO'],
-      //       },
-      //       {
-      //         display: 'lms',
-      //         value: 'lms',
-      //         roles: ['Administrator', 'LMSE', 'LMSP'],
-      //       },
-      //       // { display: 'others', value: 'others' },
-      //     ],
-      //   },
-      // },
+      {
+        InternalName: 'Types',
+        DisplayNameEn: 'Types',
+        DisplayName: 'النوع',
+        validation: 'required',
+        toggleValues: [
+          { value: 'vision', fields: ['RelatedStrategyObjective'] }, //we can put more than 1  field
+        ],
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            {
+              display: 'vision',
+              value: 'vision',
+              roles: ['Administrator', 'VROE', 'VROP'],
+            },
+            {
+              display: 'strategically',
+              value: 'strategically',
+              roles: ['Administrator', 'EPMO'],
+            },
+            {
+              display: 'lms',
+              value: 'lms',
+              roles: ['Administrator', 'LMSE', 'LMSP'],
+            },
+            // { display: 'others', value: 'others' },
+          ],
+        },
+      },
       {
         InternalName: 'RelatedStrategy',
         DisplayNameEn: 'Related Strategy',

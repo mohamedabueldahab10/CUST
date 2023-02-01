@@ -186,10 +186,17 @@ var Information_Form = [
         InternalName: 'Name',
         DisplayNameEn: 'Name',
         DisplayName: 'المخرج',
-        type: 'lookup',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
-        source: 'Deliverables',
+        // type: 'lookup',
+        // Dispfieldkey: 'Name',
+        // valfieldkey: 'Title',
+        // source: 'Deliverables',
+        type: 'lookuptoparentchild',
+        parentlist: 'Projects', //parent list name
+        parentinternalname: 'RelatedInitiative', // internal name in parent list
+        source: 'Deliverables', // target list
+        sourceinternalname: 'InitiativeCode', // column in target list
+        Dispfieldkey: 'Name', //display in dropdown
+        valfieldkey: 'Title', // value in dropdown
       },
       {
         InternalName: 'DeliverableSuccessKPI',

@@ -87,14 +87,26 @@ var Information_Form = [
           ],
         },
       },
+      // {
+      //   InternalName: 'RelatedInitiativeMilestone',
+      //   DisplayName: 'معلم المبادرة المرتبط',
+      //   DisplayNameEn: 'Related Initiative Milestone',
+      //   type: 'lookup',
+      //   source: 'InitiativeMilestones',
+      //   Dispfieldkey: 'Name',
+      //   valfieldkey: 'Title',
+      // },
       {
         InternalName: 'RelatedInitiativeMilestone',
         DisplayName: 'معلم المبادرة المرتبط',
         DisplayNameEn: 'Related Initiative Milestone',
-        type: 'lookup',
-        source: 'InitiativeMilestones',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
+        type: 'lookuptoparentchild',
+        parentlist: 'Projects', //parent list name
+        parentinternalname: 'RelatedInitiative', // internal name in parent list
+        source: 'Milestones', // target list
+        sourceinternalname: 'InitiativeCode', // column in target list
+        Dispfieldkey: 'Name', //display in dropdown
+        valfieldkey: 'Title', // value in dropdown
       },
       //   {
       //     InternalName: 'SupportDocumentsDescription',

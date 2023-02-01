@@ -20,53 +20,53 @@ var Information_Form = [
         maxchar: '250',
         validation: 'required',
       },
-      // {
-      //   InternalName: 'Types',
-      //   DisplayNameEn: 'Types',
-      //   DisplayName: 'النوع',
-      //   validation: 'required',
-      //   toggleValues: [
-      //     { value: 'vision', fields: ['RelatedStrategyObjective'] }, //we can put more than 1  field
-      //   ],
-      //   type: 'dropdownValues',
-      //   options: {
-      //     choices: [
-      //       {
-      //         display: 'vision',
-      //         value: 'vision',
-      //         roles: [
-      //           'Administrator',
-      //           'VROE',
-      //           'VROP',
-      //           'InitiativeManager',
-      //           'DU',
-      //           'EPMO',
-      //         ],
-      //       },
-      //       {
-      //         display: 'strategically',
-      //         value: 'strategically',
-      //         roles: ['Administrator', 'EPMO', 'InitiativeManager', 'DU'],
-      //       },
-      //       {
-      //         display: 'lms',
-      //         value: 'lms',
-      //         roles: [
-      //           'Administrator',
-      //           'LMSE',
-      //           'LMSP',
-      //           'InitiativeManager',
-      //           'DU',
-      //           'EPMO',
-      //         ],
-      //       },
-      //       // { display: 'others', value: 'others' },
-      //     ],
-      //   },
-      //   security: {
-      //     groups: ['System Admin Group'],
-      //   },
-      // },
+      {
+        InternalName: 'Types',
+        DisplayNameEn: 'Types',
+        DisplayName: 'النوع',
+        validation: 'required',
+        toggleValues: [
+          { value: 'vision', fields: ['RelatedStrategyObjective'] }, //we can put more than 1  field
+        ],
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            {
+              display: 'vision',
+              value: 'vision',
+              roles: [
+                'Administrator',
+                'VROE',
+                'VROP',
+                'InitiativeManager',
+                'DU',
+                'EPMO',
+              ],
+            },
+            {
+              display: 'strategically',
+              value: 'strategically',
+              roles: ['Administrator', 'EPMO', 'InitiativeManager', 'DU'],
+            },
+            {
+              display: 'lms',
+              value: 'lms',
+              roles: [
+                'Administrator',
+                'LMSE',
+                'LMSP',
+                'InitiativeManager',
+                'DU',
+                'EPMO',
+              ],
+            },
+            // { display: 'others', value: 'others' },
+          ],
+        },
+        security: {
+          groups: ['System Admin Group'],
+        },
+      },
       // {
       //   InternalName: 'RelatedKPI',
       //   DisplayNameEn: 'Related KPI',
