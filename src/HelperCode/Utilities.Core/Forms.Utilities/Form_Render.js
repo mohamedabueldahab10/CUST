@@ -3082,6 +3082,153 @@ window.ListInfo = {
         );
         break;
 
+      case "lookuptoparentchild":
+        var code = activeCode;
+
+        var customQuery =
+          '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
+          code +
+          "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+
+        var itemsID = [];
+
+        sphttp.get(
+          _spPageContextInfo.siteServerRelativeUrl,
+          element.parentlist,
+          customQuery,
+          [element.parentinternalname],
+          function (records, record, listItem, isDone) {
+            var parentCode = "";
+            if (isDone) {
+              records.forEach(function (el, index) {
+                parentCode = el[element.parentinternalname];
+              });
+
+              var internalQuery =
+                '<View><Query><Where><Eq><FieldRef Name="' +
+                element.sourceinternalname +
+                '" /><Value Type="Text">' +
+                parentCode +
+                "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+
+              sphttp.get(
+                _spPageContextInfo.siteServerRelativeUrl,
+                element.source,
+                internalQuery,
+                [element.valfieldkey, element.Dispfieldkey],
+                function (records, record, listItem, isDone) {
+                  if (listItem) itemsID.push(listItem.get_id());
+
+                  if (isDone) {
+                    htmlBody =
+                      '<div class="col-md-6 CFIELD ' +
+                      dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+                      " " +
+                      element.className +
+                      ' " ' +
+                      thistip +
+                      " " +
+                      hidestagesIDs +
+                      " " +
+                      editableBy +
+                      " " +
+                      showstagesIDs +
+                      "  " +
+                      disablestagesIDs +
+                      "  " +
+                      enablestagesIDs +
+                      "   " +
+                      isWfhidestagesIDs +
+                      " " +
+                      requireOnWfTaskstagesIDs +
+                      " " +
+                      isWfshowstagesIDs +
+                      "  " +
+                      isWfdisablestagesIDs +
+                      "  " +
+                      isWfenablestagesIDs +
+                      '        data-groups="' +
+                      groups +
+                      '" style="display:' +
+                      element.display +
+                      '">' +
+                      '<label for="' +
+                      element.InternalName +
+                      '" ' +
+                      element.validation +
+                      ">" +
+                      displayName +
+                      "</label>" +
+                      "<select " +
+                      ToggleName +
+                      " " +
+                      RequiredName +
+                      " " +
+                      inputLisKey +
+                      element.validation +
+                      " " +
+                      dynamic +
+                      ' data-listname="' +
+                      element.source +
+                      '" data-valfieldkey="' +
+                      element.valfieldkey +
+                      '" data-Dispfieldkey="' +
+                      dispfieldkey +
+                      '" data-filterfield="' +
+                      element.filterField +
+                      '" data-queryfieldvalue="' +
+                      element.queryFieldValue +
+                      '"data-queryfield="' +
+                      element.queryField +
+                      '"data-queryfieldtype="' +
+                      element.queryFieldType +
+                      '" data-filterfieldtype="' +
+                      element.filterFieldType +
+                      '" class="form-control" type="dropdown" id="' +
+                      element.InternalName +
+                      '" value="" placeholder="' +
+                      displayName +
+                      '" ' +
+                      element.state +
+                      '><option value="" ' +
+                      selected +
+                      " disabled>" +
+                      displayName +
+                      "</option>";
+
+                    records.forEach(function (el, index) {
+                      htmlBody +=
+                        '<option option-id="' +
+                        itemsID[index] +
+                        '" value="' +
+                        el[element.valfieldkey] +
+                        '">' +
+                        el[element.Dispfieldkey] +
+                        "</option>";
+                    });
+
+                    htmlBody +=
+                      "</select>" +
+                      "<span data-trans-" +
+                      Errmsgkey +
+                      ' class="errMsgField Resources"></span>' +
+                      '<div class="inputInfo ' +
+                      isexist +
+                      '">' +
+                      descPhrase +
+                      "</div>" +
+                      "</div>";
+
+                    OnSuccess(flag, htmlBody);
+                  }
+                }
+              );
+            }
+          }
+        );
+        break;
+
+
       case "lookup":
         var customQuery;
         let roleAccess = []
@@ -4822,7 +4969,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             element.addClass +
             '" ' +
             thistip +
@@ -4866,7 +5013,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             element.className +
             ' " ' +
             thistip +
@@ -4931,7 +5078,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             element.className +
             ' " ' +
             thistip +
@@ -4976,7 +5123,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD" ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             thistip +
             " " +
             hidestagesIDs +
@@ -5024,7 +5171,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             element.addClass +
             '" ' +
             thistip +
@@ -5069,7 +5216,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             element.className +
             ' " ' +
             thistip +
@@ -5114,7 +5261,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             element.className +
             ' " ' +
             thistip +
@@ -5207,7 +5354,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             element.className +
             ' " ' +
             thistip +
@@ -5252,7 +5399,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             element.className +
             ' " ' +
             thistip +
@@ -5297,7 +5444,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             element.className +
             ' " ' +
             thistip +
@@ -5341,7 +5488,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             element.className +
             ' " ' +
             thistip +
@@ -5386,7 +5533,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             element.className +
             ' " ' +
             thistip +
@@ -5430,7 +5577,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
             " " +
             element.className +
@@ -5479,7 +5626,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             element.className +
             ' " ' +
             thistip +
@@ -5527,7 +5674,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             element.className +
             ' " ' +
             thistip +
@@ -5572,7 +5719,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             element.className +
             ' " ' +
             thistip +
@@ -5617,7 +5764,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             element.className +
             ' " ' +
             thistip +
@@ -5662,7 +5809,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             element.className +
             ' " ' +
             thistip +
@@ -5707,7 +5854,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             element.className +
             ' " ' +
             thistip +
@@ -5752,7 +5899,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             element.className +
             ' " ' +
             thistip +
@@ -5797,7 +5944,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             element.className +
             ' " ' +
             thistip +
@@ -5837,6 +5984,58 @@ var View_ListInfo = {
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
+        case "lookuptoparentchild":
+          htmlBody =
+            '<div class="col-md-6 CFIELD ' +
+            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            " " +
+            element.className +
+            ' " ' +
+            thistip +
+            " " +
+            hidestagesIDs +
+            " " +
+            showstagesIDs +
+            "  " +
+            disablestagesIDs +
+            "  " +
+            enablestagesIDs +
+            "   " +
+            isWfhidestagesIDs +
+            " " +
+            requireOnWfTaskstagesIDs +
+            " " +
+            isWfshowstagesIDs +
+            "  " +
+            isWfdisablestagesIDs +
+            "  " +
+            isWfenablestagesIDs +
+            '        data-groups="' +
+            groups +
+            '"  style="display:' +
+            element.display +
+            '">' +
+            '<label for="' +
+            element.InternalName +
+            '" ' +
+            element.validation +
+            ">" +
+            displayName +
+            "</label>" +
+            '<p type="lookuptoparentchild" data-listname="' +
+            element.source +
+            '" data-valfieldkey="' +
+            element.valfieldkey +
+            '" data-dispfieldkey="' +
+            element.Dispfieldkey +
+            '" class="viewmode-value" id="' +
+            element.InternalName +
+            '" ' +
+            ToggleName +
+            "></p>" +
+            "</div>";
+          OnSuccess(flag, htmlBody);
+          break;
 
         case "lookup":
           ///////////////////////////////////////////////
@@ -5854,7 +6053,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             element.className +
             ' " ' +
             thistip +
@@ -5905,7 +6104,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD" ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             thistip +
             " " +
             hidestagesIDs +
@@ -5953,7 +6152,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             element.className +
             ' " ' +
             thistip +
@@ -5998,7 +6197,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             element.className +
             ' " ' +
             thistip +
@@ -6043,7 +6242,7 @@ var View_ListInfo = {
           htmlBody =
             '<div class="col-md-6 CFIELD multiline" ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-						" " +
+            " " +
             thistip +
             ' data-groups="' +
             groups +
