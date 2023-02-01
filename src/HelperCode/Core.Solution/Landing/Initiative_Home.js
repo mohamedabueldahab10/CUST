@@ -432,14 +432,14 @@ var initiativeHomeInfo_Request = {
 						  '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
 						  '<div class="d-inline-flex flex-column mx-2">' +
 						  '<h3 data-trans-inportfolio class="Resources acc-title d-inline-flex black"></h3>' + //resourcekey="pattr5"
-						  '<span class="acc-title d-inline-flex black">' +
+						  '<span class="acc-title d-inline-flex des-13">' +
 						  initiativeportfolio +
 						  "</span>" +
 						  "</div>" +
 						  '<div class="d-inline-flex flex-column mx-2">' +
 						  '<h3 data-trans-instage class="Resources acc-title d-inline-flex black"></h3>' +
 						  // '<h4 data-trans-' + initiativetype + ' class="Resources acc-title d-inline-flex black"></h4>' +
-						  '<span  class="Resources acc-title d-inline-flex black"> ' +
+						  '<span  class="Resources acc-title d-inline-flex des-13"> ' +
 						  instage +
 						  "</span>" +
 						  "</div>" +
@@ -470,13 +470,13 @@ var initiativeHomeInfo_Request = {
 						  //   '</div>' +
 						  '<div class="d-inline-flex flex-column mx-2">' +
 						  '<span class="des-13"><h3 data-trans-sector class="Resources acc-title d-inline-flex black"></h3></span>' +
-						  '<span class="black">' +
+						  '<span class="des-13">' +
 						  projectSector +
 						  "</span>" + //
 						  "</div>" +
 						  '<div class="d-inline-flex flex-column mx-2">' +
 						  '<span class="des-13"><h3 data-trans-subsector class="Resources acc-title d-inline-flex black"></h3></span>' +
-						  '<span class="black">' +
+						  '<span class="des-13">' +
 						  projectSubsector +
 						  "</span>" + //
 						  "</div>" +

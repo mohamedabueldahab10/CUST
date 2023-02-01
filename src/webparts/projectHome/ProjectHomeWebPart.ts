@@ -708,9 +708,9 @@ export default class ProjectHomeWebPart extends BaseClientSideWebPart<IProjectHo
                                 </h2>
                                 <a><img src="${edit}"></a>
                             </div>
-                            <div class="card-body project-status-info border-bottom pb-4">
-                                <div class="mx-3">
-                                    <div class="row">
+                            <div class="card-body project-status-info border-bottom pb-4 px-4">
+                                <div class="">
+                                    <div class="">
                            
                                         <div class="col h-100">
                                             <div class="d-flex flex-row align-items-center">
