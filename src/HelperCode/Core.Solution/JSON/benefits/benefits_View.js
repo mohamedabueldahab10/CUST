@@ -95,12 +95,12 @@ var Information_Form = [
       //   type: 'datetime',
       //   validation: 'required',
       // },
-      {
-        InternalName: 'DataSource',
-        DisplayNameEn: 'Data Source',
-        DisplayName: 'مصدر البيانات',
-        type: 'string'
-      },
+      // {
+      //   InternalName: 'DataSource',
+      //   DisplayNameEn: 'Data Source',
+      //   DisplayName: 'مصدر البيانات',
+      //   type: 'string'
+      // },
       // {
       //   InternalName: 'RelatedStrategyObjective',
       //   DisplayNameEn: 'Objective Name',

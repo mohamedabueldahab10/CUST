@@ -95,15 +95,15 @@ var Information_Form = [
       //   type: 'datetime',
       //   validation: 'required',
       // },
-      {
-        InternalName: 'DataSource',
-        DisplayNameEn: 'Data Source',
-        DisplayName: 'مصدر البيانات',
-        type: 'string',
-        maxchar: '500',
-        // "state": "disabled",
-        // dynamic: "Initiative"
-      },
+      // {
+      //   InternalName: 'DataSource',
+      //   DisplayNameEn: 'Data Source',
+      //   DisplayName: 'مصدر البيانات',
+      //   type: 'string',
+      //   maxchar: '500',
+      //   // "state": "disabled",
+      //   // dynamic: "Initiative"
+      // },
       // {
       //   // hol dynamic 3ala l lookup
       //   InternalName: 'InitiativeCode',
