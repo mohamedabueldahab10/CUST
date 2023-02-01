@@ -147,18 +147,27 @@ var Information_Form = [
         type: 'multiline',
         maxchar: 5000,
       },
+      // { //tried
+      //   InternalName: 'RelatedInitiativeDeliverable',
+      //   DisplayName: 'مخرج المبادرة المرتبط',
+      //   DisplayNameEn: 'Related Initiative Deliverable',
+      //   type: 'lookuptoparentchild',
+      //   parentlist: 'Projects', //parent list name
+      //   parentinternalname: 'RelatedInitiative', // internal name in parent list
+      //   source: 'Deliverables', // target list
+      //   sourceinternalname: 'InitiativeCode', // column in target list
+      //   Dispfieldkey: 'Name', //display in dropdown
+      //   valfieldkey: 'Title', // value in dropdown
+      // },
       {
         InternalName: 'RelatedInitiativeDeliverable',
-        DisplayName: 'مخرج المبادرة المرتبط',
         DisplayNameEn: 'Related Initiative Deliverable',
-        type: 'lookuptoparentchild',
-        parentlist: 'Projects', //parent list name
-        parentinternalname: 'RelatedInitiative', // internal name in parent list
-        source: 'Deliverables', // target list
-        sourceinternalname: 'InitiativeCode', // column in target list
-        Dispfieldkey: 'Name', //display in dropdown
-        valfieldkey: 'Title', // value in dropdown
-      },
+        DisplayName:'مخرج المبادرة المرتبط',
+        type: 'lookup',
+        source: 'InitiativeDeliverables',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+      },  
       {
         InternalName: 'ShowInProgramReport',
         DisplayName: 'اظهار في التقرير',
@@ -188,7 +197,7 @@ var Information_Form = [
       {
         InternalName: 'getfile',
         DisplayName: 'مرفقات',
-        DisplayNameEn: 'Attachments',
+         DisplayNameEn: 'Attachments',
         type: 'file',
         withAddBtn: 'true',
         validation: 'required',
