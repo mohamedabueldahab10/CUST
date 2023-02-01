@@ -40,15 +40,15 @@ var Listing_Info = [
 
   // },
   // {
-  // {
-  //   InternalName: 'Types',
-  //   DisplayNameEn: 'Types',
-  //   DisplayName: 'النوع',
-  //   type: 'text',
-  //   inlisting: true,
-  //   needTrans: true,
-  //   infilter: true,
-  // },
+  {
+    InternalName: 'Types',
+    DisplayNameEn: 'Types',
+    DisplayName: 'النوع',
+    type: 'text',
+    inlisting: true,
+    needTrans: true,
+    infilter: true,
+  },
   {
     InternalName: 'Sector',
     DisplayName: 'القطاع',
