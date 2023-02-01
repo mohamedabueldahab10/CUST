@@ -31,8 +31,8 @@ var Information_Form = [
       {
         // hol dynamic 3ala l lookup
         InternalName: 'RelatedBenefit',
-        DisplayNameEn: 'RelatedBenefit',
-        DisplayName: 'المنفعةالمرتبطة',
+        DisplayNameEn: 'Related Benefit',
+        DisplayName: 'المنفعة المرتبطة',
         type: 'lookup',
         source: 'Benefits',
         Dispfieldkey: 'Name',
@@ -43,7 +43,7 @@ var Information_Form = [
         InternalName: 'PeriodType',
         DisplayNameEn: 'Period Type',
         DisplayName: 'دورية القياس',
-        state: 'disabled',
+        // state: 'disabled',
         type: 'dropdownValues',
         options: {
           choices: [
@@ -144,6 +144,15 @@ var Information_Form = [
         min: 'FromDate',
         type: 'datetime',
         validation: 'required',
+      },
+      {
+        InternalName: 'DataSource',
+        DisplayNameEn: 'Data Source',
+        DisplayName: 'مصدر البيانات',
+        type: 'string',
+        maxchar: '500',
+        // "state": "disabled",
+        // dynamic: "Initiative"
       },
       {
         InternalName: 'PerformanceLeader',

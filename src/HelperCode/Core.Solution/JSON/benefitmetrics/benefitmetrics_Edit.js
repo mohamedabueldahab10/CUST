@@ -169,6 +169,15 @@ var Information_Form = [
         validation: 'required',
       },
       {
+        InternalName: 'DataSource',
+        DisplayNameEn: 'Data Source',
+        DisplayName: 'مصدر البيانات',
+        type: 'string',
+        maxchar: '500',
+        // "state": "disabled",
+        // dynamic: "Initiative"
+      },
+      {
         InternalName: 'PerformanceLeader',
         DisplayNameEn: 'Performance Leader',
         DisplayName: 'رائد الأداء',
@@ -184,7 +193,8 @@ var Information_Form = [
       },
       {
         InternalName: 'ActualValue',
-        DisplayName: 'القيمة الفعلية',
+          DisplayName:'القيمة الفعلية',
+          DisplayNameEn: 'ActualValue',
         type: 'float',
       },
     ],

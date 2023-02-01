@@ -193,6 +193,14 @@
           "manifest": "./src/webparts/adminPanel/AdminPanelWebPart.manifest.json"
         }
       ]
+    },
+    "knowledge-base-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/knowledgeBase/KnowledgeBaseWebPart.js",
+          "manifest": "./src/webparts/knowledgeBase/KnowledgeBaseWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {
@@ -410,6 +418,7 @@
     "InitiativesMainHomeWebPartStrings": "lib/webparts/initiativesMainHome/loc/{locale}.js",
     "ProjectCenterEditWebPartStrings": "lib/webparts/projectCenterEdit/loc/{locale}.js",
     "AdminPanelWebPartStrings": "lib/webparts/adminPanel/loc/{locale}.js",
-    "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js"
+    "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js",
+    "KnowledgeBaseWebPartStrings": "lib/webparts/knowledgeBase/loc/{locale}.js"
   }
 }

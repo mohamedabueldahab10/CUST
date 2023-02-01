@@ -381,6 +381,7 @@ var Project_Home_Info_Request = {
       ProgressLastModifiedDate = Project_Home_Info_Request.g.dateConvert(oListItem.get_item('ProgressLastModifiedDate'));
       $('.ProgressDate').text(ProgressLastModifiedDate);
       //project card 5
+      debugger
       projectimportance = oListItem.get_item('Priority') || 'nodata';
 
       projectstatus = oListItem.get_item('Status') || 'nodata';
@@ -1534,13 +1535,13 @@ var Stages_Data_Request = {
       });
     }
     stagehtml += '</div>';
-    var nodata = '<h3 class="nodata">' + No_Data + '</h3>';
-    if (count > 0) {
-      $('.project-stages-ctx div#v-pills-tab').html(phasehtml);
-      $('.project-stages-ctx div#v-pills-tabContent').html(stagehtml);
-    } else {
-      $('.project-status-info').html(nodata);
-    }
+    // var nodata = '<h3 class="nodata">' + No_Data + '</h3>';
+    // if (count > 0) {
+    //   $('.project-stages-ctx div#v-pills-tab').html(phasehtml);
+    //   $('.project-stages-ctx div#v-pills-tabContent').html(stagehtml);
+    // } else {
+    //   $('.project-status-info').html(nodata);
+    // }
     changeResources();
     var isactive = false;
     $('.project-stages-ctx div#v-pills-tabContent > .tab-pane').each(function () {

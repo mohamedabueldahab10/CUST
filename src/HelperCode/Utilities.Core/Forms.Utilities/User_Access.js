@@ -414,7 +414,7 @@ window.userCalls = {
 						: "";
 					// localStorage.setItem('userGroup', '${T.groupsName}');
 					myRolesHtml += `<li class="list-group-item">
-            <a href="javascript:" class="d-flex justify-content-between align-items-center" onclick="localStorage.setItem('userRole', '${T.Role}');localStorage.setItem('userGroup', '${T.groupsName}');location.reload();" title="${T.Role}">
+            <a href="javascript:" class="d-flex justify-content-between align-items-center" onclick="localStorage.setItem('userRole', '${T.Role}');localStorage.setItem('userGroup', '${T.groupsName}');window.location=('/');" title="${T.Role}">
               <h3 data-trans-${T.Role} class="title-13 Resources m-0">${T.Role}</h3>
               <div class="circle-radio d-flex justify-content-center align-items-center">
                 <div class="dot-radio ${isActiveRole}" data-role="${T.Role}"></div>

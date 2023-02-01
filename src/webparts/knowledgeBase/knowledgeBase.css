@@ -1,0 +1,204 @@
+.knowledgeBaseNav,
+.knowledgeBaseContent {
+    border: 1px solid rgba(151, 151, 151, 0.18);
+    background-color: #FFFFFF;
+}
+
+.knowledgeBaseContent {
+    padding: 26px 38px !important;
+}
+
+.Spinner {
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 150px;
+    z-index: 999;
+}
+
+.knowledgeNavItem {
+    height: 61px;
+    border: 1px solid #CCDBF5;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 8px 3px rgba(167, 168, 169, 0.08);
+}
+
+.knowledgeNavItem.activeTab {
+    border: 1px solid #41BA83;
+    background-color: #41BA83;
+}
+
+.knowledgeNavItem.activeTab .tabLink span {
+    color: #fff
+}
+
+.tabLink span {
+    color: #485465;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.tabLink {
+    display: block;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* guideLine Book */
+.tabContentTitle {
+    color: #1F2933;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 26px;
+    padding-bottom: 26px;
+    border-bottom: 1px solid #D8D8D8;
+}
+
+.tableHeaders>th {
+    color: #1F2933;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.guideRow>* {
+    color: #1F2933;
+    font-size: 13px;
+}
+
+.linkTd>a>i {
+    font-size: 10px;
+    margin: 0 3px;
+}
+
+.linkTd>a>* {
+    text-decoration: underline;
+}
+
+.linkTd>a {
+    color: #35A070;
+    text-decoration: none;
+}
+
+/* videos/image */
+.thumbnailItem {
+    position: relative;
+    border-radius: 3px;
+}
+
+.itemOverlay.active {
+    border: 3px solid #9e967b;
+}
+
+.itemOverlay {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: 0 15px;
+    cursor: pointer;
+    border-radius: 3px;
+
+}
+
+.react-player {
+    width: auto !important;
+    height: 350px !important;
+}
+
+.react-playerSmall {
+    width: auto !important;
+    height: 150px !important;
+}
+
+.playBtn {
+    background: none;
+    border: 0;
+}
+
+.mediaTitleWrapper {
+    height: 33%;
+    width: 100%;
+    background-color: #0C0D0D;
+    opacity: 0.52;
+    padding: 10px;
+}
+
+.mediaTitle {
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* Lessonslearned */
+h4.acc-title {
+    color: #1F2933;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 3px 0;
+}
+
+span.state-val {
+    color: #1F2933;
+    font-size: 14px;
+}
+
+/* system update */
+span.dateTitle {
+    color: #005C4F;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.dateTitleLine {
+    width: 100%;
+    background-color: #005C4F;
+    height: 3px;
+    border-radius: 3px;
+    margin: 0 13px;
+}
+
+.updateContent ul {
+    padding: 0 21px;
+}
+
+.updateContent {
+    color: #1F2933;
+    font-size: 14px;
+
+}
+
+/* search */
+.resultLength {
+    color: #005C4F;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.resultTitle {
+    color: #005C4F;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.contentType {
+    color: #9e967b;
+    font-size: 11px;
+}
+
+.searchTab input {
+    border: 0px !important
+}
+
+.guidebackground{
+    background-color: #BDF1D7;
+}
+.eventcursor{
+    cursor: pointer;
+}

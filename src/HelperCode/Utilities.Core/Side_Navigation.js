@@ -1,8 +1,20 @@
 var NAVPID_Root,
     NAVPCODE_Root,
     PrGUID_Root,
+    isArabicNav,
     NavItemsArray = [];
 var NavItems = [];
+
+
+if (
+	localStorage.getItem("lng") == null ||
+	localStorage.getItem("lng") == "ar"
+) {
+	isArabicNav = true;
+} else {
+	isArabicNav = false;
+}
+
 var customNavHtml_Root = setInterval(function () {
     
     Custom_Nav_Request_Root.preinit();
@@ -130,6 +142,8 @@ var Custom_Nav_Request_Root = {
             clearInterval(customNavHtml_Root);
             SP.SOD.executeFunc('sp.js', 'SP.ClientContext', function () {
                 Custom_Nav_Request_Root.init();
+                getImportantLinks.init();
+
             });
         }
     },
@@ -163,4 +177,104 @@ var Custom_Nav_Request_Root = {
             //$('.o365cs-nav-centerAlign').append('<div class="User-Not"><div class="SNotifications"><span class="Tasks"><i class="fas fa-tasks" data-count="0"></i><a href="#">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="0"></i><a href="#">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="0"></i><a href="#">Issues</a></span></div><div class="UProfile"></div></div>');
         }
     }
+};
+
+// important links
+var getImportantLinks = {
+	onSuccess: function (sender, args) {
+		var collListItem = getImportantLinks.g.collListItem;
+		var listItemEnum = collListItem.getEnumerator();
+		var navHTML = [];
+		while (listItemEnum.moveNext()) {
+            
+			//loop through list items
+			var oListItem = listItemEnum.get_current();
+			//to get value of column for an item use internal name of field
+			var title = isArabicNav
+				? oListItem.get_item("TitleAr") || "لا يوجد"
+				: oListItem.get_item("Title") || "No Data";
+			var Link = oListItem.get_item("URL").$1_1 || "/";
+			var Icon = oListItem.get_item("Icon");
+			var AllowTo = oListItem.get_item("AllowOnlyTo");
+			var NewTab = oListItem.get_item("NewTab");
+			NavItemsArray.push({
+				title: title,
+				link: Link,
+				AllowTo: AllowTo,
+				NewTab: NewTab,
+			});
+			
+            console.log(AllowTo[0],"AllowTo[0]")
+            console.log(AllowTo,"AAAAAAAAAAAAa")
+			debugger
+			var hasAccess = false
+			if (AllowTo[0] == "AllGroups") {
+				hasAccess = true
+			} else {
+				myRoleConfig[0].groupsName.some(function (group) {
+					if(AllowTo.includes(group)){
+						hasAccess = true
+					};
+				});
+			}
+
+			
+			// var hasAccess =
+			// 	AllowTo[0] == "AllGroups" ||
+			// 	myRoleConfig[0].groupsName.some(function (group) {
+			// 		console.log(group,"ggggggggggggggggggggg")
+			// 		console.log(AllowTo,"AllowTo AllowTo")
+			// 		AllowTo.includes(group);
+			// 	});
+			// 	console.log(hasAccess,"hasAccess")
+            
+			if (hasAccess) {
+				navHTML.push(`
+                    <li class="li-important-links pb-3 mb-3">
+                        <a href="${Link}" class="a-important-link">
+                            <i class="i-iportant-link ${Icon}"></i>
+                            <span class="title-iportant-link mx-3">${title}</span>
+                        </a>
+                    </li>
+                `);
+			}
+		}
+		$(".ul-important-links").html(navHTML.join(""));
+	},
+	onError: function (sender, args) {
+		console.log(
+			"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+		);
+	},
+	preinit: function () {
+		if ($(".sidebar-sticky").length) {
+			//making sure html is rendered
+			clearInterval(customNavHtml_Root);
+			SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
+				getImportantLinks.init();
+			});
+		}
+	},
+	// Pre-initialization functions ensure scripts, SharePoint dependencies are loaded
+
+	// The main Initialization function
+	init: function () {
+		var clientContext = new SP.ClientContext.get_current(); //site url
+		var oList = clientContext
+			.get_web()
+			.get_lists()
+			.getByTitle("Important Links"); //list name
+		var camlQuery = new SP.CamlQuery();
+		camlQuery.set_viewXml(
+			"<View><Query><Where><Eq><FieldRef Name='Show'/><Value Type='Integer'>1</Value></Eq></Where><OrderBy><FieldRef Name='Order0' Ascending='True' /></OrderBy></Query></View>"
+		); //caml query
+		getImportantLinks.g.collListItem = oList.getItems(camlQuery);
+		clientContext.load(getImportantLinks.g.collListItem);
+		clientContext.executeQueryAsync(
+			Function.createDelegate(this, getImportantLinks.onSuccess),
+			Function.createDelegate(this, getImportantLinks.onError)
+		);
+	},
+	// Global variables
+	g: {},
 };
