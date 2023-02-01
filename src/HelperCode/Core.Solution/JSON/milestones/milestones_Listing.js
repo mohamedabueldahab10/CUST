@@ -47,7 +47,7 @@ var Listing_Info = [
     DisplayNameEn: 'Status',
     type: 'text',
     inlisting: true,
-    infilter: false,
+    infilter: true,
     needTrans: true,
   },
   // {

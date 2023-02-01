@@ -79,7 +79,7 @@ var Information_Form = [
             "InternalName":"RepresentativeEmail",
             "DisplayName":"ايميل الممثل للشريك",
             "DisplayNameEn":"Representative Email",
-            "type":"string",
+            "type":"email",
             "maxchar":"250",
             "validation":"required"
          },
@@ -87,7 +87,8 @@ var Information_Form = [
             "InternalName":"RepresentativePhone",
             "DisplayName":"هاتف الممثل للشريك",
             "DisplayNameEn":"Representative Phone",
-            "type":"string",
+            // "type":"string",
+            "type":"phonenumber",
             "maxchar":"250",
             "validation":"required"
          },

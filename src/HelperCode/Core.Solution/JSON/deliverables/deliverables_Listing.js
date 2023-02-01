@@ -39,7 +39,7 @@ var Listing_Info = [
     DisplayNameEn: 'Status',
     type: 'text',
     needTrans: true,
-    inlisting: false,
+    inlisting: true,
     infilter: true,
   },
   {

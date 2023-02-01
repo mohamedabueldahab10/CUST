@@ -259,7 +259,7 @@ var Information_Form = [
       {
         //   InternalName: 'PartnerRepresentativeEmail',
         InternalName: 'RepresentativeEmail',
-        DisplayName: 'ايميل ممثل الشريك',
+        DisplayName: 'ايميل الممثل للشريك',
         DisplayNameEn: 'Representative Email',
         type: 'string',
         maxchar: '250',
@@ -270,7 +270,8 @@ var Information_Form = [
         InternalName: 'RepresentativePhone',
         DisplayName: 'هاتف ممثل الشريك',
         DisplayNameEn: 'Representative Phone',
-        type: 'string',
+        // type: 'string',
+        type:'phonenumber',
         maxchar: '250',
         // validation: 'required',
       },
