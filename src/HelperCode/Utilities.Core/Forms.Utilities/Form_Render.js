@@ -1043,7 +1043,18 @@ window.ListInfo = {
 				: "",
 			editableBy = element.hasOwnProperty("editableBy")
 				? 'data-editableby="' + element.editableBy + '"'
+				: "",
+			dontSubmit = element.hasOwnProperty("dontSubmit") ? "dont-submit" : "",
+			dontSubmitRequired = element.hasOwnProperty("dontSubmitRequired") ? "dont-submit even-required" : "",
+			dontRequest = element.hasOwnProperty("dontRequest") ? "dont-request" : "", // to avoid err on view
+			inputLisKey = element.hasOwnProperty("listKey")
+				? `data-listkey="${element.listKey}" `
+				: ` `,
+			requiredValues = "",
+			RequiredName = element.hasOwnProperty("RequiredName")
+				? "data-requiredname=" + element.RequiredName
 				: "";
+
 		renderfield = true;
 		window.acceptedExtensions;
 		if (element.hasOwnProperty("security")) {
@@ -1171,6 +1182,15 @@ window.ListInfo = {
 		} else {
 			acceptedExtensions = element.fileExtensions;
 		}
+
+
+		if (element.Errmsgkey == undefined) {
+			Errmsgkey = 'fieldIsRequired';
+		}
+		else {
+			Errmsgkey = element.Errmsgkey;
+		}
+
 
 		switch (element.type) {
 			case "string":
@@ -1591,6 +1611,73 @@ window.ListInfo = {
 					" " +
 					element.validation +
 					">" +
+					'<div class="inputInfo ' +
+					isexist +
+					'">' +
+					descPhrase +
+					"</div>" +
+					"</div>";
+				OnSuccess(flag, htmlBody);
+				break;
+
+			case "phonenumber": // ksa phone number validation
+				htmlBody =
+					'<div class="col-md-6 CFIELD ' +
+					dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+					" " +
+					element.className +
+					' " ' +
+					thistip +
+					" " +
+					hidestagesIDs +
+					" " +
+					editableBy +
+					" " +
+					showstagesIDs +
+					"  " +
+					disablestagesIDs +
+					"  " +
+					enablestagesIDs +
+					"   " +
+					isWfhidestagesIDs +
+					" " +
+					requireOnWfTaskstagesIDs +
+					" " +
+					isWfshowstagesIDs +
+					"  " +
+					isWfdisablestagesIDs +
+					"  " +
+					isWfenablestagesIDs +
+					'        data-groups="' +
+					groups +
+					'" style="display:' +
+					element.display +
+					'">' +
+					'<label for="' +
+					element.InternalName +
+					'" ' +
+					element.validation +
+					">" +
+					displayName +
+					"</label>" +
+					"<input " +
+					ToggleName +
+					" " +
+					RequiredName +
+					' type="text" placeholder="' +
+					displayName +
+					'" ' +
+					dynamic +
+					' class="form-control SPIField" id="' +
+					element.InternalName +
+					'" ' +
+					element.state +
+					" " +
+					element.validation +
+					' pattern="(05|5|009665|9665)(5|0|3|6|4|9|1|8|7)([0-9]{7})"/>' +
+					"<span data-trans-" +
+					Errmsgkey +
+					' class="errMsgField Resources"></span>' +
 					'<div class="inputInfo ' +
 					isexist +
 					'">' +
@@ -4493,7 +4580,14 @@ var View_ListInfo = {
 			isWfshowstagesIDs = "",
 			isWfdisablestagesIDs = "",
 			isWfenablestagesIDs = "",
-			renderfield = true;
+			renderfield = true,
+			dontSubmit = element.hasOwnProperty("dontSubmit") ? "dont-submit" : "", // to avoid err on view
+			dontSubmitRequired = element.hasOwnProperty("dontSubmitRequired") ? "dont-submit even-required" : "",
+			dontRequest = element.hasOwnProperty("dontRequest") ? "dont-request" : "", // to avoid err on view
+			toggleValues = "",
+			ToggleName = element.hasOwnProperty("ToggleName") ? "data-togglename=" + element.ToggleName : "";
+
+
 		if (element.hasOwnProperty("security")) {
 			if (element.security.groups.length > 0) {
 				for (var z = 0; z < element.security.groups.length; z++) {
@@ -4885,6 +4979,54 @@ var View_ListInfo = {
 						'<p type="number" class="viewmode-value number" id="' +
 						element.InternalName +
 						'" ></p>' +
+						"</div>";
+					OnSuccess(flag, htmlBody);
+					break;
+
+				case "phonenumber": // ksa phone number validation
+					htmlBody =
+						'<div class="col-md-6 CFIELD ' +
+						dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+						" " +
+						element.className +
+						' " ' +
+						thistip +
+						" " +
+						hidestagesIDs +
+						" " +
+						showstagesIDs +
+						"  " +
+						disablestagesIDs +
+						"  " +
+						enablestagesIDs +
+						"   " +
+						isWfhidestagesIDs +
+						" " +
+						requireOnWfTaskstagesIDs +
+						" " +
+						isWfshowstagesIDs +
+						"  " +
+						isWfdisablestagesIDs +
+						"  " +
+						isWfenablestagesIDs +
+						'        data-groups="' +
+						groups +
+						'" style="display:' +
+						element.display +
+						'">' +
+						'<label for="' +
+						element.InternalName +
+						'" ' +
+						element.validation +
+						">" +
+						displayName +
+						"</label>" +
+						'<p type="number" class="viewmode-value" id="' +
+						element.InternalName +
+						'" ' +
+						ToggleName +
+						"></p>" +
+						"</div>" +
 						"</div>";
 					OnSuccess(flag, htmlBody);
 					break;
