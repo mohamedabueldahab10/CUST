@@ -190,6 +190,10 @@ window.USERINID; // to get the initiative id
 
 window.activeCode = istherePCODE ? USERPCODE : isthereICODE ? UserICode : "";
 
+
+var projectStartToValidation = "", initiativeStartToValidation = "";
+
+
 if (window.location.href.indexOf("ListKey") > -1) {
 	for (var i = 0; i < ListArray.length; i++) {
 		var obj = ListArray[i];
@@ -3435,6 +3439,9 @@ var Access_Project_Info_Request = {
 				User_ProjUID = oListItem.get_item("ProjectGUID") || UserNo_Data;
 				//for milestones source
 				User_ScheduleSource = oListItem.get_item("ScheduleSource") || No_Data;
+
+				projectStartToValidation = oListItem.get_item("BaselineStartDate") || '';
+
 				// if (User_ScheduleSource == 'عبر النظام') {
 				//     $('body').append('<style>.navbar.page-nav.px-5 li.nav-item[data-href*="schedule.aspx"]{display:none}</style>');
 				// } else if (User_ScheduleSource == 'عبر الجدول الزمني') {
@@ -3446,6 +3453,19 @@ var Access_Project_Info_Request = {
 			);
 			userProjects.push(oListItem.get_item("Title"));
 		}
+
+		//should uncomment when need to applt the validation on milstones every month for proj and every 3 months for initiative
+		debugger
+		if (istherePCODE && projectStartToValidation) {
+			if (USERlistkey == 'milestones' && isNew) {
+				console.log("YOU Can creat a milestone")
+			} else {
+				Get_Milestones.init()
+			}
+
+		}
+
+
 
 		if (isthereICODE) {
 			GetInitiativeTitle_Request.preinit();
@@ -5992,3 +6012,316 @@ let data_Level2_Access = {
 		relationFieldData: [],
 	},
 };
+
+
+
+///////////////////////////////////
+
+
+var Get_Milestones = {
+	init: function () {
+
+		var clientContext = new SP.ClientContext.get_current();
+		var oList = clientContext.get_web().get_lists().getByTitle("Milestones");
+		var camlQuery = new SP.CamlQuery();
+
+		var query = ''
+
+		console.log("in get_Milestones")
+		debugger
+
+		if (USERPCODE) {
+			query = "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">" +
+				USERPCODE +
+				"</Value></Eq></And></Where><OrderBy><FieldRef Name='CommittedDate' Ascending='False' /></OrderBy></Query></View>"
+		} else if (UserICode) {
+			query = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + UserICode + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
+		}
+
+		camlQuery.set_viewXml(query);
+
+		Get_Milestones.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+		clientContext.load(Get_Milestones.g.collListItem);
+		clientContext.executeQueryAsync(
+			Function.createDelegate(this, Get_Milestones.onSuccess),
+			Function.createDelegate(this, Get_Milestones.onError)
+		);
+	},
+	onSuccess: async function (sender, args) {
+		debugger
+		var collListItem = Get_Milestones.g.collListItem;
+		var listItemEnum = collListItem.getEnumerator();
+		var itemhtml = [],
+			itemID,
+			itemname,
+			itemtitle,
+			itemPlannedClosureDate,
+			itemstatus,
+			itemdate,
+			itemdate2,
+			itemuser,
+			allMilestonesArr = [],
+			isactive;
+
+		while (listItemEnum.moveNext()) {
+			var oListItem = listItemEnum.get_current();
+			itemID = oListItem.get_id();
+			itemname = oListItem.get_item("Name") || '';
+			itemtitle = oListItem.get_item("Title") || '';
+			itemPlannedClosureDate = Get_Milestones.g.dateConvert2(oListItem.get_item("PlannedDate")) || '' //PlannedClosureDate
+			
+
+			if (itemPlannedClosureDate) {
+				allMilestonesArr.push({
+					id: itemID,
+					name: itemname,
+					title: itemtitle,
+					date: itemPlannedClosureDate
+				})
+			}
+
+
+		}
+
+		if (USERPCODE) {
+			if (allMilestonesArr.length > 0) {
+				var projectStartDate = Get_Milestones.g.dateConvert2(projectStartToValidation);
+				// var projectFinishDate = Get_Milestones.g.dateConvert2(projectEndDate);
+				var now = new Date();
+				var day = ("0" + now.getDate()).slice(-2);
+				var month = ("0" + (now.getMonth() + 1)).slice(-2);
+				var year = now.getFullYear();
+				var today = now.getFullYear() + "-" + month + "-" + day;
+				var todayArr = [today]
+
+				console.log(projectStartDate, "projectStartDate")
+				console.log(today, "today")
+
+				var dateRangeArr = await dateRange(projectStartDate, today)
+
+				var datesWithoutMilesArr = dateRangeArr
+
+				console.log(dateRangeArr, "dateRangeArr")
+
+
+				// 2022-10-20
+				//2022-12-28
+				var isMatch = false
+
+				allMilestonesArr.forEach(el => {
+
+
+
+					isMatch = dateRangeArr.some((e) => e.match(el.date.slice(0, -2)))
+
+					if (isMatch) {
+
+						let index = datesWithoutMilesArr.indexOf(el.date.slice(0, -2));
+						datesWithoutMilesArr.splice(index, 1)
+
+
+						// datesWithoutMilesArr.splice(index, 1);
+
+					} else {
+						console.log(el.date, "Dddddddddddddddddd in else")
+						// return el.date
+					}
+
+					// console.log(isMatch,"isMatch")
+
+				})
+
+				if (datesWithoutMilesArr.length > 0) {
+
+					var isMatchCurrentMonth = datesWithoutMilesArr.some((e) => e.match(today.slice(0, -2)))
+
+
+					if (datesWithoutMilesArr.length == 1 && isMatchCurrentMonth) {
+
+						$('.page-nav').after(`<p style="padding:0 5%;color:#f00">يجب انشاء معلم جديد على الشهر الحالي</p>`)
+
+					} else {
+
+						var datesHtml = '<div style="width:100%;padding:20px 0">'
+						datesWithoutMilesArr.forEach(el => {
+							datesHtml += `<span class="col-2" style="display:inline-block">${el.slice(0, -1)}</span>`
+						})
+						datesHtml += '</div>'
+
+
+						$('.page-nav').after('<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;margin-top:10%">' +
+							'<label><span  style="font-size:13px">لا يوجد معالم على هذه الشهور ,الرجاء انشاء معالم </span></label>' + datesHtml + '<div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' + _spPageContextInfo.webAbsoluteUrl
+							+ '/SitePages/new.aspx?ListKey=milestones&PCODE=' + USERPCODE +
+							'\'"><span>معالم</span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>')
+					}
+				}
+
+				console.log(datesWithoutMilesArr, "datesWithoutMilesArr")
+
+			} else {
+				$('.page-nav').after('<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;justify-content:flex-start;margin-top:10%">' +
+					'<label><span  style="font-size:13px">لا يوجد معالم على هذه الشهور ,الرجاء انشاء معالم </span></label><div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' + _spPageContextInfo.webAbsoluteUrl
+					+ '/SitePages/new.aspx?ListKey=milestones&PCODE=' + USERPCODE +
+					'\'"><span>معالم</span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>')
+			}
+		} else if (UserICode) {
+			console.log(initiativeStartToValidation, "initiativeStartToValidation")
+
+			if (allMilestonesArr.length > 0) {
+
+				var initiativeStartDate = Get_Milestones.g.dateConvert2(initiativeStartToValidation) || '';
+				// var initiativeFinishDate = standardisedPfinishdate;
+				var now = new Date();
+				var day = ("0" + now.getDate()).slice(-2);
+				var month = ("0" + (now.getMonth() + 1)).slice(-2);
+				var year = now.getFullYear();
+				var today = now.getFullYear() + "-" + month + "-" + day;
+				var todayArr = [today]
+				var splitThreeMontshArr = []
+
+
+				console.log(initiativeStartDate, "initiativeStartDate")
+				console.log(today, "today initiaative")
+
+				var dateRangeArr = await dateRange(initiativeStartDate, today)
+
+				const perChunk = 3 // items per chunk
+
+
+				const result = await dateRangeArr.reduce((resultArray, item, index) => {
+					const chunkIndex = Math.floor(index / perChunk)
+
+					if (!resultArray[chunkIndex]) {
+						resultArray[chunkIndex] = [] // start a new chunk
+					}
+
+					resultArray[chunkIndex].push(item)
+
+					return resultArray
+				}, [])
+
+				splitThreeMontshArr = result
+				console.log(splitThreeMontshArr, "splitThreeMontshArr"); // result: [['a','b'], ['c','d'], ['e']]
+
+				var datesWithoutMilesArrFiltered = splitThreeMontshArr
+
+				var isMatch = false
+				allMilestonesArr.forEach(el => {
+
+					splitThreeMontshArr.forEach(item => {
+						isMatch = item.some((e) => e.match(el.date.slice(0, -2)))
+						console.log(isMatch, "ISSSSSSSS MATCH")
+						if (isMatch) {
+							let index = splitThreeMontshArr.indexOf(item);
+							datesWithoutMilesArrFiltered.splice(index, 1)
+						} else {
+							console.log(el.date, "Dddddddddddddddddd in else")
+						}
+					})
+
+				})
+
+				console.log(datesWithoutMilesArrFiltered, "datesWithoutMilesArrFiltered")
+				if (datesWithoutMilesArrFiltered.length > 0) {
+					if (datesWithoutMilesArrFiltered.length == 1) {
+						var internalArr = datesWithoutMilesArrFiltered[0]
+						var isMatchCurrentMonth = internalArr.some((e) => e.match(today.slice(0, -2)))
+						if (isMatchCurrentMonth) {
+							$('.page-nav').after(`<p style="padding:0 5%;color:#f00">يجب انشاء معلم جديد على الفترة الحالية</p>`)
+						} else {
+
+							var datesHtml = '<div style="width:100%;padding:20px 0">'
+							datesWithoutMilesArrFiltered.forEach(el => {
+								var formatArr = []
+								el.forEach(item => {
+									formatArr.push(item.slice(0, -1))
+								})
+								datesHtml += `<span class="col-5" style="display:inline-block">[${formatArr}]</span>`
+							})
+							datesHtml += '</div>'
+
+
+							$('.page-nav').after('<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;margin-top:10%">' +
+								'<label><span  style="font-size:13px">لا يوجد معالم على هذه الفترة ,الرجاء انشاء معالم </span></label>' + datesHtml + '<div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' + _spPageContextInfo.webAbsoluteUrl
+								+ '/SitePages/new.aspx?ListKey=initiativemilestones&ICODE=' + UserICode +
+								'\'"><span>معالم</span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>')
+						}
+					} else {
+
+
+						var datesHtml = '<div style="width:100%;padding:20px 0">'
+						datesWithoutMilesArrFiltered.forEach(el => {
+							var formatArr = []
+							el.forEach(item => {
+								formatArr.push(item.slice(0, -1))
+							})
+							datesHtml += `<span class="col-5" style="display:inline-block">[${formatArr}]</span>`
+						})
+						datesHtml += '</div>'
+
+						$('.page-nav').after('<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;margin-top:10%">' +
+							'<label><span  style="font-size:13px">لا يوجد معالم على هذه الفترة ,الرجاء انشاء معالم </span></label>' + datesHtml + '<div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' + _spPageContextInfo.webAbsoluteUrl
+							+ '/SitePages/new.aspx?ListKey=initiativemilestones&ICODE=' + UserICode +
+							'\'"><span>معالم</span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>')
+					}
+				}
+
+			} else {
+				$('.page-nav').after('<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;margin-top:10%">' +
+					'<label><span  style="font-size:13px">لا يوجد معالم على هذه المبادرة ,الرجاء انشاء معالم </span></label><div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' + _spPageContextInfo.webAbsoluteUrl
+					+ '/SitePages/new.aspx?ListKey=initiativemilestones&ICODE=' + UserICode +
+					'\'"><span>معالم</span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>')
+			}
+		}
+
+	},
+	onError: function (sender, args) {
+		console.log(
+			"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+		);
+	},
+	// Global variables
+	g: {
+		dateConvert2: function (
+			date //date format supported by standards
+		) {
+			if (date) {
+				var local = date.getTime();
+				var offset = date.getTimezoneOffset() * (60 * 1000);
+				var utc = new Date(local + offset);
+				var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+				var datetouse = riyadh.toLocaleString("en-US").split(",")[0].split("/");
+				datetouse[0] =
+					datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
+				datetouse[1] =
+					datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
+				var datetouse2 = datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1]; //yyyy-mm-dd
+				return datetouse2;
+			} else {
+				return No_Data;
+			}
+		},
+	},
+
+}
+
+
+
+async function dateRange(startDate, endDate) {
+	var start = startDate.split('-');
+	var end = endDate.split('-');
+	var startYear = parseInt(start[0]);
+	var endYear = parseInt(end[0]);
+	var dates = [];
+
+	for (var i = startYear; i <= endYear; i++) {
+		var endMonth = i != endYear ? 11 : parseInt(end[1]) - 1;
+		var startMon = i === startYear ? parseInt(start[1]) - 1 : 0;
+		for (var j = startMon; j <= endMonth; j = j > 12 ? j % 12 || 11 : j + 1) {
+			var month = j + 1;
+			var displayMonth = month < 10 ? '0' + month : month;
+			dates.push([i, displayMonth, ''].join('-'));
+		}
+	}
+	return dates;
+}
