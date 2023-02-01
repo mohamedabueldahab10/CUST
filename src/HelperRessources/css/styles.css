@@ -6307,7 +6307,7 @@ right: 3%;
 }
 
 #headingImportantLinks:hover {
-    background-color: #41BA83;
+    background-color: #f7941d;
 }
 
 .important-links-ctx .important-links-btn {
@@ -6367,4 +6367,12 @@ a.a-important-link:hover>* {
 .intoallMilestonesCounter span {
     color: #148287;
     font-size: 1.8rem
+}
+.btn.btn-excel {
+    background:unset!important;
+    border:1px solid #148287;
+    padding:5px;
+    border-radius: 4px;
+    margin-inline-start:7px;
+    font-size: 16px;
 }

@@ -14,7 +14,8 @@ var PQuery = '',
   FilterChoices = [],
   filterValue = false,
   isOnload = true,
-  isEmptyFilter = true, SPHTTPitemsEnumerable;
+  isEmptyFilter = true, SPHTTPitemsEnumerable,
+  AllRecordsWithID = [];
 if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
   var search = "بحث ...";
   var No_Data = 'لا يوجد'
@@ -33,7 +34,7 @@ var projectTypeFilterQuery = '', typeClicked = 'Internal';
 var taskClicked = 'relatedTasks', allTasksClicked = false, getNewFilterTask = false, isViewMoreClicked = false;
 
 var emptyData = require('../../../HelperRessources/img/empty-data.png');
-var exportExcel = require('../../../helperResources/img/exportExcel.png');
+var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
 // var emptyData = ''
 //all data filter array
 allDataFilterArr = []
@@ -304,6 +305,12 @@ window.sphttp = {
                 onEach(records, record, oListItem, false); //false if having item
               }
             }
+            isLoadMore
+            ? RecordsWithID.map(function (a) {
+              // stack results
+              AllRecordsWithID.push(a);
+            })
+            : (AllRecordsWithID = RecordsWithID); //get only filtered results
 
           }
 
@@ -891,8 +898,8 @@ window.ListingData = {
 
           //create button and div for filtertation DDLs
           var HtmlStart = (USERProjRelated.indexOf(listkey) > -1 && PCODE) || (USERProjRelated.indexOf(listkey) == -1 && !PCODE && !ICODE && listkey != 'tasks') ?
-            '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + PCODE_STRING + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-action btn-excel" type="button" onclick="ListingData.g.ExportToExcel()"><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>' : ICODE ?
-              '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + "&ICODE=" + ICODE + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-action btn-excel" type="button" onclick="ListingData.g.ExportToExcel()"><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>'
+            '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + PCODE_STRING + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="ListingData.g.ExportToExcel()"><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>' : ICODE ?
+              '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + "&ICODE=" + ICODE + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="ListingData.g.ExportToExcel()"><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>'
               : '';
           if (originalstate) {
             $('.content-list-head > .listing-new-at').html(HtmlStart);
@@ -1354,91 +1361,91 @@ window.ListingData = {
           }
       }
     },
-    // ExportToExcel: function () {
-    //   var DN = Listing_Info.map((a) => a.DisplayName);
-    //   var fields = IN;
-    //   var filter = "";
-    //   var mydata = [];
-    //   var newdate;
-    //   var index;
-    //   var armonths = [
-    //     "يناير",
-    //     "فبراير",
-    //     "مارس",
-    //     "أبريل",
-    //     "مايو",
-    //     "يونيو",
-    //     "يوليو",
-    //     "أغسطس",
-    //     "سبتمبر",
-    //     "أكتوبر",
-    //     "نوفمبر",
-    //     "ديسمبر",
-    //   ];
-    //   var enmonths = [
-    //     "January",
-    //     "February",
-    //     "March",
-    //     "April",
-    //     "May",
-    //     "June",
-    //     "July",
-    //     "August",
-    //     "September",
-    //     "October",
-    //     "November",
-    //     "December",
-    //   ];
-    //   AllRecordsWithID.forEach(function (a, i) {
-    //     //getting listing records
-    //     mydata.push(a.record);
-    //   });
+    ExportToExcel: function () {
+      var DN = Listing_Info.map((a) => a.DisplayName);
+      var fields = IN;
+      var filter = "";
+      var mydata = [];
+      var newdate;
+      var index;
+      var armonths = [
+        "يناير",
+        "فبراير",
+        "مارس",
+        "أبريل",
+        "مايو",
+        "يونيو",
+        "يوليو",
+        "أغسطس",
+        "سبتمبر",
+        "أكتوبر",
+        "نوفمبر",
+        "ديسمبر",
+      ];
+      var enmonths = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      AllRecordsWithID.forEach(function (a, i) {
+        //getting listing records
+        mydata.push(a.record);
+      });
 
-    //   var table =
-    //     '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head> <!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets> <x:ExcelWorksheet><x:Name>{worksheet}</x:Name> <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions> </x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook> </xml><![endif]--><meta charset="UTF-8"></head><body><table><thead><tr>'; //assigning charset for ar words
-    //   // var head = Object.keys(mydata[0]);//Using internal names
-    //   var head = DN;
-    //   for (var i = 0; i < head.length; i++) {
-    //     table += "<th>" + head[i].replaceAll(" ", "%20") + "</th>";
-    //   }
-    //   table += "</tr></thead><tbody>";
-    //   for (var i = 0; i < mydata.length; i++) {
-    //     // var isshown = true;
-    //     // if ($(".items.TaskDetails")[i].hasAttribute("style"))
-    //     // 	isshown =
-    //     // 		$(".items.TaskDetails")[i].attributes[1].value != "display: none;";
-    //     // if (isshown)
-    //     table += "<tr>";
-    //     for (var j = 0; j < IN.length; j++) {
+      var table =
+        '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head> <!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets> <x:ExcelWorksheet><x:Name>{worksheet}</x:Name> <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions> </x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook> </xml><![endif]--><meta charset="UTF-8"></head><body><table><thead><tr>'; //assigning charset for ar words
+      // var head = Object.keys(mydata[0]);//Using internal names
+      var head = DN;
+      for (var i = 0; i < head.length; i++) {
+        table += "<th>" + head[i].replaceAll(" ", "%20") + "</th>";
+      }
+      table += "</tr></thead><tbody>";
+      for (var i = 0; i < mydata.length; i++) {
+        // var isshown = true;
+        // if ($(".items.TaskDetails")[i].hasAttribute("style"))
+        // 	isshown =
+        // 		$(".items.TaskDetails")[i].attributes[1].value != "display: none;";
+        // if (isshown)
+        table += "<tr>";
+        for (var j = 0; j < IN.length; j++) {
 
-    //       if (
-    //         armonths.indexOf(mydata[i][IN[j]].toString().split(" ")[1]) > -1 &&
-    //         FT[j] == "date"
-    //       ) {
-    //         newdate = mydata[i][IN[j]].split(" ");
-    //         index = armonths.indexOf(newdate[1]);
-    //         newdate[1] = enmonths[index];
-    //         mydata[i][IN[j]] = newdate.join(" ");
-    //       }
-    //       // console.log(mydata[i][IN[j]]);
-    //       // if (isshown)
-    //       table +=
-    //         "<td>" +
-    //         mydata[i][IN[j]].toString().replaceAll(" ", "%20") +
-    //         "</td>"; //fixing spaces issue
-    //     }
-    //     // if (isshown)
-    //     table += "</tr>";
-    //   }
-    //   table += "</tbody></table></body></html>";
-    //   var csv = "data:application/vnd.ms-excel;charset=utf-8," + table + "\n";
-    //   var a = document.createElement("a");
-    //   a.setAttribute("href", csv);
-    //   a.setAttribute("download", listkey + "-data.xls");
-    //   document.body.appendChild(a);
-    //   a.click();
-    //   document.body.removeChild(a);
-    // },
+          if (
+            armonths.indexOf(mydata[i][IN[j]].toString().split(" ")[1]) > -1 &&
+            FT[j] == "date"
+          ) {
+            newdate = mydata[i][IN[j]].split(" ");
+            index = armonths.indexOf(newdate[1]);
+            newdate[1] = enmonths[index];
+            mydata[i][IN[j]] = newdate.join(" ");
+          }
+          // console.log(mydata[i][IN[j]]);
+          // if (isshown)
+          table +=
+            "<td>" +
+            mydata[i][IN[j]].toString().replaceAll(" ", "%20") +
+            "</td>"; //fixing spaces issue
+        }
+        // if (isshown)
+        table += "</tr>";
+      }
+      table += "</tbody></table></body></html>";
+      var csv = "data:application/vnd.ms-excel;charset=utf-8," + table + "\n";
+      var a = document.createElement("a");
+      a.setAttribute("href", csv);
+      a.setAttribute("download", listkey + "-data.xls");
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    },
   },
   //fill filteration DDLs data
   Get_DDL: {

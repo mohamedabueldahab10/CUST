@@ -26,8 +26,8 @@
 }
 
 .knowledgeNavItem.activeTab {
-    border: 1px solid #41BA83;
-    background-color: #41BA83;
+    border: 1px solid #f7941d;
+    background-color: #f7941d;
 }
 
 .knowledgeNavItem.activeTab .tabLink span {

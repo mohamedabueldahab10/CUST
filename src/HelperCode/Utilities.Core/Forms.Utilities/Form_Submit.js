@@ -275,7 +275,20 @@ window.New_Data_Submit = {
     var itemCreateInfo = new SP.ListItemCreationInformation();
     New_Data_Submit.g.oListItem = oList.addItem(itemCreateInfo);
     $(
-      ".section-container:not([data-target_list]) .CFIELD> input[type=text], .section-container:not([data-target_list]) .CFIELD> input[type=number],.section-container:not([data-target_list]) .CFIELD> input[type=email],  .section-container:not([data-target_list]) .CFIELD> input[type=float],.section-container:not([data-target_list]) .CFIELD>  input[type=date], .section-container:not([data-target_list]) .CFIELD>  input[type=date],.section-container:not([data-target_list]) .CFIELD> .datetimeinputs input[type=datetime-local], .section-container:not([data-target_list]) .CFIELD> input[type=radio], .section-container:not([data-target_list]) .CFIELD> input[type=checkbox], .section-container:not([data-target_list]) .CFIELD> div[type=picker],.section-container:not([data-target_list]) .CFIELD> div[type=multipicker], .section-container:not([data-target_list]) .CFIELD> select[type=dropdown], .section-container:not([data-target_list]) .CFIELD>  textarea, .section-container:not([data-target_list]) .CFIELD > .multiselect-container"
+      `.section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=text],
+       .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=number],
+       .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=email],
+        .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=float],
+         .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=date],
+        .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=date],
+        .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> .datetimeinputs input[type=datetime-local],
+         .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=radio],
+          .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=checkbox],
+           .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> div[type=picker],
+           .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> div[type=multipicker],
+            .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> select[type=dropdown],
+             .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> textarea,
+              .section-container:not([data-target_list]) .CFIELD:not(.dont-submit) > .multiselect-container`
     ).each(function () {
       if ($(this).attr("type") == "picker") {
         if ($(this).find("span.sp-peoplepicker-userSpan").length) {
@@ -971,7 +984,20 @@ window.Edit_Data_Submit = {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(SP_ListName);
     Edit_Data_Submit.g.oListItem = oList.getItemById(IID); //declared inside object scope only
-    $(".section-container:not([data-target_list]) .CFIELD> input[type=text], .section-container:not([data-target_list]) .CFIELD> input[type=number],.section-container:not([data-target_list]) .CFIELD> input[type=email] ,.section-container:not([data-target_list]) .CFIELD> input[type=float], .section-container:not([data-target_list]) .CFIELD>  input[type=date],.section-container:not([data-target_list]) .CFIELD> .datetimeinputs input[type=date],.section-container:not([data-target_list]) .CFIELD> .datetimeinputs input[type=datetime-local],.section-container:not([data-target_list]) .CFIELD> input[type=radio], .section-container:not([data-target_list]) .CFIELD> input[type=checkbox], .section-container:not([data-target_list]) .CFIELD> div[type=multipicker],.section-container:not([data-target_list]) .CFIELD> div[type=picker], .section-container:not([data-target_list]) .CFIELD> select[type=dropdown], .section-container:not([data-target_list]) .CFIELD>  textarea, .section-container:not([data-target_list]) .CFIELD > .multiselect-container"
+    $(`.section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=text],
+     .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=number],
+     .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=email],
+     .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=float],
+      .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)>  input[type=date],
+      .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> .datetimeinputs input[type=date],
+      .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> .datetimeinputs input[type=datetime-local],
+      .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=radio],
+       .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=checkbox],
+        .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> div[type=multipicker],
+        .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> div[type=picker],
+         .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> select[type=dropdown],
+          .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)>  textarea,
+           .section-container:not([data-target_list]) .CFIELD:not(.dont-submit) > .multiselect-container`
     ).each(function () {
       console.log($(this).attr("id"), "while id")
 
@@ -1437,10 +1463,10 @@ var kpiResults = {
               .slice(-1)[0]
           );
 
-          kpiResults.g.oListItem.set_item(id, ppp);
+      kpiResults.g.oListItem.set_item(id, ppp);
 
-          console.log(ppp,"ppppppppppppppppppppppppppppp")
-          console.log(id,"iiiiiiiiiiiiiiiiiiiiiid")
+      console.log(ppp, "ppppppppppppppppppppppppppppp")
+      console.log(id, "iiiiiiiiiiiiiiiiiiiiiid")
     }
     if ($('#PerformanceLeader2').find("span.sp-peoplepicker-userSpan").length) {
       var id = $('#PerformanceLeader2').attr("INppicker");
@@ -1456,7 +1482,7 @@ var kpiResults = {
               .slice(-1)[0]
           );
 
-          kpiResults.g.oListItem.set_item(id, ppp);
+      kpiResults.g.oListItem.set_item(id, ppp);
     }
     /////////////////////////////////////////////////////////
 
