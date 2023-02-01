@@ -6048,7 +6048,7 @@ var Get_Milestones = {
 		);
 	},
 	onSuccess: async function (sender, args) {
-
+		debugger
 		var collListItem = Get_Milestones.g.collListItem;
 		var listItemEnum = collListItem.getEnumerator();
 		var itemhtml = [],
@@ -6068,8 +6068,8 @@ var Get_Milestones = {
 			itemID = oListItem.get_id();
 			itemname = oListItem.get_item("Name") || '';
 			itemtitle = oListItem.get_item("Title") || '';
-			itemPlannedClosureDate = Get_Milestones.g.dateConvert2(oListItem.get_item("PlannedClosureDate")) || ''
-
+			itemPlannedClosureDate = Get_Milestones.g.dateConvert2(oListItem.get_item("PlannedDate")) || '' //PlannedClosureDate
+			
 
 			if (itemPlannedClosureDate) {
 				allMilestonesArr.push({
