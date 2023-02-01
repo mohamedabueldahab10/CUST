@@ -313,6 +313,7 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
+        dontSubmit: true,
         // state: 'disabled',
         // security: {
         //     groups: ["LMS_P",
@@ -332,6 +333,7 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
+        dontSubmit: true,
         // state: 'disabled',
       },
       // {

@@ -187,6 +187,7 @@ var Information_Form = [
         DisplayName: 'هل يوجد محور / برنامج ؟',
         type: 'dropdownValues',
         state: 'disabled',
+        dontSubmit: true,
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
@@ -274,6 +275,7 @@ var Information_Form = [
         DisplayNameEn: 'Strategic Description',
         DisplayName: 'وصف  المحور الإستراتيجى / برنامج الرؤية',
         type: 'multiline',
+        dontSubmit: true,
       },
     ],
   },

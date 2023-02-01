@@ -753,6 +753,7 @@ var Information_Form = [
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
         state: 'disabled',
+        dontSubmit: true,
         // security: {
         //     groups: ["LMS_P",
         //         'EPMO', 'System Admin Group'
@@ -772,6 +773,7 @@ var Information_Form = [
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
         state: 'disabled',
+        dontSubmit: true,
       },
     ],
   },

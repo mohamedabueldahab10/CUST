@@ -347,166 +347,166 @@ var Information_Form = [
 
         ]
     },
-    {
-        label: 'قائمة المنافع ',
-        labelEn: 'Benefits List',
-        description: "حالة تحقق المنافع ",
-        descriptionEn: "Benefits Realization Status",
-        sectiontype: "master",
-        targetlist: "Benefits",
-        subFields: [{
-            "InternalName": "Name",
-            "DisplayName": "المنفعة",
-            "DisplayNameEn": "Name",
-            "type": "string"
-        },
-        {
-            "InternalName": "KPIs",
-            "DisplayName": "مؤشرات الأداء",
-            "DisplayNameEn": "KPIs",
-            "type": "string",
-        },
-        {
-            "InternalName": "Target",
-            "DisplayName": "القيمة المستهدفة",
-            "DisplayNameEn": "Target",
-            "type": "float",
-        },
-        {
-            "InternalName": "Actual",
-            "DisplayName": "القيمة الفعلية",
-            "DisplayNameEn": "Actual",
-            "type": "float",
-        },
-        {
-            "InternalName": "Comments",
-            "DisplayName": "الملاحظات",
-            "DisplayNameEn": "Comments",
-            "type": "string",
-        },
+    // {
+    //     label: 'قائمة المنافع ',
+    //     labelEn: 'Benefits List',
+    //     description: "حالة تحقق المنافع ",
+    //     descriptionEn: "Benefits Realization Status",
+    //     sectiontype: "master",
+    //     targetlist: "Benefits",
+    //     subFields: [{
+    //         "InternalName": "Name",
+    //         "DisplayName": "المنفعة",
+    //         "DisplayNameEn": "Name",
+    //         "type": "string"
+    //     },
+    //     {
+    //         "InternalName": "KPIs",
+    //         "DisplayName": "مؤشرات الأداء",
+    //         "DisplayNameEn": "KPIs",
+    //         "type": "string",
+    //     },
+    //     {
+    //         "InternalName": "Target",
+    //         "DisplayName": "القيمة المستهدفة",
+    //         "DisplayNameEn": "Target",
+    //         "type": "float",
+    //     },
+    //     {
+    //         "InternalName": "Actual",
+    //         "DisplayName": "القيمة الفعلية",
+    //         "DisplayNameEn": "Actual",
+    //         "type": "float",
+    //     },
+    //     {
+    //         "InternalName": "Comments",
+    //         "DisplayName": "الملاحظات",
+    //         "DisplayNameEn": "Comments",
+    //         "type": "string",
+    //     },
 
-        ]
-    },
-    {
-        label: 'الدروس المستفادة',
-        labelEn: 'Lessons Learned',
-        description: "  ",
-        descriptionEn: "  ",
-        sectiontype: "master",
-        targetlist: "Lessons Learned",
-        subFields: [{
-            "InternalName": "Name",
-            "DisplayName": "الدرس المستفاد",
-            "DisplayNameEn": "Name",
-            "type": "string"
-        },
+    //     ]
+    // },
+    // {
+    //     label: 'الدروس المستفادة',
+    //     labelEn: 'Lessons Learned',
+    //     description: "  ",
+    //     descriptionEn: "  ",
+    //     sectiontype: "master",
+    //     targetlist: "Lessons Learned",
+    //     subFields: [{
+    //         "InternalName": "Name",
+    //         "DisplayName": "الدرس المستفاد",
+    //         "DisplayNameEn": "Name",
+    //         "type": "string"
+    //     },
 
-        {
-            "InternalName": "Classification",
-            "DisplayName": "التصنيف",
-            "DisplayNameEn": "Classification",
-            "type": "dropdownValues",
-            options: {
-                choices: [{
-                    display: 'domainmanagement',//no
-                    value: 'domainmanagement'
-                },
-                {
-                    display: 'schedepm',
-                    value: 'schedepm'
-                },
-                {
-                    display: 'budget',
-                    value: 'budget'
-                },
-                {
-                    display: 'concerned',//no
-                    value: 'concerned'
-                },
-                {
-                    display: 'communication',//no
-                    value: 'communication'
-                },
-                {
-                    display: 'purchaseplan',//no
-                    value: 'purchaseplan'
-                },
-                {
-                    display: 'change',//no
-                    value: 'change'
-                },
-                ]
-            }
-        },
-        {
-            "InternalName": "Types",
-            "DisplayName": "النوع",
-            "DisplayNameEn": "Types",
-            "type": "dropdownValues",
-            options: {
-                choices: [{
-                    display: 'strongpoint',//no
-                    value: 'strongpoint'
-                },
-                {
-                    display: 'improvementopportunity',
-                    value: 'improvementopportunity'
-                }
-                ]
-            }
-        },
-        {
-            "InternalName": "Comments",
-            "DisplayName": "ملاحظات إضافية",
-            "DisplayNameEn": "Comments",
-            "type": "string",
-        },
+    //     {
+    //         "InternalName": "Classification",
+    //         "DisplayName": "التصنيف",
+    //         "DisplayNameEn": "Classification",
+    //         "type": "dropdownValues",
+    //         options: {
+    //             choices: [{
+    //                 display: 'domainmanagement',//no
+    //                 value: 'domainmanagement'
+    //             },
+    //             {
+    //                 display: 'schedepm',
+    //                 value: 'schedepm'
+    //             },
+    //             {
+    //                 display: 'budget',
+    //                 value: 'budget'
+    //             },
+    //             {
+    //                 display: 'concerned',//no
+    //                 value: 'concerned'
+    //             },
+    //             {
+    //                 display: 'communication',//no
+    //                 value: 'communication'
+    //             },
+    //             {
+    //                 display: 'purchaseplan',//no
+    //                 value: 'purchaseplan'
+    //             },
+    //             {
+    //                 display: 'change',//no
+    //                 value: 'change'
+    //             },
+    //             ]
+    //         }
+    //     },
+    //     {
+    //         "InternalName": "Types",
+    //         "DisplayName": "النوع",
+    //         "DisplayNameEn": "Types",
+    //         "type": "dropdownValues",
+    //         options: {
+    //             choices: [{
+    //                 display: 'strongpoint',//no
+    //                 value: 'strongpoint'
+    //             },
+    //             {
+    //                 display: 'improvementopportunity',
+    //                 value: 'improvementopportunity'
+    //             }
+    //             ]
+    //         }
+    //     },
+    //     {
+    //         "InternalName": "Comments",
+    //         "DisplayName": "ملاحظات إضافية",
+    //         "DisplayNameEn": "Comments",
+    //         "type": "string",
+    //     },
 
-        ]
-    },
-    {
-        label: 'قائمة المشاريع ',
-        labelEn: 'Projects List',
-        description: "  ",
-        descriptionEn: "  ",
-        sectiontype: "master",
-        targetlist: "Projects",
-        subFields: [{
-            "InternalName": "Name",
-            "DisplayName": "المشروع",
-            "DisplayNameEn": "Name",
-            "type": "string"
-        },
-        {
-            "InternalName": "Completed",
-            "DisplayName": "حالة الاكتمال",
-            "DisplayNameEn": "Completed",
-            "type": "dropdownValues",
-            options: {
-                choices: [{
-                    display: 'yes',
-                    value: 'yes'
-                },
-                {
-                    display: 'no',
-                    value: 'no'
-                },
-                {
-                    display: 'noneed',
-                    value: 'noneed'
-                }
-                ]
-            }
-        },
-        {
-            "InternalName": "Comments",
-            "DisplayName": "الملاحظات",
-            "DisplayNameEn": "Comments",
-            "type": "string",
-        },
+    //     ]
+    // },
+    // {
+    //     label: 'قائمة المشاريع ',
+    //     labelEn: 'Projects List',
+    //     description: "  ",
+    //     descriptionEn: "  ",
+    //     sectiontype: "master",
+    //     targetlist: "Projects",
+    //     subFields: [{
+    //         "InternalName": "Name",
+    //         "DisplayName": "المشروع",
+    //         "DisplayNameEn": "Name",
+    //         "type": "string"
+    //     },
+    //     {
+    //         "InternalName": "Completed",
+    //         "DisplayName": "حالة الاكتمال",
+    //         "DisplayNameEn": "Completed",
+    //         "type": "dropdownValues",
+    //         options: {
+    //             choices: [{
+    //                 display: 'yes',
+    //                 value: 'yes'
+    //             },
+    //             {
+    //                 display: 'no',
+    //                 value: 'no'
+    //             },
+    //             {
+    //                 display: 'noneed',
+    //                 value: 'noneed'
+    //             }
+    //             ]
+    //         }
+    //     },
+    //     {
+    //         "InternalName": "Comments",
+    //         "DisplayName": "الملاحظات",
+    //         "DisplayNameEn": "Comments",
+    //         "type": "string",
+    //     },
 
-        ]
-    },
+    //     ]
+    // },
     {
         label: 'الوثائق الداعمة',
         labelEn: 'Supporting Documents',
