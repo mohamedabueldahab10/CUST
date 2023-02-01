@@ -411,6 +411,62 @@ window.ListInfo = {
               $(this).addClass("active");
             }
           });
+          //new validation listiner
+
+          //////////////////////////////// make attachement required when change on radio yes
+          var previuosTargetVal = "";
+          $("input.yesnolistener").on("change", function (event) {
+            var value = event.target.value;
+            var targetElementRequired = $(this).data("targetfieldrequired");
+
+            // if we need to apply that when click on is delivered yes the status will be completed
+            var targetElement = $(this).data('targetfield')
+            var targetElementValue = $(this).data('targetfieldvalue')
+
+
+            if (value == 'yes' && (targetElement && targetElement != 'undefined') && (targetElementValue && targetElementValue != 'undefined')) {
+              previuosTargetVal = $(`#${targetElement}`).val()
+              $(`#${targetElement}`).val(targetElementValue)
+              $(`#${targetElement}`).attr("disabled", true)
+            } else if (value == 'no' && (targetElement && targetElement != 'undefined') && (targetElementValue && targetElementValue != 'undefined')) {
+              console.log(previuosTargetVal, "previuosTargetVal in else")
+              $(`#${targetElement}`).val(previuosTargetVal)
+              $(`#${targetElement}`).attr("disabled", false)
+
+            }
+
+            // to handle required on attachement
+            if (
+              value == "yes" &&
+              targetElementRequired &&
+              targetElementRequired != "undefined"
+            ) {
+              $(`#${targetElementRequired}`).attr("required", true);
+              $(`#${targetElementRequired}`)
+                .parent()
+                .find(">*")
+                .closest(".attlabel")
+                .attr("required", true);
+            } else if (
+              value == "no" &&
+              targetElementRequired &&
+              targetElementRequired != "undefined"
+            ) {
+              $(`#${targetElementRequired}`).attr("required", false);
+              $(`#${targetElementRequired}`)
+                .parent()
+                .find(">*")
+                .closest(".attlabel")
+                .attr("required", false);
+            }
+            //
+          });
+
+
+
+
+          //
+
           $("input.number").keyup(function (event) {
             // skip for arrow keys
             if (event.which >= 37 && event.which <= 40) return;
@@ -2619,7 +2675,7 @@ window.ListInfo = {
             element.validation +
             " " +
             dynamic +
-            '  class="form-control" type="radio" name="' +
+            '  class="form-control yesnolistener" type="radio" name="' +
             displayName +
             '" id="' +
             element.InternalName +
@@ -2629,6 +2685,12 @@ window.ListInfo = {
             displayName +
             '" ' +
             element.state +
+            " data-targetfieldrequired=" +
+            element.targetfieldrequired +
+            " data-targetfield=" +
+            element.targetfield +
+            " data-targetfieldvalue=" +
+            element.targetfieldvalue +
             "><label data-trans-" +
             element.options.choices[i].display +
             ' for="' +

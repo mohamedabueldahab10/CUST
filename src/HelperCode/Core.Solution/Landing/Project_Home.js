@@ -279,8 +279,8 @@ var Project_Home_Info_Request = {
         '</span>' +
         '<div class="d-inline-flex flex-column mx-3">' +
         '<h3 class="acc-title d-inline-flex black">' + projectname + '</h3>' +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        '<h3 data-trans-pattr4 class="Resources black"></h3>' +
+        '<div class="d-inline-flex flex-column">' +
+        '<h3 data-trans-pattr4 class="Resources acc-title d-inline-flex black"></h3>' +
         '<span class="des-13"><span class="complition-val">' + projectcode + '</span></span>' +
         '</div>' +
         '</div>' +
@@ -294,21 +294,21 @@ var Project_Home_Info_Request = {
         '<span class="des-13"><span class="state-val">' + projectSubsector + '</span></span>' +
         '</div>' +
         '<span class="des-13 project-date">' +
-        '<span class="start-date"><span data-trans-basestart class="Resources"></span><span class="px-2">' + baselineStartDate + '</span></span>' +
-        '<span class="end-date"><span data-trans-basefinish class="Resources"></span><span class="px-2">' + baselineFinishDate + '</span></span>' +
+        '<span class="start-date"><h3 data-trans-basestart class="Resources acc-title d-inline-flex black"></h3><span class="px-2">' + baselineStartDate + '</span></span>' +
+        '<span class="end-date"><h3 data-trans-basefinish class="Resources acc-title d-inline-flex black"></h3><span class="px-2">' + baselineFinishDate + '</span></span>' +
         '</span>' +
         '</div>' +
         '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
         '<div class="d-inline-flex flex-column mx-2 ' + phase + '">' +
-        '<span data-trans-pattr5 class="Resources des-13"></span>' +
-        '<h4 class="acc-title d-inline-flex black">' + phasename + '</h4>' +
+        '<h3 data-trans-pattr5 class="Resources acc-title d-inline-flex black"></h3>' +
+        '<span class="acc-title d-inline-flex black">' + phasename + '</span>' +
         '</div>' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        '<span data-trans-pattr60 class="Resources des-13"></span>' +
-        '<h4 class="acc-title d-inline-flex black">' + stageNamestr + '</h4>' +
+        '<h3 data-trans-pattr60 class="Resources acc-title d-inline-flex black"></h3>' +
+        '<span class="acc-title d-inline-flex black">' + stageNamestr + '</span>' +
         '</div>' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        '<h3 data-trans-relatedinitiative class="Resources black"></h3>' +
+        '<h3 data-trans-relatedinitiative class="Resources acc-title d-inline-flex black"></h3>' +
         '<span class="des-13 overflow-ellipsis-black" ><span id="relatedinit" style="cursor:pointer">' + projectRelatedInitiative + '</span><span class="tooltiptextblack" id="relatedinitchild">' + projectRelatedInitiative + '</span></span>' +
         '</div>' +
         '</div>' +
@@ -316,16 +316,16 @@ var Project_Home_Info_Request = {
         '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
         '<h4 data-trans-pattr57 class="black Resources d-flex mx-2" style="display:none !important"></h4>' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        '<span class="des-13"><span data-trans-pattr56 class="Resources complition-val"></span> ' +
-        '<h4 class="black actual-complete-val">' + ScheduleProjectPercentageComplete + '%</h4></span>' +
+        '<span class="des-13"><h3 data-trans-pattr56 class="Resources complition-valacc-title d-inline-flex black"></h3></span>' +
+        '<span class="black actual-complete-val"> ' + ScheduleProjectPercentageComplete + '%</span>' + //
         '</div>' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        '<span class="des-13"><span data-trans-pattr6 class="Resources state-val"></span></span>' +
-        '<h4 class="black"> ' + ScheduleBLPercentageCompleteList + '%</h4>' + //
+        '<span class="des-13"><h3 data-trans-pattr6 class="Resources state-valacc-title d-inline-flex black"></h3></span>' +
+        '<span class="black"> ' + ScheduleBLPercentageCompleteList + '%</span>' + //
         '</div>' +
         '<div class="d-inline-flex flex-column mx-2 ' + projectprogress + '">' +
-        '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val"></span></span>' +
-        '<h4 data-trans-' + projectprogress + ' class="black Resources myCompletionStatus statuscolor' + projectprogress + '"></h4>' + //
+        '<span class="des-13"><h3 data-trans-pattr8 class="Resources v-important-val acc-title d-inline-flex black"></h3></span>' +
+        '<span data-trans-' + projectprogress + ' class="black Resources myCompletionStatus statuscolor' + projectprogress + '"></span>' + //
         '</div>' +
         '</div>' +
         //

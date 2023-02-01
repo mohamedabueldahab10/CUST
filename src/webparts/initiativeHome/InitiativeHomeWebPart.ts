@@ -718,19 +718,19 @@ export default class InitiativeHomeWebPart extends BaseClientSideWebPart<IInitia
                                 <div class="mx-3">
                                     <div class="row">
                                         <div class="col-auto h-100">
-                                            <div class="d-flex flex-row align-items-center mb-4">
+                                            <div class="d-flex flex-row align-items-center">
                                                 <span class="sectionsideicontooltip">
                                                 <img src="${statustime}" class="">
                                                 <p data-trans-initiativetypetooltip class="Resources tooltipbox"></p>
                                                 </span>
                                                 <h3 data-trans-intype class="mx-2 m-0 text-nowrap Resources"></h3>
                                             </div>
-                                            <span class="badge bg-primary white p-3 font-13 bold">
+                                            <span class="badge bg-primary white  py-3 font-13 bold">
 
                                             </span>
                                         </div>
                                         <div class="col h-100">
-                                            <div class="d-flex flex-row align-items-center mb-4">
+                                            <div class="d-flex flex-row align-items-center">
                                             <span class="sectionsideicontooltip">
                                             <img src="${statustime}" class="">
                                             <p data-trans-initiativestatustooltip class="Resources tooltipbox"></p>
@@ -738,7 +738,7 @@ export default class InitiativeHomeWebPart extends BaseClientSideWebPart<IInitia
                                                 <h3 data-trans-instatus class="mx-2 m-0 text-nowrap Resources"></h3>
                                             </div>
                                             <span id="PjPriority"
-                                                class="badge bg-success white py-3 px-4 font-13 bold">
+                                                class="badge bg-success white py-3 font-13 bold">
                                             </span>
                                         </div>
                                     </div>
