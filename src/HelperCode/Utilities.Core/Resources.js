@@ -791,6 +791,18 @@
         "notstartedmilestonescount":"عدد المعالم التي لم تبدأ:",
         "latemilestonescount":"عدد المعالم المتأخرة:",
 
+        "allgroups":"كل المجموعات",
+        "administratorsforprojectwebapp":"المسؤولون عن تطبيق موقع المشروع",
+        "itsteeringcommittee":"اللجنة التوجيهية لتكنولوجيا المعلومات",
+        "sectionhead":"رئيس قسم",
+        "businessowner":"صاحب العمل",
+        "strategyspecialist":"أخصائي إستراتيجية",
+        "projectmanagersforprojectwebapp":"مديرو المشروع لتطبيق موقع المشروع",
+        "spmteam":"الفريق الاستراتيجي",
+        "vrop":"مكتب التخطيط الإستراتيجي",
+        "spmo":"مكتب إدارة المشاريع القطاعي",
+        "vroe":"مكتب ضمان التنفيذ",
+        "developmentunit":"مدير وحدة التنفيذ",
     },
     "en": {
         "clearfilter": "Clear Filter",
@@ -1597,9 +1609,19 @@
         "notcompletedmilestonescount":"Not Completed Milestones Count:",
         "notstartedmilestonescount":"Not Started Milestones Count:",
         "latemilestonescount":"Late Milestones Count:",
- 
-        
 
+        "allgroups":"All Groups",
+        "administratorsforprojectwebapp":"Administrators for Project Web App",
+        "itsteeringcommittee":"IT Steering Committee",
+        "sectionhead":"Section Head",
+        "businessowner":"Business Owner",
+        "strategyspecialist":"Strategy Specialist",
+        "projectmanagersforprojectwebapp":"Project Managers for Project Web App",
+        "spmteam":"SPM Team",
+        "vrop":"VRO_P",
+        "spmo":"SPMO",
+        "vroe":"VRO_E",
+        "developmentunit":"Development Unit",
     }
 
 };
