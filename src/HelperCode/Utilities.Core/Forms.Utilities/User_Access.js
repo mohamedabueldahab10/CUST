@@ -6101,14 +6101,14 @@ var Get_Milestones = {
 		var query = ''
 
 		if (USERPCODE) {
+			listHandler = "Milestones"
 
-			listHandler = "InitiativeMilestones"
 
 			query = "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">" +
 				USERPCODE +
 				"</Value></Eq></And></Where><OrderBy><FieldRef Name='CommittedDate' Ascending='False' /></OrderBy></Query></View>"
 		} else if (UserICode) {
-			listHandler = "Milestones"
+			listHandler = "InitiativeMilestones"
 
 			query = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + UserICode + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
 		}
