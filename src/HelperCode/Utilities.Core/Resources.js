@@ -797,6 +797,7 @@
         "projectprioritytooltip":"هذا الحقل يبين أهمية المشروع (مرتفعة -متوسطة - منخفضة)",
         "initiativetypetooltip":"هذا الحقل يبين نوع المبادرة (استراتيجية -رؤية - سوق عمل)",
         "initiativestatustooltip":"هذا الحقل يبين حالة المبادرة",
+        "importantlinks": "روابط مهمة",
 
         "allgroups":"كل المجموعات",
         "administratorsforprojectwebapp":"المسؤولون عن تطبيق موقع المشروع",
@@ -1622,19 +1623,7 @@
         "sublevel3": "Sub Level 3",
         "projectprioritytooltip":"This Field show the Priority of this project (Important or Medium or High)",
         "initiativetypetooltip":"This Field show the type of this initiative (Strategic or Vision or LMS )",
-        "initiativestatustooltip":"This Field show the type of this initiative",
-        "administratorsforprojectwebapp":"Administrators for Project Web App",
-        "allgroups":"All Groups",
-        "itsteeringcommittee":"IT Steering Committee",
-        "sectionhead":"Section Head",
-        "businessowner":"Business Owner",
-        "strategyspecialist":"Strategy Specialist",
-        "projectmanagersforprojectwebapp":"Project Managers for Project Web App",
-        "spmteam":"SPM Team",
-        "vrop":"VRO_P",
-        "spmo":"SPMO",
-        "vroe":"VRO_E",
-        "developmentunit":"Development Unit",
+        "initiativestatustooltip":"This Field show the type of this initiative"
     }
 
 };

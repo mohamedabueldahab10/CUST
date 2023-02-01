@@ -1994,6 +1994,114 @@ window.ListInfo = {
 				OnSuccess(flag, htmlBody);
 				break;
 
+
+			case "datetimetoparent": // handle date from parent
+				var code = activeCode;
+				//activecode
+				var customQuery =
+					'<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
+					code +
+					"</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+
+				var startDate = "",
+					finishDate = "";
+				sphttp.get(
+					_spPageContextInfo.siteServerRelativeUrl,
+					element.listname,
+					customQuery,
+					[element.startinternalname, element.endinternalname],
+					function (records, record, listItem, isDone) {
+						// if (listItem) itemsID.push(listItem.get_id());
+						if (isDone) {
+							records.forEach(function (el, index) {
+								startDate = el[element.startinternalname];
+								finishDate = el[element.endinternalname];
+							});
+
+							minDate = Dynamic_Data_Request.g.convertdate(startDate);
+							maxDate = Dynamic_Data_Request.g.convertdate(finishDate);
+
+							htmlBody =
+								'<div class="col-md-6 CFIELD ' +
+								dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+								" " +
+								element.className +
+								' " ' +
+								thistip +
+								" " +
+								hidestagesIDs +
+								" " +
+								editableBy +
+								" " +
+								showstagesIDs +
+								"  " +
+								disablestagesIDs +
+								"  " +
+								enablestagesIDs +
+								"   " +
+								isWfhidestagesIDs +
+								" " +
+								requireOnWfTaskstagesIDs +
+								" " +
+								isWfshowstagesIDs +
+								"  " +
+								isWfdisablestagesIDs +
+								"  " +
+								isWfenablestagesIDs +
+								'        data-groups="' +
+								groups +
+								'" style="display:' +
+								element.display +
+								'">' +
+								'<label for="' +
+								element.InternalName +
+								'" ' +
+								element.validation +
+								">" +
+								displayName +
+								"</label>" +
+								"<input " +
+								ToggleName +
+								" " +
+								RequiredName +
+								' type="date" onkeydown="return false" placeholder="' +
+								displayName +
+								'" ' +
+								dynamic +
+								' class="form-control SPIField" id="' +
+								element.InternalName +
+								'" ' +
+								element.state +
+								" " +
+								element.validation +
+								' minimumdate="' +
+								element.min +
+								'" maximumdate="' +
+								element.max +
+								'"  max="' +
+								maxDate +
+								'" min=' +
+								minDate +
+								">" +
+								"<span data-trans-" +
+								Errmsgkey +
+								' class="errMsgField Resources"></span>' +
+								'<div class="inputInfo ' +
+								isexist +
+								'">' +
+								descPhrase +
+								"</div>" +
+								"</div>";
+							OnSuccess(flag, htmlBody);
+
+							//console.log(`htmlBody from lookup success`, htmlBody);
+							// OnSuccess(flag, htmlBody);
+						}
+					}
+				);
+				break;
+
+
 			case "datewithtime":
 				htmlBody =
 					'<div class="col-md-6 CFIELD dateTime' +
@@ -5241,6 +5349,52 @@ var View_ListInfo = {
 						'<p type="date" class="viewmode-value" id="' +
 						element.InternalName +
 						'" ></p>' +
+						"</div>";
+					OnSuccess(flag, htmlBody);
+					break;
+				case "datetimetoparent":
+					htmlBody =
+						'<div class="col-md-6 CFIELD ' +
+						dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+						" " +
+						element.className +
+						' " ' +
+						thistip +
+						" " +
+						hidestagesIDs +
+						" " +
+						showstagesIDs +
+						"  " +
+						disablestagesIDs +
+						"  " +
+						enablestagesIDs +
+						"   " +
+						isWfhidestagesIDs +
+						" " +
+						requireOnWfTaskstagesIDs +
+						" " +
+						isWfshowstagesIDs +
+						"  " +
+						isWfdisablestagesIDs +
+						"  " +
+						isWfenablestagesIDs +
+						'        data-groups="' +
+						groups +
+						'" style="display:' +
+						element.display +
+						'">' +
+						'<label for="' +
+						element.InternalName +
+						'" ' +
+						element.validation +
+						">" +
+						displayName +
+						"</label>" +
+						'<p type="date" class="viewmode-value" id="' +
+						element.InternalName +
+						'" ' +
+						ToggleName +
+						"></p>" +
 						"</div>";
 					OnSuccess(flag, htmlBody);
 					break;

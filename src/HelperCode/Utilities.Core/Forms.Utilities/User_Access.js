@@ -188,7 +188,7 @@ window.userProjects = [];
 //
 window.USERINID; // to get the initiative id
 
-// $("body").attr('translate','no') // add translate no to body
+window.activeCode = istherePCODE ? USERPCODE : isthereICODE ? UserICode : "";
 
 if (window.location.href.indexOf("ListKey") > -1) {
 	for (var i = 0; i < ListArray.length; i++) {

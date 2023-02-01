@@ -1354,91 +1354,91 @@ window.ListingData = {
           }
       }
     },
-    ExportToExcel: function () {
-      var DN = Listing_Info.map((a) => a.DisplayName);
-      var fields = IN;
-      var filter = "";
-      var mydata = [];
-      var newdate;
-      var index;
-      var armonths = [
-        "يناير",
-        "فبراير",
-        "مارس",
-        "أبريل",
-        "مايو",
-        "يونيو",
-        "يوليو",
-        "أغسطس",
-        "سبتمبر",
-        "أكتوبر",
-        "نوفمبر",
-        "ديسمبر",
-      ];
-      var enmonths = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-      ];
-      AllRecordsWithID.forEach(function (a, i) {
-        //getting listing records
-        mydata.push(a.record);
-      });
+    // ExportToExcel: function () {
+    //   var DN = Listing_Info.map((a) => a.DisplayName);
+    //   var fields = IN;
+    //   var filter = "";
+    //   var mydata = [];
+    //   var newdate;
+    //   var index;
+    //   var armonths = [
+    //     "يناير",
+    //     "فبراير",
+    //     "مارس",
+    //     "أبريل",
+    //     "مايو",
+    //     "يونيو",
+    //     "يوليو",
+    //     "أغسطس",
+    //     "سبتمبر",
+    //     "أكتوبر",
+    //     "نوفمبر",
+    //     "ديسمبر",
+    //   ];
+    //   var enmonths = [
+    //     "January",
+    //     "February",
+    //     "March",
+    //     "April",
+    //     "May",
+    //     "June",
+    //     "July",
+    //     "August",
+    //     "September",
+    //     "October",
+    //     "November",
+    //     "December",
+    //   ];
+    //   AllRecordsWithID.forEach(function (a, i) {
+    //     //getting listing records
+    //     mydata.push(a.record);
+    //   });
 
-      var table =
-        '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head> <!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets> <x:ExcelWorksheet><x:Name>{worksheet}</x:Name> <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions> </x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook> </xml><![endif]--><meta charset="UTF-8"></head><body><table><thead><tr>'; //assigning charset for ar words
-      // var head = Object.keys(mydata[0]);//Using internal names
-      var head = DN;
-      for (var i = 0; i < head.length; i++) {
-        table += "<th>" + head[i].replaceAll(" ", "%20") + "</th>";
-      }
-      table += "</tr></thead><tbody>";
-      for (var i = 0; i < mydata.length; i++) {
-        // var isshown = true;
-        // if ($(".items.TaskDetails")[i].hasAttribute("style"))
-        // 	isshown =
-        // 		$(".items.TaskDetails")[i].attributes[1].value != "display: none;";
-        // if (isshown)
-        table += "<tr>";
-        for (var j = 0; j < IN.length; j++) {
+    //   var table =
+    //     '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head> <!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets> <x:ExcelWorksheet><x:Name>{worksheet}</x:Name> <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions> </x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook> </xml><![endif]--><meta charset="UTF-8"></head><body><table><thead><tr>'; //assigning charset for ar words
+    //   // var head = Object.keys(mydata[0]);//Using internal names
+    //   var head = DN;
+    //   for (var i = 0; i < head.length; i++) {
+    //     table += "<th>" + head[i].replaceAll(" ", "%20") + "</th>";
+    //   }
+    //   table += "</tr></thead><tbody>";
+    //   for (var i = 0; i < mydata.length; i++) {
+    //     // var isshown = true;
+    //     // if ($(".items.TaskDetails")[i].hasAttribute("style"))
+    //     // 	isshown =
+    //     // 		$(".items.TaskDetails")[i].attributes[1].value != "display: none;";
+    //     // if (isshown)
+    //     table += "<tr>";
+    //     for (var j = 0; j < IN.length; j++) {
 
-          if (
-            armonths.indexOf(mydata[i][IN[j]].toString().split(" ")[1]) > -1 &&
-            FT[j] == "date"
-          ) {
-            newdate = mydata[i][IN[j]].split(" ");
-            index = armonths.indexOf(newdate[1]);
-            newdate[1] = enmonths[index];
-            mydata[i][IN[j]] = newdate.join(" ");
-          }
-          // console.log(mydata[i][IN[j]]);
-          // if (isshown)
-          table +=
-            "<td>" +
-            mydata[i][IN[j]].toString().replaceAll(" ", "%20") +
-            "</td>"; //fixing spaces issue
-        }
-        // if (isshown)
-        table += "</tr>";
-      }
-      table += "</tbody></table></body></html>";
-      var csv = "data:application/vnd.ms-excel;charset=utf-8," + table + "\n";
-      var a = document.createElement("a");
-      a.setAttribute("href", csv);
-      a.setAttribute("download", listkey + "-data.xls");
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    },
+    //       if (
+    //         armonths.indexOf(mydata[i][IN[j]].toString().split(" ")[1]) > -1 &&
+    //         FT[j] == "date"
+    //       ) {
+    //         newdate = mydata[i][IN[j]].split(" ");
+    //         index = armonths.indexOf(newdate[1]);
+    //         newdate[1] = enmonths[index];
+    //         mydata[i][IN[j]] = newdate.join(" ");
+    //       }
+    //       // console.log(mydata[i][IN[j]]);
+    //       // if (isshown)
+    //       table +=
+    //         "<td>" +
+    //         mydata[i][IN[j]].toString().replaceAll(" ", "%20") +
+    //         "</td>"; //fixing spaces issue
+    //     }
+    //     // if (isshown)
+    //     table += "</tr>";
+    //   }
+    //   table += "</tbody></table></body></html>";
+    //   var csv = "data:application/vnd.ms-excel;charset=utf-8," + table + "\n";
+    //   var a = document.createElement("a");
+    //   a.setAttribute("href", csv);
+    //   a.setAttribute("download", listkey + "-data.xls");
+    //   document.body.appendChild(a);
+    //   a.click();
+    //   document.body.removeChild(a);
+    // },
   },
   //fill filteration DDLs data
   Get_DDL: {
