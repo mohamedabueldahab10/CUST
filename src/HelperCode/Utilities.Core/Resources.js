@@ -811,6 +811,8 @@
         "spmo":"مكتب إدارة المشاريع القطاعي",
         "vroe":"مكتب ضمان التنفيذ",
         "developmentunit":"مدير وحدة التنفيذ",
+        "excelexport": "تصدير إلى Excel",
+
     },
     "en": {
         "clearfilter": "Clear Filter",
@@ -1637,6 +1639,7 @@
         "spmo":"SPMO",
         "vroe":"VRO_E",
         "developmentunit":"Development Unit",
+        "excelexport": "Export to excel",
     }
 
 };
