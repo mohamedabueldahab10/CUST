@@ -169,14 +169,14 @@ var Information_Form = [
   },
   {
     label: 'المخرجات المرتبطة بالمنفعة',
-    labelEn: 'Deliverables',
+    labelEn: 'Benefit Deliverables',
     description: 'التفاصيل',
     descriptionEn: 'Details',
     sectiontype: 'master',
-    targetlist: 'Deliverables',
+    targetlist: 'BenefitDeliverables',
     subFields: [
       {
-        InternalName: 'Name',
+        InternalName: 'DeliverableID',
         DisplayNameEn: 'Name',
         DisplayName: 'المخرج',
         type: 'lookup',
@@ -188,8 +188,8 @@ var Information_Form = [
         // type: 'string',
       },
       {
-        InternalName: 'DeliverableSuccessKPI',
-        DisplayNameEn: 'Deliverable Success KPI',
+        InternalName: 'AcceptanceCriteria',
+        DisplayNameEn: 'Acceptance Criteria',
         DisplayName: 'المقياس',
         type: 'multiline',         
         "state": "disabled",
