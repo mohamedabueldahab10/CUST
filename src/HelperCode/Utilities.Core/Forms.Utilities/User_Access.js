@@ -2726,6 +2726,11 @@ window.userCalls = {
 		}
 		//end CRUD
 
+
+		if (isthereICODE) { // to get the info of initiatives
+			Get_Initiative_Info_Request.preinit()
+		}
+
 		if (
 			(!isInitiativesHomePage && !isInManager && !isInOwner) ||
 			isDU ||
@@ -4417,6 +4422,77 @@ var Access_Initiative_Info_Request = {
 	},
 };
 //
+// to get the data of initiative 
+
+//getting Related Initiatives
+window.Get_Initiative_Info_Request = {
+	onSuccess: function (sender, args) {
+		var collListItem = Get_Initiative_Info_Request.g.collListItem;
+		var listItemEnum = collListItem.getEnumerator();
+		while (listItemEnum.moveNext()) {
+			var oListItem = listItemEnum.get_current();
+			if (UserICode == oListItem.get_item("Title")) {
+				//   initiativeStartDate = oListItem.get_item("StartDate") ? oListItem.get_item("StartDate") : ""
+				initiativeStartToValidation = oListItem.get_item("StartDate") ? oListItem.get_item("StartDate") : ""
+				//   initiativeEndDate = oListItem.get_item("FinishDate") ? oListItem.get_item("FinishDate") : ""
+				//   initiativeBudget = oListItem.get_item("Cost") ? oListItem.get_item("Cost") : 0
+				console.log("INSIDE INITIativeInfoRequest")
+			}
+
+		}
+
+		console.log("USER initiatative")
+		debugger
+		//should uncomment when need to applt the validation on milstones every month for proj and every 3 months for initiative
+		if (isthereICODE && initiativeStartToValidation) {
+			if (USERlistkey == 'initiativemilestones' && isNew) {
+				console.log("YOU Can creat an initiative milestone")
+			} else {
+				Get_Milestones.init()
+			}
+		}
+	},
+	onError: function (sender, args) {
+		//
+		console.log(
+			"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+		);
+	},
+	preinit: function () {
+		SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
+			Get_Initiative_Info_Request.init();
+		});
+	},
+	init: function () {
+		var clientContext = new SP.ClientContext.get_current();
+		var oList = clientContext.get_web().get_lists().getByTitle("Initiatives");
+		var camlQuery = new SP.CamlQuery();
+		//
+		var IQuery = "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where></Query><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></View>"
+		if (UserICode) {
+			IQuery = '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' + UserICode + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query><RowLimit>1</RowLimit></View>'
+		}
+
+		camlQuery.set_viewXml(IQuery);
+
+
+		Get_Initiative_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+		clientContext.load(Get_Initiative_Info_Request.g.collListItem);
+		clientContext.executeQueryAsync(
+			Function.createDelegate(this, Get_Initiative_Info_Request.onSuccess),
+			Function.createDelegate(this, Get_Initiative_Info_Request.onError)
+		);
+	},
+	g: {
+		PCODE: istherePCODE
+			? window.location.href.split("PCODE=")[1].split("&")[0]
+			: "",
+		User_Initiatives: []
+	},
+};
+
+
+
 
 //getting related Sectors if there user sector head
 var Access_Sector_Info_Request = {
@@ -6021,22 +6097,32 @@ let data_Level2_Access = {
 var Get_Milestones = {
 	init: function () {
 
-		var clientContext = new SP.ClientContext.get_current();
-		var oList = clientContext.get_web().get_lists().getByTitle("Milestones");
-		var camlQuery = new SP.CamlQuery();
-
+		var listHandler = ""
 		var query = ''
 
-		console.log("in get_Milestones")
-		debugger
-
 		if (USERPCODE) {
+
+			listHandler = "InitiativeMilestones"
+
 			query = "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">" +
 				USERPCODE +
 				"</Value></Eq></And></Where><OrderBy><FieldRef Name='CommittedDate' Ascending='False' /></OrderBy></Query></View>"
 		} else if (UserICode) {
+			listHandler = "Milestones"
+
 			query = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + UserICode + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
 		}
+
+		var clientContext = new SP.ClientContext.get_current();
+		var oList = clientContext.get_web().get_lists().getByTitle(listHandler);
+		var camlQuery = new SP.CamlQuery();
+
+
+		console.log("in get_Milestones")
+		debugger
+
+
+
 
 		camlQuery.set_viewXml(query);
 
@@ -6068,8 +6154,14 @@ var Get_Milestones = {
 			itemID = oListItem.get_id();
 			itemname = oListItem.get_item("Name") || '';
 			itemtitle = oListItem.get_item("Title") || '';
-			itemPlannedClosureDate = Get_Milestones.g.dateConvert2(oListItem.get_item("PlannedDate")) || '' //PlannedClosureDate
-			
+			if (USERPCODE) {
+
+				itemPlannedClosureDate = Get_Milestones.g.dateConvert2(oListItem.get_item("PlannedDate")) || '' //PlannedClosureDate
+			} else if (UserICode) {
+				itemPlannedClosureDate = Get_Milestones.g.dateConvert2(oListItem.get_item("PlannedCompletedDate")) || '' //PlannedClosureDate
+
+			}
+
 
 			if (itemPlannedClosureDate) {
 				allMilestonesArr.push({
@@ -6166,7 +6258,7 @@ var Get_Milestones = {
 			}
 		} else if (UserICode) {
 			console.log(initiativeStartToValidation, "initiativeStartToValidation")
-
+			debugger
 			if (allMilestonesArr.length > 0) {
 
 				var initiativeStartDate = Get_Milestones.g.dateConvert2(initiativeStartToValidation) || '';
