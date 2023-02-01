@@ -125,7 +125,8 @@ var Information_Form = [
         valfieldkey: 'Title',
         validation: 'required',
         ToggleName: 'RelatedInitiative',
-        display: 'none'
+        display: 'none',
+        dontSubmit: true,
       },
       {
         InternalName: 'RelatedMilestone',

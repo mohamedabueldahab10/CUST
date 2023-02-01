@@ -61,6 +61,7 @@ var Information_Form = [
         DisplayNameEn: 'Related Strategy',
         DisplayName: 'الاستراتيجية المرتبطة',
         type: 'lookup',
+        dontSubmit: true,
         source: 'GoalStrategy',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
@@ -115,6 +116,7 @@ var Information_Form = [
         InternalName: 'RelatedObjectiveLevel',
         DisplayNameEn: 'Related Objective Level',
         DisplayName: 'مستوى الهدف المرتبط',
+        dontSubmit: true,
         type: 'dropdownValues',
         options: {
           choices: [
@@ -196,6 +198,7 @@ var Information_Form = [
         DisplayNameEn: 'Related Program',
         DisplayName: 'اسم البرنامج التابع له',
         type: 'string',
+        dontSubmit: true,
         // "source": "Instruments",
         // "Dispfieldkey": "Title",
         // "valfieldkey": "Title"

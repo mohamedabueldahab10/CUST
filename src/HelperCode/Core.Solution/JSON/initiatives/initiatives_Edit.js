@@ -114,6 +114,7 @@ var Information_Form = [
         InternalName: 'RelatedStrategy',
         DisplayNameEn: 'Related Strategy',
         DisplayName: 'الاستراتيجية المرتبطة',
+        dontSubmit: true,
         type: 'lookup',
         source: 'GoalStrategy',
         Dispfieldkey: 'Name',
@@ -169,6 +170,7 @@ var Information_Form = [
         InternalName: 'RelatedObjectiveLevel',
         DisplayNameEn: 'Related Objective Level',
         DisplayName: 'مستوى الهدف المرتبط',
+        dontSubmit: true,
         type: 'dropdownValues',
         options: {
           choices: [
