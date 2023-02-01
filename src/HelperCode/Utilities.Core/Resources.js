@@ -794,7 +794,8 @@
         "sublevel3": "فرعي مستوى ثالث",
         "projectprioritytooltip":"هذا الحقل يبين أهمية المشروع (مرتفعة -متوسطة - منخفضة)",
         "initiativetypetooltip":"هذا الحقل يبين نوع المبادرة (استراتيجية -رؤية - سوق عمل)",
-        "initiativestatustooltip":"هذا الحقل يبين حالة المبادرة"
+        "initiativestatustooltip":"هذا الحقل يبين حالة المبادرة",
+        "importantlinks": "روابط مهمة"
 
     },
     "en": {
@@ -1606,7 +1607,9 @@
         "sublevel3": "Sub Level 3",
         "projectprioritytooltip":"This Field show the Priority of this project (Important or Medium or High)",
         "initiativetypetooltip":"This Field show the type of this initiative (Strategic or Vision or LMS )",
-        "initiativestatustooltip":"This Field show the type of this initiative"
+        "initiativestatustooltip":"This Field show the type of this initiative",
+        "importantlinks": "Important Links"
+
     }
 
 };
