@@ -1623,7 +1623,20 @@
         "sublevel3": "Sub Level 3",
         "projectprioritytooltip":"This Field show the Priority of this project (Important or Medium or High)",
         "initiativetypetooltip":"This Field show the type of this initiative (Strategic or Vision or LMS )",
-        "initiativestatustooltip":"This Field show the type of this initiative"
+        "initiativestatustooltip":"This Field show the type of this initiative",
+
+        "allgroups":"All Groups",
+        "administratorsforprojectwebapp":"Administrators for Project Web App",
+        "itsteeringcommittee":"IT Steering Committee",
+        "sectionhead":"Section Head",
+        "businessowner":"Business Owner",
+        "strategyspecialist":"Strategy Specialist",
+        "projectmanagersforprojectwebapp":"Project Managers for Project Web App",
+        "spmteam":"SPM Team",
+        "vrop":"VRO_P",
+        "spmo":"SPMO",
+        "vroe":"VRO_E",
+        "developmentunit":"Development Unit",
     }
 
 };
