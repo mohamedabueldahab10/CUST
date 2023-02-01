@@ -413,6 +413,30 @@ window.ListInfo = {
           });
           //new validation listiner
 
+          ////////////////////////////////
+          $("input.percentbyparent").keyup(function (event) {
+            // calculate the target elemnt like in delivrable
+            var targetElement = $(this).data("targetelem");
+            var parentValue = $(this).data("parentval");
+            var fieldValue = event.target.value;
+            var weight = (fieldValue / parentValue) * 100;
+            weight = weight.toFixed(2);
+            $(`#${targetElement}`).val(weight);
+            console.log(weight, "THIIIIIIIIIIIIIIIIIIS");
+            console.log(targetElement, "targetElement");
+          });
+          $("input.weightfloatpercentage").keyup(function (event) {
+            // calculate the target elemnt like in delivrable
+
+            var targetElement = $(this).data("targetelem");
+            var parentValue = parentBudgetValue;
+            var fieldValue = event.target.value;
+            var amount = (parentValue * fieldValue) / 100;
+            amount = amount.toFixed(2);
+            $(`#${targetElement}`).val(amount);
+          });
+
+
           //////////////////////////////// make attachement required when change on radio yes
           var previuosTargetVal = "";
           $("input.yesnolistener").on("change", function (event) {
@@ -1819,6 +1843,125 @@ window.ListInfo = {
         OnSuccess(flag, htmlBody);
         break;
 
+      case "weightfloatpercentage":
+        var code = activeCode;
+
+        var customQuery =
+          "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='" +
+          element.targetcode +
+          '\' /><Value Type="Text">' +
+          code +
+          "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+
+        // also there is some code in edit data request
+        sphttp.get(
+          _spPageContextInfo.siteServerRelativeUrl,
+          element.listname,
+          customQuery,
+          [element.targetelement],
+          function (records, record, listItem, isDone) {
+            if (isDone) {
+              console.log(records, "records in perc");
+              var totalWeight = 0;
+              records.forEach(function (el, index) {
+                console.log(el, "el this is el");
+                totalWeight += el[element.targetelement]
+                  ? el[element.targetelement]
+                  : 0;
+              });
+
+              var RemainingBudget = 100 - totalWeight;
+              RemainingBudget = Number(RemainingBudget.toFixed(1));
+
+              var newVal;
+              var inpVal = 0;
+              newVal =
+                RemainingBudget + inpVal >= 100
+                  ? RemainingBudget
+                  : RemainingBudget + inpVal;
+              newVal = Number(newVal.toFixed("2"));
+
+              console.log(newVal, "newVal newVal");
+              // console.log()
+
+              htmlBody =
+                '<div class="col-md-6 CFIELD ' +
+                dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+                " " +
+                element.className +
+                ' " ' +
+                thistip +
+                " " +
+                hidestagesIDs +
+                " " +
+                editableBy +
+                " " +
+                showstagesIDs +
+                "  " +
+                disablestagesIDs +
+                "  " +
+                enablestagesIDs +
+                "   " +
+                isWfhidestagesIDs +
+                " " +
+                requireOnWfTaskstagesIDs +
+                " " +
+                isWfshowstagesIDs +
+                "  " +
+                isWfdisablestagesIDs +
+                "  " +
+                isWfenablestagesIDs +
+                '        data-groups="' +
+                groups +
+                '" style="display:' +
+                element.display +
+                '">' +
+                '<label for="' +
+                element.InternalName +
+                '" ' +
+                element.validation +
+                ">" +
+                displayName +
+                '<span data-trans-remainperc class="Resources remainpercstyle"></span><span class="remainpercstyle">' +
+                newVal +
+                "]</span>" +
+                "</label>" +
+                "<input " +
+                ToggleName +
+                " " +
+                RequiredName +
+                ' type="number" max=' +
+                newVal +
+                ' title="Please enter value between 0 and 100" step="any" placeholder="' +
+                displayName +
+                '" ' +
+                dynamic +
+                ' class="form-control SPIField weightfloatpercentage" data-weightvalue="" id="' +
+                element.InternalName +
+                '" ' +
+                element.state +
+                " " +
+                'data-targetelem="' +
+                element.seconedtarget +
+                '"' +
+                " " +
+                element.validation +
+                ' oninput="this.value = (this.value && Math.abs(this.value) >= 0) && (this.value && Math.abs(this.value) <= 100) ? Math.abs(this.value) : null">' +
+                "<span data-trans-" +
+                Errmsgkey +
+                ' class="errMsgField Resources"></span>' +
+                '<div class="inputInfo ' +
+                isexist +
+                '">' +
+                descPhrase +
+                "</div>" +
+                "</div>";
+              OnSuccess(flag, htmlBody);
+            }
+          }
+        );
+        break;
+
       case "floatpercentage":
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
@@ -1879,6 +2022,104 @@ window.ListInfo = {
           "</div>" +
           "</div>";
         OnSuccess(flag, htmlBody);
+        break;
+
+      case "percentbyrelatedparent":
+        var code = activeCode;
+
+        var customQuery =
+          '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
+          code +
+          "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+
+        sphttp.get(
+          _spPageContextInfo.siteServerRelativeUrl,
+          element.listname,
+          customQuery,
+          [element.parentinternalname],
+          function (records, record, listItem, isDone) {
+            if (isDone) {
+
+              var parentValue = "";
+              records.forEach(function (el, index) {
+                parentValue = el[element.parentinternalname];
+              });
+
+              parentBudgetValue = parentValue;
+
+              htmlBody =
+                '<div class="col-md-6 CFIELD ' +
+                dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+                " " +
+                element.className +
+                ' " ' +
+                thistip +
+                " " +
+                hidestagesIDs +
+                " " +
+                editableBy +
+                " " +
+                showstagesIDs +
+                "  " +
+                disablestagesIDs +
+                "  " +
+                enablestagesIDs +
+                "   " +
+                isWfhidestagesIDs +
+                " " +
+                requireOnWfTaskstagesIDs +
+                " " +
+                isWfshowstagesIDs +
+                "  " +
+                isWfdisablestagesIDs +
+                "  " +
+                isWfenablestagesIDs +
+                '        data-groups="' +
+                groups +
+                '" style="display:' +
+                element.display +
+                '">' +
+                '<label for="' +
+                element.InternalName +
+                '" ' +
+                element.validation +
+                ">" +
+                displayName +
+                "</label>" +
+                "<input " +
+                ToggleName +
+                " " +
+                RequiredName +
+                ' type="number" title="" step="any" placeholder="' +
+                displayName +
+                '" ' +
+                dynamic +
+                ' class="form-control SPIField percentbyparent" id="' +
+                element.InternalName +
+                '" ' +
+                'data-parentval="' +
+                parentValue +
+                '"' +
+                'data-targetelem="' +
+                element.targetelement +
+                '"' +
+                element.state +
+                " " +
+                element.validation +
+                ">" +
+                "<span data-trans-" +
+                Errmsgkey +
+                ' class="errMsgField Resources"></span>' +
+                '<div class="inputInfo ' +
+                isexist +
+                '">' +
+                descPhrase +
+                "</div>" +
+                "</div>";
+              OnSuccess(flag, htmlBody);
+            }
+          }
+        );
         break;
       case "decimalpercentage":
         htmlBody =
@@ -5667,6 +5908,79 @@ var View_ListInfo = {
           OnSuccess(flag, htmlBody);
           break;
 
+        case "percentbyrelatedparent":
+          var code = activeCode;
+
+          var customQuery =
+            '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
+            code +
+            "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+
+          sphttp.get(
+            _spPageContextInfo.siteServerRelativeUrl,
+            element.listname,
+            customQuery,
+            [element.parentinternalname],
+            function (records, record, listItem, isDone) {
+              if (isDone) {
+
+                var parentValue = "";
+                records.forEach(function (el, index) {
+                  parentValue = el[element.parentinternalname];
+                });
+
+                console.log(parentValue, "PARENT VALUE");
+                htmlBody =
+                  '<div class="col-md-6 CFIELD ' +
+                  dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+                  " " +
+                  element.className +
+                  ' " ' +
+                  thistip +
+                  " " +
+                  hidestagesIDs +
+                  " " +
+                  showstagesIDs +
+                  "  " +
+                  disablestagesIDs +
+                  "  " +
+                  enablestagesIDs +
+                  "   " +
+                  isWfhidestagesIDs +
+                  " " +
+                  requireOnWfTaskstagesIDs +
+                  " " +
+                  isWfshowstagesIDs +
+                  "  " +
+                  isWfdisablestagesIDs +
+                  "  " +
+                  isWfenablestagesIDs +
+                  '        data-groups="' +
+                  groups +
+                  '" style="display:' +
+                  element.display +
+                  '">' +
+                  '<label for="' +
+                  element.InternalName +
+                  '" ' +
+                  element.validation +
+                  ">" +
+                  displayName +
+                  "</label>" +
+                  '<p type="number" class="viewmode-value"   data-parentval="' +
+                  parentValue +
+                  '"  id="' +
+                  element.InternalName +
+                  '" ' +
+                  ToggleName +
+                  "></p>" +
+                  "</div>";
+                OnSuccess(flag, htmlBody);
+              }
+            }
+          );
+          break;
+
         case "decimalpercentage":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
@@ -7160,9 +7474,9 @@ var Projects_Info = {
 
 var GetProject_Info = {
   onSuccess: function (sender, args) {
-    if (listkey == "deliverables") {
-      deliverabePercent.init();
-    }
+    // if (listkey == "deliverables") {
+    //   deliverabePercent.init();
+    // }
     var collListItem = GetProject_Info.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var PID, stage, ismultistage;
