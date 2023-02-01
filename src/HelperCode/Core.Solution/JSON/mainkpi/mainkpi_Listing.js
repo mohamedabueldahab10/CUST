@@ -63,6 +63,14 @@ var Listing_Info = [
         infilter: false
 
     },
+    {
+        "InternalName": "ProgressStatus",
+        "DisplayName": "حالة الإنجاز",
+        "DisplayNameEn": "Progress Status",
+        "type": "text",
+         inlisting: true,
+         infilter: true
+      },
     // {
     //     "InternalName": "RelatedStrategyType",
     //     "DisplayNameEn": "Strategy Type",

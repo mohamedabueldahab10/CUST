@@ -36,15 +36,23 @@ var Information_Form = [{
                 "InternalName": "StartDate",
                 "DisplayName": "تاريخ بدء العقد",
                 "DisplayNameEn": "Start Date",
-                "type": "datetime",
+                // "type": "datetime",
+                "type": "datetimetoparent",
+                "listname":"Contracts", // list name
+                "startinternalname":"StartDate", // internalname of parent start
+                "endinternalname":"EndDate",
                 "max": "EndDate"
             },
             {
                 "InternalName": "EndDate",
                 "DisplayName": "تاريخ إنتهاء العقد",
                 "DisplayNameEn": "End Date",
-                "type": "datetime",
-                "min": "StartDate"
+                // "type": "datetime",
+                "type": "datetimetoparent",
+                "listname":"Contracts",
+                "startinternalname":"StartDate",
+                "endinternalname":"FinishDate",
+                "min":"StartDate"
             },
             // {
             //     "InternalName": "Vendor",

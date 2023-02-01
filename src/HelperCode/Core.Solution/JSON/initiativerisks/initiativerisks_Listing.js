@@ -19,8 +19,8 @@ var Listing_Info = [{
         "DisplayName": "الحالة",
         "DisplayNameEn": "Status",
         "type": "text",
-        inlisting: false,
-        infilter: false,
+        inlisting: true,
+        infilter: true,
         needTrans: true
     },
     {
