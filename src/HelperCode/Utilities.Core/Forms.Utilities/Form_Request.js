@@ -136,7 +136,7 @@ window.Edit_Data_Request = {
     // $('h2.DahsFormTitle').append(' - " '+oListItem.get_item('Project_Name')+' "');
 
     $(
-      ".section-container:not([data-target_list]) .CFIELD> input:not([type=file]), .section-container:not([data-target_list]) .CFIELD> input[type=checkbox],.section-container:not([data-target_list]) .CFIELD> div[type=multipicker], .section-container:not([data-target_list]) .CFIELD> div[type=picker], .section-container:not([data-target_list]) .CFIELD> select[type=dropdown], .section-container:not([data-target_list]) .CFIELD>  textarea,.section-container:not([data-target_list]) .CFIELD> .datetimeinputs input[type=date], .section-container:not([data-target_list]) .CFIELD> .datetimeinputs input[type=datetime-local], .section-container:not([data-target_list]) .CFIELD > .multiselect-container"
+      ".section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> input:not([type=file]), .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> input[type=checkbox],.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> div[type=multipicker], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> div[type=picker], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> select[type=dropdown], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)>  textarea,.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> .datetimeinputs input[type=date], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> .datetimeinputs input[type=datetime-local], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request) > .multiselect-container"
     ).each(function () {
 
       switch ($(this).attr("type")) {
@@ -932,7 +932,7 @@ window.View_Data_Request = {
     var pillersRadio = ''
 
     $(
-      ".section-container:not([data-target_list]) .CFIELD > .viewmode-value"
+      ".section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request) > .viewmode-value"
     ).each(function () {
 
       if ($(this).attr("type") == "date") {
