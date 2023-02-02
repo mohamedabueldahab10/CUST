@@ -58,8 +58,10 @@ var Information_Form = [
           choices: [
             // { display: "strategically", value: "strategically" },
             { display: 'main', value: 'main' },
-            { display: 'Level2', value: 'Level2' },
-            { display: 'Level3', value: 'Level3' },
+            { display: 'sublevel2', value: 'sublevel2' },
+            { display: 'sublevel3', value: 'sublevel3' },
+            // { display: 'Level2', value: 'Level2' },
+            // { display: 'Level3', value: 'Level3' },
             // { display: "sub", value: "sub" },
             // { display: "vision", value: "vision" },
             // { display: "jobmarket", value: "jobmarket" },

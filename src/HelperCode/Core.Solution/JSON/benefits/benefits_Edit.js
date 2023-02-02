@@ -68,18 +68,33 @@ var Information_Form = [
       //   type: 'string',
       //   maxchar: '250',
       // },
+      // {
+      //   InternalName: 'RelatedSubKpis',
+      //   DisplayNameEn: 'Related Sub Kpis',
+      //   DisplayName: 'المؤشرات الفرعية المرتبطة',
+      //   type: 'lookupWithQuery',
+      //   queryField: 'Types',
+      //   queryFieldType: 'dropdownValues', //ex: "Choice"
+      //   queryFieldValue: 'sub',
+      //   source: 'MainKPI',
+      //   // "state": "disabled",
+      //   Dispfieldkey: 'Name',
+      //   valfieldkey: 'Title',
+      // },
       {
         InternalName: 'RelatedSubKpis',
         DisplayNameEn: 'Related Sub Kpis',
         DisplayName: 'المؤشرات الفرعية المرتبطة',
-        type: 'lookupWithQuery',
-        queryField: 'Types',
-        queryFieldType: 'dropdownValues', //ex: "Choice"
-        queryFieldValue: 'sub',
+        type: 'lookupmultiselect',
+        validation: 'required',
         source: 'MainKPI',
-        // "state": "disabled",
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+        grpfieldkey: 'Title',
+        
+        // queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
+        // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
+        // queryFieldValue: 'sub', // if i need to make the field with filter should add this
       },
       // {
       //   InternalName: 'FromDate',
