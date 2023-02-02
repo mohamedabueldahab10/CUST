@@ -1293,7 +1293,7 @@ window.View_Data_Request = {
     // },1000);
     //custom
     ///
-    if (listkey == 'deliverables' || listkey == 'initiativedeliverables') {
+    if (listkey == 'deliverables' || listkey == 'milestones' || listkey == 'initiativedeliverables' || listkey == 'initiativemilestones') {
       
         var parentValue = $('#Amount').data('parentval')
         var weight = oListItem.get_item("Weight");
