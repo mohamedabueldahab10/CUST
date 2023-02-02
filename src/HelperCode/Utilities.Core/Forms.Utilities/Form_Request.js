@@ -619,6 +619,11 @@ window.Edit_Data_Request = {
       ListInfo.g.toggleFields($(this));
     });
 
+    // to handle toggle required field in in edit
+    $("[data-requiredvalues]").each(function () {
+			ListInfo.g.toggleRequiredFields($(this));
+		});
+
     // trigger the dynamic parent field to get the data in edit
     $("select[dynamic=parent]").trigger("change")
 
