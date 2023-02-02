@@ -11,9 +11,9 @@ var Information_Form = [{
         //     "validation": "required"
         // },
         {
-            "InternalName": "KPI",
-            "DisplayNameEn": "KPI",
-            "DisplayName": "المنفعة",
+            InternalName: 'RelatedBenefit',// oday 
+            DisplayNameEn: 'RelatedBenefit',
+            DisplayName: 'المنفعة المرتبطة',
             "type": "lookup",
             "source": "Benefits",
             "Dispfieldkey": "Name",
@@ -28,7 +28,7 @@ var Information_Form = [{
             "type": "string"
         },
         {
-            "InternalName": "KPIInput",
+            "InternalName": "KPIInput", //oday
             "DisplayName": "المعادلة المدخلة",
             "DisplayNameEn": "KPI Input",
             "type": "formula"
