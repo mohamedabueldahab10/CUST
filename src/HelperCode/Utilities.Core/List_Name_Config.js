@@ -211,6 +211,15 @@ var ListArray = [
 		subfolder: true,
 	},
 	{
+		benefitdeliverables: "BenefitDeliverables",
+		ListingTitle: "المخرجات المرتبطة بالمنفعة",
+		FormTitle: "المخرجات المرتبطة بالمنفعة",
+		TitleEn: "Benefit Deliverables",
+		projnav: "Project Navigation",
+		projectrelated: true,
+		subfolder: true,
+	},
+	{
 		closureform: "Closure Form",
 		ListingTitle: "إغلاق المشروع",
 		FormTitle: "إغلاق المشروع",
