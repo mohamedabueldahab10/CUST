@@ -623,6 +623,18 @@ window.Edit_Data_Request = {
     $("select[dynamic=parent]").trigger("change")
 
 
+    // to get the value of weight in deliv correct 
+    $("[data-weightvalue]").each(function () {
+			var elementId = $(this).attr('id')
+			var inputVal = oListItem.get_item(elementId) ? oListItem.get_item(elementId) : 0
+			var remainingBudget = $(this).attr('max')
+			remainingBudget = Number(remainingBudget)
+			var newVal = remainingBudget + inputVal >= 100 ? inputVal : remainingBudget + inputVal;
+			newVal = Number(newVal.toFixed("2"));
+
+			remainingBudget == 100 ? $(this).attr("max", remainingBudget) : $(this).attr("max", newVal);
+		})
+
 
 
     //getting related files
