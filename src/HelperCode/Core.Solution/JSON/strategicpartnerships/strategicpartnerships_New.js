@@ -164,7 +164,7 @@ var Information_Form = [
         listname: 'Projects',
         startinternalname: 'BaselineStartDate',
         endinternalname: 'BaselineFinishDate',
-        min: 'StartDate',
+        max: 'FinishDate',
       },
       {
         InternalName: 'Duration',
