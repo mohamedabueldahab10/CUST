@@ -524,6 +524,13 @@ window.ListInfo = {
           });
           //////////////////////////////////////////////////////////////
 
+          // hide show required based on selection & onload
+
+          $("[data-requiredvalues]").on("change", function () {
+            ListInfo.g.toggleRequiredFields($(this));
+          });
+
+
           //hide show fields based on selection & onload
           $("[data-togglevalues]").on("change", function () {
             ListInfo.g.toggleFields($(this));
@@ -1189,6 +1196,8 @@ window.ListInfo = {
     if (element.hasOwnProperty("dynamic")) {
       dynamic = "dynamic=" + element.dynamic;
     }
+
+
     if (element.hasOwnProperty("toggleValues")) {
       element.toggleValues.forEach(function (item, i, arr) {
         var seperator = i == arr.length - 1 ? '"' : ":::";
@@ -1203,6 +1212,24 @@ window.ListInfo = {
             : item.value + "[" + item.fields.join(",") + "]" + seperator;
       });
     }
+
+    /////////////////////////
+    if (element.hasOwnProperty("requiredValues")) {
+      element.requiredValues.forEach(function (item, i, arr) {
+        var seperator = i == arr.length - 1 ? '"' : ":::";
+        requiredValues +=
+          i == 0
+            ? 'data-requiredValues="' +
+            item.value +
+            "[" +
+            item.fields.join(",") +
+            "]" +
+            seperator
+            : item.value + "[" + item.fields.join(",") + "]" + seperator;
+      });
+    }
+
+
     // console.log(showstagesIDs);
     var thistip;
     if (element.tooltip == undefined) {
@@ -1315,6 +1342,8 @@ window.ListInfo = {
           "</label>" +
           "<input " +
           ToggleName +
+          " " +
+          RequiredName +
           ' type="text" maxlength="' +
           element.maxchar +
           '" placeholder="' +
@@ -1378,6 +1407,8 @@ window.ListInfo = {
           "</label>" +
           "<input " +
           ToggleName +
+          " " +
+          RequiredName +
           ' type="number" data-manipulates="year" min="1900" max="2099" step="1" maxdata="' +
           element.max +
           '" mindata="' +
@@ -1444,6 +1475,8 @@ window.ListInfo = {
           "</label>" +
           "<input " +
           ToggleName +
+          " " +
+          RequiredName +
           ' type="number" step="any" placeholder="' +
           displayName +
           '" ' +
@@ -1506,6 +1539,8 @@ window.ListInfo = {
           "</label>" +
           "<input " +
           ToggleName +
+          " " +
+          RequiredName +
           ' type="text" maxlength="' +
           element.maxchar +
           '" placeholder="' +
@@ -1570,6 +1605,8 @@ window.ListInfo = {
           "</label>" +
           "<input " +
           ToggleName +
+          " " +
+          RequiredName +
           ' type="email" placeholder="' +
           displayName +
           '" ' +
@@ -1632,6 +1669,8 @@ window.ListInfo = {
           "</label>" +
           "<input " +
           ToggleName +
+          " " +
+          RequiredName +
           ' type="text" placeholder="' +
           displayName +
           '" ' +
@@ -1694,6 +1733,8 @@ window.ListInfo = {
           "</label>" +
           "<input " +
           ToggleName +
+          " " +
+          RequiredName +
           ' type="float" placeholder="' +
           displayName +
           '" ' +
@@ -1823,6 +1864,8 @@ window.ListInfo = {
           "</label>" +
           "<input " +
           ToggleName +
+          " " +
+          RequiredName +
           ' type="float" placeholder="' +
           displayName +
           '" ' +
@@ -2004,6 +2047,8 @@ window.ListInfo = {
           "</label>" +
           "<input " +
           ToggleName +
+          " " +
+          RequiredName +
           ' type="number" title="Please enter value between 0 and 100" step="any" placeholder="' +
           displayName +
           '" ' +
@@ -2163,6 +2208,8 @@ window.ListInfo = {
           "</label>" +
           "<input " +
           ToggleName +
+          " " +
+          RequiredName +
           ' type="number" title="Please enter value between 0 and 100" step="any" placeholder="' +
           displayName +
           '" ' +
@@ -2225,6 +2272,8 @@ window.ListInfo = {
           "</label>" +
           "<input " +
           ToggleName +
+          " " +
+          RequiredName +
           ' type="number" min="0" max="100" placeholder="' +
           displayName +
           '" ' +
@@ -2287,6 +2336,8 @@ window.ListInfo = {
           "</label>" +
           "<input " +
           ToggleName +
+          " " +
+          RequiredName +
           ' type="date" placeholder="' +
           displayName +
           '" ' +
@@ -2465,6 +2516,8 @@ window.ListInfo = {
           "</label>" +
           "<div " +
           ToggleName +
+          " " +
+          RequiredName +
           ' class="datetimeinputs"><input type="datetime-local" placeholder="' +
           displayName +
           '" ' +
@@ -2546,6 +2599,8 @@ window.ListInfo = {
           "</label>" +
           "<div " +
           ToggleName +
+          " " +
+          RequiredName +
           ' class="PPField SPIField form-control" type="picker" id="' +
           element.InternalName +
           '" value="" placeholder="' +
@@ -2610,6 +2665,8 @@ window.ListInfo = {
           "</label>" +
           "<div " +
           ToggleName +
+          " " +
+          RequiredName +
           ' class="PPField SPIField form-control" type="multipicker" id="' +
           element.InternalName +
           '" value="" placeholder="' +
@@ -2676,6 +2733,10 @@ window.ListInfo = {
           toggleValues +
           " " +
           ToggleName +
+          " " +
+          RequiredName +
+          " " +
+          requiredValues +
           ' type="dropdown" value="" placeholder="' +
           displayName +
           '" ' +
@@ -2755,6 +2816,10 @@ window.ListInfo = {
           toggleValues +
           " " +
           ToggleName +
+          " " +
+          RequiredName +
+          " " +
+          requiredValues +
           ' type="dropdown" value="" placeholder="' +
           displayName +
           '" ' +
@@ -2837,6 +2902,8 @@ window.ListInfo = {
           '">' +
           "<label " +
           ToggleName +
+          " " +
+          RequiredName +
           ' for="' +
           element.InternalName +
           '" ' +
@@ -2903,6 +2970,8 @@ window.ListInfo = {
           '">' +
           "<label " +
           ToggleName +
+          " " +
+          RequiredName +
           ' for="' +
           element.InternalName +
           '" ' +
@@ -2991,6 +3060,8 @@ window.ListInfo = {
           "</label>" +
           "<input " +
           ToggleName +
+          " " +
+          RequiredName +
           ' type="checkbox" value="' +
           true +
           '" placeholder="' +
@@ -3914,6 +3985,8 @@ window.ListInfo = {
           "<select " +
           ToggleName +
           " " +
+          RequiredName +
+          " " + 
           element.validation +
           " " +
           dynamic +
@@ -3925,11 +3998,11 @@ window.ListInfo = {
           dispfieldkey +
           '"data-filterfield="' +
           element.filterField +
-          '"data-queryfieldvalue="' + // oday
+          '"data-queryfieldvalue="' + // 
           element.queryFieldValue +
-          '"data-queryfield="' + // oday
+          '"data-queryfield="' + // 
           element.queryField +
-          '"data-queryfieldtype="' + // oday
+          '"data-queryfieldtype="' + // 
           element.queryFieldType +
           '" data-filterfieldtype="' +
           element.filterFieldType +
@@ -4038,6 +4111,8 @@ window.ListInfo = {
           "</label>" +
           "<select " +
           ToggleName +
+          " " +
+          RequiredName +
           "  " +
           element.validation +
           " " +
@@ -4190,6 +4265,8 @@ window.ListInfo = {
           "<select " +
           ToggleName +
           " " +
+          RequiredName +
+          " " +
           element.validation +
           " " +
           dynamic +
@@ -4284,6 +4361,8 @@ window.ListInfo = {
           "</label>" +
           "<textarea " +
           ToggleName +
+          " " +
+          RequiredName +
           ' type="multiline" maxlength="1000" rows="3" value="" placeholder="' +
           displayName +
           '" ' +
@@ -4349,6 +4428,8 @@ window.ListInfo = {
           "</label>" + //class="custom-file-upload"
           "<input " +
           ToggleName +
+          " " +
+          RequiredName +
           ' type="file" accept="' +
           acceptedExtensions +
           '" hidden multiple="multiple" placeholder="' +
@@ -4904,6 +4985,60 @@ window.ListInfo = {
 
       }
 
+    },
+    toggleRequiredFields: function ($this) {
+      var myValue = $this.val();
+
+      var toggleRequiredValues =
+        $this.data("requiredvalues").indexOf(":::") > -1
+          ? $this.data("requiredvalues").split(":::")
+          : [$this.data("requiredvalues")],
+        toggleRequiredValues = toggleRequiredValues.filter(function (t) {
+          return t.indexOf(myValue + "[") > -1;
+        }),
+        toggleRequiredFields =
+          toggleRequiredValues.length > 0
+            ? toggleRequiredValues[0].match(/\[(.*?)\]/)[1].split(",")
+            : "",
+        isShowVal = toggleRequiredValues.length > 0,
+        allToggleRequiredFields =
+          $this.data("requiredvalues").indexOf(":::") > -1
+            ? $this.data("requiredvalues").split(":::")
+            : [$this.data("requiredvalues")],
+        myToggleRequiredFields = "";
+      allToggleRequiredFields.forEach((item, i, arr) => {
+        myToggleRequiredFields +=
+          i == arr.length - 1
+            ? item.match(/\[(.*?)\]/)[1]
+            : item.match(/\[(.*?)\]/)[1] + ",";
+      });
+      allToggleRequiredFields = myToggleRequiredFields.split(",");
+
+      if (isShowVal) {
+        allToggleRequiredFields.forEach((item, i, arr) => {
+          $('[data-requiredname="' + item + '"]')
+            .parent()
+            .find(">*")
+            .attr("required", false);
+        });
+
+        toggleRequiredFields.forEach(function (item, i, arr) {
+          myFieldParent = $('[data-requiredname="' + item + '"]').parent();
+          myFieldParent.find(">*").attr("required", true);
+        });
+      } else {
+        allToggleRequiredFields.forEach((item, i, arr) => {
+          $('[data-requiredname="' + item + '"]')
+            .parent()
+            .find(">*")
+            .attr("required", false);
+        });
+      }
+
+      console.log(
+        allToggleRequiredFields,
+        "allToggleRequiredFields allToggleRequiredFields"
+      );
     },
     showFieldsIfInitiativeVision: function () {
       var typeValue = $("#Types option:selected").val();
