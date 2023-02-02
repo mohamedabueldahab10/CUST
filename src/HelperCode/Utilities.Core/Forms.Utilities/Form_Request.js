@@ -1281,16 +1281,15 @@ window.View_Data_Request = {
     // },1000);
     //custom
     ///
-    if (listkey == 'deliverables' || listkey == 'milestones' || listkey == 'initiativedeliverables' || listkey == 'initiativemilestones') {
-      if ($("[data-targetelem]").length > 0) {
-
+    if (listkey == 'deliverables' || listkey == 'initiativedeliverables') {
+      
         var parentValue = $('#Amount').data('parentval')
         var weight = oListItem.get_item("Weight");
         weight = Number(weight)
         var Amount = (weight * parentValue) / 100
         Amount = Amount.toFixed(2)
         $('#Amount').text(Amount)
-      }
+   
     }
 
     ////
