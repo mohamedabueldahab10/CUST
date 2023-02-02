@@ -194,13 +194,17 @@ var Information_Form = [
         InternalName: 'DeliverableID',
         DisplayNameEn: 'Name',
         DisplayName: 'المخرج',
-        type: 'lookup',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
-        source: 'Deliverables',
-        
-        // "state": "disabled",
-        // type: 'string',
+  
+        type: 'lookupchildtoparent',
+        childlist: 'Projects', //child list name
+        childinternalparentname: 'RelatedInitiative', // child internal name related to parent
+        childinternalparenttype:'Text',
+        childinternalname:"Title", // child internal name need to use to parent
+        source: 'Deliverables', // target list
+        sourceinternalname: 'ProjectCode', // column in target list
+        Dispfieldkey: 'Name', //display in dropdown
+        valfieldkey: 'Title', // value in dropdown
+      
       },
       {
         InternalName: 'AcceptanceCriteria',
