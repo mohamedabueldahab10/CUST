@@ -388,7 +388,14 @@ var ListArray = [
 		projnav: "Project Navigation",
 		projectrelated: true,
 	},
-
+	{
+		benefitmatrixequations: "BenefitsEquations",
+		ListingTitle: "معادلات مقياس المنفعة'",
+		FormTitle: "معادلات مقياس المنفعة'",
+		TitleEn: "Benefits Matrix Equation",
+		projnav: "Project Navigation",
+		projectrelated: true,
+	},
 	{
 		goalstrategy: "GoalStrategy",
 		ListingTitle: "ادارة الأستراتيجيات",
