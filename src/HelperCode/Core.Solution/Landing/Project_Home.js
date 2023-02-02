@@ -2438,3 +2438,93 @@ var EPM_Project_Summery_Task = {
   // Global variables
   g: {}
 };
+
+var Update_ProjectStatus_Service = {
+  init: function () {
+
+    $.ajax({
+      type: 'PUT',
+      url: `https://spm-api.netways1.com/api/project/updateprojectstatusbydeliverables/${Project_Home_Info_Request.g.PCODE}`,
+      success: function (data) {
+        Get_ProjectStatus_Info.init()
+      },
+      error: function (data) {
+        console.log("call failed in update project service", data);
+      },
+    });
+  }
+}
+
+
+
+// to working on when  odai omari publish the api
+var Get_ProjectStatus_Info = {
+
+  init: function () {
+    $("button.updateprogress").removeClass("loader-action-success");
+    $("button.updateprogress").removeClass("loader-action-error");
+    $("button.updateprogress").addClass("loader-action");
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle(ListArray[0].projects);
+    var camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(
+      '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
+      Project_Home_Info_Request.g.PCODE +
+      "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>"
+    );
+    Get_ProjectStatus_Info.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(Get_ProjectStatus_Info.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Get_ProjectStatus_Info.onSuccess),
+      Function.createDelegate(this, Get_ProjectStatus_Info.onError)
+    );
+  },
+  onSuccess: function (sender, args) {
+    var collListItem = Get_ProjectStatus_Info.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    var itemID, ActualImplementationDeliverable, PlannedImplementationDeliverable, projectStatus;
+    while (listItemEnum.moveNext()) {
+
+      var oListItem = listItemEnum.get_current();
+      itemID = oListItem.get_id();
+      // ActualImplementationDeliverable = oListItem.get_item("ActualImplementationDeliverable") || 0;
+      // PlannedImplementationDeliverable = oListItem.get_item("PlannedImplementationDeliverable") || 0
+      // projectStatus = oListItem.get_item("ProjectProgressStatus") || No_Data;
+    }
+
+
+    // PlannedImplementationDeliverable = Number(PlannedImplementationDeliverable)
+    // PlannedImplementationDeliverable = PlannedImplementationDeliverable.toFixed(2)
+
+    // ActualImplementationDeliverable = Number(ActualImplementationDeliverable)
+    // ActualImplementationDeliverable = ActualImplementationDeliverable.toFixed(2)
+
+    // $(".project-details-ctx .card.h-100 > .scnd-row > div:nth-child(1) > h4.black").text(PlannedImplementationDeliverable + "%");
+
+    // $(".project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black").text(ActualImplementationDeliverable + "%");
+
+    // $(".myCompletionStatus").removeAttr("data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4");
+    // $(".myCompletionStatus").attr("data-trans-" + projectStatus, "");
+
+    // $(".myCompletionStatus").parent().removeClass("stat1 stat2 stat3 stat4")
+    // $(".myCompletionStatus").parent().addClass(projectStatus)
+
+
+
+    changeResources();
+
+    $("button.updateprogress").removeClass("loader-action");
+    $("button.updateprogress").addClass("loader-action-success");
+
+  },
+  onError: function (sender, args) {
+    $("button.updateprogress").removeClass("loader-action");
+    $("button.updateprogress").addClass("loader-action-error");
+
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  // Global variables
+  g: {},
+}

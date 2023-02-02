@@ -2099,3 +2099,101 @@ var ProgressStatus_Data_Submit = {
 		},
 	},
 };
+
+
+// to working on when  odai omari publish the api
+
+
+var Update_InitiativeStatus_Service = {
+	init: function () {
+  
+	  $.ajax({
+		type: 'PUT',
+		url: `https://spm-api.netways1.com/api/initiatives/updateinitiativestatusbymilestones/${initiativeHomeInfo_Request.g.ICODE}`,
+		success: function (data) {
+		  Get_InitiativeStatus_Info.init()
+		},
+		error: function (data) {
+		  console.log("call failed in update initiative service", data);
+		},
+	  });
+	}
+  }
+  
+  
+  var Get_InitiativeStatus_Info = {
+  
+	init: function () {
+	  $("button.updateprogress").removeClass("loader-action-success");
+	  $("button.updateprogress").removeClass("loader-action-error");
+	  $("button.updateprogress").addClass("loader-action");
+	  var clientContext = new SP.ClientContext.get_current();
+	  var oList = clientContext.get_web().get_lists().getByTitle(ListArray[4].initiatives);
+	  var camlQuery = new SP.CamlQuery();
+	  camlQuery.set_viewXml(
+		'<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' + initiativeHomeInfo_Request.g.ICODE + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query><RowLimit>1</RowLimit></View>'
+	  );
+	  Get_InitiativeStatus_Info.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+	  clientContext.load(Get_InitiativeStatus_Info.g.collListItem);
+	  clientContext.executeQueryAsync(
+		Function.createDelegate(this, Get_InitiativeStatus_Info.onSuccess),
+		Function.createDelegate(this, Get_InitiativeStatus_Info.onError)
+	  );
+	},
+	onSuccess: function (sender, args) {
+	  var collListItem = Get_InitiativeStatus_Info.g.collListItem;
+	  var listItemEnum = collListItem.getEnumerator();
+	  var itemID, ActualPercentageCompleted, PlannedPercentageCompleted, initiativeStatus;
+  
+	  while (listItemEnum.moveNext()) {
+		var oListItem = listItemEnum.get_current();
+		itemID = oListItem.get_id();
+		// PlannedPercentageCompleted = oListItem.get_item("PlannedPercentageCompleted") || 0
+		// ActualPercentageCompleted = oListItem.get_item("ActualPercentageCompleted") || 0;
+		// initiativeStatus = oListItem.get_item("InitiativeProgressStatus") || No_Data;
+	  }
+  
+	//   PlannedPercentageCompleted = Number(PlannedPercentageCompleted)
+	//   PlannedPercentageCompleted = PlannedPercentageCompleted.toFixed(2)
+  
+	//   ActualPercentageCompleted = Number(ActualPercentageCompleted)
+	//   ActualPercentageCompleted = ActualPercentageCompleted.toFixed(2)
+  
+	//   $(".project-details-ctx .card.h-100 > .scnd-row > div:nth-child(1) > h4.black").text(PlannedPercentageCompleted + "%");
+	//   $(".project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black").text(ActualPercentageCompleted + "%");
+  
+	//   $(".myCompletionStatus").removeAttr(
+	// 	"data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4 data-trans-stat5 data-trans-stat6 data-trans-stat7"
+	//   );
+  
+	//   $(".myCompletionStatus").attr("data-trans-" + initiativeStatus, "");
+  
+  
+	//   $(".myCompletionStatus").removeClass(
+	// 	"statuscolor" + listInitiativeProgress
+	//   );
+  
+	//   $(".handlecircle").addClass("circlecolor" + initiativeStatus);
+  
+	//   $(".myCompletionStatus").parent().removeClass(
+	// 	"stat1 stat2 stat3 stat4 stat5 stat6 stat7"
+	//   )
+	//   $(".myCompletionStatus").parent().addClass(initiativeStatus)
+  
+	//   changeResources();
+  
+	  $("button.updateprogress").removeClass("loader-action");
+	  $("button.updateprogress").addClass("loader-action-success");
+  
+	},
+	onError: function (sender, args) {
+	  $("button.updateprogress").removeClass("loader-action");
+	  $("button.updateprogress").addClass("loader-action-error");
+  
+	  console.log(
+		"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+	  );
+	},
+	// Global variables
+	g: {},
+  }
