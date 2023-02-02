@@ -3456,6 +3456,162 @@ window.ListInfo = {
         );
         break;
 
+
+      case "lookupchildtoparent":
+
+        var code = activeCode
+        var customQuery =
+          '<View><Query><Where><And><Eq><FieldRef Name=' + element.childinternalparentname + ' /><Value Type=' + element.childinternalparenttype + '>' +
+          code +
+          "</Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+
+        var itemsID = [];
+        debugger
+        sphttp.get(
+          _spPageContextInfo.siteServerRelativeUrl,
+          element.childlist,
+          customQuery,
+          [element.childinternalname],
+          function (records, record, listItem, isDone) {
+
+            var allRelatedChild = [] // to get all related child 
+            if (isDone) {
+              records.forEach(function (el, index) {
+                allRelatedChild.push(el[element.childinternalname]);
+
+              });
+              console.log(allRelatedChild, "allRelatedChild")
+
+
+              var internalQuery =
+                '<View><Query><Where><And><In><FieldRef Name="' + element.sourceinternalname +
+                '" /><Values>'
+
+              allRelatedChild.forEach(function (item) {
+                internalQuery += '<Value Type="Text">' + item + "</Value>";
+              });
+
+              internalQuery += "</Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+
+              sphttp.get(
+                _spPageContextInfo.siteServerRelativeUrl,
+                element.source,
+                internalQuery,
+                [element.valfieldkey, element.Dispfieldkey],
+                function (records, record, listItem, isDone) {
+                  if (listItem) itemsID.push(listItem.get_id());
+                  if (isDone) {
+                    htmlBody =
+                      '<div class="col-md-6 CFIELD ' +
+                      dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+                      " " +
+                      element.className +
+                      ' " ' +
+                      thistip +
+                      " " +
+                      hidestagesIDs +
+                      " " +
+                      editableBy +
+                      " " +
+                      showstagesIDs +
+                      "  " +
+                      disablestagesIDs +
+                      "  " +
+                      enablestagesIDs +
+                      "   " +
+                      isWfhidestagesIDs +
+                      " " +
+                      requireOnWfTaskstagesIDs +
+                      " " +
+                      isWfshowstagesIDs +
+                      "  " +
+                      isWfdisablestagesIDs +
+                      "  " +
+                      isWfenablestagesIDs +
+                      '        data-groups="' +
+                      groups +
+                      '" style="display:' +
+                      element.display +
+                      '">' +
+                      '<label for="' +
+                      element.InternalName +
+                      '" ' +
+                      element.validation +
+                      ">" +
+                      displayName +
+                      "</label>" +
+                      "<select " +
+                      ToggleName +
+                      " " +
+                      RequiredName +
+                      " " +
+                      inputLisKey +
+                      element.validation +
+                      " " +
+                      dynamic +
+                      ' data-listname="' +
+                      element.source +
+                      '" data-valfieldkey="' +
+                      element.valfieldkey +
+                      '" data-Dispfieldkey="' +
+                      dispfieldkey +
+                      '" data-filterfield="' +
+                      element.filterField +
+                      '" data-queryfieldvalue="' +
+                      element.queryFieldValue +
+                      '"data-queryfield="' +
+                      element.queryField +
+                      '"data-queryfieldtype="' +
+                      element.queryFieldType +
+                      '" data-filterfieldtype="' +
+                      element.filterFieldType +
+                      '" class="form-control" type="dropdown" id="' +
+                      element.InternalName +
+                      '" value="" placeholder="' +
+                      displayName +
+                      '" ' +
+                      element.state +
+                      '><option value="" ' +
+                      selected +
+                      " disabled>" +
+                      displayName +
+                      "</option>";
+
+                    records.forEach(function (el, index) {
+                      htmlBody +=
+                        '<option option-id="' +
+                        itemsID[index] +
+                        '" value="' +
+                        el[element.valfieldkey] +
+                        '">' +
+                        el[element.Dispfieldkey] +
+                        "</option>";
+                    });
+
+                    htmlBody +=
+                    "</select>" +
+                    "<span data-trans-" +
+                    Errmsgkey +
+                    ' class="errMsgField Resources"></span>' +
+                    '<div class="inputInfo ' +
+                    isexist +
+                    '">' +
+                    descPhrase +
+                    "</div>" +
+                    "</div>";
+
+                  OnSuccess(flag, htmlBody);
+
+
+                  }
+                })
+
+            }
+          })
+        break;
+
+
+
       case "lookuptoparentchild":
         var code = activeCode;
 
@@ -3986,7 +4142,7 @@ window.ListInfo = {
           ToggleName +
           " " +
           RequiredName +
-          " " + 
+          " " +
           element.validation +
           " " +
           dynamic +
