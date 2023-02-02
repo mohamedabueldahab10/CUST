@@ -24,6 +24,16 @@ var Information_Form = [
         type: 'multiline',
       },
       {
+        "InternalName": "Amount",
+        "DisplayName": "القيمة",
+        "DisplayNameEn": "Amount",
+        dontSubmit: true,
+        "type": "percentbyrelatedparent",
+        "listname":"Projects",
+        "parentinternalname":"ActualBudget",
+        "targetelement":"Weight",
+    },
+      {
         InternalName: 'Weight',
         DisplayName: 'الوزن / القيمة',
         DisplayNameEn: 'Weight',

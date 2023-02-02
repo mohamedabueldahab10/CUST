@@ -7474,9 +7474,9 @@ var Projects_Info = {
 
 var GetProject_Info = {
   onSuccess: function (sender, args) {
-    if (listkey == "deliverables") {
-      deliverabePercent.init();
-    }
+    // if (listkey == "deliverables") {
+    //   deliverabePercent.init();
+    // }
     var collListItem = GetProject_Info.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var PID, stage, ismultistage;

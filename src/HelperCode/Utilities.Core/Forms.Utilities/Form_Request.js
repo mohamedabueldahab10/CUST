@@ -516,6 +516,18 @@ window.Edit_Data_Request = {
       initiativeMilestoneVal = oListItem.get_item('RelatedInitiativeMilestone') ? oListItem.get_item('RelatedInitiativeMilestone') : ''
       Get_ProjectData_ByCode.init()
     }
+    if (listkey == "deliverables" || listkey == 'milestones' || listkey == 'initiativedeliverables' || listkey == 'initiativemilestones') {
+      if ($("[data-targetelem]").length > 0) {
+
+        var parentValue = $('#Amount').data('parentval')
+        var weight = oListItem.get_item("Weight");
+        weight = Number(weight)
+        var Amount = (weight * parentValue) / 100
+        Amount = Amount.toFixed(2)
+        $('#Amount').val(Amount)
+      }
+    }
+    //}
 
     if (isVROE) {
       if (listkey == "initiatives") {
@@ -602,7 +614,7 @@ window.Edit_Data_Request = {
     ////////////////////////
 
     //hide show fields based on selection & onload
-    
+
     $("[data-togglevalues]").each(function () {
       ListInfo.g.toggleFields($(this));
     });
@@ -610,7 +622,7 @@ window.Edit_Data_Request = {
     // trigger the dynamic parent field to get the data in edit
     $("select[dynamic=parent]").trigger("change")
 
-    
+
 
 
     //getting related files
@@ -1268,6 +1280,20 @@ window.View_Data_Request = {
     //     GetProject_Info.preinit();
     // },1000);
     //custom
+    ///
+    if (listkey == 'deliverables' || listkey == 'milestones' || listkey == 'initiativedeliverables' || listkey == 'initiativemilestones') {
+      if ($("[data-targetelem]").length > 0) {
+
+        var parentValue = $('#Amount').data('parentval')
+        var weight = oListItem.get_item("Weight");
+        weight = Number(weight)
+        var Amount = (weight * parentValue) / 100
+        Amount = Amount.toFixed(2)
+        $('#Amount').text(Amount)
+      }
+    }
+
+    ////
     if (listkey == "budgetitems") {
       View_Data_Request.g.budgetitem();
     }
@@ -2462,9 +2488,9 @@ window.Kpi_Related_Goal = {
       );
     });
 
-    console.log(Kpi_Related_Goal.g.array,"Kpi_Related_Goal.g.array")
-    console.log(objectiveId,"objectiveId")
-    console.log(relatedSubGoal,"relatedSubGoal relatedSubGoal")
+    console.log(Kpi_Related_Goal.g.array, "Kpi_Related_Goal.g.array")
+    console.log(objectiveId, "objectiveId")
+    console.log(relatedSubGoal, "relatedSubGoal relatedSubGoal")
 
     if (isEdit) {
       if (indexTypekpi == 'main') {
@@ -2489,8 +2515,8 @@ window.Kpi_Related_Goal = {
     var camlQuery = new SP.CamlQuery();
     typeOfIndex = indexType
 
-    console.log(indexType,"INDEX TYPE")
-    console.log(SosCode,"SOS CODE")
+    console.log(indexType, "INDEX TYPE")
+    console.log(SosCode, "SOS CODE")
 
     // var query = '<View><Query><Where><And><Eq><FieldRef Name="RelatedStrategy" /><Value Type="Text">' + SosCode + '</Value></Eq><Eq><FieldRef Name="Types" /><Value Type="Choice">' + indexType + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
 
