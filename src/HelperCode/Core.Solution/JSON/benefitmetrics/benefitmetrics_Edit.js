@@ -49,7 +49,6 @@ var Information_Form = [
         // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
         // queryFieldValue: 'sub',// if i need to make the field with filter should add this
       },
-      
       {
         InternalName: 'Owner',
         DisplayNameEn: 'Owner',

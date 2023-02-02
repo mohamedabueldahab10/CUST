@@ -36,10 +36,18 @@ var Information_Form = [
         validation: 'required',
         DisplayName: 'نوع المؤشر',
         toggleValues: [
+          // {
+          //   value: 'sub',
+          //   fields: ['SubRelatedObjective', 'RelatedMainKpis', 'Portfolio'],
+          // }, //we can put more than 1  field
           {
-            value: 'sub',
+            value: 'sublevel2',
             fields: ['SubRelatedObjective', 'RelatedMainKpis', 'Portfolio'],
-          }, //we can put more than 1  field
+          },
+          {
+            value: 'sublevel3',
+            fields: ['SubRelatedObjective', 'RelatedMainKpis', 'Portfolio'],
+          },
           { value: 'main', fields: ['RelatedMainObjective'] }, //we can put more than 1  field
           { value: 'strategically', fields: ['StrategyRelatedObjective'] },
         ],
@@ -48,9 +56,11 @@ var Information_Form = [
           choices: [
             // { display: "strategically", value: "strategically" },
             { display: 'main', value: 'main' },
+            { display: 'sublevel2', value: 'sublevel2' },
+            { display: 'sublevel3', value: 'sublevel3' },
             // { display: 'level2', value: 'level2' },
             // { display: 'level3', value: 'level3' },
-            { display: "sub", value: "sub" },
+            // { display: "sub", value: "sub" },
             // { display: "vision", value: "vision" },
             // { display: "jobmarket", value: "jobmarket" },
           ],
