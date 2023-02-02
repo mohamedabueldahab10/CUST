@@ -407,6 +407,10 @@ var Information_Form = [
         DisplayName: 'تاريخ بدء الأساس',
         DisplayNameEn: 'Baseline Start Date',
         type: 'datetime',
+        // "type": "datetimetoparent",
+        // "listname":"Projects",
+        // "startinternalname":"ActualStartDate",
+        // "endinternalname":"ActualFinishDate",
         max: 'BaselineFinishDate',
         // "state": "disabled"
       },

@@ -325,7 +325,11 @@ var Information_Form = [
         DisplayNameEn: 'Start Date',
         type: 'datetime',
         // validation: 'required',
-        max: 'FinishDate'
+        // type: 'datetimetoparent',
+        // listname: 'Projects',
+        // startinternalname: 'BaselineStartDate',
+        // endinternalname: 'BaselineFinishDate',
+        max: 'FinishDate',
       },
       {
         InternalName: 'Duration',
@@ -340,6 +344,10 @@ var Information_Form = [
          DisplayNameEn: 'Finish Date',
          type: 'datetime',
          // state: 'disabled',
+        // type: 'datetimetoparent',
+        // listname: 'Projects',
+        // startinternalname: 'BaselineStartDate',
+        // endinternalname: 'BaselineFinishDate',
          min: 'StartDate'
       },
       {

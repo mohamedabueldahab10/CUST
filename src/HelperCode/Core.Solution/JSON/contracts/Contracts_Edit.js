@@ -38,9 +38,9 @@ var Information_Form = [{
                 "DisplayNameEn": "Start Date",
                 // "type": "datetime",
                 "type": "datetimetoparent",
-                "listname":"Contracts", // list name
-                "startinternalname":"StartDate", // internalname of parent start
-                "endinternalname":"EndDate",
+                "listname":"Projects", // list name
+                "startinternalname":"BaselineStartDate", // internalname of parent start
+                "endinternalname":"BaselineFinishDate",
                 "max": "EndDate"
             },
             {
@@ -49,9 +49,9 @@ var Information_Form = [{
                 "DisplayNameEn": "End Date",
                 // "type": "datetime",
                 "type": "datetimetoparent",
-                "listname":"Contracts",
-                "startinternalname":"StartDate",
-                "endinternalname":"FinishDate",
+                "listname":"Projects",
+                "startinternalname":"BaselineStartDate",
+                "endinternalname":"BaselineFinishDate",
                 "min":"StartDate"
             },
             // {

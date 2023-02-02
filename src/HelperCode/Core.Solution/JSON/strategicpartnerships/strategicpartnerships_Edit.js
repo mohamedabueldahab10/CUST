@@ -279,12 +279,25 @@ var Information_Form = [
          "valfieldkey":"Title",
          "validation":"required"
       },
+      // {
+      //    "InternalName":"StartDate",
+      //    "DisplayName":"تاريخ بداية الشراكة",
+      //    "DisplayNameEn":"Start Date",
+      //    "type":"datetime",
+      //    "validation":"required"
+      // },
+      
       {
-         "InternalName":"StartDate",
-         "DisplayName":"تاريخ بداية الشراكة",
-         "DisplayNameEn":"Start Date",
-         "type":"datetime",
-         "validation":"required"
+        InternalName: 'StartDate',
+        DisplayName: 'تاريخ بداية الشراكة',
+        DisplayNameEn: 'Start Date',
+        type: 'datetime',
+        validation: 'required',
+        // type: 'datetimetoparent',
+        // listname: 'Projects',
+        // startinternalname: 'BaselineStartDate',
+        // endinternalname: 'BaselineFinishDate',
+        max: 'FinishDate',
       },
       {
          "InternalName":"Duration",
