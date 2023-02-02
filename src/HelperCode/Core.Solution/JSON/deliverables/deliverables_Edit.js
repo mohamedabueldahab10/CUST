@@ -117,6 +117,9 @@ var Information_Form = [{
       "InternalName": "Delivered",
       "DisplayName": "تم التسليم",
       "DisplayNameEn": "Delivered",
+      "targetfieldrequired":"getFile", // to make the attache required on yes
+      "targetfield":"Status",
+      "targetfieldvalue": "completed",
       "type": "yesnoradio",
       options: {
         choices: [

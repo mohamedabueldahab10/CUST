@@ -285,11 +285,7 @@ var Information_Form = [
         InternalName: 'FinishDate',
         DisplayName: 'تاريخ نهاية المبادرة ',
         DisplayNameEn: 'Finish Date',
-        // type: 'datetime',
-        type: 'datetimetoparent',
-        listname: 'Initiatives',
-        startinternalname: 'BaselineStartDate',
-        endinternalname: 'BaselineFinishDate',
+        type: 'datetime',
         max: 'FinishDate',
         // validation: 'required'
       },

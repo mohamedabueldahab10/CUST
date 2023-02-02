@@ -210,7 +210,8 @@ var Information_Form = [
         DisplayNameEn: 'Attachments',
         type: 'file',
         withAddBtn: 'true',
-        validation: 'required',
+        // validation: 'required',
+        targetfieldrequired:'getFile',
       },
       {
         DisplayName: 'ارسال للموافقة',
