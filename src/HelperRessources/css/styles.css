@@ -6377,3 +6377,16 @@ a.a-important-link:hover>* {
     margin-inline-start:7px;
     font-size:1.9rem;
 }
+/* ghufran style  */
+/* projhome inithome informations cards style  */
+.initiativeProjHomeInfoTitleStyle{
+    color:#000!important;
+    font-weight:500!important;
+    font-size: 1.9rem!important;
+}
+
+.initiativeProjHomeInfoValueStyle{
+    color:#1f2933!important;
+    font-weight:500!important;
+    font-size: 1.6rem!important;  
+}
