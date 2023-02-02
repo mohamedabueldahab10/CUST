@@ -253,21 +253,41 @@ var Information_Form = [
         // "state": "disabled"
         validation: 'required',
       },
+      // {
+      //   InternalName: 'StartDate',
+      //   DisplayName: 'تاريخ بداية المبادرة ',
+      //   DisplayNameEn: 'Start Date',
+      //   type: 'datetime',
+      //   max: 'FinishDate',
+      //   validation: 'required'
+      // },
+      // {
+      //   InternalName: 'FinishDate',
+      //   DisplayName: 'تاريخ نهاية المبادرة ',
+      //   DisplayNameEn: 'Finish Date',
+      //   type: 'datetime',
+      //   min: 'StartDate',
+      //   validation: 'required'
+      // },
       {
         InternalName: 'StartDate',
         DisplayName: 'تاريخ بداية المبادرة ',
         DisplayNameEn: 'Start Date',
-        type: 'datetime',
+        // type: 'datetime',
+        type: 'datetimetoparent',
+        listname: 'Initiatives',
+        startinternalname: 'BaselineStartDate',
+        endinternalname: 'BaselineFinishDate',
         max: 'FinishDate',
-        validation: 'required'
+        // validation: 'required'
       },
       {
         InternalName: 'FinishDate',
         DisplayName: 'تاريخ نهاية المبادرة ',
         DisplayNameEn: 'Finish Date',
         type: 'datetime',
-        min: 'StartDate',
-        validation: 'required'
+        max: 'FinishDate',
+        // validation: 'required'
       },
       {
         InternalName: 'Description',

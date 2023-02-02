@@ -42,21 +42,42 @@ var Information_Form = [
       //         ]
       //     }
       // },
+      // {
+      //   InternalName: 'StartDate',
+      //   DisplayName: 'تاريخ بدء العقد',
+      //   DisplayNameEn: 'Start Date',
+      //   type: 'datetime',
+      //   max: 'EndDate',
+      // },
+      // {
+      //   InternalName: 'EndDate',
+      //   DisplayName: 'تاريخ إنتهاء العقد',
+      //   DisplayNameEn: 'End Date',
+      //   type: 'datetime',
+      //   min: 'StartDate',
+      // },
       {
         InternalName: 'StartDate',
         DisplayName: 'تاريخ بدء العقد',
         DisplayNameEn: 'Start Date',
-        type: 'datetime',
+        // "type": "datetime",
+        type: 'datetimetoparent',
+        listname: 'Projects', // list name
+        startinternalname: 'BaselineStartDate', // internalname of parent start
+        endinternalname: 'BaselineFinishDate',
         max: 'EndDate',
       },
       {
         InternalName: 'EndDate',
         DisplayName: 'تاريخ إنتهاء العقد',
         DisplayNameEn: 'End Date',
-        type: 'datetime',
+        // "type": "datetime",
+        type: 'datetimetoparent',
+        listname: 'Projects',
+        startinternalname: 'BaselineStartDate',
+        endinternalname: 'BaselineFinishDate',
         min: 'StartDate',
       },
-
       {
         InternalName: 'ContractualValue',
         DisplayName: 'قيمة العقد الإجمالية',
@@ -129,7 +150,7 @@ var Information_Form = [
       {
         InternalName: 'getfile',
         DisplayName: 'مرفقات',
-         DisplayNameEn: 'Attachments',
+        DisplayNameEn: 'Attachments',
         type: 'file',
         withAddBtn: 'true',
         // validation: 'required',

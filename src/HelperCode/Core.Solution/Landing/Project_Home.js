@@ -280,102 +280,84 @@ var Project_Home_Info_Request = {
         '<div class="d-inline-flex flex-column mx-3">' +
         '<h3 class="acc-title d-inline-flex black">' + projectname + '</h3>' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        '<h3 data-trans-pattr4 class="Resources black"></h3>' +
-        '<span class="des-13"><span class="complition-val">' + projectcode + '</span></span>' +
+        '<h3 data-trans-pattr4 class="Resources black initiativeProjHomeInfoTitleStyle"></h3>' +
+        '<span class="des-13"><span class="complition-val initiativeProjHomeInfoValueStyle">' + projectcode + '</span></span>' +
         '</div>' +
         '</div>' +
         '</div>' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        '<h3 data-trans-sector class="Resources black"></h3>' +
-        '<span class="des-13"><span class="state-val">' + projectsector + '</span></span>' +
+        '<h3 data-trans-sector class="Resources black initiativeProjHomeInfoTitleStyle"></h3>' +
+        '<span class="des-13"><span class="state-val initiativeProjHomeInfoValueStyle">' + projectsector + '</span></span>' +
         '</div>' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        '<h3 data-trans-subsector class="Resources black"></h3>' +
-        '<span class="des-13"><span class="state-val">' + projectSubsector + '</span></span>' +
+        '<h3 data-trans-subsector class="Resources black initiativeProjHomeInfoTitleStyle"></h3>' +
+        '<span class="des-13"><span class="state-val initiativeProjHomeInfoValueStyle">' + projectSubsector + '</span></span>' +
         '</div>' +
         '<span class="des-13 project-date">' +
-        '<span class="start-date"><span data-trans-basestart class="Resources"></span><span class="px-2">' + baselineStartDate + '</span></span>' +
-        '<span class="end-date"><span data-trans-basefinish class="Resources"></span><span class="px-2">' + baselineFinishDate + '</span></span>' +
+        '<span class="start-date"><span data-trans-basestart class="Resources initiativeProjHomeInfoTitleStyle"></span><span class="px-2 initiativeProjHomeInfoValueStyle">' + baselineStartDate + '</span></span>' +
+        '<span class="end-date"><span data-trans-basefinish class="Resources initiativeProjHomeInfoTitleStyle"></span><span class="px-2 initiativeProjHomeInfoValueStyle">' + baselineFinishDate + '</span></span>' +
         '</span>' +
         '</div>' +
         '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
         '<div class="d-inline-flex flex-column mx-2 ' + phase + '">' +
-        '<span data-trans-pattr5 class="Resources des-13"></span>' +
+        '<span data-trans-pattr5 class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
         '<h4 class="acc-title d-inline-flex black">' + phasename + '</h4>' +
         '</div>' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        '<span data-trans-pattr60 class="Resources des-13"></span>' +
-        '<h4 class="acc-title d-inline-flex black">' + stageNamestr + '</h4>' +
+        '<span data-trans-pattr60 class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
+        '<h4 class="acc-title d-inline-flex black initiativeProjHomeInfoValueStyle">' + stageNamestr + '</h4>' +
         '</div>' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        '<h3 data-trans-relatedinitiative class="Resources black"></h3>' +
-        '<span class="des-13 overflow-ellipsis-black" ><span id="relatedinit" style="cursor:pointer">' + projectRelatedInitiative + '</span><span class="tooltiptextblack" id="relatedinitchild">' + projectRelatedInitiative + '</span></span>' +
+        '<h3 data-trans-relatedinitiative class="Resources black initiativeProjHomeInfoTitleStyle"></h3>' +
+        '<span class="des-13 overflow-ellipsis-black" ><span id="relatedinit" style="cursor:pointer">' + projectRelatedInitiative + '</span><span class="tooltiptextblack initiativeProjHomeInfoValueStyle" id="relatedinitchild">' + projectRelatedInitiative + '</span></span>' +
         '</div>' +
         '</div>' +
         //
         '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
         '<h4 data-trans-pattr57 class="black Resources d-flex mx-2" style="display:none !important"></h4>' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        '<span class="des-13"><span data-trans-pattr56 class="Resources complition-val"></span> ' +
-        '<h4 class="black actual-complete-val">' + ScheduleProjectPercentageComplete + '%</h4></span>' +
+        '<span class="des-13"><span data-trans-pattr56 class="Resources complition-val initiativeProjHomeInfoTitleStyle"></span> ' +
+        '<h4 class="black actual-complete-val initiativeProjHomeInfoValueStyle">' + ScheduleProjectPercentageComplete + '%</h4></span>' +
         '</div>' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        '<span class="des-13"><span data-trans-pattr6 class="Resources state-val"></span></span>' +
-        '<h4 class="black"> ' + ScheduleBLPercentageCompleteList + '%</h4>' + //
+        '<span class="des-13"><span data-trans-pattr6 class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+        '<h4 class="black initiativeProjHomeInfoValueStyle"> ' + ScheduleBLPercentageCompleteList + '%</h4>' + //
         '</div>' +
         '<div class="d-inline-flex flex-column mx-2 ' + projectprogress + '">' +
-        '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val"></span></span>' +
+        '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val initiativeProjHomeInfoTitleStyle"></span></span>' +
         '<h4 data-trans-' + projectprogress + ' class="black Resources myCompletionStatus statuscolor' + projectprogress + '"></h4>' + //
         '</div>' +
         '</div>' +
-        //
-        // '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
-        //   '<div class="d-inline-flex flex-column mx-2">' +
-        //   '<span class="des-13"><span data-trans-pattr63 class="Resources state-val"></span></span>' +
-        //   '<h4 class="black"> 60%</h4>' + //
-        //   '</div>' +
-        //   '<h4 data-trans-pattr57 class="black Resources d-flex mx-2" style="display:none !important"></h4>' +
-        //   '<div class="d-inline-flex flex-column mx-2">' +
-        //   '<span class="des-13"><span data-trans-pattr56 class="Resources complition-val"></span></span>' +
-        //   '<h4 class="black"> 40%</h4>' +
-        //   '</div>' +
-        //   '<div class="d-inline-flex flex-column mx-2 ' + projectprogress + '">' +
-        //   '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val"></span></span>' +
-        //   '<h4 data-trans-' + projectprogress + ' class="black Resources myCompletionStatus statuscolor' + projectprogress + '"></h4>' + //
-        // '</div>' +
-        // '</div>' +
-        //
-        //
-        // '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
-        // '<div class="d-inline-flex flex-column mx-2">' +
-        // '<span class="des-13"><span data-trans-pattr61 class="Resources state-val"></span></span>' +
-        // '<h4 class="black"> 60%</h4>' + //
-        // '</div>' +
-        // '<h4 data-trans-pattr57 class="black Resources d-flex mx-2" style="display:none !important"></h4>' +
-        // '<div class="d-inline-flex flex-column mx-2">' +
-        // '<span class="des-13"><span data-trans-pattr66 class="Resources complition-val"></span></span>' +
-        // '<h4 class="black"> 40%</h4>' +
-        // '</div>' +
-        // '<div class="d-inline-flex flex-column mx-2 ' + projectprogress + '">' +
-        // '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val"></span></span>' +
-        // '<h4 data-trans-' + projectprogress + ' class="black Resources myCompletionStatus statuscolor' + projectprogress + '"></h4>' + //
-        // '</div>' +
-        // '</div>' +
-        //
-        // '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
-        // '<div class="d-inline-flex flex-column mx-2">' +
-        // '<span class="des-13"><span data-trans-pattr62 class="Resources state-val"></span></span>' +
-        // '<h4 class="black"> 50%</h4>' + //
-        // '</div>' +
-        // '<h4 data-trans-pattr57 class="black Resources d-flex mx-2" style="display:none !important"></h4>' +
-        // '<div class="d-inline-flex flex-column mx-2">' +
-        // '<span class="des-13"><span data-trans-pattr76 class="Resources complition-val"></span> ' +
-        // '<h4 class="black"> 45%</h4></span>' +
-        // '</div>' +
-        // '<div class="d-inline-flex flex-column mx-2 ">' +
-        // '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val"></span></span>' +
-        // '<h4 data-trans-stat2 stat2 class="black Resources myCompletionStatus statuscolorstat2 stat2"></h4>' + //
-        // '</div>' +
+        '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<span class="des-13"><span data-trans-pattr61 class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+        '<h4 class="black initiativeProjHomeInfoValueStyle"></h4>' + //
+        '</div>' +
+        '<h4 data-trans-pattr57 class="black Resources d-flex mx-2" style="display:none !important"></h4>' +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<span class="des-13"><span data-trans-pattr66 class="Resources complition-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+        '<h4 class="black initiativeProjHomeInfoValueStyle"></h4>' +
+        '</div>' +
+        '<div class="d-inline-flex flex-column mx-2 ' + projectprogress + '">' +
+        '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+        '<h4 data-trans-' + projectprogress + ' class="black Resources myCompletionStatus statuscolor' + projectprogress + '"></h4>' + //
+        '</div>' +
+        '</div>' +
+        
+        '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<span class="des-13"><span data-trans-pattr62 class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+        '<h4 class="black initiativeProjHomeInfoValueStyle"></h4>' + //
+        '</div>' +
+        '<h4 data-trans-pattr57 class="black Resources d-flex mx-2" style="display:none !important"></h4>' +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<span class="des-13"><span data-trans-pattr76 class="Resources complition-val initiativeProjHomeInfoTitleStyle"></span> ' +
+        '<h4 class="black initiativeProjHomeInfoValueStyle"></h4></span>' +
+        '</div>' +
+        '<div class="d-inline-flex flex-column mx-2 ">' +
+        '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+        '<h4 data-trans-stat2 stat2 class="black Resources myCompletionStatus statuscolorstat2 stat2"></h4>' + //
+        '</div>' +
         '</div>'
       );
       ProgressLastModifiedDate = Project_Home_Info_Request.g.dateConvert(oListItem.get_item('ProgressLastModifiedDate'));
@@ -397,7 +379,7 @@ var Project_Home_Info_Request = {
 
     $('.project-details-ctx .card.h-100').html(card1.join('')); // attaching card 1
 
-    $('#PjPriority').append('<span data-trans-' + projectimportance + ' class="Resources"></span>');
+    $('#PjPriority').append('<span data-trans-' + projectimportance + ' class="Resources initiativeProjHomeInfoValueStyle"></span>');
 
     $('.project-info-ctx .media-body:nth-of-type(1) .icon-user > .user-name').text(ProjectSponsor.split(' ').map(word => word[0]).join('.'));
     $('.project-info-ctx .media-body:nth-of-type(1) p.fnt-14.reg.mx-3').text(ProjectSponsor);

@@ -17,18 +17,40 @@ var Information_Form = [
         DisplayNameEn: 'Contract Name',
         type: 'string',
       },
+      // {
+      //   InternalName: 'StartDate',
+      //   DisplayName: 'تاريخ بدء العقد',
+      //   DisplayNameEn: 'Start Date',
+      //   type: 'datetime',
+      //   max: 'EndDate',
+      // },
+      // {
+      //   InternalName: 'EndDate',
+      //   DisplayName: 'تاريخ إنتهاء العقد',
+      //   DisplayNameEn: 'Start Date',
+      //   type: 'datetime',
+      //   min: 'StartDate',
+      // },
       {
         InternalName: 'StartDate',
         DisplayName: 'تاريخ بدء العقد',
         DisplayNameEn: 'Start Date',
-        type: 'datetime',
+        // "type": "datetime",
+        type: 'datetimetoparent',
+        listname: 'Projects', // list name
+        startinternalname: 'BaselineStartDate', // internalname of parent start
+        endinternalname: 'BaselineFinishDate',
         max: 'EndDate',
       },
       {
         InternalName: 'EndDate',
         DisplayName: 'تاريخ إنتهاء العقد',
-        DisplayNameEn: 'Start Date',
-        type: 'datetime',
+        DisplayNameEn: 'End Date',
+        // "type": "datetime",
+        type: 'datetimetoparent',
+        listname: 'Projects',
+        startinternalname: 'BaselineStartDate',
+        endinternalname: 'BaselineFinishDate',
         min: 'StartDate',
       },
       // {

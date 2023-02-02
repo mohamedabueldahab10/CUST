@@ -2720,16 +2720,25 @@ function handlePhaseChartBarChart() {
   //Move Game2
   var background_5 = bar_ctx2.createLinearGradient(0, 0, 0, 270);
 
-  background_1.addColorStop(0, "#80cea2");
-  background_1.addColorStop(1, "#32b474");
-  background_2.addColorStop(0, "#70abb0");
+  //Closure red
+  background_1.addColorStop(0, "#bc3434");
+  background_1.addColorStop(1, "#C53737");
+
+  //bitakat al mashru3 green
+  background_2.addColorStop(0, "#428737");
   background_2.addColorStop(1, "#5AB74C");
+
+  //al tanfiz 2 blue
   background_3.addColorStop(0, "#688393");
   background_3.addColorStop(1, "#15425a");
+
+  // Planning yellow
   background_4.addColorStop(0, "#EBC866");
   background_4.addColorStop(1, "#FCD66D");
-  background_5.addColorStop(0, "#450A0A");
-  background_5.addColorStop(1, "#73204E");
+
+  // al tanfiz 1 green-blue
+  background_5.addColorStop(0, "#80cea2");
+  background_5.addColorStop(1, "#32b474");
 
   var BackgroundsArray = [
     background_1,
@@ -2744,29 +2753,30 @@ function handlePhaseChartBarChart() {
   ) {
     phaseOccurence = phaseOccurence.reverse();
     phaseNameArray = phaseNameArray.reverse();
-    // phaseNameArray.forEach((element, index) => phaseNameArray[index] = element.split(' ')[1]);
+    // phaseNameArray.forEach(
+    // 	(element, index) =>
+    // 	(phaseNameArray[index] =
+    // 		element.indexOf(" ") > -1 ? element.split(" ")[1] : element)
+    // );
   } else {
     BackgroundsArray = BackgroundsArray.reverse();
   }
 
-  var phaseNameArrayLabels;
+  // 	$("#phaseChart").remove(); // this is my <canvas> element
+  // 	$("#carditem3 .chartjs-size-monitor").remove();
+  // 	$("#carditem3 .card-body .card-body").append(
+  // 		'<p class="chartNodata">' + No_Data + "</p>"
+  // 	);
 
-  if (_.sum(phaseOccurence) == 0) {
-    phaseNameArrayLabels = [];
-    $("#phaseChart").remove(); // this is my <canvas> element
-    $("#carditem3 .chartjs-size-monitor").remove();
-    $("#carditem3 .card-body .card-body").append(
-      '<p class="chartNodata">' + No_Data + "</p>"
-    );
-  } else {
-    $("#carditem3 .card-body .card-body .chartNodata").remove();
-    phaseNameArrayLabels = phaseNameArray;
-  }
+  // } else {
+  // 	$("#carditem3 .card-body .card-body .chartNodata").remove();
+
+  // }
 
   /* data */
   var phasedata = {
     // labels: ["S4", "S3", "S2", "S1"],
-    labels: phaseNameArrayLabels,
+    labels: phaseNameArray,
     datasets: [
       {
         backgroundColor: BackgroundsArray,
@@ -2842,12 +2852,23 @@ function handlePhaseChartBarChart() {
       ],
     },
   };
-  if (_.sum(phaseOccurence) != 0) {
+
+  if (phaseOccurence.length) {
     var phaseChart = new Chart(document.getElementById("phaseChart"), {
       type: "bar",
       data: phasedata,
       options: phaseoptions,
     });
+  }
+  if (phaseOccurence.length) {
+    $("#carditem3 .card-body .card-body .chartNodata").remove();
+  } else {
+    $("#carditem3 .card-body .card-body .chartNodata").remove();
+    $("#phaseChart").remove(); // this is my <canvas> element
+    $("#carditem3 .chartjs-size-monitor").remove();
+    $("#carditem3 .card-body .card-body").append(
+      '<p class="chartNodata">' + No_Data + "</p>"
+    );
   }
 }
 
@@ -3028,20 +3049,25 @@ function handleCircleRiskChart() {
     '<canvas width="200" height="196" id="riskChart"><canvas>'
   );
   var circl_ctx = document.getElementById("riskChart").getContext("2d");
+
   var color1 = circl_ctx.createLinearGradient(0, 0, 0, 270);
-  color1.addColorStop(0, "#BE4C4C");
-  color1.addColorStop(1, "#D63E3E");
+
+  color1.addColorStop(0, "#bc3434");
+  color1.addColorStop(1, "#C53737");
 
   var color2 = circl_ctx.createLinearGradient(0, 0, 0, 270);
-  color2.addColorStop(0, "#fab414");
-  color2.addColorStop(1, "#F7C94B");
+
+  color2.addColorStop(0, "#428737");
+  color2.addColorStop(1, "#5AB74C");
 
   var color3 = circl_ctx.createLinearGradient(0, 0, 0, 270);
-  color3.addColorStop(0, "#58E578");
-  color3.addColorStop(1, "#5AB74C");
+
+  color3.addColorStop(0, "#EBC866");
+  color3.addColorStop(1, "#FCD66D");
 
   if (Low + Medium + Hight == 0) {
     ImpactLabel = [];
+    $("#carditem4 .card-body .card-body .chartNodata").remove();
     $("#riskChart").remove(); // this is my <canvas> element
     $("#carditem4 .chartjs-size-monitor").remove();
     $("#carditem4 .card-body .card-body").append(
@@ -3049,13 +3075,19 @@ function handleCircleRiskChart() {
     );
   } else {
     $("#carditem4 .card-body .card-body .chartNodata").remove();
-    if (
-      localStorage.getItem("lng") == null ||
-      localStorage.getItem("lng") == "ar"
-    ) {
-      ImpactLabel = ImpactLabelsAr;
-    } else ImpactLabel = ImpactLabelsEn;
   }
+
+  // if (_.sum(progressOccurence) == 0) {
+  // 	ProgressNameLabels = [];
+  // 	$("#statusChart").remove(); // this is my <canvas> element
+  // 	$("#carditem2 .chartjs-size-monitor").remove();
+  // 	$("#carditem2 .card-body .card-body").append(
+  // 		'<p class="chartNodata">' + No_Data + "</p>"
+  // 	);
+  // } else {
+  // 	$("#carditem2 .card-body .card-body .chartNodata").remove();
+  // 	ProgressNameLabels = ProgressName;
+  // }
 
   var data3 = {
     labels: ImpactLabel,
@@ -3098,6 +3130,7 @@ function handleCircleRiskChart() {
           var currentValue = dataset.data[tooltipItem.index];
           var percentage = Math.floor((currentValue / total) * 100 + 0.5);
           return [percentage + "%", currentValue];
+
           // return percentage + "%";
         },
       },
@@ -3119,22 +3152,10 @@ function handleCircleRiskChart() {
     plugins: {
       datalabels: {
         display: false,
-        // display: true,
-        // color: 'white',
-        // align: 'center',
-        // // backgroundColor: '#ccc',
-        // // borderRadius: 3,
-        // // borderColor: 'white',
-        // // borderRadius: 25,
-        // // borderWidth: 2,
-        // padding: 30,
-        // font: {
-        //   size: 14,
-        // }
       },
     },
   };
-  if (Low + Medium + Hight != 0) {
+  if (Low + Medium + Hight > 0) {
     var myChart4 = new Chart(document.getElementById("riskChart"), {
       type: "doughnut",
       data: data3,
@@ -3154,62 +3175,53 @@ function handleCirclePortfoliosChart() {
   var portfolioscircl_ctx = document
     .getElementById("portfoliosChart")
     .getContext("2d");
+
   var color1 = portfolioscircl_ctx.createLinearGradient(0, 0, 0, 270);
-  color1.addColorStop(0, "#BE4C4C");
-  color1.addColorStop(1, "#15425a");
-
+  color1.addColorStop(0, "#bc3434");
+  color1.addColorStop(1, "#C53737");
+  //color red
   var color2 = portfolioscircl_ctx.createLinearGradient(0, 0, 0, 270);
-  color2.addColorStop(0, "#fab414");
-  color2.addColorStop(1, "#F7C94B");
-
+  color2.addColorStop(0, "#428737");
+  color2.addColorStop(1, "#5AB74C");
+  //color green
   var color3 = portfolioscircl_ctx.createLinearGradient(0, 0, 0, 270);
-  color3.addColorStop(0, "#70abb0");
-  color3.addColorStop(1, "#5AB74C");
-
+  color3.addColorStop(0, "#688393");
+  color3.addColorStop(1, "#15425a");
+  //color blue
   var color4 = portfolioscircl_ctx.createLinearGradient(0, 0, 0, 270);
   color4.addColorStop(0, "#EBC866");
   color4.addColorStop(1, "#FCD66D");
-
+  // color yellow
   var color5 = portfolioscircl_ctx.createLinearGradient(0, 0, 0, 270);
-  color5.addColorStop(0, "#450A0A");
-  color5.addColorStop(1, "#73204E");
-
+  color5.addColorStop(0, "#80cea2");
+  color5.addColorStop(1, "#32b474");
+  // color green-blue
   var color6 = portfolioscircl_ctx.createLinearGradient(0, 0, 0, 270);
-  color6.addColorStop(0, "#80cea2");
-  color6.addColorStop(1, "#32b474");
-
+  color6.addColorStop(0, "#73bfb2");
+  color6.addColorStop(1, "#ada38d");
+  // color grey blue
   var color7 = portfolioscircl_ctx.createLinearGradient(0, 0, 0, 270);
   color7.addColorStop(0, "#688393");
   color7.addColorStop(1, "#b14848");
-
+  // color red - blue
   var color8 = portfolioscircl_ctx.createLinearGradient(0, 0, 0, 270);
   color8.addColorStop(0, "#15425a");
   color8.addColorStop(1, "#BE4C4C");
-
+  // color blue - red
   var color9 = portfolioscircl_ctx.createLinearGradient(0, 0, 0, 270);
-  color9.addColorStop(0, "#32b474");
-  color9.addColorStop(1, "#80cea2");
-
+  color9.addColorStop(0, "#688393");
+  color9.addColorStop(1, "#FCD66D");
+  // color blue - yellow
   var color10 = portfolioscircl_ctx.createLinearGradient(0, 0, 0, 270);
-  color10.addColorStop(0, "#b14848");
-  color10.addColorStop(1, "#688393");
-
-  var portfoliosNameLabels;
-
+  color10.addColorStop(0, "#428737");
+  color10.addColorStop(1, "#FCD66D");
+  // color green -  yellow
   if (_.sum(window.portfoliosProjectCount) == 0) {
-    portfoliosNameLabels = [];
-    $("#portfoliosChart").remove(); // this is my <canvas> element
-    $("#carditem6 .chartjs-size-monitor").remove();
-    $("#carditem6 .card-body .card-body").append(
-      '<p class="chartNodata">' + No_Data + "</p>"
-    );
-  } else {
-    $("#carditem6 .card-body .card-body .chartNodata").remove();
-    portfoliosNameLabels = portfoliosName;
+    portfoliosName = [];
   }
 
   var portfoliosdata = {
-    labels: portfoliosNameLabels,
+    labels: portfoliosName,
     datasets: [
       {
         label: "%",
@@ -3270,8 +3282,7 @@ function handleCirclePortfoliosChart() {
           });
           var currentValue = dataset.data[tooltipItem.index];
           var percentage = Math.floor((currentValue / total) * 100 + 0.5);
-          return [percentage + "%", currentValue];
-          // return percentage + "%";
+          return percentage + "%";
         },
       },
     },
@@ -3285,38 +3296,22 @@ function handleCirclePortfoliosChart() {
         fontSize: 9,
         boxWidth: 8,
         boxHeight: 8,
-        fontFamily: myFont,
+        fontStyle: "bold",
         padding: 15,
       },
     },
     plugins: {
       datalabels: {
         display: false,
-        // display: true,
-        // color: 'white',
-        // align: 'center',
-        // // backgroundColor: '#ccc',
-        // // borderRadius: 3,
-        // // borderColor: 'white',
-        // // borderRadius: 25,
-        // // borderWidth: 2,
-        // padding: 30,
-        // font: {
-        //   size: 14,
-        // }
       },
     },
   };
-  if (_.sum(portfoliosProjectCount) != 0) {
-    var portfoliosChart = new Chart(
-      document.getElementById("portfoliosChart"),
-      {
-        type: "doughnut",
-        data: portfoliosdata,
-        options: portfoliosoptions,
-      }
-    );
-  }
+
+  var portfoliosChart = new Chart(document.getElementById("portfoliosChart"), {
+    type: "doughnut",
+    data: portfoliosdata,
+    options: portfoliosoptions,
+  });
 }
 
 function handleCircleDepartmentsChart() {
@@ -3332,36 +3327,42 @@ function handleCircleDepartmentsChart() {
     .getElementById("departmentsChart")
     .getContext("2d");
   var color1 = departmentscircl_ctx.createLinearGradient(0, 0, 0, 270);
-  color1.addColorStop(0, "#BE4C4C");
-  color1.addColorStop(1, "#D63E3E");
+  color1.addColorStop(0, "#bc3434");
+  color1.addColorStop(1, "#C53737");
+  //color red
 
   var color2 = departmentscircl_ctx.createLinearGradient(0, 0, 0, 270);
-  color2.addColorStop(0, "#fab414");
-  color2.addColorStop(1, "#F7C94B");
+  color2.addColorStop(0, "#428737");
+  color2.addColorStop(1, "#5AB74C");
+  //color green
 
   var color3 = departmentscircl_ctx.createLinearGradient(0, 0, 0, 270);
-  color3.addColorStop(0, "#70abb0");
-  color3.addColorStop(1, "#5AB74C");
+  color3.addColorStop(0, "#688393");
+  color3.addColorStop(1, "#15425a");
+  //color blue
 
   var color4 = departmentscircl_ctx.createLinearGradient(0, 0, 0, 270);
-  color4.addColorStop(0, "#F59C42");
-  color4.addColorStop(1, "#F17E0B");
+  color4.addColorStop(0, "#EBC866");
+  color4.addColorStop(1, "#FCD66D");
+  // color yellow
 
   var color5 = departmentscircl_ctx.createLinearGradient(0, 0, 0, 270);
-  color5.addColorStop(0, "#450A0A");
-  color5.addColorStop(1, "#73204E");
+  color5.addColorStop(0, "#80cea2");
+  color5.addColorStop(1, "#32b474");
+  // color green-blue
 
   var color6 = departmentscircl_ctx.createLinearGradient(0, 0, 0, 270);
-  color6.addColorStop(0, "#5876E5");
-  color6.addColorStop(1, "#7992EE");
-
+  color6.addColorStop(0, "#73bfb2");
+  color6.addColorStop(1, "#ada38d");
+  // color grey blue
   var color7 = departmentscircl_ctx.createLinearGradient(0, 0, 0, 270);
   color7.addColorStop(0, "#688393");
-  color7.addColorStop(1, "#688393");
+  color7.addColorStop(1, "#b14848");
+  // color red - blue
 
-  var SectorNameLabels;
   if (_.sum(SectorsProjectCount) == 0) {
-    SectorNameLabels = [];
+    SectorsName = [];
+    $("#carditem7 .card-body .card-body .chartNodata").remove();
     $("#departmentsChart").remove(); // this is my <canvas> element
     $("#carditem7 .chartjs-size-monitor").remove();
     $("#carditem7 .card-body .card-body").append(
@@ -3369,11 +3370,10 @@ function handleCircleDepartmentsChart() {
     );
   } else {
     $("#carditem7 .card-body .card-body .chartNodata").remove();
-    SectorNameLabels = SectorsName;
   }
 
   var departmentsdata = {
-    labels: SectorNameLabels,
+    labels: SectorsName,
     datasets: [
       {
         label: "%",
@@ -3450,22 +3450,10 @@ function handleCircleDepartmentsChart() {
     plugins: {
       datalabels: {
         display: false,
-        // display: true,
-        // color: 'white',
-        // align: 'center',
-        // // backgroundColor: '#ccc',
-        // // borderRadius: 3,
-        // // borderColor: 'white',
-        // // borderRadius: 25,
-        // // borderWidth: 2,
-        // padding: 30,
-        // font: {
-        //   size: 14,
-        // }
       },
     },
   };
-  if (_.sum(SectorsProjectCount) != 0) {
+  if (_.sum(SectorsProjectCount) > 0) {
     var departmentsChart = new Chart(
       document.getElementById("departmentsChart"),
       {
