@@ -1,5 +1,5 @@
 var logo = require('../../../HelperRessources/img/print-logo.png');
-// var logo = "";
+//var logo = "";
 //= isArabic ? require('../../../HelperRessources/img/main-logo.svg') : require('../../../HelperRessources/img/main-logo-en.svg');
 (window.isNew = window.location.href.toLowerCase().indexOf("new.aspx") > -1),
   (window.isEdit =
@@ -3466,7 +3466,7 @@ window.ListInfo = {
           "</Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
 
         var itemsID = [];
-        debugger
+        
         sphttp.get(
           _spPageContextInfo.siteServerRelativeUrl,
           element.childlist,
@@ -3480,9 +3480,11 @@ window.ListInfo = {
                 allRelatedChild.push(el[element.childinternalname]);
 
               });
-              console.log(allRelatedChild, "allRelatedChild")
 
-
+              if(allRelatedChild.length == 0){ // to render an empty drop down when there is no item or related child value
+                allRelatedChild.push("")
+              }
+              
               var internalQuery =
                 '<View><Query><Where><And><In><FieldRef Name="' + element.sourceinternalname +
                 '" /><Values>'
@@ -3492,7 +3494,7 @@ window.ListInfo = {
               });
 
               internalQuery += "</Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
-
+              debugger
               sphttp.get(
                 _spPageContextInfo.siteServerRelativeUrl,
                 element.source,
@@ -3501,6 +3503,7 @@ window.ListInfo = {
                 function (records, record, listItem, isDone) {
                   if (listItem) itemsID.push(listItem.get_id());
                   if (isDone) {
+                    
                     htmlBody =
                       '<div class="col-md-6 CFIELD ' +
                       dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -3602,15 +3605,12 @@ window.ListInfo = {
 
                   OnSuccess(flag, htmlBody);
 
-
                   }
                 })
 
             }
           })
         break;
-
-
 
       case "lookuptoparentchild":
         var code = activeCode;
@@ -6869,7 +6869,7 @@ var View_ListInfo = {
           OnSuccess(flag, htmlBody);
           break;
 
-        case "lookup":
+        case "lookup": 
           ///////////////////////////////////////////////
           if (element.BIlanguage == true) {
             if (
