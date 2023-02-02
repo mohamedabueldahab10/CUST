@@ -3037,15 +3037,15 @@ function handlePhaseChartBarChart() {
     localStorage.getItem("lng") == null ||
     localStorage.getItem("lng") == "ar"
   ) {
-    stageOccurence = stageOccurence.reverse();
-    stageNameArray = stageNameArray.reverse();
+	phaseOccurence = phaseOccurence.reverse();
+	phaseNameArray = phaseNameArray.reverse();
   } else {
     BackgroundsArray = BackgroundsArray.reverse();
   }
   /* data */
   var phasedata = {
     // labels: ["S4", "S3", "S2", "S1"],
-    labels: stageNameArray,
+    labels: phaseNameArray,
     datasets: [
       {
         backgroundColor: BackgroundsArray,
@@ -3053,7 +3053,7 @@ function handlePhaseChartBarChart() {
         // data: [33, 33, 21, 25],
         // 4,2,3,1,0
         // data: reversedPhasesOccurence    to do add variable array
-        data: stageOccurence,
+        data: phaseOccurence,
       },
     ],
   };
@@ -3110,8 +3110,8 @@ function handlePhaseChartBarChart() {
             fontSize: 10,
             fontStyle: "bold",
             beginAtZero: true,
-            max: Math.max(...stageOccurence),
-            //stepSize: Math.ceil(Math.max(...stageOccurence) / 5 )
+            max: Math.max(...phaseOccurence),
+            //stepSize: Math.ceil(Math.max(...phaseOccurence) / 5 )
           },
           gridLines: {
             display: true,
