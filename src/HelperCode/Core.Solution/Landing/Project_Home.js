@@ -379,7 +379,7 @@ var Project_Home_Info_Request = {
 
     $('.project-details-ctx .card.h-100').html(card1.join('')); // attaching card 1
 
-    $('#PjPriority').append('<span data-trans-' + projectimportance + ' class="Resources PjPriority"></span>');
+    $('#PjPriority').append('<span data-trans-' + projectimportance + ' class="Resources initiativeProjHomeInfoValueStyle"></span>');
 
     $('.project-info-ctx .media-body:nth-of-type(1) .icon-user > .user-name').text(ProjectSponsor.split(' ').map(word => word[0]).join('.'));
     $('.project-info-ctx .media-body:nth-of-type(1) p.fnt-14.reg.mx-3').text(ProjectSponsor);
