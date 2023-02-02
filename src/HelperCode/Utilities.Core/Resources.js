@@ -813,7 +813,6 @@
         "vroe":"مكتب ضمان التنفيذ",
         "developmentunit":"مدير وحدة التنفيذ",
         "excelexport": "تصدير إلى Excel",
-
     },
     "en": {
         "clearfilter": "Clear Filter",
@@ -1024,7 +1023,8 @@
 
         //lesson learned source
         "department": "Departments",
-        "subsector":"Subsector",
+        
+        "subsector":"Deputyship",
         "budgetitem": "Budget Item",
         "sector": "Sector",
         "pmo": "PMO",

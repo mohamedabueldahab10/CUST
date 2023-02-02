@@ -279,8 +279,8 @@ var Project_Home_Info_Request = {
         '</span>' +
         '<div class="d-inline-flex flex-column mx-3">' +
         '<h3 class="acc-title d-inline-flex black">' + projectname + '</h3>' +
-        '<div class="d-inline-flex flex-column">' +
-        '<h3 data-trans-pattr4 class="Resources acc-title d-inline-flex black"></h3>' +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<h3 data-trans-pattr4 class="Resources black"></h3>' +
         '<span class="des-13"><span class="complition-val">' + projectcode + '</span></span>' +
         '</div>' +
         '</div>' +
@@ -294,21 +294,21 @@ var Project_Home_Info_Request = {
         '<span class="des-13"><span class="state-val">' + projectSubsector + '</span></span>' +
         '</div>' +
         '<span class="des-13 project-date">' +
-        '<span class="start-date"><h3 data-trans-basestart class="Resources acc-title d-inline-flex black"></h3><span class="px-2">' + baselineStartDate + '</span></span>' +
-        '<span class="end-date"><h3 data-trans-basefinish class="Resources acc-title d-inline-flex black"></h3><span class="px-2">' + baselineFinishDate + '</span></span>' +
+        '<span class="start-date"><span data-trans-basestart class="Resources"></span><span class="px-2">' + baselineStartDate + '</span></span>' +
+        '<span class="end-date"><span data-trans-basefinish class="Resources"></span><span class="px-2">' + baselineFinishDate + '</span></span>' +
         '</span>' +
         '</div>' +
         '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
         '<div class="d-inline-flex flex-column mx-2 ' + phase + '">' +
-        '<h3 data-trans-pattr5 class="Resources acc-title d-inline-flex black"></h3>' +
-        '<span class="acc-title d-inline-flex black">' + phasename + '</span>' +
+        '<span data-trans-pattr5 class="Resources des-13"></span>' +
+        '<h4 class="acc-title d-inline-flex black">' + phasename + '</h4>' +
         '</div>' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        '<h3 data-trans-pattr60 class="Resources acc-title d-inline-flex black"></h3>' +
-        '<span class="acc-title d-inline-flex black">' + stageNamestr + '</span>' +
+        '<span data-trans-pattr60 class="Resources des-13"></span>' +
+        '<h4 class="acc-title d-inline-flex black">' + stageNamestr + '</h4>' +
         '</div>' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        '<h3 data-trans-relatedinitiative class="Resources acc-title d-inline-flex black"></h3>' +
+        '<h3 data-trans-relatedinitiative class="Resources black"></h3>' +
         '<span class="des-13 overflow-ellipsis-black" ><span id="relatedinit" style="cursor:pointer">' + projectRelatedInitiative + '</span><span class="tooltiptextblack" id="relatedinitchild">' + projectRelatedInitiative + '</span></span>' +
         '</div>' +
         '</div>' +
@@ -316,16 +316,16 @@ var Project_Home_Info_Request = {
         '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
         '<h4 data-trans-pattr57 class="black Resources d-flex mx-2" style="display:none !important"></h4>' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        '<span class="des-13"><h3 data-trans-pattr56 class="Resources complition-valacc-title d-inline-flex black"></h3></span>' +
-        '<span class="black actual-complete-val"> ' + ScheduleProjectPercentageComplete + '%</span>' + //
+        '<span class="des-13"><span data-trans-pattr56 class="Resources complition-val"></span> ' +
+        '<h4 class="black actual-complete-val">' + ScheduleProjectPercentageComplete + '%</h4></span>' +
         '</div>' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        '<span class="des-13"><h3 data-trans-pattr6 class="Resources state-valacc-title d-inline-flex black"></h3></span>' +
-        '<span class="black"> ' + ScheduleBLPercentageCompleteList + '%</span>' + //
+        '<span class="des-13"><span data-trans-pattr6 class="Resources state-val"></span></span>' +
+        '<h4 class="black"> ' + ScheduleBLPercentageCompleteList + '%</h4>' + //
         '</div>' +
         '<div class="d-inline-flex flex-column mx-2 ' + projectprogress + '">' +
-        '<span class="des-13"><h3 data-trans-pattr8 class="Resources v-important-val acc-title d-inline-flex black"></h3></span>' +
-        '<span data-trans-' + projectprogress + ' class="black Resources myCompletionStatus statuscolor' + projectprogress + '"></span>' + //
+        '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val"></span></span>' +
+        '<h4 data-trans-' + projectprogress + ' class="black Resources myCompletionStatus statuscolor' + projectprogress + '"></h4>' + //
         '</div>' +
         '</div>' +
         //
@@ -2438,3 +2438,93 @@ var EPM_Project_Summery_Task = {
   // Global variables
   g: {}
 };
+
+var Update_ProjectStatus_Service = {
+  init: function () {
+
+    $.ajax({
+      type: 'PUT',
+      url: `https://spm-api.netways1.com/api/project/updateprojectstatusbydeliverables/${Project_Home_Info_Request.g.PCODE}`,
+      success: function (data) {
+        Get_ProjectStatus_Info.init()
+      },
+      error: function (data) {
+        console.log("call failed in update project service", data);
+      },
+    });
+  }
+}
+
+
+
+// to working on when  odai omari publish the api
+var Get_ProjectStatus_Info = {
+
+  init: function () {
+    $("button.updateprogress").removeClass("loader-action-success");
+    $("button.updateprogress").removeClass("loader-action-error");
+    $("button.updateprogress").addClass("loader-action");
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle(ListArray[0].projects);
+    var camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(
+      '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
+      Project_Home_Info_Request.g.PCODE +
+      "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>"
+    );
+    Get_ProjectStatus_Info.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(Get_ProjectStatus_Info.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Get_ProjectStatus_Info.onSuccess),
+      Function.createDelegate(this, Get_ProjectStatus_Info.onError)
+    );
+  },
+  onSuccess: function (sender, args) {
+    var collListItem = Get_ProjectStatus_Info.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    var itemID, ActualImplementationDeliverable, PlannedImplementationDeliverable, projectStatus;
+    while (listItemEnum.moveNext()) {
+
+      var oListItem = listItemEnum.get_current();
+      itemID = oListItem.get_id();
+      // ActualImplementationDeliverable = oListItem.get_item("ActualImplementationDeliverable") || 0;
+      // PlannedImplementationDeliverable = oListItem.get_item("PlannedImplementationDeliverable") || 0
+      // projectStatus = oListItem.get_item("ProjectProgressStatus") || No_Data;
+    }
+
+
+    // PlannedImplementationDeliverable = Number(PlannedImplementationDeliverable)
+    // PlannedImplementationDeliverable = PlannedImplementationDeliverable.toFixed(2)
+
+    // ActualImplementationDeliverable = Number(ActualImplementationDeliverable)
+    // ActualImplementationDeliverable = ActualImplementationDeliverable.toFixed(2)
+
+    // $(".project-details-ctx .card.h-100 > .scnd-row > div:nth-child(1) > h4.black").text(PlannedImplementationDeliverable + "%");
+
+    // $(".project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black").text(ActualImplementationDeliverable + "%");
+
+    // $(".myCompletionStatus").removeAttr("data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4");
+    // $(".myCompletionStatus").attr("data-trans-" + projectStatus, "");
+
+    // $(".myCompletionStatus").parent().removeClass("stat1 stat2 stat3 stat4")
+    // $(".myCompletionStatus").parent().addClass(projectStatus)
+
+
+
+    changeResources();
+
+    $("button.updateprogress").removeClass("loader-action");
+    $("button.updateprogress").addClass("loader-action-success");
+
+  },
+  onError: function (sender, args) {
+    $("button.updateprogress").removeClass("loader-action");
+    $("button.updateprogress").addClass("loader-action-error");
+
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  // Global variables
+  g: {},
+}

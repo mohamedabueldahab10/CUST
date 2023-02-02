@@ -406,8 +406,8 @@ var initiativeHomeInfo_Request = {
 						  '<h3 class="acc-title d-inline-flex black">' +
 						  initiativename +
 						  "</h3>" +
-							 '<h3 data-trans-inpattr4 class="Resources acc-title d-inline-flex black"></h3>' +
-						  '<span class="des-13"><span class="">' +
+							 '<h3 data-trans-inpattr4 class="Resources black"></h3>' +
+						  '<span class="des-13"><span class="complition-val">' +
 						  projectcode +
 						  "</span></span>" +
 						  "</div>" +
@@ -420,10 +420,10 @@ var initiativeHomeInfo_Request = {
 						  "</div>" +
 						  '<div class="d-inline-flex flex-column mx-2">' +
 						  '<span class="des-13 project-date">' +
-						  '<span class="start-date"><h3 data-trans-pattr1 class="Resources acc-title d-inline-flex black"></h3><span class="px-2">' +
+						  '<span class="start-date"><span data-trans-pattr1 class="Resources"></span><span class="px-2">' +
 						  Pstartdate +
 						  "</span></span>" +
-						  '<span class="end-date"><h3 data-trans-pattr2 class="Resources acc-title d-inline-flex black"></h3><span class="px-2">' +
+						  '<span class="end-date"><span data-trans-pattr2 class="Resources"></span><span class="px-2">' +
 						  Pfinishdate +
 						  "</span></span>" +
 						  "</span>" +
@@ -431,17 +431,17 @@ var initiativeHomeInfo_Request = {
 						  "</div>" +
 						  '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
 						  '<div class="d-inline-flex flex-column mx-2">' +
-						  '<h3 data-trans-inportfolio class="Resources acc-title d-inline-flex black"></h3>' + //resourcekey="pattr5"
-						  '<span class="acc-title d-inline-flex des-13">' +
+						  '<span data-trans-inportfolio class="Resources des-13"></span>' + //resourcekey="pattr5"
+						  '<h4 class="acc-title d-inline-flex black">' +
 						  initiativeportfolio +
-						  "</span>" +
+						  "</h4>" +
 						  "</div>" +
 						  '<div class="d-inline-flex flex-column mx-2">' +
-						  '<h3 data-trans-instage class="Resources acc-title d-inline-flex black"></h3>' +
+						  '<span data-trans-instage class="Resources des-13"></span>' +
 						  // '<h4 data-trans-' + initiativetype + ' class="Resources acc-title d-inline-flex black"></h4>' +
-						  '<span  class="Resources acc-title d-inline-flex des-13"> ' +
+						  '<h4  class="Resources acc-title d-inline-flex black"> ' +
 						  instage +
-						  "</span>" +
+						  "</h4>" +
 						  "</div>" +
 						  // '<div class="d-inline-flex flex-column mx-2">' +
 						  // '<span class="des-13"><span data-trans-inclassif class="Resources complition-val"></span> ' +
@@ -450,7 +450,7 @@ var initiativeHomeInfo_Request = {
 						  '<div class="d-inline-flex flex-column mx-2 ' +
 						  initiativeprogress +
 						  '">' +
-						  '<span class="des-13"><h3 data-trans-pattr8 class="Resources v-important-val acc-title d-inline-flex black"></h3></span>' +
+						  '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val"></span></span>' +
 						  "<h4 data-trans-" +
 						  initiativeprogress +
 						  ' class="black Resources myCompletionStatus statuscolor' +
@@ -469,16 +469,16 @@ var initiativeHomeInfo_Request = {
 						  //   '<h4 class="black">' + actualPercentageFromList + '%' + '</h4>' + //
 						  //   '</div>' +
 						  '<div class="d-inline-flex flex-column mx-2">' +
-						  '<span class="des-13"><h3 data-trans-sector class="Resources acc-title d-inline-flex black"></h3></span>' +
-						  '<span class="des-13">' +
+						  '<span class="des-13"><span data-trans-sector class="Resources state-val"></span></span>' +
+						  '<h4 class="black">' +
 						  projectSector +
-						  "</span>" + //
+						  "</h4>" + //
 						  "</div>" +
 						  '<div class="d-inline-flex flex-column mx-2">' +
-						  '<span class="des-13"><h3 data-trans-subsector class="Resources acc-title d-inline-flex black"></h3></span>' +
-						  '<span class="des-13">' +
+						  '<span class="des-13"><span data-trans-subsector class="Resources state-val"></span></span>' +
+						  '<h4 class="black">' +
 						  projectSubsector +
-						  "</span>" + //
+						  "</h4>" + //
 						  "</div>" +
 						  "</div>"
 					  ),
@@ -579,7 +579,7 @@ var initiativeHomeInfo_Request = {
 		$(".project-budget-value.h4").text(ActualBudget + " " + SAR_Currency);
 		// $('.card-body.project-status-info.border-bottom.pb-4 span.badge.bg-primary.white.p-3.font-13.bold').text(instage);
 		$(
-			".card-body.project-status-info.border-bottom.pb-4 span.badge.bg-primary.white.py-3.font-13.bold"
+			".card-body.project-status-info.border-bottom.pb-4 span.badge.bg-primary.white.p-3.font-13.bold"
 		).html("<p data-trans-" + initiativetype + ' class="Resources"></p>');
 		$(
 			".card-body.project-status-info.border-bottom.pb-4 span.badge.bg-success.white.font-13.bold"
@@ -2099,3 +2099,101 @@ var ProgressStatus_Data_Submit = {
 		},
 	},
 };
+
+
+// to working on when  odai omari publish the api
+
+
+var Update_InitiativeStatus_Service = {
+	init: function () {
+  
+	  $.ajax({
+		type: 'PUT',
+		url: `https://spm-api.netways1.com/api/initiatives/updateinitiativestatusbymilestones/${initiativeHomeInfo_Request.g.ICODE}`,
+		success: function (data) {
+		  Get_InitiativeStatus_Info.init()
+		},
+		error: function (data) {
+		  console.log("call failed in update initiative service", data);
+		},
+	  });
+	}
+  }
+  
+  
+  var Get_InitiativeStatus_Info = {
+  
+	init: function () {
+	  $("button.updateprogress").removeClass("loader-action-success");
+	  $("button.updateprogress").removeClass("loader-action-error");
+	  $("button.updateprogress").addClass("loader-action");
+	  var clientContext = new SP.ClientContext.get_current();
+	  var oList = clientContext.get_web().get_lists().getByTitle(ListArray[4].initiatives);
+	  var camlQuery = new SP.CamlQuery();
+	  camlQuery.set_viewXml(
+		'<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' + initiativeHomeInfo_Request.g.ICODE + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query><RowLimit>1</RowLimit></View>'
+	  );
+	  Get_InitiativeStatus_Info.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+	  clientContext.load(Get_InitiativeStatus_Info.g.collListItem);
+	  clientContext.executeQueryAsync(
+		Function.createDelegate(this, Get_InitiativeStatus_Info.onSuccess),
+		Function.createDelegate(this, Get_InitiativeStatus_Info.onError)
+	  );
+	},
+	onSuccess: function (sender, args) {
+	  var collListItem = Get_InitiativeStatus_Info.g.collListItem;
+	  var listItemEnum = collListItem.getEnumerator();
+	  var itemID, ActualPercentageCompleted, PlannedPercentageCompleted, initiativeStatus;
+  
+	  while (listItemEnum.moveNext()) {
+		var oListItem = listItemEnum.get_current();
+		itemID = oListItem.get_id();
+		// PlannedPercentageCompleted = oListItem.get_item("PlannedPercentageCompleted") || 0
+		// ActualPercentageCompleted = oListItem.get_item("ActualPercentageCompleted") || 0;
+		// initiativeStatus = oListItem.get_item("InitiativeProgressStatus") || No_Data;
+	  }
+  
+	//   PlannedPercentageCompleted = Number(PlannedPercentageCompleted)
+	//   PlannedPercentageCompleted = PlannedPercentageCompleted.toFixed(2)
+  
+	//   ActualPercentageCompleted = Number(ActualPercentageCompleted)
+	//   ActualPercentageCompleted = ActualPercentageCompleted.toFixed(2)
+  
+	//   $(".project-details-ctx .card.h-100 > .scnd-row > div:nth-child(1) > h4.black").text(PlannedPercentageCompleted + "%");
+	//   $(".project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black").text(ActualPercentageCompleted + "%");
+  
+	//   $(".myCompletionStatus").removeAttr(
+	// 	"data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4 data-trans-stat5 data-trans-stat6 data-trans-stat7"
+	//   );
+  
+	//   $(".myCompletionStatus").attr("data-trans-" + initiativeStatus, "");
+  
+  
+	//   $(".myCompletionStatus").removeClass(
+	// 	"statuscolor" + listInitiativeProgress
+	//   );
+  
+	//   $(".handlecircle").addClass("circlecolor" + initiativeStatus);
+  
+	//   $(".myCompletionStatus").parent().removeClass(
+	// 	"stat1 stat2 stat3 stat4 stat5 stat6 stat7"
+	//   )
+	//   $(".myCompletionStatus").parent().addClass(initiativeStatus)
+  
+	//   changeResources();
+  
+	  $("button.updateprogress").removeClass("loader-action");
+	  $("button.updateprogress").addClass("loader-action-success");
+  
+	},
+	onError: function (sender, args) {
+	  $("button.updateprogress").removeClass("loader-action");
+	  $("button.updateprogress").addClass("loader-action-error");
+  
+	  console.log(
+		"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+	  );
+	},
+	// Global variables
+	g: {},
+  }
