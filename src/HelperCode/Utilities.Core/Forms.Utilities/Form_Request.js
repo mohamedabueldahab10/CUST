@@ -623,7 +623,7 @@ window.Edit_Data_Request = {
     $("select[dynamic=parent]").trigger("change")
 
 
-    // to get the value of weight in deliv correct 
+    // to get the value of weight in delivrable correct in edit
     $("[data-weightvalue]").each(function () {
 			var elementId = $(this).attr('id')
 			var inputVal = oListItem.get_item(elementId) ? oListItem.get_item(elementId) : 0
