@@ -31,28 +31,28 @@ var Information_Form = [
       //     "type":"float"
       // },
       {
-        "InternalName": "Amount",
-        "DisplayName": "القيمة",
-        "DisplayNameEn": "Amount",
+        InternalName: 'Amount',
+        DisplayName: 'القيمة',
+        DisplayNameEn: 'Amount',
         dontSubmit: true,
-        "type": "percentbyrelatedparent",
-        "listname":"Projects",
-        "parentinternalname":"ActualBudget",
-        "targetelement":"Weight",
-        "validation": "required"
-    },
-    {
-        "InternalName": "Weight",
-        "DisplayName": "الوزن (%)",
-        "DisplayNameEn": "Weight (%)",
-        "type": "weightfloatpercentage",
-        "listname":"Deliverables",
-        "targetcode":"ProjectCode",
-        "targetelement":"Weight",
-        "seconedtarget":"Amount",
+        type: 'percentbyrelatedparent',
+        listname: 'Projects',
+        parentinternalname: 'ActualBudget',
+        targetelement: 'Weight',
+        validation: 'required',
+      },
+      {
+        InternalName: 'Weight',
+        DisplayName: 'الوزن (%)',
+        DisplayNameEn: 'Weight (%)',
+        type: 'weightfloatpercentage',
+        listname: 'Deliverables',
+        targetcode: 'ProjectCode',
+        targetelement: 'Weight',
+        seconedtarget: 'Amount',
         // "state":"disabled",
-        "validation": "required"
-    },    
+        validation: 'required',
+      },
       {
         InternalName: 'Status',
         DisplayName: 'الحالة',
@@ -70,7 +70,11 @@ var Information_Form = [
         InternalName: 'PlannedFinishDate',
         DisplayName: 'تاريخ الانتهاء المخطط',
         DisplayNameEn: 'Planned Finish Date',
-        type: 'datetime',
+        // type: 'datetime',
+        type: 'datetimetoparent',
+        listname: 'Projects',
+        startinternalname: 'BaselineStartDate',
+        endinternalname: 'BaselineFinishDate',
         // min: 'PlannedStartDate',
         validation: 'required',
       },
@@ -163,29 +167,29 @@ var Information_Form = [
         type: 'multiline',
         maxchar: 5000,
       },
-      // { //tried
+      {
+        //tried
+        InternalName: 'RelatedInitiativeDeliverable',
+        DisplayName: 'مخرج المبادرة المرتبط',
+        DisplayNameEn: 'Related Initiative Deliverable',
+        type: 'lookuptoparentchild',
+        parentlist: 'Projects', //parent list name
+        parentinternalname: 'RelatedInitiative', // internal name in parent list
+        source: 'Deliverables', // target list
+        sourceinternalname: 'InitiativeCode', // column in target list
+        Dispfieldkey: 'Name', //display in dropdown
+        valfieldkey: 'Title', // value in dropdown
+      },
+      // {
       //   InternalName: 'RelatedInitiativeDeliverable',
-      //   DisplayName: 'مخرج المبادرة المرتبط',
       //   DisplayNameEn: 'Related Initiative Deliverable',
-      //   type: 'lookuptoparentchild',
-      //   parentlist: 'Projects', //parent list name
-      //   parentinternalname: 'RelatedInitiative', // internal name in parent list
-      //   source: 'Deliverables', // target list
-      //   sourceinternalname: 'InitiativeCode', // column in target list
-      //   Dispfieldkey: 'Name', //display in dropdown
-      //   valfieldkey: 'Title', // value in dropdown
+      //   DisplayName:'مخرج المبادرة المرتبط',
+      //   type: 'lookup',
+      //   source: 'InitiativeDeliverables',
+      //   Dispfieldkey: 'Name',
+      //   valfieldkey: 'Title',
       // },
 
-      {
-        InternalName: 'RelatedInitiativeDeliverable',
-        DisplayNameEn: 'Related Initiative Deliverable',
-        DisplayName:'مخرج المبادرة المرتبط',
-        type: 'lookup',
-        source: 'InitiativeDeliverables',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
-      },  
-      
       {
         InternalName: 'ShowInProgramReport',
         DisplayName: 'اظهار في التقرير',
@@ -215,7 +219,7 @@ var Information_Form = [
       {
         InternalName: 'getfile',
         DisplayName: 'مرفقات',
-         DisplayNameEn: 'Attachments',
+        DisplayNameEn: 'Attachments',
         type: 'file',
         withAddBtn: 'true',
         validation: 'required',

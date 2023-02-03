@@ -441,6 +441,7 @@ var Information_Form = [
         DisplayName: 'الوكالة',
         DisplayNameEn: 'DeputyShip',
         type: 'lookup',
+        validation: 'required',
         //from other list:
         source: 'Internal Entities',
         isSector: 'True',
