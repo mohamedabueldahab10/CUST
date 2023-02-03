@@ -76,9 +76,9 @@ var Information_Form = [
         valfieldkey: 'Title',
         grpfieldkey: 'Title',
         
-        queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
-        queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
-        queryFieldValue: 'sublevel2,sublevel3', // if i need to make the field with filter should add this
+        // queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
+        // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
+        // queryFieldValue: 'sublevel2,sublevel3', // if i need to make the field with filter should add this
       },
       // {
       //   InternalName: 'RelatedSubKpis',
@@ -201,7 +201,33 @@ var Information_Form = [
       //     ],
       //   },
       // },
-      {
+      // {
+      //   InternalName: 'DeliverableID',
+      //   DisplayNameEn: 'Name',
+      //   DisplayName: 'المخرج',
+  
+      //   type: 'lookupchildtoparent',
+      //   childlist: 'Projects', //child list name
+      //   childinternalparentname: 'RelatedInitiative', // child internal name related to parent
+      //   childinternalparenttype:'Text',
+      //   childinternalname:"Title", // child internal name need to use to parent
+      //   source: 'Deliverables', // target list
+      //   sourceinternalname: 'ProjectCode', // column in target list
+      //   Dispfieldkey: 'Name', //display in dropdown
+      //   valfieldkey: 'Title', // value in dropdown
+      
+      // },
+    ],
+  },
+  {
+    label: 'المخرجات المرتبطة بالمنفعة',
+    labelEn: 'Benefit Deliverables',
+    description: 'التفاصيل',
+    descriptionEn: 'Details',
+    sectiontype: 'master',
+    targetlist: 'BenefitDeliverables',
+    subFields: [
+          {
         InternalName: 'DeliverableID',
         DisplayNameEn: 'Name',
         DisplayName: 'المخرج',
@@ -215,32 +241,7 @@ var Information_Form = [
         sourceinternalname: 'ProjectCode', // column in target list
         Dispfieldkey: 'Name', //display in dropdown
         valfieldkey: 'Title', // value in dropdown
-      },
-    ],
-  },
-  {
-    label: 'المخرجات المرتبطة بالمنفعة',
-    labelEn: 'Benefit Deliverables',
-    description: 'التفاصيل',
-    descriptionEn: 'Details',
-    sectiontype: 'master',
-    targetlist: 'BenefitDeliverables',
-    subFields: [
-      {
-        InternalName: 'DeliverableID',
-        DisplayNameEn: 'Name',
-        DisplayName: 'المخرج',
-        // type: 'lookup',
-        // Dispfieldkey: 'Name',
-        // valfieldkey: 'Title',
-        // source: 'Deliverables',
-        type: 'lookuptoparentchild',
-        parentlist: 'Projects', //parent list name
-        parentinternalname: 'RelatedInitiative', // internal name in parent list
-        source: 'Deliverables', // target list
-        sourceinternalname: 'InitiativeCode', // column in target list
-        Dispfieldkey: 'Name', //display in dropdown
-        valfieldkey: 'Title', // value in dropdown
+      
       },
       {
         InternalName: 'AcceptanceCriteria',

@@ -8,14 +8,6 @@ var Listing_Info = [
         infilter: true
 
     },
-    {
-        "InternalName": "KPIInput",
-        "DisplayName": "المعادلة المدخلة",
-        "DisplayNameEn": "KPI Input",
-        "type": "text",
-        inlisting: true,
-        infilter: true
-
-    },
+  
 
 ];

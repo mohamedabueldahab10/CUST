@@ -70,14 +70,14 @@ var Information_Form = [
         InternalName: 'RelatedSubKpis',
         DisplayNameEn: 'Related Sub Kpis',
         DisplayName: 'المؤشرات الفرعية المرتبطة',
-        type: 'lookupWithQuery',
-        queryField: 'Types',
-        queryFieldType: 'dropdownValues', //ex: "Choice"
-        queryFieldValue: 'sub',
-        source: 'MainKPI',
-        // "state": "disabled",
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
+        type: 'multiselectstring',
+        // queryField: 'Types',
+        // queryFieldType: 'dropdownValues', //ex: "Choice"
+        // queryFieldValue: 'sub',
+        // source: 'MainKPI',
+        // // "state": "disabled",
+        // Dispfieldkey: 'Name',
+        // valfieldkey: 'Title',
       },
       // {
       //   InternalName: 'FromDate',
