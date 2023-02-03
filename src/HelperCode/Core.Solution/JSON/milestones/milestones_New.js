@@ -43,6 +43,12 @@ var Information_Form = [
         max: 'today',
       },
       {
+        InternalName: 'CommittedDate',
+        DisplayName: 'تاريخ الالتزام',
+        DisplayNameEn: 'Committed Date',
+        type: 'datetime',
+      },
+      {
         InternalName: 'Deliverables',
         DisplayName: 'المخرجات',
         DisplayNameEn: 'Deliverables Completed',

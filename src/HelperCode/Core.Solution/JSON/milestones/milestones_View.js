@@ -31,6 +31,27 @@ var Information_Form = [
         max: 'today',
       },
       {
+        InternalName: 'Delivered',
+        DisplayName: 'تم التسليم',
+        DisplayNameEn: 'Delivered',
+        targetfieldrequired: 'getFile', // to make the attache required on yes
+        targetfield: 'Status',
+        targetfieldvalue: 'completed',
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            { display: 'yes', value: 'yes' },
+            { display: 'no', value: 'no' },
+          ],
+        },
+      },
+      {
+        InternalName: 'CommittedDate',
+        DisplayName: 'تاريخ الالتزام',
+        DisplayNameEn: 'Committed Date',
+        type: 'datetime',
+      },
+      {
         InternalName: 'Deliverables',
         DisplayName: 'المخرجات',
         DisplayNameEn: 'Deliverables',

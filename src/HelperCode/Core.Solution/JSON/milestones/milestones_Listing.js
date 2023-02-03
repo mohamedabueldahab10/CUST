@@ -50,6 +50,14 @@ var Listing_Info = [
     infilter: true,
     needTrans: true,
   },
+  {
+    InternalName: 'CommittedDate',
+    DisplayName: 'تاريخ الالتزام',
+    DisplayNameEn: 'Committed Date',
+    type: 'date',
+    inlisting: true,
+    infilter: true,
+  },
   // {
   //     "InternalName": "ShowInProgramReport",
   //     "DisplayName": "اظهار في التقرير",
