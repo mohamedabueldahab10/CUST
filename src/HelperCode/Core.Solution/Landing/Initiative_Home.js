@@ -579,12 +579,12 @@ var initiativeHomeInfo_Request = {
 		$(".project-budget-value.h4").text(ActualBudget + " " + SAR_Currency);
 		// $('.card-body.project-status-info.border-bottom.pb-4 span.badge.bg-primary.white.p-3.font-13.bold').text(instage);
 		$(
-			".card-body.project-status-info.border-bottom.pb-4 span.badge.bg-primary.white.p-3.font-13.bold"
-		).html("<p data-trans-" + initiativetype + ' class="Resources"></p>');
+			".card-body.project-status-info.border-bottom.pb-4 span.badge.bg-primary.white.px-3.font-13.bold"
+		).html("<p data-trans-" + initiativetype + ' class="Resources initiativeProjHomeInfoValueStyle"></p>');
 		$(
 			".card-body.project-status-info.border-bottom.pb-4 span.badge.bg-success.white.font-13.bold"
 		).html(
-			"<span data-trans-" + initiativestatus + ' class="Resources"></span>'
+			"<span data-trans-" + initiativestatus + ' class="Resources initiativeProjHomeInfoValueStyle"></span>'
 		);
 
 		// show the initiative name in bredcrum in initiative home and apply the tooltip
