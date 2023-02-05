@@ -81,7 +81,11 @@ var Information_Form = [{
       "InternalName": "PlannedFinishDate",
       "DisplayName": "تاريخ الانتهاء المخطط",
       "DisplayNameEn": "Planned Finish Date",
-      "type": "datetime",
+      // "type": "datetime",
+      type: 'datetimetoparent',
+      listname: 'Projects',
+      startinternalname: 'BaselineStartDate',
+      endinternalname: 'BaselineFinishDate',
       // "min": "PlannedStartDate",
       "validation": "required",
     },
@@ -149,14 +153,26 @@ var Information_Form = [{
       "type": "multiline",
       "maxchar": 5000,
     },
-    {
-      "InternalName": "RelatedInitiativeDeliverable",
-      "DisplayNameEn": "Related Initiative Deliverable",
-      "DisplayName": "مخرج المبادرة المرتبط",
-      "type": "lookup",
-      "source": "InitiativeDeliverables",
-      "Dispfieldkey": "Name",
-      "valfieldkey": "Title",
+    // {
+    //   "InternalName": "RelatedInitiativeDeliverable",
+    //   "DisplayNameEn": "Related Initiative Deliverable",
+    //   "DisplayName": "مخرج المبادرة المرتبط",
+    //   "type": "lookup",
+    //   "source": "InitiativeDeliverables",
+    //   "Dispfieldkey": "Name",
+    //   "valfieldkey": "Title",
+    // },
+    { //tried
+      InternalName: 'RelatedInitiativeDeliverable',
+      DisplayName: 'مخرج المبادرة المرتبط',
+      DisplayNameEn: 'Related Initiative Deliverable',
+      type: 'lookuptoparentchild',
+      parentlist: 'Projects', //parent list name
+      parentinternalname: 'RelatedInitiative', // internal name in parent list
+      source: 'Deliverables', // target list
+      sourceinternalname: 'InitiativeCode', // column in target list
+      Dispfieldkey: 'Name', //display in dropdown
+      valfieldkey: 'Title', // value in dropdown
     },
     {
       "InternalName": "ShowInProgramReport",

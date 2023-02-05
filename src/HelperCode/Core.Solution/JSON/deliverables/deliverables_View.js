@@ -74,6 +74,10 @@ var Information_Form = [
         DisplayName: 'تاريخ الانتهاء المخطط',
         DisplayNameEn: 'Planned Finish Date',
         type: 'datetime',
+        // type: 'datetimetoparent',
+        // listname: 'Projects',
+        // startinternalname: 'BaselineStartDate',
+        // endinternalname: 'BaselineFinishDate',
         // "min": "PlannedStartDate"
       },
       // {
