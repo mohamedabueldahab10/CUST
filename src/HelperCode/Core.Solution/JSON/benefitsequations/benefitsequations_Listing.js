@@ -1,7 +1,7 @@
 var Listing_Info = [
     {
         "InternalName": "Equation",
-        "DisplayName": "معادلة المؤشر في البطاقة",
+        "DisplayName": "معادلة مقياس المنفعة في البطاقة",
         "DisplayNameEn": "Equation",
         "type": "text",
         inlisting: true,

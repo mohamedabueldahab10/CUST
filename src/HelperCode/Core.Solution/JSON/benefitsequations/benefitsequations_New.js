@@ -11,11 +11,11 @@ var Information_Form = [{
         //     "validation": "required"
         // },
         {
-            InternalName: 'RelatedBenefit',
-            DisplayNameEn: 'RelatedBenefit',
-            DisplayName: 'المنفعة المرتبطة',
+            InternalName: 'RelatedBenefit',// oday 
+            DisplayNameEn: 'Related Benefit Metrics',
+            DisplayName: 'مقياس المنفعة المرتبط',
             "type": "lookup",
-            "source": "Benefits",
+            "source": "BenefitMetrics",
             "Dispfieldkey": "Name",
             "valfieldkey": "Title",
             "state": "disabled",
@@ -28,9 +28,9 @@ var Information_Form = [{
             "type": "string"
         },
         {
-            "InternalName": "KPIInput",
+            "InternalName": "BenefitInput", 
             "DisplayName": "المعادلة المدخلة",
-            "DisplayNameEn": "KPI Input",
+            "DisplayNameEn": "Benefit Input",
             "type": "formula"
         },
         // {

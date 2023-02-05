@@ -11,11 +11,11 @@ var Information_Form = [{
         //     "validation": "required"
         // },
         {
-            InternalName: 'RelatedBenefit',
-            DisplayNameEn: 'RelatedBenefit',
-            DisplayName: 'المنفعة المرتبطة',
+            InternalName: 'RelatedBenefit',// oday 
+            DisplayNameEn: 'Related Benefit Metrics',
+            DisplayName: 'مقياس المنفعة المرتبط',
             "type": "lookup",
-            "source": "Benefits",
+            "source": "BenefitMetrics",
             "Dispfieldkey": "Name",
             "valfieldkey": "Title",
             "state": "disabled",
@@ -28,14 +28,72 @@ var Information_Form = [{
             "type": "string"
         },
         {
-            "InternalName": "KPIInput",
+            "InternalName": "BenefitInput", 
             "DisplayName": "المعادلة المدخلة",
-            "DisplayNameEn": "KPI Input",
+            "DisplayNameEn": "Benefit Input",
             "type": "formula"
         },
+        // {
+        //     "InternalName": "Quarter",
+        //     "DisplayNameEn": "Quarter",
+        //     "DisplayName": "الربع",
+        //       "type": "dropdown",
+        //     //   "state": "disabled",
+        //     //   dynamic: "Initiative",
+        //     options: {
+        //       choices: [
+        //         '1', '2','3','4'
+        //       ]
+        //     }
+        //   },
+        // {
+        //     "InternalName": "Year",
+        //     "DisplayNameEn": "Year",
+        //     "DisplayName": "السنة",
+        //       "type": "dropdown",
+        //     //   "state": "disabled",
+        //     //   dynamic: "Initiative",
+        //     options: {
+        //       choices: [
+        //         '2020',
+        //          '2021',
+        //          '2022',
+        //          '2023',
+        //          '2024',
+        //          '2025',
+        //          '2026',
+        //          '2027',
+        //          '2028',
+        //          '2029',
+        //          '2030',
+        //       ]
+        //     }
+        //   },
 
-
-
+        //   {
+        //     "InternalName": "MesureStatus",
+        //     "DisplayNameEn": "MesureStatus",
+        //     "DisplayName": "حالة القياس",
+        //       "type": "dropdownValues",
+        //     //   "state": "disabled",
+        //     //   dynamic: "Initiative",
+        //     options: {
+        //       choices: [
+        //         {
+        //             display: 'mersurable',
+        //             value: 'mersurable'
+        //         },
+        //         {
+        //             display: 'unmersurable',
+        //             value: 'unmersurable'
+        //         },
+        //         {
+        //             display: 'unspecific',
+        //             value: 'unspecific'
+        //         },
+        //       ]
+        //     }
+        //   },
     ]
 },
 {
