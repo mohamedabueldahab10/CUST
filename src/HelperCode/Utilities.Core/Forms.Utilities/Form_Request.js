@@ -31,7 +31,9 @@ var kpiName = ''
 ///////// for benefitsMetrics
 var benefitsEquationID,
     benefitsEquation,
-    benefitCode="";
+    benefitCode="",
+    benefitFromYear = '',
+    benefitToYear = '';
 
 window.benefitsEquationsComponents =[]
 ////////
@@ -503,6 +505,22 @@ window.Edit_Data_Request = {
     if (listkey == "benefitmetrics") {
 
       benefitCode = oListItem.get_item("Title");
+      benefitFromYear = oListItem.get_item("FromDate") ? oListItem.get_item("FromDate") : '';
+      benefitToYear = oListItem.get_item("ToDate") ? oListItem.get_item("ToDate") : ''
+
+      $("#Year").html(
+        '<option data-trans-yeartype class="Resources" value="" selected="" disabled=""></option>'
+      );
+
+      for (var i = benefitFromYear; i <= benefitToYear; i++) {
+        $("#Year").append(
+          '<option value="' + i + '">' +
+          i +
+          "</option>"
+        );
+      }
+
+      $('#Year').val(oListItem.get_item("Year") ? oListItem.get_item("Year") : '')
 
       equationBenefit.init();
     }
@@ -4714,8 +4732,8 @@ var equationBenefit = {
         G: oListItem.get_item("G"),
       });
       debugger
-      $('input#Equation').val(oListItem.get_item("Equation") || '');
-      $('p#Equation').text(oListItem.get_item("Equation") || '');
+      $('input#BenefitEquation').val(oListItem.get_item("Equation") || '');
+      $('p#BenefitEquation').text(oListItem.get_item("Equation") || '');
     }
 
     var myCKeys =
