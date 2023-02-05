@@ -21,13 +21,22 @@ var KPIYear = "",
   KPIQuarter = '',
   KPIMid = '',
   KPIYearHandler = '';
-// KpiYears = [];
 
 var kpiFromYear = '',
   kpiToYear = '',
   PeriodType = "";
 
 var kpiName = ''
+
+///////// for benefitsMetrics
+var benefitsEquationID,
+    benefitsEquation,
+    benefitCode="",
+    benefitFromYear = '',
+    benefitToYear = '';
+
+window.benefitsEquationsComponents =[]
+////////
 
 var projRelatedInit = '', initiativeDelevrableArr = [], initiativeMilestoneVal = '';
 
@@ -492,6 +501,30 @@ window.Edit_Data_Request = {
       // Kpi_Related_Goal.init(relatedStrategyCode, indexType)
       //
     }
+
+    if (listkey == "benefitmetrics") {
+
+      benefitCode = oListItem.get_item("Title");
+      benefitFromYear = oListItem.get_item("FromDate") ? oListItem.get_item("FromDate") : '';
+      benefitToYear = oListItem.get_item("ToDate") ? oListItem.get_item("ToDate") : ''
+
+      $("#Year").html(
+        '<option data-trans-yeartype class="Resources" value="" selected="" disabled=""></option>'
+      );
+
+      for (var i = benefitFromYear; i <= benefitToYear; i++) {
+        $("#Year").append(
+          '<option value="' + i + '">' +
+          i +
+          "</option>"
+        );
+      }
+
+      $('#Year').val(oListItem.get_item("Year") ? oListItem.get_item("Year") : '')
+
+      equationBenefit.init();
+    }
+
     if (listkey == "goalstrategy") {
       if (isVROP) {
         $('#Types').val('vision');
@@ -528,6 +561,9 @@ window.Edit_Data_Request = {
       }
     }
     //}
+
+
+
 
     if (isVROE) {
       if (listkey == "initiatives") {
@@ -621,8 +657,8 @@ window.Edit_Data_Request = {
 
     // to handle toggle required field in in edit
     $("[data-requiredvalues]").each(function () {
-			ListInfo.g.toggleRequiredFields($(this));
-		});
+      ListInfo.g.toggleRequiredFields($(this));
+    });
 
     // trigger the dynamic parent field to get the data in edit
     $("select[dynamic=parent]").trigger("change")
@@ -630,15 +666,15 @@ window.Edit_Data_Request = {
 
     // to get the value of weight in delivrable correct in edit
     $("[data-weightvalue]").each(function () {
-			var elementId = $(this).attr('id')
-			var inputVal = oListItem.get_item(elementId) ? oListItem.get_item(elementId) : 0
-			var remainingBudget = $(this).attr('max')
-			remainingBudget = Number(remainingBudget)
-			var newVal = remainingBudget + inputVal >= 100 ? inputVal : remainingBudget + inputVal;
-			newVal = Number(newVal.toFixed("2"));
+      var elementId = $(this).attr('id')
+      var inputVal = oListItem.get_item(elementId) ? oListItem.get_item(elementId) : 0
+      var remainingBudget = $(this).attr('max')
+      remainingBudget = Number(remainingBudget)
+      var newVal = remainingBudget + inputVal >= 100 ? inputVal : remainingBudget + inputVal;
+      newVal = Number(newVal.toFixed("2"));
 
-			remainingBudget == 100 ? $(this).attr("max", remainingBudget) : $(this).attr("max", newVal);
-		})
+      remainingBudget == 100 ? $(this).attr("max", remainingBudget) : $(this).attr("max", newVal);
+    })
 
 
 
@@ -1255,12 +1291,6 @@ window.View_Data_Request = {
       }
     });
 
-
-
-    // if (listkey=='deliverables') { // tocheck where stage
-    //   currentStageForItem = oListItem.get_item("Stage") ? oListItem.get_item("Stage") : ''
-    // }
-
     if (listkey == 'projects') {
 
       var myselections = oListItem.get_item("RelatedInitiativeDeliverable") ? oListItem.get_item("RelatedInitiativeDeliverable").split(":::") : [] // to get the name of delivrable over the code
@@ -1297,16 +1327,17 @@ window.View_Data_Request = {
     //     GetProject_Info.preinit();
     // },1000);
     //custom
-    ///
+
+    /// to handle the weight percentage in edit 
     if (listkey == 'deliverables' || listkey == 'milestones' || listkey == 'initiativedeliverables' || listkey == 'initiativemilestones') {
-      
-        var parentValue = $('#Amount').data('parentval')
-        var weight = oListItem.get_item("Weight");
-        weight = Number(weight)
-        var Amount = (weight * parentValue) / 100
-        Amount = Amount.toFixed(2)
-        $('#Amount').text(Amount)
-   
+
+      var parentValue = $('#Amount').data('parentval')
+      var weight = oListItem.get_item("Weight");
+      weight = Number(weight)
+      var Amount = (weight * parentValue) / 100
+      Amount = Amount.toFixed(2)
+      $('#Amount').text(Amount)
+
     }
 
     ////
@@ -1373,6 +1404,12 @@ window.View_Data_Request = {
       }
 
     }
+
+    if(listkey == 'benefitmetrics'){
+      benefitCode = oListItem.get_item("Title");
+      equationBenefit.init();
+    }
+
     if (listkey == "goalstrategy") {
       if (isVROP) {
         $('#Types').val('vision');
@@ -4666,6 +4703,152 @@ var equationKPI = {
     array: [],
   },
 };
+
+
+// BenefitMetrics equation
+
+var equationBenefit = {
+
+  onSuccess: function (sender, args) {
+
+    equationBenefit.g.array = [];
+    var collListItem = equationBenefit.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+
+    while (listItemEnum.moveNext()) {
+
+      var oListItem = listItemEnum.get_current();
+      benefitsEquationID = oListItem.get_id();
+      benefitsEquation = oListItem.get_item("BenefitInput") || "";
+      benefitsEquation = benefitsEquation.replaceAll("C", "CC");
+      benefitsEquation = benefitsEquation.replaceAll(" ", "");
+      benefitsEquationsComponents.push({
+        A: oListItem.get_item("A"),
+        B: oListItem.get_item("B"),
+        CC: oListItem.get_item("CC"),
+        D: oListItem.get_item("D"),
+        E: oListItem.get_item("E"),
+        F: oListItem.get_item("F"),
+        G: oListItem.get_item("G"),
+      });
+      debugger
+      $('input#BenefitEquation').val(oListItem.get_item("Equation") || '');
+      $('p#BenefitEquation').text(oListItem.get_item("Equation") || '');
+    }
+
+    var myCKeys =
+    benefitsEquationsComponents.length > 0
+      ? Object.keys(benefitsEquationsComponents[0])
+      : []; // get internal names keys
+
+
+  // remove required field when there is no equation
+  // if (!kpiEquation && isEdit) {
+  //   $('#Year,#Months,#Quarter,#Midterms,#Years').removeAttr('required');
+  //   $('#Year,#Months,#Quarter,#Midterms,#Years').parent().removeAttr('required');
+  //   $('#Year,#Months,#Quarter,#Midterms,#Years').prev('label').removeAttr('required');
+  // }
+
+  if (benefitsEquation) {
+    benefitsEquation = benefitsEquation.toUpperCase() // kpi eq should be upper case to avoid the  editequation btn not appear in view
+    // set display text
+
+    myCKeys.forEach((o) => {
+      benefitsEquationsComponents[0][o]
+        ? $(`input#${o},p#${o}`)
+          .parent()
+          .show()
+          .find(">label")
+          .text(benefitsEquationsComponents[0][o])
+        : $(`input#${o},p#${o}`).parent().remove();
+
+      if (isView) {
+        var val = $(`p#${o}`).text()
+        if (val != No_Data) {
+          benefitsEquation = benefitsEquation.replaceAll(o, $(`p#${o}`).text())
+        } else {
+          benefitsEquation = benefitsEquation.replaceAll(o, 0)
+        }
+      } else {
+        benefitsEquation = benefitsEquation.replaceAll(o, $(`input#${o}`).val())
+      }
+    });
+
+
+    benefitsEquation = benefitsEquation.replaceAll(',', '') // remove , from high number
+
+
+    benefitsEquation =
+      eval(benefitsEquation) % 1 != 0
+        ? eval(benefitsEquation).toFixed(2)
+        : eval(benefitsEquation);
+
+
+    if (benefitsEquation === "NaN") {
+      $("input#Equation").val(0);
+      $("p#Equation").text("0");
+    } else {
+      $("input#Equation").val(benefitsEquation || 0);
+      $("p#Equation").text(benefitsEquation || 0);
+    }
+  }
+
+  if (isAdmin) { // remove attr disabled for this roles in equation
+    $(".savecancelBtns > div, .btnactionrow > .rightBtns").append(
+      '<button data-trans-editequation class="btn btn-action Resources btn-edit-equation bg-warning" type="button"></button>'
+    );
+
+  }
+  if (isAdmin) {
+    // $("input#KPIEquation, input#Equation ,input#B, input#A, input#CC , input#D ,input#E,input#F,input#G").removeAttr('disabled');
+    $("input#B, input#A, input#CC , input#D ,input#E,input#F,input#G").removeAttr('disabled');
+
+  }
+
+  $(".btn-edit-equation").on("click", () => {
+    equationBenefit.g.editEquation();
+  });
+
+  changeResources();
+
+
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  init: function () {
+
+    var clientContext = new SP.ClientContext.get_current();
+    debugger
+    var oList = clientContext.get_web().get_lists().getByTitle("BenefitsEquations");
+    var camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='RelatedBenefit'/><Value Type='Text'>" +
+      benefitCode +
+      "</Value></Eq></And></Where></Query></View>"
+    );
+
+    equationBenefit.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(equationBenefit.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, equationBenefit.onSuccess),
+      Function.createDelegate(this, equationBenefit.onError)
+    );
+  },
+  g: {
+    editEquation: function () {
+      window.location =
+        _spPageContextInfo.webAbsoluteUrl +
+        "/SitePages/Edit.aspx?ListKey=benefitsequations&IID=" +
+        benefitsEquationID +
+        PCODE_STRING;
+    },
+    array: [],
+  },
+}
+
 //////////////////////////////////////////////////////
 
 var getAttachements = {
