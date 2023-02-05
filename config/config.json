@@ -209,6 +209,14 @@
           "manifest": "./src/webparts/allTasks/AllTasksWebPart.manifest.json"
         }
       ]
+    },
+    "benefit-metrics-targets-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/benefitMetricsTargets/BenefitMetricsTargetsWebPart.js",
+          "manifest": "./src/webparts/benefitMetricsTargets/BenefitMetricsTargetsWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {
@@ -428,6 +436,7 @@
     "AdminPanelWebPartStrings": "lib/webparts/adminPanel/loc/{locale}.js",
     "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js",
     "KnowledgeBaseWebPartStrings": "lib/webparts/knowledgeBase/loc/{locale}.js",
-    "AllTasksWebPartStrings": "lib/webparts/allTasks/loc/{locale}.js"
+    "AllTasksWebPartStrings": "lib/webparts/allTasks/loc/{locale}.js",
+    "BenefitMetricsTargetsWebPartStrings": "lib/webparts/benefitMetricsTargets/loc/{locale}.js"
   }
 }
