@@ -6,7 +6,7 @@ var benefitYear = currentYear.toString();
 
 var benefitNameFilterArr = [];
 
-var emptyData = require('../../../helperResources/img/empty-data.png');
+var emptyData = require('../../../HelperRessources/img/empty-data.png');
 
 // var emptyData =""
 
