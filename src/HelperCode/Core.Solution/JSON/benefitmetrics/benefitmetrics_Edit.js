@@ -180,19 +180,19 @@ var Information_Form = [
         type: 'picker',
         validation: 'required',
       },
-      {
-        InternalName: 'TargetValue',
-        DisplayNameEn: 'Target Value',
-        DisplayName: 'القيمة المستهدفة',
-        type: 'float',
-        validation: 'required',
-      },
-      {
-        InternalName: 'ActualValue',
-          DisplayName:'القيمة الفعلية',
-          DisplayNameEn: 'ActualValue',
-        type: 'float',
-      },
+      // {
+      //   InternalName: 'TargetValue',
+      //   DisplayNameEn: 'Target Value',
+      //   DisplayName: 'القيمة المستهدفة',
+      //   type: 'float',
+      //   validation: 'required',
+      // },
+      // {
+      //   InternalName: 'ActualValue',
+      //     DisplayName:'القيمة الفعلية',
+      //     DisplayNameEn: 'ActualValue',
+      //   type: 'float',
+      // },
     ],
   },
   {

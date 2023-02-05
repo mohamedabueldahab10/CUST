@@ -232,19 +232,19 @@ var Information_Form = [
         DisplayName: 'رائد الأداء',
         type: 'picker',
       },
-      {
-        InternalName: 'TargetValue',
-        DisplayNameEn: 'Target Value',
-        DisplayName: 'القيمة المستهدفة',
-        type: 'float',
-      },
-      {
-          InternalName: 'ActualValue',
-          DisplayName:'القيمة الفعلية',
-          DisplayNameEn: 'ActualValue',
-          type:'float'
+      // {
+      //   InternalName: 'TargetValue',
+      //   DisplayNameEn: 'Target Value',
+      //   DisplayName: 'القيمة المستهدفة',
+      //   type: 'float',
+      // },
+      // {
+      //     InternalName: 'ActualValue',
+      //     DisplayName:'القيمة الفعلية',
+      //     DisplayNameEn: 'ActualValue',
+      //     type:'float'
          
-      }
+      // }
 
     ]
   },
@@ -265,7 +265,7 @@ var Information_Form = [
             "InternalName": "Quarter",
             "DisplayNameEn": "Quarter",
             "DisplayName": "الربع",
-            ToggleName: "Quarter",
+            // ToggleName: "Quarter",
             type: "dropdownValues",
             options: {
                 choices: [
@@ -281,7 +281,7 @@ var Information_Form = [
             "InternalName": "Midterms",
             "DisplayNameEn": "Midterms",
             "DisplayName": "النصف السنوي",
-             ToggleName: "Midterms",
+            //  ToggleName: "Midterms",
             type: "dropdownValues",
             options: {
                 choices: [
@@ -311,29 +311,29 @@ var Information_Form = [
           InternalName: 'Year',
           DisplayNameEn: 'Year',
           DisplayName: 'السنة',
-          type: 'dropdown',
+          type: 'string',
           //   "state": "disabled",
           //   dynamic: "Initiative",
-          options: {
-            choices: [
-              '2020',
-              '2021',
-              '2022',
-              '2023',
-              '2024',
-              '2025',
-              '2026',
-              '2027',
-              '2028',
-              '2029',
-              '2030',
-              '2031',
-              '2032',
-              '2033',
-              '2034',
-              '2035',
-            ],
-          },
+          // options: {
+          //   choices: [
+          //     '2020',
+          //     '2021',
+          //     '2022',
+          //     '2023',
+          //     '2024',
+          //     '2025',
+          //     '2026',
+          //     '2027',
+          //     '2028',
+          //     '2029',
+          //     '2030',
+          //     '2031',
+          //     '2032',
+          //     '2033',
+          //     '2034',
+          //     '2035',
+          //   ],
+          // },
       
         },
           {
