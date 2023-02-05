@@ -11,7 +11,7 @@ var Information_Form = [{
         //     "validation": "required"
         // },
         {
-            InternalName: 'RelatedBenefit',// oday 
+            InternalName: 'RelatedBenefit', 
             DisplayNameEn: 'Related Benefit Metrics',
             DisplayName: 'مقياس المنفعة المرتبط',
             "type": "lookup",
@@ -23,7 +23,7 @@ var Information_Form = [{
 
         {
             "InternalName": "Equation",
-            "DisplayName": "معادلة المؤشر في البطاقة",
+            "DisplayName": "معادلة مقياس المنفعة",
             "DisplayNameEn": "Equation",
             "type": "string"
         },

@@ -232,19 +232,19 @@ var Information_Form = [
         DisplayName: 'رائد الأداء',
         type: 'picker',
       },
-      {
-        InternalName: 'TargetValue',
-        DisplayNameEn: 'Target Value',
-        DisplayName: 'القيمة المستهدفة',
-        type: 'float',
-      },
-      {
-          InternalName: 'ActualValue',
-          DisplayName:'القيمة الفعلية',
-          DisplayNameEn: 'ActualValue',
-          type:'float'
+      // {
+      //   InternalName: 'TargetValue',
+      //   DisplayNameEn: 'Target Value',
+      //   DisplayName: 'القيمة المستهدفة',
+      //   type: 'float',
+      // },
+      // {
+      //     InternalName: 'ActualValue',
+      //     DisplayName:'القيمة الفعلية',
+      //     DisplayNameEn: 'ActualValue',
+      //     type:'float'
          
-      }
+      // }
 
     ]
   },
@@ -265,7 +265,7 @@ var Information_Form = [
             "InternalName": "Quarter",
             "DisplayNameEn": "Quarter",
             "DisplayName": "الربع",
-            ToggleName: "Quarter",
+            // ToggleName: "Quarter",
             type: "dropdownValues",
             options: {
                 choices: [
@@ -281,7 +281,7 @@ var Information_Form = [
             "InternalName": "Midterms",
             "DisplayNameEn": "Midterms",
             "DisplayName": "النصف السنوي",
-             ToggleName: "Midterms",
+            //  ToggleName: "Midterms",
             type: "dropdownValues",
             options: {
                 choices: [
