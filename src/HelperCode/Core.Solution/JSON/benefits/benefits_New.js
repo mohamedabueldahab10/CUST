@@ -247,7 +247,7 @@ var Information_Form = [
         InternalName: 'AcceptanceCriteria',
         DisplayNameEn: 'Acceptance Criteria',
         DisplayName: 'المقياس',
-        type: 'string',
+        type: 'multiline',
         state: 'disabled',
       },
     ],

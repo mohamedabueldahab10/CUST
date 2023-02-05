@@ -292,21 +292,21 @@ var Information_Form = [
             },
          
         },
-        {
-            "InternalName": "Years",
-            "DisplayNameEn": "Years",
-            "DisplayName": "السنوي",
-            //  ToggleName: "Years",
-            type: "dropdownValues",
-            options: {
-                choices: [
-                    { display: "yearly", value: "Actual1" },
-                    // { display: "midterm2", value: "Actual2" },
-                ],
-                // "display":"none"
-            },
+        // {
+        //     "InternalName": "Years",
+        //     "DisplayNameEn": "Years",
+        //     "DisplayName": "السنوي",
+        //     //  ToggleName: "Years",
+        //     type: "dropdownValues",
+        //     options: {
+        //         choices: [
+        //             { display: "yearly", value: "Actual1" },
+        //             // { display: "midterm2", value: "Actual2" },
+        //         ],
+        //         // "display":"none"
+        //     },
          
-        },
+        // },
         {
           InternalName: 'Year',
           DisplayNameEn: 'Year',
