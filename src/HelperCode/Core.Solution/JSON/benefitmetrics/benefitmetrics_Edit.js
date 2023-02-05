@@ -203,7 +203,7 @@ var Information_Form = [
     subFields: [{
             InternalName: "BenefitEquation",
             DisplayNameEn: "Benefit Equation",
-            DisplayName: "معادلة المؤشر",
+            DisplayName: "معادلة مقياس المنفعة",
             type: "string",
             state: "disabled",
             //editableBy: "PerformanceLeader",
