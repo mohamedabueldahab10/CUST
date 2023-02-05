@@ -656,6 +656,11 @@ var PageArray = [
 		TitleEn: "Admin Panel",
 	},
 	{
+		pagename: "AllTasks.aspx",
+		Title: "جميع المهام",
+		TitleEn: "All Tasks",
+	},
+	{
 		pagename: "KnowledgeBase.aspx",
 		Title: "أسس المعرفة",
 		TitleEn: "Knowledge Base",

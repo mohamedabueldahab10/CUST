@@ -854,6 +854,7 @@
     totalcostinfo: "تكاليف المبادرة",
     actualratemilestone: "نسبة التنفيذ الفعلية(المعالم)",
     plannedratemilestone: "نسبة التنفيذ المخططة(المعالم)",
+    alltasks: "عرض كافة المهام",
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1724,6 +1725,7 @@
     totalcostinfo: "total cost of initiative",
     actualratemilestone: "Percentage of actual implementation (Milestones)",
     plannedratemilestone: "Percentage of planned implementation (Milestones)",
+    alltasks: "All Tasks",
   },
 };
 
