@@ -651,6 +651,12 @@ var PageArray = [
 		listName: "KPIResults"
 	},
 	{
+		pagename: "BenefitMetrics.aspx",
+		Title: "مقاييس المنفعة",
+		TitleEn: "Benefit Metrics",
+		listName: "BenefitsResults"
+	},
+	{
 		pagename: "AdminPanel.aspx",
 		Title: "لوحة الادارة",
 		TitleEn: "Admin Panel",
