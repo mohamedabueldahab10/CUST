@@ -33,7 +33,12 @@ var benefitsEquationID,
     benefitsEquation,
     benefitCode="",
     benefitFromYear = '',
-    benefitToYear = '';
+    benefitToYear = '',
+    benefitYear = "",
+    benefitMonth = '',
+    benefitQuarter = '',
+    benefitMid = '',
+    benefitYearHandler = '';
 
 window.benefitsEquationsComponents =[]
 ////////
@@ -506,7 +511,15 @@ window.Edit_Data_Request = {
 
       benefitCode = oListItem.get_item("Title");
       benefitFromYear = oListItem.get_item("FromDate") ? oListItem.get_item("FromDate") : '';
-      benefitToYear = oListItem.get_item("ToDate") ? oListItem.get_item("ToDate") : ''
+      benefitToYear = oListItem.get_item("ToDate") ? oListItem.get_item("ToDate") : '';
+
+      benefitYear = oListItem.get_item("Year")
+
+      benefitMonth = oListItem.get_item("Months") ? oListItem.get_item("Months") : '';
+      benefitQuarter = oListItem.get_item("Quarter") ? oListItem.get_item("Quarter") : '';
+      benefitMid = oListItem.get_item("Midterms") ? oListItem.get_item("Midterms") : '';
+      benefitYearHandler = oListItem.get_item("Years") ? oListItem.get_item("Years") : '';
+
 
       $("#Year").html(
         '<option data-trans-yeartype class="Resources" value="" selected="" disabled=""></option>'
@@ -4661,11 +4674,9 @@ var equationKPI = {
       equationKPI.g.editEquation();
     });
 
-    // should work here to update on kpiResults
-    //check the notebook to know the steps
+  
     Update_Kpi_Results.init(kpiEquation)
 
-    //
 
     changeResources();
   },
@@ -4809,6 +4820,9 @@ var equationBenefit = {
     equationBenefit.g.editEquation();
   });
 
+  Update_Benefits_Results.init(benefitsEquation)
+
+
   changeResources();
 
 
@@ -4944,6 +4958,84 @@ var UpcomingTasks_Info_Request = {
   // Global variables
   g: {},
 };
+
+// update benefits results
+
+
+window.Update_Benefits_Results={
+  init: function () {
+		var context = SP.ClientContext.get_current();
+		var dfd = $.Deferred();
+		//Get list from host web
+		var programList = context.get_web().get_lists().getByTitle("BenefitsResults");
+		var camlQuery = new SP.CamlQuery();
+
+		camlQuery.set_viewXml(
+			"<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='RelatedBenefitMetrics'/><Value Type='Text'>" +
+			benefitCode +
+			"</Value></Eq></And></Where></Query></View>"
+		);
+		//Get items by Query
+		var progColl = programList.getItems(camlQuery);
+		//Load item collection
+		context.load(progColl);
+		context.executeQueryAsync(function () {
+			var currentItemArray = [];
+			if (progColl.get_count() > 0) {
+				var progEnum = progColl.getEnumerator();
+				while (progEnum.moveNext()) {
+					console.log("INSIDE WHILE");
+
+					var currentItem = progEnum.get_current();
+					var currentId = currentItem.get_item("ID");
+					var yearItem = currentItem.get_item("Year");
+					//Get Item by current ID
+					var items = programList.getItemById(currentId);
+					var yearPicked = benefitYear;
+					var monthHandler = benefitMonth;
+					var quarterHandler = benefitQuarter;
+					var midHandler = benefitMid;
+					var yearHandler = benefitYearHandler;
+
+					if (yearItem == yearPicked) {
+						if (!benefitsEquation) {
+							benefitsEquation = 0;
+						}
+						if (monthHandler) {
+							items.set_item(monthHandler, benefitsEquation);
+						} else if (quarterHandler) {
+							items.set_item(quarterHandler, benefitsEquation);
+						} else if (midHandler) {
+							items.set_item(midHandler, benefitsEquation);
+						} else if (yearHandler) {
+							items.set_item(yearHandler, benefitsEquation);
+						}
+					}
+
+					//Update the item
+					items.update();
+					currentItemArray.push(items);
+					context.load(currentItemArray[currentItemArray.length - 1]);
+				}
+				context.executeQueryAsync(
+					function () {
+						//Item Updated sucess
+						// Edit_Item_Field.init('Ideas', 'Stage', 'IdeaStage04', 'Title', IdeaId);
+						dfd.resolve();
+					},
+					function (sender, args) {
+						//Item updated fail
+						console.log(
+							"Request Failed to get kpi results Item Items :" +
+							args.get_message()
+						);
+					}
+				);
+			}
+		});
+	},
+}
+
 
 // update on kpi results list
 

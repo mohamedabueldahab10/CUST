@@ -692,7 +692,7 @@ var Get_Benefit_Results = {
               target1 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               "</tr>" +
@@ -707,20 +707,7 @@ var Get_Benefit_Results = {
               actual1 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
-              oListItem.get_id() +
-              '"></td>' +
-              "</tr>" +
-              //forcast
-              '<tr data-target_list="BenefitsResults" data-id="' + oListItem.get_id() + '" data-category="' + category + '" is-updated="false" id="MyTr">' +
-              '<th scope="row" class="Resources" data-trans-forcast></th>' +
-              ' <td id="totalForcast" class="myInput" data-id="' + oListItem.get_id() + '">' + totalForcast +
-              "</td>" +
-              ' <td><input class="QarterInputStyle inputStyle1 myInput" data-internal="Forecast1" type="number" name="" value="' +
-              forecast1 +
-              '" data-result-type="' +
-              resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               "</tr>" +
@@ -747,28 +734,28 @@ var Get_Benefit_Results = {
               target1 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle2 myInput" data-internal="Target2" type="number" name="" value="' +
               target2 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle3 myInput" data-internal="Target3" type="number" name="" value="' +
               target3 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle4 myInput" data-internal="Target4" type="number" name="" value="' +
               target4 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               "</tr>" +
@@ -788,73 +775,31 @@ var Get_Benefit_Results = {
               actual1 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle2 actualStyle myInput" data-internal="Actual2" type="number" name="" value="' +
               actual2 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle3 actualStyle myInput" data-internal="Actual3" type="number" name="" value="' +
               actual3 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle4 actualStyle myInput" data-internal="Actual4" type="number" name="" value="' +
               actual4 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               "</tr>" +
-              //forcast
-              '<tr data-target_list="BenefitsResults" data-id="' +
-              oListItem.get_id() +
-              '" data-category="' +
-              category +
-              '" is-updated="false" id="MyTr">' +
-              '<th scope="row" class="Resources" data-trans-forcast></th>' +
-              ' <td id="totalForcast" class="myInput" data-id="' +
-              oListItem.get_id() +
-              '">' +
-              totalForcast +
-              "</td>" +
-              ' <td><input class="QarterInputStyle inputStyle1 myInput" data-internal="Forecast1" type="number" name="" value="' +
-              forecast1 +
-              '" data-result-type="' +
-              resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
-              oListItem.get_id() +
-              '"></td>' +
-              ' <td><input class="QarterInputStyle inputStyle2 myInput" data-internal="Forecast2" type="number" name="" value="' +
-              forecast2 +
-              '" data-result-type="' +
-              resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
-              oListItem.get_id() +
-              '"></td>' +
-              ' <td><input class="QarterInputStyle inputStyle3 myInput" data-internal="Forecast3" type="number" name="" value="' +
-              forecast3 +
-              '" data-result-type="' +
-              resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
-              oListItem.get_id() +
-              '"></td>' +
-              ' <td><input class="QarterInputStyle inputStyle4 myInput" data-internal="Forecast4" type="number" name="" value="' +
-              forecast4 +
-              '" data-result-type="' +
-              resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
-              oListItem.get_id() +
-              '"></td>' +
-              "</tr>" +
-
               "</tbody>"
             );
           } else if (filteredValue == 'midterm') {
@@ -869,14 +814,14 @@ var Get_Benefit_Results = {
               target1 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle2 myInput" data-internal="Target2" type="number" name="" value="' +
               target2 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               "</tr>" +
@@ -891,34 +836,14 @@ var Get_Benefit_Results = {
               actual1 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle2 actualStyle myInput" data-internal="Actual2" type="number" name="" value="' +
               actual2 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
-              oListItem.get_id() +
-              '"></td>' +
-              "</tr>" +
-              //forcast
-              '<tr data-target_list="BenefitsResults" data-id="' + oListItem.get_id() + '" data-category="' + category + '" is-updated="false" id="MyTr">' +
-              '<th scope="row" class="Resources" data-trans-forcast></th>' +
-              ' <td id="totalForcast" class="myInput" data-id="' + oListItem.get_id() + '">' + totalForcast +
-              "</td>" +
-              ' <td><input class="QarterInputStyle inputStyle1 myInput" data-internal="Forecast1" type="number" name="" value="' +
-              forecast1 +
-              '" data-result-type="' +
-              resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
-              oListItem.get_id() +
-              '"></td>' +
-              ' <td><input class="QarterInputStyle inputStyle2 myInput" data-internal="Forecast2" type="number" name="" value="' +
-              forecast2 +
-              '" data-result-type="' +
-              resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               "</tr>" +
@@ -945,28 +870,28 @@ var Get_Benefit_Results = {
               target1 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle2 myInput" data-internal="Target2" type="number" name="" value="' +
               target2 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle3 myInput" data-internal="Target3" type="number" name="" value="' +
               target3 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle4 myInput" data-internal="Target4" type="number" name="" value="' +
               target4 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               //target 4 replay should change
@@ -974,56 +899,56 @@ var Get_Benefit_Results = {
               target5 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle6 myInput" data-internal="Target6" type="number" name="" value="' +
               target6 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle7 myInput" data-internal="Target7" type="number" name="" value="' +
               target7 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle8 myInput" data-internal="Target8" type="number" name="" value="' +
               target8 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle9 myInput" data-internal="Target9" type="number" name="" value="' +
               target9 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle10 myInput" data-internal="Target10" type="number" name="" value="' +
               target10 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle11 myInput" data-internal="Target11" type="number" name="" value="' +
               target11 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle12 myInput" data-internal="Target12" type="number" name="" value="' +
               target12 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               //
@@ -1044,28 +969,28 @@ var Get_Benefit_Results = {
               actual1 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle2 actualStyle myInput" data-internal="Actual2" type="number" name="" value="' +
               actual2 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle3 actualStyle myInput" data-internal="Actual3" type="number" name="" value="' +
               actual3 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle4 actualStyle myInput" data-internal="Actual4" type="number" name="" value="' +
               actual4 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               //actual 4 replay should change
@@ -1073,160 +998,60 @@ var Get_Benefit_Results = {
               actual5 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle6 actualStyle myInput" data-internal="Actual6" type="number" name="" value="' +
               actual6 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle7 actualStyle myInput" data-internal="Actual7" type="number" name="" value="' +
               actual7 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle8 actualStyle myInput" data-internal="Actual8" type="number" name="" value="' +
               actual8 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle9 actualStyle myInput" data-internal="Actual9" type="number" name="" value="' +
               actual9 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle10 actualStyle myInput" data-internal="Actual10" type="number" name="" value="' +
               actual10 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle11 actualStyle myInput" data-internal="Actual11" type="number" name="" value="' +
               actual11 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               ' <td><input class="QarterInputStyle inputStyle12 actualStyle myInput" data-internal="Actual12" type="number" name="" value="' +
               actual12 +
               '" data-result-type="' +
               resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
+              '" oninput="checkBenefitsTypes.init(this)" data-id="' +
               oListItem.get_id() +
               '"></td>' +
               //
               "</tr>" +
-              //forcast
-              '<tr data-target_list="BenefitsResults" data-id="' +
-              oListItem.get_id() +
-              '" data-category="' +
-              category +
-              '" is-updated="false" id="MyTr">' +
-              '<th scope="row" class="Resources" data-trans-forcast></th>' +
-              ' <td id="totalForcast" class="myInput" data-id="' +
-              oListItem.get_id() +
-              '">' +
-              totalForcast +
-              "</td>" +
-              ' <td><input class="QarterInputStyle inputStyle1 myInput" data-internal="Forecast1" type="number" name="" value="' +
-              forecast1 +
-              '" data-result-type="' +
-              resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
-              oListItem.get_id() +
-              '"></td>' +
-              ' <td><input class="QarterInputStyle inputStyle2 myInput" data-internal="Forecast2" type="number" name="" value="' +
-              forecast2 +
-              '" data-result-type="' +
-              resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
-              oListItem.get_id() +
-              '"></td>' +
-              ' <td><input class="QarterInputStyle inputStyle3 myInput" data-internal="Forecast3" type="number" name="" value="' +
-              forecast3 +
-              '" data-result-type="' +
-              resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
-              oListItem.get_id() +
-              '"></td>' +
-              ' <td><input class="QarterInputStyle inputStyle4 myInput" data-internal="Forecast4" type="number" name="" value="' +
-              forecast4 +
-              '" data-result-type="' +
-              resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
-              oListItem.get_id() +
-              '"></td>' +
-              //target 4 replay should change
-              ' <td><input class="QarterInputStyle inputStyle5 myInput" data-internal="Forecast5" type="number" name="" value="' +
-              forecast5 +
-              '" data-result-type="' +
-              resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
-              oListItem.get_id() +
-              '"></td>' +
-              ' <td><input class="QarterInputStyle inputStyle6 myInput" data-internal="Forecast6" type="number" name="" value="' +
-              forecast6 +
-              '" data-result-type="' +
-              resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
-              oListItem.get_id() +
-              '"></td>' +
-              ' <td><input class="QarterInputStyle inputStyle7 myInput" data-internal="Forecast7" type="number" name="" value="' +
-              forecast7 +
-              '" data-result-type="' +
-              resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
-              oListItem.get_id() +
-              '"></td>' +
-              ' <td><input class="QarterInputStyle inputStyle8 myInput" data-internal="Forecast8" type="number" name="" value="' +
-              forecast8 +
-              '" data-result-type="' +
-              resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
-              oListItem.get_id() +
-              '"></td>' +
-              ' <td><input class="QarterInputStyle inputStyle9 myInput" data-internal="Forecast9" type="number" name="" value="' +
-              forecast9 +
-              '" data-result-type="' +
-              resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
-              oListItem.get_id() +
-              '"></td>' +
-              ' <td><input class="QarterInputStyle inputStyle10 myInput" data-internal="Forecast10" type="number" name="" value="' +
-              forecast10 +
-              '" data-result-type="' +
-              resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
-              oListItem.get_id() +
-              '"></td>' +
-              ' <td><input class="QarterInputStyle inputStyle11 myInput" data-internal="Forecast11" type="number" name="" value="' +
-              forecast11 +
-              '" data-result-type="' +
-              resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
-              oListItem.get_id() +
-              '"></td>' +
-              ' <td><input class="QarterInputStyle inputStyle12 myInput" data-internal="Forecast12" type="number" name="" value="' +
-              forecast12 +
-              '" data-result-type="' +
-              resultType +
-              '" oninput="checkTypes.init(this)" data-id="' +
-              oListItem.get_id() +
-              '"></td>' +
-              //
-              "</tr>" +
-
               "</tbody>"
             );
           }
@@ -1359,4 +1184,50 @@ var Target_Details_Submit = {
     );
   },
   g: {},
+};
+
+
+window.checkBenefitsTypes = {
+  init: function ($this) {
+    var total_value = 0,
+      total_value_actual = 0;
+    if ($this.getAttribute("data-result-type") === "نسبة مئوية") {
+      $this.value =
+        $this.value &&
+          Math.abs($this.value) >= 0 &&
+          $this.value &&
+          Math.abs($this.value) <= 100
+          ? Math.abs($this.value)
+          : null;
+    }
+
+    for (i = 1; i <= 12; i++) {
+      var value = $(
+        ".inputStyle" + i + '[data-id="' + $this.getAttribute("data-id") + '"]'
+      ).val();
+      var valueActual = $(
+        ".inputStyle" +
+        i +
+        '.actualStyle[data-id="' +
+        $this.getAttribute("data-id") +
+        '"]'
+      ).val();
+
+      if (value) {
+        total_value += Number(value);
+        $('#totalTarget[data-id="' + $this.getAttribute("data-id") + '"]').text(
+          Number(total_value.toFixed(2))
+        );
+      }
+      if (valueActual) {
+
+        total_value_actual += Number(valueActual);
+        $('#totalActual[data-id="' + $this.getAttribute("data-id") + '"]').text(
+          Number(total_value_actual.toFixed(2))
+        );
+      }
+    }
+    dataId = $this.getAttribute("data-id");
+    $('#MyTr[data-id="' + dataId + '"]').attr("is-updated", "true");
+  },
 };
