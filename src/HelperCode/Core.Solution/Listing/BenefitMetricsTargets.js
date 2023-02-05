@@ -1,16 +1,14 @@
 
 
-console.log("INSIDE BENEFIT METRIC TARGETTTTTTTTTTT")
-
 var allBenefitsArr = [], benefitExist = false;
 var currentYear = new Date().getFullYear();
 var benefitYear = currentYear.toString();
 
 var benefitNameFilterArr = [];
 
-// var emptyData = require('../../../helperResources/img/empty-data.png');
+var emptyData = require('../../../helperResources/img/empty-data.png');
 
-var emptyData =""
+// var emptyData =""
 
 var filteredValue = "year", // to get the data of year for first render
   indexType = '';
