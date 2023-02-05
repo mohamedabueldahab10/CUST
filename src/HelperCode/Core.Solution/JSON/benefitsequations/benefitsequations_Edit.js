@@ -28,9 +28,9 @@ var Information_Form = [{
             "type": "string"
         },
         {
-            "InternalName": "KPIInput", //oday
+            "InternalName": "BenefitInput", 
             "DisplayName": "المعادلة المدخلة",
-            "DisplayNameEn": "KPI Input",
+            "DisplayNameEn": "Benefit Input",
             "type": "formula"
         },
         // {

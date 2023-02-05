@@ -11,7 +11,7 @@ var Information_Form = [{
         //     "validation": "required"
         // },
         {
-            InternalName: 'RelatedBenefit',
+            InternalName: 'RelatedBenefit',// oday 
             DisplayNameEn: 'RelatedBenefit',
             DisplayName: 'المنفعة المرتبطة',
             "type": "lookup",
@@ -28,14 +28,72 @@ var Information_Form = [{
             "type": "string"
         },
         {
-            "InternalName": "KPIInput",
+            "InternalName": "BenefitInput", 
             "DisplayName": "المعادلة المدخلة",
-            "DisplayNameEn": "KPI Input",
+            "DisplayNameEn": "Benefit Input",
             "type": "formula"
         },
+        // {
+        //     "InternalName": "Quarter",
+        //     "DisplayNameEn": "Quarter",
+        //     "DisplayName": "الربع",
+        //       "type": "dropdown",
+        //     //   "state": "disabled",
+        //     //   dynamic: "Initiative",
+        //     options: {
+        //       choices: [
+        //         '1', '2','3','4'
+        //       ]
+        //     }
+        //   },
+        // {
+        //     "InternalName": "Year",
+        //     "DisplayNameEn": "Year",
+        //     "DisplayName": "السنة",
+        //       "type": "dropdown",
+        //     //   "state": "disabled",
+        //     //   dynamic: "Initiative",
+        //     options: {
+        //       choices: [
+        //         '2020',
+        //          '2021',
+        //          '2022',
+        //          '2023',
+        //          '2024',
+        //          '2025',
+        //          '2026',
+        //          '2027',
+        //          '2028',
+        //          '2029',
+        //          '2030',
+        //       ]
+        //     }
+        //   },
 
-
-
+        //   {
+        //     "InternalName": "MesureStatus",
+        //     "DisplayNameEn": "MesureStatus",
+        //     "DisplayName": "حالة القياس",
+        //       "type": "dropdownValues",
+        //     //   "state": "disabled",
+        //     //   dynamic: "Initiative",
+        //     options: {
+        //       choices: [
+        //         {
+        //             display: 'mersurable',
+        //             value: 'mersurable'
+        //         },
+        //         {
+        //             display: 'unmersurable',
+        //             value: 'unmersurable'
+        //         },
+        //         {
+        //             display: 'unspecific',
+        //             value: 'unspecific'
+        //         },
+        //       ]
+        //     }
+        //   },
     ]
 },
 {
