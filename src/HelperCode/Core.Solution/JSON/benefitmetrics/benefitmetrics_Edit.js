@@ -66,61 +66,7 @@ var Information_Form = [
         // "state": "disabled",
         // dynamic: "Initiative"
       },
-      // {
-      //   InternalName: 'Quarter',
-      //   DisplayNameEn: 'Quarter',
-      //   DisplayName: 'الربع',
-      //   type: 'dropdownValues',
-      //   options: {
-      //     choices: [
-      //       { display: 'quarter1', value: 'quarter1' },
-      //       { display: 'quarter2', value: 'quarter2' },
-      //       { display: 'quarter3', value: 'quarter3' },
-      //       { display: 'quarter4', value: 'quarter4' },
-      //     ],
-      //   },
-      //   // security: {
-      //   //     groups: [
-      //   //         'SPM Admin', 'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
-      //   //     ]
-      //   // },
-      // },
-      // {
-      //   InternalName: 'Year',
-      //   DisplayNameEn: 'Year',
-      //   DisplayName: 'السنة',
-      //   type: 'yearInput',
-      //   //   "state": "disabled",
-      //   //   dynamic: "Initiative",
-      //   // options: {
-      //   //     choices: [
-      //   //         '2020',
-      //   //         '2021',
-      //   //         '2022',
-      //   //         '2023',
-      //   //         '2024',
-      //   //         '2025',
-      //   //         '2026',
-      //   //         '2027',
-      //   //         '2028',
-      //   //         '2029',
-      //   //         '2030',
-      //   //     ]
-      //   // },
-      //   // security: {
-      //   //     groups: [
-      //   //         'SPM Admin', 'SPM Team', 'VRO_P', 'Performance Leaders', 'Administrators for Project Web App', 'OPMO', 'Project Managers for Project Web App'
-      //   //     ]
-      //   // },
-      // },
-      // {
-      //   InternalName: 'Equation',
-      //   DisplayNameEn: 'Equation',
-      //   DisplayName: 'المعادلة',
-      //   type: 'string',
-      //   maxchar: '250',
-      //   validation: 'required',
-      // },
+     
       {
         InternalName: 'MesureStatus',
         DisplayNameEn: 'MesureStatus',
@@ -157,6 +103,28 @@ var Information_Form = [
         },
       },
       {
+        InternalName: 'PeriodType',
+        DisplayNameEn: 'Period Type',
+        DisplayName: 'تكرار القياس',
+        type: 'dropdownValues',
+        toggleValues: [
+          { value: 'monthly', fields: ['Months'] }, //we can put more than 1  field
+          { value: 'quarter', fields: ['Quarter'] }, //we can put more than 1  field
+          { value: 'midterm', fields: ['Midterms'] },
+          { value: 'year', fields: ['Years'] },
+        ],
+        state: 'disabled',
+        options: {
+          choices: [
+            { display: 'monthly', value: 'monthly' },
+            { display: 'quarter', value: 'quarter' },
+            { display: 'midterm', value: 'midterm' },
+            { display: 'year', value: 'year' },
+          ],
+        },
+      
+      },
+      {
         InternalName: 'ResultType',
         DisplayNameEn: 'Result Type',
         // "state": "disabled",
@@ -181,7 +149,7 @@ var Information_Form = [
         endinternalname: 'FinishDate',
         max: 'ToDate',
         // type: 'datetime',
-        validation: 'required',
+         "state": "disabled",
       },
       {
         InternalName: 'ToDate',
@@ -194,7 +162,7 @@ var Information_Form = [
         endinternalname: 'FinishDate',
         min: 'FromDate',
         // type: 'datetime',
-        validation: 'required',
+       "state": "disabled",
       },
       {
         InternalName: 'DataSource',

@@ -50,9 +50,15 @@ var Information_Form = [
       {
         InternalName: 'PeriodType',
         DisplayNameEn: 'Period Type',
-        DisplayName: 'دورية القياس',
-        state: 'disabled',
+        DisplayName: 'تكرار القياس',
         type: 'dropdownValues',
+        toggleValues: [
+          { value: 'monthly', fields: ['Months'] }, //we can put more than 1  field
+          { value: 'quarter', fields: ['Quarter'] }, //we can put more than 1  field
+          { value: 'midterm', fields: ['Midterms'] },
+          { value: 'year', fields: ['Years'] },
+        ],
+        state: 'disabled',
         options: {
           choices: [
             { display: 'monthly', value: 'monthly' },
@@ -61,6 +67,7 @@ var Information_Form = [
             { display: 'year', value: 'year' },
           ],
         },
+      
       },
       
       {
