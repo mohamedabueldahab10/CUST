@@ -855,8 +855,8 @@
     actualratemilestone: "نسبة التنفيذ الفعلية(المعالم)",
     plannedratemilestone: "نسبة التنفيذ المخططة(المعالم)",
     alltasks: "عرض كافة المهام",
-    benefitmetricname:"اسم المنفعة",
-    benefit:"المنفعة"
+    benefitmetricname:"مقياس المنفعة",
+    benefit:"مقياس المنفعة"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1728,8 +1728,8 @@
     actualratemilestone: "Percentage of actual implementation (Milestones)",
     plannedratemilestone: "Percentage of planned implementation (Milestones)",
     alltasks: "All Tasks",
-    benefitmetricname:"Benefit Name",
-    benefit:"Benefit"
+    benefitmetricname:"Benefit Metrics",
+    benefit:"Benefit Metrics"
   },
 };
 
