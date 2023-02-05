@@ -12,10 +12,10 @@ var Information_Form = [{
         // },
         {
             InternalName: 'RelatedBenefit',// oday 
-            DisplayNameEn: 'RelatedBenefit',
-            DisplayName: 'المنفعة المرتبطة',
+            DisplayNameEn: 'Related Benefit Metrics',
+            DisplayName: 'مقياس المنفعة المرتبط',
             "type": "lookup",
-            "source": "Benefits",
+            "source": "BenefitMetrics",
             "Dispfieldkey": "Name",
             "valfieldkey": "Title",
             "state": "disabled",

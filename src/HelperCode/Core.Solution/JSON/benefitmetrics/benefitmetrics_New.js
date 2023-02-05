@@ -53,10 +53,10 @@ var Information_Form = [
         type: 'dropdownValues',
         options: {
           choices: [
-            { display: 'year', value: 'year' },
+            { display: 'monthly', value: 'monthly' },
             { display: 'quarter', value: 'quarter' },
-            { display: 'halfyear', value: 'halfyear' },
-            { display: 'month', value: 'month' },
+            { display: 'midterm', value: 'midterm' },
+            { display: 'year', value: 'year' },
           ],
         },
         validation: 'required',
