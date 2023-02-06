@@ -204,9 +204,6 @@ var getImportantLinks = {
 				NewTab: NewTab,
 			});
 			
-            console.log(AllowTo[0],"AllowTo[0]")
-            console.log(AllowTo,"AAAAAAAAAAAAa")
-			debugger
 			var hasAccess = false
 			if (AllowTo[0] == "AllGroups") {
 				hasAccess = true
