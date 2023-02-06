@@ -204,6 +204,8 @@ var Information_Form = [
         sourceinternalname: 'ProjectCode', // column in target list
         Dispfieldkey: 'Name', //display in dropdown
         valfieldkey: 'Title', // value in dropdown
+        valsiblingkey:'AcceptanceCriteria',
+        targetsiblingkey:'AcceptanceCriteria'
       
       },
       {

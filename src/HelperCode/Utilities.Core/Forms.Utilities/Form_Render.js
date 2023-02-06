@@ -1,5 +1,5 @@
-var logo = require('../../../HelperRessources/img/print-logo.png');
-//var logo = "";
+// var logo = require('../../../HelperRessources/img/print-logo.png');
+var logo = "";
 //= isArabic ? require('../../../HelperRessources/img/main-logo.svg') : require('../../../HelperRessources/img/main-logo-en.svg');
 (window.isNew = window.location.href.toLowerCase().indexOf("new.aspx") > -1),
   (window.isEdit =
@@ -412,6 +412,22 @@ window.ListInfo = {
             }
           });
           //new validation listiner
+
+          //////////////////////////////// get siblings value like AcceptanceCriteria in benefits when change on delivrable
+
+          $('body').on('change', '.getsiblingdata', function (event) {
+            debugger
+            console.log($(this).find(':selected').data('siblingvalue'), "Ssssssssssssssssssss")
+            var siblingData = $(this).find(':selected').data('siblingvalue')
+            var siblingTarget = $(this).data('siblingtarget')
+
+            if (siblingTarget && siblingTarget != 'undefined') {
+              $(this).parent().parent().find(`#${siblingTarget}`).val(siblingData)
+            }
+          })
+
+          // $("select#Types").change(function () {
+
 
           ////////////////////////////////
           $("input.percentbyparent").keyup(function (event) {
@@ -3458,7 +3474,6 @@ window.ListInfo = {
 
 
       case "lookupchildtoparent":
-
         var code = activeCode
         var customQuery =
           '<View><Query><Where><And><Eq><FieldRef Name=' + element.childinternalparentname + ' /><Value Type=' + element.childinternalparenttype + '>' +
@@ -3495,15 +3510,21 @@ window.ListInfo = {
 
               internalQuery += "</Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
               debugger
+              var filedsArr = [element.valfieldkey, element.Dispfieldkey]
+              if (element.hasOwnProperty('valsiblingkey')) {
+                filedsArr = [element.valfieldkey, element.Dispfieldkey, element.valsiblingkey]
+              }
               sphttp.get(
                 _spPageContextInfo.siteServerRelativeUrl,
                 element.source,
                 internalQuery,
-                [element.valfieldkey, element.Dispfieldkey],
+                filedsArr,
                 function (records, record, listItem, isDone) {
                   if (listItem) itemsID.push(listItem.get_id());
                   if (isDone) {
 
+                    console.log(records, "records")
+                    debugger
                     htmlBody =
                       '<div class="col-md-6 CFIELD ' +
                       dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -3568,7 +3589,7 @@ window.ListInfo = {
                       element.queryFieldType +
                       '" data-filterfieldtype="' +
                       element.filterFieldType +
-                      '" class="form-control" type="dropdown" id="' +
+                      '" data-siblingtarget="' + element.targetsiblingkey + '" class="form-control getsiblingdata" type="dropdown" id="' +
                       element.InternalName +
                       '" value="" placeholder="' +
                       displayName +
@@ -3582,7 +3603,7 @@ window.ListInfo = {
 
                     records.forEach(function (el, index) {
                       htmlBody +=
-                        '<option option-id="' +
+                        '<option data-siblingvalue="' + el[element.valsiblingkey] + '" option-id="' +
                         itemsID[index] +
                         '" value="' +
                         el[element.valfieldkey] +
@@ -3789,9 +3810,9 @@ window.ListInfo = {
             "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"InitiativeCode\" /><Value Type=\"Text\">" +
             ICODE +
             "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
-        } 
+        }
 
-        
+
 
         var itemIDlist = [],
           itemsID = [];
