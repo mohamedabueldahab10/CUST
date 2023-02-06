@@ -425,11 +425,20 @@ window.ListInfo = {
               $(this).parent().parent().find(`#${siblingTarget}`).val(siblingData)
             }
           })
+          ////////////////////////////// calculate the tax 15% as ksa
+          $("input.tax").keyup(function (event) {
+            var taxElement = $(this).data("targetelementtax");
+            var amountElement = $(this).data("targetelementamount");
+            var fieldValue = event.target.value;
+            var amount = Number((fieldValue / 1.15).toFixed("2"));
+            var tax = Number((fieldValue - amount).toFixed("2"));
 
-          // $("select#Types").change(function () {
+            $(`#${amountElement}`).val(amount);
+            $(`#${taxElement}`).val(tax);
+          });
 
 
-          ////////////////////////////////
+          ///////////////////////////////
           $("input.percentbyparent").keyup(function (event) {
             // calculate the target elemnt like in delivrable
             var targetElement = $(this).data("targetelem");
@@ -1698,6 +1707,80 @@ window.ListInfo = {
           " " +
           element.validation +
           ">" +
+          '<div class="inputInfo ' +
+          isexist +
+          '">' +
+          descPhrase +
+          "</div>" +
+          "</div>";
+        OnSuccess(flag, htmlBody);
+        break;
+
+      case "floattax":
+        htmlBody =
+          '<div class="col-md-6 CFIELD ' +
+          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          " " +
+          element.className +
+          ' " ' +
+          thistip +
+          " " +
+          hidestagesIDs +
+          " " +
+          editableBy +
+          " " +
+          showstagesIDs +
+          "  " +
+          disablestagesIDs +
+          "  " +
+          enablestagesIDs +
+          "   " +
+          isWfhidestagesIDs +
+          " " +
+          requireOnWfTaskstagesIDs +
+          " " +
+          isWfshowstagesIDs +
+          "  " +
+          isWfdisablestagesIDs +
+          "  " +
+          isWfenablestagesIDs +
+          '        data-groups="' +
+          groups +
+          '" style="display:' +
+          element.display +
+          '">' +
+          '<label for="' +
+          element.InternalName +
+          '" ' +
+          element.validation +
+          ">" +
+          displayName +
+          "</label>" +
+          "<input " +
+          ToggleName +
+          " " +
+          RequiredName +
+          ' type="float"  placeholder="' +
+          displayName +
+          '" ' +
+          dynamic +
+          ' class="form-control SPIField tax" id="' +
+          element.InternalName +
+          '" ' +
+          element.state +
+          " " +
+          'data-targetelementtax="' +
+          element.targetelementtax +
+          '"' +
+          'data-targetelementamount="' +
+          element.targetelementamount +
+          '"' +
+          " " +
+          element.validation +
+          ">" +
+          "<span data-trans-" +
+          Errmsgkey +
+          ' class="errMsgField Resources"></span>' +
           '<div class="inputInfo ' +
           isexist +
           '">' +
@@ -6065,6 +6148,53 @@ var View_ListInfo = {
             '<p type="text" class="viewmode-value" id="' +
             element.InternalName +
             '" ></p>' +
+            "</div>";
+          OnSuccess(flag, htmlBody);
+          break;
+
+        case "floattax":
+          htmlBody =
+            '<div class="col-md-6 CFIELD ' +
+            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            " " +
+            element.className +
+            ' " ' +
+            thistip +
+            " " +
+            hidestagesIDs +
+            " " +
+            showstagesIDs +
+            "  " +
+            disablestagesIDs +
+            "  " +
+            enablestagesIDs +
+            "   " +
+            isWfhidestagesIDs +
+            " " +
+            requireOnWfTaskstagesIDs +
+            " " +
+            isWfshowstagesIDs +
+            "  " +
+            isWfdisablestagesIDs +
+            "  " +
+            isWfenablestagesIDs +
+            '        data-groups="' +
+            groups +
+            '" style="display:' +
+            element.display +
+            '">' +
+            '<label for="' +
+            element.InternalName +
+            '" ' +
+            element.validation +
+            ">" +
+            displayName +
+            "</label>" +
+            '<p type="number" class="viewmode-value tax" id="' +
+            element.InternalName +
+            '" ' +
+            ToggleName +
+            "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
