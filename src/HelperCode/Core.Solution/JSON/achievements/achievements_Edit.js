@@ -101,7 +101,8 @@ var Information_Form = [
           valfieldkey: 'Title',
           validation: 'required',
           ToggleName: 'RelatedObjective',
-          display: 'none'
+          display: 'none',
+  
           // "state": "disabled"
         },
         {
@@ -113,7 +114,8 @@ var Information_Form = [
           Dispfieldkey: 'Name',
           valfieldkey: 'Title',
           ToggleName: 'RelatedKPI',
-          display: 'none'
+          display: 'none',
+  
         },
         {
           InternalName: 'RelatedInitiative',
@@ -127,6 +129,7 @@ var Information_Form = [
           ToggleName: 'RelatedInitiative',
           display: 'none',
           dontSubmit: true,
+  
         },
         {
           InternalName: 'RelatedMilestone',
@@ -138,7 +141,8 @@ var Information_Form = [
           valfieldkey: 'Title',
           validation: 'required',
           ToggleName: 'RelatedMilestone',
-          display: 'none'
+          display: 'none',
+  
         },
       ],
     },

@@ -21,7 +21,10 @@ var Information_Form = [
         InternalName: 'Amount',
         DisplayNameEn: 'Amount',
         DisplayName: 'المبلغ الإجمالى للمخرجات',
-        type: 'float',
+        // type: 'float',
+        type: 'floattax', // to discount the tax in ksa 15%
+        targetelementtax: 'TAX', // tax amount field
+        targetelementamount: 'TotalAmount', // amount after tax field
       },
       {
         InternalName: 'TAX',
@@ -29,12 +32,17 @@ var Information_Form = [
         DisplayName: 'نسبة الضريبة',
         type: 'floatpercentage',
         validation: 'required',
+        state: 'disabled',
       },
       {
         InternalName: 'TotalAmount',
         DisplayNameEn: 'Total Amount',
         DisplayName: 'المبلغ الإجمالى',
         type: 'float',
+        state: 'disabled',
+        // type: 'floattax', // to discount the tax in ksa 15%
+        // targetelementtax: 'TVA', // tax amount field
+        // targetelementamount: 'InvoiceAmount', // amount after tax field
       },
       {
         InternalName: 'DisbursementStatus',
@@ -75,7 +83,7 @@ var Information_Form = [
       {
         InternalName: 'getfile',
         DisplayName: 'مرفقات',
-         DisplayNameEn: 'Attachments',
+        DisplayNameEn: 'Attachments',
         type: 'file',
         withAddBtn: 'true',
       },

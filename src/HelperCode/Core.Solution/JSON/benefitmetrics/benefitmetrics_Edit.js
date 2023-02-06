@@ -32,6 +32,7 @@ var Information_Form = [
         valfieldkey: 'Title',
         state: 'disabled',
         // dynamic:"mainfield",//controls others data
+        initiativeCodeInList: true //value in look up drop down should be related to current project
       },
       // {
       //   // hol dynamic 3ala l lookup

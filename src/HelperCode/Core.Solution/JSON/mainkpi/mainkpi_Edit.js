@@ -101,6 +101,7 @@ var Information_Form = [
             'System Admin Group',
           ],
         },
+        // projectCodeInList: true //value in look up drop down should be related to current project
       },
       {
         InternalName: 'Classification',
@@ -391,6 +392,7 @@ var Information_Form = [
             ],
           },
         ],
+        // projectCodeInList: true //value in look up drop down should be related to current project
       },
 
       //   {

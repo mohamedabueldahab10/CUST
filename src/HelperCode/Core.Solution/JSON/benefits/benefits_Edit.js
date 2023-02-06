@@ -91,7 +91,7 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         grpfieldkey: 'Title',
-        
+        initiativeCodeInList: true //value in look up drop down should be related to current project
         // queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
         // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
         // queryFieldValue: 'sub', // if i need to make the field with filter should add this
