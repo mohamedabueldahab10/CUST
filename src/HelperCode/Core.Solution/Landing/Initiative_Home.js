@@ -1942,7 +1942,6 @@ var Get_InitiativeStatus_Info = {
     var listItemEnum = collListItem.getEnumerator();
     var itemID, InitiativeProgressStatus = "";
 
-    console.log("api on success")
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       itemID = oListItem.get_id();
