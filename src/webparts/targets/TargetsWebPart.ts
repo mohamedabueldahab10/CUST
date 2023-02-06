@@ -15,7 +15,7 @@ BaseClientSideWebPart,
 IPropertyPaneConfiguration,
 PropertyPaneTextField,
 } from "@microsoft/sp-webpart-base";
-import { escape } from "@microsoft/sp-lodash-subset";
+import { escape } from "@microsoft/sp-lodash-subset"; 
 
 import styles from "./TargetsWebPart.module.scss";
 import * as strings from "TargetsWebPartStrings";

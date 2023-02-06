@@ -50,17 +50,24 @@ var Information_Form = [
       {
         InternalName: 'PeriodType',
         DisplayNameEn: 'Period Type',
-        DisplayName: 'دورية القياس',
-        state: 'disabled',
+        DisplayName: 'تكرار القياس',
         type: 'dropdownValues',
+        toggleValues: [
+          { value: 'monthly', fields: ['Months'] }, //we can put more than 1  field
+          { value: 'quarter', fields: ['Quarter'] }, //we can put more than 1  field
+          { value: 'midterm', fields: ['Midterms'] },
+          { value: 'year', fields: ['Years'] },
+        ],
+        state: 'disabled',
         options: {
           choices: [
-            { display: 'year', value: 'year' },
+            { display: 'monthly', value: 'monthly' },
             { display: 'quarter', value: 'quarter' },
-            { display: 'halfyear', value: 'halfyear' },
-            { display: 'month', value: 'month' },
+            { display: 'midterm', value: 'midterm' },
+            { display: 'year', value: 'year' },
           ],
         },
+      
       },
       
       {
@@ -225,19 +232,19 @@ var Information_Form = [
         DisplayName: 'رائد الأداء',
         type: 'picker',
       },
-      {
-        InternalName: 'TargetValue',
-        DisplayNameEn: 'Target Value',
-        DisplayName: 'القيمة المستهدفة',
-        type: 'float',
-      },
-      {
-          InternalName: 'ActualValue',
-          DisplayName:'القيمة الفعلية',
-          DisplayNameEn: 'ActualValue',
-          type:'float'
+      // {
+      //   InternalName: 'TargetValue',
+      //   DisplayNameEn: 'Target Value',
+      //   DisplayName: 'القيمة المستهدفة',
+      //   type: 'float',
+      // },
+      // {
+      //     InternalName: 'ActualValue',
+      //     DisplayName:'القيمة الفعلية',
+      //     DisplayNameEn: 'ActualValue',
+      //     type:'float'
          
-      }
+      // }
 
     ]
   },
@@ -249,7 +256,7 @@ var Information_Form = [
     subFields: [{
             InternalName: "BenefitEquation",
             DisplayNameEn: "Benefit Equation",
-            DisplayName: "معادلة المؤشر",
+            DisplayName: "معادلة مقياس المنفعة",
             type: "string",
             state: "disabled",
             //editableBy: "PerformanceLeader",
@@ -258,7 +265,7 @@ var Information_Form = [
             "InternalName": "Quarter",
             "DisplayNameEn": "Quarter",
             "DisplayName": "الربع",
-            ToggleName: "Quarter",
+            // ToggleName: "Quarter",
             type: "dropdownValues",
             options: {
                 choices: [
@@ -274,7 +281,7 @@ var Information_Form = [
             "InternalName": "Midterms",
             "DisplayNameEn": "Midterms",
             "DisplayName": "النصف السنوي",
-             ToggleName: "Midterms",
+            //  ToggleName: "Midterms",
             type: "dropdownValues",
             options: {
                 choices: [
@@ -285,48 +292,48 @@ var Information_Form = [
             },
          
         },
-        {
-            "InternalName": "Years",
-            "DisplayNameEn": "Years",
-            "DisplayName": "السنوي",
-            //  ToggleName: "Years",
-            type: "dropdownValues",
-            options: {
-                choices: [
-                    { display: "yearly", value: "Actual1" },
-                    // { display: "midterm2", value: "Actual2" },
-                ],
-                // "display":"none"
-            },
+        // {
+        //     "InternalName": "Years",
+        //     "DisplayNameEn": "Years",
+        //     "DisplayName": "السنوي",
+        //     //  ToggleName: "Years",
+        //     type: "dropdownValues",
+        //     options: {
+        //         choices: [
+        //             { display: "yearly", value: "Actual1" },
+        //             // { display: "midterm2", value: "Actual2" },
+        //         ],
+        //         // "display":"none"
+        //     },
          
-        },
+        // },
         {
           InternalName: 'Year',
           DisplayNameEn: 'Year',
           DisplayName: 'السنة',
-          type: 'dropdown',
+          type: 'string',
           //   "state": "disabled",
           //   dynamic: "Initiative",
-          options: {
-            choices: [
-              '2020',
-              '2021',
-              '2022',
-              '2023',
-              '2024',
-              '2025',
-              '2026',
-              '2027',
-              '2028',
-              '2029',
-              '2030',
-              '2031',
-              '2032',
-              '2033',
-              '2034',
-              '2035',
-            ],
-          },
+          // options: {
+          //   choices: [
+          //     '2020',
+          //     '2021',
+          //     '2022',
+          //     '2023',
+          //     '2024',
+          //     '2025',
+          //     '2026',
+          //     '2027',
+          //     '2028',
+          //     '2029',
+          //     '2030',
+          //     '2031',
+          //     '2032',
+          //     '2033',
+          //     '2034',
+          //     '2035',
+          //   ],
+          // },
       
         },
           {

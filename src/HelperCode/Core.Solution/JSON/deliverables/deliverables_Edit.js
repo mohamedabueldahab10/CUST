@@ -144,7 +144,7 @@ var Information_Form = [{
       "InternalName": "AcceptanceCriteria",
       "DisplayName": "معايير قبول المخرج",
       "DisplayNameEn": "Acceptance Criteria",
-      "type": "string"
+      "type": "multiline"
     },
     {
       "InternalName": "Comments",

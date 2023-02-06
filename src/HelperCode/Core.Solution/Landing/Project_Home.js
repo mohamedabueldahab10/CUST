@@ -1,5 +1,5 @@
 var ActualBudget = 0,
-  AssignedBudget, EstimatedBudget = 0,
+  AssignedBudget,
   phaseArray = [],
   numberofProjects = 0,
   UProjects = [],
@@ -11,15 +11,19 @@ var ActualBudget = 0,
   RSupport = 0,
   ScheduleProjectPercentageComplete,
   projectRelatedInitiative,
-  ScheduleBLPercentageCompleteList,
   projectTypes, numberofyesExp,
   //project vars
-  projectname, abrprojectname, phasename, stagename, projectcode, projectimportance, Pstartdate, Pfinishdate, standardisedPstartdate, PlannedStartDate, PlannedFinishDate, standardisedPfinishdate, ProgressLastModifiedDate, projectlength, projectsector,projectSubsector, projectstatus, ProjectSponsor, ProjectOwner, ProjectManager, PMORepresentative, Deliverablesarray = [],
+  projectname, abrprojectname, phasename, stagename, projectcode, projectimportance, Pstartdate, Pfinishdate, standardisedPstartdate, PlannedStartDate, PlannedFinishDate, standardisedPfinishdate, ProgressLastModifiedDate, projectlength, projectsector, projectSubsector, projectstatus, ProjectSponsor, ProjectOwner, ProjectManager, PMORepresentative, Deliverablesarray = [],
   deliveredDeliverablesArrayPercent = [],
   expiredDeliverablesArrayPercent = [],
   ExpDeliverablesarray = [],
   FutDeliverablesarray = [],
-  projectprogress, listProjectProgress, ScheduleSource, ProjectSPID, isDelDone = 'disabled';
+  projectprogress, listProjectProgress, ScheduleSource, ProjectSPID, isDelDone = 'disabled', MilestoneArr = [];
+
+var projectProgressStatusDeliverable, projectProgressStatusMilestone, projectProgressStatusSchedule, ProjectActualImplementationDeliverable, projectPlannedImplementationDeliverable, projectActualImplementationMilestone, projectPlannedImplementationMilestone, projectActualImplementationSchedule, projectPlannedImplementationSchedule;
+
+
+
 var years, months, days, duration = '', onLoad = true;
 
 var getBaseLineStart, getBaseLineFinish, getBaseLineDuration, baselineStartDate, baselineFinishDate;
@@ -27,6 +31,8 @@ var getBaseLineStart, getBaseLineFinish, getBaseLineDuration, baselineStartDate,
 var checkEpmProjectHtml = ''
 
 window.fullphasename;
+var lstMonthCLicked = '';
+var TLlstMonthCLicked = '', milestonelstMonthClicked = '';
 
 //to handle Project Progress Status
 var actualImplementationRate = 0,
@@ -90,12 +96,7 @@ var Project_Home_Info_Request = {
       var oListItem = Project_Home_Info_Request.g.listItemEnum.get_current();
       ProjectSPID = oListItem.get_id();
       $('.project-info-ctx .card-header > a').attr('href', _spPageContextInfo.webAbsoluteUrl + '/sitepages/view.aspx?ListKey=projects&IID=' + oListItem.get_id() + '&PCODE=' + Project_Home_Info_Request.g.PCODE)
-      // ScheduleSource = oListItem.get_item('ScheduleSource') || No_Data;
-      // if (ScheduleSource == 'عبر النظام') {
-      //     $('body').append('<style>.navbar.page-nav.px-5 li.nav-item a[href*="schedule.aspx"]{display:none}</style>')
-      // } else if (ScheduleSource == 'عبر الجدول الزمني') {
-      //     $('body').append('<style>.navbar.page-nav.px-5 li.nav-item a[href*="milestones"]{display:none}</style>')
-      // }
+
       //getting 1st stats data
       ActualBudget += oListItem.get_item('ActualBudget') || 0; //masroufa
       AssignedBudget = oListItem.get_item('AssignedBudget') || 0; //total budget
@@ -108,21 +109,15 @@ var Project_Home_Info_Request = {
         $('.actual').hide();
       }
 
-      EstimatedBudget += oListItem.get_item('EstimatedCost') || 0; //mutabakia / mutawak3a
       numberofProjects++;
-      ScheduleProjectPercentageComplete = oListItem.get_item('ScheduleProjectPercentageComplet0') == null ? 0 : oListItem.get_item('ScheduleProjectPercentageComplet0'),
 
-        ScheduleBLPercentageCompleteList = oListItem.get_item('ScheduleBLPercentageComplete') == null ? 0 : oListItem.get_item('ScheduleBLPercentageComplete'),
-
-
-        projectRelatedInitiative = oListItem.get_item('RelatedInitiative') ? oListItem.get_item('RelatedInitiative') : No_Data
+      projectRelatedInitiative = oListItem.get_item('RelatedInitiative') ? oListItem.get_item('RelatedInitiative') : No_Data
 
       //project card1
-      projectname = oListItem.get_item('Name') || No_Data,
-        // console.log(projectname);
+      projectname = oListItem.get_item('Name') || No_Data;
 
-        projectsector = oListItem.get_item('Sector') || No_Data;
-        projectSubsector= oListItem.get_item('SubSector') || No_Data;
+      projectsector = oListItem.get_item('Sector') || No_Data;
+      projectSubsector = oListItem.get_item('SubSector') || No_Data;
       projectTypes = oListItem.get_item('ProjectType') || No_Data;
 
       var projectsectorarr = [];
@@ -162,7 +157,6 @@ var Project_Home_Info_Request = {
         stagearr = stagearr.filter((item) => stagenamearr.includes(item.code));
         stagearrwithoutunderscore = JSON.parse(localStorage.getItem("Dynamo_Stages") || "[]");
         stagearrwithoutunderscore = stagearrwithoutunderscore.filter((item) => stagenamearrwithoutunderscoreten.includes(item.code));
-        // console.log('stagearrwithoutunderscore', stagearrwithoutunderscore);
 
         if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
           stagearrwithoutunderscore.forEach(item => stageName.push(item.name));
@@ -206,6 +200,18 @@ var Project_Home_Info_Request = {
         Pfinishdate = Project_Home_Info_Request.g.dateConvert2(oListItem.get_item('PlannedFinishDate'));
       }
 
+      //status of project 
+
+      ProjectActualImplementationDeliverable = oListItem.get_item("ActualImplementationDeliverable") || 0;
+      projectPlannedImplementationDeliverable = oListItem.get_item("PlannedImplementationDeliverable") || 0
+      projectProgressStatusDeliverable = oListItem.get_item("ProgressStatusDeliverable") || No_Data;
+      projectActualImplementationMilestone = oListItem.get_item("ActualImplementationMilestone") || 0;
+      projectPlannedImplementationMilestone = oListItem.get_item("PlannedImplementationMilestone") || 0;
+      projectProgressStatusMilestone = oListItem.get_item("ProgressStatusMilestone") || No_Data;
+      projectActualImplementationSchedule = oListItem.get_item("ActualImplementationSchedule") || 0;
+      projectPlannedImplementationSchedule = oListItem.get_item("PlannedImplementationSchedule") || 0;
+      projectProgressStatusSchedule = oListItem.get_item("ProgressStatusSchedule") || No_Data;
+      //
 
       // to deploy status of projects depends on form field baseline
       getBaseLineStart = oListItem.get_item('BaselineStartDate') ? oListItem.get_item('BaselineStartDate') : '';
@@ -227,15 +233,12 @@ var Project_Home_Info_Request = {
         12 * (formatteEndDate.getFullYear() - formatteStartDate.getFullYear())
 
 
-      // var projectlengthBaseLine = Math.round(getBaseLineFinish - getBaseLineStart) / (1000 * 60 * 60 * 24);
 
       var projDuration = '', numOfMonths = 0;
 
-      // if (Math.trunc((projectlengthBaseLine / 30)) > 0) {
       if (Math.trunc(projectlengthBaseLine) > 0) {
-        // numOfMonths = Math.trunc((projectlengthBaseLine) / 30);
-        numOfMonths = Math.trunc(projectlengthBaseLine);
 
+        numOfMonths = Math.trunc(projectlengthBaseLine);
 
         projDuration += ' ';
         if (numOfMonths > 1)
@@ -263,11 +266,8 @@ var Project_Home_Info_Request = {
 
         $('.project-delivery-info .d-flex:nth-child(1) > span:nth-child(2)').text(projDuration);
 
-
-        // numOfMonths = 0;
       }
 
-      // $('.project-delivery-info .d-flex:nth-child(1) > span:nth-child(2)').text(projDuration);
 
 
       fullphasename = oListItem.get_item('Phase') || No_Data;
@@ -275,7 +275,7 @@ var Project_Home_Info_Request = {
       listProjectProgress = oListItem.get_item('ProjectProgressStatus') || No_Data
       card1.push('<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
         '<div class="d-inline-flex flex-row align-items-center">' +
-        '<span class="icon-user lg d-inline-flex align-items-center text-center handlecircle circlecolor' + projectprogress + '">' +
+        '<span class="icon-user lg d-inline-flex align-items-center text-center handlecircle circlecolor' + projectProgressStatusDeliverable + '">' +
         '</span>' +
         '<div class="d-inline-flex flex-column mx-3">' +
         '<h3 class="acc-title d-inline-flex black">' + projectname + '</h3>' +
@@ -314,66 +314,58 @@ var Project_Home_Info_Request = {
         '</div>' +
         //
         '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
-        '<h4 data-trans-pattr57 class="black Resources d-flex mx-2" style="display:none !important"></h4>' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        '<span class="des-13"><span data-trans-pattr56 class="Resources complition-val initiativeProjHomeInfoTitleStyle"></span> ' +
-        '<h4 class="black actual-complete-val initiativeProjHomeInfoValueStyle">' + ScheduleProjectPercentageComplete + '%</h4></span>' +
+        '<span class="des-13"><span data-trans-pattr56 class="Resources complition-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+        '<h4 class="black actual-complete-val initiativeProjHomeInfoValueStyle">' + projectActualImplementationSchedule.toFixed(2) + '%</h4>' +
         '</div>' +
         '<div class="d-inline-flex flex-column mx-2">' +
         '<span class="des-13"><span data-trans-pattr6 class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-        '<h4 class="black initiativeProjHomeInfoValueStyle"> ' + ScheduleBLPercentageCompleteList + '%</h4>' + //
+        '<h4 class="black initiativeProjHomeInfoValueStyle"> ' + projectPlannedImplementationSchedule.toFixed(2) + '%</h4>' + //
         '</div>' +
-        '<div class="d-inline-flex flex-column mx-2 ' + projectprogress + '">' +
+        '<div class="d-inline-flex flex-column mx-2 ' + projectProgressStatusSchedule + '">' +
         '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-        '<h4 data-trans-' + projectprogress + ' class="black Resources myCompletionStatus statuscolor' + projectprogress + '"></h4>' + //
+        '<h4 data-trans-' + projectProgressStatusSchedule + ' class="black Resources myCompletionStatusSchedual statuscolor' + projectProgressStatusSchedule + '"></h4>' + //
         '</div>' +
         '</div>' +
-        '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
+        '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center third-row" href="#">' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        '<span class="des-13"><span data-trans-pattr61 class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-        '<h4 class="black initiativeProjHomeInfoValueStyle"></h4>' + //
+        '<span class="des-13"><span data-trans-pattr66 class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+        '<h4 class="black initiativeProjHomeInfoValueStyle">' + projectActualImplementationMilestone.toFixed(2) + '%</h4>' + //
         '</div>' +
-        '<h4 data-trans-pattr57 class="black Resources d-flex mx-2" style="display:none !important"></h4>' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        '<span class="des-13"><span data-trans-pattr66 class="Resources complition-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-        '<h4 class="black initiativeProjHomeInfoValueStyle"></h4>' +
+        '<span class="des-13"><span data-trans-pattr61 class="Resources complition-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+        '<h4 class="black initiativeProjHomeInfoValueStyle">' + projectPlannedImplementationMilestone.toFixed(2) + '%</h4>' +
         '</div>' +
-        '<div class="d-inline-flex flex-column mx-2 ' + projectprogress + '">' +
+        '<div class="d-inline-flex flex-column mx-2 ' + projectProgressStatusMilestone + '">' +
         '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-        '<h4 data-trans-' + projectprogress + ' class="black Resources myCompletionStatus statuscolor' + projectprogress + '"></h4>' + //
+        '<h4 data-trans-' + projectProgressStatusMilestone + ' class="black Resources myCompletionStatusMilestone statuscolor' + projectProgressStatusMilestone + '"></h4>' + //
         '</div>' +
         '</div>' +
-        
-        '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
+
+        '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center fourth-row" href="#">' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        '<span class="des-13"><span data-trans-pattr62 class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-        '<h4 class="black initiativeProjHomeInfoValueStyle"></h4>' + //
+        '<span class="des-13"><span data-trans-pattr76 class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+        '<h4 class="black initiativeProjHomeInfoValueStyle">' + ProjectActualImplementationDeliverable.toFixed(2) + '%</h4>' + //
         '</div>' +
-        '<h4 data-trans-pattr57 class="black Resources d-flex mx-2" style="display:none !important"></h4>' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        '<span class="des-13"><span data-trans-pattr76 class="Resources complition-val initiativeProjHomeInfoTitleStyle"></span> ' +
-        '<h4 class="black initiativeProjHomeInfoValueStyle"></h4></span>' +
+        '<span class="des-13"><span data-trans-pattr62 class="Resources complition-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+        '<h4 class="black initiativeProjHomeInfoValueStyle">' + projectPlannedImplementationDeliverable.toFixed(2) + '%</h4>' +
         '</div>' +
-        '<div class="d-inline-flex flex-column mx-2 ">' +
+        '<div class="d-inline-flex flex-column mx-2 ' + projectProgressStatusDeliverable + ' ">' +
         '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-        '<h4 data-trans-stat2 stat2 class="black Resources myCompletionStatus statuscolorstat2 stat2"></h4>' + //
+        '<h4 data-trans-' + projectProgressStatusDeliverable + ' class="black Resources myCompletionStatusDelivrables statuscolor' + projectProgressStatusDeliverable + '"></h4>' + //
         '</div>' +
         '</div>'
       );
       ProgressLastModifiedDate = Project_Home_Info_Request.g.dateConvert(oListItem.get_item('ProgressLastModifiedDate'));
       $('.ProgressDate').text(ProgressLastModifiedDate);
-      //project card 5
-      debugger
-      projectimportance = oListItem.get_item('Priority') || 'nodata';
 
+      projectimportance = oListItem.get_item('Priority') || 'nodata';
       projectstatus = oListItem.get_item('Status') || 'nodata';
       ProjectSponsor = oListItem.get_item('ProjectSponsor') ? oListItem.get_item('ProjectSponsor').get_lookupValue() : No_Data;
       ProjectOwner = oListItem.get_item('ProjectOwner') ? oListItem.get_item('ProjectOwner').get_lookupValue() : No_Data;
       ProjectManager = oListItem.get_item('ProjectManager') ? oListItem.get_item('ProjectManager').get_lookupValue() : No_Data;
       PMORepresentative = oListItem.get_item('PMORepresentative') ? oListItem.get_item('PMORepresentative').get_lookupValue() : No_Data;
-
-
-
 
     }
 
@@ -407,19 +399,100 @@ var Project_Home_Info_Request = {
     }
     //Schedule src dropdown
     if (scheduleSrcFeatureIsOn) {
-      $('.sched-head').append(
+
+      var schedualInfo = ""
+      if (
+        localStorage.getItem("lng") == null ||
+        localStorage.getItem("lng") == "ar"
+      ) {
+
+        schedualInfo = Resources.ar["summerytasklvlone"]
+      } else {
+        schedualInfo = Resources.en["summerytasklvlone"]
+
+      }
+
+      $(".sched-head").append(
         '<div class="schedule-src-wrapper">' +
+        '<span class="schedule-info"><i data-toggle="tooltip" data-html="true" title="' + schedualInfo + '" class="my-info-i fas fa-info-circle"></i></span>' +
         '<select class="schedule-src">' +
         // '<option data-trans-schedsrc class="Resources" value="" selected disabled="">مصدر الجدول</option>' +
-        '<option data-trans-schedepm class="Resources" value="عبر الجدول الزمني">عبر الجدول الزمني</option>' +
-        '<option data-trans-schedsystem class="Resources" value="عبر النظام">عبر النظام</option>' +
-        '</select>' +
-        '</div>'
+        // '<option data-trans-schedepm class="Resources" value="عبر الجدول الزمني">عبر الجدول الزمني</option>' +
+        // '<option data-trans-schedsystem class="Resources" value="عبر النظام">عبر النظام</option>' +
+        // '<option data-trans-milestones class="Resources" value="عبر المعالم">عبر المعالم</option>' +
+        '<option data-trans-schedepm class="Resources" value="schedual">schedual</option>' +
+        '<option data-trans-schedsystem class="Resources" value="deliverables">deliverables</option>' +
+        '<option data-trans-milestones class="Resources" value="milestones">milestones</option>' +
+        "</select>" +
+        "</div>"
       );
       // $('.schedule-src').val(User_ScheduleSource);
-      $('.schedule-src').on('change', function () {
+      $(".schedule-src").on("change", function () {
         // ProjectSchedule_Src_Submit.init($(this).val());
-        $('.fromTimeLine,.fromDeliverables').toggle();
+
+        if ($(this).val() == "schedual") {
+
+          if (
+            localStorage.getItem("lng") == null ||
+            localStorage.getItem("lng") == "ar"
+          ) {
+            schedualInfo = Resources.ar["summerytasklvlone"]
+          } else {
+            schedualInfo = Resources.en["summerytasklvlone"]
+
+          }
+
+          $('.fromDeliverables').hide()
+          $('.fromTimeLine').show()
+          $('.fromMilestones').hide()
+
+        } else if ($(this).val() == "deliverables") {
+
+          if (
+            localStorage.getItem("lng") == null ||
+            localStorage.getItem("lng") == "ar"
+          ) {
+
+            schedualInfo = Resources.ar["delevrableinfoschedual"]
+          } else {
+            schedualInfo = Resources.en["delevrableinfoschedual"]
+
+          }
+
+          $('.fromDeliverables').show()
+          $('.fromTimeLine').hide()
+          $('.fromMilestones').hide()
+
+          $(".fromDeliverables select#inputYear").val("");
+
+
+        } else if ($(this).val() == "milestones") {
+
+          if (
+            localStorage.getItem("lng") == null ||
+            localStorage.getItem("lng") == "ar"
+          ) {
+
+            schedualInfo = Resources.ar["milestoneinfoschedual"]
+          } else {
+            schedualInfo = Resources.en["milestoneinfoschedual"]
+
+          }
+
+          $('.fromDeliverables').hide()
+          $('.fromTimeLine').hide()
+          $('.fromMilestones').show()
+
+          $(".fromMilestones select#inputYear").val("");
+        }
+
+        $(".schedule-info > .my-info-i").attr("data-original-title", schedualInfo)
+
+        $(".tlContainer").html(`<p style="text-align:center">${No_Data}</p>`) // container of data
+
+
+        // $(".tlContainer").html(`<h3 style="text-align:center">${No_Data}</h3>`); // container of data
+
       });
     }
     $('.navbar.page-nav.px-5 li.nav-item a:not(:visible)').parent().hide();
@@ -431,7 +504,6 @@ var Project_Home_Info_Request = {
     Issues_Info_Request.init();
     Risks_Info_Request.init();
     Deliverables_Info_Request.init();
-    // GetProject_Tasks.preinit(); // comment it and called in ProgressStatus_Data_Submit to get the status and duration of project auto when open the page
     StagesConfiguration_Info_Request.init();
     Contracts_Info_Request.init();
     LessonsLearned_Info_Request.init();
@@ -498,11 +570,6 @@ var Project_Home_Info_Request = {
     },
     kFormatter: function (num) {
       return Math.abs(num) > 999 ? Math.sign(num) * ((Math.abs(num) / 1000).toFixed(1)) + 'k' : Math.sign(num) * Math.abs(num)
-    },
-    updatProject: function (startDate, endDate, schedualPercentage) {
-      // $('.start-date .px-2').text(startDate) // to make start date and finish date value from form
-      // $('.end-date .px-2').text(endDate)
-      $('.black.actual-complete-val').text(schedualPercentage + '%')
     }
   },
 };
@@ -541,43 +608,6 @@ var Get_RelatedInitiative = {
   g: {}
 }
 
-//epm api call
-// var EPM_Project_Data_Request = {
-//     preinit: function()
-//     {
-//         SP.SOD.registerSod('PS.ProjectContext', SP.Utilities.Utility.getLayoutsPageUrl('ps.js'));
-//         SP.SOD.loadMultiple(['PS.ProjectContext'], EPM_Project_Data_Request.init);
-//     },
-//     // The main Initialization function
-//     init: function () {
-//         var projectContext = PS.ProjectContext.get_current();
-//         var oProjects = projectContext.get_projects();
-//         EPM_Project_Data_Request.g.oProjectsItem = oProjects.getById(User_ProjUID);//declared inside object scope only
-//         oProjectsItem = EPM_Project_Data_Request.g.oProjectsItem;
-//         projectContext.load(EPM_Project_Data_Request.g.oProjectsItem);
-//         projectContext.executeQueryAsync(
-//             Function.createDelegate(this, EPM_Project_Data_Request.onSuccess),
-//             Function.createDelegate(this, EPM_Project_Data_Request.onError)
-//         );
-//     },
-//     onError: function (sender, args) {
-//         console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
-//     },
-//     onSuccess: function (sender, args) {
-//         var PlannedStartDate = Project_Home_Info_Request.g.dateConvert( oProjectsItem.get_startDate() );
-//         var PlannedFinishDate = Project_Home_Info_Request.g.dateConvert( oProjectsItem.get_finishDate() );
-//         $('.epm-start-date').text(PlannedStartDate);
-//         $('.epm-end-date').text(PlannedFinishDate);
-//         projectlength = Math.round((new Date(oProjectsItem.get_finishDate()) - new Date(oProjectsItem.get_startDate())) / (1000 * 60 * 60 * 24 * 30));
-//         if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
-//             $('.project-delivery-info .d-flex:nth-child(1) > span:nth-child(2)').text(projectlength + ' شهر ');
-//         } else {
-//             $('.project-delivery-info .d-flex:nth-child(1) > span:nth-child(2)').text(projectlength + ' Month ');
-//         }
-//     },
-//     // Global variables
-//     g: {}
-// };
 window.ProjectClosure_Submit = {
   preinit: function () {
     $('.wrapcomments').addClass('was-validated');
@@ -699,16 +729,6 @@ var ProjectSchedule_Src_Submit = {
         $('.schedule-src-wrapper').removeClass('loader-action');
         $('.schedule-src-wrapper').addClass('loader-action-success');
         window.location = window.location.href;
-        // var $this = $('.schedule-src');
-        // if ($this.val() == 'عبر النظام') {
-        //     $('.navbar.page-nav.px-5 li.nav-item a[href*="schedule.aspx"]').parent().hide();
-        //     $('.navbar.page-nav.px-5 li.nav-item a[href*="milestones"]').show();
-        //     $('.navbar.page-nav.px-5 li.nav-item a[href*="milestones"]').parent().show();
-        // } else if ($this.val() == 'عبر الجدول الزمني') {
-        //     $('.navbar.page-nav.px-5 li.nav-item a[href*="schedule.aspx"]').show();
-        //     $('.navbar.page-nav.px-5 li.nav-item a[href*="schedule.aspx"]').parent().show();
-        //     $('.navbar.page-nav.px-5 li.nav-item a[href*="milestones"]').parent().hide();
-        // }
       }),
       Function.createDelegate(this, function (sender, args) {
         $('schedule-src-wrapper').removeClass('loader-action');
@@ -917,15 +937,10 @@ var Deliveries_Info_Request = {
       for (i = 0; i < ExpDeliverablesarray.length; i++) {
         if (ExpDeliverablesarray[i].Code == Deliverable) {
           ExpectedExchange += Amount;
-          // console.log(Amount);
         }
       }
-
-      //
     }
-    //console.log(ExpectedExchange);
-    //al srf almtwaqa3
-    // $('.project-budget-ctx .card-body > div:nth-child(2) > div:nth-child(2) > div:nth-child(2)').text(ExpectedExchange.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' SAR');
+
     if (itemhtml.length == 1) {
       itemhtml.push('<h3>' + No_Data + '</h3>')
     }
@@ -974,12 +989,10 @@ var Contracts_Info_Request = {
         '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' + item2 + '</span>' +
         '</div>' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        // '<h4 class="text-warning">' + item3 + '</h4>' +
         '<span data-trans-pattr50 class="Resources des-13"></span>' +
         '<h4 class="text-warning">' + item3 + '</h4>' +
         '</div>' +
         '<div class="d-inline-flex flex-column mx-2">' +
-        // '<h4 class="black">' + item3date2 + '</h4>' +
         '<span data-trans-dateend class="Resources des-13"></span>' +
         '<h4 class="black">' + item3date2 + '</h4>' +
         '</div>' +
@@ -1071,9 +1084,13 @@ var Deliverables_Info_Request = {
   // The main Initialization function
   init: function () {
     var clientContext = new SP.ClientContext.get_current();
-    var oList = clientContext.get_web().get_lists().getByTitle('Deliverables');
+    var oList = clientContext.get_web().get_lists().getByTitle("Deliverables");
     var camlQuery = new SP.CamlQuery();
-    camlQuery.set_viewXml('<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="ProjectCode" /><Value Type="Text">' + Project_Home_Info_Request.g.PCODE + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'CommittedDate\' Ascending=\'False\' /></OrderBy></Query></View>'); //<Where><Geq><FieldRef Name=\'Committed_x0020_Date\' /><Value IncludeTimeValue=\'TRUE\'  Type=\'DateTime\'><Today /></Value></Geq></Where>
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">" +
+      Project_Home_Info_Request.g.PCODE +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='DeliveredDate' Ascending='False' /></OrderBy></Query></View>"
+    ); //<Where><Geq><FieldRef Name=\'Committed_x0020_Date\' /><Value IncludeTimeValue=\'TRUE\'  Type=\'DateTime\'><Today /></Value></Geq></Where>
     Deliverables_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Deliverables_Info_Request.g.collListItem);
     clientContext.executeQueryAsync(
@@ -1088,318 +1105,452 @@ var Deliverables_Info_Request = {
     NDelivrables = 0;
     NDelevered = 0;
     POD = 0;
-    var itemhtml = ['<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' + _spPageContextInfo.webAbsoluteUrl + '/sitepages/new.aspx?ListKey=deliverables&PCODE=' + Project_Home_Info_Request.g.PCODE + '"><i class="icon-plus"></i></a></li>'],
-      itemID, itemname, itemstatus, itemdate, itemdatevalidation, delevrableDateExpired, itemdelivered;
+    var itemhtml = [
+      '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
+      _spPageContextInfo.webAbsoluteUrl +
+      "/sitepages/new.aspx?ListKey=deliverables&PCODE=" +
+      Project_Home_Info_Request.g.PCODE +
+      '"><i class="icon-plus"></i></a></li>',
+    ],
+      itemID,
+      itemname,
+      itemstatus,
+      itemdate,
+      itemdatevalidation,
+      delevrableDateExpired,
+      itemdelivered;
+
+
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
 
       itemID = oListItem.get_id();
-      itemProjectCode = oListItem.get_item('ProjectCode') || No_Data;
-      itemname = oListItem.get_item('Name') || No_Data;
-      itemtitle = oListItem.get_item('Title') || No_Data;
-      itemstatus = oListItem.get_item('Status') || No_Data;
-      itemdelivered = oListItem.get_item('Delivered') || 'nodata';
-      itemweight = oListItem.get_item('Weight') ? oListItem.get_item('Weight') + "%" : No_Data;
-      itemdate = Project_Home_Info_Request.g.dateConvert(oListItem.get_item('CommittedDate'));
-      CommittedDate = oListItem.get_item('CommittedDate');
+      itemProjectCode = oListItem.get_item("ProjectCode") || No_Data;
+      itemname = oListItem.get_item("Name") || No_Data;
+      itemtitle = oListItem.get_item("Title") || No_Data;
+      itemstatus = oListItem.get_item("Status") || No_Data;
+      itemdelivered = oListItem.get_item("Delivered") || "nodata";
+      itemweight = oListItem.get_item("Weight")
+        ? oListItem.get_item("Weight") + "%"
+        : No_Data;
+      itemdate = Project_Home_Info_Request.g.dateConvert(
+        oListItem.get_item("DeliveredDate")
+      );
+      CommittedDate = oListItem.get_item("DeliveredDate");
 
-      itemhtml.push('<li class="list-group-item link-arrow px-0">' +
-        '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' + _spPageContextInfo.webAbsoluteUrl + '/sitepages/View.aspx?ListKey=deliverables&IID=' + itemID + "&PCODE=" + itemProjectCode + '">' +
+      itemhtml.push(
+        '<li class="list-group-item link-arrow px-0">' +
+        '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
+        _spPageContextInfo.webAbsoluteUrl +
+        "/sitepages/View.aspx?ListKey=deliverables&IID=" +
+        itemID +
+        "&PCODE=" +
+        itemProjectCode +
+        '">' +
         '<div class="d-inline-flex flex-column">' +
-        '<h3 class="acc-title d-inline-flex black">' + itemname + '</h3>' +
-        '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' + itemtitle + '</span>' +
-        '</div>' +
-
+        '<h3 class="acc-title d-inline-flex black">' +
+        itemname +
+        "</h3>" +
+        '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
+        itemtitle +
+        "</span>" +
+        "</div>" +
         '<div class="d-inline-flex flex-column mx-2">' +
-        // '<h4 class="black Resources">' + itemdate + '</h4>' +
+        '<h4 class="black Resources">' +
+        itemdate +
+        "</h4>" +
         '<span data-trans-committeddate class="Resources des-13"></span>' +
-        '<h4 class="black Resources">' + itemdate + '</h4>' +
-        '</div>' +
-
+        "</div>" +
         '<div class="d-inline-flex flex-column mx-2">' +
-        // '<h4 class="text-warning">' + itemweight + '</h4>' +
+        '<h4 class="text-warning">' +
+        itemweight +
+        "</h4>" +
         '<span data-trans-weight class="Resources des-13"></span>' +
-        '<h4 class="text-warning">' + itemweight + '</h4>' +
-        '</div>' +
-
+        "</div>" +
         '<div class="d-inline-flex flex-column mx-2">' +
-        // '<h4 data-trans-' + itemdelivered + ' class="black Resources"></h4>' +
+        "<h4 data-trans-" +
+        itemdelivered +
+        ' class="black Resources"></h4>' +
         '<span data-trans-deliveredyesno class="Resources des-13"></span>' +
-        '<h4 data-trans-' + itemdelivered + ' class="black Resources"></h4>' +
-        '</div>' +
+        "</div>" +
         '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
-        '</div>' +
-        '</a>' +
-        '</li>');
+        "</div>" +
+        "</a>" +
+        "</li>"
+      );
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      // itemdatevalidation = Project_Home_Info_Request.g.dateConvert2(oListItem.get_item('CommittedDate'));
-      // itemdatevalidation = Math.round((new Date() - new Date(itemdatevalidation)) / (1000 * 60 * 60 * 24)); //difference in days
 
-      delevrableDateExpired = Project_Home_Info_Request.g.dateConvert2(oListItem.get_item('CommittedDate'));
-      delevrableDateExpired = Math.round((new Date() - new Date(delevrableDateExpired)) / (1000 * 60 * 60 * 24)); //difference in days
+
+      delevrableDateExpired = Project_Home_Info_Request.g.dateConvert2(
+        oListItem.get_item("DeliveredDate")
+      );
+      delevrableDateExpired = Math.round(
+        (new Date() - new Date(delevrableDateExpired)) / (1000 * 60 * 60 * 24)
+      ); //difference in days
 
       // to get sum of weight of all Expired delevrables that are expired
-      if (delevrableDateExpired > 0) // expired deliverables
-      {
+      if (delevrableDateExpired > 0) {
+        // expired deliverables
         expiredDeliverablesArrayPercent.push({
-          expiredDelivrableWeight: oListItem.get_item('Weight'),
+          expiredDelivrableWeight: oListItem.get_item("Weight"),
         });
       }
       // if (delevrableDateExpired >= 0 && itemdelivered == 'yes') // expired deliverables
-      if (itemdelivered == 'yes') // expired deliverables
-      {
+      if (itemdelivered == "yes") {
+        // expired deliverables
         deliveredDeliverablesArrayPercent.push({
-          deliveredDelivrableWeight: oListItem.get_item('Weight'),
+          deliveredDelivrableWeight: oListItem.get_item("Weight"),
         });
       }
 
-      if (delevrableDateExpired > 0) // expired deliverables
-      {
+      if (delevrableDateExpired > 0) {
+        // expired deliverables
         ExpDeliverablesarray.push({
-          delivered: oListItem.get_item('Delivered'),
-          ammount: oListItem.get_item('Weight'),
+          delivered: oListItem.get_item("Delivered"),
+          ammount: oListItem.get_item("Weight"),
           date: itemdate,
-          Code: oListItem.get_item('Title')
+          Code: oListItem.get_item("Title"),
         });
-      } else // future deliverables
-      {
+      } // future deliverables
+      else {
         FutDeliverablesarray.push({
-          delivered: oListItem.get_item('Delivered'),
-          ammount: oListItem.get_item('Weight'),
+          delivered: oListItem.get_item("Delivered"),
+          ammount: oListItem.get_item("Weight"),
         });
       }
       Deliverablesarray.push({
         name: itemname,
-        delivered: oListItem.get_item('Delivered'),
-        ammount: oListItem.get_item('Weight'),
+        delivered: oListItem.get_item("Delivered"),
+        ammount: oListItem.get_item("Weight"),
         date: itemdate,
-        Code: oListItem.get_item('Title')
+        Code: oListItem.get_item("Title"),
       });
       NDelivrables++;
     }
 
-    if (itemhtml.length == 1) {
-      itemhtml.push('<h3>' + No_Data + '</h3>')
+    if (itemhtml.length == 1 || itemhtml.length == 0) {
+      itemhtml.push("<h3>" + No_Data + "</h3>");
     }
-    $('div#pills-fourth > ul.list-group').html(itemhtml.join(''));
+    $("div#pills-fourth > ul.list-group").html(itemhtml.join(""));
 
     // calc NTF
-    // rename the actualImplementationRate to be totalAmountOfWeightOfExpiredDeleveredDelevrables >> to be approved by bachar
-    actualImplementationRate = deliveredDeliverablesArrayPercent.reduce((accum, item) => accum + item.deliveredDelivrableWeight, 0);
-    var numberofyesAll = ExpDeliverablesarray.filter((v) => (v.delivered === 'yes'));
-    var All_numberofyesAll = Deliverablesarray.filter((v) => (v.delivered === 'Yes'));
 
-    // $('.project-details-ctx .card.h-100 > .scnd-row > div:nth-child(3) > h4.black').text(actualImplementationRate + '%');
-
-    // if (actualImplementationRate == 100) {
-    //   $('.container-body').append('<div class="row closureform"><button data-trans-projectclosure style="float: left;margin: 0 3px;color:White;padding: 2px;text-align:center;;width:200px;background: #853232;" class="pop-green Resources" style="float: left;font-size: 17px;" type="button"></button></div>');
-    // }
+    actualImplementationRate = deliveredDeliverablesArrayPercent.reduce(
+      (accum, item) => accum + item.deliveredDelivrableWeight,
+      0
+    );
+    var numberofyesAll = ExpDeliverablesarray.filter(
+      (v) => v.delivered === "yes"
+    );
+    var All_numberofyesAll = Deliverablesarray.filter(
+      (v) => v.delivered === "Yes"
+    );
 
     // total Amount Of Weight All Expired Delevrable >> to be approved by bachar
-    plannedImplementationRate = expiredDeliverablesArrayPercent.reduce((accum, item) => accum + item.expiredDelivrableWeight, 0);
+    plannedImplementationRate = expiredDeliverablesArrayPercent.reduce(
+      (accum, item) => accum + item.expiredDelivrableWeight,
+      0
+    );
 
-    // $('.project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black').text(plannedImplementationRate + '%');
-
-    // $('button.updateprogress').on('click', function () {
-    //   EPM_Project_Data_Request.preinit();
-    // });
-    // $('button.updateprogress').prop('disabled', false);
+    $("button.updateprogress").on("click", function () {
+      if (!isWF) {
+        Update_ProjectStatus_Service.init(); // to update project status from services
+      }
+    });
+    $("button.updateprogress").prop("disabled", false);
     //sarf mutawaka3
-    numberofyesExp = ExpDeliverablesarray.filter((v) => (v.delivered === 'yes'));
+    numberofyesExp = ExpDeliverablesarray.filter((v) => v.delivered === "yes");
 
-    // var SF = Math.round(numberofyesExp.reduce((accum, item) => accum + ((item.ammount * AssignedBudget) / 100), 0)) || 0;
-    var SFpercent = Math.round(numberofyesExp.reduce((accum, item) => accum + (item.weight * 100) / AssignedBudget, 0)) || 0;
-
-    // $('.project-budget-ctx .card-body > div:nth-child(2) > div:nth-child(2) > div:nth-child(2)').text(SF.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' SAR');
-
+    var SFpercent =
+      Math.round(
+        numberofyesExp.reduce(
+          (accum, item) => accum + (item.weight * 100) / AssignedBudget,
+          0
+        )
+      ) || 0;
 
     if (SFpercent <= 50) {
-      var degreeSF = (SFpercent * 360) / 50
-      $('.project-budget-ctx .card-body > div:nth-child(2) > div:nth-child(1) > span.progress-circle-right > span').attr('style', 'transform:rotate(' + degreeSF + 'deg);');
+      var degreeSF = (SFpercent * 360) / 50;
+      $(
+        ".project-budget-ctx .card-body > div:nth-child(2) > div:nth-child(1) > span.progress-circle-right > span"
+      ).attr("style", "transform:rotate(" + degreeSF + "deg);");
     } else {
-      $('.project-budget-ctx .card-body > div:nth-child(2) > div:nth-child(1) > span.progress-circle-right > span').attr('style', 'transform:rotate(360deg);');
-      var degreeSF = ((SFpercent - 50) * 360) / 50
-      $('.project-budget-ctx .card-body > div:nth-child(2) > div:nth-child(1) > span.progress-circle-left > span').attr('style', 'transform:rotate(' + degreeSF + 'deg);');
+      $(
+        ".project-budget-ctx .card-body > div:nth-child(2) > div:nth-child(1) > span.progress-circle-right > span"
+      ).attr("style", "transform:rotate(360deg);");
+      var degreeSF = ((SFpercent - 50) * 360) / 50;
+      $(
+        ".project-budget-ctx .card-body > div:nth-child(2) > div:nth-child(1) > span.progress-circle-left > span"
+      ).attr("style", "transform:rotate(" + degreeSF + "deg);");
     }
     //taklifa
-
-    var taklifa = Math.round(numberofyesAll.reduce((accum, item) => accum + item.ammount, 0)) || 0;
+    var taklifa =
+      Math.round(
+        numberofyesAll.reduce((accum, item) => accum + item.ammount, 0)
+      ) || 0;
     var mizaniyamutabakia = AssignedBudget - taklifa;
-    var nisbatmutabakia = Math.round((mizaniyamutabakia * 100) / AssignedBudget)
-
-
+    var nisbatmutabakia = Math.round(
+      (mizaniyamutabakia * 100) / AssignedBudget
+    );
     if (nisbatmutabakia <= 50) {
-      var degreemutabakia = (nisbatmutabakia * 360) / 50
-      $('.project-budget-ctx .card-body > div:nth-child(3) > div:nth-child(1) > span.progress-circle-right > span').attr('style', 'transform:rotate(' + degreemutabakia + 'deg);');
+      var degreemutabakia = (nisbatmutabakia * 360) / 50;
+      $(
+        ".project-budget-ctx .card-body > div:nth-child(3) > div:nth-child(1) > span.progress-circle-right > span"
+      ).attr("style", "transform:rotate(" + degreemutabakia + "deg);");
     } else {
-      $('.project-budget-ctx .card-body > div:nth-child(3) > div:nth-child(1) > span.progress-circle-right > span').attr('style', 'transform:rotate(360deg);');
-      var degreemutabakia = ((nisbatmutabakia - 360) * 360) / 50
-      $('.project-budget-ctx .card-body > div:nth-child(4) > div:nth-child(1) > span.progress-circle-left > span').attr('style', 'transform:rotate(' + degreemutabakia + 'deg);');
+      $(
+        ".project-budget-ctx .card-body > div:nth-child(3) > div:nth-child(1) > span.progress-circle-right > span"
+      ).attr("style", "transform:rotate(360deg);");
+      var degreemutabakia = ((nisbatmutabakia - 360) * 360) / 50;
+      $(
+        ".project-budget-ctx .card-body > div:nth-child(4) > div:nth-child(1) > span.progress-circle-left > span"
+      ).attr("style", "transform:rotate(" + degreemutabakia + "deg);");
     }
 
     var NoD, NoDY, NoDarray, statustxt, statusclass;
     for (var i = 0; i < UProjects.length; i++) {
-      dforthisproj = Deliverablesarray.filter((v) => (v.pcode === UProjects[i]));
-      toatlamount = dforthisproj.reduce((accum, item) => accum + item.ammount, 0);
-      numberofyes = dforthisproj.filter((v) => (v.delivered === 'yes'));
-      POD = (Math.round(numberofyes.reduce((accum, item) => accum + (item.ammount * 100) / toatlamount, 0))) || 0;
+      dforthisproj = Deliverablesarray.filter((v) => v.pcode === UProjects[i]);
+      toatlamount = dforthisproj.reduce(
+        (accum, item) => accum + item.ammount,
+        0
+      );
+      numberofyes = dforthisproj.filter((v) => v.delivered === "yes");
+      POD =
+        Math.round(
+          numberofyes.reduce(
+            (accum, item) => accum + (item.ammount * 100) / toatlamount,
+            0
+          )
+        ) || 0;
 
       Progressarray.push({
         pcode: UProjects[i],
-        progress: POD
+        progress: POD,
       });
 
-      $('.inner-data3 .inner-val[data-prname="' + UProjects[i] + '"]').text(POD + '%');
+      $('.inner-data3 .inner-val[data-prname="' + UProjects[i] + '"]').text(
+        POD + "%"
+      );
     }
     //Time Line
-    var sdlyear = '',
+    var sdlyear = "",
       iscuryear = true;
     var yearExcist = false;
-    Deliverablesarray.forEach(function (dl, i) { //appending years
-      var dataYear = isArabic ? dl.date.split('-')[0] : dl.date.split('-')[2];
+    var delivrablesYears = [];
+    $(".fromDeliverables select#inputYear").html("");
+
+    $(".fromDeliverables select#inputYear").append(
+      `<option data-trans-year class="Resources" value=""></option>`
+    );
+
+    Deliverablesarray.forEach(function (dl, i) {
+      //appending years
+      var dataYear = isArabic ? dl.date.split("-")[0] : dl.date.split("-")[2];
+
+      delivrablesYears.push(dataYear);
       if (sdlyear != dataYear) {
-        if (dataYear == new Date().getFullYear())
+        if (dataYear == new Date().getFullYear()) {
           iscuryear = true;
-        else
+        } else {
           iscuryear = false;
-        $('.fromDeliverables select#inputYear').append(new Option(dataYear, dataYear, iscuryear, iscuryear));
-        yearExcist = true
+        }
+
+        $(".fromDeliverables select#inputYear").append(
+          new Option(dataYear, dataYear, iscuryear, iscuryear)
+        );
+        yearExcist = true;
       }
       sdlyear = dataYear;
     });
 
-    Deliverables_Info_Request.g.dltimeline(new Date().getFullYear());
-    $('.fromDeliverables select#inputYear').on('change', function () {
-      $(`#month-${lstMonthCLicked}`).css('background', '#F0F3F8')
-      $('.tlContainer').html('') // to reset the data when change on year
-      Deliverables_Info_Request.g.dltimeline($(this).val())
+    // Deliverables_Info_Request.g.dltimeline(new Date().getFullYear());
+
+    $(".fromDeliverables select#inputYear").on("change", function () {
+      $(`#month-${lstMonthCLicked}`).css("background", "#F0F3F8");
+      $(".tlContainer").html(""); // to reset the data when change on year
+      Deliverables_Info_Request.g.dltimeline($(this).val());
     });
-    if (!yearExcist) { // to append no data in drop down when there is no data
-      $('.fromDeliverables select#inputYear').append(new Option(No_Data, No_Data, iscuryear, iscuryear));
+    if (!yearExcist) {
+      // to append no data in drop down when there is no data
+      $(".fromDeliverables select#inputYear").append(
+        new Option(No_Data, No_Data, iscuryear, iscuryear)
+      );
     }
     // StagesConfiguration_Info_Request.init();
     changeResources();
-    if (All_numberofyesAll.length == Deliverablesarray.length)
-      isDelDone = '';
+    if (All_numberofyesAll.length == Deliverablesarray.length) isDelDone = "";
   },
   onError: function (sender, args) {
-    console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
   },
   // Global variables
   g: {
     dltimeline: function (year) {
-      $('.fromDeliverables .milestone-item').hide();
-      $('.fromDeliverables .milestone-item[data-year=' + year + ']').show();
-      $('.fromDeliverables .time-box').remove();
-      var dlyear = '',
-        dlmonth = '',
-        curdl = $('body'),
-        dlhtml = '',
-        datetoshow = '';
+      $(".fromDeliverables .milestone-item").hide();
+      $(".fromDeliverables .milestone-item[data-year=" + year + "]").show();
+      $(".fromDeliverables .time-box").remove();
+      var dlyear = "",
+        dlmonth = "",
+        curdl = $("body"),
+        dlhtml = "",
+        datetoshow = "";
 
       // click new timeline
-      var monthsArr = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'] // handle the click on all months
-      var istimelineData = false // check if there is a data in time line or no
+      var monthsArr = [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+      ]; // handle the click on all months
 
-      $('.tlContainer').html('') // container of data
+      var istimelineData = false; // check if there is a data in time line or no
 
+      $(".tlContainer").html(""); // container of data
+      // $(`.fromDeliverables .month-list .monthBadge`).html("")
 
-
-      monthsArr.forEach(el => {
+      monthsArr.forEach((el) => {
         $(`.fromDeliverables .month-list-ctx #month-${el}`).click(function () {
-          istimelineData = false
-          $(`.fromDeliverables .month-list-ctx #month-${lstMonthCLicked}`).css('background', '#F0F3F8') // return the previous background color to the origin color
-          var dateTitle = '', nameTitle = '';
-          if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
-            dateTitle = 'التاريخ'
-            nameTitle = 'الاسم'
+          istimelineData = false;
+          $(`.fromDeliverables .month-list-ctx #month-${lstMonthCLicked}`).css(
+            "background",
+            "#F0F3F8"
+          ); // return the previous background color to the origin color
+          var dateTitle = "",
+            nameTitle = "";
+          if (
+            localStorage.getItem("lng") == null ||
+            localStorage.getItem("lng") == "ar"
+          ) {
+            dateTitle = "التاريخ";
+            nameTitle = "الاسم";
           } else {
-            dateTitle = 'Date'
-            nameTitle = 'Name'
+            dateTitle = "Date";
+            nameTitle = "Name";
           }
-          dlhtml = '<table style="width:100%">'
-          dlhtml += '<tr class="timeLineTableHeader"><th style="border:1px solid #ddd">' + dateTitle + '</th><th style="border:1px solid #ddd">' + nameTitle + '</th></tr>'
-          $('.tlContainer').html('')
-          $(`.fromDeliverables .month-list-ctx #month-${el}`).css('background', '#D0D0D0') // change background color when click on month
-          lstMonthCLicked = el
+          dlhtml = '<table style="width:100%">';
+          dlhtml +=
+            '<tr class="timeLineTableHeader"><th style="border:1px solid #ddd">' +
+            dateTitle +
+            '</th><th style="border:1px solid #ddd">' +
+            nameTitle +
+            "</th></tr>";
+          $(".tlContainer").html("");
+          $(`.fromDeliverables .month-list-ctx #month-${el}`).css(
+            "background",
+            "#D0D0D0"
+          ); // change background color when click on month
+          lstMonthCLicked = el;
           Deliverablesarray.forEach(function (dl, i) {
             // datetoshow = dl.date.split('/'), datetoshow = datetoshow[0] + '/' + datetoshow[1];
-            var dataYear = isArabic ? dl.date.split('-')[0] : dl.date.split('-')[2];
-            var dataDay = isArabic ? dl.date.split('-')[2] : dl.date.split('-')[0];
-            datetoshow = dl.date.split('-'),
-              isArabic ? datetoshow = datetoshow[1] + '-' + dataDay : dataDay + '-' + datetoshow[1];
+            var dataYear = isArabic
+              ? dl.date.split("-")[0]
+              : dl.date.split("-")[2];
+            var dataDay = isArabic
+              ? dl.date.split("-")[2]
+              : dl.date.split("-")[0];
+            (datetoshow = dl.date.split("-")),
+              isArabic
+                ? (datetoshow = datetoshow[1] + "-" + dataDay)
+                : dataDay + "-" + datetoshow[1];
             dlyear = dataYear;
 
             if (dlyear == year) {
-              if (dl.date.split('-')[1] == 10) { // to handle the data on october month
-                if ((el == dl.date.split('-')[1])) {
-                  istimelineData = true
-                  dlhtml += '<tr><td class="p-date" style="border:1px solid #ddd">' + datetoshow + '</td>' +
-                    '<td class="p-title" style="border:1px solid #ddd">' + dl.name + '</td></tr>';
+              if (dl.date.split("-")[1] == 10) {
+                // to handle the data on october month
+                if (el == dl.date.split("-")[1]) {
+                  istimelineData = true;
+                  dlhtml +=
+                    '<tr><td class="p-date" style="border:1px solid #ddd">' +
+                    datetoshow +
+                    "</td>" +
+                    '<td class="p-title" style="border:1px solid #ddd">' +
+                    dl.name +
+                    "</td></tr>";
                 }
               } else {
-                if ((el == dl.date.split('-')[1].replace('0', ''))) {
-                  istimelineData = true
-                  dlhtml += '<tr><td class="p-date" style="border:1px solid #ddd">' + datetoshow + '</td>' +
-                    '<td class="p-title" style="border:1px solid #ddd">' + dl.name + '</td></tr>';
+                if (el == dl.date.split("-")[1].replace("0", "")) {
+                  istimelineData = true;
+                  dlhtml +=
+                    '<tr><td class="p-date" style="border:1px solid #ddd">' +
+                    datetoshow +
+                    "</td>" +
+                    '<td class="p-title" style="border:1px solid #ddd">' +
+                    dl.name +
+                    "</td></tr>";
                 }
               }
             }
             if (i == Deliverablesarray.length - 1) {
-              dlhtml += '</table>'
-              $('.tlContainer').append(dlhtml)
+              dlhtml += "</table>";
+              $(".tlContainer").append(dlhtml);
               if (!istimelineData) {
-                $('.timeLineTableHeader').css('display', 'none') // hide the table if there is no data
+                $(".timeLineTableHeader").css("display", "none"); // hide the table if there is no data
+                $(".fromDeliverables .tlContainer").html(
+                  `<p style="text-align:center">${No_Data}</p>`
+                );
               }
-              $('.fromDeliverables .time-box').hover(function () {
-                $('.fromDeliverables .delivery-timeline').css('overflow', 'initial');
-              }, function () {
-                $('.fromDeliverables .delivery-timeline').css('overflow', 'hidden');
-              });
+              $(".fromDeliverables .time-box").hover(
+                function () {
+                  $(".fromDeliverables .delivery-timeline").css(
+                    "overflow",
+                    "initial"
+                  );
+                },
+                function () {
+                  $(".fromDeliverables .delivery-timeline").css(
+                    "overflow",
+                    "hidden"
+                  );
+                }
+              );
             }
           });
         });
-      })
-      //
+      });
 
-      $(`.fromDeliverables .month-list-ctx #month-1`).click()
-      // Deliverablesarray.forEach(function (dl, i) {
+      $(`.fromDeliverables .month-list-ctx #month-1`).click();
+      $(`.fromDeliverables .month-list .monthBadge`).remove(); // to remove star on the month on change to reset
 
-      //   var dataYear = isArabic ? dl.date.split('-')[0] : dl.date.split('-')[2];
-      //   var dataDay = isArabic ? dl.date.split('-')[2] : dl.date.split('-')[0];
-      //   datetoshow = dl.date.split('-'),
-      //     isArabic ? datetoshow = datetoshow[1] + '-' + dataDay : dataDay + '-' + datetoshow[1];
-      //   dlyear = dataYear;
+      ///
 
-      //   if (dlyear == year) {
-      //     if (dlmonth != dl.date.split('-')[1]) {
-      //       if (dlhtml)
-      //         curdl.append(dlhtml);
-      //       dlhtml = '</div><div class="time-box">' +
-      //         '<div class="p-date"><span data-trans-committeddate class="Resources"></span> ' + datetoshow + '</div>' +
-      //         '<div class="p-title">' + dl.name + '</div>';
-      //     } else {
-      //       dlhtml += '<div class="p-date">' + datetoshow + '</div>' +
-      //         '<div class="p-title">' + dl.name + '</div>';
-      //     }
-      //     // console.log(dlhtml);
-      //     dlmonth = dl.date.split('-')[1];
+      Deliverablesarray.forEach(function (dl, i) {
+        var delivYear = isArabic
+          ? dl.date.split("-")[0]
+          : dl.date.split("-")[2];
 
-      //     curdl = $('.fromDeliverables div#month-' + dl.date.split('-')[1].replace('0', ''));
-      //   }
-      //   if (i == Deliverablesarray.length - 1) {
-      //     dlhtml += '</div>';
-      //     curdl.append(dlhtml);
-      //     $('.fromDeliverables .time-box').hover(function () {
-      //       $('.fromDeliverables .delivery-timeline').css('overflow', 'initial');
-      //     }, function () {
-      //       $('.fromDeliverables .delivery-timeline').css('overflow', 'hidden');
-      //     });
-      //   }
-      // });
-    }
-  }
+        if (delivYear == year) {
+          var targetMonth = "";
+          if (dl.date.split("-")[1] == 10) {
+            targetMonth = dl.date.split("-")[1];
+          } else {
+            targetMonth = dl.date.split("-")[1].replace("0", "");
+          }
+
+          if (
+            $(
+              `.fromDeliverables .month-list #month-${targetMonth} > .monthBadge`
+            ).length == 0
+          ) {
+            // to add star on the month that have value
+            $(`.fromDeliverables .month-list #month-${targetMonth}`).prepend(
+              `<span class="monthBadge">*</span>`
+            );
+          }
+        }
+      });
+    },
+  },
 };
 
 //get stages and project types from stage configuration list
@@ -1587,9 +1738,13 @@ var Milestones_Info_Request = {
   // The main Initialization function
   init: function () {
     var clientContext = new SP.ClientContext.get_current();
-    var oList = clientContext.get_web().get_lists().getByTitle('Milestones');
+    var oList = clientContext.get_web().get_lists().getByTitle("Milestones");
     var camlQuery = new SP.CamlQuery();
-    camlQuery.set_viewXml('<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="ProjectCode" /><Value Type="Text">' + Project_Home_Info_Request.g.PCODE + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'CommittedDate\' Ascending=\'False\' /></OrderBy></Query></View>');
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">" +
+      Project_Home_Info_Request.g.PCODE +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='CommittedDate' Ascending='False' /></OrderBy></Query></View>"
+    );
     Milestones_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Milestones_Info_Request.g.collListItem);
     clientContext.executeQueryAsync(
@@ -1597,57 +1752,327 @@ var Milestones_Info_Request = {
       Function.createDelegate(this, Milestones_Info_Request.onError)
     );
   },
-  onSuccess: function (sender, args) {
+  onSuccess: async function (sender, args) {
     var collListItem = Milestones_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var itemhtml = [],
-      itemID, itemname, itemstatus, itemdate, itemdate2, itemuser, isactive;
+      itemID,
+      itemname,
+      itemtitle,
+      itemPlannedClosureDate,
+      itemstatus,
+      itemdate,
+      itemdate2,
+      itemuser,
+      allMilestonesArr = [],
+      isactive;
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       itemID = oListItem.get_id();
-      itemname = oListItem.get_item('Name') || No_Data;
-      itemdate = Project_Home_Info_Request.g.dateConvert(oListItem.get_item('CommittedDate'));
-      itemdate2 = new Date(Project_Home_Info_Request.g.dateConvert2(oListItem.get_item('CommittedDate')));
-      itemdate2 = Math.floor((itemdate2 - new Date(itemdate2.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)); //number of day
+      itemname = oListItem.get_item("Name") || No_Data;
+      itemtitle = oListItem.get_item("Title") || '';
+      itemPlannedClosureDate = Project_Home_Info_Request.g.dateConvert2(oListItem.get_item("PlannedDate")) || ''
+      itemPlannedClosureDateByLanguage = Project_Home_Info_Request.g.dateConvert(oListItem.get_item("PlannedDate")) || ''
+      itemdate = Project_Home_Info_Request.g.dateConvert(
+        oListItem.get_item("CommittedDate")
+      );
+      itemdate2 = new Date(
+        Project_Home_Info_Request.g.dateConvert2(
+          oListItem.get_item("CommittedDate")
+        )
+      );
+      itemdate2 = Math.floor(
+        (itemdate2 - new Date(itemdate2.getFullYear(), 0, 0)) /
+        (1000 * 60 * 60 * 24)
+      ); //number of day
       itemdate2 = (itemdate2 * 100) / 365;
-      isactive = itemdate.split('/')[2] == new Date().getFullYear() ? '' : 'style="display:none"';
-      itemhtml.push('<div class="milestone-item mb-3" ' + isactive + ' data-year="' + itemdate.split('-')[2] + '">' +
+      var dataYear = isArabic ? itemdate.split("-")[0] : itemdate.split("-")[2];
+
+      // to scedual section in project home
+      MilestoneArr.push({
+        name: itemname,
+        delivered: oListItem.get_item("Delivered"),
+        // ammount: oListItem.get_item("Weight"),
+        date: itemPlannedClosureDateByLanguage,
+        Code: itemtitle,
+      });
+
+
+
+      // Milestones_Info_Request.g.dltimeline(new Date().getFullYear());
+      $(".fromMilestones select#inputYear").on("change", function () {
+        $(`#month-${milestonelstMonthClicked}`).css("background", "#F0F3F8");
+        $(".tlContainer").html(""); // to reset the data when change on year
+        Milestones_Info_Request.g.dltimeline($(this).val());
+      });
+
+
+      // to validation in milestone 1 month
+
+      if (itemPlannedClosureDate) {
+        allMilestonesArr.push({
+          id: itemID,
+          name: itemname,
+          title: itemtitle,
+          date: itemPlannedClosureDate
+        })
+      }
+
+      isactive =
+        dataYear == new Date().getFullYear() ? "" : 'style="display:none"';
+      itemhtml.push(
+        '<div class="milestone-item mb-3" ' +
+        isactive +
+        ' data-year="' +
+        dataYear +
+        '">' +
         '<div class="row mx-0">' +
-
-        '<div class="milestone-label col-auto fnt-13 w-3 mb-1" style="width:130px"><span class="milestone-label">' + itemname + '</span></div>' +
-
+        '<div class="milestone-label col-auto fnt-13 w-3 mb-1" style="width:130px"><span class="milestone-label">' +
+        itemname +
+        "</span></div>" +
         '<div class="milestone-duration col-6 col-xl-auto fnt-13 black order-xl-last mb-1">' +
-        '<span class="m-start-date">' + itemdate + '</span>' +
+        '<span class="m-start-date">' +
+        itemdate +
+        "</span>" +
         '<!--<i class="fa m-arrow"></i>' +
         '<span class="m-end-date">15/7/2020</span>-->' +
-        '</div>' +
-
+        "</div>" +
         '<div class="col-12 col-xl-5 state-bar align-items-center order-last order-xl-1 mb-1">' +
         '<div class="position-relative d-flex flex-row-reverse mt-1">' +
         '<div class="state-progress-line bg-primary">' +
-        '</div>' +
-        '<div class="state-progress-bar bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="' + itemdate + '" style="width:50%;right:' + itemdate2 + '%!important;">' +
-        '</div>' +
-        '</div>' +
-        '</div>' +
+        "</div>" +
+        '<div class="state-progress-bar bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="' +
+        itemdate +
+        '" style="width:50%;right:' +
+        itemdate2 +
+        '%!important;">' +
+        "</div>" +
+        "</div>" +
+        "</div>" +
+        "</div>" +
+        "</div>"
+      );
 
-        '</div>' +
-        '</div>');
+
+      // work on validation every month should have a milestone
+
+
+      //
+
     }
+
+
     if (itemhtml.length == 0) {
-      itemhtml.push('<h3>' + No_Data + '</h3>')
+      itemhtml.push("<h3>" + No_Data + "</h3>");
     }
     // $('.project-milestone').html(itemhtml.join(''));
+
+
+    //work on milestone schedual section
+    var sdlyear = "",
+      iscuryear = true;
+    var yearExcist = false;
+
+    $(".fromMilestones select#inputYear").html("");
+
+    $(".fromMilestones select#inputYear").append(
+      `<option data-trans-year class="Resources" value=""></option>`
+    );
+
+    MilestoneArr.forEach(function (dl, i) {
+      //appending years
+      // var dataYear = dl.date.split("-")[0];
+      var dataYear = isArabic ? dl.date.split("-")[0] : dl.date.split("-")[2];
+
+
+      if (sdlyear != dataYear) {
+        if (dataYear == new Date().getFullYear()) iscuryear = true;
+        else iscuryear = false;
+        $(".fromMilestones select#inputYear").append(
+          new Option(dataYear, dataYear, iscuryear, iscuryear)
+        );
+        yearExcist = true;
+      }
+      sdlyear = dataYear;
+    });
+
+
+    if (!yearExcist) {
+      // to append no data in drop down when there is no data
+      $(".fromMilestones select#inputYear").append(
+        new Option(No_Data, No_Data, iscuryear, iscuryear)
+      );
+    }
+
     $(function () {
-      $('[data-toggle="tooltip"]').tooltip()
+      $('[data-toggle="tooltip"]').tooltip();
     });
     changeResources();
   },
   onError: function (sender, args) {
-    console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
   },
   // Global variables
-  g: {}
+  g: {
+
+    dltimeline: function (year) {
+
+      $(".fromMilestones .milestone-item").hide();
+      $(".fromMilestones .milestone-item[data-year=" + year + "]").show();
+      $(".fromMilestones .time-box").remove();
+      var dlyear = "",
+        dlmonth = "",
+        curdl = $("body"),
+        dlhtml = "",
+        datetoshow = "";
+
+      // click new timeline
+      var monthsArr = [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+      ]; // handle the click on all months
+      var istimelineData = false; // check if there is a data in time line or no
+
+      $(".tlContainer").html(""); // container of data
+
+      monthsArr.forEach((el) => {
+        $(`.fromMilestones .month-list-ctx #month-${el}`).click(function () {
+          istimelineData = false;
+          $(`.fromMilestones .month-list-ctx #month-${milestonelstMonthClicked}`).css(
+            "background",
+            "#F0F3F8"
+          ); // return the previous background color to the origin color
+          var dateTitle = "",
+            nameTitle = "";
+          if (
+            localStorage.getItem("lng") == null ||
+            localStorage.getItem("lng") == "ar"
+          ) {
+            dateTitle = "التاريخ";
+            nameTitle = "الاسم";
+          } else {
+            dateTitle = "Date";
+            nameTitle = "Name";
+          }
+          dlhtml = '<table style="width:100%">';
+          dlhtml +=
+            '<tr class="timeLineTableHeader"><th style="border:1px solid #ddd">' +
+            dateTitle +
+            '</th><th style="border:1px solid #ddd">' +
+            nameTitle +
+            "</th></tr>";
+          $(".tlContainer").html("");
+          $(`.fromMilestones .month-list-ctx #month-${el}`).css(
+            "background",
+            "#D0D0D0"
+          ); // change background color when click on month
+          milestonelstMonthClicked = el;
+          MilestoneArr.forEach(function (dl, i) {
+
+            var dataYear = isArabic
+              ? dl.date.split("-")[0]
+              : dl.date.split("-")[2];
+            var dataDay = isArabic
+              ? dl.date.split("-")[2]
+              : dl.date.split("-")[0];
+            (datetoshow = dl.date.split("-")),
+              isArabic
+                ? (datetoshow = datetoshow[1] + "-" + dataDay)
+                : dataDay + "-" + datetoshow[1];
+            dlyear = dataYear;
+
+            if (dlyear == year) {
+              if (dl.date.split("-")[1] == 10) {
+                // to handle the data on october month
+                if (el == dl.date.split("-")[1]) {
+                  istimelineData = true;
+                  dlhtml +=
+                    '<tr><td class="p-date" style="border:1px solid #ddd">' +
+                    datetoshow +
+                    "</td>" +
+                    '<td class="p-title" style="border:1px solid #ddd">' +
+                    dl.name +
+                    "</td></tr>";
+                }
+              } else {
+                if (el == dl.date.split("-")[1].replace("0", "")) {
+                  istimelineData = true;
+                  dlhtml +=
+                    '<tr><td class="p-date" style="border:1px solid #ddd">' +
+                    datetoshow +
+                    "</td>" +
+                    '<td class="p-title" style="border:1px solid #ddd">' +
+                    dl.name +
+                    "</td></tr>";
+                }
+              }
+            }
+            if (i == MilestoneArr.length - 1) {
+              dlhtml += "</table>";
+              $(".tlContainer").append(dlhtml);
+              if (!istimelineData) {
+                $(".timeLineTableHeader").css("display", "none"); // hide the table if there is no data
+                $(".fromMilestones .tlContainer").html(`<p style="text-align:center">${No_Data}</p>`)
+
+              }
+              $(".fromMilestones .time-box").hover(
+                function () {
+                  $(".fromMilestones .delivery-timeline").css(
+                    "overflow",
+                    "initial"
+                  );
+                },
+                function () {
+                  $(".fromMilestones .delivery-timeline").css(
+                    "overflow",
+                    "hidden"
+                  );
+                }
+              );
+            }
+          });
+        });
+      });
+      //
+
+      $(`.fromMilestones .month-list-ctx #month-1`).click();
+      $(`.fromMilestones .month-list .monthBadge`).remove()  // to remove star on the month on change to reset
+
+
+      MilestoneArr.forEach(function (dl, i) {
+        var milestoneYear = isArabic
+          ? dl.date.split("-")[0]
+          : dl.date.split("-")[2];
+
+        if (milestoneYear == year) {
+          var targetMonth = ""
+          if (dl.date.split("-")[1] == 10) {
+            targetMonth = dl.date.split("-")[1]
+          } else {
+            targetMonth = dl.date.split("-")[1].replace("0", "")
+          }
+
+          if ($(`.fromMilestones .month-list #month-${targetMonth} > .monthBadge`).length == 0) { // to add star on the month that have value
+            $(`.fromMilestones .month-list #month-${targetMonth}`).prepend(`<span class="monthBadge">*</span>`)
+          }
+        }
+      })
+
+    },
+
+  },
 };
 //tasks
 var Tasks_Info_Request = {
@@ -1720,20 +2145,15 @@ var Invoices_Info_Request = {
     TheCost = 0, Amount = 0, Deliverable = '', Invoices = 0;
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
-      //itemID = oListItem.get_id();
       Amount = oListItem.get_item('Amount');
       Deliverable = oListItem.get_item('Deliverable');
       Status = oListItem.get_item('Status');
-      // console.log(Deliverable);
-      //console.log(Amount+','+Deliverable);
-      console.log("track mult delivrable")
 
       //This can be done also by Caml query . we can passe all delivrables code there
       for (i = 0; i < Deliverablesarray.length; i++) {
         var myselections = Deliverable ? Deliverable.split(":::") : [] // add myselection to handle mult delivrable in invoices
 
         if (Deliverablesarray[i].Code == myselections[0] && Status == 'paid') {
-
           TheCost += Amount;
         }
       }
@@ -1742,7 +2162,6 @@ var Invoices_Info_Request = {
       for (i = 0; i < Deliverablesarray.length; i++) {
         if (Deliverablesarray[i].Code == Deliverable && Deliverablesarray[i].delivered == 'yes' && Status == 'paid') {
           Invoices += Amount;
-          // console.log(Amount + ',' + Deliverablesarray[i].Code + ',' + Deliverable);
         }
       }
     }
@@ -1768,142 +2187,7 @@ var Invoices_Info_Request = {
 };
 
 //
-var ProgressStatus_Data_Submit = {
-  init: function () {
-    $('button.updateprogress').removeClass('loader-action-success');
-    $('button.updateprogress').removeClass('loader-action-error');
-    $('button.updateprogress').addClass('loader-action');
-    var clientContext = new SP.ClientContext.get_current();
-    var oList = clientContext.get_web().get_lists().getByTitle(ListArray[0].projects);
-    ProgressStatus_Data_Submit.g.oListItem = oList.getItemById(USERPID); //declared inside object scope only
-    //
-    var now = new Date();
-    var day = ("0" + now.getDate()).slice(-2);
-    var month = ("0" + (now.getMonth() + 1)).slice(-2);
-    var today = now.getFullYear() + "-" + (month) + "-" + (day);
-    today = (!today) ? '' : [today.slice(5, 10), today.slice(0, 4)].join('/').replace('-', '/');
 
-
-    if (today) {
-      $('.ProgressDate').text(today);
-      ProgressStatus_Data_Submit.g.oListItem.set_item('ProgressLastModifiedDate', today);
-    }
-    ProgressStatus_Data_Submit.g.oListItem.set_item('ProgressLastUpdatedBy', SP.FieldUserValue.fromUser(UserN.LoginName));
-
-    // ProgressStatus_Data_Submit.g.oListItem.set_item('ProjectProgressStatus', projectprogress);
-
-    ProgressStatus_Data_Submit.g.oListItem.set_item('PlannedStartDate', PlannedStartDate);
-    ProgressStatus_Data_Submit.g.oListItem.set_item('PlannedFinishDate', PlannedFinishDate);
-
-
-    ProgressStatus_Data_Submit.g.oListItem.set_item('ScheduleProjectPercentageComplet0', ScheduleProjectPercentageComplete);
-
-
-    $('.myCompletionStatus').removeAttr('data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4 data-trans-stat5')
-
-    var PSDate = Project_Home_Info_Request.g.dateConvert2(PlannedStartDate)
-    var PEDate = Project_Home_Info_Request.g.dateConvert2(PlannedFinishDate)
-    var schedualPercentage = ScheduleProjectPercentageComplete ? ScheduleProjectPercentageComplete : 0
-
-
-    ////////////////////// status depends on base line start and finish from form
-
-    var timeBaseLineStartDate = 0
-    var timeBaseLineFinishDate = 0
-    var plannedPercentage = 0
-    var timeCurrentDate = ''
-
-
-    if (getBaseLineStart) {
-      timeBaseLineStartDate = new Date(getBaseLineStart);
-      timeBaseLineStartDate = timeBaseLineStartDate.getTime();
-    }
-    if (getBaseLineFinish) {
-      timeBaseLineFinishDate = new Date(getBaseLineFinish);
-      timeBaseLineFinishDate = timeBaseLineFinishDate.getTime();
-    }
-
-    timeCurrentDate = now.getTime()
-
-    var differenceTimeFromToday = timeCurrentDate - timeBaseLineStartDate // current date - base line start date
-    var differenceDaysFromToday = Math.floor((differenceTimeFromToday) / (24 * 3600 * 1000));
-
-    var diffTimeBaseLine = Math.abs(timeBaseLineFinishDate - timeBaseLineStartDate);
-    var diffDaysBaseline = Math.ceil(diffTimeBaseLine / (1000 * 60 * 60 * 24));
-
-
-
-    if (diffDaysBaseline > 0) {
-      plannedPercentage = differenceDaysFromToday / diffDaysBaseline
-    }
-    plannedPercentage = plannedPercentage * 100
-
-
-    if (plannedPercentage > 100) {
-      plannedPercentage = 100
-    }
-    if (differenceDaysFromToday < 0) {
-      plannedPercentage = 0
-    }
-
-    plannedPercentage = Number(plannedPercentage.toFixed(2))
-
-
-    ProgressStatus_Data_Submit.g.oListItem.set_item('ScheduleBLPercentageComplete', plannedPercentage); // save the percentage
-
-    $('.project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black').text(plannedPercentage + '%');
-
-
-    var differencePercentage = plannedPercentage - schedualPercentage
-
-
-    if (!diffDaysBaseline) {
-      projectprogress = 'stat5'
-    } else {
-      if (differencePercentage <= 5) {
-        projectprogress = 'stat3'
-      } else if (differencePercentage > 5 && differencePercentage <= 15) {
-        projectprogress = 'stat2';
-      } else if (differencePercentage > 15) {
-        projectprogress = 'stat1'
-      }
-    }
-
-    $('.myCompletionStatus').removeClass('statuscolor' + listProjectProgress);
-    $('.handlecircle').removeClass('circlecolor' + listProjectProgress)
-
-    ProgressStatus_Data_Submit.g.oListItem.set_item('ProjectProgressStatus', projectprogress);
-    $('.myCompletionStatus').attr('data-trans-' + projectprogress, '');
-
-    $('.myCompletionStatus').addClass('statuscolor' + projectprogress);
-    $('.handlecircle').addClass('circlecolor' + projectprogress)
-
-
-
-
-    Project_Home_Info_Request.g.updatProject(PSDate, PEDate, schedualPercentage)
-
-    changeResources();
-
-    ProgressStatus_Data_Submit.g.oListItem.update();
-    clientContext.load(ProgressStatus_Data_Submit.g.oListItem);
-    clientContext.executeQueryAsync(
-      Function.createDelegate(this, function () {
-
-        $('button.updateprogress').removeClass('loader-action');
-        $('button.updateprogress').addClass('loader-action-success');
-        GetProject_Tasks.preinit();
-
-      }),
-      Function.createDelegate(this, function (sender, args) {
-        $('button.updateprogress').removeClass('loader-action');
-        $('button.updateprogress').addClass('loader-action-error');
-        console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
-      })
-    );
-  },
-  g: {}
-};
 // Get the projects collection.
 EPMMilstone_Array = [];
 EPMSummaryTasks_Array = [];
@@ -2286,57 +2570,6 @@ var EPM_Project_Data_Request = {
       }
     }
 
-
-
-    // projectlength = Math.round(PlannedFinishDate - PlannedStartDate) / (1000 * 60 * 60 * 24);
-    // //to calculate months only
-
-    // if (Math.trunc((projectlength / 30)) > 0) {
-    //   months = Math.trunc((projectlength) / 30);
-    //   duration += ' ';
-    //   if (months > 1)
-    //     duration += isArabic ? (months + ' ' + 'شهر') : (months + ' Months ');
-    //   else
-    //     duration += isArabic ? (months + ' ' + 'شهر') : (months + ' Month ');
-
-    //   duration += ' ';
-    // } else {
-    //   months = 0;
-    // }
-
-    /////////////////////////////////////////////
-    //to calculate years and months and days
-    // if (Math.trunc(projectlength / 365) > 0) {
-    //   years = Math.trunc(projectlength / 365);
-    //   if (years > 1)
-    //     duration = isArabic ? years + 'سنة' : years + ' Years ';
-    //   else {
-    //     duration = isArabic ? years + 'سنة' : years + ' Year ';
-    //   }
-    // } else {
-    //   years = 0;
-    // }
-    // if (Math.trunc((projectlength - (years * 365) / 30)) > 0) {
-    //   months = Math.trunc((projectlength - (years * 365)) / 30);
-    //   duration += ' ';
-    //   if (months > 1)
-    //     duration += isArabic ? (months + 'شهر') : (months + ' Months ');
-    //   else
-    //     duration += isArabic ? (months + 'شهر') : (months + ' Month ');
-
-    //   duration += ' ';
-    // } else {
-    //   months = 0;
-    // }
-    // if (Math.trunc(projectlength - ((years * 365) + (months * 30))) > 0) {
-    //   days = Math.trunc(projectlength - ((years * 365) + (months * 30)));
-    //   if (days > 1)
-    //     duration += isArabic ? days + 'يوم' : days + ' Days ';
-    //   else
-    //     duration += isArabic ? days + 'يوم' : days + ' Day ';
-    // }
-    // $('.project-delivery-info .d-flex:nth-child(1) > span:nth-child(2)').text(duration); assign the duration from schedual
-
     EPM_Project_Summery_Task.preinit()
 
   },
@@ -2376,44 +2609,14 @@ var EPM_Project_Summery_Task = {
   },
   onSuccess: function (sender, args) {
 
-    // console.log("EPM_Project_Summery_Task")
 
-    // getBaseLineStart = oProjectsItem.get_projectSummaryTask().get_baselineStart()
-    // getBaseLineDuration = oProjectsItem.get_projectSummaryTask().get_baselineDuration()
-
-    // var timeBaseLineStartDate = 0
-    // var plannedPercentage = 0
-    // var now = new Date();
-
-    // if (getBaseLineDuration) {
-    //   getBaseLineDuration = Number(getBaseLineDuration.split("d").join(""))
-    // }
-
-    // if (getBaseLineStart) {
-    //   timeBaseLineStartDate = getBaseLineStart.getTime()
-    // }
-
-    // var timeCurrentDate = now.getTime()
-
-    // var differenceTime = timeCurrentDate - timeBaseLineStartDate
-
-    // var totalDays = Math.floor((differenceTime) / (24 * 3600 * 1000));
-
-
-    // if (getBaseLineDuration) {
-    //   plannedPercentage = totalDays / getBaseLineDuration
-
-    //   plannedPercentage = Number(plannedPercentage.toFixed(2))
-    // }
-    // $('.project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black').text(plannedPercentage + '%');
-
-    // console.log(getBaseLineDuration, "getBaseLineDuration")
-    // console.log(plannedPercentage, "plannedPercentage")
 
     // avoid version conflict when project wf is render
     var isWfPage = window.location.href.toLowerCase().indexOf('&wfs') > -1
     if (!isWfPage) {
-      ProgressStatus_Data_Submit.init(); // update the project auto when open the page // should return after budur testing project wf
+      Update_ProjectStatus_Service.init(); // to update project status from services
+      GetProject_Tasks.preinit();
+
     }
 
   },
@@ -2425,9 +2628,10 @@ var Update_ProjectStatus_Service = {
   init: function () {
 
     $.ajax({
-      type: 'PUT',
-      url: `https://spm-api.netways1.com/api/project/updateprojectstatusbydeliverables/${Project_Home_Info_Request.g.PCODE}`,
+      type: 'GET',
+      url: `https://hrsd-api.netways1.com/api/job/updateallprojectstatus/${Project_Home_Info_Request.g.PCODE}`,
       success: function (data) {
+        console.log("INSIDE SUCCESS Update_ProjectStatus_Service")
         Get_ProjectStatus_Info.init()
       },
       error: function (data) {
@@ -2464,34 +2668,77 @@ var Get_ProjectStatus_Info = {
   onSuccess: function (sender, args) {
     var collListItem = Get_ProjectStatus_Info.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-    var itemID, ActualImplementationDeliverable, PlannedImplementationDeliverable, projectStatus;
+    var itemID, ActualImplementationDeliverable, PlannedImplementationDeliverable, ProgressStatusDeliverable, ActualImplementationMilestone, PlannedImplementationMilestone, ProgressStatusMilestone, ActualImplementationSchedule, PlannedImplementationSchedule, ProgressStatusSchedule;
     while (listItemEnum.moveNext()) {
 
       var oListItem = listItemEnum.get_current();
       itemID = oListItem.get_id();
-      // ActualImplementationDeliverable = oListItem.get_item("ActualImplementationDeliverable") || 0;
-      // PlannedImplementationDeliverable = oListItem.get_item("PlannedImplementationDeliverable") || 0
-      // projectStatus = oListItem.get_item("ProjectProgressStatus") || No_Data;
+      ActualImplementationDeliverable = oListItem.get_item("ActualImplementationDeliverable") || 0;
+      PlannedImplementationDeliverable = oListItem.get_item("PlannedImplementationDeliverable") || 0
+      ProgressStatusDeliverable = oListItem.get_item("ProgressStatusDeliverable") || No_Data;
+      ActualImplementationMilestone = oListItem.get_item("ActualImplementationMilestone") || 0;
+      PlannedImplementationMilestone = oListItem.get_item("PlannedImplementationMilestone") || 0;
+      ProgressStatusMilestone = oListItem.get_item("ProgressStatusMilestone") || No_Data;
+      ActualImplementationSchedule = oListItem.get_item("ActualImplementationSchedule") || 0;
+      PlannedImplementationSchedule = oListItem.get_item("PlannedImplementationSchedule") || 0;
+      ProgressStatusSchedule = oListItem.get_item("ProgressStatusSchedule") || No_Data;
+
     }
 
 
-    // PlannedImplementationDeliverable = Number(PlannedImplementationDeliverable)
-    // PlannedImplementationDeliverable = PlannedImplementationDeliverable.toFixed(2)
 
-    // ActualImplementationDeliverable = Number(ActualImplementationDeliverable)
-    // ActualImplementationDeliverable = ActualImplementationDeliverable.toFixed(2)
+    ActualImplementationDeliverable = Number(ActualImplementationDeliverable)
+    ActualImplementationDeliverable = ActualImplementationDeliverable.toFixed(2)
+    PlannedImplementationDeliverable = Number(PlannedImplementationDeliverable)
+    PlannedImplementationDeliverable = PlannedImplementationDeliverable.toFixed(2)
+    ////
+    ActualImplementationMilestone = Number(ActualImplementationMilestone)
+    ActualImplementationMilestone = ActualImplementationMilestone.toFixed(2)
+    PlannedImplementationMilestone = Number(PlannedImplementationMilestone)
+    PlannedImplementationMilestone = PlannedImplementationMilestone.toFixed(2)
+    ////
+    ActualImplementationSchedule = Number(ActualImplementationSchedule)
+    ActualImplementationSchedule = ActualImplementationSchedule.toFixed(2)
+    PlannedImplementationSchedule = Number(PlannedImplementationSchedule)
+    PlannedImplementationSchedule = PlannedImplementationSchedule.toFixed(2)
+    ////
 
-    // $(".project-details-ctx .card.h-100 > .scnd-row > div:nth-child(1) > h4.black").text(PlannedImplementationDeliverable + "%");
+
+    $(".project-details-ctx .card.h-100 > .scnd-row > div:nth-child(1) > h4.black").text(ActualImplementationSchedule + "%");
+    $('.project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black').text(PlannedImplementationSchedule + '%');
+    $('.project-details-ctx .card.h-100 > .scnd-row > div:nth-child(3) > h4.black').text(ProgressStatusSchedule);
+
+
+    $('.project-details-ctx .card.h-100 > .third-row > div:nth-child(1) > h4.black').text(ActualImplementationMilestone + '%');
+    $('.project-details-ctx .card.h-100 > .third-row > div:nth-child(2) > h4.black').text(PlannedImplementationMilestone + '%');
+    $('.project-details-ctx .card.h-100 > .third-row > div:nth-child(3) > h4.black').text(ProgressStatusMilestone);
+
+    $('.project-details-ctx .card.h-100 > .fourth-row > div:nth-child(1) > h4.black').text(ActualImplementationDeliverable + '%');
+    $('.project-details-ctx .card.h-100 > .fourth-row > div:nth-child(2) > h4.black').text(PlannedImplementationDeliverable + '%');
+    $('.project-details-ctx .card.h-100 > .fourth-row > div:nth-child(3) > h4.black').text(ProgressStatusDeliverable);
+
+
+
+
 
     // $(".project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black").text(ActualImplementationDeliverable + "%");
 
-    // $(".myCompletionStatus").removeAttr("data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4");
-    // $(".myCompletionStatus").attr("data-trans-" + projectStatus, "");
+    $(".myCompletionStatusSchedual,.myCompletionStatusMilestone,.myCompletionStatusDelivrables").removeAttr("data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4 data-trans-stat5 data-trans-stat6 data-trans-stat7 data-trans-stat8");
+    
+    if (ProgressStatusSchedule != No_Data) {
+      $(".myCompletionStatusSchedual").attr("data-trans-" + ProgressStatusSchedule, ""); // لا يمكن ان يكون لا يوجد
+    }
+    $(".myCompletionStatusMilestone").attr("data-trans-" + ProgressStatusMilestone, "");
+    $(".myCompletionStatusDelivrables").attr("data-trans-" + ProgressStatusDeliverable, "");
 
-    // $(".myCompletionStatus").parent().removeClass("stat1 stat2 stat3 stat4")
-    // $(".myCompletionStatus").parent().addClass(projectStatus)
+    $(".myCompletionStatusSchedual").parent().removeClass("stat1 stat2 stat3 stat4 stat5 stat6 stat7 stat8")
+    $(".myCompletionStatusSchedual").parent().addClass(ProgressStatusSchedule)
 
+    $(".myCompletionStatusMilestone").parent().removeClass("stat1 stat2 stat3 stat4 stat5 stat6 stat7 stat8")
+    $(".myCompletionStatusMilestone").parent().addClass(ProgressStatusMilestone)
 
+    $(".myCompletionStatusDelivrables").parent().removeClass("stat1 stat2 stat3 stat4 stat5 stat6 stat7 stat8")
+    $(".myCompletionStatusDelivrables").parent().addClass(ProgressStatusDeliverable)
 
     changeResources();
 

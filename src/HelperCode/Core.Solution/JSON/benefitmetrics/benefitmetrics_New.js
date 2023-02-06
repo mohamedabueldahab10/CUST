@@ -36,6 +36,7 @@ var Information_Form = [
         // type: 'lookup',
         type: 'lookupwithoutrepeat',
         source: 'Benefits',
+        initiativeCodeInList: true,
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         // dynamic:"mainfield",//controls others data
@@ -54,10 +55,10 @@ var Information_Form = [
         type: 'dropdownValues',
         options: {
           choices: [
-            { display: 'year', value: 'year' },
+            { display: 'monthly', value: 'monthly' },
             { display: 'quarter', value: 'quarter' },
-            { display: 'halfyear', value: 'halfyear' },
-            { display: 'month', value: 'month' },
+            { display: 'midterm', value: 'midterm' },
+            { display: 'year', value: 'year' },
           ],
         },
         validation: 'required',
@@ -178,13 +179,13 @@ var Information_Form = [
         type: 'picker',
         validation: 'required',
       },
-      {
-        InternalName: 'TargetValue',
-        DisplayNameEn: 'Target Value',
-        DisplayName: 'القيمة المستهدفة',
-        type: 'float',
-        validation: 'required',
-      },
+      // {
+      //   InternalName: 'TargetValue',
+      //   DisplayNameEn: 'Target Value',
+      //   DisplayName: 'القيمة المستهدفة',
+      //   type: 'float',
+      //   validation: 'required',
+      // },
       // {
       //   InternalName: 'Quarter',
       //   DisplayNameEn: 'Quarter',

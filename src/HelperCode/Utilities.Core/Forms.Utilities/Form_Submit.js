@@ -63,6 +63,10 @@ var newFormUserCalls = {
 //added to handle the Koi Results list
 var kpiResultsArr = []
 
+
+// to handle BenefitMetric Results list
+var benefitMetricsArr = []
+
 window.New_Data_Submit = {
   preinit: function () {
     $(".errormsg").remove();
@@ -568,9 +572,31 @@ window.New_Data_Submit = {
             kpiResults.init(Name, PeriodType, Types, KpiYear, Sector, SubSector, Portfolio, MainGoalRelated, subGoalRelated)
           }
           newKPIEquation.init();
+        } else if (listkey == "benefitmetrics") {
+
+          var dateFrom = $("#FromDate").val();
+          benefitYearFrom = Number(dateFrom);
+          var yearFrom = Number(dateFrom)
+          var dateTo = $("#ToDate").val();
+          var yearTo = Number(dateTo);
+          var numberOfResults = yearTo - yearFrom;
+
+          if (numberOfResults > 0) {
+            for (var i = 0; i <= numberOfResults; i++) {
+              var benefitYear = yearFrom + i;
+              benefitResults.init(benefitYear)
+            }
+          } else {
+            var benefitYear = yearFrom;
+            benefitResults.init(benefitYear)
+          }
+
+          newBenefitEquation.init();
         } else {
           Set_Code_Submit.init();
         }
+
+
 
         if (USERisWF && listkey == "projects") {
           Edit_Item_Field.init("Ideas", "Status", "completed", "Title", IdeaId);
@@ -1321,6 +1347,13 @@ window.Edit_Data_Submit = {
                 "&IID=" +
                 $('#KPI option[value="' + $('#KPI').val() + '"]').attr('option-id') +
                 PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+            }else if(listkey == "benefitsequations"){
+              window.location =
+              _spPageContextInfo.webAbsoluteUrl +
+              "/SitePages/View.aspx?ListKey=benefitmetrics" +
+              "&IID=" +
+              $('#RelatedBenefit option[value="' + $('#RelatedBenefit').val() + '"]').attr('option-id') +
+              PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
             } else if (listkey == 'mainkpi') {
               Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis)
             } else if (listkey == 'projects' && PCODE) {
@@ -1414,6 +1447,52 @@ window.Edit_Data_Submit = {
     },
   },
 };
+
+//BenefitResults
+
+var benefitResults = {
+  init: function (benefitYear) {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("BenefitsResults");
+    var itemCreateInfo = new SP.ListItemCreationInformation();
+    benefitResults.g.oListItem = oList.addItem(itemCreateInfo);
+
+    var prt1 = listkey.substring(0, 2).toUpperCase(),
+      prt2 = String(new Date().getFullYear()).slice(4 - 2),
+      prt3 = IID.toString().padStart(4, "0");
+
+    var Code = prt1 + "-" + prt2 + "-" + prt3;
+    benefitResults.g.oListItem.set_item("RelatedBenefitMetrics", Code);
+
+    var prt4 = benefitYear.toString().slice(-2);
+
+    var eqkey = "benefitresults";
+
+    (prt1 = eqkey.substring(0, 2).toUpperCase()),
+      (Code = prt1 + "-" + prt2 + "-" + prt3 + "-" + prt4);
+    benefitResults.g.oListItem.set_item("Title", Code);
+
+    benefitResults.g.oListItem.set_item("Year", benefitYear);
+
+    benefitResults.g.oListItem.update();
+    clientContext.load(benefitResults.g.oListItem);
+
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, function () {
+        console.log("Results Benefits added");
+      }),
+      Function.createDelegate(this, function (sender, args) {
+        console.log(
+          "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+        );
+      })
+    );
+
+  },
+  g: {}
+}
+
+
 
 //kpiResults
 
@@ -1672,6 +1751,58 @@ var newKPIEquation = {
   },
   g: {},
 };
+
+// New Benefit Equation
+
+var newBenefitEquation = {
+  init: function () {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("BenefitsEquations");
+    var itemCreateInfo = new SP.ListItemCreationInformation();
+    newBenefitEquation.g.oListItem = oList.addItem(itemCreateInfo);
+
+    var prt1 = listkey.substring(0, 2).toUpperCase(),
+      prt2 = String(new Date().getFullYear()).slice(4 - 2),
+      prt3 = IID.toString().padStart(4, "0");
+    var Code = prt1 + "-" + prt2 + "-" + prt3;
+    newBenefitEquation.g.oListItem.set_item("RelatedBenefit", Code);
+
+    var eqkey = "benefitsequations";
+    (prt1 = eqkey.substring(0, 2).toUpperCase()),
+      (Code = prt1 + "-" + prt2 + "-" + prt3);
+    newBenefitEquation.g.oListItem.set_item("Title", Code);
+
+    newBenefitEquation.g.oListItem.update();
+    clientContext.load(newBenefitEquation.g.oListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, function () {
+        console.log("equation added");
+        Set_Code_Submit.init();
+      }),
+      Function.createDelegate(this, function (sender, args) {
+
+        console.log(
+          "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+        );
+        // to save the error in event logging list while submit
+        var msg = args.get_message();
+        var stack = args.get_stackTrace();
+        var url = window.location.href;
+
+        writeToEventViewer.preinit(
+          msg,
+          "JS Api Error",
+          "High",
+          url,
+          '580',
+          '14',
+          stack
+        );
+      })
+    );
+  },
+  g: {},
+}
 //master Data
 var New_Master_Details_Submit = {
   init: function () {

@@ -201,6 +201,22 @@
           "manifest": "./src/webparts/knowledgeBase/KnowledgeBaseWebPart.manifest.json"
         }
       ]
+    },
+    "all-tasks-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/allTasks/AllTasksWebPart.js",
+          "manifest": "./src/webparts/allTasks/AllTasksWebPart.manifest.json"
+        }
+      ]
+    },
+    "benefit-metrics-targets-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/benefitMetricsTargets/BenefitMetricsTargetsWebPart.js",
+          "manifest": "./src/webparts/benefitMetricsTargets/BenefitMetricsTargetsWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {
@@ -419,6 +435,8 @@
     "ProjectCenterEditWebPartStrings": "lib/webparts/projectCenterEdit/loc/{locale}.js",
     "AdminPanelWebPartStrings": "lib/webparts/adminPanel/loc/{locale}.js",
     "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js",
-    "KnowledgeBaseWebPartStrings": "lib/webparts/knowledgeBase/loc/{locale}.js"
+    "KnowledgeBaseWebPartStrings": "lib/webparts/knowledgeBase/loc/{locale}.js",
+    "AllTasksWebPartStrings": "lib/webparts/allTasks/loc/{locale}.js",
+    "BenefitMetricsTargetsWebPartStrings": "lib/webparts/benefitMetricsTargets/loc/{locale}.js"
   }
 }

@@ -139,10 +139,6 @@ export default class InitiativeHomeWebPart extends BaseClientSideWebPart<IInitia
                 <div class="Progress-Action">
                     <button data-trans-updateprogress class="btn btn-action updateprogress Resources"
                         type="button" disabled></button>
-                    <div class="Progress-Date">
-                        <span data-trans-progressdate class="Resources"></span>
-                        <span class="ProgressDate"></span>
-                    </div>
                 </div>
             </div>
             <div class="nav-settings justify-content-end">
