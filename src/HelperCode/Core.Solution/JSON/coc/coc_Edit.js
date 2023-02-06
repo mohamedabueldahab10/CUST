@@ -16,15 +16,17 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         grpfieldkey: 'Title',
+        projectCodeInList: true
       },
       {
-        InternalName: 'Amount',
-        DisplayNameEn: 'Amount',
-        DisplayName: 'المبلغ الإجمالى للمخرجات',
-        // type: 'float',
+        InternalName: 'TotalAmount',
+        DisplayNameEn: 'Total Amount',
+        DisplayName: 'المبلغ الإجمالى',
+        // type: 'float',        
         type: 'floattax', // to discount the tax in ksa 15%
         targetelementtax: 'TAX', // tax amount field
-        targetelementamount: 'TotalAmount', // amount after tax field
+        targetelementamount: 'Amount', // amount after tax field
+
       },
       {
         InternalName: 'TAX',
@@ -35,14 +37,11 @@ var Information_Form = [
         state: 'disabled',
       },
       {
-        InternalName: 'TotalAmount',
-        DisplayNameEn: 'Total Amount',
-        DisplayName: 'المبلغ الإجمالى',
+        InternalName: 'Amount',
+        DisplayNameEn: 'Amount',
+        DisplayName: 'المبلغ الإجمالى للمخرجات',
         type: 'float',
         state: 'disabled',
-        // type: 'floattax', // to discount the tax in ksa 15%
-        // targetelementtax: 'TVA', // tax amount field
-        // targetelementamount: 'InvoiceAmount', // amount after tax field
       },
       {
         InternalName: 'DisbursementStatus',
