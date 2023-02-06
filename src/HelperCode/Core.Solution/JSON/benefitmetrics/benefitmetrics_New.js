@@ -36,6 +36,7 @@ var Information_Form = [
         // type: 'lookup',
         type: 'lookupwithoutrepeat',
         source: 'Benefits',
+        initiativeCodeInList: true,
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         // dynamic:"mainfield",//controls others data

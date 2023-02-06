@@ -21,17 +21,36 @@ var Information_Form = [
         maxchar: '250',
         validation: 'required',
       },
+      // {
+      //   // hol dynamic 3ala l lookup
+      //   InternalName: 'RelatedBenefit',
+      //   DisplayNameEn: 'RelatedBenefit',
+      //   DisplayName: 'المنفعة المرتبطة',
+      //   type: 'lookup',
+      //   source: 'Benefits',
+      //   Dispfieldkey: 'Name',
+      //   valfieldkey: 'Title',
+      //   state: 'disabled',
+      //   // dynamic:"mainfield",//controls others data
+      // },
       {
         // hol dynamic 3ala l lookup
         InternalName: 'RelatedBenefit',
-        DisplayNameEn: 'RelatedBenefit',
+        DisplayNameEn: 'Related Benefit',
         DisplayName: 'المنفعة المرتبطة',
-        type: 'lookup',
+        // type: 'lookup',
+        type: 'lookupwithoutrepeat',
         source: 'Benefits',
+        initiativeCodeInList: true,
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        state: 'disabled',
         // dynamic:"mainfield",//controls others data
+        listname:'BenefitMetrics',
+        targetelement: 'RelatedBenefit',
+        state: 'disabled',
+        // queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
+        // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
+        // queryFieldValue: 'sub',// if i need to make the field with filter should add this
       },
       // {
       //   // hol dynamic 3ala l lookup
