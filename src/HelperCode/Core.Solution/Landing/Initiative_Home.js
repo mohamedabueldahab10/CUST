@@ -1546,8 +1546,9 @@ var Milestones_Info_Request = {
       $("a.btn-add").attr("style", "display: none!important;");
     }
 
-
-    Update_InitiativeStatus_Service.init();// update the initiative status when open the page auto
+    if (!isWF) {
+      Update_InitiativeStatus_Service.init();// update the initiative status when open the page auto
+    }
     changeResources();
   },
   onError: function (sender, args) {
@@ -1939,8 +1940,9 @@ var Get_InitiativeStatus_Info = {
   onSuccess: function (sender, args) {
     var collListItem = Get_InitiativeStatus_Info.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-    var itemID, InitiativeProgressStatus="";
+    var itemID, InitiativeProgressStatus = "";
 
+    console.log("api on success")
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       itemID = oListItem.get_id();
