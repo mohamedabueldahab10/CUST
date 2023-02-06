@@ -153,10 +153,6 @@ export default class ProjectHomeWebPart extends BaseClientSideWebPart<IProjectHo
                     type="button"
                     disabled
                   ></button>
-                  <div class="Progress-Date">
-                    <span data-trans-progressdate class="Resources"></span>
-                    <span class="ProgressDate"></span>
-                  </div>
                 </div>
               </div>
               <div class="nav-settings justify-content-end">

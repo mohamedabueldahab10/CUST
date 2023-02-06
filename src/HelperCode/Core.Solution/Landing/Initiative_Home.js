@@ -2108,8 +2108,8 @@ var Update_InitiativeStatus_Service = {
 	init: function () {
   
 	  $.ajax({
-		type: 'PUT',
-		url: `https://spm-api.netways1.com/api/initiatives/updateinitiativestatusbymilestones/${initiativeHomeInfo_Request.g.ICODE}`,
+		type: 'GET',
+		url: `https://hrsd-api.netways1.com/api/job/updateinitiativestatusbymilestones/${initiativeHomeInfo_Request.g.ICODE}`,
 		success: function (data) {
 		  Get_InitiativeStatus_Info.init()
 		},
@@ -2124,6 +2124,7 @@ var Update_InitiativeStatus_Service = {
   var Get_InitiativeStatus_Info = {
   
 	init: function () {
+		debugger
 	  $("button.updateprogress").removeClass("loader-action-success");
 	  $("button.updateprogress").removeClass("loader-action-error");
 	  $("button.updateprogress").addClass("loader-action");
@@ -2153,34 +2154,7 @@ var Update_InitiativeStatus_Service = {
 		// initiativeStatus = oListItem.get_item("InitiativeProgressStatus") || No_Data;
 	  }
   
-	//   PlannedPercentageCompleted = Number(PlannedPercentageCompleted)
-	//   PlannedPercentageCompleted = PlannedPercentageCompleted.toFixed(2)
-  
-	//   ActualPercentageCompleted = Number(ActualPercentageCompleted)
-	//   ActualPercentageCompleted = ActualPercentageCompleted.toFixed(2)
-  
-	//   $(".project-details-ctx .card.h-100 > .scnd-row > div:nth-child(1) > h4.black").text(PlannedPercentageCompleted + "%");
-	//   $(".project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black").text(ActualPercentageCompleted + "%");
-  
-	//   $(".myCompletionStatus").removeAttr(
-	// 	"data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4 data-trans-stat5 data-trans-stat6 data-trans-stat7"
-	//   );
-  
-	//   $(".myCompletionStatus").attr("data-trans-" + initiativeStatus, "");
-  
-  
-	//   $(".myCompletionStatus").removeClass(
-	// 	"statuscolor" + listInitiativeProgress
-	//   );
-  
-	//   $(".handlecircle").addClass("circlecolor" + initiativeStatus);
-  
-	//   $(".myCompletionStatus").parent().removeClass(
-	// 	"stat1 stat2 stat3 stat4 stat5 stat6 stat7"
-	//   )
-	//   $(".myCompletionStatus").parent().addClass(initiativeStatus)
-  
-	//   changeResources();
+	
   
 	  $("button.updateprogress").removeClass("loader-action");
 	  $("button.updateprogress").addClass("loader-action-success");

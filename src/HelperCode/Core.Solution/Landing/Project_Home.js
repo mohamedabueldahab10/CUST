@@ -2703,17 +2703,7 @@ var Get_ProjectStatus_Info = {
     PlannedImplementationSchedule = PlannedImplementationSchedule.toFixed(2)
     ////
 
-    // console.log(ActualImplementationSchedule,"ActualImplementationSchedule")
-    // console.log(PlannedImplementationSchedule,"PlannedImplementationSchedule")
-    // console.log(ActualImplementationMilestone,"ActualImplementationMilestone")
-    // console.log(PlannedImplementationMilestone,"PlannedImplementationMilestone")
-    // console.log(ActualImplementationDeliverable,"ActualImplementationDeliverable")
-    // console.log(PlannedImplementationDeliverable,"PlannedImplementationDeliverable")
-    console.log(ProgressStatusSchedule, "ProgressStatusSchedule")
-    console.log(ProgressStatusMilestone, "ProgressStatusMilestone")
-    console.log(ProgressStatusDeliverable, "ProgressStatusDeliverable")
 
-    debugger
     $(".project-details-ctx .card.h-100 > .scnd-row > div:nth-child(1) > h4.black").text(ActualImplementationSchedule + "%");
     $('.project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black').text(PlannedImplementationSchedule + '%');
     $('.project-details-ctx .card.h-100 > .scnd-row > div:nth-child(3) > h4.black').text(ProgressStatusSchedule);
@@ -2734,9 +2724,10 @@ var Get_ProjectStatus_Info = {
     // $(".project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black").text(ActualImplementationDeliverable + "%");
 
     $(".myCompletionStatusSchedual,.myCompletionStatusMilestone,.myCompletionStatusDelivrables").removeAttr("data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4 data-trans-stat5 data-trans-stat6 data-trans-stat7 data-trans-stat8");
-
-    $(".myCompletionStatusSchedual").attr("data-trans-" + "stat3", ""); // لا يمكن ان يكون لا يوجد
-
+    
+    if (ProgressStatusSchedule != No_Data) {
+      $(".myCompletionStatusSchedual").attr("data-trans-" + ProgressStatusSchedule, ""); // لا يمكن ان يكون لا يوجد
+    }
     $(".myCompletionStatusMilestone").attr("data-trans-" + ProgressStatusMilestone, "");
     $(".myCompletionStatusDelivrables").attr("data-trans-" + ProgressStatusDeliverable, "");
 
