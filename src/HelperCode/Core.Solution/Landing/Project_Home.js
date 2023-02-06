@@ -415,10 +415,6 @@ var Project_Home_Info_Request = {
         '<div class="schedule-src-wrapper">' +
         '<span class="schedule-info"><i data-toggle="tooltip" data-html="true" title="' + schedualInfo + '" class="my-info-i fas fa-info-circle"></i></span>' +
         '<select class="schedule-src">' +
-        // '<option data-trans-schedsrc class="Resources" value="" selected disabled="">مصدر الجدول</option>' +
-        // '<option data-trans-schedepm class="Resources" value="عبر الجدول الزمني">عبر الجدول الزمني</option>' +
-        // '<option data-trans-schedsystem class="Resources" value="عبر النظام">عبر النظام</option>' +
-        // '<option data-trans-milestones class="Resources" value="عبر المعالم">عبر المعالم</option>' +
         '<option data-trans-schedepm class="Resources" value="schedual">schedual</option>' +
         '<option data-trans-schedsystem class="Resources" value="deliverables">deliverables</option>' +
         '<option data-trans-milestones class="Resources" value="milestones">milestones</option>' +
@@ -1343,6 +1339,8 @@ var Deliverables_Info_Request = {
       `<option data-trans-year class="Resources" value=""></option>`
     );
 
+    debugger
+
     Deliverablesarray.forEach(function (dl, i) {
       //appending years
       var dataYear = isArabic ? dl.date.split("-")[0] : dl.date.split("-")[2];
@@ -1370,6 +1368,7 @@ var Deliverables_Info_Request = {
       $(".tlContainer").html(""); // to reset the data when change on year
       Deliverables_Info_Request.g.dltimeline($(this).val());
     });
+    
     if (!yearExcist) {
       // to append no data in drop down when there is no data
       $(".fromDeliverables select#inputYear").append(
@@ -2346,7 +2345,7 @@ var GetProject_Tasks = {
           iscuryear = true;
         else
           iscuryear = false;
-        $('select#inputYear').append(new Option(dataYear, dataYear, iscuryear, iscuryear));
+        $('.fromTimeLine select#inputYear').append(new Option(dataYear, dataYear, iscuryear, iscuryear));
         yearExcist = true;
       }
       sdlyear = dataYear;
