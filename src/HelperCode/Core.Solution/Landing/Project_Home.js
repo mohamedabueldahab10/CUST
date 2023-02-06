@@ -18,7 +18,7 @@ var ActualBudget = 0,
   expiredDeliverablesArrayPercent = [],
   ExpDeliverablesarray = [],
   FutDeliverablesarray = [],
-  projectprogress, listProjectProgress, ScheduleSource, ProjectSPID, isDelDone = 'disabled', MilestoneArr = [];
+  ScheduleSource, ProjectSPID, isDelDone = 'disabled', MilestoneArr = [];
 
 var projectProgressStatusDeliverable, projectProgressStatusMilestone, projectProgressStatusSchedule, ProjectActualImplementationDeliverable, projectPlannedImplementationDeliverable, projectActualImplementationMilestone, projectPlannedImplementationMilestone, projectActualImplementationSchedule, projectPlannedImplementationSchedule;
 
@@ -271,8 +271,7 @@ var Project_Home_Info_Request = {
 
 
       fullphasename = oListItem.get_item('Phase') || No_Data;
-      projectprogress = oListItem.get_item('ProjectProgressStatus') || No_Data;
-      listProjectProgress = oListItem.get_item('ProjectProgressStatus') || No_Data
+
       card1.push('<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
         '<div class="d-inline-flex flex-row align-items-center">' +
         '<span class="icon-user lg d-inline-flex align-items-center text-center handlecircle circlecolor' + projectProgressStatusDeliverable + '">' +
@@ -2724,7 +2723,7 @@ var Get_ProjectStatus_Info = {
     // $(".project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black").text(ActualImplementationDeliverable + "%");
 
     $(".myCompletionStatusSchedual,.myCompletionStatusMilestone,.myCompletionStatusDelivrables").removeAttr("data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4 data-trans-stat5 data-trans-stat6 data-trans-stat7 data-trans-stat8");
-    
+
     if (ProgressStatusSchedule != No_Data) {
       $(".myCompletionStatusSchedual").attr("data-trans-" + ProgressStatusSchedule, ""); // لا يمكن ان يكون لا يوجد
     }

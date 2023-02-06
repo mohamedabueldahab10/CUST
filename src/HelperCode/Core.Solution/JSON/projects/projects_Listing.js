@@ -94,7 +94,7 @@ var Listing_Info = [
 //     infilter: true,
 //   },
   {
-    InternalName: 'ProjectProgressStatus',
+    InternalName: 'ProgressStatusDeliverable',
     DisplayName: 'حالة الإنجاز',
     DisplayNameEn: 'Project Progress Status',
     type: 'text',
