@@ -45,7 +45,7 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         // dynamic:"mainfield",//controls others data
-        listname:'BenefitMetrics',
+        listname: 'BenefitMetrics',
         targetelement: 'RelatedBenefit',
         state: 'disabled',
         // queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
@@ -85,7 +85,7 @@ var Information_Form = [
         // "state": "disabled",
         // dynamic: "Initiative"
       },
-     
+
       {
         InternalName: 'MesureStatus',
         DisplayNameEn: 'MesureStatus',
@@ -141,7 +141,6 @@ var Information_Form = [
             { display: 'year', value: 'year' },
           ],
         },
-      
       },
       {
         InternalName: 'ResultType',
@@ -168,7 +167,8 @@ var Information_Form = [
         endinternalname: 'FinishDate',
         max: 'ToDate',
         // type: 'datetime',
-         "state": "disabled",
+        validation: 'required',
+        state: 'disabled',
       },
       {
         InternalName: 'ToDate',
@@ -181,7 +181,8 @@ var Information_Form = [
         endinternalname: 'FinishDate',
         min: 'FromDate',
         // type: 'datetime',
-       "state": "disabled",
+        validation: 'required',
+        state: 'disabled',
       },
       {
         InternalName: 'DataSource',
@@ -215,179 +216,176 @@ var Information_Form = [
     ],
   },
   {
-    label: "مكونات المعادلة",
-    labelEn: "Equation components",
-    description: "",
-    descriptionEn: "",
-    subFields: [{
-            InternalName: "BenefitEquation",
-            DisplayNameEn: "Benefit Equation",
-            DisplayName: "معادلة مقياس المنفعة",
-            type: "string",
-            state: "disabled",
-            //editableBy: "PerformanceLeader",
+    label: 'مكونات المعادلة',
+    labelEn: 'Equation components',
+    description: '',
+    descriptionEn: '',
+    subFields: [
+      {
+        InternalName: 'BenefitEquation',
+        DisplayNameEn: 'Benefit Equation',
+        DisplayName: 'معادلة مقياس المنفعة',
+        type: 'string',
+        state: 'disabled',
+        //editableBy: "PerformanceLeader",
+      },
+      {
+        InternalName: 'Quarter',
+        DisplayNameEn: 'Quarter',
+        DisplayName: 'الربع',
+        ToggleName: 'Quarter',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'quarter1', value: 'Actual1' },
+            { display: 'quarter2', value: 'Actual2' },
+            { display: 'quarter3', value: 'Actual3' },
+            { display: 'quarter4', value: 'Actual4' },
+          ],
         },
-        {
-            "InternalName": "Quarter",
-            "DisplayNameEn": "Quarter",
-            "DisplayName": "الربع",
-            ToggleName: "Quarter",
-            type: "dropdownValues",
-            options: {
-                choices: [
-                    { display: "quarter1", value: "Actual1" },
-                    { display: "quarter2", value: "Actual2" },
-                    { display: "quarter3", value: "Actual3" },
-                    { display: "quarter4", value: "Actual4" },
-                ],
-            },
-          
+      },
+      {
+        InternalName: 'Midterms',
+        DisplayNameEn: 'Midterms',
+        DisplayName: 'النصف السنوي',
+        ToggleName: 'Midterms',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'midterm1', value: 'Actual1' },
+            { display: 'midterm2', value: 'Actual2' },
+          ],
+          // "display":"none"
         },
-        {
-            "InternalName": "Midterms",
-            "DisplayNameEn": "Midterms",
-            "DisplayName": "النصف السنوي",
-             ToggleName: "Midterms",
-            type: "dropdownValues",
-            options: {
-                choices: [
-                    { display: "midterm1", value: "Actual1" },
-                    { display: "midterm2", value: "Actual2" },
-                ],
-                // "display":"none"
-            },
-         
+      },
+      // {
+      //     "InternalName": "Years",
+      //     "DisplayNameEn": "Years",
+      //     "DisplayName": "السنوي",
+      //     //  ToggleName: "Years",
+      //     type: "dropdownValues",
+      //     options: {
+      //         choices: [
+      //             { display: "yearly", value: "Actual1" },
+      //             // { display: "midterm2", value: "Actual2" },
+      //         ],
+      //         // "display":"none"
+      //     },
+
+      // },
+
+      {
+        InternalName: 'Year',
+        DisplayNameEn: 'Year',
+        DisplayName: 'السنة',
+        type: 'dropdown',
+        //   "state": "disabled",
+        //   dynamic: "Initiative",
+        options: {
+          choices: [
+            '2020',
+            '2021',
+            '2022',
+            '2023',
+            '2024',
+            '2025',
+            '2026',
+            '2027',
+            '2028',
+            '2029',
+            '2030',
+            '2031',
+            '2032',
+            '2033',
+            '2034',
+            '2035',
+          ],
         },
-        // {
-        //     "InternalName": "Years",
-        //     "DisplayNameEn": "Years",
-        //     "DisplayName": "السنوي",
-        //     //  ToggleName: "Years",
-        //     type: "dropdownValues",
-        //     options: {
-        //         choices: [
-        //             { display: "yearly", value: "Actual1" },
-        //             // { display: "midterm2", value: "Actual2" },
-        //         ],
-        //         // "display":"none"
-        //     },
-         
-        // },
-        
-          {
-            InternalName: 'Year',
-            DisplayNameEn: 'Year',
-            DisplayName: 'السنة',
-            type: 'dropdown',
-            //   "state": "disabled",
-            //   dynamic: "Initiative",
-            options: {
-              choices: [
-                '2020',
-                '2021',
-                '2022',
-                '2023',
-                '2024',
-                '2025',
-                '2026',
-                '2027',
-                '2028',
-                '2029',
-                '2030',
-                '2031',
-                '2032',
-                '2033',
-                '2034',
-                '2035',
-              ],
-            },
-        
-          },
-          {
-            InternalName: "Months",
-            DisplayNameEn: "Month",
-            DisplayName: "الشهر",
-            ToggleName: "Months",
-            type: "dropdownValues",
-            options: {
-                choices: [
-                    { display: "month1",  value: "Actual1" },
-                    { display: "month2", value: "Actual2" },
-                    { display: "month3", value: "Actual3" },
-                    { display: "month4", value: "Actual4" },
-                    { display: "month5",  value: "Actual5" },
-                    { display: "month6",  value: "Actual6" },
-                    { display: "month7",  value: "Actual7" },
-                    { display: "month8",  value: "Actual8" },
-                    { display: "month9",  value: "Actual9" },
-                    { display: "month10", value: "Actual10" },
-                    { display: "month11", value: "Actual11" },
-                    { display: "month12", value: "Actual12" },
-                ],
-            },
+      },
+      {
+        InternalName: 'Months',
+        DisplayNameEn: 'Month',
+        DisplayName: 'الشهر',
+        ToggleName: 'Months',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'month1', value: 'Actual1' },
+            { display: 'month2', value: 'Actual2' },
+            { display: 'month3', value: 'Actual3' },
+            { display: 'month4', value: 'Actual4' },
+            { display: 'month5', value: 'Actual5' },
+            { display: 'month6', value: 'Actual6' },
+            { display: 'month7', value: 'Actual7' },
+            { display: 'month8', value: 'Actual8' },
+            { display: 'month9', value: 'Actual9' },
+            { display: 'month10', value: 'Actual10' },
+            { display: 'month11', value: 'Actual11' },
+            { display: 'month12', value: 'Actual12' },
+          ],
+        },
         //    "display":"none"
-        },
-      
-        {
-            InternalName: "A",
-            DisplayName: "المكون الأول (A)",
-            DisplayNameEn: "A",
-            type: "float",
-            //editableBy: "PerformanceLeader",
-        },
-        {
-            InternalName: "B",
-            DisplayName: "المكون الثاني (B)",
-            DisplayNameEn: "B",
-            type: "float",
-            //editableBy: "PerformanceLeader",
-        },
-        {
-            InternalName: "CC",
-            DisplayName: "المكون الثالث (C)",
-            DisplayNameEn: "C",
-            type: "float",
-            //editableBy: "PerformanceLeader",
-        },
-        {
-            InternalName: "D",
-            DisplayName: "المكون الرابع (D)",
-            DisplayNameEn: "D",
-            type: "float",
-            //editableBy: "PerformanceLeader",
-        },
-        {
-            InternalName: "E",
-            DisplayName: "المكون الخامس (E)",
-            DisplayNameEn: "E",
-            type: "float",
-            //editableBy: "PerformanceLeader",
-        },
-        {
-            InternalName: "F",
-            DisplayName: "المكون السادس (F)",
-            DisplayNameEn: "F",
-            type: "float",
-            //editableBy: "PerformanceLeader",
-        },
-        {
-            InternalName: "G",
-            DisplayName: "المكون السابع (G)",
-            DisplayNameEn: "G",
-            type: "float",
-            //editableBy: "PerformanceLeader",
-        },
-        {
-            InternalName: "Equation",
-            DisplayNameEn: "Actual value",
-            DisplayName: "القيمة الفعلية",
-            type: "float",
-            state: "disabled",
-            //editableBy: "PerformanceLeader",
-        },
-     
+      },
+
+      {
+        InternalName: 'A',
+        DisplayName: 'المكون الأول (A)',
+        DisplayNameEn: 'A',
+        type: 'float',
+        //editableBy: "PerformanceLeader",
+      },
+      {
+        InternalName: 'B',
+        DisplayName: 'المكون الثاني (B)',
+        DisplayNameEn: 'B',
+        type: 'float',
+        //editableBy: "PerformanceLeader",
+      },
+      {
+        InternalName: 'CC',
+        DisplayName: 'المكون الثالث (C)',
+        DisplayNameEn: 'C',
+        type: 'float',
+        //editableBy: "PerformanceLeader",
+      },
+      {
+        InternalName: 'D',
+        DisplayName: 'المكون الرابع (D)',
+        DisplayNameEn: 'D',
+        type: 'float',
+        //editableBy: "PerformanceLeader",
+      },
+      {
+        InternalName: 'E',
+        DisplayName: 'المكون الخامس (E)',
+        DisplayNameEn: 'E',
+        type: 'float',
+        //editableBy: "PerformanceLeader",
+      },
+      {
+        InternalName: 'F',
+        DisplayName: 'المكون السادس (F)',
+        DisplayNameEn: 'F',
+        type: 'float',
+        //editableBy: "PerformanceLeader",
+      },
+      {
+        InternalName: 'G',
+        DisplayName: 'المكون السابع (G)',
+        DisplayNameEn: 'G',
+        type: 'float',
+        //editableBy: "PerformanceLeader",
+      },
+      {
+        InternalName: 'Equation',
+        DisplayNameEn: 'Actual value',
+        DisplayName: 'القيمة الفعلية',
+        type: 'float',
+        state: 'disabled',
+        //editableBy: "PerformanceLeader",
+      },
     ],
-},
+  },
   {
     label: 'الوثائق الداعمة',
     labelEn: 'Supporting Documents',
@@ -397,7 +395,7 @@ var Information_Form = [
       {
         InternalName: 'getfile',
         DisplayName: 'المستندات',
-         DisplayNameEn: 'Attachments',
+        DisplayNameEn: 'Attachments',
         type: 'file',
         withAddBtn: 'true',
       },
