@@ -166,7 +166,7 @@ var initiativeHomeInfo_Request = {
         ? oListItem.get_item("PlannedPercentageCompleted")
         : 0;
 
-      initiativecost = oListItem.get_item("ActualCost") || 0;
+      initiativecost = oListItem.get_item("EstimatedCost") || 0;
       ProgramTotalCost = oListItem.get_item("ProgramTotalCost") || 0;
       CurrentBudget = oListItem.get_item("CurrentBuget") || 0;
       instage = oListItem.get_item("Stage") || No_Data;
@@ -601,6 +601,41 @@ var initiativeHomeInfo_Request = {
       "</span>" + // to handle the tooltip
       "</a>"
     );
+
+
+
+
+    var estimatedCostInfo = ""
+    if (
+      localStorage.getItem("lng") == null ||
+      localStorage.getItem("lng") == "ar"
+    ) {
+      estimatedCostInfo = Resources.ar["estimatedcostinfo"]
+    } else {
+      estimatedCostInfo = Resources.en["estimatedcostinfo"]
+
+    }
+
+    $(".project-budget-ctx .card-body > div:nth-child(1) .my-info-i").attr("title", estimatedCostInfo)
+    $(".project-budget-ctx .card-body > div:nth-child(1) .my-info-i").attr("data-original-title", estimatedCostInfo)
+
+    //////////////////////////////////////////////////////
+
+    var initiativeBudgetInfo = ""
+    if (
+      localStorage.getItem("lng") == null ||
+      localStorage.getItem("lng") == "ar"
+    ) {
+      initiativeBudgetInfo = Resources.ar["initiativebudgetinfo"]
+    } else {
+      initiativeBudgetInfo = Resources.en["initiativebudgetinfo"]
+    }
+
+    $(".project-budget-ctx .card-body > div:nth-child(2) .my-info-i").attr("title", initiativeBudgetInfo)
+    $(".project-budget-ctx .card-body > div:nth-child(2) .my-info-i").attr("data-original-title", initiativeBudgetInfo)
+
+////////////////
+
 
     // card 6
     if (AssignedBudget) {
