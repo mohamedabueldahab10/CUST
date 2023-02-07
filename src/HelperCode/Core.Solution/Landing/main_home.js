@@ -235,7 +235,8 @@ window.Project_Info_Request = {
         //getting 1st stats data
         ActualBudget += oListItem.get_item("ActualBudget") || 0; //masroufa
         SpendFromBudget = oListItem.get_item("ActualBudget") || 0;
-        AssignedBudget += oListItem.get_item("AssignedBudget") || 0; // total budget
+        // AssignedBudget += oListItem.get_item("AssignedBudget") || 0; // total budget
+        AssignedBudget += oListItem.get_item("ActualBudget") || 0; // total budget
         EstimatedBudget += oListItem.get_item("EstimatedCost") || 0; //mutabakia
 
         projectPercentageSchedual =
@@ -300,7 +301,7 @@ window.Project_Info_Request = {
 
         // ProgressStatus =
         //   oListItem.get_item("ProjectProgressStatus") || "nodata";
-        debugger
+        
         ProgressStatus = oListItem.get_item("ProgressStatusDeliverable") || "nodata";
 
 
@@ -1805,12 +1806,7 @@ var Deliverables_Info_Request = {
       statusclass,
       ProgressNamearray = [];
     for (var i = 0; i < UProjects.length; i++) {
-      //future deliverables
-      // var dforthisprojFut = FutDeliverablesarray.filter((v) => (v.pcode === UProjects[i]));
-      // var numberofyesFut = dforthisprojFut.filter((v) => (v.delivered === 'yes' || v.delivered === 'Yes'));
-      //expired deliverables
-      // var dforthisprojExp = ExpDeliverablesarray.filter((v) => (v.pcode === UProjects[i]));
-      // var numberofyesExp = dforthisprojExp.filter((v) => (v.delivered === 'yes' || v.delivered === 'Yes'));
+
       //all deliverables
       var dforthisproj = Deliverablesarray.filter(
         (v) => v.pcode === UProjects[i]
@@ -1829,107 +1825,18 @@ var Deliverables_Info_Request = {
             0
           )
         ) || 0;
-      // NoD = Deliverablesarray.filter((v) => (v.pcode === UProjects[i])).length;
-      // NoDarray = Deliverablesarray.filter((v) => (v.pcode === UProjects[i]));
-      // NoDY = NoDarray.filter((v) => (v.delivered === 'Yes')).length;
-      // POD = Math.round(NoDY / NoD * 100) || 0;
+
       Progressarray.push({
         pcode: UProjects[i],
         progress: POD,
       });
-      // if (dforthisprojExp.length > 0) {
-      //     if (numberofyesExp.length == dforthisprojExp.length) //all expired are done
-      //     {
-      //         if (numberofyesFut.length > 0) {
-      //             statusclass = 'text-success';
-      //             statustxt = 'متقدم';
-      //             statusnum = 4;
-      //             ProgressNamearray.push({
-      //                 name: statustxt
-      //             });
-      //         } else {
-      //             statusclass = 'text-warning';
-      //             statustxt = 'حسب الخطة';
-      //             ProgressNamearray.push({
-      //                 name: statustxt
-      //             });
-      //             statusnum = 3;
-      //         }
-      //     } else if (numberofyesExp.length == dforthisprojExp.length - 1) {
-      //         statusclass = 'text-danger';
-      //         statustxt = 'متأخر';
-      //         statusnum = 2;
-      //         ProgressNamearray.push({
-      //             name: statustxt
-      //         });
-      //     } else if (numberofyesExp.length < dforthisprojExp.length - 1) {
-      //         statusclass = 'text-super-danger';
-      //         statustxt = 'متأخر جدا';
-      //         statusnum = 1;
-
-      //         ProgressNamearray.push({
-      //             name: statustxt
-      //         });
-      //     }
-      // } else {
-      //     if (numberofyesFut.length == 0) //on plan because no deliverable is expired
-      //     {
-      //         statusclass = 'text-warning';
-      //         statustxt = 'حسب الخطة';
-      //         statusnum = 3;
-      //         ProgressNamearray.push({
-      //             name: statustxt
-      //         });
-      //     } else if (numberofyesFut.length > 0) //one or more fute deliverables are done
-      //     {
-      //         statusclass = 'text-success';
-      //         statustxt = 'متقدم';
-      //         statusnum = 4;
-      //         ProgressNamearray.push({
-      //             name: statustxt
-      //         });
-      //     }
-      // }
-      //
-      //fill divs by id for order it
-      // var x = document.getElementsByClassName("ProjectCards")[i];
-      // if (x)
-      //     x.id = statusnum;
 
       $('.deliv-status h4[data-prname="' + UProjects[i] + '"]')
         .addClass(statusclass)
         .text(statustxt);
-      // $('.inner-data3 .inner-val[data-prname="' + UProjects[i] + '"]').text(POD + '%'); // commint it because nesbat elenjaz come from project schedual
     }
-    //progress stats
 
-    // Noverylate = progressstatusarrayALL.filter((v) => (v == 'متأخر جدا' || v.toLowerCase() == 'too late')).length;
-    // // console.log('Noverylate', Noverylate);
-    // var Noverylatepercent = (Noverylate * 100) / numberofProjects ? (Noverylate * 100) / numberofProjects : 0;
 
-    // Nolate = progressstatusarrayALL.filter((v) => (v == 'متأخر' || v.toLowerCase() == 'late')).length;
-    // // console.log('Nolate', Nolate);
-    // var Nolatepercent = (Nolate * 100) / numberofProjects ? (Nolate * 100) / numberofProjects : 0;
-
-    // Noonplan = progressstatusarrayALL.filter((v) => (v == 'حسب الخطة' || v.toLowerCase() == 'according to plan')).length;
-    // // console.log('Noonplan', Noonplan);
-    // var Noonplanpercent = (Noonplan * 100) / numberofProjects ? (Noonplan * 100) / numberofProjects : 0;
-
-    // Noahead = progressstatusarrayALL.filter((v) => (v == 'متقدم' || v.toLowerCase() == 'ahead of plan')).length;
-    // var Noaheadpercent = (Noahead * 100) / numberofProjects ? (Noahead * 100) / numberofProjects : 0;
-
-    // $('.ctx-block.row.mx-n2 > div:nth-child(2)  .card-body .media:nth-child(1) .d-flex span:nth-child(2)').text(Project_Info_Request.g.kFormatter(Noverylate));
-    // $('.ctx-block.row.mx-n2 > div:nth-child(2) .card-body .media:nth-child(1) .progress-bar').css('width', Noverylatepercent + '%');
-    // //
-    // $('.ctx-block.row.mx-n2 > div:nth-child(2)  .card-body .media:nth-child(2) .d-flex span:nth-child(2)').text(Project_Info_Request.g.kFormatter(Nolate));
-    // $('.ctx-block.row.mx-n2 > div:nth-child(2) .card-body .media:nth-child(2) .progress-bar').css('width', Nolatepercent + '%');
-    // //
-    // $('.ctx-block.row.mx-n2 > div:nth-child(2)  .card-body .media:nth-child(3) .d-flex span:nth-child(2)').text(Project_Info_Request.g.kFormatter(Noonplan));
-    // $('.ctx-block.row.mx-n2 > div:nth-child(2) .card-body .media:nth-child(3) .progress-bar').css('width', Noonplanpercent + '%');
-    // //
-    // $('.ctx-block.row.mx-n2 > div:nth-child(2)  .card-body .media:nth-child(4) .d-flex span:nth-child(2)').text(Project_Info_Request.g.kFormatter(Noahead));
-    // $('.ctx-block.row.mx-n2 > div:nth-child(2) .card-body .media:nth-child(4) .progress-bar').css('width', Noaheadpercent + '%');
-    // $('.ctx-block.row.mx-n2 > div:nth-child(2) .card-body .media:nth-child(3) .progress-bar').css('width', Noonplanpercent + '%');
 
     handleStatusBarChart();
     //
@@ -1959,7 +1866,8 @@ var Deliverables_Info_Request = {
 
     ProjectsOrder.init();
     Project_Info_Request.g.showprojectonclick();
-    Invoices_Info_Request.init();
+    // Invoices_Info_Request.init();
+    Coc_Info_Request.init();
   },
   onError: function (sender, args) {
     console.log(
@@ -2012,76 +1920,121 @@ var Main_Stages_Data_Request = {
   },
 };
 
-var Invoices_Info_Request = {
-  // The main Initialization function
+// CoC info Request
+
+var Coc_Info_Request = {
   init: function () {
     var clientContext = new SP.ClientContext.get_current();
-    var oList = clientContext.get_web().get_lists().getByTitle("Invoices");
+    var oList = clientContext.get_web().get_lists().getByTitle('Certifications');
     var camlQuery = new SP.CamlQuery();
-    camlQuery.set_viewXml(
-      "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
-    );
-    Invoices_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
-    clientContext.load(Invoices_Info_Request.g.collListItem);
+    camlQuery.set_viewXml("<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>");
+    Coc_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(Coc_Info_Request.g.collListItem);
     clientContext.executeQueryAsync(
-      Function.createDelegate(this, Invoices_Info_Request.onSuccess),
-      Function.createDelegate(this, Invoices_Info_Request.onError)
+      Function.createDelegate(this, Coc_Info_Request.onSuccess),
+      Function.createDelegate(this, Coc_Info_Request.onError)
     );
   },
   onSuccess: function (sender, args) {
-    var collListItem = Invoices_Info_Request.g.collListItem;
+    var collListItem = Coc_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-    (Amount = 0), (Deliverable = "");
+    (Amount = 0), (Deliverables = "");
 
-    // console.log(Deliverablesarray);
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
-      //itemID = oListItem.get_id();
       Amount = oListItem.get_item("Amount");
-      Deliverable = oListItem.get_item("Deliverable");
-      Status = oListItem.get_item("Status");
-      //console.log(Status);
-      //console.log(Amount+','+Deliverable);
-      for (i = 0; i < Deliverablesarray.length; i++) {
-        var myselections = Deliverable ? Deliverable.split(":::") : []; // add myselection to handle mult delivrable in invoices
+      Deliverables = oListItem.get_item("Deliverables");
+      Status = oListItem.get_item("DisbursementStatus");
 
-        // console.log(Deliverablesarray[i].pcode +','+ Deliverable); // chamge to mySelection to handle The Cose on Multi delivrable
-        if (Deliverablesarray[i].Code == myselections[0] && Status == "paid") {
-          // console.log(Status);
+
+      for (i = 0; i < Deliverablesarray.length; i++) {
+        var myselections = Deliverables ? Deliverables.split(":::") : []; // add myselection to handle mult delivrable in invoices
+        if (Deliverablesarray[i].Code == myselections[0] && Status == "exchangehasbeendone") {
           TheCost += Amount;
-          // console.log(Amount+','+Deliverablesarray[i].Code+','+Deliverable);
         }
       }
-
-      //
     }
-
-    // $('.ctx-block.row.mx-n2 .carditem1  .card-body .media:nth-child(2) .d-flex span:nth-child(2)').text(Project_Info_Request.g.kFormatter(TheCost));
-    //$('.ctx-block.row.mx-n2 .carditem4  .card-body .media:nth-child(3) .d-flex span:nth-child(2)').text(RisksCount);
-    var TheCostPercentage = (TheCost / AssignedBudget) * 100;
-    // $('.ctx-block.row.mx-n2 .carditem1 .card-body .media:nth-child(2) .progress-bar').css('width', TheCostPercentage + '%');
-    //
-    // console.log(toatlamountAllofProjectminusspercent);
-    budgetLast = AssignedBudget - TheCost;
-    // $('.ctx-block.row.mx-n2 .carditem1 .card-body .media:nth-child(3) .d-flex span:nth-child(2)').text(Project_Info_Request.g.kFormatter(AssignedBudget - TheCost));
-    // $('.ctx-block.row.mx-n2 .carditem1 .card-body .media:nth-child(3) .progress-bar').css('width', Math.abs(toatlamountAllofProjectminusspercent) + '%');
-
+    
     handleBudgetBarChart();
-    console.timeEnd();
 
-    //console.log(ExpectedExchange);
-    //LastCost=AssignedBudget-TheCost;
-    // $('.project-budget-ctx .card-body > div:nth-child(3) > div:nth-child(2) > div:nth-child(2)').html('<span>'+LastCost+' SAR</span> <span>/</span> <span>'+TheCost+' SAR</span>');
-    // $('li.nav-item a:not(:visible)').parent().hide()
   },
   onError: function (sender, args) {
-    console.log(
-      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
-    );
+    console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
   },
   // Global variables
-  g: {},
-};
+  g: {}
+}
+
+// var Invoices_Info_Request = {
+//   // The main Initialization function
+//   init: function () {
+//     var clientContext = new SP.ClientContext.get_current();
+//     var oList = clientContext.get_web().get_lists().getByTitle("Invoices");
+//     var camlQuery = new SP.CamlQuery();
+//     camlQuery.set_viewXml(
+//       "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+//     );
+//     Invoices_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+//     clientContext.load(Invoices_Info_Request.g.collListItem);
+//     clientContext.executeQueryAsync(
+//       Function.createDelegate(this, Invoices_Info_Request.onSuccess),
+//       Function.createDelegate(this, Invoices_Info_Request.onError)
+//     );
+//   },
+//   onSuccess: function (sender, args) {
+//     var collListItem = Invoices_Info_Request.g.collListItem;
+//     var listItemEnum = collListItem.getEnumerator();
+//     (Amount = 0), (Deliverable = "");
+
+//     // console.log(Deliverablesarray);
+//     while (listItemEnum.moveNext()) {
+//       var oListItem = listItemEnum.get_current();
+//       //itemID = oListItem.get_id();
+//       Amount = oListItem.get_item("Amount");
+//       Deliverable = oListItem.get_item("Deliverable");
+//       Status = oListItem.get_item("Status");
+//       //console.log(Status);
+//       //console.log(Amount+','+Deliverable);
+//       for (i = 0; i < Deliverablesarray.length; i++) {
+//         var myselections = Deliverable ? Deliverable.split(":::") : []; // add myselection to handle mult delivrable in invoices
+
+//         // console.log(Deliverablesarray[i].pcode +','+ Deliverable); // chamge to mySelection to handle The Cose on Multi delivrable
+//         if (Deliverablesarray[i].Code == myselections[0] && Status == "paid") {
+//           // console.log(Status);
+//           TheCost += Amount;
+//           // console.log(Amount+','+Deliverablesarray[i].Code+','+Deliverable);
+//         }
+//       }
+
+//       //
+//     }
+
+//     // $('.ctx-block.row.mx-n2 .carditem1  .card-body .media:nth-child(2) .d-flex span:nth-child(2)').text(Project_Info_Request.g.kFormatter(TheCost));
+//     //$('.ctx-block.row.mx-n2 .carditem4  .card-body .media:nth-child(3) .d-flex span:nth-child(2)').text(RisksCount);
+//     var TheCostPercentage = (TheCost / AssignedBudget) * 100;
+//     // $('.ctx-block.row.mx-n2 .carditem1 .card-body .media:nth-child(2) .progress-bar').css('width', TheCostPercentage + '%');
+//     //
+//     // console.log(toatlamountAllofProjectminusspercent);
+//     budgetLast = AssignedBudget - TheCost;
+//     // $('.ctx-block.row.mx-n2 .carditem1 .card-body .media:nth-child(3) .d-flex span:nth-child(2)').text(Project_Info_Request.g.kFormatter(AssignedBudget - TheCost));
+//     // $('.ctx-block.row.mx-n2 .carditem1 .card-body .media:nth-child(3) .progress-bar').css('width', Math.abs(toatlamountAllofProjectminusspercent) + '%');
+
+//     handleBudgetBarChart();
+//     console.timeEnd();
+
+//     //console.log(ExpectedExchange);
+//     //LastCost=AssignedBudget-TheCost;
+//     // $('.project-budget-ctx .card-body > div:nth-child(3) > div:nth-child(2) > div:nth-child(2)').html('<span>'+LastCost+' SAR</span> <span>/</span> <span>'+TheCost+' SAR</span>');
+//     // $('li.nav-item a:not(:visible)').parent().hide()
+//   },
+//   onError: function (sender, args) {
+//     console.log(
+//       "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+//     );
+//   },
+//   // Global variables
+//   g: {},
+// };
 
 //order project list in home
 var ProjectsOrder = {
@@ -2392,7 +2345,9 @@ var PortfoliosInfoRequest = {
 };
 
 function handleBudgetBarChart() {
+  
   var remainingCost = AssignedBudget - TheCost;
+  debugger
   console.log(AssignedBudget, "AssignedBudget");
   if (
     localStorage.getItem("lng") == null ||
