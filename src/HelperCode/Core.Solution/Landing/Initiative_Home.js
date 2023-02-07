@@ -136,7 +136,7 @@ var initiativeHomeInfo_Request = {
         initiativeHomeInfo_Request.g.ICODE
       );
       //getting 1st stats data
-      ActualBudget += oListItem.get_item("InitiativeBudget") || 0; // al mizaniya l haliya
+      ActualBudget = oListItem.get_item("InitiativeBudget") || 0; // al mizaniya l haliya
       // AssignedBudget = oListItem.get_item('AssignedBudget') || 0; //total budget
       // EstimatedBudget += oListItem.get_item('EstimatedCost') || 0; //mutabakia / mutawak3a
       //project card1

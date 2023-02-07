@@ -877,6 +877,7 @@ export default class InitiativeHomeWebPart extends BaseClientSideWebPart<IInitia
                                         <div data-trans-inpattr43 class="d-inline-flex black fnt-14 Resources"></div>
                                         <div class="project-cost-value h4"></div>
                                     </div>
+                                    <span class="budget-info"><i data-toggle="tooltip" data-html="true" title="" class="my-info-i fas fa-info-circle"></i></span>
                                 </div>
                                 <div class="d-flex flex-row align-items-center mx-4 py-3">
 
@@ -895,6 +896,7 @@ export default class InitiativeHomeWebPart extends BaseClientSideWebPart<IInitia
                                         <div data-trans-incurrentbudget class="d-inline-flex black fnt-14 Resources"></div>
                                         <div class="project-budget-value h4"></div>
                                     </div>
+                                    <span class="budget-info"><i data-toggle="tooltip" data-html="true" title="" class="my-info-i fas fa-info-circle"></i></span>
                                 </div>
                                 <!--
                                 <div class="d-flex flex-row align-items-center mx-4 py-3">
