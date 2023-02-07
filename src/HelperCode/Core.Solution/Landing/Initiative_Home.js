@@ -403,7 +403,7 @@ var initiativeHomeInfo_Request = {
           '<h3 class="acc-title d-inline-flex black initiativeProjHomeInfoTitleStyle">' +
           initiativename +
           "</h3>" +
-          '<h3 data-trans-inpattr4 class="Resources black"></h3>' +
+          '<h3 data-trans-inpattr4 class="Resources black inlineMargin0"></h3>' +
           '<span class="des-13"><span class="complition-val initiativeProjHomeInfoValueStyle">' +
           projectcode +
           "</span></span>" +
