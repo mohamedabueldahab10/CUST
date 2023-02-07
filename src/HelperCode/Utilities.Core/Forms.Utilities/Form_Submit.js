@@ -496,7 +496,11 @@ window.New_Data_Submit = {
         "Stage",
         Stages_Data_Request.g.StagesArray[0].stage
       );
-      New_Data_Submit.g.oListItem.set_item("ProjectProgressStatus", "stat5");
+      // New_Data_Submit.g.oListItem.set_item("ProjectProgressStatus", "stat5");
+      New_Data_Submit.g.oListItem.set_item("ProgressStatusDeliverable", "stat6");
+      New_Data_Submit.g.oListItem.set_item("ProgressStatusMilestone", "stat6");
+      New_Data_Submit.g.oListItem.set_item("ProgressStatusSchedule", "stat6");
+
       New_Data_Submit.g.oListItem.set_item("Status", "inprogress");
 
       //لحساب مدة الاساس

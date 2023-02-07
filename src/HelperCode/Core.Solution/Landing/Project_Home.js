@@ -18,7 +18,7 @@ var ActualBudget = 0,
   expiredDeliverablesArrayPercent = [],
   ExpDeliverablesarray = [],
   FutDeliverablesarray = [],
-  projectprogress, listProjectProgress, ScheduleSource, ProjectSPID, isDelDone = 'disabled', MilestoneArr = [];
+  ScheduleSource, ProjectSPID, isDelDone = 'disabled', MilestoneArr = [];
 
 var projectProgressStatusDeliverable, projectProgressStatusMilestone, projectProgressStatusSchedule, ProjectActualImplementationDeliverable, projectPlannedImplementationDeliverable, projectActualImplementationMilestone, projectPlannedImplementationMilestone, projectActualImplementationSchedule, projectPlannedImplementationSchedule;
 
@@ -271,8 +271,7 @@ var Project_Home_Info_Request = {
 
 
       fullphasename = oListItem.get_item('Phase') || No_Data;
-      projectprogress = oListItem.get_item('ProjectProgressStatus') || No_Data;
-      listProjectProgress = oListItem.get_item('ProjectProgressStatus') || No_Data
+
       card1.push('<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
         '<div class="d-inline-flex flex-row align-items-center">' +
         '<span class="icon-user lg d-inline-flex align-items-center text-center handlecircle circlecolor' + projectProgressStatusDeliverable + '">' +
@@ -416,10 +415,6 @@ var Project_Home_Info_Request = {
         '<div class="schedule-src-wrapper">' +
         '<span class="schedule-info"><i data-toggle="tooltip" data-html="true" title="' + schedualInfo + '" class="my-info-i fas fa-info-circle"></i></span>' +
         '<select class="schedule-src">' +
-        // '<option data-trans-schedsrc class="Resources" value="" selected disabled="">مصدر الجدول</option>' +
-        // '<option data-trans-schedepm class="Resources" value="عبر الجدول الزمني">عبر الجدول الزمني</option>' +
-        // '<option data-trans-schedsystem class="Resources" value="عبر النظام">عبر النظام</option>' +
-        // '<option data-trans-milestones class="Resources" value="عبر المعالم">عبر المعالم</option>' +
         '<option data-trans-schedepm class="Resources" value="schedual">schedual</option>' +
         '<option data-trans-schedsystem class="Resources" value="deliverables">deliverables</option>' +
         '<option data-trans-milestones class="Resources" value="milestones">milestones</option>' +
@@ -1344,6 +1339,8 @@ var Deliverables_Info_Request = {
       `<option data-trans-year class="Resources" value=""></option>`
     );
 
+    debugger
+
     Deliverablesarray.forEach(function (dl, i) {
       //appending years
       var dataYear = isArabic ? dl.date.split("-")[0] : dl.date.split("-")[2];
@@ -1371,6 +1368,7 @@ var Deliverables_Info_Request = {
       $(".tlContainer").html(""); // to reset the data when change on year
       Deliverables_Info_Request.g.dltimeline($(this).val());
     });
+    
     if (!yearExcist) {
       // to append no data in drop down when there is no data
       $(".fromDeliverables select#inputYear").append(
@@ -2347,7 +2345,7 @@ var GetProject_Tasks = {
           iscuryear = true;
         else
           iscuryear = false;
-        $('select#inputYear').append(new Option(dataYear, dataYear, iscuryear, iscuryear));
+        $('.fromTimeLine select#inputYear').append(new Option(dataYear, dataYear, iscuryear, iscuryear));
         yearExcist = true;
       }
       sdlyear = dataYear;
@@ -2724,7 +2722,7 @@ var Get_ProjectStatus_Info = {
     // $(".project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black").text(ActualImplementationDeliverable + "%");
 
     $(".myCompletionStatusSchedual,.myCompletionStatusMilestone,.myCompletionStatusDelivrables").removeAttr("data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4 data-trans-stat5 data-trans-stat6 data-trans-stat7 data-trans-stat8");
-    
+
     if (ProgressStatusSchedule != No_Data) {
       $(".myCompletionStatusSchedual").attr("data-trans-" + ProgressStatusSchedule, ""); // لا يمكن ان يكون لا يوجد
     }

@@ -2695,8 +2695,8 @@ function handleStatusBarChart() {
 
   // red very late
 
-  background_4.addColorStop(0, "#ddd");
-  background_4.addColorStop(1, "#ccc");
+  background_4.addColorStop(0, "#a9a9a9");
+  background_4.addColorStop(1, "#696969");
   // blue advanced
 
   background_5.addColorStop(0, "#688393");

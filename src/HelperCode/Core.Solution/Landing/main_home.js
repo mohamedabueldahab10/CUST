@@ -76,8 +76,8 @@ var BudgetLabelsEn = [
   Resources.en["remaining"],
 ];
 // HRSD-R2 new branch
-// var statusOccuresData = ['stat3', 'stat1', 'stat5', 'stat2', 'stat4']
-var statusOccuresData = ["stat3", "stat1", "stat5", "stat2"];
+
+var statusOccuresData = ["stat3", "stat1", "stat7", "stat2", "stat6"];
 
 if (
   localStorage.getItem("lng") == null ||
@@ -120,7 +120,7 @@ var mizania = require("../../../HelperRessources/img/mizania.svg");
 
 //filter vars
 var PQuery =
-    "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>",
+  "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>",
   originalstate = true,
   FilterChoices = [],
   phasefilterarray = [],
@@ -176,7 +176,7 @@ window.Project_Info_Request = {
       }
       PQuery = PQuery.replace(
         "</View>",
-        '<ViewFields> <FieldRef Name="Status"/> <FieldRef Name="ActualBudget"/> <FieldRef Name="AssignedBudget"/> <FieldRef Name="EstimatedCost"/> <FieldRef Name="ScheduleProjectPercentageComplet0"/> <FieldRef Name="Name"/> <FieldRef Name="Title"/> <FieldRef Name="Phase"/> <FieldRef Name="Priority"/> <FieldRef Name="SubSector"/> <FieldRef Name="ProjectProgressStatus"/> <FieldRef Name="Portfolio"/> <FieldRef Name="Sector"/> <FieldRef Name="ProjectType"/> <FieldRef Name="IsStrategicProject"/> </ViewFields></View>'
+        '<ViewFields> <FieldRef Name="Status"/> <FieldRef Name="ActualBudget"/> <FieldRef Name="AssignedBudget"/> <FieldRef Name="EstimatedCost"/> <FieldRef Name="ActualImplementationSchedule"/> <FieldRef Name="Name"/> <FieldRef Name="Title"/> <FieldRef Name="Phase"/> <FieldRef Name="Priority"/> <FieldRef Name="SubSector"/> <FieldRef Name="ProgressStatusDeliverable"/> <FieldRef Name="Portfolio"/> <FieldRef Name="Sector"/> <FieldRef Name="ProjectType"/> <FieldRef Name="IsStrategicProject"/> </ViewFields></View>'
       );
 
       // console.log('Acces Queryyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy',AccessQuery);
@@ -239,7 +239,7 @@ window.Project_Info_Request = {
         EstimatedBudget += oListItem.get_item("EstimatedCost") || 0; //mutabakia
 
         projectPercentageSchedual =
-          oListItem.get_item("ScheduleProjectPercentageComplet0") || 0;
+          oListItem.get_item("ActualImplementationSchedule") || 0;
 
         numberofProjects++;
         //projects listing
@@ -298,10 +298,20 @@ window.Project_Info_Request = {
           }
         }
 
-        ProgressStatus =
-          oListItem.get_item("ProjectProgressStatus") || "nodata";
+        // ProgressStatus =
+        //   oListItem.get_item("ProjectProgressStatus") || "nodata";
+        debugger
+        ProgressStatus = oListItem.get_item("ProgressStatusDeliverable") || "nodata";
+
+
+        // change from ScheduleProjectPercentageComplet0 to ActualImplementationSchedule
+        // ScheduleProjectPercentageComplete =
+        //   oListItem.get_item("ScheduleProjectPercentageComplet0") || 0;
+
         ScheduleProjectPercentageComplete =
-          oListItem.get_item("ScheduleProjectPercentageComplet0") || 0;
+          oListItem.get_item("ActualImplementationSchedule") || 0;
+
+
         ScheduleProgressStatusarray.push(ScheduleProjectPercentageComplete);
         projectPortfolioCode = oListItem.get_item("Portfolio") || No_Data;
         projectSector = oListItem.get_item("Sector") || No_Data;
@@ -671,7 +681,7 @@ window.Project_Info_Request = {
         progressfilterhtml +=
           '<label class="dropdown-item"><span data-trans-' +
           progressfilterarray[i] +
-          ' class="Resources" ></span><input data-type="Text" data-internal="ProjectProgressStatus" type="checkbox" name="ProjectProgressStatus" value="' +
+          ' class="Resources" ></span><input data-type="Text" data-internal="ProgressStatusDeliverable" type="checkbox" name="ProgressStatusDeliverable" value="' +
           progressfilterarray[i] +
           '"></label>';
       }
@@ -898,7 +908,7 @@ window.Project_Info_Request = {
         },
         {
           duration: 333,
-          complete: function () {},
+          complete: function () { },
         }
       );
       if (FilterChoices.length == 0) {
@@ -1074,7 +1084,7 @@ window.Project_Info_Request = {
           }
         });
     },
-    statisticsbars: function () {},
+    statisticsbars: function () { },
     handlescrollview: function () {
       $.fn.isInViewport = function () {
         var elementTop = $(this).offset().top;
@@ -1100,8 +1110,8 @@ window.Project_Info_Request = {
           var internaltt = internalvisiblelength + 6;
           var internaltoshow = $(
             ".accordion#accordionProject.internalAccordion > .card:hidden:nth-child(-n+" +
-              internaltt +
-              ")"
+            internaltt +
+            ")"
           );
           setTimeout(function () {
             internaltoshow.each(function () {
@@ -1130,8 +1140,8 @@ window.Project_Info_Request = {
             internaltt = internalvisiblelength + 6;
             internaltoshow = $(
               ".accordion#accordionProject.internalAccordion > .card:hidden:nth-child(-n+" +
-                internaltt +
-                ")"
+              internaltt +
+              ")"
             );
             if (internaltoshow.length == 0) {
               $(
@@ -1236,8 +1246,8 @@ window.Project_Info_Request = {
           var externaltt = externalvisiblelength + 6;
           var externaltoshow = $(
             ".accordion#accordionProject.externalAccordion > .card:hidden:nth-child(-n+" +
-              externaltt +
-              ")"
+            externaltt +
+            ")"
           );
           setTimeout(function () {
             externaltoshow.each(function () {
@@ -1266,8 +1276,8 @@ window.Project_Info_Request = {
             externaltt = externalvisiblelength + 6;
             externaltoshow = $(
               ".accordion#accordionProject.externalAccordion > .card:hidden:nth-child(-n+" +
-                externaltt +
-                ")"
+              externaltt +
+              ")"
             );
             if (externaltoshow.length == 0) {
               $(
@@ -2569,8 +2579,8 @@ function handleStatusBarChart() {
   background_4.addColorStop(1, "#15425a");
   // blue advanced
 
-  background_5.addColorStop(0, "#01650A");
-  background_5.addColorStop(1, "#014E08");
+  background_5.addColorStop(0, "#a9a9a9");
+  background_5.addColorStop(1, "#696969");
   // blue on plan
 
   // background_1.addColorStop(0, "rgba(0,170,0,255)");
