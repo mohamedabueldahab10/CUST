@@ -23,40 +23,40 @@ var Information_Form = [
         DisplayNameEn: 'Description',
         type: 'multiline',
       },
-      {
-        "InternalName": "Amount",
-        "DisplayName": "القيمة",
-        "DisplayNameEn": "Amount",
-        dontSubmit: true,
-        "type": "percentbyrelatedparent",
-        "listname":"Projects",
-        "parentinternalname":"ActualBudget",
-        "targetelement":"Weight",
-    },
+    //   {
+    //     "InternalName": "Amount",
+    //     "DisplayName": "القيمة",
+    //     "DisplayNameEn": "Amount",
+    //     dontSubmit: true,
+    //     "type": "percentbyrelatedparent",
+    //     "listname":"Projects",
+    //     "parentinternalname":"ActualBudget",
+    //     "targetelement":"Weight",
+    // },
       {
         InternalName: 'Weight',
         DisplayName: 'الوزن / القيمة',
         DisplayNameEn: 'Weight',
         type: 'floatpercentage',
       },
-      {
-        InternalName: 'Status',
-        DisplayName: 'الحالة',
-        DisplayNameEn: 'Status',
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            {
-              display: 'workinprogress',
-              value: 'workinprogress',
-            },
-            {
-              display: 'completed',
-              value: 'completed',
-            },
-          ],
-        },
-      },
+      // {
+      //   InternalName: 'Status',
+      //   DisplayName: 'الحالة',
+      //   DisplayNameEn: 'Status',
+      //   type: 'dropdownValues',
+      //   options: {
+      //     choices: [
+      //       {
+      //         display: 'workinprogress',
+      //         value: 'workinprogress',
+      //       },
+      //       {
+      //         display: 'completed',
+      //         value: 'completed',
+      //       },
+      //     ],
+      //   },
+      // },
       // {
       //     "InternalName": "Quantity",
       //     "DisplayName":"الكمية",
@@ -69,6 +69,19 @@ var Information_Form = [
       //     "type": "datetime",
       //     "max": "PlannedFinishDate"
       // },
+      // {
+      //   InternalName: 'ActualDate',
+      //   DisplayName: 'تاريخ الاكتمال الفعلي',
+      //   DisplayNameEn: 'Actual Date',
+      //   type: 'datetime',
+      //   max: 'today',
+      // },
+      {
+        InternalName: 'DeliveredDate',
+        DisplayName: 'تاريخ التسليم',
+        DisplayNameEn: 'Delivered Date',
+        type: 'datetime',
+      },
       {
         InternalName: 'PlannedFinishDate',
         DisplayName: 'تاريخ الانتهاء المخطط',
@@ -124,12 +137,6 @@ var Information_Form = [
             },
           ],
         },
-      },
-      {
-        InternalName: 'DeliveredDate',
-        DisplayName: 'تاريخ التسليم',
-        DisplayNameEn: 'Delivered Date',
-        type: 'datetime',
       },
       {
         InternalName: 'AcceptanceCriteria',

@@ -37,7 +37,7 @@ var Listing_Info = [
   {
     InternalName: 'PlannedDate',
     DisplayName: 'تاريخ الاكتمال المخطط',
-    DisplayNameEn: 'Planned  Date',
+    DisplayNameEn: 'Planned Finish Date',
     type: 'date',
     inlisting: true,
     infilter: false,

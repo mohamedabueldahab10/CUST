@@ -391,6 +391,7 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
+        dynamic: "Sector", //InternalName Of Parent field
         // "state": "disabled",
       },
       // {
