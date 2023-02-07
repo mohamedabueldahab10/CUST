@@ -28,7 +28,7 @@ var Information_Form = [
             {
                 InternalName: 'PlannedDate',
                 DisplayName: 'تاريخ الاكتمال المخطط',
-                DisplayNameEn: 'Planned Date',
+                DisplayNameEn: 'Planned Finish Date',
                 type: 'datetime',
                 validation: 'required',
             },
@@ -63,8 +63,8 @@ var Information_Form = [
                 type: 'yesnoradio',
                 options: {
                     choices: [
-                    { display: 'yes', value: 'yes' },
-                    { display: 'no', value: 'no' },
+                    { display: 'yes', value: 'true' },
+                    { display: 'no', value: 'false' },
                     ],
                 },
             },

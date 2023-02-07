@@ -35,6 +35,7 @@ var Information_Form = [
         DisplayNameEn: 'KPI Type',
         validation: 'required',
         DisplayName: 'نوع المؤشر',
+        dynamic: "parent", //main field that affect on other chiled field
         toggleValues: [
           // {
           //   value: 'sub',
@@ -55,9 +56,9 @@ var Information_Form = [
         options: {
           choices: [
             // { display: "strategically", value: "strategically" },
-            { display: 'main', value: 'main' },
-            { display: 'sublevel2', value: 'sublevel2' },
-            { display: 'sublevel3', value: 'sublevel3' },
+            { display: 'main', value: 'main', customFilterValue: "main" },
+            { display: 'sublevel2', value: 'sublevel2', customFilterValue: "sublevel2"},
+            { display: 'sublevel3', value: 'sublevel3', customFilterValue: "sublevel3" },
             // { display: 'level2', value: 'level2' },
             // { display: 'level3', value: 'level3' },
             // { display: "sub", value: "sub" },
@@ -231,9 +232,13 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         display: 'none',
-        dynamic: 'RelatedStrategy',
-        filterField: 'RelatedStrategy',
-        filterFieldType: 'Text',
+        // dynamic: 'RelatedStrategy',
+        // filterField: 'RelatedStrategy',
+        // filterFieldType: 'Text',
+        
+				dynamic: "KPIType", //InternalName Of Parent field
+				filterField: "KPIType",//InternalName Of Parent field
+				filterFieldType: "Choice",//Type In Sharepoint List for Parent field
         //role access
         accessFilter: [
           {
@@ -324,6 +329,7 @@ var Information_Form = [
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
         dontSubmit: true,
+        dynamic: 'parent',
         // state: 'disabled',
         // security: {
         //     groups: ["LMS_P",
@@ -344,6 +350,9 @@ var Information_Form = [
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
         dontSubmit: true,
+        "isRelatedToParent":true, // to show parent value depends on child like sector and subsector
+        filterField: "Sector",//InternalName Of Parent field
+        filterFieldType: "Text",//Type In Sharepoint List for Parent field
         // state: 'disabled',
       },
       // {

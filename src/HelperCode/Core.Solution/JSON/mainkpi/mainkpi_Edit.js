@@ -758,6 +758,7 @@ var Information_Form = [
         valfieldkey: 'Title',
         state: 'disabled',
         dontSubmit: true,
+        dynamic: 'parent',
         // security: {
         //     groups: ["LMS_P",
         //         'EPMO', 'System Admin Group'
@@ -778,6 +779,9 @@ var Information_Form = [
         valfieldkey: 'Title',
         state: 'disabled',
         dontSubmit: true,
+        "isRelatedToParent":true, // to show parent value depends on child like sector and subsector
+        filterField: "Sector",//InternalName Of Parent field
+        filterFieldType: "Text",//Type In Sharepoint List for Parent field
       },
     ],
   },

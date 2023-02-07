@@ -34,21 +34,21 @@ var Information_Form = [{
     //     "validation": "required",
 
     // },
-    {
-      "InternalName": "Amount",
-      "DisplayName": "القيمة",
-      "DisplayNameEn": "Amount",
-      dontSubmit: true,
-      "type": "percentbyrelatedparent",
-      "listname": "Projects",
-      "parentinternalname": "ActualBudget",
-      "targetelement": "Weight",
-      "validation": "required"
+    // {
+    //   "InternalName": "Amount",
+    //   "DisplayName": "القيمة",
+    //   "DisplayNameEn": "Amount",
+    //   dontSubmit: true,
+    //   "type": "percentbyrelatedparent",
+    //   "listname": "Projects",
+    //   "parentinternalname": "ActualBudget",
+    //   "targetelement": "Weight",
+    //   "validation": "required"
 
-    },
+    // },
     {
       "InternalName": "Weight",
-      "DisplayName": "الوزن (%)",
+      "DisplayName": "الوزن/القيمة (%)",
       "DisplayNameEn": "Weight (%)",
       "type": "weightfloatpercentage",
       "listname": "Deliverables",
@@ -58,18 +58,18 @@ var Information_Form = [{
       // "state":"disabled",
       "validation": "required"
     },
-    {
-      "InternalName": "Status",
-      "DisplayName": "الحالة",
-      "DisplayNameEn": "Status",
-      "type": "dropdownValues",
-      options: {
-        choices: [
-          { display: 'workinprogress', value: 'workinprogress' },
-          { display: 'completed', value: 'completed' }
-        ]
-      }
-    },
+    // {
+    //   "InternalName": "Status",
+    //   "DisplayName": "الحالة",
+    //   "DisplayNameEn": "Status",
+    //   "type": "dropdownValues",
+    //   options: {
+    //     choices: [
+    //       { display: 'workinprogress', value: 'workinprogress' },
+    //       { display: 'completed', value: 'completed' }
+    //     ]
+    //   }
+    // },
     // {
     //     "InternalName": "PlannedStartDate",
     //     "DisplayName": "تاريخ البدء المخطط",
@@ -77,6 +77,22 @@ var Information_Form = [{
     //     "type": "datetime",
     //     "max": "PlannedFinishDate"
     // },
+    // {
+    //   InternalName: 'ActualDate',
+    //   DisplayName: 'تاريخ الاكتمال الفعلي',
+    //   DisplayNameEn: 'Actual Date',
+    //   type: 'datetime',
+    //   max: 'today',
+    //   validation: 'required',
+    // },
+    {
+      "InternalName": "DeliveredDate",
+      "DisplayName": "تاريخ التسليم",
+      "DisplayNameEn": "Delivered Date",
+      "type": "datetime",
+      "max": "today",
+      // "validation": "required",
+    },
     {
       "InternalName": "PlannedFinishDate",
       "DisplayName": "تاريخ الانتهاء المخطط",
@@ -132,13 +148,6 @@ var Information_Form = [{
         ]
       }
 
-    },
-    {
-      "InternalName": "DeliveredDate",
-      "DisplayName": "تاريخ التسليم",
-      "DisplayNameEn": "Delivered Date",
-      "type": "datetime",
-      "max": "today"
     },
     {
       "InternalName": "AcceptanceCriteria",
@@ -207,7 +216,7 @@ var Information_Form = [{
       DisplayNameEn: 'Attachments',
       type: 'file',
       withAddBtn: 'true',
-      "validation": "required",
+      // "validation": "required",
     },
   ],
 },
