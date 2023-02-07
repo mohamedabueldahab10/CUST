@@ -1413,7 +1413,6 @@ var Deliverables_Info_Request = {
         var delivYear = isArabic
           ? dl.date.split("-")[0]
           : dl.date.split("-")[2];
-        debugger
         if (delivYear == year) {
           var targetMonth = ""
           if (dl.date.split("-")[1] == 10) {
@@ -1427,8 +1426,6 @@ var Deliverables_Info_Request = {
           }
         }
       })
-
-      // $(`.fromDeliverables .month-list-ctx #month-1`).click();
     },
   },
 };
@@ -1547,39 +1544,39 @@ var Milestones_Info_Request = {
         "</a>" +
         "</li>"
       );
-      delevrableDateExpired = initiativeHomeInfo_Request.g.dateConvert2(
-        oListItem.get_item("PlannedCompletedDate")
-      );
-      delevrableDateExpired = Math.round(
-        (new Date() - new Date(delevrableDateExpired)) / (1000 * 60 * 60 * 24)
-      ); //difference in days
+      // delevrableDateExpired = initiativeHomeInfo_Request.g.dateConvert2(
+      //   oListItem.get_item("PlannedCompletedDate")
+      // );
+      // delevrableDateExpired = Math.round(
+      //   (new Date() - new Date(delevrableDateExpired)) / (1000 * 60 * 60 * 24)
+      // ); //difference in days
       // to get sum of weight of all Expired delevrables that are expired
-      if (delevrableDateExpired > 0) {
-        // expired deliverables
-        expiredDeliverablesArrayPercent.push({
-          expiredDelivrableWeight: oListItem.get_item("Weight"),
-        });
-      }
-      if (itemdelivered == "yes") {
-        // expired deliverables
-        deliveredDeliverablesArrayPercent.push({
-          deliveredDelivrableWeight: oListItem.get_item("Weight"),
-        });
-      }
-      if (delevrableDateExpired > 0) {
-        // expired deliverables
-        ExpDeliverablesarray.push({
-          delivered: oListItem.get_item("Completed"),
-          ammount: oListItem.get_item("Weight"),
-          date: itemdate,
-          Code: oListItem.get_item("Title"),
-        });
-      } else {
-        FutDeliverablesarray.push({
-          delivered: oListItem.get_item("Completed"),
-          ammount: oListItem.get_item("Weight"),
-        });
-      }
+      // if (delevrableDateExpired > 0) {
+      //   // expired deliverables
+      //   expiredDeliverablesArrayPercent.push({
+      //     expiredDelivrableWeight: oListItem.get_item("Weight"),
+      //   });
+      // }
+      // if (itemdelivered == "yes") {
+      //   // expired deliverables
+      //   deliveredDeliverablesArrayPercent.push({
+      //     deliveredDelivrableWeight: oListItem.get_item("Weight"),
+      //   });
+      // }
+      // if (delevrableDateExpired > 0) {
+      //   // expired deliverables
+      //   ExpDeliverablesarray.push({
+      //     delivered: oListItem.get_item("Completed"),
+      //     ammount: oListItem.get_item("Weight"),
+      //     date: itemdate,
+      //     Code: oListItem.get_item("Title"),
+      //   });
+      // } else {
+      //   FutDeliverablesarray.push({
+      //     delivered: oListItem.get_item("Completed"),
+      //     ammount: oListItem.get_item("Weight"),
+      //   });
+      // }
 
       debugger
       MilestoneArr.push({
@@ -1598,7 +1595,7 @@ var Milestones_Info_Request = {
       //   Code: oListItem.get_item("Title"),
       // });
 
-      totalMilesDelivrable++;
+      // totalMilesDelivrable++;
 
       var dateNowToday = new Date();
 
