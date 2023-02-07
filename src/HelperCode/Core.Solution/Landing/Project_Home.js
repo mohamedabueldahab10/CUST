@@ -2233,9 +2233,7 @@ var Coc_Info_Request = {
         disbursementPerformance = disbursementPerformance.toFixed(2)
       }
 
-      console.log(plannedDisbursement, "plannedDisbursement")
 
-      debugger
       // الصرف المستحق
       var expectedDisbursementInfo = ""
       if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
@@ -2540,6 +2538,7 @@ var GetProject_Tasks = {
       }
     }
 
+
     if (epmTask_Html.length == 0) {
       epmTask_Html.push('<h3>' + UserNo_Data + '</h3>')
     }
@@ -2655,6 +2654,7 @@ var GetProject_Tasks = {
           $(`.fromTimeLine .month-list-ctx #month-${el}`).css('background', '#D0D0D0') // change background color when click on month
           TLlstMonthCLicked = el
 
+          
           EPMMilstone_Array.forEach(function (dl, i) {
             var dataYear = isArabic ? dl.date.split('-')[0] : dl.date.split('-')[2];
             var dataDay = isArabic ? dl.date.split('-')[2] : dl.date.split('-')[0];

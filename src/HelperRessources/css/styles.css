@@ -6398,3 +6398,7 @@ a.a-important-link:hover>* {
 .monthtable{
     display: flex;
 }
+
+.schedule-info {
+    padding: 0px 5px;
+}
