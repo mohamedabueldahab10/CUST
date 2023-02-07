@@ -1286,7 +1286,7 @@ var Deliverables_Info_Request = {
         if (sdlyear != dataYear) {
 
           if (dataYear == new Date().getFullYear()) {
-            iscuryear = true;
+            iscuryear = false;
           } else {
             iscuryear = false;
           }
