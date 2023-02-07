@@ -70,6 +70,10 @@ var Information_Form = [
             // { display: 'transformationally', value: 'transformationally' },
           ],
         },
+        requiredValues: [
+          { value: 'sublevel2', fields: ['RelatedObjective'] }, //we can put more than 1  field
+          { value: 'sublevel3', fields: ['RelatedObjective'] },
+        ],
       },
       {
         InternalName: 'RelatedStrategy',
@@ -92,6 +96,7 @@ var Information_Form = [
         DisplayNameEn: 'Related Main Objective',
         DisplayName: 'الهدف الرئيسي المرتبط',
         ToggleName: 'RelatedObjective',
+        RequiredName: 'RelatedObjective',
         type: 'lookupWithQuery',
         queryField: 'Types',
         queryFieldType: 'dropdownValues', //ex: "Choice"

@@ -26,12 +26,24 @@ var Information_Form = [
                     ]
                 },
             },
+            // {
+            //     "InternalName": "PlannedCompletedDate",
+            //     "DisplayNameEn": "Planned Completed Date",
+            //     "DisplayName": "تاريخ الاكتمال المخطط",
+            //     "type": "datetime",
+            //     "validation": "required",
+            //     security: {
+            //         groups: ['VRO_E','LMS_E','System Admin Group',
+            //             'EPMO'
+            //         ]
+            //     },
+            // },
             {
-                "InternalName": "PlannedCompletedDate",
-                "DisplayNameEn": "Planned Completed Date",
-                "DisplayName": "تاريخ الاكتمال المخطط",
-                "type": "datetime",
-                "validation": "required",
+                InternalName: 'PlannedDate',
+                DisplayName: 'تاريخ الاكتمال المخطط',
+                DisplayNameEn: 'Planned Date',
+                type: 'datetime',
+                validation: 'required',
                 security: {
                     groups: ['VRO_E','LMS_E','System Admin Group',
                         'EPMO'
@@ -51,21 +63,38 @@ var Information_Form = [
                 },
             },
 
+            // {
+            //     "InternalName": "Completed",
+            //     "DisplayNameEn": "Completed",
+            //     "DisplayName": "حالة الاكتمال",
+            //     "type": "yesnoradio",
+            //     options: {
+            //         choices: [{
+            //             display: 'yes',
+            //             value: 'yes'
+            //         },
+            //         {
+            //             display: 'no',
+            //             value: 'no'
+            //         }
+            //         ]
+            //     },
+            //     security: {
+            //         groups: ['VRO_E','LMS_E','System Admin Group',
+            //             'EPMO'
+            //         ]
+            //     },
+            // },
             {
-                "InternalName": "Completed",
-                "DisplayNameEn": "Completed",
-                "DisplayName": "حالة الاكتمال",
-                "type": "yesnoradio",
+                InternalName: 'Delivered',
+                DisplayName: 'تم التسليم',
+                DisplayNameEn: 'Delivered',
+                type: 'yesnoradio',
                 options: {
-                    choices: [{
-                        display: 'yes',
-                        value: 'yes'
-                    },
-                    {
-                        display: 'no',
-                        value: 'no'
-                    }
-                    ]
+                    choices: [
+                    { display: 'yes', value: 'yes' },
+                    { display: 'no', value: 'no' },
+                    ],
                 },
                 security: {
                     groups: ['VRO_E','LMS_E','System Admin Group',

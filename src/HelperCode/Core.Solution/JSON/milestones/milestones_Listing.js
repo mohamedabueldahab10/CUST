@@ -33,10 +33,11 @@ var Listing_Info = [
   //     isLinkable: true,
   //     ShowUnderProjectListing: false
   // },
+
   {
     InternalName: 'PlannedDate',
     DisplayName: 'تاريخ الاكتمال المخطط',
-    DisplayNameEn: 'Planned Date',
+    DisplayNameEn: 'Planned  Date',
     type: 'date',
     inlisting: true,
     infilter: false,
@@ -50,14 +51,14 @@ var Listing_Info = [
     infilter: true,
     needTrans: true,
   },
-  {
-    InternalName: 'CommittedDate',
-    DisplayName: 'تاريخ الالتزام',
-    DisplayNameEn: 'Committed Date',
-    type: 'date',
-    inlisting: true,
-    infilter: true,
-  },
+  // {
+  //   InternalName: 'CommittedDate',
+  //   DisplayName: 'تاريخ الالتزام',
+  //   DisplayNameEn: 'Committed Date',
+  //   type: 'date',
+  //   inlisting: true,
+  //   infilter: true,
+  // },
   // {
   //     "InternalName": "ShowInProgramReport",
   //     "DisplayName": "اظهار في التقرير",

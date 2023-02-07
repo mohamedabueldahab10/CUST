@@ -21,7 +21,6 @@ var Information_Form = [
         source: 'Internal Entities',
         isSector: 'True',
         EntityType: 'Sector',
-        validation: 'required',
         // "source":"SOs",
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',

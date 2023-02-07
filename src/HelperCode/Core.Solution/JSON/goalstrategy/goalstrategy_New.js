@@ -1,181 +1,202 @@
-
 var Information_Form = [
-    {
-        label: 'البيانات الرئيسية',
-        labelEn: 'Basic Info',
-        description: "التفاصيل",
-        descriptionEn: "Details",
-        subFields: [
+  {
+    label: 'البيانات الرئيسية',
+    labelEn: 'Basic Info',
+    description: 'التفاصيل',
+    descriptionEn: 'Details',
+    subFields: [
+      {
+        InternalName: 'Name',
+        DisplayNameEn: 'Name',
+        DisplayName: 'الأسم',
+        type: 'string',
+        validation: 'required',
+      },
+      {
+        InternalName: 'Description',
+        DisplayNameEn: 'Description',
+        DisplayName: 'الوصف',
+        type: 'multiline',
+        // "validation": "required"
+      },
+      {
+        InternalName: 'Types',
+        DisplayNameEn: 'Strategy Type',
+        DisplayName: 'نوع  الاستراتيجية',
+        validation: 'required',
+        // "toggleValues": ['sub'],
+        // "toggleFields": ['Ministry'],
+        toggleValues: [
+          { value: 'sub', fields: ['Ministry'] },
+          { value: 'ministry', fields: ['PillarsExist'] },
+          { value: 'vision', fields: ['PillarsExist'] },
+          // {value:'strategically', fields:['StrategyRelatedObjective']}
+        ],
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            // { display: 'main', value: 'main' },
             {
-                "InternalName": "Name",
-                "DisplayNameEn": "Name",
-                "DisplayName": "الأسم",
-                "type": "string",
-                "validation": "required"
+              display: 'ministry',
+              value: 'ministry',
+              roles: ['Administrator', 'EPMO', 'SPM'],
             },
             {
-                "InternalName": "Description",
-                "DisplayNameEn": "Description",
-                "DisplayName": "الوصف",
-                "type": "multiline",
-                // "validation": "required"
-
+              display: 'vision',
+              value: 'vision',
+              roles: ['Administrator', 'VROE', 'VROP'],
             },
             {
-                "InternalName": "Types",
-                "DisplayNameEn": "Strategy Type",
-                "DisplayName": "نوع  الاستراتيجية",
-                "validation": "required",
-                // "toggleValues": ['sub'],
-                // "toggleFields": ['Ministry'],
-                "toggleValues": [
-                    { value: 'sub', fields: ['Ministry'] },
-                    { value: 'ministry', fields: ['PillarsExist'] },
-                    { value: 'vision', fields: ['PillarsExist'] },
-                    // {value:'strategically', fields:['StrategyRelatedObjective']}
-                ],
-                "type": "dropdownValues",
-                options: {
-                    choices: [
-                        // { display: 'main', value: 'main' },
-                        { display: 'ministry', value: 'ministry', roles:["Administrator","EPMO","SPM"] },
-                        { display: 'vision', value: 'vision', roles:["Administrator","VROE","VROP"] },
-                        { display: 'lms', value: 'lms', roles:["Administrator","LMSE","LMSP"]},
-                        { display: 'sectorial', value: 'sectorial', roles:["Administrator","VROE","VROP","EPMO","SPM","LMSE","LMSP"] },
-                        { display: 'sub', value: 'sub' },
-
-                        // { display: 'jobmarket', value: 'jobmarket' },
-                        // { display: 'transformationally', value: 'transformationally' },
-                    ]
-                }
-
+              display: 'lms',
+              value: 'lms',
+              roles: ['Administrator', 'LMSE', 'LMSP'],
             },
             {
-                "InternalName": "Ministry",
-                "DisplayNameEn": "Related Ministey Startegy",
-                "DisplayName": "الاستراتيجية المرتبطة",
-                "ToggleName": "Ministry",
-                "type": "lookup",
-                "queryField": "Types",
-                "queryFieldType": "dropdownValues", //ex: "Choice"
-                "queryFieldValue": "ministry",
-                "validation": "required",
-                //from other list:
+              display: 'sectorial',
+              value: 'sectorial',
+              roles: [
+                'Administrator',
+                'VROE',
+                'VROP',
+                'EPMO',
+                'SPM',
+                'LMSE',
+                'LMSP',
+              ],
+            },
+            { display: 'sub', value: 'sub' },
 
-                "source": "GoalStrategy",
-                "Dispfieldkey": "Name",
-                "valfieldkey": "Title",
-                "display": "none"
+            // { display: 'jobmarket', value: 'jobmarket' },
+            // { display: 'transformationally', value: 'transformationally' },
+          ],
+        },
+        requiredValues: [
+          { value: 'sub', fields: ['Ministry'] }, //we can put more than 1  field
+        ],
+      },
+      {
+        InternalName: 'Ministry',
+        DisplayNameEn: 'Related Ministey Startegy',
+        DisplayName: 'الاستراتيجية المرتبطة',
+        ToggleName: 'Ministry',
+        RequiredName: 'Ministry',
+        // "type": "lookup",
+        type: 'lookupWithQuery',
+        queryField: 'Types',
+        queryFieldType: 'dropdownValues', //ex: "Choice"
+        queryFieldValue: 'ministry',
+        validation: 'required',
+        //from other list:
+
+        source: 'GoalStrategy',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        display: 'none',
+      },
+      {
+        InternalName: 'Vision',
+        DisplayNameEn: 'Vision',
+        DisplayName: 'الرؤية',
+        type: 'multiline',
+      },
+      {
+        InternalName: 'Value',
+        DisplayNameEn: 'Value',
+        DisplayName: 'القيم',
+        type: 'multiline',
+      },
+      {
+        InternalName: 'Mission',
+        DisplayNameEn: 'Mission',
+        DisplayName: 'الرسالة',
+        type: 'multiline',
+      },
+      {
+        InternalName: 'ApprovalDate',
+        DisplayName: 'تاريخ إعتماد الإستراتيجية',
+        DisplayNameEn: 'Approval Date',
+        type: 'datetime',
+      },
+      {
+        InternalName: 'PillarsExist',
+        DisplayName: 'هل يوجد محاور استراتيجية / برامج الرؤية ؟',
+        ToggleName: 'PillarsExist',
+        DisplayNameEn: 'Is Stategic Pillars/Vision Programs Exist?',
+        validation: 'required',
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            {
+              display: 'yes',
+              value: 'yes',
             },
             {
-                "InternalName": "Vision",
-                "DisplayNameEn": "Vision",
-                "DisplayName": "الرؤية",
-                "type": "multiline",
+              display: 'no',
+              value: 'no',
             },
-            {
-                "InternalName": "Value",
-                "DisplayNameEn": "Value",
-                "DisplayName":"القيم",
-                "type": "multiline",
-            },
-            {
-                "InternalName": "Mission",
-                "DisplayNameEn": "Mission",
-                "DisplayName": "الرسالة",
-                "type": "multiline",
-            },
-            {
-                "InternalName": "ApprovalDate",
-                "DisplayName":"تاريخ إعتماد الإستراتيجية",
-                "DisplayNameEn": "Approval Date",
-                "type":"datetime"
-            },
-            {
-                "InternalName": "PillarsExist",
-                "DisplayName": "هل يوجد محاور استراتيجية / برامج الرؤية ؟",
-                "ToggleName": "PillarsExist",
-                "DisplayNameEn": "Is Stategic Pillars/Vision Programs Exist?",
-                "validation": "required",
-                "type": "yesnoradio",
-                options: {
-                    choices: [{
-                        display: 'yes',
-                        value: 'yes'
-                    },
-                    {
-                        display: 'no',
-                        value: 'no'
-                    }
-                    ]
-                },
+          ],
+        },
+      },
+    ],
+  },
+  {
+    label: 'المحاور الاستراتيجية',
+    labelEn: 'Strategy pillars',
+    description: 'التفاصيل',
+    descriptionEn: 'Details',
+    sectiontype: 'master',
+    targetlist: 'SPillars',
+    subFields: [
+      // {
+      //     "InternalName": "Title",
+      //     "DisplayNameEn": "Title",
+      //     "DisplayName":"رمز  الركيزةالاستراتيجية",
+      //     "type":"string",
+      //      "state":"disabled"
+      // },
 
-            },
-        ]
-    },
-    {
-        label: 'المحاور الاستراتيجية',
-        labelEn: 'Strategy pillars',
-        description: "التفاصيل",
-        descriptionEn: "Details",
-        sectiontype: "master",
-        targetlist: "SPillars",
-        subFields: [
-            // {
-            //     "InternalName": "Title",
-            //     "DisplayNameEn": "Title",
-            //     "DisplayName":"رمز  الركيزةالاستراتيجية",
-            //     "type":"string",
-            //      "state":"disabled"
-            // },
-            
-         
-            {
-                "InternalName": "Name",
-                "DisplayNameEn": "Name",
-                "DisplayName": "المحور الاستراتيجي",
-                "type": "string",
-                // "validation": "required"
+      {
+        InternalName: 'Name',
+        DisplayNameEn: 'Name',
+        DisplayName: 'المحور الاستراتيجي',
+        type: 'string',
+        // "validation": "required"
+      },
+      // {
+      //     "InternalName": "RelatedStrategy",
+      //     "DisplayNameEn": "Related Strategy",//uat comment
+      //     "DisplayName": "الاستراتيجية المرتبطة",
+      //     // "ToggleName": "Ministry",
+      //     "type": "lookupWithQuery",
+      //     "queryField": "Types",
+      //     "queryFieldType": "dropdownValues", //ex: "Choice"
+      //     "queryFieldValue": "ministry",
+      //     //from other list:
 
-            },
-            // {
-            //     "InternalName": "RelatedStrategy",
-            //     "DisplayNameEn": "Related Strategy",//uat comment
-            //     "DisplayName": "الاستراتيجية المرتبطة",
-            //     // "ToggleName": "Ministry",
-            //     "type": "lookupWithQuery",
-            //     "queryField": "Types",
-            //     "queryFieldType": "dropdownValues", //ex: "Choice"
-            //     "queryFieldValue": "ministry",
-            //     //from other list:
+      //     "source": "GoalStrategy",
+      //     "Dispfieldkey": "Name",
+      //     "valfieldkey": "Title",
+      //     "validation": "required"
+      //     // "display":"none"
+      // },
+      // {
+      //     "InternalName": "ObjectiveRealized",
+      //     "DisplayName":"هل تم تحقيق الهدف؟",
+      //     "type":"radio",
+      //     options:{
+      //         choices:[
+      //             'لا','نعم'
+      //         ]
+      //     }
 
-            //     "source": "GoalStrategy",
-            //     "Dispfieldkey": "Name",
-            //     "valfieldkey": "Title",
-            //     "validation": "required"
-            //     // "display":"none"
-            // },
-            // {
-            //     "InternalName": "ObjectiveRealized",
-            //     "DisplayName":"هل تم تحقيق الهدف؟",
-            //     "type":"radio",
-            //     options:{
-            //         choices:[
-            //             'لا','نعم'
-            //         ]
-            //     }
-
-
-            // },
-            {
-                "InternalName": "Description",
-                "DisplayNameEn": "Description",
-                "DisplayName": "الوصف",
-                "type": "multiline",
-                // "validation": "required"
-
-            },
-        ]
-    }
-
-];
+      // },
+      {
+        InternalName: 'Description',
+        DisplayNameEn: 'Description',
+        DisplayName: 'الوصف',
+        type: 'multiline',
+        // "validation": "required"
+      },
+    ],
+  },
+]

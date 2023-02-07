@@ -19,11 +19,18 @@ var Information_Form = [
                 "type": "string",
                 "maxchar": "250"
             },
+            // {
+            //     "InternalName": "PlannedCompletedDate",
+            //     "DisplayNameEn": "Planned Completed Date",
+            //     "DisplayName": "تاريخ الاكتمال المخطط",
+            //     "type": "datetime"
+            // },
             {
-                "InternalName": "PlannedCompletedDate",
-                "DisplayNameEn": "Planned Completed Date",
-                "DisplayName": "تاريخ الاكتمال المخطط",
-                "type": "datetime"
+                InternalName: 'PlannedDate',
+                DisplayName: 'تاريخ الاكتمال المخطط',
+                DisplayNameEn: 'Planned Date',
+                type: 'datetime',
+                validation: 'required',
             },
             {
                 "InternalName": "Weight",
@@ -32,22 +39,34 @@ var Information_Form = [
                 "type": "floatpercentage"
             },
 
+            // {
+            //     "InternalName": "Completed",
+            //     "DisplayNameEn": "Completed",
+            //     "DisplayName": "حالة الاكتمال",
+            //     "type": "yesnoradio",
+            //     options: {
+            //         choices: [{
+            //             display: 'yes',
+            //             value: 'yes'
+            //         },
+            //         {
+            //             display: 'no',
+            //             value: 'no'
+            //         }
+            //         ]
+            //     }
+            // },
             {
-                "InternalName": "Completed",
-                "DisplayNameEn": "Completed",
-                "DisplayName": "حالة الاكتمال",
-                "type": "yesnoradio",
+                InternalName: 'Delivered',
+                DisplayName: 'تم التسليم',
+                DisplayNameEn: 'Delivered',
+                type: 'yesnoradio',
                 options: {
-                    choices: [{
-                        display: 'yes',
-                        value: 'yes'
-                    },
-                    {
-                        display: 'no',
-                        value: 'no'
-                    }
-                    ]
-                }
+                    choices: [
+                    { display: 'yes', value: 'yes' },
+                    { display: 'no', value: 'no' },
+                    ],
+                },
             },
             {
                 "InternalName": "ActualCompletedDate",

@@ -20,9 +20,15 @@ var Information_Form  = [
                 "type":"string",
                 "maxchar": "250"
             },
+            // {
+            //     "InternalName": "PlannedCompletedDate",
+            //     "DisplayNameEn": "Planned Completed Date",
+            //     "DisplayName":"تاريخ الاكتمال المخطط",
+            //     "type":"datetime"
+            // },
             {
-                "InternalName": "PlannedCompletedDate",
-                "DisplayNameEn": "Planned Completed Date",
+                "InternalName": "PlannedFinishDate",
+                "DisplayNameEn": "Planned Finish Date",
                 "DisplayName":"تاريخ الاكتمال المخطط",
                 "type":"datetime"
             },
@@ -57,22 +63,34 @@ var Information_Form  = [
             //     "DisplayNameEn": "Committed Date",
             //     "type": "datetime",
             // },
+            // {
+            //     "InternalName": "Completed",
+            //     "DisplayNameEn": "Completed",
+            //     "DisplayName":"حالة الاكتمال",
+            //     "type": "yesnoradio",
+            //     options: {
+            //         choices: [{
+            //                 display: 'yes',
+            //                 value: 'yes'
+            //             },
+            //             {
+            //                 display: 'no',
+            //                 value: 'no'
+            //             }
+            //         ]
+            //     }
+            // },
             {
-                "InternalName": "Completed",
-                "DisplayNameEn": "Completed",
-                "DisplayName":"حالة الاكتمال",
-                "type": "yesnoradio",
+                InternalName: 'Delivered',
+                DisplayName: 'تم التسليم',
+                DisplayNameEn: 'Delivered',
+                type: 'yesnoradio',
                 options: {
-                    choices: [{
-                            display: 'yes',
-                            value: 'yes'
-                        },
-                        {
-                            display: 'no',
-                            value: 'no'
-                        }
-                    ]
-                }
+                  choices: [
+                    { display: 'yes', value: 'yes' },
+                    { display: 'no', value: 'no' },
+                  ],
+                },
             },
             // {
             //     "InternalName": "RelatedBenefits",

@@ -18,6 +18,12 @@ var Information_Form = [
         type: 'string',
       },
       {
+        InternalName: 'Weight',
+        DisplayNameEn: 'Weight',
+        DisplayName: 'الوزن المكافئ للإنجاز %',
+        type: 'floatpercentage',
+      },
+      {
         InternalName: 'PlannedDate',
         DisplayName: 'تاريخ الاكتمال المخطط',
         DisplayNameEn: 'Planned Date',
@@ -45,12 +51,12 @@ var Information_Form = [
           ],
         },
       },
-      {
-        InternalName: 'CommittedDate',
-        DisplayName: 'تاريخ الالتزام',
-        DisplayNameEn: 'Committed Date',
-        type: 'datetime',
-      },
+      // {
+      //   InternalName: 'CommittedDate',
+      //   DisplayName: 'تاريخ الالتزام',
+      //   DisplayNameEn: 'Committed Date',
+      //   type: 'datetime',
+      // },
       {
         InternalName: 'Deliverables',
         DisplayName: 'المخرجات',

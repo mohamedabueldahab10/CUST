@@ -36,7 +36,7 @@ var Information_Form = [
         // type: 'lookup',
         type: 'lookupwithoutrepeat',
         source: 'Benefits',
-        initiativeCodeInList: true,
+        initiativeCodeInList: true, //value in look up drop down should be related to current project
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         // dynamic:"mainfield",//controls others data
@@ -45,7 +45,6 @@ var Information_Form = [
         // queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
         // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
         // queryFieldValue: 'sub',// if i need to make the field with filter should add this
-        initiativeCodeInList: true //value in look up drop down should be related to current project
       },
       {
         InternalName: 'PeriodType',

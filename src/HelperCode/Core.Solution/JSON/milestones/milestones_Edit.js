@@ -20,6 +20,15 @@ var Information_Form = [
         validation: 'required',
       },
       {
+        InternalName: 'Weight',
+        DisplayNameEn: 'Weight',
+        DisplayName: 'الوزن المكافئ للإنجاز %',
+        type: 'floatpercentage',
+        validation: 'required',
+        // "state": "disabled",
+        // dynamic: "Initiative"
+      },
+      {
         InternalName: 'PlannedDate',
         DisplayName: 'تاريخ الاكتمال المخطط',
         DisplayNameEn: 'Planned Date',
@@ -48,13 +57,13 @@ var Information_Form = [
           ],
         },
       },
-      {
-        InternalName: 'CommittedDate',
-        DisplayName: 'تاريخ الالتزام',
-        DisplayNameEn: 'Committed Date',
-        type: 'datetime',
-        validation: 'required',
-      },
+    //   {
+    //     InternalName: 'CommittedDate',
+    //     DisplayName: 'تاريخ الالتزام',
+    //     DisplayNameEn: 'Committed Date',
+    //     type: 'datetime',
+    //     validation: 'required',
+    //   },
       // {
       //     "InternalName": "ShowInProgramReport",
       //     "DisplayName": "اظهار في التقرير",
