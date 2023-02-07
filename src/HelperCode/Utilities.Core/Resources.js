@@ -384,7 +384,7 @@
     pattr43: "قيمة المشروع",
     pattr44: "الصرف المستحق",
     pattr45: "الميزانية المتبقية",
-    amountpaid: "القيمة المدفوعة",
+    amountpaid: "الصرف الفعلي",
     amount: "المبلغ",
     pattr46: "الرمز",
     pattr47: "التاريخ المحدد",
@@ -858,7 +858,8 @@
     benefitmetricname:"مقياس المنفعة",
     benefit:"مقياس المنفعة",
     plannedcompleteddate:"تاريخ الانتهاء المخطط",
-    actualdate:"تاريخ الاكتمال الفعلي"
+    actualdate:"تاريخ الاكتمال الفعلي",
+    budgetinfotitle:"ميزانية المشروع"
   },
   en: {
     clearfilter: "Clear Filter",

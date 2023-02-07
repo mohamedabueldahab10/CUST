@@ -264,10 +264,10 @@ window.initiativeRequest = {
           oListItem.get_item("InitiativeOwner").get_lookupId() == UserN.Id)
       ) {
         //getting 1st stats data
-        EstimatedCost += oListItem.get_item("EstimatedCost") || 0; //masroufa
+        EstimatedCost += oListItem.get_item("Expenditures") || 0; //masroufa
         SpendFromBudget = oListItem.get_item("EstimatedCost") || 0;
         // ActualBudget += oListItem.get_item("InitiativeBudget") || 0; //masroufa
-        // AssignedBudget += oListItem.get_item('AssignedBudget') || 0; // total budget
+        AssignedBudget += oListItem.get_item('ActualCost') || 0; // total budget
         // EstimatedBudget += oListItem.get_item('EstimatedCost') || 0; //mutabakia
         numberofInitiatives++;
         //projects listing
