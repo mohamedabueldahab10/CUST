@@ -347,50 +347,50 @@ export default class InitiativeHomeWebPart extends BaseClientSideWebPart<IInitia
                                         <select id="inputYear" class="input-year form-control">
                                         </select>
                                     </div>
-                                    <div class="col-lg-12 col-xl-10">
+                                    <div class="col-lg-12 col-xl-10"> 
                                         <div class="month-list-ctx">
                                             <div class="month-list d-flex" style="padding-bottom:16px">
                                                 <div style="display: flex;width: 100%;font-size:14px">
-                                                    <div class="col px-2 month" id="month-1" style="cursor:pointer;">
+                                                    <div class="col px-2 month monthtable" id="month-1" style="cursor:pointer;">
                                                         <span data-trans-PAttr9 class="Resources"></span>
     
                                                     </div>
     
-                                                    <div class="col px-2 month" id="month-2" style="cursor:pointer;">
+                                                    <div class="col px-2 month monthtable" id="month-2" style="cursor:pointer;">
                                                         <span data-trans-PAttr10 class="Resources"></span>
                                                         <!--<div class="time-box">
                                                             <div class="p-date">1/12</div>
                                                             <div class="p-title">First Delivery</div>
                                                         </div>-->
                                                     </div>
-                                                    <div class="col px-2 month" id="month-3" style="cursor:pointer;">
+                                                    <div class="col px-2 month monthtable" id="month-3" style="cursor:pointer;">
                                                         <span data-trans-PAttr11 class="Resources"></span>
                                                     </div>
-                                                    <div class="col px-2 month" id="month-4" style="cursor:pointer;">
+                                                    <div class="col px-2 month monthtable" id="month-4" style="cursor:pointer;">
                                                         <span data-trans-PAttr12 class="Resources"></span>
                                                     </div>
-                                                    <div class="col px-2 month" id="month-5" style="cursor:pointer;">
+                                                    <div class="col px-2 month monthtable" id="month-5" style="cursor:pointer;">
                                                         <span data-trans-PAttr13 class="Resources"></span>
                                                     </div>
-                                                    <div class="col px-2 month" id="month-6" style="cursor:pointer;">
+                                                    <div class="col px-2 month monthtable" id="month-6" style="cursor:pointer;">
                                                         <span data-trans-PAttr14 class="Resources"></span>
                                                     </div>
-                                                    <div class="col px-2 month" id="month-7" style="cursor:pointer;">
+                                                    <div class="col px-2 month monthtable" id="month-7" style="cursor:pointer;">
                                                         <span data-trans-PAttr15 class="Resources"></span>
                                                     </div>
-                                                    <div class="col px-2 month" id="month-8" style="cursor:pointer;">
+                                                    <div class="col px-2 month monthtable" id="month-8" style="cursor:pointer;">
                                                         <span data-trans-PAttr16 class="Resources"></span>
                                                     </div>
-                                                    <div class="col px-2 month" id="month-9" style="cursor:pointer;">
+                                                    <div class="col px-2 month monthtable" id="month-9" style="cursor:pointer;">
                                                         <span data-trans-PAttr17 class="Resources"></span>
                                                     </div>
-                                                    <div class="col px-2 month" id="month-10" style="cursor:pointer;">
+                                                    <div class="col px-2 month monthtable" id="month-10" style="cursor:pointer;">
                                                         <span data-trans-PAttr18 class="Resources"></span>
                                                     </div>
-                                                    <div class="col px-2 month" id="month-11" style="cursor:pointer;">
+                                                    <div class="col px-2 month monthtable" id="month-11" style="cursor:pointer;">
                                                         <span data-trans-PAttr19 class="Resources"></span>
                                                     </div>
-                                                    <div class="col px-2 month" id="month-12" style="cursor:pointer;">
+                                                    <div class="col px-2 month monthtable" id="month-12" style="cursor:pointer;">
                                                         <span data-trans-PAttr20 class="Resources"></span>
                                                     </div>
                                                 </div>
@@ -431,34 +431,34 @@ export default class InitiativeHomeWebPart extends BaseClientSideWebPart<IInitia
                                                     <div class="p-title">First Delivery</div>
                                                 </div>-->
                                                 </div>
-                                                <div class="col px-2 month" id="month-3" style="cursor:pointer;">
+                                                <div class="col px-2 month monthtable" id="month-3" style="cursor:pointer;">
                                                     <span data-trans-PAttr11 class="Resources"></span>
                                                 </div>
-                                                <div class="col px-2 month" id="month-4" style="cursor:pointer;">
+                                                <div class="col px-2 month monthtable" id="month-4" style="cursor:pointer;">
                                                     <span data-trans-PAttr12 class="Resources"></span>
                                                 </div>
-                                                <div class="col px-2 month" id="month-5" style="cursor:pointer;">
+                                                <div class="col px-2 month monthtable" id="month-5" style="cursor:pointer;">
                                                     <span data-trans-PAttr13 class="Resources"></span>
                                                 </div>
-                                                <div class="col px-2 month" id="month-6" style="cursor:pointer;">
+                                                <div class="col px-2 month monthtable" id="month-6" style="cursor:pointer;">
                                                     <span data-trans-PAttr14 class="Resources"></span>
                                                 </div>
-                                                <div class="col px-2 month" id="month-7" style="cursor:pointer;">
+                                                <div class="col px-2 month monthtable" id="month-7" style="cursor:pointer;">
                                                     <span data-trans-PAttr15 class="Resources"></span>
                                                 </div>
-                                                <div class="col px-2 month" id="month-8" style="cursor:pointer;">
+                                                <div class="col px-2 month monthtable" id="month-8" style="cursor:pointer;">
                                                     <span data-trans-PAttr16 class="Resources"></span>
                                                 </div>
-                                                <div class="col px-2 month" id="month-9" style="cursor:pointer;">
+                                                <div class="col px-2 month monthtable" id="month-9" style="cursor:pointer;">
                                                     <span data-trans-PAttr17 class="Resources"></span>
                                                 </div>
-                                                <div class="col px-2 month" id="month-10" style="cursor:pointer;">
+                                                <div class="col px-2 month monthtable" id="month-10" style="cursor:pointer;">
                                                     <span data-trans-PAttr18 class="Resources"></span>
                                                 </div>
-                                                <div class="col px-2 month" id="month-11" style="cursor:pointer;">
+                                                <div class="col px-2 month monthtable" id="month-11" style="cursor:pointer;">
                                                     <span data-trans-PAttr19 class="Resources"></span>
                                                 </div>
-                                                <div class="col px-2 month" id="month-12" style="cursor:pointer;">
+                                                <div class="col px-2 month monthtable" id="month-12" style="cursor:pointer;">
                                                     <span data-trans-PAttr20 class="Resources"></span>
                                                 </div>
                                             </div>
