@@ -2161,7 +2161,7 @@ var Coc_Info_Request = {
 
     var collListItem = Coc_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-    TheCost = 0, Amount = 0, Deliverables = '', Invoices = 0;
+    TheCost = 0, Amount = 0, Deliverables = '', InvoicesCoc = 0;
 
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
@@ -2172,7 +2172,7 @@ var Coc_Info_Request = {
 
       //This can be done also by Caml query . we can passe all delivrables code there
       for (i = 0; i < Deliverablesarray.length; i++) {
-        var myselections = Deliverables ? Deliverables.split(":::") : [] // add myselection to handle mult delivrable in invoices
+        var myselections = Deliverables ? Deliverables.split(":::") : [] // add myselection to handle mult delivrable in Coc
 
         if (Deliverablesarray[i].Code == myselections[0] && Status == 'exchangehasbeendone') {
           TheCost += Amount;
@@ -2183,7 +2183,7 @@ var Coc_Info_Request = {
       //we get all invoices of delivrables that have delivrables yes
       for (i = 0; i < Deliverablesarray.length; i++) {
         if (Deliverablesarray[i].Code == Deliverables && Deliverablesarray[i].delivered == 'yes' && Status == 'exchangehasbeendone') {
-          Invoices += Amount;
+          InvoicesCoc += Amount;
         }
       }
 
@@ -2198,7 +2198,7 @@ var Coc_Info_Request = {
           )
         ) || 0;
 
-      var expectedDisbursement = SF - Invoices;
+      var expectedDisbursement = SF - InvoicesCoc;
 
       if (expectedDisbursement) {
         expectedDisbursement = Number(expectedDisbursement)
@@ -2322,11 +2322,6 @@ var Coc_Info_Request = {
       $(".project-budget-ctx .card-body > div:nth-child(8) .my-info-i").attr("data-original-title", disbursementPerformanceInfo)
       $(".project-budget-ctx .card-body > div:nth-child(8) > div:nth-child(2) > div:nth-child(2)").html("<span>" + disbursementPerformance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " %</span>"
       );
-
-
-      console.log(Invoices, "Invoices Invoices")
-
-
     }
 
 
@@ -2339,73 +2334,73 @@ var Coc_Info_Request = {
 }
 
 
-var Invoices_Info_Request = {
-  // The main Initialization function
-  init: function () {
-    var clientContext = new SP.ClientContext.get_current();
-    var oList = clientContext.get_web().get_lists().getByTitle('Invoices');
-    var camlQuery = new SP.CamlQuery();
-    camlQuery.set_viewXml('<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="ProjectCode" /><Value Type="Text">' + Project_Home_Info_Request.g.PCODE + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>');
-    Invoices_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
-    clientContext.load(Invoices_Info_Request.g.collListItem);
-    clientContext.executeQueryAsync(
-      Function.createDelegate(this, Invoices_Info_Request.onSuccess),
-      Function.createDelegate(this, Invoices_Info_Request.onError)
-    );
-  },
-  onSuccess: function (sender, args) {
-    var collListItem = Invoices_Info_Request.g.collListItem;
-    var listItemEnum = collListItem.getEnumerator();
-    TheCost = 0, Amount = 0, Deliverable = '', Invoices = 0;
-    while (listItemEnum.moveNext()) {
-      var oListItem = listItemEnum.get_current();
-      Amount = oListItem.get_item('Amount');
-      Deliverable = oListItem.get_item('Deliverable');
-      Status = oListItem.get_item('Status');
+// var Invoices_Info_Request = {
+//   // The main Initialization function
+//   init: function () {
+//     var clientContext = new SP.ClientContext.get_current();
+//     var oList = clientContext.get_web().get_lists().getByTitle('Invoices');
+//     var camlQuery = new SP.CamlQuery();
+//     camlQuery.set_viewXml('<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="ProjectCode" /><Value Type="Text">' + Project_Home_Info_Request.g.PCODE + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>');
+//     Invoices_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+//     clientContext.load(Invoices_Info_Request.g.collListItem);
+//     clientContext.executeQueryAsync(
+//       Function.createDelegate(this, Invoices_Info_Request.onSuccess),
+//       Function.createDelegate(this, Invoices_Info_Request.onError)
+//     );
+//   },
+//   onSuccess: function (sender, args) {
+//     var collListItem = Invoices_Info_Request.g.collListItem;
+//     var listItemEnum = collListItem.getEnumerator();
+//     TheCost = 0, Amount = 0, Deliverable = '', Invoices = 0;
+//     while (listItemEnum.moveNext()) {
+//       var oListItem = listItemEnum.get_current();
+//       Amount = oListItem.get_item('Amount');
+//       Deliverable = oListItem.get_item('Deliverable');
+//       Status = oListItem.get_item('Status');
 
-      //This can be done also by Caml query . we can passe all delivrables code there
-      for (i = 0; i < Deliverablesarray.length; i++) {
-        var myselections = Deliverable ? Deliverable.split(":::") : [] // add myselection to handle mult delivrable in invoices
+//       //This can be done also by Caml query . we can passe all delivrables code there
+//       for (i = 0; i < Deliverablesarray.length; i++) {
+//         var myselections = Deliverable ? Deliverable.split(":::") : [] // add myselection to handle mult delivrable in invoices
 
-        if (Deliverablesarray[i].Code == myselections[0] && Status == 'paid') {
-          TheCost += Amount;
-        }
-      }
+//         if (Deliverablesarray[i].Code == myselections[0] && Status == 'paid') {
+//           TheCost += Amount;
+//         }
+//       }
 
-      //we get all invoices of delivrables that have delivrables yes
-      for (i = 0; i < Deliverablesarray.length; i++) {
-        if (Deliverablesarray[i].Code == Deliverable && Deliverablesarray[i].delivered == 'yes' && Status == 'paid') {
-          Invoices += Amount;
-        }
-      }
-    }
-
-
-    //console.log(ExpectedExchange);
-    LastCost = AssignedBudget - TheCost;
-
-    var SF = Math.round(deliveredDeliverablesArrayPercent.reduce((accum, item) => accum + ((item.deliveredDelivrableWeight * AssignedBudget) / 100), 0)) || 0;
-    var expectedDisbursement = SF - Invoices;
-
-    $('.project-budget-ctx .card-body > div:nth-child(2) > div:nth-child(2) > div:nth-child(2)').text(expectedDisbursement.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ' + SAR_Currency);
-    $('.project-budget-ctx .card-body > div:nth-child(3) > div:nth-child(2) > div:nth-child(2)').html('<span>' + LastCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ' + SAR_Currency + '</span>');
+//       //we get all invoices of delivrables that have delivrables yes
+//       for (i = 0; i < Deliverablesarray.length; i++) {
+//         if (Deliverablesarray[i].Code == Deliverable && Deliverablesarray[i].delivered == 'yes' && Status == 'paid') {
+//           Invoices += Amount;
+//         }
+//       }
+//     }
 
 
+//     //console.log(ExpectedExchange);
+//     LastCost = AssignedBudget - TheCost;
 
-    $('.project-budget-ctx .card-body > div:nth-child(4) > div:nth-child(2) > div:nth-child(2)').html('<span>' + TheCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ' + SAR_Currency + '</span>');
+//     var SF = Math.round(deliveredDeliverablesArrayPercent.reduce((accum, item) => accum + ((item.deliveredDelivrableWeight * AssignedBudget) / 100), 0)) || 0;
+//     var expectedDisbursement = SF - Invoices;
+
+//     $('.project-budget-ctx .card-body > div:nth-child(2) > div:nth-child(2) > div:nth-child(2)').text(expectedDisbursement.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ' + SAR_Currency);
+//     $('.project-budget-ctx .card-body > div:nth-child(3) > div:nth-child(2) > div:nth-child(2)').html('<span>' + LastCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ' + SAR_Currency + '</span>');
 
 
 
+//     $('.project-budget-ctx .card-body > div:nth-child(4) > div:nth-child(2) > div:nth-child(2)').html('<span>' + TheCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ' + SAR_Currency + '</span>');
 
 
-    $('li.nav-item a:not(:visible)').parent().hide()
-  },
-  onError: function (sender, args) {
-    console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
-  },
-  // Global variables
-  g: {}
-};
+
+
+
+//     $('li.nav-item a:not(:visible)').parent().hide()
+//   },
+//   onError: function (sender, args) {
+//     console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+//   },
+//   // Global variables
+//   g: {}
+// };
 
 //
 

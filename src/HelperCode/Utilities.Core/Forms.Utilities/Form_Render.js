@@ -576,9 +576,9 @@ window.ListInfo = {
             Edit_Data_Submit.g.clickbait();
             Edit_Data_Submit.g.Cancel();
 
-            if (listkey == "invoices") {
-              ListInfo.g.InvoicesTotal();
-            }
+            // if (listkey == "invoices") {
+            //   ListInfo.g.InvoicesTotal();
+            // }
             if (listkey == "deliverables") {
               ListInfo.g.DeliverablesDelivered();
             }
@@ -681,9 +681,9 @@ window.ListInfo = {
               ListInfo.g.budgetitem();
             }
 
-            if (listkey == "invoices") {
-              ListInfo.g.InvoicesTotal();
-            }
+            // if (listkey == "invoices") {
+            //   ListInfo.g.InvoicesTotal();
+            // }
 
             if (listkey == "initiatives") {
               Initiative_Stages_Data_Request.init();
@@ -3263,14 +3263,7 @@ window.ListInfo = {
 
       case "lookupmultiselect":
         var customQuery;
-        if (PCODE && listkey == "invoices") {
-          // get only delevered yes from delivrable
-          //change FieldRef to Name and Acending True to can sort alphapetics arabic and english
-          customQuery =
-            '<View><Query><Where><And><Eq><FieldRef Name="Delivered" /><Value Type="Choice">yes</Value></Eq><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="ProjectCode" /><Value Type="Text">' +
-            PCODE +
-            "</Value></Eq></And></And></Where><OrderBy><FieldRef Name='Name' Ascending='True' /></OrderBy></Query></View>";
-        } else if (
+        if (
           PCODE &&
           element.source != "Vendors" &&
           element.source != "InitiativeDeliverables"
@@ -4076,14 +4069,7 @@ window.ListInfo = {
               "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"InitiativeCode\" /><Value Type=\"Text\">" +
               ICODE +
               "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
-          }
-          //  else if (PCODE && listkey == "invoices") {
-          //   customQuery =
-          //     '<View><Query><Where><And><Eq><FieldRef Name="Delivered" /><Value Type="Choice">yes</Value></Eq><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="ProjectCode" /><Value Type="Text">' +
-          //     PCODE +
-          //     "</Value></Eq></And></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
-          // }
-          else {
+          } else {
             //change FieldRef to Name and Acending True to can sort alphapetics arabic and english
             customQuery =
               "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Name' Ascending='True' /></OrderBy></Query></View>";
@@ -5117,28 +5103,28 @@ window.ListInfo = {
         }
       });
     },
-    InvoicesTotal: function () {
-      // $('#Amount, #TVA').on("change", function () {
-      //   var amount = $('#Amount').val() ? parseInt(($('#Amount').val()).replaceAll(',', '')) : 0;
-      //   var TVA = $('#TVA').val() ? parseInt(($('#TVA').val()).replaceAll(',', '')) : 0;
-      //   var Sum = amount + ((TVA * amount) / 100);
-      //   $('#TotalAmount').val(Sum);
-      // });
-      $("#TotalAmount").on("change", function () {
-        var totalAmount = $("#TotalAmount").val()
-          ? parseInt($("#TotalAmount").val().replaceAll(",", ""))
-          : 0;
-        var amount = Number((totalAmount / 1.15).toFixed("2"));
-        var tax = Number((totalAmount - amount).toFixed("2"));
+    // InvoicesTotal: function () {
+    //   // $('#Amount, #TVA').on("change", function () {
+    //   //   var amount = $('#Amount').val() ? parseInt(($('#Amount').val()).replaceAll(',', '')) : 0;
+    //   //   var TVA = $('#TVA').val() ? parseInt(($('#TVA').val()).replaceAll(',', '')) : 0;
+    //   //   var Sum = amount + ((TVA * amount) / 100);
+    //   //   $('#TotalAmount').val(Sum);
+    //   // });
+    //   $("#TotalAmount").on("change", function () {
+    //     var totalAmount = $("#TotalAmount").val()
+    //       ? parseInt($("#TotalAmount").val().replaceAll(",", ""))
+    //       : 0;
+    //     var amount = Number((totalAmount / 1.15).toFixed("2"));
+    //     var tax = Number((totalAmount - amount).toFixed("2"));
 
-        $("#Amount").val(amount);
-        $("#TVA").val(tax);
+    //     $("#Amount").val(amount);
+    //     $("#TVA").val(tax);
 
-        // var TVA = $('#TVA').val() ? parseInt(($('#TVA').val()).replaceAll(',', '')) : 0;
-        // var Sum = amount + ((TVA * amount) / 100);
-        // $('#TotalAmount').val(Sum);
-      });
-    },
+    //     // var TVA = $('#TVA').val() ? parseInt(($('#TVA').val()).replaceAll(',', '')) : 0;
+    //     // var Sum = amount + ((TVA * amount) / 100);
+    //     // $('#TotalAmount').val(Sum);
+    //   });
+    // },
     DeliverablesDelivered: function () {
       var Delivered = $("#Delivered:checked").val();
       if (Delivered == "yes") {

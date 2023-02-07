@@ -1434,13 +1434,13 @@ window.View_Data_Request = {
       //   $('#PillarsExist').parent().hide()
       // }
     }
-    if (listkey == 'invoices' && PCODE) {
-      DeliverableRelatedToInvoice = oListItem.get_item('Deliverable');
-      if (DeliverableRelatedToInvoice) {
-        var myselections = DeliverableRelatedToInvoice ? DeliverableRelatedToInvoice.split(":::") : [] // add myselection to handle mult delivrable in invoices
-        // MultiSelect_View.init('Deliverables', myselections)
-      }
-    }
+    // if (listkey == 'invoices' && PCODE) {
+    //   DeliverableRelatedToInvoice = oListItem.get_item('Deliverable');
+    //   if (DeliverableRelatedToInvoice) {
+    //     var myselections = DeliverableRelatedToInvoice ? DeliverableRelatedToInvoice.split(":::") : [] // add myselection to handle mult delivrable in invoices
+    //     // MultiSelect_View.init('Deliverables', myselections)
+    //   }
+    // }
     if (listkey == 'milestones' && PCODE) { // add it on view to update the milestone when delete
       initiativeMilestoneVal = oListItem.get_item('RelatedInitiativeMilestone') ? oListItem.get_item('RelatedInitiativeMilestone') : ''
       Get_ProjectData_ByCode.init()
