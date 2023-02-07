@@ -1508,7 +1508,7 @@ window.ListingData = {
               latecount = 0;
             var today = new Date();
             recordsddl.forEach((item) => {
-              if (item.Completed == "yes") {
+              if (item.Delivered == "yes") {
                 countcompleted += 1;
               } else {
                 notcompletedcount += 1;
@@ -1521,20 +1521,20 @@ window.ListingData = {
               var finalformatedactualdate = new Date(year2 + "-" + month2 + "-" + day2);
               console.log(finalformatedactualdate, "finalformatedPlanneddate");
           
-              if (today < finalformatedactualdate && item.Completed !== "yes") {
+              if (today < finalformatedactualdate && item.Delivered !== "yes") {
                 countOfnostarted += 1;
                 console.log("there is a nostarted project!", countOfnostarted);
               }
-              console.log("today", today, "planneddate", item.PlannedCompletedDate);
+              console.log("today", today, "planneddate", item.PlannedDate);
               var formatedplaneddatemilestone =
-                item.PlannedCompletedDate.split("T").at(0);
+                item.PlannedDate.split("T").at(0);
               var day = formatedplaneddatemilestone.split("/").at(0);
               var month = formatedplaneddatemilestone.split("/").at(1);
               var year = formatedplaneddatemilestone.split("/").at(2);
               var finalformatedPlanneddate = new Date(year + "-" + month + "-" + day);
               console.log(finalformatedPlanneddate, "finalformatedPlanneddate");
           
-              if (today > finalformatedPlanneddate && item.Completed !== "yes") {
+              if (today > finalformatedPlanneddate && item.Delivered !== "yes") {
                 latecount += 1;
                 console.log("there is a late project!", latecount);
               }
