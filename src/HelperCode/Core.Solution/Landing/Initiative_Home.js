@@ -52,7 +52,10 @@ var fullphasename;
 var actualPercentageFromList = "",
   plannedPercentageFromList = "";
 
-var lstMonthCLicked = "";
+var lstMonthCLicked = "", milestonelstMonthClicked = "";
+
+var MilestoneArr = [];
+
 
 var completedRatio = 0,
   totalMilesDelivrable = 0,
@@ -1275,22 +1278,32 @@ var Deliverables_Info_Request = {
       `<option data-trans-year class="Resources" value=""></option>`
     );
 
-    Deliverablesarray.forEach(function (dl, i) {
-      //appending years
-      var dataYear = isArabic ? dl.date.split("-")[0] : dl.date.split("-")[2];
-      if (dataYear && dataYear != No_Data) {
-        // to handle no data in drop down when there is no data
+    Deliverablesarray.forEach(function (dl, i) { //appending years
+
+      var dataYear = isArabic ? dl.date.split('-')[0] : dl.date.split('-')[2];
+
+      if (dataYear && dataYear != No_Data) { // to handle no data in drop down when there is no data
         if (sdlyear != dataYear) {
-          if (dataYear == new Date().getFullYear()) iscuryear = true;
-          else iscuryear = false;
-          $(".fromDeliverables select#inputYear").append(
-            new Option(dataYear, dataYear, iscuryear, iscuryear)
-          );
-          yearExcist = true;
+
+          if (dataYear == new Date().getFullYear()) {
+            iscuryear = true;
+          } else {
+            iscuryear = false;
+          }
+
+          if (!delivrablesYears.includes(dataYear)) {
+            $('.fromDeliverables select#inputYear').append(
+              new Option(dataYear, dataYear, iscuryear, iscuryear)
+            );
+          }
+          delivrablesYears.push(dataYear)
+
+          yearExcist = true
         }
       }
       sdlyear = dataYear;
     });
+
 
     if (!yearExcist) {
       // to append no data in drop down when there is no data
@@ -1306,12 +1319,7 @@ var Deliverables_Info_Request = {
 
     });
 
-    // Deliverables_Info_Request.g.dltimeline(new Date().getFullYear());
-    // $(".fromDeliverables select#inputYear").on("change", function () {
-    //   $(`#month-${lstMonthCLicked}`).css("background", "#F0F3F8");
-    //   $(".tlContainer").html(""); // to reset the data when change on year
-    //   Deliverables_Info_Request.g.dltimeline($(this).val());
-    // });
+
     changeResources();
   },
   onError: function (sender, args) {
@@ -1420,131 +1428,6 @@ var Deliverables_Info_Request = {
         }
       })
 
-
-      // $(".fromTimeLine").hide();
-      // $(".fromTimeLine .milestone-item[data-year=" + year + "]").show();
-      // $(".fromTimeLine .time-box").remove();
-      // var dlyear = "",
-      //   dlmonth = "",
-      //   curdl = $("body"),
-      //   dlhtml = "",
-      //   datetoshow = "";
-      // //click new timeline
-      // var monthsArr = [
-      //   "1",
-      //   "2",
-      //   "3",
-      //   "4",
-      //   "5",
-      //   "6",
-      //   "7",
-      //   "8",
-      //   "9",
-      //   "10",
-      //   "11",
-      //   "12",
-      // ]; // handle the click on all months
-      // var istimelineData = false; // check if there is a data in time line or no
-
-      // $(".tlContainer").html(""); // container of data
-
-      // monthsArr.forEach((el) => {
-      //   $(`.fromDeliverables .month-list-ctx #month-${el}`).click(function () {
-      //     istimelineData = false;
-      //     $(`.fromDeliverables .month-list-ctx #month-${lstMonthCLicked}`).css(
-      //       "background",
-      //       "#F0F3F8"
-      //     ); // return the previous background color to the origin color
-      //     var dateTitle = "",
-      //       nameTitle = "";
-      //     if (
-      //       localStorage.getItem("lng") == null ||
-      //       localStorage.getItem("lng") == "ar"
-      //     ) {
-      //       dateTitle = "التاريخ";
-      //       nameTitle = "الاسم";
-      //     } else {
-      //       dateTitle = "Date";
-      //       nameTitle = "Name";
-      //     }
-      //     dlhtml = '<table style="width:100%">';
-      //     dlhtml +=
-      //       '<tr class="timeLineTableHeader"><th style="border:1px solid #ddd">' +
-      //       dateTitle +
-      //       '</th><th style="border:1px solid #ddd">' +
-      //       nameTitle +
-      //       "</th></tr>";
-      //     $(".tlContainer").html("");
-      //     $(`.fromDeliverables .month-list-ctx #month-${el}`).css(
-      //       "background",
-      //       "#D0D0D0"
-      //     ); // change background color when click on month
-      //     lstMonthCLicked = el;
-      //     Deliverablesarray.forEach(function (dl, i) {
-      //       // datetoshow = dl.date.split('/'), datetoshow = datetoshow[0] + '/' + datetoshow[1];
-      //       var dataYear = isArabic
-      //         ? dl.date.split("-")[0]
-      //         : dl.date.split("-")[2];
-      //       var dataDay = isArabic
-      //         ? dl.date.split("-")[2]
-      //         : dl.date.split("-")[0];
-      //       (datetoshow = dl.date.split("-")),
-      //         isArabic
-      //           ? (datetoshow = datetoshow[1] + "-" + dataDay)
-      //           : dataDay + "-" + datetoshow[1];
-      //       dlyear = dataYear;
-
-      //       if (dlyear == year) {
-      //         if (dl.date.split("-")[1] == 10) {
-      //           // to handle the data on october month
-      //           if (el == dl.date.split("-")[1]) {
-      //             istimelineData = true;
-      //             dlhtml +=
-      //               '<tr><td class="p-date" style="border:1px solid #ddd">' +
-      //               datetoshow +
-      //               "</td>" +
-      //               '<td class="p-title" style="border:1px solid #ddd">' +
-      //               dl.name +
-      //               "</td></tr>";
-      //           }
-      //         } else {
-      //           if (el == dl.date.split("-")[1].replace("0", "")) {
-      //             istimelineData = true;
-      //             dlhtml +=
-      //               '<tr><td class="p-date" style="border:1px solid #ddd">' +
-      //               datetoshow +
-      //               "</td>" +
-      //               '<td class="p-title" style="border:1px solid #ddd">' +
-      //               dl.name +
-      //               "</td></tr>";
-      //           }
-      //         }
-      //       }
-      //       if (i == Deliverablesarray.length - 1) {
-      //         dlhtml += "</table>";
-      //         $(".tlContainer").append(dlhtml);
-      //         if (!istimelineData) {
-      //           $(".timeLineTableHeader").css("display", "none"); // hide the table if there is no data
-      //         }
-      //         $(".fromDeliverables .time-box").hover(
-      //           function () {
-      //             $(".fromDeliverables .delivery-timeline").css(
-      //               "overflow",
-      //               "initial"
-      //             );
-      //           },
-      //           function () {
-      //             $(".fromDeliverables .delivery-timeline").css(
-      //               "overflow",
-      //               "hidden"
-      //             );
-      //           }
-      //         );
-      //       }
-      //     });
-      //   });
-      // });
-
       // $(`.fromDeliverables .month-list-ctx #month-1`).click();
     },
   },
@@ -1587,6 +1470,7 @@ var Milestones_Info_Request = {
       item2,
       item3,
       item4,
+      itemPlannedClosureDateByLanguage,
       itemProjectCode;
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
@@ -1609,6 +1493,8 @@ var Milestones_Info_Request = {
       item3date2 = initiativeHomeInfo_Request.g.dateConvert(
         oListItem.get_item("ActualCompletedDate")
       );
+      itemPlannedClosureDateByLanguage = initiativeHomeInfo_Request.g.dateConvert(oListItem.get_item('PlannedDate'));
+
       itemdelivered = oListItem.get_item("Completed") || "nodata";
       // item4 = oListItem.get_item('Status') || No_Data;
       itemhtml.push(
@@ -1694,6 +1580,16 @@ var Milestones_Info_Request = {
           ammount: oListItem.get_item("Weight"),
         });
       }
+
+      debugger
+      MilestoneArr.push({
+        name: itemname,
+        delivered: Status,
+        // ammount: oListItem.get_item("Weight"),
+        date: itemPlannedClosureDateByLanguage,
+        Code: item2,
+      })
+
       // Deliverablesarray.push({
       //   name: itemname,
       //   delivered: oListItem.get_item("Completed"),
@@ -1736,6 +1632,59 @@ var Milestones_Info_Request = {
       itemhtml.push("<h3>" + No_Data + "</h3>");
     }
     $("div#pills-fifth > ul.list-group").html(itemhtml.join(""));
+
+    // milestone dropdown
+    $(".fromMilestones select#inputYear").on("change", function () {
+      $(`#month-${milestonelstMonthClicked}`).css("background", "#F0F3F8");
+      $(".tlContainer").html(""); // to reset the data when change on year
+      Milestones_Info_Request.g.dltimeline($(this).val());
+    });
+    var sdlyear = "",
+      iscuryear = true;
+    var yearExcist = false;
+    var MilestonesYears = []
+    $(".fromMilestones select#inputYear").html("");
+
+    $(".fromMilestones select#inputYear").append(
+      `<option data-trans-year class="Resources" value=""></option>`
+    );
+
+    MilestoneArr.forEach(function (dl, i) {
+      //appending years
+      var dataYear = isArabic ? dl.date.split("-")[0] : dl.date.split("-")[2];
+
+
+      if (sdlyear != dataYear) {
+        if (dataYear == new Date().getFullYear()) {
+          iscuryear = true;
+        }
+        else {
+          iscuryear = false;
+        }
+        if (!MilestonesYears.includes(dataYear)) {
+          $(".fromMilestones select#inputYear").append(
+            new Option(dataYear, dataYear, iscuryear, iscuryear)
+          );
+        }
+
+        MilestonesYears.push(dataYear)
+        yearExcist = true;
+      }
+      sdlyear = dataYear;
+    });
+
+
+    if (!yearExcist) {
+      // to append no data in drop down when there is no data
+      $(".fromMilestones select#inputYear").append(
+        new Option(No_Data, No_Data, iscuryear, iscuryear)
+      );
+    }
+
+    ///
+
+
+
     if (
       isMinisterAssistant ||
       isSectorHead ||
@@ -1761,7 +1710,105 @@ var Milestones_Info_Request = {
     );
   },
   // Global variables
-  g: {},
+  g: {
+    dltimeline: function (year) {
+      $('.fromTimeLine').hide();
+      $('.fromTimeLine .milestone-item[data-year=' + year + ']').show();
+      $('.fromTimeLine .time-box').remove();
+      var dlyear = '',
+        dlmonth = '',
+        curdl = $('body'),
+        dlhtml = '',
+        datetoshow = '';
+      //click new timeline
+      var monthsArr = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'] // handle the click on all months
+      var istimelineData = false // check if there is a data in time line or no
+
+      $('.tlContainer').html('') // container of data
+
+      monthsArr.forEach(el => {
+        $(`.fromMilestones .month-list-ctx #month-${el}`).click(function () {
+          istimelineData = false
+          $(`.fromMilestones .month-list-ctx #month-${milestonelstMonthClicked}`).css('background', '#F0F3F8') // return the previous background color to the origin color
+          var dateTitle = '', nameTitle = '';
+          if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+            dateTitle = 'التاريخ'
+            nameTitle = 'الاسم'
+          } else {
+            dateTitle = 'Date'
+            nameTitle = 'Name'
+          }
+          dlhtml = '<table style="width:100%">'
+          dlhtml += '<tr class="timeLineTableHeader"><th style="border:1px solid #ddd">' + dateTitle + '</th><th style="border:1px solid #ddd">' + nameTitle + '</th></tr>'
+          $('.tlContainer').html('')
+          $(`.fromMilestones .month-list-ctx #month-${el}`).css('background', '#D0D0D0') // change background color when click on month
+          milestonelstMonthClicked = el
+          MilestoneArr.forEach(function (dl, i) {
+            // datetoshow = dl.date.split('/'), datetoshow = datetoshow[0] + '/' + datetoshow[1];
+            var dataYear = isArabic ? dl.date.split('-')[0] : dl.date.split('-')[2];
+            var dataDay = isArabic ? dl.date.split('-')[2] : dl.date.split('-')[0];
+            datetoshow = dl.date.split('-'),
+              isArabic ? datetoshow = datetoshow[1] + '-' + dataDay : dataDay + '-' + datetoshow[1];
+            dlyear = dataYear;
+
+            if (dlyear == year) {
+              if (dl.date.split('-')[1] == 10) { // to handle the data on october month
+                if ((el == dl.date.split('-')[1])) {
+                  istimelineData = true
+                  dlhtml += '<tr><td class="p-date" style="border:1px solid #ddd">' + datetoshow + '</td>' +
+                    '<td class="p-title" style="border:1px solid #ddd">' + dl.name + '</td></tr>';
+                }
+              } else {
+                if ((el == dl.date.split('-')[1].replace('0', ''))) {
+                  istimelineData = true
+                  dlhtml += '<tr><td class="p-date" style="border:1px solid #ddd">' + datetoshow + '</td>' +
+                    '<td class="p-title" style="border:1px solid #ddd">' + dl.name + '</td></tr>';
+                }
+              }
+            }
+            if (i == MilestoneArr.length - 1) {
+              dlhtml += '</table>'
+              $('.tlContainer').append(dlhtml)
+              if (!istimelineData) {
+                $('.timeLineTableHeader').css('display', 'none') // hide the table if there is no data
+                $(".fromMilestones .tlContainer").html(`<p style="text-align:center">${No_Data}</p>`)
+
+              }
+              $('.fromMilestones .time-box').hover(function () {
+                $('.fromMilestones .delivery-timeline').css('overflow', 'initial');
+              }, function () {
+                $('.fromMilestones .delivery-timeline').css('overflow', 'hidden');
+              });
+            }
+          });
+        });
+      })
+
+      $(`.fromMilestones .month-list-ctx #month-1`).click()
+      $(`.fromMilestones .month-list .monthBadge`).remove()  // to remove star on the month on change to reset
+
+
+      MilestoneArr.forEach(function (dl, i) {
+        var milestoneYear = isArabic
+          ? dl.date.split("-")[0]
+          : dl.date.split("-")[2];
+
+        if (milestoneYear == year) {
+          var targetMonth = ""
+          if (dl.date.split("-")[1] == 10) {
+            targetMonth = dl.date.split("-")[1]
+          } else {
+            targetMonth = dl.date.split("-")[1].replace("0", "")
+          }
+
+          if ($(`.fromMilestones .month-list #month-${targetMonth} > .monthBadge`).length == 0) { // to add star on the month that have value
+            $(`.fromMilestones .month-list #month-${targetMonth}`).prepend(`<span class="monthBadge">*</span>`)
+          }
+        }
+      })
+
+    }
+  },
 };
 //Benefits
 var Benefits_Info_Request = {
