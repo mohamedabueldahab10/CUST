@@ -1084,8 +1084,8 @@ var Deliverables_Info_Request = {
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">" +
       Project_Home_Info_Request.g.PCODE +
-      "</Value></Eq></And></Where><OrderBy><FieldRef Name='DeliveredDate' Ascending='False' /></OrderBy></Query></View>"
-    ); //<Where><Geq><FieldRef Name=\'Committed_x0020_Date\' /><Value IncludeTimeValue=\'TRUE\'  Type=\'DateTime\'><Today /></Value></Geq></Where>
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='ActualDate' Ascending='False' /></OrderBy></Query></View>"
+    ); 
     Deliverables_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Deliverables_Info_Request.g.collListItem);
     clientContext.executeQueryAsync(
@@ -1128,10 +1128,11 @@ var Deliverables_Info_Request = {
       itemweight = oListItem.get_item("Weight")
         ? oListItem.get_item("Weight") + "%"
         : No_Data;
+        
       itemdate = Project_Home_Info_Request.g.dateConvert(
-        oListItem.get_item("DeliveredDate")
+        oListItem.get_item("ActualDate")
       );
-      CommittedDate = oListItem.get_item("DeliveredDate");
+      // CommittedDate = oListItem.get_item("ActualDate");
 
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
@@ -1154,7 +1155,7 @@ var Deliverables_Info_Request = {
         '<h4 class="black Resources">' +
         itemdate +
         "</h4>" +
-        '<span data-trans-committeddate class="Resources des-13"></span>' +
+        '<span data-trans-actualdate class="Resources des-13"></span>' +
         "</div>" +
         '<div class="d-inline-flex flex-column mx-2">' +
         '<h4 class="text-warning">' +
@@ -1178,7 +1179,7 @@ var Deliverables_Info_Request = {
 
 
       delevrableDateExpired = Project_Home_Info_Request.g.dateConvert2(
-        oListItem.get_item("DeliveredDate")
+        oListItem.get_item("ActualDate") // change Delivered Date to Actual Date
       );
       delevrableDateExpired = Math.round(
         (new Date() - new Date(delevrableDateExpired)) / (1000 * 60 * 60 * 24)

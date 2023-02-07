@@ -6394,3 +6394,7 @@ a.a-important-link:hover>* {
 .inlineMargin0 {
     margin-inline:0!important
 }
+
+.monthtable{
+    display: flex;
+}

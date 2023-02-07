@@ -856,7 +856,9 @@
     plannedratemilestone: "نسبة التنفيذ المخططة(المعالم)",
     alltasks: "عرض كافة المهام",
     benefitmetricname:"مقياس المنفعة",
-    benefit:"مقياس المنفعة"
+    benefit:"مقياس المنفعة",
+    plannedcompleteddate:"تاريخ الانتهاء المخطط",
+    actualdate:"تاريخ الاكتمال الفعلي"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1729,7 +1731,9 @@
     plannedratemilestone: "Percentage of planned implementation (Milestones)",
     alltasks: "All Tasks",
     benefitmetricname:"Benefit Metrics",
-    benefit:"Benefit Metrics"
+    benefit:"Benefit Metrics",
+    plannedcompleteddate:"Planned Completed Date",
+    actualdate:"Actual Date"
   },
 };
 
