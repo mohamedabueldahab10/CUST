@@ -71,6 +71,9 @@ var Information_Form = [
         DisplayNameEn: 'Related Sub Kpis',
         DisplayName: 'المؤشرات الفرعية المرتبطة',
         type: 'multiselectstring',
+        "Dispfieldkey": "Name",
+                "valfieldkey": "Title",
+                "source": "MainKPI",
         // queryField: 'Types',
         // queryFieldType: 'dropdownValues', //ex: "Choice"
         // queryFieldValue: 'sub',
