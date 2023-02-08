@@ -7,6 +7,15 @@ window.isRoleDataLevelAccess = false;
 window.currentMainList = "";
 window.projectActualBudget = 0;
 window.initiativeActualBudget = 0;
+// added for CR module
+  //! Change Request
+(window.crListKey = USERlistkey == "changerequest" ? true : false),
+(window.isCrMode = window.location.href.indexOf("RID=") > -1),
+(window.RID = isCrMode ? window.location.href.split("RID=")[1].split("&")[0] : ""),
+(window.isRListKey = window.location.href.indexOf("RKey=") > -1),
+(window.RListKey = isCrMode ? window.location.href.split("RKey=")[1].split("&")[0] : ""),
+(window.CrRelatedList = "");
+// ended 
 var BreakException = {};
 var UserRole,
 	UserAccessSectorCode,
@@ -214,6 +223,12 @@ if (window.location.href.indexOf("ListKey") > -1) {
 					//if true
 					USERProjRelated.push(Object.keys(obj)[0]);
 			}
+			 // added for CR module
+			//cr
+		    if (key == RListKey) {
+				CrRelatedList = obj[key];
+			}
+			// ended 
 		}
 	}
 } else {

@@ -364,6 +364,38 @@ window.Edit_Data_Request = {
       );
       $("select#BudgetItem").change();
     }
+     // added for CR module
+    //! CR
+		else if (crListKey) {
+			let UpdateType = oListItem.get_item("UpdateType") || "";
+			let crIsGeneral = UpdateType.includes("general");
+			changeRequestBody = oListItem.get_item("ChangeBody");
+			changeRequestBody = changeRequestBody
+				? JSON.parse(changeRequestBody)
+				: [];
+			let sectionJSON;
+			if (changeRequestBody.length) {
+				isCrMode = true;
+				RID = changeRequestBody[0].itemId;
+				CrRelatedList = changeRequestBody[0].listName;
+				RListKey = changeRequestBody[0].listKey;
+				sectionJSON = [
+					{
+						label: changeRequestBody[0].label,
+						labelEn: changeRequestBody[0].labelEn,
+						description: changeRequestBody[0].description,
+						descriptionEn: changeRequestBody[0].descriptionEn,
+						subFields: changeRequestBody,
+					},
+				];
+			}
+
+			if (isCrMode) {
+				if (crIsGeneral) CrModeFunctionality.preinit();
+				else CrModeFunctionality.init(sectionJSON);
+			}
+		}
+    // ended 
     if (listkey == "risks" && oListItem.get_item("Status") == "movedtoissue") {
       window.location =
         _spPageContextInfo.siteServerRelativeUrl +
@@ -1349,6 +1381,39 @@ window.View_Data_Request = {
         '"><span class="litem">Project Home</span></a>'
       );
     }
+    // added for CR module
+//! CR
+else if (crListKey) {
+  let UpdateType = oListItem.get_item("UpdateType") || "";
+  let crIsGeneral = UpdateType.includes("general");
+  changeRequestBody = oListItem.get_item("ChangeBody");
+  changeRequestBody = changeRequestBody
+    ? JSON.parse(changeRequestBody)
+    : [];
+  let sectionJSON;
+  if (changeRequestBody.length) {
+    isCrMode = true;
+    RID = changeRequestBody[0].itemId;
+    CrRelatedList = changeRequestBody[0].listName;
+    RListKey = changeRequestBody[0].listKey;
+    sectionJSON = [
+      {
+        label: changeRequestBody[0].label,
+        labelEn: changeRequestBody[0].labelEn,
+        description: changeRequestBody[0].description,
+        descriptionEn: changeRequestBody[0].descriptionEn,
+        subFields: changeRequestBody,
+      },
+    ];
+  }
+
+  if (isCrMode) {
+    if (crIsGeneral) CrModeFunctionality.preinit();
+    else CrModeFunctionality.init(sectionJSON);
+  }
+}
+// ended 
+
     // window.checkNotificationHTML = setInterval(function() {
     //     GetProject_Info.preinit();
     // },1000);
