@@ -472,7 +472,7 @@ window.initiativeRequest = {
           '<img src="' +
           mizania +
           '" class="" data-themekey="#">' +
-          '<span data-trans-BudgetExpenditure class="mx-2 inner-title des-12 reg Resources"></span>' +
+          '<span data-trans-inpattr43 class="mx-2 inner-title des-12 reg Resources"></span>' +
           '<span data-prname="' +
           initiativeCode +
           '" class="inner-val fnt-14 bold">' +
