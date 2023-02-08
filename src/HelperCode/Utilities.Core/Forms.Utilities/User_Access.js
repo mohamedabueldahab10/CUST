@@ -5,8 +5,8 @@ window.checkHomeInitiativeStatus = "";
 window.myRoleConfig = [];
 window.isRoleDataLevelAccess = false;
 window.currentMainList = "";
-window.projectActualBudget=0;
-window.initiativeActualBudget=0;
+window.projectActualBudget = 0;
+window.initiativeActualBudget = 0;
 var BreakException = {};
 var UserRole,
 	UserAccessSectorCode,
@@ -4439,7 +4439,7 @@ window.Get_Initiative_Info_Request = {
 				initiativeStartToValidation = oListItem.get_item("StartDate") ? oListItem.get_item("StartDate") : ""
 				//   initiativeEndDate = oListItem.get_item("FinishDate") ? oListItem.get_item("FinishDate") : ""
 				//   initiativeBudget = oListItem.get_item("Cost") ? oListItem.get_item("Cost") : 0
-				initiativeActualBudget =  oListItem.get_item("InitiativeBudget")
+				initiativeActualBudget = oListItem.get_item("InitiativeBudget")
 				console.log("INSIDE INITIativeInfoRequest")
 			}
 

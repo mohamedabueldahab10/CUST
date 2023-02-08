@@ -33,10 +33,10 @@ var projectTypeFilterQuery = '', typeClicked = 'Internal';
 
 var taskClicked = 'relatedTasks', allTasksClicked = false, getNewFilterTask = false, isViewMoreClicked = false;
 
-// var emptyData = require('../../../HelperRessources/img/empty-data.png');
-// var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
-var emptyData = ''
-var exportExcel = ''
+var emptyData = require('../../../HelperRessources/img/empty-data.png');
+var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
+// var emptyData = ''
+// var exportExcel = ''
 //all data filter array
 allDataFilterArr = []
 //
@@ -937,17 +937,21 @@ window.ListingData = {
 
 
             //hide btn and appear msg if there is no Actual budget
-            console.log(projectActualBudget,"projectActualBudget")
-            debugger
-            if (PCODE && (listkey == 'deliverables' || listkey == 'milestones') && !projectActualBudget){
-                var HtmlStart = '<div data-trans-addActualBudget class="actualBudget ErrorMsg Resources"></div>';
+
+            if (PCODE && (listkey == 'deliverables' || listkey == 'milestones') && !projectActualBudget) {
+              var HtmlStart = '<div data-trans-addActualBudget class="actualBudget ErrorMsg Resources"></div>';
+            }
+
+            if (ICODE && (listkey == 'initiativedeliverables' || listkey == 'initiativemilestones') && !initiativeActualBudget) {
+              var HtmlStart = '<div data-trans-addinitiativebudget class="actualBudget ErrorMsg Resources"></div>';
 
             }
+
             if (originalstate) {
               $('.content-list-head > .listing-new-at').html(HtmlStart);
             }
 
-              changeResources();
+            changeResources();
 
             if (isTasks) {
               if (taskClicked == 'relatedTasks') {

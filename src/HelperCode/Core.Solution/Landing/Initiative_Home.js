@@ -634,7 +634,7 @@ var initiativeHomeInfo_Request = {
     $(".project-budget-ctx .card-body > div:nth-child(2) .my-info-i").attr("title", initiativeBudgetInfo)
     $(".project-budget-ctx .card-body > div:nth-child(2) .my-info-i").attr("data-original-title", initiativeBudgetInfo)
 
-////////////////
+    ////////////////
 
 
     // card 6
@@ -1206,14 +1206,20 @@ var Deliverables_Info_Request = {
     NDelivrables = 0;
     NDelevered = 0;
     POD = 0;
-    var itemhtml = [
-      '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
-      _spPageContextInfo.webAbsoluteUrl +
-      "/sitepages/new.aspx?ListKey=initiativedeliverables&ICODE=" +
-      initiativeHomeInfo_Request.g.ICODE +
-      '"><i class="icon-plus"></i></a></li>',
-    ],
-      itemID,
+
+    if (initiativeActualBudget) {
+      var itemhtml = [
+        '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
+        _spPageContextInfo.webAbsoluteUrl +
+        "/sitepages/new.aspx?ListKey=initiativedeliverables&ICODE=" +
+        initiativeHomeInfo_Request.g.ICODE +
+        '"><i class="icon-plus"></i></a></li>',
+      ];
+    } else {
+      var itemhtml = [""];
+    }
+
+    var itemID,
       itemname,
       itemstatus,
       itemdate,
@@ -1490,14 +1496,21 @@ var Milestones_Info_Request = {
   onSuccess: function (sender, args) {
     var collListItem = Milestones_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
+
+    if (initiativeActualBudget) {
+
     var itemhtml = [
       '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
       _spPageContextInfo.webAbsoluteUrl +
       "/sitepages/new.aspx?ListKey=initiativemilestones&ICODE=" +
       initiativeHomeInfo_Request.g.ICODE +
       '"><i class="icon-plus"></i></a></li>',
-    ],
-      itemID,
+    ];
+  }else{
+    var itemhtml = [""]
+  }
+
+    var itemID,
       item1,
       item2,
       item3,
