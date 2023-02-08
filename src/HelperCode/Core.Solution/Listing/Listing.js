@@ -931,12 +931,23 @@ window.ListingData = {
               '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + PCODE_STRING + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="ListingData.g.ExportToExcel()"><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>' : ICODE ?
                 '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + "&ICODE=" + ICODE + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="ListingData.g.ExportToExcel()"><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>'
                 : '';
+
+
+
+
+
+            //hide btn and appear msg if there is no Actual budget
+            console.log(projectActualBudget,"projectActualBudget")
+            debugger
+            if (PCODE && (listkey == 'deliverables' || listkey == 'milestones') && !projectActualBudget){
+                var HtmlStart = '<div data-trans-addActualBudget class="actualBudget ErrorMsg Resources"></div>';
+
+            }
             if (originalstate) {
               $('.content-list-head > .listing-new-at').html(HtmlStart);
             }
 
-
-            changeResources();
+              changeResources();
 
             if (isTasks) {
               if (taskClicked == 'relatedTasks') {
@@ -963,6 +974,7 @@ window.ListingData = {
                 }
               });
             }
+
             //
             if (isAdmin || isEPMO) {
               if (isTasks && getNewFilterTask) { // to get relate tasks for every tab

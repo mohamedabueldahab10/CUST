@@ -6414,3 +6414,8 @@ a.a-important-link:hover>* {
 .startegicobjstat9 {
     color: rgba(0, 170, 0, 255) !important;
 }
+
+.actualBudget.ErrorMsg {
+    color: red;
+    font-size: 14px;
+}

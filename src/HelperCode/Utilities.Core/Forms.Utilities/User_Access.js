@@ -5,6 +5,8 @@ window.checkHomeInitiativeStatus = "";
 window.myRoleConfig = [];
 window.isRoleDataLevelAccess = false;
 window.currentMainList = "";
+window.projectActualBudget=0;
+window.initiativeActualBudget=0;
 var BreakException = {};
 var UserRole,
 	UserAccessSectorCode,
@@ -3447,6 +3449,7 @@ var Access_Project_Info_Request = {
 
 				projectStartToValidation = oListItem.get_item("BaselineStartDate") || '';
 
+				projectActualBudget = oListItem.get_item('ActualBudget') || 0;
 				// if (User_ScheduleSource == 'عبر النظام') {
 				//     $('body').append('<style>.navbar.page-nav.px-5 li.nav-item[data-href*="schedule.aspx"]{display:none}</style>');
 				// } else if (User_ScheduleSource == 'عبر الجدول الزمني') {
@@ -4436,6 +4439,7 @@ window.Get_Initiative_Info_Request = {
 				initiativeStartToValidation = oListItem.get_item("StartDate") ? oListItem.get_item("StartDate") : ""
 				//   initiativeEndDate = oListItem.get_item("FinishDate") ? oListItem.get_item("FinishDate") : ""
 				//   initiativeBudget = oListItem.get_item("Cost") ? oListItem.get_item("Cost") : 0
+				initiativeActualBudget =  oListItem.get_item("InitiativeBudget")
 				console.log("INSIDE INITIativeInfoRequest")
 			}
 

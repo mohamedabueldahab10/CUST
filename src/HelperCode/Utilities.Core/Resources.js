@@ -864,7 +864,8 @@
     initiativebudgetinfo:"ميزانية المبادرة",
     stat9:"مكتمل",
     stat10:"تم تحقيق المستهدف",
-    stat11:"تم تحقيقه جزئيا"
+    stat11:"تم تحقيقه جزئيا",
+    addactualbudget:"يجب تحديد قيمة المشروع الفعلية قبل إنشاء المخرجات و المعالم"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1744,7 +1745,8 @@
     initiativebudgetinfo:"Initiative Budget",
     stat9:"Completed",
     stat10:"Target achieved",
-    stat11:"Partially achieved"
+    stat11:"Partially achieved",
+    addactualbudget:"Please add project actual budget to add deliverables and Milestones"
   },
 };
 
