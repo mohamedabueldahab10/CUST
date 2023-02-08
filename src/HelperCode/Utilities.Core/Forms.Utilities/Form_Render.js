@@ -136,6 +136,7 @@ window.ListInfo = {
     var htmlBuilder = "";
     var Label, Description;
     var printHtml = "";
+    var toggleSectionName;
 
     asyncFor.seqProcess(
       Information_Form,
@@ -150,7 +151,10 @@ window.ListInfo = {
           Label = item.labelEn;
           Description = item.descriptionEn;
         }
-        // console.log('Start processing ' + Label + ' subFields...');
+       
+
+        toggleSectionName = item.togglename
+
         //Handle security
         var groups = [],
           targetList = "",
@@ -199,7 +203,7 @@ window.ListInfo = {
           Description +
           "</span>" +
           "</div>" +
-          '<div class="col-lg-9 col-md-8 white-box p-4 fieldset-container">';
+          '<div data-togglename=' + toggleSectionName + ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container">';
 
         asyncFor.seqProcess(
           item.subFields,
@@ -5473,9 +5477,13 @@ var View_ListInfo = {
     }
   },
   InfoLoop: function () {
+
     var htmlBuilder = "";
     var Label, Description;
     var printHtml = "";
+
+    var toggleSectionName;
+
     asyncFor.seqProcess(
       Information_Form,
       function (item, index, resolve) {
@@ -5525,6 +5533,9 @@ var View_ListInfo = {
           Description = item.descriptionEn;
           printDate = "Date : ";
         }
+
+        toggleSectionName = item.togglename
+
         var printFooter = "";
         var printBody = "";
 
@@ -5617,7 +5628,7 @@ var View_ListInfo = {
           Description +
           "</span>" +
           "</div>" +
-          '<div class="col-lg-9 col-md-8 white-box p-4 fieldset-container">';
+          '<div data-togglename=' + toggleSectionName + ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container">';
         asyncFor.seqProcess(
           item.subFields,
           function (subitemField, indexField, resolveField) {
