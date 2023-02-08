@@ -33,9 +33,10 @@ var projectTypeFilterQuery = '', typeClicked = 'Internal';
 
 var taskClicked = 'relatedTasks', allTasksClicked = false, getNewFilterTask = false, isViewMoreClicked = false;
 
-var emptyData = require('../../../HelperRessources/img/empty-data.png');
-var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
-// var emptyData = ''
+// var emptyData = require('../../../HelperRessources/img/empty-data.png');
+// var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
+var emptyData = ''
+var exportExcel = ''
 //all data filter array
 allDataFilterArr = []
 //
@@ -195,7 +196,7 @@ window.sphttp = {
                     assignedto: oListItem.get_item('AssignedTo'),
                     relatedurl: oListItem.get_item('RelatedURL')
                   });
-                  console.log(record,"record record")
+                  console.log(record, "record record")
                   records.push(record);
                   onEach(records, record, oListItem, false); //false if having item
                 }
@@ -306,11 +307,11 @@ window.sphttp = {
               }
             }
             isLoadMore
-            ? RecordsWithID.map(function (a) {
-              // stack results
-              AllRecordsWithID.push(a);
-            })
-            : (AllRecordsWithID = RecordsWithID); //get only filtered results
+              ? RecordsWithID.map(function (a) {
+                // stack results
+                AllRecordsWithID.push(a);
+              })
+              : (AllRecordsWithID = RecordsWithID); //get only filtered results
 
           }
 
@@ -452,247 +453,299 @@ window.ListingData = {
       changeResources();
     } else {
 
-      sphttp.get(ListURL, SP_ListName, PQuery, IN, false, function (records, record, listItem, isDone) {
+      sphttp.get(
+        ListURL,
+        SP_ListName,
+        PQuery,
+        IN,
+        false,
+        async function (records, record, listItem, isDone) {
 
-        records.forEach((element, i) => {
-          if ((element.ProjectCode && element.ProjectCode != No_Data ) && !isthereICODE) { // add element.projectCode !=No_Data to show the initiative in task list
-            if (!userProjects.includes(element.ProjectCode)) {
-              records.splice(i, 1);
-            }
-          }
-        });
-
-
-        if (isDone) {
-          var html = '';
-
-          var InternalProjectsHtml = '';
-          var ExternalProjectsHtml = '';
-          for (var i = 0; i < records.length; i++) { //looping items
-            var index =i +1;
-            debugger
-            // ghufranChange
-            //  console.log(records[i], 'records')
-            if (listkey == 'projects') {
-              if (records[i].ProjectType == 'Internal') {
-                InternalProjectsHtml += '<li class="list-group-item link-arrow">' +
-                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' +'<span class="acc-title d-inline-flex black paddingEnd16px">'+index+'</span>';
-              } else if (records[i].ProjectType == 'External') {
-                ExternalProjectsHtml += '<li class="list-group-item link-arrow">' +
-                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">'  +'<span class="acc-title d-inline-flex black paddingEnd16px">'+index+'</span>';
+          records.forEach((element, i) => {
+            if ((element.ProjectCode && element.ProjectCode != No_Data) && !isthereICODE) { // add element.projectCode !=No_Data to show the initiative in task list
+              if (!userProjects.includes(element.ProjectCode)) {
+                records.splice(i, 1);
               }
-            } else if (listkey == 'initiatives') {
-              html += '<li class="list-group-item link-arrow">' +
-                '<a  style="cursor: pointer;" id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/initiativeHome.aspx?ICODE=" + records[i].Title + '">' +'<span class="acc-title d-inline-flex black paddingEnd16px">'+index+'</span>';
-            } else if (isTasks) {
-              html += '<li class="list-group-item tasksPage ">' + //link-arrow
-                '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="javascript:" onclick="ListingData.g.handleids(\'' + RecordsWithID[i].pcode + '\',\'' + RecordsWithID[i].icode + '\',\'' + RecordsWithID[i].ID + '\',\'' + RecordsWithID[i].tasktype + '\',\'' + RecordsWithID[i].stageid + '\',\'' + RecordsWithID[i].ritemid + '\',\'' + RecordsWithID[i].sourceitemid + '\',\'' + RecordsWithID[i].wfname + '\',\'' + RecordsWithID[i].puid + '\',\'' + RecordsWithID[i].relatedurl + '\')">';
-
-              var taskcode = records[i].Title;
-              var tasktitlearr, taskname;
-              if (localStorage.getItem('Dynamo_Tasks Configuration') != null) {
-                tasktitlearr = JSON.parse(localStorage.getItem("Dynamo_Tasks Configuration") || "[]");
-                tasktitlearr = tasktitlearr.filter(function (item) {
-                  return item.code == taskcode
-                });
-                if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
-                  taskname = tasktitlearr[0] ? tasktitlearr[0].name : '';
-                } else taskname = tasktitlearr[0] ? tasktitlearr[0].nameEn : '';
-              }
-
-              html += '<div class="d-inline-flex flex-column" style="width:25%!important">' +
-                '<h4 class="acc-title d-inline-flex black" style="margin:0px!important;margin-bottom:.5rem!important">' + taskname + '</h4><span class="des-13">' + taskcode + '</span></div>';
-
-            } else if (listkey == 'deliverables' & !PCODE) {
-              PCODE_STRING = '&PCODE=' + RecordsWithPCode[i].PrCODE;
-              html += '<li class="list-group-item link-arrow">' +
-                '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + PCODE_STRING + "&IID=" + RecordsWithID[i].ID + isWFs + '">'  +'<span class="acc-title d-inline-flex black paddingEnd16px">'+index+'</span>'
-            } else if (!PCODE && !ICODE) {
-              html += '<li class="list-group-item link-arrow">' +
-                '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + PCODE_STRING + "&IID=" + RecordsWithID[i].ID + isWFs + '">'  +'<span class="acc-title d-inline-flex black paddingEnd16px">'+index+'</span>'
-            } else if (ICODE) {
-              html += '<li class="list-group-item link-arrow">' +
-                '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&ICODE=" + ICODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">'  +'<span class="acc-title d-inline-flex black paddingEnd16px">'+index+'</span>'
             }
-            else if (ICODE && listkey=='initiativemilestones') {
-              html += '<li class="list-group-item link-arrow">' +
-                '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&ICODE=" + ICODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">'  +'<span class="acc-title d-inline-flex black paddingEnd16px">'+index+'</span>'
-            }
-            
-            else if (USERlistkey == 'closureform' && PCODE) {
+          });
 
-              html += '<li class="list-group-item link-arrow">' +
-                '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&PCODE=" + PCODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">'  +'<span class="acc-title d-inline-flex black paddingEnd16px">'+index+'</span>'
 
-            } else {
-              html += '<li class="list-group-item link-arrow">' +
-                '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&PCODE=" + PCODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">'  +'<span class="acc-title d-inline-flex black paddingEnd16px">'+index+'</span>'
-            }
+          if (isDone) {
+            var html = '';
 
-            var obj = records[i];
-            // console.log(obj, 'obj')
-            for (var key in obj) { // looping columns
-              var Field_In_Use = Listing_Info.filter(function (el) {
-                return el.InternalName === key;
-              });
-              if (Field_In_Use[0].type == 'date' && obj[key] != No_Data) {
-                //  console.log('here a record with date');
-                obj[key] = obj[key].slice(0, obj[key].indexOf('T'))
-              }
-              var isLinkable = Field_In_Use[0].hasOwnProperty("isLinkable"),
-                isLinkable = isLinkable ? Field_In_Use[0].isLinkable : false;
-              var isRenderField = Field_In_Use[0].hasOwnProperty("ShowUnderProjectListing") ? false : true;
-              if (!isRenderField)
-                isRenderField = (Field_In_Use[0].ShowUnderProjectListing && USERPCODE) || (!Field_In_Use[0].ShowUnderProjectListing && !USERPCODE) ? true : false;
-              if (isRenderField) {
-                //console.log(Field_In_Use[0].DisplayName);
-
-                if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
-                  displayName = Field_In_Use[0].DisplayName;
-                } else displayName = Field_In_Use[0].DisplayNameEn;
-                //First column
-                if (Field_In_Use[0].InternalName == Listing_Info[0].InternalName) {
-                  if (!isTasks) {
-
-                    if (Field_In_Use[0].needTrans == true && obj[key] != No_Data) {
-
-                      html += '<div class="d-inline-flex flex-column" style="width:25%!important">' +
-                        '<h4 data-trans-' + obj[key] + ' class="acc-title d-inline-flex black Resources" style="margin:0px!important;margin-bottom:.5rem!important"></h4>';
-                      if (records[i].ProjectType == 'Internal') {
-                        InternalProjectsHtml += '<div class="d-inline-flex flex-column" style="width:25%!important">' +
-                          '<h4 data-trans-' + obj[key] + ' class="acc-title d-inline-flex black Resources" style="margin:0px!important;margin-bottom:.5rem!important"></h4>';
-                      } else if (records[i].ProjectType == 'External') {
-                        ExternalProjectsHtml += '<div class="d-inline-flex flex-column" style="width:25%!important">' +
-                          '<h4 data-trans-' + obj[key] + ' class="acc-title d-inline-flex black Resources" style="margin:0px!important;margin-bottom:.5rem!important"></h4>';
-                      }
-                    } else {
-                      html += '<div class="d-inline-flex flex-column" style="width:25%!important">' +
-                        '<h4 class="acc-title d-inline-flex black" style="margin:0px!important;margin-bottom:.5rem!important">' + obj[key] + '</h4>';
-                      if (records[i].ProjectType == 'Internal') {
-                        InternalProjectsHtml += '<div class="d-inline-flex flex-column" style="width:25%!important">' +
-                          '<h4 class="acc-title d-inline-flex black" style="margin:0px!important;margin-bottom:.5rem!important">' + obj[key] + '</h4>';
-                      } else if (records[i].ProjectType == 'External') {
-                        ExternalProjectsHtml += '<div class="d-inline-flex flex-column" style="width:25%!important">' +
-                          '<h4 class="acc-title d-inline-flex black" style="margin:0px!important;margin-bottom:.5rem!important">' + obj[key] + '</h4>';
-                      }
-                    }
-
-                  }
+            var InternalProjectsHtml = '';
+            var ExternalProjectsHtml = '';
+            for (var i = 0; i < records.length; i++) { //looping items
+              var index = i + 1;
+              debugger
+              // ghufranChange
+              //  console.log(records[i], 'records')
+              if (listkey == 'projects') {
+                if (records[i].ProjectType == 'Internal') {
+                  InternalProjectsHtml += '<li class="list-group-item link-arrow">' +
+                    '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>';
+                } else if (records[i].ProjectType == 'External') {
+                  ExternalProjectsHtml += '<li class="list-group-item link-arrow">' +
+                    '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>';
                 }
-                //Second column
-                else if (Field_In_Use[0].InternalName == Listing_Info[1].InternalName) {
-                  if (!isTasks) {
+              } else if (listkey == 'initiatives') {
+                html += '<li class="list-group-item link-arrow">' +
+                  '<a  style="cursor: pointer;" id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/initiativeHome.aspx?ICODE=" + records[i].Title + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>';
+              } else if (isTasks) {
+                html += '<li class="list-group-item tasksPage ">' + //link-arrow
+                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="javascript:" onclick="ListingData.g.handleids(\'' + RecordsWithID[i].pcode + '\',\'' + RecordsWithID[i].icode + '\',\'' + RecordsWithID[i].ID + '\',\'' + RecordsWithID[i].tasktype + '\',\'' + RecordsWithID[i].stageid + '\',\'' + RecordsWithID[i].ritemid + '\',\'' + RecordsWithID[i].sourceitemid + '\',\'' + RecordsWithID[i].wfname + '\',\'' + RecordsWithID[i].puid + '\',\'' + RecordsWithID[i].relatedurl + '\')">';
 
+                var taskcode = records[i].Title;
+                var tasktitlearr, taskname;
+                if (localStorage.getItem('Dynamo_Tasks Configuration') != null) {
+                  tasktitlearr = JSON.parse(localStorage.getItem("Dynamo_Tasks Configuration") || "[]");
+                  tasktitlearr = tasktitlearr.filter(function (item) {
+                    return item.code == taskcode
+                  });
+                  if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+                    taskname = tasktitlearr[0] ? tasktitlearr[0].name : '';
+                  } else taskname = tasktitlearr[0] ? tasktitlearr[0].nameEn : '';
+                }
 
-                    if (Field_In_Use[0].needTrans == true && obj[key] != No_Data) {
-                      // console.log('obj[key]', obj[key]);
-                      html += '<span data-trans-' + obj[key] + ' class="des-13 Resources"></span>' +
-                        '</div>';
-                      if (records[i].ProjectType == 'Internal') {
-                        InternalProjectsHtml += '<span data-trans-' + obj[key] + ' class="des-13 Resources ' + obj[key] + '"></span>' +
-                          '</div>';
-                      } else if (records[i].ProjectType == 'External') {
-                        ExternalProjectsHtml += '<span data-trans-' + obj[key] + ' class="des-13 Resources ' + obj[key] + '"></span>' +
-                          '</div>';
+                html += '<div class="d-inline-flex flex-column" style="width:25%!important">' +
+                  '<h4 class="acc-title d-inline-flex black" style="margin:0px!important;margin-bottom:.5rem!important">' + taskname + '</h4><span class="des-13">' + taskcode + '</span></div>';
+
+              } else if (listkey == 'deliverables' & !PCODE) {
+                PCODE_STRING = '&PCODE=' + RecordsWithPCode[i].PrCODE;
+                html += '<li class="list-group-item link-arrow">' +
+                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + PCODE_STRING + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>'
+              } else if (!PCODE && !ICODE) {
+                html += '<li class="list-group-item link-arrow">' +
+                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + PCODE_STRING + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>'
+              } else if (ICODE) {
+                html += '<li class="list-group-item link-arrow">' +
+                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&ICODE=" + ICODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>'
+              }
+              else if (ICODE && listkey == 'initiativemilestones') {
+                html += '<li class="list-group-item link-arrow">' +
+                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&ICODE=" + ICODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>'
+              }
+
+              else if (USERlistkey == 'closureform' && PCODE) {
+
+                html += '<li class="list-group-item link-arrow">' +
+                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&PCODE=" + PCODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>'
+
+              } else {
+                html += '<li class="list-group-item link-arrow">' +
+                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&PCODE=" + PCODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>'
+              }
+
+              var obj = records[i];
+              // console.log(obj, 'obj')
+              for (var key in obj) { // looping columns
+                var Field_In_Use = Listing_Info.filter(function (el) {
+                  return el.InternalName === key;
+                });
+                if (Field_In_Use[0].type == 'date' && obj[key] != No_Data) {
+                  //  console.log('here a record with date');
+                  obj[key] = obj[key].slice(0, obj[key].indexOf('T'))
+                }
+                var isLinkable = Field_In_Use[0].hasOwnProperty("isLinkable"),
+                  isLinkable = isLinkable ? Field_In_Use[0].isLinkable : false;
+                var isRenderField = Field_In_Use[0].hasOwnProperty("ShowUnderProjectListing") ? false : true;
+                if (!isRenderField)
+                  isRenderField = (Field_In_Use[0].ShowUnderProjectListing && USERPCODE) || (!Field_In_Use[0].ShowUnderProjectListing && !USERPCODE) ? true : false;
+                if (isRenderField) {
+                  //console.log(Field_In_Use[0].DisplayName);
+
+                  if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+                    displayName = Field_In_Use[0].DisplayName;
+                  } else displayName = Field_In_Use[0].DisplayNameEn;
+                  //First column
+                  if (Field_In_Use[0].InternalName == Listing_Info[0].InternalName) {
+                    if (!isTasks) {
+
+                      if (Field_In_Use[0].needTrans == true && obj[key] != No_Data) {
+
+                        html += '<div class="d-inline-flex flex-column" style="width:25%!important">' +
+                          '<h4 data-trans-' + obj[key] + ' class="acc-title d-inline-flex black Resources" style="margin:0px!important;margin-bottom:.5rem!important"></h4>';
+                        if (records[i].ProjectType == 'Internal') {
+                          InternalProjectsHtml += '<div class="d-inline-flex flex-column" style="width:25%!important">' +
+                            '<h4 data-trans-' + obj[key] + ' class="acc-title d-inline-flex black Resources" style="margin:0px!important;margin-bottom:.5rem!important"></h4>';
+                        } else if (records[i].ProjectType == 'External') {
+                          ExternalProjectsHtml += '<div class="d-inline-flex flex-column" style="width:25%!important">' +
+                            '<h4 data-trans-' + obj[key] + ' class="acc-title d-inline-flex black Resources" style="margin:0px!important;margin-bottom:.5rem!important"></h4>';
+                        }
+                      } else {
+                        html += '<div class="d-inline-flex flex-column" style="width:25%!important">' +
+                          '<h4 class="acc-title d-inline-flex black" style="margin:0px!important;margin-bottom:.5rem!important">' + obj[key] + '</h4>';
+                        if (records[i].ProjectType == 'Internal') {
+                          InternalProjectsHtml += '<div class="d-inline-flex flex-column" style="width:25%!important">' +
+                            '<h4 class="acc-title d-inline-flex black" style="margin:0px!important;margin-bottom:.5rem!important">' + obj[key] + '</h4>';
+                        } else if (records[i].ProjectType == 'External') {
+                          ExternalProjectsHtml += '<div class="d-inline-flex flex-column" style="width:25%!important">' +
+                            '<h4 class="acc-title d-inline-flex black" style="margin:0px!important;margin-bottom:.5rem!important">' + obj[key] + '</h4>';
+                        }
                       }
-                    } else {
-                      html += '<span class="des-13">' + obj[key] + '</span>' +
-                        '</div>';
-                      if (records[i].ProjectType == 'Internal') {
-                        InternalProjectsHtml += '<span class="des-13">' + obj[key] + '</span>' +
-                          '</div>';
-                      } else if (records[i].ProjectType == 'External') {
-                        ExternalProjectsHtml += '<span class="des-13">' + obj[key] + '</span>' +
-                          '</div>';
-                      }
+
                     }
                   }
-                } else if (listkey == 'projects') {
-                  if (Field_In_Use[0].InternalName == "RelatedIdeaCode") {
+                  //Second column
+                  else if (Field_In_Use[0].InternalName == Listing_Info[1].InternalName) {
+                    if (!isTasks) {
 
-                    var RelatedIdeaCode = obj[key];
-                    var index = RelatedIdeaCode.lastIndexOf("-");
-                    var RelatedIdeaId = RelatedIdeaCode.substring(index + 1);
-                    var isItemLinkable = Field_In_Use[0].hasOwnProperty("isItemLinkable"),
-                      isItemLinkable = isItemLinkable ? Field_In_Use[0].isItemLinkable : false;
 
-                    var IdeaRelated_Behavior = isItemLinkable && Field_In_Use[0].InternalName == "RelatedIdeaCode" && listkey == "projects" && obj[key] != UserNo_Data ?
-                      'onclick="window.open(\' ' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/View.aspx?ListKey=ideas&IID=' + RelatedIdeaId + '\', \'_blank\')"' : '';
-                    if (Field_In_Use[0].inlisting) {
-                      if (records[i].ProjectType == 'Internal') {
-                        InternalProjectsHtml += '<div class="d-inline-flex flex-column mx-2 wordBreak" style="width:20%!important" ' + IdeaRelated_Behavior + '>' +
-                          // '<h4 class="text-warning">' + obj[key] + '</h4>' +
-                          '<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
-                          '<h4 class="text-warning">' + obj[key] + '</h4>' +
-                          '</div>';
-                      } else if (records[i].ProjectType == 'External') {
-                        ExternalProjectsHtml += '<div class="d-inline-flex flex-column mx-2 wordBreak" style="width:20%!important" ' + IdeaRelated_Behavior + '>' +
-                          // '<h4 class="text-warning">' + obj[key] + '</h4>' +
-                          '<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
-                          '<h4 class="text-warning">' + obj[key] + '</h4>' +
-                          '</div>';
-                      }
-
-                    }
-                  } else if (Field_In_Use[0].InternalName == "Priority") {
-                    var PriorityName = obj[key];
-                    if (Field_In_Use[0].inlisting) {
                       if (Field_In_Use[0].needTrans == true && obj[key] != No_Data) {
+                        // console.log('obj[key]', obj[key]);
+                        html += '<span data-trans-' + obj[key] + ' class="des-13 Resources"></span>' +
+                          '</div>';
                         if (records[i].ProjectType == 'Internal') {
-                          InternalProjectsHtml += '<div class="d-inline-flex wordBreak flex-column mx-2 ' + PriorityName + ' " style="width:20%!important">' +
-                            // '<h4 data-trans-' + PriorityName + ' class="text-warning Resources" ></h4>' +
-                            '<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
-                            '<h4 data-trans-' + PriorityName + ' class="text-warning Resources" ></h4>' +
+                          InternalProjectsHtml += '<span data-trans-' + obj[key] + ' class="des-13 Resources ' + obj[key] + '"></span>' +
                             '</div>';
                         } else if (records[i].ProjectType == 'External') {
-                          ExternalProjectsHtml += '<div class="d-inline-flex wordBreak flex-column mx-2  ' + PriorityName + '" style="width:20%!important">' +
-                            // '<h4 data-trans-' + PriorityName + ' class="text-warning Resources" ></h4>' +
+                          ExternalProjectsHtml += '<span data-trans-' + obj[key] + ' class="des-13 Resources ' + obj[key] + '"></span>' +
+                            '</div>';
+                        }
+                      } else {
+                        html += '<span class="des-13">' + obj[key] + '</span>' +
+                          '</div>';
+                        if (records[i].ProjectType == 'Internal') {
+                          InternalProjectsHtml += '<span class="des-13">' + obj[key] + '</span>' +
+                            '</div>';
+                        } else if (records[i].ProjectType == 'External') {
+                          ExternalProjectsHtml += '<span class="des-13">' + obj[key] + '</span>' +
+                            '</div>';
+                        }
+                      }
+                    }
+                  } else if (listkey == 'projects') {
+                    if (Field_In_Use[0].InternalName == "RelatedIdeaCode") {
+
+                      var RelatedIdeaCode = obj[key];
+                      var index = RelatedIdeaCode.lastIndexOf("-");
+                      var RelatedIdeaId = RelatedIdeaCode.substring(index + 1);
+                      var isItemLinkable = Field_In_Use[0].hasOwnProperty("isItemLinkable"),
+                        isItemLinkable = isItemLinkable ? Field_In_Use[0].isItemLinkable : false;
+
+                      var IdeaRelated_Behavior = isItemLinkable && Field_In_Use[0].InternalName == "RelatedIdeaCode" && listkey == "projects" && obj[key] != UserNo_Data ?
+                        'onclick="window.open(\' ' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/View.aspx?ListKey=ideas&IID=' + RelatedIdeaId + '\', \'_blank\')"' : '';
+                      if (Field_In_Use[0].inlisting) {
+                        if (records[i].ProjectType == 'Internal') {
+                          InternalProjectsHtml += '<div class="d-inline-flex flex-column mx-2 wordBreak" style="width:20%!important" ' + IdeaRelated_Behavior + '>' +
+                            // '<h4 class="text-warning">' + obj[key] + '</h4>' +
                             '<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
-                            '<h4 data-trans-' + PriorityName + ' class="text-warning Resources" ></h4>' +
+                            '<h4 class="text-warning">' + obj[key] + '</h4>' +
+                            '</div>';
+                        } else if (records[i].ProjectType == 'External') {
+                          ExternalProjectsHtml += '<div class="d-inline-flex flex-column mx-2 wordBreak" style="width:20%!important" ' + IdeaRelated_Behavior + '>' +
+                            // '<h4 class="text-warning">' + obj[key] + '</h4>' +
+                            '<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
+                            '<h4 class="text-warning">' + obj[key] + '</h4>' +
+                            '</div>';
+                        }
+
+                      }
+                    } else if (Field_In_Use[0].InternalName == "Priority") {
+                      var PriorityName = obj[key];
+                      if (Field_In_Use[0].inlisting) {
+                        if (Field_In_Use[0].needTrans == true && obj[key] != No_Data) {
+                          if (records[i].ProjectType == 'Internal') {
+                            InternalProjectsHtml += '<div class="d-inline-flex wordBreak flex-column mx-2 ' + PriorityName + ' " style="width:20%!important">' +
+                              // '<h4 data-trans-' + PriorityName + ' class="text-warning Resources" ></h4>' +
+                              '<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
+                              '<h4 data-trans-' + PriorityName + ' class="text-warning Resources" ></h4>' +
+                              '</div>';
+                          } else if (records[i].ProjectType == 'External') {
+                            ExternalProjectsHtml += '<div class="d-inline-flex wordBreak flex-column mx-2  ' + PriorityName + '" style="width:20%!important">' +
+                              // '<h4 data-trans-' + PriorityName + ' class="text-warning Resources" ></h4>' +
+                              '<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
+                              '<h4 data-trans-' + PriorityName + ' class="text-warning Resources" ></h4>' +
+                              '</div>';
+                          }
+                        } else {
+                          if (records[i].ProjectType == 'Internal') {
+                            InternalProjectsHtml += '<div class="d-inline-flex wordBreak flex-column mx-2  " style="width:20%!important">' +
+                              // '<h4 data-trans-' + PriorityName + ' class="text-warning Resources" ></h4>' +
+                              '<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
+                              '<h4 data-trans-' + PriorityName + ' class="text-warning Resources" ></h4>' +
+                              '</div>';
+                          } else if (records[i].ProjectType == 'External') {
+                            ExternalProjectsHtml += '<div class="d-inline-flex wordBreak flex-column mx-2  " style="width:20%!important">' +
+                              // '<h4 data-trans-' + PriorityName + ' class="text-warning Resources" ></h4>' +
+                              '<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
+                              '<h4 data-trans-' + PriorityName + ' class="text-warning Resources" ></h4>' +
+                              '</div>';
+                          }
+                        }
+                      }
+                    } else if (Field_In_Use[0].inlisting) {
+                      if (Field_In_Use[0].needTrans == true && obj[key] != No_Data) {
+                        if (records[i].ProjectType == 'Internal') {
+                          InternalProjectsHtml +=
+                            '<div class="d-inline- wordBreak flex-column mx-2  ' + obj[key] + ' " style="width:20% !important ">' +
+                            // '<h4 data-trans-' + obj[key] + ' class="text-warning Resources"></h4>' +
+                            '<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
+                            '<h4 data-trans-' + obj[key] + ' class="text-warning Resources"></h4>' +
+                            '</div>';
+                        } else if (records[i].ProjectType == 'External') {
+                          ExternalProjectsHtml += '<div class="d-inline-flex wordBreak flex-column mx-2  ' + obj[key] + '" style="width:20%!important">' +
+                            // '<h4 data-trans-' + obj[key] + ' class="text-warning Resources"></h4>' +
+                            '<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
+                            '<h4 data-trans-' + obj[key] + ' class="text-warning Resources"></h4>' +
                             '</div>';
                         }
                       } else {
                         if (records[i].ProjectType == 'Internal') {
-                          InternalProjectsHtml += '<div class="d-inline-flex wordBreak flex-column mx-2  " style="width:20%!important">' +
-                            // '<h4 data-trans-' + PriorityName + ' class="text-warning Resources" ></h4>' +
+                          InternalProjectsHtml +=
+                            '<div class="d-inline-flex wordBreak flex-column mx-2  " style="width:20%!important">' +
+                            // '<h4  class="text-warning">' + obj[key] + '</h4>' +
                             '<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
-                            '<h4 data-trans-' + PriorityName + ' class="text-warning Resources" ></h4>' +
+                            '<h4  class="text-warning">' + obj[key] + '</h4>' +
                             '</div>';
                         } else if (records[i].ProjectType == 'External') {
                           ExternalProjectsHtml += '<div class="d-inline-flex wordBreak flex-column mx-2  " style="width:20%!important">' +
-                            // '<h4 data-trans-' + PriorityName + ' class="text-warning Resources" ></h4>' +
+                            // '<h4 class="text-warning">' + obj[key] + '</h4>' +
                             '<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
-                            '<h4 data-trans-' + PriorityName + ' class="text-warning Resources" ></h4>' +
+                            '<h4 class="text-warning">' + obj[key] + '</h4>' +
                             '</div>';
                         }
                       }
+
                     }
-                  } else if (Field_In_Use[0].inlisting) {
+                  }
+                  //get other columns
+                  else {
+                    var PrjRelated_Behavior = isLinkable && USERProjRelated.indexOf(listkey) > -1 && Field_In_Use[0].InternalName == "ProjectCode" && !USERPCODE && obj[key] != UserNo_Data ?
+                      'onclick="window.open(\' ' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/ProjectHome.aspx?PCODE=' + obj[key] + '\', \'_blank\')"' : '';
+
                     if (Field_In_Use[0].needTrans == true && obj[key] != No_Data) {
-                      if (records[i].ProjectType == 'Internal') {
-                        InternalProjectsHtml +=
-                          '<div class="d-inline- wordBreak flex-column mx-2  ' + obj[key] + ' " style="width:20% !important ">' +
-                          // '<h4 data-trans-' + obj[key] + ' class="text-warning Resources"></h4>' +
-                          '<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
-                          '<h4 data-trans-' + obj[key] + ' class="text-warning Resources"></h4>' +
-                          '</div>';
-                      } else if (records[i].ProjectType == 'External') {
-                        ExternalProjectsHtml += '<div class="d-inline-flex wordBreak flex-column mx-2  ' + obj[key] + '" style="width:20%!important">' +
-                          // '<h4 data-trans-' + obj[key] + ' class="text-warning Resources"></h4>' +
-                          '<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
-                          '<h4 data-trans-' + obj[key] + ' class="text-warning Resources"></h4>' +
-                          '</div>';
-                      }
+                      var isHTML = USERPCODE && Field_In_Use[0].InternalName == "ProjectCode" ? '' :
+                        '<div class="d-inline-flex wordBreak flex-column mx-2  ' + obj[key] + '  " style="width:20%!important" ' + PrjRelated_Behavior + '>' +
+                        // '<h4 data-trans-' + obj[key] + ' class="text-warning Resources"></h4>' +
+                        '<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
+                        '<h4 data-trans-' + obj[key] + ' class="text-warning Resources"></h4>' +
+                        '</div>';
                     } else {
-                      if (records[i].ProjectType == 'Internal') {
-                        InternalProjectsHtml +=
-                          '<div class="d-inline-flex wordBreak flex-column mx-2  " style="width:20%!important">' +
-                          // '<h4  class="text-warning">' + obj[key] + '</h4>' +
-                          '<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
-                          '<h4  class="text-warning">' + obj[key] + '</h4>' +
-                          '</div>';
-                      } else if (records[i].ProjectType == 'External') {
-                        ExternalProjectsHtml += '<div class="d-inline-flex wordBreak flex-column mx-2  " style="width:20%!important">' +
+
+                      let fieldType = Listing_Info.filter(el => {
+                        return el.InternalName == key;
+                      })
+
+                      if (fieldType.length && fieldType[0].type == 'status') {// this type specially for strategicObjective status
+                        var statusTitle = "", value = obj[key] ? obj[key] : No_Data;
+                        statusTitle = await StrategicObjectives_Status_Listing.init(value)
+                        var isHTML =
+                          USERPCODE && Field_In_Use[0].InternalName == "ProjectCode"
+                            ? ""
+                            : '<div class="d-inline-flex flex-column mx-2  " style="width:20%!important" ' +
+                            PrjRelated_Behavior +
+                            ">" +
+                            '<span class="des-13"><span class="state-val">' +
+                            displayName +
+                            "</span></span>" +
+                            '<h4 class="text-warning ' + statusTitle.classname + '">' +
+                            statusTitle.status +
+                            "</h4>" +
+                            "</div>";
+                      } else {
+                        var isHTML = USERPCODE && Field_In_Use[0].InternalName == "ProjectCode" ? '' :
+                          '<div class="d-inline-flex wordBreak flex-column mx-2  " style="width:20%!important" ' + PrjRelated_Behavior + '>' +
                           // '<h4 class="text-warning">' + obj[key] + '</h4>' +
                           '<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
                           '<h4 class="text-warning">' + obj[key] + '</h4>' +
@@ -700,278 +753,255 @@ window.ListingData = {
                       }
                     }
 
-                  }
-                }
-                //get other columns
-                else {
-                  var PrjRelated_Behavior = isLinkable && USERProjRelated.indexOf(listkey) > -1 && Field_In_Use[0].InternalName == "ProjectCode" && !USERPCODE && obj[key] != UserNo_Data ?
-                    'onclick="window.open(\' ' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/ProjectHome.aspx?PCODE=' + obj[key] + '\', \'_blank\')"' : '';
+                    if (Field_In_Use[0].inlisting) {
+                      html += isHTML;
+                    }
 
-                  if (Field_In_Use[0].needTrans == true && obj[key] != No_Data) {
-                    var isHTML = USERPCODE && Field_In_Use[0].InternalName == "ProjectCode" ? '' :
-                      '<div class="d-inline-flex wordBreak flex-column mx-2  ' + obj[key] + '  " style="width:20%!important" ' + PrjRelated_Behavior + '>' +
-                      // '<h4 data-trans-' + obj[key] + ' class="text-warning Resources"></h4>' +
-                      '<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
-                      '<h4 data-trans-' + obj[key] + ' class="text-warning Resources"></h4>' +
-                      '</div>';
-                  } else {
-                    var isHTML = USERPCODE && Field_In_Use[0].InternalName == "ProjectCode" ? '' :
-                      '<div class="d-inline-flex wordBreak flex-column mx-2  " style="width:20%!important" ' + PrjRelated_Behavior + '>' +
-                      // '<h4 class="text-warning">' + obj[key] + '</h4>' +
-                      '<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
-                      '<h4 class="text-warning">' + obj[key] + '</h4>' +
-                      '</div>';
                   }
-
-                  if (Field_In_Use[0].inlisting) {
-                    html += isHTML;
-                  }
-
                 }
               }
+              if (isTasks) {
+                html += '</a><div class="task-Action">' +
+                  '<button class="btn btn-action delegate-btn" style="display: block;" type="button"  onclick="Delegatepopup.init(\'' + RecordsWithID[i].ID + '\')"><span data-trans-delegate class="Resources"></span></button>' +
+                  '<button class="btn btn-action task_action_btn" style="display: block;" type="button" onclick="ListingData.g.handleids(\'' + RecordsWithID[i].pcode + '\',\'' + RecordsWithID[i].icode + '\',\'' + RecordsWithID[i].ID + '\',\'' + RecordsWithID[i].tasktype + '\',\'' + RecordsWithID[i].stageid + '\',\'' + RecordsWithID[i].ritemid + '\',\'' + RecordsWithID[i].sourceitemid + '\',\'' + RecordsWithID[i].wfname + '\',\'' + RecordsWithID[i].puid + '\',\'' + RecordsWithID[i].relatedurl + '\')"><span data-trans-taskaction class="Resources"></span></button>' +
+                  '</li>';
+              } else {
+                html += '</a></li>';
+                if (records[i].ProjectType == 'Internal') {
+                  InternalProjectsHtml += '</a></li>';
+                } else if (records[i].ProjectType == 'External') {
+                  ExternalProjectsHtml += '</a></li>';
+                }
+              }
+
             }
-            if (isTasks) {
-              html += '</a><div class="task-Action">' +
-                '<button class="btn btn-action delegate-btn" style="display: block;" type="button"  onclick="Delegatepopup.init(\'' + RecordsWithID[i].ID + '\')"><span data-trans-delegate class="Resources"></span></button>' +
-                '<button class="btn btn-action task_action_btn" style="display: block;" type="button" onclick="ListingData.g.handleids(\'' + RecordsWithID[i].pcode + '\',\'' + RecordsWithID[i].icode + '\',\'' + RecordsWithID[i].ID + '\',\'' + RecordsWithID[i].tasktype + '\',\'' + RecordsWithID[i].stageid + '\',\'' + RecordsWithID[i].ritemid + '\',\'' + RecordsWithID[i].sourceitemid + '\',\'' + RecordsWithID[i].wfname + '\',\'' + RecordsWithID[i].puid + '\',\'' + RecordsWithID[i].relatedurl + '\')"><span data-trans-taskaction class="Resources"></span></button>' +
-                '</li>';
-            } else {
-              html += '</a></li>';
-              if (records[i].ProjectType == 'Internal') {
-                InternalProjectsHtml += '</a></li>';
-              } else if (records[i].ProjectType == 'External') {
-                ExternalProjectsHtml += '</a></li>';
+
+            var projectsListing = '';
+
+            if (originalstate || (!isLoadMore)) { // fix project list tabs to show
+              if (typeClicked == 'Internal') {
+                projectsListing = '<ul class="nav nav-tabs" id="projectType" role="tablist"><li class="nav-item"><a data-trans-Internal class="nav-link active Resources" id="Internal" data-toggle="tab" href="#InternalProjects" role="tab" aria-controls="InternalProjects" aria-selected="true"></a></li ><li class="nav-item"><a data-trans-External class="nav-link Resources" id="External" data-toggle="tab" href="#ExternalProjects" role="tab" aria-controls="ExternalProjects" aria-selected="false"></a></li></ul>'
+              } else if (typeClicked == 'External') {
+                projectsListing = '<ul class="nav nav-tabs" id="projectType" role="tablist"><li class="nav-item"><a data-trans-Internal class="nav-link  Resources" id="Internal" data-toggle="tab" href="#InternalProjects" role="tab" aria-controls="InternalProjects" aria-selected="true"></a></li ><li class="nav-item"><a data-trans-External class="nav-link active Resources" id="External" data-toggle="tab" href="#ExternalProjects" role="tab" aria-controls="ExternalProjects" aria-selected="false"></a></li></ul>'
               }
             }
 
-          }
-
-          var projectsListing = '';
-
-          if (originalstate || (!isLoadMore)) { // fix project list tabs to show
             if (typeClicked == 'Internal') {
-              projectsListing = '<ul class="nav nav-tabs" id="projectType" role="tablist"><li class="nav-item"><a data-trans-Internal class="nav-link active Resources" id="Internal" data-toggle="tab" href="#InternalProjects" role="tab" aria-controls="InternalProjects" aria-selected="true"></a></li ><li class="nav-item"><a data-trans-External class="nav-link Resources" id="External" data-toggle="tab" href="#ExternalProjects" role="tab" aria-controls="ExternalProjects" aria-selected="false"></a></li></ul>'
+              projectsListing += '<div class="tab-content" id="projectTypeContent"><div class="tab-pane fade show active" id="InternalProjects" role="tabpanel" aria-labelledby="Internal">' + InternalProjectsHtml + '</div><div class="tab-pane fade" id="ExternalProjects" role="tabpanel" aria-labelledby="External">' + ExternalProjectsHtml + '</div></div>'
             } else if (typeClicked == 'External') {
-              projectsListing = '<ul class="nav nav-tabs" id="projectType" role="tablist"><li class="nav-item"><a data-trans-Internal class="nav-link  Resources" id="Internal" data-toggle="tab" href="#InternalProjects" role="tab" aria-controls="InternalProjects" aria-selected="true"></a></li ><li class="nav-item"><a data-trans-External class="nav-link active Resources" id="External" data-toggle="tab" href="#ExternalProjects" role="tab" aria-controls="ExternalProjects" aria-selected="false"></a></li></ul>'
+              projectsListing += '<div class="tab-content" id="projectTypeContent"><div class="tab-pane fade" id="InternalProjects" role="tabpanel" aria-labelledby="Internal">' + InternalProjectsHtml + '</div><div class="tab-pane fade show active" id="ExternalProjects" role="tabpanel" aria-labelledby="External">' + ExternalProjectsHtml + '</div></div>'
             }
-          }
-
-          if (typeClicked == 'Internal') {
-            projectsListing += '<div class="tab-content" id="projectTypeContent"><div class="tab-pane fade show active" id="InternalProjects" role="tabpanel" aria-labelledby="Internal">' + InternalProjectsHtml + '</div><div class="tab-pane fade" id="ExternalProjects" role="tabpanel" aria-labelledby="External">' + ExternalProjectsHtml + '</div></div>'
-          } else if (typeClicked == 'External') {
-            projectsListing += '<div class="tab-content" id="projectTypeContent"><div class="tab-pane fade" id="InternalProjects" role="tabpanel" aria-labelledby="Internal">' + InternalProjectsHtml + '</div><div class="tab-pane fade show active" id="ExternalProjects" role="tabpanel" aria-labelledby="External">' + ExternalProjectsHtml + '</div></div>'
-          }
 
 
-          //// for tasks
-          var tasksListing = ''
-          // if (isAdmin || isEPMO) {
-          if (originalstate || (!isLoadMore)) { // fix project list tabs to show
+            //// for tasks
+            var tasksListing = ''
+            // if (isAdmin || isEPMO) {
+            if (originalstate || (!isLoadMore)) { // fix project list tabs to show
+              if (taskClicked == 'relatedTasks') {
+                $('.task_action_btn').css('display', 'block')
+                tasksListing = '<ul class="nav nav-tabs" id="projectType" role="tablist"><li class="nav-item"><a data-trans-mytasks class="nav-link active Resources" id="relatedTasks" data-toggle="tab" href="#relatedTasks" role="tab" aria-controls="relatedTasks" aria-selected="true"></a></li ><li class="nav-item"><a data-trans-othertasks class="nav-link Resources" id="allTasks" data-toggle="tab" href="#allTasks" role="tab" aria-controls="allTasks" aria-selected="false"></a></li></ul>'
+
+              } else if (taskClicked == 'allTasks') {
+                tasksListing = '<ul class="nav nav-tabs" id="projectType" role="tablist"><li class="nav-item"><a data-trans-mytasks class="nav-link Resources" id="relatedTasks" data-toggle="tab" href="#relatedTasks" role="tab" aria-controls="relatedTasks" aria-selected="true"></a></li ><li class="nav-item"><a data-trans-othertasks class="nav-link active Resources" id="allTasks" data-toggle="tab" href="#allTasks" role="tab" aria-controls="allTasks" aria-selected="false"></a></li></ul>'
+              }
+            }
+
+
+
             if (taskClicked == 'relatedTasks') {
-              $('.task_action_btn').css('display', 'block')
-              tasksListing = '<ul class="nav nav-tabs" id="projectType" role="tablist"><li class="nav-item"><a data-trans-mytasks class="nav-link active Resources" id="relatedTasks" data-toggle="tab" href="#relatedTasks" role="tab" aria-controls="relatedTasks" aria-selected="true"></a></li ><li class="nav-item"><a data-trans-othertasks class="nav-link Resources" id="allTasks" data-toggle="tab" href="#allTasks" role="tab" aria-controls="allTasks" aria-selected="false"></a></li></ul>'
-
+              tasksListing += '<div class="tab-content" id="taskTypeContent"><div class="tab-pane fade show active" id="relatedTasks" role="tabpanel" aria-labelledby="relatedTasks">' + html + '</div><div class="tab-pane fade" id="allTasks" role="tabpanel" aria-labelledby="allTasks">' + '' + '</div></div>'
             } else if (taskClicked == 'allTasks') {
-              tasksListing = '<ul class="nav nav-tabs" id="projectType" role="tablist"><li class="nav-item"><a data-trans-mytasks class="nav-link Resources" id="relatedTasks" data-toggle="tab" href="#relatedTasks" role="tab" aria-controls="relatedTasks" aria-selected="true"></a></li ><li class="nav-item"><a data-trans-othertasks class="nav-link active Resources" id="allTasks" data-toggle="tab" href="#allTasks" role="tab" aria-controls="allTasks" aria-selected="false"></a></li></ul>'
+              tasksListing += '<div class="tab-content" id="taskTypeContent"><div class="tab-pane fade" id="relatedTasks" role="tabpanel" aria-labelledby="relatedTasks">' + '' + '</div><div class="tab-pane fade show active" id="allTasks" role="tabpanel" aria-labelledby="allTasks">' + html + '</div></div>'
             }
-          }
+
+            // }
+
+            /////
 
 
-
-          if (taskClicked == 'relatedTasks') {
-            tasksListing += '<div class="tab-content" id="taskTypeContent"><div class="tab-pane fade show active" id="relatedTasks" role="tabpanel" aria-labelledby="relatedTasks">' + html + '</div><div class="tab-pane fade" id="allTasks" role="tabpanel" aria-labelledby="allTasks">' + '' + '</div></div>'
-          } else if (taskClicked == 'allTasks') {
-            tasksListing += '<div class="tab-content" id="taskTypeContent"><div class="tab-pane fade" id="relatedTasks" role="tabpanel" aria-labelledby="relatedTasks">' + '' + '</div><div class="tab-pane fade show active" id="allTasks" role="tabpanel" aria-labelledby="allTasks">' + html + '</div></div>'
-          }
-
-          // }
-
-          /////
-
-
-          if (records.length == 0 && originalstate && !isTasks) {
-            $('ul.list-group.w-100').html('<p data-trans-noitems class="Resources noItems"></p>');
-            $('ul.list-group.w-100').addClass('noItemsDiv');
-            $('.page-filter').addClass('noItemsFilter');
-
-          }
-          else if (records.length == 0 && originalstate && isTasks) {
-            if (isAdmin || isEPMO) {
-              $('ul.list-group.w-100').html(tasksListing);
-            } else {
+            if (records.length == 0 && originalstate && !isTasks) {
               $('ul.list-group.w-100').html('<p data-trans-noitems class="Resources noItems"></p>');
               $('ul.list-group.w-100').addClass('noItemsDiv');
               $('.page-filter').addClass('noItemsFilter');
 
             }
-          }
-          else {
-            if ((!isLoadMore || isOnload) && listkey == 'projects') {
-              $('ul.list-group.w-100').html(projectsListing);
-            }
-            if ((!isLoadMore || isOnload) && isTasks) {
+            else if (records.length == 0 && originalstate && isTasks) {
               if (isAdmin || isEPMO) {
                 $('ul.list-group.w-100').html(tasksListing);
               } else {
+                $('ul.list-group.w-100').html('<p data-trans-noitems class="Resources noItems"></p>');
+                $('ul.list-group.w-100').addClass('noItemsDiv');
+                $('.page-filter').addClass('noItemsFilter');
+
+              }
+            }
+            else {
+              if ((!isLoadMore || isOnload) && listkey == 'projects') {
+                $('ul.list-group.w-100').html(projectsListing);
+              }
+              if ((!isLoadMore || isOnload) && isTasks) {
+                if (isAdmin || isEPMO) {
+                  $('ul.list-group.w-100').html(tasksListing);
+                } else {
+                  $('ul.list-group.w-100').html(html);
+                }
+              }
+
+              if ((!isLoadMore || isOnload) && listkey != 'projects' && listkey != 'tasks') {
                 $('ul.list-group.w-100').html(html);
+              } else if ((isLoadMore && !isOnload) && listkey == 'projects') {
+                $('ul.list-group.w-100 #InternalProjects').append(InternalProjectsHtml)
+                $('ul.list-group.w-100 #ExternalProjects').append(ExternalProjectsHtml)
+                // $('ul.list-group.w-100').append(projectsListing); // comment to avoid the issue that when click on show more the data internal shown in external also
+              } else if ((isLoadMore && !isOnload) && listkey == 'tasks' && (isAdmin || isEPMO)) {
+                $('ul.list-group.w-100').append(tasksListing);
+              } else if ((isLoadMore && !isOnload) && listkey != 'projects') {
+                $('ul.list-group.w-100').append(html);
               }
             }
 
-            if ((!isLoadMore || isOnload) && listkey != 'projects' && listkey != 'tasks') {
-              $('ul.list-group.w-100').html(html);
-            } else if ((isLoadMore && !isOnload) && listkey == 'projects') {
-              $('ul.list-group.w-100 #InternalProjects').append(InternalProjectsHtml)
-              $('ul.list-group.w-100 #ExternalProjects').append(ExternalProjectsHtml)
-              // $('ul.list-group.w-100').append(projectsListing); // comment to avoid the issue that when click on show more the data internal shown in external also
-            } else if ((isLoadMore && !isOnload) && listkey == 'tasks' && (isAdmin || isEPMO)) {
-              $('ul.list-group.w-100').append(tasksListing);
-            } else if ((isLoadMore && !isOnload) && listkey != 'projects') {
-              $('ul.list-group.w-100').append(html);
-            }
-          }
+            // for tasks
+            if (isTasks && (isAdmin || isEPMO)) {
+              // to handle my tasks and other tasks in tasks list
+              $('#relatedTasks').on("click", function (e) {
+                console.log("RELATED TASK TABS")
+                // if (isAdmin || isPortManager) {
+                // $('.task_action_btn').css('display', 'block')
 
-          // for tasks
-          if (isTasks && (isAdmin || isEPMO)) {
-            // to handle my tasks and other tasks in tasks list
-            $('#relatedTasks').on("click", function (e) {
-              console.log("RELATED TASK TABS")
-              // if (isAdmin || isPortManager) {
-              // $('.task_action_btn').css('display', 'block')
+                taskClicked = 'relatedTasks'
+                getNewFilterTask = true
+                allTasksClicked = false
+                isViewMoreClicked = false
+                ListingData.preinit()
+                // ListingData.Get_DDL.init();
 
-              taskClicked = 'relatedTasks'
-              getNewFilterTask = true
-              allTasksClicked = false
-              isViewMoreClicked = false
-              ListingData.preinit()
-              // ListingData.Get_DDL.init();
+                // } else {
+                //   $('#ExternalProjects').html('<p style="text-align:center">' + No_Data + '</p>');
+                // }
+              });
+              // to handle my tasks and other tasks in tasks list
+              $('#allTasks').on("click", function (e) {
 
-              // } else {
-              //   $('#ExternalProjects').html('<p style="text-align:center">' + No_Data + '</p>');
+                console.log("ALL TASKS TABS")
+
+                taskClicked = 'allTasks'
+                getNewFilterTask = true
+                allTasksClicked = true
+                isViewMoreClicked = false
+                ListingData.preinit()
+
+              });
+              // if (!allTasksClicked) {
+              //   $('#internalProjectCount').html(records.length);
               // }
-            });
-            // to handle my tasks and other tasks in tasks list
-            $('#allTasks').on("click", function (e) {
-
-              console.log("ALL TASKS TABS")
-
-              taskClicked = 'allTasks'
-              getNewFilterTask = true
-              allTasksClicked = true
-              isViewMoreClicked = false
-              ListingData.preinit()
-
-            });
-            // if (!allTasksClicked) {
-            //   $('#internalProjectCount').html(records.length);
-            // }
-          }
-
-          //
-
-
-          // one item can create to close the initiative and project
-          if (records.length && (listkey == 'closureinitiative' || listkey == 'closureform')) {
-            $("body").append(
-              "<style>" +
-              ".btn-add{opacity: .6;pointer-events: none;}" +
-              "</style>"
-            );
-          }
-
-          // add illustration when there is no item on list
-          if (records.length == 0 && !originalstate) {
-            if (listkey == 'projects' || isTasks) {
-              $('ul.list-group.w-100 .tab-content').html(`<div style="text-align:center;background:#fff"><img css="w-100" src="${emptyData}" style="height:40vh;width:40vh;"/><p data-trans-nofilterdata class="Resources" style="text-align:center;font-size:13px;padding-bottom:13px"></p></div>`)
-            } else {
-              $('ul.list-group.w-100').html(`<div style="text-align:center;background:#fff"><img css="w-100" src="${emptyData}" style="height:40vh;width:40vh;"/><p data-trans-nofilterdata class="Resources" style="text-align:center;font-size:13px;padding-bottom:13px"></p></div>`)
             }
-          }
+
+            //
 
 
-
-          $(".Listing-Anchor").on("click", "div[onclick]", function (e) {
-            e.preventDefault();
-          });
-
-
-
-
-          //create button and div for filtertation DDLs
-          var HtmlStart = (USERProjRelated.indexOf(listkey) > -1 && PCODE) || (USERProjRelated.indexOf(listkey) == -1 && !PCODE && !ICODE && listkey != 'tasks') ?
-            '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + PCODE_STRING + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="ListingData.g.ExportToExcel()"><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>' : ICODE ?
-              '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + "&ICODE=" + ICODE + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="ListingData.g.ExportToExcel()"><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>'
-              : '';
-          if (originalstate) {
-            $('.content-list-head > .listing-new-at').html(HtmlStart);
-          }
-
-
-          changeResources();
-
-          if (isTasks) {
-            if (taskClicked == 'relatedTasks') {
-              $('.task_action_btn').css('display', 'block')
-
-            } else if (taskClicked == 'allTasks') {
-              $('.task_action_btn').css('display', 'none')
-
+            // one item can create to close the initiative and project
+            if (records.length && (listkey == 'closureinitiative' || listkey == 'closureform')) {
+              $("body").append(
+                "<style>" +
+                ".btn-add{opacity: .6;pointer-events: none;}" +
+                "</style>"
+              );
             }
-          }
 
-
-
-          if (!originalstate) {
-            //remove opacity after filteration
-            $('body').animate({
-              opacity: 1
-            }, {
-              duration: 333,
-              complete: function () {
-                $('.page-filter .dropdown-menu label.dropdown-item input:checkbox').prop({
-                  "disabled": false
-                });
+            // add illustration when there is no item on list
+            if (records.length == 0 && !originalstate) {
+              if (listkey == 'projects' || isTasks) {
+                $('ul.list-group.w-100 .tab-content').html(`<div style="text-align:center;background:#fff"><img css="w-100" src="${emptyData}" style="height:40vh;width:40vh;"/><p data-trans-nofilterdata class="Resources" style="text-align:center;font-size:13px;padding-bottom:13px"></p></div>`)
+              } else {
+                $('ul.list-group.w-100').html(`<div style="text-align:center;background:#fff"><img css="w-100" src="${emptyData}" style="height:40vh;width:40vh;"/><p data-trans-nofilterdata class="Resources" style="text-align:center;font-size:13px;padding-bottom:13px"></p></div>`)
               }
+            }
+
+
+
+            $(".Listing-Anchor").on("click", "div[onclick]", function (e) {
+              e.preventDefault();
             });
-          }
-          //
-          if (isAdmin || isEPMO) {
-            if (isTasks && getNewFilterTask) { // to get relate tasks for every tab
+
+
+
+
+            //create button and div for filtertation DDLs
+            var HtmlStart = (USERProjRelated.indexOf(listkey) > -1 && PCODE) || (USERProjRelated.indexOf(listkey) == -1 && !PCODE && !ICODE && listkey != 'tasks') ?
+              '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + PCODE_STRING + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="ListingData.g.ExportToExcel()"><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>' : ICODE ?
+                '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + "&ICODE=" + ICODE + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="ListingData.g.ExportToExcel()"><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>'
+                : '';
+            if (originalstate) {
+              $('.content-list-head > .listing-new-at').html(HtmlStart);
+            }
+
+
+            changeResources();
+
+            if (isTasks) {
+              if (taskClicked == 'relatedTasks') {
+                $('.task_action_btn').css('display', 'block')
+
+              } else if (taskClicked == 'allTasks') {
+                $('.task_action_btn').css('display', 'none')
+
+              }
+            }
+
+
+
+            if (!originalstate) {
+              //remove opacity after filteration
+              $('body').animate({
+                opacity: 1
+              }, {
+                duration: 333,
+                complete: function () {
+                  $('.page-filter .dropdown-menu label.dropdown-item input:checkbox').prop({
+                    "disabled": false
+                  });
+                }
+              });
+            }
+            //
+            if (isAdmin || isEPMO) {
+              if (isTasks && getNewFilterTask) { // to get relate tasks for every tab
+                ListingData.Get_DDL.init();
+              }
+              getNewFilterTask = false
+            }
+            //
+            if (isOnload) {
+              //hiding the loader and showing the page after all data is in place
+              $('div#particles-foreground, div#particles-background, .vertical-centered-box').animate({
+                opacity: 0
+              }, {
+                duration: 333,
+                complete: function () {
+                  $('div#particles-foreground, div#particles-background, .vertical-centered-box,script[src="' + _spPageContextInfo.webAbsoluteUrl + '/style library/spm/js/Particleground.js"]').remove();
+
+                }
+              });
+              $('a.view-more.text-center.py-2').on("click", sphttp.g.loadMore);
+            }
+
+
+
+
+            isOnload = false;
+            isLoadMore = false;
+            if (originalstate || isLoadMore) // isLoadMore
               ListingData.Get_DDL.init();
+            $('a.view-more.text-center.py-2').removeClass('loader-action');
+            if (sphttp.g.position == null) {
+              $('a.view-more.text-center.py-2').hide();
+              $('a.view-more.text-center.py-2').addClass('disabled');
+            } else {
+              $('a.view-more.text-center.py-2').show();
+              $('a.view-more.text-center.py-2').removeClass('disabled');
             }
-            getNewFilterTask = false
           }
-          //
-          if (isOnload) {
-            //hiding the loader and showing the page after all data is in place
-            $('div#particles-foreground, div#particles-background, .vertical-centered-box').animate({
-              opacity: 0
-            }, {
-              duration: 333,
-              complete: function () {
-                $('div#particles-foreground, div#particles-background, .vertical-centered-box,script[src="' + _spPageContextInfo.webAbsoluteUrl + '/style library/spm/js/Particleground.js"]').remove();
-
-              }
-            });
-            $('a.view-more.text-center.py-2').on("click", sphttp.g.loadMore);
-          }
-
-
-
-
-          isOnload = false;
-          isLoadMore = false;
-          if (originalstate || isLoadMore) // isLoadMore
-            ListingData.Get_DDL.init();
-          $('a.view-more.text-center.py-2').removeClass('loader-action');
-          if (sphttp.g.position == null) {
-            $('a.view-more.text-center.py-2').hide();
-            $('a.view-more.text-center.py-2').addClass('disabled');
-          } else {
-            $('a.view-more.text-center.py-2').show();
-            $('a.view-more.text-center.py-2').removeClass('disabled');
-          }
-        }
-      });
+        });
     }
     // ListingData.Get_DDL.init();
   },
@@ -1144,8 +1174,8 @@ window.ListingData = {
           // && USERlistkey == 'sos' || USERlistkey == 'mainkpi'
           PQuery = SectorHeadQuery
         } else if (isPManager || isPOwner || isInManager || isInOwner) {
-          if(!isTasks){ // task has special query that related to user
-          PQuery = AccessQuery
+          if (!isTasks) { // task has special query that related to user
+            PQuery = AccessQuery
           }
         }
         else {
@@ -1467,9 +1497,9 @@ window.ListingData = {
           TypsFields = [];
           // to add the new data when click show more to the filters dropdown in listing
           console.log('recordsddl', recordsddl,
-          'total items', recordsddl.length);
+            'total items', recordsddl.length);
           console.log('allDataFilterArr', allDataFilterArr);
-       
+
           if (originalstate) { // add isTasks to not add to filter when change tabs
             allDataFilterArr = recordsddl
           }
@@ -1483,11 +1513,11 @@ window.ListingData = {
               } else if (allTasksClicked && isViewMoreClicked) {
                 recordsddl = [...recordsddl, ...allDataFilterArr]
                 allDataFilterArr = [...recordsddl, ...allDataFilterArr]
-              }else if(!allTasksClicked && !isViewMoreClicked){
+              } else if (!allTasksClicked && !isViewMoreClicked) {
                 allDataFilterArr = []
                 recordsddl = [...recordsddl, ...allDataFilterArr]
                 allDataFilterArr = [...recordsddl, ...allDataFilterArr]
-              }else{
+              } else {
                 recordsddl = [...recordsddl, ...allDataFilterArr]
                 allDataFilterArr = [...recordsddl, ...allDataFilterArr]
               }
@@ -1520,7 +1550,7 @@ window.ListingData = {
               var year2 = formatedactualdatemilestone.split("/").at(2);
               var finalformatedactualdate = new Date(year2 + "-" + month2 + "-" + day2);
               console.log(finalformatedactualdate, "finalformatedPlanneddate");
-          
+
               if (today < finalformatedactualdate && item.Delivered !== true) {
                 countOfnostarted += 1;
                 console.log("there is a nostarted project!", countOfnostarted);
@@ -1533,7 +1563,7 @@ window.ListingData = {
               var year = formatedplaneddatemilestone.split("/").at(2);
               var finalformatedPlanneddate = new Date(year + "-" + month + "-" + day);
               console.log(finalformatedPlanneddate, "finalformatedPlanneddate");
-          
+
               if (today > finalformatedPlanneddate && item.Delivered !== true) {
                 latecount += 1;
                 console.log("there is a late project!", latecount);
@@ -2233,10 +2263,33 @@ window.DeleteDelegate_Data_Submit = {
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-//hide the navbar
+// to handle strategic objective status and color
+var StrategicObjectives_Status_Listing = {
+  init: function (value) {
+    debugger
+    var status = ''
+    var color = ''
 
-// if (PCODE || ICODE) {
-// } else {
-//   $('body').append('<style>.page-nav{display:none}<style/>')
-// }
-//
+    if (value && value != No_Data) {
+      if (
+        localStorage.getItem("lng") == null ||
+        localStorage.getItem("lng") == "ar"
+      ) {
+        status = Resources.ar[value]
+      } else {
+        status = Resources.en[value]
+      }
+
+
+      color = `startegicobj${value}`
+    } else {
+      status = No_Data
+    }
+
+
+    return {
+      status: status,
+      classname: color
+    }
+  }
+}

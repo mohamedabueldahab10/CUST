@@ -861,7 +861,10 @@
     actualdate:"تاريخ الاكتمال الفعلي",
     budgetinfotitle:"ميزانية المشروع",
     estimatedcostinfo:"التكلفة التقديرية للمبادرة",
-    initiativebudgetinfo:"ميزانية المبادرة"
+    initiativebudgetinfo:"ميزانية المبادرة",
+    stat9:"مكتمل",
+    stat10:"تم تحقيق المستهدف",
+    stat11:"تم تحقيقه جزئيا"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1738,7 +1741,10 @@
     plannedcompleteddate:"Planned Completed Date",
     actualdate:"Actual Date",
     estimatedcostinfo:"Estimated cost for initiative",
-    initiativebudgetinfo:"Initiative Budget"
+    initiativebudgetinfo:"Initiative Budget",
+    stat9:"Completed",
+    stat10:"Target achieved",
+    stat11:"Partially achieved"
   },
 };
 

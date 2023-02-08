@@ -42,6 +42,14 @@ var Listing_Info = [
         needTrans:true
     },
     {
+        "InternalName": "Status",
+        "DisplayName": " الحالة",
+        "DisplayNameEn": "Status",
+        "type": "status", //create this type to handle status in listing specially for strategicobjectivestatus
+        inlisting: true,
+
+    },
+    {
         "InternalName": "Sector",
         "DisplayName": "القطاع",
         "DisplayNameEn": "Sector",

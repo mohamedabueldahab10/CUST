@@ -6402,3 +6402,15 @@ a.a-important-link:hover>* {
 .schedule-info {
     padding: 0px 5px;
 }
+
+.startegicobjstat11 {
+    color: rgba(245, 27, 7, 255) !important;
+}
+
+.startegicobjstat10 {
+    color: rgba(255, 255, 0, 255) !important;
+}
+
+.startegicobjstat9 {
+    color: rgba(0, 170, 0, 255) !important;
+}
