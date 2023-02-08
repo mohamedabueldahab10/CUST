@@ -2876,6 +2876,20 @@ window.ListInfo = {
         break;
 
       case "dropdownValues":
+        // added for CR module
+				let customFilter = element.options.choices[0].hasOwnProperty(
+					"customFilterValue"
+				)
+					? 'iscustomfiltervalue="true"'
+					: "";
+				let customCr = element.hasOwnProperty("customCr")
+					? element.customCr
+					: false;
+
+				if (crListKey && isCrMode && customCr) {
+					htmlBody = "";
+          //ended
+				} else {
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -2967,6 +2981,7 @@ window.ListInfo = {
           descPhrase +
           "</div>" +
           "</div>";
+        }
         OnSuccess(flag, htmlBody);
         break;
 
@@ -4747,7 +4762,45 @@ window.ListInfo = {
         OnSuccess(flag, htmlBody);
         break;
     }
+    if (!isCrMode && crListKey) {
+      //on new custom cr
+      handleCustomeCr.init();
+      $(
+        "div#particles-foreground, div#particles-background, .vertical-centered-box"
+      ).animate(
+        {
+          opacity: 0,
+        },
+        {
+          duration: 333,
+          complete: function () {
+            $(
+              "div#particles-foreground, div#particles-background, .vertical-centered-box"
+            ).remove();
 
+            // $('div#particles-foreground, div#particles-background, .vertical-centered-box').hide();
+          },
+        }
+      );
+    } else {
+      $(
+        "div#particles-foreground, div#particles-background, .vertical-centered-box"
+      ).animate(
+        {
+          opacity: 0,
+        },
+        {
+          duration: 333,
+          complete: function () {
+            $(
+              "div#particles-foreground, div#particles-background, .vertical-centered-box"
+            ).remove();
+
+            // $('div#particles-foreground, div#particles-background, .vertical-centered-box').hide();
+          },
+        }
+      );
+    }
     //return htmlBody;
   },
   g: {
@@ -5716,6 +5769,29 @@ var View_ListInfo = {
             View_Data_Request.init();
             GetProject_Info.init();
           });
+           // added for CR module
+          if (isCrMode) {
+						CrModeFunctionality.preinit();
+					} else {
+						$(
+							"div#particles-foreground, div#particles-background, .vertical-centered-box"
+						).animate(
+							{
+								opacity: 0,
+							},
+							{
+								duration: 333,
+								complete: function () {
+									$(
+										"div#particles-foreground, div#particles-background, .vertical-centered-box"
+									).remove();
+
+									// $('div#particles-foreground, div#particles-background, .vertical-centered-box').hide();
+								},
+							}
+						);
+					}
+          // ended 
           // $('h2.DahsFormTitle').text(PageTitle);
           $(
             "div#particles-foreground, div#particles-background, .vertical-centered-box"
