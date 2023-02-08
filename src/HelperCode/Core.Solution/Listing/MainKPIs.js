@@ -26,7 +26,7 @@ var barColor = "", PDegree = 0, showMoreText = "", showLessText = "";
 var startegyIdClicked = '', sosIdClicked = '';
 var SoQuery = '';
 
-SoQuery = "<View><Query><OrderBy><FieldRef Name='Title' Ascending='True' /></OrderBy></Query></View>"
+SoQuery = "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Title' Ascending='True' /></OrderBy></Query></View>"
 
 
 var goalKpiQuery = '';
@@ -34,7 +34,7 @@ var goalKpiQueryG = '';
 // working on query handler
 var allRelatedStrategObjArr = [], allRelatedStrategyArr = [];
 
-goalKpiQuery = "<View><Query><OrderBy><FieldRef Name='Title' Ascending='True' /></OrderBy></Query></View>"
+goalKpiQuery = "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Title' Ascending='True' /></OrderBy></Query></View>"
 
 if (
   localStorage.getItem("lng") == null ||
@@ -70,13 +70,13 @@ var MainKPIs_Info_Request = {
   // The main Initialization function
   init: function () {
 
-    debugger
+    
 
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("MainKPI");
     var camlQuery = new SP.CamlQuery();
     let myQuery = `<View><Query>\
-    <OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>`;
+    <Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>`;
     if (isRoleDataLevelAccess) {
       if (dataLevelAccessQuery) {
         myQuery = dataLevelAccessQuery;
@@ -99,7 +99,7 @@ var MainKPIs_Info_Request = {
     var KPIsHTML = [];
     while (listItemEnum.moveNext()) {
 
-      debugger
+      
       
       var oListItem = listItemEnum.get_current();
 
@@ -605,7 +605,7 @@ var GoalsKPIs_Info_Request = {
     var camlQuery = new SP.CamlQuery();
 
     //////
-
+debugger
     if (allRelatedStrategyArr.length) {
       goalKpiQuery = '<View><Query><Where><And><In><FieldRef Name="Title" /><Values>';
       allRelatedStrategyArr.forEach(function (item) {
