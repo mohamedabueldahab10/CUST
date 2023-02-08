@@ -27,7 +27,7 @@ var Listing_Info = [
   // },
   {
     InternalName: 'Weight',
-    DisplayName: 'الوزن / القيمة',
+    DisplayName: 'الوزن',
     DisplayNameEn: 'Weight/Value',
     type: 'floatpercentage',
     inlisting: true,

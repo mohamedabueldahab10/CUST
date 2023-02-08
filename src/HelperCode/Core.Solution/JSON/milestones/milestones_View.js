@@ -18,6 +18,16 @@ var Information_Form = [
         type: 'string',
       },
       {
+        InternalName: 'Amount',
+        DisplayName: 'القيمة',
+        DisplayNameEn: 'Amount',
+        dontSubmit: true,
+        type: 'percentbyrelatedparent',
+        listname: 'Projects',
+        parentinternalname: 'ActualBudget',
+        targetelement: 'Weight',
+      },
+      {
         InternalName: 'Weight',
         DisplayNameEn: 'Weight',
         DisplayName: 'الوزن المكافئ للإنجاز %',
@@ -108,19 +118,19 @@ var Information_Form = [
       // }
     ],
   },
-  {
-    label: 'وثائق داعمة',
-    labelEn: 'Supporting Documents',
-    description: 'التفاصيل',
-    descriptionEn: 'Details',
-    subFields: [
-      {
-        InternalName: 'Attachment',
-        DisplayName: 'المرفقات',
-        DisplayNameEn: 'Attachment',
-        type: 'file',
-        withAddBtn: 'true',
-      },
-    ],
-  },
+  // {
+  //   label: 'وثائق داعمة',
+  //   labelEn: 'Supporting Documents',
+  //   description: 'التفاصيل',
+  //   descriptionEn: 'Details',
+  //   subFields: [
+  //     {
+  //       InternalName: 'Attachment',
+  //       DisplayName: 'المرفقات',
+  //       DisplayNameEn: 'Attachment',
+  //       type: 'file',
+  //       withAddBtn: 'true',
+  //     },
+  //   ],
+  // },
 ]

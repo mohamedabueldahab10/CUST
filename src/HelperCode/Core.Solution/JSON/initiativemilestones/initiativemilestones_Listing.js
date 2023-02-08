@@ -19,7 +19,8 @@ var Listing_Info = [
 		"InternalName": "Weight",
 		"DisplayNameEn": "Weight",
 		"DisplayName": "الوزن المكافئ للإنجاز %",
-		"type": "text",
+		// "type": "text",
+		"type": "floatpercentage",
 		inlisting: true,
 		infilter: true
 	},

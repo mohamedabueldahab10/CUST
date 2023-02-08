@@ -164,7 +164,7 @@ var Information_Form = [
         InternalName: 'RelatedMainKpis',
         ToggleName: 'RelatedMainKpis',
         DisplayNameEn: 'Related Main Kpis',
-        DisplayName: 'الربط بالمؤشرات الرئيسية',
+        DisplayName: 'المؤشر المرتبط',
         type: 'lookupWithQuery',
         queryField: 'Types',
         queryFieldType: 'dropdownValues', //ex: "Choice"

@@ -20,10 +20,26 @@ var Information_Form = [
         validation: 'required',
       },
       {
+        InternalName: 'Amount',
+        DisplayName: 'القيمة',
+        DisplayNameEn: 'Amount',
+        dontSubmit: true,
+        type: 'percentbyrelatedparent',
+        listname: 'Projects',
+        parentinternalname: 'ActualBudget',
+        targetelement: 'Weight',
+        validation: 'required',
+      },
+      {
         InternalName: 'Weight',
         DisplayNameEn: 'Weight',
         DisplayName: 'الوزن المكافئ للإنجاز %',
-        type: 'floatpercentage',
+        // type: 'floatpercentage',
+        type: 'weightfloatpercentage',
+        listname: 'Milestones',
+        targetcode: 'ProjectCode',
+        targetelement: 'Weight',
+        seconedtarget: 'Amount',
         validation: 'required',
         // "state": "disabled",
         // dynamic: "Initiative"
@@ -109,7 +125,7 @@ var Information_Form = [
         type: 'lookuptoparentchild',
         parentlist: 'Projects', //parent list name
         parentinternalname: 'RelatedInitiative', // internal name in parent list
-        source: 'Milestones', // target list
+        source: 'InitiativeMilestones', // target list
         sourceinternalname: 'InitiativeCode', // column in target list
         Dispfieldkey: 'Name', //display in dropdown
         valfieldkey: 'Title', // value in dropdown
