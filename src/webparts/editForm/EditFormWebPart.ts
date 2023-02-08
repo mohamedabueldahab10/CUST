@@ -12,6 +12,7 @@ require('../../HelperRessources/js/PPicker.js');
 require('../../HelperCode/Utilities.Core/Forms.Utilities/Form_Render.js');
 require('../../HelperCode/Utilities.Core/Forms.Utilities/Form_Request.js');
 require('../../HelperCode/Utilities.Core/Forms.Utilities/Form_Submit.js');
+require('../../HelperCode/Utilities.Core/Forms.Utilities/cr.Utility.js');
 require('../../HelperRessources/css/Styles.css');
 require('../../HelperRessources/css/style-dashboards.css');
 require('../../HelperRessources/css/fontello.css');
