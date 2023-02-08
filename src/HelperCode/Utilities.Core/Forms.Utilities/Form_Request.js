@@ -103,7 +103,7 @@ window.relatedToIdea = [{ listName: "Tasks", RelatedItem: "ProjectCode" }];
 
 
 window.Edit_Data_Request = {
-  onSuccess: function (sender, args) {
+  onSuccess: async function (sender, args) {
     var pillersRadio = ''
     if (listkey == 'kpiequations') {
       //  (!isAdmin || !isSPMTeam )? window.location = _spPageContextInfo.webAbsoluteUrl : '';
@@ -317,6 +317,13 @@ window.Edit_Data_Request = {
           break;
       }
     });
+
+
+    if (listkey == 'sos') { // add this after loop to apply don't submit feature to not change on value when submit edit
+			var statusTitle = "", value = oListItem.get_item("Status");
+			statusTitle = await StrategicObjectives_Status.init(value)
+			$('#Status').val(statusTitle);
+		}
 
     //checking field ownership
     $('[data-editableby]').each(function () {
@@ -1011,7 +1018,7 @@ window.View_Data_Request = {
 
     $(
       ".section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request) > .viewmode-value"
-    ).each(function () {
+    ).each(async function () {
 
       if ($(this).attr("type") == "date") {
         var d =
@@ -1296,11 +1303,17 @@ window.View_Data_Request = {
           );
         }
       } else {
+        if (listkey == 'sos' && $(this).attr("id") == "Status") { // add this here to handle status of strategic objective in view and print
+					var statusTitle = "", value = oListItem.get_item("" + $(this).attr("id") + "")
+					statusTitle = await StrategicObjectives_Status.init(value)
+					$(this).text(statusTitle);
+				}else{
         var value =
           oListItem.get_item("" + $(this).attr("id") + "") == null
             ? No_Data
             : oListItem.get_item("" + $(this).attr("id") + "");
         $(this).text(value);
+        }
       }
     });
 
@@ -5627,83 +5640,22 @@ var Check_Item_Deleted = {
 }
 
 
-
-//function to delete the task from wf
-// var Delete_Wf_Task = {
-//   init: function () {
-//     console.log("INSIDE DELETE")
-//     var fieldNameRef = '', fieldValue = '';
-
-//     if (PCODE) {
-//       fieldNameRef = 'ProjectCode'
-//       fieldValue = PCODE
-//     } else if (ICODE) {
-//       fieldNameRef = 'InitiativeCode'
-//       fieldValue = ICODE
-//     }
-
-//     var context = SP.ClientContext.get_current();
-//     var dfd = $.Deferred();
-//     var programList = context.get_web().get_lists().getByTitle('Tasks');
-//     var camlQuery = new SP.CamlQuery();
-//     camlQuery.set_viewXml("<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And><Eq><FieldRef Name=" + fieldNameRef + "/><Value Type='Text'>" + fieldValue + "</Value></Eq><Eq><FieldRef Name='StageID'/><Value Type='Text'>" + currentStageForItem + "</Value></Eq></And></And></Where></Query></View>")
-
-//     //Get items by Query
-//     var progColl = programList.getItems(camlQuery);
-//     //Load item collection
-//     context.load(progColl);
-
-//     context.executeQueryAsync(
-//       function () {
-//         var currentItemArray = [];
-//         if (progColl.get_count() > 0) {
-//           var progEnum = progColl.getEnumerator();
-//           while (progEnum.moveNext()) {
-//             var currentItem = progEnum.get_current();
-//             var currentId = currentItem.get_item("ID");
-
-//             //Get Item by current ID
-//             var items = programList.getItemById(currentId);
-//             items.set_item('DeletionStatus', 'Deleted');
-
-//             //Update the item
-//             items.update();
-//             currentItemArray.push(items);
-//             context.load(currentItemArray[currentItemArray.length - 1]);
-//           }
-//           context.executeQueryAsync(
-//             function () {
-//               console.log("after remove task")
-//
-//               if (
-//                 listkey == "projects" ||
-//                 listkey == "ideas" ||
-//                 listkey == "portfolio" ||
-//                 listkey == "budgetitems"
-//               ) {
-//                 window.location =
-//                   _spPageContextInfo.webAbsoluteUrl +
-//                   "/SitePages/Listing.aspx?ListKey=" +
-//                   listkey;
-//               } else {
-//                 window.location =
-//                   _spPageContextInfo.webAbsoluteUrl +
-//                   "/SitePages/Listing.aspx?ListKey=" +
-//                   listkey +
-//                   PCODE_STRING;
-//               }
-//               dfd.resolve();
-//             },
-//             function (sender, args) {
-//               //Item updated fail
-//               console.log(
-//                 "Request Failed to delete Item Items :" + args.get_message()
-//               );
-//             }
-//           );
-//         }
-//       })
-
-//   }
-// }
-
+var StrategicObjectives_Status = {
+	init: function (value) {
+    debugger
+		var status = ''
+		if (value && value != No_Data) {
+			if (
+				localStorage.getItem("lng") == null ||
+				localStorage.getItem("lng") == "ar"
+			) {
+				status = Resources.ar[value]
+			} else {
+				status = Resources.en[value]
+			}
+		} else {
+			status = No_Data
+		}
+		return status
+	}
+}
