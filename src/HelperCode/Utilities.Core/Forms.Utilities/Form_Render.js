@@ -136,6 +136,7 @@ window.ListInfo = {
     var htmlBuilder = "";
     var Label, Description;
     var printHtml = "";
+    var toggleSectionName;
 
     asyncFor.seqProcess(
       Information_Form,
@@ -150,7 +151,10 @@ window.ListInfo = {
           Label = item.labelEn;
           Description = item.descriptionEn;
         }
-        // console.log('Start processing ' + Label + ' subFields...');
+       
+
+        toggleSectionName = item.togglename
+
         //Handle security
         var groups = [],
           targetList = "",
@@ -199,7 +203,7 @@ window.ListInfo = {
           Description +
           "</span>" +
           "</div>" +
-          '<div class="col-lg-9 col-md-8 white-box p-4 fieldset-container">';
+          '<div data-togglename=' + toggleSectionName + ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container">';
 
         asyncFor.seqProcess(
           item.subFields,
@@ -2872,6 +2876,20 @@ window.ListInfo = {
         break;
 
       case "dropdownValues":
+        // added for CR module
+				let customFilter = element.options.choices[0].hasOwnProperty(
+					"customFilterValue"
+				)
+					? 'iscustomfiltervalue="true"'
+					: "";
+				let customCr = element.hasOwnProperty("customCr")
+					? element.customCr
+					: false;
+
+				if (crListKey && isCrMode && customCr) {
+					htmlBody = "";
+          //ended
+				} else {
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -2963,6 +2981,7 @@ window.ListInfo = {
           descPhrase +
           "</div>" +
           "</div>";
+        }
         OnSuccess(flag, htmlBody);
         break;
 
@@ -4743,7 +4762,45 @@ window.ListInfo = {
         OnSuccess(flag, htmlBody);
         break;
     }
+    if (!isCrMode && crListKey) {
+      //on new custom cr
+      handleCustomeCr.init();
+      $(
+        "div#particles-foreground, div#particles-background, .vertical-centered-box"
+      ).animate(
+        {
+          opacity: 0,
+        },
+        {
+          duration: 333,
+          complete: function () {
+            $(
+              "div#particles-foreground, div#particles-background, .vertical-centered-box"
+            ).remove();
 
+            // $('div#particles-foreground, div#particles-background, .vertical-centered-box').hide();
+          },
+        }
+      );
+    } else {
+      $(
+        "div#particles-foreground, div#particles-background, .vertical-centered-box"
+      ).animate(
+        {
+          opacity: 0,
+        },
+        {
+          duration: 333,
+          complete: function () {
+            $(
+              "div#particles-foreground, div#particles-background, .vertical-centered-box"
+            ).remove();
+
+            // $('div#particles-foreground, div#particles-background, .vertical-centered-box').hide();
+          },
+        }
+      );
+    }
     //return htmlBody;
   },
   g: {
@@ -5473,9 +5530,13 @@ var View_ListInfo = {
     }
   },
   InfoLoop: function () {
+
     var htmlBuilder = "";
     var Label, Description;
     var printHtml = "";
+
+    var toggleSectionName;
+
     asyncFor.seqProcess(
       Information_Form,
       function (item, index, resolve) {
@@ -5525,6 +5586,9 @@ var View_ListInfo = {
           Description = item.descriptionEn;
           printDate = "Date : ";
         }
+
+        toggleSectionName = item.togglename
+
         var printFooter = "";
         var printBody = "";
 
@@ -5617,7 +5681,7 @@ var View_ListInfo = {
           Description +
           "</span>" +
           "</div>" +
-          '<div class="col-lg-9 col-md-8 white-box p-4 fieldset-container">';
+          '<div data-togglename=' + toggleSectionName + ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container">';
         asyncFor.seqProcess(
           item.subFields,
           function (subitemField, indexField, resolveField) {
@@ -5705,6 +5769,29 @@ var View_ListInfo = {
             View_Data_Request.init();
             GetProject_Info.init();
           });
+           // added for CR module
+          if (isCrMode) {
+						CrModeFunctionality.preinit();
+					} else {
+						$(
+							"div#particles-foreground, div#particles-background, .vertical-centered-box"
+						).animate(
+							{
+								opacity: 0,
+							},
+							{
+								duration: 333,
+								complete: function () {
+									$(
+										"div#particles-foreground, div#particles-background, .vertical-centered-box"
+									).remove();
+
+									// $('div#particles-foreground, div#particles-background, .vertical-centered-box').hide();
+								},
+							}
+						);
+					}
+          // ended 
           // $('h2.DahsFormTitle').text(PageTitle);
           $(
             "div#particles-foreground, div#particles-background, .vertical-centered-box"

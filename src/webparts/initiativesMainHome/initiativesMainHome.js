@@ -2,6 +2,7 @@ var ActualBudget = 0,
   SpendFromBudget = 0,
   EstimatedCost = 0,
   AssignedBudget = 0,
+  initiativeBudget=0,
   EstimatedBudget = 0,
   phaseNameArray = [],
   phasesArrayCodes = [],
@@ -70,12 +71,12 @@ var budgetData = [];
 var axeposition;
 var BudgetLabelsAr = [
   // Resources.ar["remaining"],
-  Resources.ar["assignedbudget"],
-  Resources.ar["cost"],
+  Resources.ar["budget"],
+  Resources.ar["inpattr43"],
 ];
 var BudgetLabelsEn = [
-  Resources.en["assignedbudget"],
-  Resources.en["cost"],
+  Resources.en["budget"],
+  Resources.en["inpattr43"],
   // Resources.en["remaining"],
 ];
 
@@ -263,12 +264,13 @@ window.initiativeRequest = {
           oListItem.get_item("InitiativeOwner") &&
           oListItem.get_item("InitiativeOwner").get_lookupId() == UserN.Id)
       ) {
+        
         //getting 1st stats data
-        EstimatedCost += oListItem.get_item("Expenditures") || 0; //masroufa
+        EstimatedCost += oListItem.get_item("EstimatedCost") || 0; //masroufa
         SpendFromBudget = oListItem.get_item("EstimatedCost") || 0;
         // ActualBudget += oListItem.get_item("InitiativeBudget") || 0; //masroufa
         AssignedBudget += oListItem.get_item('ActualCost') || 0; // total budget
-        // EstimatedBudget += oListItem.get_item('EstimatedCost') || 0; //mutabakia
+        initiativeBudget +=  oListItem.get_item('InitiativeBudget') || 0;
         numberofInitiatives++;
         //projects listing
         projectname = oListItem.get_item("Name") || No_Data;
@@ -470,7 +472,7 @@ window.initiativeRequest = {
           '<img src="' +
           mizania +
           '" class="" data-themekey="#">' +
-          '<span data-trans-BudgetExpenditure class="mx-2 inner-title des-12 reg Resources"></span>' +
+          '<span data-trans-inpattr43 class="mx-2 inner-title des-12 reg Resources"></span>' +
           '<span data-prname="' +
           initiativeCode +
           '" class="inner-val fnt-14 bold">' +

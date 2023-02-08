@@ -415,7 +415,7 @@ body.nav-open {
     content: '\2713' !important;
     color: #24ff00 !important;
     font-weight: bold !important;
-    font-size:2.5rem !important;
+    font-size: 2.5rem !important;
     box-sizing: border-box !important;
     position: absolute !important;
     top: 58% !important;
@@ -433,7 +433,7 @@ body.nav-open {
     content: '\2713' !important;
     color: #24ff00 !important;
     font-weight: bold !important;
-    font-size:2.5rem !important;
+    font-size: 2.5rem !important;
     box-sizing: border-box !important;
     position: absolute !important;
     top: 58% !important;
@@ -452,7 +452,7 @@ body.nav-open {
     content: '\2717' !important;
     color: #cc0000 !important;
     font-weight: bold !important;
-    font-size:2.5rem !important;
+    font-size: 2.5rem !important;
     box-sizing: border-box !important;
     position: absolute !important;
     top: 33% !important;
@@ -470,7 +470,7 @@ body.nav-open {
     content: '\2717' !important;
     color: #cc0000 !important;
     font-weight: bold !important;
-    font-size:2.5rem !important;
+    font-size: 2.5rem !important;
     box-sizing: border-box !important;
     position: absolute !important;
     top: 33% !important;
@@ -3391,7 +3391,7 @@ button.pop-green.rejection:hover {
 }
 
 button.bbtn.language.btn-lg.w-5.fnt-14.d-inline-flex.align-items-center {
-    font-size:1.9rem;
+    font-size: 1.9rem;
     margin: 0px;
 }
 
@@ -3401,7 +3401,7 @@ button.bbtn.language.btn-lg.w-5.fnt-14.d-inline-flex.align-items-center {
 }
 
 div#langs a {
-    font-size:1.9rem;
+    font-size: 1.9rem;
     color: #fff;
 }
 
@@ -3563,7 +3563,7 @@ button#sendforApproval+.form-row.justify-content-end {
 
 .menuBurg li {
     padding: 10px 0;
-    font-size:1.9rem;
+    font-size: 1.9rem;
     font-weight: 500;
 }
 
@@ -3660,7 +3660,7 @@ button#sendforApproval+.form-row.justify-content-end {
 
 .tile i {
     color: #fab414;
-    font-size:2.5rem;
+    font-size: 2.5rem;
     cursor: pointer;
 }
 
@@ -4100,7 +4100,7 @@ span.progress-file-name {
 
 @media screen and (max-width: 1199px) and (min-width:1060px) {
     ul.navbar-nav.bd-navbar-nav.flex-row a {
-        font-size:1.9rem !important;
+        font-size: 1.9rem !important;
     }
 }
 
@@ -5157,7 +5157,8 @@ button.btn.btn-action.btn-save.Resources.disablebtns:before {
 }
 
 .ar #projectType .nav-item .nav-link #internalProjectCount,
-.ar #projectType .nav-item .nav-link #externalProjectCount .ar #projectType .nav-item .nav-link #LMSProjectCount {
+.ar #projectType .nav-item .nav-link #externalProjectCount,
+.ar #projectType .nav-item .nav-link #LMSProjectCount {
     border: 1px solid #148287;
     width: 30px;
     height: 20px;
@@ -5384,7 +5385,7 @@ h4.text-warning[data-trans-complete] {
 }
 
 .delegationicon {
-    font-size:2.8rem;
+    font-size: 2.8rem;
     margin: 0px 20px;
 }
 
@@ -5735,7 +5736,7 @@ a.btn-addTarget {
     /* left: 50%; */
     padding-top: 6px;
     color: #FFFFFF !important;
-    font-size:1.9rem;
+    font-size: 1.9rem;
     font-weight: bold;
 }
 
@@ -5825,7 +5826,7 @@ div#MainKPIsList {
 }
 
 .project-budget-value input {
-    font-size:1.9rem;
+    font-size: 1.9rem;
     padding: 7px;
     border: 1px solid #C4CDD5;
     border-radius: 3px;
@@ -6259,6 +6260,7 @@ li.ms-core-menu-footer {
 .sectionsideicontooltip {
     position: relative;
 }
+
 .sectionsideicontooltip .tooltipbox {
     display: none;
 }
@@ -6279,17 +6281,19 @@ li.ms-core-menu-footer {
 .sectionsideicontooltip:hover .tooltipbox:after {
     content: "";
     position: absolute;
-    bottom:100%;
+    bottom: 100%;
     margin-left: -10px;
     border-width: 7px;
     border-style: solid;
     border-color: transparent transparent #148282 transparent;
 }
-.ar .sectionsideicontooltip:hover .tooltipbox:after{
-right: 3%;
+
+.ar .sectionsideicontooltip:hover .tooltipbox:after {
+    right: 3%;
 }
-.en .sectionsideicontooltip:hover .tooltipbox:after{
-    left:6%;
+
+.en .sectionsideicontooltip:hover .tooltipbox:after {
+    left: 6%;
 }
 
 /* important links */
@@ -6325,7 +6329,7 @@ a.a-important-link {
 
 a.a-important-link>* {
     color: #FFFFFF;
-    font-size:1.9rem;
+    font-size: 1.9rem;
     font-weight: bold;
 }
 
@@ -6362,43 +6366,63 @@ a.a-important-link:hover>* {
 .intoallMilestonesCounter h3 {
     font-size: 2.1rem;
     font-weight: 500;
-    color:white;
+    color: white;
 }
 
 .intoallMilestonesCounter span {
     color: #148287;
     font-size: 2.1rem
 }
+
 .btn.btn-excel {
-    background:unset!important;
-    border:1px solid #148287;
-    padding:5px;
+    background: unset !important;
+    border: 1px solid #148287;
+    padding: 5px;
     border-radius: 4px;
-    margin-inline-start:7px;
-    font-size:1.9rem;
+    margin-inline-start: 7px;
+    font-size: 1.9rem;
 }
+
 /* ghufran style  */
 /* projhome inithome informations cards style  */
-.initiativeProjHomeInfoTitleStyle{
-    color:#000!important;
-    font-weight:500!important;
-    font-size: 1.9rem!important;
+.initiativeProjHomeInfoTitleStyle {
+    color: #000 !important;
+    font-weight: 500 !important;
+    font-size: 1.9rem !important;
 }
 
-.initiativeProjHomeInfoValueStyle{
-    color:#1f2933!important;
-    font-weight:500!important;
-    font-size: 1.6rem!important;  
-    margin-inline: 0!important;
+.initiativeProjHomeInfoValueStyle {
+    color: #1f2933 !important;
+    font-weight: 500 !important;
+    font-size: 1.6rem !important;
+    margin-inline: 0 !important;
 }
+
 .inlineMargin0 {
-    margin-inline:0!important
+    margin-inline: 0 !important
 }
 
-.monthtable{
+.monthtable {
     display: flex;
 }
 
 .schedule-info {
     padding: 0px 5px;
+}
+
+.startegicobjstat11 {
+    color: rgba(245, 27, 7, 255) !important;
+}
+
+.startegicobjstat10 {
+    color: rgba(255, 255, 0, 255) !important;
+}
+
+.startegicobjstat9 {
+    color: rgba(0, 170, 0, 255) !important;
+}
+
+.actualBudget.ErrorMsg {
+    color: red;
+    font-size: 14px;
 }

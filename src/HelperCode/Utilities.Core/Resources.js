@@ -859,7 +859,14 @@
     benefit:"مقياس المنفعة",
     plannedcompleteddate:"تاريخ الانتهاء المخطط",
     actualdate:"تاريخ الاكتمال الفعلي",
-    budgetinfotitle:"ميزانية المشروع"
+    budgetinfotitle:"ميزانية المشروع",
+    estimatedcostinfo:"التكلفة التقديرية للمبادرة",
+    initiativebudgetinfo:"ميزانية المبادرة",
+    stat9:"مكتمل",
+    stat10:"تم تحقيق المستهدف",
+    stat11:"تم تحقيقه جزئيا",
+    addactualbudget:"يجب تحديد قيمة المشروع الفعلية قبل إنشاء المخرجات و المعالم",
+    addinitiativebudget:"يجب تحديد ميزانية المبادرة قبل إنشاء المخرجات والمعالم"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1734,7 +1741,14 @@
     benefitmetricname:"Benefit Metrics",
     benefit:"Benefit Metrics",
     plannedcompleteddate:"Planned Completed Date",
-    actualdate:"Actual Date"
+    actualdate:"Actual Date",
+    estimatedcostinfo:"Estimated cost for initiative",
+    initiativebudgetinfo:"Initiative Budget",
+    stat9:"Completed",
+    stat10:"Target achieved",
+    stat11:"Partially achieved",
+    addactualbudget:"Please add project actual budget to add deliverables and Milestones",
+    addinitiativebudget :"Please add Initiative budget to add deliverables and Milestones"
   },
 };
 

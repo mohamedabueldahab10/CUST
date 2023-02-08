@@ -20,12 +20,21 @@ var Information_Form = [
         maxchar: '250',
         validation: 'required',
       },
+
       {
         InternalName: 'ObjectiveOwner',
         DisplayName: 'مالك الهدف',
         DisplayNameEn: 'Objective Owner',
         type: 'multipicker',
         validation: 'required',
+      },
+      {  // status type string cause it's auto calculated and just want to handle it
+        "InternalName": "Status",
+        "DisplayName": " الحالة",
+        "DisplayNameEn": "Status",
+        dontSubmit: true,
+        "type": "string",
+        "state": "disabled"
       },
       {
         InternalName: 'Description',
@@ -246,22 +255,22 @@ var Information_Form = [
           ],
         },
       },
-    //   {
-    //     InternalName: 'RelatedJobStrategy',
-    //     DisplayNameEn: 'Related Job Market Strategy',
-    //     DisplayName: 'استراتيجية سوق العمل المرتبطة',
-    //     ToggleName: 'RelatedJobStrategy',
-    //     type: 'lookupWithQuery',
-    //     queryField: 'Types',
-    //     queryFieldType: 'dropdownValues', //ex: "Choice"
-    //     queryFieldValue: 'jobmarket',
-    //     //from other list:
+      //   {
+      //     InternalName: 'RelatedJobStrategy',
+      //     DisplayNameEn: 'Related Job Market Strategy',
+      //     DisplayName: 'استراتيجية سوق العمل المرتبطة',
+      //     ToggleName: 'RelatedJobStrategy',
+      //     type: 'lookupWithQuery',
+      //     queryField: 'Types',
+      //     queryFieldType: 'dropdownValues', //ex: "Choice"
+      //     queryFieldValue: 'jobmarket',
+      //     //from other list:
 
-    //     source: 'GoalStrategy',
-    //     Dispfieldkey: 'Name',
-    //     valfieldkey: 'Title',
-    //     display: 'none',
-    //   },
+      //     source: 'GoalStrategy',
+      //     Dispfieldkey: 'Name',
+      //     valfieldkey: 'Title',
+      //     display: 'none',
+      //   },
       // {
       //     "InternalName": "ObjectiveRealized",
       //     "DisplayNameEn": "Objective Realized",

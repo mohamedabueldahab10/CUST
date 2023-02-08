@@ -123,8 +123,8 @@ var Project_Home_Info_Request = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
-        Project_Home_Info_Request.g.PCODE +
-        "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>"
+      Project_Home_Info_Request.g.PCODE +
+      "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>"
     );
 
     Project_Home_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -149,10 +149,10 @@ var Project_Home_Info_Request = {
       $(".project-info-ctx .card-header > a").attr(
         "href",
         _spPageContextInfo.webAbsoluteUrl +
-          "/sitepages/view.aspx?ListKey=projects&IID=" +
-          oListItem.get_id() +
-          "&PCODE=" +
-          Project_Home_Info_Request.g.PCODE
+        "/sitepages/view.aspx?ListKey=projects&IID=" +
+        oListItem.get_id() +
+        "&PCODE=" +
+        Project_Home_Info_Request.g.PCODE
       );
 
       //getting 1st stats data
@@ -402,141 +402,141 @@ var Project_Home_Info_Request = {
 
       card1.push(
         '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
-          '<div class="d-inline-flex flex-row align-items-center">' +
-          '<span class="icon-user lg d-inline-flex align-items-center text-center handlecircle circlecolor' +
-          projectProgressStatusDeliverable +
-          '">' +
-          "</span>" +
-          '<div class="d-inline-flex flex-column mx-3">' +
-          '<h3 class="acc-title d-inline-flex black">' +
-          projectname +
-          "</h3>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          '<h3 data-trans-pattr4 class="Resources black initiativeProjHomeInfoTitleStyle"></h3>' +
-          '<span class="des-13"><span class="complition-val initiativeProjHomeInfoValueStyle">' +
-          projectcode +
-          "</span></span>" +
-          "</div>" +
-          "</div>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          '<h3 data-trans-sector class="Resources black initiativeProjHomeInfoTitleStyle"></h3>' +
-          '<span class="des-13"><span class="state-val initiativeProjHomeInfoValueStyle">' +
-          projectsector +
-          "</span></span>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          '<h3 data-trans-subsector class="Resources black initiativeProjHomeInfoTitleStyle"></h3>' +
-          '<span class="des-13"><span class="state-val initiativeProjHomeInfoValueStyle">' +
-          projectSubsector +
-          "</span></span>" +
-          "</div>" +
-          '<span class="des-13 project-date">' +
-          '<span class="start-date"><span data-trans-basestart class="Resources initiativeProjHomeInfoTitleStyle"></span><span class="px-2 initiativeProjHomeInfoValueStyle">' +
-          baselineStartDate +
-          "</span></span>" +
-          '<span class="end-date"><span data-trans-basefinish class="Resources initiativeProjHomeInfoTitleStyle"></span><span class="px-2 initiativeProjHomeInfoValueStyle">' +
-          baselineFinishDate +
-          "</span></span>" +
-          "</span>" +
-          "</div>" +
-          '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
-          '<div class="d-inline-flex flex-column mx-2 ' +
-          phase +
-          '">' +
-          '<span data-trans-pattr5 class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
-          '<h4 class="acc-title d-inline-flex black">' +
-          phasename +
-          "</h4>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          '<span data-trans-pattr60 class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
-          '<h4 class="acc-title d-inline-flex black initiativeProjHomeInfoValueStyle">' +
-          stageNamestr +
-          "</h4>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          '<h3 data-trans-relatedinitiative class="Resources black initiativeProjHomeInfoTitleStyle"></h3>' +
-          '<span class="des-13 overflow-ellipsis-black" ><span class="initiativeProjHomeInfoValueStyle" id="relatedinit" style="cursor:pointer">' +
-          projectRelatedInitiative +
-          '</span><span class="tooltiptextblack" id="relatedinitchild">' +
-          projectRelatedInitiative +
-          "</span></span>" +
-          "</div>" +
-          "</div>" +
-          //
-          '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          '<span class="des-13"><span data-trans-pattr56 class="Resources complition-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-          '<h4 class="black actual-complete-val initiativeProjHomeInfoValueStyle">' +
-          projectActualImplementationSchedule.toFixed(2) +
-          "%</h4>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          '<span class="des-13"><span data-trans-pattr6 class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-          '<h4 class="black initiativeProjHomeInfoValueStyle"> ' +
-          projectPlannedImplementationSchedule.toFixed(2) +
-          "%</h4>" + //
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2 ' +
-          projectProgressStatusSchedule +
-          '">' +
-          '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-          "<h4 data-trans-" +
-          projectProgressStatusSchedule +
-          ' class="black Resources myCompletionStatusSchedual statuscolor' +
-          projectProgressStatusSchedule +
-          '"></h4>' + //
-          "</div>" +
-          "</div>" +
-          '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center third-row" href="#">' +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          '<span class="des-13"><span data-trans-pattr66 class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-          '<h4 class="black initiativeProjHomeInfoValueStyle">' +
-          projectActualImplementationMilestone.toFixed(2) +
-          "%</h4>" + //
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          '<span class="des-13"><span data-trans-pattr61 class="Resources complition-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-          '<h4 class="black initiativeProjHomeInfoValueStyle">' +
-          projectPlannedImplementationMilestone.toFixed(2) +
-          "%</h4>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2 ' +
-          projectProgressStatusMilestone +
-          '">' +
-          '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-          "<h4 data-trans-" +
-          projectProgressStatusMilestone +
-          ' class="black Resources myCompletionStatusMilestone statuscolor' +
-          projectProgressStatusMilestone +
-          '"></h4>' + //
-          "</div>" +
-          "</div>" +
-          '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center fourth-row" href="#">' +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          '<span class="des-13"><span data-trans-pattr76 class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-          '<h4 class="black initiativeProjHomeInfoValueStyle">' +
-          ProjectActualImplementationDeliverable.toFixed(2) +
-          "%</h4>" + //
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          '<span class="des-13"><span data-trans-pattr62 class="Resources complition-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-          '<h4 class="black initiativeProjHomeInfoValueStyle">' +
-          projectPlannedImplementationDeliverable.toFixed(2) +
-          "%</h4>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2 ' +
-          projectProgressStatusDeliverable +
-          ' ">' +
-          '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-          "<h4 data-trans-" +
-          projectProgressStatusDeliverable +
-          ' class="black Resources myCompletionStatusDelivrables statuscolor' +
-          projectProgressStatusDeliverable +
-          '"></h4>' + //
-          "</div>" +
-          "</div>"
+        '<div class="d-inline-flex flex-row align-items-center">' +
+        '<span class="icon-user lg d-inline-flex align-items-center text-center handlecircle circlecolor' +
+        projectProgressStatusDeliverable +
+        '">' +
+        "</span>" +
+        '<div class="d-inline-flex flex-column mx-3">' +
+        '<h3 class="acc-title d-inline-flex black">' +
+        projectname +
+        "</h3>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<h3 data-trans-pattr4 class="Resources black initiativeProjHomeInfoTitleStyle"></h3>' +
+        '<span class="des-13"><span class="complition-val initiativeProjHomeInfoValueStyle">' +
+        projectcode +
+        "</span></span>" +
+        "</div>" +
+        "</div>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<h3 data-trans-sector class="Resources black initiativeProjHomeInfoTitleStyle"></h3>' +
+        '<span class="des-13"><span class="state-val initiativeProjHomeInfoValueStyle">' +
+        projectsector +
+        "</span></span>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<h3 data-trans-subsector class="Resources black initiativeProjHomeInfoTitleStyle"></h3>' +
+        '<span class="des-13"><span class="state-val initiativeProjHomeInfoValueStyle">' +
+        projectSubsector +
+        "</span></span>" +
+        "</div>" +
+        '<span class="des-13 project-date">' +
+        '<span class="start-date"><span data-trans-basestart class="Resources initiativeProjHomeInfoTitleStyle"></span><span class="px-2 initiativeProjHomeInfoValueStyle">' +
+        baselineStartDate +
+        "</span></span>" +
+        '<span class="end-date"><span data-trans-basefinish class="Resources initiativeProjHomeInfoTitleStyle"></span><span class="px-2 initiativeProjHomeInfoValueStyle">' +
+        baselineFinishDate +
+        "</span></span>" +
+        "</span>" +
+        "</div>" +
+        '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
+        '<div class="d-inline-flex flex-column mx-2 ' +
+        phase +
+        '">' +
+        '<span data-trans-pattr5 class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
+        '<h4 class="acc-title d-inline-flex black">' +
+        phasename +
+        "</h4>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<span data-trans-pattr60 class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
+        '<h4 class="acc-title d-inline-flex black initiativeProjHomeInfoValueStyle">' +
+        stageNamestr +
+        "</h4>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<h3 data-trans-relatedinitiative class="Resources black initiativeProjHomeInfoTitleStyle"></h3>' +
+        '<span class="des-13 overflow-ellipsis-black" ><span class="initiativeProjHomeInfoValueStyle" id="relatedinit" style="cursor:pointer">' +
+        projectRelatedInitiative +
+        '</span><span class="tooltiptextblack" id="relatedinitchild">' +
+        projectRelatedInitiative +
+        "</span></span>" +
+        "</div>" +
+        "</div>" +
+        //
+        '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<span class="des-13"><span data-trans-pattr56 class="Resources complition-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+        '<h4 class="black actual-complete-val initiativeProjHomeInfoValueStyle">' +
+        projectActualImplementationSchedule.toFixed(2) +
+        "%</h4>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<span class="des-13"><span data-trans-pattr6 class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+        '<h4 class="black initiativeProjHomeInfoValueStyle"> ' +
+        projectPlannedImplementationSchedule.toFixed(2) +
+        "%</h4>" + //
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2 ' +
+        projectProgressStatusSchedule +
+        '">' +
+        '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+        "<h4 data-trans-" +
+        projectProgressStatusSchedule +
+        ' class="black Resources myCompletionStatusSchedual statuscolor' +
+        projectProgressStatusSchedule +
+        '"></h4>' + //
+        "</div>" +
+        "</div>" +
+        '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center third-row" href="#">' +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<span class="des-13"><span data-trans-pattr66 class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+        '<h4 class="black initiativeProjHomeInfoValueStyle">' +
+        projectActualImplementationMilestone.toFixed(2) +
+        "%</h4>" + //
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<span class="des-13"><span data-trans-pattr61 class="Resources complition-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+        '<h4 class="black initiativeProjHomeInfoValueStyle">' +
+        projectPlannedImplementationMilestone.toFixed(2) +
+        "%</h4>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2 ' +
+        projectProgressStatusMilestone +
+        '">' +
+        '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+        "<h4 data-trans-" +
+        projectProgressStatusMilestone +
+        ' class="black Resources myCompletionStatusMilestone statuscolor' +
+        projectProgressStatusMilestone +
+        '"></h4>' + //
+        "</div>" +
+        "</div>" +
+        '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center fourth-row" href="#">' +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<span class="des-13"><span data-trans-pattr76 class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+        '<h4 class="black initiativeProjHomeInfoValueStyle">' +
+        ProjectActualImplementationDeliverable.toFixed(2) +
+        "%</h4>" + //
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<span class="des-13"><span data-trans-pattr62 class="Resources complition-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+        '<h4 class="black initiativeProjHomeInfoValueStyle">' +
+        projectPlannedImplementationDeliverable.toFixed(2) +
+        "%</h4>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2 ' +
+        projectProgressStatusDeliverable +
+        ' ">' +
+        '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+        "<h4 data-trans-" +
+        projectProgressStatusDeliverable +
+        ' class="black Resources myCompletionStatusDelivrables statuscolor' +
+        projectProgressStatusDeliverable +
+        '"></h4>' + //
+        "</div>" +
+        "</div>"
       );
       ProgressLastModifiedDate = Project_Home_Info_Request.g.dateConvert(
         oListItem.get_item("ProgressLastModifiedDate")
@@ -563,8 +563,8 @@ var Project_Home_Info_Request = {
 
     $("#PjPriority").append(
       "<span data-trans-" +
-        projectimportance +
-        ' class="Resources initiativeProjHomeInfoValueStyle"></span>'
+      projectimportance +
+      ' class="Resources initiativeProjHomeInfoValueStyle"></span>'
     );
 
     $(
@@ -641,8 +641,8 @@ var Project_Home_Info_Request = {
         ".project-budget-ctx .card-body > div:nth-child(1) > div > div:nth-child(2)"
       ).text(
         AssignedBudget.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-          " " +
-          SAR_Currency
+        " " +
+        SAR_Currency
       );
     }
     //Schedule src dropdown
@@ -659,15 +659,15 @@ var Project_Home_Info_Request = {
 
       $(".sched-head").append(
         '<div class="schedule-src-wrapper">' +
-          '<span class="schedule-info"><i data-toggle="tooltip" data-html="true" title="' +
-          schedualInfo +
-          '" class="my-info-i fas fa-info-circle"></i></span>' +
-          '<select class="schedule-src">' +
-          '<option data-trans-schedepm class="Resources" value="schedual">schedual</option>' +
-          '<option data-trans-schedsystem class="Resources" value="deliverables">deliverables</option>' +
-          '<option data-trans-milestones class="Resources" value="milestones">milestones</option>' +
-          "</select>" +
-          "</div>"
+        '<span class="schedule-info"><i data-toggle="tooltip" data-html="true" title="' +
+        schedualInfo +
+        '" class="my-info-i fas fa-info-circle"></i></span>' +
+        '<select class="schedule-src">' +
+        '<option data-trans-schedepm class="Resources" value="schedual">schedual</option>' +
+        '<option data-trans-schedsystem class="Resources" value="deliverables">deliverables</option>' +
+        '<option data-trans-milestones class="Resources" value="milestones">milestones</option>' +
+        "</select>" +
+        "</div>"
       );
       // $('.schedule-src').val(User_ScheduleSource);
       $(".schedule-src").on("change", function () {
@@ -842,8 +842,8 @@ var Get_RelatedInitiative = {
 
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Title\" /><Value Type=\"Text\">" +
-        projectRelatedInitiative +
-        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+      projectRelatedInitiative +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
     Get_RelatedInitiative.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Get_RelatedInitiative.g.collListItem);
@@ -902,15 +902,15 @@ window.ProjectClosure_Submit = {
           var id = $(this).attr("INppicker");
           var ppp =
             $(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
-            undefined
+              undefined
               ? ""
               : SP.FieldUserValue.fromUser(
-                  $(this)
-                    .find("span.sp-peoplepicker-userSpan")
-                    .attr("sid")
-                    .split("|")
-                    .slice(-1)[0]
-                );
+                $(this)
+                  .find("span.sp-peoplepicker-userSpan")
+                  .attr("sid")
+                  .split("|")
+                  .slice(-1)[0]
+              );
           ProjectClosure_Submit.g.oListItem.set_item(id, ppp);
         } else if (
           ($(this).attr("id") == "ProjectOwner" && listkey == "projects") ||
@@ -924,8 +924,8 @@ window.ProjectClosure_Submit = {
         var ydate = !dateval
           ? ""
           : [dateval.slice(5, 10), dateval.slice(0, 4)]
-              .join("/")
-              .replace("-", "/");
+            .join("/")
+            .replace("-", "/");
         if (dateval)
           ProjectClosure_Submit.g.oListItem.set_item($(this).attr("id"), ydate);
       } else if ($(this).attr("type") == "radio") {
@@ -998,8 +998,8 @@ window.ProjectClosure_Submit = {
     closureappend: function () {
       $("body").append(
         '<div class="popupComment"><div class="wrapcomments"><label data-trans-closurestatus class="Resources" ></label><select type="dropdown" id="ClosureStatus" style="direction: rtl;" class="clsprjstat form-control" onchange="ProjectClosure_Submit.g.closure_onChange(this.value);"><option data-trans-failed class="Resources" value="Failed"></option><option data-trans-cancelled class="Resources" value="Cancelled"></option><option data-trans-postponed class="Resources" value="Postponed"></option><option data-trans-succeeded class="Resources"  value="Succeeded" ' +
-          isDelDone +
-          '></option></select><div class="btn-wrap"><button class="commentsub btn pop-green" onclick="if( ($(\'.clsprjstat\').val() )  ){ProjectClosure_Submit.preinit()}else{$(\'.wrapcomments\').append(\'<p data-trans-pleasefill></p>\')}"><span data-trans-submit class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class="commentsub btn pop-green rejection"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>'
+        isDelDone +
+        '></option></select><div class="btn-wrap"><button class="commentsub btn pop-green" onclick="if( ($(\'.clsprjstat\').val() )  ){ProjectClosure_Submit.preinit()}else{$(\'.wrapcomments\').append(\'<p data-trans-pleasefill></p>\')}"><span data-trans-submit class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class="commentsub btn pop-green rejection"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>'
       );
       changeResources();
     },
@@ -1061,8 +1061,8 @@ var Issues_Info_Request = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">" +
-        Project_Home_Info_Request.g.PCODE +
-        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+      Project_Home_Info_Request.g.PCODE +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
     Issues_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Issues_Info_Request.g.collListItem);
@@ -1075,12 +1075,12 @@ var Issues_Info_Request = {
     var collListItem = Issues_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var itemhtml = [
-        '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/sitepages/new.aspx?ListKey=issues&PCODE=" +
-          Project_Home_Info_Request.g.PCODE +
-          '"><i class="icon-plus"></i></a></li>',
-      ],
+      '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
+      _spPageContextInfo.webAbsoluteUrl +
+      "/sitepages/new.aspx?ListKey=issues&PCODE=" +
+      Project_Home_Info_Request.g.PCODE +
+      '"><i class="icon-plus"></i></a></li>',
+    ],
       itemID,
       itemname,
       itemstatus,
@@ -1112,39 +1112,39 @@ var Issues_Info_Request = {
         : No_Data;
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
-          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/sitepages/View.aspx?ListKey=issues&IID=" +
-          itemID +
-          "&PCODE=" +
-          itemProjectCode +
-          '">' +
-          '<div class="d-inline-flex flex-column">' +
-          '<h3 class="acc-title d-inline-flex black">' +
-          itemname +
-          "</h3>" +
-          '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
-          itemtitle +
-          "</span>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          // '<h4 class="text-warning">' + itemdateraised + '</h4>' +
-          '<span data-trans-dateraised class="Resources des-13"></span>' +
-          '<h4 class="text-warning">' +
-          itemdateraised +
-          "</h4>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          // '<h4 class="black">' + itemdate + '</h4>' +
-          '<span data-trans-dateclosure class="Resources des-13"></span>' +
-          '<h4 class="black">' +
-          itemdate +
-          "</h4>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
-          "</div>" +
-          "</a>" +
-          "</li>"
+        '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
+        _spPageContextInfo.webAbsoluteUrl +
+        "/sitepages/View.aspx?ListKey=issues&IID=" +
+        itemID +
+        "&PCODE=" +
+        itemProjectCode +
+        '">' +
+        '<div class="d-inline-flex flex-column">' +
+        '<h3 class="acc-title d-inline-flex black">' +
+        itemname +
+        "</h3>" +
+        '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
+        itemtitle +
+        "</span>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        // '<h4 class="text-warning">' + itemdateraised + '</h4>' +
+        '<span data-trans-dateraised class="Resources des-13"></span>' +
+        '<h4 class="text-warning">' +
+        itemdateraised +
+        "</h4>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        // '<h4 class="black">' + itemdate + '</h4>' +
+        '<span data-trans-dateclosure class="Resources des-13"></span>' +
+        '<h4 class="black">' +
+        itemdate +
+        "</h4>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
+        "</div>" +
+        "</a>" +
+        "</li>"
       );
 
       //
@@ -1172,8 +1172,8 @@ var Risks_Info_Request = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">" +
-        Project_Home_Info_Request.g.PCODE +
-        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+      Project_Home_Info_Request.g.PCODE +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
     Risks_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Risks_Info_Request.g.collListItem);
@@ -1186,12 +1186,12 @@ var Risks_Info_Request = {
     var collListItem = Risks_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var itemhtml = [
-        '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/sitepages/new.aspx?ListKey=risks&PCODE=" +
-          Project_Home_Info_Request.g.PCODE +
-          '"><i class="icon-plus"></i></a></li>',
-      ],
+      '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
+      _spPageContextInfo.webAbsoluteUrl +
+      "/sitepages/new.aspx?ListKey=risks&PCODE=" +
+      Project_Home_Info_Request.g.PCODE +
+      '"><i class="icon-plus"></i></a></li>',
+    ],
       itemID,
       itemname,
       itemstatus,
@@ -1217,39 +1217,39 @@ var Risks_Info_Request = {
         : No_Data;
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
-          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/sitepages/View.aspx?ListKey=risks&IID=" +
-          itemID +
-          "&PCODE=" +
-          itemProjectCode +
-          '">' +
-          '<div class="d-inline-flex flex-column">' +
-          '<h3 class="acc-title d-inline-flex black">' +
-          itemname +
-          "</h3>" +
-          '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
-          itemtitle +
-          "</span>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          // '<h4 class="black">' + itemDateIdentified + '</h4>' +
-          '<span data-trans-riskdateident class="Resources des-13"></span>' +
-          '<h4 class="black">' +
-          itemDateIdentified +
-          "</h4>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          // '<h4 class="text-warning">' + itemdate + '</h4>' +
-          '<span data-trans-riskdateclos class="Resources des-13"></span>' +
-          '<h4 class="text-warning">' +
-          itemdate +
-          "</h4>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
-          "</div>" +
-          "</a>" +
-          "</li>"
+        '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
+        _spPageContextInfo.webAbsoluteUrl +
+        "/sitepages/View.aspx?ListKey=risks&IID=" +
+        itemID +
+        "&PCODE=" +
+        itemProjectCode +
+        '">' +
+        '<div class="d-inline-flex flex-column">' +
+        '<h3 class="acc-title d-inline-flex black">' +
+        itemname +
+        "</h3>" +
+        '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
+        itemtitle +
+        "</span>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        // '<h4 class="black">' + itemDateIdentified + '</h4>' +
+        '<span data-trans-riskdateident class="Resources des-13"></span>' +
+        '<h4 class="black">' +
+        itemDateIdentified +
+        "</h4>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        // '<h4 class="text-warning">' + itemdate + '</h4>' +
+        '<span data-trans-riskdateclos class="Resources des-13"></span>' +
+        '<h4 class="text-warning">' +
+        itemdate +
+        "</h4>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
+        "</div>" +
+        "</a>" +
+        "</li>"
       );
 
       //
@@ -1280,8 +1280,8 @@ var Deliveries_Info_Request = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">" +
-        Project_Home_Info_Request.g.PCODE +
-        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+      Project_Home_Info_Request.g.PCODE +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
     Deliveries_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Deliveries_Info_Request.g.collListItem);
@@ -1294,12 +1294,12 @@ var Deliveries_Info_Request = {
     var collListItem = Deliveries_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var itemhtml = [
-        '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/sitepages/new.aspx?ListKey=deliveries&PCODE=" +
-          Project_Home_Info_Request.g.PCODE +
-          '"><i class="icon-plus"></i></a></li>',
-      ],
+      '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
+      _spPageContextInfo.webAbsoluteUrl +
+      "/sitepages/new.aspx?ListKey=deliveries&PCODE=" +
+      Project_Home_Info_Request.g.PCODE +
+      '"><i class="icon-plus"></i></a></li>',
+    ],
       itemID,
       item1,
       item2,
@@ -1323,39 +1323,39 @@ var Deliveries_Info_Request = {
       Deliverable = oListItem.get_item("Deliverable");
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
-          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/sitepages/View.aspx?ListKey=deliveries&IID=" +
-          itemID +
-          "&PCODE=" +
-          itemProjectCode +
-          '">' +
-          '<div class="d-inline-flex flex-column">' +
-          '<h3 class="acc-title d-inline-flex black">' +
-          item1 +
-          "</h3>" +
-          '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
-          item2 +
-          "</span>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          // '<h4 class="black">' + item4 + '</h4>' +
-          '<span data-trans-amount class="Resources des-13"></span>' +
-          '<h4 class="black">' +
-          item4 +
-          "</h4>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          // '<h4 class="text-warning">' + item3 + '</h4>' +
-          '<span  data-trans-pattr31 class="Resources des-13"></span>' +
-          '<h4 class="text-warning">' +
-          item3 +
-          "</h4>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
-          "</div>" +
-          "</a>" +
-          "</li>"
+        '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
+        _spPageContextInfo.webAbsoluteUrl +
+        "/sitepages/View.aspx?ListKey=deliveries&IID=" +
+        itemID +
+        "&PCODE=" +
+        itemProjectCode +
+        '">' +
+        '<div class="d-inline-flex flex-column">' +
+        '<h3 class="acc-title d-inline-flex black">' +
+        item1 +
+        "</h3>" +
+        '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
+        item2 +
+        "</span>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        // '<h4 class="black">' + item4 + '</h4>' +
+        '<span data-trans-amount class="Resources des-13"></span>' +
+        '<h4 class="black">' +
+        item4 +
+        "</h4>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        // '<h4 class="text-warning">' + item3 + '</h4>' +
+        '<span  data-trans-pattr31 class="Resources des-13"></span>' +
+        '<h4 class="text-warning">' +
+        item3 +
+        "</h4>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
+        "</div>" +
+        "</a>" +
+        "</li>"
       );
 
       for (i = 0; i < ExpDeliverablesarray.length; i++) {
@@ -1388,8 +1388,8 @@ var Contracts_Info_Request = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">" +
-        Project_Home_Info_Request.g.PCODE +
-        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+      Project_Home_Info_Request.g.PCODE +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
     Contracts_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Contracts_Info_Request.g.collListItem);
@@ -1402,12 +1402,12 @@ var Contracts_Info_Request = {
     var collListItem = Contracts_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var itemhtml = [
-        '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/sitepages/new.aspx?ListKey=contracts&PCODE=" +
-          Project_Home_Info_Request.g.PCODE +
-          '"><i class="icon-plus"></i></a></li>',
-      ],
+      '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
+      _spPageContextInfo.webAbsoluteUrl +
+      "/sitepages/new.aspx?ListKey=contracts&PCODE=" +
+      Project_Home_Info_Request.g.PCODE +
+      '"><i class="icon-plus"></i></a></li>',
+    ],
       itemID,
       item1,
       item2,
@@ -1429,37 +1429,37 @@ var Contracts_Info_Request = {
       item4 = oListItem.get_item("TypeOfContract") || No_Data;
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
-          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/sitepages/View.aspx?ListKey=contracts&IID=" +
-          itemID +
-          "&PCODE=" +
-          itemProjectCode +
-          '">' +
-          '<div class="d-inline-flex flex-column">' +
-          '<h3 class="acc-title d-inline-flex black">' +
-          item1 +
-          "</h3>" +
-          '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
-          item2 +
-          "</span>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          '<span data-trans-pattr50 class="Resources des-13"></span>' +
-          '<h4 class="text-warning">' +
-          item3 +
-          "</h4>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          '<span data-trans-dateend class="Resources des-13"></span>' +
-          '<h4 class="black">' +
-          item3date2 +
-          "</h4>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
-          "</div>" +
-          "</a>" +
-          "</li>"
+        '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
+        _spPageContextInfo.webAbsoluteUrl +
+        "/sitepages/View.aspx?ListKey=contracts&IID=" +
+        itemID +
+        "&PCODE=" +
+        itemProjectCode +
+        '">' +
+        '<div class="d-inline-flex flex-column">' +
+        '<h3 class="acc-title d-inline-flex black">' +
+        item1 +
+        "</h3>" +
+        '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
+        item2 +
+        "</span>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<span data-trans-pattr50 class="Resources des-13"></span>' +
+        '<h4 class="text-warning">' +
+        item3 +
+        "</h4>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<span data-trans-dateend class="Resources des-13"></span>' +
+        '<h4 class="black">' +
+        item3date2 +
+        "</h4>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
+        "</div>" +
+        "</a>" +
+        "</li>"
       );
 
       //
@@ -1490,8 +1490,8 @@ var LessonsLearned_Info_Request = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">" +
-        Project_Home_Info_Request.g.PCODE +
-        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+      Project_Home_Info_Request.g.PCODE +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
     LessonsLearned_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(LessonsLearned_Info_Request.g.collListItem);
@@ -1504,12 +1504,12 @@ var LessonsLearned_Info_Request = {
     var collListItem = LessonsLearned_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var itemhtml = [
-        '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/sitepages/new.aspx?ListKey=lessonslearned&PCODE=" +
-          Project_Home_Info_Request.g.PCODE +
-          '"><i class="icon-plus"></i></a></li>',
-      ],
+      '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
+      _spPageContextInfo.webAbsoluteUrl +
+      "/sitepages/new.aspx?ListKey=lessonslearned&PCODE=" +
+      Project_Home_Info_Request.g.PCODE +
+      '"><i class="icon-plus"></i></a></li>',
+    ],
       itemID,
       item1,
       item2,
@@ -1529,37 +1529,37 @@ var LessonsLearned_Info_Request = {
       // item4 = lessonLearnedSource[item4.replace(/ /g, "")] || No_Data;
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
-          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/sitepages/View.aspx?ListKey=lessonslearned&IID=" +
-          itemID +
-          '">' +
-          '<div class="d-inline-flex flex-column">' +
-          '<h3 class="acc-title d-inline-flex black">' +
-          item2 +
-          "</h3>" +
-          '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
-          item1 +
-          "</span>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          // '<h4 class="text-warning">' + item3 + '</h4>' +
-          '<span data-trans-pattr53 class="Resources des-13"></span>' +
-          '<h4 class="text-warning">' +
-          item3 +
-          "</h4>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          // '<h4 data-trans-' + item4 + ' class="black Resources"></h4>' +
-          '<span data-trans-pattr54 class="Resources des-13"></span>' +
-          "<h4 data-trans-" +
-          item4 +
-          ' class="black Resources"></h4>' +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
-          "</div>" +
-          "</a>" +
-          "</li>"
+        '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
+        _spPageContextInfo.webAbsoluteUrl +
+        "/sitepages/View.aspx?ListKey=lessonslearned&IID=" +
+        itemID +
+        '">' +
+        '<div class="d-inline-flex flex-column">' +
+        '<h3 class="acc-title d-inline-flex black">' +
+        item2 +
+        "</h3>" +
+        '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
+        item1 +
+        "</span>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        // '<h4 class="text-warning">' + item3 + '</h4>' +
+        '<span data-trans-pattr53 class="Resources des-13"></span>' +
+        '<h4 class="text-warning">' +
+        item3 +
+        "</h4>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        // '<h4 data-trans-' + item4 + ' class="black Resources"></h4>' +
+        '<span data-trans-pattr54 class="Resources des-13"></span>' +
+        "<h4 data-trans-" +
+        item4 +
+        ' class="black Resources"></h4>' +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
+        "</div>" +
+        "</a>" +
+        "</li>"
       );
 
       //
@@ -1587,8 +1587,8 @@ var Deliverables_Info_Request = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">" +
-        Project_Home_Info_Request.g.PCODE +
-        "</Value></Eq></And></Where><OrderBy><FieldRef Name='DeliveredDate' Ascending='False' /></OrderBy></Query></View>"
+      Project_Home_Info_Request.g.PCODE +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='DeliveredDate' Ascending='False' /></OrderBy></Query></View>"
     );
 
     Deliverables_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -1605,14 +1605,20 @@ var Deliverables_Info_Request = {
     NDelivrables = 0;
     NDelevered = 0;
     POD = 0;
-    var itemhtml = [
+
+    if (projectActualBudget) {
+      var itemhtml = [
         '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/sitepages/new.aspx?ListKey=deliverables&PCODE=" +
-          Project_Home_Info_Request.g.PCODE +
-          '"><i class="icon-plus"></i></a></li>',
-      ],
-      itemID,
+        _spPageContextInfo.webAbsoluteUrl +
+        "/sitepages/new.aspx?ListKey=deliverables&PCODE=" +
+        Project_Home_Info_Request.g.PCODE +
+        '"><i class="icon-plus"></i></a></li>',
+      ];
+    }else{
+      var itemhtml = []
+    }
+
+    var itemID,
       itemname,
       itemstatus,
       itemdate,
@@ -1640,43 +1646,43 @@ var Deliverables_Info_Request = {
 
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
-          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/sitepages/View.aspx?ListKey=deliverables&IID=" +
-          itemID +
-          "&PCODE=" +
-          itemProjectCode +
-          '">' +
-          '<div class="d-inline-flex flex-column">' +
-          '<h3 class="acc-title d-inline-flex black">' +
-          itemname +
-          "</h3>" +
-          '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
-          itemtitle +
-          "</span>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          '<h4 class="black Resources">' +
-          itemdate +
-          "</h4>" +
-          '<span data-trans-actualdate class="Resources des-13"></span>' +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          '<h4 class="text-warning">' +
-          itemweight +
-          "</h4>" +
-          '<span data-trans-weight class="Resources des-13"></span>' +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          "<h4 data-trans-" +
-          itemdelivered +
-          ' class="black Resources"></h4>' +
-          '<span data-trans-deliveredyesno class="Resources des-13"></span>' +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
-          "</div>" +
-          "</a>" +
-          "</li>"
+        '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
+        _spPageContextInfo.webAbsoluteUrl +
+        "/sitepages/View.aspx?ListKey=deliverables&IID=" +
+        itemID +
+        "&PCODE=" +
+        itemProjectCode +
+        '">' +
+        '<div class="d-inline-flex flex-column">' +
+        '<h3 class="acc-title d-inline-flex black">' +
+        itemname +
+        "</h3>" +
+        '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
+        itemtitle +
+        "</span>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<h4 class="black Resources">' +
+        itemdate +
+        "</h4>" +
+        '<span data-trans-actualdate class="Resources des-13"></span>' +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<h4 class="text-warning">' +
+        itemweight +
+        "</h4>" +
+        '<span data-trans-weight class="Resources des-13"></span>' +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        "<h4 data-trans-" +
+        itemdelivered +
+        ' class="black Resources"></h4>' +
+        '<span data-trans-deliveredyesno class="Resources des-13"></span>' +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
+        "</div>" +
+        "</a>" +
+        "</li>"
       );
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2241,14 +2247,14 @@ var Stages_Data_Request = {
           ).append(POD + "%");
           $(
             ".project-stages-ctx div#v-pills-tab > ." +
-              $(this).attr("id") +
-              " .percent-complete"
+            $(this).attr("id") +
+            " .percent-complete"
           ).text(Progress + "%");
         } else {
           $(
             ".project-stages-ctx div#v-pills-tab > ." +
-              $(this).attr("id") +
-              " .percent-complete"
+            $(this).attr("id") +
+            " .percent-complete"
           ).text(Progress + "%");
         }
         if (Progress != 100 && !isactive) {
@@ -2313,8 +2319,8 @@ var Milestones_Info_Request = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">" +
-        Project_Home_Info_Request.g.PCODE +
-        "</Value></Eq></And></Where><OrderBy><FieldRef Name='CommittedDate' Ascending='False' /></OrderBy></Query></View>"
+      Project_Home_Info_Request.g.PCODE +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='CommittedDate' Ascending='False' /></OrderBy></Query></View>"
     );
     Milestones_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Milestones_Info_Request.g.collListItem);
@@ -2360,7 +2366,7 @@ var Milestones_Info_Request = {
       );
       itemdate2 = Math.floor(
         (itemdate2 - new Date(itemdate2.getFullYear(), 0, 0)) /
-          (1000 * 60 * 60 * 24)
+        (1000 * 60 * 60 * 24)
       ); //number of day
       itemdate2 = (itemdate2 * 100) / 365;
       var dataYear = isArabic ? itemdate.split("-")[0] : itemdate.split("-")[2];
@@ -2396,35 +2402,35 @@ var Milestones_Info_Request = {
         dataYear == new Date().getFullYear() ? "" : 'style="display:none"';
       itemhtml.push(
         '<div class="milestone-item mb-3" ' +
-          isactive +
-          ' data-year="' +
-          dataYear +
-          '">' +
-          '<div class="row mx-0">' +
-          '<div class="milestone-label col-auto fnt-13 w-3 mb-1" style="width:130px"><span class="milestone-label">' +
-          itemname +
-          "</span></div>" +
-          '<div class="milestone-duration col-6 col-xl-auto fnt-13 black order-xl-last mb-1">' +
-          '<span class="m-start-date">' +
-          itemdate +
-          "</span>" +
-          '<!--<i class="fa m-arrow"></i>' +
-          '<span class="m-end-date">15/7/2020</span>-->' +
-          "</div>" +
-          '<div class="col-12 col-xl-5 state-bar align-items-center order-last order-xl-1 mb-1">' +
-          '<div class="position-relative d-flex flex-row-reverse mt-1">' +
-          '<div class="state-progress-line bg-primary">' +
-          "</div>" +
-          '<div class="state-progress-bar bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="' +
-          itemdate +
-          '" style="width:50%;right:' +
-          itemdate2 +
-          '%!important;">' +
-          "</div>" +
-          "</div>" +
-          "</div>" +
-          "</div>" +
-          "</div>"
+        isactive +
+        ' data-year="' +
+        dataYear +
+        '">' +
+        '<div class="row mx-0">' +
+        '<div class="milestone-label col-auto fnt-13 w-3 mb-1" style="width:130px"><span class="milestone-label">' +
+        itemname +
+        "</span></div>" +
+        '<div class="milestone-duration col-6 col-xl-auto fnt-13 black order-xl-last mb-1">' +
+        '<span class="m-start-date">' +
+        itemdate +
+        "</span>" +
+        '<!--<i class="fa m-arrow"></i>' +
+        '<span class="m-end-date">15/7/2020</span>-->' +
+        "</div>" +
+        '<div class="col-12 col-xl-5 state-bar align-items-center order-last order-xl-1 mb-1">' +
+        '<div class="position-relative d-flex flex-row-reverse mt-1">' +
+        '<div class="state-progress-line bg-primary">' +
+        "</div>" +
+        '<div class="state-progress-bar bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="' +
+        itemdate +
+        '" style="width:50%;right:' +
+        itemdate2 +
+        '%!important;">' +
+        "</div>" +
+        "</div>" +
+        "</div>" +
+        "</div>" +
+        "</div>"
       );
 
       // work on validation every month should have a milestone
@@ -2715,8 +2721,8 @@ var Coc_Info_Request = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">" +
-        Project_Home_Info_Request.g.PCODE +
-        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+      Project_Home_Info_Request.g.PCODE +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
     Coc_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Coc_Info_Request.g.collListItem);
@@ -2829,8 +2835,8 @@ var Coc_Info_Request = {
         ".project-budget-ctx .card-body > div:nth-child(2) > div:nth-child(2) > div:nth-child(2)"
       ).text(
         expectedDisbursement.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-          " " +
-          SAR_Currency
+        " " +
+        SAR_Currency
       );
 
       // الميزانية المتبقية
@@ -2856,10 +2862,10 @@ var Coc_Info_Request = {
         ".project-budget-ctx .card-body > div:nth-child(3) > div:nth-child(2) > div:nth-child(2)"
       ).html(
         "<span>" +
-          LastCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-          " " +
-          SAR_Currency +
-          "</span>"
+        LastCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+        " " +
+        SAR_Currency +
+        "</span>"
       );
 
       // الصرف الفعلي
@@ -2884,10 +2890,10 @@ var Coc_Info_Request = {
         ".project-budget-ctx .card-body > div:nth-child(4) > div:nth-child(2) > div:nth-child(2)"
       ).html(
         "<span>" +
-          TheCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-          " " +
-          SAR_Currency +
-          "</span>"
+        TheCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+        " " +
+        SAR_Currency +
+        "</span>"
       );
 
       // المخطط من الصرف
@@ -2912,10 +2918,10 @@ var Coc_Info_Request = {
         ".project-budget-ctx .card-body > div:nth-child(5) > div:nth-child(2) > div:nth-child(2)"
       ).html(
         "<span>" +
-          plannedDisbursement.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-          " " +
-          SAR_Currency +
-          "</span>"
+        plannedDisbursement.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+        " " +
+        SAR_Currency +
+        "</span>"
       );
 
       //نسبة المخطط من الصرف
@@ -2942,10 +2948,10 @@ var Coc_Info_Request = {
         ".project-budget-ctx .card-body > div:nth-child(6) > div:nth-child(2) > div:nth-child(2)"
       ).html(
         "<span>" +
-          plannedDisbursementPercent
-            .toString()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-          " %</span>"
+        plannedDisbursementPercent
+          .toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+        " %</span>"
       );
 
       //نسبة الصرف الفعلي
@@ -2972,10 +2978,10 @@ var Coc_Info_Request = {
         ".project-budget-ctx .card-body > div:nth-child(7) > div:nth-child(2) > div:nth-child(2)"
       ).html(
         "<span>" +
-          actualDisbursementPercent
-            .toString()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-          " %</span>"
+        actualDisbursementPercent
+          .toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+        " %</span>"
       );
 
       //اداء الصرف
@@ -3002,10 +3008,10 @@ var Coc_Info_Request = {
         ".project-budget-ctx .card-body > div:nth-child(8) > div:nth-child(2) > div:nth-child(2)"
       ).html(
         "<span>" +
-          disbursementPerformance
-            .toString()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-          " %</span>"
+        disbursementPerformance
+          .toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+        " %</span>"
       );
     }
   },
@@ -3152,11 +3158,11 @@ var GetProject_Tasks = {
         });
         //
         var itemdate2 = new Date(
-            Project_Home_Info_Request.g.dateConvert2(Task.get_start())
-          ),
+          Project_Home_Info_Request.g.dateConvert2(Task.get_start())
+        ),
           itemdate2 = Math.floor(
             (itemdate2 - new Date(itemdate2.getFullYear(), 0, 0)) /
-              (1000 * 60 * 60 * 24)
+            (1000 * 60 * 60 * 24)
           ); //number of da,
         (itemdate2 = (itemdate2 * 100) / 365),
           (itemdate3 = new Date(
@@ -3164,7 +3170,7 @@ var GetProject_Tasks = {
           )),
           (itemdate3 = Math.floor(
             (itemdate3 - new Date(itemdate3.getFullYear(), 0, 0)) /
-              (1000 * 60 * 60 * 24)
+            (1000 * 60 * 60 * 24)
           )); //number of da,
         (itemdate3 = (itemdate3 * 100) / 365),
           (itemdate4 = itemdate3 - itemdate2);
@@ -3193,59 +3199,59 @@ var GetProject_Tasks = {
         var myArraow = isArabic ? "←" : "→";
         epmTask_Html.push(
           '<div class="milestone-item mb-3" ' +
-            isactive +
-            ' data-year="' +
-            itemdate.split("-")[2] +
-            '">' +
-            '<div class="row mx-0">' +
-            '<div class="milestone-label col-auto fnt-13 w-3 mb-1" style="width:130px"><span class="milestone-label">' +
-            Task_Name +
-            '</span><i data-toggle="tooltip" data-html="true" title="<p>' +
-            Task_Name +
-            "</p><p>" +
-            itemdate +
-            " " +
-            myArraow +
-            " " +
-            itemdateF +
-            "</p><p>" +
-            percentcomplete +
-            ' %</p>" class="my-info-i fas fa-info-circle"></i></div>' +
-            '<div class="milestone-duration col-6 col-xl-auto fnt-13 black order-xl-last mb-1">' +
-            '<span class="m-start-date">' +
-            itemdate +
-            "</span>" +
-            '<!--<i class="fa m-arrow"></i>' +
-            '<span class="m-end-date">15/7/2020</span>-->' +
-            "</div>" +
-            '<div class="col-12 col-xl-5 state-bar align-items-center order-last order-xl-1 mb-1 line-wrap">' +
-            '<div class="position-relative d-flex flex-row-reverse mt-1 my-line">' +
-            '<div class="state-progress-line ' +
-            bgclass +
-            '">' +
-            "</div>" +
-            '<div class="state-progress-bar ' +
-            bgclass +
-            '" data-toggle="tooltip" data-mile-complete="' +
-            percentcomplete +
-            ' %" data-placement="top" title="" data-original-title="' +
-            itemdate +
-            " " +
-            myArraow +
-            " " +
-            itemdateF +
-            '" data-mile-finish="' +
-            itemdateF +
-            '" style="width:' +
-            realPercent +
-            "%!important;" +
-            myPlace +
-            '">' +
-            "</div>" +
-            "</div>" +
-            "</div>" +
-            "</div>" +
-            "</div>"
+          isactive +
+          ' data-year="' +
+          itemdate.split("-")[2] +
+          '">' +
+          '<div class="row mx-0">' +
+          '<div class="milestone-label col-auto fnt-13 w-3 mb-1" style="width:130px"><span class="milestone-label">' +
+          Task_Name +
+          '</span><i data-toggle="tooltip" data-html="true" title="<p>' +
+          Task_Name +
+          "</p><p>" +
+          itemdate +
+          " " +
+          myArraow +
+          " " +
+          itemdateF +
+          "</p><p>" +
+          percentcomplete +
+          ' %</p>" class="my-info-i fas fa-info-circle"></i></div>' +
+          '<div class="milestone-duration col-6 col-xl-auto fnt-13 black order-xl-last mb-1">' +
+          '<span class="m-start-date">' +
+          itemdate +
+          "</span>" +
+          '<!--<i class="fa m-arrow"></i>' +
+          '<span class="m-end-date">15/7/2020</span>-->' +
+          "</div>" +
+          '<div class="col-12 col-xl-5 state-bar align-items-center order-last order-xl-1 mb-1 line-wrap">' +
+          '<div class="position-relative d-flex flex-row-reverse mt-1 my-line">' +
+          '<div class="state-progress-line ' +
+          bgclass +
+          '">' +
+          "</div>" +
+          '<div class="state-progress-bar ' +
+          bgclass +
+          '" data-toggle="tooltip" data-mile-complete="' +
+          percentcomplete +
+          ' %" data-placement="top" title="" data-original-title="' +
+          itemdate +
+          " " +
+          myArraow +
+          " " +
+          itemdateF +
+          '" data-mile-finish="' +
+          itemdateF +
+          '" style="width:' +
+          realPercent +
+          "%!important;" +
+          myPlace +
+          '">' +
+          "</div>" +
+          "</div>" +
+          "</div>" +
+          "</div>" +
+          "</div>"
         );
       } else if (Task_isMilestone) {
         var Task_ID = Task.get_id().ToSerialized(),
@@ -3693,8 +3699,8 @@ var Get_ProjectStatus_Info = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
-        Project_Home_Info_Request.g.PCODE +
-        "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>"
+      Project_Home_Info_Request.g.PCODE +
+      "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>"
     );
     Get_ProjectStatus_Info.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Get_ProjectStatus_Info.g.collListItem);

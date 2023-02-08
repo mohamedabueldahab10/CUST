@@ -15,6 +15,7 @@ var ActualBudget = 0,
   numberofProjects = 0,
   UProjectsNames = [],
   Riskarray = [],
+  EstimatedCostArr = [],
   Issuearray = [],
   Deliverablesarray = [],
   ExpDeliverablesarray = [],
@@ -301,7 +302,7 @@ window.Project_Info_Request = {
 
         // ProgressStatus =
         //   oListItem.get_item("ProjectProgressStatus") || "nodata";
-        
+
         ProgressStatus = oListItem.get_item("ProgressStatusDeliverable") || "nodata";
 
 
@@ -473,7 +474,8 @@ window.Project_Info_Request = {
           '<span data-prname="' +
           projectcode +
           '" class="inner-val fnt-14 bold">' +
-          Project_Info_Request.g.kFormatter(SpendFromBudget) +
+          0 +
+          // Project_Info_Request.g.kFormatter(SpendFromBudget) +
           "</span>" +
           "</span>" +
           "</div>" +
@@ -866,6 +868,7 @@ window.Project_Info_Request = {
       // emptying all data arrays and floats exept for arrays related to filter
       (UProjects = []),
         (Riskarray = []),
+        (EstimatedCostArr = []),
         (Issuearray = []),
         (Deliverablesarray = []),
         (Progressarray = []),
@@ -1950,11 +1953,32 @@ var Coc_Info_Request = {
       for (i = 0; i < Deliverablesarray.length; i++) {
         var myselections = Deliverables ? Deliverables.split(":::") : []; // add myselection to handle mult delivrable in invoices
         if (Deliverablesarray[i].Code == myselections[0] && Status == "exchangehasbeendone") {
+          EstimatedCostArr.push({ code: oListItem.get_item("ProjectCode"), amount: Amount })
           TheCost += Amount;
         }
       }
     }
-    
+
+    for (var i = 0; i < UProjects.length; i++) {
+			let tempArray = EstimatedCostArr.filter(el => {
+				return el.code == UProjects[i]
+			})
+
+			var totalCost = 0
+			if (tempArray.length) {
+
+				tempArray.forEach(el => {
+					totalCost += el.amount
+				})
+
+				$('.inner-data4 .inner-val[data-prname="' + tempArray[0].code + '"]').text(
+					Project_Info_Request.g.kFormatter(totalCost)
+				);
+			}
+
+
+		}
+
     handleBudgetBarChart();
 
   },
@@ -2345,7 +2369,7 @@ var PortfoliosInfoRequest = {
 };
 
 function handleBudgetBarChart() {
-  
+
   var remainingCost = AssignedBudget - TheCost;
   debugger
   console.log(AssignedBudget, "AssignedBudget");
