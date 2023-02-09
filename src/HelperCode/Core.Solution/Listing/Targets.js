@@ -1,6 +1,6 @@
 var currentYear = new Date().getFullYear();
-var emptyData = require('../../../HelperRessources/img/empty-data.png');
-// var emptyData = ''
+// var emptyData = require('../../../HelperRessources/img/empty-data.png');
+var emptyData = ''
 var Operational_Array = [],
   Instrument_Array = [],
   PQueryFilteration = "",
@@ -19,8 +19,8 @@ var Where_Body = "",
 var RolePQuery = '', Role_Where_Body = "", Role_Query_Body = "";
 
 var isKpiCode = window.location.href.toLowerCase().indexOf("targets.aspx") > -1 && window.location.href.indexOf("KpiCode=") > -1;
-var wfKpiCode="";
-if(isKpiCode){
+var wfKpiCode = "";
+if (isKpiCode) {
   wfKpiCode = window.location.href.split("KpiCode=")[1].split("&")[0]
 }
 var firstRender = true;
@@ -55,9 +55,9 @@ var MainKPIs_Info_Request = {
     var camlQuery = new SP.CamlQuery(); //set query to return data
     console.log('mmmmmmmm')
 
-    
+
     if (isKpiCode) {
-      debugger
+
       var query = `<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name=\'KPI\' /><Value Type=\'Text\'>` + wfKpiCode + `</Value></Eq><And><Eq><FieldRef Name=\'Year\' /> <Value Type=\'Text\'>` + kpiYear + `</Value ></Eq><Eq><FieldRef Name=\'PeriodType\' /><Value Type=\'Choice\'>` + filteredValue + `</Value></Eq></And></And></And></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>`
       // var query = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name="KPI" /><Value Type="Text">' + wfKpiCode + "</Value></Eq><And><Eq><FieldRef Name=\'Year\' /></Eq></And></And></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
 
@@ -76,7 +76,7 @@ var MainKPIs_Info_Request = {
         `</Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>`
 
     } else {
-      debugger
+
       if (isRoleDataLevelAccess) {
 
         camlQuery.set_viewXml(RolePQuery)
@@ -179,7 +179,7 @@ var MainKPIs_Info_Request = {
         "<thead>"
       );
     }
-    debugger
+
 
     while (listItemEnum.moveNext()) {
       console.log("INSIDE WHILE")
@@ -201,9 +201,11 @@ var MainKPIs_Info_Request = {
       var SubectorCode = oListItem.get_item("SubSector") ? oListItem.get_item("SubSector") : '';
       var SectorCode = oListItem.get_item("Sector") ? oListItem.get_item("Sector") : '';
       //
-      debugger
+
       if (
-        (!isAdmin && !isMinister && !isBITeam && !isSectorHead && !isViceMinister && !isVROP && !isSPMAdmin && !isSPMTeam && !isLMSP && !isPerformanceLeader && !isMinisterAssistant && !isDU && !isGeneralManager && !isSubSectorHead && (performanceleader == UserN.Title))
+        (!isAdmin && !isMinister && !isBITeam && !isSectorHead && !isViceMinister && !isVROP && !isSPMAdmin
+          //  && !isSPMTeam
+          && !isLMSP && !isPerformanceLeader && !isMinisterAssistant && !isDU && !isGeneralManager && !isSubSectorHead && (performanceleader == UserN.Title))
         || isAdmin
         || isSPMAdmin
         || isSPMTeam
@@ -696,7 +698,7 @@ var MainKPIs_Info_Request = {
     }
 
     console.log(Operational_Array, "Operational_Array")
-    debugger
+
     if (isKpiCode && firstRender) {
       $('.filterTarget').hide()
       firstRender = false
@@ -727,7 +729,10 @@ var MainKPIs_Info_Request = {
       $('td input[data-internal*="Target"]').prop('disabled', true);
     }
 
-    if (isMinister || isBITeam || isPerformanceLeader || isSPMTeam || isEPMO) {
+    if (isMinister || isBITeam || isPerformanceLeader ||
+       //isSPMTeam || 
+       
+       isEPMO) {
       $("body").append(
         "<style>" +
         ".btn-save{display:none}" +
@@ -782,7 +787,7 @@ var MainKPIs_Info_Request = {
 };
 
 window.checkTargetStatusHtml = setInterval(function () {
-  debugger
+
   if (isRoleDataLevelAccess) {
     RoleDataLevelBuildQuery.init()
   } else {
@@ -793,6 +798,8 @@ window.checkTargetStatusHtml = setInterval(function () {
 
 var RoleDataLevelBuildQuery = {
   init: function () {
+
+
     var FilterChoicesRole = Array.from(dataLevelAccessChoicesForFilters)
 
     FilterChoicesRole.push({ internalName: 'Year', Type: 'Text', Values: [currentYear] }, { internalName: 'PeriodType', Type: 'Choice', Values: [filteredValue] })
@@ -884,6 +891,7 @@ var RoleDataLevelBuildQuery = {
 
 
         console.log(Query_Body, "Query_Body Query_Body Query_Body  jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
+
       }
     }
   }
@@ -898,8 +906,8 @@ var Get_All_Dynamic_Filter = {
       var department = oListItem.get_item("SubSector") ? oListItem.get_item("SubSector") : ''
       var portfolio = oListItem.get_item("Portfolio") ? oListItem.get_item("Portfolio") : ''
       var relatedGoal = oListItem.get_item("RelatedGoal") ? oListItem.get_item("RelatedGoal") : ''
-      var mainKpiCode=  oListItem.get_item("KPI") ? oListItem.get_item("KPI") : ''
-      var period =  oListItem.get_item("PeriodType") ? oListItem.get_item("PeriodType") : ''
+      var mainKpiCode = oListItem.get_item("KPI") ? oListItem.get_item("KPI") : ''
+      var period = oListItem.get_item("PeriodType") ? oListItem.get_item("PeriodType") : ''
       if (sector && !SectorFilterArr.includes(sector)) {
         SectorFilterArr.push(sector)
       }
@@ -917,9 +925,9 @@ var Get_All_Dynamic_Filter = {
       }
 
       //add specially to handle filtered value in fist render when isKpiCode
-      debugger
-      if(isKpiCode && (mainKpiCode == wfKpiCode)){
-        
+
+      if (isKpiCode && (mainKpiCode == wfKpiCode)) {
+
         filteredValue = period
       }
 
@@ -1225,6 +1233,7 @@ var Build_My_Filter = {
         }
       });
 
+      debugger
       if (FilterChoices.length) {
         Where_Body = ""
         Query_Body = ""
@@ -1443,12 +1452,12 @@ var Build_My_Filter = {
     })
 
     $(".yearSlider .yearContainer .previousYear").click(function (e) {
-      debugger
+
       var currentkpiYear = kpiYear
       kpiYear = Number(kpiYear) - 1
       $('.yeartitle').html(kpiYear)
       console.log(Where_Body, "Where_Body dddddddddddddddddddddddddd")
-      debugger
+
       if (isRoleDataLevelAccess) {
         // Where_Body = Where_Body.replace('<Value Type="Text">' + currentkpiYear + '</Value>', '<Value Type="Text">' + kpiYear + '</Value>')
         Where_Body = Where_Body.replace(currentkpiYear, kpiYear)

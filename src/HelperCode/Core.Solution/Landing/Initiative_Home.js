@@ -1736,10 +1736,11 @@ var Milestones_Info_Request = {
       isViceMinister ||
       isSubSectorHead ||
       isGeneralManager ||
-      isMinister ||
-      isBITeam ||
-      isInOwner ||
-      isSPMO
+      isMinister
+      // ||
+      // isBITeam ||
+      // isInOwner ||
+      // isSPMO
     ) {
       $("a.btn-add").attr("style", "display: none!important;");
     }

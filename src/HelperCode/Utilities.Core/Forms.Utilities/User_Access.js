@@ -8,13 +8,13 @@ window.currentMainList = "";
 window.projectActualBudget = 0;
 window.initiativeActualBudget = 0;
 // added for CR module
-  //! Change Request
+//! Change Request
 (window.crListKey = USERlistkey == "changerequest" ? true : false),
-(window.isCrMode = window.location.href.indexOf("RID=") > -1),
-(window.RID = isCrMode ? window.location.href.split("RID=")[1].split("&")[0] : ""),
-(window.isRListKey = window.location.href.indexOf("RKey=") > -1),
-(window.RListKey = isCrMode ? window.location.href.split("RKey=")[1].split("&")[0] : ""),
-(window.CrRelatedList = "");
+	(window.isCrMode = window.location.href.indexOf("RID=") > -1),
+	(window.RID = isCrMode ? window.location.href.split("RID=")[1].split("&")[0] : ""),
+	(window.isRListKey = window.location.href.indexOf("RKey=") > -1),
+	(window.RListKey = isCrMode ? window.location.href.split("RKey=")[1].split("&")[0] : ""),
+	(window.CrRelatedList = "");
 // ended 
 var BreakException = {};
 var UserRole,
@@ -223,9 +223,9 @@ if (window.location.href.indexOf("ListKey") > -1) {
 					//if true
 					USERProjRelated.push(Object.keys(obj)[0]);
 			}
-			 // added for CR module
+			// added for CR module
 			//cr
-		    if (key == RListKey) {
+			if (key == RListKey) {
 				CrRelatedList = obj[key];
 			}
 			// ended 
@@ -728,104 +728,74 @@ window.userCalls = {
 				en_UserRole = "Project Manager";
 				//CRUD
 				Create_Access = [
+					/////////
+					"projects",
 					"deliverables",
-					"mom",
-					"lessonslearned",
-					"initiativeexecution",
-					"closureinitiative",
-					"projectcharter",
-					// "benefits",
-					// "initiativemilestonesacceptance",
-					// "initiativedeliverablesacceptance",
-					// "initiativecards",
-					// "kpiequations",
-					// "deliveries",
-					"risks",
-					"issues",
 					"milestones",
-					"invoices",
-					"contracts",
-					"changerequest",
-					// "MOM",
+					"issues",
+					"risks",
+					"mom",
 					"closureform",
-					"communicationplans",
 					"lessonslearned",
+					"coc",
 					"stakeholders",
+					"communicationplans",
+					"contracts",
 					"documents",
-					"projecthome.aspx",
+					"changerequest"
 				];
 				Read_Access = [
-					// "budgetitems",
-					// "Targets.aspx",
-					// "goalstrategy",
-					// "spillars",
-					// "sos",
-					// "initiatives",
 					"projects",
-					"mom",
-					// "mainkpi",
-					"lessonslearned",
 					"deliverables",
-					// "closureinitiative",
-					// "initiativeexecution",
-					// "benefits",
-					// "initiativemilestonesacceptance",
-					// "initiativedeliverablesacceptance",
-					// "initiativecards",
-					"projectcharter",
-					// "kpiequations",
-					// "deliveries",
-					"risks",
-					"issues",
 					"milestones",
-					"invoices",
-					"contracts",
-					"changerequest",
-					// "MOM",
-					"communicationplans",
+					"issues",
+					"risks",
+					"mom",
+					"closureform",
 					"lessonslearned",
+					"coc",
 					"stakeholders",
+					"communicationplans",
+					"contracts",
+					"documents",
+					"changerequest",
 					"documents",
 					"tasks",
-					// "portfolio",
-					// "ideas",
-					"closureform",
 					"TaskHistory.aspx",
 					"home.aspx",
-					"deliverablemetrics",
 					"projecthome.aspx",
-					// "benefitmatrix", "benefitmetrics",
 				];
 				Edit_Access = [
 					"projects",
-					"mom",
-					// "mainkpi",
-					"lessonslearned",
 					"deliverables",
-					"closureinitiative",
-					// "initiativeexecution",
-					// "benefits",
-					// "initiativemilestonesacceptance",
-					// "initiativedeliverablesacceptance",
-					// "initiativecards",
-					"projectcharter",
-					// "kpiequations",
-					// "deliveries",
-					"risks",
-					"issues",
 					"milestones",
-					"invoices",
-					"contracts",
-					"changerequest",
-					// "MOM",
-					"communicationplans",
-					"lessonslearned",
-					"stakeholders",
-					"documents",
+					"issues",
+					"risks",
+					"mom",
 					"closureform",
+					"lessonslearned",
+					"coc",
+					"stakeholders",
+					"communicationplans",
+					"contracts",
+					"documents",
 					"projecthome.aspx",
+					//////////////////////////
 				];
-				Delete_Access = [];
+				Delete_Access = [
+					"projects",
+					"deliverables",
+					"milestones",
+					"issues",
+					"risks",
+					"mom",
+					"closureform",
+					"lessonslearned",
+					"coc",
+					"stakeholders",
+					"communicationplans",
+					"contracts",
+				];
 				break;
 
 			case "ProjectOwner":
@@ -840,56 +810,33 @@ window.userCalls = {
 				en_UserRole = "Project Owner";
 				Create_Access = ["projecthome.aspx"];
 				Read_Access = [
-					// "budgetitems",
-					// "Targets.aspx",
-					// "goalstrategy",
-					// "spillars",
-					// "sos",
-					// "initiatives",
 					"projects",
-					"mom",
-					// "mainkpi",
-					"lessonslearned",
 					"deliverables",
-					// "closureinitiative",
-					// "initiativeexecution",
-					// "benefits",
-					// "initiativemilestonesacceptance",
-					// "initiativedeliverablesacceptance",
-					// "initiativecards",
-					"projectcharter",
-					// "kpiequations",
-					// "deliveries",
-					"risks",
-					"issues",
 					"milestones",
-					"invoices",
-					"contracts",
-					"changerequest",
-					// "MOM",
-					"communicationplans",
-					"lessonslearned",
-					"stakeholders",
-					"documents",
-					"tasks",
-					// "portfolio",
-					// "ideas",
+					"issues",
+					"risks",
+					"mom",
 					"closureform",
+					"lessonslearned",
+					"coc",
+					"stakeholders",
+					"communicationplans",
+					"contracts",
+					"documents",
 					"TaskHistory.aspx",
 					"home.aspx",
-					"deliverablemetrics",
+					"tasks",
 					"projecthome.aspx",
-					// "benefitmatrix", "benefitmetrics",
 				];
 				Edit_Access = ["projecthome.aspx"];
 				Delete_Access = [];
 
 				break;
 			case "InitiativeManager":
-				if (USERisHome)
-					window.location =
-						_spPageContextInfo.webAbsoluteUrl +
-						"/sitepages/initiativesmain.aspx";
+				// if (USERisHome)
+				// 	window.location =
+				// 		_spPageContextInfo.webAbsoluteUrl +
+				// 		"/sitepages/initiativesmain.aspx";
 				$("body").append(
 					"<style>" + ".Progress-Action {display:block!important;}" + "</style>"
 				);
@@ -901,151 +848,106 @@ window.userCalls = {
 				en_UserRole = "Initiative Manager";
 				//CRUD
 				Create_Access = [
+					"initiatives",
+					"initiativedeliverables",
 					"initiativemilestones",
-					// "initiativedeliverables",
-					// "projects",
-					"initiativemom",
-					"lessonslearned",
-					"deliverables",
-					"closureinitiative",
-					"initiativeexecution",
-					"benefits",
-					"initiativemilestonesacceptance",
-					"initiativedeliverablesacceptance",
-					"initiativecards",
-					"projectcharter",
-					"kpiequations",
-					"initiativerisks",
 					"initiativeissues",
+					"initiativerisks",
+					"initiativemom",
+					"closureinitiative",
+					"benefits",
+					"benefitmetrics",
+					"projects",
+					"deliverables",
 					"milestones",
-					"invoices",
+					"issues",
+					"risks",
+					"mom",
+					"closureform",
+					"lessonslearned",
+					"coc",
+					"stakeholders",
+					"communicationplans",
 					"contracts",
 					"changerequest",
-					"communicationplans",
-					"stakeholders",
-					"documents",
-					"tasks",
-					"closureform",
-					"TaskHistory.aspx",
-					"deliverablemetrics",
-					"benefitmatrix",
-					"benefitmetrics",
 				];
 				Read_Access = [
 					"initiatives",
-					"InitiativeHome.aspx",
-					"initiativemilestones",
 					"initiativedeliverables",
-					"projects",
-					"projecthome.aspx",
+					"initiativemilestones",
 					"initiativeissues",
-					"initiativemom",
 					"initiativerisks",
-					"initiativeissues",
 					"initiativemom",
-					"initiativerisks",
-					"lessonslearned",
-					"deliverables",
 					"closureinitiative",
-					"initiativeexecution",
 					"benefits",
-					"initiativemilestonesacceptance",
-					"initiativedeliverablesacceptance",
-					"initiativecards",
-					"projectcharter",
-					"kpiequations",
-
+					"benefitmetrics",
+					"projects",
+					"deliverables",
 					"milestones",
-					"invoices",
+					"issues",
+					"risks",
+					"mom",
+					"closureform",
+					"lessonslearned",
+					"coc",
+					"stakeholders",
+					"communicationplans",
 					"contracts",
 					"changerequest",
-					"communicationplans",
-					"stakeholders",
-					"documents",
-					"tasks",
-					"closureform",
+					"projecthome.aspx",
+					"InitiativeHome.aspx",
 					"TaskHistory.aspx",
-					"deliverablemetrics",
-					"benefitmatrix",
-					"benefitmetrics",
+					"tasks",
+					"documents",
 					"initiativesmain.aspx",
+					"home.aspx",
+					"projecthome.aspx",
 				];
 				Edit_Access = [
 					"initiatives",
-					"initiativemilestones",
 					"initiativedeliverables",
-					"projects",
-					"mom",
+					"initiativemilestones",
 					"initiativeissues",
-					"initiativemom",
 					"initiativerisks",
-					"lessonslearned",
-					"deliverables",
+					"initiativemom",
 					"closureinitiative",
-					"initiativeexecution",
 					"benefits",
-					"initiativemilestonesacceptance",
-					"initiativedeliverablesacceptance",
-					"initiativecards",
-					"projectcharter",
-					"kpiequations",
-					"risks",
-					"issues",
+					"benefitmetrics",
+					"projects",
+					"deliverables",
 					"milestones",
-					"invoices",
+					"issues",
+					"risks",
+					"mom",
+					"closureform",
+					"lessonslearned",
+					"coc",
+					"stakeholders",
+					"communicationplans",
 					"contracts",
 					"changerequest",
-					"communicationplans",
-					"stakeholders",
-					"documents",
-					"tasks",
-					"closureform",
-					"TaskHistory.aspx",
-					"deliverablemetrics",
-					"benefitmatrix",
-					"benefitmetrics",
 				];
 				Delete_Access = [
-					// "initiatives",
-					// "initiativemilestones",
-					// "initiativedeliverables",
-					// "projects",
-					// "initiativeissues",
-					// "initiativemom",
-					// "initiativerisks",
-					// "lessonslearned",
-					// "deliverables",
-					// "closureinitiative",
-					// "initiativeexecution",
-					// "benefits",
-					// "initiativemilestonesacceptance",
-					// "initiativedeliverablesacceptance",
-					// "initiativecards",
-					// "projectcharter",
-					// "kpiequations",
-					// "risks",
-					// "issues",
-					// "milestones",
-					// "invoices",
-					// "contracts",
-					// "changerequest",
-					// "communicationplans",
-					// "stakeholders",
-					// "documents",
-					// "tasks",
-					// "closureform",
-					// "TaskHistory.aspx",
-					// "deliverablemetrics",
-					// "benefitmatrix",
-					// "benefitmetrics"
+					"initiatives",
+					"initiativedeliverables",
+					"initiativemilestones",
+					"initiativeissues",
+					"initiativerisks",
+					"initiativemom",
+					"closureinitiative",
+					"benefits",
+					"benefitmetrics",
+					"projects",
+					"deliverables",
+					"milestones",
 				];
 				break;
 
 			case "InitiativeOwner":
-				if (USERisHome)
-					window.location =
-						_spPageContextInfo.webAbsoluteUrl +
-						"/sitepages/initiativesmain.aspx";
+				// if (USERisHome)
+				// 	window.location =
+				// 		_spPageContextInfo.webAbsoluteUrl +
+				// 		"/sitepages/initiativesmain.aspx";
 				$("body").append(
 					"<style>" + ".Progress-Action {display:block!important;}" + "</style>"
 				);
@@ -1057,49 +959,103 @@ window.userCalls = {
 				ar_UserRole = "مالك المبادرة";
 				en_UserRole = "Initiative Owner";
 				//CRUD
-				Create_Access = [];
+				Create_Access = [
+					"initiatives",
+					"initiativedeliverables",
+					"initiativemilestones",
+					"initiativeissues",
+					"initiativerisks",
+					"initiativemom",
+					"closureinitiative",
+					"benefits",
+					"benefitmetrics",
+					"projects",
+					"deliverables",
+					"milestones",
+					"issues",
+					"risks",
+					"mom",
+					"closureform",
+					"lessonslearned",
+					"coc",
+					"stakeholders",
+					"communicationplans",
+					"contracts",
+					"changerequest",
+				];
 
 				Read_Access = [
 					"initiatives",
-					"InitiativeHome.aspx",
-					"initiativemilestones",
 					"initiativedeliverables",
-					"projects",
-					"projecthome.aspx",
+					"initiativemilestones",
 					"initiativeissues",
-					"initiativemom",
 					"initiativerisks",
-					"lessonslearned",
-					"deliverables",
+					"initiativemom",
 					"closureinitiative",
-					"initiativeexecution",
 					"benefits",
-					"initiativemilestonesacceptance",
-					"initiativedeliverablesacceptance",
-					"initiativecards",
-					"projectcharter",
-					"kpiequations",
-					"initiativeissues",
-					"initiativemom",
-					"initiativerisks",
+					"benefitmetrics",
+					"projects",
+					"deliverables",
 					"milestones",
-					"invoices",
+					"issues",
+					"risks",
+					"mom",
+					"closureform",
+					"lessonslearned",
+					"coc",
+					"stakeholders",
+					"communicationplans",
 					"contracts",
 					"changerequest",
-					"communicationplans",
-					"stakeholders",
-					"documents",
-					"tasks",
-					"closureform",
+					"projecthome.aspx",
+					"InitiativeHome.aspx",
 					"TaskHistory.aspx",
-					"deliverablemetrics",
-					"benefitmatrix",
-					"benefitmetrics",
+					"tasks",
+					"documents",
 					"initiativesmain.aspx",
+					"home.aspx",
+					"projecthome.aspx",
 				];
 
-				Edit_Access = ["initiativecards"];
-				Delete_Access = [];
+				Edit_Access = [
+					"initiatives",
+					"initiativedeliverables",
+					"initiativemilestones",
+					"initiativeissues",
+					"initiativerisks",
+					"initiativemom",
+					"closureinitiative",
+					"benefits",
+					"benefitmetrics",
+					"projects",
+					"deliverables",
+					"milestones",
+					"issues",
+					"risks",
+					"mom",
+					"closureform",
+					"lessonslearned",
+					"coc",
+					"stakeholders",
+					"communicationplans",
+					"contracts",
+					"changerequest",
+				];
+				Delete_Access = [
+					"initiatives",
+					"initiativedeliverables",
+					"initiativemilestones",
+					"initiativeissues",
+					"initiativerisks",
+					"initiativemom",
+					"closureinitiative",
+					"benefits",
+					"benefitmetrics",
+					"projects",
+					"deliverables",
+					"milestones",
+
+				];
 
 				// Delete_Access = AllListKeys;
 				// Delete_Access = Delete_Access.concat(SP_Page_Name);
@@ -1125,16 +1081,16 @@ window.userCalls = {
 				Create_Access = [];
 
 				Read_Access = [
-					//   "initiatives",
-					// "deliverablemetrics",
-					"benefitmatrix",
-					"benefitmetrics",
-					"mainkpi",
+					"goalstrategy",
 					"sos",
+					"mainkpi",
 					"Targets.aspx",
-					//  "portfolio", "home.aspx",
-					"kpiequations",
+					"benefitmatrix",
+					"initiatives",
+					"benefits",
+					"benefitmetrics",
 					"MainIndicators.aspx",
+					"initiativesmain.aspx",
 				];
 
 				Edit_Access = [];
@@ -2574,14 +2530,16 @@ window.userCalls = {
 				Create_Access = [];
 				Read_Access = [
 					"mainkpi",
-					//  "sos",
+					"sos",
+					"goalstrategy",
 					"Targets.aspx",
-					//  "portfolio",
 					"kpiequations",
-					// "home.aspx",
 					"MainIndicators.aspx",
+					"tasks"
 				];
-				Edit_Access = [];
+				Edit_Access = [
+					"mainkpi"
+				];
 				Delete_Access = [];
 				break;
 			case "PerformanceLeader":
@@ -2748,57 +2706,57 @@ window.userCalls = {
 			Get_Initiative_Info_Request.preinit()
 		}
 
+		// if (
+		// 	// (!isInitiativesHomePage && !isInManager && !isInOwner) ||
+		// 	isDU ||
+		// 	isMinisterAssistant ||
+		// 	isViceMinister ||
+		// 	isSectorHead ||
+		// 	isSubSectorHead ||
+		// 	isGeneralManager
+		// ) {
 		if (
-			(!isInitiativesHomePage && !isInManager && !isInOwner) ||
-			isDU ||
-			isMinisterAssistant ||
-			isViceMinister ||
-			isSectorHead ||
-			isSubSectorHead ||
-			isGeneralManager
+			!isSectionHead &&
+			!isPortfolioManager &&
+			!isSectorHead &&
+			!isSPMO &&
+			!isDU &&
+			!isGeneralManager &&
+			!isSubSectorHead &&
+			!isMinisterAssistant &&
+			!isViceMinister
 		) {
-			if (
-				!isSectionHead &&
-				!isPortfolioManager &&
-				!isSectorHead &&
-				!isSPMO &&
-				!isDU &&
-				!isGeneralManager &&
-				!isSubSectorHead &&
-				!isMinisterAssistant &&
-				!isViceMinister
-			) {
-				// IF Data directly getting from project list
-				//
-				Access_Project_Info_Request.preinit();
-			} else if (
-				(istherePCODE ||
-					USERisHome ||
-					USERisListing ||
-					isInitiativesHomePage ||
-					isTarget ||
-					isMainIndicator) &&
-				(isSectionHead ||
-					isPortfolioManager ||
-					isSectorHead ||
-					isSPMO ||
-					isSubSectorHead ||
-					isGeneralManager ||
-					isDU ||
-					isMinisterAssistant ||
-					isViceMinister)
-			) {
-				//if data getting from other list related to project
+			// IF Data directly getting from project list
+			//
+			Access_Project_Info_Request.preinit();
+		} else if (
+			(istherePCODE ||
+				USERisHome ||
+				USERisListing ||
+				isInitiativesHomePage ||
+				isTarget ||
+				isMainIndicator) &&
+			(isSectionHead ||
+				isPortfolioManager ||
+				isSectorHead ||
+				isSPMO ||
+				isSubSectorHead ||
+				isGeneralManager ||
+				isDU ||
+				isMinisterAssistant ||
+				isViceMinister)
+		) {
+			//if data getting from other list related to project
 
-				Access_Sector_Info_Request.preinit();
-			} else if (isthereICODE && isDU) {
-				Access_Sector_Info_Request.preinit();
-			} else {
-				window.checkBreadCrumbsStatusHtml = setInterval(function () {
-					Access_Project_Info_Request.g.handleBreadcrumbs();
-				}, 333);
-			}
+			Access_Sector_Info_Request.preinit();
+		} else if (isthereICODE && isDU) {
+			Access_Sector_Info_Request.preinit();
+		} else {
+			window.checkBreadCrumbsStatusHtml = setInterval(function () {
+				Access_Project_Info_Request.g.handleBreadcrumbs();
+			}, 333);
 		}
+		// }
 
 		if (USERisForm) {
 			window.UsercheckFieldsHtml = setInterval(function () {
@@ -2815,9 +2773,9 @@ window.userCalls = {
 
 		// handle the initiative manager and owner Groups
 		// if (isInitiativesHomePage) {
-		if (isInManager || isInOwner) {
-			Access_Initiative_Info_Request.preinit();
-		}
+		// if (isInManager || isInOwner) {
+		// 	Access_Initiative_Info_Request.preinit();
+		// }
 		// }
 		//
 	},
@@ -2862,19 +2820,214 @@ window.userCalls = {
 			{
 				Role: "ProjectManager",
 				groupsName: ["Project Managers for Project Web App"],
+				dataFilter: {
+					hierarchies: [
+						{
+							level: 1,
+							listName: "Projects",
+							accessConditions: [
+								{
+									field: "ProjectManager",
+									type: "LoggedInUser",
+									values: [""],
+									targetPages: [],
+								},
+							],
+							subRelation: {
+								level: 2,
+								listName: "",
+								//RelatedInitiative
+								// parentRelationField: "RelatedInitiative",
+								// RelationField: "Title",
+								// RelationFieldType: "Text",
+								subRelation: {
+									level: 3,
+									listName: "",
+									// parentRelationField: "Title",
+									// RelationField: "InitiativeCode",
+									// RelationFieldType: "Text",
+								},
+							},
+						},
+					],
+				},
 			},
 			{
 				Role: "ProjectOwner",
 				groupsName: ["Project Owners for Project Web App"],
+				dataFilter: {
+					hierarchies: [
+						{
+							level: 1,
+							listName: "Projects",
+							accessConditions: [
+								{
+									field: "ProjectOwner",
+									type: "LoggedInUser",
+									values: [""],
+									targetPages: [],
+								},
+							],
+							subRelation: {
+								level: 2,
+								listName: "",
+								// parentRelationField: "RelatedInitiative",
+								// RelationField: "Title",
+								// RelationFieldType: "Text",
+								subRelation: {
+									level: 3,
+									listName: "",
+								},
+							},
+						},
+					],
+				},
 			},
+
 			{
 				Role: "InitiativeManager",
 				groupsName: ["Initiative Manager"],
+				dataFilter: {
+					hierarchies: [
+						{
+							level: 1,
+							listName: "Initiatives",
+							accessConditions: [
+								{
+									field: "InitiativePM",
+									type: "LoggedInUser",
+									values: [""],
+									targetPages: [],
+								},
+							],
+							subRelation: {
+								level: 2,
+								listName: "Projects",
+								//RelatedInitiative
+								parentRelationField: "Title",
+								RelationField: "RelatedInitiative",
+								RelationFieldType: "Text",
+								subRelation: {
+									level: 3,
+									listName: "",
+
+								},
+							},
+						},
+					],
+				},
 			},
 			{
 				Role: "InitiativeOwner",
 				groupsName: ["Initiative Owner"],
+				dataFilter: {
+					hierarchies: [
+						{
+							level: 1,
+							listName: "Initiatives",
+							accessConditions: [
+								{
+									field: "InitiativeOwner",
+									type: "LoggedInUser",
+									values: [""],
+									targetPages: [],
+								},
+							],
+							subRelation: {
+								level: 2,
+								listName: "Projects",
+								//RelatedInitiative
+								parentRelationField: "Title",
+								RelationField: "RelatedInitiative",
+								RelationFieldType: "Text",
+								subRelation: {
+									level: 3,
+									listName: "",
+									// parentRelationField: "Title",
+									// RelationField: "InitiativeCode",
+									// RelationFieldType: "Text",
+								},
+							},
+						},
+					],
+				},
 			},
+			//   {
+			// 	Role: "SPMTeam",
+			// 	groupsName: ["SPM Team"],
+			// },
+			// {
+			// 	Role: "SPMTeam",
+			// 	groupsName: ["SPM Team"],
+			// 	dataFilter: {
+			// 		hierarchies: [
+			// 			{
+			// 				level: 1,
+			// 				listName: "GoalStrategy",
+			// 				accessConditions: [
+			// 					{
+			// 						field: "Types",
+			// 						type: "Choice",
+			// 						values: ["ministry"],
+			// 						targetPages: [
+			// 							"home.aspx",
+			// 							"new.aspx",
+			// 							"edit.aspx?ListKey=projects",
+			// 						],
+			// 					},
+			// 				],
+			// 				subRelation: {
+			// 					level: 2,
+			// 					listName: "SOs",
+			// 					parentRelationField: "Title",
+			// 					RelationField: "RelatedStrategy",
+			// 					RelationFieldType: "Text",
+			// 					subRelation: {
+			// 						level: 3,
+			// 						listName: "",
+			// 						// parentRelationField: "Title",
+			// 						// RelationField: "InitiativeCode",
+			// 						// RelationFieldType: "Text",
+			// 					},
+			// 				},
+			// 			},
+			// 			{
+			// 				level: 1,
+			// 				listName: "GoalStrategy",
+			// 				accessConditions: [
+			// 					{
+			// 						field: "Types",
+			// 						type: "Choice",
+			// 						values: ["ministry"],
+			// 						targetPages: [
+			// 							"home.aspx",
+			// 							"new.aspx",
+			// 							"edit.aspx?ListKey=projects",
+			// 						],
+			// 					},
+			// 				],
+			// 				subRelation: {
+			// 					level: 2,
+			// 					listName: "MainKPI",
+			// 					parentRelationField: "Title",
+			// 					RelationField: "RelatedStrategy",
+			// 					RelationFieldType: "Text",
+			// 					subRelation: {
+			// 						level: 3,
+			// 						listName: "KPIResults",
+			// 						parentRelationField: "Title",
+			// 						RelationField: "KPI",
+			// 						RelationFieldType: "Text",
+			// 						// listName: "",
+			// 						// // parentRelationField: "Title",
+			// 						// // RelationField: "InitiativeCode",
+			// 						// // RelationFieldType: "Text",
+			// 					},
+			// 				},
+			// 			},
+			// 		],
+			// 	},
+			// },
 			{
 				Role: "SPMTeam",
 				groupsName: ["SPM Team"],
@@ -2903,47 +3056,56 @@ window.userCalls = {
 								RelationFieldType: "Text",
 								subRelation: {
 									level: 3,
-									listName: "",
-									// parentRelationField: "Title",
-									// RelationField: "InitiativeCode",
-									// RelationFieldType: "Text",
-								},
-							},
-						},
-						{
-							level: 1,
-							listName: "GoalStrategy",
-							accessConditions: [
-								{
-									field: "Types",
-									type: "Choice",
-									values: ["ministry"],
-									targetPages: [
-										"home.aspx",
-										"new.aspx",
-										"edit.aspx?ListKey=projects",
-									],
-								},
-							],
-							subRelation: {
-								level: 2,
-								listName: "MainKPI",
-								parentRelationField: "Title",
-								RelationField: "RelatedStrategy",
-								RelationFieldType: "Text",
-								subRelation: {
-									level: 3,
-									listName: "KPIResults",
+									listName: "MainKPI",
 									parentRelationField: "Title",
-									RelationField: "KPI",
+									RelationField: "RelatedStrategyObjective",
 									RelationFieldType: "Text",
-									// listName: "",
-									// // parentRelationField: "Title",
-									// // RelationField: "InitiativeCode",
-									// // RelationFieldType: "Text",
+									subRelation: {
+										level: 4,
+										listName: "KPIResults",
+										parentRelationField: "Title",
+										RelationField: "KPI",
+										RelationFieldType: "Text",
+									}
 								},
 							},
 						},
+
+
+						// {
+						// 	level: 1,
+						// 	listName: "GoalStrategy",
+						// 	accessConditions: [
+						// 		{
+						// 			field: "Types",
+						// 			type: "Choice",
+						// 			values: ["ministry"],
+						// 			targetPages: [
+						// 				"home.aspx",
+						// 				"new.aspx",
+						// 				"edit.aspx?ListKey=projects",
+						// 			],
+						// 		},
+						// 	],
+						// 	subRelation: {
+						// 		level: 2,
+						// 		listName: "MainKPI",
+						// 		parentRelationField: "Title",
+						// 		RelationField: "RelatedStrategy",
+						// 		RelationFieldType: "Text",
+						// 		subRelation: {
+						// 			level: 3,
+						// 			listName: "KPIResults",
+						// 			parentRelationField: "Title",
+						// 			RelationField: "KPI",
+						// 			RelationFieldType: "Text",
+						// 			// listName: "",
+						// 			// // parentRelationField: "Title",
+						// 			// // RelationField: "InitiativeCode",
+						// 			// // RelationFieldType: "Text",
+						// 		},
+						// 	},
+						// },
 					],
 				},
 			},
@@ -3294,7 +3456,49 @@ window.userCalls = {
 			{
 				Role: "KPIOwner",
 				groupsName: ["KPI Owners"],
+				dataFilter: {
+					hierarchies: [
+						{
+							level: 1,
+							listName: "MainKPI",
+							accessConditions: [
+								{
+									field: "Owner",
+									type: "LoggedInUser",
+									values: [""],
+									targetPages: [],
+								},
+							],
+							subRelation: {
+								level: 2,
+								listName: "SOs",
+								parentRelationField: "RelatedStrategyObjective",
+								RelationField: "Title",
+								RelationFieldType: "Text",
+								subRelation: {
+									level: 3,
+									listName: "GoalStrategy",
+									parentRelationField: "RelatedStrategy",
+									RelationField: "Title",
+									RelationFieldType: "Text",
+								},
+							},
+							// subRelation: {
+							//   level: 2,
+							//   listName: "",
+							//   subRelation: {
+							//     level: 3,
+							//     listName: "",
+							//   },
+							// },
+						},
+					],
+				},
 			},
+			// {
+			// 	Role: "KPIOwner",
+			// 	groupsName: ["KPI Owners"],
+			// },
 			{
 				Role: "SubSectorHead",
 				groupsName: ["SubSector Head"],
@@ -3478,7 +3682,7 @@ var Access_Project_Info_Request = {
 		}
 
 		//should uncomment when need to applt the validation on milstones every month for proj and every 3 months for initiative
-		debugger
+
 		if (istherePCODE && projectStartToValidation) {
 			if (USERlistkey == 'milestones' && isNew) {
 				console.log("YOU Can creat a milestone")
@@ -3665,6 +3869,7 @@ var Access_Project_Info_Request = {
 			}
 			//
 			else if (isShowAll) {
+
 				//
 				///////Ghufran Listing Query
 				//if on listing pages other then projects and its child data (risks, issues...)
@@ -3672,45 +3877,49 @@ var Access_Project_Info_Request = {
 					// vrop can't see goal strategy now as userguide
 					AccessQuery =
 						"<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">vision</Value></Eq></And></Where></Query></View>";
-				} else if (USERisListing && USERlistkey == "mainkpi") {
-					if (
-						!isAdmin &&
-						!isMinister &&
-						!isBITeam &&
-						!isSPMTeam &&
-						!isVROP &&
-						!isSPMAdmin &&
-						!isDU &&
-						!isSubSectorHead &&
-						!isGeneralManager &&
-						!isMinisterAssistant &&
-						!isViceMinister &&
-						!isSectorHead &&
-						!isSPMO
-					) {
-						AccessQuery =
-							'<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Or><Or><Eq><FieldRef Name="PerformanceLeader" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq><Eq><FieldRef Name="PerformanceLeader2" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq></Or><Eq><FieldRef Name="Owner" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq></Or></And></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>';
-					}
-					// else if (isSPMAdmin || isSPMTeam){
-					//   AccessQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="Types"/><Values><Value Type="Text">sub</Value><Value Type="Text">main</Value></Values></In></And></Where></Query></View>';
+				}
+				// else if (USERisListing 
+				// 	&& USERlistkey == "mainkpi"
+				// 	) {
+				// 	if (
+				// 		!isAdmin &&
+				// 		!isMinister &&
+				// 		!isBITeam &&
+				// 		// !isSPMTeam &&
+				// 		!isVROP &&
+				// 		!isSPMAdmin &&
+				// 		!isDU &&
+				// 		!isSubSectorHead &&
+				// 		!isGeneralManager &&
+				// 		!isMinisterAssistant &&
+				// 		!isViceMinister &&
+				// 		!isSectorHead &&
+				// 		!isSPMO
+				// 	) {
+				// 		AccessQuery =
+				// 			'<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Or><Or><Eq><FieldRef Name="PerformanceLeader" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq><Eq><FieldRef Name="PerformanceLeader2" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq></Or><Eq><FieldRef Name="Owner" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq></Or></And></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>';
+				// 	}
+				// 	// else if (isSPMAdmin || isSPMTeam){
+				// 	//   AccessQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="Types"/><Values><Value Type="Text">sub</Value><Value Type="Text">main</Value></Values></In></And></Where></Query></View>';
 
-					// }
-					else if (isVROP) {
-						AccessQuery =
-							"<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"RelatedStrategyType\" /><Value Type='Text'>vision</Value></Eq></And></Where></Query></View>";
-					} else if (
-						isDU ||
-						isMinisterAssistant ||
-						isSectorHead ||
-						isViceMinister ||
-						isSubSectorHead ||
-						isGeneralManager ||
-						isSPMO
-					) {
-						//
-						AccessQuery = SectorHeadQuery;
-					}
-				} else if (USERisListing && USERlistkey == "initiatives") {
+				// 	// }
+				// 	else if (isVROP) {
+				// 		AccessQuery =
+				// 			"<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"RelatedStrategyType\" /><Value Type='Text'>vision</Value></Eq></And></Where></Query></View>";
+				// 	} else if (
+				// 		isDU ||
+				// 		isMinisterAssistant ||
+				// 		isSectorHead ||
+				// 		isViceMinister ||
+				// 		isSubSectorHead ||
+				// 		isGeneralManager ||
+				// 		isSPMO
+				// 	) {
+				// 		//
+				// 		AccessQuery = SectorHeadQuery;
+				// 	}
+				// } 
+				else if (USERisListing && USERlistkey == "initiatives") {
 					//
 					if (isVROE) {
 						AccessQuery =
@@ -3743,8 +3952,9 @@ var Access_Project_Info_Request = {
 					SubSectorInitiativeAccessQuery = SectorHeadQuery;
 					//
 				} else if (
-					(isSPMAdmin && USERisListing && USERlistkey == "sos") ||
-					(isSPMTeam && USERisListing && USERlistkey == "sos")
+					(isSPMAdmin && USERisListing && USERlistkey == "sos")
+					// ||
+					// (isSPMTeam && USERisListing && USERlistkey == "sos")
 				) {
 					AccessQuery =
 						"<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">sub</Value></Eq></And></Where></Query></View>";
@@ -3876,25 +4086,27 @@ var Access_Project_Info_Request = {
 			);
 		} else if (isStrategySpecialist) {
 			camlQuery.set_viewXml(StrategyProjectQuery);
-		} else if (isPManager || isInManager) {
-			camlQuery.set_viewXml(
-				"<View><Query><Where>" +
-				"<And>" +
-				"<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
-				'<Eq><FieldRef Name="ProjectManager" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>' +
-				"</And>" +
-				"</Where></Query></View>"
-			);
-		} else if (isPOwner || isInOwner) {
-			camlQuery.set_viewXml(
-				"<View><Query><Where>" +
-				"<And>" +
-				"<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
-				'<Eq><FieldRef Name="ProjectOwner" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>' +
-				"</And>" +
-				"</Where></Query></View>"
-			);
-		} else if (isPSponsor) {
+		}
+		//  else if (isPManager || isInManager) {
+		// 	camlQuery.set_viewXml(
+		// 		"<View><Query><Where>" +
+		// 		"<And>" +
+		// 		"<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
+		// 		'<Eq><FieldRef Name="ProjectManager" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>' +
+		// 		"</And>" +
+		// 		"</Where></Query></View>"
+		// 	);
+		// } else if (isPOwner || isInOwner) {
+		// 	camlQuery.set_viewXml(
+		// 		"<View><Query><Where>" +
+		// 		"<And>" +
+		// 		"<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
+		// 		'<Eq><FieldRef Name="ProjectOwner" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>' +
+		// 		"</And>" +
+		// 		"</Where></Query></View>"
+		// 	);
+		// }
+		else if (isPSponsor) {
 			camlQuery.set_viewXml(
 				"<View><Query><Where>" +
 				"<And>" +
@@ -4090,355 +4302,356 @@ var Access_Project_Info_Request = {
 };
 
 //getting Related Initiatives
-var Access_Initiative_Info_Request = {
-	onSuccess: function (sender, args) {
-		var collListItem = Access_Initiative_Info_Request.g.collListItem;
-		var listItemEnum = collListItem.getEnumerator();
-		while (listItemEnum.moveNext()) {
-			var oListItem = listItemEnum.get_current();
+// var Access_Initiative_Info_Request = {
+// 	onSuccess: function (sender, args) {
+// 		var collListItem = Access_Initiative_Info_Request.g.collListItem;
+// 		var listItemEnum = collListItem.getEnumerator();
+// 		while (listItemEnum.moveNext()) {
+// 			var oListItem = listItemEnum.get_current();
 
-			if (UserICode == oListItem.get_item("Title")) {
-				USERIName = oListItem.get_item("Name")
-					? oListItem.get_item("Name")
-					: UserNo_Data;
+// 			if (UserICode == oListItem.get_item("Title")) {
+// 				USERIName = oListItem.get_item("Name")
+// 					? oListItem.get_item("Name")
+// 					: UserNo_Data;
 
-				USERINID = oListItem.get_id();
-			}
+// 				USERINID = oListItem.get_id();
+// 			}
 
-			Access_Initiative_Info_Request.g.User_Initiatives.push(
-				oListItem.get_item("Title")
-			);
-			userProjects.push(oListItem.get_item("Title")); // add to show the data in listing like risk
-		}
-		//////////// initiative breadCrumbs
-		window.checkBreadCrumbsStatusHtml = setInterval(function () {
-			Access_Initiative_Info_Request.g.handleBreadcrumbs();
-		}, 333);
-		///////////
+// 			Access_Initiative_Info_Request.g.User_Initiatives.push(
+// 				oListItem.get_item("Title")
+// 			);
+// 			userProjects.push(oListItem.get_item("Title")); // add to show the data in listing like risk
+// 		}
+// 		//////////// initiative breadCrumbs
+// 		window.checkBreadCrumbsStatusHtml = setInterval(function () {
+// 			Access_Initiative_Info_Request.g.handleBreadcrumbs();
+// 		}, 333);
+// 		///////////
 
-		var fieldtoquery,
-			fieldtoquery = "Title";
+// 		var fieldtoquery,
+// 			fieldtoquery = "Title";
 
-		if (Access_Initiative_Info_Request.g.User_Initiatives.length > 0) {
-			var PermissionQuery =
-				"<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"" +
-				fieldtoquery +
-				'" /><Values>';
-		}
+// 		if (Access_Initiative_Info_Request.g.User_Initiatives.length > 0) {
+// 			var PermissionQuery =
+// 				"<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"" +
+// 				fieldtoquery +
+// 				'" /><Values>';
+// 		}
 
-		forFilterQueryInitiative =
-			'<div style="display:none!important;height:0px!important" class="dropdown "><a href="#" class="dropdown-toggle fnt-14 w-1 black" data-toggle="dropdown" role="button">ForQueryAccess</a><div class="dropdown-menu">';
+// 		forFilterQueryInitiative =
+// 			'<div style="display:none!important;height:0px!important" class="dropdown "><a href="#" class="dropdown-toggle fnt-14 w-1 black" data-toggle="dropdown" role="button">ForQueryAccess</a><div class="dropdown-menu">';
 
-		if (!istherePCODE) {
-			// check user projects
-			for (
-				var u = 0;
-				u < Access_Initiative_Info_Request.g.User_Initiatives.length;
-				u++ //build query based on user projects
-			) {
-				PermissionQuery +=
-					'<Value Type="Text">' +
-					Access_Initiative_Info_Request.g.User_Initiatives[u] +
-					"</Value>";
+// 		if (!istherePCODE) {
+// 			// check user projects
+// 			for (
+// 				var u = 0;
+// 				u < Access_Initiative_Info_Request.g.User_Initiatives.length;
+// 				u++ //build query based on user projects
+// 			) {
+// 				PermissionQuery +=
+// 					'<Value Type="Text">' +
+// 					Access_Initiative_Info_Request.g.User_Initiatives[u] +
+// 					"</Value>";
 
-				forFilterQueryInitiative +=
-					'<label class="dropdown-item">' +
-					Access_Initiative_Info_Request.g.User_Initiatives[u] +
-					'<input data-type="Text" data-internal="' +
-					fieldtoquery +
-					'" type="checkbox" name="' +
-					fieldtoquery +
-					'" value="' +
-					Access_Initiative_Info_Request.g.User_Initiatives[u] +
-					'" checked></label>';
-				if (u == Access_Initiative_Info_Request.g.User_Initiatives.length - 1) {
-					PermissionQuery +=
-						"</Values></In></And></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
-					forFilterQueryInitiative += "</div></div>";
+// 				forFilterQueryInitiative +=
+// 					'<label class="dropdown-item">' +
+// 					Access_Initiative_Info_Request.g.User_Initiatives[u] +
+// 					'<input data-type="Text" data-internal="' +
+// 					fieldtoquery +
+// 					'" type="checkbox" name="' +
+// 					fieldtoquery +
+// 					'" value="' +
+// 					Access_Initiative_Info_Request.g.User_Initiatives[u] +
+// 					'" checked></label>';
+// 				if (u == Access_Initiative_Info_Request.g.User_Initiatives.length - 1) {
+// 					PermissionQuery +=
+// 						"</Values></In></And></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
+// 					forFilterQueryInitiative += "</div></div>";
 
-					InitiativeAccessQuery = PermissionQuery;
+// 					InitiativeAccessQuery = PermissionQuery;
 
-					if (isInitiativesHomePage) {
-						checkHomeInitiativeStatus = setInterval(function () {
-							initiativeRequest.preinit();
-						}, 1000);
-					} else if (USERisListing && !isfileListing) {
-						// to get the project related to user
-						if (USERlistkey == "initiatives") {
-							AccessQuery = PermissionQuery;
-							console.log("ODYES");
-							//
-							window.checkListingStatusHtml = setInterval(function () {
-								ListingData.preinit();
-							}, 1000);
-						} else {
-							Access_Project_Info_Request.preinit();
-						}
-					}
-				}
-			}
+// 					if (isInitiativesHomePage) {
+// 						checkHomeInitiativeStatus = setInterval(function () {
+// 							initiativeRequest.preinit();
+// 						}, 1000);
+// 					} else if (USERisListing && !isfileListing) {
+// 						// to get the project related to user
+// 						if (USERlistkey == "initiatives") {
+// 							AccessQuery = PermissionQuery;
+// 							console.log("ODYES");
+// 							//
+// 							window.checkListingStatusHtml = setInterval(function () {
+// 								ListingData.preinit();
+// 							}, 1000);
+// 						} else {
+// 							Access_Project_Info_Request.preinit();
+// 						}
+// 					}
+// 				}
+// 			}
 
-			if (Access_Initiative_Info_Request.g.User_Initiatives.length == 0) {
-				var noDataQuery = "";
-				var fieldNameRef = "";
-				if (isInOwner) {
-					fieldNameRef = "InitiativeOwner";
-				} else if (isInManager) {
-					fieldNameRef = "InitiativePM";
-				}
-				noDataQuery =
-					"<View><Query><Where>" +
-					"<And>" +
-					"<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
-					'<Eq><FieldRef Name="' +
-					fieldNameRef +
-					'" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>' +
-					"</And>" +
-					"</Where></Query></View>";
+// 			if (Access_Initiative_Info_Request.g.User_Initiatives.length == 0) {
+// 				var noDataQuery = "";
+// 				var fieldNameRef = "";
+// 				// if (isInOwner) {
+// 				// 	fieldNameRef = "InitiativeOwner";
+// 				// }
+// 				//  else if (isInManager) {
+// 				// 	fieldNameRef = "InitiativePM";
+// 				// }
+// 				noDataQuery =
+// 					"<View><Query><Where>" +
+// 					"<And>" +
+// 					"<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
+// 					'<Eq><FieldRef Name="' +
+// 					fieldNameRef +
+// 					'" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>' +
+// 					"</And>" +
+// 					"</Where></Query></View>";
 
-				InitiativeAccessQuery = noDataQuery;
-				if (isInitiativesHomePage) {
-					checkHomeInitiativeStatus = setInterval(function () {
-						initiativeRequest.preinit();
-					}, 1000);
-				} else if (USERisListing && !isfileListing) {
-					// to get the project related to user
-					if (USERlistkey == "initiatives") {
-						AccessQuery = noDataQuery;
-						console.log("ODYES");
-						//
-						window.checkListingStatusHtml = setInterval(function () {
-							ListingData.preinit();
-						}, 1000);
-					} else {
-						Access_Project_Info_Request.preinit();
-					}
-				}
-			}
-		} else {
-			Access_Project_Info_Request.preinit();
-		}
+// 				InitiativeAccessQuery = noDataQuery;
+// 				if (isInitiativesHomePage) {
+// 					checkHomeInitiativeStatus = setInterval(function () {
+// 						initiativeRequest.preinit();
+// 					}, 1000);
+// 				} else if (USERisListing && !isfileListing) {
+// 					// to get the project related to user
+// 					if (USERlistkey == "initiatives") {
+// 						AccessQuery = noDataQuery;
+// 						console.log("ODYES");
+// 						//
+// 						window.checkListingStatusHtml = setInterval(function () {
+// 							ListingData.preinit();
+// 						}, 1000);
+// 					} else {
+// 						Access_Project_Info_Request.preinit();
+// 					}
+// 				}
+// 			}
+// 		} else {
+// 			Access_Project_Info_Request.preinit();
+// 		}
 
-		// ListingData.preinit();
+// 		// ListingData.preinit();
 
-		// Access_Project_Info_Request.preinit()
-	},
-	onError: function (sender, args) {
-		//
-		console.log(
-			"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
-		);
-	},
-	preinit: function () {
-		SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
-			Access_Initiative_Info_Request.init();
-		});
-	},
-	init: function () {
-		var clientContext = new SP.ClientContext.get_current();
-		var oList = clientContext.get_web().get_lists().getByTitle("Initiatives");
-		var camlQuery = new SP.CamlQuery();
-		//
+// 		// Access_Project_Info_Request.preinit()
+// 	},
+// 	onError: function (sender, args) {
+// 		//
+// 		console.log(
+// 			"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+// 		);
+// 	},
+// 	preinit: function () {
+// 		SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
+// 			Access_Initiative_Info_Request.init();
+// 		});
+// 	},
+// 	init: function () {
+// 		var clientContext = new SP.ClientContext.get_current();
+// 		var oList = clientContext.get_web().get_lists().getByTitle("Initiatives");
+// 		var camlQuery = new SP.CamlQuery();
+// 		//
 
-		if (isInManager) {
-			camlQuery.set_viewXml(
-				"<View><Query><Where>" +
-				"<And>" +
-				"<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
-				'<Eq><FieldRef Name="InitiativePM" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>' +
-				"</And>" +
-				"</Where></Query></View>"
-			);
-		} else if (isInOwner) {
-			camlQuery.set_viewXml(
-				"<View><Query><Where>" +
-				"<And>" +
-				"<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
-				'<Eq><FieldRef Name="InitiativeOwner" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>' +
-				"</And>" +
-				"</Where></Query></View>"
-			);
-		}
+// 		// if (isInManager) {
+// 		// 	camlQuery.set_viewXml(
+// 		// 		"<View><Query><Where>" +
+// 		// 		"<And>" +
+// 		// 		"<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
+// 		// 		'<Eq><FieldRef Name="InitiativePM" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>' +
+// 		// 		"</And>" +
+// 		// 		"</Where></Query></View>"
+// 		// 	);
+// 		// } else if (isInOwner) {
+// 		// 	camlQuery.set_viewXml(
+// 		// 		"<View><Query><Where>" +
+// 		// 		"<And>" +
+// 		// 		"<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
+// 		// 		'<Eq><FieldRef Name="InitiativeOwner" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>' +
+// 		// 		"</And>" +
+// 		// 		"</Where></Query></View>"
+// 		// 	);
+// 		// }
 
-		Access_Initiative_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
-		clientContext.load(Access_Initiative_Info_Request.g.collListItem);
-		clientContext.executeQueryAsync(
-			Function.createDelegate(this, Access_Initiative_Info_Request.onSuccess),
-			Function.createDelegate(this, Access_Initiative_Info_Request.onError)
-		);
-	},
-	g: {
-		PCODE: istherePCODE
-			? window.location.href.split("PCODE=")[1].split("&")[0]
-			: "",
-		User_Initiatives: [],
-		handleBreadcrumbs: function () {
-			if ($(".page-title").length) {
-				clearInterval(checkBreadCrumbsStatusHtml);
-				if (isTaskDetails) {
-					$(".page-breadcrumb .title-item").html(
-						'<span data-trans-taskdetails class="Resources"></span>'
-					);
-					changeResources();
-				} else if (istherePCODE) {
-					if (window.location.href.indexOf("projects") > -1) {
-						$(".page-title").html(
-							'<a href="' +
-							_spPageContextInfo.webAbsoluteUrl +
-							"/sitepages/ProjectHome.aspx?PCODE=" +
-							USERPCODE +
-							'">' +
-							USERPName +
-							"</a>"
-						);
-						$(".title-item:first-child").html(
-							'<a href="' +
-							_spPageContextInfo.webAbsoluteUrl +
-							"/sitepages/Listing.aspx?ListKey=" +
-							USERlistkey +
-							'">' +
-							USERPageTitle +
-							""
-						);
-					} else {
-						$(".page-title").html(
-							'<a href="' +
-							_spPageContextInfo.webAbsoluteUrl +
-							"/sitepages/ProjectHome.aspx?PCODE=" +
-							USERPCODE +
-							'">' +
-							USERPName +
-							'<span class="tooltiptext">' +
-							USERPName +
-							"</span>" + // to handle the tooltip
-							"</a>"
-						);
-						$(".title-item:first-child").html(
-							'<a href="' +
-							_spPageContextInfo.webAbsoluteUrl +
-							"/sitepages/Listing.aspx?ListKey=" +
-							USERlistkey +
-							"&PCODE=" +
-							USERPCODE +
-							'">' +
-							USERPageTitle +
-							""
-						);
-					}
-				} else if (isthereICODE) {
-					if (window.location.href.indexOf("initiatives") > -1) {
-						$(".page-title").html(
-							'<a href="' +
-							_spPageContextInfo.webAbsoluteUrl +
-							"/sitepages/InitiativeHome.aspx?ICODE=" +
-							UserICode +
-							'">' +
-							USERIName +
-							"</a>"
-						);
-						$(".title-item:first-child").html(
-							'<a href="' +
-							_spPageContextInfo.webAbsoluteUrl +
-							"/sitepages/Listing.aspx?ListKey=" +
-							USERlistkey +
-							'">' +
-							USERPageTitle +
-							""
-						);
-					} else if (USERlistkey == "documents") {
-						if (
-							localStorage.getItem("lng") == null ||
-							localStorage.getItem("lng") == "ar"
-						) {
-							USERPageTitle = "مستندات المبادرة";
-						} else {
-							USERPageTitle = "Initiative Documents";
-						}
+// 		Access_Initiative_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+// 		clientContext.load(Access_Initiative_Info_Request.g.collListItem);
+// 		clientContext.executeQueryAsync(
+// 			Function.createDelegate(this, Access_Initiative_Info_Request.onSuccess),
+// 			Function.createDelegate(this, Access_Initiative_Info_Request.onError)
+// 		);
+// 	},
+// 	g: {
+// 		PCODE: istherePCODE
+// 			? window.location.href.split("PCODE=")[1].split("&")[0]
+// 			: "",
+// 		User_Initiatives: [],
+// 		handleBreadcrumbs: function () {
+// 			if ($(".page-title").length) {
+// 				clearInterval(checkBreadCrumbsStatusHtml);
+// 				if (isTaskDetails) {
+// 					$(".page-breadcrumb .title-item").html(
+// 						'<span data-trans-taskdetails class="Resources"></span>'
+// 					);
+// 					changeResources();
+// 				} else if (istherePCODE) {
+// 					if (window.location.href.indexOf("projects") > -1) {
+// 						$(".page-title").html(
+// 							'<a href="' +
+// 							_spPageContextInfo.webAbsoluteUrl +
+// 							"/sitepages/ProjectHome.aspx?PCODE=" +
+// 							USERPCODE +
+// 							'">' +
+// 							USERPName +
+// 							"</a>"
+// 						);
+// 						$(".title-item:first-child").html(
+// 							'<a href="' +
+// 							_spPageContextInfo.webAbsoluteUrl +
+// 							"/sitepages/Listing.aspx?ListKey=" +
+// 							USERlistkey +
+// 							'">' +
+// 							USERPageTitle +
+// 							""
+// 						);
+// 					} else {
+// 						$(".page-title").html(
+// 							'<a href="' +
+// 							_spPageContextInfo.webAbsoluteUrl +
+// 							"/sitepages/ProjectHome.aspx?PCODE=" +
+// 							USERPCODE +
+// 							'">' +
+// 							USERPName +
+// 							'<span class="tooltiptext">' +
+// 							USERPName +
+// 							"</span>" + // to handle the tooltip
+// 							"</a>"
+// 						);
+// 						$(".title-item:first-child").html(
+// 							'<a href="' +
+// 							_spPageContextInfo.webAbsoluteUrl +
+// 							"/sitepages/Listing.aspx?ListKey=" +
+// 							USERlistkey +
+// 							"&PCODE=" +
+// 							USERPCODE +
+// 							'">' +
+// 							USERPageTitle +
+// 							""
+// 						);
+// 					}
+// 				} else if (isthereICODE) {
+// 					if (window.location.href.indexOf("initiatives") > -1) {
+// 						$(".page-title").html(
+// 							'<a href="' +
+// 							_spPageContextInfo.webAbsoluteUrl +
+// 							"/sitepages/InitiativeHome.aspx?ICODE=" +
+// 							UserICode +
+// 							'">' +
+// 							USERIName +
+// 							"</a>"
+// 						);
+// 						$(".title-item:first-child").html(
+// 							'<a href="' +
+// 							_spPageContextInfo.webAbsoluteUrl +
+// 							"/sitepages/Listing.aspx?ListKey=" +
+// 							USERlistkey +
+// 							'">' +
+// 							USERPageTitle +
+// 							""
+// 						);
+// 					} else if (USERlistkey == "documents") {
+// 						if (
+// 							localStorage.getItem("lng") == null ||
+// 							localStorage.getItem("lng") == "ar"
+// 						) {
+// 							USERPageTitle = "مستندات المبادرة";
+// 						} else {
+// 							USERPageTitle = "Initiative Documents";
+// 						}
 
-						$(".page-title").html(
-							'<a href="' +
-							_spPageContextInfo.webAbsoluteUrl +
-							"/sitepages/InitiativeHome.aspx?ICODE=" +
-							UserICode +
-							'">' +
-							//
-							InitiativeTitle +
-							"</a>"
-						);
-						$(".title-item:first-child").html(
-							'<a href="' +
-							_spPageContextInfo.webAbsoluteUrl +
-							"/sitepages/Listing.aspx?ListKey=" +
-							USERlistkey +
-							"&ICODE=" +
-							UserICode +
-							'">' +
-							USERPageTitle +
-							""
-						);
-					} else {
-						$(".page-title").html(
-							'<a href="' +
-							_spPageContextInfo.webAbsoluteUrl +
-							"/sitepages/InitiativeHome.aspx?ICODE=" +
-							UserICode +
-							'">' +
-							USERIName +
-							"</a>"
-						);
-						if (USERlistkey == "initiativecards") {
-							// &IID
-							if (window.location.href.indexOf("IID") > -1) {
-								var initCardId = window.location.href
-									.split("IID=")[1]
-									.split("&")[0];
+// 						$(".page-title").html(
+// 							'<a href="' +
+// 							_spPageContextInfo.webAbsoluteUrl +
+// 							"/sitepages/InitiativeHome.aspx?ICODE=" +
+// 							UserICode +
+// 							'">' +
+// 							//
+// 							InitiativeTitle +
+// 							"</a>"
+// 						);
+// 						$(".title-item:first-child").html(
+// 							'<a href="' +
+// 							_spPageContextInfo.webAbsoluteUrl +
+// 							"/sitepages/Listing.aspx?ListKey=" +
+// 							USERlistkey +
+// 							"&ICODE=" +
+// 							UserICode +
+// 							'">' +
+// 							USERPageTitle +
+// 							""
+// 						);
+// 					} else {
+// 						$(".page-title").html(
+// 							'<a href="' +
+// 							_spPageContextInfo.webAbsoluteUrl +
+// 							"/sitepages/InitiativeHome.aspx?ICODE=" +
+// 							UserICode +
+// 							'">' +
+// 							USERIName +
+// 							"</a>"
+// 						);
+// 						if (USERlistkey == "initiativecards") {
+// 							// &IID
+// 							if (window.location.href.indexOf("IID") > -1) {
+// 								var initCardId = window.location.href
+// 									.split("IID=")[1]
+// 									.split("&")[0];
 
-								$(".title-item:first-child").html(
-									'<a href="' +
-									_spPageContextInfo.webAbsoluteUrl +
-									"/sitepages/view.aspx?ListKey=" +
-									USERlistkey +
-									"&IID=" +
-									initCardId +
-									"&ICODE=" +
-									UserICode +
-									'">' +
-									USERPageTitle +
-									""
-								);
-							}
-						} else {
-							$(".title-item:first-child").html(
-								'<a href="' +
-								_spPageContextInfo.webAbsoluteUrl +
-								"/sitepages/Listing.aspx?ListKey=" +
-								USERlistkey +
-								"&ICODE=" +
-								UserICode +
-								'">' +
-								USERPageTitle +
-								""
-							);
-						}
-					}
-				} else {
-					if (!isInitiativesHomePage) {
-						$(".page-title").html(
-							'<a href="' +
-							_spPageContextInfo.webAbsoluteUrl +
-							"/sitepages/Listing.aspx?ListKey=" +
-							USERlistkey +
-							'">' +
-							USERPageTitle +
-							""
-						);
-						$(".firsttitle").hide();
-					}
-				}
-			}
-		},
-	},
-};
+// 								$(".title-item:first-child").html(
+// 									'<a href="' +
+// 									_spPageContextInfo.webAbsoluteUrl +
+// 									"/sitepages/view.aspx?ListKey=" +
+// 									USERlistkey +
+// 									"&IID=" +
+// 									initCardId +
+// 									"&ICODE=" +
+// 									UserICode +
+// 									'">' +
+// 									USERPageTitle +
+// 									""
+// 								);
+// 							}
+// 						} else {
+// 							$(".title-item:first-child").html(
+// 								'<a href="' +
+// 								_spPageContextInfo.webAbsoluteUrl +
+// 								"/sitepages/Listing.aspx?ListKey=" +
+// 								USERlistkey +
+// 								"&ICODE=" +
+// 								UserICode +
+// 								'">' +
+// 								USERPageTitle +
+// 								""
+// 							);
+// 						}
+// 					}
+// 				} else {
+// 					if (!isInitiativesHomePage) {
+// 						$(".page-title").html(
+// 							'<a href="' +
+// 							_spPageContextInfo.webAbsoluteUrl +
+// 							"/sitepages/Listing.aspx?ListKey=" +
+// 							USERlistkey +
+// 							'">' +
+// 							USERPageTitle +
+// 							""
+// 						);
+// 						$(".firsttitle").hide();
+// 					}
+// 				}
+// 			}
+// 		},
+// 	},
+// };
 //
 // to get the data of initiative 
 
@@ -4461,7 +4674,7 @@ window.Get_Initiative_Info_Request = {
 		}
 
 		console.log("USER initiatative")
-		debugger
+
 		//should uncomment when need to applt the validation on milstones every month for proj and every 3 months for initiative
 		if (isthereICODE && initiativeStartToValidation) {
 			if (USERlistkey == 'initiativemilestones' && isNew) {
@@ -5786,11 +5999,12 @@ function initiateDataLevelAccess() {
 		if (myRoleConfig[0].hasOwnProperty("dataFilter")) {
 			isRoleDataLevelAccess = true;
 			myRoleConfig[0].dataFilter.hierarchies.forEach((el, i, a) => {
+
 				let accessConditions = el.accessConditions;
 				let isListConditional1 = el.listName == currentMainList;
 				let isListConditional2 = el.subRelation.listName == currentMainList;
-				let isListConditional3 =
-					el.subRelation.subRelation.listName == currentMainList;
+				let isListConditional3 = el.subRelation.subRelation.listName == currentMainList;
+				let isListConditional4 = (el.subRelation.subRelation.subRelation ? el.subRelation.subRelation.subRelation.listName == currentMainList : false);
 				if (isListConditional1) {
 					data_Level1_Access.buildCamlQuery(
 						el.listName,
@@ -5815,6 +6029,14 @@ function initiateDataLevelAccess() {
 						i
 					);
 					throw BreakException;
+				} else if (isListConditional4) {
+					data_Level1_Access.buildCamlQuery(
+						el.listName,
+						accessConditions,
+						4,
+						i
+					);
+					throw BreakException;
 				}
 			});
 		}
@@ -5824,6 +6046,7 @@ function initiateDataLevelAccess() {
 }
 let dataLevelAccessQuery = "";
 let dataLevelAccessChoicesForFilters = [];
+
 let data_Level1_Access = {
 	buildCamlQuery: function (
 		dataListName,
@@ -5845,24 +6068,39 @@ let data_Level1_Access = {
 			});
 			//Two choices
 			if (fieldsConditionConfig.length == 1) {
-				if (i == 0) {
+				if (el.type == "LoggedInUser") {
+					whereBody += `<And><Eq><FieldRef Name="${el.field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And>`;
+				}
+				// for other field
+				else {
 					whereBody += `<And><In><FieldRef Name="${el.field}"/><Values>`;
 					for (var j = 0; j < el.values.length; j++) {
 						whereBody += `<Value Type="${el.type}">${el.values[j]}</Value>`;
 					}
 					whereBody += `</Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And>`;
 				}
+				// if (i == 0) {
+				// 	whereBody += `<And><In><FieldRef Name="${el.field}"/><Values>`;
+				// 	for (var j = 0; j < el.values.length; j++) {
+				// 		whereBody += `<Value Type="${el.type}">${el.values[j]}</Value>`;
+				// 	}
+				// 	whereBody += `</Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And>`;
+				// }
 			}
-			//More than two choices
-			else if (fieldsConditionConfig.length > 2) {
+			//More than two choices// 1 is vc we have deletion
+			else if (fieldsConditionConfig.length > 1) {
 				//two Eqs in last And
 				if (i == fieldsConditionConfig.length - 1) {
-					whereBody += `<And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>`;
-					whereBody += `<In><FieldRef Name="${el.field}"/><Values>`;
-					for (var j = 0; j < el.values.length; j++) {
-						whereBody += `<Value Type="${el.type}">${el.values[j]}</Value>`;
+					if (el.type == "LoggedInUser") {
+						whereBody += `<And><Eq><FieldRef Name="${el.field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>`;
+					} else {
+						whereBody += `<And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>`;
+						whereBody += `<In><FieldRef Name="${el.field}"/><Values>`;
+						for (var j = 0; j < el.values.length; j++) {
+							whereBody += `<Value Type="${el.type}">${el.values[j]}</Value>`;
+						}
+						whereBody += `</Values></In>`;
 					}
-					whereBody += `</Values></In>`;
 
 					//appending And closure
 					var count = (whereBody.match(/<And>/g) || []).length;
@@ -5871,11 +6109,15 @@ let data_Level1_Access = {
 				}
 				//normal And
 				else {
-					whereBody += `<And><In><FieldRef Name="${el.field}"/><Values>`;
-					for (var j = 0; j < el.values.length; j++) {
-						whereBody += `<Value Type="${el.type}">${el.values[j]}</Value>`;
+					if (el.type == "LoggedInUser") {
+						whereBody += `<And><Eq><FieldRef Name="${el.field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
+					} else {
+						whereBody += `<And><In><FieldRef Name="${el.field}"/><Values>`;
+						for (var j = 0; j < el.values.length; j++) {
+							whereBody += `<Value Type="${el.type}">${el.values[j]}</Value>`;
+						}
+						whereBody += `</Values></In>`;
 					}
-					whereBody += `</Values></In>`;
 				}
 			}
 			//Finish Line, make last changes and build query
@@ -5886,13 +6128,13 @@ let data_Level1_Access = {
 					`IncludeTimeValue="TRUE" Type="DateTime"`
 				);
 				whereBodyFinal = `<Where>${whereBody}
-					</Where>`;
+						</Where>`;
 				queryBody = `<View>
-						<Query>
-						${whereBodyFinal}
-						<OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
-						</Query>
-					</View>`;
+							<Query>
+							${whereBodyFinal}
+							<OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
+							</Query>
+						</View>`;
 				data_Level1_Access.g.dataLevelQuery = queryBody;
 				dataLevelAccessQuery = queryBody;
 				data_Level1_Access.g.fieldsConditionConfig = fieldsConditionConfig;
@@ -5932,7 +6174,7 @@ let data_Level1_Access = {
 				data_Level1_Access.g.hierarchyIndex
 			].subRelation;
 		let fieldName = secondLevelConfig.parentRelationField;
-		debugger
+
 		while (listItemEnum.moveNext()) {
 			console.log("LEVEL ONE INSIDE WHILE")
 			var oListItem = listItemEnum.get_current();
@@ -6013,6 +6255,7 @@ let data_Level2_Access = {
 	// The main Initialization function
 	init: function (dataListName) {
 		var clientContext = new SP.ClientContext.get_current();
+		debugger
 		var oList = clientContext.get_web().get_lists().getByTitle(dataListName);
 		var camlQuery = new SP.CamlQuery();
 		camlQuery.set_viewXml(data_Level2_Access.g.dataLevelQuery);
@@ -6090,7 +6333,16 @@ let data_Level2_Access = {
 				</View>`;
 				data_Level2_Access.g.dataLevelQuery = queryBody;
 				dataLevelAccessQuery = queryBody;
+				//add it  to handle 4 th level query
+				data_Level3_Access.g.dataLevelQuery = queryBody;
+
+
+				debugger
+
 				console.log("Data 3rd level access query", queryBody);
+				if (data_Level1_Access.g.dataLevel > 3) {
+					data_Level3_Access.init(listName);
+				}
 			}
 		});
 	},
@@ -6109,6 +6361,111 @@ let data_Level2_Access = {
 };
 
 
+let data_Level3_Access = {
+	// The main Initialization function
+	init: function (dataListName) {
+		debugger
+		var clientContext = new SP.ClientContext.get_current();
+		var oList = clientContext.get_web().get_lists().getByTitle(dataListName);
+		var camlQuery = new SP.CamlQuery();
+		camlQuery.set_viewXml(data_Level3_Access.g.dataLevelQuery);
+		data_Level3_Access.g.collListItem = oList.getItems(camlQuery);
+		clientContext.load(data_Level3_Access.g.collListItem);
+		clientContext.executeQueryAsync(
+			Function.createDelegate(this, data_Level3_Access.onSuccess),
+			Function.createDelegate(this, data_Level3_Access.onError)
+		);
+	},
+	onSuccess: function (sender, args) {
+		var collListItem = data_Level3_Access.g.collListItem;
+		console.log(collListItem);
+		var listItemEnum = collListItem.getEnumerator();
+
+		if (collListItem.getEnumerator().$2J_0 > 0) {
+			//check if any items are returned we can use .getEnumerator().moveNext() //true
+		}
+		debugger
+		let fourthLevelConfig =
+			myRoleConfig[0].dataFilter.hierarchies[
+				data_Level1_Access.g.hierarchyIndex
+			].subRelation.subRelation.subRelation;
+
+		let fieldName = fourthLevelConfig.parentRelationField;
+		while (listItemEnum.moveNext()) {
+			var oListItem = listItemEnum.get_current();
+			let itemCode = oListItem.get_item(fieldName);
+			data_Level3_Access.g.relationFieldData.push(itemCode);
+		}
+
+		//check if there is no item in relationFieldData push null to avoid the keep loading err
+		if (data_Level3_Access.g.relationFieldData.length == 0) {
+			data_Level3_Access.g.relationFieldData.push(null);
+		}
+		debugger
+		data_Level3_Access.dynamicCamlQueryBuilder(
+			fourthLevelConfig,
+			data_Level3_Access.g.relationFieldData
+		);
+	},
+	//currenty handles one field not more
+	dynamicCamlQueryBuilder: function (levelConfig, valuesArray) {
+		debugger
+		let listName = levelConfig.listName;
+		let fieldToQuery = levelConfig.RelationField;
+		let fieldType = levelConfig.RelationFieldType;
+		let level = levelConfig.level;
+		let whereBody = ``,
+			queryBody = ``,
+			whereBodyFinal = ``;
+		//dynamic query building
+		whereBody += `<In><FieldRef Name="${fieldToQuery}" /><Values>`;
+		//handle case of filters on pages
+		dataLevelAccessChoicesForFilters = [];
+		dataLevelAccessChoicesForFilters.push({
+			internalName: fieldToQuery,
+			Type: fieldType,
+			Values: valuesArray,
+		});
+		valuesArray.forEach((el, i, a) => {
+			//only one choice
+			whereBody += `<Value Type="${fieldType}">${el}</Value>`;
+			//Finish Line, make last changes and build query
+			if (i == valuesArray.length - 1) {
+				whereBody += `</Values></In>`;
+				whereBody = whereBody.replaceAll(
+					`Type="date"`,
+					`IncludeTimeValue="TRUE" Type="DateTime"`
+				);
+				whereBodyFinal = `<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>${whereBody}
+					</And></Where>`;
+				queryBody = `<View>
+						<Query>
+						${whereBodyFinal}
+						<OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
+						</Query>
+					</View>`;
+				data_Level3_Access.g.dataLevelQuery = queryBody;
+				dataLevelAccessQuery = queryBody;
+
+
+				console.log("Data 4rd level access query", queryBody);
+				debugger
+			}
+		});
+	},
+	onError: function (sender, args) {
+		console.log(
+			"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+		);
+	},
+	// Global variables
+	g: {
+		dataLevelQuery: ``,
+		fieldsConditionConfig: [],
+		relationField: ``,
+		relationFieldData: [],
+	},
+}
 
 ///////////////////////////////////
 

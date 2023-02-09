@@ -175,9 +175,10 @@ window.initiativeRequest = {
         PQuery = dataLevelAccessQuery;
       } else {
         //*****call charts filteration */
-        if (isInManager || isInOwner) {
-          PQuery = InitiativeAccessQuery;
-        } else if (
+        // if (isInManager || isInOwner) {
+        //   PQuery = InitiativeAccessQuery;
+        // } else 
+        if (
           isDU ||
           isMinisterAssistant ||
           isViceMinister ||
@@ -244,26 +245,26 @@ window.initiativeRequest = {
         oListItem.get_item("Sector") &&
         oListItem.get_item("Sector") == UserAccessSectorCode;
 
-      if (
-        (isVROE && oListItem.get_item("Types") == "vision") ||
-        (isLMSE && oListItem.get_item("Types") == "lms") ||
-        (isDU && relatedFilterSubSector) ||
-        (isMinisterAssistant && relatedFilterbSector) ||
-        (isViceMinister && relatedFilterbSector) ||
-        (isSectorHead && relatedFilterbSector) ||
-        (isSubSectorHead && relatedFilterSubSector) ||
-        (isGeneralManager && relatedFilterSubSector) ||
-        isEPMO ||
-        isAdmin ||
-        isMinister ||
-        isBITeam ||
-        (isInManager &&
-          oListItem.get_item("InitiativePM") &&
-          oListItem.get_item("InitiativePM").get_lookupId() == UserN.Id) ||
-        (isInOwner &&
-          oListItem.get_item("InitiativeOwner") &&
-          oListItem.get_item("InitiativeOwner").get_lookupId() == UserN.Id)
-      ) {
+      // if (
+      //   (isVROE && oListItem.get_item("Types") == "vision") ||
+      //   (isLMSE && oListItem.get_item("Types") == "lms") ||
+      //   (isDU && relatedFilterSubSector) ||
+      //   (isMinisterAssistant && relatedFilterbSector) ||
+      //   (isViceMinister && relatedFilterbSector) ||
+      //   (isSectorHead && relatedFilterbSector) ||
+      //   (isSubSectorHead && relatedFilterSubSector) ||
+      //   (isGeneralManager && relatedFilterSubSector) ||
+      //   isEPMO ||
+      //   isAdmin ||
+      //   isMinister ||
+      //   isBITeam ||
+      //   (isInManager &&
+      //     oListItem.get_item("InitiativePM") &&
+      //     oListItem.get_item("InitiativePM").get_lookupId() == UserN.Id) ||
+      //   (isInOwner &&
+      //     oListItem.get_item("InitiativeOwner") &&
+      //     oListItem.get_item("InitiativeOwner").get_lookupId() == UserN.Id)
+      // ) {
         
         //getting 1st stats data
         EstimatedCost += oListItem.get_item("EstimatedCost") || 0; //masroufa
@@ -543,7 +544,7 @@ window.initiativeRequest = {
         } else {
           strategyarray.push("no");
         }
-      }
+      // }
     }
     const arrToInstanceCountObj = (arr) =>
       arr.reduce((obj, e) => {
