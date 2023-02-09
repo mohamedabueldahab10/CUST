@@ -304,10 +304,21 @@ var Information_Form = [
         type: 'dropdownValues',
         options: {
           choices: [
+            {
+              display: 'operationally',
+              value: 'operationally',
+            },
+            {
+              display: 'transformationally',
+              value: 'transformationally',
+            }
             // { value: 'notstarted', display: 'notstarted' },
             // { value: 'closureinitiative', display: 'closureinitiative' }
-            { value: 'transformativeproject', display: 'transformativeproject' },
-            { value: 'operationalproject', display: 'operationalproject' }
+            // {
+            //   value: 'transformativeproject',
+            //   display: 'transformativeproject',
+            // },
+            // { value: 'operationalproject', display: 'operationalproject' },
           ],
         },
       },
@@ -589,6 +600,9 @@ var Information_Form = [
         DisplayName: 'التكاليف الكلية حسب سقف البرنامج ',
         DisplayNameEn: 'Program Total Cost',
         type: 'float',
+        // listname: 'Initiatives',
+        // parentinternalname: 'InitiativeCode',
+        targetelement: 'ActualCost',
       },
 
       {
@@ -596,6 +610,10 @@ var Information_Form = [
         DisplayName: 'التكاليف الكلية المعتمدة ',
         DisplayNameEn: 'Actual Cost',
         type: 'float',
+        // listname: 'Initiatives',
+        // targetcode: 'InitiativeCode',
+        targetelement: 'ActualCost',
+        seconedtarget: 'ProgramTotalCost',
       },
       {
         InternalName: 'CurrentBuget',
@@ -618,16 +636,18 @@ var Information_Form = [
     ],
   },
   {
-      label: 'الوثائق الداعمة',
-      labelEn: 'Supporting Documents',
-      description: "",
-      descriptionEn: "",
-      subFields: [{
-          "InternalName": "getfile",
-          "DisplayName": "المرفقات",
-          "DisplayNameEn": "Attachments",
-          "type": "file",
-          "withAddBtn": "true"
-      }]
-  }
+    label: 'الوثائق الداعمة',
+    labelEn: 'Supporting Documents',
+    description: '',
+    descriptionEn: '',
+    subFields: [
+      {
+        InternalName: 'getfile',
+        DisplayName: 'المرفقات',
+        DisplayNameEn: 'Attachments',
+        type: 'file',
+        withAddBtn: 'true',
+      },
+    ],
+  },
 ]

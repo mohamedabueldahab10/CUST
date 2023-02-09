@@ -35,7 +35,8 @@ var Listing_Info = [
 		"InternalName": "Weight",
 		"DisplayNameEn": "Weight",
 		"DisplayName":"القيمة",
-		"type":"text",
+		// "type":"text",
+		"type": "floatpercentage",
 		inlisting: true,
 		infilter: false
 	},	

@@ -48,9 +48,10 @@ var Information_Form = [
         toggleValues: [
           {
             value: 'sub',
-            fields: ['SubRelatedObjective', 'RelatedMainKpis', 'Portfolio'],
+            // fields: ['SubRelatedObjective', 'RelatedMainKpis', 'Portfolio'],
+            fields: ['SubRelatedObjective','Portfolio'],
           }, //we can put more than 1  field
-          { value: 'main', fields: ['RelatedMainObjective'] }, //we can put more than 1  field
+          { value: 'main', fields: ['RelatedMainKpis','RelatedMainObjective'] }, //we can put more than 1  field
           { value: 'strategically', fields: ['StrategyRelatedObjective'] },
         ],
         type: 'dropdownValues',
@@ -78,30 +79,45 @@ var Information_Form = [
           ],
         },
       },
+      // {
+      //   InternalName: 'RelatedStrategyObjective',
+      //   DisplayNameEn: 'Related Main Objective',
+      //   DisplayName: 'الهدف الرئيسي المرتبط ',
+      //   ToggleName: 'RelatedMainObjective',
+      //   type: 'lookupWithQuery',
+      //   queryField: 'Types',
+      //   queryFieldType: 'dropdownValues', //ex: "Choice"
+      //   queryFieldValue: 'main',
+      //   source: 'SOs',
+      //   Dispfieldkey: 'Name',
+      //   valfieldkey: 'Title',
+      //   display: 'none',
+      //   // "state": "disabled",
+      //   security: {
+      //     groups: [
+      //       'LMS_P',
+      //       'SPM Admin',
+      //       'SPM Team',
+      //       'VRO_P',
+      //       'System Admin Group',
+      //     ],
+      //   },
+      //   // projectCodeInList: true //value in look up drop down should be related to current project
+      // },
       {
         InternalName: 'RelatedStrategyObjective',
-        DisplayNameEn: 'Related Main Objective',
-        DisplayName: 'الهدف الرئيسي المرتبط ',
-        ToggleName: 'RelatedMainObjective',
-        type: 'lookupWithQuery',
-        queryField: 'Types',
-        queryFieldType: 'dropdownValues', //ex: "Choice"
-        queryFieldValue: 'main',
+        DisplayNameEn: 'Related Strategy Objective',
+        DisplayName: 'الهدف المرتبط',
+        type: 'lookup',
         source: 'SOs',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        display: 'none',
-        // "state": "disabled",
-        security: {
-          groups: [
-            'LMS_P',
-            'SPM Admin',
-            'SPM Team',
-            'VRO_P',
-            'System Admin Group',
-          ],
-        },
-        // projectCodeInList: true //value in look up drop down should be related to current project
+        validation: 'required',
+        // state: 'disabled'
+        dynamic: 'RelatedStrategyObjective',
+        filterField: 'RelatedStrategyObjective',
+        filterFieldType: 'Text',
+        // ToggleName: 'RelatedStrategyObjective',
       },
       {
         InternalName: 'Classification',
@@ -337,20 +353,19 @@ var Information_Form = [
         InternalName: 'RelatedMainKpis',
         ToggleName: 'RelatedMainKpis',
         DisplayNameEn: 'Related Main Kpis',
-        DisplayName: 'الربط بالمؤشرات الرئيسية',
-        type: 'lookup',
+        DisplayName: 'المؤشر المرتبط',
+        // type: 'lookup',
+        type: 'lookupWithQuery',
         //add queryField,type,value to can filter in spcific val on dynamic func (dynamicAffectSelect)
         queryField: 'Types',
-        queryFieldType: 'Choice', //ex: "Choice"
+        queryFieldType: 'dropdownValues', //ex: "Choice"
+        // queryFieldType: 'Choice', //ex: "Choice"
         queryFieldValue: 'main',
         source: 'MainKPI',
         // "state": "disabled",
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        display: 'none',
-        dynamic: 'RelatedStrategy',
-        filterField: 'RelatedStrategy',
-        filterFieldType: 'Text',
+        // display: 'none',
         security: {
           groups: [
             'LMS_P',
@@ -743,12 +758,52 @@ var Information_Form = [
         // 	],
         // },
       },
+      // {
+      //   InternalName: 'Sector',
+      //   DisplayName: 'القطاع المرتبط',
+      //   DisplayNameEn: 'Sector',
+      //   type: 'lookup',
+      //   // "validation": "required",
+      //   //from other list:
+      //   source: 'Internal Entities',
+      //   isSector: 'True',
+      //   EntityType: 'Sector',
+      //   Dispfieldkey: 'Name',
+      //   DispfieldkeyEn: 'NameEn',
+      //   valfieldkey: 'Title',
+      //   state: 'disabled',
+      //   dontSubmit: true,
+      //   dynamic: 'parent',
+      //   // security: {
+      //   //     groups: ["LMS_P",
+      //   //         'EPMO', 'System Admin Group'
+      //   //     ]
+      //   // },
+      // },
+      // {
+      //   InternalName: 'SubSector',
+      //   DisplayName: 'الادارة المرتبطة',
+      //   DisplayNameEn: 'DeputyShip',
+      //   type: 'lookup',
+      //   //from other list:
+      //   source: 'Internal Entities',
+      //   isSector: 'True',
+      //   EntityType: 'Department',
+      //   Dispfieldkey: 'Name',
+      //   DispfieldkeyEn: 'NameEn',
+      //   valfieldkey: 'Title',
+      //   state: 'disabled',
+      //   dontSubmit: true,
+      //   "isRelatedToParent":true, // to show parent value depends on child like sector and subsector
+      //   filterField: "Sector",//InternalName Of Parent field
+      //   filterFieldType: "Text",//Type In Sharepoint List for Parent field
+      // },
       {
         InternalName: 'Sector',
-        DisplayName: 'القطاع المرتبط',
+        DisplayName: 'القطاع',
         DisplayNameEn: 'Sector',
         type: 'lookup',
-        // "validation": "required",
+        validation: 'required',
         //from other list:
         source: 'Internal Entities',
         isSector: 'True',
@@ -756,20 +811,13 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
-        state: 'disabled',
-        dontSubmit: true,
-        dynamic: 'parent',
-        // security: {
-        //     groups: ["LMS_P",
-        //         'EPMO', 'System Admin Group'
-        //     ]
-        // },
       },
       {
         InternalName: 'SubSector',
-        DisplayName: 'الادارة المرتبطة',
+        DisplayName: 'الوكالة',
         DisplayNameEn: 'DeputyShip',
         type: 'lookup',
+        validation: 'required',
         //from other list:
         source: 'Internal Entities',
         isSector: 'True',
@@ -777,11 +825,6 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
-        state: 'disabled',
-        dontSubmit: true,
-        "isRelatedToParent":true, // to show parent value depends on child like sector and subsector
-        filterField: "Sector",//InternalName Of Parent field
-        filterFieldType: "Text",//Type In Sharepoint List for Parent field
       },
     ],
   },
