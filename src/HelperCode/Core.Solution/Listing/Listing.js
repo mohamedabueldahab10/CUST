@@ -33,10 +33,10 @@ var projectTypeFilterQuery = '', typeClicked = 'Internal';
 
 var taskClicked = 'relatedTasks', allTasksClicked = false, getNewFilterTask = false, isViewMoreClicked = false;
 
-var emptyData = require('../../../HelperRessources/img/empty-data.png');
-var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
-// var emptyData = ''
-// var exportExcel = ''
+// var emptyData = require('../../../HelperRessources/img/empty-data.png');
+// var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
+var emptyData = ''
+var exportExcel = ''
 //all data filter array
 allDataFilterArr = []
 //
@@ -425,6 +425,7 @@ window.ListingData = {
   init: function () {
 
     if (!isTasks && originalstate) {
+      debugger
       if (isRoleDataLevelAccess && (!UserICode && !USERPCODE && isEmptyFilter)) {
         PQuery = dataLevelAccessQuery;
       } else {
@@ -1165,8 +1166,13 @@ window.ListingData = {
 
         if (isVROP && USERisListing && USERlistkey == 'goalstrategy') {
           PQuery = '<View><Query><Where><Eq><FieldRef Name="Types" /><Value Type="Choice">vision</Value></Eq></Where></Query></View>';
-        } else if (!isDU && !isGeneralManager && !isMinisterAssistant && !isSectorHead && !isViceMinister && !isSubSectorHead && USERisListing && USERlistkey == 'mainkpi') {
-          if (!isAdmin && !isMinister && !isBITeam && !isSPMTeam && !isVROP && !isSPMAdmin && !isSPMO) {
+        } else if (!isDU && !isGeneralManager && !isMinisterAssistant && !isSectorHead && !isViceMinister && !isSubSectorHead && USERisListing
+          //  && USERlistkey == 'mainkpi'
+           ) {
+          if (!isAdmin && !isMinister && !isBITeam
+            //  && !isSPMTeam
+             
+             && !isVROP && !isSPMAdmin && !isSPMO) {
             PQuery = '<View><Query><Where><Or><Eq><FieldRef Name="PerformanceLeader" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq><Eq><FieldRef Name="Owner" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq></Or></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>';
           }
           else if (isVROP) {

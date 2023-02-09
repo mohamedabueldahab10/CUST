@@ -3297,7 +3297,10 @@ window.ListInfo = {
             "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
         }
         //ghufran User dropdown security
-        if (isEPMO || isSPMAdmin || isSPMTeam) {
+        if (isEPMO || isSPMAdmin 
+          //|| isSPMTeam
+          
+          ) {
           if (
             (listkey == "benefitmetrics" &&
               element.InternalName == "RelatedBenefit") ||
@@ -3388,7 +3391,9 @@ window.ListInfo = {
           }
         }
         if (listkey == "BenefitMatrix") {
-          if (isSPMAdmin || isSPMTeam) {
+          if (isSPMAdmin
+            //  || isSPMTeam
+             ) {
             if (element.source == "MainKPI") {
               customQuery =
                 "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus'/><Value Type='Text'>Deleted</Value></Neq><Or><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">strategically</Value></Eq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">sub</Value></Eq></Or></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";

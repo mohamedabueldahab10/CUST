@@ -1054,6 +1054,7 @@ window.userCalls = {
 					"projects",
 					"deliverables",
 					"milestones",
+					
 				];
 
 				// Delete_Access = AllListKeys;
@@ -1080,16 +1081,16 @@ window.userCalls = {
 				Create_Access = [];
 
 				Read_Access = [
-					//   "initiatives",
-					// "deliverablemetrics",
-					"benefitmatrix",
-					"benefitmetrics",
-					"mainkpi",
+					"goalstrategy",
 					"sos",
+					"mainkpi",
 					"Targets.aspx",
-					//  "portfolio", "home.aspx",
-					"kpiequations",
+					"benefitmatrix",
+					"initiatives",
+					"benefits",
+					"benefitmetrics",
 					"MainIndicators.aspx",
+					"initiativesmain.aspx",
 				];
 
 				Edit_Access = [];
@@ -2529,14 +2530,16 @@ window.userCalls = {
 				Create_Access = [];
 				Read_Access = [
 					"mainkpi",
-					//  "sos",
+					 "sos",
+					 "goalstrategy",
 					"Targets.aspx",
-					//  "portfolio",
 					"kpiequations",
-					// "home.aspx",
 					"MainIndicators.aspx",
+					"tasks"
 				];
-				Edit_Access = [];
+				Edit_Access = [
+					"mainkpi"
+				];
 				Delete_Access = [];
 				break;
 			case "PerformanceLeader":
@@ -2703,15 +2706,15 @@ window.userCalls = {
 			Get_Initiative_Info_Request.preinit()
 		}
 
-		if (
-			(!isInitiativesHomePage && !isInManager && !isInOwner) ||
-			isDU ||
-			isMinisterAssistant ||
-			isViceMinister ||
-			isSectorHead ||
-			isSubSectorHead ||
-			isGeneralManager
-		) {
+		// if (
+		// 	// (!isInitiativesHomePage && !isInManager && !isInOwner) ||
+		// 	isDU ||
+		// 	isMinisterAssistant ||
+		// 	isViceMinister ||
+		// 	isSectorHead ||
+		// 	isSubSectorHead ||
+		// 	isGeneralManager
+		// ) {
 			if (
 				!isSectionHead &&
 				!isPortfolioManager &&
@@ -2753,7 +2756,7 @@ window.userCalls = {
 					Access_Project_Info_Request.g.handleBreadcrumbs();
 				}, 333);
 			}
-		}
+		// }
 
 		if (USERisForm) {
 			window.UsercheckFieldsHtml = setInterval(function () {
@@ -2949,78 +2952,82 @@ window.userCalls = {
 				  ],
 				},
 			  },
-			{
+			  {
 				Role: "SPMTeam",
 				groupsName: ["SPM Team"],
-				dataFilter: {
-					hierarchies: [
-						{
-							level: 1,
-							listName: "GoalStrategy",
-							accessConditions: [
-								{
-									field: "Types",
-									type: "Choice",
-									values: ["ministry"],
-									targetPages: [
-										"home.aspx",
-										"new.aspx",
-										"edit.aspx?ListKey=projects",
-									],
-								},
-							],
-							subRelation: {
-								level: 2,
-								listName: "SOs",
-								parentRelationField: "Title",
-								RelationField: "RelatedStrategy",
-								RelationFieldType: "Text",
-								subRelation: {
-									level: 3,
-									listName: "",
-									// parentRelationField: "Title",
-									// RelationField: "InitiativeCode",
-									// RelationFieldType: "Text",
-								},
-							},
-						},
-						{
-							level: 1,
-							listName: "GoalStrategy",
-							accessConditions: [
-								{
-									field: "Types",
-									type: "Choice",
-									values: ["ministry"],
-									targetPages: [
-										"home.aspx",
-										"new.aspx",
-										"edit.aspx?ListKey=projects",
-									],
-								},
-							],
-							subRelation: {
-								level: 2,
-								listName: "MainKPI",
-								parentRelationField: "Title",
-								RelationField: "RelatedStrategy",
-								RelationFieldType: "Text",
-								subRelation: {
-									level: 3,
-									listName: "KPIResults",
-									parentRelationField: "Title",
-									RelationField: "KPI",
-									RelationFieldType: "Text",
-									// listName: "",
-									// // parentRelationField: "Title",
-									// // RelationField: "InitiativeCode",
-									// // RelationFieldType: "Text",
-								},
-							},
-						},
-					],
-				},
 			},
+			// {
+			// 	Role: "SPMTeam",
+			// 	groupsName: ["SPM Team"],
+			// 	dataFilter: {
+			// 		hierarchies: [
+			// 			{
+			// 				level: 1,
+			// 				listName: "GoalStrategy",
+			// 				accessConditions: [
+			// 					{
+			// 						field: "Types",
+			// 						type: "Choice",
+			// 						values: ["ministry"],
+			// 						targetPages: [
+			// 							"home.aspx",
+			// 							"new.aspx",
+			// 							"edit.aspx?ListKey=projects",
+			// 						],
+			// 					},
+			// 				],
+			// 				subRelation: {
+			// 					level: 2,
+			// 					listName: "SOs",
+			// 					parentRelationField: "Title",
+			// 					RelationField: "RelatedStrategy",
+			// 					RelationFieldType: "Text",
+			// 					subRelation: {
+			// 						level: 3,
+			// 						listName: "",
+			// 						// parentRelationField: "Title",
+			// 						// RelationField: "InitiativeCode",
+			// 						// RelationFieldType: "Text",
+			// 					},
+			// 				},
+			// 			},
+			// 			{
+			// 				level: 1,
+			// 				listName: "GoalStrategy",
+			// 				accessConditions: [
+			// 					{
+			// 						field: "Types",
+			// 						type: "Choice",
+			// 						values: ["ministry"],
+			// 						targetPages: [
+			// 							"home.aspx",
+			// 							"new.aspx",
+			// 							"edit.aspx?ListKey=projects",
+			// 						],
+			// 					},
+			// 				],
+			// 				subRelation: {
+			// 					level: 2,
+			// 					listName: "MainKPI",
+			// 					parentRelationField: "Title",
+			// 					RelationField: "RelatedStrategy",
+			// 					RelationFieldType: "Text",
+			// 					subRelation: {
+			// 						level: 3,
+			// 						listName: "KPIResults",
+			// 						parentRelationField: "Title",
+			// 						RelationField: "KPI",
+			// 						RelationFieldType: "Text",
+			// 						// listName: "",
+			// 						// // parentRelationField: "Title",
+			// 						// // RelationField: "InitiativeCode",
+			// 						// // RelationFieldType: "Text",
+			// 					},
+			// 				},
+			// 			},
+			// 		],
+			// 	},
+			// },
 			{
 				Role: "SPMAdmin",
 				groupsName: ["SPM Admin"],
@@ -3368,7 +3375,49 @@ window.userCalls = {
 			{
 				Role: "KPIOwner",
 				groupsName: ["KPI Owners"],
-			},
+				dataFilter: {
+				  hierarchies: [
+					{
+					  level: 1,
+					  listName: "MainKPI",
+					  accessConditions: [
+						{
+						  field: "Owner",
+						  type: "LoggedInUser",
+						  values: [""],
+						  targetPages: [],
+						},
+					  ],
+					  subRelation: {
+						level: 2,
+						listName: "SOs",
+						parentRelationField: "RelatedStrategyObjective",
+						RelationField: "Title",
+						RelationFieldType: "Text", 
+						subRelation: {
+						  level: 3,
+						  listName: "GoalStrategy",
+						  parentRelationField: "RelatedStrategy",
+						  RelationField: "Title",
+						  RelationFieldType: "Text",
+						},
+					  },
+					  // subRelation: {
+					  //   level: 2,
+					  //   listName: "",
+					  //   subRelation: {
+					  //     level: 3,
+					  //     listName: "",
+					  //   },
+					  // },
+					},
+				  ],
+				},
+			  },
+			// {
+			// 	Role: "KPIOwner",
+			// 	groupsName: ["KPI Owners"],
+			// },
 			{
 				Role: "SubSectorHead",
 				groupsName: ["SubSector Head"],
@@ -3739,6 +3788,7 @@ var Access_Project_Info_Request = {
 			}
 			//
 			else if (isShowAll) {
+				debugger
 				//
 				///////Ghufran Listing Query
 				//if on listing pages other then projects and its child data (risks, issues...)
@@ -3746,45 +3796,49 @@ var Access_Project_Info_Request = {
 					// vrop can't see goal strategy now as userguide
 					AccessQuery =
 						"<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">vision</Value></Eq></And></Where></Query></View>";
-				} else if (USERisListing && USERlistkey == "mainkpi") {
-					if (
-						!isAdmin &&
-						!isMinister &&
-						!isBITeam &&
-						!isSPMTeam &&
-						!isVROP &&
-						!isSPMAdmin &&
-						!isDU &&
-						!isSubSectorHead &&
-						!isGeneralManager &&
-						!isMinisterAssistant &&
-						!isViceMinister &&
-						!isSectorHead &&
-						!isSPMO
-					) {
-						AccessQuery =
-							'<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Or><Or><Eq><FieldRef Name="PerformanceLeader" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq><Eq><FieldRef Name="PerformanceLeader2" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq></Or><Eq><FieldRef Name="Owner" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq></Or></And></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>';
-					}
-					// else if (isSPMAdmin || isSPMTeam){
-					//   AccessQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="Types"/><Values><Value Type="Text">sub</Value><Value Type="Text">main</Value></Values></In></And></Where></Query></View>';
+				} 
+				// else if (USERisListing 
+				// 	&& USERlistkey == "mainkpi"
+				// 	) {
+				// 	if (
+				// 		!isAdmin &&
+				// 		!isMinister &&
+				// 		!isBITeam &&
+				// 		// !isSPMTeam &&
+				// 		!isVROP &&
+				// 		!isSPMAdmin &&
+				// 		!isDU &&
+				// 		!isSubSectorHead &&
+				// 		!isGeneralManager &&
+				// 		!isMinisterAssistant &&
+				// 		!isViceMinister &&
+				// 		!isSectorHead &&
+				// 		!isSPMO
+				// 	) {
+				// 		AccessQuery =
+				// 			'<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Or><Or><Eq><FieldRef Name="PerformanceLeader" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq><Eq><FieldRef Name="PerformanceLeader2" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq></Or><Eq><FieldRef Name="Owner" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq></Or></And></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>';
+				// 	}
+				// 	// else if (isSPMAdmin || isSPMTeam){
+				// 	//   AccessQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="Types"/><Values><Value Type="Text">sub</Value><Value Type="Text">main</Value></Values></In></And></Where></Query></View>';
 
-					// }
-					else if (isVROP) {
-						AccessQuery =
-							"<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"RelatedStrategyType\" /><Value Type='Text'>vision</Value></Eq></And></Where></Query></View>";
-					} else if (
-						isDU ||
-						isMinisterAssistant ||
-						isSectorHead ||
-						isViceMinister ||
-						isSubSectorHead ||
-						isGeneralManager ||
-						isSPMO
-					) {
-						//
-						AccessQuery = SectorHeadQuery;
-					}
-				} else if (USERisListing && USERlistkey == "initiatives") {
+				// 	// }
+				// 	else if (isVROP) {
+				// 		AccessQuery =
+				// 			"<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"RelatedStrategyType\" /><Value Type='Text'>vision</Value></Eq></And></Where></Query></View>";
+				// 	} else if (
+				// 		isDU ||
+				// 		isMinisterAssistant ||
+				// 		isSectorHead ||
+				// 		isViceMinister ||
+				// 		isSubSectorHead ||
+				// 		isGeneralManager ||
+				// 		isSPMO
+				// 	) {
+				// 		//
+				// 		AccessQuery = SectorHeadQuery;
+				// 	}
+				// } 
+				else if (USERisListing && USERlistkey == "initiatives") {
 					//
 					if (isVROE) {
 						AccessQuery =
@@ -3817,8 +3871,9 @@ var Access_Project_Info_Request = {
 					SubSectorInitiativeAccessQuery = SectorHeadQuery;
 					//
 				} else if (
-					(isSPMAdmin && USERisListing && USERlistkey == "sos") ||
-					(isSPMTeam && USERisListing && USERlistkey == "sos")
+					(isSPMAdmin && USERisListing && USERlistkey == "sos") 
+					// ||
+					// (isSPMTeam && USERisListing && USERlistkey == "sos")
 				) {
 					AccessQuery =
 						"<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">sub</Value></Eq></And></Where></Query></View>";

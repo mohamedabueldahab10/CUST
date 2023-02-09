@@ -77,6 +77,7 @@ var MainKPIs_Info_Request = {
     var camlQuery = new SP.CamlQuery();
     let myQuery = `<View><Query>\
     <Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>`;
+   debugger
     if (isRoleDataLevelAccess) {
       if (dataLevelAccessQuery) {
         myQuery = dataLevelAccessQuery;
