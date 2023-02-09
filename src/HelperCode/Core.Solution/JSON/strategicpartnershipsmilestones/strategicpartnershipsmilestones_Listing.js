@@ -1,0 +1,71 @@
+var Listing_Info = [
+  {
+    InternalName: 'Title',
+    DisplayName: 'رمز المعلم',
+    DisplayNameEn: 'Milestone Code',
+    type: 'text',
+    inlisting: true,
+    infilter: false,
+  },
+  {
+    InternalName: 'Name',
+    DisplayName: 'اسم المعلم',
+    DisplayNameEn: 'Name',
+    type: 'text',
+    inlisting: true,
+    infilter: false,
+  },
+  {
+    InternalName: 'Weight',
+    DisplayName: 'الوزن المكافئ للإنجاز %',
+    DisplayNameEn: 'Weight',
+    type: 'floatpercentage',
+    inlisting: true,
+    infilter: true,
+  },
+  // {
+  //     "InternalName": "ProjectCode",
+  //     "DisplayName": "رمز المشروع",
+  //     "DisplayNameEn": "Project Code",
+  //     "type": "text",
+  //     inlisting: true,
+  //     infilter: false,
+  //     isLinkable: true,
+  //     ShowUnderProjectListing: false
+  // },
+
+  {
+    InternalName: 'PlannedDate',
+    DisplayName: 'تاريخ الاكتمال المخطط',
+    DisplayNameEn: 'Planned Finish Date',
+    type: 'date',
+    inlisting: true,
+    infilter: false,
+  },
+  {
+    InternalName: 'Status',
+    DisplayName: 'الحالة',
+    DisplayNameEn: 'Status',
+    type: 'text',
+    inlisting: true,
+    infilter: true,
+    needTrans: true,
+  },
+  // {
+  //   InternalName: 'CommittedDate',
+  //   DisplayName: 'تاريخ الالتزام',
+  //   DisplayNameEn: 'Committed Date',
+  //   type: 'date',
+  //   inlisting: true,
+  //   infilter: true,
+  // },
+  // {
+  //     "InternalName": "ShowInProgramReport",
+  //     "DisplayName": "اظهار في التقرير",
+  //     "DisplayNameEn": "Show In Report",
+  //     "type": "text",
+  //     inlisting: true,
+  //     infilter: true,
+  //     needTrans: true
+  // },
+]
