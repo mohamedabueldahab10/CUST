@@ -5445,56 +5445,65 @@ window.ListInfo = {
       fieldsConditionConfig.map(async (el, i, a) => {
         //Two choices
         if (fieldsConditionConfig.length == 1) {
-          if (i == 0) {
-            whereBody += `<And><In><FieldRef Name="${el.field}"/><Values>`;
-            for (var j = 0; j < el.values.length; j++) {
-              whereBody += `<Value Type="${el.type}">${el.values[j]}</Value>`;
-            }
-            whereBody += `</Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And>`;
-          }
-        }
-        //More than two choices
-        else if (fieldsConditionConfig.length > 1) {
-          //two Eqs in last And
-          if (i == fieldsConditionConfig.length - 1) {
-            whereBody += `<And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>`;
-            whereBody += `<In><FieldRef Name="${el.field}"/><Values>`;
-            for (var j = 0; j < el.values.length; j++) {
-              whereBody += `<Value Type="${el.type}">${el.values[j]}</Value>`;
-            }
-            whereBody += `</Values></In>`;
+					if (el.type == "LoggedInUser") {
+						whereBody += `<And><Eq><FieldRef Name="${el.field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And>`;
+					} else {
+						whereBody += `<And><In><FieldRef Name="${el.field}"/><Values>`;
+						for (var j = 0; j < el.values.length; j++) {
+							whereBody += `<Value Type="${el.type}">${el.values[j]}</Value>`;
+						}
+						whereBody += `</Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And>`;
+					}
+				}
+    		//More than two choices
+				else if (fieldsConditionConfig.length > 1) {
+					//two Eqs in last And
+					if (i == fieldsConditionConfig.length - 1) {
+						if (el.type == "LoggedInUser") {
+							whereBody += `<And><Eq><FieldRef Name="${el.field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>`;
+						} else {
+							whereBody += `<And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>`;
+							whereBody += `<In><FieldRef Name="${el.field}"/><Values>`;
+							for (var j = 0; j < el.values.length; j++) {
+								whereBody += `<Value Type="${el.type}">${el.values[j]}</Value>`;
+							}
+							whereBody += `</Values></In>`;
+						}
 
-            //appending And closure
-            var count = (whereBody.match(/<And>/g) || []).length;
-            var ANDC = `</And>`.repeat(count);
-            whereBody += ANDC;
-          }
-          //normal And
-          else {
-            whereBody += `<And><In><FieldRef Name="${el.field}"/><Values>`;
-            for (var j = 0; j < el.values.length; j++) {
-              whereBody += `<Value Type="${el.type}">${el.values[j]}</Value>`;
-            }
-            whereBody += `</Values></In>`;
-          }
-        }
-        //Finish Line, make last changes and build query
-        if (i == fieldsConditionConfig.length - 1) {
-          // console.log(PQueryFilteration);
-          whereBody = whereBody.replaceAll(
-            `Type="date"`,
-            `IncludeTimeValue="TRUE" Type="DateTime"`
-          );
-          whereBodyFinal = `<Where>${whereBody}
-					</Where>`;
-          queryBody = `<View>
-						<Query>
-						${whereBodyFinal}
-						<OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
-						</Query>
-					</View>`;
-          console.log(`query for dropdown menu`, queryBody);
-        }
+						//appending And closure
+						var count = (whereBody.match(/<And>/g) || []).length;
+						var ANDC = `</And>`.repeat(count);
+						whereBody += ANDC;
+					}
+					//normal And
+					else {
+						if (el.type == "LoggedInUser") {
+							whereBody += `<And><Eq><FieldRef Name="${el.field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
+						} else {
+							whereBody += `<And><In><FieldRef Name="${el.field}"/><Values>`;
+							for (var j = 0; j < el.values.length; j++) {
+								whereBody += `<Value Type="${el.type}">${el.values[j]}</Value>`;
+							}
+							whereBody += `</Values></In>`;
+						}
+					}
+				}
+			//Finish Line, make last changes and build query
+      if (i == fieldsConditionConfig.length - 1) {
+        whereBody = whereBody.replaceAll(
+          `Type="date"`,
+          `IncludeTimeValue="TRUE" Type="DateTime"`
+        );
+        whereBodyFinal = `<Where>${whereBody}
+          </Where>`;
+        queryBody = `<View>
+            <Query>
+            ${whereBodyFinal}
+            <OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
+            </Query>
+          </View>`;
+        console.log(`query for dropdown menu`, queryBody);
+      }
       })
     );
     return queryBody;

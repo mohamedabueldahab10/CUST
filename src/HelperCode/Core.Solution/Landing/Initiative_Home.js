@@ -1738,7 +1738,7 @@ var Milestones_Info_Request = {
       isGeneralManager ||
       isMinister ||
       isBITeam ||
-      isInOwner ||
+      // isInOwner ||
       isSPMO
     ) {
       $("a.btn-add").attr("style", "display: none!important;");

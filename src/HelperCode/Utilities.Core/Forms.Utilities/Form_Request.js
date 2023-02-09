@@ -3191,9 +3191,9 @@ window.ProjectInitiativeDelevrable = {
 
     // $("#RelatedInitiativeDeliverable").prop("disabled", false);
 
-    if (isDU || isPManager || isInManager) { // to disabled the checkbox for this role
-      isDisabled = 'disabled'
-    }
+    // if (isDU || isPManager || isInManager) { // to disabled the checkbox for this role
+    //   isDisabled = 'disabled'
+    // }
     if (!isView) {
       var multiSelectHtml =
         '<li class="dropdown ul-bullet-remove">' +
