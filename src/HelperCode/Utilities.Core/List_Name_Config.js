@@ -20,10 +20,10 @@ var ListArray = [
 	},
 	//third is always projects documents
 	{
-		documents: "Projects Documents",
-		ListingTitle: "مستندات المشروع",
-		FormTitle: "مستندات المشروع",
-		TitleEn: "Projects Documents",
+		documents: "Documents",
+		ListingTitle: "المستندات",
+		FormTitle: "المستندات",
+		TitleEn: "Documents",
 		projnav: "Project Navigation",
 		projectrelated: true,
 		subfolder: false,
@@ -440,7 +440,7 @@ var ListArray = [
 		subfolder: true,
 	},
 	{
-		achievements: "Achievements",
+		strategicpartnershipsachievements: "Achievements",
 		ListingTitle: "المنجزات",
 		FormTitle:"المنجزات",
 		TitleEn: "Achievements",
@@ -620,6 +620,14 @@ var ListArray = [
 		initiativerisks: "Risks",
 		ListingTitle: "مخاطر المبادرة",
 		FormTitle: "مخاطر المبادرة",
+		TitleEn: "Initiative Risks",
+		projnav: "Project Navigation",
+		subfolder: true,
+	},
+	{
+		strategicpartnershipsrisks: "Risks",
+		ListingTitle: "مخاطر الشراكات الاستراتيجية",
+		FormTitle: "مخاطر الشراكات الاستراتيجية",
 		TitleEn: "Initiative Risks",
 		projnav: "Project Navigation",
 		subfolder: true,
