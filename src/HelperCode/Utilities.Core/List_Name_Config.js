@@ -229,7 +229,7 @@ var ListArray = [
 		subfolder: true,
 	},
 	{
-		strategicpartnershipsdeliverablesmilestones: "Milestones",
+		strategicpartnershipsmilestones: "Milestones",
 		ListingTitle: "معالم الشراكات الاستراتيجية",
 		FormTitle: "معالم الشراكات الاستراتيجية",
 		TitleEn: "Strategic Partnerships Milestones ",
