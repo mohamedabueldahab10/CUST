@@ -1054,7 +1054,7 @@ window.userCalls = {
 					"projects",
 					"deliverables",
 					"milestones",
-					
+
 				];
 
 				// Delete_Access = AllListKeys;
@@ -2530,8 +2530,8 @@ window.userCalls = {
 				Create_Access = [];
 				Read_Access = [
 					"mainkpi",
-					 "sos",
-					 "goalstrategy",
+					"sos",
+					"goalstrategy",
 					"Targets.aspx",
 					"kpiequations",
 					"MainIndicators.aspx",
@@ -2715,47 +2715,47 @@ window.userCalls = {
 		// 	isSubSectorHead ||
 		// 	isGeneralManager
 		// ) {
-			if (
-				!isSectionHead &&
-				!isPortfolioManager &&
-				!isSectorHead &&
-				!isSPMO &&
-				!isDU &&
-				!isGeneralManager &&
-				!isSubSectorHead &&
-				!isMinisterAssistant &&
-				!isViceMinister
-			) {
-				// IF Data directly getting from project list
-				//
-				Access_Project_Info_Request.preinit();
-			} else if (
-				(istherePCODE ||
-					USERisHome ||
-					USERisListing ||
-					isInitiativesHomePage ||
-					isTarget ||
-					isMainIndicator) &&
-				(isSectionHead ||
-					isPortfolioManager ||
-					isSectorHead ||
-					isSPMO ||
-					isSubSectorHead ||
-					isGeneralManager ||
-					isDU ||
-					isMinisterAssistant ||
-					isViceMinister)
-			) {
-				//if data getting from other list related to project
+		if (
+			!isSectionHead &&
+			!isPortfolioManager &&
+			!isSectorHead &&
+			!isSPMO &&
+			!isDU &&
+			!isGeneralManager &&
+			!isSubSectorHead &&
+			!isMinisterAssistant &&
+			!isViceMinister
+		) {
+			// IF Data directly getting from project list
+			//
+			Access_Project_Info_Request.preinit();
+		} else if (
+			(istherePCODE ||
+				USERisHome ||
+				USERisListing ||
+				isInitiativesHomePage ||
+				isTarget ||
+				isMainIndicator) &&
+			(isSectionHead ||
+				isPortfolioManager ||
+				isSectorHead ||
+				isSPMO ||
+				isSubSectorHead ||
+				isGeneralManager ||
+				isDU ||
+				isMinisterAssistant ||
+				isViceMinister)
+		) {
+			//if data getting from other list related to project
 
-				Access_Sector_Info_Request.preinit();
-			} else if (isthereICODE && isDU) {
-				Access_Sector_Info_Request.preinit();
-			} else {
-				window.checkBreadCrumbsStatusHtml = setInterval(function () {
-					Access_Project_Info_Request.g.handleBreadcrumbs();
-				}, 333);
-			}
+			Access_Sector_Info_Request.preinit();
+		} else if (isthereICODE && isDU) {
+			Access_Sector_Info_Request.preinit();
+		} else {
+			window.checkBreadCrumbsStatusHtml = setInterval(function () {
+				Access_Project_Info_Request.g.handleBreadcrumbs();
+			}, 333);
+		}
 		// }
 
 		if (USERisForm) {
@@ -2921,41 +2921,41 @@ window.userCalls = {
 				Role: "InitiativeOwner",
 				groupsName: ["Initiative Owner"],
 				dataFilter: {
-				  hierarchies: [
-					{
-					  level: 1,
-					  listName: "Initiatives",
-					  accessConditions: [
+					hierarchies: [
 						{
-						  field: "InitiativeOwner",
-						  type: "LoggedInUser",
-						  values: [""],
-						  targetPages: [],
+							level: 1,
+							listName: "Initiatives",
+							accessConditions: [
+								{
+									field: "InitiativeOwner",
+									type: "LoggedInUser",
+									values: [""],
+									targetPages: [],
+								},
+							],
+							subRelation: {
+								level: 2,
+								listName: "Projects",
+								//RelatedInitiative
+								parentRelationField: "Title",
+								RelationField: "RelatedInitiative",
+								RelationFieldType: "Text",
+								subRelation: {
+									level: 3,
+									listName: "",
+									// parentRelationField: "Title",
+									// RelationField: "InitiativeCode",
+									// RelationFieldType: "Text",
+								},
+							},
 						},
-					  ],
-					  subRelation: {
-						level: 2,
-						listName: "Projects",
-						//RelatedInitiative
-						parentRelationField: "Title",
-						RelationField: "RelatedInitiative",
-						RelationFieldType: "Text",
-						subRelation: {
-						  level: 3,
-						  listName: "",
-						  // parentRelationField: "Title",
-						  // RelationField: "InitiativeCode",
-						  // RelationFieldType: "Text",
-						},
-					  },
-					},
-				  ],
+					],
 				},
-			  },
-			  {
-				Role: "SPMTeam",
-				groupsName: ["SPM Team"],
 			},
+			//   {
+			// 	Role: "SPMTeam",
+			// 	groupsName: ["SPM Team"],
+			// },
 			// {
 			// 	Role: "SPMTeam",
 			// 	groupsName: ["SPM Team"],
@@ -3028,6 +3028,87 @@ window.userCalls = {
 			// 		],
 			// 	},
 			// },
+			{
+				Role: "SPMTeam",
+				groupsName: ["SPM Team"],
+				dataFilter: {
+					hierarchies: [
+						{
+							level: 1,
+							listName: "GoalStrategy",
+							accessConditions: [
+								{
+									field: "Types",
+									type: "Choice",
+									values: ["ministry"],
+									targetPages: [
+										"home.aspx",
+										"new.aspx",
+										"edit.aspx?ListKey=projects",
+									],
+								},
+							],
+							subRelation: {
+								level: 2,
+								listName: "SOs",
+								parentRelationField: "Title",
+								RelationField: "RelatedStrategy",
+								RelationFieldType: "Text",
+								subRelation: {
+									level: 3,
+									listName: "MainKPI",
+									parentRelationField: "Title",
+									RelationField: "RelatedStrategyObjective",
+									RelationFieldType: "Text",
+									subRelation: {
+										level: 4,
+										listName: "KPIResults",
+										parentRelationField: "Title",
+										RelationField: "KPI",
+										RelationFieldType: "Text",
+									}
+								},
+							},
+						},
+
+
+						// {
+						// 	level: 1,
+						// 	listName: "GoalStrategy",
+						// 	accessConditions: [
+						// 		{
+						// 			field: "Types",
+						// 			type: "Choice",
+						// 			values: ["ministry"],
+						// 			targetPages: [
+						// 				"home.aspx",
+						// 				"new.aspx",
+						// 				"edit.aspx?ListKey=projects",
+						// 			],
+						// 		},
+						// 	],
+						// 	subRelation: {
+						// 		level: 2,
+						// 		listName: "MainKPI",
+						// 		parentRelationField: "Title",
+						// 		RelationField: "RelatedStrategy",
+						// 		RelationFieldType: "Text",
+						// 		subRelation: {
+						// 			level: 3,
+						// 			listName: "KPIResults",
+						// 			parentRelationField: "Title",
+						// 			RelationField: "KPI",
+						// 			RelationFieldType: "Text",
+						// 			// listName: "",
+						// 			// // parentRelationField: "Title",
+						// 			// // RelationField: "InitiativeCode",
+						// 			// // RelationFieldType: "Text",
+						// 		},
+						// 	},
+						// },
+					],
+				},
+			},
 			{
 				Role: "SPMAdmin",
 				groupsName: ["SPM Admin"],
@@ -3376,44 +3457,44 @@ window.userCalls = {
 				Role: "KPIOwner",
 				groupsName: ["KPI Owners"],
 				dataFilter: {
-				  hierarchies: [
-					{
-					  level: 1,
-					  listName: "MainKPI",
-					  accessConditions: [
+					hierarchies: [
 						{
-						  field: "Owner",
-						  type: "LoggedInUser",
-						  values: [""],
-						  targetPages: [],
+							level: 1,
+							listName: "MainKPI",
+							accessConditions: [
+								{
+									field: "Owner",
+									type: "LoggedInUser",
+									values: [""],
+									targetPages: [],
+								},
+							],
+							subRelation: {
+								level: 2,
+								listName: "SOs",
+								parentRelationField: "RelatedStrategyObjective",
+								RelationField: "Title",
+								RelationFieldType: "Text",
+								subRelation: {
+									level: 3,
+									listName: "GoalStrategy",
+									parentRelationField: "RelatedStrategy",
+									RelationField: "Title",
+									RelationFieldType: "Text",
+								},
+							},
+							// subRelation: {
+							//   level: 2,
+							//   listName: "",
+							//   subRelation: {
+							//     level: 3,
+							//     listName: "",
+							//   },
+							// },
 						},
-					  ],
-					  subRelation: {
-						level: 2,
-						listName: "SOs",
-						parentRelationField: "RelatedStrategyObjective",
-						RelationField: "Title",
-						RelationFieldType: "Text", 
-						subRelation: {
-						  level: 3,
-						  listName: "GoalStrategy",
-						  parentRelationField: "RelatedStrategy",
-						  RelationField: "Title",
-						  RelationFieldType: "Text",
-						},
-					  },
-					  // subRelation: {
-					  //   level: 2,
-					  //   listName: "",
-					  //   subRelation: {
-					  //     level: 3,
-					  //     listName: "",
-					  //   },
-					  // },
-					},
-				  ],
+					],
 				},
-			  },
+			},
 			// {
 			// 	Role: "KPIOwner",
 			// 	groupsName: ["KPI Owners"],
@@ -3601,7 +3682,7 @@ var Access_Project_Info_Request = {
 		}
 
 		//should uncomment when need to applt the validation on milstones every month for proj and every 3 months for initiative
-		debugger
+
 		if (istherePCODE && projectStartToValidation) {
 			if (USERlistkey == 'milestones' && isNew) {
 				console.log("YOU Can creat a milestone")
@@ -3788,7 +3869,7 @@ var Access_Project_Info_Request = {
 			}
 			//
 			else if (isShowAll) {
-				debugger
+
 				//
 				///////Ghufran Listing Query
 				//if on listing pages other then projects and its child data (risks, issues...)
@@ -3796,7 +3877,7 @@ var Access_Project_Info_Request = {
 					// vrop can't see goal strategy now as userguide
 					AccessQuery =
 						"<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">vision</Value></Eq></And></Where></Query></View>";
-				} 
+				}
 				// else if (USERisListing 
 				// 	&& USERlistkey == "mainkpi"
 				// 	) {
@@ -3871,7 +3952,7 @@ var Access_Project_Info_Request = {
 					SubSectorInitiativeAccessQuery = SectorHeadQuery;
 					//
 				} else if (
-					(isSPMAdmin && USERisListing && USERlistkey == "sos") 
+					(isSPMAdmin && USERisListing && USERlistkey == "sos")
 					// ||
 					// (isSPMTeam && USERisListing && USERlistkey == "sos")
 				) {
@@ -4025,7 +4106,7 @@ var Access_Project_Info_Request = {
 		// 		"</Where></Query></View>"
 		// 	);
 		// }
-		 else if (isPSponsor) {
+		else if (isPSponsor) {
 			camlQuery.set_viewXml(
 				"<View><Query><Where>" +
 				"<And>" +
@@ -4593,7 +4674,7 @@ window.Get_Initiative_Info_Request = {
 		}
 
 		console.log("USER initiatative")
-		debugger
+
 		//should uncomment when need to applt the validation on milstones every month for proj and every 3 months for initiative
 		if (isthereICODE && initiativeStartToValidation) {
 			if (USERlistkey == 'initiativemilestones' && isNew) {
@@ -5918,11 +5999,12 @@ function initiateDataLevelAccess() {
 		if (myRoleConfig[0].hasOwnProperty("dataFilter")) {
 			isRoleDataLevelAccess = true;
 			myRoleConfig[0].dataFilter.hierarchies.forEach((el, i, a) => {
+
 				let accessConditions = el.accessConditions;
 				let isListConditional1 = el.listName == currentMainList;
 				let isListConditional2 = el.subRelation.listName == currentMainList;
-				let isListConditional3 =
-					el.subRelation.subRelation.listName == currentMainList;
+				let isListConditional3 = el.subRelation.subRelation.listName == currentMainList;
+				let isListConditional4 = (el.subRelation.subRelation.subRelation ? el.subRelation.subRelation.subRelation.listName == currentMainList : false);
 				if (isListConditional1) {
 					data_Level1_Access.buildCamlQuery(
 						el.listName,
@@ -5944,6 +6026,14 @@ function initiateDataLevelAccess() {
 						el.listName,
 						accessConditions,
 						3,
+						i
+					);
+					throw BreakException;
+				} else if (isListConditional4) {
+					data_Level1_Access.buildCamlQuery(
+						el.listName,
+						accessConditions,
+						4,
 						i
 					);
 					throw BreakException;
@@ -6084,7 +6174,7 @@ let data_Level1_Access = {
 				data_Level1_Access.g.hierarchyIndex
 			].subRelation;
 		let fieldName = secondLevelConfig.parentRelationField;
-		debugger
+
 		while (listItemEnum.moveNext()) {
 			console.log("LEVEL ONE INSIDE WHILE")
 			var oListItem = listItemEnum.get_current();
@@ -6165,6 +6255,7 @@ let data_Level2_Access = {
 	// The main Initialization function
 	init: function (dataListName) {
 		var clientContext = new SP.ClientContext.get_current();
+		debugger
 		var oList = clientContext.get_web().get_lists().getByTitle(dataListName);
 		var camlQuery = new SP.CamlQuery();
 		camlQuery.set_viewXml(data_Level2_Access.g.dataLevelQuery);
@@ -6242,7 +6333,16 @@ let data_Level2_Access = {
 				</View>`;
 				data_Level2_Access.g.dataLevelQuery = queryBody;
 				dataLevelAccessQuery = queryBody;
+				//add it  to handle 4 th level query
+				data_Level3_Access.g.dataLevelQuery = queryBody;
+
+
+				debugger
+
 				console.log("Data 3rd level access query", queryBody);
+				if (data_Level1_Access.g.dataLevel > 3) {
+					data_Level3_Access.init(listName);
+				}
 			}
 		});
 	},
@@ -6261,6 +6361,111 @@ let data_Level2_Access = {
 };
 
 
+let data_Level3_Access = {
+	// The main Initialization function
+	init: function (dataListName) {
+		debugger
+		var clientContext = new SP.ClientContext.get_current();
+		var oList = clientContext.get_web().get_lists().getByTitle(dataListName);
+		var camlQuery = new SP.CamlQuery();
+		camlQuery.set_viewXml(data_Level3_Access.g.dataLevelQuery);
+		data_Level3_Access.g.collListItem = oList.getItems(camlQuery);
+		clientContext.load(data_Level3_Access.g.collListItem);
+		clientContext.executeQueryAsync(
+			Function.createDelegate(this, data_Level3_Access.onSuccess),
+			Function.createDelegate(this, data_Level3_Access.onError)
+		);
+	},
+	onSuccess: function (sender, args) {
+		var collListItem = data_Level3_Access.g.collListItem;
+		console.log(collListItem);
+		var listItemEnum = collListItem.getEnumerator();
+
+		if (collListItem.getEnumerator().$2J_0 > 0) {
+			//check if any items are returned we can use .getEnumerator().moveNext() //true
+		}
+		debugger
+		let fourthLevelConfig =
+			myRoleConfig[0].dataFilter.hierarchies[
+				data_Level1_Access.g.hierarchyIndex
+			].subRelation.subRelation.subRelation;
+
+		let fieldName = fourthLevelConfig.parentRelationField;
+		while (listItemEnum.moveNext()) {
+			var oListItem = listItemEnum.get_current();
+			let itemCode = oListItem.get_item(fieldName);
+			data_Level3_Access.g.relationFieldData.push(itemCode);
+		}
+
+		//check if there is no item in relationFieldData push null to avoid the keep loading err
+		if (data_Level3_Access.g.relationFieldData.length == 0) {
+			data_Level3_Access.g.relationFieldData.push(null);
+		}
+		debugger
+		data_Level3_Access.dynamicCamlQueryBuilder(
+			fourthLevelConfig,
+			data_Level3_Access.g.relationFieldData
+		);
+	},
+	//currenty handles one field not more
+	dynamicCamlQueryBuilder: function (levelConfig, valuesArray) {
+		debugger
+		let listName = levelConfig.listName;
+		let fieldToQuery = levelConfig.RelationField;
+		let fieldType = levelConfig.RelationFieldType;
+		let level = levelConfig.level;
+		let whereBody = ``,
+			queryBody = ``,
+			whereBodyFinal = ``;
+		//dynamic query building
+		whereBody += `<In><FieldRef Name="${fieldToQuery}" /><Values>`;
+		//handle case of filters on pages
+		dataLevelAccessChoicesForFilters = [];
+		dataLevelAccessChoicesForFilters.push({
+			internalName: fieldToQuery,
+			Type: fieldType,
+			Values: valuesArray,
+		});
+		valuesArray.forEach((el, i, a) => {
+			//only one choice
+			whereBody += `<Value Type="${fieldType}">${el}</Value>`;
+			//Finish Line, make last changes and build query
+			if (i == valuesArray.length - 1) {
+				whereBody += `</Values></In>`;
+				whereBody = whereBody.replaceAll(
+					`Type="date"`,
+					`IncludeTimeValue="TRUE" Type="DateTime"`
+				);
+				whereBodyFinal = `<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>${whereBody}
+					</And></Where>`;
+				queryBody = `<View>
+						<Query>
+						${whereBodyFinal}
+						<OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
+						</Query>
+					</View>`;
+				data_Level3_Access.g.dataLevelQuery = queryBody;
+				dataLevelAccessQuery = queryBody;
+
+
+				console.log("Data 4rd level access query", queryBody);
+				debugger
+			}
+		});
+	},
+	onError: function (sender, args) {
+		console.log(
+			"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+		);
+	},
+	// Global variables
+	g: {
+		dataLevelQuery: ``,
+		fieldsConditionConfig: [],
+		relationField: ``,
+		relationFieldData: [],
+	},
+}
 
 ///////////////////////////////////
 
