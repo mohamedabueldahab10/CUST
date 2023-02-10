@@ -108,7 +108,10 @@ window.Edit_Data_Request = {
     if (listkey == 'kpiequations') {
       //  (!isAdmin || !isSPMTeam )? window.location = _spPageContextInfo.webAbsoluteUrl : '';
 
-      if (isAdmin || isMinister || isBITeam || isSPMTeam || isPerformanceLeader || isSPMAdmin || isVROP || isLMSP) {
+      if (isAdmin || isMinister || isBITeam
+        // || isSPMTeam 
+        
+        || isPerformanceLeader || isSPMAdmin || isVROP || isLMSP) {
       } else {
         window.location = _spPageContextInfo.webAbsoluteUrl
       }
@@ -329,7 +332,9 @@ window.Edit_Data_Request = {
     $('[data-editableby]').each(function () {
       let keyOwner = $(this).data('editableby');
       let itemOwner = oListItem.get_item(keyOwner) ? oListItem.get_item(keyOwner).get_lookupValue() : null;
-      let isItDisabled = (itemOwner != UserN.Title) && !isAdmin && !isMinister && !isBITeam && !isSPMTeam ? true : false;
+      let isItDisabled = (itemOwner != UserN.Title) && !isAdmin && !isMinister && !isBITeam
+      //  && !isSPMTeam
+        ? true : false;
       $(this).find('>*').prop('disabled', isItDisabled);
     });
     $("input[type=date]:not([minimumdate=undefined])").each(function () {
@@ -3191,9 +3196,9 @@ window.ProjectInitiativeDelevrable = {
 
     // $("#RelatedInitiativeDeliverable").prop("disabled", false);
 
-    if (isDU || isPManager || isInManager) { // to disabled the checkbox for this role
-      isDisabled = 'disabled'
-    }
+    // if (isDU || isPManager || isInManager) { // to disabled the checkbox for this role
+    //   isDisabled = 'disabled'
+    // }
     if (!isView) {
       var multiSelectHtml =
         '<li class="dropdown ul-bullet-remove">' +

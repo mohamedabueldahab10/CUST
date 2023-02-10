@@ -33,10 +33,10 @@ var projectTypeFilterQuery = '', typeClicked = 'Internal';
 
 var taskClicked = 'relatedTasks', allTasksClicked = false, getNewFilterTask = false, isViewMoreClicked = false;
 
-var emptyData = require('../../../HelperRessources/img/empty-data.png');
-var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
-// var emptyData = ''
-// var exportExcel = ''
+// var emptyData = require('../../../HelperRessources/img/empty-data.png');
+// var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
+var emptyData = ''
+var exportExcel = ''
 //all data filter array
 allDataFilterArr = []
 //
@@ -425,6 +425,7 @@ window.ListingData = {
   init: function () {
 
     if (!isTasks && originalstate) {
+      debugger
       if (isRoleDataLevelAccess && (!UserICode && !USERPCODE && isEmptyFilter)) {
         PQuery = dataLevelAccessQuery;
       } else {
@@ -1102,23 +1103,26 @@ window.ListingData = {
         } else {
           PQueryFilteration = '<And><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And>';
         }
-      } else if (isInManager || isInOwner) {
-        if (listkey == 'projects') {
-          if (isInManager) {
-            PQueryFilteration = '<Eq><FieldRef Name="ProjectManager" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq></And>'
-          } else {
-            PQueryFilteration = '<Eq><FieldRef Name="ProjectOwner" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq></And>'
-          }
-        } else if (listkey == 'initiatives') {
-          if (isInManager) {
-            PQueryFilteration = '<Eq><FieldRef Name="InitiativePM" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq></And>';
-          } else {
-            PQueryFilteration = '<Eq><FieldRef Name="InitiativeOwner" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq></And>';
-          }
-        } else {
-          PQueryFilteration = ''
-        }
-      } else if (isDU || isGeneralManager || isMinisterAssistant || isSectorHead || isViceMinister || isSubSectorHead) {
+      } 
+      // else if (isInManager || isInOwner) {
+      //   if (listkey == 'projects') {
+      //     if (isInManager) {
+      //       PQueryFilteration = '<Eq><FieldRef Name="ProjectManager" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq></And>'
+      //     } else {
+      //       PQueryFilteration = '<Eq><FieldRef Name="ProjectOwner" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq></And>'
+      //     }
+      //   } else if (listkey == 'initiatives') {
+      //     if (isInManager) {
+      //       PQueryFilteration = '<Eq><FieldRef Name="InitiativePM" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq></And>';
+      //     } else {
+      //       PQueryFilteration = '<Eq><FieldRef Name="InitiativeOwner" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq></And>';
+      //     }
+      //   } else {
+      //     PQueryFilteration = ''
+      //   }
+      // }
+      
+      else if (isDU || isGeneralManager || isMinisterAssistant || isSectorHead || isViceMinister || isSubSectorHead) {
         if (listkey == 'mainkpi' || listkey == 'sos' || listkey == 'initiatives' || USERlistkey == 'projects') {
 
           PQueryFilteration = "<In><FieldRef Name=\"" +
@@ -1162,8 +1166,13 @@ window.ListingData = {
 
         if (isVROP && USERisListing && USERlistkey == 'goalstrategy') {
           PQuery = '<View><Query><Where><Eq><FieldRef Name="Types" /><Value Type="Choice">vision</Value></Eq></Where></Query></View>';
-        } else if (!isDU && !isGeneralManager && !isMinisterAssistant && !isSectorHead && !isViceMinister && !isSubSectorHead && USERisListing && USERlistkey == 'mainkpi') {
-          if (!isAdmin && !isMinister && !isBITeam && !isSPMTeam && !isVROP && !isSPMAdmin && !isSPMO) {
+        } else if (!isDU && !isGeneralManager && !isMinisterAssistant && !isSectorHead && !isViceMinister && !isSubSectorHead && USERisListing
+          //  && USERlistkey == 'mainkpi'
+           ) {
+          if (!isAdmin && !isMinister && !isBITeam
+            //  && !isSPMTeam
+             
+             && !isVROP && !isSPMAdmin && !isSPMO) {
             PQuery = '<View><Query><Where><Or><Eq><FieldRef Name="PerformanceLeader" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq><Eq><FieldRef Name="Owner" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq></Or></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>';
           }
           else if (isVROP) {
@@ -1189,11 +1198,12 @@ window.ListingData = {
         else if ((isDU || isGeneralManager || isMinisterAssistant || isSectorHead || isViceMinister || isSubSectorHead) && (USERlistkey == 'sos' || USERlistkey == 'mainkpi' || USERlistkey == 'projects' || listkey == 'initiatives')) {
           // && USERlistkey == 'sos' || USERlistkey == 'mainkpi'
           PQuery = SectorHeadQuery
-        } else if (isPManager || isPOwner || isInManager || isInOwner) {
-          if (!isTasks) { // task has special query that related to user
-            PQuery = AccessQuery
-          }
         }
+        // else if (isPManager || isPOwner || isInManager || isInOwner) {
+        //   if (!isTasks) { // task has special query that related to user
+        //     PQuery = AccessQuery
+        //   }
+        // }
         else {
           if ((PCODE != null && PCODE != '') || (ICODE != null && ICODE != '')) { // add and in query to handle the correct query if there is PCODE or ICODE
             if (listkey == 'initiativemilestones') { // to arrange the card depends on planned completed Date
