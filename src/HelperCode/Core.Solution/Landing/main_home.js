@@ -100,6 +100,8 @@ if (
 }
 
 window.UProjects = [];
+window.RisksCountsForRSupport =0;
+window.issueCountsForRSupport = 0;
 var iconstagesm = require("../../../HelperRessources/img/icon-stage-sm.png");
 var iconstatustimesm = require("../../../HelperRessources/img/icon-status-time-sm.png");
 var calendar = require("../../../HelperRessources/img/calendar.svg");
@@ -1522,6 +1524,7 @@ var Risks_Info_Request = {
       riskTitle;
     // ExistVar2=UProjects.includes(oListItem.get_item('ProjectCode'));
     //console.log(UProjects.includes(oListItem.get_item('ProjectCode')));
+    var riskcountForrsprt =0;
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       ExistVar2 = UProjects.includes(oListItem.get_item("ProjectCode"));
@@ -1566,6 +1569,7 @@ var Risks_Info_Request = {
           "</div>" +
           "</li>";
         RSupport++;
+        riskcountForrsprt++;
       }
     }
 
@@ -1585,6 +1589,7 @@ var Risks_Info_Request = {
     $("div#accordionRequiredSupport > .card:nth-child(3) ul.list-group").html(
       riskshtml
     );
+    RisksCountsForRSupport = riskcountForrsprt;
     for (var i = 0; i < UProjects.length; i++) {
       var nor = Riskarray.filter((v) => v === UProjects[i]).length;
       $('.inner-data2 .inner-val[data-prname="' + UProjects[i] + '"]').text(
@@ -1633,6 +1638,7 @@ var Issues_Info_Request = {
       issueTitle,
       ExistVar1;
 
+      var issuecountForrsprt=0;
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       ExistVar1 = UProjects.includes(oListItem.get_item("ProjectCode"));
@@ -1664,6 +1670,7 @@ var Issues_Info_Request = {
           "</div>" +
           "</li>";
         RSupport++;
+        issuecountForrsprt++;
       }
 
       //
@@ -1688,6 +1695,8 @@ var Issues_Info_Request = {
     $("div#accordionRequiredSupport > .card:nth-child(2) ul.list-group").html(
       issueshtml
     );
+    issueCountsForRSupport = CurrentUserTasksCount + RisksCountsForRSupport + issuecountForrsprt;
+    $("span.Rsupprot").text(issueCountsForRSupport);
     for (var i = 0; i < UProjects.length; i++) {
       var nor = Issuearray.filter((v) => v === UProjects[i]).length;
       $('.inner-data1 .inner-val[data-prname="' + UProjects[i] + '"]').text(

@@ -7,6 +7,7 @@ window.isRoleDataLevelAccess = false;
 window.currentMainList = "";
 window.projectActualBudget = 0;
 window.initiativeActualBudget = 0;
+window.CurrentUserTasksCount=0;
 // added for CR module
 //! Change Request
 (window.crListKey = USERlistkey == "changerequest" ? true : false),
@@ -5042,7 +5043,8 @@ var Notifications_Info_Request = {
 		$(
 			"div#accordionRequiredSupportNotifications > .card:nth-child(4) ul.list-group"
 		).html(notificationshtml);
-		$("span.Rsupprot").text(UserNTasks + NRisks + NIssues + NNotifications);
+		// $("span.Rsupprot").text(UserNTasks + NRisks + NIssues + NNotifications);
+		
 
 		$("span.bell-value").text(NTasks + NRisks + NIssues + NNotifications);
 	},
@@ -5181,7 +5183,7 @@ var Tasks_Info_Request_User = {
 
 			if (tasktype == "Approval") {
 				mycount++;
-				if (mycount <= 10) {
+				// if (mycount <= 10) {
 					HPtaskshtml.push(
 						'<li class="list-group-item">' +
 						'<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
@@ -5211,10 +5213,10 @@ var Tasks_Info_Request_User = {
 						"</li>"
 					);
 					UserNTasks = ++UserNTasks;
-				}
+				// }
 			} else {
 				mycount++;
-				if (mycount <= 10) {
+				// if (mycount <= 10) {
 					HPtaskshtml.push(
 						'<li class="list-group-item">' +
 						'<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
@@ -5244,7 +5246,7 @@ var Tasks_Info_Request_User = {
 						"</li>"
 					);
 					UserNTasks = ++UserNTasks;
-				}
+				// }
 			}
 			if (wfname == "Idea") {
 				if (delegateMessage) {
@@ -5471,9 +5473,13 @@ var Tasks_Info_Request_User = {
 			HPtaskshtml.push("<p>" + No_Data + "</p>");
 		}
 		//
+		
 		$("div#accordionRequiredSupport > .card:nth-child(1) ul.list-group").html(
 			HPtaskshtml.join("")
 		); //HP Cards
+		CurrentUserTasksCount= HPtaskshtml.length;
+		// $("span.Rsupprot").text(HPtaskshtml.length);
+		
 		$(
 			"div#accordionRequiredSupportNotifications > .card:nth-child(1) ul.list-group"
 		).html(taskshtml.join(""));
