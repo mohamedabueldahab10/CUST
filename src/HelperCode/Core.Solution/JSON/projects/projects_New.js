@@ -566,6 +566,23 @@ var Information_Form = [
           ],
         },
       },
+      {
+        InternalName: 'IsZeroBudgetProj',
+        DisplayName: 'هل هو مشروع صفرى؟',
+        DisplayNameEn: 'Is Zero Budget Project ?',
+        validation: 'required',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'yes', value: 'true' },
+            { display: 'no', value: 'false' },
+          ],
+        },
+        toggleValues: [
+          // { value: 'yes', fields: [] }, //we can put more than 1 field
+          { value: 'no', fields: ['FundingSection','BudgetSection','TenderSection'] },
+        ],
+      },
 
       // {
       //     "InternalName": "PlannedStartDate",
@@ -758,6 +775,10 @@ var Information_Form = [
     labelEn: 'Funding',
     description: '',
     descriptionEn: '',
+    toggleName: 'FundingSection',
+    // sectiontype: 'master',
+    // layout: 'table',
+    targetlist: 'Funding',
     subFields: [
       {
         InternalName: 'FundingSources',
@@ -779,13 +800,17 @@ var Information_Form = [
           ],
         },
       },
-    ]
+    ],
   },
   {
     label: 'بند الميزانية',
     labelEn: 'Budget Item',
     description: '',
     descriptionEn: '',
+    toggleName: 'BudgetSection',
+    // sectiontype: 'master',
+    // layout: 'table',
+    targetlist: 'BudgetItem',
     subFields: [
       {
         InternalName: 'PRCode',
@@ -980,6 +1005,10 @@ var Information_Form = [
     labelEn: 'Tendering and Contracting',
     description: '',
     descriptionEn: '',
+    toggleName: 'TenderSection',
+    // sectiontype: 'master',
+    // layout: 'table',
+    targetlist: 'TenderSection',
     subFields: [
       {
         InternalName: 'PlannedOfferingDate',
