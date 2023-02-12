@@ -763,13 +763,13 @@ window.ListInfo = {
               }
             }
 
-            if (isSPMAdmin) {
-              if (listkey == "sos") {
-                $("#Types").val("sub");
-                $("#Types").prop("disabled", true);
-                $("#RelatedObjective").parent().css("display", "block");
-              }
-            }
+            // if (isSPMAdmin) {
+            //   if (listkey == "sos") {
+            //     $("#Types").val("sub");
+            //     $("#Types").prop("disabled", true);
+            //     $("#RelatedObjective").parent().css("display", "block");
+            //   }
+            // }
             if (listkey == "benefits" && ICODE && (isNew || isEdit || isView)) {
               //hide Initiative field if we are in the Initiative
               $("#InitiativeCode").parent().css("display", "none");
@@ -3297,7 +3297,8 @@ window.ListInfo = {
             "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
         }
         //ghufran User dropdown security
-        if (isEPMO || isSPMAdmin 
+        if (isEPMO
+          // || isSPMAdmin 
           //|| isSPMTeam
           
           ) {

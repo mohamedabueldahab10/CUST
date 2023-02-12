@@ -53,9 +53,10 @@ var MainKPIs_Info_Request = {
     // var oList = clientContext.get_web().get_lists().getByTitle("MainKpi"); //list name
     var oList = clientContext.get_web().get_lists().getByTitle("KPIResults"); //list name
     var camlQuery = new SP.CamlQuery(); //set query to return data
-    console.log('mmmmmmmm')
+    console.log('in kpi result func')
 
 
+    
     if (isKpiCode) {
 
       var query = `<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name=\'KPI\' /><Value Type=\'Text\'>` + wfKpiCode + `</Value></Eq><And><Eq><FieldRef Name=\'Year\' /> <Value Type=\'Text\'>` + kpiYear + `</Value ></Eq><Eq><FieldRef Name=\'PeriodType\' /><Value Type=\'Choice\'>` + filteredValue + `</Value></Eq></And></And></And></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>`
@@ -79,11 +80,15 @@ var MainKPIs_Info_Request = {
 
       if (isRoleDataLevelAccess) {
 
+        console.log(RolePQuery,"RolePQuery")
+
         camlQuery.set_viewXml(RolePQuery)
         // isRoleDataLevelAccess = false; 
       }
       else if (filteredValue == "year" || filteredValue === "quarter" || filteredValue == "midterm" || filteredValue == 'monthly') {
-        if (isGeneralManager || isDU || isMinisterAssistant || isViceMinister || isSectorHead || isSubSectorHead) {
+        if (isGeneralManager
+           //|| isDU 
+           || isMinisterAssistant || isViceMinister || isSectorHead || isSubSectorHead) {
           camlQuery.set_viewXml('<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name=\'PeriodType\' /> <Value Type="Choice">' + filteredValue + "</Value></Eq><And><Eq><FieldRef Name=\'Year\' /> <Value Type=\'Text\'>" + kpiYear + "</Value ></Eq><Eq><FieldRef Name=\'" + SecondLevel_FirstLevel_Field + "\' /> <Value Type=\'Text\'>" + UserAccessSectorCode + "</Value ></Eq></And></And></And></Where ><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query ></View >")
         }
         else {
@@ -182,7 +187,6 @@ var MainKPIs_Info_Request = {
 
 
     while (listItemEnum.moveNext()) {
-      console.log("INSIDE WHILE")
       //loop through items, handle/get data/fields
       var oListItem = listItemEnum.get_current();
       var performanceleader = oListItem.get_item("PerformanceLeader")
@@ -202,24 +206,25 @@ var MainKPIs_Info_Request = {
       var SectorCode = oListItem.get_item("Sector") ? oListItem.get_item("Sector") : '';
       //
 
-      if (
-        (!isAdmin && !isMinister && !isBITeam && !isSectorHead && !isViceMinister && !isVROP && !isSPMAdmin
-          //  && !isSPMTeam
-          && !isLMSP && !isPerformanceLeader && !isMinisterAssistant && !isDU && !isGeneralManager && !isSubSectorHead && (performanceleader == UserN.Title))
-        || isAdmin
-        || isSPMAdmin
-        || isSPMTeam
-        || isVROP
-        || isLMSP
-        || (isPerformanceLeader && (performanceleader1 == UserN.Title || performanceleader2 == UserN.Title))
-        || isMinister
-        || isBITeam
-        || ((isGeneralManager || isSubSectorHead) && (SubectorCode == UserAccessSectorCode))
-        || ((isDU || isMinisterAssistant || isViceMinister || isSectorHead) && (SectorCode == UserAccessSectorCode))) {
+      // if (
+      //   (!isAdmin && !isMinister && !isBITeam && !isSectorHead && !isViceMinister && !isVROP && !isSPMAdmin
+      //     //  && !isSPMTeam
+      //     && !isLMSP && !isPerformanceLeader && !isMinisterAssistant && !isDU && !isGeneralManager && !isSubSectorHead && (performanceleader == UserN.Title))
+      //   || isAdmin
+      //   || isSPMAdmin
+      //   || isSPMTeam
+      //   || isVROP
+      //   || isLMSP
+      //   || (isPerformanceLeader && (performanceleader1 == UserN.Title || performanceleader2 == UserN.Title))
+      //   || isMinister
+      //   || isBITeam
+      //   || ((isGeneralManager || isSubSectorHead) && (SubectorCode == UserAccessSectorCode))
+      //   || ((isDU || isMinisterAssistant || isViceMinister || isSectorHead) && (SectorCode == UserAccessSectorCode))) {
+        
+      
         countRec = countRec + 1;
         //sample getting field data  : oListItem.get_item('InternalName')
         var name = oListItem.get_item("Name") || UserNo_Data;
-        console.log(name, "name name name")
 
         var category = oListItem.get_item("Category") || UserNo_Data;
         var relatedInstrument =
@@ -694,10 +699,9 @@ var MainKPIs_Info_Request = {
             "</tbody>"
           );
         }
-      }
+     // }
     }
 
-    console.log(Operational_Array, "Operational_Array")
 
     if (isKpiCode && firstRender) {
       $('.filterTarget').hide()
@@ -742,7 +746,6 @@ var MainKPIs_Info_Request = {
 
     changeResources();
     $(".operatPPicker").each(function (i) {
-      console.log(i, 'i');
       var mp = new MyPeoplePicker();
       mp.init($(this).attr("id"), {
         PrincipalAccountType: "User",
@@ -793,12 +796,13 @@ window.checkTargetStatusHtml = setInterval(function () {
   } else {
     MainKPIs_Info_Request.preinit();
   }
-}, 777); //initiate the call
+}, 2000); //initiate the call
 
 
 var RoleDataLevelBuildQuery = {
   init: function () {
 
+    
 
     var FilterChoicesRole = Array.from(dataLevelAccessChoicesForFilters)
 
@@ -855,6 +859,7 @@ var RoleDataLevelBuildQuery = {
             Where_Body += '<Value Type="' + FilterChoicesRole[i].Type + '">' + FilterChoicesRole[i].Values[j] + '</Value>';
           }
           Where_Body += '</Values></In>';
+      
         }
       }
       //Finish Line, make last changes and build query
@@ -887,10 +892,11 @@ var RoleDataLevelBuildQuery = {
           '</View>';
         RolePQuery = Query_Body;
 
+        console.log(RolePQuery,"ROLE PQUERY BENFOOOOORE")
+
         MainKPIs_Info_Request.preinit();
 
 
-        console.log(Query_Body, "Query_Body Query_Body Query_Body  jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
 
       }
     }
@@ -952,7 +958,9 @@ var Get_All_Dynamic_Filter = {
     var camlQuery = new SP.CamlQuery();
 
     var query = "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>"
-    if (isGeneralManager || isDU || isMinisterAssistant || isViceMinister || isSectorHead || isSubSectorHead) {
+    if (isGeneralManager
+       //|| isDU 
+       || isMinisterAssistant || isViceMinister || isSectorHead || isSubSectorHead) {
       // UserAccessSectorCode = 'DP-001';
 
       SectorHeadQuery =
@@ -1080,7 +1088,6 @@ var Build_My_Filter = {
           return a.code === departmentName
         });
         if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
-          console.log(departmentNameArr, "departmentNameArr")
           if (departmentNameArr.length) {
             departmentName = departmentNameArr[0].name;
           }
@@ -1208,7 +1215,6 @@ var Build_My_Filter = {
       if (isRoleDataLevelAccess) {
 
         FilterChoices = Array.from(dataLevelAccessChoicesForFilters)
-        console.log(FilterChoices, "FilterChoices FilterChoices FilterChoices")
       }
       $(".filterTarget .dropdown-menu").each(function () {
         //looping through filters
@@ -1233,7 +1239,7 @@ var Build_My_Filter = {
         }
       });
 
-      debugger
+      
       if (FilterChoices.length) {
         Where_Body = ""
         Query_Body = ""
@@ -1456,7 +1462,6 @@ var Build_My_Filter = {
       var currentkpiYear = kpiYear
       kpiYear = Number(kpiYear) - 1
       $('.yeartitle').html(kpiYear)
-      console.log(Where_Body, "Where_Body dddddddddddddddddddddddddd")
 
       if (isRoleDataLevelAccess) {
         // Where_Body = Where_Body.replace('<Value Type="Text">' + currentkpiYear + '</Value>', '<Value Type="Text">' + kpiYear + '</Value>')
@@ -1467,7 +1472,6 @@ var Build_My_Filter = {
         Where_Body = Where_Body.replace(currentkpiYear, kpiYear)
 
       }
-      console.log(Where_Body, "Where_Body dddddddddddddddddddddddddd")
 
       MainKPIs_Info_Request.init(Where_Body)
     })
@@ -2021,19 +2025,13 @@ var Target_Details_Submit = {
       $(this)
         .find(".myInput, .instPPicker, .operatPPicker")
         .each(function () {
-          console.log(
-            "ListName == ",
-            CurrList,
-            "Field Name == ",
-            $(this).attr("data-internal")
-          );
+
           if ($(this).attr("type") == "picker") {
             if ($(this).find("span.sp-peoplepicker-userSpan").length) {
               var dataInternal = $(this).attr("data-internal");
               var sid = $(this)
                 .find("span.sp-peoplepicker-userSpan")
                 .attr("sid");
-              console.log("sid == " + sid);
               var PPValue =
                 sid == undefined ? "" : SP.FieldUserValue.fromUser(sid);
               Target_Details_Submit.g.oListItem.set_item(dataInternal, PPValue);
@@ -2048,7 +2046,6 @@ var Target_Details_Submit = {
               $(this).attr("data-internal"),
               $(this).val()
             );
-            console.log($(this).attr("data-internal"), $(this).val());
           }
         });
 

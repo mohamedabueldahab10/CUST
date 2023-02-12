@@ -646,13 +646,13 @@ window.Edit_Data_Request = {
         $('#Types').prop('disabled', true);
       }
     }
-    if (isSPMAdmin) {
-      if (listkey == "sos") {
-        $('#Types').val('sub');
-        $('#Types').prop('disabled', true);
-        $("#RelatedObjective").parent().css("display", "block");
-      }
-    }
+    // if (isSPMAdmin) {
+    //   if (listkey == "sos") {
+    //     $('#Types').val('sub');
+    //     $('#Types').prop('disabled', true);
+    //     $("#RelatedObjective").parent().css("display", "block");
+    //   }
+    // }
 
     ///////////////////////////
     // to handle the title change and the master details section show and hide

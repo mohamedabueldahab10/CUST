@@ -1103,7 +1103,7 @@ window.ListingData = {
         } else {
           PQueryFilteration = '<And><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And>';
         }
-      } 
+      }
       // else if (isInManager || isInOwner) {
       //   if (listkey == 'projects') {
       //     if (isInManager) {
@@ -1121,29 +1121,30 @@ window.ListingData = {
       //     PQueryFilteration = ''
       //   }
       // }
-      
-      else if (isDU || isGeneralManager || isMinisterAssistant || isSectorHead || isViceMinister || isSubSectorHead) {
-        if (listkey == 'mainkpi' || listkey == 'sos' || listkey == 'initiatives' || USERlistkey == 'projects') {
 
-          PQueryFilteration = "<In><FieldRef Name=\"" +
-            SecondLevel_FirstLevel_Field +
-            '" /><Values>';
+      // else if (isDU || isGeneralManager || isMinisterAssistant || isSectorHead || isViceMinister || isSubSectorHead) {
+      //   if (listkey == 'mainkpi' || listkey == 'sos' || listkey == 'initiatives' || USERlistkey == 'projects') {
 
-          PQueryFilteration +=
-            '<Value Type="' +
+      //     PQueryFilteration = "<In><FieldRef Name=\"" +
+      //       SecondLevel_FirstLevel_Field +
+      //       '" /><Values>';
 
-            SecondLevel_FirstLevel_FieldType +
-            '">' +
-            UserAccessSectorCode +
-            "</Value>";
+      //     PQueryFilteration +=
+      //       '<Value Type="' +
 
-          PQueryFilteration += "</Values></In></And>";
-          console.log(PQueryFilteration, 'PQueryFilterationPQueryFilteration')
+      //       SecondLevel_FirstLevel_FieldType +
+      //       '">' +
+      //       UserAccessSectorCode +
+      //       "</Value>";
 
-        } else {
-          PQueryFilteration = '';
-        }
-      } else {
+      //     PQueryFilteration += "</Values></In></And>";
+      //     console.log(PQueryFilteration, 'PQueryFilterationPQueryFilteration')
+
+      //   } else {
+      //     PQueryFilteration = '';
+      //   }
+      // }
+      else {
 
         PQueryFilteration = '';
       }
@@ -1162,63 +1163,69 @@ window.ListingData = {
           PQuery = '<View><Query><Where><In><FieldRef Name="ProjectCode" /><Values><Value Type="Text">' + PCODE + '</Value></Values></In></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
         } else if (ICODE != null && ICODE != '') {
           PQuery = '<View><Query><Where><In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
+        } else {
+          if (!isTasks) {
+            PQuery = '<View><Query><Where><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>' + PQueryFilteration + '</Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
+          }
         }
 
-        if (isVROP && USERisListing && USERlistkey == 'goalstrategy') {
-          PQuery = '<View><Query><Where><Eq><FieldRef Name="Types" /><Value Type="Choice">vision</Value></Eq></Where></Query></View>';
-        } else if (!isDU && !isGeneralManager && !isMinisterAssistant && !isSectorHead && !isViceMinister && !isSubSectorHead && USERisListing
-          //  && USERlistkey == 'mainkpi'
-           ) {
-          if (!isAdmin && !isMinister && !isBITeam
-            //  && !isSPMTeam
-             
-             && !isVROP && !isSPMAdmin && !isSPMO) {
-            PQuery = '<View><Query><Where><Or><Eq><FieldRef Name="PerformanceLeader" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq><Eq><FieldRef Name="Owner" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq></Or></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>';
-          }
-          else if (isVROP) {
-            PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="RelatedStrategyType" /><Value Type=\'Text\'>vision</Value></Eq></And></Where></Query></View>';
-          } else {
-            PQuery = AccessQuery // added it to return all cards in listing after clear filters
-          }
-        }
-        else if (!isDU && !isGeneralManager && !isMinisterAssistant && !isSectorHead && !isViceMinister && !isSubSectorHead && USERisListing && USERlistkey == 'initiatives') {
-          if (isVROE) {
-            PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type=\'Text\'>vision</Value></Eq></And></Where></Query></View>';
-          }
-          // else if (isEPMO) {
-          //   PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type=\'Text\'>strategically</Value></Eq></And></Where></Query></View>';
-          // }
-          else {
-            PQuery = AccessQuery // added it to return all cards in listing after clear filters
-          }
+        // if (isVROP && USERisListing && USERlistkey == 'goalstrategy') {
+        //   PQuery = '<View><Query><Where><Eq><FieldRef Name="Types" /><Value Type="Choice">vision</Value></Eq></Where></Query></View>';
+        // }
+        //  else if (!isDU && !isGeneralManager && !isMinisterAssistant && !isSectorHead && !isViceMinister && !isSubSectorHead && USERisListing
+        //   //  && USERlistkey == 'mainkpi'
+        //    ) {
+        //   if (!isAdmin && !isMinister && !isBITeam
+        //     //  && !isSPMTeam
 
-        } else if (isSPMAdmin && USERisListing && USERlistkey == 'sos') {
-          PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type="Choice">sub</Value></Eq></And></Where></Query></View>';
-        }
-        else if ((isDU || isGeneralManager || isMinisterAssistant || isSectorHead || isViceMinister || isSubSectorHead) && (USERlistkey == 'sos' || USERlistkey == 'mainkpi' || USERlistkey == 'projects' || listkey == 'initiatives')) {
-          // && USERlistkey == 'sos' || USERlistkey == 'mainkpi'
-          PQuery = SectorHeadQuery
-        }
-        // else if (isPManager || isPOwner || isInManager || isInOwner) {
-        //   if (!isTasks) { // task has special query that related to user
-        //     PQuery = AccessQuery
+        //      && !isVROP && !isSPMAdmin && !isSPMO) {
+        //     PQuery = '<View><Query><Where><Or><Eq><FieldRef Name="PerformanceLeader" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq><Eq><FieldRef Name="Owner" LookupId="TRUE" /><Value Type="Lookup"><UserID /></Value></Eq></Or></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>';
+        //   }
+        //   else if (isVROP) {
+        //     PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="RelatedStrategyType" /><Value Type=\'Text\'>vision</Value></Eq></And></Where></Query></View>';
+        //   }
+        //    else {
+        //     PQuery = AccessQuery // added it to return all cards in listing after clear filters
         //   }
         // }
-        else {
-          if ((PCODE != null && PCODE != '') || (ICODE != null && ICODE != '')) { // add and in query to handle the correct query if there is PCODE or ICODE
-            if (listkey == 'initiativemilestones') { // to arrange the card depends on planned completed Date
-              PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>' + PQueryFilteration + '</And></Where><OrderBy><FieldRef Name="PlannedCompletedDate" Ascending="False" /></OrderBy></Query></View>';
-            } else if (listkey == 'milestones') {
-              PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>' + PQueryFilteration + '</And></Where><OrderBy><FieldRef Name="PlannedDate" Ascending="False" /></OrderBy></Query></View>';
-            } else {
-              PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>' + PQueryFilteration + '</And></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
-            }
-          } else {
-            if (!isTasks) {
-              PQuery = '<View><Query><Where><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>' + PQueryFilteration + '</Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
-            }
-          }
-        }
+        // else if (!isDU && !isGeneralManager && !isMinisterAssistant && !isSectorHead && !isViceMinister && !isSubSectorHead && USERisListing && USERlistkey == 'initiatives') {
+        //   if (isVROE) {
+        //     PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type=\'Text\'>vision</Value></Eq></And></Where></Query></View>';
+        //   }
+        //   // else if (isEPMO) {
+        //   //   PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type=\'Text\'>strategically</Value></Eq></And></Where></Query></View>';
+        //   // }
+        //   else {
+        //     PQuery = AccessQuery // added it to return all cards in listing after clear filters
+        //   }
+
+        // } else if (isSPMAdmin && USERisListing && USERlistkey == 'sos') {
+        //   PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type="Choice">sub</Value></Eq></And></Where></Query></View>';
+        // }
+        // else if ((isDU || isGeneralManager || isMinisterAssistant || isSectorHead || isViceMinister || isSubSectorHead) && (USERlistkey == 'sos' || USERlistkey == 'mainkpi' || USERlistkey == 'projects' || listkey == 'initiatives')) {
+        //   // && USERlistkey == 'sos' || USERlistkey == 'mainkpi'
+        //   PQuery = SectorHeadQuery
+        // }
+        // // else if (isPManager || isPOwner || isInManager || isInOwner) {
+        // //   if (!isTasks) { // task has special query that related to user
+        // //     PQuery = AccessQuery
+        // //   }
+        // // }
+        // else {
+        //   if ((PCODE != null && PCODE != '') || (ICODE != null && ICODE != '')) { // add and in query to handle the correct query if there is PCODE or ICODE
+        //     if (listkey == 'initiativemilestones') { // to arrange the card depends on planned completed Date
+        //       PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>' + PQueryFilteration + '</And></Where><OrderBy><FieldRef Name="PlannedCompletedDate" Ascending="False" /></OrderBy></Query></View>';
+        //     } else if (listkey == 'milestones') {
+        //       PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>' + PQueryFilteration + '</And></Where><OrderBy><FieldRef Name="PlannedDate" Ascending="False" /></OrderBy></Query></View>';
+        //     } else {
+        //       PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>' + PQueryFilteration + '</And></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
+        //     }
+        //   } else {
+        //     if (!isTasks) {
+        //       PQuery = '<View><Query><Where><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>' + PQueryFilteration + '</Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
+        //     }
+        //   }
+        // }
 
 
         ListingData.init();
