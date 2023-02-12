@@ -1,3 +1,5 @@
+window.RisksCountsForRSupport =0;
+window.issueCountsForRSupport = 0;
 var ActualBudget = 0,
   SpendFromBudget = 0,
   EstimatedCost = 0,
@@ -1624,7 +1626,7 @@ var Risks_Info_Request = {
       riskID,
       riskTitle;
     // ExistVar2=UInitiatives.includes(oListItem.get_item('ProjectCode'));
-
+    var riskcountForrsprt = 0;
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       ExistVar2 = UInitiatives.includes(oListItem.get_item("InitiativeCode"));
@@ -1671,6 +1673,7 @@ var Risks_Info_Request = {
           "</div>" +
           "</li>";
         RSupport++;
+        riskcountForrsprt++;
       }
     }
 
@@ -1685,6 +1688,7 @@ var Risks_Info_Request = {
     $("div#accordionRequiredSupport > .card:nth-child(3) ul.list-group").html(
       riskshtml
     );
+    RisksCountsForRSupport = riskcountForrsprt;
     for (var i = 0; i < UInitiatives.length; i++) {
       var nor = Riskarray.filter((v) => v === UInitiatives[i]).length;
       $('.inner-data2 .inner-val[data-prname="' + UInitiatives[i] + '"]').text(
@@ -1734,7 +1738,7 @@ var Issues_Info_Request = {
       issueID,
       issueTitle,
       ExistVar1;
-
+    var issuecountForrsprt=0;
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       ExistVar1 = UInitiatives.includes(oListItem.get_item("InitiativeCode"));
@@ -1765,6 +1769,7 @@ var Issues_Info_Request = {
           "</div>" +
           "</li>";
         RSupport++;
+        issuecountForrsprt++;
       }
 
       //
@@ -1789,6 +1794,8 @@ var Issues_Info_Request = {
     $("div#accordionRequiredSupport > .card:nth-child(2) ul.list-group").html(
       issueshtml
     );
+    issueCountsForRSupport = CurrentUserTasksCount + RisksCountsForRSupport + issuecountForrsprt;
+    $("span.Rsupprot").text(issueCountsForRSupport);
     for (var i = 0; i < UInitiatives.length; i++) {
       var nor = Issuearray.filter((v) => v === UInitiatives[i]).length;
       $('.inner-data1 .inner-val[data-prname="' + UInitiatives[i] + '"]').text(
