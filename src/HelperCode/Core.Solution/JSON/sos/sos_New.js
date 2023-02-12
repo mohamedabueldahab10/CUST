@@ -181,14 +181,14 @@ var Information_Form = [
       {
         InternalName: 'RelatedPortfolio',
         DisplayNameEn: 'Related Portfolio',
-        ToggleName: 'RelatedPortfolio',
+        // ToggleName: 'RelatedPortfolio',
         DisplayName: 'المحفظة المرتبطة ',
         type: 'lookup',
         //from other list:
         source: 'Portfolio',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        display: 'none',
+        // display: 'none',
       },
       {
         InternalName: 'Sector',

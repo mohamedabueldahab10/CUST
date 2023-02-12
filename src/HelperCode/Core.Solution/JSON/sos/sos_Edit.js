@@ -181,7 +181,7 @@ var Information_Form = [
         source: 'Portfolio',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        display: 'none',
+        // display: 'none',
       },
       {
         InternalName: 'Sector',
