@@ -183,7 +183,7 @@ window.initiativeRequest = {
         if (
           // isDU ||
           // isMinisterAssistant ||
-          isViceMinister ||
+          //isViceMinister ||
           isSectorHead ||
           isSubSectorHead ||
           isGeneralManager

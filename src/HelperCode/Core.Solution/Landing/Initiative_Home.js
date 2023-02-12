@@ -1733,10 +1733,10 @@ var Milestones_Info_Request = {
     if (
       // isMinisterAssistant ||
       isSectorHead ||
-      isViceMinister ||
+      // isViceMinister ||
       isSubSectorHead ||
-      isGeneralManager ||
-      isMinister
+      isGeneralManager 
+      // isMinister
       // ||
       // isBITeam ||
       // isInOwner ||

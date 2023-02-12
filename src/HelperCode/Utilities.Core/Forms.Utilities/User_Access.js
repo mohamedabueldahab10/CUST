@@ -2080,28 +2080,9 @@ window.userCalls = {
         Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [];
         break;
+
       case "ViceMinister":
         isViceMinister = true;
-        (SecondLevel_List = "Internal Entities"),
-          (SecondLevel_FieldtoQuery = "ViceMinister"),
-          (SecondLevel_FieldtoQueryType = "Choice");
-        (SecondLevel_FieldtoFetch = "Title"),
-          (SecondLevel_CAMLQuery =
-            "<View><Query><Where>" +
-            "<And>" +
-            "<Eq>" +
-            '<FieldRef Name="' +
-            SecondLevel_FieldtoQuery +
-            '" LookupId="TRUE" />' +
-            '<Value Type="' +
-            SecondLevel_FieldtoQueryType +
-            '"><UserID /></Value>' +
-            "</Eq>" +
-            "<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
-            "</And>" +
-            "</Where></Query></View>"),
-          (SecondLevel_FirstLevel_Field = "Sector"),
-          (SecondLevel_FirstLevel_FieldType = "Text");
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(4),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
         ar_UserRole = "معالى نائب الوزير";
@@ -2109,60 +2090,11 @@ window.userCalls = {
 
         //CRUD
         Create_Access = [];
-        Read_Access = [
-          // "budgetitems",
-          "Targets.aspx",
-          // "goalstrategy",
-          // "spillars",
-          "initiativedeliverables",
-          "initiativerisks",
-          "initiativeissues",
-          "initiativemom",
-          "benefits",
-          "benefitmetrics",
-          "closureinitiative",
-          "sos",
-          "MainIndicators.aspx",
-          "initiatives",
-          "initiativesmain.aspx",
-          "InitiativeHome.aspx",
-          "projects",
-          "projecthome.aspx",
-          "mom",
-          "mainkpi",
-          "lessonslearned",
-          "deliverables",
-          // "closureinitiative",
-          // "initiativeexecution",
-          // "benefits",
-          // "initiativemilestonesacceptance",
-          // "initiativedeliverablesacceptance",
-          // "initiativecards",
-          "projectcharter",
-          // "kpiequations",
-          "deliveries",
-          "risks",
-          "issues",
-          "milestones",
-          "invoices",
-          "contracts",
-          "changerequest",
-          "MOM",
-          "communicationplans",
-          "lessonslearned",
-          "stakeholders",
-          "documents",
-          "tasks",
-          // "portfolio",
-          "initiativemilestones",
-          "closureform",
-          "TaskHistory.aspx",
-          "home.aspx",
-          "deliverablemetrics",
-          // "benefitmatrix", "benefitmetrics",
-        ];
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [];
         break;
+
       case "DU":
         isDU = true;
 
@@ -2732,9 +2664,9 @@ window.userCalls = {
       // !isSPMO &&
       // !isDU &&
       !isGeneralManager &&
-      !isSubSectorHead &&
+      !isSubSectorHead
       // !isMinisterAssistant &&
-      !isViceMinister
+      // !isViceMinister
     ) {
       // IF Data directly getting from project list
       //
@@ -2752,10 +2684,11 @@ window.userCalls = {
         isSectorHead ||
         // isSPMO ||
         isSubSectorHead ||
-        isGeneralManager ||
+        isGeneralManager
         // isDU ||
         // isMinisterAssistant ||
-        isViceMinister)
+        //isViceMinister
+      )
     ) {
       //if data getting from other list related to project
 
@@ -3842,9 +3775,146 @@ window.userCalls = {
           ]
         }
       },
+      // {
+      //   Role: "ViceMinister",
+      //   groupsName: ["Vice Minister"],
+      // },
       {
         Role: "ViceMinister",
         groupsName: ["Vice Minister"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "Internal Entities",
+              accessConditions: [
+                {
+                  field: "ViceMinister",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+                {
+                  field: "EntityType",
+                  type: "Choice",
+                  values: ["Sector"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "Initiatives",
+                parentRelationField: "Title",
+                RelationField: "Sector",
+                RelationFieldType: "Choice",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Internal Entities",
+              accessConditions: [
+                {
+                  field: "ViceMinister",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+                {
+                  field: "EntityType",
+                  type: "Choice",
+                  values: ["Sector"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "Projects",
+                parentRelationField: "Title",
+                RelationField: "Sector",
+                RelationFieldType: "Choice",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Internal Entities",
+              accessConditions: [
+                {
+                  field: "ViceMinister",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+                {
+                  field: "EntityType",
+                  type: "Choice",
+                  values: ["Sector"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "Sector",
+                RelationFieldType: "Choice",
+                subRelation: {
+                  level: 3,
+                  listName: "GoalStrategy",
+                  parentRelationField: "RelatedStrategy",
+                  RelationField: "Title",
+                  RelationFieldType: "Text",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Internal Entities",
+              accessConditions: [
+                {
+                  field: "ViceMinister",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+                {
+                  field: "EntityType",
+                  type: "Choice",
+                  values: ["Sector"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "Sector",
+                RelationFieldType: "Choice",
+                subRelation: {
+                  level: 3,
+                  listName: "MainKPI",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedStrategyObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "KPIResults",
+                    parentRelationField: "Title",
+                    RelationField: "KPI",
+                    RelationFieldType: "Text",
+                  }
+                },
+              },
+            },
+          ]
+        }
       },
       {
         Role: "BITeam",
@@ -3904,7 +3974,7 @@ window.userCalls = {
                 RelationFieldType: "Text",
                 subRelation: {
                   level: 3,
-                  listName:""
+                  listName: ""
                 }
               }
             }
@@ -4215,10 +4285,10 @@ var Access_Project_Info_Request = {
             isSectorHead ||
             // isSPMO ||
             isSubSectorHead ||
-            isGeneralManager ||
+            isGeneralManager
             // isDU ||
             // isMinisterAssistant ||
-            isViceMinister
+            // isViceMinister
           ) {
             //
 
@@ -4350,7 +4420,7 @@ var Access_Project_Info_Request = {
             // isSPMO ||
             // isMinisterAssistant ||
             isSectorHead ||
-            isViceMinister ||
+            // isViceMinister ||
             isSubSectorHead ||
             isGeneralManager
           ) {
@@ -4360,7 +4430,7 @@ var Access_Project_Info_Request = {
           (
             //isDU ||
             // isMinisterAssistant ||
-            isViceMinister ||
+            // isViceMinister ||
             isSectorHead ||
             isSubSectorHead ||
             isGeneralManager) &&
@@ -4380,7 +4450,7 @@ var Access_Project_Info_Request = {
         else if (
           // isMinisterAssistant ||
           isSectorHead ||
-          isViceMinister ||
+          // isViceMinister ||
           isSubSectorHead ||
           (isGeneralManager && USERlistkey == "sos")
         ) {
@@ -4492,10 +4562,10 @@ var Access_Project_Info_Request = {
       isSectorHead ||
       // isSPMO ||
       isGeneralManager ||
-      isSubSectorHead ||
+      isSubSectorHead
       // isDU ||
       // isMinisterAssistant ||
-      isViceMinister
+      // isViceMinister
     ) {
       camlQuery.set_viewXml(SectorHeadQuery);
     } else if (isAdmin || isMinister || isBITeam || isITSteering || isEPMO) {
@@ -6670,7 +6740,7 @@ let data_Level1_Access = {
 						</Query>
 					</View>`;
 
-          debugger
+        debugger
         data_Level2_Access.g.dataLevelQuery = queryBody;
         dataLevelAccessQuery = queryBody;
         if (data_Level1_Access.g.dataLevel > 2) {
