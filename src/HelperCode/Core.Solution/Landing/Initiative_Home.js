@@ -543,9 +543,9 @@ var initiativeHomeInfo_Request = {
           .join(".")
       );
     }
-    if (isMinisterAssistant) {
-      $("a.btn-add.Resources").attr("style", "display: none!important;");
-    }
+    // if (isMinisterAssistant) {
+    //   $("a.btn-add.Resources").attr("style", "display: none!important;");
+    // }
     $(".project-info-ctx .media-body:nth-of-type(2) p.fnt-14.reg.mx-3").text(
       ProjectManager
     );
@@ -1731,7 +1731,7 @@ var Milestones_Info_Request = {
 
 
     if (
-      isMinisterAssistant ||
+      // isMinisterAssistant ||
       isSectorHead ||
       isViceMinister ||
       isSubSectorHead ||

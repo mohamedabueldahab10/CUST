@@ -181,8 +181,8 @@ window.initiativeRequest = {
         //   PQuery = InitiativeAccessQuery;
         // } else 
         if (
-          isDU ||
-          isMinisterAssistant ||
+          // isDU ||
+          // isMinisterAssistant ||
           isViceMinister ||
           isSectorHead ||
           isSubSectorHead ||

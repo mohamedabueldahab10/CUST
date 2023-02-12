@@ -612,11 +612,6 @@ window.userCalls = {
         Delete_Access = Delete_Access.concat(SP_Page_Name);
         break;
       case "Minister":
-        // $("body").append(
-        //   "<style>" +
-        //   "div#s4-ribbonrow, div#O365_MainLink_Settings_container{display:block!important}html #s4-workspace {height: calc(100vh - 105px)!important;min-height:auto !important;}.Progress-Action {display:block!important;}" +
-        //   "</style>"
-        // );
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -1965,7 +1960,7 @@ window.userCalls = {
           "milestones",
           "mom",
           "closureform",
-          "lessonslearned", 
+          "lessonslearned",
           "coc",
           "stakeholders",
           "communicationplans",
@@ -2035,7 +2030,7 @@ window.userCalls = {
           "milestones",
           "mom",
           "closureform",
-          "lessonslearned", 
+          "lessonslearned",
           "coc",
           "stakeholders",
           "communicationplans",
@@ -2063,7 +2058,7 @@ window.userCalls = {
           "milestones",
           "mom",
           "closureform",
-          "lessonslearned", 
+          "lessonslearned",
           "coc",
           "stakeholders",
           "communicationplans",
@@ -2073,26 +2068,7 @@ window.userCalls = {
         break;
       case "MinisterAssistant":
         isMinisterAssistant = true;
-        (SecondLevel_List = "Internal Entities"),
-          (SecondLevel_FieldtoQuery = "MinisterAssistant"),
-          (SecondLevel_FieldtoQueryType = "Choice");
-        (SecondLevel_FieldtoFetch = "Title"),
-          (SecondLevel_CAMLQuery =
-            "<View><Query><Where>" +
-            "<And>" +
-            "<Eq>" +
-            '<FieldRef Name="' +
-            SecondLevel_FieldtoQuery +
-            '" LookupId="TRUE" />' +
-            '<Value Type="' +
-            SecondLevel_FieldtoQueryType +
-            '"><UserID /></Value>' +
-            "</Eq>" +
-            "<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
-            "</And>" +
-            "</Where></Query></View>"),
-          (SecondLevel_FirstLevel_Field = "Sector"),
-          (SecondLevel_FirstLevel_FieldType = "Text");
+
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
         ar_UserRole = "معالى مساعد الوزير";
@@ -2100,57 +2076,8 @@ window.userCalls = {
 
         //CRUD
         Create_Access = [];
-        Read_Access = [
-          // "budgetitems",
-          "Targets.aspx",
-          // "goalstrategy",
-          "initiativemilestones",
-          "sos",
-          "MainIndicators.aspx",
-          "initiatives",
-          "initiativesmain.aspx",
-          "InitiativeHome.aspx",
-          "projects",
-          "projecthome.aspx",
-          "mom",
-          "mainkpi",
-          "lessonslearned",
-          "deliverables",
-          // "closureinitiative",
-          // "initiativeexecution",
-          "initiativedeliverables",
-          "benefits",
-          "benefitmetrics",
-          "closureinitiative",
-          // "initiativemilestonesacceptance",
-          // "initiativedeliverablesacceptance",
-          // "initiativecards",
-          "projectcharter",
-          // "kpiequations",
-          "deliveries",
-          "risks",
-          "issues",
-          "milestones",
-          "invoices",
-          "contracts",
-          "changerequest",
-          "MOM",
-          "communicationplans",
-          "lessonslearned",
-          "stakeholders",
-          "documents",
-          "tasks",
-          "initiativerisks",
-          "initiativeissues",
-          "initiativemom",
-          // "portfolio",
-          // "ideas",
-          "closureform",
-          "TaskHistory.aspx",
-          "home.aspx",
-          "deliverablemetrics",
-          // "benefitmatrix", "benefitmetrics",
-        ];
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [];
         break;
       case "ViceMinister":
@@ -2261,7 +2188,7 @@ window.userCalls = {
           "milestones",
           "mom",
           "closureform",
-          "lessonslearned", 
+          "lessonslearned",
           "coc",
           "stakeholders",
           "communicationplans",
@@ -2311,7 +2238,7 @@ window.userCalls = {
           "sos",
           "goalstrategy",
           "budgetitems",
-          
+
         ];
         Edit_Access = [
           "initiatives",
@@ -2334,7 +2261,7 @@ window.userCalls = {
           "milestones",
           "mom",
           "closureform",
-          "lessonslearned", 
+          "lessonslearned",
           "coc",
           "stakeholders",
           "communicationplans",
@@ -2361,7 +2288,7 @@ window.userCalls = {
           "milestones",
           "mom",
           "closureform",
-          "lessonslearned", 
+          "lessonslearned",
           "coc",
           "stakeholders",
           "communicationplans",
@@ -2806,7 +2733,7 @@ window.userCalls = {
       // !isDU &&
       !isGeneralManager &&
       !isSubSectorHead &&
-      !isMinisterAssistant &&
+      // !isMinisterAssistant &&
       !isViceMinister
     ) {
       // IF Data directly getting from project list
@@ -2817,8 +2744,9 @@ window.userCalls = {
         USERisHome ||
         USERisListing ||
         isInitiativesHomePage ||
-        isTarget ||
-        isMainIndicator) &&
+        isTarget
+        // || isMainIndicator
+      ) &&
       (isSectionHead ||
         isPortfolioManager ||
         isSectorHead ||
@@ -2826,13 +2754,13 @@ window.userCalls = {
         isSubSectorHead ||
         isGeneralManager ||
         // isDU ||
-        isMinisterAssistant ||
+        // isMinisterAssistant ||
         isViceMinister)
     ) {
       //if data getting from other list related to project
 
       Access_Sector_Info_Request.preinit();
-    } 
+    }
     // else if (isthereICODE && isDU) {
     //   Access_Sector_Info_Request.preinit();
     // } 
@@ -3621,23 +3549,6 @@ window.userCalls = {
                   }
                 },
               },
-              // RelationField: "RelatedStrategy",
-              // RelationFieldType: "Text",
-              // subRelation: {
-              //   level: 3,
-              //   listName: "MainKPI",
-              //   parentRelationField: "Title",
-              //   RelationField: "RelatedStrategyObjective",
-              //   RelationFieldType: "Text",
-              //   subRelation: {
-              //     level: 4,
-              //     listName: "KPIResults",
-              //     parentRelationField: "Title",
-              //     RelationField: "KPI",
-              //     RelationFieldType: "Text",
-
-              //   }
-              // },
             },
 
           ]
@@ -3671,7 +3582,7 @@ window.userCalls = {
                 parentRelationField: "Title",
                 RelationField: "SubSector",
                 RelationFieldType: "Choice",
-                subRelation: { 
+                subRelation: {
                   level: 3,
                   listName: "",
                 },
@@ -3789,9 +3700,147 @@ window.userCalls = {
       //   Role: "DU",
       //   groupsName: ["Development Unit"],
       // },
+      // {
+      //   Role: "MinisterAssistant",
+      //   groupsName: ["Minister Assistant"],
+      // },
+
       {
         Role: "MinisterAssistant",
         groupsName: ["Minister Assistant"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "Internal Entities",
+              accessConditions: [
+                {
+                  field: "MinisterAssistant",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+                {
+                  field: "EntityType",
+                  type: "Choice",
+                  values: ["Sector"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "Initiatives",
+                parentRelationField: "Title",
+                RelationField: "Sector",
+                RelationFieldType: "Choice",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Internal Entities",
+              accessConditions: [
+                {
+                  field: "MinisterAssistant",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+                {
+                  field: "EntityType",
+                  type: "Choice",
+                  values: ["Sector"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "Projects",
+                parentRelationField: "Title",
+                RelationField: "Sector",
+                RelationFieldType: "Choice",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Internal Entities",
+              accessConditions: [
+                {
+                  field: "MinisterAssistant",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+                {
+                  field: "EntityType",
+                  type: "Choice",
+                  values: ["Sector"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "Sector",
+                RelationFieldType: "Choice",
+                subRelation: {
+                  level: 3,
+                  listName: "GoalStrategy",
+                  parentRelationField: "RelatedStrategy",
+                  RelationField: "Title",
+                  RelationFieldType: "Text",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Internal Entities",
+              accessConditions: [
+                {
+                  field: "MinisterAssistant",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+                {
+                  field: "EntityType",
+                  type: "Choice",
+                  values: ["Sector"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "Sector",
+                RelationFieldType: "Choice",
+                subRelation: {
+                  level: 3,
+                  listName: "MainKPI",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedStrategyObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "KPIResults",
+                    parentRelationField: "Title",
+                    RelationField: "KPI",
+                    RelationFieldType: "Text",
+                  }
+                },
+              },
+            },
+          ]
+        }
       },
       {
         Role: "ViceMinister",
@@ -3835,15 +3884,30 @@ window.userCalls = {
                   RelationFieldType: "Text",
                 },
               },
-              // subRelation: {
-              //   level: 2,
-              //   listName: "",
-              //   subRelation: {
-              //     level: 3,
-              //     listName: "",
-              //   },
-              // },
             },
+            {
+              level: 1,
+              listName: "MainKPI",
+              accessConditions: [
+                {
+                  field: "Owner",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "KPIResults",
+                parentRelationField: "Title",
+                RelationField: "KPI",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName:""
+                }
+              }
+            }
           ],
         },
       },
@@ -4153,7 +4217,7 @@ var Access_Project_Info_Request = {
             isSubSectorHead ||
             isGeneralManager ||
             // isDU ||
-            isMinisterAssistant ||
+            // isMinisterAssistant ||
             isViceMinister
           ) {
             //
@@ -4284,7 +4348,7 @@ var Access_Project_Info_Request = {
           else if (
             // isDU ||
             // isSPMO ||
-            isMinisterAssistant ||
+            // isMinisterAssistant ||
             isSectorHead ||
             isViceMinister ||
             isSubSectorHead ||
@@ -4295,7 +4359,7 @@ var Access_Project_Info_Request = {
         } else if (
           (
             //isDU ||
-            isMinisterAssistant ||
+            // isMinisterAssistant ||
             isViceMinister ||
             isSectorHead ||
             isSubSectorHead ||
@@ -4314,7 +4378,7 @@ var Access_Project_Info_Request = {
         // 		"<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">sub</Value></Eq></And></Where></Query></View>";
         // } 
         else if (
-          isMinisterAssistant ||
+          // isMinisterAssistant ||
           isSectorHead ||
           isViceMinister ||
           isSubSectorHead ||
@@ -4430,7 +4494,7 @@ var Access_Project_Info_Request = {
       isGeneralManager ||
       isSubSectorHead ||
       // isDU ||
-      isMinisterAssistant ||
+      // isMinisterAssistant ||
       isViceMinister
     ) {
       camlQuery.set_viewXml(SectorHeadQuery);
@@ -6363,7 +6427,7 @@ function initiateDataLevelAccess() {
     if (myRoleConfig[0].hasOwnProperty("dataFilter")) {
       isRoleDataLevelAccess = true;
       myRoleConfig[0].dataFilter.hierarchies.forEach((el, i, a) => {
-
+        debugger
         let accessConditions = el.accessConditions;
         let isListConditional1 = el.listName == currentMainList;
         let isListConditional2 = el.subRelation.listName == currentMainList;
@@ -6605,6 +6669,8 @@ let data_Level1_Access = {
 						<OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
 						</Query>
 					</View>`;
+
+          debugger
         data_Level2_Access.g.dataLevelQuery = queryBody;
         dataLevelAccessQuery = queryBody;
         if (data_Level1_Access.g.dataLevel > 2) {
