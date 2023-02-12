@@ -90,8 +90,9 @@ var MainKPIs_Info_Request = {
           //|| isDU 
           //|| isMinisterAssistant
           //|| isViceMinister
-          ||
-          isSectorHead || isSubSectorHead) {
+          // ||
+          // isSectorHead 
+          || isSubSectorHead) {
           camlQuery.set_viewXml('<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name=\'PeriodType\' /> <Value Type="Choice">' + filteredValue + "</Value></Eq><And><Eq><FieldRef Name=\'Year\' /> <Value Type=\'Text\'>" + kpiYear + "</Value ></Eq><Eq><FieldRef Name=\'" + SecondLevel_FirstLevel_Field + "\' /> <Value Type=\'Text\'>" + UserAccessSectorCode + "</Value ></Eq></And></And></And></Where ><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query ></View >")
         }
         else {
@@ -965,7 +966,8 @@ var Get_All_Dynamic_Filter = {
       //|| isDU 
       // || isMinisterAssistant
       //|| isViceMinister
-      || isSectorHead || isSubSectorHead) {
+      //|| isSectorHead 
+      || isSubSectorHead) {
       // UserAccessSectorCode = 'DP-001';
 
       SectorHeadQuery =

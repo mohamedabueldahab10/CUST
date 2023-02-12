@@ -1732,7 +1732,7 @@ var Milestones_Info_Request = {
 
     if (
       // isMinisterAssistant ||
-      isSectorHead ||
+      //isSectorHead ||
       // isViceMinister ||
       isSubSectorHead ||
       isGeneralManager 

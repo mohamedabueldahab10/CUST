@@ -70,14 +70,14 @@ var MainKPIs_Info_Request = {
   // The main Initialization function
   init: function () {
 
-    
+
 
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("MainKPI");
     var camlQuery = new SP.CamlQuery();
     let myQuery = `<View><Query>\
     <Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>`;
-   debugger
+    debugger
     if (isRoleDataLevelAccess) {
       if (dataLevelAccessQuery) {
         myQuery = dataLevelAccessQuery;
@@ -100,8 +100,8 @@ var MainKPIs_Info_Request = {
     var KPIsHTML = [];
     while (listItemEnum.moveNext()) {
 
-      
-      
+
+
       var oListItem = listItemEnum.get_current();
 
       var name = oListItem.get_item("Name") || UserNo_Data,
@@ -116,7 +116,7 @@ var MainKPIs_Info_Request = {
         toDate = oListItem.get_item("ToDate") || UserNo_Data,
         RelatedStrategyObjective = oListItem.get_item("RelatedStrategyObjective") || UserNo_Data;
 
-        
+
 
       if (isRoleDataLevelAccess && dataLevelAccessQuery) {
         var relatedStrategyObj = oListItem.get_item("RelatedStrategyObjective")
@@ -124,6 +124,7 @@ var MainKPIs_Info_Request = {
           allRelatedStrategObjArr.push(relatedStrategyObj)
         }
       }
+
 
 
 
@@ -227,6 +228,9 @@ var MainKPIs_Info_Request = {
       // /sitepages/Targets.aspx ? KpiCode =
     }
 
+    console.log(allRelatedStrategObjArr, "allRelatedStrategObjArr")
+    debugger
+
     if (!KPIsHTML.length) {
       KPIsHTML.push(UserNo_Data);
     }
@@ -304,7 +308,7 @@ var stratigicObjectivesRequest = {
         sectorcode = oListItem.get_item("Sector") || UserNo_Data, // Sector
         departmentcode = "";
       console.log(name, "name")
-      
+
       if (isRoleDataLevelAccess && dataLevelAccessQuery && allRelatedStrategObjArr.length) {
         var relatedStrategy = oListItem.get_item("RelatedStrategy")
         if (relatedStrategy && !allRelatedStrategyArr.includes(relatedStrategy)) {
@@ -606,7 +610,7 @@ var GoalsKPIs_Info_Request = {
     var camlQuery = new SP.CamlQuery();
 
     //////
-debugger
+    debugger
     if (allRelatedStrategyArr.length) {
       goalKpiQuery = '<View><Query><Where><And><In><FieldRef Name="Title" /><Values>';
       allRelatedStrategyArr.forEach(function (item) {

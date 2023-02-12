@@ -184,7 +184,7 @@ window.initiativeRequest = {
           // isDU ||
           // isMinisterAssistant ||
           //isViceMinister ||
-          isSectorHead ||
+          //isSectorHead ||
           isSubSectorHead ||
           isGeneralManager
         ) {
