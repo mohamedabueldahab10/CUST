@@ -1025,7 +1025,7 @@
     lms: "LMS",
 
     //Priority Values
-    hight: "Hight",
+    hight: "High",
     high: "High",
     medium: "Medium",
     low: "Low",

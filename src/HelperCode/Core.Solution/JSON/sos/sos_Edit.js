@@ -110,6 +110,16 @@ var Information_Form = [
             ],
           },
           {
+            role: 'SPMAdmin',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['ministry'],
+              },
+            ],
+          },
+          {
             role: 'VROP',
             conditions: [
               {
@@ -171,7 +181,7 @@ var Information_Form = [
         source: 'Portfolio',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        display: 'none',
+        // display: 'none',
       },
       {
         InternalName: 'Sector',
