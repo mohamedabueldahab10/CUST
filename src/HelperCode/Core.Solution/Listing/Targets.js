@@ -56,7 +56,7 @@ var MainKPIs_Info_Request = {
     console.log('in kpi result func')
 
 
-    
+
     if (isKpiCode) {
 
       var query = `<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name=\'KPI\' /><Value Type=\'Text\'>` + wfKpiCode + `</Value></Eq><And><Eq><FieldRef Name=\'Year\' /> <Value Type=\'Text\'>` + kpiYear + `</Value ></Eq><Eq><FieldRef Name=\'PeriodType\' /><Value Type=\'Choice\'>` + filteredValue + `</Value></Eq></And></And></And></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>`
@@ -80,15 +80,16 @@ var MainKPIs_Info_Request = {
 
       if (isRoleDataLevelAccess) {
 
-        console.log(RolePQuery,"RolePQuery")
+        console.log(RolePQuery, "RolePQuery")
 
         camlQuery.set_viewXml(RolePQuery)
         // isRoleDataLevelAccess = false; 
       }
       else if (filteredValue == "year" || filteredValue === "quarter" || filteredValue == "midterm" || filteredValue == 'monthly') {
         if (isGeneralManager
-           //|| isDU 
-           || isMinisterAssistant || isViceMinister || isSectorHead || isSubSectorHead) {
+          //|| isDU 
+          //|| isMinisterAssistant
+          || isViceMinister || isSectorHead || isSubSectorHead) {
           camlQuery.set_viewXml('<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name=\'PeriodType\' /> <Value Type="Choice">' + filteredValue + "</Value></Eq><And><Eq><FieldRef Name=\'Year\' /> <Value Type=\'Text\'>" + kpiYear + "</Value ></Eq><Eq><FieldRef Name=\'" + SecondLevel_FirstLevel_Field + "\' /> <Value Type=\'Text\'>" + UserAccessSectorCode + "</Value ></Eq></And></And></And></Where ><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query ></View >")
         }
         else {
@@ -220,486 +221,486 @@ var MainKPIs_Info_Request = {
       //   || isBITeam
       //   || ((isGeneralManager || isSubSectorHead) && (SubectorCode == UserAccessSectorCode))
       //   || ((isDU || isMinisterAssistant || isViceMinister || isSectorHead) && (SectorCode == UserAccessSectorCode))) {
-        
-      
-        countRec = countRec + 1;
-        //sample getting field data  : oListItem.get_item('InternalName')
-        var name = oListItem.get_item("Name") || UserNo_Data;
-
-        var category = oListItem.get_item("Category") || UserNo_Data;
-        var relatedInstrument =
-          oListItem.get_item("RelatedInstrument") || UserNo_Data;
-        var target = (oListItem.get_item("Target") ? Number(oListItem.get_item("Target").toFixed(2)) : 0);
-        var targetQ1 = (oListItem.get_item("TargetQ1") ? Number(oListItem.get_item("TargetQ1").toFixed(2)) : 0);
-        var targetQ2 = (oListItem.get_item("TargetQ2") ? Number(oListItem.get_item("TargetQ2").toFixed(2)) : 0);
-        var targetQ3 = (oListItem.get_item("TargetQ3") ? Number(oListItem.get_item("TargetQ3").toFixed(2)) : 0);
-        var targetQ4 = (oListItem.get_item("TargetQ4") ? Number(oListItem.get_item("TargetQ4").toFixed(2)) : 0);
-        //////
-        var targetY = (oListItem.get_item("TargetY") ? Number(oListItem.get_item("TargetY").toFixed(2)) : 0);
-        var targetMid1 = (oListItem.get_item("TargetMid1") ? Number(oListItem.get_item("TargetMid1").toFixed(2)) : 0);
-        var targetMid2 = (oListItem.get_item("TargetMid2") ? Number(oListItem.get_item("TargetMid2").toFixed(2)) : 0);
-        var targetM1 = (oListItem.get_item("TargetM1") ? Number(oListItem.get_item("TargetM1").toFixed(2)) : 0);
-        var targetM2 = (oListItem.get_item("TargetM2") ? Number(oListItem.get_item("TargetM2").toFixed(2)) : 0);
-        var targetM3 = (oListItem.get_item("TargetM3") ? Number(oListItem.get_item("TargetM3").toFixed(2)) : 0);
-        var targetM4 = (oListItem.get_item("TargetM4") ? Number(oListItem.get_item("TargetM4").toFixed(2)) : 0);
-        var targetM5 = (oListItem.get_item("TargetM5") ? Number(oListItem.get_item("TargetM5").toFixed(2)) : 0);
-        var targetM6 = (oListItem.get_item("TargetM6") ? Number(oListItem.get_item("TargetM6").toFixed(2)) : 0);
-        var targetM7 = (oListItem.get_item("TargetM7") ? Number(oListItem.get_item("TargetM7").toFixed(2)) : 0);
-        var targetM8 = (oListItem.get_item("TargetM8") ? Number(oListItem.get_item("TargetM8").toFixed(2)) : 0);
-        var targetM9 = (oListItem.get_item("TargetM9") ? Number(oListItem.get_item("TargetM9").toFixed(2)) : 0);
-        var targetM10 = (oListItem.get_item("TargetM10") ? Number(oListItem.get_item("TargetM10").toFixed(2)) : 0);
-        var targetM11 = (oListItem.get_item("TargetM11") ? Number(oListItem.get_item("TargetM11").toFixed(2)) : 0);
-        var targetM12 = (oListItem.get_item("TargetM12") ? Number(oListItem.get_item("TargetM12").toFixed(2)) : 0);
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        var actual = (oListItem.get_item("Actual") ? Number(oListItem.get_item("Actual").toFixed(2)) : 0);
-        var actualQ1 = (oListItem.get_item("ActualQ1") ? Number(oListItem.get_item("ActualQ1").toFixed(2)) : 0);
-        var actualQ2 = (oListItem.get_item("ActualQ2") ? Number(oListItem.get_item("ActualQ2").toFixed(2)) : 0);
-        var actualQ3 = (oListItem.get_item("ActualQ3") ? Number(oListItem.get_item("ActualQ3").toFixed(2)) : 0);
-        var actualQ4 = (oListItem.get_item("ActualQ4") ? Number(oListItem.get_item("ActualQ4").toFixed(2)) : 0);
-        //////
-        var actualY = (oListItem.get_item("ActualY") ? Number(oListItem.get_item("ActualY").toFixed(2)) : 0);
-        var actualMid1 = (oListItem.get_item("ActualMid1") ? Number(oListItem.get_item("ActualMid1").toFixed(2)) : 0);
-        var actualMid2 = (oListItem.get_item("ActualMid2") ? Number(oListItem.get_item("ActualMid2").toFixed(2)) : 0);
-        var actualM1 = (oListItem.get_item("ActualM1") ? Number(oListItem.get_item("ActualM1").toFixed(2)) : 0);
-        var actualM2 = (oListItem.get_item("ActualM2") ? Number(oListItem.get_item("ActualM2").toFixed(2)) : 0);
-        var actualM3 = (oListItem.get_item("ActualM3") ? Number(oListItem.get_item("ActualM3").toFixed(2)) : 0);
-        var actualM4 = (oListItem.get_item("ActualM4") ? Number(oListItem.get_item("ActualM4").toFixed(2)) : 0);
-        var actualM5 = (oListItem.get_item("ActualM5") ? Number(oListItem.get_item("ActualM5").toFixed(2)) : 0);
-        var actualM6 = (oListItem.get_item("ActualM6") ? Number(oListItem.get_item("ActualM6").toFixed(2)) : 0);
-        var actualM7 = (oListItem.get_item("ActualM7") ? Number(oListItem.get_item("ActualM7").toFixed(2)) : 0);
-        var actualM8 = (oListItem.get_item("ActualM8") ? Number(oListItem.get_item("ActualM8").toFixed(2)) : 0);
-        var actualM9 = (oListItem.get_item("ActualM9") ? Number(oListItem.get_item("ActualM9").toFixed(2)) : 0);
-        var actualM10 = (oListItem.get_item("ActualM10") ? Number(oListItem.get_item("ActualM10").toFixed(2)) : 0);
-        var actualM11 = (oListItem.get_item("ActualM11") ? Number(oListItem.get_item("ActualM11").toFixed(2)) : 0);
-        var actualM12 = (oListItem.get_item("ActualM12") ? Number(oListItem.get_item("ActualM12").toFixed(2)) : 0);
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        var performanceleader = oListItem.get_item("PerformanceLeader")
-          ? oListItem.get_item("PerformanceLeader").get_lookupValue()
-          : UserN.Title;
-        var dataAvailability =
-          oListItem.get_item("DataAvailability") || UserNo_Data;
-        var dataSource = oListItem.get_item("DataSource") || UserNo_Data;
-        var periodType = oListItem.get_item("PeriodType") || UserNo_Data;
-        var resultType = oListItem.get_item("ResultType") || null;
-        var calculationMethod =
-          oListItem.get_item("CalculationMethod") || UserNo_Data;
-
-        var total = 0
-        var totalActual = 0
-        if (filteredValue == 'year') {
-          total = targetY || 0
-          totalActual = actualY || 0
-        } else if (filteredValue == 'quarter') {
-          total = targetQ1 + targetQ2 + targetQ3 + targetQ4 || 0;
-          totalActual = actualQ1 + actualQ2 + actualQ3 + actualQ4 || 0;
-        } else if (filteredValue == 'midterm') {
-          total = targetMid1 + targetMid2 || 0
-          totalActual = actualMid1 + actualMid2 || 0
-        } else if (filteredValue == 'monthly') {
-          total = targetM1 + targetM2 + targetM3 + targetM4 + targetM5 + targetM6 + targetM7 + targetM8 + targetM9 + targetM10 + targetM11 + targetM12 || 0;
-          totalActual = actualM1 + actualM2 + actualM3 + actualM4 + actualM5 + actualM6 + actualM7 + actualM8 + actualM9 + actualM10 + actualM11 + actualM12 || 0;
-        }
-
-        total = Number(total.toFixed(2))
-        totalActual = Number(totalActual.toFixed(2))
 
 
-        Operational_Array.push({
-          id: oListItem.get_id(),
-          title: oListItem.get_item("Title"),
-          name: name,
-          category: category,
-          relatedInstrument: relatedInstrument,
-          target: target,
-          targetQ1: targetQ1,
-          targetQ2: targetQ2,
-          targetQ3: targetQ3,
-          targetQ4: targetQ4,
-          performanceleader: performanceleader,
-          dataAvailability: dataAvailability,
-          dataSource: dataSource,
-          periodType: periodType,
-          resultType: resultType,
-          total: total,
-          calculationMethod: calculationMethod,
-        });
+      countRec = countRec + 1;
+      //sample getting field data  : oListItem.get_item('InternalName')
+      var name = oListItem.get_item("Name") || UserNo_Data;
 
-        if (filteredValue == 'year') {
-          BODY_HTML.push(
-            '<tbody class="targetTbody">' +
-            '<tr data-target_list="KPIResults" data-id="' + oListItem.get_id() + '" data-category="' + category + '" is-updated="false" id="MyTr">' +
-            ' <th rowspan="2">' + name + "</th>" +
-            '<th scope="row" class="Resources" data-trans-target></th>' +
-            ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' + oListItem.get_id() + '">' + total +
-            "</td>" +
-            ' <td><input class="QarterInputStyle inputStyle1 myInput" data-internal="TargetY" type="number" name="" value="' +
-            targetY +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            "</tr>" +
-            // actual
-            '<tr data-target_list="KPIResults" data-id="' +
-            oListItem.get_id() + '" data-category="' + category + '" is-updated="false" id="MyTr">' +
-            '<th scope="row" class="Resources" data-trans-actual></th>' +
-            ' <td id="totalActual" class="myInput" data-internal="Actual" data-id="' + oListItem.get_id() + '">' +
-            totalActual +
-            "</td>" +
-            ' <td><input class="QarterInputStyle inputStyle1 actualStyle myInput" data-internal="ActualY" type="number" name="" value="' +
-            actualY +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            "</tr>" +
-            "</tbody>"
-          );
-        } else if (filteredValue == 'quarter') {
-          BODY_HTML.push(
-            '<tbody class="targetTbody">' +
-            '<tr data-target_list="KPIResults" data-id="' +
-            oListItem.get_id() +
-            '" data-category="' +
-            category +
-            '" is-updated="false" id="MyTr">' +
-            ' <th rowspan="2">' +
-            name +
-            "</th>" +
-            '<th scope="row" class="Resources" data-trans-target></th>' +
-            ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' +
-            oListItem.get_id() +
-            '">' +
-            total +
-            "</td>" +
-            ' <td><input class="QarterInputStyle inputStyle1 myInput" data-internal="TargetQ1" type="number" name="" value="' +
-            targetQ1 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle2 myInput" data-internal="TargetQ2" type="number" name="" value="' +
-            targetQ2 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle3 myInput" data-internal="TargetQ3" type="number" name="" value="' +
-            targetQ3 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle4 myInput" data-internal="TargetQ4" type="number" name="" value="' +
-            targetQ4 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            "</tr>" +
-            // actual
-            '<tr data-target_list="KPIResults" data-id="' +
-            oListItem.get_id() +
-            '" data-category="' +
-            category +
-            '" is-updated="false" id="MyTr">' +
-            '<th scope="row" class="Resources" data-trans-actual></th>' +
-            ' <td id="totalActual" class="myInput" data-internal="Actual" data-id="' +
-            oListItem.get_id() +
-            '">' +
-            totalActual +
-            "</td>" +
-            ' <td><input class="QarterInputStyle inputStyle1 actualStyle myInput" data-internal="ActualQ1" type="number" name="" value="' +
-            actualQ1 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle2 actualStyle myInput" data-internal="ActualQ2" type="number" name="" value="' +
-            actualQ2 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle3 actualStyle myInput" data-internal="ActualQ3" type="number" name="" value="' +
-            actualQ3 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle4 actualStyle myInput" data-internal="ActualQ4" type="number" name="" value="' +
-            actualQ4 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            "</tr>" +
-            "</tbody>"
-          );
-        } else if (filteredValue == 'midterm') {
-          BODY_HTML.push(
-            '<tbody class="targetTbody">' +
-            '<tr data-target_list="KPIResults" data-id="' + oListItem.get_id() + '" data-category="' + category + '" is-updated="false" id="MyTr">' +
-            ' <th rowspan="2">' + name + "</th>" +
-            '<th scope="row" class="Resources" data-trans-target></th>' +
-            ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' + oListItem.get_id() + '">' + total +
-            "</td>" +
-            ' <td><input class="QarterInputStyle inputStyle1 myInput" data-internal="TargetMid1" type="number" name="" value="' +
-            targetMid1 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle2 myInput" data-internal="TargetMid2" type="number" name="" value="' +
-            targetMid2 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            "</tr>" +
-            // actual
-            '<tr data-target_list="KPIResults" data-id="' +
-            oListItem.get_id() + '" data-category="' + category + '" is-updated="false" id="MyTr">' +
-            '<th scope="row" class="Resources" data-trans-actual></th>' +
-            ' <td id="totalActual" class="myInput" data-internal="Actual" data-id="' + oListItem.get_id() + '">' +
-            totalActual +
-            "</td>" +
-            ' <td><input class="QarterInputStyle inputStyle1 actualStyle myInput" data-internal="ActualMid1" type="number" name="" value="' +
-            actualMid1 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle2 actualStyle myInput" data-internal="ActualMid2" type="number" name="" value="' +
-            actualMid2 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            "</tr>" +
-            "</tbody>"
-          );
-        } else if (filteredValue == 'monthly') {
-          BODY_HTML.push(
-            '<tbody class="targetTbody">' +
-            '<tr data-target_list="KPIResults" data-id="' +
-            oListItem.get_id() +
-            '" data-category="' +
-            category +
-            '" is-updated="false" id="MyTr">' +
-            ' <th rowspan="2">' +
-            name +
-            "</th>" +
-            '<th scope="row" class="Resources" data-trans-target></th>' +
-            ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' +
-            oListItem.get_id() +
-            '">' +
-            total +
-            "</td>" +
-            ' <td><input class="QarterInputStyle inputStyle1 myInput" data-internal="TargetM1" type="number" name="" value="' +
-            targetM1 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle2 myInput" data-internal="TargetM2" type="number" name="" value="' +
-            targetM2 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle3 myInput" data-internal="TargetM3" type="number" name="" value="' +
-            targetM3 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle4 myInput" data-internal="TargetM4" type="number" name="" value="' +
-            targetM4 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            //target 4 replay should change
-            ' <td><input class="QarterInputStyle inputStyle5 myInput" data-internal="TargetM5" type="number" name="" value="' +
-            targetM5 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle6 myInput" data-internal="TargetM6" type="number" name="" value="' +
-            targetM6 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle7 myInput" data-internal="TargetM7" type="number" name="" value="' +
-            targetM7 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle8 myInput" data-internal="TargetM8" type="number" name="" value="' +
-            targetM8 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle9 myInput" data-internal="TargetM9" type="number" name="" value="' +
-            targetM9 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle10 myInput" data-internal="TargetM10" type="number" name="" value="' +
-            targetM10 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle11 myInput" data-internal="TargetM11" type="number" name="" value="' +
-            targetM11 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle12 myInput" data-internal="TargetM12" type="number" name="" value="' +
-            targetM12 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            //
-            "</tr>" +
-            // actual
-            '<tr data-target_list="KPIResults" data-id="' +
-            oListItem.get_id() +
-            '" data-category="' +
-            category +
-            '" is-updated="false" id="MyTr">' +
-            '<th scope="row" class="Resources" data-trans-actual></th>' +
-            ' <td id="totalActual" class="myInput" data-internal="Actual" data-id="' +
-            oListItem.get_id() +
-            '">' +
-            totalActual +
-            "</td>" +
-            ' <td><input class="QarterInputStyle inputStyle1 actualStyle myInput" data-internal="ActualM1" type="number" name="" value="' +
-            actualM1 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle2 actualStyle myInput" data-internal="ActualM2" type="number" name="" value="' +
-            actualM2 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle3 actualStyle myInput" data-internal="ActualM3" type="number" name="" value="' +
-            actualM3 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle4 actualStyle myInput" data-internal="ActualM4" type="number" name="" value="' +
-            actualM4 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            //actual 4 replay should change
-            ' <td><input class="QarterInputStyle inputStyle5 actualStyle myInput" data-internal="ActualM5" type="number" name="" value="' +
-            actualM5 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle6 actualStyle myInput" data-internal="ActualM6" type="number" name="" value="' +
-            actualM6 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle7 actualStyle myInput" data-internal="ActualM7" type="number" name="" value="' +
-            actualM7 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle8 actualStyle myInput" data-internal="ActualM8" type="number" name="" value="' +
-            actualM8 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle9 actualStyle myInput" data-internal="ActualM9" type="number" name="" value="' +
-            actualM9 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle10 actualStyle myInput" data-internal="ActualM10" type="number" name="" value="' +
-            actualM10 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle11 actualStyle myInput" data-internal="ActualM11" type="number" name="" value="' +
-            actualM11 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            ' <td><input class="QarterInputStyle inputStyle12 actualStyle myInput" data-internal="ActualM12" type="number" name="" value="' +
-            actualM12 +
-            '" data-result-type="' +
-            resultType +
-            '" oninput="checkTypes.init(this)" data-id="' +
-            oListItem.get_id() +
-            '"></td>' +
-            //
-            "</tr>" +
-            "</tbody>"
-          );
-        }
-     // }
+      var category = oListItem.get_item("Category") || UserNo_Data;
+      var relatedInstrument =
+        oListItem.get_item("RelatedInstrument") || UserNo_Data;
+      var target = (oListItem.get_item("Target") ? Number(oListItem.get_item("Target").toFixed(2)) : 0);
+      var targetQ1 = (oListItem.get_item("TargetQ1") ? Number(oListItem.get_item("TargetQ1").toFixed(2)) : 0);
+      var targetQ2 = (oListItem.get_item("TargetQ2") ? Number(oListItem.get_item("TargetQ2").toFixed(2)) : 0);
+      var targetQ3 = (oListItem.get_item("TargetQ3") ? Number(oListItem.get_item("TargetQ3").toFixed(2)) : 0);
+      var targetQ4 = (oListItem.get_item("TargetQ4") ? Number(oListItem.get_item("TargetQ4").toFixed(2)) : 0);
+      //////
+      var targetY = (oListItem.get_item("TargetY") ? Number(oListItem.get_item("TargetY").toFixed(2)) : 0);
+      var targetMid1 = (oListItem.get_item("TargetMid1") ? Number(oListItem.get_item("TargetMid1").toFixed(2)) : 0);
+      var targetMid2 = (oListItem.get_item("TargetMid2") ? Number(oListItem.get_item("TargetMid2").toFixed(2)) : 0);
+      var targetM1 = (oListItem.get_item("TargetM1") ? Number(oListItem.get_item("TargetM1").toFixed(2)) : 0);
+      var targetM2 = (oListItem.get_item("TargetM2") ? Number(oListItem.get_item("TargetM2").toFixed(2)) : 0);
+      var targetM3 = (oListItem.get_item("TargetM3") ? Number(oListItem.get_item("TargetM3").toFixed(2)) : 0);
+      var targetM4 = (oListItem.get_item("TargetM4") ? Number(oListItem.get_item("TargetM4").toFixed(2)) : 0);
+      var targetM5 = (oListItem.get_item("TargetM5") ? Number(oListItem.get_item("TargetM5").toFixed(2)) : 0);
+      var targetM6 = (oListItem.get_item("TargetM6") ? Number(oListItem.get_item("TargetM6").toFixed(2)) : 0);
+      var targetM7 = (oListItem.get_item("TargetM7") ? Number(oListItem.get_item("TargetM7").toFixed(2)) : 0);
+      var targetM8 = (oListItem.get_item("TargetM8") ? Number(oListItem.get_item("TargetM8").toFixed(2)) : 0);
+      var targetM9 = (oListItem.get_item("TargetM9") ? Number(oListItem.get_item("TargetM9").toFixed(2)) : 0);
+      var targetM10 = (oListItem.get_item("TargetM10") ? Number(oListItem.get_item("TargetM10").toFixed(2)) : 0);
+      var targetM11 = (oListItem.get_item("TargetM11") ? Number(oListItem.get_item("TargetM11").toFixed(2)) : 0);
+      var targetM12 = (oListItem.get_item("TargetM12") ? Number(oListItem.get_item("TargetM12").toFixed(2)) : 0);
+      ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      var actual = (oListItem.get_item("Actual") ? Number(oListItem.get_item("Actual").toFixed(2)) : 0);
+      var actualQ1 = (oListItem.get_item("ActualQ1") ? Number(oListItem.get_item("ActualQ1").toFixed(2)) : 0);
+      var actualQ2 = (oListItem.get_item("ActualQ2") ? Number(oListItem.get_item("ActualQ2").toFixed(2)) : 0);
+      var actualQ3 = (oListItem.get_item("ActualQ3") ? Number(oListItem.get_item("ActualQ3").toFixed(2)) : 0);
+      var actualQ4 = (oListItem.get_item("ActualQ4") ? Number(oListItem.get_item("ActualQ4").toFixed(2)) : 0);
+      //////
+      var actualY = (oListItem.get_item("ActualY") ? Number(oListItem.get_item("ActualY").toFixed(2)) : 0);
+      var actualMid1 = (oListItem.get_item("ActualMid1") ? Number(oListItem.get_item("ActualMid1").toFixed(2)) : 0);
+      var actualMid2 = (oListItem.get_item("ActualMid2") ? Number(oListItem.get_item("ActualMid2").toFixed(2)) : 0);
+      var actualM1 = (oListItem.get_item("ActualM1") ? Number(oListItem.get_item("ActualM1").toFixed(2)) : 0);
+      var actualM2 = (oListItem.get_item("ActualM2") ? Number(oListItem.get_item("ActualM2").toFixed(2)) : 0);
+      var actualM3 = (oListItem.get_item("ActualM3") ? Number(oListItem.get_item("ActualM3").toFixed(2)) : 0);
+      var actualM4 = (oListItem.get_item("ActualM4") ? Number(oListItem.get_item("ActualM4").toFixed(2)) : 0);
+      var actualM5 = (oListItem.get_item("ActualM5") ? Number(oListItem.get_item("ActualM5").toFixed(2)) : 0);
+      var actualM6 = (oListItem.get_item("ActualM6") ? Number(oListItem.get_item("ActualM6").toFixed(2)) : 0);
+      var actualM7 = (oListItem.get_item("ActualM7") ? Number(oListItem.get_item("ActualM7").toFixed(2)) : 0);
+      var actualM8 = (oListItem.get_item("ActualM8") ? Number(oListItem.get_item("ActualM8").toFixed(2)) : 0);
+      var actualM9 = (oListItem.get_item("ActualM9") ? Number(oListItem.get_item("ActualM9").toFixed(2)) : 0);
+      var actualM10 = (oListItem.get_item("ActualM10") ? Number(oListItem.get_item("ActualM10").toFixed(2)) : 0);
+      var actualM11 = (oListItem.get_item("ActualM11") ? Number(oListItem.get_item("ActualM11").toFixed(2)) : 0);
+      var actualM12 = (oListItem.get_item("ActualM12") ? Number(oListItem.get_item("ActualM12").toFixed(2)) : 0);
+      ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      var performanceleader = oListItem.get_item("PerformanceLeader")
+        ? oListItem.get_item("PerformanceLeader").get_lookupValue()
+        : UserN.Title;
+      var dataAvailability =
+        oListItem.get_item("DataAvailability") || UserNo_Data;
+      var dataSource = oListItem.get_item("DataSource") || UserNo_Data;
+      var periodType = oListItem.get_item("PeriodType") || UserNo_Data;
+      var resultType = oListItem.get_item("ResultType") || null;
+      var calculationMethod =
+        oListItem.get_item("CalculationMethod") || UserNo_Data;
+
+      var total = 0
+      var totalActual = 0
+      if (filteredValue == 'year') {
+        total = targetY || 0
+        totalActual = actualY || 0
+      } else if (filteredValue == 'quarter') {
+        total = targetQ1 + targetQ2 + targetQ3 + targetQ4 || 0;
+        totalActual = actualQ1 + actualQ2 + actualQ3 + actualQ4 || 0;
+      } else if (filteredValue == 'midterm') {
+        total = targetMid1 + targetMid2 || 0
+        totalActual = actualMid1 + actualMid2 || 0
+      } else if (filteredValue == 'monthly') {
+        total = targetM1 + targetM2 + targetM3 + targetM4 + targetM5 + targetM6 + targetM7 + targetM8 + targetM9 + targetM10 + targetM11 + targetM12 || 0;
+        totalActual = actualM1 + actualM2 + actualM3 + actualM4 + actualM5 + actualM6 + actualM7 + actualM8 + actualM9 + actualM10 + actualM11 + actualM12 || 0;
+      }
+
+      total = Number(total.toFixed(2))
+      totalActual = Number(totalActual.toFixed(2))
+
+
+      Operational_Array.push({
+        id: oListItem.get_id(),
+        title: oListItem.get_item("Title"),
+        name: name,
+        category: category,
+        relatedInstrument: relatedInstrument,
+        target: target,
+        targetQ1: targetQ1,
+        targetQ2: targetQ2,
+        targetQ3: targetQ3,
+        targetQ4: targetQ4,
+        performanceleader: performanceleader,
+        dataAvailability: dataAvailability,
+        dataSource: dataSource,
+        periodType: periodType,
+        resultType: resultType,
+        total: total,
+        calculationMethod: calculationMethod,
+      });
+
+      if (filteredValue == 'year') {
+        BODY_HTML.push(
+          '<tbody class="targetTbody">' +
+          '<tr data-target_list="KPIResults" data-id="' + oListItem.get_id() + '" data-category="' + category + '" is-updated="false" id="MyTr">' +
+          ' <th rowspan="2">' + name + "</th>" +
+          '<th scope="row" class="Resources" data-trans-target></th>' +
+          ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' + oListItem.get_id() + '">' + total +
+          "</td>" +
+          ' <td><input class="QarterInputStyle inputStyle1 myInput" data-internal="TargetY" type="number" name="" value="' +
+          targetY +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          "</tr>" +
+          // actual
+          '<tr data-target_list="KPIResults" data-id="' +
+          oListItem.get_id() + '" data-category="' + category + '" is-updated="false" id="MyTr">' +
+          '<th scope="row" class="Resources" data-trans-actual></th>' +
+          ' <td id="totalActual" class="myInput" data-internal="Actual" data-id="' + oListItem.get_id() + '">' +
+          totalActual +
+          "</td>" +
+          ' <td><input class="QarterInputStyle inputStyle1 actualStyle myInput" data-internal="ActualY" type="number" name="" value="' +
+          actualY +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          "</tr>" +
+          "</tbody>"
+        );
+      } else if (filteredValue == 'quarter') {
+        BODY_HTML.push(
+          '<tbody class="targetTbody">' +
+          '<tr data-target_list="KPIResults" data-id="' +
+          oListItem.get_id() +
+          '" data-category="' +
+          category +
+          '" is-updated="false" id="MyTr">' +
+          ' <th rowspan="2">' +
+          name +
+          "</th>" +
+          '<th scope="row" class="Resources" data-trans-target></th>' +
+          ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' +
+          oListItem.get_id() +
+          '">' +
+          total +
+          "</td>" +
+          ' <td><input class="QarterInputStyle inputStyle1 myInput" data-internal="TargetQ1" type="number" name="" value="' +
+          targetQ1 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle2 myInput" data-internal="TargetQ2" type="number" name="" value="' +
+          targetQ2 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle3 myInput" data-internal="TargetQ3" type="number" name="" value="' +
+          targetQ3 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle4 myInput" data-internal="TargetQ4" type="number" name="" value="' +
+          targetQ4 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          "</tr>" +
+          // actual
+          '<tr data-target_list="KPIResults" data-id="' +
+          oListItem.get_id() +
+          '" data-category="' +
+          category +
+          '" is-updated="false" id="MyTr">' +
+          '<th scope="row" class="Resources" data-trans-actual></th>' +
+          ' <td id="totalActual" class="myInput" data-internal="Actual" data-id="' +
+          oListItem.get_id() +
+          '">' +
+          totalActual +
+          "</td>" +
+          ' <td><input class="QarterInputStyle inputStyle1 actualStyle myInput" data-internal="ActualQ1" type="number" name="" value="' +
+          actualQ1 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle2 actualStyle myInput" data-internal="ActualQ2" type="number" name="" value="' +
+          actualQ2 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle3 actualStyle myInput" data-internal="ActualQ3" type="number" name="" value="' +
+          actualQ3 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle4 actualStyle myInput" data-internal="ActualQ4" type="number" name="" value="' +
+          actualQ4 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          "</tr>" +
+          "</tbody>"
+        );
+      } else if (filteredValue == 'midterm') {
+        BODY_HTML.push(
+          '<tbody class="targetTbody">' +
+          '<tr data-target_list="KPIResults" data-id="' + oListItem.get_id() + '" data-category="' + category + '" is-updated="false" id="MyTr">' +
+          ' <th rowspan="2">' + name + "</th>" +
+          '<th scope="row" class="Resources" data-trans-target></th>' +
+          ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' + oListItem.get_id() + '">' + total +
+          "</td>" +
+          ' <td><input class="QarterInputStyle inputStyle1 myInput" data-internal="TargetMid1" type="number" name="" value="' +
+          targetMid1 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle2 myInput" data-internal="TargetMid2" type="number" name="" value="' +
+          targetMid2 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          "</tr>" +
+          // actual
+          '<tr data-target_list="KPIResults" data-id="' +
+          oListItem.get_id() + '" data-category="' + category + '" is-updated="false" id="MyTr">' +
+          '<th scope="row" class="Resources" data-trans-actual></th>' +
+          ' <td id="totalActual" class="myInput" data-internal="Actual" data-id="' + oListItem.get_id() + '">' +
+          totalActual +
+          "</td>" +
+          ' <td><input class="QarterInputStyle inputStyle1 actualStyle myInput" data-internal="ActualMid1" type="number" name="" value="' +
+          actualMid1 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle2 actualStyle myInput" data-internal="ActualMid2" type="number" name="" value="' +
+          actualMid2 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          "</tr>" +
+          "</tbody>"
+        );
+      } else if (filteredValue == 'monthly') {
+        BODY_HTML.push(
+          '<tbody class="targetTbody">' +
+          '<tr data-target_list="KPIResults" data-id="' +
+          oListItem.get_id() +
+          '" data-category="' +
+          category +
+          '" is-updated="false" id="MyTr">' +
+          ' <th rowspan="2">' +
+          name +
+          "</th>" +
+          '<th scope="row" class="Resources" data-trans-target></th>' +
+          ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' +
+          oListItem.get_id() +
+          '">' +
+          total +
+          "</td>" +
+          ' <td><input class="QarterInputStyle inputStyle1 myInput" data-internal="TargetM1" type="number" name="" value="' +
+          targetM1 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle2 myInput" data-internal="TargetM2" type="number" name="" value="' +
+          targetM2 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle3 myInput" data-internal="TargetM3" type="number" name="" value="' +
+          targetM3 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle4 myInput" data-internal="TargetM4" type="number" name="" value="' +
+          targetM4 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          //target 4 replay should change
+          ' <td><input class="QarterInputStyle inputStyle5 myInput" data-internal="TargetM5" type="number" name="" value="' +
+          targetM5 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle6 myInput" data-internal="TargetM6" type="number" name="" value="' +
+          targetM6 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle7 myInput" data-internal="TargetM7" type="number" name="" value="' +
+          targetM7 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle8 myInput" data-internal="TargetM8" type="number" name="" value="' +
+          targetM8 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle9 myInput" data-internal="TargetM9" type="number" name="" value="' +
+          targetM9 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle10 myInput" data-internal="TargetM10" type="number" name="" value="' +
+          targetM10 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle11 myInput" data-internal="TargetM11" type="number" name="" value="' +
+          targetM11 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle12 myInput" data-internal="TargetM12" type="number" name="" value="' +
+          targetM12 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          //
+          "</tr>" +
+          // actual
+          '<tr data-target_list="KPIResults" data-id="' +
+          oListItem.get_id() +
+          '" data-category="' +
+          category +
+          '" is-updated="false" id="MyTr">' +
+          '<th scope="row" class="Resources" data-trans-actual></th>' +
+          ' <td id="totalActual" class="myInput" data-internal="Actual" data-id="' +
+          oListItem.get_id() +
+          '">' +
+          totalActual +
+          "</td>" +
+          ' <td><input class="QarterInputStyle inputStyle1 actualStyle myInput" data-internal="ActualM1" type="number" name="" value="' +
+          actualM1 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle2 actualStyle myInput" data-internal="ActualM2" type="number" name="" value="' +
+          actualM2 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle3 actualStyle myInput" data-internal="ActualM3" type="number" name="" value="' +
+          actualM3 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle4 actualStyle myInput" data-internal="ActualM4" type="number" name="" value="' +
+          actualM4 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          //actual 4 replay should change
+          ' <td><input class="QarterInputStyle inputStyle5 actualStyle myInput" data-internal="ActualM5" type="number" name="" value="' +
+          actualM5 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle6 actualStyle myInput" data-internal="ActualM6" type="number" name="" value="' +
+          actualM6 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle7 actualStyle myInput" data-internal="ActualM7" type="number" name="" value="' +
+          actualM7 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle8 actualStyle myInput" data-internal="ActualM8" type="number" name="" value="' +
+          actualM8 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle9 actualStyle myInput" data-internal="ActualM9" type="number" name="" value="' +
+          actualM9 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle10 actualStyle myInput" data-internal="ActualM10" type="number" name="" value="' +
+          actualM10 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle11 actualStyle myInput" data-internal="ActualM11" type="number" name="" value="' +
+          actualM11 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          ' <td><input class="QarterInputStyle inputStyle12 actualStyle myInput" data-internal="ActualM12" type="number" name="" value="' +
+          actualM12 +
+          '" data-result-type="' +
+          resultType +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
+          //
+          "</tr>" +
+          "</tbody>"
+        );
+      }
+      // }
     }
 
 
@@ -734,9 +735,9 @@ var MainKPIs_Info_Request = {
     }
 
     if (isMinister || isBITeam || isPerformanceLeader ||
-       //isSPMTeam || 
-       
-       isEPMO) {
+      //isSPMTeam || 
+
+      isEPMO) {
       $("body").append(
         "<style>" +
         ".btn-save{display:none}" +
@@ -802,7 +803,7 @@ window.checkTargetStatusHtml = setInterval(function () {
 var RoleDataLevelBuildQuery = {
   init: function () {
 
-    
+
 
     var FilterChoicesRole = Array.from(dataLevelAccessChoicesForFilters)
 
@@ -859,7 +860,7 @@ var RoleDataLevelBuildQuery = {
             Where_Body += '<Value Type="' + FilterChoicesRole[i].Type + '">' + FilterChoicesRole[i].Values[j] + '</Value>';
           }
           Where_Body += '</Values></In>';
-      
+
         }
       }
       //Finish Line, make last changes and build query
@@ -892,7 +893,7 @@ var RoleDataLevelBuildQuery = {
           '</View>';
         RolePQuery = Query_Body;
 
-        console.log(RolePQuery,"ROLE PQUERY BENFOOOOORE")
+        console.log(RolePQuery, "ROLE PQUERY BENFOOOOORE")
 
         MainKPIs_Info_Request.preinit();
 
@@ -959,8 +960,9 @@ var Get_All_Dynamic_Filter = {
 
     var query = "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>"
     if (isGeneralManager
-       //|| isDU 
-       || isMinisterAssistant || isViceMinister || isSectorHead || isSubSectorHead) {
+      //|| isDU 
+      // || isMinisterAssistant
+      || isViceMinister || isSectorHead || isSubSectorHead) {
       // UserAccessSectorCode = 'DP-001';
 
       SectorHeadQuery =
@@ -1239,7 +1241,7 @@ var Build_My_Filter = {
         }
       });
 
-      
+
       if (FilterChoices.length) {
         Where_Body = ""
         Query_Body = ""
