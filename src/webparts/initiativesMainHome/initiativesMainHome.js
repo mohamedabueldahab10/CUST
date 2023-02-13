@@ -185,7 +185,7 @@ window.initiativeRequest = {
           // isMinisterAssistant ||
           //isViceMinister ||
           //isSectorHead ||
-          isSubSectorHead ||
+          //isSubSectorHead ||
           isGeneralManager
         ) {
           PQuery = SubSectorInitiativeAccessQuery;

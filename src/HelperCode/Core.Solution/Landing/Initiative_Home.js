@@ -1734,7 +1734,7 @@ var Milestones_Info_Request = {
       // isMinisterAssistant ||
       //isSectorHead ||
       // isViceMinister ||
-      isSubSectorHead ||
+      // isSubSectorHead ||
       isGeneralManager 
       // isMinister
       // ||

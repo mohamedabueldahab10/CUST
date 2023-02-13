@@ -2160,26 +2160,26 @@ window.userCalls = {
         break;
       case "SubSectorHead":
         isSubSectorHead = true;
-        (SecondLevel_List = "Internal Entities"),
-          (SecondLevel_FieldtoQuery = "Manager"),
-          (SecondLevel_FieldtoQueryType = "Choice");
-        (SecondLevel_FieldtoFetch = "Title"),
-          (SecondLevel_CAMLQuery =
-            "<View><Query><Where>" +
-            "<And>" +
-            "<Eq>" +
-            '<FieldRef Name="' +
-            SecondLevel_FieldtoQuery +
-            '" LookupId="TRUE" />' +
-            '<Value Type="' +
-            SecondLevel_FieldtoQueryType +
-            '"><UserID /></Value>' +
-            "</Eq>" +
-            "<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
-            "</And>" +
-            "</Where></Query></View>"),
-          (SecondLevel_FirstLevel_Field = "SubSector"),
-          (SecondLevel_FirstLevel_FieldType = "Text");
+        // (SecondLevel_List = "Internal Entities"),
+        //   (SecondLevel_FieldtoQuery = "Manager"),
+        //   (SecondLevel_FieldtoQueryType = "Choice");
+        // (SecondLevel_FieldtoFetch = "Title"),
+        //   (SecondLevel_CAMLQuery =
+        //     "<View><Query><Where>" +
+        //     "<And>" +
+        //     "<Eq>" +
+        //     '<FieldRef Name="' +
+        //     SecondLevel_FieldtoQuery +
+        //     '" LookupId="TRUE" />' +
+        //     '<Value Type="' +
+        //     SecondLevel_FieldtoQueryType +
+        //     '"><UserID /></Value>' +
+        //     "</Eq>" +
+        //     "<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
+        //     "</And>" +
+        //     "</Where></Query></View>"),
+        //   (SecondLevel_FirstLevel_Field = "SubSector"),
+        //   (SecondLevel_FirstLevel_FieldType = "Text");
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
         ar_UserRole = "وكيل ";
@@ -2187,59 +2187,8 @@ window.userCalls = {
 
         //CRUD
         Create_Access = [];
-        Read_Access = [
-          // "budgetitems",
-          "Targets.aspx",
-          // "goalstrategy",
-          "initiativedeliverables",
-          "benefits",
-          "benefitmetrics",
-          "closureinitiative",
-          "initiatives",
-          "InitiativeHome.aspx",
-          "initiativemilestones",
-          "initiativeissues",
-          "initiativemom",
-          "initiativerisks",
-          "projects",
-          "projecthome.aspx",
-          "mom",
-          "mainkpi",
-          "lessonslearned",
-          "deliverables",
-          "closureinitiative",
-          "initiativeexecution",
-          "benefits",
-          "initiativemilestonesacceptance",
-          "initiativedeliverablesacceptance",
-          "initiativecards",
-          "projectcharter",
-          "kpiequations",
-          "deliveries",
-          "risks",
-          "issues",
-          "milestones",
-          "invoices",
-          "contracts",
-          "changerequest",
-          "MOM",
-          "communicationplans",
-          "lessonslearned",
-          "stakeholders",
-          "documents",
-          "mainindicators.aspx",
-          "initiativesmain.aspx",
-          "tasks",
-          // "portfolio",
-          // "ideas",
-          "sos",
-          "closureform",
-          "TaskHistory.aspx",
-          "home.aspx",
-          "deliverablemetrics",
-          "benefitmatrix",
-          "benefitmetrics",
-        ];
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [];
         break;
       case "GeneralManager":
@@ -2593,8 +2542,9 @@ window.userCalls = {
       //!isSectorHead &&
       // !isSPMO &&
       // !isDU &&
-      !isGeneralManager &&
-      !isSubSectorHead
+      !isGeneralManager
+      // &&
+      // !isSubSectorHead
       // !isMinisterAssistant &&
       // !isViceMinister
     ) {
@@ -2613,7 +2563,7 @@ window.userCalls = {
         isPortfolioManager ||
         //isSectorHead ||
         // isSPMO ||
-        isSubSectorHead ||
+        // isSubSectorHead ||
         isGeneralManager
         // isDU ||
         // isMinisterAssistant ||
@@ -4052,9 +4002,146 @@ window.userCalls = {
       // 	Role: "KPIOwner",
       // 	groupsName: ["KPI Owners"],
       // },
+      // {
+      //   Role: "SubSectorHead",
+      //   groupsName: ["SubSector Head"],
+      // },
       {
         Role: "SubSectorHead",
         groupsName: ["SubSector Head"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "Internal Entities",
+              accessConditions: [
+                {
+                  field: "Manager",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+                {
+                  field: "EntityType",
+                  type: "Choice",
+                  values: ["Department"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "Initiatives",
+                parentRelationField: "Title",
+                RelationField: "SubSector",
+                RelationFieldType: "Choice",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Internal Entities",
+              accessConditions: [
+                {
+                  field: "Manager",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+                {
+                  field: "EntityType",
+                  type: "Choice",
+                  values: ["Department"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "Projects",
+                parentRelationField: "Title",
+                RelationField: "SubSector",
+                RelationFieldType: "Choice",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Internal Entities",
+              accessConditions: [
+                {
+                  field: "Manager",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+                {
+                  field: "EntityType",
+                  type: "Choice",
+                  values: ["Department"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "SubSector",
+                RelationFieldType: "Choice",
+                subRelation: {
+                  level: 3,
+                  listName: "GoalStrategy",
+                  parentRelationField: "RelatedStrategy",
+                  RelationField: "Title",
+                  RelationFieldType: "Text",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Internal Entities",
+              accessConditions: [
+                {
+                  field: "Manager",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+                {
+                  field: "EntityType",
+                  type: "Choice",
+                  values: ["Department"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "SubSector",
+                RelationFieldType: "Choice",
+                subRelation: {
+                  level: 3,
+                  listName: "MainKPI",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedStrategyObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "KPIResults",
+                    parentRelationField: "Title",
+                    RelationField: "KPI",
+                    RelationFieldType: "Text",
+                  }
+                },
+              },
+            },
+          ]
+        }
       },
       {
         Role: "GeneralManager",
@@ -4351,7 +4438,7 @@ var Access_Project_Info_Request = {
             isPortfolioManager ||
             //isSectorHead ||
             // isSPMO ||
-            isSubSectorHead ||
+            // isSubSectorHead ||
             isGeneralManager
             // isDU ||
             // isMinisterAssistant ||
@@ -4488,7 +4575,7 @@ var Access_Project_Info_Request = {
             // isMinisterAssistant ||
             //isSectorHead ||
             // isViceMinister ||
-            isSubSectorHead ||
+            // isSubSectorHead ||
             isGeneralManager
           ) {
             AccessQuery = SectorHeadQuery;
@@ -4499,7 +4586,7 @@ var Access_Project_Info_Request = {
             // isMinisterAssistant ||
             // isViceMinister ||
             //isSectorHead ||
-            isSubSectorHead ||
+            // isSubSectorHead ||
             isGeneralManager) &&
           isInitiativesHomePage
         ) {
@@ -4518,7 +4605,7 @@ var Access_Project_Info_Request = {
           // isMinisterAssistant ||
           //isSectorHead ||
           // isViceMinister ||
-          isSubSectorHead ||
+          // isSubSectorHead ||
           (isGeneralManager && USERlistkey == "sos")
         ) {
           AccessQuery = SectorHeadQuery;
@@ -4628,8 +4715,9 @@ var Access_Project_Info_Request = {
       isPortfolioManager ||
       //isSectorHead ||
       // isSPMO ||
-      isGeneralManager ||
-      isSubSectorHead
+      isGeneralManager
+      // ||
+      // isSubSectorHead
       // isDU ||
       // isMinisterAssistant ||
       // isViceMinister
@@ -5315,9 +5403,10 @@ var Access_Sector_Info_Request = {
 
     // handle the query
     SectorHeadQuery += "</Values></In></And></Where></Query></View>";
-    if (isGeneralManager || isSubSectorHead
-       //|| isSectorHead
-       ) {
+    if (isGeneralManager
+      //|| isSubSectorHead
+      //|| isSectorHead
+    ) {
       console.log(UserAccessSectorCode);
 
       var subsectorname, substorcode;
