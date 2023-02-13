@@ -1166,7 +1166,7 @@ var Information_Form = [
     targetlist: 'Dependency Projects',
     subFields: [
       {
-        InternalName: 'ProjectCode',
+        InternalName: 'DependencyProject',
         DisplayName: 'إعتمادية على مشروع اّخر',
         DisplayNameEn: 'Dependency Project',
         type: 'lookup',
