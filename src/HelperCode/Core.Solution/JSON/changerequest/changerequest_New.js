@@ -624,406 +624,406 @@ window.Information_Form = [
 			// },
 		],
 	},
-	{
-		label: 'الدراسات الخاصة بطلب التغيير ',
-		labelEn: 'Change Requests Studies',
-		description: "التفاصيل",
-		descriptionEn: "Details",
-		sectiontype: "master",
-		layout:"table",targetlist: "ChangeRequestsStudies",
-		subFields: [
-			// {
-			//     "InternalName": "Title",
-			//     "DisplayName":"الرمز",
-			//     "type":"string"
-			// },
-			{
-				"InternalName": "CannotQuickTrack",
-				"DisplayName": "لا يمكن عمل مسار سريع",
-				"DisplayNameEn": "Cannot Quick Track",
-				"type": "yesnoradio",
-				      options: {
-					choices: [
-						{ display: 'yes', value: 'yes' },
-						{ display: 'no', value: 'no' }
-					]
-				}
+	// {
+	// 	label: 'الدراسات الخاصة بطلب التغيير ',
+	// 	labelEn: 'Change Requests Studies',
+	// 	description: "التفاصيل",
+	// 	descriptionEn: "Details",
+	// 	sectiontype: "master",
+	// 	layout:"table",targetlist: "ChangeRequestsStudies",
+	// 	subFields: [
+	// 		// {
+	// 		//     "InternalName": "Title",
+	// 		//     "DisplayName":"الرمز",
+	// 		//     "type":"string"
+	// 		// },
+	// 		{
+	// 			"InternalName": "CannotQuickTrack",
+	// 			"DisplayName": "لا يمكن عمل مسار سريع",
+	// 			"DisplayNameEn": "Cannot Quick Track",
+	// 			"type": "yesnoradio",
+	// 			      options: {
+	// 				choices: [
+	// 					{ display: 'yes', value: 'yes' },
+	// 					{ display: 'no', value: 'no' }
+	// 				]
+	// 			}
 
-			},
-			{
-				"InternalName": "CannotDecreaseDuration",
-				"DisplayName": "لا يمكن تقليل مدة الكراسة",
-				"DisplayNameEn": "Cannot Decrease Duration",
-				"type": "yesnoradio",
-				      options: {
-					choices: [
-						{ display: 'yes', value: 'yes' },
-						{ display: 'no', value: 'no' }
-					]
-				}
+	// 		},
+	// 		{
+	// 			"InternalName": "CannotDecreaseDuration",
+	// 			"DisplayName": "لا يمكن تقليل مدة الكراسة",
+	// 			"DisplayNameEn": "Cannot Decrease Duration",
+	// 			"type": "yesnoradio",
+	// 			      options: {
+	// 				choices: [
+	// 					{ display: 'yes', value: 'yes' },
+	// 					{ display: 'no', value: 'no' }
+	// 				]
+	// 			}
 
-			},
-			{
-				"InternalName": "CannotReschedule",
-				"DisplayName": "لا يمكن إعادة جدولت التسليمات الرئيسية",
-				"DisplayNameEn": "Cannot Reschedule",
-				"type": "yesnoradio",
-				      options: {
-					choices: [
-						{ display: 'yes', value: 'yes' },
-						{ display: 'no', value: 'no' }
-					]
-				}
+	// 		},
+	// 		{
+	// 			"InternalName": "CannotReschedule",
+	// 			"DisplayName": "لا يمكن إعادة جدولت التسليمات الرئيسية",
+	// 			"DisplayNameEn": "Cannot Reschedule",
+	// 			"type": "yesnoradio",
+	// 			      options: {
+	// 				choices: [
+	// 					{ display: 'yes', value: 'yes' },
+	// 					{ display: 'no', value: 'no' }
+	// 				]
+	// 			}
 
-			},
-			{
-				"InternalName": "CannotDecreaseTasksDuration",
-				"DisplayName": "لا يمكن تقليل مدة المهام في المسار الحرج",
-				"DisplayNameEn": "Cannot Decrease Tasks Duration",
-				"type": "yesnoradio",
-				      options: {
-					choices: [
-						{ display: 'yes', value: 'yes' },
-						{ display: 'no', value: 'no' }
-					]
-				}
+	// 		},
+	// 		{
+	// 			"InternalName": "CannotDecreaseTasksDuration",
+	// 			"DisplayName": "لا يمكن تقليل مدة المهام في المسار الحرج",
+	// 			"DisplayNameEn": "Cannot Decrease Tasks Duration",
+	// 			"type": "yesnoradio",
+	// 			      options: {
+	// 				choices: [
+	// 					{ display: 'yes', value: 'yes' },
+	// 					{ display: 'no', value: 'no' }
+	// 				]
+	// 			}
 
-			},
-			{
-				"InternalName": "Others",
-				"DisplayName": "أخرى",
-				"DisplayNameEn": "Others",
-				"type": "string",
-			},
+	// 		},
+	// 		{
+	// 			"InternalName": "Others",
+	// 			"DisplayName": "أخرى",
+	// 			"DisplayNameEn": "Others",
+	// 			"type": "string",
+	// 		},
 
-			// {
-			//     "InternalName": "RelatedCR",
-			//     "DisplayName": "طلب التغيير المرتبط",
-			//     "DisplayNameEn": "Related CR",
-			//     "type": "lookup",
-			//     "source": "ChangeRequest",
-			//     "Dispfieldkey": "Title",
-			//     "valfieldkey": "Title"
-			// },
-		],
-	},
-	{
-		label: 'بيان اثار التغيير المطلوب',
-		labelEn: 'Change Requests Impacts',
-		description: "التفاصيل",
-		descriptionEn: "Details",
-		sectiontype: "master",
-		layout:"table",targetlist: "ChangeRequestsImpacts",
-		subFields: [
-			// {
-			//     "InternalName": "Title",
-			//     "DisplayName":"الرمز",
-			//     "type":"string"
-			// },
-			{
-				"InternalName": "ElementsAffectedByChange",
-				"DisplayName": "العناصر المتأثرة بالتغيير",
-				"DisplayNameEn": "Elements Affected By Change",
-				"type": "dropdownValues",
-				      options: {
-					choices: [
-						{ display: 'yes', value: 'yes' },
-						{ display: 'no', value: 'no' }
-					]
-				}
+	// 		// {
+	// 		//     "InternalName": "RelatedCR",
+	// 		//     "DisplayName": "طلب التغيير المرتبط",
+	// 		//     "DisplayNameEn": "Related CR",
+	// 		//     "type": "lookup",
+	// 		//     "source": "ChangeRequest",
+	// 		//     "Dispfieldkey": "Title",
+	// 		//     "valfieldkey": "Title"
+	// 		// },
+	// 	],
+	// },
+	// {
+	// 	label: 'بيان اثار التغيير المطلوب',
+	// 	labelEn: 'Change Requests Impacts',
+	// 	description: "التفاصيل",
+	// 	descriptionEn: "Details",
+	// 	sectiontype: "master",
+	// 	layout:"table",targetlist: "ChangeRequestsImpacts",
+	// 	subFields: [
+	// 		// {
+	// 		//     "InternalName": "Title",
+	// 		//     "DisplayName":"الرمز",
+	// 		//     "type":"string"
+	// 		// },
+	// 		{
+	// 			"InternalName": "ElementsAffectedByChange",
+	// 			"DisplayName": "العناصر المتأثرة بالتغيير",
+	// 			"DisplayNameEn": "Elements Affected By Change",
+	// 			"type": "dropdownValues",
+	// 			      options: {
+	// 				choices: [
+	// 					{ display: 'yes', value: 'yes' },
+	// 					{ display: 'no', value: 'no' }
+	// 				]
+	// 			}
 
-			},
-			{
-				"InternalName": "Total",
-				"DisplayName": "إجمالي الزيادة/ الانخفاض",
-				"DisplayNameEn": "Total",
-				"type": "float",
-
-
-			},
-			{
-				"InternalName": "Baseline",
-				"DisplayName": "خط الأساس",
-				"DisplayNameEn": "Baseline",
-				"type": "datetime"
-
-			},
-			{
-				"InternalName": "CurrentDate",
-				"DisplayName": "الحالي",
-				"DisplayNameEn": "Current Date",
-				"type": "datetime"
-
-			},
-			{
-				"InternalName": "NewDate",
-				"DisplayName": "الجديد",
-				"DisplayNameEn": "New Date",
-				"type": "datetime"
-
-			},
+	// 		},
+	// 		{
+	// 			"InternalName": "Total",
+	// 			"DisplayName": "إجمالي الزيادة/ الانخفاض",
+	// 			"DisplayNameEn": "Total",
+	// 			"type": "float",
 
 
-			// {
-			//     "InternalName": "RelatedCR",
-			//     "DisplayName": "طلب التغيير المرتبط",
-			//     "DisplayNameEn": "Related CR",
-			//     "type": "lookup",
-			//     "source": "ChangeRequest",
-			//     "Dispfieldkey": "Title",
-			//     "valfieldkey": "Title"
-			// },
-		],
-	},
-	{
-		label: '	التسليمات أو المعالم المتأثرة بالتغيير',
-		labelEn: 'Impacted Milestones',
-		description: "التفاصيل",
-		descriptionEn: "Details",
-		sectiontype: "master",
-		layout:"table",targetlist: "ImpactedMilestones",
-		subFields: [
-			// {
-			//     "InternalName": "Title",
-			//     "DisplayName":"الرمز",
-			//     "type":"string"
-			// },
-			{
-				"InternalName": "Name",
-				"DisplayName": "اسم التسليمة أو المعلم",
-				"DisplayNameEn": "Name",
-				"type": "string",
+	// 		},
+	// 		{
+	// 			"InternalName": "Baseline",
+	// 			"DisplayName": "خط الأساس",
+	// 			"DisplayNameEn": "Baseline",
+	// 			"type": "datetime"
+
+	// 		},
+	// 		{
+	// 			"InternalName": "CurrentDate",
+	// 			"DisplayName": "الحالي",
+	// 			"DisplayNameEn": "Current Date",
+	// 			"type": "datetime"
+
+	// 		},
+	// 		{
+	// 			"InternalName": "NewDate",
+	// 			"DisplayName": "الجديد",
+	// 			"DisplayNameEn": "New Date",
+	// 			"type": "datetime"
+
+	// 		},
 
 
-			},
-
-			{
-				"InternalName": "StartDate",
-				"DisplayName": "تاريخ البدء الحالي",
-				"DisplayNameEn": "Start Date",
-				"type": "datetime"
-
-			},
-			{
-				"InternalName": "NewStartDate",
-				"DisplayName": "تاريخ البدء الجديد",
-				"DisplayNameEn": "New Start Date",
-				"type": "datetime"
-
-			},
-			{
-				"InternalName": "FinishDate",
-				"DisplayName": "تاريخ الانتهاء الحالي",
-				"DisplayNameEn": "Finish Date",
-				"type": "datetime"
-
-			},
-			{
-				"InternalName": "NewFinishDate",
-				"DisplayName": "تاريخ الانتهاء الجديد",
-				"DisplayNameEn": "New Finish Date",
-				"type": "datetime"
-
-			},
-
-
-			// {
-			//     "InternalName": "RelatedCR",
-			//     "DisplayName": "طلب التغيير المرتبط",
-			//     "DisplayNameEn": "Related CR",
-			//     "type": "lookup",
-			//     "source": "ChangeRequest",
-			//     "Dispfieldkey": "Title",
-			//     "valfieldkey": "Title"
-			// },
-		],
-	},
-	{
-		label: 'جدول الكميات',
-		labelEn: 'Quantities Table',
-		description: "التفاصيل",
-		descriptionEn: "Details",
-		sectiontype: "master",
-		layout:"table",targetlist: "QuantitiesTable",
-		subFields: [
-			// {
-			//     "InternalName": "Title",
-			//     "DisplayName":"الرمز",
-			//     "type":"string"
-			// },
-			{
-				"InternalName": "Name",
-				"DisplayName": "اسم المخرج الحالي حسب جدول الكميات",
-				"DisplayNameEn": "Name",
-				"type": "string",
+	// 		// {
+	// 		//     "InternalName": "RelatedCR",
+	// 		//     "DisplayName": "طلب التغيير المرتبط",
+	// 		//     "DisplayNameEn": "Related CR",
+	// 		//     "type": "lookup",
+	// 		//     "source": "ChangeRequest",
+	// 		//     "Dispfieldkey": "Title",
+	// 		//     "valfieldkey": "Title"
+	// 		// },
+	// 	],
+	// },
+	// {
+	// 	label: '	التسليمات أو المعالم المتأثرة بالتغيير',
+	// 	labelEn: 'Impacted Milestones',
+	// 	description: "التفاصيل",
+	// 	descriptionEn: "Details",
+	// 	sectiontype: "master",
+	// 	layout:"table",targetlist: "ImpactedMilestones",
+	// 	subFields: [
+	// 		// {
+	// 		//     "InternalName": "Title",
+	// 		//     "DisplayName":"الرمز",
+	// 		//     "type":"string"
+	// 		// },
+	// 		{
+	// 			"InternalName": "Name",
+	// 			"DisplayName": "اسم التسليمة أو المعلم",
+	// 			"DisplayNameEn": "Name",
+	// 			"type": "string",
 
 
-			},
-			{
-				"InternalName": "NewName",
-				"DisplayName": "اسم المخرج الجديد",
-				"DisplayNameEn": "New Name",
-				"type": "string",
+	// 		},
+
+	// 		{
+	// 			"InternalName": "StartDate",
+	// 			"DisplayName": "تاريخ البدء الحالي",
+	// 			"DisplayNameEn": "Start Date",
+	// 			"type": "datetime"
+
+	// 		},
+	// 		{
+	// 			"InternalName": "NewStartDate",
+	// 			"DisplayName": "تاريخ البدء الجديد",
+	// 			"DisplayNameEn": "New Start Date",
+	// 			"type": "datetime"
+
+	// 		},
+	// 		{
+	// 			"InternalName": "FinishDate",
+	// 			"DisplayName": "تاريخ الانتهاء الحالي",
+	// 			"DisplayNameEn": "Finish Date",
+	// 			"type": "datetime"
+
+	// 		},
+	// 		{
+	// 			"InternalName": "NewFinishDate",
+	// 			"DisplayName": "تاريخ الانتهاء الجديد",
+	// 			"DisplayNameEn": "New Finish Date",
+	// 			"type": "datetime"
+
+	// 		},
 
 
-			},
-			{
-				"InternalName": "Number",
-				"DisplayName": "العدد",
-				"DisplayNameEn": "Number",
-				"type": "float",
+	// 		// {
+	// 		//     "InternalName": "RelatedCR",
+	// 		//     "DisplayName": "طلب التغيير المرتبط",
+	// 		//     "DisplayNameEn": "Related CR",
+	// 		//     "type": "lookup",
+	// 		//     "source": "ChangeRequest",
+	// 		//     "Dispfieldkey": "Title",
+	// 		//     "valfieldkey": "Title"
+	// 		// },
+	// 	],
+	// },
+	// {
+	// 	label: 'جدول الكميات',
+	// 	labelEn: 'Quantities Table',
+	// 	description: "التفاصيل",
+	// 	descriptionEn: "Details",
+	// 	sectiontype: "master",
+	// 	layout:"table",targetlist: "QuantitiesTable",
+	// 	subFields: [
+	// 		// {
+	// 		//     "InternalName": "Title",
+	// 		//     "DisplayName":"الرمز",
+	// 		//     "type":"string"
+	// 		// },
+	// 		{
+	// 			"InternalName": "Name",
+	// 			"DisplayName": "اسم المخرج الحالي حسب جدول الكميات",
+	// 			"DisplayNameEn": "Name",
+	// 			"type": "string",
 
 
-			},
-			{
-				"InternalName": "ResultType",
-				"DisplayName": "الوحدة",
-				"DisplayNameEn": "Result Type",
-				"type": "float",
+	// 		},
+	// 		{
+	// 			"InternalName": "NewName",
+	// 			"DisplayName": "اسم المخرج الجديد",
+	// 			"DisplayNameEn": "New Name",
+	// 			"type": "string",
 
 
-			},
-			{
-				"InternalName": "Cost",
-				"DisplayName": "تكلفة المخرج",
-				"DisplayNameEn": "Cost",
-				"type": "float",
+	// 		},
+	// 		{
+	// 			"InternalName": "Number",
+	// 			"DisplayName": "العدد",
+	// 			"DisplayNameEn": "Number",
+	// 			"type": "float",
 
 
-			},
-			{
-				InternalName: "IsUniqueOutput",
-				DisplayNameEn: "Is Unique Output",
-				DisplayName: "هل المخرج له مثيل",
-				type: "dropdownValues",
-				// validation: "required",
-				options: {
-				  choices: [
-					{ display: "yes", value: "yes" },
-					{ display: "no", value: "no" },
-					{ display: "noneed", value: "noneed" },
-				  ],
-				},
-			  },
-			  {
-				"InternalName": "CurrentCost",
-				"DisplayName": "التكلفة الاجمالية الحالية",
-				"DisplayNameEn": "Current Cost",
-				"type": "float",
+	// 		},
+	// 		{
+	// 			"InternalName": "ResultType",
+	// 			"DisplayName": "الوحدة",
+	// 			"DisplayNameEn": "Result Type",
+	// 			"type": "float",
 
 
-			},
-			  {
-				"InternalName": "NewCost",
-				"DisplayName": "التكلفة الاجمالية الجديدة",
-				"DisplayNameEn": "New Cost",
-				"type": "float",
+	// 		},
+	// 		{
+	// 			"InternalName": "Cost",
+	// 			"DisplayName": "تكلفة المخرج",
+	// 			"DisplayNameEn": "Cost",
+	// 			"type": "float",
 
 
-			},
+	// 		},
+	// 		{
+	// 			InternalName: "IsUniqueOutput",
+	// 			DisplayNameEn: "Is Unique Output",
+	// 			DisplayName: "هل المخرج له مثيل",
+	// 			type: "dropdownValues",
+	// 			// validation: "required",
+	// 			options: {
+	// 			  choices: [
+	// 				{ display: "yes", value: "yes" },
+	// 				{ display: "no", value: "no" },
+	// 				{ display: "noneed", value: "noneed" },
+	// 			  ],
+	// 			},
+	// 		  },
+	// 		  {
+	// 			"InternalName": "CurrentCost",
+	// 			"DisplayName": "التكلفة الاجمالية الحالية",
+	// 			"DisplayNameEn": "Current Cost",
+	// 			"type": "float",
+
+
+	// 		},
+	// 		  {
+	// 			"InternalName": "NewCost",
+	// 			"DisplayName": "التكلفة الاجمالية الجديدة",
+	// 			"DisplayNameEn": "New Cost",
+	// 			"type": "float",
+
+
+	// 		},
 
 
 
-		],
-	},
+	// 	],
+	// },
 
-	{
-		label: "المخاطر ذات العلاقة ",
-		labelEn: "Risk Data",
-		description: "التفاصيل",
-		descriptionEn: "Details",
-		sectiontype: "master",
-		layout:"table",targetlist: "Risks",
-		subFields: [
-			// {
-			//     "InternalName": "Title",
-			//     "DisplayName":"رمز الخطر",
-			//     "type":"string",
-			//     "validation": "required"
-			// },
-			{
-				InternalName: "Name",
-				DisplayName: "اسم الخطر",
-				DisplayNameEn: "Risk Name",
-				type: "string",
-				validation: "required",
-			},
-			{
-				InternalName: "ResolutionPlan",
-				DisplayName: "خطة التعامل مع الخطر",
-				DisplayNameEn: "Resolution Plan",
-				type: "multiline",
-				maxchar: 5000,
-			},
+	// {
+	// 	label: "المخاطر ذات العلاقة ",
+	// 	labelEn: "Risk Data",
+	// 	description: "التفاصيل",
+	// 	descriptionEn: "Details",
+	// 	sectiontype: "master",
+	// 	layout:"table",targetlist: "Risks",
+	// 	subFields: [
+	// 		// {
+	// 		//     "InternalName": "Title",
+	// 		//     "DisplayName":"رمز الخطر",
+	// 		//     "type":"string",
+	// 		//     "validation": "required"
+	// 		// },
+	// 		{
+	// 			InternalName: "Name",
+	// 			DisplayName: "اسم الخطر",
+	// 			DisplayNameEn: "Risk Name",
+	// 			type: "string",
+	// 			validation: "required",
+	// 		},
+	// 		{
+	// 			InternalName: "ResolutionPlan",
+	// 			DisplayName: "خطة التعامل مع الخطر",
+	// 			DisplayNameEn: "Resolution Plan",
+	// 			type: "multiline",
+	// 			maxchar: 5000,
+	// 		},
 
-			{
-				InternalName: "Description",
-				DisplayName: "وصف الخطر",
-				DisplayNameEn: "Description",
-				type: "multiline",
-				maxchar: 5000,
-			},
-			// {
-			// 	InternalName: "RiskPercentage",
-			// 	DisplayName: "نسبة التعرض للخطر ",
-			// 	DisplayNameEn: "Risk Percentage",
-			// 	type: "float",
-			// },
+	// 		{
+	// 			InternalName: "Description",
+	// 			DisplayName: "وصف الخطر",
+	// 			DisplayNameEn: "Description",
+	// 			type: "multiline",
+	// 			maxchar: 5000,
+	// 		},
+	// 		// {
+	// 		// 	InternalName: "RiskPercentage",
+	// 		// 	DisplayName: "نسبة التعرض للخطر ",
+	// 		// 	DisplayNameEn: "Risk Percentage",
+	// 		// 	type: "float",
+	// 		// },
 
 
-		],
-	},
-	{
-		label: 'العوائق',
-		labelEn: 'Issues Data',
-		description: "التفاصيل",
-		descriptionEn: "Details",
-		sectiontype: "master",
-		layout:"table",targetlist: "Issues",
-		subFields: [
-			// {
-			//     "InternalName": "Title",
-			//     "DisplayName":"رمز العائق",
-			//     "type":"string",
-			//     "validation": "required"
-			// },
-			{
-				"InternalName": "Name",
-				"DisplayName": "عنوان العائق",
-				"DisplayNameEn": "Issue Name",
-				"type": "string",
-				"validation": "required"
-			},
-			{
-				"InternalName": "Description",
-				"DisplayName": "وصف العائق",
-				"DisplayNameEn": "Description",
-				"type": "multiline",
-				"maxchar": 5000,
-			},
-			{
-				"InternalName": "Priority",
-				"DisplayName": "الأولوية",
-				"DisplayNameEn": "Priority",
-				"type": "dropdownValues",
-				options: {
-					choices: [
-						{ display: 'critical', value: 'critical' },
-						{ display: 'hight', value: 'hight' },
-						{ display: 'medium', value: 'medium' },
-						{ display: 'low', value: 'low' }
-					]
-				}
-			},
-			{
-				"InternalName": "Resolution",
-				"DisplayName": "وصف الحل",
-				"DisplayNameEn": "Resolution",
-				"type": "multiline",
-				"maxchar": 5000,
-			},
-		]
-	},
+	// 	],
+	// },
+	// {
+	// 	label: 'العوائق',
+	// 	labelEn: 'Issues Data',
+	// 	description: "التفاصيل",
+	// 	descriptionEn: "Details",
+	// 	sectiontype: "master",
+	// 	layout:"table",targetlist: "Issues",
+	// 	subFields: [
+	// 		// {
+	// 		//     "InternalName": "Title",
+	// 		//     "DisplayName":"رمز العائق",
+	// 		//     "type":"string",
+	// 		//     "validation": "required"
+	// 		// },
+	// 		{
+	// 			"InternalName": "Name",
+	// 			"DisplayName": "عنوان العائق",
+	// 			"DisplayNameEn": "Issue Name",
+	// 			"type": "string",
+	// 			"validation": "required"
+	// 		},
+	// 		{
+	// 			"InternalName": "Description",
+	// 			"DisplayName": "وصف العائق",
+	// 			"DisplayNameEn": "Description",
+	// 			"type": "multiline",
+	// 			"maxchar": 5000,
+	// 		},
+	// 		{
+	// 			"InternalName": "Priority",
+	// 			"DisplayName": "الأولوية",
+	// 			"DisplayNameEn": "Priority",
+	// 			"type": "dropdownValues",
+	// 			options: {
+	// 				choices: [
+	// 					{ display: 'critical', value: 'critical' },
+	// 					{ display: 'hight', value: 'hight' },
+	// 					{ display: 'medium', value: 'medium' },
+	// 					{ display: 'low', value: 'low' }
+	// 				]
+	// 			}
+	// 		},
+	// 		{
+	// 			"InternalName": "Resolution",
+	// 			"DisplayName": "وصف الحل",
+	// 			"DisplayNameEn": "Resolution",
+	// 			"type": "multiline",
+	// 			"maxchar": 5000,
+	// 		},
+	// 	]
+	// },
 	{
 		label: "المرفقات",
 		labelEn: "Attachments",
