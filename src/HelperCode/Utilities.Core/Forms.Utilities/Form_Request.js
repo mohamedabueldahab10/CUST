@@ -628,18 +628,18 @@ window.Edit_Data_Request = {
         $('#Types').prop('disabled', true);
       }
     }
-    if (isNew && isEPMO) {
-      if (listkey == "initiatives") {
-        $('#Types').val('strategically');
-        $('#Types').prop('disabled', true);
-      }
-    }
-    if (isEdit && isEPMO) {
-      if (listkey == "initiatives") {
-        // $('#Types').val('strategically');
-        $('#Types').prop('disabled', true);
-      }
-    }
+    // if (isNew && isEPMO) {
+    //   if (listkey == "initiatives") {
+    //     $('#Types').val('strategically');
+    //     $('#Types').prop('disabled', true);
+    //   }
+    // }
+    // if (isEdit && isEPMO) {
+    //   if (listkey == "initiatives") {
+    //     // $('#Types').val('strategically');
+    //     $('#Types').prop('disabled', true);
+    //   }
+    // }
     if (Groups.includes("Strategy Specialist") || isVROP) {
       if (listkey == "sos") {
         $('#Types').val('main');
@@ -1535,18 +1535,18 @@ else if (crListKey) {
         $('#Types').prop('disabled', true);
       }
     }
-    if (isNew && isEPMO) {
-      if (listkey == "initiatives") {
-        $('#Types').val('strategically');
-        $('#Types').prop('disabled', true);
-      }
-    }
-    if (isEdit && isEPMO) {
-      if (listkey == "initiatives") {
-        // $('#Types').val('strategically');
-        $('#Types').prop('disabled', true);
-      }
-    }
+    // if (isNew && isEPMO) {
+    //   if (listkey == "initiatives") {
+    //     $('#Types').val('strategically');
+    //     $('#Types').prop('disabled', true);
+    //   }
+    // }
+    // if (isEdit && isEPMO) {
+    //   if (listkey == "initiatives") {
+    //     // $('#Types').val('strategically');
+    //     $('#Types').prop('disabled', true);
+    //   }
+    // }
 
     var host = _spPageContextInfo.webAbsoluteUrl;
     if (PCODE || ICODE) {

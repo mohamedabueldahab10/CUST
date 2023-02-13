@@ -738,18 +738,18 @@ window.ListInfo = {
                 $("#Types").prop("disabled", true);
               }
             }
-            if (isNew && isEPMO) {
-              if (listkey == "initiatives") {
-                $("#Types").val("strategically");
-                $("#Types").prop("disabled", true);
-              }
-            }
-            if (isEdit && isEPMO) {
-              if (listkey == "initiatives") {
-                // $('#Types').val('strategically');
-                $("#Types").prop("disabled", true);
-              }
-            }
+            // if (isNew && isEPMO) {
+            //   if (listkey == "initiatives") {
+            //     $("#Types").val("strategically");
+            //     $("#Types").prop("disabled", true);
+            //   }
+            // }
+            // if (isEdit && isEPMO) {
+            //   if (listkey == "initiatives") {
+            //     // $('#Types').val('strategically');
+            //     $("#Types").prop("disabled", true);
+            //   }
+            // }
             if (isStrategyTeam || isVROP) {
               if (listkey == "sos") {
                 // $("#Types").val("main");
@@ -3297,55 +3297,55 @@ window.ListInfo = {
             "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
         }
         //ghufran User dropdown security
-        if (isEPMO
-          // || isSPMAdmin 
-          //|| isSPMTeam
+        // if (isEPMO
+        //   // || isSPMAdmin 
+        //   //|| isSPMTeam
           
-          ) {
-          if (
-            (listkey == "benefitmetrics" &&
-              element.InternalName == "RelatedBenefit") ||
-            (listkey == "benefitmatrix" &&
-              element.InternalName == "RelatedBenefit") ||
-            (listkey == "deliverablemetrics" &&
-              element.InternalName == "RelatedInitiativeDeliverable")
-          ) {
-            if (localStorage.getItem("Dynamo_Initiatives") != null) {
-              var visionarr = JSON.parse(
-                localStorage.getItem("Dynamo_Initiatives") || "[]"
-              );
-              visionarr = visionarr.filter(function (item) {
-                return item.name == "vision";
-              });
-              var strategicallyarr = JSON.parse(
-                localStorage.getItem("Dynamo_Initiatives") || "[]"
-              );
-              strategicallyarr = strategicallyarr.filter(function (item) {
-                return item.name == "strategically";
-              });
-              console.log("visionarr", visionarr);
-              console.log("strategic", strategicallyarr);
-            }
-            customQuery =
-              "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"InitiativeCode\" /><Values>";
-            strategicallyarr.forEach(function (item) {
-              customQuery += '<Value Type="Text">' + item.code + "</Value>";
-            });
-            customQuery +=
-              "</Values></In></And></Where></Query><RowLimit>100</RowLimit></View>";
-          } else if (
-            (listkey == "Benefits" &&
-              element.InternalName == "InitiativeCode") ||
-            (listkey == "BenefitMatrix" &&
-              element.InternalName == "RelatedInitiative")
-          ) {
-            customQuery =
-              "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">strategically</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
-          } else if ("benefitmatrix" && element.InternalName == "RelatedKPI") {
-            customQuery =
-              "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus'/><Value Type='Text'>Deleted</Value></Neq><Or><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">strategically</Value></Eq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">sub</Value></Eq></Or></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
-          }
-        }
+        //   ) {
+        //   if (
+        //     (listkey == "benefitmetrics" &&
+        //       element.InternalName == "RelatedBenefit") ||
+        //     (listkey == "benefitmatrix" &&
+        //       element.InternalName == "RelatedBenefit") ||
+        //     (listkey == "deliverablemetrics" &&
+        //       element.InternalName == "RelatedInitiativeDeliverable")
+        //   ) {
+        //     if (localStorage.getItem("Dynamo_Initiatives") != null) {
+        //       var visionarr = JSON.parse(
+        //         localStorage.getItem("Dynamo_Initiatives") || "[]"
+        //       );
+        //       visionarr = visionarr.filter(function (item) {
+        //         return item.name == "vision";
+        //       });
+        //       var strategicallyarr = JSON.parse(
+        //         localStorage.getItem("Dynamo_Initiatives") || "[]"
+        //       );
+        //       strategicallyarr = strategicallyarr.filter(function (item) {
+        //         return item.name == "strategically";
+        //       });
+        //       console.log("visionarr", visionarr);
+        //       console.log("strategic", strategicallyarr);
+        //     }
+        //     customQuery =
+        //       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"InitiativeCode\" /><Values>";
+        //     strategicallyarr.forEach(function (item) {
+        //       customQuery += '<Value Type="Text">' + item.code + "</Value>";
+        //     });
+        //     customQuery +=
+        //       "</Values></In></And></Where></Query><RowLimit>100</RowLimit></View>";
+        //   } else if (
+        //     (listkey == "Benefits" &&
+        //       element.InternalName == "InitiativeCode") ||
+        //     (listkey == "BenefitMatrix" &&
+        //       element.InternalName == "RelatedInitiative")
+        //   ) {
+        //     customQuery =
+        //       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">strategically</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+        //   } else if ("benefitmatrix" && element.InternalName == "RelatedKPI") {
+        //     customQuery =
+        //       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus'/><Value Type='Text'>Deleted</Value></Neq><Or><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">strategically</Value></Eq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">sub</Value></Eq></Or></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+        //   }
+        // }
         if (isVROE || isVROP) {
           if (
             (listkey == "Benefits" &&
@@ -5390,10 +5390,10 @@ window.ListInfo = {
         $("#RelatedBudgetItem").parent().css("display", "none");
       }
       if (isNew) {
-        if (isEPMO) {
-          $("#Types").val("strategically");
-          $("#Types").prop("disabled", true);
-        }
+        // if (isEPMO) {
+        //   $("#Types").val("strategically");
+        //   $("#Types").prop("disabled", true);
+        // }
         $("#Types").on("change", function () {
           var typeValueafterchange = $("#Types option:selected").val();
           if (typeValueafterchange == "vision") {
@@ -5404,10 +5404,10 @@ window.ListInfo = {
         });
       }
       if (isEdit) {
-        if (isEPMO) {
-          // $('#Types').val('strategically');
-          $("#Types").prop("disabled", true);
-        }
+        // if (isEPMO) {
+        //   // $('#Types').val('strategically');
+        //   $("#Types").prop("disabled", true);
+        // }
         $("#Types").on("change", function () {
           var typeValueafterchange = $("#Types option:selected").val();
           if (typeValueafterchange == "vision") {
