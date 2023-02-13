@@ -30,17 +30,17 @@ var kpiName = ''
 
 ///////// for benefitsMetrics
 var benefitsEquationID,
-    benefitsEquation,
-    benefitCode="",
-    benefitFromYear = '',
-    benefitToYear = '',
-    benefitYear = "",
-    benefitMonth = '',
-    benefitQuarter = '',
-    benefitMid = '',
-    benefitYearHandler = '';
+  benefitsEquation,
+  benefitCode = "",
+  benefitFromYear = '',
+  benefitToYear = '',
+  benefitYear = "",
+  benefitMonth = '',
+  benefitQuarter = '',
+  benefitMid = '',
+  benefitYearHandler = '';
 
-window.benefitsEquationsComponents =[]
+window.benefitsEquationsComponents = []
 ////////
 
 var projRelatedInit = '', initiativeDelevrableArr = [], initiativeMilestoneVal = '';
@@ -108,10 +108,7 @@ window.Edit_Data_Request = {
     if (listkey == 'kpiequations') {
       //  (!isAdmin || !isSPMTeam )? window.location = _spPageContextInfo.webAbsoluteUrl : '';
 
-      if (isAdmin || isMinister || isBITeam
-        // || isSPMTeam 
-        
-        || isPerformanceLeader || isSPMAdmin || isVROP || isLMSP) {
+      if (isAdmin || isMinister || isBITeam || isSPMTeam || isPerformanceLeader || isSPMAdmin || isVROP || isLMSP) {
       } else {
         window.location = _spPageContextInfo.webAbsoluteUrl
       }
@@ -323,17 +320,17 @@ window.Edit_Data_Request = {
 
 
     if (listkey == 'sos') { // add this after loop to apply don't submit feature to not change on value when submit edit
-			var statusTitle = "", value = oListItem.get_item("Status");
-			statusTitle = await StrategicObjectives_Status.init(value)
-			$('#Status').val(statusTitle);
-		}
+      var statusTitle = "", value = oListItem.get_item("Status");
+      statusTitle = await StrategicObjectives_Status.init(value)
+      $('#Status').val(statusTitle);
+    }
 
     //checking field ownership
     $('[data-editableby]').each(function () {
       let keyOwner = $(this).data('editableby');
       let itemOwner = oListItem.get_item(keyOwner) ? oListItem.get_item(keyOwner).get_lookupValue() : null;
       let isItDisabled = (itemOwner != UserN.Title) && !isAdmin && !isMinister && !isBITeam
-      //  && !isSPMTeam
+        //  && !isSPMTeam
         ? true : false;
       $(this).find('>*').prop('disabled', isItDisabled);
     });
@@ -369,37 +366,37 @@ window.Edit_Data_Request = {
       );
       $("select#BudgetItem").change();
     }
-     // added for CR module
+    // added for CR module
     //! CR
-		else if (crListKey) {
-			let UpdateType = oListItem.get_item("UpdateType") || "";
-			let crIsGeneral = UpdateType.includes("general");
-			changeRequestBody = oListItem.get_item("ChangeBody");
-			changeRequestBody = changeRequestBody
-				? JSON.parse(changeRequestBody)
-				: [];
-			let sectionJSON;
-			if (changeRequestBody.length) {
-				isCrMode = true;
-				RID = changeRequestBody[0].itemId;
-				CrRelatedList = changeRequestBody[0].listName;
-				RListKey = changeRequestBody[0].listKey;
-				sectionJSON = [
-					{
-						label: changeRequestBody[0].label,
-						labelEn: changeRequestBody[0].labelEn,
-						description: changeRequestBody[0].description,
-						descriptionEn: changeRequestBody[0].descriptionEn,
-						subFields: changeRequestBody,
-					},
-				];
-			}
+    else if (crListKey) {
+      let UpdateType = oListItem.get_item("UpdateType") || "";
+      let crIsGeneral = UpdateType.includes("general");
+      changeRequestBody = oListItem.get_item("ChangeBody");
+      changeRequestBody = changeRequestBody
+        ? JSON.parse(changeRequestBody)
+        : [];
+      let sectionJSON;
+      if (changeRequestBody.length) {
+        isCrMode = true;
+        RID = changeRequestBody[0].itemId;
+        CrRelatedList = changeRequestBody[0].listName;
+        RListKey = changeRequestBody[0].listKey;
+        sectionJSON = [
+          {
+            label: changeRequestBody[0].label,
+            labelEn: changeRequestBody[0].labelEn,
+            description: changeRequestBody[0].description,
+            descriptionEn: changeRequestBody[0].descriptionEn,
+            subFields: changeRequestBody,
+          },
+        ];
+      }
 
-			if (isCrMode) {
-				if (crIsGeneral) CrModeFunctionality.preinit();
-				else CrModeFunctionality.init(sectionJSON);
-			}
-		}
+      if (isCrMode) {
+        if (crIsGeneral) CrModeFunctionality.preinit();
+        else CrModeFunctionality.init(sectionJSON);
+      }
+    }
     // ended 
     if (listkey == "risks" && oListItem.get_item("Status") == "movedtoissue") {
       window.location =
@@ -1341,15 +1338,15 @@ window.View_Data_Request = {
         }
       } else {
         if (listkey == 'sos' && $(this).attr("id") == "Status") { // add this here to handle status of strategic objective in view and print
-					var statusTitle = "", value = oListItem.get_item("" + $(this).attr("id") + "")
-					statusTitle = await StrategicObjectives_Status.init(value)
-					$(this).text(statusTitle);
-				}else{
-        var value =
-          oListItem.get_item("" + $(this).attr("id") + "") == null
-            ? No_Data
-            : oListItem.get_item("" + $(this).attr("id") + "");
-        $(this).text(value);
+          var statusTitle = "", value = oListItem.get_item("" + $(this).attr("id") + "")
+          statusTitle = await StrategicObjectives_Status.init(value)
+          $(this).text(statusTitle);
+        } else {
+          var value =
+            oListItem.get_item("" + $(this).attr("id") + "") == null
+              ? No_Data
+              : oListItem.get_item("" + $(this).attr("id") + "");
+          $(this).text(value);
         }
       }
     });
@@ -1387,37 +1384,37 @@ window.View_Data_Request = {
       );
     }
     // added for CR module
-//! CR
-else if (crListKey) {
-  let UpdateType = oListItem.get_item("UpdateType") || "";
-  let crIsGeneral = UpdateType.includes("general");
-  changeRequestBody = oListItem.get_item("ChangeBody");
-  changeRequestBody = changeRequestBody
-    ? JSON.parse(changeRequestBody)
-    : [];
-  let sectionJSON;
-  if (changeRequestBody.length) {
-    isCrMode = true;
-    RID = changeRequestBody[0].itemId;
-    CrRelatedList = changeRequestBody[0].listName;
-    RListKey = changeRequestBody[0].listKey;
-    sectionJSON = [
-      {
-        label: changeRequestBody[0].label,
-        labelEn: changeRequestBody[0].labelEn,
-        description: changeRequestBody[0].description,
-        descriptionEn: changeRequestBody[0].descriptionEn,
-        subFields: changeRequestBody,
-      },
-    ];
-  }
+    //! CR
+    else if (crListKey) {
+      let UpdateType = oListItem.get_item("UpdateType") || "";
+      let crIsGeneral = UpdateType.includes("general");
+      changeRequestBody = oListItem.get_item("ChangeBody");
+      changeRequestBody = changeRequestBody
+        ? JSON.parse(changeRequestBody)
+        : [];
+      let sectionJSON;
+      if (changeRequestBody.length) {
+        isCrMode = true;
+        RID = changeRequestBody[0].itemId;
+        CrRelatedList = changeRequestBody[0].listName;
+        RListKey = changeRequestBody[0].listKey;
+        sectionJSON = [
+          {
+            label: changeRequestBody[0].label,
+            labelEn: changeRequestBody[0].labelEn,
+            description: changeRequestBody[0].description,
+            descriptionEn: changeRequestBody[0].descriptionEn,
+            subFields: changeRequestBody,
+          },
+        ];
+      }
 
-  if (isCrMode) {
-    if (crIsGeneral) CrModeFunctionality.preinit();
-    else CrModeFunctionality.init(sectionJSON);
-  }
-}
-// ended 
+      if (isCrMode) {
+        if (crIsGeneral) CrModeFunctionality.preinit();
+        else CrModeFunctionality.init(sectionJSON);
+      }
+    }
+    // ended 
 
     // window.checkNotificationHTML = setInterval(function() {
     //     GetProject_Info.preinit();
@@ -1501,7 +1498,7 @@ else if (crListKey) {
 
     }
 
-    if(listkey == 'benefitmetrics'){
+    if (listkey == 'benefitmetrics') {
       benefitCode = oListItem.get_item("Title");
       equationBenefit.init();
     }
@@ -2601,26 +2598,26 @@ window.Kpi_Related_Goal = {
 
     // $("#RelatedStrategyObjective").prop("disabled", false);
     debugger
-    if (typeOfIndex == 'main') {
-      objectiveId = "RelatedStrategyObjective"
-      if (isPerformanceLeader) {
-        $("#RelatedStrategy").prop("disabled", true)
-        $("#Types").prop("disabled", true)
-        $("#RelatedStrategyObjective").prop("disabled", true);
-      } else {
-        $("#RelatedStrategyObjective").prop("disabled", false);
-      }
-    } else if (typeOfIndex == 'sub') {
-      objectiveId = "SubRelatedObjective"
-      if (isPerformanceLeader) {
-        $("#RelatedStrategy").prop("disabled", true)
-        $("#Types").prop("disabled", true)
-        $("#SubRelatedObjective").prop("disabled", true);
-      } else {
-        $("#SubRelatedObjective").prop("disabled", false);
-      }
+    // if (typeOfIndex == 'main') {
+    //   objectiveId = "RelatedStrategyObjective"
+    //   if (isPerformanceLeader) {
+    //     $("#RelatedStrategy").prop("disabled", true)
+    //     $("#Types").prop("disabled", true)
+    //     $("#RelatedStrategyObjective").prop("disabled", true);
+    //   } else {
+    //     $("#RelatedStrategyObjective").prop("disabled", false);
+    //   }
+    // } else if (typeOfIndex == 'sub') {
+    //   objectiveId = "SubRelatedObjective"
+    //   if (isPerformanceLeader) {
+    //     $("#RelatedStrategy").prop("disabled", true)
+    //     $("#Types").prop("disabled", true)
+    //     $("#SubRelatedObjective").prop("disabled", true);
+    //   } else {
+    //     $("#SubRelatedObjective").prop("disabled", false);
+    //   }
 
-    }
+    // }
     $(`#${objectiveId}`).html(
       '<option data-trans-relatedstrategy class="Resources" value="" selected="" disabled=""></option>'
     );
@@ -4757,7 +4754,7 @@ var equationKPI = {
       equationKPI.g.editEquation();
     });
 
-  
+
     Update_Kpi_Results.init(kpiEquation)
 
 
@@ -4831,82 +4828,82 @@ var equationBenefit = {
     }
 
     var myCKeys =
-    benefitsEquationsComponents.length > 0
-      ? Object.keys(benefitsEquationsComponents[0])
-      : []; // get internal names keys
+      benefitsEquationsComponents.length > 0
+        ? Object.keys(benefitsEquationsComponents[0])
+        : []; // get internal names keys
 
 
-  // remove required field when there is no equation
-  // if (!kpiEquation && isEdit) {
-  //   $('#Year,#Months,#Quarter,#Midterms,#Years').removeAttr('required');
-  //   $('#Year,#Months,#Quarter,#Midterms,#Years').parent().removeAttr('required');
-  //   $('#Year,#Months,#Quarter,#Midterms,#Years').prev('label').removeAttr('required');
-  // }
+    // remove required field when there is no equation
+    // if (!kpiEquation && isEdit) {
+    //   $('#Year,#Months,#Quarter,#Midterms,#Years').removeAttr('required');
+    //   $('#Year,#Months,#Quarter,#Midterms,#Years').parent().removeAttr('required');
+    //   $('#Year,#Months,#Quarter,#Midterms,#Years').prev('label').removeAttr('required');
+    // }
 
-  if (benefitsEquation) {
-    benefitsEquation = benefitsEquation.toUpperCase() // kpi eq should be upper case to avoid the  editequation btn not appear in view
-    // set display text
+    if (benefitsEquation) {
+      benefitsEquation = benefitsEquation.toUpperCase() // kpi eq should be upper case to avoid the  editequation btn not appear in view
+      // set display text
 
-    myCKeys.forEach((o) => {
-      benefitsEquationsComponents[0][o]
-        ? $(`input#${o},p#${o}`)
-          .parent()
-          .show()
-          .find(">label")
-          .text(benefitsEquationsComponents[0][o])
-        : $(`input#${o},p#${o}`).parent().remove();
+      myCKeys.forEach((o) => {
+        benefitsEquationsComponents[0][o]
+          ? $(`input#${o},p#${o}`)
+            .parent()
+            .show()
+            .find(">label")
+            .text(benefitsEquationsComponents[0][o])
+          : $(`input#${o},p#${o}`).parent().remove();
 
-      if (isView) {
-        var val = $(`p#${o}`).text()
-        if (val != No_Data) {
-          benefitsEquation = benefitsEquation.replaceAll(o, $(`p#${o}`).text())
+        if (isView) {
+          var val = $(`p#${o}`).text()
+          if (val != No_Data) {
+            benefitsEquation = benefitsEquation.replaceAll(o, $(`p#${o}`).text())
+          } else {
+            benefitsEquation = benefitsEquation.replaceAll(o, 0)
+          }
         } else {
-          benefitsEquation = benefitsEquation.replaceAll(o, 0)
+          benefitsEquation = benefitsEquation.replaceAll(o, $(`input#${o}`).val())
         }
+      });
+
+
+      benefitsEquation = benefitsEquation.replaceAll(',', '') // remove , from high number
+
+
+      benefitsEquation =
+        eval(benefitsEquation) % 1 != 0
+          ? eval(benefitsEquation).toFixed(2)
+          : eval(benefitsEquation);
+
+
+      if (benefitsEquation === "NaN") {
+        $("input#Equation").val(0);
+        $("p#Equation").text("0");
       } else {
-        benefitsEquation = benefitsEquation.replaceAll(o, $(`input#${o}`).val())
+        $("input#Equation").val(benefitsEquation || 0);
+        $("p#Equation").text(benefitsEquation || 0);
       }
+    }
+
+    if (isAdmin) { // remove attr disabled for this roles in equation
+      $(".savecancelBtns > div, .btnactionrow > .rightBtns").append(
+        '<button data-trans-editequation class="btn btn-action Resources btn-edit-equation bg-warning" type="button"></button>'
+      );
+
+    }
+    if (isAdmin) {
+      // $("input#KPIEquation, input#Equation ,input#B, input#A, input#CC , input#D ,input#E,input#F,input#G").removeAttr('disabled');
+      $("input#B, input#A, input#CC , input#D ,input#E,input#F,input#G").removeAttr('disabled');
+
+    }
+
+    $(".btn-edit-equation").on("click", () => {
+      equationBenefit.g.editEquation();
     });
 
-
-    benefitsEquation = benefitsEquation.replaceAll(',', '') // remove , from high number
-
-
-    benefitsEquation =
-      eval(benefitsEquation) % 1 != 0
-        ? eval(benefitsEquation).toFixed(2)
-        : eval(benefitsEquation);
+    Update_Benefits_Results.init(benefitsEquation)
 
 
-    if (benefitsEquation === "NaN") {
-      $("input#Equation").val(0);
-      $("p#Equation").text("0");
-    } else {
-      $("input#Equation").val(benefitsEquation || 0);
-      $("p#Equation").text(benefitsEquation || 0);
-    }
-  }
-
-  if (isAdmin) { // remove attr disabled for this roles in equation
-    $(".savecancelBtns > div, .btnactionrow > .rightBtns").append(
-      '<button data-trans-editequation class="btn btn-action Resources btn-edit-equation bg-warning" type="button"></button>'
-    );
-
-  }
-  if (isAdmin) {
-    // $("input#KPIEquation, input#Equation ,input#B, input#A, input#CC , input#D ,input#E,input#F,input#G").removeAttr('disabled');
-    $("input#B, input#A, input#CC , input#D ,input#E,input#F,input#G").removeAttr('disabled');
-
-  }
-
-  $(".btn-edit-equation").on("click", () => {
-    equationBenefit.g.editEquation();
-  });
-
-  Update_Benefits_Results.init(benefitsEquation)
-
-
-  changeResources();
+    changeResources();
 
 
   },
@@ -5045,78 +5042,78 @@ var UpcomingTasks_Info_Request = {
 // update benefits results
 
 
-window.Update_Benefits_Results={
+window.Update_Benefits_Results = {
   init: function () {
-		var context = SP.ClientContext.get_current();
-		var dfd = $.Deferred();
-		//Get list from host web
-		var programList = context.get_web().get_lists().getByTitle("BenefitsResults");
-		var camlQuery = new SP.CamlQuery();
+    var context = SP.ClientContext.get_current();
+    var dfd = $.Deferred();
+    //Get list from host web
+    var programList = context.get_web().get_lists().getByTitle("BenefitsResults");
+    var camlQuery = new SP.CamlQuery();
 
-		camlQuery.set_viewXml(
-			"<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='RelatedBenefitMetrics'/><Value Type='Text'>" +
-			benefitCode +
-			"</Value></Eq></And></Where></Query></View>"
-		);
-		//Get items by Query
-		var progColl = programList.getItems(camlQuery);
-		//Load item collection
-		context.load(progColl);
-		context.executeQueryAsync(function () {
-			var currentItemArray = [];
-			if (progColl.get_count() > 0) {
-				var progEnum = progColl.getEnumerator();
-				while (progEnum.moveNext()) {
-					console.log("INSIDE WHILE");
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='RelatedBenefitMetrics'/><Value Type='Text'>" +
+      benefitCode +
+      "</Value></Eq></And></Where></Query></View>"
+    );
+    //Get items by Query
+    var progColl = programList.getItems(camlQuery);
+    //Load item collection
+    context.load(progColl);
+    context.executeQueryAsync(function () {
+      var currentItemArray = [];
+      if (progColl.get_count() > 0) {
+        var progEnum = progColl.getEnumerator();
+        while (progEnum.moveNext()) {
+          console.log("INSIDE WHILE");
 
-					var currentItem = progEnum.get_current();
-					var currentId = currentItem.get_item("ID");
-					var yearItem = currentItem.get_item("Year");
-					//Get Item by current ID
-					var items = programList.getItemById(currentId);
-					var yearPicked = benefitYear;
-					var monthHandler = benefitMonth;
-					var quarterHandler = benefitQuarter;
-					var midHandler = benefitMid;
-					var yearHandler = benefitYearHandler;
+          var currentItem = progEnum.get_current();
+          var currentId = currentItem.get_item("ID");
+          var yearItem = currentItem.get_item("Year");
+          //Get Item by current ID
+          var items = programList.getItemById(currentId);
+          var yearPicked = benefitYear;
+          var monthHandler = benefitMonth;
+          var quarterHandler = benefitQuarter;
+          var midHandler = benefitMid;
+          var yearHandler = benefitYearHandler;
 
-					if (yearItem == yearPicked) {
-						if (!benefitsEquation) {
-							benefitsEquation = 0;
-						}
-						if (monthHandler) {
-							items.set_item(monthHandler, benefitsEquation);
-						} else if (quarterHandler) {
-							items.set_item(quarterHandler, benefitsEquation);
-						} else if (midHandler) {
-							items.set_item(midHandler, benefitsEquation);
-						} else if (yearHandler) {
-							items.set_item(yearHandler, benefitsEquation);
-						}
-					}
+          if (yearItem == yearPicked) {
+            if (!benefitsEquation) {
+              benefitsEquation = 0;
+            }
+            if (monthHandler) {
+              items.set_item(monthHandler, benefitsEquation);
+            } else if (quarterHandler) {
+              items.set_item(quarterHandler, benefitsEquation);
+            } else if (midHandler) {
+              items.set_item(midHandler, benefitsEquation);
+            } else if (yearHandler) {
+              items.set_item(yearHandler, benefitsEquation);
+            }
+          }
 
-					//Update the item
-					items.update();
-					currentItemArray.push(items);
-					context.load(currentItemArray[currentItemArray.length - 1]);
-				}
-				context.executeQueryAsync(
-					function () {
-						//Item Updated sucess
-						// Edit_Item_Field.init('Ideas', 'Stage', 'IdeaStage04', 'Title', IdeaId);
-						dfd.resolve();
-					},
-					function (sender, args) {
-						//Item updated fail
-						console.log(
-							"Request Failed to get kpi results Item Items :" +
-							args.get_message()
-						);
-					}
-				);
-			}
-		});
-	},
+          //Update the item
+          items.update();
+          currentItemArray.push(items);
+          context.load(currentItemArray[currentItemArray.length - 1]);
+        }
+        context.executeQueryAsync(
+          function () {
+            //Item Updated sucess
+            // Edit_Item_Field.init('Ideas', 'Stage', 'IdeaStage04', 'Title', IdeaId);
+            dfd.resolve();
+          },
+          function (sender, args) {
+            //Item updated fail
+            console.log(
+              "Request Failed to get kpi results Item Items :" +
+              args.get_message()
+            );
+          }
+        );
+      }
+    });
+  },
 }
 
 
@@ -5711,21 +5708,21 @@ var Check_Item_Deleted = {
 
 
 var StrategicObjectives_Status = {
-	init: function (value) {
+  init: function (value) {
     debugger
-		var status = ''
-		if (value && value != No_Data) {
-			if (
-				localStorage.getItem("lng") == null ||
-				localStorage.getItem("lng") == "ar"
-			) {
-				status = Resources.ar[value]
-			} else {
-				status = Resources.en[value]
-			}
-		} else {
-			status = No_Data
-		}
-		return status
-	}
+    var status = ''
+    if (value && value != No_Data) {
+      if (
+        localStorage.getItem("lng") == null ||
+        localStorage.getItem("lng") == "ar"
+      ) {
+        status = Resources.ar[value]
+      } else {
+        status = Resources.en[value]
+      }
+    } else {
+      status = No_Data
+    }
+    return status
+  }
 }

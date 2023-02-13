@@ -2326,14 +2326,23 @@ window.userCalls = {
         Create_Access = [];
         Read_Access = [
           "mainkpi",
-          //  "sos",
+          "sos",
+          "goalstrategy",
           "Targets.aspx",
           "kpiequations",
           "MainIndicators.aspx",
+          "benefitmatrix",
+          "benefitmetrics",
+          "benefits",
+          "initiatives",
+          "InitiativeHome.aspx",
+          "initiativesmain.aspx",
         ];
         Edit_Access = [
           "Targets.aspx",
           "mainkpi",
+          "sos",
+          "benefitmetrics",
           "kpiequations",
           "MainIndicators.aspx",
         ];
@@ -4228,9 +4237,92 @@ window.userCalls = {
       //   Role: "GeneralManager",
       //   groupsName: ["General Manager"],
       // },
+      // {
+      //   Role: "PerformanceLeader",
+      //   groupsName: ["Performance Leaders"],
+      // },
       {
         Role: "PerformanceLeader",
         groupsName: ["Performance Leaders"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "MainKPI",
+              accessConditions: [
+                {
+                  field: "PerformanceLeader",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "RelatedStrategyObjective",
+                RelationField: "Title",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "GoalStrategy",
+                  parentRelationField: "RelatedStrategy",
+                  RelationField: "Title",
+                  RelationFieldType: "Text",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "MainKPI",
+              accessConditions: [
+                {
+                  field: "PerformanceLeader",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "KPIResults",
+                parentRelationField: "Title",
+                RelationField: "KPI",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: ""
+                }
+              }
+            },
+            {
+              level: 1,
+              listName: "MainKPI",
+              accessConditions: [
+                {
+                  field: "PerformanceLeader",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "RelatedStrategyObjective",
+                RelationField: "Title",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "Initiatives",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedObjective",
+                  RelationFieldType: "Text"
+                },
+              }
+            }
+          ],
+        },
       },
       {
         Role: "Other",
