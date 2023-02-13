@@ -355,6 +355,7 @@ window.Edit_Data_Request = {
       });
     });
     //handle top menu navigation
+    debugger
     if (SP_ListName == ListArray[0].projects) {
       PCODE = oListItem.get_item("Title");
       $(".headtwo").append(
@@ -369,6 +370,7 @@ window.Edit_Data_Request = {
     // added for CR module
     //! CR
     else if (crListKey) {
+      debugger
       let UpdateType = oListItem.get_item("UpdateType") || "";
       let crIsGeneral = UpdateType.includes("general");
       changeRequestBody = oListItem.get_item("ChangeBody");

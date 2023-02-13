@@ -8,15 +8,7 @@ window.currentMainList = "";
 window.projectActualBudget = 0;
 window.initiativeActualBudget = 0;
 window.CurrentUserTasksCount = 0;
-// added for CR module
-//! Change Request
-(window.crListKey = USERlistkey == "changerequest" ? true : false),
-  (window.isCrMode = window.location.href.indexOf("RID=") > -1),
-  (window.RID = isCrMode ? window.location.href.split("RID=")[1].split("&")[0] : ""),
-  (window.isRListKey = window.location.href.indexOf("RKey=") > -1),
-  (window.RListKey = isCrMode ? window.location.href.split("RKey=")[1].split("&")[0] : ""),
-  (window.CrRelatedList = "");
-// ended 
+
 var BreakException = {};
 var UserRole,
   UserAccessSectorCode,
@@ -201,6 +193,20 @@ window.userProjects = [];
 window.USERINID; // to get the initiative id
 
 window.activeCode = istherePCODE ? USERPCODE : isthereICODE ? UserICode : "";
+
+
+// added for CR module
+//! Change Request
+debugger
+(window.crListKey = USERlistkey == "changerequest" ? true : false),
+  (window.isCrMode = window.location.href.indexOf("RID=") > -1),
+  (window.RID = isCrMode ? window.location.href.split("RID=")[1].split("&")[0] : ""),
+  (window.isRListKey = window.location.href.indexOf("RKey=") > -1),
+  (window.RListKey = isCrMode ? window.location.href.split("RKey=")[1].split("&")[0] : ""),
+  (window.CrRelatedList = ""),
+  (window.changeRequestBody = []);
+// ended 
+
 
 
 var projectStartToValidation = "", initiativeStartToValidation = "";

@@ -14,6 +14,7 @@ window.CrModeFunctionality = {
 			prefix = "_Edit.js";
 		}
 		let CR_JSON_File_Name = RListKey + prefix;
+		debugger
 		//get form's json
 		$.getScript(
 			_spPageContextInfo.webAbsoluteUrl +
@@ -343,6 +344,7 @@ window.CrModeFunctionality = {
 window.handleCustomeCr = {
 	init: function () {
 		$('[data-togglename*="UpdateType"]').on("change", function () {
+			debugger
 			isGeneral =
 				$(this).find(">option:selected").attr("data-trans-generalchange") == ""
 					? true

@@ -876,7 +876,8 @@
     stat10:"تم تحقيق المستهدف",
     stat11:"تم تحقيقه جزئيا",
     addactualbudget:"يجب تحديد قيمة المشروع الفعلية قبل إنشاء المخرجات و المعالم",
-    addinitiativebudget:"يجب تحديد ميزانية المبادرة قبل إنشاء المخرجات والمعالم"
+    addinitiativebudget:"يجب تحديد ميزانية المبادرة قبل إنشاء المخرجات والمعالم",
+		crrelateditem: "الحقول الخاضعة لطلب التغيير",
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1768,7 +1769,8 @@
     stat10:"Target achieved",
     stat11:"Partially achieved",
     addactualbudget:"Please add project actual budget to add deliverables and Milestones",
-    addinitiativebudget :"Please add Initiative budget to add deliverables and Milestones"
+    addinitiativebudget :"Please add Initiative budget to add deliverables and Milestones",
+    crrelateditem: "Fields Related to this Change Request",
   },
 };
 
