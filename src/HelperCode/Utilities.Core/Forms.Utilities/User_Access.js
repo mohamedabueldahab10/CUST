@@ -630,26 +630,6 @@ window.userCalls = {
 
       case "SectorHead":
         isSectorHead = true;
-        // (SecondLevel_List = "Internal Entities"),
-        //   (SecondLevel_FieldtoQuery = "Manager"),
-        //   (SecondLevel_FieldtoQueryType = "Choice");
-        // (SecondLevel_FieldtoFetch = "Title"),
-        //   (SecondLevel_CAMLQuery =
-        //     "<View><Query><Where>" +
-        //     "<And>" +
-        //     "<Eq>" +
-        //     '<FieldRef Name="' +
-        //     SecondLevel_FieldtoQuery +
-        //     '" LookupId="TRUE" />' +
-        //     '<Value Type="' +
-        //     SecondLevel_FieldtoQueryType +
-        //     '"><UserID /></Value>' +
-        //     "</Eq>" +
-        //     "<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
-        //     "</And>" +
-        //     "</Where></Query></View>"),
-        //   (SecondLevel_FirstLevel_Field = "Sector"),
-        //   (SecondLevel_FirstLevel_FieldType = "Text");
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
         ar_UserRole = " مدير  ";
@@ -657,58 +637,8 @@ window.userCalls = {
 
         //CRUD
         Create_Access = [];
-        Read_Access = [
-          // "budgetitems",
-          "Targets.aspx",
-          // "goalstrategy",
-          // "spillars",
-          "sos",
-          "MainIndicators.aspx",
-          "initiatives",
-          "initiativesmain.aspx",
-          "InitiativeHome.aspx",
-          "projects",
-          "projecthome.aspx",
-          "mom",
-          "mainkpi",
-          "lessonslearned",
-          "deliverables",
-          "initiativeissues",
-          "initiativemom",
-          "initiativerisks",
-          "initiativedeliverables",
-          "benefits",
-          "benefitmetrics",
-          "closureinitiative",
-          // "closureinitiative",
-          // "initiativeexecution",
-          // "benefits",
-          // "initiativemilestonesacceptance",
-          // "initiativedeliverablesacceptance",
-          "initiativemilestones",
-          "projectcharter",
-          // "kpiequations",
-          // "deliveries",
-          "risks",
-          "issues",
-          "milestones",
-          "invoices",
-          "contracts",
-          "changerequest",
-          // "MOM",
-          "communicationplans",
-          "lessonslearned",
-          "stakeholders",
-          "documents",
-          "tasks",
-          // "portfolio",
-          // "ideas",
-          "closureform",
-          "TaskHistory.aspx",
-          "home.aspx",
-          "deliverablemetrics",
-          // "benefitmatrix", "benefitmetrics",
-        ];
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [];
         break;
 
