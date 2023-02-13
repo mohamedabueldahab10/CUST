@@ -613,7 +613,7 @@ window.Information_Form = [
 			//     "validation": "required"
 			// },
 			{
-				InternalName: "RiskName",
+				InternalName: "Name",
 				DisplayName: "اسم الخطر",
 				DisplayNameEn: "Risk Name",
 				type: "string",
@@ -634,12 +634,12 @@ window.Information_Form = [
 				type: "multiline",
 				maxchar: 5000,
 			},
-			{
-				InternalName: "RiskPercentage",
-				DisplayName: "نسبة التعرض للخطر ",
-				DisplayNameEn: "Risk Percentage",
-				type: "float",
-			},
+			// {
+			// 	InternalName: "RiskPercentage",
+			// 	DisplayName: "نسبة التعرض للخطر ",
+			// 	DisplayNameEn: "Risk Percentage",
+			// 	type: "float",
+			// },
 
 
 		],
@@ -659,7 +659,7 @@ window.Information_Form = [
 			//     "validation": "required"
 			// },
 			{
-				"InternalName": "IssueName",
+				"InternalName": "Name",
 				"DisplayName": "عنوان العائق",
 				"DisplayNameEn": "Issue Name",
 				"type": "string",
