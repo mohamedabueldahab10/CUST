@@ -1730,20 +1730,20 @@ var Milestones_Info_Request = {
 
 
 
-    if (
-      // isMinisterAssistant ||
-      //isSectorHead ||
-      // isViceMinister ||
-      // isSubSectorHead ||
-      isGeneralManager 
-      // isMinister
-      // ||
-      // isBITeam ||
-      // isInOwner ||
-      // isSPMO
-    ) {
-      $("a.btn-add").attr("style", "display: none!important;");
-    }
+    // if (
+    //   // isMinisterAssistant ||
+    //   //isSectorHead ||
+    //   // isViceMinister ||
+    //   // isSubSectorHead ||
+    //   isGeneralManager 
+    //   // isMinister
+    //   // ||
+    //   // isBITeam ||
+    //   // isInOwner ||
+    //   // isSPMO
+    // ) {
+    //   $("a.btn-add").attr("style", "display: none!important;");
+    // }
 
     if (!isWF) {
       Update_InitiativeStatus_Service.init();// update the initiative status when open the page auto

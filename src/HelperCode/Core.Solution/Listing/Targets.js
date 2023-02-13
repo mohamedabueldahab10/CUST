@@ -86,20 +86,20 @@ var MainKPIs_Info_Request = {
         // isRoleDataLevelAccess = false; 
       }
       else if (filteredValue == "year" || filteredValue === "quarter" || filteredValue == "midterm" || filteredValue == 'monthly') {
-        if (isGeneralManager
-          //|| isDU 
-          //|| isMinisterAssistant
-          //|| isViceMinister
-          // ||
-          // isSectorHead 
-          //|| isSubSectorHead
-          ) {
-          camlQuery.set_viewXml('<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name=\'PeriodType\' /> <Value Type="Choice">' + filteredValue + "</Value></Eq><And><Eq><FieldRef Name=\'Year\' /> <Value Type=\'Text\'>" + kpiYear + "</Value ></Eq><Eq><FieldRef Name=\'" + SecondLevel_FirstLevel_Field + "\' /> <Value Type=\'Text\'>" + UserAccessSectorCode + "</Value ></Eq></And></And></And></Where ><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query ></View >")
-        }
-        else {
-          camlQuery.set_viewXml(
-            '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name=\'PeriodType\' /> <Value Type="Choice">' + filteredValue + "</Value></Eq><Eq><FieldRef Name=\'Year\' /> <Value Type=\'Text\'>" + kpiYear + "</Value ></Eq></And></And></Where ><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query ></View >");
-        }
+        // if (isGeneralManager
+        //   //|| isDU 
+        //   //|| isMinisterAssistant
+        //   //|| isViceMinister
+        //   // ||
+        //   // isSectorHead 
+        //   //|| isSubSectorHead
+        //   ) {
+        //   camlQuery.set_viewXml('<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name=\'PeriodType\' /> <Value Type="Choice">' + filteredValue + "</Value></Eq><And><Eq><FieldRef Name=\'Year\' /> <Value Type=\'Text\'>" + kpiYear + "</Value ></Eq><Eq><FieldRef Name=\'" + SecondLevel_FirstLevel_Field + "\' /> <Value Type=\'Text\'>" + UserAccessSectorCode + "</Value ></Eq></And></And></And></Where ><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query ></View >")
+        // }
+        // else {
+        camlQuery.set_viewXml(
+          '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name=\'PeriodType\' /> <Value Type="Choice">' + filteredValue + "</Value></Eq><Eq><FieldRef Name=\'Year\' /> <Value Type=\'Text\'>" + kpiYear + "</Value ></Eq></And></And></Where ><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query ></View >");
+        // }
       } else {
         camlQuery.set_viewXml(
           "<View><Query>\
@@ -963,36 +963,36 @@ var Get_All_Dynamic_Filter = {
     var camlQuery = new SP.CamlQuery();
 
     var query = "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>"
-    if (isGeneralManager
-      //|| isDU 
-      // || isMinisterAssistant
-      //|| isViceMinister
-      //|| isSectorHead 
-      //|| isSubSectorHead
-      ) {
-      // UserAccessSectorCode = 'DP-001';
+    // if (isGeneralManager
+    //   //|| isDU 
+    //   // || isMinisterAssistant
+    //   //|| isViceMinister
+    //   //|| isSectorHead 
+    //   //|| isSubSectorHead
+    // ) {
+    //   // UserAccessSectorCode = 'DP-001';
 
-      SectorHeadQuery =
-        "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"" +
-        SecondLevel_FirstLevel_Field +
-        '" /><Values>';
+    //   SectorHeadQuery =
+    //     "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"" +
+    //     SecondLevel_FirstLevel_Field +
+    //     '" /><Values>';
 
-      SectorHeadQuery =
-        "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"" +
-        SecondLevel_FirstLevel_Field +
-        '" /><Values>';
+    //   SectorHeadQuery =
+    //     "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"" +
+    //     SecondLevel_FirstLevel_Field +
+    //     '" /><Values>';
 
-      SectorHeadQuery +=
-        '<Value Type="' +
-        SecondLevel_FirstLevel_FieldType +
-        '">' +
-        UserAccessSectorCode +
-        "</Value>";
+    //   SectorHeadQuery +=
+    //     '<Value Type="' +
+    //     SecondLevel_FirstLevel_FieldType +
+    //     '">' +
+    //     UserAccessSectorCode +
+    //     "</Value>";
 
-      SectorHeadQuery += "</Values></In></And></Where></Query></View>";
+    //   SectorHeadQuery += "</Values></In></And></Where></Query></View>";
 
-      query = SectorHeadQuery
-    }
+    //   query = SectorHeadQuery
+    // }
     camlQuery.set_viewXml(query);
     Get_All_Dynamic_Filter.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Get_All_Dynamic_Filter.g.collListItem);

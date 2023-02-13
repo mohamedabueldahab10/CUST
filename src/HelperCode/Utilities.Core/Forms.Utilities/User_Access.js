@@ -2193,26 +2193,26 @@ window.userCalls = {
         break;
       case "GeneralManager":
         isGeneralManager = true;
-        (SecondLevel_List = "Internal Entities"),
-          (SecondLevel_FieldtoQuery = "Manager"),
-          (SecondLevel_FieldtoQueryType = "Choice");
-        (SecondLevel_FieldtoFetch = "Title"),
-          (SecondLevel_CAMLQuery =
-            "<View><Query><Where>" +
-            "<And>" +
-            "<Eq>" +
-            '<FieldRef Name="' +
-            SecondLevel_FieldtoQuery +
-            '" LookupId="TRUE" />' +
-            '<Value Type="' +
-            SecondLevel_FieldtoQueryType +
-            '"><UserID /></Value>' +
-            "</Eq>" +
-            "<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
-            "</And>" +
-            "</Where></Query></View>"),
-          (SecondLevel_FirstLevel_Field = "SubSector"),
-          (SecondLevel_FirstLevel_FieldType = "Text");
+        // (SecondLevel_List = "Internal Entities"),
+        //   (SecondLevel_FieldtoQuery = "Manager"),
+        //   (SecondLevel_FieldtoQueryType = "Choice");
+        // (SecondLevel_FieldtoFetch = "Title"),
+        //   (SecondLevel_CAMLQuery =
+        //     "<View><Query><Where>" +
+        //     "<And>" +
+        //     "<Eq>" +
+        //     '<FieldRef Name="' +
+        //     SecondLevel_FieldtoQuery +
+        //     '" LookupId="TRUE" />' +
+        //     '<Value Type="' +
+        //     SecondLevel_FieldtoQueryType +
+        //     '"><UserID /></Value>' +
+        //     "</Eq>" +
+        //     "<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
+        //     "</And>" +
+        //     "</Where></Query></View>"),
+        //   (SecondLevel_FirstLevel_Field = "SubSector"),
+        //   (SecondLevel_FirstLevel_FieldType = "Text");
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
         ar_UserRole = " مدير إدارة ";
@@ -2220,61 +2220,11 @@ window.userCalls = {
 
         //CRUD
         Create_Access = [];
-        Read_Access = [
-          // "budgetitems",
-          "Targets.aspx",
-          // "goalstrategy",
-          "benefits",
-          "benefitmetrics",
-          "closureinitiative",
-          "initiatives",
-          "InitiativeHome.aspx",
-          "initiativemilestones",
-          "initiativedeliverables",
-          "initiativeissues",
-          "initiativemom",
-          "initiativerisks",
-          "projects",
-          "projecthome.aspx",
-          "mom",
-          "mainkpi",
-          "lessonslearned",
-          "deliverables",
-          "closureinitiative",
-          "initiativeexecution",
-          "benefits",
-          "initiativemilestonesacceptance",
-          "initiativedeliverablesacceptance",
-          "initiativecards",
-          "projectcharter",
-          "kpiequations",
-          "deliveries",
-          "risks",
-          "issues",
-          "milestones",
-          "invoices",
-          "contracts",
-          "changerequest",
-          "MOM",
-          "communicationplans",
-          "lessonslearned",
-          "stakeholders",
-          "documents",
-          "mainindicators.aspx",
-          "initiativesmain.aspx",
-          "tasks",
-          // "portfolio",
-          // "ideas",
-          "sos",
-          "closureform",
-          "TaskHistory.aspx",
-          "home.aspx",
-          "deliverablemetrics",
-          "benefitmatrix",
-          "benefitmetrics",
-        ];
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [];
         break;
+        
       case "BITeam":
         isBITeam = true;
         $("body").append(
@@ -2538,11 +2488,11 @@ window.userCalls = {
     // ) {
     if (
       !isSectionHead &&
-      !isPortfolioManager &&
+      !isPortfolioManager 
       //!isSectorHead &&
       // !isSPMO &&
       // !isDU &&
-      !isGeneralManager
+      // !isGeneralManager
       // &&
       // !isSubSectorHead
       // !isMinisterAssistant &&
@@ -2560,11 +2510,11 @@ window.userCalls = {
         // || isMainIndicator
       ) &&
       (isSectionHead ||
-        isPortfolioManager ||
+        isPortfolioManager 
         //isSectorHead ||
         // isSPMO ||
         // isSubSectorHead ||
-        isGeneralManager
+        // isGeneralManager
         // isDU ||
         // isMinisterAssistant ||
         //isViceMinister
@@ -4146,7 +4096,144 @@ window.userCalls = {
       {
         Role: "GeneralManager",
         groupsName: ["General Manager"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "Internal Entities",
+              accessConditions: [
+                {
+                  field: "Manager",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+                {
+                  field: "EntityType",
+                  type: "Choice",
+                  values: ["Department"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "Initiatives",
+                parentRelationField: "Title",
+                RelationField: "SubSector",
+                RelationFieldType: "Choice",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Internal Entities",
+              accessConditions: [
+                {
+                  field: "Manager",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+                {
+                  field: "EntityType",
+                  type: "Choice",
+                  values: ["Department"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "Projects",
+                parentRelationField: "Title",
+                RelationField: "SubSector",
+                RelationFieldType: "Choice",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Internal Entities",
+              accessConditions: [
+                {
+                  field: "Manager",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+                {
+                  field: "EntityType",
+                  type: "Choice",
+                  values: ["Department"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "SubSector",
+                RelationFieldType: "Choice",
+                subRelation: {
+                  level: 3,
+                  listName: "GoalStrategy",
+                  parentRelationField: "RelatedStrategy",
+                  RelationField: "Title",
+                  RelationFieldType: "Text",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Internal Entities",
+              accessConditions: [
+                {
+                  field: "Manager",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+                {
+                  field: "EntityType",
+                  type: "Choice",
+                  values: ["Department"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "SubSector",
+                RelationFieldType: "Choice",
+                subRelation: {
+                  level: 3,
+                  listName: "MainKPI",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedStrategyObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "KPIResults",
+                    parentRelationField: "Title",
+                    RelationField: "KPI",
+                    RelationFieldType: "Text",
+                  }
+                },
+              },
+            },
+          ]
+        }
       },
+      // {
+      //   Role: "GeneralManager",
+      //   groupsName: ["General Manager"],
+      // },
       {
         Role: "PerformanceLeader",
         groupsName: ["Performance Leaders"],
@@ -4435,11 +4522,11 @@ var Access_Project_Info_Request = {
         if (Access_Project_Info_Request.g.User_Projects.length == 0) {
           if (
             isSectionHead ||
-            isPortfolioManager ||
+            isPortfolioManager 
             //isSectorHead ||
             // isSPMO ||
             // isSubSectorHead ||
-            isGeneralManager
+            // isGeneralManager
             // isDU ||
             // isMinisterAssistant ||
             // isViceMinister
@@ -4569,30 +4656,31 @@ var Access_Project_Info_Request = {
           // if (isEPMO) {
           //   AccessQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type=\'Text\'>strategically</Value></Eq></And></Where></Query></View>';
           // }
-          else if (
-            // isDU ||
-            // isSPMO ||
-            // isMinisterAssistant ||
-            //isSectorHead ||
-            // isViceMinister ||
-            // isSubSectorHead ||
-            isGeneralManager
-          ) {
-            AccessQuery = SectorHeadQuery;
-          }
-        } else if (
-          (
-            //isDU ||
-            // isMinisterAssistant ||
-            // isViceMinister ||
-            //isSectorHead ||
-            // isSubSectorHead ||
-            isGeneralManager) &&
-          isInitiativesHomePage
-        ) {
-          SubSectorInitiativeAccessQuery = SectorHeadQuery;
-          //
+          // else if (
+          //   // isDU ||
+          //   // isSPMO ||
+          //   // isMinisterAssistant ||
+          //   //isSectorHead ||
+          //   // isViceMinister ||
+          //   // isSubSectorHead ||
+          //   isGeneralManager
+          // ) {
+          //   AccessQuery = SectorHeadQuery;
+          // }
         }
+        //  else if (
+        //   (
+        //     //isDU ||
+        //     // isMinisterAssistant ||
+        //     // isViceMinister ||
+        //     //isSectorHead ||
+        //     // isSubSectorHead ||
+        //     isGeneralManager) &&
+        //   isInitiativesHomePage
+        // ) {
+        //   SubSectorInitiativeAccessQuery = SectorHeadQuery;
+        //   //
+        // }
         //  else if (
         // 	(isSPMAdmin && USERisListing && USERlistkey == "sos")
         // 	// ||
@@ -4601,15 +4689,16 @@ var Access_Project_Info_Request = {
         // 	AccessQuery =
         // 		"<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">sub</Value></Eq></And></Where></Query></View>";
         // } 
-        else if (
-          // isMinisterAssistant ||
-          //isSectorHead ||
-          // isViceMinister ||
-          // isSubSectorHead ||
-          (isGeneralManager && USERlistkey == "sos")
-        ) {
-          AccessQuery = SectorHeadQuery;
-        } else {
+        // else if (
+        //   // isMinisterAssistant ||
+        //   //isSectorHead ||
+        //   // isViceMinister ||
+        //   // isSubSectorHead ||
+        //   (isGeneralManager && USERlistkey == "sos")
+        // ) {
+        //   AccessQuery = SectorHeadQuery;
+        // } 
+        else {
           AccessQuery =
             "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
         }
@@ -4712,10 +4801,10 @@ var Access_Project_Info_Request = {
 
     if (
       isSectionHead ||
-      isPortfolioManager ||
+      isPortfolioManager 
       //isSectorHead ||
       // isSPMO ||
-      isGeneralManager
+      //isGeneralManager
       // ||
       // isSubSectorHead
       // isDU ||
@@ -5403,37 +5492,37 @@ var Access_Sector_Info_Request = {
 
     // handle the query
     SectorHeadQuery += "</Values></In></And></Where></Query></View>";
-    if (isGeneralManager
-      //|| isSubSectorHead
-      //|| isSectorHead
-    ) {
-      console.log(UserAccessSectorCode);
+    // if (isGeneralManager
+    //   //|| isSubSectorHead
+    //   //|| isSectorHead
+    // ) {
+    //   console.log(UserAccessSectorCode);
 
-      var subsectorname, substorcode;
-      if (localStorage.getItem("Dynamo_Internal Entities") != null) {
-        subsectorArray = JSON.parse(
-          localStorage.getItem("Dynamo_Internal Entities") || "[]"
-        );
-        subsectorArray = subsectorArray.filter(function (a) {
-          return a.code == UserAccessSectorCode;
-        });
+    //   var subsectorname, substorcode;
+    //   if (localStorage.getItem("Dynamo_Internal Entities") != null) {
+    //     subsectorArray = JSON.parse(
+    //       localStorage.getItem("Dynamo_Internal Entities") || "[]"
+    //     );
+    //     subsectorArray = subsectorArray.filter(function (a) {
+    //       return a.code == UserAccessSectorCode;
+    //     });
 
-        if (
-          localStorage.getItem("lng") == null ||
-          localStorage.getItem("lng") == "ar"
-        ) {
-          // subsectorname = subsectorArray.length ? subsectorArray[0].name : '';
-          ar_UserRole += subsectorArray[0].name;
+    //     if (
+    //       localStorage.getItem("lng") == null ||
+    //       localStorage.getItem("lng") == "ar"
+    //     ) {
+    //       // subsectorname = subsectorArray.length ? subsectorArray[0].name : '';
+    //       ar_UserRole += subsectorArray[0].name;
 
-          $(".page-title").html(ar_UserRole);
-        } else {
-          //   subsectorname = subsectorArray.length ? subsectorArray[0].nameEn : '';
-          en_UserRole += subsectorArray[0].nameEn;
-          $(".page-title").html(en_UserRole);
-        }
-        //   substorcode = subsectorArray.length ? subsectorArray[0].code : '';
-      }
-    }
+    //       $(".page-title").html(ar_UserRole);
+    //     } else {
+    //       //   subsectorname = subsectorArray.length ? subsectorArray[0].nameEn : '';
+    //       en_UserRole += subsectorArray[0].nameEn;
+    //       $(".page-title").html(en_UserRole);
+    //     }
+    //     //   substorcode = subsectorArray.length ? subsectorArray[0].code : '';
+    //   }
+    // }
     // if target
     // if (isTarget){
     //
