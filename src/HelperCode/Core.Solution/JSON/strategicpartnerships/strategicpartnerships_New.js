@@ -12,34 +12,75 @@ var Information_Form = [
         type: 'string',
         validation: 'required',
       },
+      // {
+      //   InternalName: 'Sector',
+      //   DisplayName: 'القطاع',
+      //   DisplayNameEn: 'Sector',
+      //   type: 'lookup',
+      //   validation: 'required',
+      //   source: 'Internal Entities',
+      //   isSector: 'True',
+      //   EntityType: 'Sector',
+      //   // "source":"SOs",
+      //   Dispfieldkey: 'Name',
+      //   DispfieldkeyEn: 'NameEn',
+      //   valfieldkey: 'Title',
+      // },
+      // {
+      //   InternalName: 'SubSector',
+      //   DisplayName: 'الوكالة',
+      //   DisplayNameEn: 'Deputyship',
+      //   type: 'lookup',
+      //   source: 'Internal Entities',
+      //   isSector: 'True',
+      //   EntityType: 'Department',
+      //   Dispfieldkey: 'Name',
+      //   DispfieldkeyEn: 'NameEn',
+      //   // "source":"SOs",
+      //   valfieldkey: 'Title',
+      //   validation: 'required',
+      // },
+
       {
         InternalName: 'Sector',
         DisplayName: 'القطاع',
         DisplayNameEn: 'Sector',
-        type: 'lookup',
-        validation: 'required',
+        type: 'lookupWithQuery',
+        queryField: 'EntityType',
+        queryFieldType: 'dropdownValues', //ex: "Choice"
+        queryFieldValue: 'Sector',
         source: 'Internal Entities',
-        isSector: 'True',
-        EntityType: 'Sector',
-        // "source":"SOs",
+        // "state": "disabled",
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
+        validation: 'required',
+        // security: {
+        //     groups: [
+        //         'EPMO', 'System Admin Group'
+        //     ]
+        // },
       },
       {
         InternalName: 'SubSector',
-        DisplayName: 'الوكالة',
-        DisplayNameEn: 'Deputyship',
+        DisplayName: 'الوكالة المالكة',
+        DisplayNameEn: 'Departments',
         type: 'lookup',
+        //from other list:
         source: 'Internal Entities',
         isSector: 'True',
         EntityType: 'Department',
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
-        // "source":"SOs",
         valfieldkey: 'Title',
         validation: 'required',
+        // security: {
+        //     groups: [
+        //         'EPMO', 'System Admin Group'
+        //     ]
+        // },
       },
+
       {
         InternalName: 'PartnershipType',
         DisplayName: 'نوع الشراكة',

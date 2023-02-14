@@ -203,7 +203,7 @@ var Information_Form = [
         dynamic: 'RelatedStrategy',
         filterField: 'RelatedStrategy',
         filterFieldType: 'Text',
-        grpfieldkey: 'Title',
+        // grpfieldkey: 'Title',
         //
         accessFilter: [
           {
@@ -442,46 +442,46 @@ var Information_Form = [
       //     "type": "picker",
       //     "validation": "required"
       // },
-      // {
-      //   InternalName: 'StartDate',
-      //   DisplayName: 'تاريخ بداية المبادرة ',
-      //   DisplayNameEn: 'Start Date',
-      //   type: 'datetime',
-      //   max: 'FinishDate',
-      //   validation: 'required',
-      // },
-      // {
-      //   InternalName: 'FinishDate',
-      //   DisplayName: 'تاريخ نهاية المبادرة ',
-      //   DisplayNameEn: 'Finish Date',
-      //   type: 'datetime',
-      //   min: 'StartDate',
-      //   validation: 'required',
-      // },
       {
         InternalName: 'StartDate',
         DisplayName: 'تاريخ بداية المبادرة ',
         DisplayNameEn: 'Start Date',
-        // type: 'datetime',
-        type: 'datetimetoparent',
-        listname: 'Initiatives',
-        startinternalname: 'BaselineStartDate',
-        endinternalname: 'BaselineFinishDate',
+        type: 'datetime',
         max: 'FinishDate',
-        validation: 'required'
+        validation: 'required',
       },
       {
         InternalName: 'FinishDate',
         DisplayName: 'تاريخ نهاية المبادرة ',
         DisplayNameEn: 'Finish Date',
-        // type: 'datetime',
-        type: 'datetimetoparent',
-        listname: 'Initiatives',
-        startinternalname: 'BaselineStartDate',
-        endinternalname: 'BaselineFinishDate',
-        max: 'FinishDate',
-        validation: 'required'
+        type: 'datetime',
+        min: 'StartDate',
+        validation: 'required',
       },
+      // {
+      //   InternalName: 'StartDate',
+      //   DisplayName: 'تاريخ بداية المبادرة ',
+      //   DisplayNameEn: 'Start Date',
+      //   // type: 'datetime',
+      //   type: 'datetimetoparent',
+      //   listname: 'Initiatives',
+      //   startinternalname: 'BaselineStartDate',
+      //   endinternalname: 'BaselineFinishDate',
+      //   max: 'FinishDate',
+      //   validation: 'required'
+      // },
+      // {
+      //   InternalName: 'FinishDate',
+      //   DisplayName: 'تاريخ نهاية المبادرة ',
+      //   DisplayNameEn: 'Finish Date',
+      //   // type: 'datetime',
+      //   type: 'datetimetoparent',
+      //   listname: 'Initiatives',
+      //   startinternalname: 'BaselineStartDate',
+      //   endinternalname: 'BaselineFinishDate',
+      //   min: 'StartDate',
+      //   validation: 'required'
+      // },
       {
         InternalName: 'Description',
         DisplayNameEn: 'Description',
@@ -518,7 +518,8 @@ var Information_Form = [
         InternalName: 'DependencyCost',
         DisplayName: 'حجم الارتباط (منصة اعتماد) ',
         DisplayNameEn: 'Dependency Cost',
-        type: 'float',
+        // type: 'float',
+        type: 'floatpercentage',
       },
       // {
       //     "InternalName": "InitiativeStatus",
@@ -612,12 +613,15 @@ var Information_Form = [
         DisplayName: 'التكاليف الكلية حسب سقف البرنامج ',
         DisplayNameEn: 'Program Total Cost',
         type: 'float',
+        targetelement: 'ActualCost',
       },
       {
         InternalName: 'ActualCost',
         DisplayName: 'التكاليف الكلية المعتمدة ',
         DisplayNameEn: 'Actual Cost',
         type: 'float',
+        targetelement: 'ActualCost',
+        seconedtarget: 'ProgramTotalCost',
       },
       {
         InternalName: 'CurrentBuget',
