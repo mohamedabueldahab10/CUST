@@ -1128,11 +1128,7 @@ window.userCalls = {
         break;
 
       case "VROE":
-        // for get it back
-        // if (USERisHome)
-        // 	window.location =
-        // 		_spPageContextInfo.webAbsoluteUrl +
-        // 		"/sitepages/initiativesmain.aspx";
+
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -1144,279 +1140,86 @@ window.userCalls = {
         en_UserRole = "Execution Guarantee Office";
         //CRUD
         Create_Access = [
-          "initiativeHome.aspx",
+          "benefitmatrix",
           "initiatives",
-          "initiativecards",
-          "initiativeexecution",
-          "initiativedeliverablesacceptance",
-          "initiativemilestonesacceptance",
+          "initiativedeliverables",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
           "closureinitiative",
           "benefits",
-          "initiativemilestones",
-          "initiativedeliverables",
-          // "mom",
-          // "risks",
-          "deliverablemetrics",
-          "benefitmatrix",
           "benefitmetrics",
-          "initiativeissues",
-          "initiativemom",
-          "initiativerisks",
           "projects",
           "deliverables",
           "mom",
-          "lessonslearned",
-          "initiativeexecution",
-          "closureinitiative",
-          "projectcharter",
-          // "benefits",
-          // "initiativemilestonesacceptance",
-          // "initiativedeliverablesacceptance",
-          // "initiativecards",
-          // "kpiequations",
-          // "deliveries",
           "risks",
           "issues",
           "milestones",
-          "invoices",
+          "lessonslearned",
+          "closureform",
+          "coc",
+          "stakeholders",
+          "communicationplans",
           "contracts",
           "changerequest",
-          // "MOM",
-          "closureform",
-          "communicationplans",
-          "lessonslearned",
-          "stakeholders",
           "documents",
-          "projecthome.aspx",
+       
         ];
-        Read_Access = [
-          "initiativeHome.aspx",
-          "initiatives",
-          "initiativesmain.aspx",
-          "InitiativeHome.aspx",
-          "initiativemilestones",
-          "initiativedeliverables",
-          // "home.aspx",
-          "initiativecards",
-          "initiativecards",
-          "initiativeexecution",
-          "initiativedeliverablesacceptance",
-          "initiativemilestonesacceptance",
-          "closureinitiative",
-          "benefits",
-          "mom",
-          "risks",
-          "initiativeissues",
-          "initiativemom",
-          "initiativerisks",
-          "home.aspx",
-          "sos",
-          "MainIndicators.aspx",
-          "mainkpi",
-          "lessonslearned",
-          "deliverables",
-          "closureinitiative",
-          "initiativeexecution",
-          "benefits",
-          "initiativemilestonesacceptance",
-          "initiativedeliverablesacceptance",
-          "initiativecards",
-          "projectcharter",
-          "kpiequations",
-          "deliveries",
-          "risks",
-          "issues",
-          "milestones",
-          "invoices",
-          "contracts",
-          "changerequest",
-          "communicationplans",
-          "lessonslearned",
-          "stakeholders",
-          "documents",
-          "closureform",
-          "projects",
-          "projecthome.aspx",
-          "deliverablemetrics",
-          "benefitmatrix",
-          "benefitmetrics",
-          "deliverables",
-          "mom",
-          "lessonslearned",
-          "initiativeexecution",
-          "closureinitiative",
-          "projectcharter",
-          // "benefits",
-          // "initiativemilestonesacceptance",
-          // "initiativedeliverablesacceptance",
-          // "initiativecards",
-          // "kpiequations",
-          // "deliveries",
-          "risks",
-          "issues",
-          "milestones",
-          "invoices",
-          "contracts",
-          "changerequest",
-          // "MOM",
-          "closureform",
-          "communicationplans",
-          "lessonslearned",
-          "stakeholders",
-          "documents",
-          "projecthome.aspx",
-        ];
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
-          "initiativeHome.aspx",
+          "benefitmatrix",
           "initiatives",
-          "initiativecards",
-          "initiativecards",
-          "initiativeexecution",
-          "initiativedeliverablesacceptance",
-          "initiativemilestonesacceptance",
+          "initiativedeliverables",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
           "closureinitiative",
           "benefits",
-          // "mom",
-          // "risks",
-          "initiativeissues",
-          "initiativemom",
-          "initiativerisks",
-          "initiativemilestones",
-          "initiativedeliverables",
-          "deliverablemetrics",
-          "benefitmatrix",
           "benefitmetrics",
           "projects",
           "deliverables",
           "mom",
-          "lessonslearned",
-          "initiativeexecution",
-          "closureinitiative",
-          "projectcharter",
-          // "benefits",
-          // "initiativemilestonesacceptance",
-          // "initiativedeliverablesacceptance",
-          // "initiativecards",
-          // "kpiequations",
-          // "deliveries",
           "risks",
           "issues",
           "milestones",
-          "invoices",
+          "lessonslearned",
+          "closureform",
+          "coc",
+          "stakeholders",
+          "communicationplans",
           "contracts",
           "changerequest",
-          // "MOM",
-          "closureform",
-          "communicationplans",
-          "lessonslearned",
-          "stakeholders",
           "documents",
-          "projecthome.aspx",
         ];
         Delete_Access = [
-          "initiativeHome.aspx",
+          "benefitmatrix",
           "initiatives",
-          "initiativecards",
-          "initiativecards",
-          "initiativeexecution",
-          "initiativedeliverablesacceptance",
-          "initiativemilestonesacceptance",
+          "initiativedeliverables",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
           "closureinitiative",
           "benefits",
-          // "mom",
-          // "risks",
-          "initiativeissues",
-          "initiativemom",
-          "initiativerisks",
-          "deliverablemetrics",
-          "benefitmatrix",
           "benefitmetrics",
           "projects",
           "deliverables",
           "mom",
-          "lessonslearned",
-          "initiativeexecution",
-          "closureinitiative",
-          "projectcharter",
-          // "benefits",
-          // "initiativemilestonesacceptance",
-          // "initiativedeliverablesacceptance",
-          // "initiativecards",
-          // "kpiequations",
-          // "deliveries",
           "risks",
           "issues",
           "milestones",
-          "invoices",
-          "contracts",
-          "changerequest",
-          // "MOM",
-          "closureform",
-          "communicationplans",
           "lessonslearned",
+          "closureform",
+          "coc",
           "stakeholders",
-          "documents",
-          "projecthome.aspx",
+          "communicationplans",
+          "contracts"
         ];
         break;
-      //VRO For get Back ///Ghufran
-      // case "VROE":
-      //   if (USERisHome)
-      //     window.location =
-      //       _spPageContextInfo.webAbsoluteUrl +
-      //       "/sitepages/initiativesmain.aspx";
-      //   $("body").append(
-      //     "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
-      //   );
-      //   isVROE = true;
-      //   //***** */
-      //   ChartHide =
-      //     ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-      //   ar_UserRole = "مكتب ضمان التنفيذ";
-      //   en_UserRole = "Execution Guarantee Office";
-      //   //CRUD
-      //   Create_Access = [
-      //     "initiativeHome.aspx",
-      //     "initiatives",
-      //     "initiativecards",
-      //     "initiativeexecution",
-      //     "initiativedeliverablesacceptance",
-      //     "initiativemilestonesacceptance",
-      //     "closureinitiative",
-      //     "benefits",
-      //     "mom",
-      //     "risks",
-      //   ];
-      //   Read_Access = [
-      //     "initiativeHome.aspx",
-      //     "initiatives",
-      //     "initiativesmain.aspx",
-      //     "home.aspx",
-      //     "initiativecards",
-      //     "initiativecards",
-      //     "initiativeexecution",
-      //     "initiativedeliverablesacceptance",
-      //     "initiativemilestonesacceptance",
-      //     "closureinitiative",
-      //     "benefits",
-      //     "mom",
-      //     "risks",
-      //   ];
-      //   Edit_Access = [
-      //     "initiativeHome.aspx",
-      //     "initiatives",
-      //     "initiativecards",
-      //     "initiativecards",
-      //     "initiativeexecution",
-      //     "initiativedeliverablesacceptance",
-      //     "initiativemilestonesacceptance",
-      //     "closureinitiative",
-      //     "benefits",
-      //     "mom",
-      //     "risks",
-      //   ];
-      //   Delete_Access = [];
-      //   break;
+    
       case "LMSE":
         // for get it back
         // if (USERisHome)
@@ -3067,7 +2870,6 @@ window.userCalls = {
       {
         Role: "VROE",
         groupsName: ["VRO_E"],
-        // currently supporting only 2 conditions
         dataFilter: {
           hierarchies: [
             {
@@ -3087,17 +2889,24 @@ window.userCalls = {
               ],
               subRelation: {
                 level: 2,
-                listName: "",
-                // parentRelationField: "Title",
-                // RelationField: "RelatedStrategy",
-                // RelationFieldType: "Text",
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "RelatedStrategy",
+                RelationFieldType: "Text",
                 subRelation: {
                   level: 3,
-                  listName: "",
-                  // parentRelationField: "Title",
-                  // RelationField: "InitiativeCode",
-                  // RelationFieldType: "Text",
-                },
+                  listName: "MainKPI",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedStrategyObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "KPIResults",
+                    parentRelationField: "Title",
+                    RelationField: "KPI",
+                    RelationFieldType: "Text",
+                  }
+                }
               },
             },
             {
@@ -3124,9 +2933,6 @@ window.userCalls = {
                 subRelation: {
                   level: 3,
                   listName: "",
-                  // parentRelationField: "Title",
-                  // RelationField: "InitiativeCode",
-                  // RelationFieldType: "Text",
                 },
               },
             },
@@ -3203,44 +3009,6 @@ window.userCalls = {
                 },
               },
             },
-            // {
-            //   level: 1,
-            //   listName: "GoalStrategy",
-            //   accessConditions: [
-            //     {
-            //       field: "Types",
-            //       type: "Choice",
-            //       values: ["vision"],
-            //       targetPages: [
-            //         "home.aspx",
-            //         "new.aspx",
-            //         "edit.aspx?ListKey=projects",
-            //       ],
-            //     },
-
-            //   ],
-            //     subRelation: {
-            //     level: 2,
-            //     listName: "SOs",
-            //     parentRelationField: "Title",
-            //     RelationField: "RelatedStrategy",
-            //     RelationFieldType: "Text",
-            //     subRelation: {
-            //       level: 3,
-            //       listName: "Initiatives",
-            //       parentRelationField: "Title",
-            //       RelationField: "RelatedObjective",
-            //       RelationFieldType: "Text",
-            //       subRelation: {
-            //         level: 4,
-            //         listName: "Projects",
-            //         parentRelationField: "Title",
-            //         RelationField: "RelatedInitiative",
-            //         RelationFieldType: "Text",
-            //       }
-            //     },
-            //   },
-            // },
           ],
         },
       },
@@ -4850,12 +4618,12 @@ var Access_Project_Info_Request = {
         // 		AccessQuery = SectorHeadQuery;
         // 	}
         // } 
-        if (USERisListing && USERlistkey == "initiatives") {
+        // if (USERisListing && USERlistkey == "initiatives") {
           //
-          if (isVROE) {
-            AccessQuery =
-              "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type='Text'>vision</Value></Eq></And></Where></Query></View>";
-          }
+          // if (isVROE) {
+          //   AccessQuery =
+          //     "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type='Text'>vision</Value></Eq></And></Where></Query></View>";
+          // }
           //else
           // if (isEPMO) {
           //   AccessQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type=\'Text\'>strategically</Value></Eq></And></Where></Query></View>';
@@ -4871,7 +4639,7 @@ var Access_Project_Info_Request = {
           // ) {
           //   AccessQuery = SectorHeadQuery;
           // }
-        }
+        //}
         //  else if (
         //   (
         //     //isDU ||
@@ -4902,10 +4670,10 @@ var Access_Project_Info_Request = {
         // ) {
         //   AccessQuery = SectorHeadQuery;
         // } 
-        else {
+        // else {
           AccessQuery =
             "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
-        }
+        // }
 
         if (USERisListing && !isfileListing) {
           window.checkListingStatusHtml = setInterval(function () {
