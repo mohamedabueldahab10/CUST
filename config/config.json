@@ -217,6 +217,14 @@
           "manifest": "./src/webparts/benefitMetricsTargets/BenefitMetricsTargetsWebPart.manifest.json"
         }
       ]
+    },
+    "strategic-partnership-home-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/strategicPartnershipHome/StrategicPartnershipHomeWebPart.js",
+          "manifest": "./src/webparts/strategicPartnershipHome/StrategicPartnershipHomeWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {
@@ -437,6 +445,7 @@
     "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js",
     "KnowledgeBaseWebPartStrings": "lib/webparts/knowledgeBase/loc/{locale}.js",
     "AllTasksWebPartStrings": "lib/webparts/allTasks/loc/{locale}.js",
-    "BenefitMetricsTargetsWebPartStrings": "lib/webparts/benefitMetricsTargets/loc/{locale}.js"
+    "BenefitMetricsTargetsWebPartStrings": "lib/webparts/benefitMetricsTargets/loc/{locale}.js",
+    "StrategicPartnershipHomeWebPartStrings": "lib/webparts/strategicPartnershipHome/loc/{locale}.js"
   }
 }
