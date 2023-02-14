@@ -20,7 +20,7 @@ window.Information_Form = [
 					choices: [
 						{ display: "projects", value: "Projects" },
 						{ display: "initiatives", value: "Initiatives" },
-						{ display: "strategicobjectives", value: "StrategicObjectives" },
+						{ display: "strategicobjectives", value: "SOs" },
 						{ display: "kpi", value: "MainKPI" },
 					],
 				},
@@ -28,7 +28,7 @@ window.Information_Form = [
 					{ value: "Projects", fields: ["ProjectCode", "projectsUpdateType"] }, //we can put more than 1  field
 					{ value: "Initiatives", fields: ["InitiativeCode", "initiativeUpdateType"] }, //we can put more than 1  field
 					{
-						value: "StrategicObjectives",
+						value: "SOs",
 						fields: ["CRRelatedStrategyObjective", "strategicobjectivesUpdateType"],
 					}, //we can put more than 1  field
 					{ value: "MainKPI", fields: ["CRRelatedMainKpis", "mainkpiUpdateType"] }, //we can put more than 1  field
@@ -264,7 +264,7 @@ window.Information_Form = [
 				customCr: true,
 				ToggleName: "CRRelatedStrategyObjective",
 				type: "lookup",
-				source: "sos",
+				source: "SOs",
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
 				dontSubmit: true,
@@ -1024,18 +1024,18 @@ window.Information_Form = [
 	// 		},
 	// 	]
 	// },
-	{
-		label: "المرفقات",
-		labelEn: "Attachments",
-		description: "",
-		descriptionEn: "",
-		subFields: [
-			{
-				InternalName: "getfile",
-				DisplayName: "المرفقات",
-				DisplayNameEn: "Attachments",
-				type: "file",
-			},
-		],
-	},
+	// {
+	// 	label: "المرفقات",
+	// 	labelEn: "Attachments",
+	// 	description: "",
+	// 	descriptionEn: "",
+	// 	subFields: [
+	// 		{
+	// 			InternalName: "getfile",
+	// 			DisplayName: "المرفقات",
+	// 			DisplayNameEn: "Attachments",
+	// 			type: "file",
+	// 		},
+	// 	],
+	// },
 ];
