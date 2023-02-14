@@ -1095,10 +1095,7 @@ window.userCalls = {
         ];
         break;
       case "VROP":
-        if (USERisHome)
-          window.location =
-            _spPageContextInfo.webAbsoluteUrl +
-            "/sitepages/MainIndicators.aspx";
+
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -1110,46 +1107,23 @@ window.userCalls = {
         en_UserRole = "Strategic Planning Office";
         //CRUD
         Create_Access = [
-          "mainkpi",
-          ,
-          //  "deliverablemetrics", "benefitmatrix", "benefitmetrics"
-          "sos",
-          "Targets.aspx",
-          "kpiequations",
           "goalstrategy",
-          "MainIndicators.aspx",
-          // , "goalstrategy"
-        ];
-        Read_Access = [
-          "mainkpi",
-          "benefits",
-          //  "deliverablemetrics", "benefitmatrix", "benefitmetrics",
           "sos",
-          "Targets.aspx",
-          "kpiequations",
-          "MainIndicators.aspx",
-          ,
-          "goalstrategy",
+          "mainkpi",
+          "changerequest"
         ];
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
-          "mainkpi",
-          ,
-          //  "deliverablemetrics", "benefitmatrix", "benefitmetrics"
-          "sos",
-          "Targets.aspx",
-          "kpiequations",
-          ,
           "goalstrategy",
+          "sos",
+          "mainkpi",
+          "changerequest"
         ];
         Delete_Access = [
-          "mainkpi",
-          ,
-          //  "deliverablemetrics", "benefitmatrix", "benefitmetrics"
-          "sos",
-          "Targets.aspx",
-          "kpiequations",
-          ,
           "goalstrategy",
+          "sos",
+          "mainkpi"
         ];
         break;
 
@@ -3187,20 +3161,28 @@ window.userCalls = {
                 RelationFieldType: "Text",
                 subRelation: {
                   level: 3,
-                  listName: "",
-                  // parentRelationField: "Title",
-                  // RelationField: "InitiativeCode",
-                  // RelationFieldType: "Text",
-                },
+                  listName: "MainKPI",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedStrategyObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "KPIResults",
+                    parentRelationField: "Title",
+                    RelationField: "KPI",
+                    RelationFieldType: "Text",
+
+                  }
+                }
               },
             },
             {
               level: 1,
-              listName: "GoalStrategy",
+              listName: "Initiatives",
               accessConditions: [
                 {
                   field: "Types",
-                  type: "Choice",
+                  type: "Text",
                   values: ["vision"],
                   targetPages: [
                     "home.aspx",
@@ -3211,19 +3193,54 @@ window.userCalls = {
               ],
               subRelation: {
                 level: 2,
-                listName: "MainKPI",
+                listName: "Projects",
                 parentRelationField: "Title",
-                RelationField: "RelatedStrategy",
+                RelationField: "RelatedInitiative",
                 RelationFieldType: "Text",
                 subRelation: {
                   level: 3,
-                  listName: "KPIResults",
-                  parentRelationField: "Title",
-                  RelationField: "KPI",
-                  RelationFieldType: "Text",
+                  listName: "",
                 },
               },
             },
+            // {
+            //   level: 1,
+            //   listName: "GoalStrategy",
+            //   accessConditions: [
+            //     {
+            //       field: "Types",
+            //       type: "Choice",
+            //       values: ["vision"],
+            //       targetPages: [
+            //         "home.aspx",
+            //         "new.aspx",
+            //         "edit.aspx?ListKey=projects",
+            //       ],
+            //     },
+
+            //   ],
+            //     subRelation: {
+            //     level: 2,
+            //     listName: "SOs",
+            //     parentRelationField: "Title",
+            //     RelationField: "RelatedStrategy",
+            //     RelationFieldType: "Text",
+            //     subRelation: {
+            //       level: 3,
+            //       listName: "Initiatives",
+            //       parentRelationField: "Title",
+            //       RelationField: "RelatedObjective",
+            //       RelationFieldType: "Text",
+            //       subRelation: {
+            //         level: 4,
+            //         listName: "Projects",
+            //         parentRelationField: "Title",
+            //         RelationField: "RelatedInitiative",
+            //         RelationFieldType: "Text",
+            //       }
+            //     },
+            //   },
+            // },
           ],
         },
       },
@@ -4787,11 +4804,11 @@ var Access_Project_Info_Request = {
         //
         ///////Ghufran Listing Query
         //if on listing pages other then projects and its child data (risks, issues...)
-        if (isVROP && USERisListing && USERlistkey == "goalstrategy") {
-          // vrop can't see goal strategy now as userguide
-          AccessQuery =
-            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">vision</Value></Eq></And></Where></Query></View>";
-        }
+        // if (isVROP && USERisListing && USERlistkey == "goalstrategy") {
+        //   // vrop can't see goal strategy now as userguide
+        //   AccessQuery =
+        //     "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">vision</Value></Eq></And></Where></Query></View>";
+        // }
         // else if (USERisListing 
         // 	&& USERlistkey == "mainkpi"
         // 	) {
@@ -4833,7 +4850,7 @@ var Access_Project_Info_Request = {
         // 		AccessQuery = SectorHeadQuery;
         // 	}
         // } 
-        else if (USERisListing && USERlistkey == "initiatives") {
+        if (USERisListing && USERlistkey == "initiatives") {
           //
           if (isVROE) {
             AccessQuery =

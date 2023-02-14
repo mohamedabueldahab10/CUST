@@ -492,10 +492,10 @@ window.Edit_Data_Request = {
 
 
     if (listkey == "mainkpi") {
-      if (isVROP) {
-        // $('#Types').val('vision'); // comminted to get the value as saved on list (for Vrop value saved Main)
-        $('#Types').prop('disabled', true);
-      }
+      // if (isVROP) {
+      //   // $('#Types').val('vision'); // comminted to get the value as saved on list (for Vrop value saved Main)
+      //   $('#Types').prop('disabled', true);
+      // }
       KPICode = oListItem.get_item("Title");
       kpiCodeResult = oListItem.get_item("Title")
       KPIYear = oListItem.get_item("Year")
@@ -581,12 +581,12 @@ window.Edit_Data_Request = {
       equationBenefit.init();
     }
 
-    if (listkey == "goalstrategy") {
-      if (isVROP) {
-        $('#Types').val('vision');
-        $('#Types').prop('disabled', true);
-      }
-    }
+    // if (listkey == "goalstrategy") {
+    //   if (isVROP) {
+    //     $('#Types').val('vision');
+    //     $('#Types').prop('disabled', true);
+    //   }
+    // }
     if (listkey == "projects" && PCODE) {
 
       projRelatedInit = oListItem.get_item("RelatedInitiative");
@@ -639,12 +639,12 @@ window.Edit_Data_Request = {
     //     $('#Types').prop('disabled', true);
     //   }
     // }
-    if (Groups.includes("Strategy Specialist") || isVROP) {
-      if (listkey == "sos") {
-        $('#Types').val('main');
-        $('#Types').prop('disabled', true);
-      }
-    }
+    // if (Groups.includes("Strategy Specialist") || isVROP) {
+    //   if (listkey == "sos") {
+    //     $('#Types').val('main');
+    //     $('#Types').prop('disabled', true);
+    //   }
+    // }
     // if (isSPMAdmin) {
     //   if (listkey == "sos") {
     //     $('#Types').val('sub');
@@ -1464,10 +1464,10 @@ window.View_Data_Request = {
       }
     }
     if (listkey == "mainkpi") {
-      if (isVROP) {
-        $('#Types').val('vision');
-        $('#Types').prop('disabled', true);
-      }
+      // if (isVROP) {
+      //   $('#Types').val('vision');
+      //   $('#Types').prop('disabled', true);
+      // }
       KPICode = oListItem.get_item("Title");
       KPIYear = oListItem.get_item("Year");
       KPIMonth = oListItem.get_item("Months") ? oListItem.get_item("Months") : '';
@@ -1505,17 +1505,17 @@ window.View_Data_Request = {
       equationBenefit.init();
     }
 
-    if (listkey == "goalstrategy") {
-      if (isVROP) {
-        $('#Types').val('vision');
-        $('#Types').prop('disabled', true);
-      }
-      var types = oListItem.get_item("Types") ? oListItem.get_item("Types") : ''
+    // if (listkey == "goalstrategy") {
+    //   if (isVROP) {
+    //     $('#Types').val('vision');
+    //     $('#Types').prop('disabled', true);
+    //   }
+    //   var types = oListItem.get_item("Types") ? oListItem.get_item("Types") : ''
 
-      // if(types == 'sub' || types == 'sectorial'){ // to hide the PillersExist
-      //   $('#PillarsExist').parent().hide()
-      // }
-    }
+    //   // if(types == 'sub' || types == 'sectorial'){ // to hide the PillersExist
+    //   //   $('#PillarsExist').parent().hide()
+    //   // }
+    // }
     // if (listkey == 'invoices' && PCODE) {
     //   DeliverableRelatedToInvoice = oListItem.get_item('Deliverable');
     //   if (DeliverableRelatedToInvoice) {

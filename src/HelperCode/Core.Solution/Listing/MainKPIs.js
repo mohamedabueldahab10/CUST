@@ -793,10 +793,11 @@ var GoalsKPIs_Info_Request = {
 
     /////////////////////////////////////////
     debugger
-    if ((isRoleDataLevelAccess && isVROP)) {
-      $(".col.px-2.my-5:first-child() .link-items-goal").click();
-    }
-    else if (firstRender) {
+    // if ((isRoleDataLevelAccess && isVROP)) {
+    //   $(".col.px-2.my-5:first-child() .link-items-goal").click();
+    // }
+    // else
+     if (firstRender) {
       $('.card').show();
     }
   },
