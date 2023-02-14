@@ -537,9 +537,9 @@ window.Edit_Data_Request = {
       equationKPI.init();
 
 
-      if (isSPMAdmin) {
-        $('#Year').prop('disabled', true);
-      }
+      // if (isSPMAdmin) {
+      //   $('#Year').prop('disabled', true);
+      // }
 
 
       // to handle the relates strategy
