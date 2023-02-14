@@ -8,15 +8,15 @@ var isGeneral;
 if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
 	var search = "بحث ...";
 	var No_Data = 'لا يوجد'
-  } else {
+} else {
 	var No_Data = 'No Data';
 	var search = "Search ...";
-  }
-  if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+}
+if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
 	var enternameemail = Resources.ar["enternameemail"]
-  } else {
+} else {
 	var enternameemail = Resources.en["enternameemail"]
-  }
+}
 window.CrModeFunctionality = {
 	preinit: function () {
 		let prefix = "";
@@ -30,10 +30,10 @@ window.CrModeFunctionality = {
 		//get form's json
 		$.getScript(
 			_spPageContextInfo.webAbsoluteUrl +
-				"/Style%20Library/spm/JSON/" +
-				RListKey +
-				"/" +
-				CR_JSON_File_Name
+			"/Style%20Library/spm/JSON/" +
+			RListKey +
+			"/" +
+			CR_JSON_File_Name
 		).done(function (script, textStatus) {
 			crlabel = Information_Form[0].label;
 			crlabelEn = Information_Form[0].labelEn;
@@ -115,7 +115,7 @@ window.CrModeFunctionality = {
 					Label +
 					"</h3>" +
 					'<span class="font-14">' +
-					Description+
+					Description +
 					"</span>" +
 					"</div>" +
 					'<div class="col-lg-9 col-md-8 white-box p-4 fieldset-container">';
@@ -425,9 +425,12 @@ window.CrItemDataRequest = {
 		$(
 			".cr-related-item-section:not([data-target_list]) .CFIELD> input:not([type=file]), .cr-related-item-section:not([data-target_list]) .CFIELD> input[type=checkbox], .cr-related-item-section:not([data-target_list]) .CFIELD> div[type=picker], .cr-related-item-section:not([data-target_list]) .CFIELD> select[type=dropdown], .cr-related-item-section:not([data-target_list]) .CFIELD>  textarea,.cr-related-item-section:not([data-target_list]) .CFIELD> .datetimeinputs input[type=date], .cr-related-item-section:not([data-target_list]) .CFIELD> .datetimeinputs input[type=datetime-local], .cr-related-item-section:not([data-target_list]) .CFIELD > .multiselect-container, .cr-related-item-section:not([data-target_list]) .CFIELD > div.richTextEdits , .cr-related-item-section:not([data-target_list]) .CFIELD> div[type=multipicker]"
 		).each(function () {
-			fieldType = $(this).attr("type");
+
 			console.log($(this).attr("type"), 'typeeeeeeeeeeeeeeeeeeeeee');
-			console.warn($(this).attr("id"));
+			console.log($(this).attr("id"), "Attr id");
+			debugger
+
+			fieldType = $(this).attr("type");
 			let newJsonValues = jsonValues ? jsonValues : Information_Form;
 			var currentJsonValues = newJsonValues.map(function (el) {
 				return el.InternalName == $(this).attr("id");
@@ -528,14 +531,14 @@ window.CrItemDataRequest = {
 
 				case "picker":
 					//
-					
+
 					var pemail =
 						oListItem.get_item("" + $(this).attr("id") + "") == null
 							? enternameemail
 							: oListItem
-									.get_item("" + $(this).attr("id") + "")
-									.get_lookupValue();
-									console.log('there is a picker hereeeee', pemail);
+								.get_item("" + $(this).attr("id") + "")
+								.get_lookupValue();
+					console.log('there is a picker hereeeee', pemail);
 					$(this).attr("data-email", pemail);
 
 					if (pemail != enternameemail)
@@ -547,6 +550,32 @@ window.CrItemDataRequest = {
 					var idinternal = $(this).attr("id");
 					var mp = new MyPeoplePicker();
 					mp.init($(this).attr("id"), { AllowMultipleValues: false });
+					break;
+
+
+				case "multipicker":
+					debugger
+					var pemail =
+						oListItem.get_item("" + $(this).attr("id") + "") == null
+							? enternameemail
+							: oListItem
+								.get_item("" + $(this).attr("id") + "");
+
+					var userItems = [];
+
+					pemail.forEach(function (element) {
+						userItems.push(element.get_lookupValue());
+					})
+
+					// $(this).attr(
+					// 	"user-email",
+					// 	oListItem.get_item($(this).attr("id")).get_email()
+					// );
+
+					$(this).attr("data-email", userItems.join(", "));
+
+					var mp = new MyPeoplePicker();
+					mp.init($(this).attr("id"), { AllowMultipleValues: true });
 					break;
 
 				case "dropdown":
@@ -724,8 +753,8 @@ window.CrItemDataRequest = {
 		append: function () {
 			$(".o365cs-nav-header16 .o365cs-nav-o365Branding").html(
 				'<div class="Logo"><a href=""><img class="img-Logo" src="' +
-					mainLogo +
-					'"></a></div>'
+				mainLogo +
+				'"></a></div>'
 			);
 			$(".o365cs-nav-centerAlign").append(
 				'<div class="User-Not"><div class="SNotifications"><span class="Tasks"><i class="fas fa-tasks" data-count="10"></i><a href="#">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="10"></i><a href="#">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="30"></i><a href="#">Issues</a></span></div><div class="UProfile"></div></div>'
@@ -765,18 +794,18 @@ window.CrItemDataRequest = {
 										.text()
 										.indexOf("لعام") > -1
 										? $("#Cost" + i)
-												.parent()
-												.find("label")
-												.text()
-												.split("لعام")[0] +
-										  " لعام " +
-										  yeartodisp
+											.parent()
+											.find("label")
+											.text()
+											.split("لعام")[0] +
+										" لعام " +
+										yeartodisp
 										: $("#Cost" + i)
-												.parent()
-												.find("label")
-												.text() +
-										  " لعام " +
-										  yeartodisp;
+											.parent()
+											.find("label")
+											.text() +
+										" لعام " +
+										yeartodisp;
 							} else {
 								var label =
 									$("#Cost" + i)
@@ -785,18 +814,18 @@ window.CrItemDataRequest = {
 										.text()
 										.indexOf("For Year") > -1
 										? $("#Cost" + i)
-												.parent()
-												.find("label")
-												.text()
-												.split("For Year")[0] +
-										  " For Year " +
-										  yeartodisp
+											.parent()
+											.find("label")
+											.text()
+											.split("For Year")[0] +
+										" For Year " +
+										yeartodisp
 										: $("#Cost" + i)
-												.parent()
-												.find("label")
-												.text() +
-										  " For Year " +
-										  yeartodisp;
+											.parent()
+											.find("label")
+											.text() +
+										" For Year " +
+										yeartodisp;
 							}
 							$("#Cost" + i)
 								.parent()
@@ -844,18 +873,18 @@ window.CrItemDataRequest = {
 									.text()
 									.indexOf("لعام") > -1
 									? $("#Cost" + i)
-											.parent()
-											.find("label")
-											.text()
-											.split("لعام")[0] +
-									  " لعام " +
-									  yeartodisp
+										.parent()
+										.find("label")
+										.text()
+										.split("لعام")[0] +
+									" لعام " +
+									yeartodisp
 									: $("#Cost" + i)
-											.parent()
-											.find("label")
-											.text() +
-									  " لعام " +
-									  yeartodisp;
+										.parent()
+										.find("label")
+										.text() +
+									" لعام " +
+									yeartodisp;
 						} else {
 							var label =
 								$("#Cost" + i)
@@ -864,18 +893,18 @@ window.CrItemDataRequest = {
 									.text()
 									.indexOf("For Year") > -1
 									? $("#Cost" + i)
-											.parent()
-											.find("label")
-											.text()
-											.split("For Year")[0] +
-									  " For Year " +
-									  yeartodisp
+										.parent()
+										.find("label")
+										.text()
+										.split("For Year")[0] +
+									" For Year " +
+									yeartodisp
 									: $("#Cost" + i)
-											.parent()
-											.find("label")
-											.text() +
-									  " For Year " +
-									  yeartodisp;
+										.parent()
+										.find("label")
+										.text() +
+									" For Year " +
+									yeartodisp;
 						}
 						$("#Cost" + i)
 							.parent()
@@ -1174,8 +1203,8 @@ window.CrItemDataRenderFromJSON_Edit = {
 		append: function () {
 			$(".o365cs-nav-header16 .o365cs-nav-o365Branding").html(
 				'<div class="Logo"><a href=""><img class="img-Logo" src="' +
-					mainLogo +
-					'"></a></div>'
+				mainLogo +
+				'"></a></div>'
 			);
 			$(".o365cs-nav-centerAlign").append(
 				'<div class="User-Not"><div class="SNotifications"><span class="Tasks"><i class="fas fa-tasks" data-count="10"></i><a href="#">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="10"></i><a href="#">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="30"></i><a href="#">Issues</a></span></div><div class="UProfile"></div></div>'
@@ -1215,18 +1244,18 @@ window.CrItemDataRenderFromJSON_Edit = {
 										.text()
 										.indexOf("لعام") > -1
 										? $("#Cost" + i)
-												.parent()
-												.find("label")
-												.text()
-												.split("لعام")[0] +
-										  " لعام " +
-										  yeartodisp
+											.parent()
+											.find("label")
+											.text()
+											.split("لعام")[0] +
+										" لعام " +
+										yeartodisp
 										: $("#Cost" + i)
-												.parent()
-												.find("label")
-												.text() +
-										  " لعام " +
-										  yeartodisp;
+											.parent()
+											.find("label")
+											.text() +
+										" لعام " +
+										yeartodisp;
 							} else {
 								var label =
 									$("#Cost" + i)
@@ -1235,18 +1264,18 @@ window.CrItemDataRenderFromJSON_Edit = {
 										.text()
 										.indexOf("For Year") > -1
 										? $("#Cost" + i)
-												.parent()
-												.find("label")
-												.text()
-												.split("For Year")[0] +
-										  " For Year " +
-										  yeartodisp
+											.parent()
+											.find("label")
+											.text()
+											.split("For Year")[0] +
+										" For Year " +
+										yeartodisp
 										: $("#Cost" + i)
-												.parent()
-												.find("label")
-												.text() +
-										  " For Year " +
-										  yeartodisp;
+											.parent()
+											.find("label")
+											.text() +
+										" For Year " +
+										yeartodisp;
 							}
 							$("#Cost" + i)
 								.parent()
@@ -1294,18 +1323,18 @@ window.CrItemDataRenderFromJSON_Edit = {
 									.text()
 									.indexOf("لعام") > -1
 									? $("#Cost" + i)
-											.parent()
-											.find("label")
-											.text()
-											.split("لعام")[0] +
-									  " لعام " +
-									  yeartodisp
+										.parent()
+										.find("label")
+										.text()
+										.split("لعام")[0] +
+									" لعام " +
+									yeartodisp
 									: $("#Cost" + i)
-											.parent()
-											.find("label")
-											.text() +
-									  " لعام " +
-									  yeartodisp;
+										.parent()
+										.find("label")
+										.text() +
+									" لعام " +
+									yeartodisp;
 						} else {
 							var label =
 								$("#Cost" + i)
@@ -1314,18 +1343,18 @@ window.CrItemDataRenderFromJSON_Edit = {
 									.text()
 									.indexOf("For Year") > -1
 									? $("#Cost" + i)
-											.parent()
-											.find("label")
-											.text()
-											.split("For Year")[0] +
-									  " For Year " +
-									  yeartodisp
+										.parent()
+										.find("label")
+										.text()
+										.split("For Year")[0] +
+									" For Year " +
+									yeartodisp
 									: $("#Cost" + i)
-											.parent()
-											.find("label")
-											.text() +
-									  " For Year " +
-									  yeartodisp;
+										.parent()
+										.find("label")
+										.text() +
+									" For Year " +
+									yeartodisp;
 						}
 						$("#Cost" + i)
 							.parent()
@@ -1591,7 +1620,7 @@ window.CrSetChangeBody = {
 			// let tempJSON = newJsonValues.filter(function (el) {
 			// 	return el.InternalName == o.InternalName;
 			// });
-			let tempJSON = newJsonValues.filter((el) => el.InternalName ==  o.InternalName).map(el => el);
+			let tempJSON = newJsonValues.filter((el) => el.InternalName == o.InternalName).map(el => el);
 
 			o.DisplayName = tempJSON[0].DisplayName || "";
 			o.DisplayNameEn = tempJSON[0].DisplayNameEn || "";
@@ -1607,12 +1636,12 @@ window.CrSetChangeBody = {
 						$this.find("span.sp-peoplepicker-userSpan").attr("sid") == undefined
 							? ""
 							: SP.FieldUserValue.fromUser(
-									$this
-										.find("span.sp-peoplepicker-userSpan")
-										.attr("sid")
-										.split("|")
-										.slice(-1)[0]
-							  );
+								$this
+									.find("span.sp-peoplepicker-userSpan")
+									.attr("sid")
+									.split("|")
+									.slice(-1)[0]
+							);
 					o.value = ppp;
 				}
 			} else if (o.type == "datetime") {
@@ -1648,8 +1677,8 @@ window.CrSetChangeBody = {
 					var ydate = !dateval
 						? ""
 						: [dateval.slice(5, 10), dateval.slice(0, 4)]
-								.join("/")
-								.replace("-", "/");
+							.join("/")
+							.replace("-", "/");
 					if (dateval) o.value = ydate;
 				}
 			} else if (o.type == "datetime-local") {
@@ -1783,9 +1812,9 @@ window.executeCR = {
 				Function.createDelegate(this, function (sender, args) {
 					console.log(
 						"Request failed. " +
-							args.get_message() +
-							"\n" +
-							args.get_stackTrace()
+						args.get_message() +
+						"\n" +
+						args.get_stackTrace()
 					);
 				})
 			);
