@@ -543,9 +543,9 @@ var initiativeHomeInfo_Request = {
           .join(".")
       );
     }
-    if (isMinisterAssistant) {
-      $("a.btn-add.Resources").attr("style", "display: none!important;");
-    }
+    // if (isMinisterAssistant) {
+    //   $("a.btn-add.Resources").attr("style", "display: none!important;");
+    // }
     $(".project-info-ctx .media-body:nth-of-type(2) p.fnt-14.reg.mx-3").text(
       ProjectManager
     );
@@ -1730,20 +1730,20 @@ var Milestones_Info_Request = {
 
 
 
-    if (
-      isMinisterAssistant ||
-      isSectorHead ||
-      isViceMinister ||
-      isSubSectorHead ||
-      isGeneralManager ||
-      isMinister
-      // ||
-      // isBITeam ||
-      // isInOwner ||
-      // isSPMO
-    ) {
-      $("a.btn-add").attr("style", "display: none!important;");
-    }
+    // if (
+    //   // isMinisterAssistant ||
+    //   //isSectorHead ||
+    //   // isViceMinister ||
+    //   // isSubSectorHead ||
+    //   isGeneralManager 
+    //   // isMinister
+    //   // ||
+    //   // isBITeam ||
+    //   // isInOwner ||
+    //   // isSPMO
+    // ) {
+    //   $("a.btn-add").attr("style", "display: none!important;");
+    // }
 
     if (!isWF) {
       Update_InitiativeStatus_Service.init();// update the initiative status when open the page auto

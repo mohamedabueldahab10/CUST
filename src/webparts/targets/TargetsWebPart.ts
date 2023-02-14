@@ -3,12 +3,14 @@ require("ListNameConfig");
 require("UserAccess");
 
 require("../../HelperCode/Utilities.Core/Side_Navigation.js");
-require("../../HelperCode/Core.Solution/Listing/Targets.js");
-require("../../HelperCode/External.Libraries/JS/PPicker.js");
+// require("../../HelperCode/Core.Solution/Listing/Targets.js");
+// require("../../HelperCode/External.Libraries/JS/PPicker.js");
 require("../../HelperRessources/css/Styles.css");
 require("../../HelperRessources/css/style-dashboards.css");
 require('../../HelperRessources/css/fontello.css');
 require("./targets.css");
+require("../../HelperCode/External.Libraries/JS/PPicker.js"); // move it to the end to can finish calling userAccess to render the query successfull 
+require("../../HelperCode/Core.Solution/Listing/Targets.js"); // move it to the end to can finish calling userAccess to render the query successfull 
 import { Version } from "@microsoft/sp-core-library";
 import {
 BaseClientSideWebPart,

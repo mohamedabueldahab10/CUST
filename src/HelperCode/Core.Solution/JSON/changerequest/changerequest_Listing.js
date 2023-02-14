@@ -3,29 +3,19 @@ var Listing_Info = [
     {
         "InternalName": "Title",
         "DisplayName": "رمز طلب التغيير",
-        // "DisplayNameEn": "Change Request Code",
-        "DisplayNameEn": "Title",
+        "DisplayNameEn": "Change Request Code",
         "type": "text",
         inlisting: true,
-        infilter: false
+        infilter: true
     },
     {
-        "InternalName": "WorkflowName",
-        "DisplayName": "اسم الإجراء",
-        "DisplayNameEn": "Workflow Name",
-        "type": "text",
+        "InternalName": "Requester",
+        "DisplayName": "مقدم الطلب",
+        "DisplayNameEn": "Requester",
+        "type": "picker",
         inlisting: true,
-        infilter: true,
-        needTrans: true
+        infilter: true
     },
-    // {
-    //     "InternalName": "Requester",
-    //     "DisplayName": "مقدم الطلب",
-    //     "DisplayNameEn": "Requester",
-    //     "type": "picker",
-    //     inlisting: true,
-    //     infilter: true
-    // },
     // {
     //     "InternalName": "ProjectCode",
     //     "DisplayName": "رمز المشروع",
@@ -37,31 +27,21 @@ var Listing_Info = [
     //     ShowUnderProjectListing: false
     // },
     {
-        "InternalName": "Status",
-        "DisplayName": "الحالة",
-        "DisplayNameEn": "Status",
+        InternalName: "Description",
+        DisplayName: "وصف التغيير",
+        DisplayNameEn: "Description",
         "type": "text",
-        needTrans: true,
+        inlisting: true,
+        infilter: false
+    },
+    {
+        "InternalName": "Created",
+        "DisplayName": "تاريخ الطلب",
+        "DisplayNameEn": "Request Date",
+        "type": "date",
         inlisting: true,
         infilter: true
     },
-    // {
-    //     "InternalName": "ImpactOn",
-    //     "DisplayName": "مجال التغيير",
-    //     "DisplayNameEn": "Impact On",
-    //     "type": "text",
-    //     needTrans: true,
-    //     inlisting: true,
-    //     infilter: true
-    // },
-    // {
-    //     "InternalName": "RequestDate",
-    //     "DisplayName": "تاريخ الطلب",
-    //     "DisplayNameEn": "Request Date",
-    //     "type": "date",
-    //     inlisting: true,
-    //     infilter: true
-    // },
     // {
     //     "InternalName": "Priority",
     //     "DisplayName": "الأولوية",

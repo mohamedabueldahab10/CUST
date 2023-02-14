@@ -447,6 +447,7 @@
     issues: "التحديات",
     risks: "المخاطر",
     projects: "المشاريع",
+    strategicobjectives:"الأهداف الاستراتيجية",
     completionpercentage: "نسبة الإنجاز",
     budgetexpenditure: "الصرف من الميزانية",
     portfolio: "المحفظة",
@@ -619,7 +620,16 @@
     strategic: "الاستراتيجية",
     targeted: "المستهدف",
     ownername: "اسم المالك",
-    baseline: "الحدود",
+    baseline: "خط الأساس",
+    performanceindicators: "مؤشرات الأداء",
+    durationoftheproject: "مدة المشروع",
+    range: "النطاق",
+    contract: "العقد",
+    implementationconsultant: "استشاري التنفيذ",
+    projecthold: "تعليق المشروع",
+    projectseparation: "فصل المشروع",
+    projectstatus: "حالة المشروع",
+    generalchange: "تغيير عام",
     basestart: "تاريخ بدء الأساس",
     basefinish: "تاريخ إنهاء الأساس",
     frequencymeas: "قياسات التردد",
@@ -866,7 +876,8 @@
     stat10:"تم تحقيق المستهدف",
     stat11:"تم تحقيقه جزئيا",
     addactualbudget:"يجب تحديد قيمة المشروع الفعلية قبل إنشاء المخرجات و المعالم",
-    addinitiativebudget:"يجب تحديد ميزانية المبادرة قبل إنشاء المخرجات والمعالم"
+    addinitiativebudget:"يجب تحديد ميزانية المبادرة قبل إنشاء المخرجات والمعالم",
+		crrelateditem: "الحقول الخاضعة لطلب التغيير",
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1015,7 +1026,7 @@
     lms: "LMS",
 
     //Priority Values
-    hight: "Hight",
+    hight: "High",
     high: "High",
     medium: "Medium",
     low: "Low",
@@ -1068,6 +1079,7 @@
     issue: "Issue",
     risk: "Risk",
     projects: "projects",
+    strategicobjectives:"Strategic Objectives",
     newrequest: "New Request",
 
     //Resolution Status
@@ -1494,6 +1506,15 @@
     ownername: "Owner Name",
     jobmarket: "Job market",
     baseline: "Baseline",
+    implementationconsultant: "Implementation consultant",
+    contract: "Contract",
+    range: "Range",
+    projecthold: "Hold Project",
+    durationoftheproject: "Duration of the project",
+    generalchange: "General Change",
+    projectstatus: "Project Status",
+    projectseparation: "Project Separation",
+    performanceindicators: "Performance Indicators",
     basestart: "Baseline Start Date",
     basefinish: "Baseline Finish Date",
     frequencymeas: "Frequency Measurement",
@@ -1748,7 +1769,8 @@
     stat10:"Target achieved",
     stat11:"Partially achieved",
     addactualbudget:"Please add project actual budget to add deliverables and Milestones",
-    addinitiativebudget :"Please add Initiative budget to add deliverables and Milestones"
+    addinitiativebudget :"Please add Initiative budget to add deliverables and Milestones",
+    crrelateditem: "Fields Related to this Change Request",
   },
 };
 

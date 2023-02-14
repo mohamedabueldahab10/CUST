@@ -1,8 +1,10 @@
+window.RisksCountsForRSupport = 0;
+window.issueCountsForRSupport = 0;
 var ActualBudget = 0,
   SpendFromBudget = 0,
   EstimatedCost = 0,
   AssignedBudget = 0,
-  initiativeBudget=0,
+  initiativeBudget = 0,
   EstimatedBudget = 0,
   phaseNameArray = [],
   phasesArrayCodes = [],
@@ -120,7 +122,7 @@ var mizania = require("../../HelperRessources/img/mizania.svg");
 // var mizania;// = require("../../HelperRessources/img/mizania.svg");
 //filter vars
 var PQuery =
-    "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>",
+  "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>",
   originalstate = true,
   FilterChoices = [],
   subsectorfilterarray = [],
@@ -178,19 +180,19 @@ window.initiativeRequest = {
         // if (isInManager || isInOwner) {
         //   PQuery = InitiativeAccessQuery;
         // } else 
-        if (
-          isDU ||
-          isMinisterAssistant ||
-          isViceMinister ||
-          isSectorHead ||
-          isSubSectorHead ||
-          isGeneralManager
-        ) {
-          PQuery = SubSectorInitiativeAccessQuery;
-        } else {
-          PQuery =
-            "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
-        }
+        // if (
+        //   // isDU ||
+        //   // isMinisterAssistant ||
+        //   //isViceMinister ||
+        //   //isSectorHead ||
+        //   //isSubSectorHead ||
+        //   isGeneralManager
+        // ) {
+        //   PQuery = SubSectorInitiativeAccessQuery;
+        // } else {
+        PQuery =
+          "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
+        //}
       }
       //**** Start*/check user rule and buld query to get projects;
       $(ChartHide).hide();
@@ -265,285 +267,285 @@ window.initiativeRequest = {
       //     oListItem.get_item("InitiativeOwner") &&
       //     oListItem.get_item("InitiativeOwner").get_lookupId() == UserN.Id)
       // ) {
-        
-        //getting 1st stats data
-        EstimatedCost += oListItem.get_item("EstimatedCost") || 0; //masroufa
-        SpendFromBudget = oListItem.get_item("EstimatedCost") || 0;
-        // ActualBudget += oListItem.get_item("InitiativeBudget") || 0; //masroufa
-        AssignedBudget += oListItem.get_item('ActualCost') || 0; // total budget
-        initiativeBudget +=  oListItem.get_item('InitiativeBudget') || 0;
-        numberofInitiatives++;
-        //projects listing
-        projectname = oListItem.get_item("Name") || No_Data;
-        initiativeCode = oListItem.get_item("Title") || No_Data; //.replace(/[^a-z0-9]/gi, '')
 
-        phases = oListItem.get_item("Phase")
-          ? oListItem.get_item("Phase")
-          : No_Data;
-        subsector = oListItem.get_item("SubSector")
-          ? oListItem.get_item("SubSector")
-          : No_Data;
+      //getting 1st stats data
+      EstimatedCost += oListItem.get_item("EstimatedCost") || 0; //masroufa
+      SpendFromBudget = oListItem.get_item("EstimatedCost") || 0;
+      // ActualBudget += oListItem.get_item("InitiativeBudget") || 0; //masroufa
+      AssignedBudget += oListItem.get_item('ActualCost') || 0; // total budget
+      initiativeBudget += oListItem.get_item('InitiativeBudget') || 0;
+      numberofInitiatives++;
+      //projects listing
+      projectname = oListItem.get_item("Name") || No_Data;
+      initiativeCode = oListItem.get_item("Title") || No_Data; //.replace(/[^a-z0-9]/gi, '')
 
-        // priority = oListItem.get_item('Priority') || "nodata";
-        var phasename, phasecode;
+      phases = oListItem.get_item("Phase")
+        ? oListItem.get_item("Phase")
+        : No_Data;
+      subsector = oListItem.get_item("SubSector")
+        ? oListItem.get_item("SubSector")
+        : No_Data;
 
-        if (localStorage.getItem("Dynamo_Phases") != null) {
-          phasesArray = JSON.parse(
-            localStorage.getItem("Dynamo_Phases") || "[]"
-          );
-          phasesArray = phasesArray.filter(function (a) {
-            return a.code == phases;
-          });
+      // priority = oListItem.get_item('Priority') || "nodata";
+      var phasename, phasecode;
 
-          if (
-            localStorage.getItem("lng") == null ||
-            localStorage.getItem("lng") == "ar"
-          ) {
-            phasename = phasesArray.length ? phasesArray[0].name : "";
-          } else phasename = phasesArray.length ? phasesArray[0].nameEn : "";
+      if (localStorage.getItem("Dynamo_Phases") != null) {
+        phasesArray = JSON.parse(
+          localStorage.getItem("Dynamo_Phases") || "[]"
+        );
+        phasesArray = phasesArray.filter(function (a) {
+          return a.code == phases;
+        });
 
-          phasecode = phasesArray.length ? phasesArray[0].code : "";
-        }
-        var subsectorname, substorcode;
-        if (localStorage.getItem("Dynamo_Internal Entities") != null) {
-          subsectorArray = JSON.parse(
-            localStorage.getItem("Dynamo_Internal Entities") || "[]"
-          );
-          subsectorArray = subsectorArray.filter(function (a) {
-            return a.code == subsector;
-          });
-          if (
-            localStorage.getItem("lng") == null ||
-            localStorage.getItem("lng") == "ar"
-          ) {
-            subsectorname = subsectorArray.length ? subsectorArray[0].name : "";
-          } else
-            subsectorname = subsectorArray.length
-              ? subsectorArray[0].nameEn
-              : "";
-          substorcode = subsectorArray.length ? subsectorArray[0].code : "";
-        }
-
-        ProgressStatus =
-          oListItem.get_item("InitiativeProgressStatus") || "nodata";
-        // ScheduleProjectPercentageComplete = oListItem.get_item('ScheduleProjectPercentageComplet0') || 0;
-        // ScheduleProgressStatusarray.push(ScheduleProjectPercentageComplete)
-        projectPortfolioCode = oListItem.get_item("Portfolio") || No_Data;
-        projectSector = oListItem.get_item("Sector") || No_Data;
-        intiativeType = oListItem.get_item("Types") || "nodata";
-        // strategy = oListItem.get_item('IsStrategicProject') || "no";
-
-        if (originalstate) {
-          // in original state before any filter [before culminating data]
-          phasefilterarray.push({ code: phasecode, name: phasename });
-          phasefilterarray.sort((a, b) => (a.code > b.code ? 1 : -1));
-          subsectorfilterarray.push({ code: substorcode, name: subsectorname });
-          subsectorfilterarray.sort((a, b) => (a.code > b.code ? 1 : -1));
-          uniqueArray = (a) =>
-            [...new Set(a.map((o) => JSON.stringify(o)))].map((s) =>
-              JSON.parse(s)
-            );
-          phasefilterarray = uniqueArray(phasefilterarray);
-          subsectorfilterarray = uniqueArray(subsectorfilterarray);
-          // Priorities.push(priority);
-          // priorityfilterarray = uniqueArray(Priorities);
-          Progressarray.push(ProgressStatus);
-          progressfilterarray = uniqueArray(Progressarray);
-        }
-        // phasename = phasename ? phasename : No_Data
-        projectshtml =
-          '<div id class="card ProjectCards ' +
-          intiativeType +
-          ' " >' +
-          '<div class="card-header bg-white" id="headingProject' +
-          initiativeCode +
-          '">' +
-          '<div class="acc-header mb-0 py-3 px-2 d-flex justify-content-between collapsed" data-toggle="collapse" data-target="#collapseProject' +
-          initiativeCode +
-          '" aria-expanded="false" aria-controls="collapseProject' +
-          initiativeCode +
-          '">' +
-          '<h4 class="acc-title d-inline-flex"><a href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/sitepages/InitiativeHome.aspx?ICODE=" +
-          oListItem.get_item("Title") +
-          '">' +
-          projectname +
-          "<a/></h4>" +
-          '<div class="d-inline-flex flex-column mx-2 ' +
-          phases +
-          '">' +
-          // '<h4 class="text-warning">' +
-          // phasename +
-          // "</h4>" +
-          '<span class="des-13 d-flex"><img src="' +
-          iconstagesm +
-          '" class="h-100" data-themekey="#"><span data-trans-filter1 class="state-val mx-2 Resources"></span></span>' +
-          '<h4 class="text-warning">' +
-          phasename +
-          "</h4>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2 ' +
-          ProgressStatus +
-          ' ">' + //deliv-status
-          // "<h4 data-trans-" + ProgressStatus + '  data-prname="' + initiativeCode + '" class="Resources"></h4>' +
-          '<span class="des-13 d-flex"><img src="' +
-          iconstatustimesm +
-          '" class="h-100" data-themekey="#"><span data-trans-completionstatus class="complition-val mx-2 Resources"></span></span>' +
-          "<h4 data-trans-" +
-          ProgressStatus +
-          '  data-prname="' +
-          initiativeCode +
-          '" class="Resources"></h4>' +
-          "</div>" +
-          // '<div class="d-inline-flex flex-column mx-2">' +
-          // "<h4 data-trans-" +
-          // priority +
-          // ' class="black Resources" ></h4>' +
-          // '<span class="des-13 d-flex"><img src="' +
-          // iconimportantsm +
-          // '" class="h-100" data-themekey="#"><span data-trans-Importance class="v-important-val mx-2 Resources"></span></span>' +
-          // "</div>" +
-          // '<div class="d-inline-flex flex-column mx-2">' +
-          // "<h4 data-trans-" +
-          // strategy +
-          // ' class="black Resources"> ' +strategy +'</h4>' +
-          // '<span class="des-13 d-flex"><img src="' +
-          // iconstrategysm +
-          // '" class="h-100" data-themekey="#"><span data-trans-strategy class="v-important-val mx-2 Resources"></span></span>' +
-          // "</div>" +
-          '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
-          "</div>" +
-          "</div>" +
-          "</div>" +
-          '<div id="collapseProject' +
-          initiativeCode +
-          '" class="collapse" aria-labelledby="headingProject' +
-          initiativeCode +
-          '" data-parent="#accordionProject" style="">' +
-          '<div class="card-body">' +
-          '<div class="d-flex justify-content-between pb-2">' +
-          '<div class="d-inline-flex flex-row mx-2">' +
-          '<a href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/SitePages/Listing.aspx?ListKey=initiativeissues&ICODE=" +
-          initiativeCode +
-          '">' +
-          '<span class="project-inner inner-data1">' +
-          '<img src="' +
-          calendar +
-          '" class="" data-themekey="#">' +
-          '<span data-trans-Issues class="mx-2 inner-title des-12 reg Resources"></span>' +
-          '<span data-prname="' +
-          initiativeCode +
-          '" class="inner-val fnt-14 bold">12</span>' +
-          "</span>" +
-          "</a>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-row mx-2">' +
-          '<a href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/SitePages/Listing.aspx?ListKey=initiativerisks&ICODE=" +
-          initiativeCode +
-          '">' +
-          '<span class="project-inner inner-data2">' +
-          '<img src="' +
-          risk +
-          '" class="" data-themekey="#">' +
-          '<span data-trans-Risks class="mx-2 inner-title des-12 reg Resources"></span>' +
-          '<span data-prname="' +
-          initiativeCode +
-          '" class="inner-val fnt-14 bold">12</span>' +
-          "</span>" +
-          "</a>" +
-          "</div>" +
-          '<div style="display:none !important" class="d-inline-flex flex-row mx-2">' +
-          '<span class="project-inner inner-data3">' +
-          '<img src="' +
-          progress +
-          '" class="" data-themekey="#">' +
-          '<span data-trans-CompletionPercentage class="mx-2 inner-title des-12 reg Resources"></span>' +
-          '<span data-prname="' +
-          initiativeCode +
-          '" class="inner-val fnt-14 bold">12</span>' +
-          "</span>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-row mx-2">' +
-          '<span class="project-inner inner-data4">' +
-          '<img src="' +
-          mizania +
-          '" class="" data-themekey="#">' +
-          '<span data-trans-inpattr43 class="mx-2 inner-title des-12 reg Resources"></span>' +
-          '<span data-prname="' +
-          initiativeCode +
-          '" class="inner-val fnt-14 bold">' +
-          initiativeRequest.g.kFormatter(SpendFromBudget) +
-          "</span>" +
-          "</span>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-row mx-2" style="display:none !important">' +
-          '<span class="project-inner inner-data5">' +
-          '<img src="' +
-          mizania +
-          '" class="" data-themekey="#">' +
-          '<span data-trans-Portfolio class="mx-2 inner-title des-12 reg Resources"></span>' +
-          '<span title="' +
-          projectPortfolioCode +
-          '" data-prname="' +
-          oListItem.get_item("Title") +
-          '" class="inner-val fnt-14 bold portfolioName"></span>' +
-          "</span>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-row mx-2" style="display:none !important">' +
-          '<span class="project-inner inner-data6">' +
-          '<img src="' +
-          mizania +
-          '" class="" data-themekey="#">' +
-          '<span data-trans-Section class="mx-2 inner-title des-12 reg Resources"></span>' +
-          '<span title="' +
-          projectSector +
-          '" data-prname="' +
-          oListItem.get_item("Title") +
-          '" class="inner-val fnt-14 bold SectorName"></span>' +
-          "</span>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-row mx-2" style="width:20px">' +
-          "</div>" +
-          "</div>" +
-          "</div>" +
-          "</div>" +
-          "</div>";
-
-        if (intiativeType === "vision") {
-          initiativesVisionHTML += projectshtml;
-
-          initiativesVisionCount = initiativesVisionCount + 1;
-        } else if (intiativeType === "strategically") {
-          initiativesStratigalHTML += projectshtml;
-          initiativesStratigalCount = initiativesStratigalCount + 1;
-        } else if (intiativeType === "lms") {
-          initiativesLMSHTML += projectshtml;
-          initiativesLMSCount = initiativesLMSCount + 1;
-        }
-
-        phaseCodeArray.push(phases);
-        subsectorCodeArray.push(subsector);
-        phaseNameArray2.push(phases);
-        // Priorityarray.push(priority);
-        ProgressStatusarray.push(ProgressStatus);
-
-        initiativesNames.push(projectname);
-        UInitiatives.push(initiativeCode);
         if (
-          strategy == true ||
-          strategy == "true" ||
-          strategy == "yes" ||
-          strategy == "Yes"
+          localStorage.getItem("lng") == null ||
+          localStorage.getItem("lng") == "ar"
         ) {
-          strategyarray.push("yes");
-        } else {
-          strategyarray.push("no");
-        }
+          phasename = phasesArray.length ? phasesArray[0].name : "";
+        } else phasename = phasesArray.length ? phasesArray[0].nameEn : "";
+
+        phasecode = phasesArray.length ? phasesArray[0].code : "";
+      }
+      var subsectorname, substorcode;
+      if (localStorage.getItem("Dynamo_Internal Entities") != null) {
+        subsectorArray = JSON.parse(
+          localStorage.getItem("Dynamo_Internal Entities") || "[]"
+        );
+        subsectorArray = subsectorArray.filter(function (a) {
+          return a.code == subsector;
+        });
+        if (
+          localStorage.getItem("lng") == null ||
+          localStorage.getItem("lng") == "ar"
+        ) {
+          subsectorname = subsectorArray.length ? subsectorArray[0].name : "";
+        } else
+          subsectorname = subsectorArray.length
+            ? subsectorArray[0].nameEn
+            : "";
+        substorcode = subsectorArray.length ? subsectorArray[0].code : "";
+      }
+
+      ProgressStatus =
+        oListItem.get_item("InitiativeProgressStatus") || "nodata";
+      // ScheduleProjectPercentageComplete = oListItem.get_item('ScheduleProjectPercentageComplet0') || 0;
+      // ScheduleProgressStatusarray.push(ScheduleProjectPercentageComplete)
+      projectPortfolioCode = oListItem.get_item("Portfolio") || No_Data;
+      projectSector = oListItem.get_item("Sector") || No_Data;
+      intiativeType = oListItem.get_item("Types") || "nodata";
+      // strategy = oListItem.get_item('IsStrategicProject') || "no";
+
+      if (originalstate) {
+        // in original state before any filter [before culminating data]
+        phasefilterarray.push({ code: phasecode, name: phasename });
+        phasefilterarray.sort((a, b) => (a.code > b.code ? 1 : -1));
+        subsectorfilterarray.push({ code: substorcode, name: subsectorname });
+        subsectorfilterarray.sort((a, b) => (a.code > b.code ? 1 : -1));
+        uniqueArray = (a) =>
+          [...new Set(a.map((o) => JSON.stringify(o)))].map((s) =>
+            JSON.parse(s)
+          );
+        phasefilterarray = uniqueArray(phasefilterarray);
+        subsectorfilterarray = uniqueArray(subsectorfilterarray);
+        // Priorities.push(priority);
+        // priorityfilterarray = uniqueArray(Priorities);
+        Progressarray.push(ProgressStatus);
+        progressfilterarray = uniqueArray(Progressarray);
+      }
+      // phasename = phasename ? phasename : No_Data
+      projectshtml =
+        '<div id class="card ProjectCards ' +
+        intiativeType +
+        ' " >' +
+        '<div class="card-header bg-white" id="headingProject' +
+        initiativeCode +
+        '">' +
+        '<div class="acc-header mb-0 py-3 px-2 d-flex justify-content-between collapsed" data-toggle="collapse" data-target="#collapseProject' +
+        initiativeCode +
+        '" aria-expanded="false" aria-controls="collapseProject' +
+        initiativeCode +
+        '">' +
+        '<h4 class="acc-title d-inline-flex"><a href="' +
+        _spPageContextInfo.webAbsoluteUrl +
+        "/sitepages/InitiativeHome.aspx?ICODE=" +
+        oListItem.get_item("Title") +
+        '">' +
+        projectname +
+        "<a/></h4>" +
+        '<div class="d-inline-flex flex-column mx-2 ' +
+        phases +
+        '">' +
+        // '<h4 class="text-warning">' +
+        // phasename +
+        // "</h4>" +
+        '<span class="des-13 d-flex"><img src="' +
+        iconstagesm +
+        '" class="h-100" data-themekey="#"><span data-trans-filter1 class="state-val mx-2 Resources"></span></span>' +
+        '<h4 class="text-warning">' +
+        phasename +
+        "</h4>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2 ' +
+        ProgressStatus +
+        ' ">' + //deliv-status
+        // "<h4 data-trans-" + ProgressStatus + '  data-prname="' + initiativeCode + '" class="Resources"></h4>' +
+        '<span class="des-13 d-flex"><img src="' +
+        iconstatustimesm +
+        '" class="h-100" data-themekey="#"><span data-trans-completionstatus class="complition-val mx-2 Resources"></span></span>' +
+        "<h4 data-trans-" +
+        ProgressStatus +
+        '  data-prname="' +
+        initiativeCode +
+        '" class="Resources"></h4>' +
+        "</div>" +
+        // '<div class="d-inline-flex flex-column mx-2">' +
+        // "<h4 data-trans-" +
+        // priority +
+        // ' class="black Resources" ></h4>' +
+        // '<span class="des-13 d-flex"><img src="' +
+        // iconimportantsm +
+        // '" class="h-100" data-themekey="#"><span data-trans-Importance class="v-important-val mx-2 Resources"></span></span>' +
+        // "</div>" +
+        // '<div class="d-inline-flex flex-column mx-2">' +
+        // "<h4 data-trans-" +
+        // strategy +
+        // ' class="black Resources"> ' +strategy +'</h4>' +
+        // '<span class="des-13 d-flex"><img src="' +
+        // iconstrategysm +
+        // '" class="h-100" data-themekey="#"><span data-trans-strategy class="v-important-val mx-2 Resources"></span></span>' +
+        // "</div>" +
+        '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
+        "</div>" +
+        "</div>" +
+        "</div>" +
+        '<div id="collapseProject' +
+        initiativeCode +
+        '" class="collapse" aria-labelledby="headingProject' +
+        initiativeCode +
+        '" data-parent="#accordionProject" style="">' +
+        '<div class="card-body">' +
+        '<div class="d-flex justify-content-between pb-2">' +
+        '<div class="d-inline-flex flex-row mx-2">' +
+        '<a href="' +
+        _spPageContextInfo.webAbsoluteUrl +
+        "/SitePages/Listing.aspx?ListKey=initiativeissues&ICODE=" +
+        initiativeCode +
+        '">' +
+        '<span class="project-inner inner-data1">' +
+        '<img src="' +
+        calendar +
+        '" class="" data-themekey="#">' +
+        '<span data-trans-Issues class="mx-2 inner-title des-12 reg Resources"></span>' +
+        '<span data-prname="' +
+        initiativeCode +
+        '" class="inner-val fnt-14 bold">12</span>' +
+        "</span>" +
+        "</a>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-row mx-2">' +
+        '<a href="' +
+        _spPageContextInfo.webAbsoluteUrl +
+        "/SitePages/Listing.aspx?ListKey=initiativerisks&ICODE=" +
+        initiativeCode +
+        '">' +
+        '<span class="project-inner inner-data2">' +
+        '<img src="' +
+        risk +
+        '" class="" data-themekey="#">' +
+        '<span data-trans-Risks class="mx-2 inner-title des-12 reg Resources"></span>' +
+        '<span data-prname="' +
+        initiativeCode +
+        '" class="inner-val fnt-14 bold">12</span>' +
+        "</span>" +
+        "</a>" +
+        "</div>" +
+        '<div style="display:none !important" class="d-inline-flex flex-row mx-2">' +
+        '<span class="project-inner inner-data3">' +
+        '<img src="' +
+        progress +
+        '" class="" data-themekey="#">' +
+        '<span data-trans-CompletionPercentage class="mx-2 inner-title des-12 reg Resources"></span>' +
+        '<span data-prname="' +
+        initiativeCode +
+        '" class="inner-val fnt-14 bold">12</span>' +
+        "</span>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-row mx-2">' +
+        '<span class="project-inner inner-data4">' +
+        '<img src="' +
+        mizania +
+        '" class="" data-themekey="#">' +
+        '<span data-trans-inpattr43 class="mx-2 inner-title des-12 reg Resources"></span>' +
+        '<span data-prname="' +
+        initiativeCode +
+        '" class="inner-val fnt-14 bold">' +
+        initiativeRequest.g.kFormatter(SpendFromBudget) +
+        "</span>" +
+        "</span>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-row mx-2" style="display:none !important">' +
+        '<span class="project-inner inner-data5">' +
+        '<img src="' +
+        mizania +
+        '" class="" data-themekey="#">' +
+        '<span data-trans-Portfolio class="mx-2 inner-title des-12 reg Resources"></span>' +
+        '<span title="' +
+        projectPortfolioCode +
+        '" data-prname="' +
+        oListItem.get_item("Title") +
+        '" class="inner-val fnt-14 bold portfolioName"></span>' +
+        "</span>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-row mx-2" style="display:none !important">' +
+        '<span class="project-inner inner-data6">' +
+        '<img src="' +
+        mizania +
+        '" class="" data-themekey="#">' +
+        '<span data-trans-Section class="mx-2 inner-title des-12 reg Resources"></span>' +
+        '<span title="' +
+        projectSector +
+        '" data-prname="' +
+        oListItem.get_item("Title") +
+        '" class="inner-val fnt-14 bold SectorName"></span>' +
+        "</span>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-row mx-2" style="width:20px">' +
+        "</div>" +
+        "</div>" +
+        "</div>" +
+        "</div>" +
+        "</div>";
+
+      if (intiativeType === "vision") {
+        initiativesVisionHTML += projectshtml;
+
+        initiativesVisionCount = initiativesVisionCount + 1;
+      } else if (intiativeType === "strategically") {
+        initiativesStratigalHTML += projectshtml;
+        initiativesStratigalCount = initiativesStratigalCount + 1;
+      } else if (intiativeType === "lms") {
+        initiativesLMSHTML += projectshtml;
+        initiativesLMSCount = initiativesLMSCount + 1;
+      }
+
+      phaseCodeArray.push(phases);
+      subsectorCodeArray.push(subsector);
+      phaseNameArray2.push(phases);
+      // Priorityarray.push(priority);
+      ProgressStatusarray.push(ProgressStatus);
+
+      initiativesNames.push(projectname);
+      UInitiatives.push(initiativeCode);
+      if (
+        strategy == true ||
+        strategy == "true" ||
+        strategy == "yes" ||
+        strategy == "Yes"
+      ) {
+        strategyarray.push("yes");
+      } else {
+        strategyarray.push("no");
+      }
       // }
     }
     const arrToInstanceCountObj = (arr) =>
@@ -910,7 +912,7 @@ window.initiativeRequest = {
         },
         {
           duration: 333,
-          complete: function () {},
+          complete: function () { },
         }
       );
       if (FilterChoices.length == 0) {
@@ -1091,7 +1093,7 @@ window.initiativeRequest = {
           }
         });
     },
-    statisticsbars: function () {},
+    statisticsbars: function () { },
     handlescrollview: function () {
       $.fn.isInViewport = function () {
         var elementTop = $(this).offset().top;
@@ -1117,8 +1119,8 @@ window.initiativeRequest = {
           var internaltt = internalvisiblelength + 6;
           var internaltoshow = $(
             ".accordion#accordionProject.internalAccordion > .card:hidden:nth-child(-n+" +
-              internaltt +
-              ")"
+            internaltt +
+            ")"
           );
           setTimeout(function () {
             internaltoshow.each(function () {
@@ -1147,8 +1149,8 @@ window.initiativeRequest = {
             internaltt = internalvisiblelength + 6;
             internaltoshow = $(
               ".accordion#accordionProject.internalAccordion > .card:hidden:nth-child(-n+" +
-                internaltt +
-                ")"
+              internaltt +
+              ")"
             );
             if (internaltoshow.length == 0) {
               $(
@@ -1253,8 +1255,8 @@ window.initiativeRequest = {
           var externaltt = externalvisiblelength + 6;
           var externaltoshow = $(
             ".accordion#accordionProject.externalAccordion > .card:hidden:nth-child(-n+" +
-              externaltt +
-              ")"
+            externaltt +
+            ")"
           );
           setTimeout(function () {
             externaltoshow.each(function () {
@@ -1283,8 +1285,8 @@ window.initiativeRequest = {
             externaltt = externalvisiblelength + 6;
             externaltoshow = $(
               ".accordion#accordionProject.externalAccordion > .card:hidden:nth-child(-n+" +
-                externaltt +
-                ")"
+              externaltt +
+              ")"
             );
             if (externaltoshow.length == 0) {
               $(
@@ -1390,8 +1392,8 @@ window.initiativeRequest = {
           var externaltt = externalvisiblelength + 6;
           var externaltoshow = $(
             ".accordion#accordionProject.LMSAccordion > .card:hidden:nth-child(-n+" +
-              externaltt +
-              ")"
+            externaltt +
+            ")"
           );
           setTimeout(function () {
             externaltoshow.each(function () {
@@ -1420,8 +1422,8 @@ window.initiativeRequest = {
             externaltt = externalvisiblelength + 6;
             externaltoshow = $(
               ".accordion#accordionProject.LMSAccordion > .card:hidden:nth-child(-n+" +
-                externaltt +
-                ")"
+              externaltt +
+              ")"
             );
             if (externaltoshow.length == 0) {
               $(".accordion#accordionProject.LMSAccordion a.view-more").animate(
@@ -1624,7 +1626,7 @@ var Risks_Info_Request = {
       riskID,
       riskTitle;
     // ExistVar2=UInitiatives.includes(oListItem.get_item('ProjectCode'));
-
+    var riskcountForrsprt = 0;
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       ExistVar2 = UInitiatives.includes(oListItem.get_item("InitiativeCode"));
@@ -1671,6 +1673,7 @@ var Risks_Info_Request = {
           "</div>" +
           "</li>";
         RSupport++;
+        riskcountForrsprt++;
       }
     }
 
@@ -1685,6 +1688,7 @@ var Risks_Info_Request = {
     $("div#accordionRequiredSupport > .card:nth-child(3) ul.list-group").html(
       riskshtml
     );
+    RisksCountsForRSupport = riskcountForrsprt;
     for (var i = 0; i < UInitiatives.length; i++) {
       var nor = Riskarray.filter((v) => v === UInitiatives[i]).length;
       $('.inner-data2 .inner-val[data-prname="' + UInitiatives[i] + '"]').text(
@@ -1734,7 +1738,7 @@ var Issues_Info_Request = {
       issueID,
       issueTitle,
       ExistVar1;
-
+    var issuecountForrsprt = 0;
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       ExistVar1 = UInitiatives.includes(oListItem.get_item("InitiativeCode"));
@@ -1765,6 +1769,7 @@ var Issues_Info_Request = {
           "</div>" +
           "</li>";
         RSupport++;
+        issuecountForrsprt++;
       }
 
       //
@@ -1789,6 +1794,8 @@ var Issues_Info_Request = {
     $("div#accordionRequiredSupport > .card:nth-child(2) ul.list-group").html(
       issueshtml
     );
+    issueCountsForRSupport = CurrentUserTasksCount + RisksCountsForRSupport + issuecountForrsprt;
+    $("span.Rsupprot").text(issueCountsForRSupport);
     for (var i = 0; i < UInitiatives.length; i++) {
       var nor = Issuearray.filter((v) => v === UInitiatives[i]).length;
       $('.inner-data1 .inner-val[data-prname="' + UInitiatives[i] + '"]').text(
@@ -3040,8 +3047,8 @@ function handlePhaseChartBarChart() {
     localStorage.getItem("lng") == null ||
     localStorage.getItem("lng") == "ar"
   ) {
-	phaseOccurence = phaseOccurence.reverse();
-	phaseNameArray = phaseNameArray.reverse();
+    phaseOccurence = phaseOccurence.reverse();
+    phaseNameArray = phaseNameArray.reverse();
   } else {
     BackgroundsArray = BackgroundsArray.reverse();
   }

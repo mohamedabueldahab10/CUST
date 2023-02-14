@@ -151,7 +151,7 @@ window.ListInfo = {
           Label = item.labelEn;
           Description = item.descriptionEn;
         }
-       
+
 
         toggleSectionName = item.togglename
 
@@ -515,10 +515,55 @@ window.ListInfo = {
             //
           });
 
+          //////add section to cr
+          debugger
+          if (!isCrMode && crListKey) {
+            console.log("YEEEEEEEEEEEEES")
+            //on new custom cr
+            handleCustomeCr.init();
+            $(
+              "div#particles-foreground, div#particles-background, .vertical-centered-box"
+            ).animate(
+              {
+                opacity: 0,
+              },
+              {
+                duration: 333,
+                complete: function () {
+                  $(
+                    "div#particles-foreground, div#particles-background, .vertical-centered-box"
+                  ).remove();
+
+                  // $('div#particles-foreground, div#particles-background, .vertical-centered-box').hide();
+                },
+              }
+            );
+          } else {
+            $(
+              "div#particles-foreground, div#particles-background, .vertical-centered-box"
+            ).animate(
+              {
+                opacity: 0,
+              },
+              {
+                duration: 333,
+                complete: function () {
+                  $(
+                    "div#particles-foreground, div#particles-background, .vertical-centered-box"
+                  ).remove();
+
+                  // $('div#particles-foreground, div#particles-background, .vertical-centered-box').hide();
+                },
+              }
+            );
+          }
 
 
 
-          //
+          ////////
+
+
+
 
           $("input.number").keyup(function (event) {
             // skip for arrow keys
@@ -721,55 +766,55 @@ window.ListInfo = {
             }
             // $('.title-item').text('إضافة');
             //disable types dropdowns ghufran
-            if (isVROP) {
-              if (listkey == "mainkpi") {
-                // $('#Types').val('main');
-                // $('#Types').prop('disabled', true);
-                // ListInfo.g.toggleFields($("#Types")); // call the toggle fied when field is disabled
-              } else if (listkey == "goalstrategy") {
-                $("#Types").val("vision");
-                $("#Types").prop("disabled", true);
-                ListInfo.g.toggleFields($("#Types")); // call the toggle fied when field is disabled and should the type be vision on vrop
-              }
-            }
+            // if (isVROP) {
+            //   if (listkey == "mainkpi") {
+            //     // $('#Types').val('main');
+            //     // $('#Types').prop('disabled', true);
+            //     // ListInfo.g.toggleFields($("#Types")); // call the toggle fied when field is disabled
+            //   } else if (listkey == "goalstrategy") {
+            //     $("#Types").val("vision");
+            //     $("#Types").prop("disabled", true);
+            //     ListInfo.g.toggleFields($("#Types")); // call the toggle fied when field is disabled and should the type be vision on vrop
+            //   }
+            // }
             if (isVROE) {
               if (listkey == "initiatives") {
                 $("#Types").val("vision");
                 $("#Types").prop("disabled", true);
               }
             }
-            if (isNew && isEPMO) {
-              if (listkey == "initiatives") {
-                $("#Types").val("strategically");
-                $("#Types").prop("disabled", true);
-              }
-            }
-            if (isEdit && isEPMO) {
-              if (listkey == "initiatives") {
-                // $('#Types').val('strategically');
-                $("#Types").prop("disabled", true);
-              }
-            }
-            if (isStrategyTeam || isVROP) {
-              if (listkey == "sos") {
-                // $("#Types").val("main");
-                // $("#Types").prop("disabled", true);
-              }
-            }
-            if (listkey == "goalstrategy") {
-              if (isVROP) {
-                $("#Types").val("vision");
-                $("#Types").prop("disabled", true);
-              }
-            }
+            // if (isNew && isEPMO) {
+            //   if (listkey == "initiatives") {
+            //     $("#Types").val("strategically");
+            //     $("#Types").prop("disabled", true);
+            //   }
+            // }
+            // if (isEdit && isEPMO) {
+            //   if (listkey == "initiatives") {
+            //     // $('#Types').val('strategically');
+            //     $("#Types").prop("disabled", true);
+            //   }
+            // }
+            // if (isStrategyTeam || isVROP) {
+            //   if (listkey == "sos") {
+            //     // $("#Types").val("main");
+            //     // $("#Types").prop("disabled", true);
+            //   }
+            // }
+            // if (listkey == "goalstrategy") {
+            //   if (isVROP) {
+            //     $("#Types").val("vision");
+            //     $("#Types").prop("disabled", true);
+            //   }
+            // }
 
-            if (isSPMAdmin) {
-              if (listkey == "sos") {
-                $("#Types").val("sub");
-                $("#Types").prop("disabled", true);
-                $("#RelatedObjective").parent().css("display", "block");
-              }
-            }
+            // if (isSPMAdmin) {
+            //   if (listkey == "sos") {
+            //     $("#Types").val("sub");
+            //     $("#Types").prop("disabled", true);
+            //     $("#RelatedObjective").parent().css("display", "block");
+            //   }
+            // }
             if (listkey == "benefits" && ICODE && (isNew || isEdit || isView)) {
               //hide Initiative field if we are in the Initiative
               $("#InitiativeCode").parent().css("display", "none");
@@ -2877,110 +2922,132 @@ window.ListInfo = {
 
       case "dropdownValues":
         // added for CR module
-				let customFilter = element.options.choices[0].hasOwnProperty(
-					"customFilterValue"
-				)
-					? 'iscustomfiltervalue="true"'
-					: "";
-				let customCr = element.hasOwnProperty("customCr")
-					? element.customCr
-					: false;
+        let customFilter = element.options.choices[0].hasOwnProperty(
+          "customFilterValue"
+        )
+          ? 'iscustomfiltervalue="true"'
+          : "";
+        let customCr = element.hasOwnProperty("customCr")
+          ? element.customCr
+          : false;
 
-				if (crListKey && isCrMode && customCr) {
-					htmlBody = "";
+        if (crListKey && isCrMode && customCr) {
+          htmlBody = "";
           //ended
-				} else {
-        htmlBody =
-          '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-          " " +
-          element.className +
-          ' " ' +
-          thistip +
-          " " +
-          hidestagesIDs +
-          " " +
-          editableBy +
-          " " +
-          showstagesIDs +
-          "  " +
-          disablestagesIDs +
-          "  " +
-          enablestagesIDs +
-          "   " +
-          isWfhidestagesIDs +
-          " " +
-          requireOnWfTaskstagesIDs +
-          " " +
-          isWfshowstagesIDs +
-          "  " +
-          isWfdisablestagesIDs +
-          "  " +
-          isWfenablestagesIDs +
-          '        data-groups="' +
-          groups +
-          '" style="display:' +
-          element.display +
-          '">' +
-          '<label for="' +
-          element.InternalName +
-          '" ' +
-          element.validation +
-          ">" +
-          displayName +
-          "</label>" +
-          "<select " +
-          toggleValues +
-          " " +
-          ToggleName +
-          " " +
-          RequiredName +
-          " " +
-          requiredValues +
-          ' type="dropdown" value="" placeholder="' +
-          displayName +
-          '" ' +
-          dynamic +
-          ' class="form-control SPIField" id="' +
-          element.InternalName +
-          '" ' +
-          element.state +
-          " " +
-          element.validation +
-          '><option value="" ' +
-          selected +
-          " disabled>" +
-          displayName +
-          "</option>";
-        for (var i = 0; i < element.options.choices.length; i++) {
-          let isRenderOption = true;
-          let optionHasRole =
-            element.options.choices[i].hasOwnProperty("roles");
-          if (
-            optionHasRole &&
-            !element.options.choices[i].roles.includes(myRoleConfig[0].Role)
-          ) {
-            isRenderOption = false;
+        } else {
+          htmlBody =
+            '<div class="col-md-6 CFIELD ' +
+            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            " " +
+            element.className +
+            ' " ' +
+            thistip +
+            " " +
+            hidestagesIDs +
+            " " +
+            editableBy +
+            " " +
+            showstagesIDs +
+            "  " +
+            disablestagesIDs +
+            "  " +
+            enablestagesIDs +
+            "   " +
+            isWfhidestagesIDs +
+            " " +
+            requireOnWfTaskstagesIDs +
+            " " +
+            isWfshowstagesIDs +
+            "  " +
+            isWfdisablestagesIDs +
+            "  " +
+            isWfenablestagesIDs +
+            '        data-groups="' +
+            groups +
+            '" style="display:' +
+            element.display +
+            '">' +
+            '<label for="' +
+            element.InternalName +
+            '" ' +
+            element.validation +
+            ">" +
+            displayName +
+            "</label>" +
+            "<select " +
+            toggleValues +
+            " " +
+            ToggleName +
+            " " +
+            RequiredName +
+            " " +
+            requiredValues +
+            ' type="dropdown" value="" placeholder="' +
+            displayName +
+            '" ' +
+            dynamic +
+            ' class="form-control SPIField" id="' +
+            element.InternalName +
+            '" ' +
+            element.state +
+            " " +
+            element.validation +
+            '><option value="" ' +
+            selected +
+            " disabled>" +
+            displayName +
+            "</option>";
+          for (var i = 0; i < element.options.choices.length; i++) {
+
+
+            let customValue = element.options.choices[i].customFilterValue
+              ? 'data-customfiltervalue="' +
+              element.options.choices[i].customFilterValue +
+              '"'
+              : "";
+
+            let fieldsValue = element.options.choices[i].fields
+              ? 'data-fieldsvalue="' +
+              JSON.stringify(element.options.choices[i].fields).replaceAll(
+                `"`,
+                `'`
+              ) +
+              '"'
+              : "";
+
+
+            let isRenderOption = true;
+            let optionHasRole =
+              element.options.choices[i].hasOwnProperty("roles");
+            if (
+              optionHasRole &&
+              !element.options.choices[i].roles.includes(myRoleConfig[0].Role)
+            ) {
+              isRenderOption = false;
+            }
+            if (isRenderOption) {
+              htmlBody +=
+                "<option data-trans-" +
+                element.options.choices[i].display +
+                ' class="Resources" value="' +
+                element.options.choices[i].value +
+                '" ' +
+                customValue +
+                " " +
+                fieldsValue +
+                " " +
+                element.options.choices[i].selected +
+                "></option>";
+            }
           }
-          if (isRenderOption) {
-            htmlBody +=
-              "<option data-trans-" +
-              element.options.choices[i].display +
-              ' class="Resources" value="' +
-              element.options.choices[i].value +
-              '" ' +
-              element.options.choices[i].selected +
-              "></option>";
-          }
-        }
-        htmlBody +=
-          "</select>" +
-          '<div class="inputInfo ' +
-          isexist +
-          '">' +
-          descPhrase +
-          "</div>" +
-          "</div>";
+          htmlBody +=
+            "</select>" +
+            '<div class="inputInfo ' +
+            isexist +
+            '">' +
+            descPhrase +
+            "</div>" +
+            "</div>";
         }
         OnSuccess(flag, htmlBody);
         break;
@@ -3297,103 +3364,104 @@ window.ListInfo = {
             "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
         }
         //ghufran User dropdown security
-        if (isEPMO || isSPMAdmin 
-          //|| isSPMTeam
-          
-          ) {
-          if (
-            (listkey == "benefitmetrics" &&
-              element.InternalName == "RelatedBenefit") ||
-            (listkey == "benefitmatrix" &&
-              element.InternalName == "RelatedBenefit") ||
-            (listkey == "deliverablemetrics" &&
-              element.InternalName == "RelatedInitiativeDeliverable")
-          ) {
-            if (localStorage.getItem("Dynamo_Initiatives") != null) {
-              var visionarr = JSON.parse(
-                localStorage.getItem("Dynamo_Initiatives") || "[]"
-              );
-              visionarr = visionarr.filter(function (item) {
-                return item.name == "vision";
-              });
-              var strategicallyarr = JSON.parse(
-                localStorage.getItem("Dynamo_Initiatives") || "[]"
-              );
-              strategicallyarr = strategicallyarr.filter(function (item) {
-                return item.name == "strategically";
-              });
-              console.log("visionarr", visionarr);
-              console.log("strategic", strategicallyarr);
-            }
-            customQuery =
-              "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"InitiativeCode\" /><Values>";
-            strategicallyarr.forEach(function (item) {
-              customQuery += '<Value Type="Text">' + item.code + "</Value>";
-            });
-            customQuery +=
-              "</Values></In></And></Where></Query><RowLimit>100</RowLimit></View>";
-          } else if (
-            (listkey == "Benefits" &&
-              element.InternalName == "InitiativeCode") ||
-            (listkey == "BenefitMatrix" &&
-              element.InternalName == "RelatedInitiative")
-          ) {
-            customQuery =
-              "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">strategically</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
-          } else if ("benefitmatrix" && element.InternalName == "RelatedKPI") {
-            customQuery =
-              "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus'/><Value Type='Text'>Deleted</Value></Neq><Or><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">strategically</Value></Eq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">sub</Value></Eq></Or></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
-          }
-        }
-        if (isVROE || isVROP) {
-          if (
-            (listkey == "Benefits" &&
-              element.InternalName == "InitiativeCode") ||
-            (listkey == "BenefitMatrix" &&
-              element.InternalName == "RelatedInitiative")
-          ) {
-            customQuery =
-              "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">vision</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
-          } else if (
-            (listkey == "benefitmetrics" &&
-              element.InternalName == "RelatedBenefit") ||
-            (listkey == "benefitmatrix" &&
-              element.InternalName == "RelatedBenefit") ||
-            (listkey == "deliverablemetrics" &&
-              element.InternalName == "RelatedInitiativeDeliverable")
-          ) {
-            if (localStorage.getItem("Dynamo_Initiatives") != null) {
-              var visionarr = JSON.parse(
-                localStorage.getItem("Dynamo_Initiatives") || "[]"
-              );
-              visionarr = visionarr.filter(function (item) {
-                return item.name == "vision";
-              });
-              var strategicallyarr = JSON.parse(
-                localStorage.getItem("Dynamo_Initiatives") || "[]"
-              );
-              strategicallyarr = strategicallyarr.filter(function (item) {
-                return item.name == "strategically";
-              });
-              console.log("visionarr", visionarr);
-              console.log("strategic", strategicallyarr);
-            }
-            customQuery =
-              "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"InitiativeCode\" /><Values>";
-            visionarr.forEach(function (item) {
-              customQuery += '<Value Type="Text">' + item.code + "</Value>";
-            });
-            customQuery +=
-              "</Values></In></And></Where></Query><RowLimit>100</RowLimit></View>";
-          } else if ("benefitmatrix" && element.InternalName == "RelatedKPI") {
-            customQuery =
-              "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">vision</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
-          }
-        }
+        // if (isEPMO
+        //   // || isSPMAdmin 
+        //   //|| isSPMTeam
+
+        //   ) {
+        //   if (
+        //     (listkey == "benefitmetrics" &&
+        //       element.InternalName == "RelatedBenefit") ||
+        //     (listkey == "benefitmatrix" &&
+        //       element.InternalName == "RelatedBenefit") ||
+        //     (listkey == "deliverablemetrics" &&
+        //       element.InternalName == "RelatedInitiativeDeliverable")
+        //   ) {
+        //     if (localStorage.getItem("Dynamo_Initiatives") != null) {
+        //       var visionarr = JSON.parse(
+        //         localStorage.getItem("Dynamo_Initiatives") || "[]"
+        //       );
+        //       visionarr = visionarr.filter(function (item) {
+        //         return item.name == "vision";
+        //       });
+        //       var strategicallyarr = JSON.parse(
+        //         localStorage.getItem("Dynamo_Initiatives") || "[]"
+        //       );
+        //       strategicallyarr = strategicallyarr.filter(function (item) {
+        //         return item.name == "strategically";
+        //       });
+        //       console.log("visionarr", visionarr);
+        //       console.log("strategic", strategicallyarr);
+        //     }
+        //     customQuery =
+        //       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"InitiativeCode\" /><Values>";
+        //     strategicallyarr.forEach(function (item) {
+        //       customQuery += '<Value Type="Text">' + item.code + "</Value>";
+        //     });
+        //     customQuery +=
+        //       "</Values></In></And></Where></Query><RowLimit>100</RowLimit></View>";
+        //   } else if (
+        //     (listkey == "Benefits" &&
+        //       element.InternalName == "InitiativeCode") ||
+        //     (listkey == "BenefitMatrix" &&
+        //       element.InternalName == "RelatedInitiative")
+        //   ) {
+        //     customQuery =
+        //       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">strategically</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+        //   } else if ("benefitmatrix" && element.InternalName == "RelatedKPI") {
+        //     customQuery =
+        //       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus'/><Value Type='Text'>Deleted</Value></Neq><Or><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">strategically</Value></Eq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">sub</Value></Eq></Or></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+        //   }
+        // }
+        // if (isVROE || isVROP) {
+        //   if (
+        //     (listkey == "Benefits" &&
+        //       element.InternalName == "InitiativeCode") ||
+        //     (listkey == "BenefitMatrix" &&
+        //       element.InternalName == "RelatedInitiative")
+        //   ) {
+        //     customQuery =
+        //       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">vision</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+        //   } else if (
+        //     (listkey == "benefitmetrics" &&
+        //       element.InternalName == "RelatedBenefit") ||
+        //     (listkey == "benefitmatrix" &&
+        //       element.InternalName == "RelatedBenefit") ||
+        //     (listkey == "deliverablemetrics" &&
+        //       element.InternalName == "RelatedInitiativeDeliverable")
+        //   ) {
+        //     if (localStorage.getItem("Dynamo_Initiatives") != null) {
+        //       var visionarr = JSON.parse(
+        //         localStorage.getItem("Dynamo_Initiatives") || "[]"
+        //       );
+        //       visionarr = visionarr.filter(function (item) {
+        //         return item.name == "vision";
+        //       });
+        //       var strategicallyarr = JSON.parse(
+        //         localStorage.getItem("Dynamo_Initiatives") || "[]"
+        //       );
+        //       strategicallyarr = strategicallyarr.filter(function (item) {
+        //         return item.name == "strategically";
+        //       });
+        //       console.log("visionarr", visionarr);
+        //       console.log("strategic", strategicallyarr);
+        //     }
+        //     customQuery =
+        //       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"InitiativeCode\" /><Values>";
+        //     visionarr.forEach(function (item) {
+        //       customQuery += '<Value Type="Text">' + item.code + "</Value>";
+        //     });
+        //     customQuery +=
+        //       "</Values></In></And></Where></Query><RowLimit>100</RowLimit></View>";
+        //   } else if ("benefitmatrix" && element.InternalName == "RelatedKPI") {
+        //     customQuery =
+        //       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">vision</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+        //   }
+        // }
         if (listkey == "BenefitMatrix") {
           if (isSPMAdmin
             //  || isSPMTeam
-             ) {
+          ) {
             if (element.source == "MainKPI") {
               customQuery =
                 "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus'/><Value Type='Text'>Deleted</Value></Neq><Or><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">strategically</Value></Eq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">sub</Value></Eq></Or></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
@@ -3429,43 +3497,44 @@ window.ListInfo = {
               customQuery =
                 "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">strategically</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
             }
-          } else if (isVROP) {
-            if (element.source == "MainKPI") {
-              customQuery =
-                "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">vision</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
-            } else if (element.source == "Initiatives") {
-              customQuery =
-                "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">vision</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
-            } else if (
-              element.source == "InitiativeDeliverables" ||
-              element.source == "Benefits" ||
-              element.source == "BenefitMetrics"
-            ) {
-              if (localStorage.getItem("Dynamo_Initiatives") != null) {
-                var visionarr = JSON.parse(
-                  localStorage.getItem("Dynamo_Initiatives") || "[]"
-                );
-                visionarr = visionarr.filter(function (item) {
-                  return item.name == "vision";
-                });
-                var strategicallyarr = JSON.parse(
-                  localStorage.getItem("Dynamo_Initiatives") || "[]"
-                );
-                strategicallyarr = strategicallyarr.filter(function (item) {
-                  return item.name == "strategically";
-                });
-                console.log("visionarr", visionarr);
-                console.log("strategic", strategicallyarr);
-              }
-              customQuery =
-                "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"InitiativeCode\" /><Values>";
-              visionarr.forEach(function (item) {
-                customQuery += '<Value Type="Text">' + item.code + "</Value>";
-              });
-              customQuery +=
-                "</Values></In></And></Where></Query><RowLimit>100</RowLimit></View>";
-            }
-          }
+          } 
+          // else if (isVROP) {
+          //   if (element.source == "MainKPI") {
+          //     customQuery =
+          //       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">vision</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+          //   } else if (element.source == "Initiatives") {
+          //     customQuery =
+          //       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">vision</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+          //   } else if (
+          //     element.source == "InitiativeDeliverables" ||
+          //     element.source == "Benefits" ||
+          //     element.source == "BenefitMetrics"
+          //   ) {
+          //     if (localStorage.getItem("Dynamo_Initiatives") != null) {
+          //       var visionarr = JSON.parse(
+          //         localStorage.getItem("Dynamo_Initiatives") || "[]"
+          //       );
+          //       visionarr = visionarr.filter(function (item) {
+          //         return item.name == "vision";
+          //       });
+          //       var strategicallyarr = JSON.parse(
+          //         localStorage.getItem("Dynamo_Initiatives") || "[]"
+          //       );
+          //       strategicallyarr = strategicallyarr.filter(function (item) {
+          //         return item.name == "strategically";
+          //       });
+          //       console.log("visionarr", visionarr);
+          //       console.log("strategic", strategicallyarr);
+          //     }
+          //     customQuery =
+          //       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"InitiativeCode\" /><Values>";
+          //     visionarr.forEach(function (item) {
+          //       customQuery += '<Value Type="Text">' + item.code + "</Value>";
+          //     });
+          //     customQuery +=
+          //       "</Values></In></And></Where></Query><RowLimit>100</RowLimit></View>";
+          //   }
+          // }
         }
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
@@ -4289,6 +4358,7 @@ window.ListInfo = {
           " " +
           RequiredName +
           " " +
+          inputLisKey +
           element.validation +
           " " +
           dynamic +
@@ -4767,45 +4837,45 @@ window.ListInfo = {
         OnSuccess(flag, htmlBody);
         break;
     }
-    if (!isCrMode && crListKey) {
-      //on new custom cr
-      handleCustomeCr.init();
-      $(
-        "div#particles-foreground, div#particles-background, .vertical-centered-box"
-      ).animate(
-        {
-          opacity: 0,
-        },
-        {
-          duration: 333,
-          complete: function () {
-            $(
-              "div#particles-foreground, div#particles-background, .vertical-centered-box"
-            ).remove();
+    // if (!isCrMode && crListKey) {
+    //   //on new custom cr
+    //   handleCustomeCr.init();
+    //   $(
+    //     "div#particles-foreground, div#particles-background, .vertical-centered-box"
+    //   ).animate(
+    //     {
+    //       opacity: 0,
+    //     },
+    //     {
+    //       duration: 333,
+    //       complete: function () {
+    //         $(
+    //           "div#particles-foreground, div#particles-background, .vertical-centered-box"
+    //         ).remove();
 
-            // $('div#particles-foreground, div#particles-background, .vertical-centered-box').hide();
-          },
-        }
-      );
-    } else {
-      $(
-        "div#particles-foreground, div#particles-background, .vertical-centered-box"
-      ).animate(
-        {
-          opacity: 0,
-        },
-        {
-          duration: 333,
-          complete: function () {
-            $(
-              "div#particles-foreground, div#particles-background, .vertical-centered-box"
-            ).remove();
+    //         // $('div#particles-foreground, div#particles-background, .vertical-centered-box').hide();
+    //       },
+    //     }
+    //   );
+    // } else {
+    //   $(
+    //     "div#particles-foreground, div#particles-background, .vertical-centered-box"
+    //   ).animate(
+    //     {
+    //       opacity: 0,
+    //     },
+    //     {
+    //       duration: 333,
+    //       complete: function () {
+    //         $(
+    //           "div#particles-foreground, div#particles-background, .vertical-centered-box"
+    //         ).remove();
 
-            // $('div#particles-foreground, div#particles-background, .vertical-centered-box').hide();
-          },
-        }
-      );
-    }
+    //         // $('div#particles-foreground, div#particles-background, .vertical-centered-box').hide();
+    //       },
+    //     }
+    //   );
+    // }
     //return htmlBody;
   },
   g: {
@@ -5389,10 +5459,10 @@ window.ListInfo = {
         $("#RelatedBudgetItem").parent().css("display", "none");
       }
       if (isNew) {
-        if (isEPMO) {
-          $("#Types").val("strategically");
-          $("#Types").prop("disabled", true);
-        }
+        // if (isEPMO) {
+        //   $("#Types").val("strategically");
+        //   $("#Types").prop("disabled", true);
+        // }
         $("#Types").on("change", function () {
           var typeValueafterchange = $("#Types option:selected").val();
           if (typeValueafterchange == "vision") {
@@ -5403,10 +5473,10 @@ window.ListInfo = {
         });
       }
       if (isEdit) {
-        if (isEPMO) {
-          // $('#Types').val('strategically');
-          $("#Types").prop("disabled", true);
-        }
+        // if (isEPMO) {
+        //   // $('#Types').val('strategically');
+        //   $("#Types").prop("disabled", true);
+        // }
         $("#Types").on("change", function () {
           var typeValueafterchange = $("#Types option:selected").val();
           if (typeValueafterchange == "vision") {
@@ -5450,65 +5520,65 @@ window.ListInfo = {
       fieldsConditionConfig.map(async (el, i, a) => {
         //Two choices
         if (fieldsConditionConfig.length == 1) {
-					if (el.type == "LoggedInUser") {
-						whereBody += `<And><Eq><FieldRef Name="${el.field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And>`;
-					} else {
-						whereBody += `<And><In><FieldRef Name="${el.field}"/><Values>`;
-						for (var j = 0; j < el.values.length; j++) {
-							whereBody += `<Value Type="${el.type}">${el.values[j]}</Value>`;
-						}
-						whereBody += `</Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And>`;
-					}
-				}
-    		//More than two choices
-				else if (fieldsConditionConfig.length > 1) {
-					//two Eqs in last And
-					if (i == fieldsConditionConfig.length - 1) {
-						if (el.type == "LoggedInUser") {
-							whereBody += `<And><Eq><FieldRef Name="${el.field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>`;
-						} else {
-							whereBody += `<And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>`;
-							whereBody += `<In><FieldRef Name="${el.field}"/><Values>`;
-							for (var j = 0; j < el.values.length; j++) {
-								whereBody += `<Value Type="${el.type}">${el.values[j]}</Value>`;
-							}
-							whereBody += `</Values></In>`;
-						}
+          if (el.type == "LoggedInUser") {
+            whereBody += `<And><Eq><FieldRef Name="${el.field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And>`;
+          } else {
+            whereBody += `<And><In><FieldRef Name="${el.field}"/><Values>`;
+            for (var j = 0; j < el.values.length; j++) {
+              whereBody += `<Value Type="${el.type}">${el.values[j]}</Value>`;
+            }
+            whereBody += `</Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And>`;
+          }
+        }
+        //More than two choices
+        else if (fieldsConditionConfig.length > 1) {
+          //two Eqs in last And
+          if (i == fieldsConditionConfig.length - 1) {
+            if (el.type == "LoggedInUser") {
+              whereBody += `<And><Eq><FieldRef Name="${el.field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>`;
+            } else {
+              whereBody += `<And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>`;
+              whereBody += `<In><FieldRef Name="${el.field}"/><Values>`;
+              for (var j = 0; j < el.values.length; j++) {
+                whereBody += `<Value Type="${el.type}">${el.values[j]}</Value>`;
+              }
+              whereBody += `</Values></In>`;
+            }
 
-						//appending And closure
-						var count = (whereBody.match(/<And>/g) || []).length;
-						var ANDC = `</And>`.repeat(count);
-						whereBody += ANDC;
-					}
-					//normal And
-					else {
-						if (el.type == "LoggedInUser") {
-							whereBody += `<And><Eq><FieldRef Name="${el.field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
-						} else {
-							whereBody += `<And><In><FieldRef Name="${el.field}"/><Values>`;
-							for (var j = 0; j < el.values.length; j++) {
-								whereBody += `<Value Type="${el.type}">${el.values[j]}</Value>`;
-							}
-							whereBody += `</Values></In>`;
-						}
-					}
-				}
-			//Finish Line, make last changes and build query
-      if (i == fieldsConditionConfig.length - 1) {
-        whereBody = whereBody.replaceAll(
-          `Type="date"`,
-          `IncludeTimeValue="TRUE" Type="DateTime"`
-        );
-        whereBodyFinal = `<Where>${whereBody}
+            //appending And closure
+            var count = (whereBody.match(/<And>/g) || []).length;
+            var ANDC = `</And>`.repeat(count);
+            whereBody += ANDC;
+          }
+          //normal And
+          else {
+            if (el.type == "LoggedInUser") {
+              whereBody += `<And><Eq><FieldRef Name="${el.field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
+            } else {
+              whereBody += `<And><In><FieldRef Name="${el.field}"/><Values>`;
+              for (var j = 0; j < el.values.length; j++) {
+                whereBody += `<Value Type="${el.type}">${el.values[j]}</Value>`;
+              }
+              whereBody += `</Values></In>`;
+            }
+          }
+        }
+        //Finish Line, make last changes and build query
+        if (i == fieldsConditionConfig.length - 1) {
+          whereBody = whereBody.replaceAll(
+            `Type="date"`,
+            `IncludeTimeValue="TRUE" Type="DateTime"`
+          );
+          whereBodyFinal = `<Where>${whereBody}
           </Where>`;
-        queryBody = `<View>
+          queryBody = `<View>
             <Query>
             ${whereBodyFinal}
             <OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
             </Query>
           </View>`;
-        console.log(`query for dropdown menu`, queryBody);
-      }
+          console.log(`query for dropdown menu`, queryBody);
+        }
       })
     );
     return queryBody;
@@ -5783,28 +5853,28 @@ var View_ListInfo = {
             View_Data_Request.init();
             GetProject_Info.init();
           });
-           // added for CR module
+          // added for CR module
           if (isCrMode) {
-						CrModeFunctionality.preinit();
-					} else {
-						$(
-							"div#particles-foreground, div#particles-background, .vertical-centered-box"
-						).animate(
-							{
-								opacity: 0,
-							},
-							{
-								duration: 333,
-								complete: function () {
-									$(
-										"div#particles-foreground, div#particles-background, .vertical-centered-box"
-									).remove();
+            CrModeFunctionality.preinit();
+          } else {
+            $(
+              "div#particles-foreground, div#particles-background, .vertical-centered-box"
+            ).animate(
+              {
+                opacity: 0,
+              },
+              {
+                duration: 333,
+                complete: function () {
+                  $(
+                    "div#particles-foreground, div#particles-background, .vertical-centered-box"
+                  ).remove();
 
-									// $('div#particles-foreground, div#particles-background, .vertical-centered-box').hide();
-								},
-							}
-						);
-					}
+                  // $('div#particles-foreground, div#particles-background, .vertical-centered-box').hide();
+                },
+              }
+            );
+          }
           // ended 
           // $('h2.DahsFormTitle').text(PageTitle);
           $(

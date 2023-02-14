@@ -681,7 +681,8 @@ var PageArray = [
 		pagename: "MainIndicators.aspx",
 		Title: "المؤشرات الرئيسية",
         TitleEn: "Main Indicators",
-        listName: "SOs",
+		listName :"MainKPI"
+        // listName: "SOs",
 	},
 	{
 		pagename: "Initiatives.aspx",

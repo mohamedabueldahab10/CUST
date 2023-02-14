@@ -5,6 +5,18 @@ var crMasterDetailsArrayNew = [];
 var crMasterDetailsArrayEdit = [];
 var crRelatedItemCode = "";
 var isGeneral;
+if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+	var search = "بحث ...";
+	var No_Data = 'لا يوجد'
+  } else {
+	var No_Data = 'No Data';
+	var search = "Search ...";
+  }
+  if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+	var enternameemail = Resources.ar["enternameemail"]
+  } else {
+	var enternameemail = Resources.en["enternameemail"]
+  }
 window.CrModeFunctionality = {
 	preinit: function () {
 		let prefix = "";
@@ -14,6 +26,7 @@ window.CrModeFunctionality = {
 			prefix = "_Edit.js";
 		}
 		let CR_JSON_File_Name = RListKey + prefix;
+		debugger
 		//get form's json
 		$.getScript(
 			_spPageContextInfo.webAbsoluteUrl +
@@ -343,6 +356,7 @@ window.CrModeFunctionality = {
 window.handleCustomeCr = {
 	init: function () {
 		$('[data-togglename*="UpdateType"]').on("change", function () {
+			debugger
 			isGeneral =
 				$(this).find(">option:selected").attr("data-trans-generalchange") == ""
 					? true
@@ -407,10 +421,12 @@ window.CrItemDataRequest = {
 		}
 
 		var fieldType = "";
+		debugger
 		$(
-			".cr-related-item-section:not([data-target_list]) .CFIELD> input:not([type=file]), .cr-related-item-section:not([data-target_list]) .CFIELD> input[type=checkbox], .cr-related-item-section:not([data-target_list]) .CFIELD> div[type=picker], .cr-related-item-section:not([data-target_list]) .CFIELD> select[type=dropdown], .cr-related-item-section:not([data-target_list]) .CFIELD>  textarea,.cr-related-item-section:not([data-target_list]) .CFIELD> .datetimeinputs input[type=date], .cr-related-item-section:not([data-target_list]) .CFIELD> .datetimeinputs input[type=datetime-local], .cr-related-item-section:not([data-target_list]) .CFIELD > .multiselect-container, .cr-related-item-section:not([data-target_list]) .CFIELD > div.richTextEdits"
+			".cr-related-item-section:not([data-target_list]) .CFIELD> input:not([type=file]), .cr-related-item-section:not([data-target_list]) .CFIELD> input[type=checkbox], .cr-related-item-section:not([data-target_list]) .CFIELD> div[type=picker], .cr-related-item-section:not([data-target_list]) .CFIELD> select[type=dropdown], .cr-related-item-section:not([data-target_list]) .CFIELD>  textarea,.cr-related-item-section:not([data-target_list]) .CFIELD> .datetimeinputs input[type=date], .cr-related-item-section:not([data-target_list]) .CFIELD> .datetimeinputs input[type=datetime-local], .cr-related-item-section:not([data-target_list]) .CFIELD > .multiselect-container, .cr-related-item-section:not([data-target_list]) .CFIELD > div.richTextEdits , .cr-related-item-section:not([data-target_list]) .CFIELD> div[type=multipicker]"
 		).each(function () {
 			fieldType = $(this).attr("type");
+			console.log($(this).attr("type"), 'typeeeeeeeeeeeeeeeeeeeeee');
 			console.warn($(this).attr("id"));
 			let newJsonValues = jsonValues ? jsonValues : Information_Form;
 			var currentJsonValues = newJsonValues.map(function (el) {
@@ -512,12 +528,14 @@ window.CrItemDataRequest = {
 
 				case "picker":
 					//
+					
 					var pemail =
 						oListItem.get_item("" + $(this).attr("id") + "") == null
 							? enternameemail
 							: oListItem
 									.get_item("" + $(this).attr("id") + "")
 									.get_lookupValue();
+									console.log('there is a picker hereeeee', pemail);
 					$(this).attr("data-email", pemail);
 
 					if (pemail != enternameemail)
