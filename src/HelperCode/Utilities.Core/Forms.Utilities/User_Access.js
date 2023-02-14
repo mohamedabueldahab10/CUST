@@ -92,6 +92,8 @@ var UserRole,
   isAdminPanel = window.location.href.indexOf("AdminPanel.aspx") > -1,
   istherePCODE = window.location.href.toLowerCase().indexOf("pcode=") > -1,
   isthereICODE = window.location.href.indexOf("ICODE=") > -1,
+  isthereSTCODE = window.location.href.indexOf("STCODE=") > -1,
+  UserSTCode = isthereSTCODE ? window.location.href.split("STCODE=")[1].split("&")[0] : "",
   UserICode = isthereICODE
     ? window.location.href.split("ICODE=")[1].split("&")[0]
     : "",
@@ -1164,7 +1166,7 @@ window.userCalls = {
           "contracts",
           "changerequest",
           "documents",
-       
+
         ];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
@@ -1219,7 +1221,7 @@ window.userCalls = {
           "contracts"
         ];
         break;
-    
+
       case "LMSE":
         // for get it back
         // if (USERisHome)
@@ -4619,26 +4621,26 @@ var Access_Project_Info_Request = {
         // 	}
         // } 
         // if (USERisListing && USERlistkey == "initiatives") {
-          //
-          // if (isVROE) {
-          //   AccessQuery =
-          //     "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type='Text'>vision</Value></Eq></And></Where></Query></View>";
-          // }
-          //else
-          // if (isEPMO) {
-          //   AccessQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type=\'Text\'>strategically</Value></Eq></And></Where></Query></View>';
-          // }
-          // else if (
-          //   // isDU ||
-          //   // isSPMO ||
-          //   // isMinisterAssistant ||
-          //   //isSectorHead ||
-          //   // isViceMinister ||
-          //   // isSubSectorHead ||
-          //   isGeneralManager
-          // ) {
-          //   AccessQuery = SectorHeadQuery;
-          // }
+        //
+        // if (isVROE) {
+        //   AccessQuery =
+        //     "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type='Text'>vision</Value></Eq></And></Where></Query></View>";
+        // }
+        //else
+        // if (isEPMO) {
+        //   AccessQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type=\'Text\'>strategically</Value></Eq></And></Where></Query></View>';
+        // }
+        // else if (
+        //   // isDU ||
+        //   // isSPMO ||
+        //   // isMinisterAssistant ||
+        //   //isSectorHead ||
+        //   // isViceMinister ||
+        //   // isSubSectorHead ||
+        //   isGeneralManager
+        // ) {
+        //   AccessQuery = SectorHeadQuery;
+        // }
         //}
         //  else if (
         //   (
@@ -4671,8 +4673,8 @@ var Access_Project_Info_Request = {
         //   AccessQuery = SectorHeadQuery;
         // } 
         // else {
-          AccessQuery =
-            "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
+        AccessQuery =
+          "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
         // }
 
         if (USERisListing && !isfileListing) {
@@ -6627,7 +6629,7 @@ window.Notification_Update_Status = {
 //////////////
 //hide the navbar
 
-if (istherePCODE || isthereICODE) {
+if (istherePCODE || isthereICODE || isthereSTCODE) {
 } else {
   $("body").append("<style>.page-nav{display:none}<style/>");
 }
