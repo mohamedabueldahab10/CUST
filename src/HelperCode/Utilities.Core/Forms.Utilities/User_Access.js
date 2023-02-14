@@ -1072,20 +1072,6 @@ window.userCalls = {
           "deliverablemetrics",
           "benefitmatrix",
           "benefitmetrics",
-          /////////////////////
-          // "initiatives",
-          // "InitiativeHome.aspx",
-          // "mainkpi",
-          // "sos",
-          // "benefits",
-          // "Targets.aspx",
-          // "portfolio",
-          // "home.aspx",
-          // "kpiequations",
-          // "MainIndicators.aspx",
-          // "deliverablemetrics",
-          // "benefitmatrix",
-          // "benefitmetrics",
         ];
 
         Edit_Access = [
@@ -1166,23 +1152,6 @@ window.userCalls = {
           "goalstrategy",
         ];
         break;
-      // case "StrategyTeam":
-      // 	$("body").append(
-      // 		"<style>" + ".Progress-Action {display:block!important;}" + "</style>"
-      // 	);
-      // 	isSPMTeam = true;
-      // 	isAllKpis = true;
-      // 	//***** */
-      // 	ChartHide =
-      // 		".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-      // 	ar_UserRole = "الفريق الاستراتيجي";
-      // 	en_UserRole = "Strategy Team";
-      // 	//CRUD
-      // 	Create_Access = ["goalstrategy", "spillars", "sos"];
-      // 	Read_Access = ["goalstrategy", "spillars", "home.aspx", "sos", "MainIndicators.aspx"];
-      // 	Edit_Access = ["goalstrategy", "spillars", "sos"];
-      // 	Delete_Access = [];
-      // 	break;
 
       case "VROE":
         // for get it back
@@ -2193,26 +2162,6 @@ window.userCalls = {
         break;
       case "GeneralManager":
         isGeneralManager = true;
-        // (SecondLevel_List = "Internal Entities"),
-        //   (SecondLevel_FieldtoQuery = "Manager"),
-        //   (SecondLevel_FieldtoQueryType = "Choice");
-        // (SecondLevel_FieldtoFetch = "Title"),
-        //   (SecondLevel_CAMLQuery =
-        //     "<View><Query><Where>" +
-        //     "<And>" +
-        //     "<Eq>" +
-        //     '<FieldRef Name="' +
-        //     SecondLevel_FieldtoQuery +
-        //     '" LookupId="TRUE" />' +
-        //     '<Value Type="' +
-        //     SecondLevel_FieldtoQueryType +
-        //     '"><UserID /></Value>' +
-        //     "</Eq>" +
-        //     "<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
-        //     "</And>" +
-        //     "</Where></Query></View>"),
-        //   (SecondLevel_FirstLevel_Field = "SubSector"),
-        //   (SecondLevel_FirstLevel_FieldType = "Text");
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
         ar_UserRole = " مدير إدارة ";
@@ -2244,10 +2193,12 @@ window.userCalls = {
         break;
 
       case "StrategyTeam":
-        if (USERisHome)
-          window.location =
-            _spPageContextInfo.webAbsoluteUrl +
-            "/sitepages/MainIndicators.aspx";
+
+        // if (USERisHome)
+        //   window.location =
+        //     _spPageContextInfo.webAbsoluteUrl +
+        //     "/sitepages/MainIndicators.aspx";
+
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -2263,24 +2214,26 @@ window.userCalls = {
           "goalstrategy",
           "spillars",
           "sos",
-          // "portfolio"
+          "mainkpi",
+          "changerequest"
         ];
-        Read_Access = [
-          "goalstrategy",
-          "spillars",
-          "MainIndicators.aspx",
-          "sos",
-          //  "portfolio"
-        ];
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
+        // Read_Access = [
+        //   "goalstrategy",
+        //   "spillars",
+        //   "MainIndicators.aspx",
+        //   "sos",
+        //   //  "portfolio"
+        // ];
         Edit_Access = [
           "goalstrategy",
           "spillars",
           "sos",
-          //  "portfolio"
+          "mainkpi",
+          "changerequest"
         ];
-        Delete_Access = [
-          // "goalstrategy", "spillars", "sos"
-        ];
+        Delete_Access = [];
         break;
       case "KPIOwner":
         if (USERisHome)
@@ -2497,7 +2450,7 @@ window.userCalls = {
     // ) {
     if (
       !isSectionHead &&
-      !isPortfolioManager 
+      !isPortfolioManager
       //!isSectorHead &&
       // !isSPMO &&
       // !isDU &&
@@ -2519,7 +2472,7 @@ window.userCalls = {
         // || isMainIndicator
       ) &&
       (isSectionHead ||
-        isPortfolioManager 
+        isPortfolioManager
         //isSectorHead ||
         // isSPMO ||
         // isSubSectorHead ||
@@ -2992,6 +2945,36 @@ window.userCalls = {
                 },
               },
             },
+            {
+              level: 1,
+              listName: "GoalStrategy",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Choice",
+                  values: ["ministry"],
+                  targetPages: [
+                    "home.aspx",
+                    "new.aspx",
+                    "edit.aspx?ListKey=projects",
+                  ],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "RelatedStrategy",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "Initiatives",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedObjective",
+                  RelationFieldType: "Text"
+                },
+              },
+            }
 
 
             // {
@@ -3071,6 +3054,36 @@ window.userCalls = {
                     RelationFieldType: "Text",
 
                   }
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "GoalStrategy",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Choice",
+                  values: ["ministry"],
+                  targetPages: [
+                    "home.aspx",
+                    "new.aspx",
+                    "edit.aspx?ListKey=projects",
+                  ],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "RelatedStrategy",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "Initiatives",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedObjective",
+                  RelationFieldType: "Text"
                 },
               },
             }
@@ -3321,9 +3334,91 @@ window.userCalls = {
           ],
         },
       },
+      // {
+      //   Role: "StrategyTeam",
+      //   groupsName: ["Strategy Specialist"],
+      // },
       {
         Role: "StrategyTeam",
         groupsName: ["Strategy Specialist"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "GoalStrategy",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Choice",
+                  values: ["ministry"],
+                  targetPages: [
+                    "home.aspx",
+                    "new.aspx",
+                    "edit.aspx?ListKey=projects",
+                  ],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "RelatedStrategy",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "MainKPI",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedStrategyObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "KPIResults",
+                    parentRelationField: "Title",
+                    RelationField: "KPI",
+                    RelationFieldType: "Text",
+                  }
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "GoalStrategy",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Choice",
+                  values: ["ministry"],
+                  targetPages: [
+                    "home.aspx",
+                    "new.aspx",
+                    "edit.aspx?ListKey=projects",
+                  ],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "RelatedStrategy",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "Initiatives",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "Projects",
+                    parentRelationField: "Title",
+                    RelationField: "RelatedInitiative",
+                    RelationFieldType: "Text",
+                  }
+                },
+              },
+            }
+          ],
+        },
       },
       {
         Role: "SPMO",
@@ -4614,7 +4709,7 @@ var Access_Project_Info_Request = {
         if (Access_Project_Info_Request.g.User_Projects.length == 0) {
           if (
             isSectionHead ||
-            isPortfolioManager 
+            isPortfolioManager
             //isSectorHead ||
             // isSPMO ||
             // isSubSectorHead ||
@@ -4893,7 +4988,7 @@ var Access_Project_Info_Request = {
 
     if (
       isSectionHead ||
-      isPortfolioManager 
+      isPortfolioManager
       //isSectorHead ||
       // isSPMO ||
       //isGeneralManager

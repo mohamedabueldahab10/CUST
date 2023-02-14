@@ -795,12 +795,12 @@ window.ListInfo = {
             //     $("#Types").prop("disabled", true);
             //   }
             // }
-            if (isStrategyTeam || isVROP) {
-              if (listkey == "sos") {
-                // $("#Types").val("main");
-                // $("#Types").prop("disabled", true);
-              }
-            }
+            // if (isStrategyTeam || isVROP) {
+            //   if (listkey == "sos") {
+            //     // $("#Types").val("main");
+            //     // $("#Types").prop("disabled", true);
+            //   }
+            // }
             if (listkey == "goalstrategy") {
               if (isVROP) {
                 $("#Types").val("vision");
