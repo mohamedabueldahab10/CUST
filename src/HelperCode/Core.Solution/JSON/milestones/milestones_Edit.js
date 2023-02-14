@@ -20,6 +20,20 @@ var Information_Form = [
         validation: 'required',
       },
       {
+        InternalName: 'Weight',
+        DisplayNameEn: 'Weight',
+        DisplayName: 'الوزن المكافئ للإنجاز %',
+        type: 'floatpercentage',
+        // type: 'weightfloatpercentage',
+        listname: 'Milestones',
+        targetcode: 'ProjectCode',
+        targetelement: 'Weight',
+        seconedtarget: 'Amount',
+        validation: 'required',
+        // "state": "disabled",
+        // dynamic: "Initiative"
+      },
+      {
         InternalName: 'Amount',
         DisplayName: 'القيمة',
         DisplayNameEn: 'Amount',
@@ -29,20 +43,6 @@ var Information_Form = [
         parentinternalname: 'ActualBudget',
         targetelement: 'Weight',
         validation: 'required',
-      },
-      {
-        InternalName: 'Weight',
-        DisplayNameEn: 'Weight',
-        DisplayName: 'الوزن المكافئ للإنجاز %',
-        // type: 'floatpercentage',
-        type: 'weightfloatpercentage',
-        listname: 'Milestones',
-        targetcode: 'ProjectCode',
-        targetelement: 'Weight',
-        seconedtarget: 'Amount',
-        validation: 'required',
-        // "state": "disabled",
-        // dynamic: "Initiative"
       },
       {
         InternalName: 'PlannedDate',
@@ -56,22 +56,6 @@ var Information_Form = [
         DisplayNameEn: 'Actual Date',
         type: 'datetime',
         max: 'today',
-      },
-      {
-        InternalName: 'Delivered',
-        DisplayName: 'تم التسليم',
-        DisplayNameEn: 'Delivered',
-        targetfieldrequired: 'getFile', // to make the attache required on yes
-        targetfield: 'Status',
-        targetfieldvalue: 'completed',
-        validation: 'required',
-        type: 'yesnoradio',
-        options: {
-          choices: [
-            { display: 'yes', value: 'yes' },
-            { display: 'no', value: 'no' },
-          ],
-        },
       },
     //   {
     //     InternalName: 'CommittedDate',
@@ -110,32 +94,48 @@ var Information_Form = [
         type: 'multiline',
         maxchar: 5000,
       },
-      {
-        InternalName: 'Status',
-        DisplayName: 'الحالة',
-        DisplayNameEn: 'Status',
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            { display: 'onschedule', value: 'onschedule' },
-            { display: 'completed', value: 'completed' },
-            { display: 'late', value: 'late' },
-          ],
-        },
-      },
+      // {
+      //   InternalName: 'Status',
+      //   DisplayName: 'الحالة',
+      //   DisplayNameEn: 'Status',
+      //   type: 'dropdownValues',
+      //   options: {
+      //     choices: [
+      //       { display: 'onschedule', value: 'onschedule' },
+      //       { display: 'completed', value: 'completed' },
+      //       { display: 'late', value: 'late' },
+      //     ],
+      //   },
+      // },
       {
         InternalName: 'RelatedInitiativeMilestone',
         DisplayName: 'معلم المبادرة المرتبط',
         DisplayNameEn: 'Related Initiative Milestone',
         // type: 'lookup',
-        source: 'InitiativeMilestones',
+        // source: 'InitiativeMilestones',
         "type": 'lookuptoparentchild',
         "parentlist":"Projects", //parent list name
         "parentinternalname":"RelatedInitiative", // internal name in parent list
-        // "source":"Milestones", // target list
+        "source":"Milestones", // target list
         "sourceinternalname":"InitiativeCode", // column in target list
         "Dispfieldkey": 'Name', //display in dropdown
         "valfieldkey": "Title"// value in dropdown
+      },
+      {
+        InternalName: 'Delivered',
+        DisplayName: 'تم التسليم',
+        DisplayNameEn: 'Delivered',
+        targetfieldrequired: 'getFile', // to make the attache required on yes
+        targetfield: 'Status',
+        targetfieldvalue: 'completed',
+        // validation: 'required',
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            { display: 'yes', value: 'yes' },
+            { display: 'no', value: 'no' },
+          ],
+        },
       },
       {
         InternalName: 'ShowInProgramReport',
@@ -162,6 +162,13 @@ var Information_Form = [
       //     "type": "multiline",
       //     "maxchar": "500",
       // }
+      {
+        InternalName: 'SupportDocumentsDescription',
+        DisplayNameEn: 'Support Documents Description',
+        DisplayName: 'وصف الوثائق الداعمة',
+        type: 'multiline',
+        maxchar: '500',
+      },
     ],
   },
   {
@@ -170,12 +177,27 @@ var Information_Form = [
     description: 'التفاصيل',
     descriptionEn: 'Details',
     subFields: [
+      // {
+      //   InternalName: 'SupportDocumentsDescription',
+      //   DisplayNameEn: 'Support Documents Description',
+      //   DisplayName: 'وصف الوثائق الداعمة',
+      //   type: 'multiline',
+      //   maxchar: '500',
+      // },
+      // {
+      //   InternalName: 'Attachment',
+      //   DisplayName: 'المرفقات',
+      //   DisplayNameEn: 'Attachment',
+      //   type: 'file',
+      //   withAddBtn: 'true',
+      // },
       {
-        InternalName: 'Attachment',
-        DisplayName: 'المرفقات',
-        DisplayNameEn: 'Attachment',
+        InternalName: 'getfile',
+        DisplayName: 'مرفقات',
+        DisplayNameEn: 'Attachments',
         type: 'file',
         withAddBtn: 'true',
+        // validation: 'required',
       },
     ],
   },

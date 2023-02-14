@@ -18,6 +18,12 @@ var Information_Form = [
         type: 'string',
       },
       {
+        InternalName: 'Weight',
+        DisplayNameEn: 'Weight',
+        DisplayName: 'الوزن المكافئ للإنجاز %',
+        type: 'floatpercentage',
+      },
+      {
         InternalName: 'Amount',
         DisplayName: 'القيمة',
         DisplayNameEn: 'Amount',
@@ -26,12 +32,6 @@ var Information_Form = [
         listname: 'Projects',
         parentinternalname: 'ActualBudget',
         targetelement: 'Weight',
-      },
-      {
-        InternalName: 'Weight',
-        DisplayNameEn: 'Weight',
-        DisplayName: 'الوزن المكافئ للإنجاز %',
-        type: 'floatpercentage',
       },
       {
         InternalName: 'PlannedDate',
@@ -45,21 +45,6 @@ var Information_Form = [
         DisplayNameEn: 'Actual Date',
         type: 'datetime',
         max: 'today',
-      },
-      {
-        InternalName: 'Delivered',
-        DisplayName: 'تم التسليم',
-        DisplayNameEn: 'Delivered',
-        targetfieldrequired: 'getFile', // to make the attache required on yes
-        targetfield: 'Status',
-        targetfieldvalue: 'completed',
-        type: 'yesnoradio',
-        options: {
-          choices: [
-            { display: 'yes', value: 'yes' },
-            { display: 'no', value: 'no' },
-          ],
-        },
       },
       // {
       //   InternalName: 'CommittedDate',
@@ -81,27 +66,43 @@ var Information_Form = [
         type: 'multiline',
         maxchar: 5000,
       },
-      {
-        InternalName: 'Status',
-        DisplayName: 'الحالة',
-        DisplayNameEn: 'Status',
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            { display: 'onschedule', value: 'onschedule' },
-            { display: 'completed', value: 'completed' },
-            { display: 'late', value: 'late' },
-          ],
-        },
-      },
+      // {
+      //   InternalName: 'Status',
+      //   DisplayName: 'الحالة',
+      //   DisplayNameEn: 'Status',
+      //   type: 'dropdownValues',
+      //   options: {
+      //     choices: [
+      //       { display: 'onschedule', value: 'onschedule' },
+      //       { display: 'completed', value: 'completed' },
+      //       { display: 'late', value: 'late' },
+      //     ],
+      //   },
+      // },
       {
         InternalName: 'RelatedInitiativeMilestone',
         DisplayName: 'معلم المبادرة المرتبط',
         DisplayNameEn: 'Related Initiative Milestone',
         type: 'lookup',
-        source: 'InitiativeMilestones',
+        // source: 'InitiativeMilestones',
+        source: 'Milestones',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+      },
+      {
+        InternalName: 'Delivered',
+        DisplayName: 'تم التسليم',
+        DisplayNameEn: 'Delivered',
+        targetfieldrequired: 'getFile', // to make the attache required on yes
+        targetfield: 'Status',
+        targetfieldvalue: 'completed',
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            { display: 'yes', value: 'yes' },
+            { display: 'no', value: 'no' },
+          ],
+        },
       },
       {
         InternalName: 'ShowInProgramReport',
@@ -109,13 +110,13 @@ var Information_Form = [
         DisplayNameEn: 'Show In Report',
         type: 'radio',
       },
-      // {
-      //     "InternalName": "SupportDocumentsDescription",
-      //     "DisplayNameEn": "Support Documents Description",
-      //     "DisplayName": "وصف الوثائق الداعمة",
-      //     "type": "multiline",
-      //     "maxchar": "500",
-      // }
+      {
+          "InternalName": "SupportDocumentsDescription",
+          "DisplayNameEn": "Support Documents Description",
+          "DisplayName": "وصف الوثائق الداعمة",
+          "type": "multiline",
+          "maxchar": "500",
+      }
     ],
   },
   // {
@@ -133,4 +134,20 @@ var Information_Form = [
   //     },
   //   ],
   // },
+  
+  // {
+  //   label: 'وثائق داعمة',
+  //   labelEn: 'Supporting Documents',
+  //   description: 'التفاصيل',
+  //   descriptionEn: 'Details',
+  //   subFields: [
+  //     {
+  //       InternalName: 'SupportDocumentsDescription',
+  //       DisplayNameEn: 'Support Documents Description',
+  //       DisplayName: 'وصف الوثائق الداعمة',
+  //       type: 'multiline',
+  //       maxchar: '500',
+  //     },
+  //   ]
+  // }
 ]
