@@ -421,10 +421,12 @@ window.CrItemDataRequest = {
 		}
 
 		var fieldType = "";
+		debugger
 		$(
 			".cr-related-item-section:not([data-target_list]) .CFIELD> input:not([type=file]), .cr-related-item-section:not([data-target_list]) .CFIELD> input[type=checkbox], .cr-related-item-section:not([data-target_list]) .CFIELD> div[type=picker], .cr-related-item-section:not([data-target_list]) .CFIELD> select[type=dropdown], .cr-related-item-section:not([data-target_list]) .CFIELD>  textarea,.cr-related-item-section:not([data-target_list]) .CFIELD> .datetimeinputs input[type=date], .cr-related-item-section:not([data-target_list]) .CFIELD> .datetimeinputs input[type=datetime-local], .cr-related-item-section:not([data-target_list]) .CFIELD > .multiselect-container, .cr-related-item-section:not([data-target_list]) .CFIELD > div.richTextEdits"
 		).each(function () {
 			fieldType = $(this).attr("type");
+			console.log($(this).attr("type"), 'typeeeeeeeeeeeeeeeeeeeeee');
 			console.warn($(this).attr("id"));
 			let newJsonValues = jsonValues ? jsonValues : Information_Form;
 			var currentJsonValues = newJsonValues.map(function (el) {
@@ -526,12 +528,14 @@ window.CrItemDataRequest = {
 
 				case "picker":
 					//
+					
 					var pemail =
 						oListItem.get_item("" + $(this).attr("id") + "") == null
 							? enternameemail
 							: oListItem
 									.get_item("" + $(this).attr("id") + "")
 									.get_lookupValue();
+									console.log('there is a picker hereeeee', pemail);
 					$(this).attr("data-email", pemail);
 
 					if (pemail != enternameemail)
