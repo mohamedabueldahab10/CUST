@@ -251,13 +251,13 @@ var Custom_Nav_Request = {
                 var isactive = (window.location.href.toLowerCase().split('/').pop() == Link.toLowerCase().split('/').pop()) ? 'active' : '';
                 if (count < 7) {
                     $('.menuToggleBurgMenu').css('display', 'none');
-                    LinkItem += (isListKeyhere && !isProjectCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '<span class="lineres" style="display:none;"></span></a></li>';
+                    LinkItem += (isListKeyhere && !isProjectCodehere && !isInitiativeCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '<span class="lineres" style="display:none;"></span></a></li>';
                 } else {
                     $('.menuToggleBurgMenu').css('display', 'block');
-                    extraLinkItem += (isListKeyhere && !isProjectCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '</a></li>';
+                    extraLinkItem += (isListKeyhere && !isProjectCodehere && !isInitiativeCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '</a></li>';
                 }
                 count++
-            } else if (module.indexOf('Project') > -1 && !isInitiativeCodehere) { //p context
+            } else if (isProjectCodehere && module.indexOf('Project') > -1 && !isInitiativeCodehere && !isStrategicPartnerShipCodehere) { //p context
                 //to get value of column for an item use internal name of field
                 if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
                     var title = oListItem.get_item('TitleAr') || 'لا يوجد';
