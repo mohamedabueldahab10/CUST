@@ -5,6 +5,18 @@ var crMasterDetailsArrayNew = [];
 var crMasterDetailsArrayEdit = [];
 var crRelatedItemCode = "";
 var isGeneral;
+if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+	var search = "بحث ...";
+	var No_Data = 'لا يوجد'
+  } else {
+	var No_Data = 'No Data';
+	var search = "Search ...";
+  }
+  if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+	var enternameemail = Resources.ar["enternameemail"]
+  } else {
+	var enternameemail = Resources.en["enternameemail"]
+  }
 window.CrModeFunctionality = {
 	preinit: function () {
 		let prefix = "";

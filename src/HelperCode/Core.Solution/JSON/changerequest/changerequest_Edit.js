@@ -695,16 +695,16 @@ window.Information_Form = [
 	// 		},
 	// 	]
 	// },
-    {
-        label: 'المرفقات',
-        labelEn: 'Attachments',
-        description: "",
-        descriptionEn: "",
-        subFields: [{
-            "InternalName": "getfile",
-            "DisplayName": "المرفقات",
-            "DisplayNameEn": "Attachments",
-            "type": "file"
-        }]
-    }
+    // {
+    //     label: 'المرفقات',
+    //     labelEn: 'Attachments',
+    //     description: "",
+    //     descriptionEn: "",
+    //     subFields: [{
+    //         "InternalName": "getfile",
+    //         "DisplayName": "المرفقات",
+    //         "DisplayNameEn": "Attachments",
+    //         "type": "file"
+    //     }]
+    // }
 ];
