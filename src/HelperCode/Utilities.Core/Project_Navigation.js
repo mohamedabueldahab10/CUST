@@ -9,6 +9,8 @@ var NAVPID,
     isProjectCodehere = window.location.href.indexOf('PCODE=') > -1,
     isInitiativeCodehere = window.location.href.indexOf('ICODE=') > -1,
     InitiativeCode = isInitiativeCodehere ? window.location.href.split('ICODE=')[1].split('&')[0] : '',
+    isStrategicPartnerShipCodehere = window.location.href.indexOf('STCODE=') > -1,
+    StrategicPartnerShipCode = isStrategicPartnerShipCodehere ? window.location.href.split('STCODE=')[1].split('&')[0] : '',
     isListKeyhere = window.location.href.indexOf('ListKey=') > -1,
     isIdeaPage = window.location.href.indexOf('ideas') > -1,
     isTaskPage = window.location.href.indexOf('tasks') > -1,
@@ -18,8 +20,9 @@ var customNavHtml = setInterval(function () {
     if (isProjectCodehere) {
         Nav_Project_Info_Request.preinit();
     } else if (isInitiativeCodehere) {
-
         Nav_Initiative_Info_Request.preinit()
+    } else if (isStrategicPartnerShipCodehere) {
+        Nav_StrategicPS_Info_Request.preinit()
     } else if (isListKeyhere) {
         Custom_Nav_Request.preinit();
     } else {
@@ -71,7 +74,7 @@ var Nav_Project_Info_Request = {
     }
 };
 
-var Nav_Initiative_Info_Request ={
+var Nav_Initiative_Info_Request = {
     onSuccess: function (sender, args) {
         var collListItem = Nav_Initiative_Info_Request.g.collListItem;
         var listItemEnum = collListItem.getEnumerator();
@@ -114,6 +117,48 @@ var Nav_Initiative_Info_Request ={
     }
 }
 
+
+var Nav_StrategicPS_Info_Request = {
+    onSuccess: function (sender, args) {
+        var collListItem = Nav_StrategicPS_Info_Request.g.collListItem;
+        var listItemEnum = collListItem.getEnumerator();
+        while (listItemEnum.moveNext()) {
+            var oListItem = listItemEnum.get_current();
+            NAVPID = oListItem.get_id();
+            NAVPCODE = oListItem.get_item('Title');
+        }
+        Custom_Nav_Request.preinit();
+    },
+    onError: function (sender, args) {
+        console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+    },
+    preinit: function () {
+        if ($('.navbar.page-nav.px-5').length) {
+            clearInterval(customNavHtml);
+            SP.SOD.executeFunc('sp.js', 'SP.ClientContext', function () {
+                Nav_StrategicPS_Info_Request.init();
+            });
+        }
+    },
+    init: function () {
+        var clientContext = new SP.ClientContext.get_current();
+        var oList = clientContext.get_web().get_lists().getByTitle("Strategic Partnerships");
+        var camlQuery = new SP.CamlQuery();
+        camlQuery.set_viewXml('<View><Query><Where><Eq><FieldRef Name=\'Title\'/><Value Type=\'Text\'>' + Nav_StrategicPS_Info_Request.g.STCODE + '</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>');
+        Nav_StrategicPS_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+        clientContext.load(Nav_StrategicPS_Info_Request.g.collListItem);
+        clientContext.executeQueryAsync(
+            Function.createDelegate(this, Nav_StrategicPS_Info_Request.onSuccess),
+            Function.createDelegate(this, Nav_StrategicPS_Info_Request.onError)
+        );
+    },
+    // Global variables
+    g: {
+        STCODE: isStrategicPartnerShipCodehere ? window.location.href.split('STCODE=')[1].split('&')[0] : '',
+    }
+}
+
+
 var Custom_Nav_Request = {
     // Pre-initialization functions ensure scripts, SharePoint dependencies are loaded
     preinit: function () {
@@ -147,6 +192,7 @@ var Custom_Nav_Request = {
         while (listItemEnum.moveNext()) { //loop through list items
             var oListItem = listItemEnum.get_current();
             module = oListItem.get_item('Module');
+            
 
             if (isInitiativeCodehere && module.indexOf('Initiative') > -1) {
                 //to get value of column for an item use internal name of field
@@ -168,6 +214,36 @@ var Custom_Nav_Request = {
                     // Link = (Link.includes('projectname') ? Link.replace('projectname', NAVPCODE) : Link);
                     // Link = (Link.includes('VPID') ? Link.replace('VPID', NAVPID).replace('VPCODE', NAVPCODE) : Link);
                     // Link = (Link.includes('VPID') ? Link.replace('VPID', NAVPID) : Link);
+                    Link = (Link.includes('VPCODE') ? Link.replace('&PCODE=VPCODE', '') : Link);
+                    Link = (Link.includes('VProjUid') ? '' : Link);
+                }
+                var tab = (oListItem.get_item('NewTab')) ? '_blank' : '';
+                var isactive = (window.location.href.toLowerCase().split('/').pop() == Link.toLowerCase().split('/').pop()) ? 'active' : '';
+                if (count < 7) {
+                    $('.menuToggleBurgMenu').css('display', 'none');
+                    LinkItem += (isListKeyhere && !isProjectCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '<span class="lineres" style="display:none;"></span></a></li>';
+                } else {
+                    $('.menuToggleBurgMenu').css('display', 'block');
+                    extraLinkItem += (isListKeyhere && !isProjectCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '</a></li>';
+                }
+                count++
+            } else if (isStrategicPartnerShipCodehere && module.indexOf('StrategicPartnership') > -1) {
+                if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+                    var title = oListItem.get_item('TitleAr') || 'لا يوجد';
+                } else { var title = oListItem.get_item('TitleEn') || 'No Data'; }
+                //
+                var Link = oListItem.get_item('URL').$1_1;
+                var isOnlyInProjectView = oListItem.get_item('OnlyInProjectView');
+
+                if (isStrategicPartnerShipCodehere) {
+
+                    Link = (Link.includes('projectname') ? Link.replace('projectname', StrategicPartnerShipCode) : Link);
+                    Link = (Link.includes('VPID') ? Link.replace('VPID', NAVPID).replace('VPCODE', StrategicPartnerShipCode) : Link);
+                    Link = (Link.includes('VPID') ? Link.replace('VPID', NAVPID) : Link);
+                    Link = (Link.includes('VPCODE') ? Link.replace('VPCODE', StrategicPartnerShipCode) : Link);
+                    Link = (Link.includes('PCODE') ? Link.replace('PCODE', 'STCODE') : Link);
+                    Link = (Link.includes('VProjUid') ? Link.replace('VProjUid', PrGUID) : Link);
+                } else if (isListKeyhere) {
                     Link = (Link.includes('VPCODE') ? Link.replace('&PCODE=VPCODE', '') : Link);
                     Link = (Link.includes('VProjUid') ? '' : Link);
                 }
@@ -209,12 +285,13 @@ var Custom_Nav_Request = {
                     LinkItem += (isListKeyhere && !isProjectCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '<span class="lineres" style="display:none;"></span></a></li>';
                 } else {
                     $('.menuToggleBurgMenu').css('display', 'block');
-                    extraLinkItem += (isListKeyhere && !isProjectCodehere ) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '</a></li>';
+                    extraLinkItem += (isListKeyhere && !isProjectCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '</a></li>';
                 }
                 count++
             }
         }
 
+        debugger
         // $('body').append('<style>#menuToggleBurgMenu{background-color:red}</style>')
         $(".navbar.page-nav.px-5 ul.navbar-nav.bd-navbar-nav.flex-row").html(LinkItem);
         $(".navbar.page-nav.px-5 .menuBurg").html(extraLinkItem)
