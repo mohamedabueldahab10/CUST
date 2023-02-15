@@ -882,7 +882,9 @@
     strategicpartnerinfo:"معلومات الشراكة",
     strategicpartnerimportance:"أهمية الشراكة",
     strategicpartnerstart:"تاريخ بدء الشراكة",
-    strategicpartnerend:"تاريخ نهاية الشراكة"
+    strategicpartnerend:"تاريخ نهاية الشراكة",
+    strategicpartnershippioneer:"رائد الشراكة",
+    strategicpartnershipduration:"مدة الشراكة"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1780,7 +1782,9 @@
     strategicpartnerinfo:"Strategic Partnership Info",
     strategicpartnerimportance:"strategic Partner Importance",
     strategicpartnerstart:"Strategic Partnership Start",
-    strategicpartnerend:"Strategic Partnership End"
+    strategicpartnerend:"Strategic Partnership End",
+    strategicpartnershippioneer:"Strategic PartnerShip Pioneer",
+    strategicpartnershipduration:"Strategic Partnership Duration"
   },
 };
 
