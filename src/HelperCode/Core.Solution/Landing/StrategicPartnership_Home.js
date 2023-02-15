@@ -1,5 +1,8 @@
 var strategicName = "",
-  strategicCode;
+  strategicCode,
+  strategicSector,
+  strategicSubSector,
+  strategicStartDate;
 
 
 
@@ -63,6 +66,45 @@ var StrategicPS_Home_Info_Request = {
 
       strategicName = oListItem.get_item("Name") || No_Data;
       strategicCode = oListItem.get_item("Title") || No_Data;
+      strategicSector = oListItem.get_item("Sector") || No_Data;
+      strategicSubSector = oListItem.get_item("SubSector") || No_Data;
+      strategicStartDate = StrategicPS_Home_Info_Request.g.dateConvert2(oListItem.get_item("StartDate")) || No_Data;
+
+      var strategicsectorarr = [];
+
+      if (localStorage.getItem("Dynamo_Internal Entities") != null) {
+        strategicsectorarr = JSON.parse(
+          localStorage.getItem("Dynamo_Internal Entities")
+        );
+        strategicsectorarr = strategicsectorarr.filter(function (a) {
+          return a.code === strategicSector;
+        });
+        if (
+          localStorage.getItem("lng") == null ||
+          localStorage.getItem("lng") == "ar"
+        ) {
+          strategicSector = strategicsectorarr[0].name;
+        } else strategicSector = strategicsectorarr[0].nameEn;
+      }
+      var strategicSubsectorarr = [];
+
+      if (localStorage.getItem("Dynamo_Internal Entities") != null) {
+        strategicSubsectorarr = JSON.parse(
+          localStorage.getItem("Dynamo_Internal Entities")
+        );
+        strategicSubsectorarr = strategicSubsectorarr.filter(function (a) {
+          return a.code === strategicSubSector;
+        });
+        if (
+          localStorage.getItem("lng") == null ||
+          localStorage.getItem("lng") == "ar"
+        ) {
+          strategicSubSector = strategicSubsectorarr[0].name;
+        } else strategicSubSector = strategicSubsectorarr[0].nameEn;
+      }
+
+
+
 
       card1.push(
         '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
@@ -86,20 +128,20 @@ var StrategicPS_Home_Info_Request = {
         '<div class="d-inline-flex flex-column mx-2">' +
         '<h3 data-trans-sector class="Resources black initiativeProjHomeInfoTitleStyle"></h3>' +
         '<span class="des-13"><span class="state-val initiativeProjHomeInfoValueStyle">' +
-        "projectsector" +
+        strategicSector +
         "</span></span>" +
         "</div>" +
         '<div class="d-inline-flex flex-column mx-2">' +
         '<h3 data-trans-subsector class="Resources black initiativeProjHomeInfoTitleStyle"></h3>' +
         '<span class="des-13"><span class="state-val initiativeProjHomeInfoValueStyle">' +
-        "projectSubsector" +
+        strategicSubSector +
         "</span></span>" +
         "</div>" +
         '<span class="des-13 project-date">' +
-        '<span class="start-date"><span data-trans-basestart class="Resources initiativeProjHomeInfoTitleStyle"></span><span class="px-2 initiativeProjHomeInfoValueStyle">' +
-        "baselineStartDate" +
+        '<span class="start-date"><span data-trans-strategicpartnerstart class="Resources initiativeProjHomeInfoTitleStyle"></span><span class="px-2 initiativeProjHomeInfoValueStyle">' +
+        strategicStartDate +
         "</span></span>" +
-        '<span class="end-date"><span data-trans-basefinish class="Resources initiativeProjHomeInfoTitleStyle"></span><span class="px-2 initiativeProjHomeInfoValueStyle">' +
+        '<span class="end-date"><span data-trans-strategicpartnerend class="Resources initiativeProjHomeInfoTitleStyle"></span><span class="px-2 initiativeProjHomeInfoValueStyle">' +
         "baselineFinishDate" +
         "</span></span>" +
         "</span>" +
@@ -129,54 +171,7 @@ var StrategicPS_Home_Info_Request = {
         "</div>" +
         "</div>" +
         //
-        '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        '<span class="des-13"><span data-trans-pattr56 class="Resources complition-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-        '<h4 class="black actual-complete-val initiativeProjHomeInfoValueStyle">' +
-        " projectActualImplementationSchedule.toFixed(2)" +
-        "%</h4>" +
-        "</div>" +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        '<span class="des-13"><span data-trans-pattr6 class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-        '<h4 class="black initiativeProjHomeInfoValueStyle"> ' +
-        "projectPlannedImplementationSchedule.toFixed(2)" +
-        "%</h4>" + //
-        "</div>" +
-        '<div class="d-inline-flex flex-column mx-2 ' +
-        "projectProgressStatusSchedule " +
-        '">' +
-        '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-        "<h4 data-trans-" +
-        "projectProgressStatusSchedule" +
-        ' class="black Resources myCompletionStatusSchedual statuscolor' +
-        "projectProgressStatusSchedule" +
-        '"></h4>' + //
-        "</div>" +
-        "</div>" +
-        '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center third-row" href="#">' +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        '<span class="des-13"><span data-trans-pattr66 class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-        '<h4 class="black initiativeProjHomeInfoValueStyle">' +
-        "projectActualImplementationMilestone.toFixed(2)" +
-        "%</h4>" + //
-        "</div>" +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        '<span class="des-13"><span data-trans-pattr61 class="Resources complition-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-        '<h4 class="black initiativeProjHomeInfoValueStyle">' +
-        " projectPlannedImplementationMilestone.toFixed(2)" +
-        "%</h4>" +
-        "</div>" +
-        '<div class="d-inline-flex flex-column mx-2 ' +
-        "  projectProgressStatusMilestone" +
-        '">' +
-        '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-        "<h4 data-trans-" +
-        " projectProgressStatusMilestone" +
-        ' class="black Resources myCompletionStatusMilestone statuscolor' +
-        " projectProgressStatusMilestone" +
-        '"></h4>' + //
-        "</div>" +
-        "</div>" +
+
         '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center fourth-row" href="#">' +
         '<div class="d-inline-flex flex-column mx-2">' +
         '<span class="des-13"><span data-trans-pattr76 class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
@@ -230,7 +225,57 @@ var StrategicPS_Home_Info_Request = {
     );
   },
   g: {
-    STCODE: window.location.href.indexOf("STCODE=") > -1 ? window.location.href.split("STCODE=")[1].split("&")[0] : ""
+    STCODE: window.location.href.indexOf("STCODE=") > -1 ? window.location.href.split("STCODE=")[1].split("&")[0] : "",
+    dateConvert: function (date) {
+      if (date) {
+        var local = date.getTime();
+        var offset = date.getTimezoneOffset() * (60 * 1000);
+        var utc = new Date(local + offset);
+        var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+        var datetouse = riyadh.toLocaleString("en-US").split(",")[0].split("/");
+        datetouse[0] =
+          datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
+        datetouse[1] =
+          datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
+        if (
+          localStorage.getItem("lng") == null ||
+          localStorage.getItem("lng") == "ar"
+        ) {
+          var datetouse2 =
+            datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
+        } else {
+          var datetouse2 =
+            datetouse[1] + "-" + datetouse[0] + "-" + datetouse[2];
+        }
+        return datetouse2;
+      } else {
+        return No_Data;
+      }
+    },
+    dateConvert2: function (
+      date //date format supported by standards
+    ) {
+      if (date) {
+        var local = date.getTime();
+        var offset = date.getTimezoneOffset() * (60 * 1000);
+        var utc = new Date(local + offset);
+        var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+        var datetouse = riyadh.toLocaleString("en-US").split(",")[0].split("/");
+        datetouse[0] =
+          datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
+        datetouse[1] =
+          datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
+        var datetouse2 = datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1]; //yyyy-mm-dd
+        return datetouse2;
+      } else {
+        return No_Data;
+      }
+    },
+    kFormatter: function (num) {
+      return Math.abs(num) > 999
+        ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + "k"
+        : Math.sign(num) * Math.abs(num);
+    },
   }
 }
 

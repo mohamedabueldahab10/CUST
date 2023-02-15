@@ -880,7 +880,9 @@
 		crrelateditem: "الحقول الخاضعة لطلب التغيير",
     strategicpartnercode:"رمز الشراكة",
     strategicpartnerinfo:"معلومات الشراكة",
-    strategicpartnerimportance:"أهمية الشراكة"
+    strategicpartnerimportance:"أهمية الشراكة",
+    strategicpartnerstart:"تاريخ بدء الشراكة",
+    strategicpartnerend:"تاريخ نهاية الشراكة"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1776,7 +1778,9 @@
     crrelateditem: "Fields Related to this Change Request",
     strategicpartnercode:"Strategic Partnership Code",
     strategicpartnerinfo:"Strategic Partnership Info",
-    strategicpartnerimportance:"strategic Partner Importance"
+    strategicpartnerimportance:"strategic Partner Importance",
+    strategicpartnerstart:"Strategic Partnership Start",
+    strategicpartnerend:"Strategic Partnership End"
   },
 };
 
