@@ -4,7 +4,8 @@ var strategicName = "",
   strategicSubSector,
   strategicStartDate,
   strategicPartnershipDuration,
-  strategicPartnershipStatus;
+  strategicPartnershipStatus,
+  strategicRelatedInitiative;
 
 
 
@@ -72,7 +73,14 @@ var StrategicPS_Home_Info_Request = {
       strategicSubSector = oListItem.get_item("SubSector") || No_Data;
       strategicStartDate = StrategicPS_Home_Info_Request.g.dateConvert2(oListItem.get_item("StartDate")) || No_Data;
       strategicPartnershipDuration = oListItem.get_item("Duration") || No_Data;
-      strategicPartnershipStatus = oListItem.get_item("Status") || 'nodata'
+      strategicPartnershipStatus = oListItem.get_item("Status") || 'nodata';
+      strategicRelatedInitiative = oListItem.get_item("RelatedInitiative") || No_Data;
+
+
+      if(strategicSubSector && strategicSubSector != No_Data){
+        Get_PartnerShip_Representative.init();
+      }
+
 
       var strategicsectorarr = [];
 
@@ -111,7 +119,12 @@ var StrategicPS_Home_Info_Request = {
         strategicPartnershipDuration += isArabic ? " شهرا " : "  Months ";
       }
 
+      if (strategicRelatedInitiative && strategicRelatedInitiative != No_Data) {
+        Get_RelatedInitiative.init();
+      }
 
+  
+      
       card1.push(
         '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
         '<div class="d-inline-flex flex-row align-items-center">' +
@@ -170,9 +183,9 @@ var StrategicPS_Home_Info_Request = {
         '<div class="d-inline-flex flex-column mx-2">' +
         '<h3 data-trans-relatedinitiative class="Resources black initiativeProjHomeInfoTitleStyle"></h3>' +
         '<span class="des-13 overflow-ellipsis-black" ><span class="initiativeProjHomeInfoValueStyle" id="relatedinit" style="cursor:pointer">' +
-        "projectRelatedInitiative" +
+        strategicRelatedInitiative +
         '</span><span class="tooltiptextblack" id="relatedinitchild">' +
-        "projectRelatedInitiative" +
+        strategicRelatedInitiative +
         "</span></span>" +
         "</div>" +
         "</div>" +
@@ -205,6 +218,9 @@ var StrategicPS_Home_Info_Request = {
       );
 
     }
+
+
+
 
     $(".project-details-ctx .card.h-100").html(card1.join("")); // attaching card 1
 
@@ -297,18 +313,89 @@ var StrategicPS_Home_Info_Request = {
 }
 
 
-
-
-
-
-
-
-
-
-
-
 var checkHomeStatusHtml = setInterval(function () {
   StrategicPS_Home_Info_Request.preinit();
 }, 1000);
 
 
+var Get_RelatedInitiative = {
+  init: function () {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("Initiatives");
+    var camlQuery = new SP.CamlQuery();
+
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Title\" /><Value Type=\"Text\">" +
+      strategicRelatedInitiative +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+    );
+    Get_RelatedInitiative.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(Get_RelatedInitiative.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Get_RelatedInitiative.onSuccess),
+      Function.createDelegate(this, Get_RelatedInitiative.onError)
+    );
+  },
+  onSuccess: function (sender, args) {
+    var collListItem = Get_RelatedInitiative.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    var initName = "";
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      initName = oListItem.get_item("Name") || No_Data;
+    }
+    $("#relatedinit").html(initName);
+    $("#relatedinitchild").html(initName);
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  g: {},
+};
+
+var Get_PartnerShip_Representative = {
+  init: function () {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("Internal Entities");
+    var camlQuery = new SP.CamlQuery();
+
+    camlQuery.set_viewXml(
+      "<View><Query><Where><Eq><FieldRef Name=\"Title\" /><Value Type=\"Text\">" + strategicSubSector + "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+    );
+
+    Get_PartnerShip_Representative.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(Get_PartnerShip_Representative.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Get_PartnerShip_Representative.onSuccess),
+      Function.createDelegate(this, Get_PartnerShip_Representative.onError)
+    );
+  },
+  onSuccess: function (sender, args) {
+    var collListItem = Get_PartnerShip_Representative.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    var partnershipRepresentative = "";
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      partnershipRepresentative = oListItem.get_item("PartnershipRepresentative")? oListItem.get_item("PartnershipRepresentative").get_lookupValue() : No_Data;
+    }
+
+    $(".project-info-ctx .media-body:nth-of-type(1) .icon-user > .user-name" ).text(
+      partnershipRepresentative.split(" ")
+        .map((word) => word[0])
+        .join(".")
+    );
+    $(".project-info-ctx .media-body:nth-of-type(1) p.fnt-14.reg.mx-3").text(
+      partnershipRepresentative
+    );
+
+  
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  g: {},
+}
