@@ -460,8 +460,12 @@ window.ListInfo = {
 
               end.setMonth(end.getMonth() + duration)
 
-              console.log(start,"start")
-              console.log(end,"end")
+             
+              start = Dynamic_Data_Request.g.convertdate(start);
+              end = Dynamic_Data_Request.g.convertdate(end);
+              console.log(start, "start")
+              console.log(end, "end")
+              $(`#${targetElement}`).val(end)
 
               // const date2 = new Date(BaselineFinishDate);
               // const diffTime = Math.abs(date2 - date1);
