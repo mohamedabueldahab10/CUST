@@ -90,6 +90,10 @@ if (window.location.href.indexOf("PCODE=") > -1) {
   ICODE = window.location.href.split("ICODE=")[1].split("&")[0];
   PCODE_STRING = "&ICODE=" + ICODE;
 }
+else if (window.location.href.indexOf("STCODE=") > -1) {
+  STCODE = window.location.href.split("STCODE=")[1].split("&")[0];
+  PCODE_STRING = "&STCODE=" + STCODE;
+}
 //determinig json file name
 if (isNew) {
   JSON_File_Name =
