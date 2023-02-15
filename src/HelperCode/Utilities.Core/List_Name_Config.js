@@ -446,6 +446,7 @@ var ListArray = [
 		TitleEn: "Achievements",
 		projnav: "Project Navigation",
 		subfolder: true,
+		projectrelated:true
 	},
 	{
 		strategicpartnershipsvendors: "SP Vendors",
@@ -454,6 +455,7 @@ var ListArray = [
 		TitleEn: "Srategic Parternship Vendors",
 		projnav: "Project Navigation",
 		subfolder: true,
+		projectrelated:true
 	},
 	{
 		strategicpartnershipsimpactmeasurement: "SP Impact",
@@ -462,6 +464,7 @@ var ListArray = [
 		TitleEn: "Srategic Parternship Impact Measurement",
 		projnav: "Project Navigation",
 		subfolder: true,
+		projectrelated:true
 	},
 	{
 		strategicpartnershipsachievements: "SP Achievements",
@@ -470,6 +473,7 @@ var ListArray = [
 		TitleEn: "Srategic Parternship Achievements",
 		projnav: "Project Navigation",
 		subfolder: true,
+		projectrelated:true
 	},
 	{
 		coc: "Certifications",
@@ -599,6 +603,8 @@ var ListArray = [
 		TitleEn: "Strategic Partnerships Issues",
 		projnav: "Project Navigation",
 		subfolder: true,
+		projectrelated:true
+		
 	},
 	{
 		strategicpartnershipsmom: "MOM",
@@ -607,6 +613,7 @@ var ListArray = [
 		TitleEn: "Strategic Partnerships MOM",
 		projnav: "Project Navigation",
 		subfolder: true,
+		projectrelated:true
 	},
 	{
 		initiativemom: "MOM",
@@ -631,6 +638,7 @@ var ListArray = [
 		TitleEn: "Initiative Risks",
 		projnav: "Project Navigation",
 		subfolder: true,
+		projectrelated:true
 	},
 	{
 		instrumentexpenditures: "Instrument Expenditures",
