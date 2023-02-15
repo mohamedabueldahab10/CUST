@@ -533,7 +533,7 @@ window.ListingData = {
                 PCODE_STRING = '&PCODE=' + RecordsWithPCode[i].PrCODE;
                 html += '<li class="list-group-item link-arrow">' +
                   '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + PCODE_STRING + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>'
-              } else if (!PCODE && !ICODE) {
+              } else if (!PCODE && !ICODE && !STCODE) {
                 html += '<li class="list-group-item link-arrow">' +
                   '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + PCODE_STRING + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>'
               } else if (ICODE) {
@@ -541,8 +541,9 @@ window.ListingData = {
                   '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&ICODE=" + ICODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>'
               }
               else if (STCODE){
+                debugger
                 html += '<li class="list-group-item link-arrow">' +
-                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&STCODE=" + STCODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>'
+                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&STCODE=" + UserSTCode + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>'
               }
               else if (ICODE && listkey == 'initiativemilestones') {
                 html += '<li class="list-group-item link-arrow">' +
