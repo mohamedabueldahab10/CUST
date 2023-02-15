@@ -7,10 +7,10 @@ var isuploaddone = 0,
   folderdirectory,
   Documents_Library;
 window.IdeaId;
-var STCODE = '';
-if (window.location.href.includes("STCODE")) {
-  STCODE = window.location.href.split('STCODE=')[1].split('&')[0];
-}
+// var STCODE = '';
+// if (window.location.href.includes("STCODE")) {
+//   STCODE = window.location.href.split('STCODE=')[1].split('&')[0];
+// }
 var projectManagerPickedToProjectCenter = '';
 
 var kpiName = '', kpiType = '', kpiSector = '', kpiSubSector = '', kpiMainGoalRelated = '', kpiSubGoalRelated = '', kpiPortfolio = '', kpiPerformanceAnalysis = '', kpiYearPicked = '', kpiMidPicked = '', kpiQuarterPicked = '', kpiMonthPicked = '', kpiPeriodTypeUpdate = '';
@@ -487,8 +487,8 @@ window.New_Data_Submit = {
     else if (ICODE && listkey != "initiatives") {
       New_Data_Submit.g.oListItem.set_item("InitiativeCode", ICODE);
     }
-    else if (STCODE && listkey != "strategicpartnerships") {
-      New_Data_Submit.g.oListItem.set_item("StrategicPartnershipCode", STCODE);
+    else if (UserSTCode && listkey != "strategicpartnerships") {
+      New_Data_Submit.g.oListItem.set_item("StrategicPartnershipCode", UserSTCode);
     }
     if (listkey == "projects") {
       // console.log('Phases_Data_Request.g.PhasesArray[0]', Phases_Data_Request.g.PhasesArray[0]);

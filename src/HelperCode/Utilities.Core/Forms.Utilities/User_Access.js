@@ -5018,6 +5018,30 @@ var Access_Project_Info_Request = {
               ""
             );
           } 
+          else {
+            //
+            $(".page-title").html(
+              '<a href="' +
+              _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/StrategicPartnershipHome.aspx?STCODE=" +
+              UserSTCode +
+              '">' +
+              //
+              StrategicPartnershipTitle +
+              "</a>"
+            );
+            $(".title-item:first-child").html(
+              '<a href="' +
+              _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/Listing.aspx?ListKey=" +
+              USERlistkey +
+              "&STCODE=" +
+              UserSTCode +
+              '">' +
+              USERPageTitle +
+              ""
+            );
+          }
         } 
         else {
           if (
