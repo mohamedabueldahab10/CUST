@@ -65,7 +65,7 @@ var StrategicPS_Home_Info_Request = {
   onSuccess: function (sender, args) {
     var collListItem = StrategicPS_Home_Info_Request.g.collListItem;
     StrategicPS_Home_Info_Request.g.listItemEnum = collListItem.getEnumerator();
-
+    debugger
     var card1 = [];
 
     while (StrategicPS_Home_Info_Request.g.listItemEnum.moveNext()) {
@@ -80,7 +80,7 @@ var StrategicPS_Home_Info_Request = {
         StrategicPS_Home_Info_Request.g.STCODE
       );
 
-
+debugger
       strategicName = oListItem.get_item("Name") || No_Data;
       strategicCode = oListItem.get_item("Title") || No_Data;
       strategicSector = oListItem.get_item("Sector") || No_Data;
@@ -98,7 +98,7 @@ var StrategicPS_Home_Info_Request = {
 
       var strategicsectorarr = [];
 
-      if (localStorage.getItem("Dynamo_Internal Entities") != null) {
+      if (localStorage.getItem("Dynamo_Internal Entities") != null && strategicSector != No_Data) {
         strategicsectorarr = JSON.parse(
           localStorage.getItem("Dynamo_Internal Entities")
         );
@@ -114,7 +114,7 @@ var StrategicPS_Home_Info_Request = {
       }
       var strategicSubsectorarr = [];
 
-      if (localStorage.getItem("Dynamo_Internal Entities") != null) {
+      if (localStorage.getItem("Dynamo_Internal Entities") != null  && strategicSubSector != No_Data) {
         strategicSubsectorarr = JSON.parse(
           localStorage.getItem("Dynamo_Internal Entities")
         );
