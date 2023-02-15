@@ -12,75 +12,42 @@ var Information_Form = [
         type: 'string',
         validation: 'required',
       },
-      // {
-      //   InternalName: 'Sector',
-      //   DisplayName: 'القطاع',
-      //   DisplayNameEn: 'Sector',
-      //   type: 'lookup',
-      //   validation: 'required',
-      //   source: 'Internal Entities',
-      //   isSector: 'True',
-      //   EntityType: 'Sector',
-      //   // "source":"SOs",
-      //   Dispfieldkey: 'Name',
-      //   DispfieldkeyEn: 'NameEn',
-      //   valfieldkey: 'Title',
-      // },
-      // {
-      //   InternalName: 'SubSector',
-      //   DisplayName: 'الوكالة',
-      //   DisplayNameEn: 'Deputyship',
-      //   type: 'lookup',
-      //   source: 'Internal Entities',
-      //   isSector: 'True',
-      //   EntityType: 'Department',
-      //   Dispfieldkey: 'Name',
-      //   DispfieldkeyEn: 'NameEn',
-      //   // "source":"SOs",
-      //   valfieldkey: 'Title',
-      //   validation: 'required',
-      // },
-
       {
-        InternalName: 'Sector',
-        DisplayName: 'القطاع',
-        DisplayNameEn: 'Sector',
-        type: 'lookupWithQuery',
-        queryField: 'EntityType',
-        queryFieldType: 'dropdownValues', //ex: "Choice"
-        queryFieldValue: 'Sector',
-        source: 'Internal Entities',
-        // "state": "disabled",
-        Dispfieldkey: 'Name',
-        DispfieldkeyEn: 'NameEn',
-        valfieldkey: 'Title',
-        validation: 'required',
-        // security: {
-        //     groups: [
-        //         'EPMO', 'System Admin Group'
-        //     ]
-        // },
-      },
-      {
-        InternalName: 'SubSector',
-        DisplayName: 'الوكالة المالكة',
-        DisplayNameEn: 'Departments',
-        type: 'lookup',
-        //from other list:
-        source: 'Internal Entities',
-        isSector: 'True',
-        EntityType: 'Department',
-        Dispfieldkey: 'Name',
-        DispfieldkeyEn: 'NameEn',
-        valfieldkey: 'Title',
-        validation: 'required',
-        // security: {
-        //     groups: [
-        //         'EPMO', 'System Admin Group'
-        //     ]
-        // },
-      },
+                "InternalName": "Sector",
+                "DisplayName": "القطاع",
+                "DisplayNameEn": "Sector",
+                "type": "lookupWithQuery",
+                "queryField": "EntityType",
+                "queryFieldType": "dropdownValues", //ex: "Choice"
+                dontSubmit: true,
+                "queryFieldValue": "Sector",
+                dynamic: "parent",
+                "source": "Internal Entities",
+                // "state": "disabled",
+                "Dispfieldkey": "Name",
+                "DispfieldkeyEn": "NameEn",
+                "valfieldkey": "Title",
+                "validation": "required"
+            },
+            {
+                "InternalName": "SubSector",
+                "DisplayName": "الوكالات",
+                "DisplayNameEn": "Departments",
+                "type": "lookup",
+                //from other list:
+                "source": "Internal Entities",
+                // "isSector": "True",
+                // "EntityType": "Department",
+                "Dispfieldkey": "Name",
+                "DispfieldkeyEn": "NameEn",
+                "valfieldkey": "Title",
+                "validation": "required",
+                "isRelatedToParent":true, // to show parent value depends on child like sector and subsector
+                dynamic: "Sector", //InternalName Of Parent field
+                filterField: "ParentEntity",//InternalName Of Parent field
+                filterFieldType: "Text",//Type In Sharepoint List for Parent field
 
+            },
       {
         InternalName: 'PartnershipType',
         DisplayName: 'نوع الشراكة',
@@ -200,18 +167,22 @@ var Information_Form = [
         DisplayNameEn: 'Start Date',
         type: 'datetime',
         validation: 'required',
-        // type: 'datetimetoparent',
-        // listname: 'Projects',
-        // startinternalname: 'BaselineStartDate',
-        // endinternalname: 'BaselineFinishDate',
-        max: 'FinishDate',
       },
       {
         InternalName: 'Duration',
         DisplayName: 'مدة الشراكة (شهر)',
         DisplayNameEn: 'Duration (Month)',
-        type: 'float',
+        type: 'floatDuration',
+        sourceelementdate:"StartDate",
+        targetelementdate:"FinishDate",
         validation: 'required',
+      },
+      {
+        InternalName: 'FinishDate',
+        DisplayName: 'تاريخ نهاية الشراكة', 
+        DisplayNameEn: 'Finish Date',
+        type: 'datetime',
+        state: 'disabled',
       },
       {
         InternalName: 'NoticePeriod',

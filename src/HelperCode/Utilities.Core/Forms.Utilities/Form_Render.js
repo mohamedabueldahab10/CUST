@@ -444,6 +444,32 @@ window.ListInfo = {
             $(`#${amountElement}`).val(amount);
             $(`#${taxElement}`).val(tax);
           });
+          ////////////////////////////// calculate the end date based on start date and duration
+
+          $("input.autoEndDate").keyup(function (event) {
+            debugger
+            var duration = event.target.value;
+            var sourceElement = $(this).data('sourceelementdate');
+            var sourceElementValue = $(`#${sourceElement}`).val();
+            var targetElement = $(this).data('targetelementdate');
+
+            if (sourceElementValue && duration) {
+              duration = Number(duration)
+              let start = new Date(sourceElementValue);
+              let end = new Date(start);
+
+              end.setMonth(end.getMonth() + duration)
+
+              console.log(start,"start")
+              console.log(end,"end")
+
+              // const date2 = new Date(BaselineFinishDate);
+              // const diffTime = Math.abs(date2 - date1);
+              // const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+              // New_Data_Submit.g.oListItem.set_item("BaselineDuration", diffDays);
+            }
+
+          })
 
 
           ///////////////////////////////
@@ -1827,6 +1853,80 @@ window.ListInfo = {
           '"' +
           'data-targetelementamount="' +
           element.targetelementamount +
+          '"' +
+          " " +
+          element.validation +
+          ">" +
+          "<span data-trans-" +
+          Errmsgkey +
+          ' class="errMsgField Resources"></span>' +
+          '<div class="inputInfo ' +
+          isexist +
+          '">' +
+          descPhrase +
+          "</div>" +
+          "</div>";
+        OnSuccess(flag, htmlBody);
+        break;
+
+      case "floatDuration":
+        htmlBody =
+          '<div class="col-md-6 CFIELD ' +
+          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          " " +
+          element.className +
+          ' " ' +
+          thistip +
+          " " +
+          hidestagesIDs +
+          " " +
+          editableBy +
+          " " +
+          showstagesIDs +
+          "  " +
+          disablestagesIDs +
+          "  " +
+          enablestagesIDs +
+          "   " +
+          isWfhidestagesIDs +
+          " " +
+          requireOnWfTaskstagesIDs +
+          " " +
+          isWfshowstagesIDs +
+          "  " +
+          isWfdisablestagesIDs +
+          "  " +
+          isWfenablestagesIDs +
+          '        data-groups="' +
+          groups +
+          '" style="display:' +
+          element.display +
+          '">' +
+          '<label for="' +
+          element.InternalName +
+          '" ' +
+          element.validation +
+          ">" +
+          displayName +
+          "</label>" +
+          "<input " +
+          ToggleName +
+          " " +
+          RequiredName +
+          ' type="float" placeholder="' +
+          displayName +
+          '" ' +
+          dynamic +
+          ' class="form-control SPIField autoEndDate" id="' +
+          element.InternalName +
+          '" ' +
+          element.state +
+          " " +
+          'data-targetelementdate="' +
+          element.targetelementdate +
+          '"' +
+          'data-sourceelementdate="' +
+          element.sourceelementdate +
           '"' +
           " " +
           element.validation +
@@ -3501,7 +3601,7 @@ window.ListInfo = {
               customQuery =
                 "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Text\">strategically</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
             }
-          } 
+          }
           // else if (isVROP) {
           //   if (element.source == "MainKPI") {
           //     customQuery =
