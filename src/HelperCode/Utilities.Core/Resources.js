@@ -823,13 +823,11 @@
     kpiresulttext: "بيانات المؤشر",
     sublevel2: "فرعي مستوى ثاني",
     sublevel3: "فرعي مستوى ثالث",
-    projectprioritytooltip:
-      "هذا الحقل يبين أهمية المشروع (مرتفعة -متوسطة - منخفضة)",
-    initiativetypetooltip:
-      "هذا الحقل يبين نوع المبادرة (استراتيجية -رؤية - سوق عمل)",
+    projectprioritytooltip: "هذا الحقل يبين أهمية المشروع (مرتفعة -متوسطة - منخفضة)",
+    initiativetypetooltip:"هذا الحقل يبين نوع المبادرة (استراتيجية -رؤية - سوق عمل)",
     initiativestatustooltip: "هذا الحقل يبين حالة المبادرة",
     importantlinks: "روابط مهمة",
-
+    strategicpartnershiptooltip:"(هذا الحقل يبين حالة الشراك (سارية , سارية-مجددة , غير سارية",
     allgroups: "كل المجموعات",
     administratorsforprojectwebapp: "المسؤولون عن تطبيق موقع المشروع",
     itsteeringcommittee: "اللجنة التوجيهية لتكنولوجيا المعلومات",
@@ -885,7 +883,8 @@
     strategicpartnerend:"تاريخ نهاية الشراكة",
     strategicpartnershippioneer:"رائد الشراكة",
     strategicpartnershipduration:"مدة الشراكة",
-    ongoing:"جارية"
+    ongoing:"جارية",
+    deliverablemilestoneschedual:"المخرجات - المعالم"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1729,7 +1728,7 @@
     initiativetypetooltip:
       "This Field show the type of this initiative (Strategic or Vision or LMS )",
     initiativestatustooltip: "This Field show the type of this initiative",
-
+    strategicpartnershiptooltip:"This Field show the Status of this Strategic Partnership (Standard or Repeated-Standard or Not Standard",
     allgroups: "All Groups",
     administratorsforprojectwebapp: "Administrators for Project Web App",
     itsteeringcommittee: "IT Steering Committee",
@@ -1786,7 +1785,8 @@
     strategicpartnerend:"Strategic Partnership End",
     strategicpartnershippioneer:"Strategic PartnerShip Pioneer",
     strategicpartnershipduration:"Strategic Partnership Duration",
-    ongoing:"On going"
+    ongoing:"On going",
+    deliverablemilestoneschedual:"Deliverables - Milestones"
   },
 };
 

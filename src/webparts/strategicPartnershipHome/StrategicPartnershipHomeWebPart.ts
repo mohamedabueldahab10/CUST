@@ -360,7 +360,7 @@ export default class StrategicPartnershipHomeWebPart extends BaseClientSideWebPa
                   <div
                     class="sched-head card-header bg-white border-bottom px-4 py-4 justify-content-between"
                   >
-                    <h2 data-trans-PTitle2 class="black Resources"></h2>
+                    <h2 data-trans-deliverablemilestoneschedual class="black Resources"></h2>
                   </div>
                   <div style="display:none" class="card-body project-delivery-info border-bottom pb-4 px-0 fromTimeLine">
                     <div class="delivery-timeline mx-4 py-3">
@@ -799,7 +799,7 @@ export default class StrategicPartnershipHomeWebPart extends BaseClientSideWebPa
                             <span class="sectionsideicontooltip">
                               <img src="${important}" class="" />
                               <p
-                                data-trans-projectprioritytooltip
+                                data-trans-strategicpartnershiptooltip
                                 class="Resources tooltipbox"
                               ></p>
                             </span>
