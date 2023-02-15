@@ -714,7 +714,7 @@ export default class StrategicPartnershipHomeWebPart extends BaseClientSideWebPa
   
                     <li class="nav-item">
                       <a
-                        data-trans-PTitle10
+                        data-trans-inptitle10
                         class="nav-link Resources"
                         id="pills-fifth-tab"
                         data-toggle="pill"
@@ -724,18 +724,7 @@ export default class StrategicPartnershipHomeWebPart extends BaseClientSideWebPa
                         aria-selected="false"
                       ></a>
                     </li>
-                    <li class="nav-item">
-                      <a
-                        data-trans-PTitle11
-                        class="nav-link Resources"
-                        id="pills-sixth-tab"
-                        data-toggle="pill"
-                        href="#pills-sixth"
-                        role="tab"
-                        aria-controls="pills-sixth"
-                        aria-selected="false"
-                      ></a>
-                    </li>
+        
                   </ul>
                   <div class="tab-content" id="pills-tabContent">
                     <div
@@ -783,15 +772,7 @@ export default class StrategicPartnershipHomeWebPart extends BaseClientSideWebPa
                     >
                       <ul class="list-group w-100 border-custom"></ul>
                     </div>
-                    <div
-                      style="max-height: 300px; overflow-y: auto"
-                      class="tab-pane fade px-4"
-                      id="pills-sixth"
-                      role="tabpanel"
-                      aria-labelledby="pills-sixth-tab"
-                    >
-                      <ul class="list-group w-100 border-custom"></ul>
-                    </div>
+              
                   </div>
                 </div>
               </div>

@@ -237,7 +237,7 @@ var StrategicPS_Home_Info_Request = {
 
     // calling internal list functions
     Partnership_Issues_Info_Request.init();
-
+    Partnership_Deliverables_Info_Request.init();
     //
 
 
@@ -432,7 +432,7 @@ var Partnership_Issues_Info_Request = {
     var itemhtml = [
       '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
       _spPageContextInfo.webAbsoluteUrl +
-      "/sitepages/new.aspx?ListKey=issues&STCODE=" +
+      "/sitepages/new.aspx?ListKey=strategicpartnershipsissues&STCODE=" +
       StrategicPS_Home_Info_Request.g.STCODE +
       '"><i class="icon-plus"></i></a></li>',
     ],
@@ -455,7 +455,7 @@ var Partnership_Issues_Info_Request = {
         '<li class="list-group-item link-arrow px-0">' +
         '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
         _spPageContextInfo.webAbsoluteUrl +
-        "/sitepages/View.aspx?ListKey=issues&IID=" +
+        "/sitepages/View.aspx?ListKey=strategicpartnershipsissues&IID=" +
         itemID +
         "&STCODE=" +
         itemStrategicCode +
@@ -502,4 +502,199 @@ var Partnership_Issues_Info_Request = {
   // Global variables
   g: {},
 
+}
+
+
+// var Partnership_Risks_Info_Request = {
+//   init: function () {
+//     var clientContext = new SP.ClientContext.get_current();
+//     var oList = clientContext.get_web().get_lists().getByTitle("Risks");
+//     var camlQuery = new SP.CamlQuery();
+//     camlQuery.set_viewXml(
+//       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"StrategicPartnershipCode\" /><Value Type=\"Text\">" +
+//       StrategicPS_Home_Info_Request.g.STCODE +
+//       "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+//     );
+//     Partnership_Risks_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+//     clientContext.load(Partnership_Risks_Info_Request.g.collListItem);
+//     clientContext.executeQueryAsync(
+//       Function.createDelegate(this, Partnership_Risks_Info_Request.onSuccess),
+//       Function.createDelegate(this, Partnership_Risks_Info_Request.onError)
+//     );
+//   },
+//   onSuccess: function (sender, args) {
+//     var collListItem = Partnership_Risks_Info_Request.g.collListItem;
+//     var listItemEnum = collListItem.getEnumerator();
+//     var itemhtml = [
+//       '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
+//       _spPageContextInfo.webAbsoluteUrl +
+//       "/sitepages/new.aspx?ListKey=risks&STCODE=" +
+//       StrategicPS_Home_Info_Request.g.STCODE +
+//       '"><i class="icon-plus"></i></a></li>',
+//     ],
+//       itemStrategicCode,
+//       itemStrategicName,
+//       itemStrategicTitle,
+//       itemClosuredate,
+//       itemdateraised;
+
+//     while (listItemEnum.moveNext()) {
+//       var oListItem = listItemEnum.get_current();
+//       itemID = oListItem.get_id();
+//       itemStrategicCode = oListItem.get_item("StrategicPartnershipCode") || No_Data;
+//       itemStrategicName = oListItem.get_item("Name") || No_Data;
+//       itemStrategicTitle = oListItem.get_item("Title") || No_Data;
+//       itemClosuredate = StrategicPS_Home_Info_Request.g.dateConvert(oListItem.get_item("IssueClosureDate"));
+//       itemdateraised = StrategicPS_Home_Info_Request.g.dateConvert(oListItem.get_item("DateRaised"));
+
+//       itemhtml.push(
+//         '<li class="list-group-item link-arrow px-0">' +
+//         '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
+//         _spPageContextInfo.webAbsoluteUrl +
+//         "/sitepages/View.aspx?ListKey=issues&IID=" +
+//         itemID +
+//         "&STCODE=" +
+//         itemStrategicCode +
+//         '">' +
+//         '<div class="d-inline-flex flex-column">' +
+//         '<h3 class="acc-title d-inline-flex black">' +
+//         itemStrategicName +
+//         "</h3>" +
+//         '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
+//         itemStrategicTitle +
+//         "</span>" +
+//         "</div>" +
+//         '<div class="d-inline-flex flex-column mx-2">' +
+//         '<span data-trans-dateraised class="Resources des-13"></span>' +
+//         '<h4 class="text-warning">' +
+//         itemdateraised +
+//         "</h4>" +
+//         "</div>" +
+//         '<div class="d-inline-flex flex-column mx-2">' +
+//         '<span data-trans-dateclosure class="Resources des-13"></span>' +
+//         '<h4 class="text-warning">' +
+//         itemClosuredate +
+//         "</h4>" +
+//         "</div>" +
+//         '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
+//         "</div>" +
+//         "</a>" +
+//         "</li>"
+//       );
+//     }
+
+//     if (itemhtml.length == 1) {
+//       itemhtml.push("<h3>" + No_Data + "</h3>");
+//     }
+//     $("div#pills-first > ul.list-group").html(itemhtml.join(""));
+//     changeResources();
+
+//   },
+//   onError: function (sender, args) {
+//     console.log(
+//       "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+//     );
+//   },
+//   // Global variables
+//   g: {},
+
+// }
+
+
+var Partnership_Deliverables_Info_Request ={
+  init: function () {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("Deliverables");
+    var camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"StrategicPartnershipCode\" /><Value Type=\"Text\">" +
+      StrategicPS_Home_Info_Request.g.STCODE +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+    );
+    Partnership_Deliverables_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(Partnership_Deliverables_Info_Request.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Partnership_Deliverables_Info_Request.onSuccess),
+      Function.createDelegate(this, Partnership_Deliverables_Info_Request.onError)
+    );
+  },
+  onSuccess: function (sender, args) {
+    var collListItem = Partnership_Deliverables_Info_Request.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    var itemhtml = [
+      '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
+      _spPageContextInfo.webAbsoluteUrl +
+      "/sitepages/new.aspx?ListKey=strategicpartnershipsdeliverables&STCODE=" +
+      StrategicPS_Home_Info_Request.g.STCODE +
+      '"><i class="icon-plus"></i></a></li>',
+    ],
+      itemStrategicCode,
+      itemStrategicName,
+      itemStrategicTitle,
+      itemDeliveredDate,
+      itemPlannedFinishDate;
+
+      while (listItemEnum.moveNext()) {
+        var oListItem = listItemEnum.get_current();
+        itemID = oListItem.get_id();
+        itemStrategicCode = oListItem.get_item("StrategicPartnershipCode") || No_Data;
+        itemStrategicName = oListItem.get_item("Name") || No_Data;
+        itemStrategicTitle = oListItem.get_item("Title") || No_Data;
+        itemDeliveredDate = StrategicPS_Home_Info_Request.g.dateConvert(oListItem.get_item("DeliveredDate"));
+        itemPlannedFinishDate = StrategicPS_Home_Info_Request.g.dateConvert(oListItem.get_item("PlannedFinishDate"));
+
+
+        itemhtml.push(
+          '<li class="list-group-item link-arrow px-0">' +
+          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
+          _spPageContextInfo.webAbsoluteUrl +
+          "/sitepages/View.aspx?ListKey=strategicpartnershipsdeliverables&IID=" +
+          itemID +
+          "&STCODE=" +
+          itemStrategicCode +
+          '">' +
+          '<div class="d-inline-flex flex-column">' +
+          '<h3 class="acc-title d-inline-flex black">' +
+          itemStrategicName +
+          "</h3>" +
+          '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
+          itemStrategicTitle +
+          "</span>" +
+          "</div>" +
+          '<div class="d-inline-flex flex-column mx-2">' +
+          '<span data-trans-pattr31 class="Resources des-13"></span>' +
+          '<h4 class="text-warning">' +
+          itemDeliveredDate +
+          "</h4>" +
+          "</div>" +
+          '<div class="d-inline-flex flex-column mx-2">' +
+          '<span data-trans-plannedcompleteddate class="Resources des-13"></span>' +
+          '<h4 class="text-warning">' +
+          itemPlannedFinishDate +
+          "</h4>" +
+          "</div>" +
+          '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
+          "</div>" +
+          "</a>" +
+          "</li>"
+        );
+
+      }
+
+      if (itemhtml.length == 1 || itemhtml.length == 0) {
+        itemhtml.push("<h3>" + No_Data + "</h3>");
+      }
+      $("div#pills-fourth > ul.list-group").html(itemhtml.join(""));
+
+      changeResources();
+
+
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  // Global variables
+  g: {},
 }
