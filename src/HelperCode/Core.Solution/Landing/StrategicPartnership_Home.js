@@ -7,6 +7,7 @@ var strategicName = "",
   strategicPartnershipStatus,
   strategicRelatedInitiative,
   strategicDeliverablesArr = [],
+  strategicMilestonesArr = [],
   lstMonthCLicked = "",
   milestonelstMonthClicked = "";
 
@@ -722,16 +723,11 @@ var Partnership_Deliverables_Info_Request = {
       itemDeliveredDate = StrategicPS_Home_Info_Request.g.dateConvert(oListItem.get_item("DeliveredDate"));
       itemPlannedFinishDate = StrategicPS_Home_Info_Request.g.dateConvert(oListItem.get_item("PlannedFinishDate"));
 
-
       strategicDeliverablesArr.push({
         name: itemStrategicName,
         date: itemDeliveredDate,
         Code: itemStrategicTitle
       });
-
-
-
-
 
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
@@ -826,14 +822,9 @@ var Partnership_Deliverables_Info_Request = {
       Partnership_Deliverables_Info_Request.g.dltimeline($(this).val());
 
     });
-
-
     //
 
-
-
     changeResources();
-
 
   },
   onError: function (sender, args) {
@@ -987,6 +978,14 @@ var Partnership_Milestones_Info_Request = {
       itemPlannedDate = StrategicPS_Home_Info_Request.g.dateConvert(oListItem.get_item("PlannedDate"));
 
 
+      strategicMilestonesArr.push({
+        name: itemStrategicName,
+        date: itemPlannedDate,
+        Code: itemStrategicCode,
+      })
+
+
+
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
         '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
@@ -1027,7 +1026,57 @@ var Partnership_Milestones_Info_Request = {
     if (itemhtml.length == 1 || itemhtml.length == 0) {
       itemhtml.push("<h3>" + No_Data + "</h3>");
     }
+
     $("div#pills-fifth > ul.list-group").html(itemhtml.join(""));
+
+    // milestone dropdown schedual section
+    $(".fromMilestones select#inputYear").on("change", function () {
+      $(`#month-${milestonelstMonthClicked}`).css("background", "#F0F3F8");
+      $(".tlContainer").html(""); // to reset the data when change on year
+      Partnership_Milestones_Info_Request.g.dltimeline($(this).val());
+    });
+
+    var sdlyear = "",
+      iscuryear = true;
+    var yearExcist = false;
+    var MilestonesYears = []
+
+    $(".fromMilestones select#inputYear").html("");
+
+    $(".fromMilestones select#inputYear").append(
+      `<option data-trans-year class="Resources" value=""></option>`
+    );
+
+    strategicMilestonesArr.forEach(function (dl, i) {
+      //appending years
+      var dataYear = isArabic ? dl.date.split("-")[0] : dl.date.split("-")[2];
+
+
+      if (sdlyear != dataYear) {
+        if (dataYear == new Date().getFullYear()) {
+          iscuryear = true;
+        }
+        else {
+          iscuryear = false;
+        }
+        if (!MilestonesYears.includes(dataYear)) {
+          $(".fromMilestones select#inputYear").append(
+            new Option(dataYear, dataYear, iscuryear, iscuryear)
+          );
+        }
+
+        MilestonesYears.push(dataYear)
+        yearExcist = true;
+      }
+      sdlyear = dataYear;
+    });
+
+    if (!yearExcist) {
+      // to append no data in drop down when there is no data
+      $(".fromMilestones select#inputYear").append(
+        new Option(No_Data, No_Data, iscuryear, iscuryear)
+      );
+    }
 
     changeResources();
 
@@ -1039,5 +1088,105 @@ var Partnership_Milestones_Info_Request = {
     );
   },
   // Global variables
-  g: {},
+  g: {
+
+    dltimeline: function (year) {
+      $('.fromTimeLine').hide();
+      $('.fromTimeLine .milestone-item[data-year=' + year + ']').show();
+      $('.fromTimeLine .time-box').remove();
+      var dlyear = '',
+        dlmonth = '',
+        curdl = $('body'),
+        dlhtml = '',
+        datetoshow = '';
+      //click new timeline
+      var monthsArr = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'] // handle the click on all months
+      var istimelineData = false // check if there is a data in time line or no
+
+      $('.tlContainer').html('') // container of data
+
+      monthsArr.forEach(el => {
+        $(`.fromMilestones .month-list-ctx #month-${el}`).click(function () {
+          istimelineData = false
+          $(`.fromMilestones .month-list-ctx #month-${milestonelstMonthClicked}`).css('background', '#F0F3F8') // return the previous background color to the origin color
+          var dateTitle = '', nameTitle = '';
+          if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+            dateTitle = 'التاريخ'
+            nameTitle = 'الاسم'
+          } else {
+            dateTitle = 'Date'
+            nameTitle = 'Name'
+          }
+          dlhtml = '<table style="width:100%">'
+          dlhtml += '<tr class="timeLineTableHeader"><th style="border:1px solid #ddd">' + dateTitle + '</th><th style="border:1px solid #ddd">' + nameTitle + '</th></tr>'
+          $('.tlContainer').html('')
+          $(`.fromMilestones .month-list-ctx #month-${el}`).css('background', '#D0D0D0') // change background color when click on month
+          milestonelstMonthClicked = el
+          strategicMilestonesArr.forEach(function (dl, i) {
+            // datetoshow = dl.date.split('/'), datetoshow = datetoshow[0] + '/' + datetoshow[1];
+            var dataYear = isArabic ? dl.date.split('-')[0] : dl.date.split('-')[2];
+            var dataDay = isArabic ? dl.date.split('-')[2] : dl.date.split('-')[0];
+            datetoshow = dl.date.split('-'),
+              isArabic ? datetoshow = datetoshow[1] + '-' + dataDay : dataDay + '-' + datetoshow[1];
+            dlyear = dataYear;
+
+            if (dlyear == year) {
+              if (dl.date.split('-')[1] == 10) { // to handle the data on october month
+                if ((el == dl.date.split('-')[1])) {
+                  istimelineData = true
+                  dlhtml += '<tr><td class="p-date" style="border:1px solid #ddd">' + datetoshow + '</td>' +
+                    '<td class="p-title" style="border:1px solid #ddd">' + dl.name + '</td></tr>';
+                }
+              } else {
+                if ((el == dl.date.split('-')[1].replace('0', ''))) {
+                  istimelineData = true
+                  dlhtml += '<tr><td class="p-date" style="border:1px solid #ddd">' + datetoshow + '</td>' +
+                    '<td class="p-title" style="border:1px solid #ddd">' + dl.name + '</td></tr>';
+                }
+              }
+            }
+            if (i == strategicMilestonesArr.length - 1) {
+              dlhtml += '</table>'
+              $('.tlContainer').append(dlhtml)
+              if (!istimelineData) {
+                $('.timeLineTableHeader').css('display', 'none') // hide the table if there is no data
+                $(".fromMilestones .tlContainer").html(`<p style="text-align:center">${No_Data}</p>`)
+
+              }
+              $('.fromMilestones .time-box').hover(function () {
+                $('.fromMilestones .delivery-timeline').css('overflow', 'initial');
+              }, function () {
+                $('.fromMilestones .delivery-timeline').css('overflow', 'hidden');
+              });
+            }
+          });
+        });
+      })
+
+      $(`.fromMilestones .month-list-ctx #month-1`).click()
+      $(`.fromMilestones .month-list .monthBadge`).remove()  // to remove star on the month on change to reset
+
+
+      strategicMilestonesArr.forEach(function (dl, i) {
+        var milestoneYear = isArabic
+          ? dl.date.split("-")[0]
+          : dl.date.split("-")[2];
+
+        if (milestoneYear == year) {
+          var targetMonth = ""
+          if (dl.date.split("-")[1] == 10) {
+            targetMonth = dl.date.split("-")[1]
+          } else {
+            targetMonth = dl.date.split("-")[1].replace("0", "")
+          }
+
+          if ($(`.fromMilestones .month-list #month-${targetMonth} > .monthBadge`).length == 0) { // to add star on the month that have value
+            $(`.fromMilestones .month-list #month-${targetMonth}`).prepend(`<span class="monthBadge">*</span>`)
+          }
+        }
+      })
+
+    }
+
+  },
 }
