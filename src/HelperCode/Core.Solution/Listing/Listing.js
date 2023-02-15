@@ -9,6 +9,7 @@ var PQuery = '',
   Filter2 = '',
   PCODE = '',
   ICODE = '',
+  STCODE = '',
   IIDs = '',
   isLoadMore = true,
   FilterChoices = [],
@@ -52,6 +53,9 @@ if (window.location.href.includes("PCODE")) {
 if (window.location.href.includes("ICODE")) {
   ICODE = window.location.href.split('ICODE=')[1].split('&')[0];
 }
+if (window.location.href.includes("STCODE")) {
+  STCODE = window.location.href.split('STCODE=')[1].split('&')[0];
+}
 
 //get SP_ListName and PageTitle from List_Name_Config js
 for (var i = 0; i < ListArray.length; i++) {
@@ -80,6 +84,10 @@ else if (UserICode != null && UserICode != '') {
   // PCODE_STRING = '&PCODE='+PCODE;
   PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In></And></Where></Query></View>';
   PQueryFilteration = '<Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + UserICode + '</Value></Eq>';
+}
+else if(UserSTCode !=null && UserSTCode != ''){
+  PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="StrategicPartnershipCode" /><Values><Value Type="Text">' + UserSTCode + '</Value></Values></In></And></Where></Query></View>';
+  PQueryFilteration = '<Eq><FieldRef Name="StrategicPartnershipCode" /><Value Type="Text">' + UserSTCode + '</Value></Eq>';
 }
 else if (isTasks) {
   PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>';
@@ -438,6 +446,11 @@ window.ListingData = {
             PQueryFilteration = '<In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In>';
           }
         }
+        else if (UserSTCode != null && UserSTCode != '') {
+            PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="StrategicPartnershipCode" /><Values><Value Type="Text">' + UserSTCode + '</Value></Values></In></And></Where></Query></View>';
+            PQueryFilteration = '<In><FieldRef Name="StrategicPartnershipCode" /><Values><Value Type="Text">' + UserSTCode + '</Value></Values></In>';
+          
+        }
         else {
           PQuery = AccessQuery;
         }
@@ -492,7 +505,12 @@ window.ListingData = {
               } else if (listkey == 'initiatives') {
                 html += '<li class="list-group-item link-arrow">' +
                   '<a  style="cursor: pointer;" id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/initiativeHome.aspx?ICODE=" + records[i].Title + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>';
-              } else if (isTasks) {
+              } 
+              else if (listkey=='strategicpartnerships'){
+                html += '<li class="list-group-item link-arrow">' +
+                  '<a  style="cursor: pointer;" id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/StrategicPartnershipHome.aspx?STCODE=" + records[i].Title + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>';
+              }
+              else if (isTasks) {
                 html += '<li class="list-group-item tasksPage ">' + //link-arrow
                   '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="javascript:" onclick="ListingData.g.handleids(\'' + RecordsWithID[i].pcode + '\',\'' + RecordsWithID[i].icode + '\',\'' + RecordsWithID[i].ID + '\',\'' + RecordsWithID[i].tasktype + '\',\'' + RecordsWithID[i].stageid + '\',\'' + RecordsWithID[i].ritemid + '\',\'' + RecordsWithID[i].sourceitemid + '\',\'' + RecordsWithID[i].wfname + '\',\'' + RecordsWithID[i].puid + '\',\'' + RecordsWithID[i].relatedurl + '\')">';
 
@@ -521,6 +539,10 @@ window.ListingData = {
               } else if (ICODE) {
                 html += '<li class="list-group-item link-arrow">' +
                   '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&ICODE=" + ICODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>'
+              }
+              else if (STCODE){
+                html += '<li class="list-group-item link-arrow">' +
+                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&STCODE=" + STCODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>'
               }
               else if (ICODE && listkey == 'initiativemilestones') {
                 html += '<li class="list-group-item link-arrow">' +
@@ -928,9 +950,11 @@ window.ListingData = {
 
 
             //create button and div for filtertation DDLs
-            var HtmlStart = (USERProjRelated.indexOf(listkey) > -1 && PCODE) || (USERProjRelated.indexOf(listkey) == -1 || listkey == 'changerequest' && !PCODE && !ICODE && listkey != 'tasks') ?
+            var HtmlStart = (USERProjRelated.indexOf(listkey) > -1 && PCODE) || (USERProjRelated.indexOf(listkey) == -1 || listkey == 'changerequest' && !PCODE && !ICODE && !STCODE && listkey != 'tasks') ?
               '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + PCODE_STRING + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="ListingData.g.ExportToExcel()"><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>' : ICODE ?
                 '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + "&ICODE=" + ICODE + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="ListingData.g.ExportToExcel()"><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>'
+                : STCODE ?
+                '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + "&STCODE=" + STCODE + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="ListingData.g.ExportToExcel()"><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>'
                 : '';
 
 
@@ -1095,6 +1119,9 @@ window.ListingData = {
       else if (ICODE != null && ICODE != '') {
         PQueryFilteration = '<In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In>';
       }
+      else if (STCODE != null && STCODE != '') {
+        PQueryFilteration = '<In><FieldRef Name="StrategicPartnershipCode" /><Values><Value Type="Text">' + UserSTCode + '</Value></Values></In>';
+      }
       else if (isTasks) {
         console.log("INSIDE ALLL TASK REMOBE")
 
@@ -1163,7 +1190,11 @@ window.ListingData = {
           PQuery = '<View><Query><Where><In><FieldRef Name="ProjectCode" /><Values><Value Type="Text">' + PCODE + '</Value></Values></In></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
         } else if (ICODE != null && ICODE != '') {
           PQuery = '<View><Query><Where><In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
-        } else {
+        } 
+      else if (STCODE != null && STCODE != '') {
+        PQuery = '<View><Query><Where><In><FieldRef Name="StrategicPartnershipCode" /><Values><Value Type="Text">' + UserSTCode + '</Value></Values></In></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
+      } 
+        else {
           if (!isTasks) {
             PQuery = '<View><Query><Where><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>' + PQueryFilteration + '</Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
           }
@@ -1311,7 +1342,7 @@ window.ListingData = {
                 Where_Body_Final = '<Where><And>' + Where_Body + PQueryFilteration + '</And></Where>';
               }
               else {
-                if ((UserICode != null && UserICode != '') || (PCODE != null && PCODE != '')) {
+                if ((UserICode != null && UserICode != '') || (PCODE != null && PCODE != '') || (STCODE != null && STCODE != '')) {
                   Where_Body_Final = '<Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And>' + Where_Body + PQueryFilteration + '</And></And></Where>';
                 }
                 else {
@@ -1514,7 +1545,7 @@ window.ListingData = {
   Get_DDL: {
     init: function () {
       console.log("IN GET DDDL INIT")
-      if (isRoleDataLevelAccess && (!UserICode && !USERPCODE && isEmptyFilter)) {
+      if (isRoleDataLevelAccess && (!UserICode && !UserSTCode && !USERPCODE && isEmptyFilter)) {
         cmlQ = dataLevelAccessQuery;
       } else {
         cmlQ = PQuery;
@@ -1801,7 +1832,7 @@ window.ListingData = {
 
         //////////////////////////////////////////////////////// start handle tab projects
 
-        if (listkey == 'projects' && !PCODE && !ICODE) {
+        if (listkey == 'projects' && !PCODE && !ICODE && !STCODE) {
 
           // projectTypeFilterQuery = '<div style="display:none!important;height:0px!important" class="dropdown "><a href="#" class="dropdown-toggle fnt-14 w-1 black" data-toggle="dropdown" role="button">ProjectTypeQueryAccess</a><div class="dropdown-menu" id="projectTypeQueryAccess">'
           projectTypeFilterQuery = '<div style="display:none!important;height:0px!important" class="dropdown "><a href="#" class="dropdown-toggle fnt-14 w-1 black" data-toggle="dropdown" role="button">ProjectTypeQueryAccess</a><div class="dropdown-menu" id="projectTypeQueryAccess">'
