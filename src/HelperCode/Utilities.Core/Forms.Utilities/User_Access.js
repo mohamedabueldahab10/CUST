@@ -115,6 +115,7 @@ var UserRole,
   USERPName,
   USERIName,
   InitiativeTitle,
+  StrategicPartnershipTitle,
   InitiativeStartDate,
   InitiativeFinishDate,
   USERPID,
@@ -557,18 +558,17 @@ window.userCalls = {
         break;
       case "initiativehome.aspx":
         if (isArabic) {
-          document.title = "تفاصيل المبادرة";
+          // document.title = "تفاصيل المبادرة";
         } else {
           document.title = "Initiative Home";
         }
         break;
-        case "StrategicPartnershipHome.aspx":
+        case "strategicpartnershiphome.aspx":
           if (isArabic) {
             document.title = "تفاصيل الشراكة الاستراتيجية";
           } else {
             document.title = "Strategic Partnership Home";
           }
-          console.log('Ghuuuuuufraaaaaaaaaannnnnnn');
           break;
       case "taskhistory.aspx":
         if (isArabic) {
@@ -4406,6 +4406,9 @@ var Access_Project_Info_Request = {
 
     if (isthereICODE) {
       GetInitiativeTitle_Request.preinit();
+    } 
+    if (isthereSTCODE) {
+      GetStrategicPartnershipTitle_Request.preinit();
     } else {
       window.checkBreadCrumbsStatusHtml = setInterval(function () {
         Access_Project_Info_Request.g.handleBreadcrumbs();
@@ -4992,7 +4995,31 @@ var Access_Project_Info_Request = {
               ""
             );
           }
-        } else {
+        
+        } 
+        else if (isthereSTCODE) {
+          if (window.location.href.indexOf("StrategicPartnership") > -1) {
+            $(".page-title").html(
+              '<a href="' +
+              _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/StrategicPartnershipHome.aspx?STCODE=" +
+              UserSTCode +
+              '">' +
+              StrategicPartnershipTitle +
+              "</a>"
+            );
+            $(".title-item:first-child").html(
+              '<a href="' +
+              _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/Listing.aspx?ListKey=" +
+              USERlistkey +
+              '">' +
+              USERPageTitle +
+              ""
+            );
+          } 
+        } 
+        else {
           if (
             !isInitiativesHomePage &&
             !isTarget &&
@@ -6719,7 +6746,52 @@ var GetInitiativeTitle_Request = {
   },
   g: {},
 };
-//
+
+//getting Related StrategicPartnerships Title
+var GetStrategicPartnershipTitle_Request = {
+  onSuccess: function (sender, args) {
+    var collListItem = GetStrategicPartnershipTitle_Request.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      StrategicPartnershipTitle = oListItem.get_item("Name")
+        ? oListItem.get_item("Name")
+        : UserNo_Data;
+    }
+    window.checkBreadCrumbsStatusHtml = setInterval(function () {
+      Access_Project_Info_Request.g.handleBreadcrumbs();
+    }, 333);
+  },
+  onError: function (sender, args) {
+    //
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  preinit: function () {
+    SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
+      GetStrategicPartnershipTitle_Request.init();
+    });
+  },
+  init: function () {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("Strategic Partnerships");
+    var camlQuery = new SP.CamlQuery();
+
+    camlQuery.set_viewXml(
+      '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
+        UserSTCode +
+        "</Value></Eq></Where></Query></View>"
+    );
+    GetStrategicPartnershipTitle_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(GetStrategicPartnershipTitle_Request.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, GetStrategicPartnershipTitle_Request.onSuccess),
+      Function.createDelegate(this, GetStrategicPartnershipTitle_Request.onError)
+    );
+  },
+  g: {},
+};
 
 // data level access
 function initiateDataLevelAccess() {
