@@ -435,12 +435,64 @@ var Partnership_Issues_Info_Request = {
       "/sitepages/new.aspx?ListKey=issues&STCODE=" +
       StrategicPS_Home_Info_Request.g.STCODE +
       '"><i class="icon-plus"></i></a></li>',
-    ];
+    ],
+      itemStrategicCode,
+      itemStrategicName,
+      itemStrategicTitle,
+      itemClosuredate,
+      itemdateraised;
 
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       itemID = oListItem.get_id();
+      itemStrategicCode = oListItem.get_item("StrategicPartnershipCode") || No_Data;
+      itemStrategicName = oListItem.get_item("Name") || No_Data;
+      itemStrategicTitle = oListItem.get_item("Title") || No_Data;
+      itemClosuredate = StrategicPS_Home_Info_Request.g.dateConvert(oListItem.get_item("IssueClosureDate"));
+      itemdateraised = StrategicPS_Home_Info_Request.g.dateConvert(oListItem.get_item("DateRaised"));
+
+      itemhtml.push(
+        '<li class="list-group-item link-arrow px-0">' +
+        '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
+        _spPageContextInfo.webAbsoluteUrl +
+        "/sitepages/View.aspx?ListKey=issues&IID=" +
+        itemID +
+        "&STCODE=" +
+        itemStrategicCode +
+        '">' +
+        '<div class="d-inline-flex flex-column">' +
+        '<h3 class="acc-title d-inline-flex black">' +
+        itemStrategicName +
+        "</h3>" +
+        '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
+        itemStrategicTitle +
+        "</span>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<span data-trans-dateraised class="Resources des-13"></span>' +
+        '<h4 class="text-warning">' +
+        itemdateraised +
+        "</h4>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        '<span data-trans-dateclosure class="Resources des-13"></span>' +
+        '<h4 class="text-warning">' +
+        itemClosuredate +
+        "</h4>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
+        "</div>" +
+        "</a>" +
+        "</li>"
+      );
     }
+
+    if (itemhtml.length == 1) {
+      itemhtml.push("<h3>" + No_Data + "</h3>");
+    }
+    $("div#pills-first > ul.list-group").html(itemhtml.join(""));
+    changeResources();
+
   },
   onError: function (sender, args) {
     console.log(
