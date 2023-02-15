@@ -878,6 +878,9 @@
     addactualbudget:"يجب تحديد قيمة المشروع الفعلية قبل إنشاء المخرجات و المعالم",
     addinitiativebudget:"يجب تحديد ميزانية المبادرة قبل إنشاء المخرجات والمعالم",
 		crrelateditem: "الحقول الخاضعة لطلب التغيير",
+    strategicpartnercode:"رمز الشراكة",
+    strategicpartnerinfo:"معلومات الشراكة",
+    strategicpartnerimportance:"أهمية الشراكة"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1771,6 +1774,9 @@
     addactualbudget:"Please add project actual budget to add deliverables and Milestones",
     addinitiativebudget :"Please add Initiative budget to add deliverables and Milestones",
     crrelateditem: "Fields Related to this Change Request",
+    strategicpartnercode:"Strategic Partnership Code",
+    strategicpartnerinfo:"Strategic Partnership Info",
+    strategicpartnerimportance:"strategic Partner Importance"
   },
 };
 

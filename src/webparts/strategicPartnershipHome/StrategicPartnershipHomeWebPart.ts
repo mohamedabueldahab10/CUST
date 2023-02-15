@@ -1010,7 +1010,7 @@ export default class StrategicPartnershipHomeWebPart extends BaseClientSideWebPa
                   <div
                     class="card-header bg-white border-bottom px-4 py-4 justify-content-between"
                   >
-                    <h2 data-trans-PTitle4 class="black Resources"></h2>
+                    <h2 data-trans-strategicpartnerinfo class="black Resources"></h2>
                     <a><img src="${edit}" /></a>
                   </div>
                   <div
@@ -1028,7 +1028,7 @@ export default class StrategicPartnershipHomeWebPart extends BaseClientSideWebPa
                               ></p>
                             </span>
                             <h3
-                              data-trans-PAttr34
+                              data-trans-strategicpartnerimportance
                               class="mx-2 m-0 text-nowrap Resources"
                             ></h3>
                           </div>
