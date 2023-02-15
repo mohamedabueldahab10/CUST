@@ -865,7 +865,7 @@ export default class StrategicPartnershipHomeWebPart extends BaseClientSideWebPa
                       <div
                         class="d-flex justify-content-between pb-3 mb-0 lh-125 border-gray"
                       >
-                        <span data-trans-PAttr40 class="Resources"></span>
+                        <span data-trans-strategicpartnershipduration class="Resources"></span>
                         <span class="fnt-14 bold"></span>
                       </div>
                     </div>

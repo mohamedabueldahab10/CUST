@@ -2,7 +2,9 @@ var strategicName = "",
   strategicCode,
   strategicSector,
   strategicSubSector,
-  strategicStartDate;
+  strategicStartDate,
+  strategicPartnershipDuration,
+  strategicPartnershipStatus;
 
 
 
@@ -69,6 +71,8 @@ var StrategicPS_Home_Info_Request = {
       strategicSector = oListItem.get_item("Sector") || No_Data;
       strategicSubSector = oListItem.get_item("SubSector") || No_Data;
       strategicStartDate = StrategicPS_Home_Info_Request.g.dateConvert2(oListItem.get_item("StartDate")) || No_Data;
+      strategicPartnershipDuration = oListItem.get_item("Duration") || No_Data;
+      strategicPartnershipStatus = oListItem.get_item("Status") || 'nodata'
 
       var strategicsectorarr = [];
 
@@ -103,7 +107,9 @@ var StrategicPS_Home_Info_Request = {
         } else strategicSubSector = strategicSubsectorarr[0].nameEn;
       }
 
-
+      if (strategicPartnershipDuration) {
+        strategicPartnershipDuration += isArabic ? " شهرا " : "  Months ";
+      }
 
 
       card1.push(
@@ -199,9 +205,20 @@ var StrategicPS_Home_Info_Request = {
       );
 
     }
+
     $(".project-details-ctx .card.h-100").html(card1.join("")); // attaching card 1
+
+
+    $("#PjPriority").append("<span data-trans-" + strategicPartnershipStatus + ' class="Resources initiativeProjHomeInfoValueStyle"></span>');
+
+
+    $(".project-delivery-info .d-flex:nth-child(1) > span:nth-child(2)").text(strategicPartnershipDuration);
+
+
     $(".navbar.page-nav.px-5 li.nav-item a:not(:visible)").parent().hide();
+
     changeResources();
+
     $(
       "div#particles-foreground, div#particles-background, .vertical-centered-box"
     ).animate(
