@@ -558,7 +558,7 @@ window.userCalls = {
         break;
       case "initiativehome.aspx":
         if (isArabic) {
-          // document.title = "تفاصيل المبادرة";
+          document.title = "تفاصيل المبادرة";
         } else {
           document.title = "Initiative Home";
         }
