@@ -775,7 +775,7 @@ var Information_Form = [
     labelEn: 'Funding',
     description: '',
     descriptionEn: '',
-    toggleName: 'FundingSection',
+    // toggleName: 'FundingSection',
     // sectiontype: 'master',
     // layout: 'table',
     targetlist: 'Funding',
@@ -807,7 +807,7 @@ var Information_Form = [
     labelEn: 'Budget Item',
     description: '',
     descriptionEn: '',
-    toggleName: 'BudgetSection',
+    // toggleName: 'BudgetSection',
     // sectiontype: 'master',
     // layout: 'table',
     targetlist: 'BudgetItem',
@@ -893,6 +893,7 @@ var Information_Form = [
         DisplayNameEn: 'Actual Budget',
         type: 'float',
         // "state": "disabled"
+        RequiredName: 'ActualBudget',
       },
       // {
       //     "InternalName": "Cost4",
@@ -1005,7 +1006,7 @@ var Information_Form = [
     labelEn: 'Tendering and Contracting',
     description: '',
     descriptionEn: '',
-    toggleName: 'TenderSection',
+    // toggleName: 'TenderSection',
     // sectiontype: 'master',
     // layout: 'table',
     targetlist: 'TenderSection',
@@ -1046,9 +1047,6 @@ var Information_Form = [
         DisplayName: 'حالة الكراسة',
         DisplayNameEn: 'RFP Status',
         type: 'dropdownValues',
-        targetfieldrequired: 'ActualBudget', // to make the attache required on yes
-        targetfield: 'RFPStatus',
-        targetfieldvalue: 'linked',
         options: {
           choices: [
             { display: 'brochureapproved', value: 'brochureapproved' },
@@ -1056,6 +1054,9 @@ var Information_Form = [
             { display: 'linked', value: 'linked' },
           ],
         },
+        requiredValues: [
+        { value: "linked", fields: ["ActualBudget"] }, //we can put more than 1  field
+        ],
       },
     ],
   },

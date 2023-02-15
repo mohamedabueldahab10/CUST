@@ -117,7 +117,10 @@ var Information_Form = [{
                         { display: 'open', value: 'open', selected: 'selected' },
                         { display: 'closed', value: 'closed' }
                     ]
-                }
+                },
+                requiredValues: [
+                { value: "closed", fields: ["IssueClosureDate"] }, //we can put more than 1  field
+              ],
             },
             {
                 "InternalName": "Owner",
@@ -164,13 +167,14 @@ var Information_Form = [{
             //     "DisplayNameEn": "Due Date",
             //     "type": "datetime"
             // },
-            // {
-            //     "InternalName": "IssueClosureDate",
-            //     "DisplayName": "تاريخ اغلاق التحدي",
-            //     "DisplayNameEn": "Issue Closure Date",
-            //     "type": "datetime",
-            //     "min": "DateRaised"
-            // },
+            {
+                "InternalName": "IssueClosureDate",
+                "DisplayName": "تاريخ اغلاق التحدي",
+                "DisplayNameEn": "Issue Closure Date",
+                "type": "datetime",
+                "min": "DateRaised",
+                "RequiredName": "IssueClosureDate"
+            },
             // {
             //     "InternalName": "ResolutionOwner",
             //     "DisplayName": "المسؤول عن الحل",
