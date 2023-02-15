@@ -504,6 +504,7 @@ window.userCalls = {
     }
   },
   get_AccessAction: function () {
+    debugger
     switch (UserPage_Name) {
       case "listing.aspx":
         if (isArabic) {
@@ -561,6 +562,14 @@ window.userCalls = {
           document.title = "Initiative Home";
         }
         break;
+        case "StrategicPartnershipHome.aspx":
+          if (isArabic) {
+            document.title = "تفاصيل الشراكة الاستراتيجية";
+          } else {
+            document.title = "Strategic Partnership Home";
+          }
+          console.log('Ghuuuuuufraaaaaaaaaannnnnnn');
+          break;
       case "taskhistory.aspx":
         if (isArabic) {
           document.title = "تاريخ المهمة";

@@ -128,7 +128,19 @@ var StrategicPS_Home_Info_Request = {
       }
 
 
-
+ // show the Strategic Partnership name in bredcrum in Strategic Partnership home and apply the tooltip
+      $(".page-title").html(
+      '<a href="' +
+      _spPageContextInfo.webAbsoluteUrl +
+      "/sitepages/StrategicPartnershipHome.aspx?STCODE=" +
+      strategicCode +
+      '">' +
+      strategicName +
+      '<span class="tooltiptext">' +
+      strategicName +
+      "</span>" + // to handle the tooltip
+      "</a>"
+      );
       card1.push(
         '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
         '<div class="d-inline-flex flex-row align-items-center">' +
