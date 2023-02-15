@@ -71,6 +71,16 @@ var StrategicPS_Home_Info_Request = {
     while (StrategicPS_Home_Info_Request.g.listItemEnum.moveNext()) {
       var oListItem = StrategicPS_Home_Info_Request.g.listItemEnum.get_current();
 
+      $(".project-info-ctx .card-header > a").attr(
+        "href",
+        _spPageContextInfo.webAbsoluteUrl +
+        "/sitepages/view.aspx?ListKey=strategicpartnerships&IID=" +
+        oListItem.get_id() +
+        "&STCODE=" +
+        StrategicPS_Home_Info_Request.g.STCODE
+      );
+
+
       strategicName = oListItem.get_item("Name") || No_Data;
       strategicCode = oListItem.get_item("Title") || No_Data;
       strategicSector = oListItem.get_item("Sector") || No_Data;
