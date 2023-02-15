@@ -3,6 +3,7 @@ var strategicName = "",
   strategicSector,
   strategicSubSector,
   strategicStartDate,
+  strategicFinishDate,
   strategicPartnershipDuration,
   strategicPartnershipStatus,
   strategicRelatedInitiative,
@@ -80,12 +81,13 @@ var StrategicPS_Home_Info_Request = {
         StrategicPS_Home_Info_Request.g.STCODE
       );
 
-debugger
+      debugger
       strategicName = oListItem.get_item("Name") || No_Data;
       strategicCode = oListItem.get_item("Title") || No_Data;
       strategicSector = oListItem.get_item("Sector") || No_Data;
       strategicSubSector = oListItem.get_item("SubSector") || No_Data;
       strategicStartDate = StrategicPS_Home_Info_Request.g.dateConvert2(oListItem.get_item("StartDate")) || No_Data;
+      strategicFinishDate = StrategicPS_Home_Info_Request.g.dateConvert2(oListItem.get_item("FinishDate")) || No_Data;
       strategicPartnershipDuration = oListItem.get_item("Duration") || No_Data;
       strategicPartnershipStatus = oListItem.get_item("Status") || 'nodata';
       strategicRelatedInitiative = oListItem.get_item("RelatedInitiative") || No_Data;
@@ -114,7 +116,7 @@ debugger
       }
       var strategicSubsectorarr = [];
 
-      if (localStorage.getItem("Dynamo_Internal Entities") != null  && strategicSubSector != No_Data) {
+      if (localStorage.getItem("Dynamo_Internal Entities") != null && strategicSubSector != No_Data) {
         strategicSubsectorarr = JSON.parse(
           localStorage.getItem("Dynamo_Internal Entities")
         );
@@ -138,18 +140,18 @@ debugger
       }
 
 
- // show the Strategic Partnership name in bredcrum in Strategic Partnership home and apply the tooltip
+      // show the Strategic Partnership name in bredcrum in Strategic Partnership home and apply the tooltip
       $(".page-title").html(
-      '<a href="' +
-      _spPageContextInfo.webAbsoluteUrl +
-      "/sitepages/StrategicPartnershipHome.aspx?STCODE=" +
-      strategicCode +
-      '">' +
-      strategicName +
-      '<span class="tooltiptext">' +
-      strategicName +
-      "</span>" + // to handle the tooltip
-      "</a>"
+        '<a href="' +
+        _spPageContextInfo.webAbsoluteUrl +
+        "/sitepages/StrategicPartnershipHome.aspx?STCODE=" +
+        strategicCode +
+        '">' +
+        strategicName +
+        '<span class="tooltiptext">' +
+        strategicName +
+        "</span>" + // to handle the tooltip
+        "</a>"
       );
       card1.push(
         '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
@@ -187,7 +189,7 @@ debugger
         strategicStartDate +
         "</span></span>" +
         '<span class="end-date"><span data-trans-strategicpartnerend class="Resources initiativeProjHomeInfoTitleStyle"></span><span class="px-2 initiativeProjHomeInfoValueStyle">' +
-        "baselineFinishDate" +
+        strategicFinishDate +
         "</span></span>" +
         "</span>" +
         "</div>" +
