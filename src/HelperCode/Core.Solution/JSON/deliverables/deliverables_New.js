@@ -74,14 +74,14 @@ var Information_Form = [
       //   max: 'today',
       //   validation: 'required',
       // },
-      {
-        InternalName: 'DeliveredDate',
-        DisplayName: 'تاريخ التسليم',
-        DisplayNameEn: 'Delivered Date',
-        type: 'datetime',
-        max: 'today',
-        validation: 'required',
-      },
+      // {
+      //   InternalName: 'DeliveredDate',
+      //   DisplayName: 'تاريخ التسليم',
+      //   DisplayNameEn: 'Delivered Date',
+      //   type: 'datetime',
+      //   max: 'today',
+      //   validation: 'required',
+      // },
       {
         InternalName: 'PlannedFinishDate',
         DisplayName: 'تاريخ الانتهاء المخطط',
@@ -94,20 +94,20 @@ var Information_Form = [
         // min: 'PlannedStartDate',
         validation: 'required',
       },
-      {
-        InternalName: 'Delivered',
-        DisplayName: 'تم التسليم',
-        DisplayNameEn: 'Delivered',
-        type: 'yesnoradio',
-        targetfield: 'Status',
-        targetfieldvalue: 'completed',
-        options: {
-          choices: [
-            { display: 'yes', value: 'yes' },
-            { display: 'no', value: 'no' },
-          ],
-        },
-      },
+      // {
+      //   InternalName: 'Delivered',
+      //   DisplayName: 'تم التسليم',
+      //   DisplayNameEn: 'Delivered',
+      //   type: 'yesnoradio',
+      //   targetfield: 'Status',
+      //   targetfieldvalue: 'completed',
+      //   options: {
+      //     choices: [
+      //       { display: 'yes', value: 'yes' },
+      //       { display: 'no', value: 'no' },
+      //     ],
+      //   },
+      // },
       {
         InternalName: 'AcceptanceCriteria',
         DisplayName: 'معايير قبول المخرج',

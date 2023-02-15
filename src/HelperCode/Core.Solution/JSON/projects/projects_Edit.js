@@ -775,7 +775,7 @@ var Information_Form = [
           ],
         },
       },
-    ]
+    ],
   },
   {
     label: 'بند الميزانية',
@@ -864,6 +864,7 @@ var Information_Form = [
         DisplayNameEn: 'Actual Budget',
         type: 'float',
         // "state": "disabled"
+        RequiredName: 'ActualBudget',
       },
       // {
       //     "InternalName": "Cost4",
@@ -1020,6 +1021,9 @@ var Information_Form = [
             { display: 'linked', value: 'linked' },
           ],
         },
+        requiredValues: [
+          { value: 'linked', fields: ['ActualBudget'] }, //we can put more than 1  field
+        ],
       },
     ],
   },
@@ -1233,4 +1237,3 @@ var Information_Form = [
     ],
   },
 ]
-
