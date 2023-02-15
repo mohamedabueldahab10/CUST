@@ -362,9 +362,7 @@ export default class StrategicPartnershipHomeWebPart extends BaseClientSideWebPa
                   >
                     <h2 data-trans-PTitle2 class="black Resources"></h2>
                   </div>
-                  <div
-                    class="card-body project-delivery-info border-bottom pb-4 px-0 fromTimeLine"
-                  >
+                  <div style="display:none" class="card-body project-delivery-info border-bottom pb-4 px-0 fromTimeLine">
                     <div class="delivery-timeline mx-4 py-3">
                       <div class="row">
                         <div class="col-lg-3 col-xl-2 mb-3 mb-lg-2">
@@ -523,7 +521,7 @@ export default class StrategicPartnershipHomeWebPart extends BaseClientSideWebPa
                     </div>
                     <div class="project-milestone"></div>
                   </div>
-                  <div style="display:none" class="card-body project-delivery-info border-bottom pb-4 px-0 fromDeliverables">
+                  <div class="card-body project-delivery-info border-bottom pb-4 px-0 fromDeliverables">
   
                     <div class="delivery-timeline mx-4 py-3">
                       <div class="row">
