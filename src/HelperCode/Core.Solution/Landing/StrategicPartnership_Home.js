@@ -77,7 +77,7 @@ var StrategicPS_Home_Info_Request = {
       strategicRelatedInitiative = oListItem.get_item("RelatedInitiative") || No_Data;
 
 
-      if(strategicSubSector && strategicSubSector != No_Data){
+      if (strategicSubSector && strategicSubSector != No_Data) {
         Get_PartnerShip_Representative.init();
       }
 
@@ -123,8 +123,8 @@ var StrategicPS_Home_Info_Request = {
         Get_RelatedInitiative.init();
       }
 
-  
-      
+
+
       card1.push(
         '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
         '<div class="d-inline-flex flex-row align-items-center">' +
@@ -232,6 +232,14 @@ var StrategicPS_Home_Info_Request = {
 
 
     $(".navbar.page-nav.px-5 li.nav-item a:not(:visible)").parent().hide();
+
+
+
+    // calling internal list functions
+    Partnership_Issues_Info_Request.init();
+
+    //
+
 
     changeResources();
 
@@ -378,10 +386,10 @@ var Get_PartnerShip_Representative = {
     var partnershipRepresentative = "";
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
-      partnershipRepresentative = oListItem.get_item("PartnershipRepresentative")? oListItem.get_item("PartnershipRepresentative").get_lookupValue() : No_Data;
+      partnershipRepresentative = oListItem.get_item("PartnershipRepresentative") ? oListItem.get_item("PartnershipRepresentative").get_lookupValue() : No_Data;
     }
 
-    $(".project-info-ctx .media-body:nth-of-type(1) .icon-user > .user-name" ).text(
+    $(".project-info-ctx .media-body:nth-of-type(1) .icon-user > .user-name").text(
       partnershipRepresentative.split(" ")
         .map((word) => word[0])
         .join(".")
@@ -390,7 +398,7 @@ var Get_PartnerShip_Representative = {
       partnershipRepresentative
     );
 
-  
+
   },
   onError: function (sender, args) {
     console.log(
@@ -398,4 +406,48 @@ var Get_PartnerShip_Representative = {
     );
   },
   g: {},
+}
+
+var Partnership_Issues_Info_Request = {
+
+  init: function () {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("Issues");
+    var camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"StrategicPartnershipCode\" /><Value Type=\"Text\">" +
+      StrategicPS_Home_Info_Request.g.STCODE +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+    );
+    Partnership_Issues_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(Partnership_Issues_Info_Request.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Partnership_Issues_Info_Request.onSuccess),
+      Function.createDelegate(this, Partnership_Issues_Info_Request.onError)
+    );
+  },
+  onSuccess: function (sender, args) {
+    var collListItem = Partnership_Issues_Info_Request.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    var itemhtml = [
+      '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
+      _spPageContextInfo.webAbsoluteUrl +
+      "/sitepages/new.aspx?ListKey=issues&STCODE=" +
+      StrategicPS_Home_Info_Request.g.STCODE +
+      '"><i class="icon-plus"></i></a></li>',
+    ];
+
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      itemID = oListItem.get_id();
+    }
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  // Global variables
+  g: {},
+
 }
