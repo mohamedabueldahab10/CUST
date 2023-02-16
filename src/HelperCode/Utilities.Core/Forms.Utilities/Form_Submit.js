@@ -678,7 +678,7 @@ window.New_Data_Submit = {
 var Set_Code_Submit = {
   init: function () {
     // console.log(PCODE);
-
+debugger
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(SP_ListName);
     Set_Code_Submit.g.oListItem = oList.getItemById(IID); //declared inside object scope only
@@ -739,6 +739,10 @@ var Set_Code_Submit = {
               $(".btn-save").addClass("success");
               if (listkey == 'initiatives') {
                 window.location = _spPageContextInfo.webAbsoluteUrl + "/SitePages/initiativeHome.aspx?ICODE=" + Code
+                // /SitePages/initiativeHome.aspx?ICODE=IN-22-0090
+              }
+              else if (listkey == 'strategicpartnerships') {
+                window.location = _spPageContextInfo.webAbsoluteUrl + "/SitePages/StrategicPartnershipHome.aspx?STCODE=" + Code
                 // /SitePages/initiativeHome.aspx?ICODE=IN-22-0090
               }
               else if (listkey == "projects") {
