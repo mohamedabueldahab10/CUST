@@ -16,6 +16,7 @@ var Information_Form = [
         targetelement: 'Deliverables',
         projectCodeInList: true,
         source: 'Deliverables',
+        grpfieldkey: 'Title',
         // validation: 'required',
         // source: 'Deliverables',
         // Dispfieldkey: 'Name',

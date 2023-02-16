@@ -4170,43 +4170,21 @@ window.ListInfo = {
                 ">" +
                 displayName +
                 "</label>" +
-                "<select " +
-                ToggleName +
-                " " +
-                RequiredName +
-                " " +
-                inputLisKey +
-                element.validation +
-                " " +
-                dynamic +
-                ' data-listname="' +
-                element.source +
-                '" data-valfieldkey="' +
-                element.valfieldkey +
-                '" data-Dispfieldkey="' +
-                dispfieldkey +
-                '" data-filterfield="' +
-                element.filterField +
-                '" data-queryfieldvalue="' +
-                element.queryFieldValue +
-                '"data-queryfield="' +
-                element.queryField +
-                '"data-queryfieldtype="' +
-                element.queryFieldType +
-                '" data-filterfieldtype="' +
-                element.filterFieldType +
-                '" class="form-control" type="dropdown" id="' +
+                '<div style="display:inline-' +
+                element.toggledisplay +
+                '" class="showhide-trigger" title="Show/Hide ' +
+                displayName +
+                '"></div>' +
+                '<ul myfield="' +
                 element.InternalName +
-                '" value="" placeholder="' +
+                '" id="' +
+                element.InternalName +
+                '" type="multiselect" class="multiselect-container form-control" type="multiselect">' +
+                '<li class="dropdown ul-bullet-remove">' +
+                '<a href="#" data-toggle="dropdown" class="dropdown-toggle">' +
                 displayName +
-                '" ' +
-                element.state +
-                '><option value="" ' +
-                selected +
-                " disabled>" +
-                displayName +
-                "</option>";
-
+                '<b class="caret"></b></a>' +
+                '<ul class="dropdown-menu">';
 
               sphttp.get(
                 _spPageContextInfo.siteServerRelativeUrl,
@@ -4217,25 +4195,47 @@ window.ListInfo = {
                   if (isDone) {
                     console.log(records, "Seccccccccc")
 
-                    records.forEach(function (el, index) {
-                      if (!RelatedItemUsed.includes(el[element.valfieldkey])) {
-                        htmlBody +=
-                          '<option option-id="' +
-                          itemsID[index] +
-                          '" value="' +
-                          el[element.valfieldkey] +
-                          '">' +
-                          el[dispfieldkey] +
-                          "</option>";
+                    // records.forEach(function (el, index) {
+
+                    var grpfield = element.grpfieldkey;
+                    window.resultMulti = records.reduce(function (r, a) {
+
+                      console.log(a, "Aaaaaaaaaaaaaaaaaaaaaaaaaaa")
+                      console.log(RelatedItemUsed,"RelatedItemUsed")
+                      r[a[grpfield]] = r[a[grpfield]] || [];
+                      if (!RelatedItemUsed.includes(a[element.valfieldkey])) {
+
+                      r[a[grpfield]].push(a);
                       }
+                      return r;
+                     // }
+              
+                    }, Object.create(null));
+
+                    console.log(resultMulti, "resultMulti")
+
+                    Object.entries(resultMulti).forEach((el) => {
+                      htmlBody += '<label class="grp-select">' + el[0] + "</label>";
+                      el[1].forEach((dl) => {
+                        htmlBody +=
+                          "<li>" +
+                          '<div class="checkbox">' +
+                          "<label>" +
+                          '<input value="' +
+                          dl[element.valfieldkey] +
+                          '" id="' +
+                          element.InternalName +
+                          '" type="checkbox">' +
+                          dl[dispfieldkey] +
+                          "</label>" +
+                          "</div>" +
+                          "</li>";
+                      });
                     });
-
-
                     htmlBody +=
-                      "</select>" +
-                      "<span data-trans-" +
-                      Errmsgkey +
-                      ' class="errMsgField Resources"></span>' +
+                      "</ul>" +
+                      "</li>" +
+                      "</ul>" +
                       '<div class="inputInfo ' +
                       isexist +
                       '">' +
@@ -4243,7 +4243,36 @@ window.ListInfo = {
                       "</div>" +
                       "</div>";
                     //console.log(`htmlBody from lookup success`, htmlBody);
+
                     OnSuccess(flag, htmlBody);
+                    console.log(resultMulti, "resultMulti")
+
+                    // if (!RelatedItemUsed.includes(el[element.valfieldkey])) {
+                    //   htmlBody +=
+                    //     '<option option-id="' +
+                    //     itemsID[index] +
+                    //     '" value="' +
+                    //     el[element.valfieldkey] +
+                    //     '">' +
+                    //     el[dispfieldkey] +
+                    //     "</option>";
+                    // }
+                    // });
+
+
+                    // htmlBody +=
+                    //   "</select>" +
+                    //   "<span data-trans-" +
+                    //   Errmsgkey +
+                    //   ' class="errMsgField Resources"></span>' +
+                    //   '<div class="inputInfo ' +
+                    //   isexist +
+                    //   '">' +
+                    //   descPhrase +
+                    //   "</div>" +
+                    //   "</div>";
+                    // //console.log(`htmlBody from lookup success`, htmlBody);
+                    // OnSuccess(flag, htmlBody);
 
 
                   }
