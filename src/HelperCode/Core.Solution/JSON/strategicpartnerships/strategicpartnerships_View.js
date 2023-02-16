@@ -37,7 +37,7 @@ var Information_Form = [
         InternalName: 'SubSector',
         DisplayName: 'الوكالة',
         DisplayNameEn: 'Deputyship',
-        type: 'multiselectstring',
+        type: 'lookup',
         source: 'Internal Entities',
         // source: 'SOs',
         isSector: 'True',

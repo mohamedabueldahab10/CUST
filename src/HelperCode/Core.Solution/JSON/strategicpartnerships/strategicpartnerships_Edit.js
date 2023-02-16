@@ -384,29 +384,22 @@ var Information_Form = [
          "type":"multiline",
          "maxchar":"500"
       },
+     ],
+  },
+  {
+    label: 'الوثائق الداعمة',
+    labelEn: 'Supporting Documents',
+    description: '',
+    descriptionEn: '',
+    subFields: [
       {
-         "InternalName": "getfile",
-         "DisplayName": "مرفقات",
-         "DisplayNameEn": "Attachments",
-         "type": "file",
-         "withAddBtn":"true"
-      }
+        //   InternalName: 'getfile',
+        InternalName: 'getfile',
+        DisplayName: 'المرفقات',
+        DisplayNameEn: 'Attachments',
+        type: 'file',
+        withAddBtn: 'true',
+      },
     ],
   },
-//   {
-//     label: 'الوثائق الداعمة',
-//     labelEn: 'Supporting Documents',
-//     description: '',
-//     descriptionEn: '',
-//     subFields: [
-//       {
-//         //   InternalName: 'getfile',
-//         InternalName: 'getfile',
-//         DisplayName: 'المرفقات',
-//         DisplayNameEn: 'Attachments',
-//         type: 'file',
-//         withAddBtn: 'true',
-//       },
-//     ],
-//   },
 ]

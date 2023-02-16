@@ -1780,7 +1780,7 @@
     crrelateditem: "Fields Related to this Change Request",
     strategicpartnercode:"Strategic Partnership Code",
     strategicpartnerinfo:"Strategic Partnership Info",
-    strategicpartnerimportance:"strategic Partner Status",
+    strategicpartnerimportance:"Strategic Partner Status",
     strategicpartnerstart:"Strategic Partnership Start",
     strategicpartnerend:"Strategic Partnership End",
     strategicpartnershippioneer:"Strategic PartnerShip Pioneer",

@@ -157,7 +157,7 @@ var Information_Form = [
         DisplayNameEn: 'Related Project',
         DisplayName: 'المشروع المرتبط',
         type: 'lookup',
-        source: 'Initiatives',
+        source: 'Projects',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
       },
@@ -259,161 +259,22 @@ var Information_Form = [
         type: 'multiline',
         maxchar: '500',
       },
-      {
-        InternalName: 'getfile',
-        DisplayName: 'مرفقات',
-        DisplayNameEn: 'Attachments',
-        type: 'file',
-        withAddBtn: 'true',
-      },
     ],
   },
-  // ,{
-  //    label: 'الوثائق الداعمة',
-  //    labelEn: 'Supporting Documents',
-  //    description: "",
-  //    descriptionEn: "",
-  //    subFields: [{
-  //       "InternalName": "getfile",
-  //       "DisplayName": "المرفقات",
-  //       "DisplayNameEn": "Attachments",
-  //       "type": "file",
-  //       "withAddBtn":"true"
-  //    }]
-  // }
-
-  // OLD
-  // {
-  //    "label":"الشراكات الاستراتيجية",
-  //    "labelEn":"Strategic Partnerships",
-  //    "description":"التفاصيل",
-  //    "descriptionEn":"Details",
-  //    "subFields":[
-  //       // {
-  //       //    "InternalName":"PartnerType",
-  //       //    "DisplayName":"نوع الشريك",
-  //       //    "DisplayNameEn":"Partner Type",
-  //       //    "type":"dropdownValues",
-  //       //    "validation":"required",
-  //       //    "options":{
-  //       //       "choices":[
-  //       //          {
-  //       //             "value":"GovernmentSector",
-  //       //             "display":"قطاع حكومي"
-  //       //          },
-  //       //          {
-  //       //             "value":"PrivateSector",
-  //       //             "display":"قطاع خاص"
-  //       //          },
-  //       //          {
-  //       //             "value":"NonprofitSector",
-  //       //             "display":"قطاع غير ربحي"
-  //       //          }
-  //       //       ]
-  //       //    }
-  //       // },
-  //       {
-  //          "InternalName":"PartnerRepresentativeName",
-  //          "DisplayName":"اسم ممثل الشريك",
-  //          "DisplayNameEn":"Partner Representative Name",
-  //          "type":"string",
-  //          "maxchar":"250",
-  //          "validation":"required"
-  //       },
-  //       {
-  //          "InternalName":"PartnerRepresentativeEmail",
-  //          "DisplayName":"ايميل ممثل الشريك",
-  //          "DisplayNameEn":"Partner Representative Email",
-  //          "type":"string",
-  //          "maxchar":"250",
-  //          "validation":"required"
-  //       },
-  //       {
-  //          "InternalName":"PartnerRepresentativePhone",
-  //          "DisplayName":"هاتف ممثل الشريك",
-  //          "DisplayNameEn":"Partner Representative Phone",
-  //          "type":"string",
-  //          "maxchar":"250",
-  //          "validation":"required"
-  //       },
-  //       {
-  //          "InternalName":"Description",
-  //          "DisplayNameEn":"Description",
-  //          "DisplayName":"وصف الشراكة",
-  //          "type":"multiline",
-  //          "maxchar":"500",
-  //          "validation":"required"
-  //       },
-  //       {
-  //          "InternalName":"PartnershipCommitments",
-  //          "DisplayNameEn":"Partnership Commitments",
-  //          "DisplayName":"التزامات الشراكة",
-  //          "type":"multiline",
-  //          "maxchar":"500",
-  //          "validation":"required"
-  //       },
-  //       {
-  //          "InternalName":"PartnershipEndDate",
-  //          "DisplayName":"تاريخ نهاية الشراكة",
-  //          "DisplayNameEn":"Partnership End Date",
-  //          "type":"datetime",
-  //          "min":"PartnershipStartDate",
-  //          "validation":"required"
-  //       },
-  //       {
-  //          "InternalName":"PartnershipStatus",
-  //          "DisplayName":"حالة الشراكة",
-  //          "DisplayNameEn":"Partnership Status",
-  //          "type":"dropdownValues",
-  //          "validation":"required",
-  //          "options":{
-  //             "choices":[
-  //                {
-  //                   "value":"notstarted",
-  //                   "display":"notstarted"
-  //                },
-  //                {
-  //                   "value":"inprogress",
-  //                   "display":"inprogress"
-  //                },
-  //                {
-  //                   "value":"completed",
-  //                   "display":"completed"
-  //                },
-  //                {
-  //                   "value":"cancelled",
-  //                   "display":"cancelled"
-  //                }
-  //             ]
-  //          }
-  //       },
-  //       {
-  //          "InternalName":"NeedEscalation",
-  //          "DisplayName":"بحاجة للتصعيد؟",
-  //          "DisplayNameEn":"Need Escalation?",
-  //          "validation":"required",
-  //          "type":"dropdownValues",
-  //          "options":{
-  //             "choices":[
-  //                {
-  //                   "display":"yes",
-  //                   "value":"yes"
-  //                },
-  //                {
-  //                   "display":"no",
-  //                   "value":"no"
-  //                }
-  //             ]
-  //          }
-  //       },
-  //       {
-  //          "InternalName":"Notes",
-  //          "DisplayNameEn":"Notes",
-  //          "DisplayName":"ملاحظات",
-  //          "type":"multiline",
-  //          "maxchar":"500",
-  //          "validation":"required"
-  //       }
-  //    ]
-  // },
-]
+      {
+        label: 'الوثائق الداعمة',
+        labelEn: 'Supporting Documents',
+        description: 'التفاصيل',
+        descriptionEn: 'Details',
+        subFields: [
+          {
+            InternalName: 'getfile',
+            DisplayName: 'المرفقات',
+            DisplayNameEn: 'Attachments',
+            type: 'file',
+            // withAddBtn: 'true',
+          },
+        ],
+      },
+    ]
+    
