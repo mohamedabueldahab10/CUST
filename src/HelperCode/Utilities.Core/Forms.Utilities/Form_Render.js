@@ -4061,13 +4061,12 @@ window.ListInfo = {
         var customQuery;
         var sourcelistQuery;
         var RelatedItemUsed = [];
-        debugger
+
         customQuery =
           "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
 
         sourcelistQuery =
           "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
-
 
         if (ICODE && element.initiativeCodeInList) {
           sourcelistQuery =
@@ -4127,8 +4126,6 @@ window.ListInfo = {
                     }
                   }
                 }
-                console.log(RelatedItemUsed, "RelatedItemUsed")
-                console.log(records, "records")
               });
 
               htmlBody =
@@ -4193,26 +4190,18 @@ window.ListInfo = {
                 [element.valfieldkey, element.Dispfieldkey],
                 function (records, record, listItem, isDone) {
                   if (isDone) {
-                    console.log(records, "Seccccccccc")
-
-                    // records.forEach(function (el, index) {
 
                     var grpfield = element.grpfieldkey;
-                    window.resultMulti = records.reduce(function (r, a) {
 
-                      console.log(a, "Aaaaaaaaaaaaaaaaaaaaaaaaaaa")
-                      console.log(RelatedItemUsed,"RelatedItemUsed")
+                    window.resultMulti = records.reduce(function (r, a) {
                       r[a[grpfield]] = r[a[grpfield]] || [];
                       if (!RelatedItemUsed.includes(a[element.valfieldkey])) {
-
-                      r[a[grpfield]].push(a);
+                        r[a[grpfield]].push(a);
                       }
                       return r;
-                     // }
-              
+
                     }, Object.create(null));
 
-                    console.log(resultMulti, "resultMulti")
 
                     Object.entries(resultMulti).forEach((el) => {
                       htmlBody += '<label class="grp-select">' + el[0] + "</label>";
@@ -4232,6 +4221,7 @@ window.ListInfo = {
                           "</li>";
                       });
                     });
+
                     htmlBody +=
                       "</ul>" +
                       "</li>" +
@@ -4242,38 +4232,8 @@ window.ListInfo = {
                       descPhrase +
                       "</div>" +
                       "</div>";
-                    //console.log(`htmlBody from lookup success`, htmlBody);
 
                     OnSuccess(flag, htmlBody);
-                    console.log(resultMulti, "resultMulti")
-
-                    // if (!RelatedItemUsed.includes(el[element.valfieldkey])) {
-                    //   htmlBody +=
-                    //     '<option option-id="' +
-                    //     itemsID[index] +
-                    //     '" value="' +
-                    //     el[element.valfieldkey] +
-                    //     '">' +
-                    //     el[dispfieldkey] +
-                    //     "</option>";
-                    // }
-                    // });
-
-
-                    // htmlBody +=
-                    //   "</select>" +
-                    //   "<span data-trans-" +
-                    //   Errmsgkey +
-                    //   ' class="errMsgField Resources"></span>' +
-                    //   '<div class="inputInfo ' +
-                    //   isexist +
-                    //   '">' +
-                    //   descPhrase +
-                    //   "</div>" +
-                    //   "</div>";
-                    // //console.log(`htmlBody from lookup success`, htmlBody);
-                    // OnSuccess(flag, htmlBody);
-
 
                   }
                 })
@@ -7655,6 +7615,53 @@ var View_ListInfo = {
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
+
+        case "lookupmultiselectwithoutrepeat":
+          htmlBody =
+            '<div class="col-md-6 CFIELD ' +
+            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            " " +
+            element.className +
+            ' " ' +
+            thistip +
+            " " +
+            hidestagesIDs +
+            " " +
+            showstagesIDs +
+            "  " +
+            disablestagesIDs +
+            "  " +
+            enablestagesIDs +
+            "   " +
+            isWfhidestagesIDs +
+            " " +
+            requireOnWfTaskstagesIDs +
+            " " +
+            isWfshowstagesIDs +
+            "  " +
+            isWfdisablestagesIDs +
+            "  " +
+            isWfenablestagesIDs +
+            '        data-groups="' +
+            groups +
+            '" style="display:' +
+            element.display +
+            '">' +
+            '<label for="' +
+            element.InternalName +
+            '" ' +
+            element.validation +
+            ">" +
+            displayName +
+            "</label>" +
+            '<p type="multiselect" class="viewmode-value" id="' +
+            element.InternalName +
+            '" ></p>' +
+            "</div>";
+          OnSuccess(flag, htmlBody);
+          break;
+
+
         case "lookupmultiselect":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
