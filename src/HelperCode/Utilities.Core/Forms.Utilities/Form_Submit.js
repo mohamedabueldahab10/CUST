@@ -49,7 +49,7 @@ var newFormUserCalls = {
       method: "GET",
       headers: { Accept: "application/json; odata=verbose" },
       success: function (data) {
-        debugger
+        
         allResourcesArr = data.d.results;
         SP.SOD.registerSod(
           "PS.ProjectContext",
@@ -1817,6 +1817,7 @@ var newBenefitEquation = {
 //master Data
 var New_Master_Details_Submit = {
   init: function () {
+    
     var clientContext = new SP.ClientContext.get_current();
     // $('[data-target_list]').each(function(){
     var pillerCount = 0
@@ -1963,6 +1964,8 @@ var New_Master_Details_Submit = {
       }
     );
     // });
+    
+
 
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
@@ -1986,6 +1989,7 @@ var New_Master_Details_Submit = {
           });
         } else if (isNew) {
           if (listkey == "projects") {
+            
             createFolder(
               ListArray[2].documents,
               PCODE + "/",
@@ -2634,7 +2638,7 @@ var createFolder = function (listTitle, folderUrl, success, error) {
     var curFolder = parentFolder.get_folders().add(folderName);
     ctx.load(curFolder);
     ctx.executeQueryAsync(function () {
-      debugger
+      
       if (folderNames.length > 1) {
         //    var subFolderUrl = folderNames.slice(1,folderNames.length).join('/');
         for (var i = 0; i < KeysFolders.length; i++) {
@@ -2708,7 +2712,7 @@ var New_ProjectStages_Submit = {
       .get_lists()
       .getByTitle("Project Stages");
 
-      debugger
+      
 
     for (var i = 0; i < Stages_Data_Request.g.StagesArray.length; i++) {
       var itemCreateInfo = new SP.ListItemCreationInformation();
@@ -2770,7 +2774,7 @@ var projects;
 function CreateProject() {
   // Initialize the current client context.
   console.log("before")
-debugger
+
   var projContext = PS.ProjectContext.get_current();
   // Initialize a ProjectCreationInformation object and specify properties
   // for the new project.
