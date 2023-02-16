@@ -460,7 +460,7 @@ window.ListInfo = {
 
               end.setMonth(end.getMonth() + duration)
 
-             
+
               start = Dynamic_Data_Request.g.convertdate(start);
               end = Dynamic_Data_Request.g.convertdate(end);
               console.log(start, "start")
@@ -4054,6 +4054,233 @@ window.ListInfo = {
             }
           }
         );
+        break;
+
+      case "lookupmultiselectwithoutrepeat":
+
+        var customQuery;
+        var sourcelistQuery;
+        var RelatedItemUsed = [];
+        debugger
+        customQuery =
+          "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+
+        sourcelistQuery =
+          "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+
+
+        if (ICODE && element.initiativeCodeInList) {
+          sourcelistQuery =
+            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"InitiativeCode\" /><Value Type=\"Text\">" +
+            ICODE +
+            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+        } else if (PCODE && element.projectCodeInList) {
+          sourcelistQuery =
+            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">" +
+            PCODE +
+            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+        }
+
+        if (element.queryField && element.queryField != "undefined" &&
+          element.queryFieldType && element.queryFieldType != "undefined" &&
+          element.queryFieldValue && element.queryFieldValue != "undefined") {
+
+          sourcelistQuery = '<View><Query><Where><Eq><FieldRef Name="' +
+            element.queryField +
+            '" /><Value Type="' +
+            element.queryFieldType +
+            '">' +
+            element.queryFieldValue +
+            "</Value></Eq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
+        }
+
+
+        var itemIDlist = [],
+          itemsID = [];
+        var listItemId = "";
+
+        sphttp.get(
+          _spPageContextInfo.siteServerRelativeUrl,
+          element.listname,
+          customQuery,
+          [element.valfieldkey, element.targetelement],
+          function (records, record, listItem, isDone) {
+
+            if (listItem) itemIDlist.push(listItem.get_id());
+
+            if (isDone) {
+              records.forEach(function (el, index) {
+                if (el[element.targetelement]) {
+                  if (!RelatedItemUsed.includes(el[element.targetelement])) {
+                    if (itemIDlist[index] != IID) {
+                      // console.log(el[element.targetelement],"el[element.targetelement]")
+                      if (el[element.targetelement].indexOf(":::") > -1) {
+                        var splitMultiVal = el[element.targetelement].split(":::");
+                        splitMultiVal.forEach(item => {
+                          if (!RelatedItemUsed.includes(item)) {
+                            RelatedItemUsed.push(item);
+                          }
+                        })
+                      } else {
+                        RelatedItemUsed.push(el[element.targetelement]);
+                      }
+                    }
+                  }
+                }
+                console.log(RelatedItemUsed, "RelatedItemUsed")
+                console.log(records, "records")
+              });
+
+              htmlBody =
+                '<div class="col-md-6 CFIELD ' +
+                dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+                " " +
+                element.className +
+                ' " ' +
+                thistip +
+                " " +
+                hidestagesIDs +
+                " " +
+                editableBy +
+                " " +
+                showstagesIDs +
+                "  " +
+                disablestagesIDs +
+                "  " +
+                enablestagesIDs +
+                "   " +
+                isWfhidestagesIDs +
+                " " +
+                requireOnWfTaskstagesIDs +
+                " " +
+                isWfshowstagesIDs +
+                "  " +
+                isWfdisablestagesIDs +
+                "  " +
+                isWfenablestagesIDs +
+                '        data-groups="' +
+                groups +
+                '" style="display:' +
+                element.display +
+                '">' +
+                '<label for="' +
+                element.InternalName +
+                '" ' +
+                element.validation +
+                ">" +
+                displayName +
+                "</label>" +
+                '<div style="display:inline-' +
+                element.toggledisplay +
+                '" class="showhide-trigger" title="Show/Hide ' +
+                displayName +
+                '"></div>' +
+                '<ul myfield="' +
+                element.InternalName +
+                '" id="' +
+                element.InternalName +
+                '" type="multiselect" class="multiselect-container form-control" type="multiselect">' +
+                '<li class="dropdown ul-bullet-remove">' +
+                '<a href="#" data-toggle="dropdown" class="dropdown-toggle">' +
+                displayName +
+                '<b class="caret"></b></a>' +
+                '<ul class="dropdown-menu">';
+
+              sphttp.get(
+                _spPageContextInfo.siteServerRelativeUrl,
+                element.source,
+                sourcelistQuery,
+                [element.valfieldkey, element.Dispfieldkey],
+                function (records, record, listItem, isDone) {
+                  if (isDone) {
+                    console.log(records, "Seccccccccc")
+
+                    // records.forEach(function (el, index) {
+
+                    var grpfield = element.grpfieldkey;
+                    window.resultMulti = records.reduce(function (r, a) {
+
+                      console.log(a, "Aaaaaaaaaaaaaaaaaaaaaaaaaaa")
+                      console.log(RelatedItemUsed,"RelatedItemUsed")
+                      r[a[grpfield]] = r[a[grpfield]] || [];
+                      if (!RelatedItemUsed.includes(a[element.valfieldkey])) {
+
+                      r[a[grpfield]].push(a);
+                      }
+                      return r;
+                     // }
+              
+                    }, Object.create(null));
+
+                    console.log(resultMulti, "resultMulti")
+
+                    Object.entries(resultMulti).forEach((el) => {
+                      htmlBody += '<label class="grp-select">' + el[0] + "</label>";
+                      el[1].forEach((dl) => {
+                        htmlBody +=
+                          "<li>" +
+                          '<div class="checkbox">' +
+                          "<label>" +
+                          '<input value="' +
+                          dl[element.valfieldkey] +
+                          '" id="' +
+                          element.InternalName +
+                          '" type="checkbox">' +
+                          dl[dispfieldkey] +
+                          "</label>" +
+                          "</div>" +
+                          "</li>";
+                      });
+                    });
+                    htmlBody +=
+                      "</ul>" +
+                      "</li>" +
+                      "</ul>" +
+                      '<div class="inputInfo ' +
+                      isexist +
+                      '">' +
+                      descPhrase +
+                      "</div>" +
+                      "</div>";
+                    //console.log(`htmlBody from lookup success`, htmlBody);
+
+                    OnSuccess(flag, htmlBody);
+                    console.log(resultMulti, "resultMulti")
+
+                    // if (!RelatedItemUsed.includes(el[element.valfieldkey])) {
+                    //   htmlBody +=
+                    //     '<option option-id="' +
+                    //     itemsID[index] +
+                    //     '" value="' +
+                    //     el[element.valfieldkey] +
+                    //     '">' +
+                    //     el[dispfieldkey] +
+                    //     "</option>";
+                    // }
+                    // });
+
+
+                    // htmlBody +=
+                    //   "</select>" +
+                    //   "<span data-trans-" +
+                    //   Errmsgkey +
+                    //   ' class="errMsgField Resources"></span>' +
+                    //   '<div class="inputInfo ' +
+                    //   isexist +
+                    //   '">' +
+                    //   descPhrase +
+                    //   "</div>" +
+                    //   "</div>";
+                    // //console.log(`htmlBody from lookup success`, htmlBody);
+                    // OnSuccess(flag, htmlBody);
+
+
+                  }
+                })
+
+            }
+          })
+
         break;
 
       case "lookupwithoutrepeat":

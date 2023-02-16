@@ -20,7 +20,7 @@ var ListArray = [
 	},
 	//third is always projects documents
 	{
-		documents: "Documents",
+		documents: "Projects Documents",
 		ListingTitle: "المستندات",
 		FormTitle: "المستندات",
 		TitleEn: "Documents",

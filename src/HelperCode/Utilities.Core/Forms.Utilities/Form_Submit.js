@@ -49,6 +49,7 @@ var newFormUserCalls = {
       method: "GET",
       headers: { Accept: "application/json; odata=verbose" },
       success: function (data) {
+        
         allResourcesArr = data.d.results;
         SP.SOD.registerSod(
           "PS.ProjectContext",
@@ -677,7 +678,7 @@ window.New_Data_Submit = {
 var Set_Code_Submit = {
   init: function () {
     // console.log(PCODE);
-
+debugger
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(SP_ListName);
     Set_Code_Submit.g.oListItem = oList.getItemById(IID); //declared inside object scope only
@@ -738,6 +739,10 @@ var Set_Code_Submit = {
               $(".btn-save").addClass("success");
               if (listkey == 'initiatives') {
                 window.location = _spPageContextInfo.webAbsoluteUrl + "/SitePages/initiativeHome.aspx?ICODE=" + Code
+                // /SitePages/initiativeHome.aspx?ICODE=IN-22-0090
+              }
+              else if (listkey == 'strategicpartnerships') {
+                window.location = _spPageContextInfo.webAbsoluteUrl + "/SitePages/StrategicPartnershipHome.aspx?STCODE=" + Code
                 // /SitePages/initiativeHome.aspx?ICODE=IN-22-0090
               }
               else if (listkey == "projects") {
@@ -1816,6 +1821,7 @@ var newBenefitEquation = {
 //master Data
 var New_Master_Details_Submit = {
   init: function () {
+    
     var clientContext = new SP.ClientContext.get_current();
     // $('[data-target_list]').each(function(){
     var pillerCount = 0
@@ -1962,6 +1968,8 @@ var New_Master_Details_Submit = {
       }
     );
     // });
+    
+
 
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
@@ -1985,6 +1993,7 @@ var New_Master_Details_Submit = {
           });
         } else if (isNew) {
           if (listkey == "projects") {
+            
             createFolder(
               ListArray[2].documents,
               PCODE + "/",
@@ -2633,6 +2642,7 @@ var createFolder = function (listTitle, folderUrl, success, error) {
     var curFolder = parentFolder.get_folders().add(folderName);
     ctx.load(curFolder);
     ctx.executeQueryAsync(function () {
+      
       if (folderNames.length > 1) {
         //    var subFolderUrl = folderNames.slice(1,folderNames.length).join('/');
         for (var i = 0; i < KeysFolders.length; i++) {
@@ -2706,6 +2716,7 @@ var New_ProjectStages_Submit = {
       .get_lists()
       .getByTitle("Project Stages");
 
+      
 
     for (var i = 0; i < Stages_Data_Request.g.StagesArray.length; i++) {
       var itemCreateInfo = new SP.ListItemCreationInformation();
@@ -2812,7 +2823,9 @@ var GUIDS = [];
 //SP.SOD.executeOrDelayUntilScriptLoaded(GetProjects, "PS.js");
 
 // Get the projects collection.
-function GetProjects() {
+// function GetProjects() {
+  window.GetProjects = function () {
+
   // Initialize the current client context.
   console.log("GetProjects in")
   projContext = PS.ProjectContext.get_current();
