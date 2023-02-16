@@ -9,20 +9,14 @@ var Information_Form = [
         InternalName: 'Deliverables',
         DisplayNameEn: 'Deliverables',
         DisplayName: 'المخرجات',
-        type: 'lookupmultiselectwithoutrepeat',
+        type: 'lookupmultiselectwithoutrepeat', // new type to return the not used value in multi select
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        listname:'Certifications', 
-        targetelement: 'Deliverables',
-        projectCodeInList: true,
-        source: 'Deliverables',
+        listname:'Certifications', // current list
+        targetelement: 'Deliverables', // internal name of element in current list
+        projectCodeInList: true, 
+        source: 'Deliverables',// target list
         grpfieldkey: 'Title',
-        // validation: 'required',
-        // source: 'Deliverables',
-        // Dispfieldkey: 'Name',
-        // valfieldkey: 'Title',
-        // grpfieldkey: 'Title',
-        // projectCodeInList: true
       },
       // {
       //   InternalName: 'Deliverables',
