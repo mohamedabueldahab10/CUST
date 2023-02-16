@@ -138,7 +138,9 @@ var Information_Form = [{
                 "DisplayName": "تاريخ اغلاق التحدي",
                 "DisplayNameEn": "Issue Closure Date",
                 "type": "datetime",
-                "min": "DateRaised"
+                "min": "DateRaised",
+                "ToggleName": "IssueClosureDate",
+                "display": "none"
             },
             // {
             //     "InternalName": "ResolutionOwner",
@@ -168,7 +170,8 @@ var Information_Form = [{
                             value: 'closed'
                         },
                     ]
-                }
+                },
+                toggleValues: [{ value: 'closed', fields: ['IssueClosureDate'] }],
             },
             {
                 "InternalName": "Comments",

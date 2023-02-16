@@ -889,11 +889,11 @@ var Information_Form = [
       },
       {
         InternalName: 'ActualBudget',
-        DisplayName: 'الميزانية',
+        DisplayName: 'التكلفة الفعلية',
         DisplayNameEn: 'Actual Budget',
         type: 'float',
         // "state": "disabled"
-        // RequiredName: 'ActualBudget',
+        RequiredName: 'ActualBudget',
       },
       // {
       //     "InternalName": "Cost4",
