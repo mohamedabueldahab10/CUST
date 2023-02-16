@@ -871,9 +871,10 @@ var Information_Form = [
       // },
       {
         InternalName: 'ActualBudget',
-        DisplayName: 'الميزانية',
+        DisplayName: 'التكلفة الفعلية',
         DisplayNameEn: 'Actual Budget',
         type: 'float',
+        RequiredName: 'ActualBudget',
         // "state": "disabled"
       },
 
@@ -981,6 +982,9 @@ var Information_Form = [
             { display: 'linked', value: 'linked' },
           ],
         },
+        requiredValues: [
+        { value: "linked", fields: ["ActualBudget"] }, //we can put more than 1  field
+        ],
       },
     ],
   },
