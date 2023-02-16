@@ -49,7 +49,7 @@ var newFormUserCalls = {
       method: "GET",
       headers: { Accept: "application/json; odata=verbose" },
       success: function (data) {
-        
+
         allResourcesArr = data.d.results;
         SP.SOD.registerSod(
           "PS.ProjectContext",
@@ -678,7 +678,6 @@ window.New_Data_Submit = {
 var Set_Code_Submit = {
   init: function () {
     // console.log(PCODE);
-debugger
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(SP_ListName);
     Set_Code_Submit.g.oListItem = oList.getItemById(IID); //declared inside object scope only
@@ -691,6 +690,8 @@ debugger
       Set_Code_Submit.g.oListItem.set_item("Title", Code);
       if (listkey == 'initiatives') { // added to handle inity attach
         ICODE = Code
+      } else if (listkey == 'strategicpartnerships') {
+        STCODE = Code
       }
 
       if (isPrjRelated) {
@@ -715,12 +716,15 @@ debugger
         } else if (ICODE || listkey == "initiatives") {
           Documents_Library = "Initiative Documents";
           folderdirectory = ICODE + "/" + listkey;
+        } else if (STCODE || listkey == "strategicpartnerships") {
+          Documents_Library = "StrategicPartnerships Documents";
+          folderdirectory = STCODE + "/" + listkey;
         } else {
           Documents_Library = listkey + " Documents";
           folderdirectory = "/";
           // folderdirectory = host+'/'+listkey+' Documents/';
         }
-        if (listkey != "projects" && listkey != 'initiatives') {
+        if (listkey != "projects" && listkey != 'initiatives' && listkey != 'strategicpartnerships') {
           //Get File Input Control and read the file name
           $("input[type=file]").each(function (e) {
             fileCount += document.querySelector("#" + $(this).attr("id")).files
@@ -737,26 +741,26 @@ debugger
               $(".errormsg").hide();
               $(".successmsg").show();
               $(".btn-save").addClass("success");
-              if (listkey == 'initiatives') {
-                window.location = _spPageContextInfo.webAbsoluteUrl + "/SitePages/initiativeHome.aspx?ICODE=" + Code
-                // /SitePages/initiativeHome.aspx?ICODE=IN-22-0090
-              }
-              else if (listkey == 'strategicpartnerships') {
-                window.location = _spPageContextInfo.webAbsoluteUrl + "/SitePages/StrategicPartnershipHome.aspx?STCODE=" + Code
-                // /SitePages/initiativeHome.aspx?ICODE=IN-22-0090
-              }
-              else if (listkey == "projects") {
-                window.location =
-                  _spPageContextInfo.webAbsoluteUrl +
-                  "/SitePages/View.aspx?ListKey=" +
-                  listkey +
-                  "&IID=" +
-                  IID +
-                  PCODE_STRING;
-              }
-              else {
-                window.location = _spPageContextInfo.webAbsoluteUrl + "/SitePages/Listing.aspx?ListKey=" + listkey + PCODE_STRING;
-              }
+              // if (listkey == 'initiatives') {
+              //   window.location = _spPageContextInfo.webAbsoluteUrl + "/SitePages/initiativeHome.aspx?ICODE=" + Code
+              //   // /SitePages/initiativeHome.aspx?ICODE=IN-22-0090
+              // }
+              // else if (listkey == 'strategicpartnerships') {
+              //   window.location = _spPageContextInfo.webAbsoluteUrl + "/SitePages/StrategicPartnershipHome.aspx?STCODE=" + Code
+              //   // /SitePages/initiativeHome.aspx?ICODE=IN-22-0090
+              // }
+              // else if (listkey == "projects") {
+              //   window.location =
+              //     _spPageContextInfo.webAbsoluteUrl +
+              //     "/SitePages/View.aspx?ListKey=" +
+              //     listkey +
+              //     "&IID=" +
+              //     IID +
+              //     PCODE_STRING;
+              // }
+              // else {
+              window.location = _spPageContextInfo.webAbsoluteUrl + "/SitePages/Listing.aspx?ListKey=" + listkey + PCODE_STRING;
+              //}
             }
           }
         } else if (listkey == 'initiatives') {
@@ -767,6 +771,22 @@ debugger
             createFolder(
               "Initiative Documents",
               ICODE + "/",
+              function (folder) {
+                // console.log(String.format("Folder has been created", folder.get_name()));
+              },
+              function (sender, args) {
+                // console.log(args.get_message());
+              }
+            );
+          }
+        } else if (listkey == "strategicpartnerships") {
+          if ($(".Details-Item.NewItem").length > 0) {
+            //calling new master submit
+            New_Data_Submit.g.checkNewMasterDetails();
+          } else {
+            createFolder(
+              "StrategicPartnerships Documents",
+              STCODE + "/",
               function (folder) {
                 // console.log(String.format("Folder has been created", folder.get_name()));
               },
@@ -1328,6 +1348,9 @@ window.Edit_Data_Submit = {
           Documents_Library = "Initiative Documents";
           folderdirectory = ICODE + "/" + listkey;
 
+        } else if (STCODE || listkey == "strategicpartnerships") {
+          Documents_Library = "StrategicPartnerships Documents";
+          folderdirectory = STCODE + "/" + listkey;
         } else {
           Documents_Library = listkey + " Documents";
           folderdirectory = ""; //_spPageContextInfo.webServerRelativeUrl+
@@ -1362,13 +1385,13 @@ window.Edit_Data_Submit = {
                 "&IID=" +
                 $('#KPI option[value="' + $('#KPI').val() + '"]').attr('option-id') +
                 PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
-            }else if(listkey == "benefitsequations"){
+            } else if (listkey == "benefitsequations") {
               window.location =
-              _spPageContextInfo.webAbsoluteUrl +
-              "/SitePages/View.aspx?ListKey=benefitmetrics" +
-              "&IID=" +
-              $('#RelatedBenefit option[value="' + $('#RelatedBenefit').val() + '"]').attr('option-id') +
-              PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+                _spPageContextInfo.webAbsoluteUrl +
+                "/SitePages/View.aspx?ListKey=benefitmetrics" +
+                "&IID=" +
+                $('#RelatedBenefit option[value="' + $('#RelatedBenefit').val() + '"]').attr('option-id') +
+                PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
             } else if (listkey == 'mainkpi') {
               Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis)
             } else if (listkey == 'projects' && PCODE) {
@@ -1821,7 +1844,7 @@ var newBenefitEquation = {
 //master Data
 var New_Master_Details_Submit = {
   init: function () {
-    
+
     var clientContext = new SP.ClientContext.get_current();
     // $('[data-target_list]').each(function(){
     var pillerCount = 0
@@ -1968,7 +1991,7 @@ var New_Master_Details_Submit = {
       }
     );
     // });
-    
+
 
 
     clientContext.executeQueryAsync(
@@ -1993,7 +2016,7 @@ var New_Master_Details_Submit = {
           });
         } else if (isNew) {
           if (listkey == "projects") {
-            
+
             createFolder(
               ListArray[2].documents,
               PCODE + "/",
@@ -2009,6 +2032,17 @@ var New_Master_Details_Submit = {
             createFolder(
               "Initiative Documents",
               ICODE + "/",
+              function (folder) {
+                // console.log(String.format("Folder has been created", folder.get_name()));
+              },
+              function (sender, args) {
+                // console.log(args.get_message());
+              }
+            );
+          } else if (listkey == "strategicpartnerships") {
+            createFolder(
+              "StrategicPartnerships Documents",
+              STCODE + "/",
               function (folder) {
                 // console.log(String.format("Folder has been created", folder.get_name()));
               },
@@ -2443,6 +2477,10 @@ function _uploadFile() {
           var code = PCODE ? PCODE : ICODE;
 
           Doc_Title = listkey + "-" + code;
+        } else if (STCODE) {
+          var code = STCODE
+          Doc_Title = listkey + "-" + code;
+
         } else {
           Doc_Title = listkey;
         }
@@ -2642,7 +2680,7 @@ var createFolder = function (listTitle, folderUrl, success, error) {
     var curFolder = parentFolder.get_folders().add(folderName);
     ctx.load(curFolder);
     ctx.executeQueryAsync(function () {
-      
+      debugger
       if (folderNames.length > 1) {
         //    var subFolderUrl = folderNames.slice(1,folderNames.length).join('/');
         for (var i = 0; i < KeysFolders.length; i++) {
@@ -2661,6 +2699,10 @@ var createFolder = function (listTitle, folderUrl, success, error) {
               if (listkey == 'initiatives') {
                 // window.location = _spPageContextInfo.webAbsoluteUrl + "/SitePages/initiativeHome.aspx?ICODE=" + ICODE
                 New_InitiativeStages_Submit.init()
+              } else if (listkey == 'strategicpartnerships') {
+                setTimeout(function () { // add setTimeOut to make sure that the folders created successfully on Initiative Document
+                  window.location = _spPageContextInfo.webAbsoluteUrl + "/SitePages/StrategicPartnershipHome.aspx?STCODE=" + STCODE
+                }, 3000);
               } else {
                 New_ProjectStages_Submit.init();
               }
@@ -2716,7 +2758,7 @@ var New_ProjectStages_Submit = {
       .get_lists()
       .getByTitle("Project Stages");
 
-      
+
 
     for (var i = 0; i < Stages_Data_Request.g.StagesArray.length; i++) {
       var itemCreateInfo = new SP.ListItemCreationInformation();
@@ -2824,7 +2866,7 @@ var GUIDS = [];
 
 // Get the projects collection.
 // function GetProjects() {
-  window.GetProjects = function () {
+window.GetProjects = function () {
 
   // Initialize the current client context.
   console.log("GetProjects in")

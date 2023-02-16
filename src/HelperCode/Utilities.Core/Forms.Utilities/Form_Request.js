@@ -744,6 +744,8 @@ window.Edit_Data_Request = {
       getfolderurl =
         host + "/" + ListArray[2].documents + "/" + PCODE + "/" + listkey;
       DocumentLibraryName = PCODE ? ListArray[2].documents : "Initiative Documents";
+    }else if(STCODE){
+      DocumentLibraryName ="StrategicPartnerships Documents"
     } else {
       getfolderurl = host + "/" + listkey + " Documents/";
       DocumentLibraryName = listkey + " Documents";
@@ -1051,7 +1053,7 @@ window.View_Data_Request = {
   onSuccess: function (sender, args) {
     var strategyType = ''
     var pillersRadio = ''
-    
+
     $(
       ".section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request) > .viewmode-value"
     ).each(async function () {
@@ -1554,6 +1556,8 @@ window.View_Data_Request = {
       getfolderurl =
         host + "/" + ListArray[2].documents + "/" + PCODE + "/" + listkey;
       DocumentLibraryName = PCODE ? ListArray[2].documents : "Initiative Documents";
+    }else if(STCODE){
+      DocumentLibraryName ="StrategicPartnerships Documents"
     } else {
       getfolderurl = host + "/" + listkey + " Documents/";
       DocumentLibraryName = listkey + " Documents";
@@ -3915,8 +3919,17 @@ window.ViewAllFiles_Main_Strategy = {
     var query = SP.CamlQuery.createAllItemsQuery();
     var mytitle;
     mytitle = listkey;
-    if (PCODE || ICODE) {
-      var code = PCODE ? PCODE : ICODE
+    debugger
+    if (PCODE || ICODE || STCODE) {
+      // var code = PCODE ? PCODE : ICODE
+      var code = ""
+      if (PCODE) {
+        code = PCODE
+      } else if (ICODE) {
+        code = ICODE
+      } else if (STCODE) {
+        code = STCODE
+      }
       query.set_viewXml(
         '<View Scope="RecursiveAll"> \
                       <Query> \
@@ -3987,12 +4000,15 @@ window.ViewAllFiles_Main_Strategy = {
     );
   },
   success: function () {
+    
+
     // var filesUrls = [];
     filesUrls = [];
     var ListEnumerator = ViewAllFiles_Main_Strategy.g.allItems.getEnumerator();
-
+    
 
     while (ListEnumerator.moveNext()) {
+      debugger
       var currentFile = ListEnumerator.get_current();
       var FileID = currentFile.get_item("ItemID");
       var _contentType = currentFile.get_contentType();

@@ -52,6 +52,7 @@ if (
   window.PageTitle,
   (window.PCODE = ""),
   (window.ICODE = ""),
+  (window.STCODE = ""),
   (window.PCODE_STRING = "");
 window.btnDeleteLabel = "";
 var siteRootName = window.location.href.split("/")[4];
