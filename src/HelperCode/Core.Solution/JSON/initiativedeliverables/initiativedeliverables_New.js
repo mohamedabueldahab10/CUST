@@ -111,18 +111,18 @@ var Information_Form = [
       //         ]
       //     }
       // },
-      {
-        InternalName: 'Delivered',
-        DisplayName: 'تم التسليم',
-        DisplayNameEn: 'Delivered',
-        type: 'yesnoradio',
-        options: {
-          choices: [
-            { display: 'yes', value: 'true' },
-            { display: 'no', value: 'false' },
-          ],
-        },
-      },
+      // {
+      //   InternalName: 'Delivered',
+      //   DisplayName: 'تم التسليم',
+      //   DisplayNameEn: 'Delivered',
+      //   type: 'yesnoradio',
+      //   options: {
+      //     choices: [
+      //       { display: 'yes', value: 'true' },
+      //       { display: 'no', value: 'false' },
+      //     ],
+      //   },
+      // },
       // {
       //     "InternalName": "RelatedBenefits",
       //     "DisplayNameEn": "Related Benefits",
