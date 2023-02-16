@@ -952,7 +952,7 @@ window.ListingData = {
             debugger
 
             //create button and div for filtertation DDLs
-            var HtmlStart = (USERProjRelated.indexOf(listkey) > -1 && PCODE) || (USERProjRelated.indexOf(listkey) == -1 || listkey == 'changerequest' && !PCODE && !ICODE && !STCODE && listkey != 'tasks') ?
+            var HtmlStart = (USERProjRelated.indexOf(listkey) > -1 && PCODE) || (USERProjRelated.indexOf(listkey) == -1 && !PCODE && !ICODE &&!STCODE && listkey != 'tasks') || (listkey=='changerequest') ? 
               '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + PCODE_STRING + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="ListingData.g.ExportToExcel()"><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>' : ICODE ?
                 '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + "&ICODE=" + ICODE + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="ListingData.g.ExportToExcel()"><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>'
                 : STCODE ?
