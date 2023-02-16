@@ -16,7 +16,7 @@ var Information_Form = [
         DisplayNameEn: 'Deliverables',
         DisplayName: 'المخرجات',
         // type: 'lookup',
-        type: 'lookupmultiselect',
+        type: 'lookupmultiselectwithoutrepeat',
         validation: 'required',
         source: 'Deliverables',
         Dispfieldkey: 'Name',

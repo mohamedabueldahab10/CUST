@@ -7617,6 +7617,7 @@ var View_ListInfo = {
           break;
 
         case "lookupmultiselectwithoutrepeat":
+          debugger
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -7654,7 +7655,7 @@ var View_ListInfo = {
             ">" +
             displayName +
             "</label>" +
-            '<p type="multiselect" class="viewmode-value" id="' +
+            '<p type="multiselect" class="viewmode-value" data-valfieldkey="' + element.valfieldkey + '" data-dispfieldkey="' + element.Dispfieldkey + '" data-listname="' + element.source + '" id="' +
             element.InternalName +
             '" ></p>' +
             "</div>";
@@ -7700,7 +7701,7 @@ var View_ListInfo = {
             ">" +
             displayName +
             "</label>" +
-            '<p type="multiselect" class="viewmode-value" id="' +
+            '<p type="multiselect" class="viewmode-value" data-valfieldkey="' + element.valfieldkey + '" data-dispfieldkey="' + element.Dispfieldkey + '" data-listname="' + element.source + '" id="' +
             element.InternalName +
             '" ></p>' +
             "</div>";

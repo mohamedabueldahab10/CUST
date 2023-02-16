@@ -1051,10 +1051,11 @@ window.View_Data_Request = {
   onSuccess: function (sender, args) {
     var strategyType = ''
     var pillersRadio = ''
-
+    
     $(
       ".section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request) > .viewmode-value"
     ).each(async function () {
+
 
       if ($(this).attr("type") == "date") {
         var d =
@@ -1254,6 +1255,7 @@ window.View_Data_Request = {
 
         $(this).text(value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
       } else if ($(this).attr("type") == "multiselect") {
+        debugger
         var valfieldkey = $(this).data("valfieldkey"),
           Dispfieldkey = $(this).data("dispfieldkey"),
           listname = $(this).data("listname"),
