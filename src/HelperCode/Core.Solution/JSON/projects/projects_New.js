@@ -778,7 +778,7 @@ var Information_Form = [
     // toggleName: 'FundingSection',
     // sectiontype: 'master',
     // layout: 'table',
-    targetlist: 'Funding',
+    // targetlist: 'Funding',
     subFields: [
       {
         InternalName: 'FundingSources',
@@ -810,7 +810,7 @@ var Information_Form = [
     // toggleName: 'BudgetSection',
     // sectiontype: 'master',
     // layout: 'table',
-    targetlist: 'BudgetItem',
+    // targetlist: 'BudgetItem',
     subFields: [
       {
         InternalName: 'PRCode',
@@ -862,7 +862,7 @@ var Information_Form = [
         DisplayNameEn: 'Cost 2',
         type: 'float',
         state: 'disabled',
-        dynamic: 'BudgetItem',
+        // dynamic: 'BudgetItem',
       },
       {
         InternalName: 'Cost3',
@@ -870,7 +870,7 @@ var Information_Form = [
         DisplayNameEn: 'Cost 3',
         type: 'float',
         state: 'disabled',
-        dynamic: 'BudgetItem',
+        // dynamic: 'BudgetItem',
       },
       {
         InternalName: 'AssignedBudget',
@@ -893,7 +893,7 @@ var Information_Form = [
         DisplayNameEn: 'Actual Budget',
         type: 'float',
         // "state": "disabled"
-        RequiredName: 'ActualBudget',
+        // RequiredName: 'ActualBudget',
       },
       // {
       //     "InternalName": "Cost4",
@@ -1009,7 +1009,7 @@ var Information_Form = [
     // toggleName: 'TenderSection',
     // sectiontype: 'master',
     // layout: 'table',
-    targetlist: 'TenderSection',
+    // targetlist: 'TenderSection',
     subFields: [
       {
         InternalName: 'PlannedOfferingDate',
