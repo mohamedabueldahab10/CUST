@@ -265,7 +265,7 @@
     done: "تم",
     funded: "ممولة",
     unfunded: "غير ممولة",
-    partiallyfunded: "ممولة جزئيا،",
+    partiallyfunded: "ممولة جزئيا",
     zero: "صفرية",
     large: "كبير",
     medium: "متوسط",
