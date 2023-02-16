@@ -827,7 +827,7 @@
     initiativetypetooltip:"هذا الحقل يبين نوع المبادرة (استراتيجية -رؤية - سوق عمل)",
     initiativestatustooltip: "هذا الحقل يبين حالة المبادرة",
     importantlinks: "روابط مهمة",
-    strategicpartnershiptooltip:"(هذا الحقل يبين حالة الشراك (سارية , سارية-مجددة , غير سارية",
+    strategicpartnershiptooltip: "هذا الحقل يبين حالة الشراكة (سارية - سارية-مجددة - غير سارية)",
     allgroups: "كل المجموعات",
     administratorsforprojectwebapp: "المسؤولون عن تطبيق موقع المشروع",
     itsteeringcommittee: "اللجنة التوجيهية لتكنولوجيا المعلومات",
