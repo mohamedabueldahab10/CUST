@@ -279,33 +279,36 @@ var Information_Form = [
          "valfieldkey":"Title",
          "validation":"required"
       },
-      // {
-      //    "InternalName":"StartDate",
-      //    "DisplayName":"تاريخ بداية الشراكة",
-      //    "DisplayNameEn":"Start Date",
-      //    "type":"datetime",
-      //    "validation":"required"
-      // },
-      
       {
-        InternalName: 'StartDate',
-        DisplayName: 'تاريخ بداية الشراكة',
-        DisplayNameEn: 'Start Date',
-        type: 'datetime',
-        validation: 'required',
-        // type: 'datetimetoparent',
-        // listname: 'Projects',
-        // startinternalname: 'BaselineStartDate',
-        // endinternalname: 'BaselineFinishDate',
-        max: 'FinishDate',
-      },
-      {
-         "InternalName":"Duration",
-         "DisplayName":"مدة الشراكة (شهر)",
-         "DisplayNameEn":"Duration (Month)",
-         "type":"float",
+         "InternalName":"StartDate",
+         "DisplayName":"تاريخ بداية الشراكة",
+         "DisplayNameEn":"Start Date",
+         "type":"datetime",
          "validation":"required"
       },
+      {
+        InternalName: 'Duration',
+        DisplayName: 'مدة الشراكة (شهر)',
+        DisplayNameEn: 'Duration (Month)',
+        type: 'floatDuration',
+        sourceelementdate:"StartDate", // date from
+        targetelementdate:"FinishDate",// destination 
+        validation: 'required',
+      },
+      {
+        InternalName: 'FinishDate',
+        DisplayName: 'تاريخ نهاية الشراكة', 
+        DisplayNameEn: 'Finish Date',
+        type: 'datetime',
+        state: 'disabled',
+      },
+      // {
+      //    "InternalName":"Duration",
+      //    "DisplayName":"مدة الشراكة (شهر)",
+      //    "DisplayNameEn":"Duration (Month)",
+      //    "type":"float",
+      //    "validation":"required"
+      // },
       {
          "InternalName":"NoticePeriod",
          "DisplayName":"مهلة الإخطار بعدم الرغبة بتجديد الشراكة",
