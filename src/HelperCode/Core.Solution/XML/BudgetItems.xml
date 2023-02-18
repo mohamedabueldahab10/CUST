@@ -1,0 +1,258 @@
+<Fields>
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Title" 
+			StaticName="Title" 
+			Name="Title"/>
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Text" 
+			DisplayName="Related to Sector" 
+			StaticName="RelatedToSector" 
+			Name="RelatedToSector"/>
+	
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="DateTime" 
+			Format="DateOnly"
+			DisplayName="From" 
+			StaticName="From" 
+			Name="From"/>
+			
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="DateTime" 
+			Format="DateOnly"
+			DisplayName="To" 
+			StaticName="To" 
+			Name="To"/>
+			
+		<Field 
+			Group="SPM Fields" 
+			Required="TRUE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Name" 
+			StaticName="Name" 
+			Name="Name"/>
+		<Field 
+			Group="SPM Fields" 
+			Required="TRUE" 
+			Type="User" 
+			DisplayName="Objective Owner"
+			StaticName="ObjectiveOwner" 
+			Name="ObjectiveOwner"/>
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Initiative" 
+			StaticName="Initiative" 
+			Name="Initiative"/>
+	
+		
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Note" 
+			DisplayName="Description" 
+			StaticName="Description" 
+			Name="Description"/>
+			
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Number" 
+			DisplayName="Amount" 
+			StaticName="Amount" 
+			Name="Amount"/>
+		<!-- <Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Number" 
+			DisplayName="Expenses1" 
+			StaticName="Expenses1" 
+			Name="Expenses1"/> -->
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Number" 
+			DisplayName="Expenses2" 
+			StaticName="Expenses2" 
+			Name="Expenses2"/>
+			
+		<!--	to be re-added in case needed
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Number" 
+			DisplayName="Cash" 
+			StaticName="Cash" 
+			Name="Cash"/>	
+		-->
+		
+		<Field 
+			Name="Type"
+			StaticName="Type"
+			DisplayName="Type"
+			Type="Choice"
+			Required="FALSE"
+			Group="SPM Fields">
+			<CHOICES>
+				<CHOICE>opex</CHOICE>
+				<CHOICE>capex</CHOICE>
+				<!-- <CHOICE>Support</CHOICE>
+				<CHOICE>Operational</CHOICE>
+				<CHOICE>Implementation</CHOICE>		 -->
+				<!-- Ghufran Comment for json: because of translation, put options in list as we use in json :
+			    everything must be not capital letter and if we have most then 2 word make them one 
+				for example: word word wordword		 -->
+			</CHOICES>
+		</Field>
+
+		
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Number" 
+			DisplayName="Expenses1" 
+			StaticName="Expenses1" 
+			Name="Expenses1"
+			Description="" />
+			
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Number" 
+			DisplayName="Expenses2" 
+			StaticName="Expenses2" 
+			Name="Expenses2"
+			Description="" />
+		
+			
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Number" 
+			DisplayName="Cost1" 
+			StaticName="Cost1" 
+			Name="Cost1"
+			Description="amount of total invoices in this year" />
+			
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Number" 
+			DisplayName="Cost2" 
+			StaticName="Cost2" 
+			Name="Cost2"
+			Description="amount of total invoices in this year "/>
+		
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Number" 
+			DisplayName="Cost3" 
+			StaticName="Cost3" 
+			Name="Cost3"
+			Description="amount of total invoices in this year " />
+
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Number" 
+			DisplayName="Cost4" 
+			StaticName="Cost4"
+			Name="Cost4"
+			Description="amount of total invoices in this year " />
+
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Number" 
+			DisplayName="Cost5" 
+			StaticName="Cost5" 
+			Name="Cost5"
+			Description="amount of total invoices in this year "/>
+			
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Number" 
+			DisplayName="TotalCost" 
+			StaticName="TotalCost" 
+			Name="TotalCost"
+			Description="total amount of all the invoices in all the years"/>
+
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Deletion Status"
+			StaticName="DeletionStatus" 
+			Name="DeletionStatus"/>
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="BudgetNumber" 
+			StaticName="BudgetNumber" 
+			Name="BudgetNumber"/>
+		<Field 
+			Group="SPM Fields" 
+			Required="TRUE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Stakeholders" 
+			StaticName="Stakeholders" 
+			Name="Stakeholders"/>
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Initiative" 
+			StaticName="Initiative" 
+			Name="Initiative"/>
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="InitiativeCode" 
+			StaticName="InitiativeCode" 
+			Name="InitiativeCode"/>
+		<Field
+			Name="Amount"
+			StaticName="Amount"
+			DisplayName="Amount"
+			Type="Number"
+			Required="FALSE"
+			Group="SPM Fields"
+  		/>
+		<Field
+			Name="ActualCost"
+			StaticName="ActualCost"
+			DisplayName="Actual Cost"
+			Type="Number"
+			Required="FALSE"
+			Group="SPM Fields"
+  		/>
+		<Field
+			Name="CurrentBudget"
+			StaticName="CurrentBudget"
+			DisplayName="Current Budget"
+			Type="Number"
+			Required="FALSE"
+			Group="SPM Fields"
+  		/>	
+</Fields>

@@ -1,0 +1,157 @@
+<Fields> 
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Contract Code"
+				StaticName="Title"
+				Name="Title"/>							
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="First"
+				StaticName="First"
+				Name="First"/>							
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Second Party"
+				StaticName="Second"
+				Name="Second"/>							
+	<Field 
+				Group="SPM Fields"
+				Required="TRUE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Contract Name"
+				StaticName="Name"
+				Name="Name"/>
+	<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				MaxLength="255"
+				Type="Text" 
+				DisplayName="Project Code" 
+				StaticName="ProjectCode" 
+				Name="ProjectCode"/>
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Beneficiary"
+				StaticName="Beneficiary"
+				Name="Beneficiary"/>
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="First Party"
+				StaticName="FirstParty"
+				Name="FirstParty"/>
+	<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="Note" 
+				DisplayName="Description" 
+				StaticName="Description" 
+				Name="Description"/>
+	<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="Note" 
+				DisplayName="Preamble" 
+				StaticName="Preamble" 
+				Name="Preamble"/>
+	<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="Note" 
+				DisplayName="Scope" 
+				StaticName="Scope" 
+				Name="Scope"/>
+	<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="Number" 
+				DisplayName="Contractual Value" 
+				StaticName="ContractualValue" 
+				Name="ContractualValue"/>	
+				
+	<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				MaxLength="255"
+				Type="Text" 
+				DisplayName="Vendor" 
+				StaticName="Vendor" 
+				Name="Vendor"/>				
+	<Field 
+				Group="SPM Fields" 
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"  
+				DisplayName="Purpose" 
+				StaticName="Purpose" 
+				Name="Purpose"/>				
+	<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Start Date" 
+				StaticName="StartDate" 
+				Name="StartDate"/>
+	<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="End Date" 
+				StaticName="EndDate" 
+				Name="EndDate"/>	
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Choice" 
+			DisplayName="Type Of Contract" 
+			StaticName="TypeOfContract" 
+			Name="TypeOfContract" >
+			
+			<CHOICES>
+				<CHOICE>Main</CHOICE>
+				<CHOICE>Sub</CHOICE>
+			</CHOICES>
+		</Field>
+		<!-- <Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="Calculated" 
+				DisplayName="Duration" 
+				StaticName="Duration" 
+				Name="Duration"/> 
+				-->
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Deletion Status"
+			StaticName="DeletionStatus" 
+			Name="DeletionStatus"/>	
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="InitiativeCode"
+			StaticName="InitiativeCode" 
+			Name="InitiativeCode"/>	
+</Fields> 
+				

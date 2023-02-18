@@ -1,0 +1,614 @@
+<Fields> 		
+		<Field
+				Group="Initiative Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Initiative Code"
+				StaticName="Title"
+				Name="Title"/>	
+		<Field
+				Group="Initiative Fields"
+				Required="TRUE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Name"
+				StaticName="Name"
+				Name="Name"/>	
+		<Field
+				Group="Initiative Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Number"
+				DisplayName="ActualPercentage"
+				StaticName="ActualPercentage"
+				Name="ActualPercentage"/>	
+		<Field
+				Group="Initiative Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Number"
+				DisplayName="PlannedPercentage"
+				StaticName="PlannedPercentage"
+				Name="PlannedPercentage"/>	
+		<Field
+				Group="Initiative Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Location"
+				StaticName="Location"
+				Name="Location"/>	
+		<Field
+				Group="Initiative Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Escalate"
+				StaticName="Escalate"
+				Name="Escalate"/>	
+		<Field
+				Group="Initiative Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="RequestStatus"
+				StaticName="RequestStatus"
+				Name="RequestStatus"/>	
+		<Field
+				Group="Initiative Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Comments"
+				StaticName="Comments"
+				Name="Comments"/>	
+		<Field
+				Group="Initiative Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="RelatedObjectiveAgency"
+				StaticName="RelatedObjectiveAgency"
+				Name="RelatedObjectiveAgency"/>	
+		<Field
+				Group="Initiative Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Initiative Progress Status"
+				StaticName="InitiativeProgressStatus"
+				Name="InitiativeProgressStatus"/>	
+			<Field 
+			
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Deletion Status" 
+			StaticName="DeletionStatus" 
+			Name="DeletionStatus"/>
+			<Field 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Choice" 
+			DisplayName="Types" 
+			StaticName="Types" 
+			Name="Types">
+			<CHOICES>
+					<CHOICE>vision</CHOICE>
+					<CHOICE>strategically</CHOICE>
+					<CHOICE>others</CHOICE>
+			</CHOICES>
+			</Field>
+			<Field 
+			
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Related Budget Item" 
+			StaticName="RelatedBudgetItem" 
+			Name="RelatedBudgetItem"/>
+			<Field 
+			
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="ExpectedBenefits" 
+			StaticName="ExpectedBenefits" 
+			Name="ExpectedBenefits"/>
+		<Field
+				Group="Initiative Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="StrategicPillar"
+				StaticName="StrategicPillar"
+				Name="StrategicPillar"/>	
+		<Field
+				Group="Initiative Fields"
+				Required="TRUE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Sector"
+				StaticName="Sector"
+				Name="Sector"/>	
+		<Field
+				Group="Initiative Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Department"
+				StaticName="Department"
+				Name="Department"/>	
+		<Field
+				Group="Initiative Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Stage"
+				StaticName="Stage"
+				Name="Stage"/>	
+		<Field
+				Group="Initiative Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="ObjectiveOwner"
+				StaticName="ObjectiveOwner"
+				Name="ObjectiveOwner"/>	
+		<Field
+				Group="Initiative Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Related Program"
+				StaticName="RelatedProgram"
+				Name="RelatedProgram"/>	
+				<Field
+				Group="Initiative Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="ProgramVision"
+				StaticName="ProgramVision"
+				Name="ProgramVision"/>	
+				
+		<Field
+				Group="Initiative Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="RelatedStrategy"
+				StaticName="RelatedStrategy"
+				Name="RelatedStrategy"/>	
+		<Field 
+				Group="SPM Fields" 
+				Required="TRUE" 
+				Type="Choice" 
+				DisplayName="RelatedObjectiveLevel" 
+				StaticName="RelatedObjectiveLevel" 
+				Name="RelatedObjectiveLevel" >
+				<CHOICES>
+					<CHOICE>objl1</CHOICE>
+					<CHOICE>objl2</CHOICE>
+					<CHOICE>objl3</CHOICE>
+				</CHOICES>
+		</Field>		
+				
+		<Field
+				Group="Initiative Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="RelatedKPI"
+				StaticName="RelatedKPI"
+				Name="RelatedKPI"/>	
+		<Field
+				Group="Initiative Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Note"
+				DisplayName="Description"
+				StaticName="Description"
+				Name="Description"/>	
+		<Field
+				Group="Main KPI Fields"
+				Required="TRUE"
+				Type="User"
+				DisplayName="Initiative manager"
+				StaticName="InitiativePM"
+				Name="InitiativePM"/>		
+		<Field
+				Group="Main KPI Fields"
+				Required="TRUE"
+				Type="User"
+				DisplayName="Initiative Owner"
+				StaticName="InitiativeOwner"
+				Name="InitiativeOwner"/>
+		<Field
+				Group="Initiative Fields"
+				Required="TRUE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Initiative Actual Owner"
+				StaticName="InitiativeActualOwner"
+				Name="InitiativeActualOwner"/>			
+		<Field
+				Group="Main KPI Fields"
+				Required="FALSE"
+				Type="User"
+				DisplayName="VRO_E"
+				StaticName="VRO_E"
+				Name="VRO_E"/>		
+		<Field
+				Group="Main KPI Fields"
+				Required="FALSE"
+				Type="User"
+				DisplayName="ResponsibleVision"
+				StaticName="ResponsibleVision"
+				Name="ResponsibleVision"/>		
+
+		<Field 
+				Group="SPM Fields" 
+				Required="TRUE" 
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="StartDate" 
+				StaticName="StartDate" 
+				Name="StartDate"/>
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Expense Start Date" 
+				StaticName="ExpenseStartDate" 
+				Name="ExpenseStartDate"/>
+		<Field 
+				Group="SPM Fields" 
+				Required="TRUE" 
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Finish Date" 
+				StaticName="FinishDate" 
+				Name="FinishDate"/>
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Number" 
+				DisplayName="Planned Percentage Completed" 
+				StaticName="PlannedPercentageCompleted" 
+				Name="PlannedPercentageCompleted"/>	
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Number" 
+				DisplayName="Actual Percentage Completed" 
+				StaticName="ActualPercentageCompleted" 
+				Name="ActualPercentageCompleted"/>
+		<!-- <Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Modified" 
+				StaticName="Modified" 
+				Name="Modified"/>
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Created" 
+				StaticName="Created" 
+				Name="Created"/>
+		<Field 
+				Required="FALSE" 
+				Type="User" 
+				DisplayName="Created By" 
+				StaticName="CreatedBy" 
+				Name="CreatedBy"/>	
+		<Field 
+				Required="FALSE" 
+				Type="User" 
+				DisplayName="Modified By" 
+				StaticName="ModifiedBy" 
+				Name="ModifiedBy"/>						 -->
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Number" 
+				DisplayName="Delay Percentage" 
+				StaticName="DelayPercentage" 
+				Name="DelayPercentage"/>
+		<!-- <Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Number" 
+				DisplayName="ID" 
+				StaticName="ID" 
+				Name="ID"/>	 -->
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Number" 
+				DisplayName="Program Total Cost" 
+				StaticName="ProgramTotalCost" 
+				Name="ProgramTotalCost"/>	
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Number" 
+				DisplayName="Actual Cost" 
+				StaticName="ActualCost" 
+				Name="ActualCost"/>	
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Number" 
+				DisplayName="Dependency Cost" 
+				StaticName="DependencyCost" 
+				Name="DependencyCost"/>	
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Number" 
+				DisplayName="Current Buget" 
+				StaticName="CurrentBuget" 
+				Name="CurrentBuget"/>	
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Number" 
+				DisplayName="Expenditures" 
+				StaticName="Expenditures" 
+				Name="Expenditures"/>	
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Number" 
+				DisplayName="Current Expenditures" 
+				StaticName="CurrentExpenditures" 
+				Name="CurrentExpenditures"/>	
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="RelatedStrategyObjective" 
+				StaticName="RelatedStrategyObjective" 
+				Name="RelatedStrategyObjective"/>	
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="Portfolio" 
+				StaticName="Portfolio" 
+				Name="Portfolio"/>	
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="OwnerEmail" 
+				StaticName="OwnerEmail" 
+				Name="OwnerEmail"/>	
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="ManagerEmail" 
+				StaticName="ManagerEmail" 
+				Name="ManagerEmail"/>	
+		<Field 
+				
+				Required="FALSE"
+				Type="Number" 
+				DisplayName="Estimated Cost" 
+				StaticName="EstimatedCost" 
+				Name="EstimatedCost"/>	
+		<!-- <Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="Classification" 
+				StaticName="Classification" 
+				Name="Classification"/>	 -->
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="Choice" 
+				DisplayName="Classification" 
+				StaticName="Classification" 
+				Name="Classification" 
+				Format="RadioButtons">
+				<CHOICES>
+					<CHOICE>transformativeproject</CHOICE>
+					<CHOICE>operationalproject</CHOICE>
+				</CHOICES>
+		</Field>
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="RelatedStrategyObjectiveCode" 
+				StaticName="RelatedStrategyObjectiveCode" 
+				Name="RelatedStrategyObjectiveCode"/>	
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="MasterID" 
+				StaticName="MasterID" 
+				Name="MasterID"/>	
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="MasterKey" 
+				StaticName="MasterKey" 
+				Name="MasterKey"/>	
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="Status" 
+				StaticName="Status" 
+				Name="Status"/>	
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="RelatedObjective" 
+				StaticName="RelatedObjective" 
+				Name="RelatedObjective"/>	
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="RelatedBenefit" 
+				StaticName="RelatedBenefit" 
+				Name="RelatedBenefit"/>	
+		<Field 
+				
+				Required="TRUE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="SubSector" 
+				StaticName="SubSector" 
+				Name="SubSector"/>	
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="InitiativeCode" 
+				StaticName="InitiativeCode" 
+				Name="InitiativeCode"/>	
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="ProjectCode" 
+				StaticName="ProjectCode" 
+				Name="ProjectCode"/>	
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="Initiative Status" 
+				StaticName="InitiativeStatus" 
+				Name="InitiativeStatus"/>	
+				<!-- mahmoudi -->
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="VisionRealizationInitiative" 
+				StaticName="VisionRealizationInitiative" 
+				Name="VisionRealizationInitiative"/>	
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="Phase" 
+				StaticName="Phase" 
+				Name="Phase"/>	
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="SiteCreated" 
+				StaticName="SiteCreated" 
+				Name="SiteCreated"/>	
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="DataUpdated" 
+				StaticName="DataUpdated" 
+				Name="DataUpdated"/>	
+		<Field 
+				
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="SecuritySet" 
+				StaticName="SecuritySet" 
+				Name="SecuritySet"/>	
+
+
+
+
+
+		
+		<Field 
+				
+				Required="FALSE" 
+				Type="Number" 
+				DisplayName="InitiativeBudget" 
+				StaticName="InitiativeBudget" 
+				Name="InitiativeBudget"/>	
+		<Field 
+				
+				Required="FALSE" 
+				Type="User" 
+				DisplayName="Initiative Owner Entity" 
+				StaticName="InitiativeOwnerEntity" 
+				Name="InitiativeOwnerEntity"/>	
+					<Field 
+			Name="ProgressLastModifiedDate"
+			StaticName="ProgressLastModifiedDate"
+			Format="DateTime"
+			DisplayName="Progress Last Modified Date" 
+			Type="DateTime" 
+			Required="False"
+			Group="SPM Fields" />
+	<Field 
+			Name="ProgressLastUpdatedBy" 
+			Type="User" 
+			DisplayName="Progress Last Updated By" 
+			Required="False" 
+			StaticName="ProgressLastUpdatedBy"
+			Group="SPM Fields" />
+	<Field 
+			Name="ERPCode" 
+			Type="Text"
+			DisplayName="ERPCode" 
+			Required="False" 
+			StaticName="ERPCode"
+			Group="SPM Fields" />
+	<Field 
+			Name="OfficialCode" 
+			Type="Text"
+			DisplayName="OfficialCode" 
+			Required="False" 
+			StaticName="OfficialCode"
+			Group="SPM Fields" />
+
+</Fields>

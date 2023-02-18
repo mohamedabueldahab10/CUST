@@ -1,0 +1,87 @@
+<Fields>
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE"
+			Type="Text" 
+			DisplayName="Code"
+			StaticName="Title" 
+			Name="Title"/>
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE"
+			Type="Text" 
+			DisplayName="TitleAr"
+			StaticName="TitleAr" 
+			Name="TitleAr"/>
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="Link" 
+				DisplayName="URL" 
+				StaticName="URL" 
+				Name="URL"/>
+
+		<Field 
+			Name="NewTab"
+			StaticName="NewTab"
+			DisplayName="New Tab"
+			Type="Boolean"
+			Required="FALSE"
+			Group="SPM Fields"/>
+	
+		<Field 
+			Name="Show"
+			StaticName="Show"
+			DisplayName="Show"
+			Type="Boolean"
+			Required="FALSE"
+			Group="SPM Fields"/>
+		<Field 
+			Name="Comments"
+			StaticName="Comments"
+			DisplayName="Comments"
+			Type="Text"
+			Required="FALSE"
+			Group="SPM Fields"/>
+		<Field 
+			Name="Icon"
+			StaticName="Icon"
+			DisplayName="Icon"
+			Type="Text"
+			Required="FALSE"
+			Group="SPM Fields"/>
+	<Field 
+			Name="AllowOnlyTo"
+			StaticName="AllowOnlyTo"
+			DisplayName="AllowOnlyTo"
+			Type="Choice"
+			Required="FALSE"
+			Group="SPM Fields">
+			<CHOICES>
+				<CHOICE>allgroups</CHOICE>
+				<CHOICE>administratorsforprojectwebapp</CHOICE>	
+				<CHOICE>itsteeringcommittee</CHOICE>
+				<CHOICE>sectionhead</CHOICE>	
+				<CHOICE>pmo</CHOICE>
+				<CHOICE>businessowner</CHOICE>	
+				<CHOICE>strategyspecialist</CHOICE>
+				<CHOICE>projectmanagersforprojectwebapp</CHOICE>	
+				<CHOICE>spmteam</CHOICE>	
+				<CHOICE>vrop</CHOICE>	
+				<CHOICE>epmo</CHOICE>	
+				<CHOICE>spmo</CHOICE>	
+				<CHOICE>vroe</CHOICE>
+				<CHOICE>inpattr38</CHOICE>
+				<CHOICE>inpattr36</CHOICE>
+				<CHOICE>developmentunit</CHOICE>
+			</CHOICES>
+	</Field>
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Deletion Status"
+			StaticName="DeletionStatus" 
+			Name="DeletionStatus"/>
+</Fields>

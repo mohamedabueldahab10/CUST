@@ -1,0 +1,171 @@
+<Fields>
+	<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="Link" 
+				DisplayName="URL" 
+				StaticName="URL" 
+				Name="URL"/> 
+	<!-- <Field 
+		Name="Comments"
+		StaticName="Comments"
+		DisplayName="notes"
+		Type="Note"
+		Required="FALSE"
+		Group="SPM Fields"/> OOB	 -->
+
+	
+
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="MasterID" 
+			StaticName="MasterID" 
+			Name="MasterID"/>
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Comments" 
+			StaticName="Comments" 
+			Name="Comments"/>
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Number" 
+			DisplayName="Order" 
+			StaticName="Order0" 
+			Name="Order0"/>
+	<Field
+			Group="SPM Fields"
+			Required="FALSE" 
+			Type="Boolean"
+			DisplayName="Show?" 
+			StaticName="Show" 
+			Name="Show"/>
+	<Field 
+			Group="Navigation Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Title (English)" 
+			StaticName="TitleEn" 
+			Name="TitleEn"/>
+	<Field 
+		Group="Navigation Fields" 
+		Required="FALSE" 
+		MaxLength="255" 
+		Type="Text" 
+		DisplayName="Title (Arabic)" 
+		StaticName="TitleAr" 
+		Name="TitleAr"/>
+
+	<Field 
+			Group="SPM Fields"
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="MasterKey" 
+			StaticName="MasterKey" 
+			Name="MasterKey"/>
+	<Field 
+			Group="SPM Fields"
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Icon" 
+			StaticName="Icon" 
+			Name="Icon"/>
+
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Deletion Status"
+			StaticName="DeletionStatus" 
+			Name="DeletionStatus"/>
+
+	<Field 
+			Name="NavType"
+			StaticName="NavType"
+			DisplayName="NavType"
+			Type="Choice"
+			Required="FALSE"
+			Group="SPM Fields">
+			<CHOICES>
+				<CHOICE>Header</CHOICE>
+				<CHOICE>Subhead</CHOICE>			
+			</CHOICES>
+	</Field>
+	<Field 
+			Name="AllowOnlyTo"
+			StaticName="AllowOnlyTo"
+			DisplayName="AllowOnlyTo"
+			Type="Choice"
+			Required="FALSE"
+			Group="SPM Fields">
+			<CHOICES>
+				<CHOICE>AllGroups</CHOICE>
+				<CHOICE>Administrators for Project Web App</CHOICE>	
+				<CHOICE>IT Steering Committee</CHOICE>
+				<CHOICE>Section Head</CHOICE>	
+				<CHOICE>PMO Team</CHOICE>
+				<CHOICE>Business Owner</CHOICE>	
+				<CHOICE>Strategy Specialist</CHOICE>
+				<CHOICE>Project Managers for Project Web App</CHOICE>	
+				<CHOICE>SPM Team</CHOICE>	
+				<CHOICE>VRO_P</CHOICE>	
+				<CHOICE>EPMO</CHOICE>	
+				<CHOICE>SPMO</CHOICE>	
+				<CHOICE>VRO_E</CHOICE>
+				<CHOICE>Initiative Manager</CHOICE>
+				<CHOICE>Initiative Owner</CHOICE>
+				<CHOICE>Development Unit</CHOICE>
+
+		
+			</CHOICES>
+	</Field>
+	<Field 
+			Name="todelete"
+			StaticName="todelete"
+			DisplayName="todelete"
+			Type="Choice"
+			Required="FALSE"
+			Group="SPM Fields">
+			<CHOICES>
+				<CHOICE>AllGroups</CHOICE>
+				<CHOICE>Administrators for Project Web App</CHOICE>	
+				<CHOICE>IT Steering Committee</CHOICE>
+				<CHOICE>Section Head</CHOICE>	
+				<CHOICE>PMO Team</CHOICE>
+				<CHOICE>Business Owner</CHOICE>	
+				<CHOICE>Strategy Specialist</CHOICE>
+				<CHOICE>Project Managers for Project Web App</CHOICE>	
+				<CHOICE>SPM Team</CHOICE>	
+				<CHOICE>VRO_P</CHOICE>	
+				<CHOICE>EPMO</CHOICE>	
+				<CHOICE>Initiative Manager</CHOICE>	
+				<CHOICE>Initiative Owner</CHOICE>	
+				<CHOICE>Development Unit</CHOICE>	
+				<CHOICE>SPM Admin</CHOICE>	
+				<CHOICE>KPI Owners</CHOICE>	
+				<CHOICE>Performance Leaders</CHOICE>	
+				<CHOICE>SPMO</CHOICE>	
+				<CHOICE>VRO_E</CHOICE>				
+			</CHOICES>
+	</Field>
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE"
+			Type="Text" 
+			DisplayName="Header"
+			StaticName="Header" 
+			Name="Header"
+			ShowField="TitleAr"
+			List="Side Navigation"/>
+
+</Fields>

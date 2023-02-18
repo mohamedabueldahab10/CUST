@@ -1,0 +1,411 @@
+<Fields> 		
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Title"
+				StaticName="Title"
+				Name="Title"/>	
+			<Field 
+			
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="DeletionStatus" 
+			StaticName="DeletionStatus" 
+			Name="DeletionStatus"/>
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Initiative"
+				StaticName="Initiative"
+				Name="Initiative"/>	
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Number"
+				DisplayName="Baseline"
+				StaticName="Baseline"
+				Name="Baseline"/>	
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Dimensions"
+				StaticName="Dimensions"
+				Name="Dimensions"/>	
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Polarity"
+				StaticName="Polarity"
+				Name="Polarity"/>	
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Number"
+				DisplayName="Actual"
+				StaticName="Actual"
+				Name="Actual"/>	
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Number"
+				DisplayName="Target"
+				StaticName="Target"
+				Name="Target"/>	
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Note"
+				DisplayName="Description"
+				StaticName="Description"
+				Name="Description"/>	
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Name"
+				StaticName="Name"
+				Name="Name"/>		
+				
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="KPIActivationStatus"
+				StaticName="KPIActivationStatus"
+				Name="KPIActivationStatus"/>		
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="KPILevels"
+				StaticName="KPILevels"
+				Name="KPILevels"/>		
+		<Field
+			Group="Initiative KPI Fields"
+			Required="FALSE" 
+			Type="Choice"
+			DisplayName="PeriodType" 
+			StaticName="PeriodType" 
+			Name="PeriodType">
+			<CHOICES>
+			<CHOICE>quarter</CHOICE>
+			<CHOICE>yearly</CHOICE>
+			</CHOICES>
+		</Field>		
+		<Field
+			Group="Initiative KPI Fields"
+			Required="FALSE" 
+			Type="Choice"
+			DisplayName="MesurePriority" 
+			StaticName="MesurePriority" 
+			Name="MesurePriority">
+			<CHOICES>
+			<CHOICE>high</CHOICE>
+			<CHOICE>low</CHOICE>
+			</CHOICES>
+		</Field>		
+			
+		<Field
+			Group="Initiative KPI Fields"
+			Required="FALSE" 
+			Type="Choice"
+			DisplayName="Calculation" 
+			StaticName="Calculation" 
+			Name="Calculation">
+			<CHOICES>    
+			<CHOICE>last</CHOICE>
+			<CHOICE>average</CHOICE>
+			<CHOICE>sum</CHOICE>
+		</CHOICES>
+			<Field
+				Group="Main KPI Fields"
+				Required="FALSE"
+				Type="Number"
+				DisplayName="TargetQ1"
+				StaticName="TargetQ1"
+				Name="TargetQ1"/>
+	<Field
+				Group="Main KPI Fields"
+				Required="FALSE"
+				Type="Number"
+				DisplayName="TargetQ2"
+				StaticName="TargetQ2"
+				Name="TargetQ2"/>
+	<Field
+				Group="Main KPI Fields"
+				Required="FALSE"
+				Type="Number"
+				DisplayName="TargetQ3"
+				StaticName="TargetQ3"
+				Name="TargetQ3"/>
+	<Field
+				Group="Main KPI Fields"
+				Required="FALSE"
+				Type="Number"
+				DisplayName="TargetQ4"
+				StaticName="TargetQ4"
+				Name="TargetQ4"/>
+		</Field>
+
+
+
+
+		<Field
+			Group="Initiative KPI Fields"
+			Required="FALSE" 
+			Type="Choice"
+			DisplayName="ResultType" 
+			StaticName="ResultType" 
+			Name="ResultType">
+			<CHOICES>
+			<CHOICE>number</CHOICE>
+			<CHOICE>percentage </CHOICE>
+			</CHOICES>
+		</Field>	
+	
+
+
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE" 
+				Type="Choice"
+				DisplayName="KPIType" 
+				StaticName="KPIType" 
+				Name="KPIType">
+				<CHOICES>    
+				<CHOICE>result</CHOICE>
+				<CHOICE>deliverable</CHOICE>
+				<CHOICE>input</CHOICE>
+			</CHOICES>
+		</Field>		
+	<Field
+				Group=" KPI Fields"
+				Required="FALSE"
+				Type="Text"
+				DisplayName="CalculationMethod"
+				StaticName="CalculationMethod"
+				Name="CalculationMethod"/>	
+		<!-- <Field
+				Group="Initiative KPI Fields"
+				Required="FALSE" 
+				Type="Choice"
+				DisplayName="Types" 
+				StaticName="Types" 
+				Name="Types">
+				<CHOICES>    
+				<CHOICE>استراتيجي</CHOICE>
+				<CHOICE>مهم</CHOICE>
+				<CHOICE>عادي</CHOICE>
+			</CHOICES>
+		</Field>		 -->
+		
+		<!-- <Field
+				Group="Initiative KPI Fields"
+				Required="FALSE" 
+				Type="Choice"
+				DisplayName="SupportType" 
+				StaticName="SupportType" 
+				Name="SupportType">
+				<CHOICES>    
+				<CHOICE>تدريب</CHOICE>
+				<CHOICE>تشغيلي</CHOICE>
+				<CHOICE>خدمة غير مالية</CHOICE>
+				<CHOICE>دعم مالي</CHOICE>
+			</CHOICES>
+		</Field>		 -->
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE" 
+				Type="Choice"
+				DisplayName="Category" 
+				StaticName="Category" 
+				Name="Category">
+				<CHOICES>    
+				<CHOICE>main</CHOICE>
+				<CHOICE>operational</CHOICE>
+			</CHOICES>
+		</Field>		
+
+
+
+		<!-- <Field
+				Group="Initiative KPI Fields"
+				Required="FALSE" 
+				Type="Choice"
+				DisplayName="SystemName" 
+				StaticName="SystemName" 
+				Name="SystemName">
+				<CHOICES>    
+				<CHOICE>BI</CHOICE>
+				<CHOICE>EC</CHOICE>
+				<CHOICE>فالكون</CHOICE>
+				<CHOICE>CRM</CHOICE>
+				<CHOICE>ETS</CHOICE>
+				<CHOICE>NLG</CHOICE>
+				<CHOICE>postgre</CHOICE>
+				<CHOICE>طاقات</CHOICE>
+				<CHOICE>لوحة بيانات دروب</CHOICE>
+				<CHOICE>SPS</CHOICE>
+				<CHOICE>نظام ماهر</CHOICE>
+				<CHOICE>منصة اكاديمية هدف للقيادة</CHOICE>
+				<CHOICE>ذكاء الأعمال</CHOICE>
+				<CHOICE>postgre sql</CHOICE>
+			</CHOICES>
+		</Field>		 -->
+				
+		<!-- <Field 
+			Group="Initiative KPI Fields"
+			Required="FALSE" 
+			Type="Note" 
+			DisplayName="Priority" 
+			StaticName="Priority" 
+			Name="Priority"/>			 -->
+			
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Project Code"
+				StaticName="ProjectCode"
+				Name="ProjectCode"/>				
+		<!-- <Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="RequiredData"
+				StaticName="RequiredData"
+				Name="RequiredData"/>				
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="DataAvailability"
+				StaticName="DataAvailability"
+				Name="DataAvailability"/>				
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="DataSource"
+				StaticName="DataSource"
+				Name="DataSource"/>				 -->
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Benchmarking"
+				StaticName="Benchmarking"
+				Name="Benchmarking"/>				
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="RelatedInstrument"
+				StaticName="RelatedInstrument"
+				Name="RelatedInstrument"/>				
+					
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				Type="User"
+				DisplayName="Owner"
+				StaticName="Owner"
+				Name="Owner"/>				
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				Type="Text"
+				DisplayName="Formula"
+				StaticName="Formula"
+				Name="Formula"/>				
+		<!-- <Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				Type="Text"
+				DisplayName="Instrument"
+				StaticName="Instrument"
+				Name="Instrument"/>				 -->
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				Type="Text"
+				DisplayName="RelatedMainKPI"
+				StaticName="RelatedMainKPI"
+				Name="RelatedMainKPI"/>				
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				Type="Number"
+				DisplayName="ActualQ1"
+				StaticName="ActualQ1"
+				Name="ActualQ1"/>				
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				Type="Number"
+				DisplayName="ActualQ2"
+				StaticName="ActualQ2"
+				Name="ActualQ2"/>				
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				Type="Number"
+				DisplayName="ActualQ3"
+				StaticName="ActualQ3"
+				Name="ActualQ3"/>				
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				Type="Number"
+				DisplayName="ActualQ4"
+				StaticName="ActualQ4"
+				Name="ActualQ4"/>				
+		<Field
+				Group="Initiative KPI Fields"
+				Required="FALSE"
+				Type="Text"
+				DisplayName="RelatedStrategyObjective"
+				StaticName="RelatedStrategyObjective"
+				Name="RelatedStrategyObjective"/>				
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Text" 
+			DisplayName="InitiativeCode"
+			StaticName="InitiativeCode" 
+			Name="InitiativeCode"/>			
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				MaxLength="255"
+				Type="Text"
+				DisplayName="DeletionStatus" 
+				StaticName="DeletionStatus" 
+				Name="DeletionStatus"/>			
+
+
+
+
+</Fields>

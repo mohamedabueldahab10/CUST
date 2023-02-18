@@ -1,0 +1,93 @@
+<Fields> 		
+		<Field
+				Group="SPillars Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Code"
+				StaticName="Code"
+				Name="Code"/>				
+		<Field 
+				Group="SPillars Fields" 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="Name" 
+				StaticName="Name" 
+				Name="Name"/>		
+		<Field 
+				Group="SPillars Fields" 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="Types" 
+				StaticName="Types" 
+				Name="Types"/>		
+		<Field 
+				Group="SPillars Fields" 
+				Required="FALSE" 
+				Type="Note" 
+				DisplayName="Description" 
+				StaticName="Description" 
+				Name="Description"/>
+	<Field 
+				Name="ObjectiveRealized"
+				StaticName="ObjectiveRealized"
+				DisplayName="Objective Realized"
+				Type="Choice"
+				Required="FALSE"
+				Group="SOBJs Fields">
+				<CHOICES>
+					<CHOICE>yes</CHOICE>
+					<CHOICE>no</CHOICE>
+				</CHOICES>
+		</Field>	
+		<Field 
+				Group="SPillars Fields"  
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="MasterKey" 
+				StaticName="MasterKey" 
+				Name="MasterKey"/>
+		<Field 
+				Group="SPillars Fields" 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="MasterID" 
+				StaticName="MasterID" 
+				Name="MasterID"/>
+		<Field 
+				Group="SPillars Fields" 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="RelatedStrategy" 
+				StaticName="RelatedStrategy" 
+				Name="RelatedStrategy"/>
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="InitiativeCode"
+			StaticName="InitiativeCode" 
+			Name="InitiativeCode"/>
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="ProjectCode"
+			StaticName="ProjectCode" 
+			Name="ProjectCode"/>
+			<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Deletion Status"
+			StaticName="DeletionStatus" 
+			Name="DeletionStatus"/>
+</Fields>

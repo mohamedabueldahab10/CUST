@@ -1,0 +1,90 @@
+<Fields> 		
+		<Field
+				Group="SPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Code"
+				StaticName="Title"
+				Name="Title"/>
+	<Field 
+			
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="DeletionStatus" 
+			StaticName="DeletionStatus" 
+			Name="DeletionStatus"/>
+	<Field 
+			
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="ElementsAffectedByChange" 
+			StaticName="ElementsAffectedByChange" 
+			Name="ElementsAffectedByChange"/>
+	
+	<Field 
+			Name="Baseline"
+			StaticName="Baseline"
+			Format="DateOnly"
+			DisplayName="Baseline" 
+			Type="DateTime" 
+			Required="False"
+			Group="SPM Fields" />
+	<Field 
+			Name="CurrentDate"
+			StaticName="CurrentDate"
+			Format="DateOnly"
+			DisplayName="CurrentDate" 
+			Type="DateTime" 
+			Required="False"
+			Group="SPM Fields" />
+	<Field 
+			Name="NewDate"
+			StaticName="NewDate"
+			Format="DateOnly"
+			DisplayName="NewDate" 
+			Type="DateTime" 
+			Required="False"
+			Group="SPM Fields" />
+	<Field 
+			
+			Required="FALSE" 
+			Type="Number" 
+			DisplayName="Total" 
+			StaticName="Total" 
+			Name="Total"/>
+	<Field 
+			
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="RelatedCR" 
+			StaticName="RelatedCR" 
+			Name="RelatedCR"/>
+	
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Text" 
+			DisplayName="ProjectCode"
+			StaticName="ProjectCode" 
+			Name="ProjectCode"/>
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Text" 
+			DisplayName="MasterID"
+			StaticName="MasterID" 
+			Name="MasterID"/>
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Text" 
+			DisplayName="MasterKey"
+			StaticName="MasterKey" 
+			Name="MasterKey"/>
+	
+
+</Fields>
