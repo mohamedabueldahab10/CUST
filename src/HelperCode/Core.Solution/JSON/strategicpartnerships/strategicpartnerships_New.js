@@ -96,7 +96,7 @@ var Information_Form = [
         DisplayNameEn: 'Partner Name',
         type: 'lookup',
         validation: 'required',
-        source: 'SP Vendors',
+        source: 'SPVendors',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
       },

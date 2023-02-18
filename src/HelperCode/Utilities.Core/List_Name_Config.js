@@ -449,7 +449,7 @@ var ListArray = [
 		projectrelated:true
 	},
 	{
-		strategicpartnershipsvendors: "SP Vendors",
+		strategicpartnershipsvendors: "SPVendors",
 		ListingTitle: "الشريك الخارجي",
 		FormTitle:"الشريك الخارجي",
 		TitleEn: "Srategic Parternship Vendors",
@@ -458,7 +458,7 @@ var ListArray = [
 		projectrelated:true
 	},
 	{
-		strategicpartnershipsimpactmeasurement: "SP Impact",
+		strategicpartnershipsimpactmeasurement: "SPImpactMeasurement",
 		ListingTitle: "قياس الأثر",
 		FormTitle:"قياس الأثر",
 		TitleEn: "Srategic Parternship Impact Measurement",
@@ -467,7 +467,7 @@ var ListArray = [
 		projectrelated:true
 	},
 	{
-		strategicpartnershipsachievements: "SP Achievements",
+		strategicpartnershipsachievements: "SPAchievements",
 		ListingTitle: "منجزات الشراكات الإستراتيجية",
 		FormTitle:"منجزات الشراكات الإستراتيجية",
 		TitleEn: "Srategic Parternship Achievements",
