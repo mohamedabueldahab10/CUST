@@ -716,6 +716,11 @@ window.Edit_Data_Request = {
       ListInfo.g.toggleRequiredFields($(this));
     });
 
+    // to handle toggle disabled fields in edit
+    $("[data-toggledisabledvalues]").each(function () {
+      ListInfo.g.toggleDisabledFields($(this));
+    })
+
     // trigger the dynamic parent field to get the data in edit
     $("select[dynamic=parent]").trigger("change")
 
@@ -744,8 +749,8 @@ window.Edit_Data_Request = {
       getfolderurl =
         host + "/" + ListArray[2].documents + "/" + PCODE + "/" + listkey;
       DocumentLibraryName = PCODE ? ListArray[2].documents : "Initiative Documents";
-    }else if(STCODE){
-      DocumentLibraryName ="StrategicPartnerships Documents"
+    } else if (STCODE) {
+      DocumentLibraryName = "StrategicPartnerships Documents"
     } else {
       getfolderurl = host + "/" + listkey + " Documents/";
       DocumentLibraryName = listkey + " Documents";
@@ -1468,10 +1473,9 @@ window.View_Data_Request = {
       }
     }
     if (listkey == "mainkpi") {
-      // if (isVROP) {
-      //   $('#Types').val('vision');
-      //   $('#Types').prop('disabled', true);
-      // }
+
+      var recurrenceChanged = oListItem.get_item("RecurrenceChanged") ? oListItem.get_item("RecurrenceChanged") : '';
+
       KPICode = oListItem.get_item("Title");
       KPIYear = oListItem.get_item("Year");
       KPIMonth = oListItem.get_item("Months") ? oListItem.get_item("Months") : '';
@@ -1502,6 +1506,13 @@ window.View_Data_Request = {
         $('#Months,#Quarter,#Midterms').parent().hide();
       }
 
+      debugger
+      if (recurrenceChanged == 'yes') {
+        var htmlMsg = '<div data-trans-recurrencerepeat class="kpiPeriodChanged ErrorMsg Resources"></div>';
+        $('.btnactionrow').html(htmlMsg);
+        
+
+      }
     }
 
     if (listkey == 'benefitmetrics') {
@@ -1556,8 +1567,8 @@ window.View_Data_Request = {
       getfolderurl =
         host + "/" + ListArray[2].documents + "/" + PCODE + "/" + listkey;
       DocumentLibraryName = PCODE ? ListArray[2].documents : "Initiative Documents";
-    }else if(STCODE){
-      DocumentLibraryName ="StrategicPartnerships Documents"
+    } else if (STCODE) {
+      DocumentLibraryName = "StrategicPartnerships Documents"
     } else {
       getfolderurl = host + "/" + listkey + " Documents/";
       DocumentLibraryName = listkey + " Documents";
@@ -4000,12 +4011,12 @@ window.ViewAllFiles_Main_Strategy = {
     );
   },
   success: function () {
-    
+
 
     // var filesUrls = [];
     filesUrls = [];
     var ListEnumerator = ViewAllFiles_Main_Strategy.g.allItems.getEnumerator();
-    
+
 
     while (ListEnumerator.moveNext()) {
       debugger
@@ -4774,6 +4785,11 @@ var equationKPI = {
       equationKPI.g.editEquation();
     });
 
+    // to make the equation fields disabled after render
+    $("[data-toggledisabledvalues]").each(function () {
+      ListInfo.g.toggleDisabledFields($(this));
+    })
+    //
 
     Update_Kpi_Results.init(kpiEquation)
 

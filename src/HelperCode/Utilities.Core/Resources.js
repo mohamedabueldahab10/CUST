@@ -884,7 +884,8 @@
     strategicpartnershippioneer: "رائد الشراكة",
     strategicpartnershipduration: "مدة الشراكة",
     ongoing: "جارية",
-    deliverablemilestoneschedual: "المخرجات - المعالم"
+    deliverablemilestoneschedual: "المخرجات - المعالم",
+    recurrencerepeat :"لا يمكن التعديل لانه تم تغيير دورية القياس"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1786,7 +1787,8 @@
     strategicpartnershippioneer: "Strategic PartnerShip Pioneer",
     strategicpartnershipduration: "Strategic Partnership Duration",
     ongoing: "On going",
-    deliverablemilestoneschedual: "Deliverables - Milestones"
+    deliverablemilestoneschedual: "Deliverables - Milestones",
+    recurrencerepeat:"You can't edit because the Recurrence Changed"
   },
 };
 

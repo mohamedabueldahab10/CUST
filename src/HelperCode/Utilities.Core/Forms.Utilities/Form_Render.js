@@ -633,12 +633,17 @@ window.ListInfo = {
           });
           //////////////////////////////////////////////////////////////
 
-          // hide show required based on selection & onload
+          // disabled enable fields based on selection & onload
 
+          $("[data-toggledisabledvalues]").on("change",function(){
+            ListInfo.g.toggleDisabledFields($(this));
+
+          })
+
+          // hide show required based on selection & onload
           $("[data-requiredvalues]").on("change", function () {
             ListInfo.g.toggleRequiredFields($(this));
           });
-
 
           //hide show fields based on selection & onload
           $("[data-togglevalues]").on("change", function () {
@@ -1249,7 +1254,14 @@ window.ListInfo = {
       requiredValues = "",
       RequiredName = element.hasOwnProperty("RequiredName")
         ? "data-requiredname=" + element.RequiredName
+        : "",
+
+      toggleDisabledValues = "",
+      toggleDisabledName = element.hasOwnProperty("ToggleDisabledName")
+        ? "data-toggledisabledname=" + element.ToggleDisabledName
         : "";
+
+
 
     renderfield = true;
     window.acceptedExtensions;
@@ -1321,7 +1333,6 @@ window.ListInfo = {
             : item.value + "[" + item.fields.join(",") + "]" + seperator;
       });
     }
-
     /////////////////////////
     if (element.hasOwnProperty("requiredValues")) {
       element.requiredValues.forEach(function (item, i, arr) {
@@ -1329,6 +1340,21 @@ window.ListInfo = {
         requiredValues +=
           i == 0
             ? 'data-requiredValues="' +
+            item.value +
+            "[" +
+            item.fields.join(",") +
+            "]" +
+            seperator
+            : item.value + "[" + item.fields.join(",") + "]" + seperator;
+      });
+    }
+    /////////////////////////// to handle toggle disabled value
+    if (element.hasOwnProperty("toggleDisabledValues")) {
+      element.toggleDisabledValues.forEach(function (item, i, arr) {
+        var seperator = i == arr.length - 1 ? '"' : ":::";
+        toggleDisabledValues +=
+          i == 0
+            ? 'data-toggleDisabledValues="' +
             item.value +
             "[" +
             item.fields.join(",") +
@@ -1452,6 +1478,8 @@ window.ListInfo = {
           "<input " +
           ToggleName +
           " " +
+          toggleDisabledName +
+          " " +
           RequiredName +
           ' type="text" maxlength="' +
           element.maxchar +
@@ -1516,6 +1544,8 @@ window.ListInfo = {
           "</label>" +
           "<input " +
           ToggleName +
+          " " +
+          toggleDisabledName +
           " " +
           RequiredName +
           ' type="number" data-manipulates="year" min="1900" max="2099" step="1" maxdata="' +
@@ -1585,6 +1615,8 @@ window.ListInfo = {
           "<input " +
           ToggleName +
           " " +
+          toggleDisabledName +
+          " " +
           RequiredName +
           ' type="number" step="any" placeholder="' +
           displayName +
@@ -1648,6 +1680,8 @@ window.ListInfo = {
           "</label>" +
           "<input " +
           ToggleName +
+          " " +
+          toggleDisabledName +
           " " +
           RequiredName +
           ' type="text" maxlength="' +
@@ -1715,7 +1749,10 @@ window.ListInfo = {
           "<input " +
           ToggleName +
           " " +
+          toggleDisabledName +
+          " " +
           RequiredName +
+
           ' type="email" placeholder="' +
           displayName +
           '" ' +
@@ -1778,6 +1815,8 @@ window.ListInfo = {
           "</label>" +
           "<input " +
           ToggleName +
+          " " +
+          toggleDisabledName +
           " " +
           RequiredName +
           ' type="text" placeholder="' +
@@ -1842,6 +1881,8 @@ window.ListInfo = {
           "</label>" +
           "<input " +
           ToggleName +
+          " " +
+          toggleDisabledName +
           " " +
           RequiredName +
           ' type="float"  placeholder="' +
@@ -1917,6 +1958,8 @@ window.ListInfo = {
           "<input " +
           ToggleName +
           " " +
+          toggleDisabledName +
+          " " +
           RequiredName +
           ' type="float" placeholder="' +
           displayName +
@@ -1991,6 +2034,8 @@ window.ListInfo = {
           "<input " +
           ToggleName +
           " " +
+          toggleDisabledName +
+          " " +
           RequiredName +
           ' type="float" placeholder="' +
           displayName +
@@ -2054,6 +2099,8 @@ window.ListInfo = {
           "</label>" +
           "<input " +
           ToggleName +
+          " " +
+          toggleDisabledName +
           " " +
           RequiredName +
           ' type="text" placeholder="' +
@@ -2121,6 +2168,8 @@ window.ListInfo = {
           "</label>" +
           "<input " +
           ToggleName +
+          " " +
+          toggleDisabledName +
           " " +
           RequiredName +
           ' type="float" placeholder="' +
@@ -2229,6 +2278,8 @@ window.ListInfo = {
                 "<input " +
                 ToggleName +
                 " " +
+                toggleDisabledName +
+                " " +
                 RequiredName +
                 ' type="number" max=' +
                 newVal +
@@ -2304,6 +2355,8 @@ window.ListInfo = {
           "</label>" +
           "<input " +
           ToggleName +
+          " " +
+          toggleDisabledName +
           " " +
           RequiredName +
           ' type="number" title="Please enter value between 0 and 100" step="any" placeholder="' +
@@ -2391,6 +2444,8 @@ window.ListInfo = {
                 "<input " +
                 ToggleName +
                 " " +
+                toggleDisabledName +
+                " " +
                 RequiredName +
                 ' type="number" title="" step="any" placeholder="' +
                 displayName +
@@ -2466,6 +2521,8 @@ window.ListInfo = {
           "<input " +
           ToggleName +
           " " +
+          toggleDisabledName +
+          " " +
           RequiredName +
           ' type="number" title="Please enter value between 0 and 100" step="any" placeholder="' +
           displayName +
@@ -2530,6 +2587,8 @@ window.ListInfo = {
           "<input " +
           ToggleName +
           " " +
+          toggleDisabledName +
+          " " +
           RequiredName +
           ' type="number" min="0" max="100" placeholder="' +
           displayName +
@@ -2593,6 +2652,8 @@ window.ListInfo = {
           "</label>" +
           "<input " +
           ToggleName +
+          " " +
+          toggleDisabledName +
           " " +
           RequiredName +
           ' type="date" placeholder="' +
@@ -2692,6 +2753,8 @@ window.ListInfo = {
                 "<input " +
                 ToggleName +
                 " " +
+                toggleDisabledName +
+                " " +
                 RequiredName +
                 ' type="date" onkeydown="return false" placeholder="' +
                 displayName +
@@ -2773,6 +2836,8 @@ window.ListInfo = {
           "</label>" +
           "<div " +
           ToggleName +
+          " " +
+          toggleDisabledName +
           " " +
           RequiredName +
           ' class="datetimeinputs"><input type="datetime-local" placeholder="' +
@@ -2857,6 +2922,8 @@ window.ListInfo = {
           "<div " +
           ToggleName +
           " " +
+          toggleDisabledName +
+          " " +
           RequiredName +
           ' class="PPField SPIField form-control" type="picker" id="' +
           element.InternalName +
@@ -2923,6 +2990,8 @@ window.ListInfo = {
           "<div " +
           ToggleName +
           " " +
+          toggleDisabledName +
+          " " +
           RequiredName +
           ' class="PPField SPIField form-control" type="multipicker" id="' +
           element.InternalName +
@@ -2987,9 +3056,13 @@ window.ListInfo = {
           displayName +
           "</label>" +
           "<select " +
+          toggleDisabledValues +
+          " " +
           toggleValues +
           " " +
           ToggleName +
+          " " +
+          toggleDisabledName +
           " " +
           RequiredName +
           " " +
@@ -3084,9 +3157,13 @@ window.ListInfo = {
             displayName +
             "</label>" +
             "<select " +
+            toggleDisabledValues +
+            " " +
             toggleValues +
             " " +
             ToggleName +
+            " " +
+            toggleDisabledName +
             " " +
             RequiredName +
             " " +
@@ -3212,6 +3289,8 @@ window.ListInfo = {
           "<label " +
           ToggleName +
           " " +
+          toggleDisabledName +
+          " " +
           RequiredName +
           ' for="' +
           element.InternalName +
@@ -3279,6 +3358,8 @@ window.ListInfo = {
           '">' +
           "<label " +
           ToggleName +
+          " " +
+          toggleDisabledName +
           " " +
           RequiredName +
           ' for="' +
@@ -3369,6 +3450,8 @@ window.ListInfo = {
           "</label>" +
           "<input " +
           ToggleName +
+          " " +
+          toggleDisabledName +
           " " +
           RequiredName +
           ' type="checkbox" value="' +
@@ -3860,6 +3943,8 @@ window.ListInfo = {
                       "<select " +
                       ToggleName +
                       " " +
+                      toggleDisabledName +
+                      " " +
                       RequiredName +
                       " " +
                       inputLisKey +
@@ -4005,6 +4090,8 @@ window.ListInfo = {
                       "</label>" +
                       "<select " +
                       ToggleName +
+                      " " +
+                      toggleDisabledName +
                       " " +
                       RequiredName +
                       " " +
@@ -4358,6 +4445,8 @@ window.ListInfo = {
                 "<select " +
                 ToggleName +
                 " " +
+                toggleDisabledName +
+                " " +
                 RequiredName +
                 " " +
                 inputLisKey +
@@ -4667,6 +4756,8 @@ window.ListInfo = {
           "<select " +
           ToggleName +
           " " +
+          toggleDisabledName +
+          " " +
           RequiredName +
           " " +
           inputLisKey +
@@ -4794,6 +4885,8 @@ window.ListInfo = {
           "</label>" +
           "<select " +
           ToggleName +
+          " " +
+          toggleDisabledName +
           " " +
           RequiredName +
           "  " +
@@ -4948,6 +5041,8 @@ window.ListInfo = {
           "<select " +
           ToggleName +
           " " +
+          toggleDisabledName +
+          " " +
           RequiredName +
           " " +
           element.validation +
@@ -5045,6 +5140,8 @@ window.ListInfo = {
           "<textarea " +
           ToggleName +
           " " +
+          toggleDisabledName +
+          " " +
           RequiredName +
           ' type="multiline" maxlength="1000" rows="3" value="" placeholder="' +
           displayName +
@@ -5111,6 +5208,8 @@ window.ListInfo = {
           "</label>" + //class="custom-file-upload"
           "<input " +
           ToggleName +
+          " " +
+          toggleDisabledName +
           " " +
           RequiredName +
           ' type="file" accept="' +
@@ -5761,6 +5860,58 @@ window.ListInfo = {
         "allToggleRequiredFields allToggleRequiredFields"
       );
     },
+    toggleDisabledFields:function($this){
+      var myValue = $this.val();
+
+      var toggleDisabledValues =
+        $this.data("toggledisabledvalues").indexOf(":::") > -1
+          ? $this.data("toggledisabledvalues").split(":::")
+          : [$this.data("toggledisabledvalues")],
+        toggleDisabledValues = toggleDisabledValues.filter(function (t) {
+          return t.indexOf(myValue + "[") > -1;
+        }),
+        toggleDisabledFields =
+          toggleDisabledValues.length > 0
+            ? toggleDisabledValues[0].match(/\[(.*?)\]/)[1].split(",")
+            : "",
+        isShowVal = toggleDisabledValues.length > 0,
+        allToggleDisabledFields =
+          $this.data("toggledisabledvalues").indexOf(":::") > -1
+            ? $this.data("toggledisabledvalues").split(":::")
+            : [$this.data("toggledisabledvalues")],
+        myToggleDisabledFields = "";
+      allToggleDisabledFields.forEach((item, i, arr) => {
+        myToggleDisabledFields +=
+          i == arr.length - 1
+            ? item.match(/\[(.*?)\]/)[1]
+            : item.match(/\[(.*?)\]/)[1] + ",";
+      });
+      allToggleDisabledFields = myToggleDisabledFields.split(",");
+
+      console.log(allToggleDisabledFields,"allToggleDisabledFields")
+      debugger
+      if (isShowVal) {
+        allToggleDisabledFields.forEach((item, i, arr) => {
+          $('[data-toggledisabledname="' + item + '"]')
+            .parent()
+            .find(">*")
+            .attr("disabled", false);
+        });
+
+        toggleDisabledFields.forEach(function (item, i, arr) {
+          myFieldParent = $('[data-toggledisabledname="' + item + '"]').parent();
+          myFieldParent.find(">*").attr("disabled", true);
+        });
+      } else {
+        allToggleDisabledFields.forEach((item, i, arr) => {
+          $('[data-toggledisabledname="' + item + '"]')
+            .parent()
+            .find(">*")
+            .attr("disabled", false);
+        });
+      }
+
+    },
     showFieldsIfInitiativeVision: function () {
       var typeValue = $("#Types option:selected").val();
 
@@ -6253,7 +6404,8 @@ var View_ListInfo = {
       dontSubmitRequired = element.hasOwnProperty("dontSubmitRequired") ? "dont-submit even-required" : "",
       dontRequest = element.hasOwnProperty("dontRequest") ? "dont-request" : "", // to avoid err on view
       toggleValues = "",
-      ToggleName = element.hasOwnProperty("ToggleName") ? "data-togglename=" + element.ToggleName : "";
+      ToggleName = element.hasOwnProperty("ToggleName") ? "data-togglename=" + element.ToggleName : "",
+      toggleDisabledName = element.hasOwnProperty("ToggleDisabledName") ? "data-toggledisabledname=" + element.ToggleDisabledName : "";
 
 
     if (element.hasOwnProperty("security")) {
@@ -6414,6 +6566,8 @@ var View_ListInfo = {
             "</label>" +
             "<input " +
             ToggleName +
+            " " +
+            toggleDisabledName +
             ' type="number" data-manipulates="year" min="1900" max="2099" step="1" maxdata="' +
             element.max +
             '" mindata="' +
@@ -6662,6 +6816,8 @@ var View_ListInfo = {
             element.InternalName +
             '" ' +
             ToggleName +
+            " " +
+            toggleDisabledName +
             "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
@@ -6754,6 +6910,8 @@ var View_ListInfo = {
             element.InternalName +
             '" ' +
             ToggleName +
+            " " +
+            toggleDisabledName +
             "></p>" +
             "</div>" +
             "</div>";
@@ -6915,6 +7073,8 @@ var View_ListInfo = {
                   element.InternalName +
                   '" ' +
                   ToggleName +
+                  " " +
+                  toggleDisabledName +
                   "></p>" +
                   "</div>";
                 OnSuccess(flag, htmlBody);
@@ -7100,6 +7260,8 @@ var View_ListInfo = {
             element.InternalName +
             '" ' +
             ToggleName +
+            " " +
+            toggleDisabledName +
             "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
@@ -7515,6 +7677,8 @@ var View_ListInfo = {
             element.InternalName +
             '" ' +
             ToggleName +
+            " " +
+            toggleDisabledName +
             "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);

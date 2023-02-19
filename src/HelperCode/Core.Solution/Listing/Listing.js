@@ -1440,6 +1440,8 @@ window.ListingData = {
             keyNameParams = 'mom'
           } else if (wfname == 'InitiativeSample') {
             keyNameParams = "initiativesample"
+          } else if (wfname == 'VisionInitiative' || wfname == 'StrategicallyInitiative' || wfname == 'LmsInitiative') {
+            keyNameParams = "initiatives"
           }
 
           // console.log(keyNameParams);

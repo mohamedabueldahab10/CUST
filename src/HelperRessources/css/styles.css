@@ -6426,3 +6426,10 @@ a.a-important-link:hover>* {
     color: red;
     font-size: 14px;
 }
+
+.kpiPeriodChanged.ErrorMsg {
+    width: 100%;
+    text-align: end !important;
+    color: red !important;
+    font-size: 14px;
+}

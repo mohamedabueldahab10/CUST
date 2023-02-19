@@ -563,13 +563,13 @@ window.userCalls = {
           document.title = "Initiative Home";
         }
         break;
-        case "strategicpartnershiphome.aspx":
-          if (isArabic) {
-            document.title = "تفاصيل الشراكة الاستراتيجية";
-          } else {
-            document.title = "Strategic Partnership Home";
-          }
-          break;
+      case "strategicpartnershiphome.aspx":
+        if (isArabic) {
+          document.title = "تفاصيل الشراكة الاستراتيجية";
+        } else {
+          document.title = "Strategic Partnership Home";
+        }
+        break;
       case "taskhistory.aspx":
         if (isArabic) {
           document.title = "تاريخ المهمة";
@@ -4406,7 +4406,7 @@ var Access_Project_Info_Request = {
 
     if (isthereICODE) {
       GetInitiativeTitle_Request.preinit();
-    } 
+    }
     if (isthereSTCODE) {
       GetStrategicPartnershipTitle_Request.preinit();
     } else {
@@ -4995,8 +4995,8 @@ var Access_Project_Info_Request = {
               ""
             );
           }
-        
-        } 
+
+        }
         else if (isthereSTCODE) {
           if (window.location.href.indexOf("StrategicPartnership") > -1) {
             $(".page-title").html(
@@ -5017,7 +5017,7 @@ var Access_Project_Info_Request = {
               USERPageTitle +
               ""
             );
-          } 
+          }
           else {
             //
             $(".page-title").html(
@@ -5042,7 +5042,7 @@ var Access_Project_Info_Request = {
               ""
             );
           }
-        } 
+        }
         else {
           if (
             !isInitiativesHomePage &&
@@ -6455,6 +6455,8 @@ var Tasks_Info_Request_User = {
             keyNameParams = "tasks";
           } else if (wfname == "MoM") {
             keyNameParams = "mom";
+          } else if (wfname == 'VisionInitiative' || wfname == 'StrategicallyInitiative' || wfname == 'LmsInitiative') {
+            keyNameParams = "initiatives"
           }
 
           switch (tasktype) {
@@ -6804,8 +6806,8 @@ var GetStrategicPartnershipTitle_Request = {
 
     camlQuery.set_viewXml(
       '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
-        UserSTCode +
-        "</Value></Eq></Where></Query></View>"
+      UserSTCode +
+      "</Value></Eq></Where></Query></View>"
     );
     GetStrategicPartnershipTitle_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(GetStrategicPartnershipTitle_Request.g.collListItem);
