@@ -56,7 +56,7 @@ var Information_Form = [
         DisplayName: 'رقم الهاتف',
         DisplayNameEn: 'Phone Number',
         // type: 'floatwithoutformatting',
-        type:'phonenumber',
+        type:'floatwithoutformatting',
       },
       {
         InternalName: 'Role',
