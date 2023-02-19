@@ -885,7 +885,8 @@
     strategicpartnershipduration: "مدة الشراكة",
     ongoing: "جارية",
     deliverablemilestoneschedual: "المخرجات - المعالم",
-    recurrencerepeat :"لا يمكن التعديل لانه تم تغيير دورية القياس"
+    recurrencerepeat :"لا يمكن التعديل لانه تم تغيير دورية القياس",
+    recurrencechanged:"تم تغيير دورية القياس"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1788,7 +1789,8 @@
     strategicpartnershipduration: "Strategic Partnership Duration",
     ongoing: "On going",
     deliverablemilestoneschedual: "Deliverables - Milestones",
-    recurrencerepeat:"You can't edit because the Recurrence Changed"
+    recurrencerepeat:"You can't edit because the Recurrence Changed",
+    recurrencechanged:"Recurrence Changed"
   },
 };
 
