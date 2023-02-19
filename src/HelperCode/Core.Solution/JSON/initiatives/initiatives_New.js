@@ -41,24 +41,28 @@ var Information_Form = [
               display: 'vision',
               value: 'vision',
               roles: ['Administrator', 'VROE', 'VROP'],
-              // otherFields:[
-              //   {fieldName:"WFModuleCode",value:"vision"},
-              //   {fieldName:"WFStage",value:"Stage01"},
-              // ]
+              otherFields:[
+                {fieldName:"WFModuleCode",value:"VisionInitiative"},
+                {fieldName:"WFStage",value:"VInStage01"},
+              ]
             },
             {
               display: 'strategically',
               value: 'strategically',
               roles: ['Administrator', 'EPMO'],
-              // otherFields:[
-              //   {fieldName:"WFModuleCode",value:"strategically"},
-              //   {fieldName:"WFStage",value:"Stage02"},
-              // ]
+              otherFields:[
+                {fieldName:"WFModuleCode",value:"StrategicallyInitiative"},
+                {fieldName:"WFStage",value:"SInStage01"},
+              ]
             },
             {
               display: 'lms',
               value: 'lms',
               roles: ['Administrator', 'LMSE', 'LMSP'],
+              otherFields:[
+                {fieldName:"WFModuleCode",value:"LmsInitiative"},
+                {fieldName:"WFStage",value:"LInStage01"},
+              ]
             },
             // { display: 'others', value: 'others' },
           ],
