@@ -114,8 +114,8 @@ var workflowname,
 	isProjectCharter =
 		window.location.href.indexOf("projectcharter") > -1 &&
 		window.location.href.indexOf("WFs") > -1,
-	isInitiativeSample =
-		window.location.href.indexOf("initiativesample") > -1 &&
+	isVisionInitiative =
+		window.location.href.indexOf("initiatives") > -1 &&
 		window.location.href.indexOf("WFs") > -1,
 	//
 	isRelatedProjectPage = window.location.href.indexOf("PCODE") > -1,
@@ -295,8 +295,8 @@ if (isChangeRequestPage) {
 		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
 		workflowname +
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
-} else if (isInitiativeSample) {
-	workflowname = "InitiativeSample";
+} else if (isVisionInitiative) {
+	workflowname = "VisionInitiative";
 	bulkeditlist = "Initiatives";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
@@ -904,7 +904,7 @@ var Task_PCODE_Data_Request_WFs = {
 		}
 
 
-		if (!accessCurrentTask && !isAdminUser && System_Groups.indexOf("System Administrators") == -1) {
+		if (!accessCurrentTask && !isAdmin && System_Groups.indexOf("System Admin Group") == -1) {
 			Security_userCalls.g.Security_Msg();
 		}
 
@@ -923,6 +923,8 @@ var Task_PCODE_Data_Request_WFs = {
 					"<style>div#s4-titlerow {display: block!important;padding: 6px;}h1#pageTitle span {display: flex;}</style>"
 				);
 			}
+
+			debugger
 			//  alert(tasktype);
 			switch (tasktype) {
 				case "ProjectTask":
@@ -2658,11 +2660,11 @@ var Task_Edit_Data = {
 						_spPageContextInfo.siteAbsoluteUrl +
 						"/SitePages/Listing.aspx?ListKey=mom";
 				}
-				if (isInitiativeSample) {
-					window.location =
-						_spPageContextInfo.siteAbsoluteUrl +
-						"/SitePages/Listing.aspx?ListKey=initiatives";
-				}
+				// if (isInitiativeSample) {
+				// 	window.location =
+				// 		_spPageContextInfo.siteAbsoluteUrl +
+				// 		"/SitePages/Listing.aspx?ListKey=initiatives";
+				// }
 				if (isTasksPage) {
 					window.location =
 						_spPageContextInfo.siteAbsoluteUrl +
