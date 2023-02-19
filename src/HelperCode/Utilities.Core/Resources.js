@@ -447,7 +447,7 @@
     issues: "التحديات",
     risks: "المخاطر",
     projects: "المشاريع",
-    strategicobjectives:"الأهداف الاستراتيجية",
+    strategicobjectives: "الأهداف الاستراتيجية",
     completionpercentage: "نسبة الإنجاز",
     budgetexpenditure: "الصرف من الميزانية",
     portfolio: "المحفظة",
@@ -824,7 +824,7 @@
     sublevel2: "فرعي مستوى ثاني",
     sublevel3: "فرعي مستوى ثالث",
     projectprioritytooltip: "هذا الحقل يبين أهمية المشروع (مرتفعة -متوسطة - منخفضة)",
-    initiativetypetooltip:"هذا الحقل يبين نوع المبادرة (استراتيجية -رؤية - سوق عمل)",
+    initiativetypetooltip: "هذا الحقل يبين نوع المبادرة (استراتيجية -رؤية - سوق عمل)",
     initiativestatustooltip: "هذا الحقل يبين حالة المبادرة",
     importantlinks: "روابط مهمة",
     strategicpartnershiptooltip: "هذا الحقل يبين حالة الشراكة (سارية - سارية-مجددة - غير سارية)",
@@ -863,28 +863,30 @@
     actualratemilestone: "نسبة التنفيذ الفعلية(المعالم)",
     plannedratemilestone: "نسبة التنفيذ المخططة(المعالم)",
     alltasks: "عرض كافة المهام",
-    benefitmetricname:"مقياس المنفعة",
-    benefit:"مقياس المنفعة",
-    plannedcompleteddate:"تاريخ الانتهاء المخطط",
-    actualdate:"تاريخ الاكتمال الفعلي",
-    budgetinfotitle:"ميزانية المشروع",
-    estimatedcostinfo:"التكلفة التقديرية للمبادرة",
-    initiativebudgetinfo:"ميزانية المبادرة",
-    stat9:"مكتمل",
-    stat10:"تم تحقيق المستهدف",
-    stat11:"تم تحقيقه جزئيا",
-    addactualbudget:"يجب تحديد قيمة المشروع الفعلية قبل إنشاء المخرجات و المعالم",
-    addinitiativebudget:"يجب تحديد ميزانية المبادرة قبل إنشاء المخرجات والمعالم",
-		crrelateditem: "الحقول الخاضعة لطلب التغيير",
-    strategicpartnercode:"رمز الشراكة",
-    strategicpartnerinfo:"معلومات الشراكة",
-    strategicpartnerimportance:"حالة الشراكة",
-    strategicpartnerstart:"تاريخ بدء الشراكة",
-    strategicpartnerend:"تاريخ نهاية الشراكة",
-    strategicpartnershippioneer:"رائد الشراكة",
-    strategicpartnershipduration:"مدة الشراكة",
-    ongoing:"جارية",
-    deliverablemilestoneschedual:"المخرجات - المعالم"
+    benefitmetricname: "مقياس المنفعة",
+    benefit: "مقياس المنفعة",
+    plannedcompleteddate: "تاريخ الانتهاء المخطط",
+    actualdate: "تاريخ الاكتمال الفعلي",
+    budgetinfotitle: "ميزانية المشروع",
+    estimatedcostinfo: "التكلفة التقديرية للمبادرة",
+    initiativebudgetinfo: "ميزانية المبادرة",
+    stat9: "مكتمل",
+    stat10: "تم تحقيق المستهدف",
+    stat11: "تم تحقيقه جزئيا",
+    addactualbudget: "يجب تحديد قيمة المشروع الفعلية قبل إنشاء المخرجات و المعالم",
+    addinitiativebudget: "يجب تحديد ميزانية المبادرة قبل إنشاء المخرجات والمعالم",
+    crrelateditem: "الحقول الخاضعة لطلب التغيير",
+    strategicpartnercode: "رمز الشراكة",
+    strategicpartnerinfo: "معلومات الشراكة",
+    strategicpartnerimportance: "حالة الشراكة",
+    strategicpartnerstart: "تاريخ بدء الشراكة",
+    strategicpartnerend: "تاريخ نهاية الشراكة",
+    strategicpartnershippioneer: "رائد الشراكة",
+    strategicpartnershipduration: "مدة الشراكة",
+    ongoing: "جارية",
+    deliverablemilestoneschedual: "المخرجات - المعالم",
+    recurrencerepeat :"لا يمكن التعديل لانه تم تغيير دورية القياس",
+    recurrencechanged:"تم تغيير دورية القياس"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1086,7 +1088,7 @@
     issue: "Issue",
     risk: "Risk",
     projects: "projects",
-    strategicobjectives:"Strategic Objectives",
+    strategicobjectives: "Strategic Objectives",
     newrequest: "New Request",
 
     //Resolution Status
@@ -1728,7 +1730,7 @@
     initiativetypetooltip:
       "This Field show the type of this initiative (Strategic or Vision or LMS )",
     initiativestatustooltip: "This Field show the type of this initiative",
-    strategicpartnershiptooltip:"This Field show the Status of this Strategic Partnership (Standard or Repeated-Standard or Not Standard",
+    strategicpartnershiptooltip: "This Field show the Status of this Strategic Partnership (Standard or Repeated-Standard or Not Standard",
     allgroups: "All Groups",
     administratorsforprojectwebapp: "Administrators for Project Web App",
     itsteeringcommittee: "IT Steering Committee",
@@ -1766,40 +1768,42 @@
     actualratemilestone: "Percentage of actual implementation (Milestones)",
     plannedratemilestone: "Percentage of planned implementation (Milestones)",
     alltasks: "All Tasks",
-    benefitmetricname:"Benefit Metrics",
-    benefit:"Benefit Metrics",
-    plannedcompleteddate:"Planned Completed Date",
-    actualdate:"Actual Date",
-    estimatedcostinfo:"Estimated cost for initiative",
-    initiativebudgetinfo:"Initiative Budget",
-    stat9:"Completed",
-    stat10:"Target achieved",
-    stat11:"Partially achieved",
-    addactualbudget:"Please add project actual budget to add deliverables and Milestones",
-    addinitiativebudget :"Please add Initiative budget to add deliverables and Milestones",
+    benefitmetricname: "Benefit Metrics",
+    benefit: "Benefit Metrics",
+    plannedcompleteddate: "Planned Completed Date",
+    actualdate: "Actual Date",
+    estimatedcostinfo: "Estimated cost for initiative",
+    initiativebudgetinfo: "Initiative Budget",
+    stat9: "Completed",
+    stat10: "Target achieved",
+    stat11: "Partially achieved",
+    addactualbudget: "Please add project actual budget to add deliverables and Milestones",
+    addinitiativebudget: "Please add Initiative budget to add deliverables and Milestones",
     crrelateditem: "Fields Related to this Change Request",
-    strategicpartnercode:"Strategic Partnership Code",
-    strategicpartnerinfo:"Strategic Partnership Info",
-    strategicpartnerimportance:"Strategic Partner Status",
-    strategicpartnerstart:"Strategic Partnership Start",
-    strategicpartnerend:"Strategic Partnership End",
-    strategicpartnershippioneer:"Strategic PartnerShip Pioneer",
-    strategicpartnershipduration:"Strategic Partnership Duration",
-    ongoing:"On going",
-    deliverablemilestoneschedual:"Deliverables - Milestones"
+    strategicpartnercode: "Strategic Partnership Code",
+    strategicpartnerinfo: "Strategic Partnership Info",
+    strategicpartnerimportance: "Strategic Partner Status",
+    strategicpartnerstart: "Strategic Partnership Start",
+    strategicpartnerend: "Strategic Partnership End",
+    strategicpartnershippioneer: "Strategic PartnerShip Pioneer",
+    strategicpartnershipduration: "Strategic Partnership Duration",
+    ongoing: "On going",
+    deliverablemilestoneschedual: "Deliverables - Milestones",
+    recurrencerepeat:"You can't edit because the Recurrence Changed",
+    recurrencechanged:"Recurrence Changed"
   },
 };
 
 function changeResources() {
   jQuery.fn.translate = function (opt) {
     var sett = $.extend(
-        {
-          default_lang: "ar",
-          langs: "#langs",
-          source: "text",
-        },
-        opt
-      ),
+      {
+        default_lang: "ar",
+        langs: "#langs",
+        source: "text",
+      },
+      opt
+    ),
       attributes = {},
       el = this;
 
@@ -1897,6 +1901,9 @@ window.Dynamo_Data = [
     Group: "AssignedToGroup",
     ActionButtonTitleAr: "ActionButtonTitleAr",
     ActionButtonTitleEn: "ActionButtonTitleEn",
+    TaskActionType: "TaskActionType",
+    TaskCondition: "Condition",
+    loadOn: ["taskdetails.aspx", "taskhistory.aspx", "listing.aspx"],
   },
   {
     ListName: "Initiatives",
@@ -1937,7 +1944,9 @@ window.Dynamo_Values = {
     ActionButtonTitleEn,
     ModuleType,
     ModuleIdentifier,
-    ModuleURL
+    ModuleURL,
+    TaskActionType,
+    TaskCondition
   ) {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(LN);
@@ -1953,6 +1962,9 @@ window.Dynamo_Values = {
     Dynamo_Values.g.ModuleType = ModuleType;
     Dynamo_Values.g.ModuleIdentifier = ModuleIdentifier;
     Dynamo_Values.g.ModuleURL = ModuleURL;
+    //
+    Dynamo_Values.g.TaskActionType = TaskActionType;
+    Dynamo_Values.g.TaskCondition = TaskCondition;
 
     camlQuery.set_viewXml(
       "<View><Query><OrderBy><FieldRef Name='Created' Ascending='True' /></OrderBy></Query></View>"
@@ -1968,6 +1980,11 @@ window.Dynamo_Values = {
     var collListItem = Dynamo_Values.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     window.Dynamo_Array = [];
+
+    var TaskActionType;
+    var TaskCondition;
+
+
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       if (Dynamo_Values.g.FNameEn) {
@@ -2012,6 +2029,14 @@ window.Dynamo_Values = {
         ModuleURL = oListItem.get_item(Dynamo_Values.g.ModuleURL);
       }
 
+      //
+      if (Dynamo_Values.g.TaskActionType) {
+        TaskActionType = oListItem.get_item(Dynamo_Values.g.TaskActionType);
+      }
+      if (Dynamo_Values.g.TaskCondition) {
+        TaskCondition = oListItem.get_item(Dynamo_Values.g.TaskCondition);
+      }
+
       Dynamo_Array.push({
         name: oListItem.get_item(Dynamo_Values.g.FName),
         nameEn: NameEn,
@@ -2024,6 +2049,9 @@ window.Dynamo_Values = {
         ModuleIdentifier: ModuleIdentifier,
         ModuleURL: ModuleURL,
         timeset: new Date().getTime(),
+        //
+        TaskActionType: TaskActionType,
+        TaskCondition: TaskCondition,
       });
     }
 
@@ -2062,7 +2090,9 @@ window.Dynamo_Values = {
           Dynamo_Data[y].ActionButtonTitleEn,
           Dynamo_Data[y].ModuleType,
           Dynamo_Data[y].ModuleIdentifier,
-          Dynamo_Data[y].ModuleURL
+          Dynamo_Data[y].ModuleURL,
+          Dynamo_Data[y].TaskActionType,
+          Dynamo_Data[y].TaskCondition
         );
         // Dynamo_Data.splice(y, 1);
         break;
@@ -2099,7 +2129,12 @@ for (var y = 0; y < Dynamo_Data.length; y++) {
     }
   }
   //initiate call if not found
-  if (getLocalStorage("Dynamo_" + Dynamo_Data[y].ListName) == null) {
+  var pageName = window.location.pathname
+    .substring(window.location.pathname.lastIndexOf("/") + 1)
+    .toLocaleLowerCase();
+  let isLoadOn = Dynamo_Data[y].hasOwnProperty("loadOn") ? Dynamo_Data[y].loadOn.indexOf(pageName) > -1 : true;
+  let isLoadOnLength = Dynamo_Data[y].hasOwnProperty("loadOn") ? Dynamo_Data[y].loadOn.length : 0;
+  if (getLocalStorage("Dynamo_" + Dynamo_Data[y].ListName) == null && (isLoadOn || !isLoadOnLength)) {
     //
     SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
       //
@@ -2114,7 +2149,9 @@ for (var y = 0; y < Dynamo_Data.length; y++) {
         Dynamo_Data[y].ActionButtonTitleEn,
         Dynamo_Data[y].ModuleType,
         Dynamo_Data[y].ModuleIdentifier,
-        Dynamo_Data[y].ModuleURL
+        Dynamo_Data[y].ModuleURL,
+        Dynamo_Data[y].TaskActionType,
+        Dynamo_Data[y].TaskCondition
       );
       // Dynamo_Data.splice(y, 1); //remove so that we dont call it again
     });

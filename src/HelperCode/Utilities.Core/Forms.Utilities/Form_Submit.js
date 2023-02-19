@@ -13,7 +13,7 @@ window.IdeaId;
 // }
 var projectManagerPickedToProjectCenter = '';
 
-var kpiName = '', kpiType = '', kpiSector = '', kpiSubSector = '', kpiMainGoalRelated = '', kpiSubGoalRelated = '', kpiPortfolio = '', kpiPerformanceAnalysis = '', kpiYearPicked = '', kpiMidPicked = '', kpiQuarterPicked = '', kpiMonthPicked = '', kpiPeriodTypeUpdate = '';
+var kpiName = '', kpiType = '', kpiSector = '', kpiSubSector = '', kpiMainGoalRelated = '', kpiSubGoalRelated = '', kpiPortfolio = '', kpiPerformanceAnalysis = '', kpiYearPicked = '', kpiMidPicked = '', kpiQuarterPicked = '', kpiMonthPicked = '', kpiPeriodTypeUpdate = '', kpiRecurrenceChanged = '';
 
 var allEnterpriseResources = [], projectBuildTeamArr = [], projectManagerPickerToEpm;
 
@@ -442,6 +442,16 @@ window.New_Data_Submit = {
         ) {
           New_Data_Submit.g.oListItem.set_item("Stage", CRfirstStage);
         }
+
+        let otherFieldsJSON = eval($(this).find("option:checked").data("otherfields"));
+
+        if (otherFieldsJSON && otherFieldsJSON != 'undefined' && otherFieldsJSON.length) {
+          otherFieldsJSON.forEach(el => {
+            New_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
+          })
+        }
+
+
       } else if ($(this).hasClass("percentagefield")) {
         New_Data_Submit.g.oListItem.set_item(
           $(this).attr("id"),
@@ -1233,6 +1243,17 @@ window.Edit_Data_Submit = {
         ) {
           Edit_Data_Submit.g.oListItem.set_item("Stage", CRfirstStage);
         }
+
+
+        let otherFieldsJSON = eval($(this).find("option:checked").data("otherfields"));
+
+        if (otherFieldsJSON && otherFieldsJSON != 'undefined' && otherFieldsJSON.length) {
+          otherFieldsJSON.forEach(el => {
+            Edit_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
+          })
+        }
+
+
       } else if ($(this).hasClass("percentagefield")) {
         Edit_Data_Submit.g.oListItem.set_item(
           $(this).attr("id"),
@@ -1324,6 +1345,7 @@ window.Edit_Data_Submit = {
       kpiMidPicked = $('#Midterms').val() ? $('#Midterms').val() : ''
       kpiQuarterPicked = $('#Quarter').val() ? $('#Quarter').val() : ''
       kpiMonthPicked = $('#Months').val() ? $('#Months').val() : ''
+      kpiRecurrenceChanged = $('#RecurrenceChanged').val() ? $('#RecurrenceChanged').val() : '';
 
       if (kpiType == 'main') { // remove portfolio and alhadaf elfer3e when change to main cause main don't have portfolio
         Edit_Data_Submit.g.oListItem.set_item('Portfolio', '');
@@ -1393,7 +1415,7 @@ window.Edit_Data_Submit = {
                 $('#RelatedBenefit option[value="' + $('#RelatedBenefit').val() + '"]').attr('option-id') +
                 PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
             } else if (listkey == 'mainkpi') {
-              Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis)
+              Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis,kpiRecurrenceChanged)
             } else if (listkey == 'projects' && PCODE) {
 
               getProjectInfoToUpdateEPM()
@@ -1623,7 +1645,7 @@ var kpiResults = {
 
 // Edit Kpi Results list when edit on main kpi to make the target page updated
 var Edit_KPI_Results = {
-  init: function (Name, Types, Sector, SubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis) {
+  init: function (Name, Types, Sector, SubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis,kpiRecurrenceChanged) {
 
     var context = SP.ClientContext.get_current();
     var dfd = $.Deferred();
@@ -1652,6 +1674,7 @@ var Edit_KPI_Results = {
             items.set_item('Types', Types);
             items.set_item('Sector', Sector)
             items.set_item('SubSector', SubSector)
+            items.set_item('RecurrenceChanged',kpiRecurrenceChanged)
 
             ///////// update performance leader1 and performance leader2
             if ($('#PerformanceLeader').find("span.sp-peoplepicker-userSpan").length) {
@@ -2270,7 +2293,7 @@ var Edit_Master_Details_Submit = {
         $(".btn-save").addClass("success");
 
         if (listkey == 'mainkpi') { // to update the kpi result list
-          Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis)
+          Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis,kpiRecurrenceChanged)
         } else {
           window.location =
             _spPageContextInfo.webAbsoluteUrl +
@@ -2584,7 +2607,7 @@ function _uploadFile() {
                     }
                     else {
                       if (listkey == 'mainkpi') { // to update the kpi result list
-                        Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis)
+                        Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis.kpiRecurrenceChanged)
                       } else {
 
                         window.location =
