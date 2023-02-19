@@ -58,6 +58,7 @@ var UserRole,
   isEPMO = false,
   isStrategySpecialist = false,
   isPerformanceLeader = false,
+  isStartegicPartnershipsTeam = false,
   isKPIOWNER = false,
   isBITeam = false,
   pickerValidationDone = false, // to check picker user groups on form submit
@@ -2094,6 +2095,75 @@ window.userCalls = {
           "MainIndicators.aspx",
         ];
         Delete_Access = [];
+        break;
+
+      case "StartegicPartnershipsTeam":
+        if (USERisHome)
+          window.location =
+            _spPageContextInfo.webAbsoluteUrl +
+            "/sitepages/Listing.aspx?ListKey=strategicpartnerships";
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+        isStartegicPartnershipsTeam = true;
+
+        //***** */
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ar_UserRole = "فريق الشراكة الاستراتيجية";
+        en_UserRole = "Startegic Partnerships Team";
+
+        Create_Access = [
+          "strategicpartnerships",
+          "StrategicPartnershipHome.aspx",
+          "strategicpartnershipsdeliverables",
+          "strategicpartnershipsmilestones",
+          "strategicpartnershipsissues",
+          "strategicpartnershipsrisks",
+          "strategicpartnershipsimpactmeasurement",
+          "strategicpartnershipslessonslearned",
+          "strategicpartnershipsmom",
+          "strategicpartnershipsachievements",
+        ];
+
+        Read_Access = [
+          "strategicpartnerships",
+          "StrategicPartnershipHome.aspx",
+          "strategicpartnershipsdeliverables",
+          "strategicpartnershipsmilestones",
+          "strategicpartnershipsissues",
+          "strategicpartnershipsrisks",
+          "strategicpartnershipsimpactmeasurement",
+          "strategicpartnershipslessonslearned",
+          "strategicpartnershipsmom",
+          "documents",
+          "strategicpartnershipsachievements",
+          "tasks"
+        ];
+        Edit_Access = [
+          "strategicpartnerships",
+          "StrategicPartnershipHome.aspx",
+          "strategicpartnershipsdeliverables",
+          "strategicpartnershipsmilestones",
+          "strategicpartnershipsissues",
+          "strategicpartnershipsrisks",
+          "strategicpartnershipsimpactmeasurement",
+          "strategicpartnershipslessonslearned",
+          "strategicpartnershipsmom",
+          "strategicpartnershipsachievements",
+        ];
+        Delete_Access = [
+          "strategicpartnerships",
+          "StrategicPartnershipHome.aspx",
+          "strategicpartnershipsdeliverables",
+          "strategicpartnershipsmilestones",
+          "strategicpartnershipsissues",
+          "strategicpartnershipsrisks",
+          "strategicpartnershipsimpactmeasurement",
+          "strategicpartnershipslessonslearned",
+          "strategicpartnershipsmom",
+          "strategicpartnershipsachievements",
+        ];
         break;
 
       default:
@@ -4220,6 +4290,10 @@ window.userCalls = {
             }
           ],
         },
+      },
+      {
+        Role: "StartegicPartnershipsTeam",
+        groupsName: ["Startegic Partnerships Team"],
       },
       {
         Role: "Other",
