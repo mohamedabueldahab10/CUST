@@ -41,11 +41,19 @@ var Information_Form = [
               display: 'vision',
               value: 'vision',
               roles: ['Administrator', 'VROE', 'VROP'],
+              // otherFields:[
+              //   {fieldName:"WFModuleCode",value:"vision"},
+              //   {fieldName:"WFStage",value:"Stage01"},
+              // ]
             },
             {
               display: 'strategically',
               value: 'strategically',
               roles: ['Administrator', 'EPMO'],
+              // otherFields:[
+              //   {fieldName:"WFModuleCode",value:"strategically"},
+              //   {fieldName:"WFStage",value:"Stage02"},
+              // ]
             },
             {
               display: 'lms',
