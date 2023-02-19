@@ -3134,6 +3134,19 @@ window.ListInfo = {
             ) {
               isRenderOption = false;
             }
+            // working on other value
+
+            let otherFieldsValue = element.options.choices[i].otherFields
+              ? 'data-otherfields="' +
+              JSON.stringify(element.options.choices[i].otherFields).replaceAll(
+                `"`,
+                `'`
+              ) +
+              '"'
+              : "";
+            //
+
+
             if (isRenderOption) {
               htmlBody +=
                 "<option data-trans-" +
@@ -3144,6 +3157,8 @@ window.ListInfo = {
                 customValue +
                 " " +
                 fieldsValue +
+                " " +
+                otherFieldsValue +
                 " " +
                 element.options.choices[i].selected +
                 "></option>";

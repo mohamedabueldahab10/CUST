@@ -442,6 +442,16 @@ window.New_Data_Submit = {
         ) {
           New_Data_Submit.g.oListItem.set_item("Stage", CRfirstStage);
         }
+        
+        let otherFieldsJSON = eval($(this).find("option:checked").data("otherfields"));
+
+        if (otherFieldsJSON && otherFieldsJSON != 'undefined' && otherFieldsJSON.length) {
+          otherFieldsJSON.forEach(el => {
+            New_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
+          })
+        }
+
+
       } else if ($(this).hasClass("percentagefield")) {
         New_Data_Submit.g.oListItem.set_item(
           $(this).attr("id"),
@@ -1233,6 +1243,17 @@ window.Edit_Data_Submit = {
         ) {
           Edit_Data_Submit.g.oListItem.set_item("Stage", CRfirstStage);
         }
+
+        
+        let otherFieldsJSON = eval($(this).find("option:checked").data("otherfields"));
+
+        if (otherFieldsJSON && otherFieldsJSON != 'undefined' && otherFieldsJSON.length) {
+          otherFieldsJSON.forEach(el => {
+            Edit_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
+          })
+        }
+
+
       } else if ($(this).hasClass("percentagefield")) {
         Edit_Data_Submit.g.oListItem.set_item(
           $(this).attr("id"),
