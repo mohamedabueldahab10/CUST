@@ -1021,7 +1021,7 @@ window.userCalls = {
         ar_UserRole = "إدارة الأداء الإستراتيجي";
         en_UserRole = "Strategy Performance Management";
         //CRUD
-        Create_Access = [];
+        Create_Access = ["benefitmetrics"];
 
         Read_Access = [
           "goalstrategy",
@@ -1036,7 +1036,7 @@ window.userCalls = {
           "initiativesmain.aspx",
         ];
 
-        Edit_Access = [];
+        Edit_Access = ["benefitmetrics"];
         Delete_Access = [];
         break;
       case "SPMAdmin":
@@ -1083,6 +1083,7 @@ window.userCalls = {
           "deliverablemetrics",
           "benefitmatrix",
           "benefitmetrics",
+          "changerequest",
         ];
 
         Edit_Access = [
@@ -1094,6 +1095,7 @@ window.userCalls = {
           "benefits",
           "Targets.aspx",
           "kpiequations",
+          "changerequest",
 
         ];
         Delete_Access = [
@@ -1853,7 +1855,7 @@ window.userCalls = {
           "closureinitiative",
           /////////////////////
           "MainIndicators.aspx",
-          "Targets.aspx",
+          // "Targets.aspx",
           "sos",
           "goalstrategy",
           "budgetitems",
