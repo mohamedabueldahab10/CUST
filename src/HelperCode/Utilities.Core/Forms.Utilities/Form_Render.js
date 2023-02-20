@@ -5720,9 +5720,11 @@ window.ListInfo = {
         }
       });
     },
-    toggleFields: function ($this) {
 
+    toggleFields: function ($this) {
+      
       var myValue = $this.val(),
+       mytype= $this,
         toggleValues =
           $this.data("togglevalues").indexOf(":::") > -1
             ? $this.data("togglevalues").split(":::")
@@ -5740,6 +5742,7 @@ window.ListInfo = {
             ? $this.data("togglevalues").split(":::")
             : [$this.data("togglevalues")],
         myToggleFields = "";
+
       allToggleFields.forEach((item, i, arr) => {
         myToggleFields +=
           i == arr.length - 1
@@ -5747,8 +5750,12 @@ window.ListInfo = {
             : item.match(/\[(.*?)\]/)[1] + ",";
       });
       allToggleFields = myToggleFields.split(",");
+      debugger
+      console.log(allToggleFields, 'testttttt')
       if (isShowVal) {
         allToggleFields.forEach((item, i, arr) => {
+          debugger
+          console.log(item ,arr, 'itetetetetetemmmmm');
           $('[data-togglename="' + item + '"]')
             .parent()
             .hide();
@@ -5763,8 +5770,10 @@ window.ListInfo = {
             .parent()
             .is(":hidden"),
             myFieldParent = $('[data-togglename="' + item + '"]').parent();
+            myFieldParentofParent = $('[data-togglename="' + item + '"]');
           if (isHidden) {
             myFieldParent.show();
+            myFieldParentofParent.show();
             myFieldParent.find(">*").attr("required", true);
 
             //make toggle fields not required
@@ -5792,6 +5801,7 @@ window.ListInfo = {
           }
         });
       } else {
+        debugger
         allToggleFields.forEach((item, i, arr) => {
           $('[data-togglename="' + item + '"]')
             .parent()

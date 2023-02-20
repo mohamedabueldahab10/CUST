@@ -31,7 +31,7 @@ var Information_Form = [
         DisplayName: 'اسم المستخدم',
         type: 'picker', //user
         ToggleName: 'Username',
-        // display: 'none'
+        display: 'none'
       },
       {
         InternalName: 'Name',
