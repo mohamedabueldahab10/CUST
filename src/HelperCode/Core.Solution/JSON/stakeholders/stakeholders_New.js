@@ -23,7 +23,7 @@ var Information_Form = [
         DisplayNameEn: 'Username',
         DisplayName: 'اسم المستخدم',
         type: 'picker', //user
-        validation: 'required',
+        // validation: 'required',
         ToggleName: 'Username',
         display: 'none'
       },
@@ -53,7 +53,7 @@ var Information_Form = [
         DisplayName: 'رقم الهاتف',
         DisplayNameEn: 'Phone Number',
         // type: 'floatwithoutformatting',
-        type:'phonenumber',
+        type:'floatwithoutformatting',
         validation: 'required',
       },
       {
