@@ -114,9 +114,7 @@ var workflowname,
 	isProjectCharter =
 		window.location.href.indexOf("projectcharter") > -1 &&
 		window.location.href.indexOf("WFs") > -1,
-	isVisionInitiative =
-		window.location.href.indexOf("initiatives") > -1 &&
-		window.location.href.indexOf("WFs") > -1,
+
 	//
 	isRelatedProjectPage = window.location.href.indexOf("PCODE") > -1,
 	isDeliverablesPage = window.location.href.indexOf("deliverables") > -1,
@@ -124,7 +122,7 @@ var workflowname,
 	isStrategyWf = window.location.href.indexOf("strategies") > -1,
 	isSOsWf = window.location.href.indexOf("strategicobjectives") > -1,
 	isKPIResultWf = window.location.href.indexOf("Targets") > -1,
-	isInitiativesWf = window.location.href.indexOf("initiatives") > -1,
+	isVisionInitiative = window.location.href.indexOf("initiatives") > -1,
 	isProjectCancellationRequestWF =
 		window.location.href.indexOf("projectcancellationrequest") > -1,
 	isDeliverabletWF = window.location.href.indexOf("deliveriesreport") > -1,
@@ -295,21 +293,7 @@ if (isChangeRequestPage) {
 		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
 		workflowname +
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
-} else if (isVisionInitiative) {
-	workflowname = "VisionInitiative";
-	bulkeditlist = "Initiatives";
-	IID2 = window.location.href.split("IID=")[1].split("&")[0];
-	bulkeditquery =
-		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
-		IID2 +
-		"</Value> </Eq></Where></Query></View>";
-	taskquery =
-		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
-		taskID +
-		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
-		workflowname +
-		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
-} else if (isSOsWf) {
+}  else if (isSOsWf) {
 	workflowname = "StrategicObjectives";
 	bulkeditlist = "StrategicObjectives";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -337,8 +321,8 @@ if (isChangeRequestPage) {
 		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
 		workflowname +
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
-} else if (isInitiativesWf) {
-	workflowname = "Initiatives";
+} else if (isVisionInitiative) {
+	workflowname = "VisionInitiative";
 	bulkeditlist = "Initiatives";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
@@ -929,7 +913,7 @@ var Task_PCODE_Data_Request_WFs = {
 			switch (tasktype) {
 				case "ProjectTask":
 					$(".navbar.page-nav.px-5").after(
-						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
 						taskid +
 						'\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div><button data-trans-task onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" > "' +
 						stagename +
@@ -937,7 +921,7 @@ var Task_PCODE_Data_Request_WFs = {
 						stagename +
 						'"</button></div></div>'
 					);
-					$(".btnactionrow > h2.approvalHeader").append('<div class="wf-delegate-btn"><button class="btn delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+					$(".btnactionrow > h2.approvalHeader").append('<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
 					taskid +
 					'\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>')
 					$(".btnactionrow .form-btns-wrapper").append(
@@ -952,14 +936,14 @@ var Task_PCODE_Data_Request_WFs = {
 					break;
 				case "TriApproval":
 					$(".navbar.page-nav.px-5").after(
-						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
 						taskid +
 						'\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div></div><div class="apprv"><span class="approveStageName">' +
 						actionbuttonTitle +
 						'</span><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-rejection  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button data-trans-cancelbutton  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(2,\'Approval\')" class="btn pop-green cancelbutton Resources"  type="button"></button></div></div>'
 					);
 					$(".btnactionrow .form-btns-wrapper").append(
-						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
 						taskid +
 						'\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div></div><div class="apprv"><span class="approveStageName">' +
 						actionbuttonTitle +
@@ -974,14 +958,14 @@ var Task_PCODE_Data_Request_WFs = {
 				case "Approval":
 					// console.log('aaaaaaaaaaaaaa');
 					$(".navbar.page-nav.px-5").after(
-						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
 						taskid +
 						'\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div></div><div class="apprv"><span class="approveStageName">' +
 						actionbuttonTitle +
 						'</span><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-rejection  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button></div></div>'
 					);
 					//delegation btn
-					$(".btnactionrow > h2.approvalHeader").append('<div class="wf-delegate-btn"><button class="btn delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+					$(".btnactionrow > h2.approvalHeader").append('<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
 					taskid +
 						'\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>')
 					//main action
@@ -1014,7 +998,7 @@ var Task_PCODE_Data_Request_WFs = {
 						}
 					}
 					$(".navbar.page-nav.px-5").after(
-						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
 						taskid +
 						'\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div></div><div class="apprv"><span class="approveStageName">' +
 						actionbuttonTitle +
@@ -1023,7 +1007,7 @@ var Task_PCODE_Data_Request_WFs = {
 						"</span></button></div></div>"
 					);
 					//delegation btn
-					$(".btnactionrow > h2.approvalHeader").append('<div class="wf-delegate-btn"><button class="btn delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+					$(".btnactionrow > h2.approvalHeader").append('<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
 					taskid +
 						'\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>')
 					$(".btnactionrow .form-btns-wrapper").append(
@@ -1042,14 +1026,14 @@ var Task_PCODE_Data_Request_WFs = {
 				case "Submit":
 					// $('.DahsFormTitle > button').hide();
 					$(".navbar.page-nav.px-5").after(
-						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
 						taskid +
 						'\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Submit\')"  class="btn pop-green Resources" type="button"><span  class=" beencompletedpadd">' +
 						actionbuttonTitle +
 						"</span></button></div></div></div>"
 					);
 					//delegation btn
-					$(".btnactionrow > h2.approvalHeader").append('<div class="wf-delegate-btn"><button class="btn delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+					$(".btnactionrow > h2.approvalHeader").append('<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
 						taskid +
 						'\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>');
 					$(".btnactionrow .form-btns-wrapper").append(
@@ -1068,14 +1052,14 @@ var Task_PCODE_Data_Request_WFs = {
 				case "SubmitProject":
 					// console.log("SubmitProject")
 					$(".navbar.page-nav.px-5").after(
-						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
 						taskid +
 						'\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button><button onclick="NewProjectTask_Edit_Data.init();"  class="btn pop-green Resources" type="button"><span  class=" beencompletedpadd">' +
 						actionbuttonTitle +
 						"</span></button</div>div></div>"
 					); //
 					$(".btnactionrow .form-btns-wrapper").append(
-						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
 						taskid +
 						'\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button><button onclick="NewProjectTask_Edit_Data.init();"  class="btn pop-green Resources" type="button"><span  class=" beencompletedpadd">' +
 						actionbuttonTitle +
@@ -1090,14 +1074,14 @@ var Task_PCODE_Data_Request_WFs = {
 				case "New":
 					// $('.DahsFormTitle > button').hide();
 					$(".navbar.page-nav.px-5").after(
-						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
 						taskid +
 						'\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'New\')" " class="btn pop-green" type="button"><span  class=" beencompletedpadd">' +
 						actionbuttonTitle +
 						"</span></button></div></div>"
 					); //style="float: left;font-size: 17px;
 					$(".btnactionrow .form-btns-wrapper").append(
-						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
 						taskid +
 						'\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'New\')" " class="btn pop-green" type="button"><span  class=" beencompletedpadd">' +
 						actionbuttonTitle +
@@ -1112,12 +1096,12 @@ var Task_PCODE_Data_Request_WFs = {
 				case "Resubmit":
 					// $('.DahsFormTitle > button').hide();
 					$(".navbar.page-nav.px-5").after(
-						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
 						taskid +
 						'\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button><button data-trans-resend onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Submit\')" class="btn pop-green Resources" type="button"></button></div></div></div>'
 					);
 					$(".btnactionrow .form-btns-wrapper").append(
-						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
 						taskid +
 						'\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button><button data-trans-resend onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Submit\')" class="btn pop-green Resources" type="button"></button></div></div></div>'
 					);
@@ -1135,7 +1119,7 @@ var Task_PCODE_Data_Request_WFs = {
 						"</span></button></div>"
 					);
 					//delegation btn
-					$(".btnactionrow > h2.approvalHeader").append('<div class="wf-delegate-btn"><button class="btn delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+					$(".btnactionrow > h2.approvalHeader").append('<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
 						taskid +
 						'\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>');
 					$(".btnactionrow .form-btns-wrapper").append(
@@ -1219,14 +1203,14 @@ var Task_PCODE_Data_Request_WFs = {
 					// console.log("Submit SubmitSubmitSubmit with JUMANA")
 					// $('.DahsFormTitle > button').hide();
 					$(".navbar.page-nav.px-5").after(
-						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
 						taskid +
 						'\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Submit\')"  class="btn pop-green Resources" type="button"><span  class=" beencompletedpadd">' +
 						actionbuttonTitle +
 						"</span></button></div></div></div>"
 					); //style="float: left;font-size: 17px;"
 					$(".btnactionrow .form-btns-wrapper").append(
-						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
 						taskid +
 						'\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Submit\')"  class="btn pop-green Resources" type="button"><span  class=" beencompletedpadd">' +
 						actionbuttonTitle +
