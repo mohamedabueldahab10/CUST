@@ -886,7 +886,8 @@
     ongoing: "جارية",
     deliverablemilestoneschedual: "المخرجات - المعالم",
     recurrencerepeat :"لا يمكن التعديل لانه تم تغيير دورية القياس",
-    recurrencechanged:"تم تغيير دورية القياس"
+    recurrencechanged:"تم تغيير دورية القياس",
+    phonenumberpattern:"يجب ادخال رقم سعودي"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1790,7 +1791,8 @@
     ongoing: "On going",
     deliverablemilestoneschedual: "Deliverables - Milestones",
     recurrencerepeat:"You can't edit because the Recurrence Changed",
-    recurrencechanged:"Recurrence Changed"
+    recurrencechanged:"Recurrence Changed",
+    phonenumberpattern:"should enter KSA number"
   },
 };
 
