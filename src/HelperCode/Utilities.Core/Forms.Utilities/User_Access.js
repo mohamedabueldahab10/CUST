@@ -1327,70 +1327,43 @@ window.userCalls = {
           "changerequest",
         ];
         break;
+        
       case "LMSP":
-        // for get it back
-        if (USERisHome)
-          window.location =
-            _spPageContextInfo.webAbsoluteUrl +
-            "/sitepages/MainIndicators.aspx";
+
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
-        //***** */
+
         isLMSP = true;
+
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+
         ar_UserRole = "مكتب التخطيط الإستراتيجي لسوق العمل";
         en_UserRole = "Strategic Planning Office";
         //CRUD
         Create_Access = [
           "mainkpi",
           "sos",
-          "Targets.aspx",
-          "kpiequations",
-          ,
-          "goalstrategy",
-          "MainIndicators.aspx",
-          //  "deliverablemetrics", "benefitmatrix", "benefitmetrics"
-        ];
-        Read_Access = [
-          "mainkpi",
-          "benefits",
-          //  "deliverablemetrics", "benefitmatrix", "benefitmetrics",
-          "sos",
-          "Targets.aspx",
-          "kpiequations",
-          "MainIndicators.aspx",
-          ,
           "goalstrategy",
         ];
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
           "mainkpi",
-          ,
-          //  "deliverablemetrics", "benefitmatrix", "benefitmetrics"
           "sos",
           "Targets.aspx",
           "kpiequations",
-          ,
           "goalstrategy",
         ];
         Delete_Access = [
           "mainkpi",
-          ,
-          //  "deliverablemetrics", "benefitmatrix", "benefitmetrics"
           "sos",
-          "Targets.aspx",
-          "kpiequations",
-          ,
           "goalstrategy",
         ];
         break;
 
       case "EPMO":
-        // if (USERisHome)
-        //   window.location =
-        //     _spPageContextInfo.webAbsoluteUrl +
-        //     "/sitepages/initiativesmain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -3139,7 +3112,6 @@ window.userCalls = {
           ],
         },
       },
-
       {
         Role: "LMSP",
         groupsName: ["LMS_P"],
@@ -3154,9 +3126,9 @@ window.userCalls = {
                   type: "Choice",
                   values: ["lms"],
                   targetPages: [
-                    "home.aspx",
-                    "new.aspx",
-                    "edit.aspx?ListKey=projects",
+                    // "home.aspx",
+                    // "new.aspx",
+                    // "edit.aspx?ListKey=projects",
                   ],
                 },
               ],
@@ -3168,46 +3140,118 @@ window.userCalls = {
                 RelationFieldType: "Text",
                 subRelation: {
                   level: 3,
-                  listName: "",
-                  // parentRelationField: "Title",
-                  // RelationField: "InitiativeCode",
-                  // RelationFieldType: "Text",
-                },
+                  listName: "MainKPI",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedStrategyObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "KPIResults",
+                    parentRelationField: "Title",
+                    RelationField: "KPI",
+                    RelationFieldType: "Text",
+                  }
+                }
               },
             },
             {
               level: 1,
-              listName: "GoalStrategy",
+              listName: "Initiatives",
               accessConditions: [
                 {
                   field: "Types",
-                  type: "Choice",
+                  type: "Text",
                   values: ["lms"],
                   targetPages: [
-                    "home.aspx",
-                    "new.aspx",
-                    "edit.aspx?ListKey=projects",
+                    // "home.aspx",
+                    // "new.aspx",
+                    // "edit.aspx?ListKey=projects",
                   ],
                 },
               ],
               subRelation: {
                 level: 2,
-                listName: "MainKPI",
+                listName: "Projects",
                 parentRelationField: "Title",
-                RelationField: "RelatedStrategy",
+                RelationField: "RelatedInitiative",
                 RelationFieldType: "Text",
                 subRelation: {
                   level: 3,
-                  listName: "KPIResults",
-                  parentRelationField: "Title",
-                  RelationField: "KPI",
-                  RelationFieldType: "Text",
+                  listName: "",
                 },
               },
             },
           ],
         },
       },
+      // {
+      //   Role: "LMSP",
+      //   groupsName: ["LMS_P"],
+      //   dataFilter: {
+      //     hierarchies: [
+      //       {
+      //         level: 1,
+      //         listName: "GoalStrategy",
+      //         accessConditions: [
+      //           {
+      //             field: "Types",
+      //             type: "Choice",
+      //             values: ["lms"],
+      //             targetPages: [
+      //               "home.aspx",
+      //               "new.aspx",
+      //               "edit.aspx?ListKey=projects",
+      //             ],
+      //           },
+      //         ],
+      //         subRelation: {
+      //           level: 2,
+      //           listName: "SOs",
+      //           parentRelationField: "Title",
+      //           RelationField: "RelatedStrategy",
+      //           RelationFieldType: "Text",
+      //           subRelation: {
+      //             level: 3,
+      //             listName: "",
+      //             // parentRelationField: "Title",
+      //             // RelationField: "InitiativeCode",
+      //             // RelationFieldType: "Text",
+      //           },
+      //         },
+      //       },
+      //       {
+      //         level: 1,
+      //         listName: "GoalStrategy",
+      //         accessConditions: [
+      //           {
+      //             field: "Types",
+      //             type: "Choice",
+      //             values: ["lms"],
+      //             targetPages: [
+      //               "home.aspx",
+      //               "new.aspx",
+      //               "edit.aspx?ListKey=projects",
+      //             ],
+      //           },
+      //         ],
+      //         subRelation: {
+      //           level: 2,
+      //           listName: "MainKPI",
+      //           parentRelationField: "Title",
+      //           RelationField: "RelatedStrategy",
+      //           RelationFieldType: "Text",
+      //           subRelation: {
+      //             level: 3,
+      //             listName: "KPIResults",
+      //             parentRelationField: "Title",
+      //             RelationField: "KPI",
+      //             RelationFieldType: "Text",
+      //           },
+      //         },
+      //       },
+      //     ],
+      //   },
+      // },
       {
         Role: "StrategyTeam",
         groupsName: ["Strategy Specialist"],
@@ -6644,16 +6688,16 @@ var Tasks_Info_Request_User = {
               );
               break;
             default:
-                window.open(
-                  _spPageContextInfo.webAbsoluteUrl +
-                  rurl +
-                  "&TID=" +
-                  taskid +
-                  "&IID=" +
-                  ritemid +
-                  "&WFs",
-                  "_self"
-                );
+              window.open(
+                _spPageContextInfo.webAbsoluteUrl +
+                rurl +
+                "&TID=" +
+                taskid +
+                "&IID=" +
+                ritemid +
+                "&WFs",
+                "_self"
+              );
               break;
           }
       }
