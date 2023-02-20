@@ -1377,11 +1377,13 @@ window.ListingData = {
           return obj.stage == stageid;
         });
         var rurl = curstage_org[0].relatedURL;
-
-        // console.log('rurl', rurl);
-        // curstage =  ProjectStages_Data_Request.g.StagesArray.filter(function(obj) {
-        // 	return obj.stage == curstage_org[0].stage;
-        // });
+      }else{
+        targerstage_org = Generic_WF_Stages_Data_Request.g.GWFStagesArray.filter(
+          function (obj) {
+            return obj.stage == stageid;
+          }
+        );
+        var rurl = targerstage_org[0].relatedURL;
       }
       Tasks_Info_Request_User.g.handlelinks(pcode, icode, rurl, taskid, tasktype, stageid, ritemid, sourceitemid, wfname, puid);
     },
@@ -1424,8 +1426,6 @@ window.ListingData = {
           var keyNameParams = ''
           if (wfname == 'Idea') {
             keyNameParams = "ideas"
-          } else if (wfname == "مهمة") {
-            keyNameParams = 'tasks'
           } else if (wfname == 'DV') {
             keyNameParams = 'deliverables'
           } else if (wfname == 'CR') {
@@ -1434,8 +1434,6 @@ window.ListingData = {
             keyNameParams = 'issues'
           } else if (wfname == 'Risk') {
             keyNameParams = 'risks'
-          } else if (wfname == 'تصعيد مهمة') {
-            keyNameParams = 'tasks'
           } else if (wfname == 'MoM') {
             keyNameParams = 'mom'
           } else if (wfname == 'InitiativeSample') {
@@ -1443,18 +1441,31 @@ window.ListingData = {
           } else if (wfname == 'VisionInitiative' || wfname == 'StrategicallyInitiative' || wfname == 'LmsInitiative') {
             keyNameParams = "initiatives"
           }
-
-          // console.log(keyNameParams);
           switch (tasktype) {
             case 'SubmitField':
-              window.open(_spPageContextInfo.webAbsoluteUrl + '/sitepages/edit.aspx?ListKey=' + keyNameParams + '&IID=' + ritemid + '&WFs', '_blank');
+              window.open(
+                _spPageContextInfo.webAbsoluteUrl +
+                "/sitepages/edit.aspx?ListKey=" +
+                keyNameParams +
+                "&IID=" +
+                ritemid +
+                "&TID=" +
+                taskid +
+                "&WFs",
+                "_self"
+              );
               break;
             default:
-              if (wfname == 'تصعيد مهمة' || wfname == 'تصعيد خطر' || wfname == 'تصعيد تحدي') {
-                window.open(_spPageContextInfo.webAbsoluteUrl + '/sitepages/view.aspx?ListKey=' + keyNameParams + '&IID=' + sourceitemid + '&RID=' + ritemid + '&WFEs', '_blank');
-              } else {
-                window.open(_spPageContextInfo.webAbsoluteUrl + '/sitepages/view.aspx?ListKey=' + keyNameParams + '&IID=' + ritemid + '&WFs', '_blank');
-              }
+              window.open(
+                _spPageContextInfo.webAbsoluteUrl +
+                rurl +
+                "&TID=" +
+                taskid +
+                "&IID=" +
+                ritemid +
+                "&WFs",
+                "_self"
+              );
               break;
           }
       }
