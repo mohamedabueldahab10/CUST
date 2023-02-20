@@ -89,6 +89,7 @@ var Information_Form = [
             "DisplayNameEn":"Representative Phone",
             // "type":"string",
             "type":"phonenumber",
+            "Errmsgkey":"phonenumberpattern",
             "maxchar":"250",
             "validation":"required"
          },
