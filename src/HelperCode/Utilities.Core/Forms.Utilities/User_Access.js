@@ -43,6 +43,7 @@ var UserRole,
   isSPMTeam = false,
   isVROP = false,
   isVROHead = false,
+  isVROPHead = false,
   isSPMAdmin = false,
   isStrategyTeam = false,
   isAllKpis = false, // to get all kpis
@@ -1155,6 +1156,38 @@ window.userCalls = {
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
         ar_UserRole = "قائد مكتب تحقيق الرؤية";
         en_UserRole = "Leader of the Vision Realization Office";
+
+        Create_Access = [
+          "goalstrategy",
+          "sos",
+          "mainkpi",
+          "changerequest"
+        ];
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
+        Edit_Access = [
+          "goalstrategy",
+          "sos",
+          "mainkpi",
+          "changerequest"
+        ];
+        Delete_Access = [
+          "goalstrategy",
+          "sos",
+          "mainkpi"
+        ];
+        break;
+
+      case "VROPHead":
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+        isVROPHead = true;
+        //***** */
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ar_UserRole = "مدير ادارة تخطيط اهداف الرؤية";
+        en_UserRole = "Director of the Vision Objectives Department";
 
         Create_Access = [
           "goalstrategy",
@@ -4448,6 +4481,79 @@ window.userCalls = {
       {
         Role: "VROHead",
         groupsName: ["VRO Head"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "GoalStrategy",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Choice",
+                  values: ["vision"],
+                  targetPages: [
+                    "home.aspx",
+                    "new.aspx",
+                    "edit.aspx?ListKey=projects",
+                  ],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "RelatedStrategy",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "MainKPI",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedStrategyObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "KPIResults",
+                    parentRelationField: "Title",
+                    RelationField: "KPI",
+                    RelationFieldType: "Text",
+
+                  }
+                }
+              },
+            },
+            {
+              level: 1,
+              listName: "Initiatives",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Text",
+                  values: ["vision"],
+                  targetPages: [
+                    "home.aspx",
+                    "new.aspx",
+                    "edit.aspx?ListKey=projects",
+                  ],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "Projects",
+                parentRelationField: "Title",
+                RelationField: "RelatedInitiative",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+          ],
+        },
+      },
+      {
+        Role: "VROPHead",
+        groupsName: ["VRO-P Head"],
         dataFilter: {
           hierarchies: [
             {
