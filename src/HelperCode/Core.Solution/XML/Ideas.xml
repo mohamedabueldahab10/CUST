@@ -1,0 +1,209 @@
+<Fields> 
+		<Field
+				Group="Ideas Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Expected Budget"
+				StaticName="ExpectedBudget"
+				Name="ExpectedBudget"/>
+
+		<Field 
+				Group="Ideas Fields"
+				Required="FALSE" 
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Planned Finish Date" 
+				StaticName="PlannedFinishDate" 
+				Name="PlannedFinishDate"/>
+		<Field 
+				Group="Ideas Fields"
+				Required="FALSE" 
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="ExpectedLaunchDate" 
+				StaticName="ExpectedLaunchDate" 
+				Name="ExpectedLaunchDate"/>
+		<Field 
+				Group="Ideas Fields"
+				Required="FALSE" 
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Planned Start Date" 
+				StaticName="PlannedStartDate" 
+				Name="PlannedStartDate"/>
+			
+		<Field
+				Group="Ideas Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Code"
+				StaticName="Title"
+				Name="Title"/>	
+		<Field
+				Group="Ideas Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Portfolio"
+				StaticName="Portfolio"
+				Name="Portfolio"/>	
+		<Field
+				Group="Ideas Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Comments"
+				StaticName="Comments"
+				Name="Comments"/>	
+
+		<Field 
+				Group="Ideas Fields"
+				Required="FALSE" 
+				Type="Note" 
+				DisplayName="Urgency / Consequence of not Authorizing" 
+				StaticName="Urgency" 
+				Name="Urgency"/>
+		<Field 
+				Group="Ideas Fields"
+				Required="FALSE" 
+				Type="Note" 
+				DisplayName="Alignment" 
+				StaticName="Alignment" 
+				Name="Alignment"/>
+		<Field 
+				Group="Ideas Fields"
+				Required="FALSE" 
+				Type="Note" 
+				DisplayName="Financial Models" 
+				StaticName="FinancialModels" 
+				Name="FinancialModels"/>
+		<Field 
+				Group="Ideas Fields"
+				Required="FALSE" 
+				Type="Note" 
+				DisplayName="Impact" 
+				StaticName="Impact" 
+				Name="Impact"/>
+		<Field 
+				Group="Ideas Fields"
+				Required="FALSE" 
+				Type="Note" 
+				DisplayName="Estimated Business Benefits" 
+				StaticName="EstimatedBusinessBenefits" 
+				Name="EstimatedBusinessBenefits"/>
+		<Field 
+				Group="Ideas Fields"
+				Required="FALSE" 
+				Type="Note" 
+				DisplayName="Major Risks" 
+				StaticName="MajorRisks" 
+				Name="MajorRisks"/>
+		<Field 
+				Group="Ideas Fields"
+				Required="FALSE" 
+				Type="Note" 
+				DisplayName="Major Assumptions" 
+				StaticName="MajorAssumptions" 
+				Name="MajorAssumptions"/>
+		<Field 
+				Group="Ideas Fields"
+				Required="FALSE" 
+				Type="Note" 
+				DisplayName="Executive Summary" 
+				StaticName="ExecutiveSummary" 
+				Name="ExecutiveSummary"/>
+		<Field 
+				Group="Ideas Fields"
+				Required="FALSE" 
+				Type="Note" 
+				DisplayName="Description" 
+				StaticName="Description" 
+				Name="Description"/>
+
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Number" 
+			DisplayName="Estimated Costs" 
+			StaticName="EstimatedCosts" 
+			Name="EstimatedCosts"/>	 
+		<Field
+				Group="Ideas Fields"
+				Required="FALSE" 
+				Type="Choice"
+				DisplayName="Status" 
+				StaticName="Status" 
+				Name="Status">
+				<CHOICES> 
+					<CHOICE>Not Started</CHOICE>
+					<CHOICE>Completed</CHOICE>
+					<CHOICE>In Progress</CHOICE>
+					<CHOICE>On Hold</CHOICE>
+					<CHOICE>Cancelled</CHOICE>
+				</CHOICES>
+		</Field>
+		<Field
+				Group="Ideas Fields"
+				Required="FALSE" 
+				Type="Choice"
+				DisplayName="SubmitForApproval" 
+				StaticName="SubmitForApproval" 
+				Name="SubmitForApproval">
+				<CHOICES> 
+					<CHOICE>No</CHOICE>
+					<CHOICE>Yes</CHOICE>
+				</CHOICES>
+		</Field>
+
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Deletion Status"
+			StaticName="DeletionStatus" 
+			Name="DeletionStatus"/>
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="RequesterDepartment"
+			StaticName="RequesterDepartment" 
+			Name="RequesterDepartment"/>
+	
+		<Field
+				Group="Ideas Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Name"
+				StaticName="Name"
+				Name="Name"/>
+		<Field 
+			Name="Stage"
+			StaticName="Stage"
+			DisplayName="Stage"
+			Type="Choice"
+			Required="FALSE"
+			Group="Ideas Fields">
+			<CHOICES>
+				<CHOICE>IdeaStage01</CHOICE>
+				<CHOICE>IdeaStage02</CHOICE>
+				<CHOICE>IdeaStage03</CHOICE>
+				<CHOICE>IdeaStage04</CHOICE>
+				<CHOICE>IdeaStage05</CHOICE>
+							
+			</CHOICES>
+	</Field>
+	  <Field 
+        Group="SPM Fields" 
+        Required="FALSE" 
+        MaxLength="255" 
+        Type="Text" 
+        DisplayName="InitiativeCode"
+        StaticName="InitiativeCode" 
+        Name="InitiativeCode"/>	
+</Fields>

@@ -1,0 +1,208 @@
+<!-- done -->
+<Fields>
+		<Field
+    Group="SPM Fields"
+    Required="TRUE"
+    MaxLength="255"
+    Type="Text"
+    DisplayName="Name"
+    StaticName="Name"
+    Name="Name"
+  />
+		<Field
+    Group="SPM Fields"
+    Required="FALSE"
+    MaxLength="255"
+    Type="Text"
+    DisplayName="Code"
+    StaticName="Title"
+    Name="Title"
+  />	
+		<Field
+    Group="SPM Fields"
+    Required="TRUE"
+    MaxLength="255"
+    Type="Text"
+    DisplayName="Job Title"
+    StaticName="JobTitle"
+    Name="JobTitle"
+  />	
+		
+		<!-- <Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Interest" 
+			StaticName="Interest" 
+			Name="Interest"/> -->
+		<Field
+    Group="SPM Fields"
+    Required="FALSE"
+    Type="Choice"
+    DisplayName="Interest"
+    StaticName="Interest"
+    Name="Interest"
+  >
+			<CHOICES>
+				<CHOICE>hight</CHOICE>
+				<CHOICE>medium</CHOICE>
+				<CHOICE>low</CHOICE>
+			</CHOICES>
+		</Field>	
+		<Field
+    Group="SPM Fields"
+    Required="FALSE"
+    MaxLength="255"
+    Type="Text"
+    DisplayName="Master Key"
+    StaticName="MasterKey"
+    Name="MasterKey"
+  />
+		<Field
+    Group="SPM Fields"
+    Required="FALSE"
+    MaxLength="255"
+    Type="Text"
+    DisplayName="MasterID"
+    StaticName="MasterID"
+    Name="MasterID"
+  />
+		<Field
+    Group="SPM Fields"
+    Required="FALSE"
+    MaxLength="255"
+    Type="Text"
+    DisplayName="Role"
+    StaticName="Role"
+    Name="Role"
+  />			
+		<Field
+    Group="SPM Fields"
+    Required="FALSE"
+    MaxLength="255"
+    Type="Text"
+    DisplayName="Department"
+    StaticName="Department"
+    Name="Department"
+  />
+		<Field
+    Group="SPM Fields"
+    Required="TRUE"
+    MaxLength="255"
+    Type="Text"
+    DisplayName="Email"
+    StaticName="Email"
+    Name="Email"
+  />
+		<Field
+    Group="SPM Fields"
+    Required="TRUE"
+    MaxLength="255"
+    Type="Text"
+    DisplayName="Phone Number"
+    StaticName="PhoneNumber"
+    Name="PhoneNumber"
+  />
+		<Field
+    Group="SPM Fields"
+    Required="FALSE"
+    MaxLength="255"
+    Type="Text"
+    DisplayName="Project Code"
+    StaticName="ProjectCode"
+    Name="ProjectCode"
+  />
+		<Field
+    Group="SPM Fields"
+    Required="FALSE"
+    Type="Choice"
+    DisplayName="Stakeholder Type"
+    StaticName="StakeholderType"
+    Name="StakeholderType"
+    Format="RadioButtons"
+  >
+				<CHOICES>
+					<CHOICE>internal</CHOICE>
+					<CHOICE>external</CHOICE>
+				</CHOICES>
+		</Field>
+		<Field
+    Group="SPM Fields"
+    Required="FALSE"
+    Type="Choice"
+    DisplayName="Influence Level"
+    StaticName="InfluenceLevel"
+    Name="InfluenceLevel"
+  >
+				<CHOICES>	
+					<CHOICE>hight</CHOICE>
+					<CHOICE>medium</CHOICE>
+					<CHOICE>low</CHOICE>
+					<!-- <CHOICE>H</CHOICE>
+					<CHOICE>M</CHOICE>
+					<CHOICE>L</CHOICE> -->
+				</CHOICES>
+		</Field>
+	<Field
+    Name="Description"
+    StaticName="Description"
+    DisplayName="Description"
+    Type="Note"
+    Required="FALSE"
+    Group="SPM Fields"
+  />
+	<Field
+    Name="Requirements"
+    StaticName="Requirements"
+    DisplayName="Requirements"
+    Type="Note"
+    Required="FALSE"
+    Group="SPM Fields"
+  />
+	<Field
+    Name="TypeOfEngagement"
+    StaticName="TypeOfEngagement"
+    DisplayName="Type Of Engagement"
+    Type="Choice"
+    Required="FALSE"
+    Group="SPM Fields"
+  >
+	<CHOICES>	
+			<CHOICE>hight</CHOICE>
+			<CHOICE>medium</CHOICE>
+			<CHOICE>low</CHOICE>
+			<!-- <CHOICE>H</CHOICE>
+			<CHOICE>M</CHOICE>
+			<CHOICE>L</CHOICE> -->
+		</CHOICES>
+	</Field>		
+	<Field
+    Name="Expectations"
+    StaticName="Expectations"
+    DisplayName="Expectations"
+    Type="Note"
+    Required="FALSE"
+    Group="SPM Fields"
+  />
+	
+	<Field
+    Group="SPM Fields"
+    Required="FALSE"
+    MaxLength="255"
+    Type="Text"
+    DisplayName="Power Level"
+    StaticName="PowerLevel"
+    Name="PowerLevel"
+  />
+
+	<Field
+    Group="SPM Fields"
+    Required="FALSE"
+    MaxLength="255"
+    Type="Text"
+    DisplayName="Deletion Status"
+    StaticName="DeletionStatus"
+    Name="DeletionStatus"
+  />
+</Fields>

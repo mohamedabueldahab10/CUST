@@ -1,0 +1,64 @@
+<Fields>
+	<Field 
+		Group="SPM Fields" 
+		Required="FALSE" 
+		MaxLength="255" 
+		Type="Text" 
+		DisplayName="Title" 
+		StaticName="Title" 
+		Name="Title"/>
+	<Field
+		Group="SPM Fields"
+		Required="FALSE"
+		MaxLength="255"
+		Type="Text"
+		DisplayName="MasterKey"
+		StaticName="MasterKey"
+		Name="MasterKey"
+	/>
+	<Field
+		Group="SPM Fields"
+		Required="FALSE"
+		MaxLength="255"
+		Type="Text"
+		DisplayName="MasterID"
+		StaticName="MasterID"
+		Name="MasterID"
+	/>
+	<Field
+		Group="SPM Fields"
+		Required="FALSE"
+		MaxLength="255"
+		Type="Text"
+		DisplayName="DeletionStatus"
+		StaticName="DeletionStatus"
+		Name="DeletionStatus"
+	/>
+	<Field
+		Group="SPM Fields"
+		Required="FALSE"
+		MaxLength="255"
+		Type="Text"
+		DisplayName="InitiativeCode"
+		StaticName="InitiativeCode"
+		Name="InitiativeCode"
+	/>
+	<Field
+		Group="SPM Fields"
+		Required="FALSE"
+		MaxLength="255"
+		Type="Text"
+		DisplayName="DeliverableID"
+		StaticName="DeliverableID"
+		Name="DeliverableID"
+	/>
+	<Field
+		Group="SPM Fields"
+		Required="FALSE"
+		Type="Note"
+		DisplayName="AcceptanceCriteria"
+		StaticName="AcceptanceCriteria"
+		Name="AcceptanceCriteria"
+	/>
+	
+</Fields>

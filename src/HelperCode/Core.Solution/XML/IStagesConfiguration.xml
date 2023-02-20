@@ -1,0 +1,97 @@
+<Fields>
+	<Field 
+			Name="ProjectType"
+			StaticName="ProjectType"
+			DisplayName="ProjectType"
+			Type="Choice"
+			Required="FALSE"
+			Group="SPM Fields">
+			<CHOICES>
+				<CHOICE>Internal</CHOICE>
+				<CHOICE>External</CHOICE>	
+			</CHOICES>
+	</Field>
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="NextApprovalStage" 
+			StaticName="NextApprovalStage" 
+			Name="NextApprovalStage"/>
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="DeletionStatus" 
+			StaticName="DeletionStatus" 
+			Name="DeletionStatus"/>
+    <Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="NextRejectionStage" 
+			StaticName="NextRejectionStage" 
+			Name="NextRejectionStage"/>
+    <Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="StageCode" 
+			StaticName="StageCode" 
+			Name="StageCode"/>
+    <Field 
+			Name="TaskType"
+			StaticName="TaskType"
+			DisplayName="TaskType"
+			Type="Choice"
+			Required="FALSE"
+			Group="SPM Fields">
+			<CHOICES>
+				<CHOICE>Approval</CHOICE>
+				<CHOICE>Submit</CHOICE>	
+                <CHOICE>Resubmit</CHOICE>	
+                <CHOICE>SubmitField</CHOICE>	
+                <CHOICE>Attach</CHOICE>	
+                <CHOICE>New</CHOICE>	
+                <CHOICE>CheckList</CHOICE>	
+                <CHOICE>ProjectTask</CHOICE>	
+			</CHOICES>
+	</Field>
+     <Field 
+			Name="AssignTo"
+			StaticName="AssignTo"
+			DisplayName="AssignTo"
+			Type="Choice"
+			Required="FALSE"
+			Group="SPM Fields">
+			<CHOICES>
+				<CHOICE>PM</CHOICE>
+				<CHOICE>BO</CHOICE>	
+                <CHOICE>PMO</CHOICE>	
+                <CHOICE>SH</CHOICE>	
+                <CHOICE>FM</CHOICE>	
+                <CHOICE>SC</CHOICE>		
+			</CHOICES>
+	</Field>
+    <Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Deletion Status"
+			StaticName="DeletionStatus" 
+			Name="DeletionStatus"/>
+    <Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="RelatedURL"
+			StaticName="RelatedURL" 
+			Name="RelatedURL"/>
+	
+</Fields>

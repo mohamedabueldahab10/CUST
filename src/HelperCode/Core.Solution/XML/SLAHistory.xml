@@ -1,0 +1,54 @@
+<Fields>
+<Field 
+		Group="SPM Fields"  
+		Type="Number" 
+		DisplayName="SLAID" 
+		StaticName="SLAID" 
+		Name="SLAID"/>
+<Field>
+
+<Field 
+		Group="SPM Fields" 
+		Required="TRUE" 
+		MaxLength="255" 
+		Type="Text" 
+		DisplayName="Title" 
+		StaticName="Title" 
+		Name="Title"/>
+
+<Field
+		Group="SPM Fields"
+		Required="FALSE"
+		MaxLength="255"
+		Type="Text"
+		DisplayName="SLA Name"
+		StaticName="SLAName"
+		Name="SLAName"/>
+
+<Field
+		Group="SPM Fields"
+		Required="FALSE"
+		MaxLength="255"
+		Type="Text"
+		DisplayName="Item List Name"
+		StaticName="ItemlistName"
+		Name="ItemlistName"/>
+
+<Field
+		Group="SPM Fields"
+		Required="FALSE"
+		MaxLength="255"
+		Type="Text"
+		DisplayName="Item ID"
+		StaticName="ItemID"
+		Name="ItemID"/>
+
+<Field
+		Group="SPM Fields"
+		Required="FALSE"
+		Type="Note"
+		DisplayName="History"
+		StaticName="History"
+		Name="History"/>
+
+ <Fields/>

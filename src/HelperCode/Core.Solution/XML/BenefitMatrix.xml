@@ -1,0 +1,192 @@
+<Fields>
+<Field 
+		Group="SPM Fields" 
+		Required="FALSE" 
+		MaxLength="255" 
+		Type="Text" 
+		DisplayName="Title" 
+		StaticName="Title" 
+		Name="Title"/>
+<Field
+		Group="Initiative KPI Fields"
+		Required="TRUE"
+		MaxLength="255"
+		Type="Text"
+		DisplayName="Name"
+		StaticName="Name"
+		Name="Name"/>	
+<Field 
+		Group="SPM Fields" 
+		Required="TRUE" 
+		Type="User" 
+		DisplayName="Benefit Owner"
+		StaticName="Owner" 
+		Name="Owner"/>	
+<Field 
+		Group="SPM Fields" 
+		Required="TRUE" 
+		Type="Note"
+		DisplayName="Description" 
+		StaticName="Description" 
+		Name="Description"/>
+<Field 
+		Group="SPM Fields" 
+		Required="FALSE" 
+		MaxLength="255" 
+		Type="Number" 
+		DisplayName="Weight"
+		StaticName="Weight" 
+		Name="Weight"/>		
+<Field 
+		Group="SPM Fields" 
+		Required="TRUE" 
+		Type="Text" 
+		DisplayName="Related Sub Kpis"
+		StaticName="RelatedSubKpis" 
+		Name="RelatedSubKpis"/>		
+<Field
+		Group="Initiative KPI Fields"
+		Required="FALSE"
+		MaxLength="255"
+		Type="Text"
+		DisplayName="Name"
+		StaticName="Name"
+		Name="Name"/>	
+<Field 
+		Group="SPM Fields" 
+		Required="FALSE" 
+		Type="Note"
+		DisplayName="Deliverable Success KPI" 
+		StaticName="DeliverableSuccessKPI" 
+		Name="DeliverableSuccessKPI"/>
+
+	<!-- <Field
+			Group=" Fields"
+			Required="FALSE" 
+			Type="Choice"
+			DisplayName="PeriodType" 
+			StaticName="PeriodType" 
+			Name="PeriodType">
+			<CHOICES>
+			<CHOICE>quarter</CHOICE>
+			<CHOICE>yearly</CHOICE>
+			</CHOICES>
+		</Field>
+
+
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Text" 
+			DisplayName="Types" 
+			StaticName="Types" 
+			Name="Types"/>
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Text" 
+			DisplayName="Polarity"
+			StaticName="Polarity" 
+			Name="Polarity"/>
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Text" 
+			DisplayName="ResultType"
+			StaticName="ResultType" 
+			Name="ResultType"/>
+	<Field
+				Group="EPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Quarter"
+				StaticName="Quarter"
+				Name="Quarter"/>
+		<Field
+				Group="EPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Year"
+				StaticName="Year"
+				Name="Year"/>
+		<Field
+				Group="EPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="MesureStatus"
+				StaticName="MesureStatus"
+				Name="MesureStatus"/>
+ -->
+
+		<!-- <Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Text" 
+			DisplayName="MasterKey" 
+			StaticName="MasterKey" 
+			Name="MasterKey"/>
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Text" 
+			DisplayName="MasterID" 
+			StaticName="MasterID" 
+			Name="MasterID"/> 
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="InitiativeCode"
+			StaticName="InitiativeCode" 
+			Name="InitiativeCode"/>
+
+
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Deletion Status"
+			StaticName="DeletionStatus" 
+			Name="DeletionStatus"/> -->
+
+<!-- 
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="RelatedBenefit"
+			StaticName="RelatedBenefit" 
+			Name="RelatedBenefit"/>
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="RelatedInitiative"
+			StaticName="RelatedInitiative" 
+			Name="RelatedInitiative"/>
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="RelatedKPI"
+			StaticName="RelatedKPI" 
+			Name="RelatedKPI"/>
+
+		
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Text" 
+			DisplayName="RelatedBenefitMetrics"
+			StaticName="RelatedBenefitMetrics" 
+			Name="RelatedBenefitMetrics"/> -->
+			
+</Fields>

@@ -1,0 +1,69 @@
+<Fields>
+
+<Field 
+		Group="SPM Fields" 
+		Required="TRUE" 
+		MaxLength="255" 
+		Type="Text" 
+		DisplayName="Title" 
+		StaticName="Title" 
+		Name="Title"/>
+
+<Field
+		Group="SPM Fields"
+		Required="TRUE"
+		MaxLength="255" 
+		Type="Text"
+		DisplayName="Email Subject"
+		StaticName="EmailSubject"
+		Name="EmailSubject"/>
+
+		
+<Field
+		Group="SPM Fields"
+		Required="TRUE"
+		MaxLength="255" 
+		Type="Text"
+		DisplayName="User Name"
+		StaticName="UserName"
+		Name="UserName"/>
+
+		
+<Field
+		Group="SPM Fields"
+		Required="TRUE"
+		MaxLength="255" 
+		Type="Text"
+		DisplayName="User Email"
+		StaticName="UserEmail"
+		Name="UserEmail"/>
+
+		
+<Field
+		Group="SPM Fields"
+		Required="TRUE"
+		MaxLength="255" 
+		Type="Text"
+		DisplayName="Send Status"
+		StaticName="SendStatus"
+		Name="SendStatus"/>
+
+<Field
+		Group="SPM Fields"
+		Required="TRUE"
+		MaxLength="255" 
+		Type="Note"
+		DisplayName="Email Body"
+		StaticName="EmailBody"
+		Name="EmailBody"/>
+
+<Field
+		Group="SPM Fields"
+		Required="TRUE"
+		MaxLength="255" 
+		Type="Text"
+		DisplayName="EmailType"
+		StaticName="EmailType"
+		Name="EmailType"/>
+
+ <Fields/>
