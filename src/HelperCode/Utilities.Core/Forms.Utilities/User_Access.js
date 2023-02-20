@@ -1238,11 +1238,6 @@ window.userCalls = {
         break;
 
       case "LMSE":
-        // for get it back
-        // if (USERisHome)
-        // 	window.location =
-        // 		_spPageContextInfo.webAbsoluteUrl +
-        // 		"/sitepages/initiativesmain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -3072,45 +3067,6 @@ window.userCalls = {
           ],
         },
       },
-      // {
-      //   Role: "LMSE",
-      //   groupsName: ["LMS_E"],
-      //   // currently supporting only 2 conditions
-      //   dataFilter: {
-      //     hierarchies: [
-      //       {
-      //         level: 1,
-      //         listName: "Initiatives",
-      //         accessConditions: [
-      //           {
-      //             field: "Types",
-      //             type: "Text",
-      //             values: ["lms"],
-      //             targetPages: [
-      //               "home.aspx",
-      //               "new.aspx",
-      //               "edit.aspx?ListKey=projects",
-      //             ],
-      //           },
-      //         ],
-      //         subRelation: {
-      //           level: 2,
-      //           listName: "Projects",
-      //           parentRelationField: "Title",
-      //           RelationField: "RelatedInitiative",
-      //           RelationFieldType: "Text",
-      //           subRelation: {
-      //             level: 3,
-      //             listName: "",
-      //             // parentRelationField: "Title",
-      //             // RelationField: "InitiativeCode",
-      //             // RelationFieldType: "Text",
-      //           },
-      //         },
-      //       },
-      //     ],
-      //   },
-      // },
       {
         Role: "LMSE",
         groupsName: ["LMS_E"],
@@ -3183,6 +3139,7 @@ window.userCalls = {
           ],
         },
       },
+
       {
         Role: "LMSP",
         groupsName: ["LMS_P"],
@@ -3251,10 +3208,6 @@ window.userCalls = {
           ],
         },
       },
-      // {
-      //   Role: "StrategyTeam",
-      //   groupsName: ["Strategy Specialist"],
-      // },
       {
         Role: "StrategyTeam",
         groupsName: ["Strategy Specialist"],
