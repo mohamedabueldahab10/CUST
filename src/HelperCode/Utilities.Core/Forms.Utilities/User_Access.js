@@ -6108,6 +6108,7 @@ var Tasks_Info_Request_User = {
           PCODE_Stage_Data_Request.init();
         }
         User_Stages_Data_Request.init();
+        Generic_WF_Stages_Data_Request.init();
         Tasks_Info_Request_User.init();
       });
     }
@@ -6540,6 +6541,13 @@ var Tasks_Info_Request_User = {
       puid,
       rurl //rurl,
     ) {
+      debugger
+      console.log(
+        Generic_WF_Stages_Data_Request.g.GWFStagesArray,
+        "GWFStagesArray "
+      );
+
+
       if (wfname == "Project") {
         curstage_org = User_Stages_Data_Request.g.StagesArray.filter(function (
           obj
@@ -6551,6 +6559,14 @@ var Tasks_Info_Request_User = {
         // curstage =  ProjectStages_Data_Request.g.StagesArray.filter(function(obj) {
         // 	return obj.stage == curstage_org[0].stage;
         // });
+      } else {
+        targerstage_org = Generic_WF_Stages_Data_Request.g.GWFStagesArray.filter(
+          function (obj) {
+            return obj.stage == stageid;
+          }
+        );
+        var rurl = targerstage_org[0].relatedURL;
+        console.log(rurl, "RUUUUUUUUUUUUUUREL");
       }
       Tasks_Info_Request_User.g.handlelinks(
         pcode,
@@ -6697,14 +6713,10 @@ var Tasks_Info_Request_User = {
           if (wfname == "ProjectCharter") {
             keyNameParams = "projectcharter";
           }
-          if (wfname == "InitiativeSample") {
+          else if (wfname == "InitiativeSample") {
             keyNameParams = "initiativesample";
           }
-          if (wfname == "Idea") {
-            keyNameParams = "ideas";
-          } else if (wfname == "مهمة") {
-            keyNameParams = "tasks";
-          } else if (wfname == "DV") {
+          else if (wfname == "DV") {
             keyNameParams = "deliverables";
           } else if (wfname == "CR") {
             keyNameParams = "changerequest";
@@ -6712,8 +6724,6 @@ var Tasks_Info_Request_User = {
             keyNameParams = "issues";
           } else if (wfname == "Risk") {
             keyNameParams = "risks";
-          } else if (wfname == "تصعيد مهمة") {
-            keyNameParams = "tasks";
           } else if (wfname == "MoM") {
             keyNameParams = "mom";
           } else if (wfname == 'VisionInitiative' || wfname == 'StrategicallyInitiative' || wfname == 'LmsInitiative') {
@@ -6741,50 +6751,47 @@ var Tasks_Info_Request_User = {
                 keyNameParams +
                 "&IID=" +
                 ritemid +
+                "&TID=" +
+                taskid +
                 "&WFs",
                 "_self"
               );
               break;
             default:
-              if (
-                wfname == "تصعيد مهمة" ||
-                wfname == "تصعيد خطر" ||
-                wfname == "تصعيد تحدي"
-              ) {
+              debugger
+              // if (wfname == "InitiativeSample") {
+              //   window.open(
+              //     _spPageContextInfo.webAbsoluteUrl +
+              //     "/sitepages/view.aspx?ListKey=" +
+              //     keyNameParams +
+              //     "&IID=" +
+              //     ritemid +
+              //     "&ICODE=" +
+              //     icode +
+              //     "&WFs",
+              //     "_self"
+              //   );
+              // } else {
                 window.open(
                   _spPageContextInfo.webAbsoluteUrl +
-                  "/sitepages/view.aspx?ListKey=" +
-                  keyNameParams +
-                  "&IID=" +
-                  sourceitemid +
-                  "&RID=" +
-                  ritemid +
-                  "&WFEs",
-                  "_self"
-                );
-              } else if (wfname == "InitiativeSample") {
-                window.open(
-                  _spPageContextInfo.webAbsoluteUrl +
-                  "/sitepages/view.aspx?ListKey=" +
-                  keyNameParams +
-                  "&IID=" +
-                  ritemid +
-                  "&ICODE=" +
-                  icode +
-                  "&WFs",
-                  "_self"
-                );
-              } else {
-                window.open(
-                  _spPageContextInfo.webAbsoluteUrl +
-                  "/sitepages/view.aspx?ListKey=" +
-                  keyNameParams +
+                  rurl +
+                  "&TID=" +
+                  taskid +
                   "&IID=" +
                   ritemid +
                   "&WFs",
                   "_self"
                 );
-              }
+                // window.open(
+                //   _spPageContextInfo.webAbsoluteUrl +
+                //   "/sitepages/view.aspx?ListKey=" +
+                //   keyNameParams +
+                //   "&IID=" +
+                //   ritemid +
+                //   "&WFs",
+                //   "_self"
+                // );
+              // }
               break;
           }
       }
@@ -6831,6 +6838,50 @@ var User_Stages_Data_Request = {
     StagesArray: [],
   },
 };
+
+
+////Generic_WF_Stages_Data_Request
+window.Generic_WF_Stages_Data_Request = {
+  onSuccess: function (sender, args) {
+    var collListItem = Generic_WF_Stages_Data_Request.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      Generic_WF_Stages_Data_Request.g.GWFStagesArray.push({
+        stage: oListItem.get_item("Title"),
+        relatedURL: oListItem.get_item("RelatedURL"),
+        stageid: oListItem.get_id(),
+      });
+    }
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  init: function () {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext
+      .get_web()
+      .get_lists()
+      .getByTitle("GenericWFStagesConfig");
+    var camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(
+      "<View><Query><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>"
+    );
+    Generic_WF_Stages_Data_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(Generic_WF_Stages_Data_Request.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Generic_WF_Stages_Data_Request.onSuccess),
+      Function.createDelegate(this, Generic_WF_Stages_Data_Request.onError)
+    );
+  },
+  // Global variables
+  g: {
+    GWFStagesArray: [],
+  },
+};
+///
 
 //check current project stage and disable related project pages if project is closed
 window.currentStage;
