@@ -1238,11 +1238,6 @@ window.userCalls = {
         break;
 
       case "LMSE":
-        // for get it back
-        // if (USERisHome)
-        // 	window.location =
-        // 		_spPageContextInfo.webAbsoluteUrl +
-        // 		"/sitepages/initiativesmain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -1254,221 +1249,82 @@ window.userCalls = {
         en_UserRole = "Execution Guarantee Office";
         //CRUD
         Create_Access = [
-          "initiativeHome.aspx",
+          "benefitmatrix",
           "initiatives",
-          "initiativemilestones",
           "initiativedeliverables",
-          "initiativecards",
-          "initiativeexecution",
-          "initiativedeliverablesacceptance",
-          "initiativemilestonesacceptance",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
           "closureinitiative",
           "benefits",
-          // "mom",
-          // "risks",
-          "deliverablemetrics",
-          "benefitmatrix",
           "benefitmetrics",
-          "initiativeissues",
-          "initiativemom",
-          "initiativerisks",
           "projects",
           "deliverables",
           "mom",
-          "lessonslearned",
-          "initiativeexecution",
-          "closureinitiative",
-          "projectcharter",
-          // "benefits",
-          // "initiativemilestonesacceptance",
-          // "initiativedeliverablesacceptance",
-          // "initiativecards",
-          // "kpiequations",
-          // "deliveries",
           "risks",
           "issues",
           "milestones",
-          "invoices",
+          "lessonslearned",
+          "closureform",
+          "coc",
+          "stakeholders",
+          "communicationplans",
           "contracts",
           "changerequest",
-          // "MOM",
-          "closureform",
-          "communicationplans",
-          "lessonslearned",
-          "stakeholders",
           "documents",
-          "projecthome.aspx",
         ];
-        Read_Access = [
-          "initiativeHome.aspx",
-          "initiatives",
-          "initiativemilestones",
-          "initiativedeliverables",
-          "initiativesmain.aspx",
-          "InitiativeHome.aspx",
-          "home.aspx",
-          "initiativecards",
-          "initiativecards",
-          "initiativeexecution",
-          "initiativedeliverablesacceptance",
-          "initiativemilestonesacceptance",
-          "closureinitiative",
-          "benefits",
-          "mom",
-          "risks",
-          "initiativeissues",
-          "initiativemom",
-          "initiativerisks",
-          // "home.aspx",
-          "sos",
-          "MainIndicators.aspx",
-          "mainkpi",
-          "lessonslearned",
-          "deliverables",
-          "closureinitiative",
-          "initiativeexecution",
-          "benefits",
-          "initiativemilestonesacceptance",
-          "initiativedeliverablesacceptance",
-          "initiativecards",
-          "projectcharter",
-          "kpiequations",
-          "deliveries",
-          "risks",
-          "issues",
-          "milestones",
-          "invoices",
-          "contracts",
-          "changerequest",
-          "communicationplans",
-          "lessonslearned",
-          "stakeholders",
-          "documents",
-          "closureform",
-          "projects",
-          "projecthome.aspx",
-          "deliverablemetrics",
-          "benefitmatrix",
-          "benefitmetrics",
-          "deliverables",
-          "mom",
-          "lessonslearned",
-          "initiativeexecution",
-          "closureinitiative",
-          "projectcharter",
-          // "benefits",
-          // "initiativemilestonesacceptance",
-          // "initiativedeliverablesacceptance",
-          // "initiativecards",
-          // "kpiequations",
-          // "deliveries",
-          "risks",
-          "issues",
-          "milestones",
-          "invoices",
-          "contracts",
-          "changerequest",
-          // "MOM",
-          "closureform",
-          "communicationplans",
-          "lessonslearned",
-          "stakeholders",
-          "documents",
-          "projecthome.aspx",
-        ];
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
-          "initiativeHome.aspx",
+          "benefitmatrix",
           "initiatives",
-          "initiativemilestones",
           "initiativedeliverables",
-          "initiativecards",
-          "initiativecards",
-          "initiativeexecution",
-          "initiativedeliverablesacceptance",
-          "initiativemilestonesacceptance",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
           "closureinitiative",
           "benefits",
-          // "mom",
-          // "risks",
-          "initiativeissues",
-          "initiativemom",
-          "initiativerisks",
-          "deliverablemetrics",
-          "benefitmatrix",
           "benefitmetrics",
           "projects",
           "deliverables",
           "mom",
-          "lessonslearned",
-          "initiativeexecution",
-          "closureinitiative",
-          "projectcharter",
-          // "benefits",
-          // "initiativemilestonesacceptance",
-          // "initiativedeliverablesacceptance",
-          // "initiativecards",
-          // "kpiequations",
-          // "deliveries",
           "risks",
           "issues",
           "milestones",
-          "invoices",
+          "lessonslearned",
+          "closureform",
+          "coc",
+          "stakeholders",
+          "communicationplans",
           "contracts",
           "changerequest",
-          // "MOM",
-          "closureform",
-          "communicationplans",
-          "lessonslearned",
-          "stakeholders",
           "documents",
-          "projecthome.aspx",
         ];
         Delete_Access = [
-          "initiativeHome.aspx",
+          "benefitmatrix",
           "initiatives",
-          "initiativemilestones",
           "initiativedeliverables",
-          "initiativecards",
-          "initiativecards",
-          "initiativeexecution",
-          "initiativedeliverablesacceptance",
-          "initiativemilestonesacceptance",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
           "closureinitiative",
           "benefits",
-          // "mom",
-          // "risks",
-          "initiativeissues",
-          "initiativemom",
-          "initiativerisks",
-          "deliverablemetrics",
-          "benefitmatrix",
           "benefitmetrics",
           "projects",
           "deliverables",
           "mom",
-          "lessonslearned",
-          "initiativeexecution",
-          "closureinitiative",
-          "projectcharter",
-          // "benefits",
-          // "initiativemilestonesacceptance",
-          // "initiativedeliverablesacceptance",
-          // "initiativecards",
-          // "kpiequations",
-          // "deliveries",
           "risks",
           "issues",
           "milestones",
-          "invoices",
-          "contracts",
-          "changerequest",
-          // "MOM",
-          "closureform",
-          "communicationplans",
           "lessonslearned",
+          "closureform",
+          "coc",
           "stakeholders",
-          "documents",
-          "projecthome.aspx",
+          "communicationplans",
+          "changerequest",
         ];
         break;
       case "LMSP":
@@ -3214,9 +3070,45 @@ window.userCalls = {
       {
         Role: "LMSE",
         groupsName: ["LMS_E"],
-        // currently supporting only 2 conditions
         dataFilter: {
           hierarchies: [
+            {
+              level: 1,
+              listName: "GoalStrategy",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Choice",
+                  values: ["lms"],
+                  targetPages: [
+                    // "home.aspx",
+                    // "new.aspx",
+                    // "edit.aspx?ListKey=projects",
+                  ],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "RelatedStrategy",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "MainKPI",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedStrategyObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "KPIResults",
+                    parentRelationField: "Title",
+                    RelationField: "KPI",
+                    RelationFieldType: "Text",
+                  }
+                }
+              },
+            },
             {
               level: 1,
               listName: "Initiatives",
@@ -3226,9 +3118,9 @@ window.userCalls = {
                   type: "Text",
                   values: ["lms"],
                   targetPages: [
-                    "home.aspx",
-                    "new.aspx",
-                    "edit.aspx?ListKey=projects",
+                    // "home.aspx",
+                    // "new.aspx",
+                    // "edit.aspx?ListKey=projects",
                   ],
                 },
               ],
@@ -3241,15 +3133,13 @@ window.userCalls = {
                 subRelation: {
                   level: 3,
                   listName: "",
-                  // parentRelationField: "Title",
-                  // RelationField: "InitiativeCode",
-                  // RelationFieldType: "Text",
                 },
               },
             },
           ],
         },
       },
+
       {
         Role: "LMSP",
         groupsName: ["LMS_P"],
@@ -3318,10 +3208,6 @@ window.userCalls = {
           ],
         },
       },
-      // {
-      //   Role: "StrategyTeam",
-      //   groupsName: ["Strategy Specialist"],
-      // },
       {
         Role: "StrategyTeam",
         groupsName: ["Strategy Specialist"],
@@ -6758,20 +6644,6 @@ var Tasks_Info_Request_User = {
               );
               break;
             default:
-              debugger
-              // if (wfname == "InitiativeSample") {
-              //   window.open(
-              //     _spPageContextInfo.webAbsoluteUrl +
-              //     "/sitepages/view.aspx?ListKey=" +
-              //     keyNameParams +
-              //     "&IID=" +
-              //     ritemid +
-              //     "&ICODE=" +
-              //     icode +
-              //     "&WFs",
-              //     "_self"
-              //   );
-              // } else {
                 window.open(
                   _spPageContextInfo.webAbsoluteUrl +
                   rurl +
@@ -6782,16 +6654,6 @@ var Tasks_Info_Request_User = {
                   "&WFs",
                   "_self"
                 );
-                // window.open(
-                //   _spPageContextInfo.webAbsoluteUrl +
-                //   "/sitepages/view.aspx?ListKey=" +
-                //   keyNameParams +
-                //   "&IID=" +
-                //   ritemid +
-                //   "&WFs",
-                //   "_self"
-                // );
-              // }
               break;
           }
       }
