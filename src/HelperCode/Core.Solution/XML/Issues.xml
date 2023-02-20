@@ -1,0 +1,281 @@
+<Fields> 
+		<Field
+				Group="SPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Issue ID"
+				StaticName="IssueID"
+				Name="IssueID"/>
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Date Raised" 
+				StaticName="DateRaised" 
+				Name="DateRaised"/>
+		<Field
+				Group="SPM Fields"
+				Required="FALSE"
+				Type="Choice"
+				DisplayName="Category"
+				StaticName="Category"
+				Name="Category">
+				<CHOICES>
+					<CHOICE>financial</CHOICE>
+					<CHOICE>legal</CHOICE>
+					<CHOICE>contractual</CHOICE>
+				</CHOICES>
+		</Field>						
+		<Field
+				Group="SPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Title"
+				StaticName="Title"
+				Name="Title"/>	
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="Note" 
+				DisplayName="Description" 
+				StaticName="Description" 
+				Name="Description"/>
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="Note" 
+				DisplayName="Resolution Description" 
+				StaticName="ResolutionDescription" 
+				Name="ResolutionDescription"/>
+		<Field
+				Group="SPM Fields"
+				Required="FALSE" 
+				Type="Choice"
+				DisplayName="Impact" 
+				StaticName="Impact" 
+				Name="Impact">
+				<CHOICES> 
+					<CHOICE>high</CHOICE>
+					<CHOICE>medium</CHOICE>
+					<CHOICE>low</CHOICE>
+				</CHOICES>
+		</Field>
+		<Field
+				Group="SPM Fields"
+				Required="FALSE" 
+				Type="Choice"
+				DisplayName="Stage" 
+				StaticName="Stage" 
+				Name="Stage">
+				<CHOICES> 
+					<CHOICE>ISStage01</CHOICE>
+					<CHOICE>ISStage02</CHOICE>
+					<CHOICE>ISStage03</CHOICE>
+				</CHOICES>
+		</Field>
+		<Field
+				Group="SPM Fields"
+				Required="FALSE" 
+				Type="Choice"
+				DisplayName="Type" 
+				StaticName="Type" 
+				Name="Type">
+				<CHOICES> 
+					<CHOICE>Issue</CHOICE>
+					<CHOICE>Risk</CHOICE>
+					<CHOICE>New Request</CHOICE>
+				</CHOICES>
+		</Field>
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="Note" 
+				DisplayName="Impact Description" 
+				StaticName="ImpactDescription" 
+				Name="ImpactDescription"/>
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="Note" 
+				DisplayName="Resolution" 
+				StaticName="Resolution" 
+				Name="Resolution"/>
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Resolution Target Date" 
+				StaticName="ResolutionTargetDate" 
+				Name="ResolutionTargetDate"/>
+		<Field 
+				Type="User" 
+				DisplayName="Resolution Owner" 
+				Required="False" 
+				StaticName="ResolutionOwner" 
+				Name="ResolutionOwner" 
+				Group="SPM Fields"/>	
+		<Field 
+				Type="User" 
+				DisplayName="Raised By" 
+				Required="False" 
+				StaticName="RaisedBy" 
+				Name="RaisedBy" 
+				Group="SPM Fields"/>	
+		<Field
+				Group="SPM Fields"
+				Required="FALSE" 
+				Type="Choice"
+				DisplayName="Resolution Status" 
+				StaticName="ResolutionStatus" 
+				Name="ResolutionStatus">
+				<CHOICES>
+					<CHOICE>New</CHOICE>
+					<CHOICE>In Progress</CHOICE>
+					<CHOICE>Closed</CHOICE>
+					<CHOICE>Cancelled</CHOICE>
+				</CHOICES>
+		</Field>
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Resolution Actual Date" 
+				StaticName="ResolutionActualDate" 
+				Name="ResolutionActualDate"/>
+		<Field
+				Group="SPM Fields"
+				Required="FALSE" 
+				Type="Choice"
+				DisplayName="Status" 
+				StaticName="Status" 
+				Name="Status">
+				<CHOICES>
+					<CHOICE>Open</CHOICE>
+					<CHOICE>Closed</CHOICE>
+				</CHOICES>
+		</Field>
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Issue Closure Date" 
+				StaticName="IssueClosureDate" 
+				Name="IssueClosureDate"/>
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="Note" 
+				DisplayName="Comments" 
+				StaticName="Comments" 
+				Name="Comments"/>
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="Project Code" 
+				StaticName="ProjectCode" 
+				Name="ProjectCode"/>
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="Name" 
+				StaticName="Name" 
+				Name="Name"/>
+		<Field
+				Group="SPM Fields"
+				Required="FALSE" 
+				Type="Choice"
+				DisplayName="Priority" 
+				StaticName="Priority" 
+				Name="Priority">
+				<CHOICES>
+					<CHOICE>critical</CHOICE>
+					<CHOICE>high</CHOICE>
+					<CHOICE>medium</CHOICE>
+					<CHOICE>low</CHOICE>
+				</CHOICES>
+		</Field>
+		<Field 
+				Type="User" 
+				DisplayName="Assigned To" 
+				Required="False" 
+				StaticName="AssignedTo" 
+				Name="AssignedTo" 
+				Group="SPM Fields"/>	
+		<Field 
+				Type="User" 
+				DisplayName="Owner" 
+				Required="False" 
+				StaticName="Owner" 
+				Name="Owner" 
+				Group="SPM Fields"/>	
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Due Date" 
+				StaticName="DueDate" 
+				Name="DueDate"/>
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="MasterKey" 
+				StaticName="MasterKey" 
+				Name="MasterKey"/>
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="MasterID" 
+				StaticName="MasterID" 
+				Name="MasterID"/>	
+				
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="Related Risk Code" 
+				StaticName="RelatedRiskCode" 
+				Name="RelatedRiskCode"/>
+
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Deletion Status"
+			StaticName="DeletionStatus" 
+			Name="DeletionStatus"/>
+		<Field 
+			Group="Instrument Fields"
+			Required="FALSE" 
+			Type="Text" 
+			DisplayName="InitiativeCode" 
+			StaticName="InitiativeCode" 
+			Name="InitiativeCode"/>	
+
+			<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				Name="Strategic Partnership Code"
+				DisplayName="StrategicPartnershipCode" 
+				StaticName="StrategicPartnershipCode"/>	
+
+				
+</Fields>

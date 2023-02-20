@@ -1,0 +1,234 @@
+ <Fields>
+	<Field 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="Title" 
+				StaticName="Title" 
+				Name="Title"/>
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Project Code"
+				StaticName="ProjectCode"
+				Name="ProjectCode"/>					
+	<Field 
+				Group="SPM Fields"
+				Required="TRUE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Name"
+				StaticName="Name"
+				Name="Name"/>					
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="EquivalentPercentageAchievement"
+				StaticName="EquivalentPercentageAchievement"
+				Name="EquivalentPercentageAchievement"/>					
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="AchievementAcceptance"
+				StaticName="AchievementAcceptance"
+				Name="AchievementAcceptance"/>					
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="AcceptanceFile"
+				StaticName="AcceptanceFile"
+				Name="AcceptanceFile"/>					
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Note" 
+				DisplayName="Notes"
+				StaticName="Notes"
+				Name="Notes"/>					
+	
+	<!-- <Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="DeliverableSuccessKPI"
+				StaticName="DeliverableSuccessKPI"
+				Name="DeliverableSuccessKPI"/>					 -->
+	<!-- <Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				Type="Number"
+				DisplayName="Target"
+				StaticName="Target"
+				Name="Target"/>					
+	 -->
+	<Field 
+				Group="SPM Fields"
+				Required="TRUE"
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Planned Completed Date"
+				StaticName="PlannedCompletedDate"
+				Name="PlannedCompletedDate"/>				
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Actual Completed Date"
+				StaticName="ActualCompletedDate"
+				Name="ActualCompletedDate"/>				
+	
+	
+<!-- 			
+	<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				MaxLength="255"
+				Type="Text"  
+				DisplayName="Completed" 
+				StaticName="Completed" 
+				Name="Completed"/>	 -->
+	<Field 
+			Required="FALSE"
+			Type="Choice" 
+			DefaultValue="no"
+			DisplayName="Completed" 
+			StaticName="Completed" 
+			Name="Completed"
+			Format="RadioButtons">
+			<CHOICES>
+				<CHOICE>yes</CHOICE>
+				<CHOICE>no</CHOICE>
+			</CHOICES>
+	</Field>			
+	<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				MaxLength="255"
+				Type="Text"
+				DisplayName="DeletionStatus" 
+				StaticName="DeletionStatus" 
+				Name="DeletionStatus"/>
+<!-- 				
+	<Field
+				Group="EPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Number"
+				DisplayName="Id"
+				StaticName="Id"
+				Name="Id"/> -->
+		
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="MasterKey" 
+			StaticName="MasterKey" 
+			Name="MasterKey"/>
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Number" 
+			DisplayName="PercentageCompleted" 
+			StaticName="PercentageCompleted" 
+			Name="PercentageCompleted"/>
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Text" 
+			DisplayName="Related Initiative Deliverable" 
+			StaticName="RelatedInitiativeDeliverable" 
+			Name="RelatedInitiativeDeliverable"/>
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="MasterID" 
+			StaticName="MasterID" 
+			Name="MasterID"/>	
+
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="ProjectName"
+			StaticName="ProjectName" 
+			Name="ProjectName"/>			  
+			  
+	<Field 
+			Group="SPM Fields" 
+			Required="TRUE" 
+			Type="Number" 
+			DisplayName="Weight"
+			StaticName="Weight" 
+			Name="Weight"/>		
+
+	<Field
+		   Group="EPM Fields"
+		   Required="FALSE"
+		   MaxLength="255"
+		   Type="Number"
+		   DisplayName="Amount"
+		   StaticName="Amount"
+		   Name="Amount"/>		  
+	  
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Text" 
+			DisplayName="Initiative Code"
+			StaticName="InitiativeCode" 
+			Name="InitiativeCode"/>		
+<!-- 	
+		<Field 
+			Name="Created"
+			StaticName="Created"
+			Format="DateOnly"
+			DisplayName="Created" 
+			Type="DateTime" 
+			Required="False"
+			Group="SPM Fields" />
+		<Field 
+			Type="User" 
+			DisplayName="CreatedBy" 
+			Required="False" 
+			StaticName="CreatedBy" 
+			Name="CreatedBy" 
+			Group="SPM Fields"/>
+		<Field 
+			Name="Modified"
+			StaticName="Modified"
+			Format="DateOnly"
+			DisplayName="Modified" 
+			Type="DateTime" 
+			Required="False"
+			Group="SPM Fields" />
+		<Field 
+			Type="User" 
+			DisplayName="ModifiedBy" 
+			Required="False" 
+			StaticName="ModifiedBy" 
+			Name="ModifiedBy" 
+			Group="SPM Fields"/>			   -->
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Note" 
+			DisplayName="Support Documents Description"
+			StaticName="SupportDocumentsDescription" 
+			Name="SupportDocumentsDescription"/>		
+ </Fields>       

@@ -230,7 +230,7 @@ var MainKPIs_Info_Request = {
       countRec = countRec + 1;
       //sample getting field data  : oListItem.get_item('InternalName')
       var name = oListItem.get_item("Name") || UserNo_Data;
-
+      var recurrenceChanged = oListItem.get_item("RecurrenceChanged") || ""
       var category = oListItem.get_item("Category") || UserNo_Data;
       var relatedInstrument =
         oListItem.get_item("RelatedInstrument") || UserNo_Data;
@@ -333,11 +333,11 @@ var MainKPIs_Info_Request = {
         BODY_HTML.push(
           '<tbody class="targetTbody">' +
           '<tr data-target_list="KPIResults" data-id="' + oListItem.get_id() + '" data-category="' + category + '" is-updated="false" id="MyTr">' +
-          ' <th rowspan="2">' + name + "</th>" +
+          `<th rowspan="2"><span>${name}</span><span class="target_recurrencechanged Resources" ${recurrenceChanged == 'yes' ? "data-trans-recurrencechanged" : ""}></span></th>` +
           '<th scope="row" class="Resources" data-trans-target></th>' +
           ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' + oListItem.get_id() + '">' + total +
           "</td>" +
-          ' <td><input class="QarterInputStyle inputStyle1 myInput" data-internal="TargetY" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle1 myInput" data-recurrencechanged="' + recurrenceChanged + '"  data-internal="TargetY" type="number" name="" value="' +
           targetY +
           '" data-result-type="' +
           resultType +
@@ -352,7 +352,7 @@ var MainKPIs_Info_Request = {
           ' <td id="totalActual" class="myInput" data-internal="Actual" data-id="' + oListItem.get_id() + '">' +
           totalActual +
           "</td>" +
-          ' <td><input class="QarterInputStyle inputStyle1 actualStyle myInput" data-internal="ActualY" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle1 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="ActualY" type="number" name="" value="' +
           actualY +
           '" data-result-type="' +
           resultType +
@@ -370,37 +370,36 @@ var MainKPIs_Info_Request = {
           '" data-category="' +
           category +
           '" is-updated="false" id="MyTr">' +
-          ' <th rowspan="2">' +
-          name +
-          "</th>" +
+          //' <th rowspan="2">' + name +"</th>" +
+          `<th rowspan="2"><span>${name}</span><span class="target_recurrencechanged Resources" ${recurrenceChanged == 'yes' ? "data-trans-recurrencechanged" : ""}></span></th>` +
           '<th scope="row" class="Resources" data-trans-target></th>' +
           ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' +
           oListItem.get_id() +
           '">' +
           total +
           "</td>" +
-          ' <td><input class="QarterInputStyle inputStyle1 myInput" data-internal="TargetQ1" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle1 myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="TargetQ1" type="number" name="" value="' +
           targetQ1 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle2 myInput" data-internal="TargetQ2" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle2 myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="TargetQ2" type="number" name="" value="' +
           targetQ2 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle3 myInput" data-internal="TargetQ3" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle3 myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="TargetQ3" type="number" name="" value="' +
           targetQ3 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle4 myInput" data-internal="TargetQ4" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle4 myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="TargetQ4" type="number" name="" value="' +
           targetQ4 +
           '" data-result-type="' +
           resultType +
@@ -420,28 +419,28 @@ var MainKPIs_Info_Request = {
           '">' +
           totalActual +
           "</td>" +
-          ' <td><input class="QarterInputStyle inputStyle1 actualStyle myInput" data-internal="ActualQ1" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle1 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="ActualQ1" type="number" name="" value="' +
           actualQ1 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle2 actualStyle myInput" data-internal="ActualQ2" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle2 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="ActualQ2" type="number" name="" value="' +
           actualQ2 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle3 actualStyle myInput" data-internal="ActualQ3" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle3 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="ActualQ3" type="number" name="" value="' +
           actualQ3 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle4 actualStyle myInput" data-internal="ActualQ4" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle4 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="ActualQ4" type="number" name="" value="' +
           actualQ4 +
           '" data-result-type="' +
           resultType +
@@ -455,18 +454,19 @@ var MainKPIs_Info_Request = {
         BODY_HTML.push(
           '<tbody class="targetTbody">' +
           '<tr data-target_list="KPIResults" data-id="' + oListItem.get_id() + '" data-category="' + category + '" is-updated="false" id="MyTr">' +
-          ' <th rowspan="2">' + name + "</th>" +
+          // ' <th rowspan="2">' + name + "</th>" +
+          `<th rowspan="2"><span>${name}</span><span class="target_recurrencechanged Resources" ${recurrenceChanged == 'yes' ? "data-trans-recurrencechanged" : ""}></span></th>` +
           '<th scope="row" class="Resources" data-trans-target></th>' +
           ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' + oListItem.get_id() + '">' + total +
           "</td>" +
-          ' <td><input class="QarterInputStyle inputStyle1 myInput" data-internal="TargetMid1" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle1 myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="TargetMid1" type="number" name="" value="' +
           targetMid1 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle2 myInput" data-internal="TargetMid2" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle2 myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="TargetMid2" type="number" name="" value="' +
           targetMid2 +
           '" data-result-type="' +
           resultType +
@@ -481,14 +481,14 @@ var MainKPIs_Info_Request = {
           ' <td id="totalActual" class="myInput" data-internal="Actual" data-id="' + oListItem.get_id() + '">' +
           totalActual +
           "</td>" +
-          ' <td><input class="QarterInputStyle inputStyle1 actualStyle myInput" data-internal="ActualMid1" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle1 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="ActualMid1" type="number" name="" value="' +
           actualMid1 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle2 actualStyle myInput" data-internal="ActualMid2" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle2 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="ActualMid2" type="number" name="" value="' +
           actualMid2 +
           '" data-result-type="' +
           resultType +
@@ -506,37 +506,36 @@ var MainKPIs_Info_Request = {
           '" data-category="' +
           category +
           '" is-updated="false" id="MyTr">' +
-          ' <th rowspan="2">' +
-          name +
-          "</th>" +
+          //' <th rowspan="2">' +name +"</th>" +
+          `<th rowspan="2"><span>${name}</span><span class="target_recurrencechanged Resources" ${recurrenceChanged == 'yes' ? "data-trans-recurrencechanged" : ""}></span></th>` +
           '<th scope="row" class="Resources" data-trans-target></th>' +
           ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' +
           oListItem.get_id() +
           '">' +
           total +
           "</td>" +
-          ' <td><input class="QarterInputStyle inputStyle1 myInput" data-internal="TargetM1" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle1 myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="TargetM1" type="number" name="" value="' +
           targetM1 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle2 myInput" data-internal="TargetM2" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle2 myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="TargetM2" type="number" name="" value="' +
           targetM2 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle3 myInput" data-internal="TargetM3" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle3 myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="TargetM3" type="number" name="" value="' +
           targetM3 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle4 myInput" data-internal="TargetM4" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle4 myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="TargetM4" type="number" name="" value="' +
           targetM4 +
           '" data-result-type="' +
           resultType +
@@ -544,56 +543,56 @@ var MainKPIs_Info_Request = {
           oListItem.get_id() +
           '"></td>' +
           //target 4 replay should change
-          ' <td><input class="QarterInputStyle inputStyle5 myInput" data-internal="TargetM5" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle5 myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="TargetM5" type="number" name="" value="' +
           targetM5 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle6 myInput" data-internal="TargetM6" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle6 myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="TargetM6" type="number" name="" value="' +
           targetM6 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle7 myInput" data-internal="TargetM7" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle7 myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="TargetM7" type="number" name="" value="' +
           targetM7 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle8 myInput" data-internal="TargetM8" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle8 myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="TargetM8" type="number" name="" value="' +
           targetM8 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle9 myInput" data-internal="TargetM9" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle9 myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="TargetM9" type="number" name="" value="' +
           targetM9 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle10 myInput" data-internal="TargetM10" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle10 myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="TargetM10" type="number" name="" value="' +
           targetM10 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle11 myInput" data-internal="TargetM11" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle11 myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="TargetM11" type="number" name="" value="' +
           targetM11 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle12 myInput" data-internal="TargetM12" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle12 myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="TargetM12" type="number" name="" value="' +
           targetM12 +
           '" data-result-type="' +
           resultType +
@@ -614,28 +613,28 @@ var MainKPIs_Info_Request = {
           '">' +
           totalActual +
           "</td>" +
-          ' <td><input class="QarterInputStyle inputStyle1 actualStyle myInput" data-internal="ActualM1" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle1 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="ActualM1" type="number" name="" value="' +
           actualM1 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle2 actualStyle myInput" data-internal="ActualM2" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle2 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="ActualM2" type="number" name="" value="' +
           actualM2 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle3 actualStyle myInput" data-internal="ActualM3" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle3 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="ActualM3" type="number" name="" value="' +
           actualM3 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle4 actualStyle myInput" data-internal="ActualM4" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle4 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="ActualM4" type="number" name="" value="' +
           actualM4 +
           '" data-result-type="' +
           resultType +
@@ -643,56 +642,56 @@ var MainKPIs_Info_Request = {
           oListItem.get_id() +
           '"></td>' +
           //actual 4 replay should change
-          ' <td><input class="QarterInputStyle inputStyle5 actualStyle myInput" data-internal="ActualM5" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle5 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="ActualM5" type="number" name="" value="' +
           actualM5 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle6 actualStyle myInput" data-internal="ActualM6" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle6 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="ActualM6" type="number" name="" value="' +
           actualM6 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle7 actualStyle myInput" data-internal="ActualM7" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle7 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="ActualM7" type="number" name="" value="' +
           actualM7 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle8 actualStyle myInput" data-internal="ActualM8" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle8 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="ActualM8" type="number" name="" value="' +
           actualM8 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle9 actualStyle myInput" data-internal="ActualM9" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle9 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="ActualM9" type="number" name="" value="' +
           actualM9 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle10 actualStyle myInput" data-internal="ActualM10" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle10 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="ActualM10" type="number" name="" value="' +
           actualM10 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle11 actualStyle myInput" data-internal="ActualM11" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle11 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="ActualM11" type="number" name="" value="' +
           actualM11 +
           '" data-result-type="' +
           resultType +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
           '"></td>' +
-          ' <td><input class="QarterInputStyle inputStyle12 actualStyle myInput" data-internal="ActualM12" type="number" name="" value="' +
+          ' <td><input class="QarterInputStyle inputStyle12 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-internal="ActualM12" type="number" name="" value="' +
           actualM12 +
           '" data-result-type="' +
           resultType +
@@ -704,6 +703,10 @@ var MainKPIs_Info_Request = {
           "</tbody>"
         );
       }
+
+
+
+
       // }
     }
 
@@ -737,6 +740,10 @@ var MainKPIs_Info_Request = {
       $('input[data-internal*="Actual"]').prop('disabled', true);
       $('td input[data-internal*="Target"]').prop('disabled', true);
     }
+
+    // disable field when recurrence changed
+    $('input[data-recurrencechanged*="yes"]').prop('disabled', true);
+    //
 
     if (isMinister || isBITeam || isPerformanceLeader ||
       //isSPMTeam || 

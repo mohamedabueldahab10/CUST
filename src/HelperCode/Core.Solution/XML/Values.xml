@@ -1,0 +1,108 @@
+<Fields> 		
+		<Field
+				Group="Values Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Title"
+				StaticName="Title"
+				Name="Title"/>				
+		<Field 
+				Group="Values Fields" 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="Name" 
+				StaticName="Name" 
+				Name="Name"/>	
+			<Field 
+			
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="ProjectCode" 
+			StaticName="ProjectCode" 
+			Name="ProjectCode"/>	
+		<Field 
+			
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="MasterID" 
+			StaticName="MasterID" 
+			Name="MasterID"/>	
+		<Field 
+			
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="DeletionStatus" 
+			StaticName="DeletionStatus" 
+			Name="DeletionStatus"/>	
+		<Field 
+				Group="Values Fields" 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="MasterKey" 
+				StaticName="MasterKey" 
+				Name="MasterKey"/>		
+		<Field 
+				Group="Values Fields" 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="CustomerFocus" 
+				StaticName="CustomerFocus" 
+				Name="CustomerFocus"/>		
+		<Field 
+				Group="Values Fields" 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="Specialist" 
+				StaticName="Specialist" 
+				Name="Specialist"/>		
+		<Field 
+				Group="Values Fields" 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="Team" 
+				StaticName="Team" 
+				Name="Team"/>		
+		<Field 
+				Group="Values Fields" 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="SpeedProgress" 
+				StaticName="SpeedProgress" 
+				Name="SpeedProgress"/>		
+		<Field 
+				Group="Values Fields" 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="InitiativeCode" 
+				StaticName="InitiativeCode" 
+				Name="InitiativeCode"/>		
+		<Field 
+				Group="Values Fields" 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="Transparency" 
+				StaticName="Transparency" 
+				Name="Transparency"/>		
+		<Field 
+				Group="Values Fields" 
+				Required="FALSE" 
+				Type="Note" 
+				DisplayName="Description" 
+				StaticName="Description" 
+				Name="Description"/>
+		
+	
+
+</Fields>

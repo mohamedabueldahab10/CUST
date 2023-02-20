@@ -30,6 +30,7 @@ var Information_Form = [
         type: 'string',
         maxchar: '250',
         validation: 'required',
+        ToggleDisabledName: 'Name',
         security: {
           groups: [
             'LMS_P',
@@ -45,13 +46,14 @@ var Information_Form = [
         DisplayNameEn: 'KPI Type',
         validation: 'required',
         DisplayName: 'نوع المؤشر',
+        ToggleDisabledName: 'KPIType',
         toggleValues: [
           {
             value: 'sub',
             // fields: ['SubRelatedObjective', 'RelatedMainKpis', 'Portfolio'],
-            fields: ['SubRelatedObjective','Portfolio'],
+            fields: ['SubRelatedObjective', 'Portfolio'],
           }, //we can put more than 1  field
-          { value: 'main', fields: ['RelatedMainKpis','RelatedMainObjective'] }, //we can put more than 1  field
+          { value: 'main', fields: ['RelatedMainKpis', 'RelatedMainObjective'] }, //we can put more than 1  field
           { value: 'strategically', fields: ['StrategyRelatedObjective'] },
         ],
         type: 'dropdownValues',
@@ -108,6 +110,7 @@ var Information_Form = [
         InternalName: 'RelatedStrategyObjective',
         DisplayNameEn: 'Related Strategy Objective',
         DisplayName: 'الهدف المرتبط',
+        ToggleDisabledName: 'RelatedStrategyObjective',
         type: 'lookup',
         source: 'SOs',
         Dispfieldkey: 'Name',
@@ -122,6 +125,7 @@ var Information_Form = [
       {
         InternalName: 'Classification',
         DisplayNameEn: 'Classification',
+        ToggleDisabledName: 'Classification',
         DisplayName: 'تصنيف المؤشر',
         type: 'dropdownValues',
         options: {
@@ -147,6 +151,7 @@ var Information_Form = [
         InternalName: 'CategoryKPI',
         DisplayNameEn: 'Category',
         DisplayName: 'فئة المؤشر',
+        ToggleDisabledName: 'CategoryKPI',
         type: 'dropdownValues',
         options: {
           choices: [
@@ -168,6 +173,7 @@ var Information_Form = [
         InternalName: 'Description',
         DisplayNameEn: 'Description',
         DisplayName: 'وصف المؤشر',
+        ToggleDisabledName: 'Description',
         maxchar: '500',
         type: 'multiline',
         validation: 'required',
@@ -185,6 +191,7 @@ var Information_Form = [
         InternalName: 'Issues',
         DisplayNameEn: 'Issues',
         DisplayName: 'التحديات',
+        ToggleDisabledName: 'Issues',
         maxchar: '500',
         type: 'multiline',
       },
@@ -192,6 +199,7 @@ var Information_Form = [
         InternalName: 'Risks',
         DisplayNameEn: 'Risks',
         DisplayName: 'المخاطر',
+        ToggleDisabledName: 'Risks',
         maxchar: '500',
         type: 'multiline',
       },
@@ -199,6 +207,7 @@ var Information_Form = [
         InternalName: 'ExternalFactors',
         DisplayNameEn: 'External Factors',
         DisplayName: 'العوامل الخارجية',
+        ToggleDisabledName: 'ExternalFactors',
         maxchar: '500',
         type: 'multiline',
       },
@@ -206,6 +215,7 @@ var Information_Form = [
         InternalName: 'Assumptions',
         DisplayNameEn: 'Assumptions',
         DisplayName: 'الافتراضات',
+        ToggleDisabledName: 'Assumptions',
         maxchar: '500',
         type: 'multiline',
         security: {
@@ -353,6 +363,7 @@ var Information_Form = [
         InternalName: 'RelatedMainKpis',
         ToggleName: 'RelatedMainKpis',
         DisplayNameEn: 'Related Main Kpis',
+        ToggleDisabledName: 'RelatedMainKpis',
         DisplayName: 'المؤشر المرتبط',
         // type: 'lookup',
         type: 'lookupWithQuery',
@@ -673,6 +684,7 @@ var Information_Form = [
         DisplayName: 'مالك المؤشر',
         type: 'picker',
         validation: 'required',
+        ToggleDisabledName: 'Owner',
         security: {
           groups: [
             'LMS_P',
@@ -689,6 +701,7 @@ var Information_Form = [
         DisplayName: 'رائد الأداء',
         type: 'picker',
         validation: 'required',
+        ToggleDisabledName: 'PerformanceLeader',
         security: {
           groups: [
             'LMS_P',
@@ -705,6 +718,7 @@ var Information_Form = [
         DisplayName: 'رائد الأداء الثاني',
         type: 'picker',
         validation: 'required',
+        ToggleDisabledName: 'PerformanceLeader2',
         security: {
           groups: [
             'LMS_P',
@@ -720,6 +734,7 @@ var Information_Form = [
         DisplayNameEn: 'Calculation Type',
         DisplayName: 'نوع الحساب',
         type: 'dropdownValues',
+        ToggleDisabledName: 'CalculationType',
         options: {
           choices: [
             { display: 'leadingindicator', value: 'leadingindicator' },
@@ -736,28 +751,41 @@ var Information_Form = [
         // 	],
         // },
       },
+
+      // {
+      //   InternalName: 'RecurrenceChanged',
+      //   DisplayNameEn: 'Recurrence Changed',
+      //   DisplayName: 'تغيير دورية القياس',
+      //   type: 'yesnoradio',
+      //   validation: 'required',
+      //   options: {
+      //     choices: [
+      //       { display: 'yes', value: 'yes' },
+      //       { display: 'no', value: 'no' },
+      //     ],
+      //   },
+      // },
+
       {
         InternalName: 'RecurrenceChanged',
         DisplayNameEn: 'Recurrence Changed',
         DisplayName: 'تغيير دورية القياس',
-        type: 'yesnoradio',
-        validation: 'required',
+        type: 'dropdownValues',
+        ToggleDisabledName: 'RecurrenceChanged',
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
             { display: 'no', value: 'no' },
           ],
         },
-        // security: {
-        // 	groups: [
-        // 		"LMS_P",
-        // 		"SPM Admin",
-        // 		"SPM Team",
-        // 		"VRO_P",
-        // 		"System Admin Group"
-        // 	],
-        // },
+        toggleDisabledValues: [
+          { value: 'yes', fields: ['Name', 'KPIType', 'RelatedStrategyObjective', 'kpivision', 'CategoryKPI', 'Description', 'Issues', 'Risks', 'ExternalFactors', 'Assumptions', 'RelatedMainKpis', 'Owner', 'CalculationType', 'PerformanceLeader', 'PerformanceLeader2', 'Sector', 'SubSector', 'DataSource', 'DataSourceResponsible', 'Email', 'Polarity', 'ResultType', 'Cumulative', 'Weight', 'Baseline', 'MesurePeriod', 'MesurePeriod', 'Classification', 'Year', 'Months', 'A', 'B', 'CC', 'D', 'E', 'F', 'G','getfile'] }, //we can put more than 1  field
+          { value: 'no', fields: [] },
+        ],
       },
+
+
+
       // {
       //   InternalName: 'Sector',
       //   DisplayName: 'القطاع المرتبط',
@@ -804,6 +832,7 @@ var Information_Form = [
         DisplayNameEn: 'Sector',
         type: 'lookup',
         validation: 'required',
+        ToggleDisabledName: 'Sector',
         //from other list:
         source: 'Internal Entities',
         isSector: 'True',
@@ -818,6 +847,7 @@ var Information_Form = [
         DisplayNameEn: 'DeputyShip',
         type: 'lookup',
         validation: 'required',
+        ToggleDisabledName: 'SubSector',
         //from other list:
         source: 'Internal Entities',
         isSector: 'True',
@@ -838,6 +868,7 @@ var Information_Form = [
         InternalName: 'DataSource',
         DisplayNameEn: 'Data Source',
         DisplayName: 'مصدر البيانات',
+        ToggleDisabledName: 'DataSource',
         type: 'string',
         maxchar: '500',
         security: {
@@ -854,6 +885,7 @@ var Information_Form = [
         InternalName: 'DataSourceResponsible',
         DisplayNameEn: 'Data Source Responsible',
         DisplayName: 'مسؤول مصدر البيانات',
+        ToggleDisabledName: 'DataSourceResponsible',
         type: 'string',
         maxchar: '500',
         security: {
@@ -869,6 +901,7 @@ var Information_Form = [
       {
         InternalName: 'Email',
         DisplayNameEn: 'Email',
+        ToggleDisabledName: 'Email',
         DisplayName: 'البريد الالكتروني لمسؤول مصدر البيانات',
         type: 'email', //in view should be string
         //   "maxchar": "500",
@@ -895,6 +928,7 @@ var Information_Form = [
         DisplayNameEn: 'Polarity',
         DisplayName: 'قطبية المؤشر',
         type: 'dropdown',
+        ToggleDisabledName: 'Polarity',
         validation: 'required',
         options: {
           choices: ['+', '-'],
@@ -946,6 +980,7 @@ var Information_Form = [
         DisplayNameEn: 'Result Type',
         DisplayName: 'وحدة القياس',
         type: 'dropdownValues',
+        ToggleDisabledName: 'ResultType',
         options: {
           choices: [
             { display: 'numeric', value: 'numeric' },
@@ -980,6 +1015,7 @@ var Information_Form = [
         DisplayNameEn: 'Cumulative',
         DisplayName: 'تراكمية المؤشر',
         type: 'yesnoradio',
+        ToggleDisabledName: 'Cumulative',
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
@@ -1001,6 +1037,7 @@ var Information_Form = [
         InternalName: 'Weight',
         DisplayNameEn: 'Weight',
         DisplayName: 'وزن المؤشر',
+        ToggleDisabledName: 'Weight',
         // type: 'floatpercentage',
         type: 'float',
         security: {
@@ -1019,6 +1056,7 @@ var Information_Form = [
         DisplayName: 'خط الأساس',
         // type: 'number',
         type: 'float',
+        ToggleDisabledName: 'Baseline',
         security: {
           groups: [
             'LMS_P',
@@ -1033,6 +1071,7 @@ var Information_Form = [
         InternalName: 'MesurePeriod',
         DisplayName: 'فترة قياس خط الأساس',
         DisplayNameEn: 'Mesure Period',
+        ToggleDisabledName: 'MesurePeriod',
         min: 'FromDate',
         type: 'datetime',
         security: {
@@ -1099,79 +1138,80 @@ var Information_Form = [
         },
         //editableBy: "PerformanceLeader",
       },
-    //   {
-    //     InternalName: 'Quarter',
-    //     DisplayNameEn: 'Quarter',
-    //     DisplayName: 'الربع',
-    //     ToggleName: 'Quarter',
-    //     type: 'dropdownValues',
-    //     options: {
-    //       choices: [
-    //         { display: 'quarter1', value: 'ActualQ1' },
-    //         { display: 'quarter2', value: 'ActualQ2' },
-    //         { display: 'quarter3', value: 'ActualQ3' },
-    //         { display: 'quarter4', value: 'ActualQ4' },
-    //       ],
-    //       display: 'none',
-    //     },
-    //     security: {
-    //       groups: [
-    //         'LMS_P',
-    //         'VRO_P',
-    //         'Performance Leaders',
-    //         'System Admin Group',
-    //       ],
-    //     },
-    //   },
-    //   {
-    //     InternalName: 'Midterms',
-    //     DisplayNameEn: 'Midterms',
-    //     DisplayName: 'النصف السنوي',
-    //     ToggleName: 'Midterms',
-    //     type: 'dropdownValues',
-    //     options: {
-    //       choices: [
-    //         { display: 'midterm1', value: 'ActualMid1' },
-    //         { display: 'midterm2', value: 'ActualMid2' },
-    //       ],
-    //       display: 'none',
-    //     },
-    //     security: {
-    //       groups: [
-    //         'LMS_P',
-    //         'VRO_P',
-    //         'Performance Leaders',
-    //         'System Admin Group',
-    //       ],
-    //     },
-    //   },
-    //   {
-    //     InternalName: 'Years',
-    //     DisplayNameEn: 'Years',
-    //     DisplayName: 'السنوي',
-    //     ToggleName: 'Years',
-    //     type: 'dropdownValues',
-    //     options: {
-    //       choices: [
-    //         { display: 'yearly', value: 'ActualY' },
-    //         // { display: "midterm2", value: "ActualMid2" },
-    //       ],
-    //       display: 'none',
-    //     },
-    //     security: {
-    //       groups: [
-    //         'LMS_P',
-    //         'VRO_P',
-    //         'Performance Leaders',
-    //         'System Admin Group',
-    //       ],
-    //     },
-    //   },
+      //   {
+      //     InternalName: 'Quarter',
+      //     DisplayNameEn: 'Quarter',
+      //     DisplayName: 'الربع',
+      //     ToggleName: 'Quarter',
+      //     type: 'dropdownValues',
+      //     options: {
+      //       choices: [
+      //         { display: 'quarter1', value: 'ActualQ1' },
+      //         { display: 'quarter2', value: 'ActualQ2' },
+      //         { display: 'quarter3', value: 'ActualQ3' },
+      //         { display: 'quarter4', value: 'ActualQ4' },
+      //       ],
+      //       display: 'none',
+      //     },
+      //     security: {
+      //       groups: [
+      //         'LMS_P',
+      //         'VRO_P',
+      //         'Performance Leaders',
+      //         'System Admin Group',
+      //       ],
+      //     },
+      //   },
+      //   {
+      //     InternalName: 'Midterms',
+      //     DisplayNameEn: 'Midterms',
+      //     DisplayName: 'النصف السنوي',
+      //     ToggleName: 'Midterms',
+      //     type: 'dropdownValues',
+      //     options: {
+      //       choices: [
+      //         { display: 'midterm1', value: 'ActualMid1' },
+      //         { display: 'midterm2', value: 'ActualMid2' },
+      //       ],
+      //       display: 'none',
+      //     },
+      //     security: {
+      //       groups: [
+      //         'LMS_P',
+      //         'VRO_P',
+      //         'Performance Leaders',
+      //         'System Admin Group',
+      //       ],
+      //     },
+      //   },
+      //   {
+      //     InternalName: 'Years',
+      //     DisplayNameEn: 'Years',
+      //     DisplayName: 'السنوي',
+      //     ToggleName: 'Years',
+      //     type: 'dropdownValues',
+      //     options: {
+      //       choices: [
+      //         { display: 'yearly', value: 'ActualY' },
+      //         // { display: "midterm2", value: "ActualMid2" },
+      //       ],
+      //       display: 'none',
+      //     },
+      //     security: {
+      //       groups: [
+      //         'LMS_P',
+      //         'VRO_P',
+      //         'Performance Leaders',
+      //         'System Admin Group',
+      //       ],
+      //     },
+      //   },
       {
         InternalName: 'Year',
         DisplayNameEn: 'Year',
         DisplayName: 'السنة',
         type: 'dropdown',
+        ToggleDisabledName: 'Year',
         //   "state": "disabled",
         //   dynamic: "Initiative",
         options: {
@@ -1204,6 +1244,7 @@ var Information_Form = [
         DisplayNameEn: 'Month',
         DisplayName: 'الشهر',
         ToggleName: 'Months',
+        ToggleDisabledName: 'Months',
         type: 'dropdownValues',
         options: {
           choices: [
@@ -1274,6 +1315,7 @@ var Information_Form = [
         DisplayName: 'المكون الأول (A)',
         DisplayNameEn: 'A',
         type: 'float',
+        ToggleDisabledName: 'A',
         // type: 'number',
         //editableBy: "PerformanceLeader",
         security: {
@@ -1289,7 +1331,7 @@ var Information_Form = [
         InternalName: 'B',
         DisplayName: 'المكون الثاني (B)',
         DisplayNameEn: 'B',
-        // type: 'number',
+        ToggleDisabledName: 'B',
         type: 'float',
         //editableBy: "PerformanceLeader",
         security: {
@@ -1305,6 +1347,7 @@ var Information_Form = [
         InternalName: 'CC',
         DisplayName: 'المكون الثالث (C)',
         DisplayNameEn: 'C',
+        ToggleDisabledName: 'CC',
         // type: 'number',
         type: 'float',
         //editableBy: "PerformanceLeader",
@@ -1321,6 +1364,7 @@ var Information_Form = [
         InternalName: 'D',
         DisplayName: 'المكون الرابع (D)',
         DisplayNameEn: 'D',
+        ToggleDisabledName: 'D',
         // type: 'number',
         type: 'float',
         //editableBy: "PerformanceLeader",
@@ -1337,6 +1381,7 @@ var Information_Form = [
         InternalName: 'E',
         DisplayName: 'المكون الخامس (E)',
         DisplayNameEn: 'E',
+        ToggleDisabledName: 'E',
         // type: 'number',
         type: 'float',
         //editableBy: "PerformanceLeader",
@@ -1353,6 +1398,7 @@ var Information_Form = [
         InternalName: 'F',
         DisplayName: 'المكون السادس (F)',
         DisplayNameEn: 'F',
+        ToggleDisabledName: 'F',
         // type: 'number',
         type: 'float',
         //editableBy: "PerformanceLeader",
@@ -1369,6 +1415,7 @@ var Information_Form = [
         InternalName: 'G',
         DisplayName: 'المكون السابع (G)',
         DisplayNameEn: 'G',
+        ToggleDisabledName: 'G',
         // type: 'number',
         type: 'float',
         //editableBy: "PerformanceLeader",
@@ -1381,38 +1428,38 @@ var Information_Form = [
           ],
         },
       },
-    //   {
-    //     InternalName: 'Equation',
-    //     DisplayNameEn: 'Actual value',
-    //     DisplayName: 'القيمة الفعلية',
-    //     // type: 'number',
-    //     type: 'float',
-    //     state: 'disabled',
-    //     //editableBy: "PerformanceLeader",
-    //     security: {
-    //       groups: [
-    //         'LMS_P',
-    //         'VRO_P',
-    //         'Performance Leaders',
-    //         'System Admin Group',
-    //       ],
-    //     },
-    //   },
-    //   {
-    //     InternalName: 'PerformanceAnalysis',
-    //     DisplayNameEn: 'Performance Analysis',
-    //     DisplayName: 'تحليل الأداء',
-    //     maxchar: '500',
-    //     type: 'multiline',
-    //     security: {
-    //       groups: [
-    //         'LMS_P',
-    //         'VRO_P',
-    //         'Performance Leaders',
-    //         'System Admin Group',
-    //       ],
-    //     },
-    //   },
+      //   {
+      //     InternalName: 'Equation',
+      //     DisplayNameEn: 'Actual value',
+      //     DisplayName: 'القيمة الفعلية',
+      //     // type: 'number',
+      //     type: 'float',
+      //     state: 'disabled',
+      //     //editableBy: "PerformanceLeader",
+      //     security: {
+      //       groups: [
+      //         'LMS_P',
+      //         'VRO_P',
+      //         'Performance Leaders',
+      //         'System Admin Group',
+      //       ],
+      //     },
+      //   },
+      //   {
+      //     InternalName: 'PerformanceAnalysis',
+      //     DisplayNameEn: 'Performance Analysis',
+      //     DisplayName: 'تحليل الأداء',
+      //     maxchar: '500',
+      //     type: 'multiline',
+      //     security: {
+      //       groups: [
+      //         'LMS_P',
+      //         'VRO_P',
+      //         'Performance Leaders',
+      //         'System Admin Group',
+      //       ],
+      //     },
+      //   },
     ],
   },
   {
@@ -1424,8 +1471,9 @@ var Information_Form = [
       {
         InternalName: 'getfile',
         DisplayName: 'المرفقات',
-         DisplayNameEn: 'Attachments',
+        DisplayNameEn: 'Attachments',
         type: 'file',
+        ToggleDisabledName: 'getfile',
         security: {
           groups: [
             'LMS_P',
