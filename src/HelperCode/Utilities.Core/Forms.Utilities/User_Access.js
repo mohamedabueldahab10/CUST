@@ -59,6 +59,7 @@ var UserRole,
   isStrategySpecialist = false,
   isPerformanceLeader = false,
   isStartegicPartnershipsTeam = false,
+  isPartnershipRepresentative = false,
   isKPIOWNER = false,
   isBITeam = false,
   pickerValidationDone = false, // to check picker user groups on form submit
@@ -2164,6 +2165,52 @@ window.userCalls = {
           "strategicpartnershipsmom",
           "strategicpartnershipsachievements",
         ];
+        break;
+
+      case "PartnershipRepresentative":
+        if (USERisHome)
+          window.location =
+            _spPageContextInfo.webAbsoluteUrl +
+            "/sitepages/Listing.aspx?ListKey=strategicpartnerships";
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+
+        isPartnershipRepresentative = true
+
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ar_UserRole = "ممثل الشراكة الاستراتيجية";
+        en_UserRole = "Partnership Representative";
+
+        //CRUD
+        Create_Access = [
+          "strategicpartnerships",
+          "StrategicPartnershipHome.aspx",
+          "strategicpartnershipsdeliverables",
+          "strategicpartnershipsmilestones",
+          "strategicpartnershipsissues",
+          "strategicpartnershipsrisks",
+          "strategicpartnershipslessonslearned",
+          "strategicpartnershipsmom",
+        ];
+        Read_Access = [
+          "strategicpartnerships",
+          "StrategicPartnershipHome.aspx",
+          "strategicpartnershipsdeliverables",
+          "strategicpartnershipsmilestones",
+          "strategicpartnershipsissues",
+          "strategicpartnershipsrisks",
+          "strategicpartnershipsimpactmeasurement",
+          "strategicpartnershipslessonslearned",
+          "strategicpartnershipsmom",
+          "documents",
+          "strategicpartnershipsachievements",
+          "tasks"
+        ];
+        Edit_Access = [];
+        Delete_Access = []
+
         break;
 
       default:
@@ -4294,6 +4341,43 @@ window.userCalls = {
       {
         Role: "StartegicPartnershipsTeam",
         groupsName: ["Startegic Partnerships Team"],
+      },
+      {
+        Role: "PartnershipRepresentative",
+        groupsName: ["Partnership Representative"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "Internal Entities",
+              accessConditions: [
+                {
+                  field: "PartnershipRepresentative",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+                {
+                  field: "EntityType",
+                  type: "Choice",
+                  values: ["Department"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "Strategic Partnerships",
+                parentRelationField: "Title",
+                RelationField: "SubSector",
+                RelationFieldType: "Choice",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            }
+          ]
+        }
       },
       {
         Role: "Other",
