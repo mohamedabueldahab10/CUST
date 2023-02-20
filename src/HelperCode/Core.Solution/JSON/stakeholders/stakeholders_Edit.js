@@ -26,7 +26,7 @@ var Information_Form = [
         type: 'picker', //user
         validation: 'required',
         ToggleName: 'Username',
-        display: 'none'
+        // display: 'none'
       },
 
       {
