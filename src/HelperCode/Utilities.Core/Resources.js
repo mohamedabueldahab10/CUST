@@ -1792,7 +1792,7 @@
     deliverablemilestoneschedual: "Deliverables - Milestones",
     recurrencerepeat:"You can't edit because the Recurrence Changed",
     recurrencechanged:"Recurrence Changed",
-    phonenumberpattern:"should enter KSA number a KSA doesn't containing spaces or specifics characters"
+    phonenumberpattern:"should enter a KSA number doesn't containing spaces or specifics characters"
   },
 };
 
