@@ -60,6 +60,8 @@ var UserRole,
   isPerformanceLeader = false,
   isStartegicPartnershipsTeam = false,
   isPartnershipRepresentative = false,
+  isRelationshipManager = false,
+  isStartegicAchievementTeam = false,
   isKPIOWNER = false,
   isBITeam = false,
   pickerValidationDone = false, // to check picker user groups on form submit
@@ -2212,7 +2214,74 @@ window.userCalls = {
         ];
         Edit_Access = [];
         Delete_Access = []
+        break;
 
+      case "RelationshipManager":
+        if (USERisHome)
+          window.location =
+            _spPageContextInfo.webAbsoluteUrl +
+            "/sitepages/Listing.aspx?ListKey=strategicpartnerships";
+
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+
+        isRelationshipManager = true
+
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+
+        ar_UserRole = "مدير علاقات الشراكة الاستراتيجية";
+        en_UserRole = "Relationship Manager";
+
+        Create_Access = []
+        Read_Access = [
+          "strategicpartnerships",
+          "StrategicPartnershipHome.aspx",
+          "strategicpartnershipsdeliverables",
+          "strategicpartnershipsmilestones",
+          "strategicpartnershipsissues",
+          "strategicpartnershipsrisks",
+          "strategicpartnershipsimpactmeasurement",
+          "strategicpartnershipslessonslearned",
+          "strategicpartnershipsmom",
+          "documents",
+          "strategicpartnershipsachievements",
+          "tasks"
+        ];
+        Edit_Access = [];
+        Delete_Access = [];
+
+        break;
+
+      case "StartegicAchievementTeam":
+        if (USERisHome)
+          window.location =
+            _spPageContextInfo.webAbsoluteUrl +
+            "/sitepages/Listing.aspx?ListKey=strategicpartnerships";
+
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+
+        isStartegicAchievementTeam = true
+
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+
+        ar_UserRole = "فريق المنجزات الاستراتيجية";
+        en_UserRole = "Startegic Achievement Team";
+
+        Create_Access = []
+        Read_Access = [
+          "strategicpartnerships",
+          "StrategicPartnershipHome.aspx",
+          "documents",
+          "strategicpartnershipsachievements",
+          "tasks"
+        ];
+        Edit_Access = [];
+        Delete_Access = [];
         break;
 
       default:
@@ -4380,6 +4449,38 @@ window.userCalls = {
             }
           ]
         }
+      },
+      {
+        Role: "RelationshipManager",
+        groupsName: ["Relationship Manager"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "Strategic Partnerships",
+              accessConditions: [
+                {
+                  field: "PartnershipManager",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+          ]
+        }
+      },
+      {
+        Role: "StartegicAchievementTeam",
+        groupsName: ["Startegic Achievement Team"],
       },
       {
         Role: "Other",
