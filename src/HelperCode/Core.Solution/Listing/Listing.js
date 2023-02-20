@@ -1372,6 +1372,8 @@ window.ListingData = {
     //for tasks functions
     handleids: function (pcode, icode, taskid, tasktype, stageid, ritemid, sourceitemid, wfname, puid, rurl) //rurl,
     {
+      console.log(taskid,"taskid")
+      debugger
       if (wfname == 'Project') {
         curstage_org = User_Stages_Data_Request.g.StagesArray.filter(function (obj) {
           return obj.stage == stageid;
