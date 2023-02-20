@@ -16,7 +16,8 @@ var Information_Form = [
             { display: 'stackholderexternal', value: 'stackholderexternal' },
           ],
         },
-        "toggleValues": [{ value: 'Username', fields: ['stackholderinternal'] }],
+        "toggleValues": [{ value: 'stackholderinternal', fields: ['Username'] }],
+        validation: 'required',
       },
       {
         InternalName: 'Username',
