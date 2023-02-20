@@ -887,7 +887,7 @@
     deliverablemilestoneschedual: "المخرجات - المعالم",
     recurrencerepeat :"لا يمكن التعديل لانه تم تغيير دورية القياس",
     recurrencechanged:"تم تغيير دورية القياس",
-    phonenumberpattern:"يجب ادخال رقم سعودي"
+    phonenumberpattern:"يحب إدخال رقم هاتف سعودي لا يحتوي على مسافات أو رموز خاصة"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1792,7 +1792,7 @@
     deliverablemilestoneschedual: "Deliverables - Milestones",
     recurrencerepeat:"You can't edit because the Recurrence Changed",
     recurrencechanged:"Recurrence Changed",
-    phonenumberpattern:"should enter KSA number"
+    phonenumberpattern:"should enter a KSA number doesn't containing spaces or specifics characters"
   },
 };
 
