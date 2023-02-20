@@ -6439,3 +6439,9 @@ a.a-important-link:hover>* {
     color: red;
     font-size: 10px;
 }
+
+span.errMsgField.Resources {
+    font-size: 12px;
+    color: #f00;
+    display: none;
+}

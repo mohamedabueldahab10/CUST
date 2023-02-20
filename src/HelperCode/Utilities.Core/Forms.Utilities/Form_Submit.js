@@ -211,6 +211,17 @@ window.New_Data_Submit = {
       membersGroupCheckArray.length > 0 ? userCalls.isMember(membersGroupCheckArray[0].groupName, membersGroupCheckArray[0].userLoginName, membersGroupCheckArray[0].fieldID) : '';
     }
 
+    
+    // to show the err msg in fields
+    if ($(".was-validated .CFIELD:not(.even-required) .form-control").length > 0) {
+
+      $(".was-validated .form-control:invalid").each(function () {
+        $(this).siblings('.errMsgField').show();
+      })
+    }
+    changeResources();
+
+
     if (
       $(".was-validated .form-control:invalid").length == 0 &&
       pickervalid &&
@@ -918,6 +929,8 @@ window.Edit_Data_Submit = {
         pickervalid = false;
         $(this).addClass("picker-error");
         $(this).removeClass("picker-valid");
+        $(this).siblings('.errMsgField').show();
+
         // return false;
       } else {
         $(this).removeClass("picker-error");
@@ -961,6 +974,17 @@ window.Edit_Data_Submit = {
       }
     })
     //
+
+    // to show the err msg in fields
+    if ($(".was-validated .CFIELD:not(.even-required) .form-control:invalid").length > 0) {
+
+      $(".was-validated .CFIELD:not(.even-required) .form-control:invalid").each(function () {
+        $(this).siblings('.errMsgField').show();
+      })
+    }
+
+    changeResources();
+
 
     if (listkey == "risks") {
       if ($("#MoveItToIssueList").is(":checked") == true) {
