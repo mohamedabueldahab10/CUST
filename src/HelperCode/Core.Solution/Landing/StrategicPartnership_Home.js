@@ -10,7 +10,10 @@ var strategicName = "",
   strategicDeliverablesArr = [],
   strategicMilestonesArr = [],
   lstMonthCLicked = "",
-  milestonelstMonthClicked = "";
+  milestonelstMonthClicked = "",
+  listStrategicPartnershipProgress = "",
+  actualDeliverable = 0,
+  plannedDeliverable = 0;
 
 
 
@@ -91,7 +94,9 @@ var StrategicPS_Home_Info_Request = {
       strategicPartnershipDuration = oListItem.get_item("Duration") || No_Data;
       strategicPartnershipStatus = oListItem.get_item("Status") || 'nodata';
       strategicRelatedInitiative = oListItem.get_item("RelatedInitiative") || No_Data;
-
+      listStrategicPartnershipProgress = oListItem.get_item("ProgressStatus") || No_Data;
+      actualDeliverable = oListItem.get_item("Actual") || 0;
+      plannedDeliverable = oListItem.get_item("Planned") || 0;
 
       if (strategicSubSector && strategicSubSector != No_Data) {
         Get_PartnerShip_Representative.init();
@@ -223,23 +228,23 @@ var StrategicPS_Home_Info_Request = {
         '<div class="d-inline-flex flex-column mx-2">' +
         '<span class="des-13"><span data-trans-pattr76 class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
         '<h4 class="black initiativeProjHomeInfoValueStyle">' +
-        " ProjectActualImplementationDeliverable.toFixed(2)" +
+        actualDeliverable.toFixed(2) +
         "%</h4>" + //
         "</div>" +
         '<div class="d-inline-flex flex-column mx-2">' +
         '<span class="des-13"><span data-trans-pattr62 class="Resources complition-val initiativeProjHomeInfoTitleStyle"></span></span>' +
         '<h4 class="black initiativeProjHomeInfoValueStyle">' +
-        " projectPlannedImplementationDeliverable.toFixed(2)" +
+        plannedDeliverable.toFixed(2) +
         "%</h4>" +
         "</div>" +
         '<div class="d-inline-flex flex-column mx-2 ' +
-        " projectProgressStatusDeliverable" +
+        listStrategicPartnershipProgress +
         ' ">' +
         '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val initiativeProjHomeInfoTitleStyle"></span></span>' +
         "<h4 data-trans-" +
-        " projectProgressStatusDeliverable" +
+        listStrategicPartnershipProgress +
         ' class="black Resources myCompletionStatusDelivrables statuscolor' +
-        " projectProgressStatusDeliverable" +
+        listStrategicPartnershipProgress +
         '"></h4>' + //
         "</div>" +
         "</div>"
@@ -848,6 +853,20 @@ var Partnership_Deliverables_Info_Request = {
     });
     //
 
+    $('button.updateprogress').on('click', function () {
+      //   ProgressStatus_Data_Submit.init();
+      if (!isWF) {
+        Update_StrategicPartnershipStatus_Service.init();
+      }
+    })
+
+    $("button.updateprogress").prop("disabled", false);
+
+
+    if (!isWF) {
+      Update_StrategicPartnershipStatus_Service.init();// update the initiative status when open the page auto
+    }
+
     changeResources();
 
   },
@@ -1213,4 +1232,97 @@ var Partnership_Milestones_Info_Request = {
     }
 
   },
+}
+
+
+var Update_StrategicPartnershipStatus_Service = {
+  init: function () {
+
+    $.ajax({
+      type: 'GET',
+      url: `https://hrsd-api.netways1.com/api/job/updatestrategicpartnershipstatusbydeliverables/${StrategicPS_Home_Info_Request.g.STCODE}`,
+      success: function (data) {
+        Get_StrategicPartnershipStatus_Info.init()
+      },
+      error: function (data) {
+        console.log("call failed in update strategic partnership service", data);
+      },
+    });
+  }
+}
+
+var Get_StrategicPartnershipStatus_Info = {
+  init: function () {
+    debugger
+    $("button.updateprogress").removeClass("loader-action-success");
+    $("button.updateprogress").removeClass("loader-action-error");
+    $("button.updateprogress").addClass("loader-action");
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle('Strategic Partnerships');
+    var camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(
+      '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' + StrategicPS_Home_Info_Request.g.STCODE + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query><RowLimit>1</RowLimit></View>'
+    );
+    Get_StrategicPartnershipStatus_Info.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(Get_StrategicPartnershipStatus_Info.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Get_StrategicPartnershipStatus_Info.onSuccess),
+      Function.createDelegate(this, Get_StrategicPartnershipStatus_Info.onError)
+    );
+  },
+  onSuccess: function (sender, args) {
+    var collListItem = Get_StrategicPartnershipStatus_Info.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    var itemID, StrategicPartnershipProgressStatus = "", StrategicPartnershipActualDeliverable = "", StrategicPartnershipPlannedDeliverable = "";
+
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      itemID = oListItem.get_id();
+      StrategicPartnershipProgressStatus = oListItem.get_item("ProgressStatus") || No_Data;
+      StrategicPartnershipActualDeliverable = oListItem.get_item("Actual") || 0;
+      StrategicPartnershipPlannedDeliverable = oListItem.get_item("Planned") || 0;
+
+    }
+
+
+    StrategicPartnershipActualDeliverable = Number(StrategicPartnershipActualDeliverable);
+    StrategicPartnershipActualDeliverable = StrategicPartnershipActualDeliverable.toFixed(2);
+
+    StrategicPartnershipPlannedDeliverable = Number(StrategicPartnershipPlannedDeliverable);
+    StrategicPartnershipPlannedDeliverable = StrategicPartnershipPlannedDeliverable.toFixed(2);
+
+
+    $(".project-details-ctx .card.h-100 > .fourth-row > div:nth-child(1) > h4.black").text(StrategicPartnershipActualDeliverable + "%");
+    $(".project-details-ctx .card.h-100 > .fourth-row > div:nth-child(2) > h4.black").text(StrategicPartnershipPlannedDeliverable + "%");
+
+    $(".myCompletionStatusDelivrables").removeAttr(
+      "data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4 data-trans-stat5 data-trans-stat6 data-trans-stat7"
+    );
+
+    $(".myCompletionStatusDelivrables").removeClass("statuscolor" + listStrategicPartnershipProgress);
+    $(".handlecircle").removeClass("circlecolor" + listStrategicPartnershipProgress);
+
+
+    $(".myCompletionStatusDelivrables").attr("data-trans-" + StrategicPartnershipProgressStatus, "");
+    $(".black.myCompletionStatusDelivrables").text(StrategicPartnershipProgressStatus);
+
+    $(".myCompletionStatusDelivrables").addClass("statuscolor" + StrategicPartnershipProgressStatus);
+    $(".handlecircle").addClass("circlecolor" + StrategicPartnershipProgressStatus);
+
+
+    $("button.updateprogress").removeClass("loader-action");
+    $("button.updateprogress").addClass("loader-action-success");
+
+    changeResources();
+  },
+  onError: function (sender, args) {
+    $("button.updateprogress").removeClass("loader-action");
+    $("button.updateprogress").addClass("loader-action-error");
+
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  // Global variables
+  g: {},
 }
