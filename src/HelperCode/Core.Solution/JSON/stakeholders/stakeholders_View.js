@@ -23,7 +23,7 @@ var Information_Form = [
           ],
         },
 
-        "toggleValues": [{ value: 'Username', fields: ['stackholderinternal'] }],
+        "toggleValues": [{ value: 'stackholderinternal', fields: ['Username'] }],
       },
       {
         InternalName: 'Username',
@@ -31,7 +31,7 @@ var Information_Form = [
         DisplayName: 'اسم المستخدم',
         type: 'picker', //user
         ToggleName: 'Username',
-        display: 'none'
+        // display: 'none'
       },
       {
         InternalName: 'Name',
@@ -55,8 +55,8 @@ var Information_Form = [
         InternalName: 'PhoneNumber',
         DisplayName: 'رقم الهاتف',
         DisplayNameEn: 'Phone Number',
-        // type: 'floatwithoutformatting',
-        type:'floatwithoutformatting',
+        type: 'floatwithoutformatting',
+        // type:'phonenumber',
       },
       {
         InternalName: 'Role',
@@ -137,20 +137,20 @@ var Information_Form = [
       },
     ],
   },
-  {
-    label: 'وثائق داعمة',
-    labelEn: 'Supporting Documents',
-    description: 'التفاصيل',
-    descriptionEn: 'Details',
-    subFields: [
-      {
-        InternalName: 'getfile',
-        DisplayName: 'مرفقات',
-        DisplayNameEn: 'Attachments',
-        type: 'file',
-        withAddBtn: 'true',
-        // validation: 'required',
-      },
-    ],
-  },
+  // {
+  //   label: 'وثائق داعمة',
+  //   labelEn: 'Supporting Documents',
+  //   description: 'التفاصيل',
+  //   descriptionEn: 'Details',
+  //   subFields: [
+  //     {
+  //       InternalName: 'getfile',
+  //       DisplayName: 'مرفقات',
+  //       DisplayNameEn: 'Attachments',
+  //       type: 'file',
+  //       withAddBtn: 'true',
+  //       // validation: 'required',
+  //     },
+  //   ],
+  // },
 ]

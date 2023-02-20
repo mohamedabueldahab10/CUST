@@ -16,16 +16,17 @@ var Information_Form = [
             { display: 'stackholderexternal', value: 'stackholderexternal' },
           ],
         },
-        "toggleValues": [{ value: 'Username', fields: ['stackholderinternal'] }],
+        "toggleValues": [{ value: 'stackholderinternal', fields: ['Username'] }],
+        validation: 'required',
       },
       {
         InternalName: 'Username',
         DisplayNameEn: 'Username',
         DisplayName: 'اسم المستخدم',
         type: 'picker', //user
-        // validation: 'required',
+        validation: 'required',
         ToggleName: 'Username',
-        display: 'none'
+        // display: 'none'
       },
       {
         InternalName: 'Name',
@@ -52,8 +53,8 @@ var Information_Form = [
         InternalName: 'PhoneNumber',
         DisplayName: 'رقم الهاتف',
         DisplayNameEn: 'Phone Number',
-        // type: 'floatwithoutformatting',
-        type:'floatwithoutformatting',
+        type: 'floatwithoutformatting',
+        // type:'phonenumber',
         validation: 'required',
       },
       {
