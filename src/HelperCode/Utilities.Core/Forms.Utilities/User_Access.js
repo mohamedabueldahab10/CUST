@@ -2230,7 +2230,7 @@ window.userCalls = {
           "communicationplans",
           "contracts",
           "changerequest"
-        ] 
+        ]
 
         Delete_Access = [
           "benefitmatrix",
@@ -2508,13 +2508,7 @@ window.userCalls = {
         ];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
-        // Read_Access = [
-        //   "goalstrategy",
-        //   "spillars",
-        //   "MainIndicators.aspx",
-        //   "sos",
-        //   //  "portfolio"
-        // ];
+
         Edit_Access = [
           "goalstrategy",
           "spillars",
@@ -2859,6 +2853,30 @@ window.userCalls = {
 
         break;
 
+      case "PortfolioManager":
+
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+
+        isPortfolioManager = true;
+
+        ChartHide = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+
+
+        ar_UserRole = "مدير المحفظة";
+        en_UserRole = "Portfolio Manager";
+
+        Create_Access = [];
+
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
+
+        Edit_Access = []
+
+        Delete_Access = []
+        break;
+
       default:
         ChartHide =
           ".ctx-block.row.mx-n2 > div:nth-child(4),.ctx-block.row.mx-n2 > div:nth-child(5),.ctx-block.row.mx-n2 > div:nth-child(6),.ctx-block.row.mx-n2 > div:nth-child(7)";
@@ -3000,8 +3018,7 @@ window.userCalls = {
     // 	isGeneralManager
     // ) {
     if (
-      !isSectionHead &&
-      !isPortfolioManager
+      !isSectionHead
       //!isSectorHead &&
       // !isSPMO &&
       // !isDU &&
@@ -3022,8 +3039,7 @@ window.userCalls = {
         isTarget
         // || isMainIndicator
       ) &&
-      (isSectionHead ||
-        isPortfolioManager
+      (isSectionHead
         //isSectorHead ||
         // isSPMO ||
         // isSubSectorHead ||
@@ -6069,6 +6085,99 @@ window.userCalls = {
         }
       },
       {
+        Role: "PortfolioManager",
+        groupsName: ["System Portfolio Manager"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "Portfolio",
+              accessConditions: [
+                {
+                  field: "Manager",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "Projects",
+                parentRelationField: "Title",
+                RelationField: "Portfolio",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "Initiatives",
+                  parentRelationField: "RelatedInitiative",
+                  RelationField: "Title",
+                  RelationFieldType: "Text",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Portfolio",
+              accessConditions: [
+                {
+                  field: "Manager",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "RelatedPortfolio",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "GoalStrategy",
+                  parentRelationField: "RelatedStrategy",
+                  RelationField: "Title",
+                  RelationFieldType: "Text",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Portfolio",
+              accessConditions: [
+                {
+                  field: "Manager",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "RelatedPortfolio",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "MainKPI",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedStrategyObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "KPIResults",
+                    parentRelationField: "Title",
+                    RelationField: "KPI",
+                    RelationFieldType: "Text",
+                  }
+                }
+              },
+            },
+          ],
+        },
+      },
+      {
         Role: "Other",
         groupsName: [
           "Legal User",
@@ -6357,8 +6466,8 @@ var Access_Project_Info_Request = {
 
         if (Access_Project_Info_Request.g.User_Projects.length == 0) {
           if (
-            isSectionHead ||
-            isPortfolioManager
+            isSectionHead
+
             //isSectorHead ||
             // isSPMO ||
             // isSubSectorHead ||
@@ -6637,8 +6746,8 @@ var Access_Project_Info_Request = {
     var camlQuery = new SP.CamlQuery();
 
     if (
-      isSectionHead ||
-      isPortfolioManager
+      isSectionHead
+
       //isSectorHead ||
       // isSPMO ||
       //isGeneralManager
