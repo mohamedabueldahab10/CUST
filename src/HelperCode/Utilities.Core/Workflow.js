@@ -122,9 +122,9 @@ var workflowname,
 	isStrategyWf = window.location.href.indexOf("strategies") > -1,
 	isSOsWf = window.location.href.indexOf("strategicobjectives") > -1,
 	isKPIResultWf = window.location.href.indexOf("Targets") > -1,
-	isVisionInitiative = window.location.href.indexOf("initiatives") > -1,
-	isStrategicallyInitiative = window.location.href.indexOf("initiatives") > -1,
-	isLMSInitiative = window.location.href.indexOf("initiatives") > -1,
+	isVisionInitiative = window.location.href.indexOf("initiatives&VisionInitiative") > -1, 
+	isStrategicallyInitiative = window.location.href.indexOf("initiatives&StrategicallyInitiative") > -1,
+	isLMSInitiative = window.location.href.indexOf("initiatives&LMSInitiative") > -1,
 	isStrategicPartnerships = window.location.href.indexOf("strategicpartnerships") > -1,
 	isSPAchievements = window.location.href.indexOf("strategicpartnershipsachievements") > -1,
 	isProjectCancellationRequestWF =
@@ -198,6 +198,7 @@ if (
 	No_Data = "No Data";
 }
 
+debugger
 if (isChangeRequestPage) {
 	workflowname = "CR";
 	fieldtoedit = "SubmitForApproval";
@@ -325,7 +326,9 @@ if (isChangeRequestPage) {
 		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
 		workflowname +
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
-} else if (isVisionInitiative) {
+} 
+else if (isVisionInitiative) {
+	
 	workflowname = "VisionInitiative";
 	bulkeditlist = "Initiatives";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -340,9 +343,10 @@ if (isChangeRequestPage) {
 		workflowname +
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 
-} else if (isStrategicPartnerships) {
+}
+ else if (isStrategicPartnerships) {
 	workflowname = "StrategicPartnerships";
-	bulkeditlist = "StrategicPartnerships";
+	bulkeditlist = "Strategic Partnerships";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -368,7 +372,9 @@ if (isChangeRequestPage) {
 		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
 		workflowname +
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
-}else if (isLMSInitiative) {
+}
+else if (isLMSInitiative) {
+	debugger
 	workflowname = "LMSInitiative";
 	bulkeditlist = "Initiatives";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -382,7 +388,8 @@ if (isChangeRequestPage) {
 		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
 		workflowname +
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
-}else if (isSPAchievements) {
+}
+else if (isSPAchievements) {
 	workflowname = "SPAchievements";
 	bulkeditlist = "SPAchievements";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -794,6 +801,7 @@ var DeleteDelegate_Data_Submit = {
 var Task_PCODE_Data_Request_WFs = {
 	// Pre-initialization functions ensure scripts, SharePoint dependencies are loaded
 	preinit: function () {
+		
 		// console.log('321');
 		if (
 			$(".DahsFormTitle").length ||
@@ -829,7 +837,7 @@ var Task_PCODE_Data_Request_WFs = {
 		var oList = clientContext.get_web().get_lists().getByTitle("Tasks"); //list name
 		var camlQuery = new SP.CamlQuery();
 		camlQuery.set_viewXml(taskquery); //caml query
-
+		debugger
 		Task_PCODE_Data_Request_WFs.g.collListItem = oList.getItems(camlQuery);
 		clientContext.load(Task_PCODE_Data_Request_WFs.g.collListItem);
 		clientContext.executeQueryAsync(
@@ -842,6 +850,7 @@ var Task_PCODE_Data_Request_WFs = {
 		var listItemEnum = collListItem.getEnumerator();
 
 		while (listItemEnum.moveNext()) {
+			debugger
 			console.log("INSIDE WHILE WF")
 			accessCurrentTask = true
 
