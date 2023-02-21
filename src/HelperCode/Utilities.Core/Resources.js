@@ -283,7 +283,7 @@
     stat5: "لا يوجد خط اساس",
     stat6: "لم يبدأ",
     stat7: "مكتمل",
-    stat8: "لم تبدأ",
+    stat8: "لا توجد قيمة",
     rsupport1: "اعتمادات",
     rsupport2: "تحديات",
     rsupport3: "مخاطر",
@@ -887,7 +887,15 @@
     deliverablemilestoneschedual: "المخرجات - المعالم",
     recurrencerepeat :"لا يمكن التعديل لانه تم تغيير دورية القياس",
     recurrencechanged:"تم تغيير دورية القياس",
-    phonenumberpattern:"يحب إدخال رقم هاتف سعودي لا يحتوي على مسافات أو رموز خاصة"
+    phonenumberpattern:"يحب إدخال رقم هاتف سعودي لا يحتوي على مسافات أو رموز خاصة",
+    strategicpartnershipsachievements:"المنجزات",
+    strategicpartnershipsdeliverables:"المخرجات",
+    strategicpartnershipsimpactmeasurement:"مقياس الأثر",
+    strategicpartnershipslessonslearned:"الدروس المستفادة",
+    strategicpartnershipsmilestones:"المعالم",
+    strategicpartnershipsmom:"محاضر الإجتماع",
+    strategicpartnershipsrisks:"المخاطر",
+    strategicpartnershipsissues:"التحديات"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1162,7 +1170,7 @@
     stat5: "No BaseLine",
     stat6: "Not Started",
     stat7: "Completed",
-    stat8: "Not Started",
+    stat8: "No Value",
     rsupport1: "Reliance",
     rsupport2: "Issues",
     rsupport3: "Risks",
@@ -1792,7 +1800,15 @@
     deliverablemilestoneschedual: "Deliverables - Milestones",
     recurrencerepeat:"You can't edit because the Recurrence Changed",
     recurrencechanged:"Recurrence Changed",
-    phonenumberpattern:"should enter a KSA number doesn't containing spaces or specifics characters"
+    phonenumberpattern:"should enter a KSA number doesn't containing spaces or specifics characters",
+    strategicpartnershipsachievements:"Achievements",
+    strategicpartnershipsdeliverables:"Deliverables",
+    strategicpartnershipsimpactmeasurement:"Impact Measurement",
+    strategicpartnershipslessonslearned:"Lessons learned",
+    strategicpartnershipsmilestones:"Milestones",
+    strategicpartnershipsmom:"MOM",
+    strategicpartnershipsrisks:"Risks",
+    strategicpartnershipsissues:"Issues"
   },
 };
 

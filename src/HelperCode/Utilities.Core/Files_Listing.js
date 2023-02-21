@@ -1,5 +1,5 @@
 var Folders_Files_Array = [],
-  PCODE,ICODE, listkey, SP_ListName, PageTitle, KeysFolders = [],
+  PCODE,ICODE, STCODE, listkey, SP_ListName, PageTitle, KeysFolders = [],
   NRisks = 0,
   NIssues = 0,
   Fileelements, fileCount = 0,
@@ -12,6 +12,9 @@ if (window.location.href.indexOf('PCODE=') > -1) {
 
 if(window.location.href.indexOf('ICODE=') > -1){
   ICODE = window.location.href.split('ICODE=')[1].split('&')[0];
+}
+if(window.location.href.indexOf('STCODE=') > -1){
+  STCODE = window.location.href.split('STCODE=')[1].split('&')[0];
 }
 
 console.log('Correct File listing')
@@ -43,6 +46,14 @@ if (window.location.href.indexOf('ListKey') > -1) {
       PageTitle = 'مستندات المبادرة'
     }else{
       PageTitle = 'Initiative Documents'
+    }
+  }
+  if(STCODE){
+    SP_ListName = 'StrategicPartnerships Documents'
+    if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+      PageTitle = 'مستندات الشراكة الاستراتيجية'
+    }else{
+      PageTitle = 'StrategicPartnerships Documents'
     }
   }
 
@@ -78,6 +89,9 @@ var GetFilesFromFolder = {
       handleCode=PCODE
     }else if(ICODE){
       handleCode = ICODE
+    }
+    else if(STCODE){
+      handleCode = STCODE
     }
     camlQuery.set_viewXml('<View Scope="RecursiveAll"> \
         <Query> \
@@ -176,6 +190,9 @@ var GetFilesFromFolder = {
       FolderHTML += '<div class="tile folder" data-target="#' + newarrayforfolder[i].Folder + '"><i class="fas fa-folder"></i><h3 data-trans-' + newarrayforfolder[i].Folder + ' class="Resources"></h3><p>' + PCODE + '</p></div><!-- .tile.folder -->';
       }else if(ICODE){
         FolderHTML += '<div class="tile folder" data-target="#' + newarrayforfolder[i].Folder + '"><i class="fas fa-folder"></i><h3 data-trans-' + newarrayforfolder[i].Folder + ' class="Resources"></h3><p>' + ICODE + '</p></div><!-- .tile.folder -->';
+      }
+      else if(STCODE){
+        FolderHTML += '<div class="tile folder" data-target="#' + newarrayforfolder[i].Folder + '"><i class="fas fa-folder"></i><h3 data-trans-' + newarrayforfolder[i].Folder + ' class="Resources"></h3><p>' + STCODE + '</p></div><!-- .tile.folder -->';
       }
 
       if (i == newarrayforfolder.length - 1) {
