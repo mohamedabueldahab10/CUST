@@ -1442,6 +1442,10 @@ window.ListingData = {
             keyNameParams = "initiativesample"
           } else if (wfname == 'VisionInitiative' || wfname == 'StrategicallyInitiative' || wfname == 'LMSInitiative') {
             keyNameParams = "initiatives"
+          }else if (wfname == 'StrategicPartnerships') {
+            keyNameParams = 'strategicpartnerships'
+          }else if (wfname == 'SPAchievements') {
+            keyNameParams = 'strategicpartnershipsachievements'
           }
           switch (tasktype) {
             case 'SubmitField':
