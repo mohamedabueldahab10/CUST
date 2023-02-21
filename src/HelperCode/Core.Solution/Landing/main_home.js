@@ -110,14 +110,14 @@ var iconstrategysm = require("../../../HelperRessources/img/analysis.png");
 var risk = require("../../../HelperRessources/img/risk.svg");
 var progress = require("../../../HelperRessources/img/progress.svg");
 var mizania = require("../../../HelperRessources/img/mizania.svg");
-var iconstagesm = '';
-var iconstatustimesm = '';
-var calendar = '';
-var iconimportantsm = '';
-var iconstrategysm = '';
-var risk = '';
-var progress = '';
-var mizania = '';
+// var iconstagesm = '';
+// var iconstatustimesm = '';
+// var calendar = '';
+// var iconimportantsm = '';
+// var iconstrategysm = '';
+// var risk = '';
+// var progress = '';
+// var mizania = '';
 
 // new repo
 
@@ -170,6 +170,7 @@ window.Project_Info_Request = {
   },
   // The main Initialization function
   init: function () {
+    debugger
     if (originalstate) {
       //*****call charts filteration */
       if (isRoleDataLevelAccess) {

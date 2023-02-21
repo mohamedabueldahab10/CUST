@@ -71,6 +71,8 @@ var UserRole,
   isPartnershipRepresentative = false,
   isRelationshipManager = false,
   isStartegicAchievementTeam = false,
+  isBudgetManager = false,
+  isObjectiveOwner = false,
   isKPIOWNER = false,
   isBITeam = false,
   pickerValidationDone = false, // to check picker user groups on form submit
@@ -2233,6 +2235,7 @@ window.userCalls = {
           "documents",
 
         ];
+
         Read_Access = [
           "initiatives",
           "initiativesmain.aspx",
@@ -2276,6 +2279,7 @@ window.userCalls = {
           "budgetitems",
 
         ];
+
         Edit_Access = [
           "initiatives",
           "benefitmatrix",
@@ -2470,6 +2474,46 @@ window.userCalls = {
           "mainkpi"
         ];
         Delete_Access = [];
+        break;
+
+      case "ObjectiveOwner":
+
+        if (USERisHome)
+          window.location =
+            _spPageContextInfo.webAbsoluteUrl +
+            "/sitepages/MainIndicators.aspx";
+
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+
+        isObjectiveOwner = true;
+
+        ChartHide = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+
+        ar_UserRole = "مالك الهدف";
+        en_UserRole = "Objective Owner";
+
+        Create_Access = [
+          "mainkpi",
+          "changerequest"
+        ];
+        Read_Access = [
+          "mainkpi",
+          "sos",
+          "goalstrategy",
+          "Targets.aspx",
+          "kpiequations",
+          "MainIndicators.aspx",
+          "tasks",
+          "changerequest"
+        ];
+        Edit_Access = [
+          "mainkpi",
+          "changerequest"
+        ];
+        Delete_Access = [];
+        
         break;
       case "PerformanceLeader":
         if (USERisHome)
@@ -2693,6 +2737,46 @@ window.userCalls = {
         ];
         Edit_Access = [];
         Delete_Access = [];
+        break;
+
+      case "BudgetManager":
+
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+
+        isBudgetManager = true;
+
+        ChartHide = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+
+        ar_UserRole = "مدير الميزانية";
+        en_UserRole = "Budget Manager";
+
+        Create_Access = [];
+
+        Read_Access = [
+          "initiatives",
+          "initiativedeliverables",
+          "initiativemilestones",
+          "projects",
+          "deliverables",
+          "milestones",
+          "coc",
+          "documents",
+          "tasks",
+          "InitiativeHome.aspx",
+          "initiativesmain.aspx",
+          "projecthome.aspx",
+          "home.aspx"
+
+        ];
+        // Read_Access = AllListKeys;
+        // Read_Access = Read_Access.concat(SP_Page_Name);
+
+        Edit_Access = []
+
+        Delete_Access = []
+
         break;
 
       default:
@@ -2937,11 +3021,6 @@ window.userCalls = {
         Role: "Minister",
         groupsName: ["Minister"],
       },
-
-      // {
-      //   Role: "SectorHead",
-      //   groupsName: ["Sector Head"],
-      // },
       {
         Role: "SectorHead",
         groupsName: ["Sector Head"],
@@ -5623,7 +5702,14 @@ window.userCalls = {
                   listName: "Initiatives",
                   parentRelationField: "Title",
                   RelationField: "RelatedObjective",
-                  RelationFieldType: "Text"
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "Projects",
+                    parentRelationField: "Title",
+                    RelationField: "RelatedInitiative",
+                    RelationFieldType: "Text",
+                  }
                 },
               },
             }
@@ -5700,6 +5786,67 @@ window.userCalls = {
                 },
               },
             },
+          ],
+        },
+      },
+      {
+        Role: "BudgetManager",
+        groupsName: ["Budget Manager"],
+      },
+      {
+        Role: "ObjectiveOwner",
+        groupsName: ["Objective Owner"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "SOs",
+              accessConditions: [
+                {
+                  field: "ObjectiveOwner",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "GoalStrategy",
+                parentRelationField: "RelatedStrategy",
+                RelationField: "Title",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "SOs",
+              accessConditions: [
+                {
+                  field: "ObjectiveOwner",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "MainKPI",
+                parentRelationField: "Title",
+                RelationField: "RelatedStrategyObjective",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "KPIResults",
+                  parentRelationField: "Title",
+                  RelationField: "KPI",
+                  RelationFieldType: "Text",
+                }
+              }
+            }
           ],
         },
       },
@@ -5906,14 +6053,15 @@ var Access_Project_Info_Request = {
       !isAdmin &&
       !isMinister &&
       !isITSteering &&
-      !isBITeam
+      !isBITeam &&
+      !isBudgetManager
     ) {
       //in pages related to project if user is not related to the current project
 
       userCalls.g.Security_Msg();
     }
 
-    if (!isAdmin && !isMinister && !isITSteering && !isEPMO && !isBITeam) {
+    if (!isAdmin && !isMinister && !isITSteering && !isEPMO && !isBITeam && !isBudgetManager) {
       //Access caml query for home page and listing pages
       //
       console.log("inside access project info req")
@@ -5973,7 +6121,8 @@ var Access_Project_Info_Request = {
               "</Values></In></And></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
             forfilterQuery += "</div></div>";
             AccessQuery = PermissionQuery;
-
+            console.log(AccessQuery, "AccessQuery")
+            debugger
             if (USERisHome) {
               //call homepage
               window.checkHomeStatusHtml = setInterval(function () {
@@ -6008,7 +6157,8 @@ var Access_Project_Info_Request = {
             isMinister ||
             isITSteering ||
             isEPMO ||
-            isBITeam
+            isBITeam ||
+            isBudgetManager
           ) {
             // to can see everything
             AccessQuery =
@@ -6281,7 +6431,7 @@ var Access_Project_Info_Request = {
       // isViceMinister
     ) {
       camlQuery.set_viewXml(SectorHeadQuery);
-    } else if (isAdmin || isMinister || isBITeam || isITSteering || isEPMO) {
+    } else if (isAdmin || isMinister || isBITeam || isITSteering || isEPMO || isBudgetManager) {
       // to can see everything
       camlQuery.set_viewXml(
         "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where></Query><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></View>"
@@ -7950,6 +8100,10 @@ var Tasks_Info_Request_User = {
             keyNameParams = "mom";
           } else if (wfname == 'VisionInitiative' || wfname == 'StrategicallyInitiative' || wfname == 'LMSInitiative') {
             keyNameParams = "initiatives"
+          } else if (wfname == 'StrategicPartnerships') {
+            keyNameParams = 'strategicpartnerships'
+          } else if (wfname == 'SPAchievements') {
+            keyNameParams = 'strategicpartnershipsachievements'
           }
 
           switch (tasktype) {
