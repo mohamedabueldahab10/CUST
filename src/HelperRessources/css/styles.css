@@ -5446,10 +5446,22 @@ select[disabled] {
 
 #userGroup .dropdown-menu {
     width: 100%;
-    padding: 0.5rem 1rem;
+    /* padding: 0.5rem 1rem; */
+    padding: 0.5rem 0rem;
     background-color: transparent;
 }
-
+div#userGroup ul.list-group {
+    max-height: 500px !important;
+    height: 500px !important;
+    overflow-y: scroll;
+}
+div#userGroup li.list-group-item a{
+   display:flex;
+   justify-content:space-around;
+}
+div#userGroup li.list-group-item h3.title-13  {
+    word-break: break-word;
+}
 .circle-radio {
     width: 20px;
     height: 20px;
