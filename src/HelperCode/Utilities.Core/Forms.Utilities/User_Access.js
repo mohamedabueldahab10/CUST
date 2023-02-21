@@ -59,6 +59,7 @@ var UserRole,
   isCRCommitteeVision = false,
   isLMSP = false,
   isSPMO = false,
+  isSPMOHead = false,
   isDU = false,
   isSubSectorHead = false,
   isGeneralManager = false,
@@ -2172,6 +2173,85 @@ window.userCalls = {
         ];
 
         break;
+
+      case "SPMOHead":
+
+        isSPMOHead = true;
+
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
+
+        ar_UserRole = " مدير مكتب إدارة المشاريع القطاعي";
+        en_UserRole = "Sectoral Project Management Office Head";
+
+        Create_Access = [
+          "benefitmatrix",
+          "initiatives",
+          "initiativedeliverables",
+          "initiativemilestones",
+          "initiativerisks",
+          "initiativeissues",
+          "initiativemom",
+          "benefits",
+          "benefitmetrics",
+          "closureinitiative",
+          "deliverables",
+          "risks",
+          "issues",
+          "milestones",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "communicationplans",
+          "contracts",
+          "changerequest"
+        ];
+
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
+
+        Edit_Access = [
+          "benefitmatrix",
+          "initiativerisks",
+          "initiativeissues",
+          "initiativemom",
+          "benefits",
+          "benefitmetrics",
+          "closureinitiative",
+          "risks",
+          "issues",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "communicationplans",
+          "contracts",
+          "changerequest"
+        ] 
+
+        Delete_Access = [
+          "benefitmatrix",
+          "initiativerisks",
+          "initiativeissues",
+          "initiativemom",
+          "benefits",
+          "benefitmetrics",
+          "closureinitiative",
+          "risks",
+          "issues",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "communicationplans",
+          "contracts"
+        ]
+
+        break;
       case "MinisterAssistant":
         isMinisterAssistant = true;
 
@@ -2513,7 +2593,7 @@ window.userCalls = {
           "changerequest"
         ];
         Delete_Access = [];
-        
+
         break;
       case "PerformanceLeader":
         if (USERisHome)
@@ -5849,6 +5929,144 @@ window.userCalls = {
             }
           ],
         },
+      },
+      {
+        Role: "SPMOHead",
+        groupsName: ["SPMO Head"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "Internal Entities",
+              accessConditions: [
+                {
+                  field: "SPMO",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+                {
+                  field: "EntityType",
+                  type: "Choice",
+                  values: ["Sector"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "Initiatives",
+                parentRelationField: "Title",
+                RelationField: "Sector",
+                RelationFieldType: "Choice",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Internal Entities",
+              accessConditions: [
+                {
+                  field: "SPMO",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+                {
+                  field: "EntityType",
+                  type: "Choice",
+                  values: ["Sector"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "Projects",
+                parentRelationField: "Title",
+                RelationField: "Sector",
+                RelationFieldType: "Choice",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Internal Entities",
+              accessConditions: [
+                {
+                  field: "SPMO",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+                {
+                  field: "EntityType",
+                  type: "Choice",
+                  values: ["Sector"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "Sector",
+                RelationFieldType: "Choice",
+                subRelation: {
+                  level: 3,
+                  listName: "GoalStrategy",
+                  parentRelationField: "RelatedStrategy",
+                  RelationField: "Title",
+                  RelationFieldType: "Text",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Internal Entities",
+              accessConditions: [
+                {
+                  field: "SPMO",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+                {
+                  field: "EntityType",
+                  type: "Choice",
+                  values: ["Sector"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "Sector",
+                RelationFieldType: "Choice",
+                subRelation: {
+                  level: 3,
+                  listName: "MainKPI",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedStrategyObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "KPIResults",
+                    parentRelationField: "Title",
+                    RelationField: "KPI",
+                    RelationFieldType: "Text",
+                  }
+                },
+              },
+            },
+
+          ]
+        }
       },
       {
         Role: "Other",
