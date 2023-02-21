@@ -1440,7 +1440,7 @@ window.ListingData = {
             keyNameParams = 'mom'
           } else if (wfname == 'InitiativeSample') {
             keyNameParams = "initiativesample"
-          } else if (wfname == 'VisionInitiative' || wfname == 'StrategicallyInitiative' || wfname == 'LmsInitiative') {
+          } else if (wfname == 'VisionInitiative' || wfname == 'StrategicallyInitiative' || wfname == 'LMSInitiative') {
             keyNameParams = "initiatives"
           }
           switch (tasktype) {

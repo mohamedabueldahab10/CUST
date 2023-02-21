@@ -7245,7 +7245,7 @@ var Tasks_Info_Request_User = {
             keyNameParams = "risks";
           } else if (wfname == "MoM") {
             keyNameParams = "mom";
-          } else if (wfname == 'VisionInitiative' || wfname == 'StrategicallyInitiative' || wfname == 'LmsInitiative') {
+          } else if (wfname == 'VisionInitiative' || wfname == 'StrategicallyInitiative' || wfname == 'LMSInitiative') {
             keyNameParams = "initiatives"
           }
 
