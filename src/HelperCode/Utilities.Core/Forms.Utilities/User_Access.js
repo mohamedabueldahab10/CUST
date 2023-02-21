@@ -52,6 +52,11 @@ var UserRole,
   isVROE = false,
   isVROEHead = false,
   isLMSE = false,
+  isLMSUControl = false,
+  isLMSUExecution = false,
+  isLMSUPerformance = false,
+  isCRCommittee = false,
+  isCRCommitteeVision = false,
   isLMSP = false,
   isSPMO = false,
   isDU = false,
@@ -1468,8 +1473,9 @@ window.userCalls = {
         );
         //***** */
         isLMSE = true;
-        ChartHide =
-          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+
+        ChartHide = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+
         ar_UserRole = "مكتب ضمان التنفيذ لسوق العمل";
         en_UserRole = "Execution Guarantee Office";
         //CRUD
@@ -1553,6 +1559,358 @@ window.userCalls = {
         ];
         break;
 
+      case "LMSUControl":
+
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+
+        isLMSUControl = true;
+
+        ChartHide = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+
+        ar_UserRole = "وحدة استراتيجية سوق العمل ( إدارة الحوكمة والجودة)";
+        en_UserRole = "LMSU Control";
+
+        Create_Access = [
+          "goalstrategy",
+          "sos",
+          "mainkpi",
+          "benefitmatrix",
+          "initiatives",
+          "initiativedeliverables",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
+          "closureinitiative",
+          "benefits",
+          "benefitmetrics",
+          "projects",
+          "deliverables",
+          "mom",
+          "risks",
+          "issues",
+          "milestones",
+          "lessonslearned",
+          "closureform",
+          "coc",
+          "stakeholders",
+          "communicationplans",
+          "changerequest",
+          "contracts"
+        ]
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
+
+        Edit_Access = [
+          "goalstrategy",
+          "sos",
+          "mainkpi",
+          "benefitmatrix",
+          "initiatives",
+          "initiativedeliverables",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
+          "closureinitiative",
+          "benefits",
+          "benefitmetrics",
+          "projects",
+          "deliverables",
+          "mom",
+          "risks",
+          "issues",
+          "milestones",
+          "lessonslearned",
+          "closureform",
+          "coc",
+          "stakeholders",
+          "communicationplans",
+          "changerequest",
+          "contracts"
+        ]
+        Delete_Access = [
+          "goalstrategy",
+          "sos",
+          "mainkpi",
+          "benefitmatrix",
+          "initiatives",
+          "initiativedeliverables",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
+          "closureinitiative",
+          "benefits",
+          "benefitmetrics",
+          "projects",
+          "deliverables",
+          "mom",
+          "risks",
+          "issues",
+          "milestones",
+          "lessonslearned",
+          "closureform",
+          "coc",
+          "stakeholders",
+          "communicationplans",
+          "changerequest",
+        ]
+        break;
+
+      case "LMSUExecution":
+
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+
+        isLMSUExecution = true;
+
+        ChartHide = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+
+        ar_UserRole = "وحدة استراتيجية سوق العمل (إدارة التنفيذ)";
+        en_UserRole = "LMSU Execution";
+
+        Create_Access = [
+          "goalstrategy",
+          "sos",
+          "mainkpi",
+          "benefitmatrix",
+          "initiatives",
+          "initiativedeliverables",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
+          "closureinitiative",
+          "benefits",
+          "benefitmetrics",
+          "projects",
+          "deliverables",
+          "mom",
+          "risks",
+          "issues",
+          "milestones",
+          "lessonslearned",
+          "closureform",
+          "coc",
+          "stakeholders",
+          "communicationplans",
+          "changerequest",
+          "contracts"
+        ]
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
+
+        Edit_Access = [
+          "goalstrategy",
+          "sos",
+          "mainkpi",
+          "benefitmatrix",
+          "initiatives",
+          "initiativedeliverables",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
+          "closureinitiative",
+          "benefits",
+          "benefitmetrics",
+          "projects",
+          "deliverables",
+          "mom",
+          "risks",
+          "issues",
+          "milestones",
+          "lessonslearned",
+          "closureform",
+          "coc",
+          "stakeholders",
+          "communicationplans",
+          "changerequest",
+          "contracts"
+        ]
+        Delete_Access = [
+          "goalstrategy",
+          "sos",
+          "mainkpi",
+          "benefitmatrix",
+          "initiatives",
+          "initiativedeliverables",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
+          "closureinitiative",
+          "benefits",
+          "benefitmetrics",
+          "projects",
+          "deliverables",
+          "mom",
+          "risks",
+          "issues",
+          "milestones",
+          "lessonslearned",
+          "closureform",
+          "coc",
+          "stakeholders",
+          "communicationplans",
+          "changerequest",
+        ]
+        break;
+
+      case "LMSUPerformance":
+
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+
+        isLMSUPerformance = true;
+
+        ChartHide = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+
+        ar_UserRole = " وحدة استراتيجية سوق العمل (إدارة الآداء)";
+        en_UserRole = "LMSU Performance";
+
+        Create_Access = [
+          "goalstrategy",
+          "sos",
+          "mainkpi",
+          "benefitmatrix",
+          "initiatives",
+          "initiativedeliverables",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
+          "closureinitiative",
+          "benefits",
+          "benefitmetrics",
+          "projects",
+          "deliverables",
+          "mom",
+          "risks",
+          "issues",
+          "milestones",
+          "lessonslearned",
+          "closureform",
+          "coc",
+          "stakeholders",
+          "communicationplans",
+          "changerequest",
+          "contracts"
+        ]
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
+
+        Edit_Access = [
+          "goalstrategy",
+          "sos",
+          "mainkpi",
+          "benefitmatrix",
+          "initiatives",
+          "initiativedeliverables",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
+          "closureinitiative",
+          "benefits",
+          "benefitmetrics",
+          "projects",
+          "deliverables",
+          "mom",
+          "risks",
+          "issues",
+          "milestones",
+          "lessonslearned",
+          "closureform",
+          "coc",
+          "stakeholders",
+          "communicationplans",
+          "changerequest",
+          "contracts"
+        ]
+        Delete_Access = [
+          "goalstrategy",
+          "sos",
+          "mainkpi",
+          "benefitmatrix",
+          "initiatives",
+          "initiativedeliverables",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
+          "closureinitiative",
+          "benefits",
+          "benefitmetrics",
+          "projects",
+          "deliverables",
+          "mom",
+          "risks",
+          "issues",
+          "milestones",
+          "lessonslearned",
+          "closureform",
+          "coc",
+          "stakeholders",
+          "communicationplans",
+          "changerequest",
+        ]
+
+        break;
+
+      case "CRCommittee":
+
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+
+        isCRCommittee = true;
+
+        ChartHide = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+
+        ar_UserRole = "لجنة طلبات التغيير";
+        en_UserRole = "Change Request Committee";
+
+        Create_Access = [];
+
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
+
+        Edit_Access = []
+
+        Delete_Access = []
+
+        break;
+
+      case "CRCommitteeVision":
+
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+
+        isCRCommitteeVision = true;
+
+        ChartHide = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+
+        ar_UserRole = "لجنة طلبات التغيير (الرؤية)";
+        en_UserRole = "Change Request Committee (Vision)";
+
+        Create_Access = [];
+
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
+
+        Edit_Access = []
+
+        Delete_Access = []
+
+        break;
+
       case "LMSP":
 
         $("body").append(
@@ -1561,8 +1919,7 @@ window.userCalls = {
 
         isLMSP = true;
 
-        ChartHide =
-          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHide = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
         ar_UserRole = "مكتب التخطيط الإستراتيجي لسوق العمل";
         en_UserRole = "Strategic Planning Office";
@@ -3985,10 +4342,6 @@ window.userCalls = {
           ]
         }
       },
-      // {
-      //   Role: "ViceMinister",
-      //   groupsName: ["Vice Minister"],
-      // },
       {
         Role: "ViceMinister",
         groupsName: ["Vice Minister"],
@@ -5002,6 +5355,355 @@ window.userCalls = {
         },
       },
       {
+        Role: "LMSUControl",
+        groupsName: ["LMSU-Control"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "GoalStrategy",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Choice",
+                  values: ["lms"],
+                  targetPages: [
+
+                  ],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "RelatedStrategy",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "MainKPI",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedStrategyObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "KPIResults",
+                    parentRelationField: "Title",
+                    RelationField: "KPI",
+                    RelationFieldType: "Text",
+                  }
+                }
+              },
+            },
+            {
+              level: 1,
+              listName: "Initiatives",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Text",
+                  values: ["lms"],
+                  targetPages: [
+                  ],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "Projects",
+                parentRelationField: "Title",
+                RelationField: "RelatedInitiative",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+          ],
+        },
+      },
+      {
+        Role: "LMSUExecution",
+        groupsName: ["LMSU-Execution"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "GoalStrategy",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Choice",
+                  values: ["lms"],
+                  targetPages: [
+
+                  ],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "RelatedStrategy",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "MainKPI",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedStrategyObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "KPIResults",
+                    parentRelationField: "Title",
+                    RelationField: "KPI",
+                    RelationFieldType: "Text",
+                  }
+                }
+              },
+            },
+            {
+              level: 1,
+              listName: "Initiatives",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Text",
+                  values: ["lms"],
+                  targetPages: [
+                  ],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "Projects",
+                parentRelationField: "Title",
+                RelationField: "RelatedInitiative",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+          ],
+        },
+      },
+      {
+        Role: "LMSUPerformance",
+        groupsName: ["LMSU-Performance"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "GoalStrategy",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Choice",
+                  values: ["lms"],
+                  targetPages: [
+
+                  ],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "RelatedStrategy",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "MainKPI",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedStrategyObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "KPIResults",
+                    parentRelationField: "Title",
+                    RelationField: "KPI",
+                    RelationFieldType: "Text",
+                  }
+                }
+              },
+            },
+            {
+              level: 1,
+              listName: "Initiatives",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Text",
+                  values: ["lms"],
+                  targetPages: [
+                  ],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "Projects",
+                parentRelationField: "Title",
+                RelationField: "RelatedInitiative",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+          ],
+        },
+      },
+      {
+        Role: "CRCommittee",
+        groupsName: ["CR Committee"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "GoalStrategy",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Choice",
+                  values: ["ministry"],
+                  targetPages: [
+                    // "home.aspx",
+                    // "new.aspx",
+                    // "edit.aspx?ListKey=projects",
+                  ],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "RelatedStrategy",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "MainKPI",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedStrategyObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "KPIResults",
+                    parentRelationField: "Title",
+                    RelationField: "KPI",
+                    RelationFieldType: "Text",
+                  }
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "GoalStrategy",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Choice",
+                  values: ["ministry"],
+                  targetPages: [
+                    "home.aspx",
+                    "new.aspx",
+                    "edit.aspx?ListKey=projects",
+                  ],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "RelatedStrategy",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "Initiatives",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedObjective",
+                  RelationFieldType: "Text"
+                },
+              },
+            }
+          ],
+        },
+      },
+      {
+        Role: "CRCommitteeVision",
+        groupsName: ["CR Committee-Vision"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "GoalStrategy",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Choice",
+                  values: ["vision"],
+                  targetPages: [
+                    // "home.aspx",
+                    // "new.aspx",
+                    // "edit.aspx?ListKey=projects",
+                  ],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "RelatedStrategy",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "MainKPI",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedStrategyObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "KPIResults",
+                    parentRelationField: "Title",
+                    RelationField: "KPI",
+                    RelationFieldType: "Text",
+
+                  }
+                }
+              },
+            },
+            {
+              level: 1,
+              listName: "Initiatives",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Text",
+                  values: ["vision"],
+                  targetPages: [
+                    "home.aspx",
+                    "new.aspx",
+                    "edit.aspx?ListKey=projects",
+                  ],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "Projects",
+                parentRelationField: "Title",
+                RelationField: "RelatedInitiative",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+          ],
+        },
+      },
+      {
         Role: "Other",
         groupsName: [
           "Legal User",
@@ -5214,7 +5916,8 @@ var Access_Project_Info_Request = {
     if (!isAdmin && !isMinister && !isITSteering && !isEPMO && !isBITeam) {
       //Access caml query for home page and listing pages
       //
-
+      console.log("inside access project info req")
+      debugger
       var fieldtoquery,
         isShowAll = false;
       if (USERProjRelated.indexOf(USERlistkey) > -1) {
