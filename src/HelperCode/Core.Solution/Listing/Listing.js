@@ -98,8 +98,6 @@ else if (isTasks) {
 //function to get data from sharepoint list (JSOM)
 window.sphttp = {
   get: function (listUrl, listDisplayName, camelQuery, internalFieldNames, isGetDdl, onEach, onError) {
-    console.log("SPHTTTp")
-    // console.log(FilterChoices,"FilterChoices FilterChoices")
 
     sphttp.g.isGetDdl = isGetDdl;
     var clientContext = new SP.ClientContext(listUrl);
@@ -204,15 +202,14 @@ window.sphttp = {
                     assignedto: oListItem.get_item('AssignedTo'),
                     relatedurl: oListItem.get_item('RelatedURL')
                   });
-                  console.log(record, "record record")
                   records.push(record);
+
                   onEach(records, record, oListItem, false); //false if having item
                 }
               }
             } else {
               if (internalFieldNames && internalFieldNames.length > 0) {
                 for (var i = 0; i < internalFieldNames.length; i++) {
-                  // console.log(internalFieldNames[i]);
                   if (internalFieldNames[i] = Listing_Info[i].InternalName) {
                     if (Listing_Info[i].type == "date") {
                       // var timezone = String(oListItem.get_item(internalFieldNames[i])) || null;
@@ -226,10 +223,8 @@ window.sphttp = {
                         var utc = new Date(local + offset);
                         var riyadh = new Date(utc.getTime() + (3 * 60 * 60 * 1000));
                         var riyadhtime = riyadh.toString().split(' ')[4];
-                        // console.log(riyadh.toISOString(), 'riyyyyyaa');
                         var dateforfilteration = riyadh.toISOString();
                         var dateforfilterationValue = dateforfilteration.substring(dateforfilteration.indexOf('T') + 1);
-                        // console.log(dateforfilterationValue, 'riyyyyyaadddddd');
                         var datetouse = riyadh.toLocaleString("en-US").split(',')[0].split('/');
                         datetouse[0] = (datetouse[0].length == 1) ? '0' + datetouse[0] : datetouse[0];
                         datetouse[1] = (datetouse[1].length == 1) ? '0' + datetouse[1] : datetouse[1];
@@ -457,7 +452,6 @@ window.ListingData = {
       }
     }
 
-    console.log(PQuery, "INNNNNNNNNNNNNNNNNNNNNNN LISTING")
 
     if (userProjects && userProjects.length == 0 && (USERProjRelated.indexOf(USERlistkey) > -1 || USERisProjects)) {
       $('div#particles-foreground, div#particles-background, .vertical-centered-box').remove();
@@ -467,6 +461,7 @@ window.ListingData = {
       changeResources();
     } else {
 
+      
       sphttp.get(
         ListURL,
         SP_ListName,
@@ -475,8 +470,17 @@ window.ListingData = {
         false,
         async function (records, record, listItem, isDone) {
 
+
+          // records.forEach((element, i) => { 
+          //   if ((element.ProjectCode && element.ProjectCode != No_Data) && !isthereICODE) { // add element.projectCode !=No_Data to show the initiative in task list
+          //     if (!userProjects.includes(element.ProjectCode)) {
+          //       records.splice(i, 1);
+          //     }
+          //   }
+          // });
+
           records.forEach((element, i) => {
-            if ((element.ProjectCode && element.ProjectCode != No_Data) && !isthereICODE) { // add element.projectCode !=No_Data to show the initiative in task list
+            if ((element.ProjectCode && element.ProjectCode != No_Data) && element.WorkflowName == "Project") { // add element.projectCode !=No_Data to show the initiative in task list
               if (!userProjects.includes(element.ProjectCode)) {
                 records.splice(i, 1);
               }
@@ -485,6 +489,9 @@ window.ListingData = {
 
 
           if (isDone) {
+            debugger
+            console.log(records,"records afteeeeeeeeer")
+
             var html = '';
 
             var InternalProjectsHtml = '';
@@ -493,7 +500,6 @@ window.ListingData = {
               var index = i + 1;
               debugger
               // ghufranChange
-              //  console.log(records[i], 'records')
               if (listkey == 'projects') {
                 if (records[i].ProjectType == 'Internal') {
                   InternalProjectsHtml += '<li class="list-group-item link-arrow">' +
@@ -561,13 +567,11 @@ window.ListingData = {
               }
 
               var obj = records[i];
-              // console.log(obj, 'obj')
               for (var key in obj) { // looping columns
                 var Field_In_Use = Listing_Info.filter(function (el) {
                   return el.InternalName === key;
                 });
                 if (Field_In_Use[0].type == 'date' && obj[key] != No_Data) {
-                  //  console.log('here a record with date');
                   obj[key] = obj[key].slice(0, obj[key].indexOf('T'))
                 }
                 var isLinkable = Field_In_Use[0].hasOwnProperty("isLinkable"),
@@ -576,7 +580,6 @@ window.ListingData = {
                 if (!isRenderField)
                   isRenderField = (Field_In_Use[0].ShowUnderProjectListing && USERPCODE) || (!Field_In_Use[0].ShowUnderProjectListing && !USERPCODE) ? true : false;
                 if (isRenderField) {
-                  //console.log(Field_In_Use[0].DisplayName);
 
                   if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
                     displayName = Field_In_Use[0].DisplayName;
@@ -616,7 +619,6 @@ window.ListingData = {
 
 
                       if (Field_In_Use[0].needTrans == true && obj[key] != No_Data) {
-                        // console.log('obj[key]', obj[key]);
                         html += '<span data-trans-' + obj[key] + ' class="des-13 Resources"></span>' +
                           '</div>';
                         if (records[i].ProjectType == 'Internal') {
@@ -888,7 +890,6 @@ window.ListingData = {
             if (isTasks && (isAdmin || isEPMO)) {
               // to handle my tasks and other tasks in tasks list
               $('#relatedTasks').on("click", function (e) {
-                console.log("RELATED TASK TABS")
                 // if (isAdmin || isPortManager) {
                 // $('.task_action_btn').css('display', 'block')
 
@@ -905,8 +906,6 @@ window.ListingData = {
               });
               // to handle my tasks and other tasks in tasks list
               $('#allTasks').on("click", function (e) {
-
-                console.log("ALL TASKS TABS")
 
                 taskClicked = 'allTasks'
                 getNewFilterTask = true
@@ -1072,9 +1071,7 @@ window.ListingData = {
             //handle date format for caml
             if (fieldType == 'date') {
               for (var t = 0; t < selectedchoices.length; t++) {
-                // console.log(selectedchoices[t], 'selected choices')
                 if (selectedchoices[t].indexOf('/') > -1) {
-                  // console.log('true here');
                   // selectedchoices[t] = selectedchoices[t].split('/');
                   // selectedchoices[t] = selectedchoices[t][2] + '-' + selectedchoices[t][1] + '-' + selectedchoices[t][0] + 'T00:00:00.000Z';
                   var myDate = selectedchoices[t].split('T');
@@ -1094,7 +1091,6 @@ window.ListingData = {
             });
           }
         });
-        console.log(FilterChoices, dataLevelAccessChoicesForFilters)
         ListingData.g.camlfilterbuilder();
       });
       $('.page-filter .dropdown-menu label.dropdown-item').on("click", function (e) {
@@ -1125,7 +1121,6 @@ window.ListingData = {
         PQueryFilteration = '<In><FieldRef Name="StrategicPartnershipCode" /><Values><Value Type="Text">' + UserSTCode + '</Value></Values></In>';
       }
       else if (isTasks) {
-        console.log("INSIDE ALLL TASK REMOBE")
 
         if (allTasksClicked) {
           PQueryFilteration = '<And><Neq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Neq><In><FieldRef Name="Status" /><Values><Value Type="Choice">Open</Value></Values></In></And>';
@@ -1167,7 +1162,6 @@ window.ListingData = {
       //       "</Value>";
 
       //     PQueryFilteration += "</Values></In></And>";
-      //     console.log(PQueryFilteration, 'PQueryFilterationPQueryFilteration')
 
       //   } else {
       //     PQueryFilteration = '';
@@ -1179,8 +1173,6 @@ window.ListingData = {
       }
 
       if (FilterChoices.length == 0) {
-        // console.log("BOOOOOOOOOOOOOOOOH")
-        //
         isEmptyFilter = true;
         filterValue = false
 
@@ -1345,11 +1337,9 @@ window.ListingData = {
           //Finish Line, make last changes and build query
           if (i == FilterChoices.length - 1) {
 
-            // console.log(PQueryFilteration);
             Where_Body = Where_Body.replaceAll('Type="date"', 'IncludeTimeValue="TRUE" Type="DateTime"'); //IncludeTimeValue="false"
             //alert(Where_Body.includes('Type="date"')+'00'+Where_Body);
             //Where_Body.replace('Type="date"', '');
-            // console.log(PQueryFilteration.length > 0);
 
             if (!(PQueryFilteration.length > 0)) {
               if (isTasks) {
@@ -1384,7 +1374,6 @@ window.ListingData = {
               '</View>';
             PQuery = Query_Body;
 
-            console.log(Query_Body, "Query_Body Query_Body Query_Body")
             ListingData.init();
           }
         }
@@ -1393,7 +1382,6 @@ window.ListingData = {
     //for tasks functions
     handleids: function (pcode, icode, taskid, tasktype, stageid, ritemid, sourceitemid, wfname, puid, rurl) //rurl,
     {
-      console.log(taskid, "taskid")
       debugger
       if (wfname == 'Project') {
         curstage_org = User_Stages_Data_Request.g.StagesArray.filter(function (obj) {
@@ -1417,15 +1405,12 @@ window.ListingData = {
             if (rurl.toLowerCase().indexOf('view.aspx') > -1) //view page with pcode
             {
               rurl = rurl.replace('&PCODE=', '');
-              //console.log('1');
               window.open(_spPageContextInfo.webAbsoluteUrl + rurl + '&IID=' + ritemid + '&PCODE=' + pcode + '&TID=' + taskid + '&WFs', '_blank'); //
 
             } else if (rurl.toLowerCase().indexOf('edit') > -1) //edit page is mainly without pcode [just in case!]
             {
               rurl = rurl.replace('&PCODE=', '');
-              //console.log(rurl);
               window.open(_spPageContextInfo.webAbsoluteUrl + rurl + '&IID=' + ritemid + '&PCODE=' + pcode + '&TID=' + taskid + '&WFs', '_blank'); //
-              // console.log('jumana');
             } else //Listing page with pcode
             {
 
@@ -1438,7 +1423,6 @@ window.ListingData = {
           {
             window.open(_spPageContextInfo.webAbsoluteUrl + rurl + '&PCODE=' + pcode + '&IID=' + ritemid + '&TID=' + taskid + '&WFs', '_blank'); //+'&TID='+taskid
           } else if ((rurl.toLowerCase().indexOf('schedule.aspx') > -1) && (window.location.href.toLowerCase().indexOf('&wfs') > -1)) {
-            // console.log('2');
             rurl = rurl.replace('&PCODE=', '');
             window.open(_spPageContextInfo.webAbsoluteUrl + rurl + puid + '&PCODE=' + pcode + '&TID=' + taskid + '&WFs', '_blank'); //+'&TID='+taskid
           } else {
@@ -1563,14 +1547,11 @@ window.ListingData = {
             newdate[1] = enmonths[index];
             mydata[i][IN[j]] = newdate.join(" ");
           }
-          // console.log(mydata[i][IN[j]]);
-          // if (isshown)
           table +=
             "<td>" +
             mydata[i][IN[j]].toString().replaceAll(" ", "%20") +
             "</td>"; //fixing spaces issue
         }
-        // if (isshown)
         table += "</tr>";
       }
       table += "</tbody></table></body></html>";
@@ -1586,7 +1567,6 @@ window.ListingData = {
   //fill filteration DDLs data
   Get_DDL: {
     init: function () {
-      console.log("IN GET DDDL INIT")
       if (isRoleDataLevelAccess && (!UserICode && !UserSTCode && !USERPCODE && isEmptyFilter)) {
         cmlQ = dataLevelAccessQuery ? dataLevelAccessQuery : PQuery;
       } else {
@@ -1602,9 +1582,7 @@ window.ListingData = {
           localStorageVar = [];
           TypsFields = [];
           // to add the new data when click show more to the filters dropdown in listing
-          console.log('recordsddl', recordsddl,
-            'total items', recordsddl.length);
-          console.log('allDataFilterArr', allDataFilterArr);
+    
 
           if (originalstate) { // add isTasks to not add to filter when change tabs
             allDataFilterArr = recordsddl
@@ -1649,30 +1627,24 @@ window.ListingData = {
               } else {
                 notcompletedcount += 1;
               }
-              console.log("today", today, "actualdate", item.ActualCompletedDate);
               var formatedactualdatemilestone = item.ActualCompletedDate.split("T").at(0);
               var day2 = formatedactualdatemilestone.split("/").at(0);
               var month2 = formatedactualdatemilestone.split("/").at(1);
               var year2 = formatedactualdatemilestone.split("/").at(2);
               var finalformatedactualdate = new Date(year2 + "-" + month2 + "-" + day2);
-              console.log(finalformatedactualdate, "finalformatedPlanneddate");
 
               if (today < finalformatedactualdate && item.Delivered !== true) {
                 countOfnostarted += 1;
-                console.log("there is a nostarted project!", countOfnostarted);
               }
-              console.log("today", today, "planneddate", item.PlannedDate);
               var formatedplaneddatemilestone =
                 item.PlannedDate.split("T").at(0);
               var day = formatedplaneddatemilestone.split("/").at(0);
               var month = formatedplaneddatemilestone.split("/").at(1);
               var year = formatedplaneddatemilestone.split("/").at(2);
               var finalformatedPlanneddate = new Date(year + "-" + month + "-" + day);
-              console.log(finalformatedPlanneddate, "finalformatedPlanneddate");
 
               if (today > finalformatedPlanneddate && item.Delivered !== true) {
                 latecount += 1;
-                console.log("there is a late project!", latecount);
               }
             });
             AllinitiativeMilestonesCounterContainer +=
@@ -1711,10 +1683,8 @@ window.ListingData = {
                   if (Field_In_Use[0].InternalName == Listing_Info[y].InternalName) { //catch columns one by one and get all items for it
                     //FilterationItems += obj[key] + ',';
                     if (Listing_Info[y].type == 'date') {
-                      // FilterationItems.push(obj[key]);
                       FilterationItems.push(obj[key]);
-                      // console.log('there is a date filter');
-                      // console.log(obj[key]);
+       
                     }
                     else {
                       FilterationItems.push(obj[key]);
@@ -1728,7 +1698,6 @@ window.ListingData = {
               FilterationItems = [];
             }
           }
-          console.log(AllFilterationItems, "AllFilterationItems AllFilterationItems")
           ListingData.Get_DDL.Build_HTML(AllFilterationItems, InternalNameFields, DisplayNameFields, TypsFields, NeedTrans, localStorageVar); //call functopn to split data and build html for DDLs
           changeResources();
           ListingData.g.filtertrigger(); //call filteration function
@@ -1753,7 +1722,6 @@ window.ListingData = {
       DisplayNames = DisplayNames.filter((v, i, a) => a.indexOf(v) === i);
       FilterNames = FilterNames.filter((v, i, a) => a.indexOf(v) === i);
       //TypsFieldsAll = TypsFieldsAll.filter((v, i, a) => a.indexOf(v) === i);
-      // console.log('AllData', AllData);
 
       for (var L = 0; L < DisplayNames.length; L++) {
         //buld ddl html
@@ -1782,7 +1750,6 @@ window.ListingData = {
             else {
               if (TypsFieldsAll[L] == "date" && AllData[L][z] != No_Data) {
                 var dateDisplay = AllData[L][z].slice(0, AllData[L][z].indexOf('T'))
-                // console.log('dateDisplay',dateDisplay);
                 FilterationcontractsHTML +=
                   '<label class="dropdown-item"><span title="' + AllData[L][z] + '" class="textintofilter">' + dateDisplay + '</span><input data-type="' + TypsFieldsAll[L] + '" data-internal="' + FilterNames[L] + '" type="checkbox" name="' + FilterNames[L] + '" value="' + AllData[L][z] + '">' +
                   '</label>'
@@ -2210,8 +2177,6 @@ window.Delegate_Data_Submit = {
     while (listItemEnum.moveNext()) {
       var currentItem = listItemEnum.get_current();
       currentId = currentItem.get_item("ID");
-      // console.log(currentId);
-
       delegatedtaskname = currentItem.get_item('Title');
       Workflowname = currentItem.get_item('WorkflowName');
       WorkflowInstanceId = currentItem.get_item('WFInstanceID');
@@ -2227,10 +2192,7 @@ window.Delegate_Data_Submit = {
       ProjectCode = currentItem.get_item('ProjectCode');
       TaskDelegatedFrom = currentItem.get_item('AssignedTo');
 
-      // if (Workflowname == "Project" || Workflowname == "Idea") {
-      // console.log(wo\\)
-      // if(Workflowname == 'Project' || Workflowname == 'DV'){ // should change after mah fix tsk configration list
-      //
+  
       if (Workflowname) {
         if (localStorage.getItem('Dynamo_Tasks Configuration') != null) {
           stages = JSON.parse(localStorage.getItem("Dynamo_Tasks Configuration") || "[]");
@@ -2358,7 +2320,6 @@ window.DeleteDelegate_Data_Submit = {
         }
         context.executeQueryAsync(function () {
           //Item Updated sucess
-          // console.log("Items are updated Successfully");
           dfd.resolve();
           window.location.reload();
         }, function (sender, args) {
