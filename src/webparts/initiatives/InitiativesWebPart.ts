@@ -43,7 +43,7 @@ export default class InitiativesWebPart extends BaseClientSideWebPart<IInitiativ
                     <img css="w-100" src="${logo}">
                 </a>
             </div>
-            <ul class="nav flex-column">
+            <ul class="nav flex-column sidelinkscontainer">
                 <!--
                 <li class="nav-item">
                     <a class="nav-link active" href="../chat.html">

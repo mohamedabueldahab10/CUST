@@ -110,7 +110,7 @@ export default class MasterPage extends React.Component<IMasterPageProps, {
 								<img className="w-100" src={logo} />
 							</a>
 						</div>
-						<ul className="nav flex-column"></ul>
+						<ul className="nav flex-column sidelinkscontainer"></ul>
 						<div
 							className="accordion important-links-ctx"
 							id="accordionImportantLinks"

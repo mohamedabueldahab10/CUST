@@ -52,7 +52,7 @@ export default class InitiativesMainHomeWebPart extends BaseClientSideWebPart<II
                     <img css="w-100" src="${logo}">
                 </a>
             </div>
-            <ul class="nav flex-column">
+            <ul class="nav flex-column sidelinkscontainer">
             </ul>
             <div class="accordion important-links-ctx" id="accordionImportantLinks">
             <div class="card bg-transparent border-0">
