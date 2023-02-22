@@ -25,7 +25,7 @@ var Information_Form = [
         DisplayName: 'اسم المستخدم',
         type: 'picker', //user
         validation: 'required',
-        // display: 'none',
+        display: 'none',
         ToggleName: 'Username',
       },
       {
