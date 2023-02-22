@@ -711,28 +711,7 @@ var MainKPIs_Info_Request = {
     }
 
 
-    if (isKpiCode && firstRender) {
-      $('.filterTarget').hide()
-      firstRender = false
-    }
 
-    var hideSendBtn = true
-
-    debugger
-
-    Create_Access.forEach(el => {
-      if (el == 'targets.aspx') {
-        hideSendBtn = false
-      }
-    })
-
-    if (hideSendBtn) {
-      $("body").append(
-        "<style>" +
-        ".btn-addTarget{opacity: .6;pointer-events: none;display:none}" +
-        "</style>"
-      )
-    }
 
 
 
@@ -763,15 +742,38 @@ var MainKPIs_Info_Request = {
     $('input[data-recurrencechanged*="yes"]').prop('disabled', true);
     //
 
-    if (isMinister || isBITeam || isPerformanceLeader ||
-      //isSPMTeam || 
+    // if (isMinister || isBITeam || isPerformanceLeader ||
+    //   //isSPMTeam || 
 
-      isEPMO) {
+    //   isEPMO) {
+    //   $("body").append(
+    //     "<style>" +
+    //     ".btn-save{display:none}" +
+    //     "</style>"
+    //   );
+    // }
+
+    if (isKpiCode && firstRender) {
+      $('.filterTarget').hide()
+      firstRender = false
+    }
+
+    var hideSendBtn = true
+
+    debugger
+
+    Create_Access.forEach(el => {
+      if (el == 'targets.aspx') {
+        hideSendBtn = false
+      }
+    })
+
+    if (hideSendBtn) {
       $("body").append(
         "<style>" +
-        ".btn-save{display:none}" +
+        ".btn-addTarget{opacity: .6;pointer-events: none;display:none}" +
         "</style>"
-      );
+      )
     }
 
     changeResources();
