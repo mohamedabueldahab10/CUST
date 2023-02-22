@@ -357,7 +357,8 @@ window.ListInfo = {
 
             let affectedSelectsInfo = [];
             $("[dynamic=" + parentFieldName + "]").each(function () {
-
+              console.log(parentFieldName, "parentFieldName")
+              debugger
               let affectedFieldName = $(this).attr("id");
               let listName = $(this).data("listname");
               let filterField = $(this).data("filterfield");
@@ -635,7 +636,7 @@ window.ListInfo = {
 
           // disabled enable fields based on selection & onload
 
-          $("[data-toggledisabledvalues]").on("change",function(){
+          $("[data-toggledisabledvalues]").on("change", function () {
             ListInfo.g.toggleDisabledFields($(this));
 
           })
@@ -4844,6 +4845,7 @@ window.ListInfo = {
           '">' +
           element.queryFieldValue +
           "</Value></Eq></And></Where><OrderBy><FieldRef Name='Name' Ascending='True' /></OrderBy></Query></View>";
+
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -4901,12 +4903,11 @@ window.ListInfo = {
           element.Dispfieldkey +
           '"  data-filterfield="' +
           element.filterField +
-
-          '"data-queryfieldvalue="' + // oday
+          '"data-queryfieldvalue="' +
           element.queryFieldValue +
-          '"data-queryfield="' + // oday
+          '"data-queryfield="' +
           element.queryField +
-          '"data-queryfieldtype="' + // oday
+          '"data-queryfieldtype="' +
           element.queryFieldType +
 
           '" data-filterfieldtype="' +
@@ -5722,9 +5723,9 @@ window.ListInfo = {
     },
 
     toggleFields: function ($this) {
-      
+
       var myValue = $this.val(),
-       mytype= $this,
+        mytype = $this,
         toggleValues =
           $this.data("togglevalues").indexOf(":::") > -1
             ? $this.data("togglevalues").split(":::")
@@ -5750,12 +5751,10 @@ window.ListInfo = {
             : item.match(/\[(.*?)\]/)[1] + ",";
       });
       allToggleFields = myToggleFields.split(",");
-      debugger
-      console.log(allToggleFields, 'testttttt')
+
       if (isShowVal) {
         allToggleFields.forEach((item, i, arr) => {
-          debugger
-          console.log(item ,arr, 'itetetetetetemmmmm');
+
           $('[data-togglename="' + item + '"]')
             .parent()
             .hide();
@@ -5770,7 +5769,7 @@ window.ListInfo = {
             .parent()
             .is(":hidden"),
             myFieldParent = $('[data-togglename="' + item + '"]').parent();
-            myFieldParentofParent = $('[data-togglename="' + item + '"]');
+          myFieldParentofParent = $('[data-togglename="' + item + '"]');
           if (isHidden) {
             myFieldParent.show();
             myFieldParentofParent.show();
@@ -5801,7 +5800,7 @@ window.ListInfo = {
           }
         });
       } else {
-        debugger
+
         allToggleFields.forEach((item, i, arr) => {
           $('[data-togglename="' + item + '"]')
             .parent()
@@ -5870,7 +5869,7 @@ window.ListInfo = {
         "allToggleRequiredFields allToggleRequiredFields"
       );
     },
-    toggleDisabledFields:function($this){
+    toggleDisabledFields: function ($this) {
       var myValue = $this.val();
 
       var toggleDisabledValues =
@@ -5898,8 +5897,7 @@ window.ListInfo = {
       });
       allToggleDisabledFields = myToggleDisabledFields.split(",");
 
-      console.log(allToggleDisabledFields,"allToggleDisabledFields")
-      debugger
+
       if (isShowVal) {
         allToggleDisabledFields.forEach((item, i, arr) => {
           $('[data-toggledisabledname="' + item + '"]')
@@ -7807,7 +7805,7 @@ var View_ListInfo = {
           break;
 
         case "lookupmultiselectwithoutrepeat":
-          debugger
+
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -8226,11 +8224,19 @@ var Dynamic_Data_Request = {
 };
 dynamicAffectSelect = {
   // The main Initialization function
+  // The main Initialization function
   init: function (affectedSelectsInfo) {
-
-    var queryFieldValue = affectedSelectsInfo[0].queryFieldValue ? affectedSelectsInfo[0].queryFieldValue : ''
-    var queryFieldName = affectedSelectsInfo[0].queryFieldName ? affectedSelectsInfo[0].queryFieldName : ''
-    var queryFieldType = affectedSelectsInfo[0].queryFieldType ? affectedSelectsInfo[0].queryFieldType : ''
+    console.log(affectedSelectsInfo, "affectedSelectsInfo");
+    debugger
+    var queryFieldValue = affectedSelectsInfo[0].queryFieldValue
+      ? affectedSelectsInfo[0].queryFieldValue
+      : "";
+    var queryFieldName = affectedSelectsInfo[0].queryFieldName
+      ? affectedSelectsInfo[0].queryFieldName
+      : "";
+    var queryFieldType = affectedSelectsInfo[0].queryFieldType
+      ? affectedSelectsInfo[0].queryFieldType
+      : "";
 
     dynamicAffectSelect.g.affectedSelectsInfo = affectedSelectsInfo;
     var clientContext = new SP.ClientContext.get_current();
@@ -8240,36 +8246,47 @@ dynamicAffectSelect = {
       .getByTitle(affectedSelectsInfo[0].listName);
     var camlQuery = new SP.CamlQuery();
 
-    var Query = ''
+    var Query = "";
+    var valueToFilter = affectedSelectsInfo[0].customFilterValue
+      ? affectedSelectsInfo[0].customFilterValue
+      : affectedSelectsInfo[0].parentFieldValue;
 
-    if (queryFieldValue && queryFieldName && queryFieldType) {
+    if (
+      affectedSelectsInfo[0].isCustomFilterValue === "true" &&
+      !affectedSelectsInfo[0].customFilterValue
+    ) {
       Query = `<View><Query>
-			<Where><And>
-			<Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
-			<And>
-			<Eq><FieldRef Name="${affectedSelectsInfo[0].filterField}"/><Value Type="${affectedSelectsInfo[0].filterFieldType}">${affectedSelectsInfo[0].parentFieldValue}</Value></Eq>
-			<Eq><FieldRef Name="${queryFieldName}" /><Value Type="${queryFieldType}">${queryFieldValue}</Value></Eq></Eq>
-			</And></And></Where>
-			<OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`
+        <Where>
+          <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
+          </Where>
+        <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`;
+    } else if (
+      queryFieldValue &&
+      queryFieldValue != "undefined" &&
+      queryFieldName &&
+      queryFieldName != "undefined" &&
+      queryFieldType &&
+      queryFieldType != "undefined"
+    ) {
+      Query = `<View><Query>
+        <Where><And>
+        <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
+        <And>
+        <Eq><FieldRef Name="${affectedSelectsInfo[0].filterField}"/><Value Type="${affectedSelectsInfo[0].filterFieldType}">${valueToFilter}</Value></Eq>
+        <Eq><FieldRef Name="${queryFieldName}" /><Value Type="${queryFieldType}">${queryFieldValue}</Value></Eq></Eq>
+        </And></And></Where>
+        <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`;
     } else {
       Query = `<View><Query>
-			<Where><And>
-			  <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
-			  <Eq><FieldRef Name="${affectedSelectsInfo[0].filterField}"/><Value Type="${affectedSelectsInfo[0].filterFieldType}">${affectedSelectsInfo[0].parentFieldValue}</Value></Eq>
-			</And></Where>
-		  <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`
+        <Where><And>
+          <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
+          <Eq><FieldRef Name="${affectedSelectsInfo[0].filterField}"/><Value Type="${affectedSelectsInfo[0].filterFieldType}">${valueToFilter}</Value></Eq>
+        </And></Where>
+        <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`;
     }
 
     camlQuery.set_viewXml(Query);
 
-    // 		camlQuery.set_viewXml(
-    // 			`<View><Query>
-    //     <Where><And>
-    //       <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
-    //       <Eq><FieldRef Name="${affectedSelectsInfo[0].filterField}"/><Value Type="${affectedSelectsInfo[0].filterFieldType}">${affectedSelectsInfo[0].parentFieldValue}</Value></Eq>
-    //     </And></Where>
-    //   <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`
-    // 		);
     dynamicAffectSelect.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(dynamicAffectSelect.g.collListItem);
     clientContext.executeQueryAsync(
