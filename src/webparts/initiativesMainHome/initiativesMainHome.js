@@ -746,7 +746,8 @@ window.initiativeRequest = {
               checked: false,
               disabled: true,
             })
-            .trigger("change");
+            // .trigger("change");
+            initiativeRequest.g.clearFilterHandler()
         }
       });
       initiativeRequest.g.filtertrigger(); // filter trigger
@@ -818,6 +819,10 @@ window.initiativeRequest = {
         FilterChoices = [];
         portfoliosdata = [];
         portfoliosoptions = [];
+
+        if (isRoleDataLevelAccess) {
+					FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
+				}
 
         $(".page-filter .dropdown-menu").each(function () {
           //looping through filters
@@ -1082,6 +1087,11 @@ window.initiativeRequest = {
               });
           }
           FilterChoices = [];
+
+          if (isRoleDataLevelAccess) {
+						FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
+					}
+
           initiativeRequest.g.camlfilterbuilder();
 
           if (
@@ -1595,6 +1605,51 @@ window.initiativeRequest = {
         }
       });
     },
+    clearFilterHandler: function () {
+
+			FilterChoices = [];
+			portfoliosdata = [];
+			portfoliosoptions = [];
+			if (isRoleDataLevelAccess) {
+				FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
+			}
+			$(".page-filter .dropdown-menu").each(function () {
+				//looping through filters
+				var internalName = $(this).find("input:checkbox").data("internal");
+				var fieldType = $(this).find("input:checkbox").data("type");
+				var BooleanfieldType = $(this)
+					.find("input:checkbox")
+					.data("columntype");
+				// console.log('BooleanfieldType', BooleanfieldType);
+				var selectedchoices = $(this)
+					.find("input:checked")
+					.map(function () {
+						//getting selected choices
+						return $(this).val();
+					})
+					.get();
+				if (selectedchoices.length) {
+					//checking if there are choices
+					if (BooleanfieldType == "Boolean") {
+						for (i = 0; i < selectedchoices.length; i++) {
+							if (
+								selectedchoices[i] == "true" ||
+								selectedchoices[i] == "Yes" ||
+								selectedchoices[i] == "yes"
+							) {
+								selectedchoices[i] = 1;
+							} else selectedchoices[i] = 0;
+						}
+					}
+					FilterChoices.push({
+						internalName: internalName,
+						Type: fieldType,
+						Values: selectedchoices,
+					});
+				}
+			});
+			initiativeRequest.g.camlfilterbuilder();
+		}
   },
 };
 window.checkInitiativeHomeHtml = setInterval(function () {
