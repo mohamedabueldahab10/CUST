@@ -8,7 +8,12 @@ window.currentMainList = "";
 window.projectActualBudget = 0;
 window.initiativeActualBudget = 0;
 window.CurrentUserTasksCount = 0;
-
+window.USERisProjectHome =
+window.location.href.toLowerCase().indexOf("/projecthome.aspx") > -1;
+window.USERisInitiativeHome =
+window.location.href.toLowerCase().indexOf("/initiativehome.aspx") > -1;  
+window.USERisStrategicPartnershipHome =
+window.location.href.toLowerCase().indexOf("/strategicpartnershiphome.aspx") > -1;
 var BreakException = {};
 var UserRole,
   UserAccessSectorCode,
@@ -122,12 +127,12 @@ var UserRole,
     window.location.href.toLowerCase().indexOf("listkey=") > -1
       ? window.location.href.split("ListKey=")[1].split("&")[0]
       : "",
-  USERisProjectHome =
-    window.location.href.toLowerCase().indexOf("/projecthome.aspx") > -1,
-  USERisInitiativeHome =
-    window.location.href.toLowerCase().indexOf("/initiativehome.aspx") > -1,  
-  USERisStrategicPartnershipHome =
-    window.location.href.toLowerCase().indexOf("/strategicpartnershiphome.aspx") > -1,
+  // USERisProjectHome =
+  //   window.location.href.toLowerCase().indexOf("/projecthome.aspx") > -1,
+  // USERisInitiativeHome =
+  //   window.location.href.toLowerCase().indexOf("/initiativehome.aspx") > -1,  
+  // USERisStrategicPartnershipHome =
+  //   window.location.href.toLowerCase().indexOf("/strategicpartnershiphome.aspx") > -1,
   USERProjRelated = [],
   // isWF = window.location.href.toLowerCase().indexOf('&wfs') > -1,
   USERForBreadCrumbs = "",
