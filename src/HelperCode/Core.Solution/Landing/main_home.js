@@ -173,8 +173,8 @@ window.Project_Info_Request = {
     debugger
     if (originalstate) {
       //*****call charts filteration */
-      if (isRoleDataLevelAccess) {
-        PQuery = dataLevelAccessQuery;
+      if (isRoleDataLevelAccess  && !UserICode && !USERPCODE) {
+        PQuery = dataLevelAccessQuery ? dataLevelAccessQuery : AccessQuery;
       } else {
         PQuery = AccessQuery;
       }
@@ -740,7 +740,8 @@ window.Project_Info_Request = {
               checked: false,
               disabled: true,
             })
-            .trigger("change");
+            // .trigger("change");
+            Project_Info_Request.g.clearFilterHandler() // to clear the filter
         }
       });
       Project_Info_Request.g.filtertrigger(); // filter trigger
@@ -816,6 +817,10 @@ window.Project_Info_Request = {
         FilterChoices = [];
         portfoliosdata = [];
         portfoliosoptions = [];
+
+        if (isRoleDataLevelAccess) {
+					FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
+				}
         console.log("inside filter trigger  in main home");
 
         $(".page-filter .dropdown-menu").each(function () {
@@ -1080,6 +1085,11 @@ window.Project_Info_Request = {
               });
           }
           FilterChoices = [];
+
+          if (isRoleDataLevelAccess) {
+            FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
+          }
+
           Project_Info_Request.g.camlfilterbuilder();
 
           if (
@@ -1496,6 +1506,50 @@ window.Project_Info_Request = {
         }
       });
     },
+    clearFilterHandler: function () {
+			FilterChoices = [];
+			portfoliosdata = [];
+			portfoliosoptions = [];
+			if (isRoleDataLevelAccess) {
+				FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
+			}
+			$(".page-filter .dropdown-menu").each(function () {
+				//looping through filters
+				var internalName = $(this).find("input:checkbox").data("internal");
+				var fieldType = $(this).find("input:checkbox").data("type");
+				var BooleanfieldType = $(this)
+					.find("input:checkbox")
+					.data("columntype");
+				// console.log('BooleanfieldType', BooleanfieldType);
+				var selectedchoices = $(this)
+					.find("input:checked")
+					.map(function () {
+						//getting selected choices
+						return $(this).val();
+					})
+					.get();
+				if (selectedchoices.length) {
+					//checking if there are choices
+					if (BooleanfieldType == "Boolean") {
+						for (i = 0; i < selectedchoices.length; i++) {
+							if (
+								selectedchoices[i] == "true" ||
+								selectedchoices[i] == "Yes" ||
+								selectedchoices[i] == "yes"
+							) {
+								selectedchoices[i] = 1;
+							} else selectedchoices[i] = 0;
+						}
+					}
+					FilterChoices.push({
+						internalName: internalName,
+						Type: fieldType,
+						Values: selectedchoices,
+					});
+				}
+			});
+			Project_Info_Request.g.camlfilterbuilder();
+		}
   },
 };
 //Risks
