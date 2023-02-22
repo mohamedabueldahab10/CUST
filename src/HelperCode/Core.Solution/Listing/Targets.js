@@ -716,6 +716,24 @@ var MainKPIs_Info_Request = {
       firstRender = false
     }
 
+    var hideSendBtn = true
+
+    debugger
+
+    Create_Access.forEach(el => {
+      if (el == 'Targets.aspx') {
+        hideSendBtn = false
+      }
+    })
+
+    if (hideSendBtn) {
+      $("body").append(
+        "<style>" +
+        ".btn-addTarget{opacity: .6;pointer-events: none;display:none}" +
+        "</style>"
+      )
+    }
+
 
 
     //after looping list items
