@@ -6457,3 +6457,7 @@ span.errMsgField.Resources {
     color: #f00;
     display: none;
 }
+
+.sidelinkscontainer {
+    min-height: -webkit-fill-available;
+}
