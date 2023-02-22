@@ -13,7 +13,8 @@ var strategicName = "",
   milestonelstMonthClicked = "",
   listStrategicPartnershipProgress = "",
   actualDeliverable = 0,
-  plannedDeliverable = 0;
+  plannedDeliverable = 0,
+  STStage = "";
 
 
 
@@ -98,10 +99,29 @@ var StrategicPS_Home_Info_Request = {
       actualDeliverable = oListItem.get_item("Actual") || 0;
       plannedDeliverable = oListItem.get_item("Planned") || 0;
 
+      STStage = oListItem.get_item('WFStage') || No_Data;
+
+
       if (strategicSubSector && strategicSubSector != No_Data) {
         Get_PartnerShip_Representative.init();
       }
 
+
+      // for strategic stage bilangual
+      var strategicStagearr = [];
+      if (localStorage.getItem('Dynamo_GenericWFStagesConfig') != null) {
+        strategicStagearr = JSON.parse(localStorage.getItem('Dynamo_GenericWFStagesConfig'));
+        strategicStagearr = strategicStagearr.filter(function (a) {
+          return a.code === STStage
+        });
+        if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+          STStage = strategicStagearr.length ? strategicStagearr[0].name : '';
+        } else STStage = strategicStagearr.length ? strategicStagearr[0].nameEn : '';
+      }
+
+
+
+      //////
 
       var strategicsectorarr = [];
 
@@ -210,7 +230,7 @@ var StrategicPS_Home_Info_Request = {
         '<div class="d-inline-flex flex-column mx-2">' +
         '<span data-trans-pattr60 class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
         '<h4 class="acc-title d-inline-flex black initiativeProjHomeInfoValueStyle">' +
-        "stageNamestr" +
+        STStage +
         "</h4>" +
         "</div>" +
         '<div class="d-inline-flex flex-column mx-2">' +

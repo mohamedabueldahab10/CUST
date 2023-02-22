@@ -1906,6 +1906,13 @@ window.Dynamo_Data = [
     Code: "Title",
   },
   {
+		ListName: "GenericWFStagesConfig",
+		Name: "ArabicName",
+		NameEn: "EnglishName",
+		Code: "Title",
+		loadOn: [], // all pages if empty
+	},
+  {
     ListName: "Portfolio",
     Name: "Name",
     NameEn: "NameEn",
