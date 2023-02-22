@@ -124,6 +124,10 @@ var UserRole,
       : "",
   USERisProjectHome =
     window.location.href.toLowerCase().indexOf("/projecthome.aspx") > -1,
+  USERisInitiativeHome =
+    window.location.href.toLowerCase().indexOf("/initiativehome.aspx") > -1,  
+  USERisStrategicPartnershipHome =
+    window.location.href.toLowerCase().indexOf("/strategicpartnershiphome.aspx") > -1,
   USERProjRelated = [],
   // isWF = window.location.href.toLowerCase().indexOf('&wfs') > -1,
   USERForBreadCrumbs = "",
@@ -2893,7 +2897,7 @@ window.userCalls = {
     switch (
     true //Create Access
     ) {
-      case (USERisNew || USERisListing || USERisProjectHome) &&
+      case (USERisNew || USERisListing || USERisProjectHome || USERisInitiativeHome || USERisStrategicPartnershipHome) &&
         Create_Access.indexOf(USERlistkey) == -1 &&
         Create_Access.indexOf(Page_UrlName) == -1 &&
         !USERisWF:
