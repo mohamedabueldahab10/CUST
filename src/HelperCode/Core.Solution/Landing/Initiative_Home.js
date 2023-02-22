@@ -169,9 +169,9 @@ var initiativeHomeInfo_Request = {
       initiativecost = oListItem.get_item("EstimatedCost") || 0;
       ProgramTotalCost = oListItem.get_item("ProgramTotalCost") || 0;
       CurrentBudget = oListItem.get_item("CurrentBuget") || 0;
-      instage = oListItem.get_item("Stage") || No_Data;
+      instage = oListItem.get_item("WFStage") || No_Data; 
       projectTypes = oListItem.get_item("Types") || No_Data;
-      stagename = oListItem.get_item("Stage") || No_Data;
+      // stagename = oListItem.get_item("Stage") || No_Data;
       projectSector = oListItem.get_item("Sector") || No_Data;
       projectSubsector = oListItem.get_item("SubSector") || No_Data;
       //Ghufran Calculated duration
@@ -234,63 +234,63 @@ var initiativeHomeInfo_Request = {
           ".card-body.project-delivery-info.border-bottom.pb-4 .mx-3.pt-3 .d-flex.justify-content-between.pb-3.mb-0.lh-125.border-gray span.fnt-14.bold"
         ).text(No_Data);
       }
-      var stagenamearr = stagename.replaceAll("__", "").split(";");
-      var stagenamearrwithoutunderscoreten = stagename
-        .replace(/__S10;| __S22;| __S31;/g, "")
-        .split(";");
+      // var stagenamearr = stagename.replaceAll("__", "").split(";");
+      // var stagenamearrwithoutunderscoreten = stagename
+      //   .replace(/__S10;| __S22;| __S31;/g, "")
+      //   .split(";");
       // console.log('stagenamearrwithoutunderscoreten', stagenamearrwithoutunderscoreten);
-      var stageName = [],
-        stageNamestr = "";
-      if (localStorage.getItem("Dynamo_Stages") != null) {
-        stagearr = JSON.parse(localStorage.getItem("Dynamo_Stages") || "[]");
-        stagearr = stagearr.filter((item) => stagenamearr.includes(item.code));
-        stagearrwithoutunderscore = JSON.parse(
-          localStorage.getItem("Dynamo_Stages") || "[]"
-        );
-        stagearrwithoutunderscore = stagearrwithoutunderscore.filter((item) =>
-          stagenamearrwithoutunderscoreten.includes(item.code)
-        );
-        // console.log('stagearrwithoutunderscore', stagearrwithoutunderscore);
+      // var stageName = [],
+      //   stageNamestr = "";
+      // if (localStorage.getItem("Dynamo_Stages") != null) {
+      //   stagearr = JSON.parse(localStorage.getItem("Dynamo_Stages") || "[]");
+      //   stagearr = stagearr.filter((item) => stagenamearr.includes(item.code));
+      //   stagearrwithoutunderscore = JSON.parse(
+      //     localStorage.getItem("Dynamo_Stages") || "[]"
+      //   );
+      //   stagearrwithoutunderscore = stagearrwithoutunderscore.filter((item) =>
+      //     stagenamearrwithoutunderscoreten.includes(item.code)
+      //   );
+      //   // console.log('stagearrwithoutunderscore', stagearrwithoutunderscore);
 
-        if (
-          localStorage.getItem("lng") == null ||
-          localStorage.getItem("lng") == "ar"
-        ) {
-          stagearrwithoutunderscore.forEach((item) =>
-            stageName.push(item.name)
-          );
-        } else
-          stagearrwithoutunderscore.forEach((item) =>
-            stageName.push(item.nameEn)
-          );
-      }
+      //   if (
+      //     localStorage.getItem("lng") == null ||
+      //     localStorage.getItem("lng") == "ar"
+      //   ) {
+      //     stagearrwithoutunderscore.forEach((item) =>
+      //       stageName.push(item.name)
+      //     );
+      //   } else
+      //     stagearrwithoutunderscore.forEach((item) =>
+      //       stageName.push(item.nameEn)
+      //     );
+      // }
 
-      if (stageName.toString().split() == "") {
-        if (
-          localStorage.getItem("lng") == null ||
-          localStorage.getItem("lng") == "ar"
-        ) {
-          stageNamestr = "المشروع منتهي";
-        } else {
-          stageNamestr = "Project Completed";
-        }
-      } else {
-        stageNamestr = stageName.toString();
-      }
+      // if (stageName.toString().split() == "") {
+      //   if (
+      //     localStorage.getItem("lng") == null ||
+      //     localStorage.getItem("lng") == "ar"
+      //   ) {
+      //     stageNamestr = "المشروع منتهي";
+      //   } else {
+      //     stageNamestr = "Project Completed";
+      //   }
+      // } else {
+      //   stageNamestr = stageName.toString();
+      // }
 
-      if (localStorage.getItem("Dynamo_Phases") != null) {
-        phasearr = JSON.parse(localStorage.getItem("Dynamo_Phases") || "[]");
-        phasearr = phasearr.filter(function (a) {
-          return a.code == phasename;
-        });
+      // if (localStorage.getItem("Dynamo_Phases") != null) {
+      //   phasearr = JSON.parse(localStorage.getItem("Dynamo_Phases") || "[]");
+      //   phasearr = phasearr.filter(function (a) {
+      //     return a.code == phasename;
+      //   });
 
-        if (
-          localStorage.getItem("lng") == null ||
-          localStorage.getItem("lng") == "ar"
-        ) {
-          phasename = phasearr.length ? phasearr[0].name : "";
-        } else phasename = phasearr.length ? phasearr[0].nameEn : "";
-      }
+      //   if (
+      //     localStorage.getItem("lng") == null ||
+      //     localStorage.getItem("lng") == "ar"
+      //   ) {
+      //     phasename = phasearr.length ? phasearr[0].name : "";
+      //   } else phasename = phasearr.length ? phasearr[0].nameEn : "";
+      // }
       //////////////////////////////////
       // for Sector bilangual
       var initiativeSectorarr = [];
@@ -337,8 +337,8 @@ var initiativeHomeInfo_Request = {
 
       // for initiative stage bilangual
       var initiativeStagearr = [];
-      if (localStorage.getItem("Dynamo_IStages") != null) {
-        initiativeStagearr = JSON.parse(localStorage.getItem("Dynamo_IStages"));
+      if (localStorage.getItem("Dynamo_GenericWFStagesConfig") != null) {
+        initiativeStagearr = JSON.parse(localStorage.getItem("Dynamo_GenericWFStagesConfig"));
         initiativeStagearr = initiativeStagearr.filter(function (a) {
           return a.code === instage;
         });
@@ -730,7 +730,7 @@ var initiativeHomeInfo_Request = {
       // $('.navbar.page-nav.px-5').append('<div class="closebtn"><button style="float: left;color:White;text-align:center;background: #853232;" class="btn pop-green close-project" style="float: left;font-size: 17px;" type="button" onclick="ProjectClosure_Submit.g.closureappend()"><span data-trans-closeproject class="Resources"></span></button></div>');
     }
 
-    IStagesConfiguration_Info_Request.init();
+    // IStagesConfiguration_Info_Request.init();
 
     //calling other data
     Projects_Info_Request.init();
@@ -1953,249 +1953,249 @@ var Benefits_Info_Request = {
   g: {},
 };
 
-// get the Istage configuration info request
-var IStagesConfiguration_Info_Request = {
-  // The main Initialization function
-  init: function () {
-    var clientContext = new SP.ClientContext.get_current();
-    var oList = clientContext
-      .get_web()
-      .get_lists()
-      .getByTitle("IStagesConfiguration");
-    var camlQuery = new SP.CamlQuery();
-    camlQuery.set_viewXml(
-      "<View><Query><OrderBy><FieldRef Name='StageCode' Ascending='True' /></OrderBy></Query></View>"
-    );
-    IStagesConfiguration_Info_Request.g.collListItem =
-      oList.getItems(camlQuery); //declared inside object scope only
-    clientContext.load(IStagesConfiguration_Info_Request.g.collListItem);
-    clientContext.executeQueryAsync(
-      Function.createDelegate(
-        this,
-        IStagesConfiguration_Info_Request.onSuccess
-      ),
-      Function.createDelegate(this, IStagesConfiguration_Info_Request.onError)
-    );
-  },
-  onSuccess: function (sender, args) {
-    var collListItem = IStagesConfiguration_Info_Request.g.collListItem;
-    var listItemEnum = collListItem.getEnumerator();
+// // get the Istage configuration info request
+// var IStagesConfiguration_Info_Request = {
+//   // The main Initialization function
+//   init: function () {
+//     var clientContext = new SP.ClientContext.get_current();
+//     var oList = clientContext
+//       .get_web()
+//       .get_lists()
+//       .getByTitle("IStagesConfiguration");
+//     var camlQuery = new SP.CamlQuery();
+//     camlQuery.set_viewXml(
+//       "<View><Query><OrderBy><FieldRef Name='StageCode' Ascending='True' /></OrderBy></Query></View>"
+//     );
+//     IStagesConfiguration_Info_Request.g.collListItem =
+//       oList.getItems(camlQuery); //declared inside object scope only
+//     clientContext.load(IStagesConfiguration_Info_Request.g.collListItem);
+//     clientContext.executeQueryAsync(
+//       Function.createDelegate(
+//         this,
+//         IStagesConfiguration_Info_Request.onSuccess
+//       ),
+//       Function.createDelegate(this, IStagesConfiguration_Info_Request.onError)
+//     );
+//   },
+//   onSuccess: function (sender, args) {
+//     var collListItem = IStagesConfiguration_Info_Request.g.collListItem;
+//     var listItemEnum = collListItem.getEnumerator();
 
-    while (listItemEnum.moveNext()) {
-      var oListItem = listItemEnum.get_current();
-      stages = oListItem.get_item("StageCode");
-      projectType = oListItem.get_item("ProjectType");
+//     while (listItemEnum.moveNext()) {
+//       var oListItem = listItemEnum.get_current();
+//       stages = oListItem.get_item("StageCode");
+//       projectType = oListItem.get_item("ProjectType");
 
-      if (projectType == projectTypes || projectType == null) {
-        stageArr.push(stages);
-      }
-    }
-    Initiative_Stages_Data_Request.init();
-  },
-  onError: function (sender, args) {
-    // console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
-  },
-  // Global variables
-  g: {},
-};
+//       if (projectType == projectTypes || projectType == null) {
+//         stageArr.push(stages);
+//       }
+//     }
+//     // Initiative_Stages_Data_Request.init();
+//   },
+//   onError: function (sender, args) {
+//     // console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+//   },
+//   // Global variables
+//   g: {},
+// };
 
-var Initiative_Stages_Data_Request = {
-  // to get the phases and stages and display them on initiative home
-  onSuccess: function (sender, args) {
-    var collListItem = Initiative_Stages_Data_Request.g.collListItem;
-    var listItemEnum = collListItem.getEnumerator();
-    var stage,
-      phase,
-      phaseprev,
-      phasehtml = "",
-      stagehtml = "",
-      ischecked,
-      encodedphaename;
-    var count = 0;
-    while (listItemEnum.moveNext()) {
-      var oListItem = listItemEnum.get_current();
-      phase = oListItem.get_item("PhaseCode");
-      // encodedphaename = encodeURI(phase.replace(/\s/g, '')).replace(/[^a-zA-Z ]/g, "");
-      stage = oListItem.get_item("StageCode");
-      var stagename, phasename;
-      var stagearr = [],
-        phasearr = [];
+// var Initiative_Stages_Data_Request = {
+//   // to get the phases and stages and display them on initiative home
+//   onSuccess: function (sender, args) {
+//     var collListItem = Initiative_Stages_Data_Request.g.collListItem;
+//     var listItemEnum = collListItem.getEnumerator();
+//     var stage,
+//       phase,
+//       phaseprev,
+//       phasehtml = "",
+//       stagehtml = "",
+//       ischecked,
+//       encodedphaename;
+//     var count = 0;
+//     while (listItemEnum.moveNext()) {
+//       var oListItem = listItemEnum.get_current();
+//       phase = oListItem.get_item("PhaseCode");
+//       // encodedphaename = encodeURI(phase.replace(/\s/g, '')).replace(/[^a-zA-Z ]/g, "");
+//       stage = oListItem.get_item("StageCode");
+//       var stagename, phasename;
+//       var stagearr = [],
+//         phasearr = [];
 
-      if (localStorage.getItem("Dynamo_IStages") != null) {
-        // to get the stages name
-        stagearr = JSON.parse(localStorage.getItem("Dynamo_IStages") || "[]");
-        stagearr = stagearr.filter(function (item) {
-          return item.code == stage;
-        });
-        if (
-          localStorage.getItem("lng") == null ||
-          localStorage.getItem("lng") == "ar"
-        ) {
-          stagename = stagearr[0].name;
-        } else stagename = stagearr[0].nameEn;
-      }
+//       if (localStorage.getItem("Dynamo_IStages") != null) {
+//         // to get the stages name
+//         stagearr = JSON.parse(localStorage.getItem("Dynamo_IStages") || "[]");
+//         stagearr = stagearr.filter(function (item) {
+//           return item.code == stage;
+//         });
+//         if (
+//           localStorage.getItem("lng") == null ||
+//           localStorage.getItem("lng") == "ar"
+//         ) {
+//           stagename = stagearr[0].name;
+//         } else stagename = stagearr[0].nameEn;
+//       }
 
-      if (localStorage.getItem("Dynamo_Phases") != null) {
-        //to get the pases name like project phase
-        phasearr = JSON.parse(localStorage.getItem("Dynamo_Phases") || "[]");
-        phasearr = phasearr.filter(function (a) {
-          return a.code == phase;
-        });
+//       if (localStorage.getItem("Dynamo_Phases") != null) {
+//         //to get the pases name like project phase
+//         phasearr = JSON.parse(localStorage.getItem("Dynamo_Phases") || "[]");
+//         phasearr = phasearr.filter(function (a) {
+//           return a.code == phase;
+//         });
 
-        if (
-          localStorage.getItem("lng") == null ||
-          localStorage.getItem("lng") == "ar"
-        ) {
-          phasename = phasearr[0] ? phasearr[0].name : "";
-        } else phasename = phasearr[0] ? phasearr[0].nameEn : "";
-      }
-      count++;
-      ischecked = oListItem.get_item("Decision") ? "checked=checked" : "";
-      if (phase) {
-        if (phaseprev != phase) {
-          phasehtml +=
-            '<a class="new-Phase nav-link fnt-13 bold show ' +
-            phase +
-            '" id="v-pills-' +
-            phase +
-            '-tab" data-toggle="pill" href="#' +
-            phase +
-            '" role="tab" aria-controls="v-pills-' +
-            phase +
-            '" aria-selected="false">' +
-            '<span class="percent-complete">100%</span><span class="px-2" style="unicode-bidi: isolate;">' +
-            phasename +
-            "</span>" +
-            "</a>";
-          stagehtml +=
-            '</div></div><div class="new-Phase-Values tab-pane fade show" id="' +
-            phase +
-            '" role="tabpanel" aria-labelledby="v-pills-' +
-            phase +
-            '-tab">' +
-            '<div class="form-check custom-check d-flex align-items-center">' +
-            '<input class="form-check-input" type="checkbox" value="" id="defaultCheck' +
-            phase +
-            '" disabled="" ' +
-            ischecked +
-            ">" +
-            '<label class="form-check-label" for="defaultCheck' +
-            phase +
-            '">' +
-            stagename +
-            "</label>" +
-            "</div>";
-        } else {
-          stagehtml +=
-            '<div class="form-check custom-check d-flex align-items-center">' +
-            '<input class="form-check-input" type="checkbox" value="" id="defaultCheck' +
-            phase +
-            '" ' +
-            ischecked +
-            ' disabled="" ' +
-            ischecked +
-            ">" +
-            '<label class="form-check-label" for="defaultCheck' +
-            phase +
-            '">' +
-            stagename +
-            "</label>" +
-            "</div>";
-        }
-      }
+//         if (
+//           localStorage.getItem("lng") == null ||
+//           localStorage.getItem("lng") == "ar"
+//         ) {
+//           phasename = phasearr[0] ? phasearr[0].name : "";
+//         } else phasename = phasearr[0] ? phasearr[0].nameEn : "";
+//       }
+//       count++;
+//       ischecked = oListItem.get_item("Decision") ? "checked=checked" : "";
+//       if (phase) {
+//         if (phaseprev != phase) {
+//           phasehtml +=
+//             '<a class="new-Phase nav-link fnt-13 bold show ' +
+//             phase +
+//             '" id="v-pills-' +
+//             phase +
+//             '-tab" data-toggle="pill" href="#' +
+//             phase +
+//             '" role="tab" aria-controls="v-pills-' +
+//             phase +
+//             '" aria-selected="false">' +
+//             '<span class="percent-complete">100%</span><span class="px-2" style="unicode-bidi: isolate;">' +
+//             phasename +
+//             "</span>" +
+//             "</a>";
+//           stagehtml +=
+//             '</div></div><div class="new-Phase-Values tab-pane fade show" id="' +
+//             phase +
+//             '" role="tabpanel" aria-labelledby="v-pills-' +
+//             phase +
+//             '-tab">' +
+//             '<div class="form-check custom-check d-flex align-items-center">' +
+//             '<input class="form-check-input" type="checkbox" value="" id="defaultCheck' +
+//             phase +
+//             '" disabled="" ' +
+//             ischecked +
+//             ">" +
+//             '<label class="form-check-label" for="defaultCheck' +
+//             phase +
+//             '">' +
+//             stagename +
+//             "</label>" +
+//             "</div>";
+//         } else {
+//           stagehtml +=
+//             '<div class="form-check custom-check d-flex align-items-center">' +
+//             '<input class="form-check-input" type="checkbox" value="" id="defaultCheck' +
+//             phase +
+//             '" ' +
+//             ischecked +
+//             ' disabled="" ' +
+//             ischecked +
+//             ">" +
+//             '<label class="form-check-label" for="defaultCheck' +
+//             phase +
+//             '">' +
+//             stagename +
+//             "</label>" +
+//             "</div>";
+//         }
+//       }
 
-      phaseprev = oListItem.get_item("PhaseCode");
+//       phaseprev = oListItem.get_item("PhaseCode");
 
-      Initiative_Stages_Data_Request.g.StagesArray.push({
-        phase: oListItem.get_item("PhaseCode"),
-        stage: oListItem.get_item("StageCode"),
-      });
-    }
-    stagehtml += "</div>";
-    var nodata = '<h3 class="nodata">' + No_Data + "</h3>";
-    if (count > 0) {
-      $(".project-stages-ctx div#v-pills-tab").html(phasehtml);
-      $(".project-stages-ctx div#v-pills-tabContent").html(stagehtml);
-    } else {
-      $(".project-status-info").html(nodata);
-    }
-    changeResources();
-    var isactive = false;
-    $(".project-stages-ctx div#v-pills-tabContent > .tab-pane").each(
-      function () {
-        //
-        var Progress = $(this).find("[checked=checked]").length;
-        var Total = $(this).find(".form-check-input").length;
-        Progress = Math.round((Progress * 100) / Total);
+//       Initiative_Stages_Data_Request.g.StagesArray.push({
+//         phase: oListItem.get_item("PhaseCode"),
+//         stage: oListItem.get_item("StageCode"),
+//       });
+//     }
+//     stagehtml += "</div>";
+//     var nodata = '<h3 class="nodata">' + No_Data + "</h3>";
+//     if (count > 0) {
+//       $(".project-stages-ctx div#v-pills-tab").html(phasehtml);
+//       $(".project-stages-ctx div#v-pills-tabContent").html(stagehtml);
+//     } else {
+//       $(".project-status-info").html(nodata);
+//     }
+//     changeResources();
+//     var isactive = false;
+//     $(".project-stages-ctx div#v-pills-tabContent > .tab-pane").each(
+//       function () {
+//         //
+//         var Progress = $(this).find("[checked=checked]").length;
+//         var Total = $(this).find(".form-check-input").length;
+//         Progress = Math.round((Progress * 100) / Total);
 
-        if ($(this).attr("id").indexOf("Execution") > -1) {
-          //execution is based on deliverables
-          $(
-            'div.Phase[href="#' + $(this).attr("id") + '"] span.percentage'
-          ).append(POD + "%");
-          $(
-            ".project-stages-ctx div#v-pills-tab > ." +
-            $(this).attr("id") +
-            " .percent-complete"
-          ).text(Progress + "%");
-        } else {
-          $(
-            ".project-stages-ctx div#v-pills-tab > ." +
-            $(this).attr("id") +
-            " .percent-complete"
-          ).text(Progress + "%");
-        }
-        if (Progress != 100 && !isactive) {
-          isactive = true;
-          $(
-            ".project-stages-ctx div#v-pills-tab > ." + $(this).attr("id")
-          ).addClass("active");
-          $(this).addClass("active");
-          // $(this).find('.Stage-content').addClass('active');
-        }
-      }
-    );
-    if (!isactive) {
-      $(".new-Phase:last-child").addClass("active");
-      $(".new-Phase-Values:last-child").addClass("show active");
-    }
-  },
-  onError: function (sender, args) {
-    console.log(
-      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
-    );
-  },
-  init: function () {
-    var clientContext = new SP.ClientContext.get_current();
-    var oList = clientContext
-      .get_web()
-      .get_lists()
-      .getByTitle("Initiative Stages");
-    var camlQuery = new SP.CamlQuery();
+//         if ($(this).attr("id").indexOf("Execution") > -1) {
+//           //execution is based on deliverables
+//           $(
+//             'div.Phase[href="#' + $(this).attr("id") + '"] span.percentage'
+//           ).append(POD + "%");
+//           $(
+//             ".project-stages-ctx div#v-pills-tab > ." +
+//             $(this).attr("id") +
+//             " .percent-complete"
+//           ).text(Progress + "%");
+//         } else {
+//           $(
+//             ".project-stages-ctx div#v-pills-tab > ." +
+//             $(this).attr("id") +
+//             " .percent-complete"
+//           ).text(Progress + "%");
+//         }
+//         if (Progress != 100 && !isactive) {
+//           isactive = true;
+//           $(
+//             ".project-stages-ctx div#v-pills-tab > ." + $(this).attr("id")
+//           ).addClass("active");
+//           $(this).addClass("active");
+//           // $(this).find('.Stage-content').addClass('active');
+//         }
+//       }
+//     );
+//     if (!isactive) {
+//       $(".new-Phase:last-child").addClass("active");
+//       $(".new-Phase-Values:last-child").addClass("show active");
+//     }
+//   },
+//   onError: function (sender, args) {
+//     console.log(
+//       "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+//     );
+//   },
+//   init: function () {
+//     var clientContext = new SP.ClientContext.get_current();
+//     var oList = clientContext
+//       .get_web()
+//       .get_lists()
+//       .getByTitle("Initiative Stages");
+//     var camlQuery = new SP.CamlQuery();
 
-    var Query =
-      "<View><Query><Where><And><Eq><FieldRef Name='InitiativeCode'/><Value Type='Text'>" +
-      initiativeHomeInfo_Request.g.ICODE +
-      '</Value></Eq><In><FieldRef Name="StageCode" /><Values>';
+//     var Query =
+//       "<View><Query><Where><And><Eq><FieldRef Name='InitiativeCode'/><Value Type='Text'>" +
+//       initiativeHomeInfo_Request.g.ICODE +
+//       '</Value></Eq><In><FieldRef Name="StageCode" /><Values>';
 
-    stageArr.forEach(function (item) {
-      Query += '<Value Type="Text">' + item + "</Value>";
-    });
-    Query +=
-      "</Values></In></And></Where><OrderBy><FieldRef Name='StageCode' Ascending='True' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
+//     stageArr.forEach(function (item) {
+//       Query += '<Value Type="Text">' + item + "</Value>";
+//     });
+//     Query +=
+//       "</Values></In></And></Where><OrderBy><FieldRef Name='StageCode' Ascending='True' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
 
-    camlQuery.set_viewXml(Query);
-    Initiative_Stages_Data_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
-    clientContext.load(Initiative_Stages_Data_Request.g.collListItem);
-    clientContext.executeQueryAsync(
-      Function.createDelegate(this, Initiative_Stages_Data_Request.onSuccess),
-      Function.createDelegate(this, Initiative_Stages_Data_Request.onError)
-    );
-  },
-  g: {
-    StagesArray: [],
-  },
-};
+//     camlQuery.set_viewXml(Query);
+//     Initiative_Stages_Data_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+//     clientContext.load(Initiative_Stages_Data_Request.g.collListItem);
+//     clientContext.executeQueryAsync(
+//       Function.createDelegate(this, Initiative_Stages_Data_Request.onSuccess),
+//       Function.createDelegate(this, Initiative_Stages_Data_Request.onError)
+//     );
+//   },
+//   g: {
+//     StagesArray: [],
+//   },
+// };
 
 var Update_InitiativeStatus_Service = {
   init: function () {

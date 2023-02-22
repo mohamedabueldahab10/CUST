@@ -219,14 +219,14 @@ var StrategicPS_Home_Info_Request = {
         "</span>" +
         "</div>" +
         '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
-        '<div class="d-inline-flex flex-column mx-2 ' +
-        "phase" +
-        '">' +
-        '<span data-trans-pattr5 class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
-        '<h4 class="acc-title d-inline-flex black">' +
-        "phasename" +
-        "</h4>" +
-        "</div>" +
+        // '<div class="d-inline-flex flex-column mx-2 ' +
+        // "phase" +
+        // '">' +
+        // '<span data-trans-pattr5 class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
+        // '<h4 class="acc-title d-inline-flex black">' +
+        // "phasename" +
+        // "</h4>" +
+        // "</div>" +
         '<div class="d-inline-flex flex-column mx-2">' +
         '<span data-trans-pattr60 class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
         '<h4 class="acc-title d-inline-flex black initiativeProjHomeInfoValueStyle">' +

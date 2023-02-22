@@ -1899,12 +1899,12 @@ window.Dynamo_Data = [
     Code: "Title",
     Owner: "Manager",
   },
-  {
-    ListName: "IStages",
-    Name: "StageName",
-    NameEn: "StageNameEn",
-    Code: "Title",
-  },
+  // {
+  //   ListName: "IStages",
+  //   Name: "StageName",
+  //   NameEn: "StageNameEn",
+  //   Code: "Title",
+  // },
   {
 		ListName: "GenericWFStagesConfig",
 		Name: "ArabicName",

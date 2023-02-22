@@ -775,7 +775,7 @@ window.ListInfo = {
             // }
 
             if (listkey == "initiatives") {
-              Initiative_Stages_Data_Request.init();
+              // Initiative_Stages_Data_Request.init();
               Sectors_Info.init(); // sector
               ListInfo.g.showFieldsIfInitiativeVision();
               $("#Types").on("change", function () {
@@ -8406,58 +8406,58 @@ window.Stages_Data_Request = {
   },
 };
 //end phases-stages
-window.Initiative_Stages_Data_Request = {
-  onSuccess: function (sender, args) {
-    var collListItem = Initiative_Stages_Data_Request.g.collListItem;
-    var listItemEnum = collListItem.getEnumerator();
-    while (listItemEnum.moveNext()) {
-      var oListItem = listItemEnum.get_current();
-      //   var strategyType = oListItem.get_item('Types') ? oListItem.get_item('Types') : ''
-      //   pillersExist = oListItem.get_item('PillarsExist') ? oListItem.get_item('PillarsExist') : ''
-      //   strategyId = oListItem.get_id()
+// window.Initiative_Stages_Data_Request = {
+//   onSuccess: function (sender, args) {
+//     var collListItem = Initiative_Stages_Data_Request.g.collListItem;
+//     var listItemEnum = collListItem.getEnumerator();
+//     while (listItemEnum.moveNext()) {
+//       var oListItem = listItemEnum.get_current();
+//       //   var strategyType = oListItem.get_item('Types') ? oListItem.get_item('Types') : ''
+//       //   pillersExist = oListItem.get_item('PillarsExist') ? oListItem.get_item('PillarsExist') : ''
+//       //   strategyId = oListItem.get_id()
 
-      //   $('#RelatedStrategyType').val(strategyType)
-      //   if (listkey == 'sos') {
-      //     $('#RelatedStrategyPillars').val(pillersExist)
-      //   }
-      // }
-      // if (pillersExist === "Yes" || pillersExist == "yes") {
-      //   $('#PillarName').parent().css('display', 'block')
-      //   Get_Pillers_Info.init(strategyId)
-      // } else {
-      //   if (listkey == 'sos') {
-      //     $('#PillarName').parent().css('display', 'none')
-      //   }
-      Initiative_Stages_Data_Request.g.StagesArray.push({
-        phase: oListItem.get_item("RelatedPhase"),
-        stage: oListItem.get_item("Title"),
-      });
-    }
-  },
-  onError: function (sender, args) {
-    console.log(
-      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
-    );
-  },
-  init: function () {
-    var clientContext = new SP.ClientContext.get_current();
-    var oList = clientContext.get_web().get_lists().getByTitle("IStages");
-    var camlQuery = new SP.CamlQuery();
-    camlQuery.set_viewXml(
-      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='Enabled'/><Value Type='Integer'>1</Value></Eq></And></Where><OrderBy><FieldRef Name='ListSort' Ascending='True' /></OrderBy></Query></View>"
-    );
-    Initiative_Stages_Data_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
-    clientContext.load(Initiative_Stages_Data_Request.g.collListItem);
-    clientContext.executeQueryAsync(
-      Function.createDelegate(this, Initiative_Stages_Data_Request.onSuccess),
-      Function.createDelegate(this, Initiative_Stages_Data_Request.onError)
-    );
-  },
-  // Global variables
-  g: {
-    StagesArray: [],
-  },
-};
+//       //   $('#RelatedStrategyType').val(strategyType)
+//       //   if (listkey == 'sos') {
+//       //     $('#RelatedStrategyPillars').val(pillersExist)
+//       //   }
+//       // }
+//       // if (pillersExist === "Yes" || pillersExist == "yes") {
+//       //   $('#PillarName').parent().css('display', 'block')
+//       //   Get_Pillers_Info.init(strategyId)
+//       // } else {
+//       //   if (listkey == 'sos') {
+//       //     $('#PillarName').parent().css('display', 'none')
+//       //   }
+//       Initiative_Stages_Data_Request.g.StagesArray.push({
+//         phase: oListItem.get_item("RelatedPhase"),
+//         stage: oListItem.get_item("Title"),
+//       });
+//     }
+//   },
+//   onError: function (sender, args) {
+//     console.log(
+//       "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+//     );
+//   },
+//   init: function () {
+//     var clientContext = new SP.ClientContext.get_current();
+//     var oList = clientContext.get_web().get_lists().getByTitle("IStages");
+//     var camlQuery = new SP.CamlQuery();
+//     camlQuery.set_viewXml(
+//       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='Enabled'/><Value Type='Integer'>1</Value></Eq></And></Where><OrderBy><FieldRef Name='ListSort' Ascending='True' /></OrderBy></Query></View>"
+//     );
+//     Initiative_Stages_Data_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+//     clientContext.load(Initiative_Stages_Data_Request.g.collListItem);
+//     clientContext.executeQueryAsync(
+//       Function.createDelegate(this, Initiative_Stages_Data_Request.onSuccess),
+//       Function.createDelegate(this, Initiative_Stages_Data_Request.onError)
+//     );
+//   },
+//   // Global variables
+//   g: {
+//     StagesArray: [],
+//   },
+// };
 
 //stages initiative request
 
