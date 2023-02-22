@@ -90,9 +90,10 @@ else if (UserSTCode != null && UserSTCode != '') {
   PQueryFilteration = '<Eq><FieldRef Name="StrategicPartnershipCode" /><Value Type="Text">' + UserSTCode + '</Value></Eq>';
 }
 else if (isTasks) {
-  PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>';
-
-  PQueryFilteration = '<And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And>';
+  PQuery =
+    '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>';
+  PQueryFilteration =
+    '<And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And>';
 }
 
 //function to get data from sharepoint list (JSOM)
@@ -428,7 +429,7 @@ window.ListingData = {
   init: function () {
 
     if (!isTasks && originalstate) {
-      debugger
+      
       if (isRoleDataLevelAccess && (!UserICode && !USERPCODE && isEmptyFilter)) {
         PQuery = dataLevelAccessQuery ? dataLevelAccessQuery : AccessQuery;
       } else {
@@ -489,7 +490,7 @@ window.ListingData = {
 
 
           if (isDone) {
-            debugger
+            
             console.log(records,"records afteeeeeeeeer")
 
             var html = '';
@@ -498,7 +499,7 @@ window.ListingData = {
             var ExternalProjectsHtml = '';
             for (var i = 0; i < records.length; i++) { //looping items
               var index = i + 1;
-              debugger
+              
               // ghufranChange
               if (listkey == 'projects') {
                 if (records[i].ProjectType == 'Internal') {
@@ -547,7 +548,7 @@ window.ListingData = {
                   '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&ICODE=" + ICODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>'
               }
               else if (STCODE) {
-                debugger
+                
                 html += '<li class="list-group-item link-arrow">' +
                   '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&STCODE=" + UserSTCode + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>'
               }
@@ -948,7 +949,7 @@ window.ListingData = {
 
 
 
-            debugger
+            
 
             //create button and div for filtertation DDLs
             var HtmlStart = (USERProjRelated.indexOf(listkey) > -1 && PCODE) || (USERProjRelated.indexOf(listkey) == -1 && !PCODE && !ICODE && !STCODE && listkey != 'tasks') || (listkey == 'changerequest') ?
@@ -1126,6 +1127,7 @@ window.ListingData = {
           PQueryFilteration = '<And><Neq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Neq><In><FieldRef Name="Status" /><Values><Value Type="Choice">Open</Value></Values></In></And>';
         } else {
           PQueryFilteration = '<And><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And>';
+          
         }
       }
       // else if (isInManager || isInOwner) {
@@ -1340,30 +1342,40 @@ window.ListingData = {
             Where_Body = Where_Body.replaceAll('Type="date"', 'IncludeTimeValue="TRUE" Type="DateTime"'); //IncludeTimeValue="false"
             //alert(Where_Body.includes('Type="date"')+'00'+Where_Body);
             //Where_Body.replace('Type="date"', '');
-
+            debugger
             if (!(PQueryFilteration.length > 0)) {
-              if (isTasks) {
-                Where_Body_Final = "<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>"  + Where_Body + PQueryFilteration + 
-                "</And></Where>";
-              }
-              else {
-                Where_Body_Final = '<Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>' + Where_Body + PQueryFilteration + '</And></Where>';
-              }
+              // if (isTasks) {
+              //   Where_Body_Final = "<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>"  + Where_Body + PQueryFilteration + 
+              //   "</And></Where>";
+              // }
+              // else {
+              //   Where_Body_Final = '<Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>' + Where_Body + PQueryFilteration + '</And></Where>';
+              // }
+              Where_Body_Final =
+              "<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
+              Where_Body +
+              PQueryFilteration +
+              "</And></Where>";
             } else {
-              if (isTasks) {
-                Where_Body_Final = "<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" + Where_Body + PQueryFilteration + 
-                "</And></Where>";
-              }
-              else {
-                if ((UserICode != null && UserICode != '') || (PCODE != null && PCODE != '') || (STCODE != null && STCODE != '')) {
-                  Where_Body_Final = '<Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And>' + Where_Body + PQueryFilteration + '</And></And></Where>';
-                }
-                else {
-                  Where_Body_Final = '<Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And>' + Where_Body + PQueryFilteration + '</And></Where>';
+              Where_Body_Final =
+              "<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And>" +
+              Where_Body +
+              PQueryFilteration +
+              "</And></And></Where>"; 
+              // if (isTasks) {
+              //   Where_Body_Final = "<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" + Where_Body + PQueryFilteration + 
+              //   "</And></Where>";
+              // }
+              // else {
+              //   if ((UserICode != null && UserICode != '') || (PCODE != null && PCODE != '') || (STCODE != null && STCODE != '')) {
+              //     Where_Body_Final = '<Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And>' + Where_Body + PQueryFilteration + '</And></And></Where>';
+              //   }
+              //   else {
+              //     Where_Body_Final = '<Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And>' + Where_Body + PQueryFilteration + '</And></Where>';
 
-                }
+              //   }
 
-              }
+              // }
             }
 
             Query_Body = '<View>' +
@@ -1382,7 +1394,7 @@ window.ListingData = {
     //for tasks functions
     handleids: function (pcode, icode, taskid, tasktype, stageid, ritemid, sourceitemid, wfname, puid, rurl) //rurl,
     {
-      debugger
+      
       if (wfname == 'Project') {
         curstage_org = User_Stages_Data_Request.g.StagesArray.filter(function (obj) {
           return obj.stage == stageid;
@@ -2342,7 +2354,7 @@ window.DeleteDelegate_Data_Submit = {
 // to handle strategic objective status and color
 var StrategicObjectives_Status_Listing = {
   init: function (value) {
-    debugger
+    
     var status = ''
     var color = ''
 
