@@ -721,7 +721,7 @@ var MainKPIs_Info_Request = {
     debugger
 
     Create_Access.forEach(el => {
-      if (el == 'Targets.aspx') {
+      if (el == 'targets.aspx') {
         hideSendBtn = false
       }
     })
