@@ -136,7 +136,7 @@ var Information_Form = [{
             "type": "datetime",
             "min": "DateRaised",
             "ToggleName": "IssueClosureDate",
-            "display": "none"
+            // "display": "none"
         },
         // {
         //     "InternalName": "ResolutionOwner",
