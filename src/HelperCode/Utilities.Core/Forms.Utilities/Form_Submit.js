@@ -2744,8 +2744,12 @@ var createFolder = function (listTitle, folderUrl, success, error) {
               $(".errormsg").hide();
               $(".successmsg").show();
               if (listkey == 'initiatives') {
-                // window.location = _spPageContextInfo.webAbsoluteUrl + "/SitePages/initiativeHome.aspx?ICODE=" + ICODE
-                New_InitiativeStages_Submit.init()
+                setTimeout(function () { // add setTimeOut to make sure that the folders created successfully on Initiative Document
+
+                window.location = _spPageContextInfo.webAbsoluteUrl + "/SitePages/initiativeHome.aspx?ICODE=" + ICODE
+              }, 3000);
+
+                // New_InitiativeStages_Submit.init()
               } else if (listkey == 'strategicpartnerships') {
                 setTimeout(function () { // add setTimeOut to make sure that the folders created successfully on Initiative Document
                   window.location = _spPageContextInfo.webAbsoluteUrl + "/SitePages/StrategicPartnershipHome.aspx?STCODE=" + STCODE
@@ -2767,34 +2771,34 @@ var createFolder = function (listTitle, folderUrl, success, error) {
 
 // create stages for initiatives
 
-var New_InitiativeStages_Submit = {
-  init: function () {
-    var clientContext = new SP.ClientContext.get_current();
-    var oList = clientContext.get_web().get_lists().getByTitle("Initiative Stages");
-    for (var i = 0; i < Initiative_Stages_Data_Request.g.StagesArray.length; i++) {
-      var itemCreateInfo = new SP.ListItemCreationInformation();
-      New_InitiativeStages_Submit.g.oListItem = oList.addItem(itemCreateInfo);
-      New_InitiativeStages_Submit.g.oListItem.set_item("PhaseCode", Initiative_Stages_Data_Request.g.StagesArray[i].phase);
-      New_InitiativeStages_Submit.g.oListItem.set_item("StageCode", Initiative_Stages_Data_Request.g.StagesArray[i].stage);
-      New_InitiativeStages_Submit.g.oListItem.set_item("InitiativeCode", ICODE);
-      New_InitiativeStages_Submit.g.oListItem.update();
-      clientContext.load(New_InitiativeStages_Submit.g.oListItem);
-    }
-    clientContext.executeQueryAsync(
-      Function.createDelegate(this, function () {
-        window.location = _spPageContextInfo.webAbsoluteUrl + "/SitePages/initiativeHome.aspx?ICODE=" + ICODE
-      }),
-      Function.createDelegate(this, function (sender, args) {
-        console.log(
-          "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
-        );
-      })
+// var New_InitiativeStages_Submit = {
+//   init: function () {
+//     var clientContext = new SP.ClientContext.get_current();
+//     var oList = clientContext.get_web().get_lists().getByTitle("Initiative Stages");
+//     for (var i = 0; i < Initiative_Stages_Data_Request.g.StagesArray.length; i++) {
+//       var itemCreateInfo = new SP.ListItemCreationInformation();
+//       New_InitiativeStages_Submit.g.oListItem = oList.addItem(itemCreateInfo);
+//       New_InitiativeStages_Submit.g.oListItem.set_item("PhaseCode", Initiative_Stages_Data_Request.g.StagesArray[i].phase);
+//       New_InitiativeStages_Submit.g.oListItem.set_item("StageCode", Initiative_Stages_Data_Request.g.StagesArray[i].stage);
+//       New_InitiativeStages_Submit.g.oListItem.set_item("InitiativeCode", ICODE);
+//       New_InitiativeStages_Submit.g.oListItem.update();
+//       clientContext.load(New_InitiativeStages_Submit.g.oListItem);
+//     }
+//     clientContext.executeQueryAsync(
+//       Function.createDelegate(this, function () {
+//         window.location = _spPageContextInfo.webAbsoluteUrl + "/SitePages/initiativeHome.aspx?ICODE=" + ICODE
+//       }),
+//       Function.createDelegate(this, function (sender, args) {
+//         console.log(
+//           "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+//         );
+//       })
 
-    )
+//     )
 
-  },
-  g: {}
-}
+//   },
+//   g: {}
+// }
 
 //phases-stages - create stages for project
 var New_ProjectStages_Submit = {

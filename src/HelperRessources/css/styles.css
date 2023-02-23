@@ -6457,3 +6457,151 @@ span.errMsgField.Resources {
     color: #f00;
     display: none;
 }
+
+.sidelinkscontainer {
+    min-height: -webkit-fill-available;
+}
+
+/* new wf task action style (approval page) */
+.FormContainer.wf-mode .section-container {
+    background-color: #fff !important;
+    padding-right: 20px;
+    padding-left: 20px;
+    box-shadow: 0 0 8px 3px hsl(210deg 1% 66% / 8%);
+    border-radius: 3px;
+    margin-bottom: 20px;
+}
+
+.FormContainer.wf-mode .fieldset-container {
+    border: 0px !important;
+}
+
+.FormContainer.wf-mode .approvalHeader {
+    background-color: #11adad !important;
+    box-shadow: 0 0 8px 3px hsl(210deg 1% 66% / 8%);
+    border-radius: 3px;
+    color: #fff !important;
+    width: 100%;
+    padding: 20px 28px !important;
+    margin-bottom: 0px;
+}
+
+.FormContainer.wf-mode .section1.approvalHeader {
+    background-color: #0f9494 !important;
+    box-shadow: 0 0 8px 3px hsl(210deg 1% 66% / 8%);
+    border-radius: 3px;
+    color: #fff !important;
+    width: 100%;
+    padding: 20px 28px !important;
+    margin-bottom: 20px;
+}
+
+
+
+.btnactionrow>h2.approvalHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.FormContainer.wf-mode .btnactionrow {
+    display: flex !important;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 0px 0px 20px !important;
+    margin: 20px 0;
+}
+
+.FormContainer.wf-mode .form-btns-wrapper {
+    /* display: none !important; */
+    justify-content: flex-start !important;
+    padding: 0 20px;
+}
+
+.FormContainer.wf-mode .form-btns-wrapper span.approveStageName {
+    margin: 0 25px;
+}
+
+.FormContainer.wf-mode .form-btns-wrapper .SubmitTitleRow {
+    margin: 0px !important;
+    width: auto !important;
+}
+
+.form-btns-wrapper .apprv {
+    justify-content: space-between;
+    width: 100%;
+}
+
+.form-btns-wrapper .WF-btn {
+    width: 100%
+}
+
+p.task-name {
+    font-weight: 400;
+    margin-bottom: 6px;
+}
+
+.FormContainer.wf-mode .form-btns-wrapper button,
+.btnactionrow .WF-btn button,
+.btnactionrow .delegate-btn {
+    border-radius: 13.5px;
+    background-color: #41BA83 !important;
+    color: #FFFFFF !important;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 16px;
+    padding: 4px 13px 6px 13px !important;
+    cursor: pointer;
+    border: 0;
+    height: 28px;
+}
+
+.btnactionrow .delegate-btn {
+    background-color: #fff !important;
+    color: #148282 !important;
+}
+
+.FormContainer.wf-mode .btnactionrow .btn.btn-action.btn-save,
+.FormContainer.wf-mode .btnactionrow .btn.btn-action.btn-cancel,
+.FormContainer.wf-mode .btnactionrow .btn.btn-action.btn-delete {
+    display: none !important;
+}
+.FormContainer.wf-mode .btnactionrow .wf-btn-wrapper-new > .btn.btn-action.btn-save{
+    display: block!important;
+}
+.btnactionrow .WF-btn {
+    padding: 0px !important;
+    margin: 0px !important;
+    display: inline-flex !important;
+}
+
+
+.task-history-ctx {
+    background-color: #fff;
+}
+
+.task-history-ctx .historyValue {
+    color: #f3983d;
+    font-size: 14px;
+}
+
+.historyLabel {
+    font-size: 14px;
+}
+
+.task-history-ctx .history-row-ctx {
+    border-bottom: 1px solid #D9DCE1;
+}
+
+.task-history-ctx .loadMore {
+    border-radius: 13.5px;
+    background-color: #148282;
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 16px;
+    margin: 0 auto;
+    padding: 1px 10px 6px 10px;
+    cursor: pointer;
+}

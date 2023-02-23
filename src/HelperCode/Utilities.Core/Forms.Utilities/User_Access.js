@@ -8,7 +8,14 @@ window.currentMainList = "";
 window.projectActualBudget = 0;
 window.initiativeActualBudget = 0;
 window.CurrentUserTasksCount = 0;
-
+window.USERisProjectHome =
+window.location.href.toLowerCase().indexOf("/projecthome.aspx") > -1;
+window.USERisInitiativeHome =
+window.location.href.toLowerCase().indexOf("/initiativehome.aspx") > -1;  
+window.USERisStrategicPartnershipHome =
+window.location.href.toLowerCase().indexOf("/strategicpartnershiphome.aspx") > -1;
+window.USERisTargets =
+window.location.href.toLowerCase().indexOf("/targets.aspx") > -1;
 var BreakException = {};
 var UserRole,
   UserAccessSectorCode,
@@ -88,6 +95,7 @@ var UserRole,
     "stratigicinformation.aspx",
     "InitiativesMain.aspx",
     "Targets.aspx",
+    "BenefitMetrics.aspx",
     "StrategicIndicators.aspx",
     "MainIndicators.aspx",
     "Programs.aspx",
@@ -122,8 +130,12 @@ var UserRole,
     window.location.href.toLowerCase().indexOf("listkey=") > -1
       ? window.location.href.split("ListKey=")[1].split("&")[0]
       : "",
-  USERisProjectHome =
-    window.location.href.toLowerCase().indexOf("/projecthome.aspx") > -1,
+  // USERisProjectHome =
+  //   window.location.href.toLowerCase().indexOf("/projecthome.aspx") > -1,
+  // USERisInitiativeHome =
+  //   window.location.href.toLowerCase().indexOf("/initiativehome.aspx") > -1,  
+  // USERisStrategicPartnershipHome =
+  //   window.location.href.toLowerCase().indexOf("/strategicpartnershiphome.aspx") > -1,
   USERProjRelated = [],
   // isWF = window.location.href.toLowerCase().indexOf('&wfs') > -1,
   USERForBreadCrumbs = "",
@@ -2893,7 +2905,7 @@ window.userCalls = {
     switch (
     true //Create Access
     ) {
-      case (USERisNew || USERisListing || USERisProjectHome) &&
+      case (USERisNew || USERisListing || USERisProjectHome || USERisInitiativeHome || USERisStrategicPartnershipHome) &&
         Create_Access.indexOf(USERlistkey) == -1 &&
         Create_Access.indexOf(Page_UrlName) == -1 &&
         !USERisWF:
@@ -2999,6 +3011,25 @@ window.userCalls = {
         );
         break;
     }
+    // debugger
+    // switch (
+    //   true //Create Access
+    //   ) {
+    //     case ((USERisTargets) &&
+    //       (Create_Access.indexOf('Targets.aspx') == -1 && Create_Access.indexOf('targets.aspx') == -1 )
+    //       &&
+    //       (Edit_Access.indexOf('Targets.aspx') == -1 && Edit_Access.indexOf('targets.aspx') == -1)
+    //       ) :
+    //       //SEND btn
+    //       //disable
+  
+    //       $("body").append(
+    //         "<style>" +
+    //         ".btn-addTarget{opacity: .6;pointer-events: none;display:none}" +
+    //         "</style>"
+    //       );
+    //       break;
+    //   }
     //end CRUD
 
 

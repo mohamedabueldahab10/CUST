@@ -50,50 +50,8 @@ export default class StrategicPartnershipHomeWebPart extends BaseClientSideWebPa
             <img css="w-100" src="${logo}" />
           </a>
         </div>
-        <ul class="nav flex-column">
-          <!--
-              <li class="nav-item">
-                  <a class="nav-link active" href="../chat.html">
-                      <div class="d-flex align-items-center">
-                          <div class="nav-icon">
-                              <img src="${home}">
-                          </div>
-  
-                          <span class="nav-link-text px-2">Home</span>
-                      </div>
-                  </a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link " href="../chat.html">
-                      <div class="d-flex align-items-center">
-                          <div class="nav-icon">
-                              <img src="${sections}">
-                          </div>
-                          <span class="nav-link-text px-2">Stratigic Sections</span>
-                      </div>
-                  </a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link " href="../chat.html">
-                      <div class="d-flex align-items-center">
-                          <div class="nav-icon">
-                              <img src="${initiatives}">
-                          </div>
-                          <span class="nav-link-text px-2">Initiatives</span>
-                      </div>
-                  </a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link " href="../chat.html">
-                      <div class="d-flex align-items-center">
-                          <div class="nav-icon">
-                              <img src="${projects}">
-                          </div>
-                          <span class="nav-link-text px-2">Projects</span>
-                      </div>
-                  </a>
-              </li>
-              -->
+        <ul class="nav flex-column sidelinkscontainer">
+   
         </ul>
         <div class="accordion important-links-ctx" id="accordionImportantLinks">
           <div class="card bg-transparent border-0">

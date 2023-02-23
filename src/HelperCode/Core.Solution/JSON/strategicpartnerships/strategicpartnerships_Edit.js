@@ -15,31 +15,41 @@ var Information_Form = [
         validation: 'required',
       },
       {
-        InternalName: 'Sector',
-        DisplayName: 'القطاع',
-        DisplayNameEn: 'Sector',
-        type: 'lookup',
-        validation: 'required',
-        source: 'Internal Entities',
-        isSector: 'True',
-        EntityType: 'Sector',
-        Dispfieldkey: 'Name',
-        DispfieldkeyEn: 'NameEn',
-        valfieldkey: 'Title',
-      },
-      {
-        InternalName: 'SubSector',
-        DisplayName: 'الوكالة',
-        DisplayNameEn: 'Deputyship',
-        type: 'lookup',
-        source: 'Internal Entities',
-        isSector: 'True',
-        EntityType: 'Department',
-        Dispfieldkey: 'Name',
-        DispfieldkeyEn: 'NameEn',
-        valfieldkey: 'Title',
-        validation: 'required',
-      },
+        "InternalName": "Sector",
+        "DisplayName": "القطاع",
+        "DisplayNameEn": "Sector",
+        "type": "lookupWithQuery",
+        "queryField": "EntityType",
+        "queryFieldType": "dropdownValues", //ex: "Choice"
+        // dontSubmit: true,
+        "queryFieldValue": "Sector",
+        dynamic: "parent",
+        "source": "Internal Entities",
+        // "state": "disabled",
+        "Dispfieldkey": "Name",
+        "DispfieldkeyEn": "NameEn",
+        "valfieldkey": "Title",
+        "validation": "required"
+    },
+    {
+        "InternalName": "SubSector",
+        "DisplayName": "الوكالات",
+        "DisplayNameEn": "Departments",
+        "type": "lookup",
+        //from other list:
+        "source": "Internal Entities",
+        // "isSector": "True",
+        // "EntityType": "Department",
+        "Dispfieldkey": "Name",
+        "DispfieldkeyEn": "NameEn",
+        "valfieldkey": "Title",
+        "validation": "required",
+        "isRelatedToParent":true, // to show parent value depends on child like sector and subsector
+        dynamic: "Sector", //InternalName Of Parent field
+        filterField: "ParentEntity",//InternalName Of Parent field
+        filterFieldType: "Text",//Type In Sharepoint List for Parent field
+
+    },
       {
         InternalName: 'PartnershipType',
         DisplayName: 'نوع الشراكة',

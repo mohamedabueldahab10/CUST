@@ -895,7 +895,10 @@
     strategicpartnershipsmilestones:"المعالم",
     strategicpartnershipsmom:"محاضر الإجتماع",
     strategicpartnershipsrisks:"المخاطر",
-    strategicpartnershipsissues:"التحديات"
+    strategicpartnershipsissues:"التحديات",
+    assignedto: "المُكلَف",
+    date: "التاريخ",
+
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1808,7 +1811,11 @@
     strategicpartnershipsmilestones:"Milestones",
     strategicpartnershipsmom:"MOM",
     strategicpartnershipsrisks:"Risks",
-    strategicpartnershipsissues:"Issues"
+    strategicpartnershipsissues:"Issues",
+    assignedto: "Assigned To",
+    date: "Date",
+
+    
   },
 };
 
@@ -1899,12 +1906,19 @@ window.Dynamo_Data = [
     Code: "Title",
     Owner: "Manager",
   },
+  // {
+  //   ListName: "IStages",
+  //   Name: "StageName",
+  //   NameEn: "StageNameEn",
+  //   Code: "Title",
+  // },
   {
-    ListName: "IStages",
-    Name: "StageName",
-    NameEn: "StageNameEn",
-    Code: "Title",
-  },
+		ListName: "GenericWFStagesConfig",
+		Name: "ArabicName",
+		NameEn: "EnglishName",
+		Code: "Title",
+		loadOn: [], // all pages if empty
+	},
   {
     ListName: "Portfolio",
     Name: "Name",

@@ -1510,7 +1510,7 @@ window.View_Data_Request = {
       if (recurrenceChanged == 'yes') {
         var htmlMsg = '<div data-trans-recurrencerepeat class="kpiPeriodChanged ErrorMsg Resources"></div>';
         $('.btnactionrow').html(htmlMsg);
-        
+
 
       }
     }
@@ -5761,4 +5761,146 @@ var StrategicObjectives_Status = {
     }
     return status
   }
+}
+
+//get task history
+let SPHTTPitemsEnumerable;
+window.Get_TaskHistory = {
+  init: function () {
+
+    $(".wf-project-name").text(projectNameTitle);
+    $(".wf-task-name").text(actionbuttonTitle);
+    $("button.loadMore").addClass("disabled");
+
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("Tasks");
+    Get_TaskHistory.g.camlQuery = new SP.CamlQuery();
+    Get_TaskHistory.g.camlQuery.set_viewXml(
+      "<View><Query><Where><And><Eq><FieldRef Name='RelatedItemID'/><Value Type='Text'>" +
+      IID +
+      "</Value></Eq><And><Neq><FieldRef Name='ID'/><Value Type='Integer'>" +
+      taskid +
+      "</Value></Neq><Eq><FieldRef Name='WorkflowName'/><Value Type='Text'>" +
+      workflowname +
+      "</Value></Eq></And></And></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query><RowLimit>5</RowLimit></View>"
+    );
+    SPHTTPitemsEnumerable = oList.getItems(Get_TaskHistory.g.camlQuery);
+    clientContext.load(SPHTTPitemsEnumerable);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Get_TaskHistory.onSuccess),
+      Function.createDelegate(this, Get_TaskHistory.onError)
+    );
+  },
+  onSuccess: function (sender, args) {
+    var listItemEnum = SPHTTPitemsEnumerable.getEnumerator();
+    let historyHTML = ``;
+    if (!$(".task-history-ctx").length) {
+      historyHTML = `<div class="section3 row col-12 px-0 task-history-ctx mx-0">
+                <h2 class="approvalHeader Resources" data-trans-taskHistory>
+				العمليات السابقة
+                </h2>
+                <div class="taskHistory row mx-0 mt-5 col-12 flex-column">
+        `;
+    }
+
+    while (listItemEnum.moveNext()) {
+			var oListItem = listItemEnum.get_current();
+			let stage = oListItem.get_item("Title");
+			var assignedTo = [];
+			if (oListItem.get_item("AssignedTo").length) {
+				oListItem.get_item("AssignedTo").forEach((el) => {
+					assignedTo.push(el.get_lookupValue());
+				});
+			}
+
+			//date
+			let d =
+				oListItem.get_item("Created") == null
+					? "empty"
+					: oListItem.get_item("Created");
+			var local = d.getTime();
+			var offset = d.getTimezoneOffset() * (60 * 1000);
+			var utc = new Date(local + offset);
+			var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+			var datetouse = riyadh.toLocaleString("en-US").split(",")[0].split("/");
+			datetouse[0] =
+				datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
+			datetouse[1] =
+				datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
+			if (
+				localStorage.getItem("lng") == null ||
+				localStorage.getItem("lng") == "ar"
+			) {
+				var datetouse2 = datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
+			} else {
+				var datetouse2 = datetouse[1] + "-" + datetouse[0] + "-" + datetouse[2];
+			}
+			//end date
+			historyHTML += `
+            <div class="row mx-0 my-3 history-row-ctx">
+                <div class="col-4">
+                    <p>${stage}</p>
+                </div>
+                <div class="col-4">
+                    <p class="historyValue">${assignedTo.join(",")}</p>
+                    <p class="Resources historyLabel" data-trans-assignedTo>assignedTo</p>
+                </div>
+                <div class="col-4">
+                    <p class="historyValue">${datetouse2}</p>
+                    <p  class="Resources historyLabel" data-trans-date>date</p>
+                </div>
+            </div>
+            `;
+		}
+
+    let noTaskhistory = historyHTML ? "" : UserNo_Data;
+		if (!$(".task-history-ctx").length) {
+			historyHTML += `<p>${noTaskhistory}</p>
+                    <button type="button"
+                    class="loadMore Resources mb-3" data-trans-viewmore
+                    >
+                        loadmore
+                    </button>
+                </div>
+            </div>
+            `;
+			$(".btnactionrow").before(historyHTML);
+			$("button.loadMore").on("click", () => {
+				Get_TaskHistory.loadMore();
+			});
+		} else {
+			// $(".task-history-ctx .taskHistory").append(historyHTML);
+			$(historyHTML).insertBefore(
+				$(".task-history-ctx .taskHistory button.loadMore")
+			);
+		}
+		$(".btnactionrow .form-btns-wrapper").show();
+		Get_TaskHistory.g.position =
+			SPHTTPitemsEnumerable.get_listItemCollectionPosition();
+		$("button.loadMore").removeClass("disabled loader-action");
+    changeResources();
+
+  },
+  onError: function (sender, args) {
+		console.log(
+			"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+		);
+	},
+  loadMore: function () {
+		//Position will be null if all the items in the collection are fetched and there are no more items to be fetched.
+		if (Get_TaskHistory.g.position != null) {
+			isLoadMore = true;
+			//If more items are to be fetched, make a second call to the server and fetch the next group of items.
+			Get_TaskHistory.g.camlQuery.set_listItemCollectionPosition(
+				sphttp.g.position
+			);
+			Get_TaskHistory.init();
+			$("button.loadMore").addClass("loader-action");
+		} else if (Get_TaskHistory.g.position == null) {
+			// $("button.loadMore").hide();
+			$("button.loadMore").addClass("disabled");
+		}
+	},
+	// Global variables
+	g: {},
 }

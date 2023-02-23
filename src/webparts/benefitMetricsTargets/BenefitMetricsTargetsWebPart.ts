@@ -44,7 +44,7 @@ export default class BenefitMetricsTargetsWebPart extends BaseClientSideWebPart<
                     <img css="w-100" src="${logo}">
                 </a>
             </div>
-            <ul class="nav flex-column">
+            <ul class="nav flex-column sidelinkscontainer">
 
             </ul>
             <div class="accordion important-links-ctx" id="accordionImportantLinks">

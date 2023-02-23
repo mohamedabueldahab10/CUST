@@ -138,7 +138,14 @@ window.ListInfo = {
     }
   },
   InfoLoop: function () {
-    var htmlBuilder = "";
+
+    var htmlBuilder = isWF
+      ? '<div class="section1 approvalHeader col-12"><div class="d-flex justify-content-between w-100"><div class=""><span class="bold Resources" data-trans-' +
+      USERlistkey +
+      '></span>' + ' ' + '<span class="mx-3 wf-project-name"></span></div><div class=""><span class="bold Resources" data-trans-taskname></span><span class="mx-3 wf-task-name"></span></div></div></div><h2 class="approvalHeader Resources" data-trans-taskformtitle>النموذج المعتمد</h2>'
+      : "";
+
+    // var htmlBuilder = "";
     var Label, Description;
     var printHtml = "";
     var toggleSectionName;
@@ -242,9 +249,18 @@ window.ListInfo = {
         }
         // console.log('Finishing label ' + Label + ' - IsDone: ' + isDone);
         htmlBuilder += "</div></div></div>";
+
+
+
         if (isDone) {
+          actionTaskHeader = "";
+          if (isWF) {
+            actionTaskHeader =
+              '<h2 class="approvalHeader Resources mb-5" data-trans-taskDecision>	القرار</h2>';
+          }
           htmlBuilder +=
             '<div class="py-5 btnactionrow savecancelBtns">' +
+            actionTaskHeader +
             '<div class="form-row justify-content-end form-btns-wrapper">' +
             '<button data-trans-CancelButton class="btn btn-action btn-cancel cancel Resources" type="button"></button>' +
             '<button data-trans-SaveButton class="btn btn-action btn-save Resources" type="button"></button>' +
@@ -357,7 +373,8 @@ window.ListInfo = {
 
             let affectedSelectsInfo = [];
             $("[dynamic=" + parentFieldName + "]").each(function () {
-
+              console.log(parentFieldName, "parentFieldName")
+              debugger
               let affectedFieldName = $(this).attr("id");
               let listName = $(this).data("listname");
               let filterField = $(this).data("filterfield");
@@ -550,10 +567,22 @@ window.ListInfo = {
             //
           });
 
-          //////add section to cr
+
+          // add new style for wf
           debugger
+          if (isWF) {
+            $(".FormContainer").addClass("wf-mode");
+            $("#navbarsParent").addClass("wfMode");
+            $(".page-nav").attr("style", "display: none !important");
+            $(".sidebar").attr("style", "display: none !important");
+            $(".main-panel").attr("style", "width: 100% !important");
+            // getTaskHistory.init();
+            Get_TaskHistory.init()
+          }
+          //
+          //////add section to cr
+
           if (!isCrMode && crListKey) {
-            console.log("YEEEEEEEEEEEEES")
             //on new custom cr
             handleCustomeCr.init();
             $(
@@ -635,7 +664,7 @@ window.ListInfo = {
 
           // disabled enable fields based on selection & onload
 
-          $("[data-toggledisabledvalues]").on("change",function(){
+          $("[data-toggledisabledvalues]").on("change", function () {
             ListInfo.g.toggleDisabledFields($(this));
 
           })
@@ -775,7 +804,7 @@ window.ListInfo = {
             // }
 
             if (listkey == "initiatives") {
-              Initiative_Stages_Data_Request.init();
+              // Initiative_Stages_Data_Request.init();
               Sectors_Info.init(); // sector
               ListInfo.g.showFieldsIfInitiativeVision();
               $("#Types").on("change", function () {
@@ -4844,6 +4873,7 @@ window.ListInfo = {
           '">' +
           element.queryFieldValue +
           "</Value></Eq></And></Where><OrderBy><FieldRef Name='Name' Ascending='True' /></OrderBy></Query></View>";
+
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -4901,12 +4931,11 @@ window.ListInfo = {
           element.Dispfieldkey +
           '"  data-filterfield="' +
           element.filterField +
-
-          '"data-queryfieldvalue="' + // oday
+          '"data-queryfieldvalue="' +
           element.queryFieldValue +
-          '"data-queryfield="' + // oday
+          '"data-queryfield="' +
           element.queryField +
-          '"data-queryfieldtype="' + // oday
+          '"data-queryfieldtype="' +
           element.queryFieldType +
 
           '" data-filterfieldtype="' +
@@ -5722,9 +5751,9 @@ window.ListInfo = {
     },
 
     toggleFields: function ($this) {
-      
+
       var myValue = $this.val(),
-       mytype= $this,
+        mytype = $this,
         toggleValues =
           $this.data("togglevalues").indexOf(":::") > -1
             ? $this.data("togglevalues").split(":::")
@@ -5750,12 +5779,10 @@ window.ListInfo = {
             : item.match(/\[(.*?)\]/)[1] + ",";
       });
       allToggleFields = myToggleFields.split(",");
-      debugger
-      console.log(allToggleFields, 'testttttt')
+
       if (isShowVal) {
         allToggleFields.forEach((item, i, arr) => {
-          debugger
-          console.log(item ,arr, 'itetetetetetemmmmm');
+
           $('[data-togglename="' + item + '"]')
             .parent()
             .hide();
@@ -5770,7 +5797,7 @@ window.ListInfo = {
             .parent()
             .is(":hidden"),
             myFieldParent = $('[data-togglename="' + item + '"]').parent();
-            myFieldParentofParent = $('[data-togglename="' + item + '"]');
+          myFieldParentofParent = $('[data-togglename="' + item + '"]');
           if (isHidden) {
             myFieldParent.show();
             myFieldParentofParent.show();
@@ -5801,7 +5828,7 @@ window.ListInfo = {
           }
         });
       } else {
-        debugger
+
         allToggleFields.forEach((item, i, arr) => {
           $('[data-togglename="' + item + '"]')
             .parent()
@@ -5870,7 +5897,7 @@ window.ListInfo = {
         "allToggleRequiredFields allToggleRequiredFields"
       );
     },
-    toggleDisabledFields:function($this){
+    toggleDisabledFields: function ($this) {
       var myValue = $this.val();
 
       var toggleDisabledValues =
@@ -5898,8 +5925,7 @@ window.ListInfo = {
       });
       allToggleDisabledFields = myToggleDisabledFields.split(",");
 
-      console.log(allToggleDisabledFields,"allToggleDisabledFields")
-      debugger
+
       if (isShowVal) {
         allToggleDisabledFields.forEach((item, i, arr) => {
           $('[data-toggledisabledname="' + item + '"]')
@@ -6087,7 +6113,12 @@ var View_ListInfo = {
   },
   InfoLoop: function () {
 
-    var htmlBuilder = "";
+    var htmlBuilder = isWF
+      ? '<div class="section1 approvalHeader col-12"><div class="d-flex justify-content-between w-100"><div class=""><span class="bold Resources" data-trans-' +
+      USERlistkey +
+      '></span>' + ' ' + '<span class="mx-3 wf-project-name"></span></div><div class=""><span class="bold Resources" data-trans-taskname></span><span class="mx-3 wf-task-name"></span></div></div></div><h2 class="approvalHeader Resources" data-trans-taskformtitle>النموذج المعتمد</h2>'
+      : "";
+
     var Label, Description;
     var printHtml = "";
 
@@ -6281,9 +6312,15 @@ var View_ListInfo = {
         // console.log('Finishing label ' + Label + ' - IsDone: ' + isDone);
         htmlBuilder += "</div></div></div>";
         if (isDone) {
-          console.log("btnDeleteLabel", btnDeleteLabel);
+          debugger
+          actionTaskHeader = "";
+          if (isWF) {
+            actionTaskHeader =
+              '<h2 class="approvalHeader Resources mb-5" data-trans-taskDecision>	القرار</h2>';
+          }
           htmlBuilder +=
             '<div class="py-5 btnactionrow">' +
+            actionTaskHeader +
             '<div class="leftBtns">' +
             '<button data-trans-toissue class="btn btn-action btn-to-issue Resources" type="button"></button>' +
             '<button class="btn btn-action btn-delete" type="button">' +
@@ -6348,7 +6385,19 @@ var View_ListInfo = {
             );
           }
           // ended 
-          // $('h2.DahsFormTitle').text(PageTitle);
+
+          //handle new style of wf
+          if (isWF) {
+            $(".FormContainer").addClass("wf-mode");
+            $("#navbarsParent").addClass("wfMode");
+            $(".page-nav").attr("style", "display: none !important");
+            $(".sidebar").attr("style", "display: none !important");
+            $(".main-panel").attr("style", "width: 100% !important");
+            //getTaskHistory.init();
+            Get_TaskHistory.init()
+          }
+          //
+
           $(
             "div#particles-foreground, div#particles-background, .vertical-centered-box"
           ).animate(
@@ -7807,7 +7856,7 @@ var View_ListInfo = {
           break;
 
         case "lookupmultiselectwithoutrepeat":
-          debugger
+
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -8226,11 +8275,19 @@ var Dynamic_Data_Request = {
 };
 dynamicAffectSelect = {
   // The main Initialization function
+  // The main Initialization function
   init: function (affectedSelectsInfo) {
-
-    var queryFieldValue = affectedSelectsInfo[0].queryFieldValue ? affectedSelectsInfo[0].queryFieldValue : ''
-    var queryFieldName = affectedSelectsInfo[0].queryFieldName ? affectedSelectsInfo[0].queryFieldName : ''
-    var queryFieldType = affectedSelectsInfo[0].queryFieldType ? affectedSelectsInfo[0].queryFieldType : ''
+    console.log(affectedSelectsInfo, "affectedSelectsInfo");
+    debugger
+    var queryFieldValue = affectedSelectsInfo[0].queryFieldValue
+      ? affectedSelectsInfo[0].queryFieldValue
+      : "";
+    var queryFieldName = affectedSelectsInfo[0].queryFieldName
+      ? affectedSelectsInfo[0].queryFieldName
+      : "";
+    var queryFieldType = affectedSelectsInfo[0].queryFieldType
+      ? affectedSelectsInfo[0].queryFieldType
+      : "";
 
     dynamicAffectSelect.g.affectedSelectsInfo = affectedSelectsInfo;
     var clientContext = new SP.ClientContext.get_current();
@@ -8240,36 +8297,47 @@ dynamicAffectSelect = {
       .getByTitle(affectedSelectsInfo[0].listName);
     var camlQuery = new SP.CamlQuery();
 
-    var Query = ''
+    var Query = "";
+    var valueToFilter = affectedSelectsInfo[0].customFilterValue
+      ? affectedSelectsInfo[0].customFilterValue
+      : affectedSelectsInfo[0].parentFieldValue;
 
-    if (queryFieldValue && queryFieldName && queryFieldType) {
+    if (
+      affectedSelectsInfo[0].isCustomFilterValue === "true" &&
+      !affectedSelectsInfo[0].customFilterValue
+    ) {
       Query = `<View><Query>
-			<Where><And>
-			<Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
-			<And>
-			<Eq><FieldRef Name="${affectedSelectsInfo[0].filterField}"/><Value Type="${affectedSelectsInfo[0].filterFieldType}">${affectedSelectsInfo[0].parentFieldValue}</Value></Eq>
-			<Eq><FieldRef Name="${queryFieldName}" /><Value Type="${queryFieldType}">${queryFieldValue}</Value></Eq></Eq>
-			</And></And></Where>
-			<OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`
+        <Where>
+          <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
+          </Where>
+        <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`;
+    } else if (
+      queryFieldValue &&
+      queryFieldValue != "undefined" &&
+      queryFieldName &&
+      queryFieldName != "undefined" &&
+      queryFieldType &&
+      queryFieldType != "undefined"
+    ) {
+      Query = `<View><Query>
+        <Where><And>
+        <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
+        <And>
+        <Eq><FieldRef Name="${affectedSelectsInfo[0].filterField}"/><Value Type="${affectedSelectsInfo[0].filterFieldType}">${valueToFilter}</Value></Eq>
+        <Eq><FieldRef Name="${queryFieldName}" /><Value Type="${queryFieldType}">${queryFieldValue}</Value></Eq></Eq>
+        </And></And></Where>
+        <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`;
     } else {
       Query = `<View><Query>
-			<Where><And>
-			  <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
-			  <Eq><FieldRef Name="${affectedSelectsInfo[0].filterField}"/><Value Type="${affectedSelectsInfo[0].filterFieldType}">${affectedSelectsInfo[0].parentFieldValue}</Value></Eq>
-			</And></Where>
-		  <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`
+        <Where><And>
+          <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
+          <Eq><FieldRef Name="${affectedSelectsInfo[0].filterField}"/><Value Type="${affectedSelectsInfo[0].filterFieldType}">${valueToFilter}</Value></Eq>
+        </And></Where>
+        <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`;
     }
 
     camlQuery.set_viewXml(Query);
 
-    // 		camlQuery.set_viewXml(
-    // 			`<View><Query>
-    //     <Where><And>
-    //       <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
-    //       <Eq><FieldRef Name="${affectedSelectsInfo[0].filterField}"/><Value Type="${affectedSelectsInfo[0].filterFieldType}">${affectedSelectsInfo[0].parentFieldValue}</Value></Eq>
-    //     </And></Where>
-    //   <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`
-    // 		);
     dynamicAffectSelect.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(dynamicAffectSelect.g.collListItem);
     clientContext.executeQueryAsync(
@@ -8406,58 +8474,58 @@ window.Stages_Data_Request = {
   },
 };
 //end phases-stages
-window.Initiative_Stages_Data_Request = {
-  onSuccess: function (sender, args) {
-    var collListItem = Initiative_Stages_Data_Request.g.collListItem;
-    var listItemEnum = collListItem.getEnumerator();
-    while (listItemEnum.moveNext()) {
-      var oListItem = listItemEnum.get_current();
-      //   var strategyType = oListItem.get_item('Types') ? oListItem.get_item('Types') : ''
-      //   pillersExist = oListItem.get_item('PillarsExist') ? oListItem.get_item('PillarsExist') : ''
-      //   strategyId = oListItem.get_id()
+// window.Initiative_Stages_Data_Request = {
+//   onSuccess: function (sender, args) {
+//     var collListItem = Initiative_Stages_Data_Request.g.collListItem;
+//     var listItemEnum = collListItem.getEnumerator();
+//     while (listItemEnum.moveNext()) {
+//       var oListItem = listItemEnum.get_current();
+//       //   var strategyType = oListItem.get_item('Types') ? oListItem.get_item('Types') : ''
+//       //   pillersExist = oListItem.get_item('PillarsExist') ? oListItem.get_item('PillarsExist') : ''
+//       //   strategyId = oListItem.get_id()
 
-      //   $('#RelatedStrategyType').val(strategyType)
-      //   if (listkey == 'sos') {
-      //     $('#RelatedStrategyPillars').val(pillersExist)
-      //   }
-      // }
-      // if (pillersExist === "Yes" || pillersExist == "yes") {
-      //   $('#PillarName').parent().css('display', 'block')
-      //   Get_Pillers_Info.init(strategyId)
-      // } else {
-      //   if (listkey == 'sos') {
-      //     $('#PillarName').parent().css('display', 'none')
-      //   }
-      Initiative_Stages_Data_Request.g.StagesArray.push({
-        phase: oListItem.get_item("RelatedPhase"),
-        stage: oListItem.get_item("Title"),
-      });
-    }
-  },
-  onError: function (sender, args) {
-    console.log(
-      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
-    );
-  },
-  init: function () {
-    var clientContext = new SP.ClientContext.get_current();
-    var oList = clientContext.get_web().get_lists().getByTitle("IStages");
-    var camlQuery = new SP.CamlQuery();
-    camlQuery.set_viewXml(
-      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='Enabled'/><Value Type='Integer'>1</Value></Eq></And></Where><OrderBy><FieldRef Name='ListSort' Ascending='True' /></OrderBy></Query></View>"
-    );
-    Initiative_Stages_Data_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
-    clientContext.load(Initiative_Stages_Data_Request.g.collListItem);
-    clientContext.executeQueryAsync(
-      Function.createDelegate(this, Initiative_Stages_Data_Request.onSuccess),
-      Function.createDelegate(this, Initiative_Stages_Data_Request.onError)
-    );
-  },
-  // Global variables
-  g: {
-    StagesArray: [],
-  },
-};
+//       //   $('#RelatedStrategyType').val(strategyType)
+//       //   if (listkey == 'sos') {
+//       //     $('#RelatedStrategyPillars').val(pillersExist)
+//       //   }
+//       // }
+//       // if (pillersExist === "Yes" || pillersExist == "yes") {
+//       //   $('#PillarName').parent().css('display', 'block')
+//       //   Get_Pillers_Info.init(strategyId)
+//       // } else {
+//       //   if (listkey == 'sos') {
+//       //     $('#PillarName').parent().css('display', 'none')
+//       //   }
+//       Initiative_Stages_Data_Request.g.StagesArray.push({
+//         phase: oListItem.get_item("RelatedPhase"),
+//         stage: oListItem.get_item("Title"),
+//       });
+//     }
+//   },
+//   onError: function (sender, args) {
+//     console.log(
+//       "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+//     );
+//   },
+//   init: function () {
+//     var clientContext = new SP.ClientContext.get_current();
+//     var oList = clientContext.get_web().get_lists().getByTitle("IStages");
+//     var camlQuery = new SP.CamlQuery();
+//     camlQuery.set_viewXml(
+//       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='Enabled'/><Value Type='Integer'>1</Value></Eq></And></Where><OrderBy><FieldRef Name='ListSort' Ascending='True' /></OrderBy></Query></View>"
+//     );
+//     Initiative_Stages_Data_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+//     clientContext.load(Initiative_Stages_Data_Request.g.collListItem);
+//     clientContext.executeQueryAsync(
+//       Function.createDelegate(this, Initiative_Stages_Data_Request.onSuccess),
+//       Function.createDelegate(this, Initiative_Stages_Data_Request.onError)
+//     );
+//   },
+//   // Global variables
+//   g: {
+//     StagesArray: [],
+//   },
+// };
 
 //stages initiative request
 

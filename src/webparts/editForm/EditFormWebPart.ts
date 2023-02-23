@@ -43,7 +43,7 @@ export default class EditFormWebPart extends BaseClientSideWebPart<IEditFormWebP
         <nav class="sidebar d-inline-block">
             <div class="sidebar-sticky">
                 <div class="main-logo"><a href="${RelativeUrl}"><img css="w-100" src="${logo}"></a></div>
-                <ul class="nav flex-column"></ul>
+                <ul class="nav flex-column sidelinkscontainer"></ul>
                 <div class="accordion important-links-ctx" id="accordionImportantLinks">
                 <div class="card bg-transparent border-0">
                     <div class="card-header" id="headingImportantLinks">

@@ -46,7 +46,7 @@ export default class ViewFormWebPart extends BaseClientSideWebPart<IViewFormWebP
                     <img css="w-100" src="${logo}">
                 </a>
             </div>
-            <ul class="nav flex-column">
+            <ul class="nav flex-column sidelinkscontainer">
 
             </ul>
             <div class="accordion important-links-ctx" id="accordionImportantLinks">
@@ -210,9 +210,11 @@ export default class ViewFormWebPart extends BaseClientSideWebPart<IViewFormWebP
                         </div>
                     </nav>
                 </div>
-                <div class="container-body printableAreaClass" id="printableArea">
+                <div class="FormContainer">
+                    <div class="container-body printableAreaClass" id="printableArea">
 
 
+                    </div>
                 </div>
             </div>
             <div class="close-layer js-close-layer" onClick="handleMainMenu.close()"></div>
