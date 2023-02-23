@@ -46,7 +46,24 @@ Get_All_BenefitMetrics = {
 
     console.log(allBenefitsArr, "allBenefitsArr")
 
-    Get_Benefit_Results.init()
+    Get_Benefit_Results.init();
+    var hideSendBtn = true
+
+    debugger
+
+    Create_Access.forEach(el => {
+      if (el == 'benefitmetrics.aspx') {
+        hideSendBtn = false
+      }
+    })
+
+    if (hideSendBtn) {
+      $("body").append(
+        "<style>" +
+        ".btn-addTarget{opacity: .6;pointer-events: none;display:none}" +
+        "</style>"
+      )
+    }
 
   },
   onError: function (sender, args) {
