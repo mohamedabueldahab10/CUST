@@ -211,7 +211,7 @@ export default class NewFormWebPart extends BaseClientSideWebPart<INewFormWebPar
                 </nav>
             </div>
             <div class="FormContainer">
-                <div class="container-body">
+                <div class="container-body"> 
 
                 </div>
                 <div id="preloader" style="display:none">

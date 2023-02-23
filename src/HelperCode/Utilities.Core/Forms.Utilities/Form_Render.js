@@ -138,7 +138,14 @@ window.ListInfo = {
     }
   },
   InfoLoop: function () {
-    var htmlBuilder = "";
+
+    var htmlBuilder = isWF
+    ? '<div class="section1 approvalHeader col-12"><div class="d-flex justify-content-between w-100"><div class=""><span class="bold Resources" data-trans-' +
+    USERlistkey +
+    '></span>' + ' ' + '<span class="mx-3 wf-project-name"></span></div><div class=""><span class="bold Resources" data-trans-taskname></span><span class="mx-3 wf-task-name"></span></div></div></div><h2 class="approvalHeader Resources" data-trans-taskformtitle>النموذج المعتمد</h2>'
+    : "";
+
+    // var htmlBuilder = "";
     var Label, Description;
     var printHtml = "";
     var toggleSectionName;
@@ -550,11 +557,23 @@ window.ListInfo = {
             }
             //
           });
+ 
 
-          //////add section to cr
+          // add new style for wf
           debugger
+          if (isWF) {
+            $(".FormContainer").addClass("wf-mode");
+            $("#navbarsParent").addClass("wfMode");
+            $(".page-nav").attr("style", "display: none !important");
+            $(".sidebar").attr("style", "display: none !important");
+            $(".main-panel").attr("style", "width: 100% !important");
+            // getTaskHistory.init();
+            Get_TaskHistory.init()
+          }
+          //
+          //////add section to cr
+          
           if (!isCrMode && crListKey) {
-            console.log("YEEEEEEEEEEEEES")
             //on new custom cr
             handleCustomeCr.init();
             $(
@@ -6085,7 +6104,12 @@ var View_ListInfo = {
   },
   InfoLoop: function () {
 
-    var htmlBuilder = "";
+    var htmlBuilder = isWF
+    ? '<div class="section1 approvalHeader col-12"><div class="d-flex justify-content-between w-100"><div class=""><span class="bold Resources" data-trans-' +
+    USERlistkey +
+    '></span>' + ' ' + '<span class="mx-3 wf-project-name"></span></div><div class=""><span class="bold Resources" data-trans-taskname></span><span class="mx-3 wf-task-name"></span></div></div></div><h2 class="approvalHeader Resources" data-trans-taskformtitle>النموذج المعتمد</h2>'
+    : "";
+
     var Label, Description;
     var printHtml = "";
 
@@ -6346,7 +6370,19 @@ var View_ListInfo = {
             );
           }
           // ended 
-          // $('h2.DahsFormTitle').text(PageTitle);
+
+          //handle new style of wf
+          if (isWF) {
+						$(".FormContainer").addClass("wf-mode");
+						$("#navbarsParent").addClass("wfMode");
+						$(".page-nav").attr("style", "display: none !important");
+						$(".sidebar").attr("style", "display: none !important");
+						$(".main-panel").attr("style", "width: 100% !important");
+						//getTaskHistory.init();
+            Get_TaskHistory.init()
+					}
+          //
+
           $(
             "div#particles-foreground, div#particles-background, .vertical-centered-box"
           ).animate(

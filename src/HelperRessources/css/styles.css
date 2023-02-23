@@ -6461,3 +6461,37 @@ span.errMsgField.Resources {
 .sidelinkscontainer {
     min-height: -webkit-fill-available;
 }
+
+/* new wf task action style (approval page) */
+.FormContainer.wf-mode .section-container {
+    background-color: #fff !important;
+    padding-right: 20px;
+    padding-left: 20px;
+    box-shadow: 0 0 8px 3px hsl(210deg 1% 66% / 8%);
+    border-radius: 3px;
+    margin-bottom: 20px;
+}
+
+.FormContainer.wf-mode .fieldset-container {
+    border: 0px !important;
+}
+
+.FormContainer.wf-mode .approvalHeader {
+    background-color: #11adad !important;
+    box-shadow: 0 0 8px 3px hsl(210deg 1% 66% / 8%);
+    border-radius: 3px;
+    color: #fff !important;
+    width: 100%;
+    padding: 20px 28px !important;
+    margin-bottom: 0px;
+}
+
+.FormContainer.wf-mode .section1.approvalHeader {
+    background-color: #0f9494 !important;
+    box-shadow: 0 0 8px 3px hsl(210deg 1% 66% / 8%);
+    border-radius: 3px;
+    color: #fff !important;
+    width: 100%;
+    padding: 20px 28px !important;
+    margin-bottom: 20px;
+}

@@ -210,9 +210,11 @@ export default class ViewFormWebPart extends BaseClientSideWebPart<IViewFormWebP
                         </div>
                     </nav>
                 </div>
-                <div class="container-body printableAreaClass" id="printableArea">
+                <div class="FormContainer">
+                    <div class="container-body printableAreaClass" id="printableArea">
 
 
+                    </div>
                 </div>
             </div>
             <div class="close-layer js-close-layer" onClick="handleMainMenu.close()"></div>
