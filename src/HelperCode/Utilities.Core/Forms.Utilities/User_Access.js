@@ -635,9 +635,9 @@ window.userCalls = {
     currentUserRole //we need first role for user
     ) {
       case "Administrator":
-        $("body").append(
+        $("body").append(       
           "<style>" +
-          "div#s4-ribbonrow, div#O365_MainLink_Settings_container{display:block!important}html #s4-workspace {height: calc(100vh - 105px)!important;min-height:auto !important;}.Progress-Action {display:block!important;}" +
+          "div#s4-ribbonrow, div#O365_MainLink_Settings_container{display:block!important}html #s4-workspace {min-height:auto !important;}.Progress-Action {display:block!important;}" +
           "</style>"
         );
         isAdmin = true;

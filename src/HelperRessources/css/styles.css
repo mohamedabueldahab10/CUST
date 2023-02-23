@@ -804,7 +804,7 @@ span.approveStageName {
     margin-bottom: 15px; */
 }
 
-.apprv {
+.containforms .apprv {
     flex-wrap: wrap;
     align-content: center;
     display: none !important;
@@ -5335,7 +5335,7 @@ div#dialogIcon img {
     align-items: center;
 }
 
-.apprv button.rejection {
+.containforms .apprv button.rejection {
     color: #fff !important;
 }
 
@@ -5492,11 +5492,11 @@ select[disabled] {
     padding: 0.5rem 0rem;
     background-color: transparent;
 }
-div#userGroup ul.list-group {
+/* div#userGroup ul.list-group {
     max-height: 500px !important;
     height: 500px !important;
     overflow-y: scroll;
-}
+} */
 div#userGroup li.list-group-item a{
    display:flex;
    justify-content:space-around;
@@ -6352,10 +6352,10 @@ li.ms-core-menu-footer {
 
 
 /* Wf button style */
-.container-ctx>.WF-btn >.SubmitTitleRow  {
+.container-ctx.containforms>.WF-btn >.SubmitTitleRow  {
     display: none!important;
 }
-.container-ctx>.WF-btn .wf-delegate-btn button.btn.delegate-btn {
+.container-ctx.containforms>.WF-btn .wf-delegate-btn button.btn.delegate-btn {
     font-size: 1.6rem;
     min-width: 12rem;
     font-weight: 500;
@@ -6365,19 +6365,19 @@ li.ms-core-menu-footer {
 }
 
 
-.container-ctx>.WF-btn .wf-delegate-btn {
+.container-ctx.containforms>.WF-btn .wf-delegate-btn {
     display: flex;
     justify-content: center;
     flex-direction: row-reverse;
 }
 
-.container-ctx>.WF-btn .wf-delegate-btn button {
+.container-ctx.containforms>.WF-btn .wf-delegate-btn button {
     height: 35px;
     line-height: 16px;
     padding: 0.2rem 1rem 0.7rem 1rem;
 }
 
-.container-ctx>.WF-btn .wf-delegate-btn button span {
+.container-ctx.containforms>.WF-btn .wf-delegate-btn button span {
     display: flex;
     justify-content: center;
     vertical-align: middle;
@@ -6385,7 +6385,7 @@ li.ms-core-menu-footer {
     align-content: center;
 }
 
-.container-ctx>.WF-btn .wf-delegate-btn button span i {
+.container-ctx.containforms>.WF-btn .wf-delegate-btn button span i {
     margin: 0px 5px;
     padding-top: 5px;
 }
