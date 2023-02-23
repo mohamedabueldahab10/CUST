@@ -5878,6 +5878,8 @@ window.Get_TaskHistory = {
 		Get_TaskHistory.g.position =
 			SPHTTPitemsEnumerable.get_listItemCollectionPosition();
 		$("button.loadMore").removeClass("disabled loader-action");
+    changeResources();
+
   },
   onError: function (sender, args) {
 		console.log(
