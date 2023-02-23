@@ -6498,6 +6498,83 @@ span.errMsgField.Resources {
 
 
 
+.btnactionrow>h2.approvalHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.FormContainer.wf-mode .btnactionrow {
+    display: flex !important;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 0px 0px 20px !important;
+    margin: 20px 0;
+}
+
+.FormContainer.wf-mode .form-btns-wrapper {
+    /* display: none !important; */
+    justify-content: flex-start !important;
+    padding: 0 20px;
+}
+
+.FormContainer.wf-mode .form-btns-wrapper span.approveStageName {
+    margin: 0 25px;
+}
+
+.FormContainer.wf-mode .form-btns-wrapper .SubmitTitleRow {
+    margin: 0px !important;
+    width: auto !important;
+}
+
+.form-btns-wrapper .apprv {
+    justify-content: space-between;
+    width: 100%;
+}
+
+.form-btns-wrapper .WF-btn {
+    width: 100%
+}
+
+p.task-name {
+    font-weight: 400;
+    margin-bottom: 6px;
+}
+
+.FormContainer.wf-mode .form-btns-wrapper button,
+.btnactionrow .WF-btn button,
+.btnactionrow .delegate-btn {
+    border-radius: 13.5px;
+    background-color: #41BA83 !important;
+    color: #FFFFFF !important;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 16px;
+    padding: 4px 13px 6px 13px !important;
+    cursor: pointer;
+    border: 0;
+    height: 28px;
+}
+
+.btnactionrow .delegate-btn {
+    background-color: #fff !important;
+    color: #6dbf00 !important;
+}
+
+.FormContainer.wf-mode .btnactionrow .btn.btn-action.btn-save,
+.FormContainer.wf-mode .btnactionrow .btn.btn-action.btn-cancel {
+    display: none !important;
+}
+.FormContainer.wf-mode .btnactionrow .wf-btn-wrapper-new > .btn.btn-action.btn-save{
+    display: block!important;
+}
+.btnactionrow .WF-btn {
+    padding: 0px !important;
+    margin: 0px !important;
+    display: inline-flex !important;
+}
+
+
 .task-history-ctx {
     background-color: #fff;
 }
@@ -6517,7 +6594,7 @@ span.errMsgField.Resources {
 
 .task-history-ctx .loadMore {
     border-radius: 13.5px;
-    background-color: #14415a;
+    background-color: #148282;
     color: #FFFFFF;
     font-size: 13px;
     font-weight: bold;

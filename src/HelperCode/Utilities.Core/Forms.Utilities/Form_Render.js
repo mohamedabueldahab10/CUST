@@ -140,10 +140,10 @@ window.ListInfo = {
   InfoLoop: function () {
 
     var htmlBuilder = isWF
-    ? '<div class="section1 approvalHeader col-12"><div class="d-flex justify-content-between w-100"><div class=""><span class="bold Resources" data-trans-' +
-    USERlistkey +
-    '></span>' + ' ' + '<span class="mx-3 wf-project-name"></span></div><div class=""><span class="bold Resources" data-trans-taskname></span><span class="mx-3 wf-task-name"></span></div></div></div><h2 class="approvalHeader Resources" data-trans-taskformtitle>النموذج المعتمد</h2>'
-    : "";
+      ? '<div class="section1 approvalHeader col-12"><div class="d-flex justify-content-between w-100"><div class=""><span class="bold Resources" data-trans-' +
+      USERlistkey +
+      '></span>' + ' ' + '<span class="mx-3 wf-project-name"></span></div><div class=""><span class="bold Resources" data-trans-taskname></span><span class="mx-3 wf-task-name"></span></div></div></div><h2 class="approvalHeader Resources" data-trans-taskformtitle>النموذج المعتمد</h2>'
+      : "";
 
     // var htmlBuilder = "";
     var Label, Description;
@@ -249,9 +249,18 @@ window.ListInfo = {
         }
         // console.log('Finishing label ' + Label + ' - IsDone: ' + isDone);
         htmlBuilder += "</div></div></div>";
+
+
+
         if (isDone) {
+          actionTaskHeader = "";
+          if (isWF) {
+            actionTaskHeader =
+              '<h2 class="approvalHeader Resources mb-5" data-trans-taskDecision>	القرار</h2>';
+          }
           htmlBuilder +=
             '<div class="py-5 btnactionrow savecancelBtns">' +
+            actionTaskHeader +
             '<div class="form-row justify-content-end form-btns-wrapper">' +
             '<button data-trans-CancelButton class="btn btn-action btn-cancel cancel Resources" type="button"></button>' +
             '<button data-trans-SaveButton class="btn btn-action btn-save Resources" type="button"></button>' +
@@ -557,7 +566,7 @@ window.ListInfo = {
             }
             //
           });
- 
+
 
           // add new style for wf
           debugger
@@ -572,7 +581,7 @@ window.ListInfo = {
           }
           //
           //////add section to cr
-          
+
           if (!isCrMode && crListKey) {
             //on new custom cr
             handleCustomeCr.init();
@@ -6105,10 +6114,10 @@ var View_ListInfo = {
   InfoLoop: function () {
 
     var htmlBuilder = isWF
-    ? '<div class="section1 approvalHeader col-12"><div class="d-flex justify-content-between w-100"><div class=""><span class="bold Resources" data-trans-' +
-    USERlistkey +
-    '></span>' + ' ' + '<span class="mx-3 wf-project-name"></span></div><div class=""><span class="bold Resources" data-trans-taskname></span><span class="mx-3 wf-task-name"></span></div></div></div><h2 class="approvalHeader Resources" data-trans-taskformtitle>النموذج المعتمد</h2>'
-    : "";
+      ? '<div class="section1 approvalHeader col-12"><div class="d-flex justify-content-between w-100"><div class=""><span class="bold Resources" data-trans-' +
+      USERlistkey +
+      '></span>' + ' ' + '<span class="mx-3 wf-project-name"></span></div><div class=""><span class="bold Resources" data-trans-taskname></span><span class="mx-3 wf-task-name"></span></div></div></div><h2 class="approvalHeader Resources" data-trans-taskformtitle>النموذج المعتمد</h2>'
+      : "";
 
     var Label, Description;
     var printHtml = "";
@@ -6303,9 +6312,15 @@ var View_ListInfo = {
         // console.log('Finishing label ' + Label + ' - IsDone: ' + isDone);
         htmlBuilder += "</div></div></div>";
         if (isDone) {
-          console.log("btnDeleteLabel", btnDeleteLabel);
+          debugger
+          actionTaskHeader = "";
+          if (isWF) {
+            actionTaskHeader =
+              '<h2 class="approvalHeader Resources mb-5" data-trans-taskDecision>	القرار</h2>';
+          }
           htmlBuilder +=
             '<div class="py-5 btnactionrow">' +
+            actionTaskHeader +
             '<div class="leftBtns">' +
             '<button data-trans-toissue class="btn btn-action btn-to-issue Resources" type="button"></button>' +
             '<button class="btn btn-action btn-delete" type="button">' +
@@ -6373,14 +6388,14 @@ var View_ListInfo = {
 
           //handle new style of wf
           if (isWF) {
-						$(".FormContainer").addClass("wf-mode");
-						$("#navbarsParent").addClass("wfMode");
-						$(".page-nav").attr("style", "display: none !important");
-						$(".sidebar").attr("style", "display: none !important");
-						$(".main-panel").attr("style", "width: 100% !important");
-						//getTaskHistory.init();
+            $(".FormContainer").addClass("wf-mode");
+            $("#navbarsParent").addClass("wfMode");
+            $(".page-nav").attr("style", "display: none !important");
+            $(".sidebar").attr("style", "display: none !important");
+            $(".main-panel").attr("style", "width: 100% !important");
+            //getTaskHistory.init();
             Get_TaskHistory.init()
-					}
+          }
           //
 
           $(
