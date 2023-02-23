@@ -5847,7 +5847,7 @@ window.Get_TaskHistory = {
                 </div>
                 <div class="col-4">
                     <p class="historyValue">${datetouse2}</p>
-                    <p data-trans-date>date</p>
+                    <p  class="Resources historyLabel" data-trans-date>date</p>
                 </div>
             </div>
             `;

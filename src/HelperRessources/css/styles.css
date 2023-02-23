@@ -6495,3 +6495,35 @@ span.errMsgField.Resources {
     padding: 20px 28px !important;
     margin-bottom: 20px;
 }
+
+
+
+.task-history-ctx {
+    background-color: #fff;
+}
+
+.task-history-ctx .historyValue {
+    color: #f3983d;
+    font-size: 14px;
+}
+
+.historyLabel {
+    font-size: 14px;
+}
+
+.task-history-ctx .history-row-ctx {
+    border-bottom: 1px solid #D9DCE1;
+}
+
+.task-history-ctx .loadMore {
+    border-radius: 13.5px;
+    background-color: #f3983d;
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 16px;
+    margin: 0 auto;
+    padding: 1px 10px 6px 10px;
+    cursor: pointer;
+}

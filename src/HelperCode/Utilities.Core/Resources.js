@@ -895,7 +895,10 @@
     strategicpartnershipsmilestones:"المعالم",
     strategicpartnershipsmom:"محاضر الإجتماع",
     strategicpartnershipsrisks:"المخاطر",
-    strategicpartnershipsissues:"التحديات"
+    strategicpartnershipsissues:"التحديات",
+    assignedto: "المُكلَف",
+    date: "التاريخ",
+
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1808,7 +1811,11 @@
     strategicpartnershipsmilestones:"Milestones",
     strategicpartnershipsmom:"MOM",
     strategicpartnershipsrisks:"Risks",
-    strategicpartnershipsissues:"Issues"
+    strategicpartnershipsissues:"Issues",
+    assignedto: "Assigned To",
+    date: "Date",
+
+    
   },
 };
 
