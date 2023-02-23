@@ -95,6 +95,7 @@ var UserRole,
     "stratigicinformation.aspx",
     "InitiativesMain.aspx",
     "Targets.aspx",
+    "BenefitMetrics.aspx",
     "StrategicIndicators.aspx",
     "MainIndicators.aspx",
     "Programs.aspx",
@@ -3010,25 +3011,25 @@ window.userCalls = {
         );
         break;
     }
-    debugger
-    switch (
-      true //Create Access
-      ) {
-        case ((USERisTargets) &&
-          Create_Access.indexOf('Targets.aspx') == -1 && Create_Access.indexOf('targets.aspx') == -1)
-          &&
-          ((USERisTargets) &&
-          Edit_Access.indexOf('Targets.aspx') == -1 && Edit_Access.indexOf('targets.aspx') == -1) :
-          //SEND btn
-          //disable
+    // debugger
+    // switch (
+    //   true //Create Access
+    //   ) {
+    //     case ((USERisTargets) &&
+    //       (Create_Access.indexOf('Targets.aspx') == -1 && Create_Access.indexOf('targets.aspx') == -1 )
+    //       &&
+    //       (Edit_Access.indexOf('Targets.aspx') == -1 && Edit_Access.indexOf('targets.aspx') == -1)
+    //       ) :
+    //       //SEND btn
+    //       //disable
   
-          $("body").append(
-            "<style>" +
-            ".btn-addTarget{opacity: .6;pointer-events: none;display:none}" +
-            "</style>"
-          );
-          break;
-      }
+    //       $("body").append(
+    //         "<style>" +
+    //         ".btn-addTarget{opacity: .6;pointer-events: none;display:none}" +
+    //         "</style>"
+    //       );
+    //       break;
+    //   }
     //end CRUD
 
 
