@@ -6558,11 +6558,12 @@ p.task-name {
 
 .btnactionrow .delegate-btn {
     background-color: #fff !important;
-    color: #6dbf00 !important;
+    color: #148282 !important;
 }
 
 .FormContainer.wf-mode .btnactionrow .btn.btn-action.btn-save,
-.FormContainer.wf-mode .btnactionrow .btn.btn-action.btn-cancel {
+.FormContainer.wf-mode .btnactionrow .btn.btn-action.btn-cancel,
+.FormContainer.wf-mode .btnactionrow .btn.btn-action.btn-delete {
     display: none !important;
 }
 .FormContainer.wf-mode .btnactionrow .wf-btn-wrapper-new > .btn.btn-action.btn-save{
