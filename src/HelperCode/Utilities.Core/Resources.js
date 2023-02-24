@@ -899,6 +899,9 @@
     assignedto: "المُكلَف",
     date: "التاريخ",
 
+    
+    arnamepattern:"يحب إدخال الإسم بالعربي",
+    ennamepattern:"يجب إدخال الإسم بالانجليزي",
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1815,7 +1818,9 @@
     assignedto: "Assigned To",
     date: "Date",
 
-    
+
+    arnamepattern:"Name must be entered in English",
+    ennamepattern:"Name must be entered in Arabic",
   },
 };
 

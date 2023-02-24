@@ -9,6 +9,7 @@ var Information_Form = [{
             "DisplayNameEn": "Portfolio Name",
             "type": "string",
             "validation": "required",
+            "Errmsgkey":"arnamepattern",
         },
         {
             "InternalName": "NameEn",
@@ -16,6 +17,7 @@ var Information_Form = [{
             "DisplayNameEn": "Portfolio Name(English)",
             "type": "string",
             "validation": "required",
+            "Errmsgkey":"ennamepattern",
         },
         {
             "InternalName": "Description",
