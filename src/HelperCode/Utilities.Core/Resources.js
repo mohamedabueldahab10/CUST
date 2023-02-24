@@ -1819,8 +1819,8 @@
     date: "Date",
 
 
-    arnamepattern:"Name must be entered in English",
-    ennamepattern:"Name must be entered in Arabic",
+    arnamepattern:"Name must be entered in Arabic",
+    ennamepattern:"Name must be entered in English",
   },
 };
 
