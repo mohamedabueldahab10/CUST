@@ -6705,3 +6705,61 @@ p.task-name {
     cursor: pointer;
 }
 
+:not(.containforms)>.WF-btn .wfTitle {
+    display: none
+ }
+ 
+ :not(.containforms)>.WF-btn .apprv,
+ :not(.containforms)>.WF-btn .SubmitTitleRow,
+ :not(.containforms)  #myModal .modal-dialog  {
+    padding-inline: 16px;
+ }
+ :not(.containforms)  #myModal .modal-dialog {
+    margin: 0 !important
+ }
+ @media screen and (min-width: 1200px) {
+ 
+    :not(.containforms)>.WF-btn .apprv,
+    :not(.containforms)>.WF-btn .SubmitTitleRow,
+    :not(.containforms)  #myModal .modal-dialog  {
+       padding-inline-start: 6.2rem;
+    }
+ 
+    :not(.containforms)  #myModal .modal-dialog  {
+       margin: 0 !important
+    }
+ }
+ 
+ :not(.containforms)>.WF-btn .apprv {
+    display: block;
+    /* padding-top:0.4rem; */
+    margin-top: 1rem;
+ }
+ 
+ :not(.containforms)>.WF-btn .apprv span.approveStageName {
+    padding-inline-start: 0;
+    display: block !important;
+    margin-bottom: 1rem;
+ }
+ 
+ :not(.containforms)>.pop-green {
+    margin-inline-start: 0;
+    margin-inline-end: 20px;
+ }
+ /* ghufran fix height  */
+ #userGroup ul.list-group {
+    max-height:54rem !important;
+    overflow-y:auto;
+}
+div#accordionRequiredSupport ul.list-group {
+    max-height:30rem !important;
+    overflow-y:auto;
+}
+
+#userGroup ul.list-group h3.title-13 {
+    width:11.5rem!important
+}
+.page-filter .dropdown-menu.show {
+     max-height:54rem !important;
+    overflow-y:auto;
+}

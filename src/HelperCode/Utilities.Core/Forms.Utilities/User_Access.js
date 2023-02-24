@@ -2664,7 +2664,8 @@ window.userCalls = {
         ar_UserRole = "رائد الأداء";
         en_UserRole = "Performance Leader";
         //CRUD
-        Create_Access = ["Targets.aspx"];
+        Create_Access = ["Targets.aspx",
+        "BenefitMetrics.aspx"];
         Read_Access = [
           "mainkpi",
           "sos",
