@@ -800,19 +800,57 @@ a.File-Link i {
 
 span.approveStageName {
     display: block;
-    width: 100%;
-    margin-bottom: 15px;
+    /* width: 100%;
+    margin-bottom: 15px; */
 }
 
-.apprv {
+.containforms .apprv {
     flex-wrap: wrap;
     align-content: center;
+    display: none !important;
 }
 
-button.btn.pop-green.cancelbutton.Resources {
+.WF-btn .btn.pop-green {
+    /* display:none; */
+}
+
+.btnactionrow .WF-btn .btn.pop-green {
+    display: block !important;
+}
+
+.btnactionrow .apprv {
+    display: flex !important;
+    margin-bottom: 0px !important;
+}
+
+.btnactionrow #myModal {
+    display: none !important;
+}
+
+.FormContainer.wf-mode .btnactionrow .leftBtns,
+/* .FormContainer.wf-mode .btnactionrow .rightBtns, */
+.FormContainer.wf-mode .btnactionrow .SubmitTitleRow .wfTitle {
+    display: none;
+}
+.FormContainer.wf-mode .form-tabs {
+    min-height: 238px;
+    border-left: 1px solid #dee2e6;
+    margin: 25px 0px;
+}
+
+.FormContainer .tabs-content-wrapper{
+    max-height: 100vh;
+}
+.FormContainer.wf-mode .tabs-content-wrapper{
+    background-color: #fff;
+    min-height: 82vh;
+}
+
+
+/* button.btn.pop-green.cancelbutton.Resources {
     background-color: rgba(89, 8, 53, 0.1);
     color: #590835;
-}
+} */
 
 .form-row>.col,
 .form-row>[class*=col-] {
@@ -4916,7 +4954,7 @@ div#AssignedTo.UserError {
     /* top:50px; */
     /* left:300px; */
     /* width:auto; */
-    margin: 0px 10px !important;
+    margin: 0 4% !important;
     width: 500px;
     /* max-width:100% */
 }
@@ -5297,6 +5335,10 @@ div#dialogIcon img {
     align-items: center;
 }
 
+.containforms .apprv button.rejection {
+    color: #fff !important;
+}
+
 .apprv button {
     height: 40px;
 }
@@ -5450,11 +5492,11 @@ select[disabled] {
     padding: 0.5rem 0rem;
     background-color: transparent;
 }
-div#userGroup ul.list-group {
+/* div#userGroup ul.list-group {
     max-height: 500px !important;
     height: 500px !important;
     overflow-y: scroll;
-}
+} */
 div#userGroup li.list-group-item a{
    display:flex;
    justify-content:space-around;
@@ -6308,6 +6350,58 @@ li.ms-core-menu-footer {
     left: 6%;
 }
 
+
+/* Wf button style */
+.container-ctx.containforms>.WF-btn >.SubmitTitleRow  {
+    display: none!important;
+}
+.container-ctx.containforms>.WF-btn .wf-delegate-btn button.btn.delegate-btn {
+    font-size: 1.6rem;
+    min-width: 12rem;
+    font-weight: 500;
+    margin-left: 1rem;
+    text-align: center !important;
+    margin: 0 3px;
+}
+
+
+.container-ctx.containforms>.WF-btn .wf-delegate-btn {
+    display: flex;
+    justify-content: center;
+    flex-direction: row-reverse;
+}
+
+.container-ctx.containforms>.WF-btn .wf-delegate-btn button {
+    height: 35px;
+    line-height: 16px;
+    padding: 0.2rem 1rem 0.7rem 1rem;
+}
+
+.container-ctx.containforms>.WF-btn .wf-delegate-btn button span {
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
+    align-items: center;
+    align-content: center;
+}
+
+.container-ctx.containforms>.WF-btn .wf-delegate-btn button span i {
+    margin: 0px 5px;
+    padding-top: 5px;
+}
+
+.btn.delegate-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.btn.delegate-btn i {
+    margin: 0px 5px;
+    margin-top: 4px;
+}
+
 /* important links */
 .important-links-ctx {
     position: sticky;
@@ -6526,6 +6620,11 @@ span.errMsgField.Resources {
     width: auto !important;
 }
 
+.apprv {
+    margin-bottom: 25px;
+    display: flex;
+}
+
 .form-btns-wrapper .apprv {
     justify-content: space-between;
     width: 100%;
@@ -6544,7 +6643,7 @@ p.task-name {
 .btnactionrow .WF-btn button,
 .btnactionrow .delegate-btn {
     border-radius: 13.5px;
-    background-color: #41BA83 !important;
+    background-color: #148282 !important;
     color: #FFFFFF !important;
     font-size: 13px;
     font-weight: bold;
@@ -6605,3 +6704,4 @@ p.task-name {
     padding: 1px 10px 6px 10px;
     cursor: pointer;
 }
+

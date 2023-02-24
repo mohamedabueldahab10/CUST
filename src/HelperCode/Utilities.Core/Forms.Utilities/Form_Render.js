@@ -735,9 +735,9 @@ window.ListInfo = {
                 );
               });
             }
-            if (USERisWF) {
-              $(".form-btns-wrapper").hide();
-            }
+            // if (USERisWF) {
+            //   $(".form-btns-wrapper").hide();
+            // }
             if (listkey == "initiatives") {
               Sectors_Info.init(); // to get the department related to sector on edit
               ListInfo.g.showFieldsIfInitiativeVision();
@@ -823,10 +823,10 @@ window.ListInfo = {
             if (listkey == "goalstrategy") {
               ListInfo.g.requiredSpillarsName();
             }
-            if (USERisWF || UserHaveLicense == false) {
-              $(".form-btns-wrapper").hide();
-              $(".btnactionrow").hide();
-            }
+            // if (USERisWF || UserHaveLicense == false) {
+            //   $(".form-btns-wrapper").hide();
+            //   $(".btnactionrow").hide();
+            // }
             if (UserHaveLicense == false) {
               $(".container-body").prepend(
                 '<div class="noLicense"><span data-trans-nolicense class="Resources"></span></div>'
@@ -6327,7 +6327,7 @@ var View_ListInfo = {
             btnDeleteLabel +
             "</button>" +
             "</div>" +
-            '<div class="form-row rightBtns justify-content-end">' +
+            '<div class="form-row rightBtns justify-content-end form-btns-wrapper">' +
             '<button data-trans-CancelButton class="btn btn-action btn-cancel Resources" type="button"></button>' +
             '<button  data-trans-EditButton class="btn btn-action btn-save Resources" type="button"></button>' +
             "</div>" +

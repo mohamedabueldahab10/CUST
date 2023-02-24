@@ -635,9 +635,9 @@ window.userCalls = {
     currentUserRole //we need first role for user
     ) {
       case "Administrator":
-        $("body").append(
+        $("body").append(       
           "<style>" +
-          "div#s4-ribbonrow, div#O365_MainLink_Settings_container{display:block!important}html #s4-workspace {height: calc(100vh - 105px)!important;min-height:auto !important;}.Progress-Action {display:block!important;}" +
+          "div#s4-ribbonrow, div#O365_MainLink_Settings_container{display:block!important}html #s4-workspace {min-height:auto !important;}.Progress-Action {display:block!important;}" +
           "</style>"
         );
         isAdmin = true;
@@ -828,6 +828,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "milestones",
@@ -852,6 +853,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "milestones",
@@ -884,6 +886,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "milestones",
@@ -908,6 +911,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "milestones",
@@ -940,6 +944,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "milestones",
@@ -965,6 +970,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "milestones",
@@ -998,6 +1004,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "milestones",
@@ -1022,6 +1029,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "milestones",
@@ -1049,7 +1057,7 @@ window.userCalls = {
         ar_UserRole = "إدارة الأداء الإستراتيجي";
         en_UserRole = "Strategy Performance Management";
         //CRUD
-        Create_Access = ["benefitmetrics"];
+        Create_Access = ["benefitmetrics","BenefitMetrics.aspx"];
 
         Read_Access = [
           "goalstrategy",
@@ -1060,11 +1068,12 @@ window.userCalls = {
           "initiatives",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "MainIndicators.aspx",
           "initiativesmain.aspx",
         ];
 
-        Edit_Access = ["benefitmetrics"];
+        Edit_Access = ["benefitmetrics","BenefitMetrics.aspx"];
         Delete_Access = [];
         break;
       case "SPMAdmin":
@@ -1090,6 +1099,7 @@ window.userCalls = {
           "mainkpi",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "deliverablemetrics",
           "changerequest",
           "Targets.aspx",
@@ -1111,6 +1121,7 @@ window.userCalls = {
           "deliverablemetrics",
           "benefitmatrix",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "changerequest",
         ];
 
@@ -1120,6 +1131,7 @@ window.userCalls = {
           "deliverablemetrics",
           "benefitmatrix",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "benefits",
           "Targets.aspx",
           "kpiequations",
@@ -1131,8 +1143,10 @@ window.userCalls = {
           "sos",
           "benefitmatrix",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "benefits",
-          // "mainkpi", "sos",  "benefits", "Targets.aspx", "kpiequations", "deliverablemetrics", "benefitmatrix", "benefitmetrics", //check
+          // "mainkpi", "sos",  "benefits", "Targets.aspx", "kpiequations", "deliverablemetrics", "benefitmatrix", "benefitmetrics",
+          "BenefitMetrics.aspx", //check
         ];
         break;
       case "VROP":
@@ -1319,6 +1333,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "mom",
@@ -1348,6 +1363,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "mom",
@@ -1374,6 +1390,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "mom",
@@ -1412,6 +1429,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "mom",
@@ -1441,6 +1459,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "mom",
@@ -1467,6 +1486,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "mom",
@@ -1505,6 +1525,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "mom",
@@ -1533,6 +1554,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "mom",
@@ -1559,6 +1581,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "mom",
@@ -1601,6 +1624,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "mom",
@@ -1632,6 +1656,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "mom",
@@ -1660,6 +1685,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "mom",
@@ -1702,6 +1728,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "mom",
@@ -1733,6 +1760,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "mom",
@@ -1761,6 +1789,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "mom",
@@ -1803,6 +1832,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "mom",
@@ -1834,6 +1864,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "mom",
@@ -1862,6 +1893,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "projects",
           "deliverables",
           "mom",
@@ -1943,6 +1975,7 @@ window.userCalls = {
           "mainkpi",
           "sos",
           "goalstrategy",
+          "Targets.aspx",
         ];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
@@ -1981,6 +2014,7 @@ window.userCalls = {
           "initiativerisks",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "closureinitiative",
           "projects",
           "deliverables",
@@ -2008,6 +2042,7 @@ window.userCalls = {
           "initiativerisks",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "closureinitiative",
           "projects",
           "deliverables",
@@ -2033,6 +2068,7 @@ window.userCalls = {
           "initiativerisks",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "closureinitiative",
           "projects",
           "deliverables",
@@ -2070,6 +2106,7 @@ window.userCalls = {
           "initiativemom",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "closureinitiative",
           // for projects
           "projects",
@@ -2120,6 +2157,7 @@ window.userCalls = {
           "initiativemom",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "closureinitiative",
           /////////////////////
           "MainIndicators.aspx",
@@ -2140,6 +2178,7 @@ window.userCalls = {
           "initiativemom",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "closureinitiative",
           // for projects
           "projects",
@@ -2168,6 +2207,7 @@ window.userCalls = {
           "initiativemom",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "closureinitiative",
           // for projects
           "projects",
@@ -2206,6 +2246,7 @@ window.userCalls = {
           "initiativemom",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "closureinitiative",
           "deliverables",
           "risks",
@@ -2231,6 +2272,7 @@ window.userCalls = {
           "initiativemom",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "closureinitiative",
           "risks",
           "issues",
@@ -2251,6 +2293,7 @@ window.userCalls = {
           "initiativemom",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "closureinitiative",
           "risks",
           "issues",
@@ -2309,6 +2352,7 @@ window.userCalls = {
           "initiativemom",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "closureinitiative",
           // for projects
           "projects",
@@ -2362,6 +2406,7 @@ window.userCalls = {
           "initiativemom",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "closureinitiative",
           /////////////////////
           "MainIndicators.aspx",
@@ -2384,6 +2429,7 @@ window.userCalls = {
           "initiativemom",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "closureinitiative",
           // for projects
           "projects",
@@ -2412,6 +2458,7 @@ window.userCalls = {
           "initiativemom",
           "benefits",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "closureinitiative",
           // for projects
           "deliverables",
@@ -2617,7 +2664,7 @@ window.userCalls = {
         ar_UserRole = "رائد الأداء";
         en_UserRole = "Performance Leader";
         //CRUD
-        Create_Access = [];
+        Create_Access = ["Targets.aspx"];
         Read_Access = [
           "mainkpi",
           "sos",
@@ -2627,6 +2674,7 @@ window.userCalls = {
           "MainIndicators.aspx",
           "benefitmatrix",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "benefits",
           "initiatives",
           "InitiativeHome.aspx",
@@ -2637,6 +2685,7 @@ window.userCalls = {
           "mainkpi",
           "sos",
           "benefitmetrics",
+          "BenefitMetrics.aspx",
           "kpiequations",
           "MainIndicators.aspx",
         ];
@@ -2670,6 +2719,7 @@ window.userCalls = {
           "strategicpartnershipslessonslearned",
           "strategicpartnershipsmom",
           "strategicpartnershipsachievements",
+          "strategicpartnershipsvendors"
         ];
 
         Read_Access = [
@@ -2684,7 +2734,8 @@ window.userCalls = {
           "strategicpartnershipsmom",
           "documents",
           "strategicpartnershipsachievements",
-          "tasks"
+          "tasks",
+          "strategicpartnershipsvendors"
         ];
         Edit_Access = [
           "strategicpartnerships",
@@ -2697,6 +2748,8 @@ window.userCalls = {
           "strategicpartnershipslessonslearned",
           "strategicpartnershipsmom",
           "strategicpartnershipsachievements",
+          "tasks",
+          "strategicpartnershipsvendors"
         ];
         Delete_Access = [
           "strategicpartnerships",
@@ -2709,6 +2762,7 @@ window.userCalls = {
           "strategicpartnershipslessonslearned",
           "strategicpartnershipsmom",
           "strategicpartnershipsachievements",
+          "strategicpartnershipsvendors"
         ];
         break;
 
@@ -2738,6 +2792,7 @@ window.userCalls = {
           "strategicpartnershipsrisks",
           "strategicpartnershipslessonslearned",
           "strategicpartnershipsmom",
+          
         ];
         Read_Access = [
           "strategicpartnerships",
@@ -2751,7 +2806,8 @@ window.userCalls = {
           "strategicpartnershipsmom",
           "documents",
           "strategicpartnershipsachievements",
-          "tasks"
+          "tasks",
+          "strategicpartnershipsvendors"
         ];
         Edit_Access = [];
         Delete_Access = []

@@ -182,7 +182,7 @@ export default class EditFormWebPart extends BaseClientSideWebPart<IEditFormWebP
                     </div>
                 </div>
             </nav>
-            <div class="container-ctx">
+            <div class="container-ctx containforms">
                 <div class="navbar page-nav px-5">
                     <ul class="navbar-nav bd-navbar-nav flex-row">
                         <!--<li class="nav-item active"><a href="#">Home</a></li>
