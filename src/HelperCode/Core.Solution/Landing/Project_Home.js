@@ -1621,7 +1621,7 @@ var Deliverables_Info_Request = {
         Project_Home_Info_Request.g.PCODE +
         '"><i class="icon-plus"></i></a></li>',
       ];
-    }else{
+    } else {
       var itemhtml = []
     }
 
@@ -2188,7 +2188,7 @@ var Stages_Data_Request = {
           "</span>" +
           "</a>";
         stagehtml +=
-          '</div></div><div class="new-Phase-Values tab-pane fade show" id="' +
+          '</div></div><div class="new-Phase-Values tab-pane fade show" data-phase="' + phase + '" id="' +
           phase +
           '" role="tabpanel" aria-labelledby="v-pills-' +
           phase +
@@ -2239,6 +2239,9 @@ var Stages_Data_Request = {
     }
     changeResources();
     var isactive = false;
+
+    var PhasesProgressArr = []
+
     $(".project-stages-ctx div#v-pills-tabContent > .tab-pane").each(
       function () {
         //
@@ -2272,8 +2275,24 @@ var Stages_Data_Request = {
           $(this).addClass("active");
           // $(this).find('.Stage-content').addClass('active');
         }
+
+        var dataPhase = $(this).data('phase')
+        PhasesProgressArr.push({ phase: dataPhase, progress: Progress })
+
       }
     );
+
+    
+    // to check that if the previous phase percentage not 100% should change the percentage to be 100%
+    for (var i = 0; i < PhasesProgressArr.length; i++) {
+      if (PhasesProgressArr[i + 1]) {
+        if (PhasesProgressArr[i + 1].progress > 0) {
+          $(".project-stages-ctx div#v-pills-tab > ." + PhasesProgressArr[i].phase + " .percent-complete"
+          ).text(100 + "%");
+        }
+      }
+    }
+
     if (!isactive) {
       $(".new-Phase:last-child").addClass("active");
       $(".new-Phase-Values:last-child").addClass("show active");

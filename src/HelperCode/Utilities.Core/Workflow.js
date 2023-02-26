@@ -125,7 +125,7 @@ var workflowname,
 	isVisionInitiative = window.location.href.indexOf("initiatives&VisionInitiative") > -1, 
 	isStrategicallyInitiative = window.location.href.indexOf("initiatives&StrategicallyInitiative") > -1,
 	isLMSInitiative = window.location.href.indexOf("initiatives&LMSInitiative") > -1,
-	isStrategicPartnerships = window.location.href.indexOf("strategicpartnerships") > -1,
+	isStrategicPartnerships = window.location.href.indexOf("strategicpartnerships&STP") > -1,
 	isSPAchievements = window.location.href.indexOf("strategicpartnershipsachievements") > -1,
 	isProjectCancellationRequestWF =
 		window.location.href.indexOf("projectcancellationrequest") > -1,
