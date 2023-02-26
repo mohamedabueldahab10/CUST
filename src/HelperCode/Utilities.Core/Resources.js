@@ -898,10 +898,11 @@
     strategicpartnershipsissues:"التحديات",
     assignedto: "المُكلَف",
     date: "التاريخ",
-
-    
     arnamepattern:"يحب إدخال الإسم بالعربي",
     ennamepattern:"يجب إدخال الإسم بالانجليزي",
+    taskformtitle:"النموذج المعتمد",
+    taskhistory:"العمليات السابقة",
+    taskdecision:"القرار"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1817,10 +1818,11 @@
     strategicpartnershipsissues:"Issues",
     assignedto: "Assigned To",
     date: "Date",
-
-
     arnamepattern:"Name must be entered in Arabic",
     ennamepattern:"Name must be entered in English",
+    taskformtitle:"Task Form",
+    taskhistory:"Task History",
+    taskdecision:"Decision"
   },
 };
 

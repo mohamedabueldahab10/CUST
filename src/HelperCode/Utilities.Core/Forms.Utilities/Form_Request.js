@@ -5777,15 +5777,6 @@ window.Get_TaskHistory = {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("Tasks");
 
-    // var camelQuery = "<View><Query><Where><And><Eq><FieldRef Name='RelatedItemID'/><Value Type='Text'>" +
-    //   IID +
-    //   "</Value></Eq><And><Neq><FieldRef Name='ID'/><Value Type='Integer'>" +
-    //   taskid +
-    //   "</Value></Neq><Eq><FieldRef Name='WorkflowName'/><Value Type='Text'>" +
-    //   workflowname +
-    //   "</Value></Eq></And></And></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query><RowLimit>5</RowLimit></View>"
-
-    
     var camelQuery = `<View><Query><Where><And>
     <Eq><FieldRef Name='RelatedItemID'/><Value Type='Text'>${IID}</Value></Eq>
     <And>
@@ -5827,6 +5818,23 @@ window.Get_TaskHistory = {
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       let stage = oListItem.get_item("Title");
+      let taskDescription = oListItem.get_item('Body') ? oListItem.get_item('Body') : No_Data;
+
+      let createdDate = oListItem.get_item('Created') || No_Data;
+      createdDate = createdDate.toLocaleDateString("en-US");
+
+      let modifiedNoteDate = oListItem.get_item('Modified') || No_Data;
+      modifiedNoteDate = modifiedNoteDate.toLocaleDateString("en-US");
+
+
+      let takenAction = oListItem.get_item('TakenAction');
+
+      if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+        takenAction = takenAction ? Resources.ar[takenAction.toLowerCase()] : No_Data;
+      } else {
+        takenAction = takenAction ? Resources.en[takenAction.toLowerCase()] : No_Data;
+      }
+
       var assignedTo = [];
       if (oListItem.get_item("AssignedTo").length) {
         oListItem.get_item("AssignedTo").forEach((el) => {
@@ -5834,41 +5842,69 @@ window.Get_TaskHistory = {
         });
       }
 
-      //date
-      let d =
-        oListItem.get_item("Created") == null
-          ? "empty"
-          : oListItem.get_item("Created");
-      var local = d.getTime();
-      var offset = d.getTimezoneOffset() * (60 * 1000);
-      var utc = new Date(local + offset);
-      var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
-      var datetouse = riyadh.toLocaleString("en-US").split(",")[0].split("/");
-      datetouse[0] =
-        datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
-      datetouse[1] =
-        datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
-      if (
-        localStorage.getItem("lng") == null ||
-        localStorage.getItem("lng") == "ar"
-      ) {
-        var datetouse2 = datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
-      } else {
-        var datetouse2 = datetouse[1] + "-" + datetouse[0] + "-" + datetouse[2];
+      let tasktitlearr = []
+
+      if (localStorage.getItem('Dynamo_Tasks Configuration') != null) {
+        tasktitlearr = JSON.parse(localStorage.getItem("Dynamo_Tasks Configuration") || "[]");
+        tasktitlearr = tasktitlearr.filter(function (item) {
+          return item.code == stage
+        });
+        if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+          stage = tasktitlearr[0].name;
+        } else {
+          stage = tasktitlearr[0].nameEn;
+        }
       }
+
+
+
+      // //date
+      // let d =
+      //   oListItem.get_item("Created") == null
+      //     ? "empty"
+      //     : oListItem.get_item("Created");
+      // var local = d.getTime();
+      // var offset = d.getTimezoneOffset() * (60 * 1000);
+      // var utc = new Date(local + offset);
+      // var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+      // var datetouse = riyadh.toLocaleString("en-US").split(",")[0].split("/");
+      // datetouse[0] =
+      //   datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
+      // datetouse[1] =
+      //   datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
+      // if (
+      //   localStorage.getItem("lng") == null ||
+      //   localStorage.getItem("lng") == "ar"
+      // ) {
+      //   var datetouse2 = datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
+      // } else {
+      //   var datetouse2 = datetouse[1] + "-" + datetouse[0] + "-" + datetouse[2];
+      // }
       //end date
       historyHTML += `
             <div class="row mx-0 my-3 history-row-ctx">
-                <div class="col-4">
+                <div class="col-3">
                     <p>${stage}</p>
                 </div>
-                <div class="col-4">
+                <div class="col-2">
                     <p class="historyValue">${assignedTo.join(",")}</p>
                     <p class="Resources historyLabel" data-trans-assignedTo>assignedTo</p>
                 </div>
-                <div class="col-4">
-                    <p class="historyValue">${datetouse2}</p>
-                    <p  class="Resources historyLabel" data-trans-date>date</p>
+                <div class="col-2">
+                    <p class="historyValue">${createdDate}</p>
+                    <p  class="Resources historyLabel" data-trans-createddate>createddate</p>
+                </div>
+                <div class="col-2">
+                    <p class="historyValue">${modifiedNoteDate}</p>
+                    <p  class="Resources historyLabel" data-trans-modifieddate>task comment</p>
+                </div>
+                <div class="col-2">
+                    <p class="historyValue">${taskDescription}</p>
+                    <p  class="Resources historyLabel" data-trans-taskComment>task comment</p>
+                </div>
+                <div class="col-1">
+                    <p class="historyValue">${takenAction}</p>
+                    <p  class="Resources historyLabel" data-trans-takenaction>taken action</p>
                 </div>
             </div>
             `;
