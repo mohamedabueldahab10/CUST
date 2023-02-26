@@ -169,7 +169,7 @@ var initiativeHomeInfo_Request = {
       initiativecost = oListItem.get_item("EstimatedCost") || 0;
       ProgramTotalCost = oListItem.get_item("ProgramTotalCost") || 0;
       CurrentBudget = oListItem.get_item("CurrentBuget") || 0;
-      instage = oListItem.get_item("WFStage") || No_Data; 
+      instage = oListItem.get_item("WFStage") || No_Data;
       projectTypes = oListItem.get_item("Types") || No_Data;
       // stagename = oListItem.get_item("Stage") || No_Data;
       projectSector = oListItem.get_item("Sector") || No_Data;
@@ -509,6 +509,15 @@ var initiativeHomeInfo_Request = {
           (1000 * 60 * 60 * 24 * 30)
         ));
     }
+
+    // hide side nav and project nav in wf
+    if (isWF) {
+      $(".page-nav").attr("style", "display: none !important");
+      $(".sidebar").attr("style", "display: none !important");
+      $(".main-panel").attr("style", "width: 100% !important");
+    }
+
+
     if (RelatedObjective && RelatedObjective != No_Data) {
       Get_RelatedObjective.init();
     }
@@ -1499,16 +1508,16 @@ var Milestones_Info_Request = {
 
     if (initiativeActualBudget) {
 
-    var itemhtml = [
-      '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
-      _spPageContextInfo.webAbsoluteUrl +
-      "/sitepages/new.aspx?ListKey=initiativemilestones&ICODE=" +
-      initiativeHomeInfo_Request.g.ICODE +
-      '"><i class="icon-plus"></i></a></li>',
-    ];
-  }else{
-    var itemhtml = [""]
-  }
+      var itemhtml = [
+        '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
+        _spPageContextInfo.webAbsoluteUrl +
+        "/sitepages/new.aspx?ListKey=initiativemilestones&ICODE=" +
+        initiativeHomeInfo_Request.g.ICODE +
+        '"><i class="icon-plus"></i></a></li>',
+      ];
+    } else {
+      var itemhtml = [""]
+    }
 
     var itemID,
       item1,

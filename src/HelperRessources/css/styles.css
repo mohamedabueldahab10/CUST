@@ -6763,3 +6763,8 @@ div#accordionRequiredSupport ul.list-group {
      max-height:54rem !important;
     overflow-y:auto;
 }
+
+
+:not(.containforms)>.wf-delegate-btn>.delegate-btn{
+    height: 40px;
+}

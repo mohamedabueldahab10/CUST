@@ -559,6 +559,13 @@ var Project_Home_Info_Request = {
         : No_Data;
     }
 
+    // hide side nav and project nav in wf
+    if (isWF) {
+      $(".page-nav").attr("style", "display: none !important");
+      $(".sidebar").attr("style", "display: none !important");
+      $(".main-panel").attr("style", "width: 100% !important");
+    }
+
     $(".project-details-ctx .card.h-100").html(card1.join("")); // attaching card 1
 
     $("#PjPriority").append(
