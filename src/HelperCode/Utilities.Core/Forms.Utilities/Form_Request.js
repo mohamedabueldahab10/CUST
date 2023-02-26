@@ -1191,14 +1191,65 @@ window.View_Data_Request = {
             $(this).text(Resources.ar["no"]);
           } else $(this).text(Resources.en["no"]);
         } else {
-          if (listkey == 'mainkpi' && $(this).attr("id") == 'Year') { // view the year value in main kpi view
-            $(this).text(value)
-          } else if (
-            localStorage.getItem("lng") == null ||
-            localStorage.getItem("lng") == "ar"
-          ) {
-            $(this).text(Resources.ar[value.toLowerCase()]);
-          } else $(this).text(Resources.en[value.toLowerCase()]);
+
+          if (listkey == 'mainkpi') {
+            if ($(this).attr("id") == 'Year') {
+              $(this).text(value)
+            } else {
+              if (
+                localStorage.getItem("lng") == null ||
+                localStorage.getItem("lng") == "ar"
+              ) {
+                $(this).text(Resources.ar[value.toLowerCase()]);
+              } else $(this).text(Resources.en[value.toLowerCase()]);
+            }
+          }
+          else if (listkey == 'benefitmetrics') {
+            if ($(this).attr("id") == 'Year') {
+              $(this).text(value)
+            } else {
+              var periodType = oListItem.get_item("PeriodType")
+              var currentId = $(this).attr("id")
+              if (currentId == 'Months' || currentId == 'Quarter' || currentId == 'Midterms') {
+                // if (periodType == 'monthly') {
+                  var period = value.toLowerCase() + periodType
+                  console.log(period,"period")
+                  if (
+                    localStorage.getItem("lng") == null ||
+                    localStorage.getItem("lng") == "ar"
+                  ) {
+                    $(this).text(Resources.ar[period.toLowerCase()]);
+                  } else $(this).text(Resources.en[period.toLowerCase()]);
+
+                  debugger
+               // }
+              }else{
+                if (
+                  localStorage.getItem("lng") == null ||
+                  localStorage.getItem("lng") == "ar"
+                ) {
+                  $(this).text(Resources.ar[value.toLowerCase()]);
+                } else $(this).text(Resources.en[value.toLowerCase()]);
+              }
+            }
+          }
+          else {
+            if (
+              localStorage.getItem("lng") == null ||
+              localStorage.getItem("lng") == "ar"
+            ) {
+              $(this).text(Resources.ar[value.toLowerCase()]);
+            } else $(this).text(Resources.en[value.toLowerCase()]);
+          }
+
+          // if (listkey == 'mainkpi' && $(this).attr("id") == 'Year') { // view the year value in main kpi view
+          //   $(this).text(value)
+          // } else if (
+          //   localStorage.getItem("lng") == null ||
+          //   localStorage.getItem("lng") == "ar"
+          // ) {
+          //   $(this).text(Resources.ar[value.toLowerCase()]);
+          // } else $(this).text(Resources.en[value.toLowerCase()]);
         }
       } else if ($(this).attr("type") == "radio") {
         var radioval =
@@ -4760,7 +4811,7 @@ var equationKPI = {
         }
       });
 
-      
+
       kpiEquation = kpiEquation.replaceAll(',', '') // remove , from high number
 
 
@@ -5203,7 +5254,7 @@ window.Update_Kpi_Results = {
             var quarterHandler = KPIQuarter
             var midHandler = KPIMid
             var yearHandler = KPIYearHandler
-            
+
             if (yearItem == yearPicked) {
               if (!kpiEquation) {
                 kpiEquation = 0
@@ -5820,10 +5871,10 @@ window.Get_TaskHistory = {
     var listItemEnum = SPHTTPitemsEnumerable.getEnumerator();
     let historyHTML = ``;
 
-    let wfHistoryLink=""
-    console.log(workflowname,"workflowname")
-    console.log(peojectC,"peojectC")
-    console.log(relateditemid,"relateditemid")
+    let wfHistoryLink = ""
+    console.log(workflowname, "workflowname")
+    console.log(peojectC, "peojectC")
+    console.log(relateditemid, "relateditemid")
 
     debugger
 
