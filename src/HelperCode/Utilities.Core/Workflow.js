@@ -2839,7 +2839,7 @@ var Workflow_Note_Data_Request_WFs = {
 			_spPageContextInfo.webAbsoluteUrl +
 			"/style%20library/spm/images/icon-flag.png";
 		if (tasksNoteArr.length > 0) {
-			$("#myModal").css("display", "flex");
+			// $("#myModal").css("display", "flex");
 			for (var i = 0; i < tasksNoteArr.length; i++) {
 				if (i == 0) {
 					tabhead +=
