@@ -835,16 +835,18 @@ span.approveStageName {
 .FormContainer.wf-mode .btnactionrow .SubmitTitleRow .wfTitle {
     display: none;
 }
+
 .FormContainer.wf-mode .form-tabs {
     min-height: 238px;
     border-left: 1px solid #dee2e6;
     margin: 25px 0px;
 }
 
-.FormContainer .tabs-content-wrapper{
+.FormContainer .tabs-content-wrapper {
     max-height: 100vh;
 }
-.FormContainer.wf-mode .tabs-content-wrapper{
+
+.FormContainer.wf-mode .tabs-content-wrapper {
     background-color: #fff;
     min-height: 82vh;
 }
@@ -5495,18 +5497,21 @@ select[disabled] {
     padding: 0.5rem 0rem;
     background-color: transparent;
 }
+
 /* div#userGroup ul.list-group {
     max-height: 500px !important;
     height: 500px !important;
     overflow-y: scroll;
 } */
-div#userGroup li.list-group-item a{
-   display:flex;
-   justify-content:space-around;
+div#userGroup li.list-group-item a {
+    display: flex;
+    justify-content: space-around;
 }
-div#userGroup li.list-group-item h3.title-13  {
+
+div#userGroup li.list-group-item h3.title-13 {
     word-break: break-word;
 }
+
 .circle-radio {
     width: 20px;
     height: 20px;
@@ -6355,9 +6360,10 @@ li.ms-core-menu-footer {
 
 
 /* Wf button style */
-.container-ctx.containforms>.WF-btn >.SubmitTitleRow  {
-    display: none!important;
+.container-ctx.containforms>.WF-btn>.SubmitTitleRow {
+    display: none !important;
 }
+
 .container-ctx.containforms>.WF-btn .wf-delegate-btn button.btn.delegate-btn {
     font-size: 1.6rem;
     min-width: 12rem;
@@ -6543,7 +6549,7 @@ a.a-important-link:hover>* {
     font-size: 14px;
 }
 
-.target_recurrencechanged{
+.target_recurrencechanged {
     display: block;
     color: red;
     font-size: 10px;
@@ -6581,6 +6587,8 @@ span.errMsgField.Resources {
     width: 100%;
     padding: 20px 28px !important;
     margin-bottom: 0px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .FormContainer.wf-mode .section1.approvalHeader {
@@ -6595,10 +6603,20 @@ span.errMsgField.Resources {
 
 
 
-.btnactionrow>h2.approvalHeader {
+/* .btnactionrow>h2.approvalHeader {
     display: flex;
     justify-content: space-between;
+} */
+
+.approvalHeader > h2 {
+    margin: 0;
+    color: #fff !important;;
 }
+
+.approvalHeader > a {
+    color: #fff;
+}
+
 
 .FormContainer.wf-mode .btnactionrow {
     display: flex !important;
@@ -6668,9 +6686,11 @@ p.task-name {
 .FormContainer.wf-mode .btnactionrow .btn.btn-action.btn-delete {
     display: none !important;
 }
-.FormContainer.wf-mode .btnactionrow .wf-btn-wrapper-new > .btn.btn-action.btn-save{
-    display: block!important;
+
+.FormContainer.wf-mode .btnactionrow .wf-btn-wrapper-new>.btn.btn-action.btn-save {
+    display: block !important;
 }
+
 .btnactionrow .WF-btn {
     padding: 0px !important;
     margin: 0px !important;
@@ -6710,64 +6730,78 @@ p.task-name {
 
 :not(.containforms)>.WF-btn .wfTitle {
     display: none
- }
- 
- :not(.containforms)>.WF-btn .apprv,
- :not(.containforms)>.WF-btn .SubmitTitleRow,
- :not(.containforms)  #myModal .modal-dialog  {
+}
+
+:not(.containforms)>.WF-btn .apprv,
+:not(.containforms)>.WF-btn .SubmitTitleRow,
+:not(.containforms) #myModal .modal-dialog {
     padding-inline: 16px;
- }
- :not(.containforms)  #myModal .modal-dialog {
+}
+
+:not(.containforms) #myModal .modal-dialog {
     margin: 0 !important
- }
- @media screen and (min-width: 1200px) {
- 
+}
+
+@media screen and (min-width: 1200px) {
+
     :not(.containforms)>.WF-btn .apprv,
     :not(.containforms)>.WF-btn .SubmitTitleRow,
-    :not(.containforms)  #myModal .modal-dialog  {
-       padding-inline-start: 6.2rem;
+    :not(.containforms) #myModal .modal-dialog {
+        padding-inline-start: 6.2rem;
     }
- 
-    :not(.containforms)  #myModal .modal-dialog  {
-       margin: 0 !important
+
+    :not(.containforms) #myModal .modal-dialog {
+        margin: 0 !important
     }
- }
- 
- :not(.containforms)>.WF-btn .apprv {
+}
+
+:not(.containforms)>.WF-btn .apprv {
     display: block;
     /* padding-top:0.4rem; */
     margin-top: 1rem;
- }
- 
- :not(.containforms)>.WF-btn .apprv span.approveStageName {
+}
+
+:not(.containforms)>.WF-btn .apprv span.approveStageName {
     padding-inline-start: 0;
     display: block !important;
     margin-bottom: 1rem;
- }
- 
- :not(.containforms)>.pop-green {
+}
+
+:not(.containforms)>.pop-green {
     margin-inline-start: 0;
     margin-inline-end: 20px;
- }
- /* ghufran fix height  */
- #userGroup ul.list-group {
-    max-height:54rem !important;
-    overflow-y:auto;
 }
+
+/* ghufran fix height  */
+#userGroup ul.list-group {
+    max-height: 54rem !important;
+    overflow-y: auto;
+}
+
 div#accordionRequiredSupport ul.list-group {
-    max-height:30rem !important;
-    overflow-y:auto;
+    max-height: 30rem !important;
+    overflow-y: auto;
 }
 
 #userGroup ul.list-group h3.title-13 {
-    width:11.5rem!important
+    width: 11.5rem !important
 }
+
 .page-filter .dropdown-menu.show {
-     max-height:54rem !important;
-    overflow-y:auto;
+    max-height: 54rem !important;
+    overflow-y: auto;
 }
 
 
-:not(.containforms)>.wf-delegate-btn>.delegate-btn{
+:not(.containforms)>.wf-delegate-btn>.delegate-btn {
     height: 40px;
+}
+
+.linkmsg {
+    font-size: 13px;
+    /* display: flex; */
+    font-weight: bold;
+    /* justify-content: flex-end; */
+    padding: 0;
+    color: #148282;
 }

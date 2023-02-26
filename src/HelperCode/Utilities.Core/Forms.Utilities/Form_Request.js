@@ -1515,6 +1515,13 @@ window.View_Data_Request = {
 
 
       }
+
+
+      if (!USERisWF) {
+        $('#printableArea').prepend('<a class="linkmsg alert" href="' + _spPageContextInfo.siteAbsoluteUrl + '/sitepages/Targets.aspx?KpiCode=' + KPICode + '"><i class="fas fa-info-circle iconfontawesome"></i><span data-trans-kpiresulttext class="Resources">' +
+          "</span></a>")
+      }
+
     }
 
     if (listkey == 'benefitmetrics') {
@@ -4753,7 +4760,7 @@ var equationKPI = {
         }
       });
 
-
+      
       kpiEquation = kpiEquation.replaceAll(',', '') // remove , from high number
 
 
@@ -4761,6 +4768,8 @@ var equationKPI = {
         eval(kpiEquation) % 1 != 0
           ? eval(kpiEquation).toFixed(2)
           : eval(kpiEquation);
+
+
 
 
       if (kpiEquation === "NaN") {
@@ -4792,6 +4801,8 @@ var equationKPI = {
       ListInfo.g.toggleDisabledFields($(this));
     })
     //
+
+    debugger
 
     Update_Kpi_Results.init(kpiEquation)
 
@@ -5164,6 +5175,7 @@ window.Update_Kpi_Results = {
     //Get list from host web
     var programList = context.get_web().get_lists().getByTitle('KPIResults');
     var camlQuery = new SP.CamlQuery();
+    debugger
     // camlQuery.set_viewXml(
     //   '<View><Query><Where><Eq><FieldRef Name="KPI" /> <Value Type="Text">' + value + "</Value></Eq></Where></Query></View>"
     // );
@@ -5180,6 +5192,7 @@ window.Update_Kpi_Results = {
         if (progColl.get_count() > 0) {
           var progEnum = progColl.getEnumerator();
           while (progEnum.moveNext()) {
+            debugger
             var currentItem = progEnum.get_current();
             var currentId = currentItem.get_item("ID");
             var yearItem = currentItem.get_item("Year");
@@ -5190,7 +5203,7 @@ window.Update_Kpi_Results = {
             var quarterHandler = KPIQuarter
             var midHandler = KPIMid
             var yearHandler = KPIYearHandler
-
+            
             if (yearItem == yearPicked) {
               if (!kpiEquation) {
                 kpiEquation = 0
@@ -5806,11 +5819,44 @@ window.Get_TaskHistory = {
   onSuccess: function (sender, args) {
     var listItemEnum = SPHTTPitemsEnumerable.getEnumerator();
     let historyHTML = ``;
+
+    let wfHistoryLink=""
+    console.log(workflowname,"workflowname")
+    console.log(peojectC,"peojectC")
+    console.log(relateditemid,"relateditemid")
+
+    debugger
+
+    if (workflowname == "Project") {
+      wfHistoryLink =
+        "" +
+        _spPageContextInfo.webAbsoluteUrl +
+        "/SitePages/TaskHistory.aspx?TT=" +
+        workflowname +
+        "&PCODE=" +
+        peojectC +
+        "&IID=" +
+        relateditemid +
+        "";
+    } else {
+      wfHistoryLink =
+        "" +
+        _spPageContextInfo.webAbsoluteUrl +
+        "/SitePages/TaskHistory.aspx?TT=" +
+        workflowname +
+        "&IID=" +
+        relateditemid +
+        "";
+    }
     if (!$(".task-history-ctx").length) {
       historyHTML = `<div class="section3 row col-12 px-0 task-history-ctx mx-0">
-                <h2 class="approvalHeader Resources" data-trans-taskHistory>
+            <div class="approvalHeader">
+             
+                <h2 class="Resources" data-trans-taskHistory>
 				العمليات السابقة
                 </h2>
+                <a href=${wfHistoryLink}><span data-trans-viewhistory class="Resources">fffff</span></a>
+            </div>
                 <div class="taskHistory row mx-0 mt-5 col-12 flex-column">
         `;
     }
