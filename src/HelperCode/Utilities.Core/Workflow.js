@@ -1780,6 +1780,8 @@ window.isWfFirst_Upload = true;
 var SubmitField_BulkEdit = {
 	preinit: function (state, withNote = false) {
 
+		debugger
+
 		globalStateSubmitField = state;
 		if (stageid == "S01" && isWfFirst_Upload) {
 			var WF_Fileelements, WF_fileCount;

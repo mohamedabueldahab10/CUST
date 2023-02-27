@@ -1303,6 +1303,15 @@ window.Edit_Data_Submit = {
       }
     });
 
+    // save the new stage in wfStage if it's not a project wf
+    if (USERisWF && workflowname != "Project") {
+      if (globalStateSubmitField) {
+        Edit_Data_Submit.g.oListItem.set_item("WFStage", nxtstageid);
+      } else {
+        Edit_Data_Submit.g.oListItem.set_item("WFStage", prvstageid);
+      }
+    }
+
     console.log("edit form submit")
 
 
