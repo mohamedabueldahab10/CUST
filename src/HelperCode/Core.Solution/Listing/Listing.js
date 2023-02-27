@@ -105,17 +105,13 @@ window.sphttp = {
     var clientContext = new SP.ClientContext(listUrl);
     var oListsp = clientContext.get_web().get_lists().getByTitle(listDisplayName);
     // var fields=IN.join(', ');
-    // if (!isGetDdl && (isLoadMore || isEmptyFilter || filterValue || allTasksClicked)) {
-    //   camelQuery = camelQuery.replace('</Query></View>', '</Query><RowLimit>30</RowLimit></View>');
-    // }else if(isGetDdl){
-
-    //   console.log(camelQuery,"CCCCCCCCCCCCCC")
-    //   debugger
-    // }
-
-    if (isLoadMore || isEmptyFilter || filterValue || allTasksClicked) {
+    if (!isGetDdl && (isLoadMore || isEmptyFilter || filterValue || allTasksClicked)) {
       camelQuery = camelQuery.replace('</Query></View>', '</Query><RowLimit>30</RowLimit></View>');
     }
+
+    // if (isLoadMore || isEmptyFilter || filterValue || allTasksClicked) {
+    //   camelQuery = camelQuery.replace('</Query></View>', '</Query><RowLimit>30</RowLimit></View>');
+    // }
 
     var fieldsToGet = '<ViewFields>'; // get all data on filter in listing page
     internalFieldNames.forEach(function (o, i, a) {
@@ -131,7 +127,7 @@ window.sphttp = {
     if (!isLoadMore || isOnload) { // remove isEmptyFilter
       sphttp.g.camlQuery = new SP.CamlQuery();
     }
-    sphttp.g.camlQuery.set_viewXml(camelQuery);
+    sphttp.g.camlQuery.set_viewXml(camelQuery); 
 
 
 
@@ -346,7 +342,7 @@ window.sphttp = {
         isViewMoreClicked = true
         getNewFilterTask = true
       }
-      
+
       if (sphttp.g.position != null) {
 
         isLoadMore = true;
