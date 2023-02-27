@@ -124,6 +124,7 @@ var UserRole,
   isWF = window.location.href.toLowerCase().indexOf("&wfs") > -1,
   USERisWF = window.location.href.toLowerCase().indexOf("&wfs") > -1,
   isTarget = window.location.href.toLowerCase().indexOf("targets.aspx") > -1,
+  isBenefitsMetrics = window.location.href.toLowerCase().indexOf("benefitmetrics.aspx") > -1,
   isTaskDetails =
     window.location.href.toLowerCase().indexOf("taskdetails") > -1,
   USERlistkey =
@@ -7094,7 +7095,8 @@ var Access_Project_Info_Request = {
             !isInitiativesHomePage &&
             !isTarget &&
             !isMainIndicator &&
-            !isAdminPanel
+            !isAdminPanel && 
+            !isBenefitsMetrics
           ) {
             $(".page-title").html(
               '<a href="' +
@@ -7106,7 +7108,7 @@ var Access_Project_Info_Request = {
               ""
             );
             $(".firsttitle").hide();
-          } else if (isTarget || isMainIndicator || isAdminPanel) {
+          } else if (isTarget || isBenefitsMetrics || isMainIndicator || isAdminPanel) {
             $(".page-title").html(
               `<span style="color:#fff">${USERPageTitle}</span>`
             );
