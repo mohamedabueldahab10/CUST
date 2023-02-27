@@ -100,11 +100,20 @@ else if (isTasks) {
 window.sphttp = {
   get: function (listUrl, listDisplayName, camelQuery, internalFieldNames, isGetDdl, onEach, onError) {
 
+    debugger
     sphttp.g.isGetDdl = isGetDdl;
     var clientContext = new SP.ClientContext(listUrl);
     var oListsp = clientContext.get_web().get_lists().getByTitle(listDisplayName);
     // var fields=IN.join(', ');
-    if (!isGetDdl && (isLoadMore || isEmptyFilter || filterValue || allTasksClicked)) {
+    // if (!isGetDdl && (isLoadMore || isEmptyFilter || filterValue || allTasksClicked)) {
+    //   camelQuery = camelQuery.replace('</Query></View>', '</Query><RowLimit>30</RowLimit></View>');
+    // }else if(isGetDdl){
+
+    //   console.log(camelQuery,"CCCCCCCCCCCCCC")
+    //   debugger
+    // }
+
+    if (isLoadMore || isEmptyFilter || filterValue || allTasksClicked) {
       camelQuery = camelQuery.replace('</Query></View>', '</Query><RowLimit>30</RowLimit></View>');
     }
 
@@ -121,8 +130,9 @@ window.sphttp = {
 
     if (!isLoadMore || isOnload) { // remove isEmptyFilter
       sphttp.g.camlQuery = new SP.CamlQuery();
-      sphttp.g.camlQuery.set_viewXml(camelQuery);
     }
+    sphttp.g.camlQuery.set_viewXml(camelQuery);
+
 
 
     SPHTTPitemsEnumerable = oListsp.getItems(sphttp.g.camlQuery);
@@ -336,6 +346,7 @@ window.sphttp = {
         isViewMoreClicked = true
         getNewFilterTask = true
       }
+      
       if (sphttp.g.position != null) {
 
         isLoadMore = true;
@@ -347,6 +358,18 @@ window.sphttp = {
         $('a.view-more.text-center.py-2').hide();
         $('a.view-more.text-center.py-2').addClass('disabled');
       }
+      //////////////////////////////////////////////////////
+      // debugger
+      // if (sphttp.g.position != null) {
+      //   isLoadMore = true;
+      //   //If more items are to be fetched, make a second call to the server and fetch the next group of items.
+      //   sphttp.g.camlQuery.set_listItemCollectionPosition(sphttp.g.position);
+      //   ListingData.init();
+      //   $("a.view-more.text-center.py-2").addClass("loader-action");
+      // } else if (sphttp.g.position == null) {
+      //   $("a.view-more.text-center.py-2").hide();
+      //   $("a.view-more.text-center.py-2").addClass("disabled");
+      // }
     }
   }
 }
@@ -1584,6 +1607,7 @@ window.ListingData = {
       } else {
         cmlQ = PQuery;
       }
+
       sphttp.get(ListURL, SP_ListName, cmlQ, IN, true, function (recordsddl, recordddl, listItem, isDone) {
         if (isDone) {
           FilterationItems = []; //data
