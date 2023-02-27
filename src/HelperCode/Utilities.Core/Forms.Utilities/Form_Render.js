@@ -497,27 +497,65 @@ window.ListInfo = {
           ///////////////////////////////
           $("input.percentbyparent").keyup(function (event) {
             // calculate the target elemnt like in delivrable
-            var targetElement = $(this).data("targetelem");
-            var parentValue = $(this).data("parentval");
-            var fieldValue = event.target.value;
-            var weight = (fieldValue / parentValue) * 100;
-            weight = weight.toFixed(2);
-            $(`#${targetElement}`).val(weight);
-            console.log(weight, "THIIIIIIIIIIIIIIIIIIS");
-            console.log(targetElement, "targetElement");
+            debugger
+            var isMasterDetails = $(this).parent().parent().hasClass("Details-Item")
+            var parentValue = 0,
+              targetElement = "",
+              fieldValue = 0,
+              weight = 0;
+            if (isMasterDetails) { // for new validation in master details
+              if (listkey == "projects") {
+                parentValue = $('#ActualBudget').val()
+              }
+              if (parentValue) {
+                parentValue = parentValue.replaceAll(",", "")
+                parentValue = Number(parentValue)
+                targetElement = $(this).data("targetelem");
+                fieldValue = event.target.value;
+                weight = (fieldValue / parentValue) * 100;
+                weight = weight.toFixed(2);
+                $(this).parent().parent().find(`#${targetElement}`).val(weight)
+              }
+            } else {
+              targetElement = $(this).data("targetelem");
+              parentValue = $(this).data("parentval");
+              fieldValue = event.target.value;
+              weight = (fieldValue / parentValue) * 100;
+              weight = weight.toFixed(2);
+              $(`#${targetElement}`).val(weight);
+            }
           });
+
+          ///////////////////////////////
           $("input.weightfloatpercentage").keyup(function (event) {
-            // calculate the target elemnt like in delivrable
+            var isMasterDetails = $(this).parent().parent().hasClass("Details-Item")
+            var parentValue = 0,
+              targetElement = "",
+              fieldValue = 0,
+              amount = 0;
 
-            var targetElement = $(this).data("targetelem");
-            var parentValue = parentBudgetValue;
-            var fieldValue = event.target.value;
-            var amount = (parentValue * fieldValue) / 100;
-            amount = amount.toFixed(2);
-            $(`#${targetElement}`).val(amount);
+            if (isMasterDetails) { // for new validation in master details
+              if (listkey == "projects") {
+                parentValue = $('#ActualBudget').val()
+              }
+              if (parentValue) {
+                parentValue = parentValue.replaceAll(",", "")
+                parentValue = Number(parentValue)
+                targetElement = $(this).data("targetelem");
+                fieldValue = event.target.value;
+                amount = (parentValue * fieldValue) / 100;
+                amount = amount.toFixed(2);
+                $(this).parent().parent().find(`#${targetElement}`).val(amount)
+              }
+            } else {
+              parentValue = parentBudgetValue;
+              targetElement = $(this).data("targetelem");
+              fieldValue = event.target.value;
+              amount = (parentValue * fieldValue) / 100;
+              amount = amount.toFixed(2);
+              $(`#${targetElement}`).val(amount);
+            }
           });
-
-
           //////////////////////////////// make attachement required when change on radio yes
           var previuosTargetVal = "";
           $("input.yesnolistener").on("change", function (event) {
