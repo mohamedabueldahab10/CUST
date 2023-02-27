@@ -17,10 +17,16 @@ var Information_Form = [
         DisplayNameEn: 'Name',
         type: 'string',
       },
+      // {
+      //   InternalName: 'Weight',
+      //   DisplayNameEn: 'Weight',
+      //   DisplayName: 'الوزن المكافئ للإنجاز %',
+      //   type: 'floatpercentage',
+      // },
       {
         InternalName: 'Weight',
+        DisplayName: 'الوزن',
         DisplayNameEn: 'Weight',
-        DisplayName: 'الوزن المكافئ للإنجاز %',
         type: 'floatpercentage',
       },
       {
