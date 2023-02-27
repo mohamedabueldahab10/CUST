@@ -503,27 +503,27 @@ window.ListInfo = {
               targetElement = "",
               fieldValue = 0,
               weight = 0;
-            if (isMasterDetails) { // for new validation in master details
-              if (listkey == "projects") {
-                parentValue = $('#ActualBudget').val()
-              }
-              if (parentValue) {
-                parentValue = parentValue.replaceAll(",", "")
-                parentValue = Number(parentValue)
-                targetElement = $(this).data("targetelem");
-                fieldValue = event.target.value;
-                weight = (fieldValue / parentValue) * 100;
-                weight = weight.toFixed(2);
-                $(this).parent().parent().find(`#${targetElement}`).val(weight)
-              }
-            } else {
+            // if (isMasterDetails) { // for new validation in master details
+            //   if (listkey == "projects") {
+            //     parentValue = $('#ActualBudget').val()
+            //   }
+            //   if (parentValue) {
+            //     parentValue = parentValue.replaceAll(",", "")
+            //     parentValue = Number(parentValue)
+            //     targetElement = $(this).data("targetelem");
+            //     fieldValue = event.target.value;
+            //     weight = (fieldValue / parentValue) * 100;
+            //     weight = weight.toFixed(2);
+            //     $(this).parent().parent().find(`#${targetElement}`).val(weight)
+            //   }
+            // } else {
               targetElement = $(this).data("targetelem");
               parentValue = $(this).data("parentval");
               fieldValue = event.target.value;
               weight = (fieldValue / parentValue) * 100;
               weight = weight.toFixed(2);
               $(`#${targetElement}`).val(weight);
-            }
+            //}
           });
 
           ///////////////////////////////
@@ -534,27 +534,27 @@ window.ListInfo = {
               fieldValue = 0,
               amount = 0;
 
-            if (isMasterDetails) { // for new validation in master details
-              if (listkey == "projects") {
-                parentValue = $('#ActualBudget').val()
-              }
-              if (parentValue) {
-                parentValue = parentValue.replaceAll(",", "")
-                parentValue = Number(parentValue)
-                targetElement = $(this).data("targetelem");
-                fieldValue = event.target.value;
-                amount = (parentValue * fieldValue) / 100;
-                amount = amount.toFixed(2);
-                $(this).parent().parent().find(`#${targetElement}`).val(amount)
-              }
-            } else {
+            // if (isMasterDetails) { // for new validation in master details
+            //   if (listkey == "projects") {
+            //     parentValue = $('#ActualBudget').val()
+            //   }
+            //   if (parentValue) {
+            //     parentValue = parentValue.replaceAll(",", "")
+            //     parentValue = Number(parentValue)
+            //     targetElement = $(this).data("targetelem");
+            //     fieldValue = event.target.value;
+            //     amount = (parentValue * fieldValue) / 100;
+            //     amount = amount.toFixed(2);
+            //     $(this).parent().parent().find(`#${targetElement}`).val(amount)
+            //   }
+            // } else {
               parentValue = parentBudgetValue;
               targetElement = $(this).data("targetelem");
               fieldValue = event.target.value;
               amount = (parentValue * fieldValue) / 100;
               amount = amount.toFixed(2);
               $(`#${targetElement}`).val(amount);
-            }
+            // }
           });
           //////////////////////////////// make attachement required when change on radio yes
           var previuosTargetVal = "";
