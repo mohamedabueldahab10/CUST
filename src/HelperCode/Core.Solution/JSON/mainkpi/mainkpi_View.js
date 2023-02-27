@@ -358,41 +358,77 @@ var Information_Form = [
 
       // },
 
+      // {
+      //   InternalName: 'Sector',
+      //   DisplayName: 'القطاع المرتبط',
+      //   DisplayNameEn: 'Sector',
+      //   type: 'lookup',
+      //   // "validation": "required",
+      //   //from other list:
+      //   source: 'Internal Entities',
+      //   isSector: 'True',
+      //   EntityType: 'Sector',
+      //   Dispfieldkey: 'Name',
+      //   DispfieldkeyEn: 'NameEn',
+      //   valfieldkey: 'Title',
+      //   dontSubmit: true,
+      //   // "state": "disabled",
+      //   // security: {
+      //   //     groups: [
+      //   //         'EPMO', 'Administrators for Project Web App'
+      //   //     ]
+      //   // },
+      // },
+      // {
+      //   InternalName: 'SubSector',
+      //   DisplayName: 'الادارة المرتبطة',
+      //   DisplayNameEn: 'Departments',
+      //   type: 'lookup',
+      //   //from other list:
+      //   source: 'Internal Entities',
+      //   isSector: 'True',
+      //   EntityType: 'Department',
+      //   Dispfieldkey: 'Name',
+      //   DispfieldkeyEn: 'NameEn',
+      //   valfieldkey: 'Title',
+      //   dynamic: "Sector", //InternalName Of Parent field
+      //   // "state": "disabled",
+      // },
+
       {
         InternalName: 'Sector',
-        DisplayName: 'القطاع المرتبط',
+        DisplayName: 'القطاع',
         DisplayNameEn: 'Sector',
-        type: 'lookup',
-        // "validation": "required",
-        //from other list:
+        type: 'lookupWithQuery',
+        queryField: 'EntityType',
+        queryFieldType: 'dropdownValues', //ex: "Choice"
+        // dontSubmit: true,
+        queryFieldValue: 'Sector',
+        dynamic: 'parent',
         source: 'Internal Entities',
-        isSector: 'True',
-        EntityType: 'Sector',
+        // "state": "disabled",
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
-        dontSubmit: true,
-        // "state": "disabled",
-        // security: {
-        //     groups: [
-        //         'EPMO', 'Administrators for Project Web App'
-        //     ]
-        // },
+        validation: 'required',
       },
       {
         InternalName: 'SubSector',
-        DisplayName: 'الادارة المرتبطة',
-        DisplayNameEn: 'Departments',
+        DisplayName: 'الوكالات',
+        DisplayNameEn: 'DeputyShip',
         type: 'lookup',
         //from other list:
         source: 'Internal Entities',
-        isSector: 'True',
-        EntityType: 'Department',
+        // "isSector": "True",
+        // "EntityType": "Department",
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
-        dynamic: "Sector", //InternalName Of Parent field
-        // "state": "disabled",
+        validation: 'required',
+        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+        dynamic: 'Sector', //InternalName Of Parent field
+        filterField: 'ParentEntity', //InternalName Of Parent field
+        filterFieldType: 'Text', //Type In Sharepoint List for Parent field
       },
       // {
       //   InternalName: 'Portfolio',
@@ -968,14 +1004,14 @@ var Information_Form = [
         type: 'float',
         //editableBy: "PerformanceLeader",
       },
-      // {
-      //   InternalName: 'Equation',
-      //   DisplayNameEn: 'Actual value',
-      //   DisplayName: 'القيمة الفعلية',
-      //   type: 'float',
-      //   state: 'disabled',
-      //   //editableBy: "PerformanceLeader",
-      // },
+      {
+        InternalName: 'Equation',
+        DisplayNameEn: 'Actual value',
+        DisplayName: 'القيمة الفعلية',
+        type: 'float',
+        state: 'disabled',
+        //editableBy: "PerformanceLeader",
+      },
       // {
       //   InternalName: 'PerformanceAnalysis',
       //   DisplayNameEn: 'Performance Analysis',

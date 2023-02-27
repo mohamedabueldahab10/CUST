@@ -32,7 +32,7 @@ var Information_Form = [
             {
                 "InternalName": "SubSector",
                 "DisplayName": "الوكالات",
-                "DisplayNameEn": "Departments",
+                "DisplayNameEn": "DeputyShip",
                 "type": "lookup",
                 //from other list:
                 "source": "Internal Entities",

@@ -35,7 +35,7 @@ var Information_Form = [
         DisplayNameEn: 'KPI Type',
         validation: 'required',
         DisplayName: 'نوع المؤشر',
-        dynamic: "parent", //main field that affect on other chiled field
+        dynamic: 'parent', //main field that affect on other chiled field
         toggleValues: [
           // {
           //   value: 'sub',
@@ -56,9 +56,17 @@ var Information_Form = [
         options: {
           choices: [
             // { display: "strategically", value: "strategically" },
-            { display: 'main', value: 'main', customFilterValue: "main" },
-            { display: 'sublevel2', value: 'sublevel2', customFilterValue: "sublevel2"},
-            { display: 'sublevel3', value: 'sublevel3', customFilterValue: "sublevel3" },
+            { display: 'main', value: 'main', customFilterValue: 'main' },
+            {
+              display: 'sublevel2',
+              value: 'sublevel2',
+              customFilterValue: 'sublevel2',
+            },
+            {
+              display: 'sublevel3',
+              value: 'sublevel3',
+              customFilterValue: 'sublevel3',
+            },
             // { display: 'level2', value: 'level2' },
             // { display: 'level3', value: 'level3' },
             // { display: "sub", value: "sub" },
@@ -253,10 +261,10 @@ var Information_Form = [
       //   // dynamic: 'RelatedStrategy',
       //   // filterField: 'RelatedStrategy',
       //   // filterFieldType: 'Text',
-        
-			// 	dynamic: "KPIType", //InternalName Of Parent field
-			// 	filterField: "KPIType",//InternalName Of Parent field
-			// 	filterFieldType: "Choice",//Type In Sharepoint List for Parent field
+
+      // 	dynamic: "KPIType", //InternalName Of Parent field
+      // 	filterField: "KPIType",//InternalName Of Parent field
+      // 	filterFieldType: "Choice",//Type In Sharepoint List for Parent field
       //   //role access
       //   accessFilter: [
       //     {
@@ -433,33 +441,68 @@ var Information_Form = [
       //   filterFieldType: "Text",//Type In Sharepoint List for Parent field
       //   // state: 'disabled',
       // },
+      // {
+      //   InternalName: 'Sector',
+      //   DisplayName: 'القطاع',
+      //   DisplayNameEn: 'Sector',
+      //   type: 'lookup',
+      //   validation: 'required',
+      //   //from other list:
+      //   source: 'Internal Entities',
+      //   isSector: 'True',
+      //   EntityType: 'Sector',
+      //   Dispfieldkey: 'Name',
+      //   DispfieldkeyEn: 'NameEn',
+      //   valfieldkey: 'Title',
+      // },
+      // {
+      //   InternalName: 'SubSector',
+      //   DisplayName: 'الوكالة',
+      //   DisplayNameEn: 'DeputyShip',
+      //   type: 'lookup',
+      //   validation: 'required',
+      //   //from other list:
+      //   source: 'Internal Entities',
+      //   isSector: 'True',
+      //   EntityType: 'Department',
+      //   Dispfieldkey: 'Name',
+      //   DispfieldkeyEn: 'NameEn',
+      //   valfieldkey: 'Title',
+      // },
       {
         InternalName: 'Sector',
         DisplayName: 'القطاع',
         DisplayNameEn: 'Sector',
-        type: 'lookup',
-        validation: 'required',
-        //from other list:
+        type: 'lookupWithQuery',
+        queryField: 'EntityType',
+        queryFieldType: 'dropdownValues', //ex: "Choice"
+        // dontSubmit: true,
+        queryFieldValue: 'Sector',
+        dynamic: 'parent',
         source: 'Internal Entities',
-        isSector: 'True',
-        EntityType: 'Sector',
+        // "state": "disabled",
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
+        validation: 'required',
       },
       {
         InternalName: 'SubSector',
-        DisplayName: 'الوكالة',
+        DisplayName: 'الوكالات',
         DisplayNameEn: 'DeputyShip',
         type: 'lookup',
-        validation: 'required',
         //from other list:
         source: 'Internal Entities',
-        isSector: 'True',
-        EntityType: 'Department',
+        // "isSector": "True",
+        // "EntityType": "Department",
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
+        validation: 'required',
+        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+        dynamic: 'Sector', //InternalName Of Parent field
+        filterField: 'ParentEntity', //InternalName Of Parent field
+        filterFieldType: 'Text', //Type In Sharepoint List for Parent field
       },
       // {
       // 	InternalName: "RecurrenceChanged",
@@ -979,63 +1022,63 @@ var Information_Form = [
       },
     ],
   },
-  {
-    label: 'مكون المعادلة',
-    labelEn: 'Equation Component',
-    description: 'التفاصيل',
-    descriptionEn: 'Details',
-    subFields: [
-      {
-        InternalName: 'A',
-        DisplayNameEn: 'A',
-        DisplayName: 'المكون الأول',
-        type: 'number',
-        // type: "float",
-      },
-      {
-        InternalName: 'B',
-        DisplayNameEn: 'B',
-        DisplayName: 'المكون الثاني',
-        type: 'number',
-        // type: "float",
-      },
-      {
-        InternalName: 'CC',
-        DisplayNameEn: 'CC',
-        DisplayName: 'المكون الثالث',
-        type: 'number',
-        // type: "float",
-      },
-      {
-        InternalName: 'D',
-        DisplayNameEn: 'D',
-        DisplayName: 'المكون الرابع',
-        type: 'number',
-        // type: "float",
-      },
-      {
-        InternalName: 'E',
-        DisplayNameEn: 'E',
-        DisplayName: 'المكون الخامس',
-        type: 'number',
-        // type: "float",
-      },
-      {
-        InternalName: 'F',
-        DisplayNameEn: 'F',
-        DisplayName: 'المكون السادس',
-        type: 'number',
-        // type: "float",
-      },
-      {
-        InternalName: 'G',
-        DisplayNameEn: 'G',
-        DisplayName: 'المكون السابع',
-        type: 'number',
-        // type: "float",
-      },
-    ],
-  },
+  // {
+  //   label: 'مكون المعادلة',
+  //   labelEn: 'Equation Component',
+  //   description: 'التفاصيل',
+  //   descriptionEn: 'Details',
+  //   subFields: [
+  //     {
+  //       InternalName: 'A',
+  //       DisplayNameEn: 'A',
+  //       DisplayName: 'المكون الأول',
+  //       type: 'number',
+  //       // type: "float",
+  //     },
+  //     {
+  //       InternalName: 'B',
+  //       DisplayNameEn: 'B',
+  //       DisplayName: 'المكون الثاني',
+  //       type: 'number',
+  //       // type: "float",
+  //     },
+  //     {
+  //       InternalName: 'CC',
+  //       DisplayNameEn: 'CC',
+  //       DisplayName: 'المكون الثالث',
+  //       type: 'number',
+  //       // type: "float",
+  //     },
+  //     {
+  //       InternalName: 'D',
+  //       DisplayNameEn: 'D',
+  //       DisplayName: 'المكون الرابع',
+  //       type: 'number',
+  //       // type: "float",
+  //     },
+  //     {
+  //       InternalName: 'E',
+  //       DisplayNameEn: 'E',
+  //       DisplayName: 'المكون الخامس',
+  //       type: 'number',
+  //       // type: "float",
+  //     },
+  //     {
+  //       InternalName: 'F',
+  //       DisplayNameEn: 'F',
+  //       DisplayName: 'المكون السادس',
+  //       type: 'number',
+  //       // type: "float",
+  //     },
+  //     {
+  //       InternalName: 'G',
+  //       DisplayNameEn: 'G',
+  //       DisplayName: 'المكون السابع',
+  //       type: 'number',
+  //       // type: "float",
+  //     },
+  //   ],
+  // },
   {
     label: 'الوثائق الداعمة',
     labelEn: 'Supporting Documents',

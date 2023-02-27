@@ -53,7 +53,10 @@ var Information_Form = [
             // fields: ['SubRelatedObjective', 'RelatedMainKpis', 'Portfolio'],
             fields: ['SubRelatedObjective', 'Portfolio'],
           }, //we can put more than 1  field
-          { value: 'main', fields: ['RelatedMainKpis', 'RelatedMainObjective'] }, //we can put more than 1  field
+          {
+            value: 'main',
+            fields: ['RelatedMainKpis', 'RelatedMainObjective'],
+          }, //we can put more than 1  field
           { value: 'strategically', fields: ['StrategyRelatedObjective'] },
         ],
         type: 'dropdownValues',
@@ -779,12 +782,52 @@ var Information_Form = [
           ],
         },
         toggleDisabledValues: [
-          { value: 'yes', fields: ['Name', 'KPIType', 'RelatedStrategyObjective', 'kpivision', 'CategoryKPI', 'Description', 'Issues', 'Risks', 'ExternalFactors', 'Assumptions', 'RelatedMainKpis', 'Owner', 'CalculationType', 'PerformanceLeader', 'PerformanceLeader2', 'Sector', 'SubSector', 'DataSource', 'DataSourceResponsible', 'Email', 'Polarity', 'ResultType', 'Cumulative', 'Weight', 'Baseline', 'MesurePeriod', 'MesurePeriod', 'Classification', 'Year', 'Months', 'A', 'B', 'CC', 'D', 'E', 'F', 'G','getfile'] }, //we can put more than 1  field
+          {
+            value: 'yes',
+            fields: [
+              'Name',
+              'KPIType',
+              'RelatedStrategyObjective',
+              'kpivision',
+              'CategoryKPI',
+              'Description',
+              'Issues',
+              'Risks',
+              'ExternalFactors',
+              'Assumptions',
+              'RelatedMainKpis',
+              'Owner',
+              'CalculationType',
+              'PerformanceLeader',
+              'PerformanceLeader2',
+              'Sector',
+              'SubSector',
+              'DataSource',
+              'DataSourceResponsible',
+              'Email',
+              'Polarity',
+              'ResultType',
+              'Cumulative',
+              'Weight',
+              'Baseline',
+              'MesurePeriod',
+              'MesurePeriod',
+              'Classification',
+              'Year',
+              'Months',
+              'A',
+              'B',
+              'CC',
+              'D',
+              'E',
+              'F',
+              'G',
+              'getfile',
+            ],
+          }, //we can put more than 1  field
           { value: 'no', fields: [] },
         ],
       },
-
-
 
       // {
       //   InternalName: 'Sector',
@@ -826,36 +869,73 @@ var Information_Form = [
       //   filterField: "Sector",//InternalName Of Parent field
       //   filterFieldType: "Text",//Type In Sharepoint List for Parent field
       // },
+      // {
+      //   InternalName: 'Sector',
+      //   DisplayName: 'القطاع',
+      //   DisplayNameEn: 'Sector',
+      //   type: 'lookup',
+      //   validation: 'required',
+      //   ToggleDisabledName: 'Sector',
+      //   //from other list:
+      //   source: 'Internal Entities',
+      //   isSector: 'True',
+      //   EntityType: 'Sector',
+      //   Dispfieldkey: 'Name',
+      //   DispfieldkeyEn: 'NameEn',
+      //   valfieldkey: 'Title',
+      // },
+      // {
+      //   InternalName: 'SubSector',
+      //   DisplayName: 'الوكالة',
+      //   DisplayNameEn: 'DeputyShip',
+      //   type: 'lookup',
+      //   validation: 'required',
+      //   ToggleDisabledName: 'SubSector',
+      //   //from other list:
+      //   source: 'Internal Entities',
+      //   isSector: 'True',
+      //   EntityType: 'Department',
+      //   Dispfieldkey: 'Name',
+      //   DispfieldkeyEn: 'NameEn',
+      //   valfieldkey: 'Title',
+      // },
+      
       {
-        InternalName: 'Sector',
-        DisplayName: 'القطاع',
-        DisplayNameEn: 'Sector',
-        type: 'lookup',
-        validation: 'required',
-        ToggleDisabledName: 'Sector',
+        "InternalName": "Sector",
+        "DisplayName": "القطاع",
+        "DisplayNameEn": "Sector",
+        "type": "lookupWithQuery",
+        "queryField": "EntityType",
+        "queryFieldType": "dropdownValues", //ex: "Choice"
+        // dontSubmit: true,
+        "queryFieldValue": "Sector",
+        dynamic: "parent",
+        "source": "Internal Entities",
+        // "state": "disabled",
+        "Dispfieldkey": "Name",
+        "DispfieldkeyEn": "NameEn",
+        "valfieldkey": "Title",
+        "validation": "required"
+    },
+    {
+        "InternalName": "SubSector",
+        "DisplayName": "الوكالات",
+        "DisplayNameEn": "DeputyShip",
+        "type": "lookup",
         //from other list:
-        source: 'Internal Entities',
-        isSector: 'True',
-        EntityType: 'Sector',
-        Dispfieldkey: 'Name',
-        DispfieldkeyEn: 'NameEn',
-        valfieldkey: 'Title',
-      },
-      {
-        InternalName: 'SubSector',
-        DisplayName: 'الوكالة',
-        DisplayNameEn: 'DeputyShip',
-        type: 'lookup',
-        validation: 'required',
-        ToggleDisabledName: 'SubSector',
-        //from other list:
-        source: 'Internal Entities',
-        isSector: 'True',
-        EntityType: 'Department',
-        Dispfieldkey: 'Name',
-        DispfieldkeyEn: 'NameEn',
-        valfieldkey: 'Title',
-      },
+        "source": "Internal Entities",
+        // "isSector": "True",
+        // "EntityType": "Department",
+        "Dispfieldkey": "Name",
+        "DispfieldkeyEn": "NameEn",
+        "valfieldkey": "Title",
+        "validation": "required",
+        "isRelatedToParent":true, // to show parent value depends on child like sector and subsector
+        dynamic: "Sector", //InternalName Of Parent field
+        filterField: "ParentEntity",//InternalName Of Parent field
+        filterFieldType: "Text",//Type In Sharepoint List for Parent field
+
+    },
     ],
   },
   {
@@ -1428,23 +1508,23 @@ var Information_Form = [
           ],
         },
       },
-      //   {
-      //     InternalName: 'Equation',
-      //     DisplayNameEn: 'Actual value',
-      //     DisplayName: 'القيمة الفعلية',
-      //     // type: 'number',
-      //     type: 'float',
-      //     state: 'disabled',
-      //     //editableBy: "PerformanceLeader",
-      //     security: {
-      //       groups: [
-      //         'LMS_P',
-      //         'VRO_P',
-      //         'Performance Leaders',
-      //         'System Admin Group',
-      //       ],
-      //     },
-      //   },
+      {
+        InternalName: 'Equation',
+        DisplayNameEn: 'Actual value',
+        DisplayName: 'القيمة الفعلية',
+        // type: 'number',
+        type: 'float',
+        state: 'disabled',
+        //editableBy: "PerformanceLeader",
+        security: {
+          groups: [
+            'LMS_P',
+            'VRO_P',
+            'Performance Leaders',
+            'System Admin Group',
+          ],
+        },
+      },
       //   {
       //     InternalName: 'PerformanceAnalysis',
       //     DisplayNameEn: 'Performance Analysis',
