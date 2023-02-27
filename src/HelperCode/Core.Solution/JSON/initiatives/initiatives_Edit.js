@@ -513,6 +513,8 @@ var Information_Form = [
         DisplayName: 'تاريخ بداية الصرف',
         DisplayNameEn: 'Expense Start Date',
         type: 'datetime',
+        enableOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
+        requireOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
       },
       {
         InternalName: 'DependencyCost',
@@ -579,6 +581,8 @@ var Information_Form = [
     labelEn: 'Financial Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
+    enableOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
+    requireOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
     subFields: [
       {
         InternalName: 'RelatedBudgetItem',
@@ -591,12 +595,16 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         // "display":"none"
+        enableOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
+        requireOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
       },
       {
         InternalName: 'EstimatedCost',
         DisplayName: 'التكلفة التقديرية ',
         DisplayNameEn: 'Estimated Cost',
         type: 'float',
+        enableOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
+        requireOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
       },
       {
         InternalName: 'InitiativeBudget',
@@ -606,14 +614,18 @@ var Information_Form = [
         type: 'float',
         security: {
           groups: ['EPMO', 'System Admin Group'],
-        },
+        },  
+        enableOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
+        requireOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
       },
       {
         InternalName: 'ProgramTotalCost',
         DisplayName: 'التكاليف الكلية حسب سقف البرنامج ',
         DisplayNameEn: 'Program Total Cost',
         type: 'float',
-        targetelement: 'ActualCost',
+        targetelement: 'ActualCost',    
+        enableOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
+        requireOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
       },
       {
         InternalName: 'ActualCost',
@@ -622,24 +634,32 @@ var Information_Form = [
         type: 'float',
         targetelement: 'ActualCost',
         seconedtarget: 'ProgramTotalCost',
+        enableOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
+        requireOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
       },
       {
         InternalName: 'CurrentBuget',
         DisplayName: 'السيولة المخصصة للعام المالي الحالي ',
         DisplayNameEn: 'Current Budget',
         type: 'float',
+        enableOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
+        requireOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
       },
       {
         InternalName: 'Expenditures',
         DisplayName: 'المنصرف الأجمالي ',
         DisplayNameEn: 'Expenditures',
         type: 'float',
+        enableOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
+        requireOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
       },
       {
         InternalName: 'CurrentExpenditures',
         DisplayName: 'المنصرف من العالم المالي الحالي ',
         DisplayNameEn: 'Current Expenditures',
         type: 'float',
+        enableOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
+        requireOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
       },
     ],
   },
