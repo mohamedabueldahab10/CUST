@@ -18,6 +18,8 @@ var Where_Body = "",
 
 var RolePQuery = '', Role_Where_Body = "", Role_Query_Body = "";
 
+
+var isBenefitMetricsCode = window.location.href.toLowerCase().indexOf("benefitmetrics.aspx") > -1 && window.location.href.indexOf("BenefitMetricsCode=") > -1;
 var firstRender = true;
 
 
@@ -45,6 +47,14 @@ Get_All_BenefitMetrics = {
 
 
     console.log(allBenefitsArr, "allBenefitsArr")
+
+    if ((isBenefitMetricsCode) && allBenefitsArr.length && firstRender) {
+      $('.filterTarget').hide()
+      filteredValue = allBenefitsArr[0].periodType
+      firstRender = false
+    }
+
+
 
     Get_Benefit_Results.init();
     var hideSendBtn = true
@@ -96,7 +106,11 @@ Get_All_BenefitMetrics = {
     var oList = clientContext.get_web().get_lists().getByTitle("BenefitMetrics"); //list name
     var camlQuery = new SP.CamlQuery(); //set query to return data
     let query = "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
-    if (Where_Body) {
+    if (isBenefitMetricsCode) {
+      benefitMetricsCode = window.location.href.split("BenefitMetricsCode=")[1].split("&")[0];
+      query = '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' + benefitMetricsCode +
+        "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+    } else if (Where_Body) {
       query = `<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>` +
         Where_Body +
         `</And></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>`
