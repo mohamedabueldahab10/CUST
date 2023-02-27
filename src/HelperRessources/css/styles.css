@@ -810,6 +810,9 @@ span.approveStageName {
     display: none !important;
 }
 
+/* .containforms .apprv .btn-save {
+    display: none !important;
+} */
 .WF-btn .btn.pop-green {
     /* display:none; */
 }
@@ -6692,9 +6695,9 @@ p.task-name {
     display: none !important;
 }
 
-.FormContainer.wf-mode .btnactionrow .wf-btn-wrapper-new>.btn.btn-action.btn-save {
+/* .FormContainer.wf-mode .btnactionrow .wf-btn-wrapper-new>.btn.btn-action.btn-save {
     display: block !important;
-}
+} */
 
 .btnactionrow .WF-btn {
     padding: 0px !important;

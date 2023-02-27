@@ -10124,17 +10124,18 @@ var GetCurrentStage_Info = {
 		var collListItem = GetCurrentStage_Info.g.collListItem;
 		var listItemEnum = collListItem.getEnumerator();
 		var PID, stage, ismultistage;
+    debugger
 		while (listItemEnum.moveNext()) {
 			var oListItem = listItemEnum.get_current();
 			PID = oListItem.get_id();
-			if (
-				(!SP_relatedWfList && SP_ListName == "Projects") ||
-				SP_relatedWfList == "Projects"
-			) {
-				stage = oListItem.get_item("Stage");
-			} else {
+			// if (
+			// 	(!SP_relatedWfList && SP_ListName == "Projects") ||
+			// 	SP_relatedWfList == "Projects"
+			// ) {
+			// 	stage = oListItem.get_item("Stage");
+			// } else {
 				stage = oListItem.get_item("WFStage");
-			}
+		//	}
 
 			if (stage) {
 				ismultistage = stage.indexOf(";") > -1;
@@ -10198,6 +10199,7 @@ var GetCurrentStage_Info = {
 				}
 			});
 			$("[data-isWfenablestageID]").each(function () {
+        debugger
 				var stageofElement = $(this).attr("data-isWfenablestageID");
 				if (stageofElement.includes(stage)) {
 					$(this).children("input").attr("disabled", false);
