@@ -837,7 +837,7 @@ var Task_PCODE_Data_Request_WFs = {
 		var oList = clientContext.get_web().get_lists().getByTitle("Tasks"); //list name
 		var camlQuery = new SP.CamlQuery();
 		camlQuery.set_viewXml(taskquery); //caml query
-		debugger
+		
 		Task_PCODE_Data_Request_WFs.g.collListItem = oList.getItems(camlQuery);
 		clientContext.load(Task_PCODE_Data_Request_WFs.g.collListItem);
 		clientContext.executeQueryAsync(
@@ -850,8 +850,8 @@ var Task_PCODE_Data_Request_WFs = {
 		var listItemEnum = collListItem.getEnumerator();
 
 		while (listItemEnum.moveNext()) {
-			debugger
-			console.log("INSIDE WHILE WF")
+			
+			
 			accessCurrentTask = true
 
 			//loop through list items
@@ -885,6 +885,7 @@ var Task_PCODE_Data_Request_WFs = {
 				: "";
 			// condition = oListItem.get_item('Condition');
 			var tasktitlearr = [];
+			debugger
 			if (localStorage.getItem("Dynamo_Tasks Configuration") != null) {
 				tasktitlearr = JSON.parse(
 					localStorage.getItem("Dynamo_Tasks Configuration") || "[]"
@@ -977,6 +978,7 @@ var Task_PCODE_Data_Request_WFs = {
 					"<style>div#s4-titlerow {display: block!important;padding: 6px;}h1#pageTitle span {display: flex;}</style>"
 				);
 			}
+			console.log("in handle tak action")
 
 			debugger
 			//  alert(tasktype);

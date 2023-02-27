@@ -6364,6 +6364,11 @@ li.ms-core-menu-footer {
     display: none !important;
 }
 
+
+.container-ctx.containforms>.WF-btn {
+    display: none !important;
+}
+
 .container-ctx.containforms>.WF-btn .wf-delegate-btn button.btn.delegate-btn {
     font-size: 1.6rem;
     min-width: 12rem;
