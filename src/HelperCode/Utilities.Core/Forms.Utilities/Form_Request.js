@@ -1576,7 +1576,14 @@ window.View_Data_Request = {
     }
 
     if (listkey == 'benefitmetrics') {
+
       benefitCode = oListItem.get_item("Title");
+
+      if (!USERisWF) {
+        $('#printableArea').prepend('<a class="linkmsg alert" href="' + _spPageContextInfo.siteAbsoluteUrl + '/sitepages/BenefitMetrics.aspx?BenefitMetricsCode=' + benefitCode + '"><i class="fas fa-info-circle iconfontawesome"></i><span data-trans-benefitmetricstext class="Resources">' +
+          "</span></a>")
+      }
+
       equationBenefit.init();
     }
 
