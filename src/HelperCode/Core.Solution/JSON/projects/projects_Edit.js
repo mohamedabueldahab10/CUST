@@ -1191,13 +1191,12 @@ var Information_Form = [
     ],
   },
   {
-    label: 'المخرجات',
+    label: 'بيانات المخرج',
+    labelEn: 'Delivrable Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
-    labelEn: '',
-    descriptionEn: 'Delivrables',
     sectiontype: 'master',
-    targetlist: 'Delivrables',
+    targetlist: 'Deliverables',
     subFields: [
       // {
       //     "InternalName": "Title",
@@ -1398,11 +1397,10 @@ var Information_Form = [
     ],
   },
   {
-    label: 'المعالم',
+    label: 'بيانات المعلم',
+    labelEn: 'Milestone Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
-    labelEn: 'Milestones',
-    descriptionEn: '',
     sectiontype: 'master',
     targetlist: 'Milestones',
     subFields: [
