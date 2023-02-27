@@ -1908,14 +1908,15 @@ var New_Master_Details_Submit = {
 
         var itemCreateInfo = new SP.ListItemCreationInformation();
         New_Master_Details_Submit.g.oListItem = oList.addItem(itemCreateInfo);
+
         $(this)
           .find(
-            ".CFIELD>input," +
-            ".CFIELD>div[type=picker]," +
-            ".CFIELD>div[type=multipicker]," +
-            ".CFIELD>select[type=dropdown]," +
-            ".CFIELD>textarea," +
-            ".CFIELD>.multiselect-container"
+            ".CFIELD:not(.dont-submit)>input," +
+            ".CFIELD:not(.dont-submit)>div[type=picker]," +
+            ".CFIELD:not(.dont-submit)>div[type=multipicker]," +
+            ".CFIELD:not(.dont-submit)>select[type=dropdown]," +
+            ".CFIELD:not(.dont-submit)>textarea," +
+            ".CFIELD:not(.dont-submit)>.multiselect-container"
           )
           .each(function () {
             if ($(this).attr("type") == "picker") {
