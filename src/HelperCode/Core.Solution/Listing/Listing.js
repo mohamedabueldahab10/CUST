@@ -34,10 +34,10 @@ var projectTypeFilterQuery = '', typeClicked = 'Internal';
 
 var taskClicked = 'relatedTasks', allTasksClicked = false, getNewFilterTask = false, isViewMoreClicked = false;
 
-// var emptyData = require('../../../HelperRessources/img/empty-data.png');
-// var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
-var emptyData = ''
-var exportExcel = ''
+var emptyData = require('../../../HelperRessources/img/empty-data.png');
+var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
+// var emptyData = ''
+// var exportExcel = ''
 //all data filter array
 allDataFilterArr = []
 //
@@ -106,7 +106,7 @@ window.sphttp = {
     var oListsp = clientContext.get_web().get_lists().getByTitle(listDisplayName);
     // var fields=IN.join(', ');
     if (!isGetDdl && (isLoadMore || isEmptyFilter || filterValue || allTasksClicked)) {
-      camelQuery = camelQuery.replace('</Query></View>', '</Query><RowLimit>30</RowLimit></View>');
+      camelQuery = camelQuery.replace('</Query></View>', '</Query><RowLimit>10</RowLimit></View>');
     }
 
     // if (isLoadMore || isEmptyFilter || filterValue || allTasksClicked) {
