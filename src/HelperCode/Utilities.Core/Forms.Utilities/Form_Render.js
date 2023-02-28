@@ -297,7 +297,15 @@ window.ListInfo = {
           //$('.project-Title-Name').text(PageTitle);
           $(".breakLine").before('<div class="col-md-12"></div>');
           SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
+           // GetProject_Info.init();
+           if (
+            (workflowname == "Project" || SP_ListName == "Projects") &&
+            IID
+          ) {
             GetProject_Info.init();
+          } else {
+            GetCurrentStage_Info.init();
+          }
           });
           changeResources();
           //handle master details
@@ -10111,3 +10119,165 @@ function ForNumbers(evt) {
 }
 
 //////////
+var GetCurrentStage_Info = {
+	onSuccess: function (sender, args) {
+		var collListItem = GetCurrentStage_Info.g.collListItem;
+		var listItemEnum = collListItem.getEnumerator();
+		var PID, stage, ismultistage;
+    debugger
+		while (listItemEnum.moveNext()) {
+			var oListItem = listItemEnum.get_current();
+			PID = oListItem.get_id();
+			// if (
+			// 	(!SP_relatedWfList && SP_ListName == "Projects") ||
+			// 	SP_relatedWfList == "Projects"
+			// ) {
+			// 	stage = oListItem.get_item("Stage");
+			// } else {
+				stage = oListItem.get_item("WFStage");
+		//	}
+
+			if (stage) {
+				ismultistage = stage.indexOf(";") > -1;
+			}
+			if (ismultistage) {
+				stage = stage.split(";");
+			}
+		}
+
+		if (!USERisWF) {
+			$("[data-hidestageID*=" + stage + "]").remove();
+			$("[data-showstageID*=" + stage + "]").show();
+			$('[data-showstageID*="allstages"]').show();
+
+			$("[data-disablestageID]").each(function () {
+				var stageofElement = $(this).attr("data-disablestageID");
+				if (stageofElement.includes(stage)) {
+					$(this).children("input").attr("disabled", true);
+					$(this).children("select").attr("disabled", true);
+					$(this).children(".PPField").attr("disabled", true);
+					$(this).children("textarea").attr("disabled", true);
+				} else {
+					$(this).children("input").attr("disabled", false);
+					$(this).children("select").attr("disabled", false);
+					$(this).children(".PPField").attr("disabled", false);
+					$(this).children("textarea").attr("disabled", false);
+				}
+			});
+
+			$("[data-enablestageID]").each(function () {
+				var stageofElement = $(this).attr("data-enablestageID");
+				if (stageofElement.includes(stage)) {
+					$(this).children("input").attr("disabled", false);
+					$(this).children("select").attr("disabled", false);
+					$(this).children(".PPField").attr("disabled", false);
+					$(this).children("textarea").attr("disabled", false);
+				} else {
+					$(this).children("input").attr("disabled", true);
+					$(this).children("select").attr("disabled", true);
+					$(this).children(".PPField").attr("disabled", true);
+					$(this).children("textarea").attr("disabled", true);
+				}
+			});
+		} else {
+			console.log("GetCurrentStage_Info");
+			$('[data-showstageID*="allstages"]').show();
+			$(".CFIELD[data-isWfhidestageID=" + stage + "]").remove();
+			$(".CFIELD[data-isWfshowstageID=" + stage + "]").show();
+			$("[data-isWfdisablestageID]").each(function () {
+				var stageofElement = $(this).attr("data-isWfdisablestageID");
+				if (stageofElement.includes(stage)) {
+					$(this).children("input").attr("disabled", true);
+					$(this).children("select").attr("disabled", true);
+					$(this).children(".PPField").attr("disabled", true);
+					$(this).children("textarea").attr("disabled", true);
+				} else {
+					$(this).children("input").attr("disabled", false);
+					$(this).children("select").attr("disabled", false);
+					$(this).children(".PPField").attr("disabled", false);
+					$(this).children("textarea").attr("disabled", false);
+				}
+			});
+			$("[data-isWfenablestageID]").each(function () {
+        debugger
+				var stageofElement = $(this).attr("data-isWfenablestageID");
+				if (stageofElement.includes(stage)) {
+					$(this).children("input").attr("disabled", false);
+					$(this).children("select").attr("disabled", false);
+					$(this).children(".PPField").attr("disabled", false);
+					$(this).children("textarea").attr("disabled", false);
+				} else {
+					$(this).children("input").attr("disabled", true);
+					$(this).children("select").attr("disabled", true);
+					$(this).children(".PPField").attr("disabled", true);
+					$(this).children("textarea").attr("disabled", true);
+				}
+			});
+			$("[data-iswfrequirestageid=" + stage + "] label").attr({
+				required: true,
+			});
+			$(
+				"[data-iswfrequirestageid=" +
+					stage +
+					"] input,[data-iswfrequirestageid=" +
+					stage +
+					"] select,[data-iswfrequirestageid=" +
+					stage +
+					"] textarea,[data-iswfrequirestageid=" +
+					stage +
+					"] .PPField"
+			).prop("required", true);
+		}
+		$(`.form-tabs .nav-link:first-child`).trigger("click");
+		if (PCODE) {
+			$(".headtwo").append(
+				'<a class="" href="' +
+					_spPageContextInfo.webAbsoluteUrl +
+					'"><span class="litem">Home</span></a>' +
+					'<a class="" href="' +
+					_spPageContextInfo.webAbsoluteUrl +
+					"/SitePages/View.aspx?ListKey=projects&IID=" +
+					PID +
+					'"><span data-trans-projectdetails class="litem Resources"></span></a>' //+
+				//'<a class="" href="'+_spPageContextInfo.webAbsoluteUrl+'"><span class="litem">Project Phase</span></a>'+
+				//'<a class="" href="'+_spPageContextInfo.webAbsoluteUrl+'"><span class="litem">Project Report</span></a>'
+			);
+		}
+	},
+	onError: function (sender, args) {
+		console.log(
+			"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+		);
+	},
+	// Pre-initialization functions ensure scripts, SharePoint dependencies are loaded
+	preinit: function () {
+		if ($(".ms-Icon--Settings").length) {
+			clearInterval(checkNotificationHTML);
+			SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
+				GetCurrentStage_Info.init();
+			});
+		}
+	},
+	// The main Initialization function
+	init: function () {
+		// console.log('asdf');
+    debugger
+		var clientContext = new SP.ClientContext.get_current();
+		var oList = clientContext.get_web().get_lists().getByTitle(SP_ListName);
+		var camlQuery = new SP.CamlQuery();
+		var PQUERY;
+		PQUERY =
+			"<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='ID'/><Value Type='Integer'>" +
+			IID +
+			"</Value></Eq></And></Where></Query><RowLimit>1</RowLimit></View>";
+		camlQuery.set_viewXml(PQUERY);
+		GetCurrentStage_Info.g.collListItem = oList.getItems(camlQuery);
+		clientContext.load(GetCurrentStage_Info.g.collListItem);
+		clientContext.executeQueryAsync(
+			Function.createDelegate(this, GetCurrentStage_Info.onSuccess),
+			Function.createDelegate(this, GetCurrentStage_Info.onError)
+		);
+	},
+	// Global variables
+	g: {},
+};

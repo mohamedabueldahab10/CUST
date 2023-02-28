@@ -31,13 +31,13 @@ if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar
 }
 
 var projectTypeFilterQuery = '', typeClicked = 'Internal';
-
+window.indexofListing = 0;
 var taskClicked = 'relatedTasks', allTasksClicked = false, getNewFilterTask = false, isViewMoreClicked = false;
 
-// var emptyData = require('../../../HelperRessources/img/empty-data.png');
-// var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
-var emptyData = ''
-var exportExcel = ''
+var emptyData = require('../../../HelperRessources/img/empty-data.png');
+var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
+// var emptyData = ''
+// var exportExcel = ''
 //all data filter array
 allDataFilterArr = []
 //
@@ -100,13 +100,18 @@ else if (isTasks) {
 window.sphttp = {
   get: function (listUrl, listDisplayName, camelQuery, internalFieldNames, isGetDdl, onEach, onError) {
 
+    debugger
     sphttp.g.isGetDdl = isGetDdl;
     var clientContext = new SP.ClientContext(listUrl);
     var oListsp = clientContext.get_web().get_lists().getByTitle(listDisplayName);
     // var fields=IN.join(', ');
     if (!isGetDdl && (isLoadMore || isEmptyFilter || filterValue || allTasksClicked)) {
-      camelQuery = camelQuery.replace('</Query></View>', '</Query><RowLimit>30</RowLimit></View>');
+      camelQuery = camelQuery.replace('</Query></View>', '</Query><RowLimit>10</RowLimit></View>');
     }
+
+    // if (isLoadMore || isEmptyFilter || filterValue || allTasksClicked) {
+    //   camelQuery = camelQuery.replace('</Query></View>', '</Query><RowLimit>30</RowLimit></View>');
+    // }
 
     var fieldsToGet = '<ViewFields>'; // get all data on filter in listing page
     internalFieldNames.forEach(function (o, i, a) {
@@ -121,8 +126,9 @@ window.sphttp = {
 
     if (!isLoadMore || isOnload) { // remove isEmptyFilter
       sphttp.g.camlQuery = new SP.CamlQuery();
-      sphttp.g.camlQuery.set_viewXml(camelQuery);
     }
+    sphttp.g.camlQuery.set_viewXml(camelQuery); 
+
 
 
     SPHTTPitemsEnumerable = oListsp.getItems(sphttp.g.camlQuery);
@@ -336,6 +342,7 @@ window.sphttp = {
         isViewMoreClicked = true
         getNewFilterTask = true
       }
+
       if (sphttp.g.position != null) {
 
         isLoadMore = true;
@@ -347,6 +354,18 @@ window.sphttp = {
         $('a.view-more.text-center.py-2').hide();
         $('a.view-more.text-center.py-2').addClass('disabled');
       }
+      //////////////////////////////////////////////////////
+      // debugger
+      // if (sphttp.g.position != null) {
+      //   isLoadMore = true;
+      //   //If more items are to be fetched, make a second call to the server and fetch the next group of items.
+      //   sphttp.g.camlQuery.set_listItemCollectionPosition(sphttp.g.position);
+      //   ListingData.init();
+      //   $("a.view-more.text-center.py-2").addClass("loader-action");
+      // } else if (sphttp.g.position == null) {
+      //   $("a.view-more.text-center.py-2").hide();
+      //   $("a.view-more.text-center.py-2").addClass("disabled");
+      // }
     }
   }
 }
@@ -497,25 +516,30 @@ window.ListingData = {
 
             var InternalProjectsHtml = '';
             var ExternalProjectsHtml = '';
+            
             for (var i = 0; i < records.length; i++) { //looping items
-              var index = i + 1;
+              indexofListing =  indexofListing + 1;
               
               // ghufranChange
               if (listkey == 'projects') {
                 if (records[i].ProjectType == 'Internal') {
+                  // InternalProjectsHtml += '<li class="list-group-item link-arrow">' +
+                  //   '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexofListing + '</span>';
                   InternalProjectsHtml += '<li class="list-group-item link-arrow">' +
-                    '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>';
+                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '';
                 } else if (records[i].ProjectType == 'External') {
-                  ExternalProjectsHtml += '<li class="list-group-item link-arrow">' +
-                    '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>';
+                  // ExternalProjectsHtml += '<li class="list-group-item link-arrow">' +
+                  //   '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexofListing + '</span>';
+                    ExternalProjectsHtml += '<li class="list-group-item link-arrow">' +
+                    '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '';
                 }
               } else if (listkey == 'initiatives') {
                 html += '<li class="list-group-item link-arrow">' +
-                  '<a  style="cursor: pointer;" id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/initiativeHome.aspx?ICODE=" + records[i].Title + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>';
+                  '<a  style="cursor: pointer;" id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/initiativeHome.aspx?ICODE=" + records[i].Title + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexofListing + '</span>';
               }
               else if (listkey == 'strategicpartnerships') {
                 html += '<li class="list-group-item link-arrow">' +
-                  '<a  style="cursor: pointer;" id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/StrategicPartnershipHome.aspx?STCODE=" + records[i].Title + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>';
+                  '<a  style="cursor: pointer;" id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/StrategicPartnershipHome.aspx?STCODE=" + records[i].Title + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexofListing + '</span>';
               }
               else if (isTasks) {
                 html += '<li class="list-group-item tasksPage ">' + //link-arrow
@@ -539,32 +563,32 @@ window.ListingData = {
               } else if (listkey == 'deliverables' & !PCODE) {
                 PCODE_STRING = '&PCODE=' + RecordsWithPCode[i].PrCODE;
                 html += '<li class="list-group-item link-arrow">' +
-                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + PCODE_STRING + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>'
+                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + PCODE_STRING + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexofListing + '</span>'
               } else if (!PCODE && !ICODE && !STCODE) {
                 html += '<li class="list-group-item link-arrow">' +
-                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + PCODE_STRING + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>'
+                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + PCODE_STRING + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexofListing + '</span>'
               } else if (ICODE) {
                 html += '<li class="list-group-item link-arrow">' +
-                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&ICODE=" + ICODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>'
+                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&ICODE=" + ICODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexofListing + '</span>'
               }
               else if (STCODE) {
                 
                 html += '<li class="list-group-item link-arrow">' +
-                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&STCODE=" + UserSTCode + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>'
+                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&STCODE=" + UserSTCode + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexofListing + '</span>'
               }
               else if (ICODE && listkey == 'initiativemilestones') {
                 html += '<li class="list-group-item link-arrow">' +
-                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&ICODE=" + ICODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>'
+                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&ICODE=" + ICODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexofListing + '</span>'
               }
 
               else if (USERlistkey == 'closureform' && PCODE) {
 
                 html += '<li class="list-group-item link-arrow">' +
-                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&PCODE=" + PCODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>'
+                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&PCODE=" + PCODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexofListing + '</span>'
 
               } else {
                 html += '<li class="list-group-item link-arrow">' +
-                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&PCODE=" + PCODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + index + '</span>'
+                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&PCODE=" + PCODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexofListing + '</span>'
               }
 
               var obj = records[i];
@@ -1584,6 +1608,7 @@ window.ListingData = {
       } else {
         cmlQ = PQuery;
       }
+
       sphttp.get(ListURL, SP_ListName, cmlQ, IN, true, function (recordsddl, recordddl, listItem, isDone) {
         if (isDone) {
           FilterationItems = []; //data

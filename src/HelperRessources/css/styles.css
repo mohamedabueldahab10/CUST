@@ -810,6 +810,9 @@ span.approveStageName {
     display: none !important;
 }
 
+/* .containforms .apprv .btn-save {
+    display: none !important;
+} */
 .WF-btn .btn.pop-green {
     /* display:none; */
 }
@@ -6364,6 +6367,11 @@ li.ms-core-menu-footer {
     display: none !important;
 }
 
+
+.container-ctx.containforms>.WF-btn {
+    display: none !important;
+}
+
 .container-ctx.containforms>.WF-btn .wf-delegate-btn button.btn.delegate-btn {
     font-size: 1.6rem;
     min-width: 12rem;
@@ -6687,9 +6695,9 @@ p.task-name {
     display: none !important;
 }
 
-.FormContainer.wf-mode .btnactionrow .wf-btn-wrapper-new>.btn.btn-action.btn-save {
+/* .FormContainer.wf-mode .btnactionrow .wf-btn-wrapper-new>.btn.btn-action.btn-save {
     display: block !important;
-}
+} */
 
 .btnactionrow .WF-btn {
     padding: 0px !important;
