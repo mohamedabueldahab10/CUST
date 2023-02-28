@@ -27,6 +27,16 @@ var Information_Form = [
         type: 'string',
       },
       {
+        InternalName: 'Portfolio',
+        DisplayName: 'المحفظة',
+        DisplayNameEn: 'Portfolio',
+        type: 'lookup',
+        //from other list:
+        source: 'Portfolio',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+      },
+      {
         InternalName: 'Types',
         DisplayNameEn: 'Types',
         DisplayName: 'النوع',
@@ -111,14 +121,14 @@ var Information_Form = [
         source: 'GoalStrategy',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        dontSubmit: true,
+        // dontSubmit: true,
       },
 
       {
         InternalName: 'RelatedObjectiveLevel',
         DisplayNameEn: 'Related Objective Level',
         DisplayName: 'مستوى الهدف المرتبط',
-        dontSubmit: true,
+        // dontSubmit: true,
         type: 'dropdownValues',
         options: {
           choices: [
@@ -154,7 +164,7 @@ var Information_Form = [
         DisplayNameEn: 'Related Program',
         DisplayName: 'اسم البرنامج التابع له',
         type: 'string',
-        dontSubmit: true,
+        // dontSubmit: true,
         // "source": "Instruments",
         // "Dispfieldkey": "Title",
         // "valfieldkey": "Title"
