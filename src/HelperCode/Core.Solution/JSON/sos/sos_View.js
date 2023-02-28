@@ -28,12 +28,6 @@ var Information_Form = [
         type: 'multipicker',
         // validation: 'required',
       },
-      { // status type string cause it's auto calculated and just want to handle it
-        "InternalName": "Status",
-        "DisplayName": " الحالة",
-        "DisplayNameEn": "Status",
-        "type": "string"
-    },
       {
         InternalName: 'Description',
         DisplayNameEn: 'Description',
@@ -99,8 +93,10 @@ var Information_Form = [
       },
       {
         InternalName: 'RelatedObjective',
-        DisplayNameEn: 'Related Main Objective',
-        DisplayName: 'الهدف الرئيسي المرتبط',
+        DisplayNameEn: 'Related Objective',
+        DisplayName: 'الهدف المرتبط',
+        // DisplayNameEn: 'Related Main Objective',
+        // DisplayName: 'الهدف الرئيسي المرتبط',
         ToggleName: 'RelatedObjective',
         RequiredName: 'RelatedObjective',
         type: 'lookupWithQuery',
@@ -164,6 +160,18 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
+      },
+      {
+        InternalName: 'ProgressPercentage',
+        DisplayName: 'نسبة الإنجاز',
+        DisplayNameEn: 'Progress Percentage',
+        type: 'floatpercentage',
+      },
+      { // status type string cause it's auto calculated and just want to handle it
+        "InternalName": "Status",
+        "DisplayName": " الحالة",
+        "DisplayNameEn": "Status",
+        "type": "string"
       },
       // {
       //     "InternalName": "RelatedPillar",
