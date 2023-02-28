@@ -8822,17 +8822,17 @@ var GetProject_Info = {
               value +
               "] textarea"
             ).attr("disabled", false);
-            $("[data-iswfrequirestageid=" + value + "] label").attr({
+            $("[data-isWfrequirestageID=" + value + "] label").attr({
               required: true,
             });
             $(
-              "[data-iswfrequirestageid=" +
+              "[data-isWfrequirestageID=" +
               value +
-              "] input,[data-iswfrequirestageid=" +
+              "] input,[data-isWfrequirestageID=" +
               value +
-              "] select,[data-iswfrequirestageid=" +
+              "] select,[data-isWfrequirestageID=" +
               value +
-              "] textarea,[data-iswfrequirestageid=" +
+              "] textarea,[data-isWfrequirestageID=" +
               value +
               "] .PPField"
             ).prop("required", true);
@@ -8889,17 +8889,17 @@ var GetProject_Info = {
             stage +
             "] textarea"
           ).attr("disabled", false);
-          $("[data-iswfrequirestageid=" + stage + "] label").attr({
+          $("[data-isWfrequirestageID=" + stage + "] label").attr({
             required: true,
           });
           $(
-            "[data-iswfrequirestageid=" +
+            "[data-isWfrequirestageID=" +
             stage +
-            "] input,[data-iswfrequirestageid=" +
+            "] input,[data-isWfrequirestageID=" +
             stage +
-            "] select,[data-iswfrequirestageid=" +
+            "] select,[data-isWfrequirestageID=" +
             stage +
-            "] textarea,[data-iswfrequirestageid=" +
+            "] textarea,[data-isWfrequirestageID=" +
             stage +
             "] .PPField"
           ).prop("required", true);
@@ -10124,7 +10124,7 @@ var GetCurrentStage_Info = {
 		var collListItem = GetCurrentStage_Info.g.collListItem;
 		var listItemEnum = collListItem.getEnumerator();
 		var PID, stage, ismultistage;
-    debugger
+    
 		while (listItemEnum.moveNext()) {
 			var oListItem = listItemEnum.get_current();
 			PID = oListItem.get_id();
@@ -10199,7 +10199,6 @@ var GetCurrentStage_Info = {
 				}
 			});
 			$("[data-isWfenablestageID]").each(function () {
-        debugger
 				var stageofElement = $(this).attr("data-isWfenablestageID");
 				if (stageofElement.includes(stage)) {
 					$(this).children("input").attr("disabled", false);
@@ -10213,20 +10212,36 @@ var GetCurrentStage_Info = {
 					$(this).children("textarea").attr("disabled", true);
 				}
 			});
-			$("[data-iswfrequirestageid=" + stage + "] label").attr({
-				required: true,
-			});
-			$(
-				"[data-iswfrequirestageid=" +
-					stage +
-					"] input,[data-iswfrequirestageid=" +
-					stage +
-					"] select,[data-iswfrequirestageid=" +
-					stage +
-					"] textarea,[data-iswfrequirestageid=" +
-					stage +
-					"] .PPField"
-			).prop("required", true);
+
+      // data-isWfrequirestageID
+      //iswfrequirestageid
+      $("[data-isWfrequirestageID]").each(function () {
+        var stageofElement = $(this).attr("data-isWfenablestageID");
+        if (stageofElement.includes(stage)) {
+          $(this).children("label").attr("required", true);
+          $(this).children("input").attr("required", true);
+					$(this).children("select").attr("required", true);
+					$(this).children(".PPField").attr("required", true);
+					$(this).children("textarea").attr("required", true);
+        }
+      })
+      ////////////////////////////////
+			// $("[data-isWfrequirestageID=" + stage + "] label").attr({
+			// 	required: true,
+			// });
+			// $(
+			// 	"[data-isWfrequirestageID=" +
+			// 		stage +
+			// 		"] input,[data-isWfrequirestageID=" +
+			// 		stage +
+			// 		"] select,[data-isWfrequirestageID=" +
+			// 		stage +
+			// 		"] textarea,[data-isWfrequirestageID=" +
+			// 		stage +
+			// 		"] .PPField"
+			// ).prop("required", true);
+
+      
 		}
 		$(`.form-tabs .nav-link:first-child`).trigger("click");
 		if (PCODE) {
