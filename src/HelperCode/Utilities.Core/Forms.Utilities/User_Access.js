@@ -75,10 +75,10 @@ var UserRole,
   isEPMO = false,
   isStrategySpecialist = false,
   isPerformanceLeader = false,
-  isStartegicPartnershipsTeam = false,
+  isStrategicPartnershipsTeam = false,
   isPartnershipRepresentative = false,
   isRelationshipManager = false,
-  isStartegicAchievementTeam = false,
+  isStrategicAchievementTeam = false,
   isBudgetManager = false,
   isObjectiveOwner = false,
   isKPIOWNER = false,
@@ -2694,7 +2694,7 @@ window.userCalls = {
         Delete_Access = [];
         break;
 
-      case "StartegicPartnershipsTeam":
+      case "StrategicPartnershipsTeam":
         if (USERisHome)
           window.location =
             _spPageContextInfo.webAbsoluteUrl +
@@ -2702,7 +2702,7 @@ window.userCalls = {
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
-        isStartegicPartnershipsTeam = true;
+        isStrategicPartnershipsTeam = true;
 
         //***** */
         ChartHide =
@@ -2853,7 +2853,7 @@ window.userCalls = {
 
         break;
 
-      case "StartegicAchievementTeam":
+      case "StrategicAchievementTeam":
         if (USERisHome)
           window.location =
             _spPageContextInfo.webAbsoluteUrl +
@@ -2863,7 +2863,7 @@ window.userCalls = {
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
 
-        isStartegicAchievementTeam = true
+        isStrategicAchievementTeam = true
 
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
@@ -5180,8 +5180,9 @@ window.userCalls = {
         },
       },
       {
-        Role: "StartegicPartnershipsTeam",
-        groupsName: ["Startegic Partnerships Team"],
+        Role: "StrategicPartnershipsTeam",
+        groupsName: ["Strategic Partnerships Team"],
+        
       },
       {
         Role: "PartnershipRepresentative",
@@ -5249,8 +5250,8 @@ window.userCalls = {
         }
       },
       {
-        Role: "StartegicAchievementTeam",
-        groupsName: ["Startegic Achievement Team"],
+        Role: "StrategicAchievementTeam",
+        groupsName: ["Strategic Achievement Team"],
       },
       {
         Role: "VROHead",

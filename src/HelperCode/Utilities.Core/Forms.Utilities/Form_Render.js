@@ -7841,6 +7841,8 @@ var View_ListInfo = {
             element.validation +
             ">" +
             displayName +
+            " " +
+            `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-info-circle iconfontawesome'></i></a></span>" : ""}` +
             "</label>" +
             '<p type="lookup" data-listname="' +
             element.source +
@@ -7850,7 +7852,7 @@ var View_ListInfo = {
             dispfieldkey +
             '" class="viewmode-value" id="' +
             element.InternalName +
-            '" option-id=""></p>' +
+            '" data-linkedto="' + element.linkedto + '"></p>' +
             "</div>";
           OnSuccess(flag, htmlBody);
           ///////////////////////////////////////////////
@@ -7890,6 +7892,8 @@ var View_ListInfo = {
             element.validation +
             ">" +
             displayName +
+            " " +
+            `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-info-circle iconfontawesome'></i></a></span>" : ""}` +
             "</label>" +
             '<p type="lookup" data-listname="' +
             element.source +
@@ -7899,7 +7903,7 @@ var View_ListInfo = {
             element.Dispfieldkey +
             '" class="viewmode-value" id="' +
             element.InternalName +
-            '" option-id=""></p>' +
+            '" data-linkedto="' + element.linkedto + '"></p>' +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -9211,9 +9215,9 @@ var GetProject_Info = {
 
 
         $('.helpful-info-ctx [data-showstageID*="' + stage + '"]').show();
-				$('.helpful-info-ctx [data-showstageID*="allstages"]').show();
+        $('.helpful-info-ctx [data-showstageID*="allstages"]').show();
 
-       
+
         $("[data-isWfrequirestageID]").each(function () {
           var stageofElement = $(this).attr("data-isWfenablestageID");
           if (stageofElement.includes(stage)) {

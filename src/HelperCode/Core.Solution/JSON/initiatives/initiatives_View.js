@@ -157,6 +157,8 @@ var Information_Form = [
         source: 'SOs',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+        showlink:true,
+        linkedto:"sos"
         // "state": "disabled"
       },
       {
