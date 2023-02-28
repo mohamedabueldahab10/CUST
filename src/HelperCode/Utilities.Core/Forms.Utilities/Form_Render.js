@@ -297,15 +297,14 @@ window.ListInfo = {
           //$('.project-Title-Name').text(PageTitle);
           $(".breakLine").before('<div class="col-md-12"></div>');
           SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
-           // GetProject_Info.init();
-           if (
-            (workflowname == "Project" || SP_ListName == "Projects") &&
-            IID
-          ) {
-            GetProject_Info.init();
-          } else {
-            GetCurrentStage_Info.init();
-          }
+            if (
+              (workflowname == "Project" || SP_ListName == "Projects") &&
+              IID
+            ) {
+              GetProject_Info.init();
+            } else {
+              GetCurrentStage_Info.init();
+            }
           });
           changeResources();
           //handle master details
@@ -525,12 +524,12 @@ window.ListInfo = {
             //     $(this).parent().parent().find(`#${targetElement}`).val(weight)
             //   }
             // } else {
-              targetElement = $(this).data("targetelem");
-              parentValue = $(this).data("parentval");
-              fieldValue = event.target.value;
-              weight = (fieldValue / parentValue) * 100;
-              weight = weight.toFixed(2);
-              $(`#${targetElement}`).val(weight);
+            targetElement = $(this).data("targetelem");
+            parentValue = $(this).data("parentval");
+            fieldValue = event.target.value;
+            weight = (fieldValue / parentValue) * 100;
+            weight = weight.toFixed(2);
+            $(`#${targetElement}`).val(weight);
             //}
           });
 
@@ -556,12 +555,12 @@ window.ListInfo = {
             //     $(this).parent().parent().find(`#${targetElement}`).val(amount)
             //   }
             // } else {
-              parentValue = parentBudgetValue;
-              targetElement = $(this).data("targetelem");
-              fieldValue = event.target.value;
-              amount = (parentValue * fieldValue) / 100;
-              amount = amount.toFixed(2);
-              $(`#${targetElement}`).val(amount);
+            parentValue = parentBudgetValue;
+            targetElement = $(this).data("targetelem");
+            fieldValue = event.target.value;
+            amount = (parentValue * fieldValue) / 100;
+            amount = amount.toFixed(2);
+            $(`#${targetElement}`).val(amount);
             // }
           });
           //////////////////////////////// make attachement required when change on radio yes
@@ -6406,7 +6405,11 @@ var View_ListInfo = {
           // $('.title-item').text('تفاصيل');
           SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
             View_Data_Request.init();
-            GetProject_Info.init();
+            if (SP_ListName == "Projects" && IID) {
+              GetProject_Info.init();
+            } else {
+              GetCurrentStage_Info.init();
+            }
           });
           // added for CR module
           if (isCrMode) {
@@ -8750,11 +8753,261 @@ var Projects_Info = {
 };
 //end PCODE
 
+// var GetProject_Info = {
+//   onSuccess: function (sender, args) {
+//     // if (listkey == "deliverables") {
+//     //   deliverabePercent.init();
+//     // }
+//     var collListItem = GetProject_Info.g.collListItem;
+//     var listItemEnum = collListItem.getEnumerator();
+//     var PID, stage, ismultistage;
+//     while (listItemEnum.moveNext()) {
+//       var oListItem = listItemEnum.get_current();
+//       PID = oListItem.get_id();
+//       stage = oListItem.get_item("Stage");
+//       if (stage) {
+//         ismultistage = stage.indexOf(";") > -1;
+//       }
+//       if (ismultistage) {
+//         stage = stage.split(";");
+//       }
+//     }
+//     if (listkey == "projects" && IID) {
+//       if (ismultistage) {
+//         $.each(stage, function (index, value) {
+//           if (!USERisWF) {
+//             $(".CFIELD[data-hidestageID=" + value + "]").remove();
+//             $(".CFIELD[data-showstageID=" + value + "]").show();
+//             $(
+//               ".CFIELD[data-disablestageID=" +
+//               value +
+//               "] input,.CFIELD[data-enablestageID=" +
+//               value +
+//               "] .PPField ,.CFIELD[data-disablestageID=" +
+//               value +
+//               "] select,.CFIELD[data-disablestageID=" +
+//               value +
+//               "] textarea"
+//             ).attr("disabled", true);
+//             $(
+//               ".CFIELD[data-enablestageID=" +
+//               value +
+//               "] input,.CFIELD[data-enablestageID=" +
+//               value +
+//               "] .PPField ,.CFIELD[data-enablestageID=" +
+//               value +
+//               "] select,.CFIELD[data-enablestageID=" +
+//               value +
+//               "] textarea"
+//             ).attr("disabled", false);
+//           } else {
+//             $(".CFIELD[data-isWfhidestageID=" + value + "]").remove();
+//             $(".CFIELD[data-isWfshowstageID=" + value + "]").show();
+//             $(
+//               ".CFIELD[data-isWfdisablestageID=" +
+//               value +
+//               "] input,.CFIELD[data-isWfenablestageID=" +
+//               value +
+//               "] .PPField ,.CFIELD[data-isWfdisablestageID=" +
+//               value +
+//               "] select,.CFIELD[data-isWfdisablestageID=" +
+//               value +
+//               "] textarea"
+//             ).attr("disabled", true);
+//             $(
+//               ".CFIELD[data-isWfenablestageID=" +
+//               value +
+//               "] input,.CFIELD[data-isWfenablestageID=" +
+//               value +
+//               "] .PPField ,.CFIELD[data-isWfenablestageID=" +
+//               value +
+//               "] select,.CFIELD[data-isWfenablestageID=" +
+//               value +
+//               "] textarea"
+//             ).attr("disabled", false);
+//             $("[data-isWfrequirestageID=" + value + "] label").attr({
+//               required: true,
+//             });
+//             $(
+//               "[data-isWfrequirestageID=" +
+//               value +
+//               "] input,[data-isWfrequirestageID=" +
+//               value +
+//               "] select,[data-isWfrequirestageID=" +
+//               value +
+//               "] textarea,[data-isWfrequirestageID=" +
+//               value +
+//               "] .PPField"
+//             ).prop("required", true);
+//           }
+//         });
+//       } else {
+//         if (!USERisWF) {
+//           $(".CFIELD[data-hidestageID=" + stage + "]").remove();
+//           $(".CFIELD[data-showstageID=" + stage + "]").show();
+//           $(
+//             ".CFIELD[data-disablestageID=" +
+//             stage +
+//             "] input,.CFIELD[data-enablestageID=" +
+//             stage +
+//             "] .PPField ,.CFIELD[data-disablestageID=" +
+//             stage +
+//             "] select,.CFIELD[data-disablestageID=" +
+//             stage +
+//             "]"
+//           ).attr("disabled", true);
+//           $(
+//             ".CFIELD[data-enablestageID=" +
+//             stage +
+//             "] input,.CFIELD[data-enablestageID=" +
+//             stage +
+//             "] .PPField ,.CFIELD[data-enablestageID=" +
+//             stage +
+//             "] select,.CFIELD[data-enablestageID=" +
+//             stage +
+//             "]"
+//           ).attr("disabled", false);
+//         } else {
+//           $(".CFIELD[data-isWfhidestageID=" + stage + "]").remove();
+//           $(".CFIELD[data-isWfshowstageID=" + stage + "]").show();
+//           $(
+//             ".CFIELD[data-isWfdisablestageID=" +
+//             stage +
+//             "] input,.CFIELD[data-isWfenablestageID=" +
+//             stage +
+//             "] .PPField ,.CFIELD[data-isWfdisablestageID=" +
+//             stage +
+//             "] select,.CFIELD[data-isWfdisablestageID=" +
+//             stage +
+//             "] textarea"
+//           ).attr("disabled", true);
+//           $(
+//             ".CFIELD[data-isWfenablestageID=" +
+//             stage +
+//             "] input,.CFIELD[data-isWfenablestageID=" +
+//             stage +
+//             "] .PPField ,.CFIELD[data-isWfenablestageID=" +
+//             stage +
+//             "] select,.CFIELD[data-isWfenablestageID=" +
+//             stage +
+//             "] textarea"
+//           ).attr("disabled", false);
+//           $("[data-isWfrequirestageID=" + stage + "] label").attr({
+//             required: true,
+//           });
+//           $(
+//             "[data-isWfrequirestageID=" +
+//             stage +
+//             "] input,[data-isWfrequirestageID=" +
+//             stage +
+//             "] select,[data-isWfrequirestageID=" +
+//             stage +
+//             "] textarea,[data-isWfrequirestageID=" +
+//             stage +
+//             "] .PPField"
+//           ).prop("required", true);
+//         }
+//       }
+//     }
+//     if (PCODE) {
+//       $(".headtwo").append(
+//         '<a class="" href="' +
+//         _spPageContextInfo.webAbsoluteUrl +
+//         '"><span class="litem">Home</span></a>' +
+//         '<a class="" href="' +
+//         _spPageContextInfo.webAbsoluteUrl +
+//         "/SitePages/View.aspx?ListKey=projects&IID=" +
+//         PID +
+//         '"><span data-trans-projectdetails class="litem Resources"></span></a>' //+
+//         //'<a class="" href="'+_spPageContextInfo.webAbsoluteUrl+'"><span class="litem">Project Phase</span></a>'+
+//         //'<a class="" href="'+_spPageContextInfo.webAbsoluteUrl+'"><span class="litem">Project Report</span></a>'
+//       );
+//     }
+//     // GetProject_Info.g.notificationappen();
+//     // Risks_Info_Request.init();
+//     // Issues_Info_Request.init();
+//   },
+//   onError: function (sender, args) {
+//     console.log(
+//       "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+//     );
+//   },
+//   // Pre-initialization functions ensure scripts, SharePoint dependencies are loaded
+//   preinit: function () {
+//     if ($(".ms-Icon--Settings").length) {
+//       clearInterval(checkNotificationHTML);
+//       SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
+//         GetProject_Info.init();
+//       });
+//     }
+//   },
+//   // The main Initialization function
+//   init: function () {
+//     // console.log('asdf');
+//     var clientContext = new SP.ClientContext.get_current();
+//     var oList = clientContext
+//       .get_web()
+//       .get_lists()
+//       .getByTitle(ListArray[0].projects);
+//     var camlQuery = new SP.CamlQuery();
+//     var PQUERY;
+//     if (PCODE) {
+//       PQUERY =
+//         "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='Title'/><Value Type='Text'>" +
+//         PCODE +
+//         "</Value></Eq></And></Where></Query><RowLimit>1</RowLimit></View>";
+//     } else if (listkey == "projects" && IID) {
+//       PQUERY =
+//         "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='ID'/><Value Type='Integer'>" +
+//         IID +
+//         "</Value></Eq></And></Where></Query><RowLimit>1</RowLimit></View>";
+//     } else {
+//       PQUERY =
+//         "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where></Query></View>";
+//     }
+
+//     camlQuery.set_viewXml(PQUERY);
+//     GetProject_Info.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+//     clientContext.load(GetProject_Info.g.collListItem);
+//     clientContext.executeQueryAsync(
+//       Function.createDelegate(this, GetProject_Info.onSuccess),
+//       Function.createDelegate(this, GetProject_Info.onError)
+//     );
+//   },
+//   // Global variables
+//   g: {
+//     notificationappen: function () {
+//       if (PCODE) {
+//         $("#O365_SearchBoxContainer_container").append(
+//           '<div class="User-Not"><div class="SNotifications"><span class="Tasks"><i class="fas fa-tasks" data-count="0"></i><a href="' +
+//           _spPageContextInfo.webAbsoluteUrl +
+//           "/SitePages/Listing.aspx?ListKey=tasks&PCODE=" +
+//           PCODE +
+//           '">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="0"></i><a href="/sites/SPM/SitePages/Listing.aspx?ListKey=risks&PCODE=' +
+//           PCODE +
+//           '">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="0"></i><a href="' +
+//           _spPageContextInfo.webAbsoluteUrl +
+//           "/SitePages/Listing.aspx?ListKey=issues&PCODE=" +
+//           PCODE +
+//           '"">Issues</a></span></div><div class="UProfile"></div></div>'
+//         );
+//       } else {
+//         $("#O365_SearchBoxContainer_container").append(
+//           '<div class="User-Not"><div class="SNotifications"><span class="Tasks"><i class="fas fa-tasks" data-count="0"></i><a href="' +
+//           _spPageContextInfo.webAbsoluteUrl +
+//           '/SitePages/Listing.aspx?ListKey=tasks">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="0"></i><a href="' +
+//           _spPageContextInfo.webAbsoluteUrl +
+//           '/SitePages/Listing.aspx?ListKey=risks">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="0"></i><a href="' +
+//           _spPageContextInfo.webAbsoluteUrl +
+//           '/SitePages/Listing.aspx?ListKey=issues">Issues</a></span></div><div class="UProfile"></div></div>'
+//         );
+//       }
+//     },
+//   },
+// };
+
 var GetProject_Info = {
   onSuccess: function (sender, args) {
-    // if (listkey == "deliverables") {
-    //   deliverabePercent.init();
-    // }
     var collListItem = GetProject_Info.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var PID, stage, ismultistage;
@@ -8769,143 +9022,211 @@ var GetProject_Info = {
         stage = stage.split(";");
       }
     }
-    if (listkey == "projects" && IID) {
-      if (ismultistage) {
-        $.each(stage, function (index, value) {
-          if (!USERisWF) {
-            $(".CFIELD[data-hidestageID=" + value + "]").remove();
-            $(".CFIELD[data-showstageID=" + value + "]").show();
-            $(
-              ".CFIELD[data-disablestageID=" +
-              value +
-              "] input,.CFIELD[data-enablestageID=" +
-              value +
-              "] .PPField ,.CFIELD[data-disablestageID=" +
-              value +
-              "] select,.CFIELD[data-disablestageID=" +
-              value +
-              "] textarea"
-            ).attr("disabled", true);
-            $(
-              ".CFIELD[data-enablestageID=" +
-              value +
-              "] input,.CFIELD[data-enablestageID=" +
-              value +
-              "] .PPField ,.CFIELD[data-enablestageID=" +
-              value +
-              "] select,.CFIELD[data-enablestageID=" +
-              value +
-              "] textarea"
-            ).attr("disabled", false);
+    // if (listkey == "projects" && IID) {
+    if (ismultistage) {
+      $.each(stage, function (index, value) {
+        if (!USERisWF) {
+          $(
+            '.section-container [data-hidestageID*="allstages"], .section-container [data-hidestageID*=' +
+            value +
+            "]"
+          ).each(function () {
+            let tabId = $(this).parent().attr("id");
+            $(`.form-tabs .nav-link[href="#${tabId}"]`).remove();
+          });
+
+          $('[data-hidestageID*="allstages"]').remove();
+
+          $(".CFIELD[data-hidestageID=" + value + "]").remove();
+          $(".CFIELD[data-showstageID=" + value + "]").show();
+
+          $("[data-disablestageID]").each(function () {
+            var stageofElement = $(this).attr("data-disablestageID");
+            if (stageofElement.includes(value)) {
+              $(this).children("input").attr("disabled", true);
+              $(this).children("select").attr("disabled", true);
+              $(this).children(".PPField").attr("disabled", true);
+              $(this).children("textarea").attr("disabled", true);
+            } else {
+              $(this).children("input").attr("disabled", false);
+              $(this).children("select").attr("disabled", false);
+              $(this).children(".PPField").attr("disabled", false);
+              $(this).children("textarea").attr("disabled", false);
+            }
+          });
+
+          $("[data-enablestageID]").each(function () {
+            var stageofElement = $(this).attr("data-enablestageID");
+            if (stageofElement.includes(value)) {
+              $(this).children("input").attr("disabled", false);
+              $(this).children("select").attr("disabled", false);
+              $(this).children(".PPField").attr("disabled", false);
+              $(this).children("textarea").attr("disabled", false);
+            } else {
+              $(this).children("input").attr("disabled", true);
+              $(this).children("select").attr("disabled", true);
+              $(this).children(".PPField").attr("disabled", true);
+              $(this).children("textarea").attr("disabled", true);
+            }
+          });
+        } else {
+          $(
+            '.section-container [data-isWfhidestageID*="allstages"], .section-container [data-isWfhidestageID*=' + value + "]"
+          ).each(function () {
+            let tabId = $(this).parent().attr("id");
+            $(`.form-tabs .nav-link[href="#${tabId}"]`).remove();
+          });
+
+          $(".CFIELD[data-isWfhidestageID=" + value + "]").remove();
+          $(".CFIELD[data-isWfshowstageID=" + value + "]").show();
+
+          $("[data-isWfdisablestageID]").each(function () {
+            var stageofElement = $(this).attr("data-isWfdisablestageID");
+            if (stageofElement.includes(value)) {
+              $(this).children("input").attr("disabled", true);
+              $(this).children("select").attr("disabled", true);
+              $(this).children(".PPField").attr("disabled", true);
+              $(this).children("textarea").attr("disabled", true);
+            } else {
+              $(this).children("input").attr("disabled", false);
+              $(this).children("select").attr("disabled", false);
+              $(this).children(".PPField").attr("disabled", false);
+              $(this).children("textarea").attr("disabled", false);
+            }
+          });
+
+          $("[data-isWfenablestageID]").each(function () {
+            var stageofElement = $(this).attr("data-isWfenablestageID");
+            if (stageofElement.includes(value)) {
+              $(this).children("input").attr("disabled", false);
+              $(this).children("select").attr("disabled", false);
+              $(this).children(".PPField").attr("disabled", false);
+              $(this).children("textarea").attr("disabled", false);
+            } else {
+              $(this).children("input").attr("disabled", true);
+              $(this).children("select").attr("disabled", true);
+              $(this).children(".PPField").attr("disabled", true);
+              $(this).children("textarea").attr("disabled", true);
+            }
+          });
+
+          $('.helpful-info-ctx [data-showstageID*="' + stage + '"]').show();
+          $('.helpful-info-ctx [data-showstageID*="allstages"]').show();
+
+          $("[data-isWfrequirestageID]").each(function () {
+            var stageofElement = $(this).attr("data-isWfenablestageID");
+            if (stageofElement.includes(stage)) {
+              $(this).children("label").attr("required", true);
+              $(this).children("input").attr("required", true);
+              $(this).children("select").attr("required", true);
+              $(this).children(".PPField").attr("required", true);
+              $(this).children("textarea").attr("required", true);
+            }
+          })
+        }
+      });
+    } else {
+      if (!USERisWF) {
+
+        $(`.section-container[data-hidestageID*="allstages"], .section-container[data-hidestageID*="${stage}"]`
+        ).each(function () {
+          let tabId = $(this).parent().attr("id");
+          $(`.form-tabs .nav-link[href="#${tabId}"]`).remove();
+        });
+
+        $('[data-hidestageID*="allstages"]').remove();
+        $('[data-hidestageID*="' + stage + '"]').remove();
+        $('[data-showstageID*="' + stage + '"]').show();
+        $('[data-showstageID*="allstages"]').show();
+
+        $("[data-disablestageID]").each(function () {
+          var stageofElement = $(this).attr("data-disablestageID");
+          if (stageofElement.includes(stage)) {
+            $(this).children("input").attr("disabled", true);
+            $(this).children("select").attr("disabled", true);
+            $(this).children(".PPField").attr("disabled", true);
+            $(this).children("textarea").attr("disabled", true);
           } else {
-            $(".CFIELD[data-isWfhidestageID=" + value + "]").remove();
-            $(".CFIELD[data-isWfshowstageID=" + value + "]").show();
-            $(
-              ".CFIELD[data-isWfdisablestageID=" +
-              value +
-              "] input,.CFIELD[data-isWfenablestageID=" +
-              value +
-              "] .PPField ,.CFIELD[data-isWfdisablestageID=" +
-              value +
-              "] select,.CFIELD[data-isWfdisablestageID=" +
-              value +
-              "] textarea"
-            ).attr("disabled", true);
-            $(
-              ".CFIELD[data-isWfenablestageID=" +
-              value +
-              "] input,.CFIELD[data-isWfenablestageID=" +
-              value +
-              "] .PPField ,.CFIELD[data-isWfenablestageID=" +
-              value +
-              "] select,.CFIELD[data-isWfenablestageID=" +
-              value +
-              "] textarea"
-            ).attr("disabled", false);
-            $("[data-isWfrequirestageID=" + value + "] label").attr({
-              required: true,
-            });
-            $(
-              "[data-isWfrequirestageID=" +
-              value +
-              "] input,[data-isWfrequirestageID=" +
-              value +
-              "] select,[data-isWfrequirestageID=" +
-              value +
-              "] textarea,[data-isWfrequirestageID=" +
-              value +
-              "] .PPField"
-            ).prop("required", true);
+            $(this).children("input").attr("disabled", false);
+            $(this).children("select").attr("disabled", false);
+            $(this).children(".PPField").attr("disabled", false);
+            $(this).children("textarea").attr("disabled", false);
+          }
+        });
+
+        $("[data-enablestageID]").each(function () {
+          var stageofElement = $(this).attr("data-enablestageID");
+          if (stageofElement.includes(stage)) {
+            $(this).children("input").attr("disabled", false);
+            $(this).children("select").attr("disabled", false);
+            $(this).children(".PPField").attr("disabled", false);
+            $(this).children("textarea").attr("disabled", false);
+          } else {
+            $(this).children("input").attr("disabled", true);
+            $(this).children("select").attr("disabled", true);
+            $(this).children(".PPField").attr("disabled", true);
+            $(this).children("textarea").attr("disabled", true);
           }
         });
       } else {
-        if (!USERisWF) {
-          $(".CFIELD[data-hidestageID=" + stage + "]").remove();
-          $(".CFIELD[data-showstageID=" + stage + "]").show();
-          $(
-            ".CFIELD[data-disablestageID=" +
-            stage +
-            "] input,.CFIELD[data-enablestageID=" +
-            stage +
-            "] .PPField ,.CFIELD[data-disablestageID=" +
-            stage +
-            "] select,.CFIELD[data-disablestageID=" +
-            stage +
-            "]"
-          ).attr("disabled", true);
-          $(
-            ".CFIELD[data-enablestageID=" +
-            stage +
-            "] input,.CFIELD[data-enablestageID=" +
-            stage +
-            "] .PPField ,.CFIELD[data-enablestageID=" +
-            stage +
-            "] select,.CFIELD[data-enablestageID=" +
-            stage +
-            "]"
-          ).attr("disabled", false);
-        } else {
-          $(".CFIELD[data-isWfhidestageID=" + stage + "]").remove();
-          $(".CFIELD[data-isWfshowstageID=" + stage + "]").show();
-          $(
-            ".CFIELD[data-isWfdisablestageID=" +
-            stage +
-            "] input,.CFIELD[data-isWfenablestageID=" +
-            stage +
-            "] .PPField ,.CFIELD[data-isWfdisablestageID=" +
-            stage +
-            "] select,.CFIELD[data-isWfdisablestageID=" +
-            stage +
-            "] textarea"
-          ).attr("disabled", true);
-          $(
-            ".CFIELD[data-isWfenablestageID=" +
-            stage +
-            "] input,.CFIELD[data-isWfenablestageID=" +
-            stage +
-            "] .PPField ,.CFIELD[data-isWfenablestageID=" +
-            stage +
-            "] select,.CFIELD[data-isWfenablestageID=" +
-            stage +
-            "] textarea"
-          ).attr("disabled", false);
-          $("[data-isWfrequirestageID=" + stage + "] label").attr({
-            required: true,
-          });
-          $(
-            "[data-isWfrequirestageID=" +
-            stage +
-            "] input,[data-isWfrequirestageID=" +
-            stage +
-            "] select,[data-isWfrequirestageID=" +
-            stage +
-            "] textarea,[data-isWfrequirestageID=" +
-            stage +
-            "] .PPField"
-          ).prop("required", true);
-        }
+        $(
+          `.section-container[data-isWfhidestageID*="allstages"], .section-container[data-isWfhidestageID*="${stage}"]`
+        ).each(function () {
+          let tabId = $(this).parent().attr("id");
+          $(`.form-tabs .nav-link[href="#${tabId}"]`).remove();
+        });
+
+        $("[data-isWfhidestageID*=" + stage + "]").remove();
+        $("[data-isWfshowstageID*=" + stage + "]").show();
+
+        $("[data-isWfdisablestageID]").each(function () {
+          var stageofElement = $(this).attr("data-isWfdisablestageID");
+          if (stageofElement.includes(stage)) {
+            $(this).children("input").attr("disabled", true);
+            $(this).children("select").attr("disabled", true);
+            $(this).children(".PPField").attr("disabled", true);
+            $(this).children("textarea").attr("disabled", true);
+          } else {
+            $(this).children("input").attr("disabled", false);
+            $(this).children("select").attr("disabled", false);
+            $(this).children(".PPField").attr("disabled", false);
+            $(this).children("textarea").attr("disabled", false);
+          }
+        });
+
+        $("[data-isWfenablestageID]").each(function () {
+          var stageofElement = $(this).attr("data-isWfenablestageID");
+          if (stageofElement.includes(stage)) {
+            $(this).children("input").attr("disabled", false);
+            $(this).children("select").attr("disabled", false);
+            $(this).children(".PPField").attr("disabled", false);
+            $(this).children("textarea").attr("disabled", false);
+          } else {
+            $(this).children("input").attr("disabled", true);
+            $(this).children("select").attr("disabled", true);
+            $(this).children(".PPField").attr("disabled", true);
+            $(this).children("textarea").attr("disabled", true);
+          }
+        });
+
+
+        $('.helpful-info-ctx [data-showstageID*="' + stage + '"]').show();
+				$('.helpful-info-ctx [data-showstageID*="allstages"]').show();
+
+       
+        $("[data-isWfrequirestageID]").each(function () {
+          var stageofElement = $(this).attr("data-isWfenablestageID");
+          if (stageofElement.includes(stage)) {
+            $(this).children("label").attr("required", true);
+            $(this).children("input").attr("required", true);
+            $(this).children("select").attr("required", true);
+            $(this).children(".PPField").attr("required", true);
+            $(this).children("textarea").attr("required", true);
+          }
+        })
       }
     }
+    // }
     if (PCODE) {
       $(".headtwo").append(
         '<a class="" href="' +
@@ -8916,13 +9237,8 @@ var GetProject_Info = {
         "/SitePages/View.aspx?ListKey=projects&IID=" +
         PID +
         '"><span data-trans-projectdetails class="litem Resources"></span></a>' //+
-        //'<a class="" href="'+_spPageContextInfo.webAbsoluteUrl+'"><span class="litem">Project Phase</span></a>'+
-        //'<a class="" href="'+_spPageContextInfo.webAbsoluteUrl+'"><span class="litem">Project Report</span></a>'
       );
     }
-    // GetProject_Info.g.notificationappen();
-    // Risks_Info_Request.init();
-    // Issues_Info_Request.init();
   },
   onError: function (sender, args) {
     console.log(
@@ -9002,6 +9318,7 @@ var GetProject_Info = {
     },
   },
 };
+
 var deliverabePercent = {
   onSuccess: function (sender, args) {
     var collListItem = deliverabePercent.g.collListItem;
@@ -10120,98 +10437,98 @@ function ForNumbers(evt) {
 
 //////////
 var GetCurrentStage_Info = {
-	onSuccess: function (sender, args) {
-		var collListItem = GetCurrentStage_Info.g.collListItem;
-		var listItemEnum = collListItem.getEnumerator();
-		var PID, stage, ismultistage;
-    
-		while (listItemEnum.moveNext()) {
-			var oListItem = listItemEnum.get_current();
-			PID = oListItem.get_id();
-			// if (
-			// 	(!SP_relatedWfList && SP_ListName == "Projects") ||
-			// 	SP_relatedWfList == "Projects"
-			// ) {
-			// 	stage = oListItem.get_item("Stage");
-			// } else {
-				stage = oListItem.get_item("WFStage");
-		//	}
+  onSuccess: function (sender, args) {
+    var collListItem = GetCurrentStage_Info.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    var PID, stage, ismultistage;
 
-			if (stage) {
-				ismultistage = stage.indexOf(";") > -1;
-			}
-			if (ismultistage) {
-				stage = stage.split(";");
-			}
-		}
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      PID = oListItem.get_id();
+      // if (
+      // 	(!SP_relatedWfList && SP_ListName == "Projects") ||
+      // 	SP_relatedWfList == "Projects"
+      // ) {
+      // 	stage = oListItem.get_item("Stage");
+      // } else {
+      stage = oListItem.get_item("WFStage");
+      //	}
 
-		if (!USERisWF) {
-			$("[data-hidestageID*=" + stage + "]").remove();
-			$("[data-showstageID*=" + stage + "]").show();
-			$('[data-showstageID*="allstages"]').show();
+      if (stage) {
+        ismultistage = stage.indexOf(";") > -1;
+      }
+      if (ismultistage) {
+        stage = stage.split(";");
+      }
+    }
 
-			$("[data-disablestageID]").each(function () {
-				var stageofElement = $(this).attr("data-disablestageID");
-				if (stageofElement.includes(stage)) {
-					$(this).children("input").attr("disabled", true);
-					$(this).children("select").attr("disabled", true);
-					$(this).children(".PPField").attr("disabled", true);
-					$(this).children("textarea").attr("disabled", true);
-				} else {
-					$(this).children("input").attr("disabled", false);
-					$(this).children("select").attr("disabled", false);
-					$(this).children(".PPField").attr("disabled", false);
-					$(this).children("textarea").attr("disabled", false);
-				}
-			});
+    if (!USERisWF) {
+      $("[data-hidestageID*=" + stage + "]").remove();
+      $("[data-showstageID*=" + stage + "]").show();
+      $('[data-showstageID*="allstages"]').show();
 
-			$("[data-enablestageID]").each(function () {
-				var stageofElement = $(this).attr("data-enablestageID");
-				if (stageofElement.includes(stage)) {
-					$(this).children("input").attr("disabled", false);
-					$(this).children("select").attr("disabled", false);
-					$(this).children(".PPField").attr("disabled", false);
-					$(this).children("textarea").attr("disabled", false);
-				} else {
-					$(this).children("input").attr("disabled", true);
-					$(this).children("select").attr("disabled", true);
-					$(this).children(".PPField").attr("disabled", true);
-					$(this).children("textarea").attr("disabled", true);
-				}
-			});
-		} else {
-			console.log("GetCurrentStage_Info");
-			$('[data-showstageID*="allstages"]').show();
-			$(".CFIELD[data-isWfhidestageID=" + stage + "]").remove();
-			$(".CFIELD[data-isWfshowstageID=" + stage + "]").show();
-			$("[data-isWfdisablestageID]").each(function () {
-				var stageofElement = $(this).attr("data-isWfdisablestageID");
-				if (stageofElement.includes(stage)) {
-					$(this).children("input").attr("disabled", true);
-					$(this).children("select").attr("disabled", true);
-					$(this).children(".PPField").attr("disabled", true);
-					$(this).children("textarea").attr("disabled", true);
-				} else {
-					$(this).children("input").attr("disabled", false);
-					$(this).children("select").attr("disabled", false);
-					$(this).children(".PPField").attr("disabled", false);
-					$(this).children("textarea").attr("disabled", false);
-				}
-			});
-			$("[data-isWfenablestageID]").each(function () {
-				var stageofElement = $(this).attr("data-isWfenablestageID");
-				if (stageofElement.includes(stage)) {
-					$(this).children("input").attr("disabled", false);
-					$(this).children("select").attr("disabled", false);
-					$(this).children(".PPField").attr("disabled", false);
-					$(this).children("textarea").attr("disabled", false);
-				} else {
-					$(this).children("input").attr("disabled", true);
-					$(this).children("select").attr("disabled", true);
-					$(this).children(".PPField").attr("disabled", true);
-					$(this).children("textarea").attr("disabled", true);
-				}
-			});
+      $("[data-disablestageID]").each(function () {
+        var stageofElement = $(this).attr("data-disablestageID");
+        if (stageofElement.includes(stage)) {
+          $(this).children("input").attr("disabled", true);
+          $(this).children("select").attr("disabled", true);
+          $(this).children(".PPField").attr("disabled", true);
+          $(this).children("textarea").attr("disabled", true);
+        } else {
+          $(this).children("input").attr("disabled", false);
+          $(this).children("select").attr("disabled", false);
+          $(this).children(".PPField").attr("disabled", false);
+          $(this).children("textarea").attr("disabled", false);
+        }
+      });
+
+      $("[data-enablestageID]").each(function () {
+        var stageofElement = $(this).attr("data-enablestageID");
+        if (stageofElement.includes(stage)) {
+          $(this).children("input").attr("disabled", false);
+          $(this).children("select").attr("disabled", false);
+          $(this).children(".PPField").attr("disabled", false);
+          $(this).children("textarea").attr("disabled", false);
+        } else {
+          $(this).children("input").attr("disabled", true);
+          $(this).children("select").attr("disabled", true);
+          $(this).children(".PPField").attr("disabled", true);
+          $(this).children("textarea").attr("disabled", true);
+        }
+      });
+    } else {
+      console.log("GetCurrentStage_Info");
+      $('[data-showstageID*="allstages"]').show();
+      $(".CFIELD[data-isWfhidestageID=" + stage + "]").remove();
+      $(".CFIELD[data-isWfshowstageID=" + stage + "]").show();
+      $("[data-isWfdisablestageID]").each(function () {
+        var stageofElement = $(this).attr("data-isWfdisablestageID");
+        if (stageofElement.includes(stage)) {
+          $(this).children("input").attr("disabled", true);
+          $(this).children("select").attr("disabled", true);
+          $(this).children(".PPField").attr("disabled", true);
+          $(this).children("textarea").attr("disabled", true);
+        } else {
+          $(this).children("input").attr("disabled", false);
+          $(this).children("select").attr("disabled", false);
+          $(this).children(".PPField").attr("disabled", false);
+          $(this).children("textarea").attr("disabled", false);
+        }
+      });
+      $("[data-isWfenablestageID]").each(function () {
+        var stageofElement = $(this).attr("data-isWfenablestageID");
+        if (stageofElement.includes(stage)) {
+          $(this).children("input").attr("disabled", false);
+          $(this).children("select").attr("disabled", false);
+          $(this).children(".PPField").attr("disabled", false);
+          $(this).children("textarea").attr("disabled", false);
+        } else {
+          $(this).children("input").attr("disabled", true);
+          $(this).children("select").attr("disabled", true);
+          $(this).children(".PPField").attr("disabled", true);
+          $(this).children("textarea").attr("disabled", true);
+        }
+      });
 
       // data-isWfrequirestageID
       //iswfrequirestageid
@@ -10220,79 +10537,79 @@ var GetCurrentStage_Info = {
         if (stageofElement.includes(stage)) {
           $(this).children("label").attr("required", true);
           $(this).children("input").attr("required", true);
-					$(this).children("select").attr("required", true);
-					$(this).children(".PPField").attr("required", true);
-					$(this).children("textarea").attr("required", true);
+          $(this).children("select").attr("required", true);
+          $(this).children(".PPField").attr("required", true);
+          $(this).children("textarea").attr("required", true);
         }
       })
       ////////////////////////////////
-			// $("[data-isWfrequirestageID=" + stage + "] label").attr({
-			// 	required: true,
-			// });
-			// $(
-			// 	"[data-isWfrequirestageID=" +
-			// 		stage +
-			// 		"] input,[data-isWfrequirestageID=" +
-			// 		stage +
-			// 		"] select,[data-isWfrequirestageID=" +
-			// 		stage +
-			// 		"] textarea,[data-isWfrequirestageID=" +
-			// 		stage +
-			// 		"] .PPField"
-			// ).prop("required", true);
+      // $("[data-isWfrequirestageID=" + stage + "] label").attr({
+      // 	required: true,
+      // });
+      // $(
+      // 	"[data-isWfrequirestageID=" +
+      // 		stage +
+      // 		"] input,[data-isWfrequirestageID=" +
+      // 		stage +
+      // 		"] select,[data-isWfrequirestageID=" +
+      // 		stage +
+      // 		"] textarea,[data-isWfrequirestageID=" +
+      // 		stage +
+      // 		"] .PPField"
+      // ).prop("required", true);
 
-      
-		}
-		$(`.form-tabs .nav-link:first-child`).trigger("click");
-		if (PCODE) {
-			$(".headtwo").append(
-				'<a class="" href="' +
-					_spPageContextInfo.webAbsoluteUrl +
-					'"><span class="litem">Home</span></a>' +
-					'<a class="" href="' +
-					_spPageContextInfo.webAbsoluteUrl +
-					"/SitePages/View.aspx?ListKey=projects&IID=" +
-					PID +
-					'"><span data-trans-projectdetails class="litem Resources"></span></a>' //+
-				//'<a class="" href="'+_spPageContextInfo.webAbsoluteUrl+'"><span class="litem">Project Phase</span></a>'+
-				//'<a class="" href="'+_spPageContextInfo.webAbsoluteUrl+'"><span class="litem">Project Report</span></a>'
-			);
-		}
-	},
-	onError: function (sender, args) {
-		console.log(
-			"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
-		);
-	},
-	// Pre-initialization functions ensure scripts, SharePoint dependencies are loaded
-	preinit: function () {
-		if ($(".ms-Icon--Settings").length) {
-			clearInterval(checkNotificationHTML);
-			SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
-				GetCurrentStage_Info.init();
-			});
-		}
-	},
-	// The main Initialization function
-	init: function () {
-		// console.log('asdf');
+
+    }
+    $(`.form-tabs .nav-link:first-child`).trigger("click");
+    if (PCODE) {
+      $(".headtwo").append(
+        '<a class="" href="' +
+        _spPageContextInfo.webAbsoluteUrl +
+        '"><span class="litem">Home</span></a>' +
+        '<a class="" href="' +
+        _spPageContextInfo.webAbsoluteUrl +
+        "/SitePages/View.aspx?ListKey=projects&IID=" +
+        PID +
+        '"><span data-trans-projectdetails class="litem Resources"></span></a>' //+
+        //'<a class="" href="'+_spPageContextInfo.webAbsoluteUrl+'"><span class="litem">Project Phase</span></a>'+
+        //'<a class="" href="'+_spPageContextInfo.webAbsoluteUrl+'"><span class="litem">Project Report</span></a>'
+      );
+    }
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  // Pre-initialization functions ensure scripts, SharePoint dependencies are loaded
+  preinit: function () {
+    if ($(".ms-Icon--Settings").length) {
+      clearInterval(checkNotificationHTML);
+      SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
+        GetCurrentStage_Info.init();
+      });
+    }
+  },
+  // The main Initialization function
+  init: function () {
+    // console.log('asdf');
     debugger
-		var clientContext = new SP.ClientContext.get_current();
-		var oList = clientContext.get_web().get_lists().getByTitle(SP_ListName);
-		var camlQuery = new SP.CamlQuery();
-		var PQUERY;
-		PQUERY =
-			"<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='ID'/><Value Type='Integer'>" +
-			IID +
-			"</Value></Eq></And></Where></Query><RowLimit>1</RowLimit></View>";
-		camlQuery.set_viewXml(PQUERY);
-		GetCurrentStage_Info.g.collListItem = oList.getItems(camlQuery);
-		clientContext.load(GetCurrentStage_Info.g.collListItem);
-		clientContext.executeQueryAsync(
-			Function.createDelegate(this, GetCurrentStage_Info.onSuccess),
-			Function.createDelegate(this, GetCurrentStage_Info.onError)
-		);
-	},
-	// Global variables
-	g: {},
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle(SP_ListName);
+    var camlQuery = new SP.CamlQuery();
+    var PQUERY;
+    PQUERY =
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='ID'/><Value Type='Integer'>" +
+      IID +
+      "</Value></Eq></And></Where></Query><RowLimit>1</RowLimit></View>";
+    camlQuery.set_viewXml(PQUERY);
+    GetCurrentStage_Info.g.collListItem = oList.getItems(camlQuery);
+    clientContext.load(GetCurrentStage_Info.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, GetCurrentStage_Info.onSuccess),
+      Function.createDelegate(this, GetCurrentStage_Info.onError)
+    );
+  },
+  // Global variables
+  g: {},
 };
