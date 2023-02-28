@@ -44,7 +44,7 @@ var Listing_Info = [
     InternalName: 'Types',
     DisplayNameEn: 'Types',
     DisplayName: 'النوع',
-    type: 'text',
+    type: 'dropdownValues',
     inlisting: true,
     needTrans: true,
     infilter: true,
@@ -87,7 +87,7 @@ var Listing_Info = [
     InternalName: 'InitiativeProgressStatus',
     DisplayName: 'حالة الإنجاز',
     DisplayNameEn: 'Initiative Progress Status',
-    type: 'text', //formula
+    type: 'dropdownValues', //formula
     needTrans: true,
     inlisting: true,
     infilter: true,
