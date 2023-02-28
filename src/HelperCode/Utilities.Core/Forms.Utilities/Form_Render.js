@@ -10497,7 +10497,6 @@ var GetCurrentStage_Info = {
         }
       });
     } else {
-      console.log("GetCurrentStage_Info");
       $('[data-showstageID*="allstages"]').show();
       $(".CFIELD[data-isWfhidestageID=" + stage + "]").remove();
       $(".CFIELD[data-isWfshowstageID=" + stage + "]").show();
@@ -10530,8 +10529,6 @@ var GetCurrentStage_Info = {
         }
       });
 
-      // data-isWfrequirestageID
-      //iswfrequirestageid
       $("[data-isWfrequirestageID]").each(function () {
         var stageofElement = $(this).attr("data-isWfenablestageID");
         if (stageofElement.includes(stage)) {
@@ -10542,23 +10539,6 @@ var GetCurrentStage_Info = {
           $(this).children("textarea").attr("required", true);
         }
       })
-      ////////////////////////////////
-      // $("[data-isWfrequirestageID=" + stage + "] label").attr({
-      // 	required: true,
-      // });
-      // $(
-      // 	"[data-isWfrequirestageID=" +
-      // 		stage +
-      // 		"] input,[data-isWfrequirestageID=" +
-      // 		stage +
-      // 		"] select,[data-isWfrequirestageID=" +
-      // 		stage +
-      // 		"] textarea,[data-isWfrequirestageID=" +
-      // 		stage +
-      // 		"] .PPField"
-      // ).prop("required", true);
-
-
     }
     $(`.form-tabs .nav-link:first-child`).trigger("click");
     if (PCODE) {
@@ -10571,8 +10551,6 @@ var GetCurrentStage_Info = {
         "/SitePages/View.aspx?ListKey=projects&IID=" +
         PID +
         '"><span data-trans-projectdetails class="litem Resources"></span></a>' //+
-        //'<a class="" href="'+_spPageContextInfo.webAbsoluteUrl+'"><span class="litem">Project Phase</span></a>'+
-        //'<a class="" href="'+_spPageContextInfo.webAbsoluteUrl+'"><span class="litem">Project Report</span></a>'
       );
     }
   },
@@ -10592,8 +10570,6 @@ var GetCurrentStage_Info = {
   },
   // The main Initialization function
   init: function () {
-    // console.log('asdf');
-    debugger
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(SP_ListName);
     var camlQuery = new SP.CamlQuery();
