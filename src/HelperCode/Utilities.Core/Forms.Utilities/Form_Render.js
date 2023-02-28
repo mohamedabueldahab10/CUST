@@ -7850,7 +7850,7 @@ var View_ListInfo = {
             dispfieldkey +
             '" class="viewmode-value" id="' +
             element.InternalName +
-            '" ></p>' +
+            '" option-id=""></p>' +
             "</div>";
           OnSuccess(flag, htmlBody);
           ///////////////////////////////////////////////
@@ -7899,7 +7899,7 @@ var View_ListInfo = {
             element.Dispfieldkey +
             '" class="viewmode-value" id="' +
             element.InternalName +
-            '" ></p>' +
+            '" option-id=""></p>' +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;

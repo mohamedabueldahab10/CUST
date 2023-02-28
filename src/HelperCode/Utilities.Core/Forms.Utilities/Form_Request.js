@@ -1390,10 +1390,12 @@ window.View_Data_Request = {
             _spPageContextInfo.siteServerRelativeUrl,
             listname,
             customquery,
-            [valfieldkey, Dispfieldkey],
+            ["ID",valfieldkey, Dispfieldkey],
             function (records, record, listItem, isDone) {
               if (isDone) {
+                debugger
                 records.forEach(function (el, index) {
+                  $this.attr('option-id',el["ID"])
                   $this.html(el[Dispfieldkey]);
                 });
               }
