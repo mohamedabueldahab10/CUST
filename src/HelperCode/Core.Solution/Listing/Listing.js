@@ -1596,7 +1596,6 @@ window.ListingData = {
               break;
 
             case "dropdownValues":
-              debugger
               var data = mydata[i][IN[j]]
               if (data) {
                 if (
@@ -1612,11 +1611,9 @@ window.ListingData = {
               mydata[i][IN[j]] = translationData
               break;
 
-
               default:
                 console.log("no change on on value")
                 break;
-
           }
 
 
