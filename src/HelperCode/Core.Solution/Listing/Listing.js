@@ -34,10 +34,10 @@ var projectTypeFilterQuery = '', typeClicked = 'Internal';
 window.indexofListing = 0;
 var taskClicked = 'relatedTasks', allTasksClicked = false, getNewFilterTask = false, isViewMoreClicked = false;
 
-var emptyData = require('../../../HelperRessources/img/empty-data.png');
-var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
-// var emptyData = ''
-// var exportExcel = ''
+// var emptyData = require('../../../HelperRessources/img/empty-data.png');
+// var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
+var emptyData = ''
+var exportExcel = ''
 //all data filter array
 allDataFilterArr = []
 //
@@ -127,7 +127,7 @@ window.sphttp = {
     if (!isLoadMore || isOnload) { // remove isEmptyFilter
       sphttp.g.camlQuery = new SP.CamlQuery();
     }
-    sphttp.g.camlQuery.set_viewXml(camelQuery); 
+    sphttp.g.camlQuery.set_viewXml(camelQuery);
 
 
 
@@ -448,7 +448,7 @@ window.ListingData = {
   init: function () {
 
     if (!isTasks && originalstate) {
-      
+
       if (isRoleDataLevelAccess && (!UserICode && !USERPCODE && isEmptyFilter)) {
         PQuery = dataLevelAccessQuery ? dataLevelAccessQuery : AccessQuery;
       } else {
@@ -481,7 +481,7 @@ window.ListingData = {
       changeResources();
     } else {
 
-      
+
       sphttp.get(
         ListURL,
         SP_ListName,
@@ -509,28 +509,28 @@ window.ListingData = {
 
 
           if (isDone) {
-            
-            console.log(records,"records afteeeeeeeeer")
+
+            console.log(records, "records afteeeeeeeeer")
 
             var html = '';
 
             var InternalProjectsHtml = '';
             var ExternalProjectsHtml = '';
-            
+
             for (var i = 0; i < records.length; i++) { //looping items
-              indexofListing =  indexofListing + 1;
-              
+              indexofListing = indexofListing + 1;
+
               // ghufranChange
               if (listkey == 'projects') {
                 if (records[i].ProjectType == 'Internal') {
                   // InternalProjectsHtml += '<li class="list-group-item link-arrow">' +
                   //   '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexofListing + '</span>';
                   InternalProjectsHtml += '<li class="list-group-item link-arrow">' +
-                  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '';
+                    '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '';
                 } else if (records[i].ProjectType == 'External') {
                   // ExternalProjectsHtml += '<li class="list-group-item link-arrow">' +
                   //   '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexofListing + '</span>';
-                    ExternalProjectsHtml += '<li class="list-group-item link-arrow">' +
+                  ExternalProjectsHtml += '<li class="list-group-item link-arrow">' +
                     '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '';
                 }
               } else if (listkey == 'initiatives') {
@@ -572,7 +572,7 @@ window.ListingData = {
                   '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&ICODE=" + ICODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexofListing + '</span>'
               }
               else if (STCODE) {
-                
+
                 html += '<li class="list-group-item link-arrow">' +
                   '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&STCODE=" + UserSTCode + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexofListing + '</span>'
               }
@@ -973,7 +973,7 @@ window.ListingData = {
 
 
 
-            
+
 
             //create button and div for filtertation DDLs
             var HtmlStart = (USERProjRelated.indexOf(listkey) > -1 && PCODE) || (USERProjRelated.indexOf(listkey) == -1 && !PCODE && !ICODE && !STCODE && listkey != 'tasks') || (listkey == 'changerequest') ?
@@ -1151,7 +1151,7 @@ window.ListingData = {
           PQueryFilteration = '<And><Neq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Neq><In><FieldRef Name="Status" /><Values><Value Type="Choice">Open</Value></Values></In></And>';
         } else {
           PQueryFilteration = '<And><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And>';
-          
+
         }
       }
       // else if (isInManager || isInOwner) {
@@ -1376,16 +1376,16 @@ window.ListingData = {
               //   Where_Body_Final = '<Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>' + Where_Body + PQueryFilteration + '</And></Where>';
               // }
               Where_Body_Final =
-              "<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
-              Where_Body +
-              PQueryFilteration +
-              "</And></Where>";
+                "<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
+                Where_Body +
+                PQueryFilteration +
+                "</And></Where>";
             } else {
               Where_Body_Final =
-              "<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And>" +
-              Where_Body +
-              PQueryFilteration +
-              "</And></And></Where>"; 
+                "<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And>" +
+                Where_Body +
+                PQueryFilteration +
+                "</And></And></Where>";
               // if (isTasks) {
               //   Where_Body_Final = "<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" + Where_Body + PQueryFilteration + 
               //   "</And></Where>";
@@ -1418,7 +1418,7 @@ window.ListingData = {
     //for tasks functions
     handleids: function (pcode, icode, taskid, tasktype, stageid, ritemid, sourceitemid, wfname, puid, rurl) //rurl,
     {
-      
+
       if (wfname == 'Project') {
         curstage_org = User_Stages_Data_Request.g.StagesArray.filter(function (obj) {
           return obj.stage == stageid;
@@ -1519,11 +1519,13 @@ window.ListingData = {
     },
     ExportToExcel: function () {
       var DN = Listing_Info.map((a) => a.DisplayName);
+      var FT = Listing_Info.map((a) => a.type);
       var fields = IN;
       var filter = "";
       var mydata = [];
       var newdate;
       var index;
+      var translationData = "";
       var armonths = [
         "يناير",
         "فبراير",
@@ -1552,6 +1554,7 @@ window.ListingData = {
         "November",
         "December",
       ];
+
       AllRecordsWithID.forEach(function (a, i) {
         //getting listing records
         mydata.push(a.record);
@@ -1565,6 +1568,7 @@ window.ListingData = {
         table += "<th>" + head[i].replaceAll(" ", "%20") + "</th>";
       }
       table += "</tr></thead><tbody>";
+
       for (var i = 0; i < mydata.length; i++) {
         // var isshown = true;
         // if ($(".items.TaskDetails")[i].hasAttribute("style"))
@@ -1574,8 +1578,10 @@ window.ListingData = {
         table += "<tr>";
         for (var j = 0; j < IN.length; j++) {
 
+          // console.log(FT,"FFFFFFFFFFFFFFFTTTTTTTTTt")
+
           if (
-            armonths.indexOf(mydata[i][IN[j]].toString().split(" ")[1]) > -1 &&
+            mydata[i][IN[j]] && armonths.indexOf(mydata[i][IN[j]].toString().split(" ")[1]) > -1 &&
             FT[j] == "date"
           ) {
             newdate = mydata[i][IN[j]].split(" ");
@@ -1583,6 +1589,71 @@ window.ListingData = {
             newdate[1] = enmonths[index];
             mydata[i][IN[j]] = newdate.join(" ");
           }
+
+
+
+          // if (FT[j] == "date" && mydata[i][IN[j]] && mydata[i][IN[j]].indexOf("T") > -1) {
+          //   var formattedDate = mydata[i][IN[j]].split("T")[0]
+          //   mydata[i][IN[j]] = formattedDate
+          // }
+
+          // if (FT[j] == "dropdownValues") {
+          //   debugger
+          //   var data = mydata[i][IN[j]]
+          //   if (data) {
+          //     if (
+          //       localStorage.getItem("lng") == null ||
+          //       localStorage.getItem("lng") == "ar"
+          //     ) {
+          //       debugger
+          //       translationData = Resources.ar[data] ? Resources.ar[data] : No_Data
+          //     } else {
+          //       translationData = Resources.en[data] ? Resources.en[data] : No_Data
+
+          //     }
+          //   }
+          //   mydata[i][IN[j]] = translationData
+          // }
+
+          switch (FT[j]) {
+            case "date":
+              var checkDateFormat = mydata[i][IN[j]].indexOf("T") > -1
+              if (checkDateFormat) {
+                var formattedDate = mydata[i][IN[j]].split("T")[0]
+                mydata[i][IN[j]] = formattedDate
+              }
+              break;
+
+            case "dropdownValues":
+
+              var data = mydata[i][IN[j]]
+              if (data) {
+                if (
+                  localStorage.getItem("lng") == null ||
+                  localStorage.getItem("lng") == "ar"
+                ) {
+                  debugger
+                  translationData = Resources.ar[data] ? Resources.ar[data] : No_Data
+                } else {
+                  translationData = Resources.en[data] ? Resources.en[data] : No_Data
+                }
+              }
+              mydata[i][IN[j]] = translationData
+              break;
+
+
+              default:
+                console.log("no change on on value")
+                break;
+
+          }
+
+
+          console.log(mydata[i], "mydata[i]")
+          console.log([IN[j]], "[IN[j]]")
+          console.log(mydata[i][IN[j]], "mydata[i][IN[j]]")
+          console.log(FT[j], "FT[j]")
+          debugger
           table +=
             "<td>" +
             mydata[i][IN[j]].toString().replaceAll(" ", "%20") +
@@ -1619,7 +1690,7 @@ window.ListingData = {
           localStorageVar = [];
           TypsFields = [];
           // to add the new data when click show more to the filters dropdown in listing
-    
+
 
           if (originalstate) { // add isTasks to not add to filter when change tabs
             allDataFilterArr = recordsddl
@@ -1721,7 +1792,7 @@ window.ListingData = {
                     //FilterationItems += obj[key] + ',';
                     if (Listing_Info[y].type == 'date') {
                       FilterationItems.push(obj[key]);
-       
+
                     }
                     else {
                       FilterationItems.push(obj[key]);
@@ -2229,7 +2300,7 @@ window.Delegate_Data_Submit = {
       ProjectCode = currentItem.get_item('ProjectCode');
       TaskDelegatedFrom = currentItem.get_item('AssignedTo');
 
-  
+
       if (Workflowname) {
         if (localStorage.getItem('Dynamo_Tasks Configuration') != null) {
           stages = JSON.parse(localStorage.getItem("Dynamo_Tasks Configuration") || "[]");
@@ -2379,7 +2450,7 @@ window.DeleteDelegate_Data_Submit = {
 // to handle strategic objective status and color
 var StrategicObjectives_Status_Listing = {
   init: function (value) {
-    
+
     var status = ''
     var color = ''
 
