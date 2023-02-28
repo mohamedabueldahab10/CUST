@@ -27,6 +27,16 @@ var Information_Form = [
         type: 'string',
       },
       {
+        InternalName: 'Portfolio',
+        DisplayName: 'المحفظة',
+        DisplayNameEn: 'Portfolio',
+        type: 'lookup',
+        //from other list:
+        source: 'Portfolio',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+      },
+      {
         InternalName: 'Types',
         DisplayNameEn: 'Types',
         DisplayName: 'النوع',
@@ -41,28 +51,28 @@ var Information_Form = [
               display: 'vision',
               value: 'vision',
               roles: ['Administrator', 'VROE', 'VROP'],
-              otherFields:[
-                {fieldName:"WFModuleCode",value:"VisionInitiative"},
-                {fieldName:"WFStage",value:"VInStage01"},
-              ]
+              otherFields: [
+                { fieldName: 'WFModuleCode', value: 'VisionInitiative' },
+                { fieldName: 'WFStage', value: 'VInStage01' },
+              ],
             },
             {
               display: 'strategically',
               value: 'strategically',
               roles: ['Administrator', 'EPMO'],
-              otherFields:[
-                {fieldName:"WFModuleCode",value:"StrategicallyInitiative"},
-                {fieldName:"WFStage",value:"SInStage01"},
-              ]
+              otherFields: [
+                { fieldName: 'WFModuleCode', value: 'StrategicallyInitiative' },
+                { fieldName: 'WFStage', value: 'SInStage01' },
+              ],
             },
             {
               display: 'lms',
               value: 'lms',
               roles: ['Administrator', 'LMSE', 'LMSP'],
-              otherFields:[
-                {fieldName:"WFModuleCode",value:"LmsInitiative"},
-                {fieldName:"WFStage",value:"LInStage01"},
-              ]
+              otherFields: [
+                { fieldName: 'WFModuleCode', value: 'LmsInitiative' },
+                { fieldName: 'WFStage', value: 'LInStage01' },
+              ],
             },
             // { display: 'others', value: 'others' },
           ],
@@ -271,7 +281,7 @@ var Information_Form = [
         DisplayNameEn: 'Start Date',
         type: 'datetime',
         max: 'FinishDate',
-        validation: 'required'
+        validation: 'required',
       },
       {
         InternalName: 'FinishDate',
@@ -279,7 +289,7 @@ var Information_Form = [
         DisplayNameEn: 'Finish Date',
         type: 'datetime',
         min: 'StartDate',
-        validation: 'required'
+        validation: 'required',
       },
       // {
       //   InternalName: 'StartDate',
@@ -327,7 +337,7 @@ var Information_Form = [
             {
               display: 'transformationally',
               value: 'transformationally',
-            }
+            },
             // { value: 'notstarted', display: 'notstarted' },
             // { value: 'closureinitiative', display: 'closureinitiative' }
             // {
