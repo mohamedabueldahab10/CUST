@@ -1570,15 +1570,10 @@ window.ListingData = {
       table += "</tr></thead><tbody>";
 
       for (var i = 0; i < mydata.length; i++) {
-        // var isshown = true;
-        // if ($(".items.TaskDetails")[i].hasAttribute("style"))
-        // 	isshown =
-        // 		$(".items.TaskDetails")[i].attributes[1].value != "display: none;";
-        // if (isshown)
+
         table += "<tr>";
         for (var j = 0; j < IN.length; j++) {
 
-          // console.log(FT,"FFFFFFFFFFFFFFFTTTTTTTTTt")
 
           if (
             mydata[i][IN[j]] && armonths.indexOf(mydata[i][IN[j]].toString().split(" ")[1]) > -1 &&
@@ -1591,30 +1586,6 @@ window.ListingData = {
           }
 
 
-
-          // if (FT[j] == "date" && mydata[i][IN[j]] && mydata[i][IN[j]].indexOf("T") > -1) {
-          //   var formattedDate = mydata[i][IN[j]].split("T")[0]
-          //   mydata[i][IN[j]] = formattedDate
-          // }
-
-          // if (FT[j] == "dropdownValues") {
-          //   debugger
-          //   var data = mydata[i][IN[j]]
-          //   if (data) {
-          //     if (
-          //       localStorage.getItem("lng") == null ||
-          //       localStorage.getItem("lng") == "ar"
-          //     ) {
-          //       debugger
-          //       translationData = Resources.ar[data] ? Resources.ar[data] : No_Data
-          //     } else {
-          //       translationData = Resources.en[data] ? Resources.en[data] : No_Data
-
-          //     }
-          //   }
-          //   mydata[i][IN[j]] = translationData
-          // }
-
           switch (FT[j]) {
             case "date":
               var checkDateFormat = mydata[i][IN[j]].indexOf("T") > -1
@@ -1625,14 +1596,14 @@ window.ListingData = {
               break;
 
             case "dropdownValues":
-
+              debugger
               var data = mydata[i][IN[j]]
               if (data) {
                 if (
                   localStorage.getItem("lng") == null ||
                   localStorage.getItem("lng") == "ar"
                 ) {
-                  debugger
+                  
                   translationData = Resources.ar[data] ? Resources.ar[data] : No_Data
                 } else {
                   translationData = Resources.en[data] ? Resources.en[data] : No_Data
@@ -1649,11 +1620,6 @@ window.ListingData = {
           }
 
 
-          console.log(mydata[i], "mydata[i]")
-          console.log([IN[j]], "[IN[j]]")
-          console.log(mydata[i][IN[j]], "mydata[i][IN[j]]")
-          console.log(FT[j], "FT[j]")
-          debugger
           table +=
             "<td>" +
             mydata[i][IN[j]].toString().replaceAll(" ", "%20") +
