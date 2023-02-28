@@ -153,8 +153,10 @@ var Information_Form = [
       },
       {
         InternalName: 'RelatedObjective',
-        DisplayNameEn: 'Related Main Objective',
-        DisplayName: 'الهدف الرئيسي المرتبط',
+        DisplayNameEn: 'Related Objective',
+        DisplayName: 'الهدف المرتبط',
+        // DisplayNameEn: 'Related Main Objective',
+        // DisplayName: 'الهدف الرئيسي المرتبط',
         ToggleName: 'RelatedObjective',
         RequiredName: 'RelatedObjective',
         type: 'lookupWithQuery',
