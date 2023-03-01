@@ -127,6 +127,32 @@ var workflowname,
 	isLMSInitiative = window.location.href.indexOf("initiatives&LMSInitiative") > -1,
 	isStrategicPartnerships = window.location.href.indexOf("strategicpartnerships&STP") > -1,
 	isSPAchievements = window.location.href.indexOf("strategicpartnershipsachievements") > -1,
+	// ghufran
+	isVROCRInitiative = window.location.href.indexOf("changerequest&VROCRInitiative") > -1,
+	isEPMOCRInitiative = window.location.href.indexOf("changerequest&EPMOCRInitiative") > -1,
+	isLMSCRInitiative = window.location.href.indexOf("changerequest&LMSCRInitiative") > -1,
+	isVROBenefitActual = window.location.href.indexOf("benefits&VROBenefitActual") > -1,
+	isEPMOBenefitActual = window.location.href.indexOf("benefits&EPMOBenefitActual") > -1,
+	isLMSBenefitActual = window.location.href.indexOf("benefits&LMSBenefitActual") > -1,
+	isVROInitiativeMilestone = window.location.href.indexOf("initiativemilestones&VROInitiativeMilestone") > -1,
+	isEPMOInitiativeMilestone = window.location.href.indexOf("initiativemilestones&EPMOInitiativeMilestone") > -1,
+	isLMSInitiativeMilestone = window.location.href.indexOf("initiativemilestones&LMSInitiativeMilestone") > -1,
+	isVROInitiativeDeliverable = window.location.href.indexOf("initiativedeliverables&VROInitiativeDeliverable") > -1,
+	isEPMOInitiativeDeliverable = window.location.href.indexOf("initiativedeliverables&EPMOInitiativeDeliverable") > -1,
+	isLMSInitiativeDeliverable = window.location.href.indexOf("initiativedeliverables&LMSInitiativeDeliverable") > -1,
+	isVROProjMilestone = window.location.href.indexOf("milestones&VROProjMilestone") > -1,
+	isEPMOProjMilestone = window.location.href.indexOf("milestones&EPMOProjMilestone") > -1,
+	isLMSProjMilestone = window.location.href.indexOf("milestones&LMSProjMilestone") > -1,
+	isVROCOC = window.location.href.indexOf("coc&VROCOC") > -1,
+	isEPMOCOC = window.location.href.indexOf("coc&EPMOCOC") > -1,
+	isLMSCOC = window.location.href.indexOf("coc&LMSCOC") > -1,
+	isVROCRObjective = window.location.href.indexOf("changerequest&VROCRObjective") > -1,
+	isMSCRObjective = window.location.href.indexOf("changerequest&MSCRObjective") > -1,
+	isLMSCRObjective = window.location.href.indexOf("changerequest&LMSCRObjective") > -1,
+	isVROCRKPI = window.location.href.indexOf("changerequest&VROCRKPI") > -1,
+	isMSCRKPI = window.location.href.indexOf("changerequest&MSCRKPI") > -1,
+	isLMSCRKPI = window.location.href.indexOf("changerequest&LMSCRKPI") > -1,
+	// 
 	isProjectCancellationRequestWF =
 		window.location.href.indexOf("projectcancellationrequest") > -1,
 	isDeliverabletWF = window.location.href.indexOf("deliveriesreport") > -1,
@@ -377,6 +403,390 @@ else if (isLMSInitiative) {
 	debugger
 	workflowname = "LMSInitiative";
 	bulkeditlist = "Initiatives";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isVROCRInitiative) {
+	debugger
+	workflowname = "VROCRInitiative";
+	bulkeditlist = "ChangeRequest";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isEPMOCRInitiative) {
+	debugger
+	workflowname = "EPMOCRInitiative";
+	bulkeditlist = "ChangeRequest";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isLMSCRInitiative) {
+	debugger
+	workflowname = "LMSCRInitiative";
+	bulkeditlist = "ChangeRequest";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isVROBenefitActual) {
+	debugger
+	workflowname = "VROBenefitActual";
+	bulkeditlist = "Benefits";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isEPMOBenefitActual) {
+	debugger
+	workflowname = "EPMOBenefitActual";
+	bulkeditlist = "Benefits";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isLMSBenefitActual) {
+	debugger
+	workflowname = "LMSBenefitActual";
+	bulkeditlist = "Benefits";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isVROInitiativeMilestone) {
+	debugger
+	workflowname = "VROInitiativeMilestone";
+	bulkeditlist = "InitiativeMilestones";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isEPMOInitiativeMilestone) {
+	debugger
+	workflowname = "EPMOInitiativeMilestone";
+	bulkeditlist = "InitiativeMilestones";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isLMSInitiativeMilestone) {
+	debugger
+	workflowname = "LMSInitiativeMilestone";
+	bulkeditlist = "InitiativeMilestones";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isVROInitiativeDeliverable) {
+	debugger
+	workflowname = "VROInitiativeDeliverable";
+	bulkeditlist = "InitiativeDeliverable";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isEPMOInitiativeDeliverable) {
+	debugger
+	workflowname = "EPMOInitiativeDeliverable";
+	bulkeditlist = "InitiativeDeliverable";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isLMSInitiativeDeliverable) {
+	debugger
+	workflowname = "LMSInitiativeDeliverable";
+	bulkeditlist = "InitiativeDeliverable";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isVROProjMilestone) {
+	debugger
+	workflowname = "VROProjMilestone";
+	bulkeditlist = "Milestones";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isEPMOProjMilestone) {
+	debugger
+	workflowname = "EPMOProjMilestone";
+	bulkeditlist = "Milestones";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isLMSProjMilestone) {
+	debugger
+	workflowname = "LMSProjMilestone";
+	bulkeditlist = "Milestones";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isVROCOC) {
+	debugger
+	workflowname = "VROCOC";
+	bulkeditlist = "Certifications";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isEPMOCOC) {
+	debugger
+	workflowname = "EPMOCOC";
+	bulkeditlist = "Certifications";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isLMSCOC) {
+	debugger
+	workflowname = "LMSCOC";
+	bulkeditlist = "Certifications";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isVROCRObjective) {
+	debugger
+	workflowname = "VROCRObjective";
+	bulkeditlist = "ChangeRequest";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isMSCRObjective) {
+	debugger
+	workflowname = "MSCRObjective";
+	bulkeditlist = "ChangeRequest";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isLMSCRObjective) {
+	debugger
+	workflowname = "LMSCRObjective";
+	bulkeditlist = "ChangeRequest";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isVROCRKPI) {
+	debugger
+	workflowname = "VROCRKPI";
+	bulkeditlist = "ChangeRequest";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isMSCRKPI) {
+	debugger
+	workflowname = "MSCRKPI";
+	bulkeditlist = "ChangeRequest";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isLMSCRKPI) {
+	debugger
+	workflowname = "LMSCRKPI";
+	bulkeditlist = "ChangeRequest";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +

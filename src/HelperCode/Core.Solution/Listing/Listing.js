@@ -1471,7 +1471,7 @@ window.ListingData = {
             keyNameParams = "ideas"
           } else if (wfname == 'DV') {
             keyNameParams = 'deliverables'
-          } else if (wfname == 'CR') {
+          } else if (wfname == 'CR' || 	wfname == 'VROCRInitiative' || wfname == 'EPMOCRInitiative' || wfname == 'LMSCRInitiative' || wfname == 'VROCRObjective' || wfname == 'MSCRObjective' || wfname == 'LMSCRObjective' || wfname == 'VROCRKPI' || wfname == 'MSCRKPI' || wfname == 'LMSCRKPI') {
             keyNameParams = 'changerequest'
           } else if (wfname == 'Issue') {
             keyNameParams = 'issues'
@@ -1487,33 +1487,16 @@ window.ListingData = {
             keyNameParams = 'strategicpartnerships'
           } else if (wfname == 'SPAchievements') {
             keyNameParams = 'strategicpartnershipsachievements'
-          }
-          switch (tasktype) {
-            case 'SubmitField':
-              window.open(
-                _spPageContextInfo.webAbsoluteUrl +
-                "/sitepages/edit.aspx?ListKey=" +
-                keyNameParams +
-                "&IID=" +
-                ritemid +
-                "&TID=" +
-                taskid +
-                "&WFs",
-                "_self"
-              );
-              break;
-            default:
-              window.open(
-                _spPageContextInfo.webAbsoluteUrl +
-                rurl +
-                "&TID=" +
-                taskid +
-                "&IID=" +
-                ritemid +
-                "&WFs",
-                "_self"
-              );
-              break;
+          } else if(wfname == 'VROBenefitActual' || wfname == 'EPMOBenefitActual' || wfname == 'LMSBenefitActual') {
+            keyNameParams = 'benefits'
+          } else if(wfname == 'VROInitiativeMilestone' || wfname == 'EPMOInitiativeMilestone' || wfname == 'LMSInitiativeMilestone') {
+            keyNameParams = 'initiativemilestones'
+          } else if(wfname == 'VROInitiativeDeliverable' || wfname == 'EPMOInitiativeDeliverable' || wfname == 'LMSInitiativeDeliverable') {
+            keyNameParams = 'initiativedeliverables'
+          } else if(wfname == 'VROProjMilestone' || wfname == 'EPMOProjMilestone' || wfname == 'LMSProjMilestone') {
+            keyNameParams = 'milestones'
+          } else if(wfname == 'VROCOC' || wfname == 'EPMOCOC' || wfname == 'LMSCOC') {
+            keyNameParams = 'coc'
           }
       }
     },

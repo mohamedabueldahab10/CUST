@@ -13,7 +13,7 @@ var Listing_Info = [
         "DisplayName":"اسم الهدف",
         "type":"text",
         inlisting: true,
-        infilter: true
+        infilter: false
     },
     {
         "InternalName": "ObjectiveOwner",
@@ -40,6 +40,14 @@ var Listing_Info = [
         inlisting: true,
         infilter: true,
         needTrans:true
+    },
+    {
+        "InternalName": "RelatedStrategy",
+        "DisplayNameEn": "Related Vision Strategy",
+        "DisplayName": "الاستراتيجية المرتبطة",
+        "type": "lookup",
+        inlisting: false,
+        infilter: true
     },
     {
         "InternalName": "Status",
