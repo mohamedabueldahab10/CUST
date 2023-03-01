@@ -6813,3 +6813,8 @@ div#accordionRequiredSupport ul.list-group {
     padding: 0;
     color: #148282;
 }
+
+.elementLink{
+    color: #148282;
+    font-size: 13px;
+}

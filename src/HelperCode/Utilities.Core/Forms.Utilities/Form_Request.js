@@ -1212,18 +1212,18 @@ window.View_Data_Request = {
               var currentId = $(this).attr("id")
               if (currentId == 'Months' || currentId == 'Quarter' || currentId == 'Midterms') {
                 // if (periodType == 'monthly') {
-                  var period = value.toLowerCase() + periodType
-                  console.log(period,"period")
-                  if (
-                    localStorage.getItem("lng") == null ||
-                    localStorage.getItem("lng") == "ar"
-                  ) {
-                    $(this).text(Resources.ar[period.toLowerCase()]);
-                  } else $(this).text(Resources.en[period.toLowerCase()]);
+                var period = value.toLowerCase() + periodType
+                console.log(period, "period")
+                if (
+                  localStorage.getItem("lng") == null ||
+                  localStorage.getItem("lng") == "ar"
+                ) {
+                  $(this).text(Resources.ar[period.toLowerCase()]);
+                } else $(this).text(Resources.en[period.toLowerCase()]);
 
-                  debugger
-               // }
-              }else{
+                debugger
+                // }
+              } else {
                 if (
                   localStorage.getItem("lng") == null ||
                   localStorage.getItem("lng") == "ar"
@@ -1369,6 +1369,7 @@ window.View_Data_Request = {
         var valfieldkey = $(this).data("valfieldkey"),
           Dispfieldkey = $(this).data("dispfieldkey"),
           listname = $(this).data("listname"),
+          linkedto = $(this).data("linkedto"),
           $this = $(this);
 
         if (oListItem.get_item($(this).attr("id")) == null) {
@@ -1390,11 +1391,13 @@ window.View_Data_Request = {
             _spPageContextInfo.siteServerRelativeUrl,
             listname,
             customquery,
-            [valfieldkey, Dispfieldkey],
+            ["ID", valfieldkey, Dispfieldkey],
             function (records, record, listItem, isDone) {
               if (isDone) {
+                debugger
                 records.forEach(function (el, index) {
                   $this.html(el[Dispfieldkey]);
+                  $this.parent().find('a').attr('href', '/SitePages/View.aspx?ListKey=' + linkedto + '&IID=' + el["ID"] + '')
                 });
               }
             }

@@ -211,7 +211,7 @@ window.New_Data_Submit = {
       membersGroupCheckArray.length > 0 ? userCalls.isMember(membersGroupCheckArray[0].groupName, membersGroupCheckArray[0].userLoginName, membersGroupCheckArray[0].fieldID) : '';
     }
 
-    
+
     // to show the err msg in fields
     if ($(".was-validated .CFIELD:not(.even-required) .form-control").length > 0) {
 
@@ -691,6 +691,11 @@ window.New_Data_Submit = {
         $(".errormsg").hide();
         $(".successmsg").show();
         $(".btn-save").addClass("success");
+        if (USERisWF && workflowname == "Project") {
+          BulkEdit(true);
+        } else if (USERisWF && workflowname != "Project") {
+          Continue_Submit_Field.init();
+        }
       }
     },
   },
@@ -1432,38 +1437,44 @@ window.Edit_Data_Submit = {
           } else if ($(".Details-Item.EditItem").length > 0) {
             Edit_Data_Submit.g.checkEditMasterDetails();
           } else {
-            $(".btn-save").addClass("success");
-            if (listkey == 'kpiequations') {
-              window.location =
-                _spPageContextInfo.webAbsoluteUrl +
-                "/SitePages/View.aspx?ListKey=mainkpi" +
-                "&IID=" +
-                $('#KPI option[value="' + $('#KPI').val() + '"]').attr('option-id') +
-                PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
-            } else if (listkey == "benefitsequations") {
-              window.location =
-                _spPageContextInfo.webAbsoluteUrl +
-                "/SitePages/View.aspx?ListKey=benefitmetrics" +
-                "&IID=" +
-                $('#RelatedBenefit option[value="' + $('#RelatedBenefit').val() + '"]').attr('option-id') +
-                PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
-            } else if (listkey == 'mainkpi') {
-              Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis,kpiRecurrenceChanged)
-            } else if (listkey == 'projects' && PCODE) {
-
-              getProjectInfoToUpdateEPM()
+            if (USERisWF && workflowname == "Project") {
+              BulkEdit(true);
+            } else if (USERisWF && workflowname != "Project") {
+              Continue_Submit_Field.init();
             } else {
-              window.location =
-                _spPageContextInfo.webAbsoluteUrl +
-                "/SitePages/View.aspx?ListKey=" +
-                listkey +
-                "&IID=" +
-                IID +
-                PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+              $(".btn-save").addClass("success");
+              if (listkey == 'kpiequations') {
+                window.location =
+                  _spPageContextInfo.webAbsoluteUrl +
+                  "/SitePages/View.aspx?ListKey=mainkpi" +
+                  "&IID=" +
+                  $('#KPI option[value="' + $('#KPI').val() + '"]').attr('option-id') +
+                  PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+              } else if (listkey == "benefitsequations") {
+                window.location =
+                  _spPageContextInfo.webAbsoluteUrl +
+                  "/SitePages/View.aspx?ListKey=benefitmetrics" +
+                  "&IID=" +
+                  $('#RelatedBenefit option[value="' + $('#RelatedBenefit').val() + '"]').attr('option-id') +
+                  PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+              } else if (listkey == 'mainkpi') {
+                Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis, kpiRecurrenceChanged)
+              } else if (listkey == 'projects' && PCODE) {
+
+                getProjectInfoToUpdateEPM()
+              } else {
+                window.location =
+                  _spPageContextInfo.webAbsoluteUrl +
+                  "/SitePages/View.aspx?ListKey=" +
+                  listkey +
+                  "&IID=" +
+                  IID +
+                  PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+              }
+
+
+
             }
-
-
-
           }
         }
         // }
@@ -1678,7 +1689,7 @@ var kpiResults = {
 
 // Edit Kpi Results list when edit on main kpi to make the target page updated
 var Edit_KPI_Results = {
-  init: function (Name, Types, Sector, SubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis,kpiRecurrenceChanged) {
+  init: function (Name, Types, Sector, SubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis, kpiRecurrenceChanged) {
 
     var context = SP.ClientContext.get_current();
     var dfd = $.Deferred();
@@ -1707,7 +1718,7 @@ var Edit_KPI_Results = {
             items.set_item('Types', Types);
             items.set_item('Sector', Sector)
             items.set_item('SubSector', SubSector)
-            items.set_item('RecurrenceChanged',kpiRecurrenceChanged)
+            items.set_item('RecurrenceChanged', kpiRecurrenceChanged)
 
             ///////// update performance leader1 and performance leader2
             if ($('#PerformanceLeader').find("span.sp-peoplepicker-userSpan").length) {
@@ -2123,8 +2134,10 @@ var New_Master_Details_Submit = {
           }
         } else {
           // console.log('successful');
-          if (USERisWF) {
+          if (USERisWF && workflowname == "Project") {
             BulkEdit(true);
+          } else if (USERisWF && workflowname != "Project") {
+            Continue_Submit_Field.init();
           } else {
             $(".errormsg").hide();
             $(".successmsg").show();
@@ -2320,22 +2333,27 @@ var Edit_Master_Details_Submit = {
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
         // determinig folder directory
-
-
-        $(".errormsg").hide();
-        $(".successmsg").show();
-        $(".btn-save").addClass("success");
-
-        if (listkey == 'mainkpi') { // to update the kpi result list
-          Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis,kpiRecurrenceChanged)
+        if (USERisWF && workflowname == "Project") {
+          BulkEdit(true);
+        } else if (USERisWF && workflowname != "Project") {
+          Continue_Submit_Field.init();
         } else {
-          window.location =
-            _spPageContextInfo.webAbsoluteUrl +
-            "/SitePages/View.aspx?ListKey=" +
-            listkey +
-            "&IID=" +
-            IID +
-            PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+
+          $(".errormsg").hide();
+          $(".successmsg").show();
+          $(".btn-save").addClass("success");
+
+          if (listkey == 'mainkpi') { // to update the kpi result list
+            Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis, kpiRecurrenceChanged)
+          } else {
+            window.location =
+              _spPageContextInfo.webAbsoluteUrl +
+              "/SitePages/View.aspx?ListKey=" +
+              listkey +
+              "&IID=" +
+              IID +
+              PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+          }
         }
       }),
       Function.createDelegate(this, function (sender, args) {
@@ -2756,8 +2774,8 @@ var createFolder = function (listTitle, folderUrl, success, error) {
               if (listkey == 'initiatives') {
                 setTimeout(function () { // add setTimeOut to make sure that the folders created successfully on Initiative Document
 
-                window.location = _spPageContextInfo.webAbsoluteUrl + "/SitePages/initiativeHome.aspx?ICODE=" + ICODE
-              }, 3000);
+                  window.location = _spPageContextInfo.webAbsoluteUrl + "/SitePages/initiativeHome.aspx?ICODE=" + ICODE
+                }, 3000);
 
                 // New_InitiativeStages_Submit.init()
               } else if (listkey == 'strategicpartnerships') {
