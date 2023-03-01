@@ -210,8 +210,10 @@ var Information_Form = [
         valfieldkey: 'Title',
         // "state": "disabled"
         // "validation":"required"
+        isRelatedToParent:true, // to show parent value depends on child like sector and subsector
         dynamic: 'RelatedStrategy',
-        filterField: 'RelatedStrategy',
+        fieldsinlookup:"RelatedStrategy", // fields in look up list
+        filterField: 'RelatedStrategy', // 
         filterFieldType: 'Text',
         // grpfieldkey: 'Title',
         //

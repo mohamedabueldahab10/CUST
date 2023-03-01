@@ -158,7 +158,12 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         showlink:true,
-        linkedto:"sos"
+        linkedto:"sos",
+        isRelatedToParent:true, // to show parent value depends on child like sector and subsector
+        dynamic: 'RelatedStrategy',
+        fieldsinlookup:"RelatedStrategy",
+        filterField: 'RelatedStrategy',
+        filterFieldType: 'Text',
         // "state": "disabled"
       },
       {

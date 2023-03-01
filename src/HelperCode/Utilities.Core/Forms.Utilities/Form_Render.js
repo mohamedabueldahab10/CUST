@@ -4788,6 +4788,18 @@ window.ListInfo = {
         }
 
 
+        var listFields = [element.valfieldkey, dispfieldkey];
+
+
+        if (element.isRelatedToParent) {
+					// to handle sector and subsector (get the element from list)
+					parentFieldKey = element.fieldsinlookup;
+					listFields = [element.valfieldkey, dispfieldkey, element.filterField];
+				} else {
+					parentFieldKey = "";
+				}
+
+
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -4871,7 +4883,7 @@ window.ListInfo = {
           _spPageContextInfo.siteServerRelativeUrl,
           element.source,
           customQuery,
-          [element.valfieldkey, dispfieldkey],
+          listFields,
           function (records, record, listItem, isDone) {
             if (listItem) itemsID.push(listItem.get_id());
             if (isDone) {
@@ -4887,8 +4899,12 @@ window.ListInfo = {
                   '<option option-id="' +
                   itemsID[index] +
                   '" value="' +
-                  el[element.valfieldkey] +
-                  '">' +
+                  el[element.valfieldkey] + //data-parentrelatedkey > to get the target element,data-parentrelatedvalue > to save the value of parent like sector
+                  '" data-parentrelatedvalue=' +
+									el[element.filterField] +
+									" data-parentrelatedkey=" +
+									element.fieldsinlookup + // changed from dynamic to fieldsinlookup
+									">" +
                   optionText +
                   "</option>";
               });
@@ -7849,8 +7865,12 @@ var View_ListInfo = {
             '" data-valfieldkey="' +
             element.valfieldkey +
             '" data-Dispfieldkey="' +
-            dispfieldkey +
-            '" class="viewmode-value" id="' +
+            dispfieldkey + //data-parentrelatedkey > to get the target element,data-parentrelatedvalue > to save the value of parent like sector,data-parentrelatedfilterkey >> to show the value on this column in list
+            '" data-parentrelatedkey=' +
+            element.fieldsinlookup + // change from dynamic to fieldsinlookup
+            ' data-parentrelatedvalue="" data-parentrelatedfilterkey=' +
+            element.filterField +
+            ' class="viewmode-value" id="' +
             element.InternalName +
             '" data-linkedto="' + element.linkedto + '"></p>' +
             "</div>";
