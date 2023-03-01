@@ -1322,7 +1322,7 @@ var Get_StrategicPartnershipStatus_Info = {
     $(".project-details-ctx .card.h-100 > .fourth-row > div:nth-child(2) > h4.black").text(StrategicPartnershipPlannedDeliverable + "%");
 
     $(".myCompletionStatusDelivrables").removeAttr(
-      "data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4 data-trans-stat5 data-trans-stat6 data-trans-stat7"
+      "data-trans-stat23 data-trans-stat24 data-trans-stat25 data-trans-stat26 data-trans-stat27"
     );
 
     $(".myCompletionStatusDelivrables").removeClass("statuscolor" + listStrategicPartnershipProgress);
