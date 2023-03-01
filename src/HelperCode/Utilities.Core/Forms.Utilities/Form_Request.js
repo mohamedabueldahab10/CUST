@@ -116,33 +116,33 @@ window.Edit_Data_Request = {
       }
     }
 
-    if (listkey == "initiatives") {
+    // if (listkey == "initiatives") {
 
-      var typeValue = $("#Types option:selected").val();
-      if (typeValue == "vision") {
-        $("#RelatedBudgetItem , #ProgramTotalCost ,#RelatedKPI")
-          .parent()
-          .css("display", "block");
-      } else {
-        $("#RelatedBudgetItem , #ProgramTotalCost, #RelatedKPI").parent().css("display", "none");
-      }
+    //   var typeValue = $("#Types option:selected").val();
+    //   if (typeValue == "vision") {
+    //     $("#RelatedBudgetItem , #ProgramTotalCost ,#RelatedKPI")
+    //       .parent()
+    //       .css("display", "block");
+    //   } else {
+    //     $("#RelatedBudgetItem , #ProgramTotalCost, #RelatedKPI").parent().css("display", "none");
+    //   }
 
-      if (isNew || isEdit) {
+    //   if (isNew || isEdit) {
 
-        $("#Types").on("change", function () {
-          var typeValueafterchange = $("#Types option:selected").val();
-          if (typeValueafterchange == "vision") {
-            $("#RelatedBudgetItem , #ProgramTotalCost , #RelatedKPI")
-              .parent()
-              .css("display", "block");
-          } else {
-            $("#RelatedBudgetItem , #ProgramTotalCost, #RelatedKPI")
-              .parent()
-              .css("display", "none");
-          }
-        });
-      }
-    }
+    //     $("#Types").on("change", function () {
+    //       var typeValueafterchange = $("#Types option:selected").val();
+    //       if (typeValueafterchange == "vision") {
+    //         $("#RelatedBudgetItem , #ProgramTotalCost , #RelatedKPI")
+    //           .parent()
+    //           .css("display", "block");
+    //       } else {
+    //         $("#RelatedBudgetItem , #ProgramTotalCost, #RelatedKPI")
+    //           .parent()
+    //           .css("display", "none");
+    //       }
+    //     });
+    //   }
+    // }
     // if(oListItem.get_item('DeletionStatus') && oListItem.get_item('DeletionStatus').toLowerCase()  == 'deleted'){
     //     window.location = _spPageContextInfo.webAbsoluteUrl;
     // }
@@ -440,7 +440,7 @@ window.Edit_Data_Request = {
       Edit_Data_Request.g.budgetitem();
     }
     if (listkey == "initiatives") {
-      Edit_Data_Request.g.showFieldsIfInitiativeVision();
+      // Edit_Data_Request.g.showFieldsIfInitiativeVision();
 
       var type = $('#Types').val()
       Initiative_Sos.init("SOs", type); //get related sos depends on type
@@ -971,31 +971,31 @@ window.Edit_Data_Request = {
         $("[id^=Cost]").parent().hide();
       }
     },
-    showFieldsIfInitiativeVision: function () {
-      var typeValue = $("#Types option:selected").val();
-      if (typeValue == "vision") {
-        $("#RelatedBudgetItem , #ProgramTotalCost,#RelatedKPI")
-          .parent()
-          .css("display", "block");
-      } else {
-        $("#RelatedBudgetItem , #ProgramTotalCost,#RelatedKPI").parent().css("display", "none");
-      }
-      if (isNew || isEdit) {
+    // showFieldsIfInitiativeVision: function () {
+    //   var typeValue = $("#Types option:selected").val();
+    //   if (typeValue == "vision") {
+    //     $("#RelatedBudgetItem , #ProgramTotalCost,#RelatedKPI")
+    //       .parent()
+    //       .css("display", "block");
+    //   } else {
+    //     $("#RelatedBudgetItem , #ProgramTotalCost,#RelatedKPI").parent().css("display", "none");
+    //   }
+    //   if (isNew || isEdit) {
 
-        $("#Types").on("change", function () {
-          var typeValueafterchange = $("#Types option:selected").val();
-          if (typeValueafterchange == "vision") {
-            $("#RelatedBudgetItem , #ProgramTotalCost , #RelatedKPI")
-              .parent()
-              .css("display", "block");
-          } else {
-            $("#RelatedBudgetItem , #ProgramTotalCost , #RelatedKPI")
-              .parent()
-              .css("display", "none");
-          }
-        });
-      }
-    }
+    //     $("#Types").on("change", function () {
+    //       var typeValueafterchange = $("#Types option:selected").val();
+    //       if (typeValueafterchange == "vision") {
+    //         $("#RelatedBudgetItem , #ProgramTotalCost , #RelatedKPI")
+    //           .parent()
+    //           .css("display", "block");
+    //       } else {
+    //         $("#RelatedBudgetItem , #ProgramTotalCost , #RelatedKPI")
+    //           .parent()
+    //           .css("display", "none");
+    //       }
+    //     });
+    //   }
+    // }
   },
 };
 //RelatedIdeaProject
@@ -1504,9 +1504,9 @@ window.View_Data_Request = {
     if (listkey == "budgetitems") {
       View_Data_Request.g.budgetitem();
     }
-    if (listkey == "initiatives") {
-      View_Data_Request.g.showFieldsIfInitiativeVision();
-    }
+    // if (listkey == "initiatives") {
+    //   View_Data_Request.g.showFieldsIfInitiativeVision();
+    // }
 
     if (listkey == "risks" && oListItem.get_item("Status") == "movedtoissue") {
       $(".form-row.justify-content-end button").hide();
@@ -1945,16 +1945,16 @@ window.View_Data_Request = {
         }
       }
     },
-    showFieldsIfInitiativeVision: function () {
-      var typeValue = $("#Types").text();
-      if (typeValue == "vision") {
-        $("#RelatedBudgetItem , #ProgramTotalCost , #RelatedKPI")
-          .parent()
-          .css("display", "block");
-      } else {
-        $("#RelatedBudgetItem , #ProgramTotalCost , #RelatedKPI").parent().css("display", "none");
-      }
-    }
+    // showFieldsIfInitiativeVision: function () {
+    //   var typeValue = $("#Types").text();
+    //   if (typeValue == "vision") {
+    //     $("#RelatedBudgetItem , #ProgramTotalCost , #RelatedKPI")
+    //       .parent()
+    //       .css("display", "block");
+    //   } else {
+    //     $("#RelatedBudgetItem , #ProgramTotalCost , #RelatedKPI").parent().css("display", "none");
+    //   }
+    // }
   },
 };
 // data related Access

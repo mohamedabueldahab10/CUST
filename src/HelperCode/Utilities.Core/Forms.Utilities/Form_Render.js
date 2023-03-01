@@ -785,7 +785,7 @@ window.ListInfo = {
             // }
             if (listkey == "initiatives") {
               Sectors_Info.init(); // to get the department related to sector on edit
-              ListInfo.g.showFieldsIfInitiativeVision();
+              // ListInfo.g.showFieldsIfInitiativeVision();
               $("#Types").on("change", function () {
                 var type = $(this).val();
                 Initiative_Sos.init("SOs", type); //get related sos depends on type
@@ -851,7 +851,7 @@ window.ListInfo = {
             if (listkey == "initiatives") {
               // Initiative_Stages_Data_Request.init();
               Sectors_Info.init(); // sector
-              ListInfo.g.showFieldsIfInitiativeVision();
+              // ListInfo.g.showFieldsIfInitiativeVision();
               $("#Types").on("change", function () {
                 var type = $(this).val();
                 Initiative_Sos.init("SOs", type); //get related sos depends on type
@@ -5993,66 +5993,66 @@ window.ListInfo = {
       }
 
     },
-    showFieldsIfInitiativeVision: function () {
-      var typeValue = $("#Types option:selected").val();
+    // showFieldsIfInitiativeVision: function () {
+    //   var typeValue = $("#Types option:selected").val();
 
-      if (typeValue == "vision") {
-        $("#RelatedBudgetItem").parent().css("display", "block");
-      } else {
-        $("#RelatedBudgetItem").parent().css("display", "none");
-      }
-      if (isNew) {
-        // if (isEPMO) {
-        //   $("#Types").val("strategically");
-        //   $("#Types").prop("disabled", true);
-        // }
-        $("#Types").on("change", function () {
-          var typeValueafterchange = $("#Types option:selected").val();
-          if (typeValueafterchange == "vision") {
-            $("#RelatedBudgetItem").parent().css("display", "block");
-          } else {
-            $("#RelatedBudgetItem").parent().css("display", "none");
-          }
-        });
-      }
-      if (isEdit) {
-        // if (isEPMO) {
-        //   // $('#Types').val('strategically');
-        //   $("#Types").prop("disabled", true);
-        // }
-        $("#Types").on("change", function () {
-          var typeValueafterchange = $("#Types option:selected").val();
-          if (typeValueafterchange == "vision") {
-            $("#RelatedBudgetItem").parent().css("display", "block");
-          } else {
-            $("#RelatedBudgetItem").parent().css("display", "none");
-          }
-        });
-      }
-      // commented to can show the fields when use strategy type of initiative
-      // if (typeValue == "vision") {
-      //   $("#RelatedBudgetItem , #ProgramTotalCost")
-      //     .parent()
-      //     .css("display", "block");
-      // } else {
-      //   $("#RelatedBudgetItem , #ProgramTotalCost").parent().css("display", "none");
-      // }
-      // if (isNew || isEdit) {
+    //   if (typeValue == "vision") {
+    //     $("#RelatedBudgetItem").parent().css("display", "block");
+    //   } else {
+    //     $("#RelatedBudgetItem").parent().css("display", "none");
+    //   }
+    //   if (isNew) {
+    //     // if (isEPMO) {
+    //     //   $("#Types").val("strategically");
+    //     //   $("#Types").prop("disabled", true);
+    //     // }
+    //     $("#Types").on("change", function () {
+    //       var typeValueafterchange = $("#Types option:selected").val();
+    //       if (typeValueafterchange == "vision") {
+    //         $("#RelatedBudgetItem").parent().css("display", "block");
+    //       } else {
+    //         $("#RelatedBudgetItem").parent().css("display", "none");
+    //       }
+    //     });
+    //   }
+    //   if (isEdit) {
+    //     // if (isEPMO) {
+    //     //   // $('#Types').val('strategically');
+    //     //   $("#Types").prop("disabled", true);
+    //     // }
+    //     $("#Types").on("change", function () {
+    //       var typeValueafterchange = $("#Types option:selected").val();
+    //       if (typeValueafterchange == "vision") {
+    //         $("#RelatedBudgetItem").parent().css("display", "block");
+    //       } else {
+    //         $("#RelatedBudgetItem").parent().css("display", "none");
+    //       }
+    //     });
+    //   }
+    //   // commented to can show the fields when use strategy type of initiative
+    //   // if (typeValue == "vision") {
+    //   //   $("#RelatedBudgetItem , #ProgramTotalCost")
+    //   //     .parent()
+    //   //     .css("display", "block");
+    //   // } else {
+    //   //   $("#RelatedBudgetItem , #ProgramTotalCost").parent().css("display", "none");
+    //   // }
+    //   // if (isNew || isEdit) {
 
-      //   $("#Types").on("change", function () {
-      //     var typeValueafterchange = $("#Types option:selected").val();
-      //     if (typeValueafterchange == "vision") {
-      //       $("#RelatedBudgetItem , #ProgramTotalCost")
-      //         .parent()
-      //         .css("display", "block");
-      //     } else {
-      //       $("#RelatedBudgetItem , #ProgramTotalCost")
-      //         .parent()
-      //         .css("display", "none");
-      //     }
-      //   });
-      // }
-    },
+    //   //   $("#Types").on("change", function () {
+    //   //     var typeValueafterchange = $("#Types option:selected").val();
+    //   //     if (typeValueafterchange == "vision") {
+    //   //       $("#RelatedBudgetItem , #ProgramTotalCost")
+    //   //         .parent()
+    //   //         .css("display", "block");
+    //   //     } else {
+    //   //       $("#RelatedBudgetItem , #ProgramTotalCost")
+    //   //         .parent()
+    //   //         .css("display", "none");
+    //   //     }
+    //   //   });
+    //   // }
+    // },
   },
   roleQuery: async function (fieldsConditionConfig) {
     let whereBody = ``,
