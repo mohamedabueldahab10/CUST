@@ -7842,7 +7842,7 @@ var View_ListInfo = {
             ">" +
             displayName +
             " " +
-            `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-info-circle iconfontawesome'></i></a></span>" : ""}` +
+            `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>" : ""}` +
             "</label>" +
             '<p type="lookup" data-listname="' +
             element.source +
@@ -7893,7 +7893,7 @@ var View_ListInfo = {
             ">" +
             displayName +
             " " +
-            `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-info-circle iconfontawesome'></i></a></span>" : ""}` +
+            `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>" : ""}` +
             "</label>" +
             '<p type="lookup" data-listname="' +
             element.source +
