@@ -254,7 +254,7 @@ var Information_Form = [
         // type: "dropdownValues",
         dontSubmit: true,
         type: 'yesnoradio',
-        state: 'disabled',
+        // state: 'disabled',
         options: {
           choices: [
             { display: 'yes', value: 'yes' },

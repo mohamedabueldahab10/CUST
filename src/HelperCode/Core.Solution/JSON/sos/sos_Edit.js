@@ -257,9 +257,10 @@ var Information_Form = [
         InternalName: 'RelatedStrategyPillars',
         DisplayNameEn: 'Is Pillar / program  Exist?',
         DisplayName: 'هل يوجد محور / برنامج ؟',
-        type: 'dropdownValues',
-        state: 'disabled',
+        // type: 'dropdownValues',
+        // state: 'disabled',
         dontSubmit: true,
+        type: 'yesnoradio',
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
