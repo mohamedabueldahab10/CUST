@@ -1498,6 +1498,34 @@ window.ListingData = {
           } else if(wfname == 'VROCOC' || wfname == 'EPMOCOC' || wfname == 'LMSCOC') {
             keyNameParams = 'coc'
           }
+          switch (tasktype) {
+            case 'SubmitField':
+              window.open(
+                _spPageContextInfo.webAbsoluteUrl +
+                "/sitepages/edit.aspx?ListKey=" +
+                keyNameParams +
+                "&IID=" +
+                ritemid +
+                "&TID=" +
+                taskid +
+                "&WFs",
+                "_self"
+              );
+              break;
+            default:
+              window.open(
+                _spPageContextInfo.webAbsoluteUrl +
+                rurl +
+                "&TID=" +
+                taskid +
+                "&IID=" +
+                ritemid +
+                "&WFs",
+                "_self"
+              );
+              break;
+          }
+          
       }
     },
     ExportToExcel: function () {
