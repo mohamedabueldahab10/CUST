@@ -9,13 +9,13 @@ window.projectActualBudget = 0;
 window.initiativeActualBudget = 0;
 window.CurrentUserTasksCount = 0;
 window.USERisProjectHome =
-window.location.href.toLowerCase().indexOf("/projecthome.aspx") > -1;
+  window.location.href.toLowerCase().indexOf("/projecthome.aspx") > -1;
 window.USERisInitiativeHome =
-window.location.href.toLowerCase().indexOf("/initiativehome.aspx") > -1;  
+  window.location.href.toLowerCase().indexOf("/initiativehome.aspx") > -1;
 window.USERisStrategicPartnershipHome =
-window.location.href.toLowerCase().indexOf("/strategicpartnershiphome.aspx") > -1;
+  window.location.href.toLowerCase().indexOf("/strategicpartnershiphome.aspx") > -1;
 window.USERisTargets =
-window.location.href.toLowerCase().indexOf("/targets.aspx") > -1;
+  window.location.href.toLowerCase().indexOf("/targets.aspx") > -1;
 var BreakException = {};
 var UserRole,
   UserAccessSectorCode,
@@ -636,7 +636,7 @@ window.userCalls = {
     currentUserRole //we need first role for user
     ) {
       case "Administrator":
-        $("body").append(       
+        $("body").append(
           "<style>" +
           "div#s4-ribbonrow, div#O365_MainLink_Settings_container{display:block!important}html #s4-workspace {min-height:auto !important;}.Progress-Action {display:block!important;}" +
           "</style>"
@@ -1058,7 +1058,7 @@ window.userCalls = {
         ar_UserRole = "إدارة الأداء الإستراتيجي";
         en_UserRole = "Strategy Performance Management";
         //CRUD
-        Create_Access = ["benefitmetrics","BenefitMetrics.aspx"];
+        Create_Access = ["benefitmetrics", "BenefitMetrics.aspx"];
 
         Read_Access = [
           "goalstrategy",
@@ -1074,7 +1074,7 @@ window.userCalls = {
           "initiativesmain.aspx",
         ];
 
-        Edit_Access = ["benefitmetrics","BenefitMetrics.aspx"];
+        Edit_Access = ["benefitmetrics", "BenefitMetrics.aspx"];
         Delete_Access = [];
         break;
       case "SPMAdmin":
@@ -2666,7 +2666,7 @@ window.userCalls = {
         en_UserRole = "Performance Leader";
         //CRUD
         Create_Access = ["Targets.aspx",
-        "BenefitMetrics.aspx"];
+          "BenefitMetrics.aspx"];
         Read_Access = [
           "mainkpi",
           "sos",
@@ -2794,7 +2794,7 @@ window.userCalls = {
           "strategicpartnershipsrisks",
           "strategicpartnershipslessonslearned",
           "strategicpartnershipsmom",
-          
+
         ];
         Read_Access = [
           "strategicpartnerships",
@@ -3080,7 +3080,7 @@ window.userCalls = {
     //       ) :
     //       //SEND btn
     //       //disable
-  
+
     //       $("body").append(
     //         "<style>" +
     //         ".btn-addTarget{opacity: .6;pointer-events: none;display:none}" +
@@ -5182,7 +5182,7 @@ window.userCalls = {
       {
         Role: "StrategicPartnershipsTeam",
         groupsName: ["Strategic Partnerships Team"],
-        
+
       },
       {
         Role: "PartnershipRepresentative",
@@ -7096,7 +7096,7 @@ var Access_Project_Info_Request = {
             !isInitiativesHomePage &&
             !isTarget &&
             !isMainIndicator &&
-            !isAdminPanel && 
+            !isAdminPanel &&
             !isBenefitsMetrics
           ) {
             $(".page-title").html(
@@ -8506,8 +8506,8 @@ var Tasks_Info_Request_User = {
           }
           else if (wfname == "DV") {
             keyNameParams = "deliverables";
-          } else if (wfname == "CR" || wfname == "VROCRInitiative" || wfname == "EPMOCRInitiative" || wfname == "LMSCRInitiative" || wfname == "VROCRObjective" || wfname == "MSCRObjective" || wfname == "LMSCRObjective" || wfname == "VROCRKPI" || wfname == "MSCRKPI" || wfname == "LMSCRKPI" ) {
-              keyNameParams = "changerequest";
+          } else if (wfname == "CR" || wfname == "VROCRInitiative" || wfname == "EPMOCRInitiative" || wfname == "LMSCRInitiative" || wfname == "VROCRObjective" || wfname == "MSCRObjective" || wfname == "LMSCRObjective" || wfname == "VROCRKPI" || wfname == "MSCRKPI" || wfname == "LMSCRKPI") {
+            keyNameParams = "changerequest";
           } else if (wfname == "Issue") {
             keyNameParams = "issues";
           } else if (wfname == "Risk") {
@@ -8520,16 +8520,16 @@ var Tasks_Info_Request_User = {
             keyNameParams = 'strategicpartnerships'
           } else if (wfname == 'SPAchievements') {
             keyNameParams = 'strategicpartnershipsachievements'
-          } else if(wfname == 'VROBenefitActual' || wfname == 'EPMOBenefitActual' || wfname == 'LMSBenefitActual') {
-              keyNameParams = 'benefits'
-          } else if(wfname == 'VROInitiativeMilestone' || wfname == 'EPMOInitiativeMilestone' || wfname == 'LMSInitiativeMilestone') {
-              keyNameParams = 'initiativemilestones'
-          } else if(wfname == 'VROInitiativeDeliverable' || wfname == 'EPMOInitiativeDeliverable' || wfname == 'LMSInitiativeDeliverable') {
+          } else if (wfname == 'VROBenefitActual' || wfname == 'EPMOBenefitActual' || wfname == 'LMSBenefitActual') {
+            keyNameParams = 'benefits'
+          } else if (wfname == 'VROInitiativeMilestone' || wfname == 'EPMOInitiativeMilestone' || wfname == 'LMSInitiativeMilestone') {
+            keyNameParams = 'initiativemilestones'
+          } else if (wfname == 'VROInitiativeDeliverable' || wfname == 'EPMOInitiativeDeliverable' || wfname == 'LMSInitiativeDeliverable') {
             keyNameParams = 'initiativedeliverables'
-          } else if(wfname == 'VROProjMilestone' || wfname == 'EPMOProjMilestone' || wfname == 'LMSProjMilestone') {
-              keyNameParams = 'milestones'
-          } else if(wfname == 'VROCOC' || wfname == 'EPMOCOC' || wfname == 'LMSCOC') {
-              keyNameParams = 'coc'
+          } else if (wfname == 'VROProjMilestone' || wfname == 'EPMOProjMilestone' || wfname == 'LMSProjMilestone') {
+            keyNameParams = 'milestones'
+          } else if (wfname == 'VROCOC' || wfname == 'EPMOCOC' || wfname == 'LMSCOC') {
+            keyNameParams = 'coc'
           }
           switch (tasktype) {
             case "SubmitProject":
@@ -8548,8 +8548,7 @@ var Tasks_Info_Request_User = {
             case "SubmitField":
               window.open(
                 _spPageContextInfo.webAbsoluteUrl +
-                "/sitepages/edit.aspx?ListKey=" +
-                keyNameParams +
+                rurl +
                 "&IID=" +
                 ritemid +
                 "&TID=" +
