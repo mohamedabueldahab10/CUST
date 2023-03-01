@@ -77,6 +77,13 @@ var Information_Form = [
           ],
         },
       },
+      {
+        InternalName: 'ExpectedPaymentDate',
+        DisplayNameEn: 'ExpectedPayment Date',
+        DisplayName: 'التاريخ المخطط للصرف',
+        type: 'datetime',
+      }
+      
     ],
   },
   {
