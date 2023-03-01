@@ -82,7 +82,9 @@ var BudgetLabelsEn = [
   // Resources.en["remaining"],
 ];
 
-var statusOccuresData = ["stat3", "stat1", "stat6", "stat2", "stat7"];
+// var statusOccuresData = ["stat3", "stat1", "stat6", "stat2", "stat7"];
+var statusOccuresData = ["stat7", "stat6", "stat5", "stat4", "stat3","stat2","stat1"];
+
 
 if (
   localStorage.getItem("lng") == null ||
@@ -2727,6 +2729,9 @@ function handleStatusBarChart() {
   var background_3 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
   var background_4 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
   var background_5 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
+  var background_6 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
+  var background_7 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
+
 
   // background_1.addColorStop(0, "#73bfb2");
   // background_1.addColorStop(1, "#ada38d");
@@ -2748,24 +2753,28 @@ function handleStatusBarChart() {
   // background_5.addColorStop(1, "#15425a");
   //////////////////////
 
-  background_1.addColorStop(0, "#428737");
-  background_1.addColorStop(1, "#5AB74C");
-  //green on plan
+  background_1.addColorStop(0, "#bc3434");
+  background_1.addColorStop(1, "#C53737");
+
   background_2.addColorStop(0, "#EBC866");
   background_2.addColorStop(1, "#FCD66D");
-  // yellow late
 
-  background_3.addColorStop(0, "#bc3434");
-  background_3.addColorStop(1, "#C53737");
+  background_3.addColorStop(0, "#428737");
+  background_3.addColorStop(1, "#5AB74C");
 
-  // red very late
-
-  background_4.addColorStop(0, "#a9a9a9");
-  background_4.addColorStop(1, "#696969");
+  background_4.addColorStop(0, "#688393");
+  background_4.addColorStop(1, "#15425a");
   // blue advanced
 
-  background_5.addColorStop(0, "#688393");
-  background_5.addColorStop(1, "#15425a");
+  background_5.addColorStop(0, "#a9a9a9");
+  background_5.addColorStop(1, "#696969");
+
+  background_6.addColorStop(0, "#a9a9a9");
+  background_6.addColorStop(1, "#696969");
+
+  background_7.addColorStop(0, "#a9a9a9");
+  background_7.addColorStop(1, "#696969");
+  
 
   // background_4.addColorStop(0, "#688393");
   // background_4.addColorStop(1, "#15425a");
@@ -2775,21 +2784,23 @@ function handleStatusBarChart() {
   // background_5.addColorStop(1, "#ccc");
   /////////////////////
   var BackgroundsArray = [
+    background_7,
+    background_6,
     background_5,
-    background_2,
     background_4,
     background_3,
+    background_2,
     background_1,
   ];
-  if (
-    localStorage.getItem("lng") == null ||
-    localStorage.getItem("lng") == "ar"
-  ) {
-    progressOccurence = progressOccurence.reverse();
-    ProgressName = ProgressName.reverse();
-  } else {
-    BackgroundsArray = BackgroundsArray.reverse();
-  }
+  // if (
+  //   localStorage.getItem("lng") == null ||
+  //   localStorage.getItem("lng") == "ar"
+  // ) {
+  //   // progressOccurence = progressOccurence.reverse();
+  //   // ProgressName = ProgressName.reverse();
+  // } else {
+  //   // BackgroundsArray = BackgroundsArray.reverse();
+  // }
   console.log(progressOccurence, "progressOccurence progressOccurence");
   /* data */
   var data1 = {

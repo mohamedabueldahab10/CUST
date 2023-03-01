@@ -2250,49 +2250,50 @@ ul[disabled],
     border-right-color: rgb(243, 152, 61);
 }
 
+/* main kpi status */
 
-.progress-semi .bar.stat1 {
+.progress-semi .bar.stat15 {
     border-bottom-color: #bc3434;
     border-right-color: #bc3434
 }
 
-.progress-semi .bar.stat2 {
+.progress-semi .bar.stat16 {
     border-bottom-color: #EBC866;
     border-right-color: #EBC866
 }
 
-.progress-semi .bar.stat3 {
+.progress-semi .bar.stat17 {
     border-bottom-color: #428737;
     border-right-color: #428737;
 }
 
-.progress-semi .bar.stat6 {
+.progress-semi .bar.stat18 {
     border-bottom-color: #a9a9a9;
     border-right-color: #a9a9a9;
 }
 
-.progress-semi .bar.stat8 {
+.progress-semi .bar.stat19 {
     border-bottom-color: #696969;
     border-right-color: #696969;
 }
 
-.kpistatus.stat1 {
+.kpistatus.stat15 {
     color: #bc3434;
 }
 
-.kpistatus.stat2 {
+.kpistatus.stat16 {
     color: #EBC866;
 }
 
-.kpistatus.stat3 {
+.kpistatus.stat17 {
     color: #428737;
 }
 
-.kpistatus.stat6 {
+.kpistatus.stat18 {
     color: #a9a9a9;
 }
 
-.kpistatus.stat8 {
+.kpistatus.stat19 {
     color: #696969;
 }
 
@@ -2310,7 +2311,7 @@ ul[disabled],
     bottom: 4px;
     right: 0;
 }
-
+/* end kpi status */
 
 /*
 *
@@ -4255,7 +4256,42 @@ a.taskButton:hover {
     padding-bottom: 10px
 }
 
+/* for strategic partnership status */
+.circlecolorstat23 {
+    background: #bc3434 !important;
+}
+.circlecolorstat24 {
+    background: #EBC866 !important;
+}
+.circlecolorstat25 {
+    background: #5AB74C !important;
+}
+.circlecolorstat26 {
+    background: #15425a !important;
+}
+.circlecolorstat27 {
+    background: #696969 !important;
+}
 
+.stat23 h4.Resources {
+    color: #C53737 !important; 
+}
+.stat24 h4.Resources {
+    color: #EBC866 !important; 
+}
+.stat25 h4.Resources {
+    color: #5AB74C !important; 
+}
+.stat26 h4.Resources {
+    color: #15425a !important; 
+}
+.stat27 h4.Resources {
+    color: #696969 !important; 
+}
+
+/* end of strategic partnership */
+
+/* for initiative status */
 .circlecolorstat1 {
     background: #bc3434 !important;
 }
@@ -4265,20 +4301,13 @@ a.taskButton:hover {
 }
 
 .circlecolorstat3 {
-    background: rgba(0, 170, 0, 255) !important;
+    background: #5AB74C !important;
 }
 
 .circlecolorstat4 {
     background: #15425a !important;
 }
 
-.circlecolorstat7 {
-    background: #15425a !important;
-}
-
-.circlecolorcomplete {
-    background: #5B9BD5 !important;
-}
 
 .circlecolorstat5 {
     background: #696969 !important;
@@ -4288,19 +4317,32 @@ a.taskButton:hover {
     background: #696969 !important;
 }
 
+.circlecolorstat7 {
+    background: #696969 !important;
+}
+
+.circlecolorcomplete {
+    background: #5B9BD5 !important;
+}
+/* for initiative status */
 h4.black.Resources.myCompletionStatus.statuscolorstat1,
 .stat1 h4.Resources {
-    color: #bc3434 !important;
+    color: #C53737 !important; 
 }
 
 h4.black.Resources.myCompletionStatus.statuscolorstat2,
 .stat2 h4.Resources {
-    color: #EBC866 !important;
+    color: #FCD66D !important;
 }
 
 h4.black.Resources.myCompletionStatus.statuscolorstat3,
 .stat3 h4.Resources {
-    color: rgba(0, 170, 0, 255) !important;
+    color: #5AB74C !important;
+}
+
+h4.black.Resources.myCompletionStatus.statuscolorstat4,
+.stat4 h4.Resources {
+    color: #15425a !important;
 }
 
 h4.black.Resources.myCompletionStatus.statuscolorstat5,
@@ -4313,17 +4355,46 @@ h4.black.Resources.myCompletionStatus.statuscolorstat6,
     color: #696969 !important;
 }
 
-
-h4.black.Resources.myCompletionStatus.statuscolorstat4,
-.stat4 h4.Resources {
-    color: #15425a !important;
-}
-
 h4.black.Resources.myCompletionStatus.statuscolorstat7,
 .stat7 h4.Resources {
+    color: #696969 !important;
+}
+/* end for initiative status */
+/* for project status */
+h4.black.Resources.myCompletionStatus.statuscolorstat8,
+.stat8 h4.Resources {
+    color: #C53737 !important; 
+}
+h4.black.Resources.myCompletionStatus.statuscolorstat9,
+.stat9 h4.Resources {
+    color: #FCD66D !important;
+}
+h4.black.Resources.myCompletionStatus.statuscolorstat10,
+.stat10 h4.Resources {
+    color: #5AB74C !important;
+}
+h4.black.Resources.myCompletionStatus.statuscolorstat11,
+.stat11 h4.Resources {
     color: #15425a !important;
 }
+h4.black.Resources.myCompletionStatus.statuscolorstat12,
+.stat12 h4.Resources {
+    color: #696969 !important;
+}
+h4.black.Resources.myCompletionStatus.statuscolorstat13,
+.stat13 h4.Resources {
+    color: #696969 !important;
+}
+h4.black.Resources.myCompletionStatus.statuscolorstat14,
+.stat14 h4.Resources {
+    color: #696969 !important;
+}
+h4.black.Resources.myCompletionStatus.statuscolorstat28,
+.stat28 h4.Resources {
+    color: #696969 !important;
+}
 
+/* end for project status */
 
 .control-ctx.project-info-ctx.projects .project-status-info span,
 .control-ctx.project-info-ctx.initiatives .project-status-info span {
@@ -6533,17 +6604,21 @@ a.a-important-link:hover>* {
     padding: 0px 5px;
 }
 
-.startegicobjstat11 {
+/* for Sos status */
+
+.startegicobjstat20 {
     color: #bc3434 !important;
 }
 
-.startegicobjstat10 {
+.startegicobjstat21 {
     color: #EBC866 !important;
 }
 
-.startegicobjstat9 {
-    color: rgba(0, 170, 0, 255) !important;
+.startegicobjstat22 {
+    color: #428737 !important;
 }
+
+/* end of Sos Status */
 
 .actualBudget.ErrorMsg {
     color: red;

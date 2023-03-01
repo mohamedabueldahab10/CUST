@@ -78,7 +78,8 @@ var BudgetLabelsEn = [
 ];
 // HRSD-R2 new branch
 
-var statusOccuresData = ["stat3", "stat1", "stat7", "stat2", "stat6"];
+// var statusOccuresData = ["stat3", "stat1", "stat7", "stat2", "stat6"];
+var statusOccuresData = ["stat28", "stat14", "stat13", "stat12", "stat11", "stat10", "stat9", "stat8"];
 
 if (
   localStorage.getItem("lng") == null ||
@@ -100,7 +101,7 @@ if (
 }
 
 window.UProjects = [];
-window.RisksCountsForRSupport =0;
+window.RisksCountsForRSupport = 0;
 window.issueCountsForRSupport = 0;
 var iconstagesm = require("../../../HelperRessources/img/icon-stage-sm.png");
 var iconstatustimesm = require("../../../HelperRessources/img/icon-status-time-sm.png");
@@ -173,7 +174,7 @@ window.Project_Info_Request = {
     debugger
     if (originalstate) {
       //*****call charts filteration */
-      if (isRoleDataLevelAccess  && !UserICode && !USERPCODE) {
+      if (isRoleDataLevelAccess && !UserICode && !USERPCODE) {
         PQuery = dataLevelAccessQuery ? dataLevelAccessQuery : AccessQuery;
       } else {
         PQuery = AccessQuery;
@@ -740,8 +741,8 @@ window.Project_Info_Request = {
               checked: false,
               disabled: true,
             })
-            // .trigger("change");
-            Project_Info_Request.g.clearFilterHandler() // to clear the filter
+          // .trigger("change");
+          Project_Info_Request.g.clearFilterHandler() // to clear the filter
         }
       });
       Project_Info_Request.g.filtertrigger(); // filter trigger
@@ -819,8 +820,8 @@ window.Project_Info_Request = {
         portfoliosoptions = [];
 
         if (isRoleDataLevelAccess) {
-					FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
-				}
+          FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
+        }
         console.log("inside filter trigger  in main home");
 
         $(".page-filter .dropdown-menu").each(function () {
@@ -1507,49 +1508,49 @@ window.Project_Info_Request = {
       });
     },
     clearFilterHandler: function () {
-			FilterChoices = [];
-			portfoliosdata = [];
-			portfoliosoptions = [];
-			if (isRoleDataLevelAccess) {
-				FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
-			}
-			$(".page-filter .dropdown-menu").each(function () {
-				//looping through filters
-				var internalName = $(this).find("input:checkbox").data("internal");
-				var fieldType = $(this).find("input:checkbox").data("type");
-				var BooleanfieldType = $(this)
-					.find("input:checkbox")
-					.data("columntype");
-				// console.log('BooleanfieldType', BooleanfieldType);
-				var selectedchoices = $(this)
-					.find("input:checked")
-					.map(function () {
-						//getting selected choices
-						return $(this).val();
-					})
-					.get();
-				if (selectedchoices.length) {
-					//checking if there are choices
-					if (BooleanfieldType == "Boolean") {
-						for (i = 0; i < selectedchoices.length; i++) {
-							if (
-								selectedchoices[i] == "true" ||
-								selectedchoices[i] == "Yes" ||
-								selectedchoices[i] == "yes"
-							) {
-								selectedchoices[i] = 1;
-							} else selectedchoices[i] = 0;
-						}
-					}
-					FilterChoices.push({
-						internalName: internalName,
-						Type: fieldType,
-						Values: selectedchoices,
-					});
-				}
-			});
-			Project_Info_Request.g.camlfilterbuilder();
-		}
+      FilterChoices = [];
+      portfoliosdata = [];
+      portfoliosoptions = [];
+      if (isRoleDataLevelAccess) {
+        FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
+      }
+      $(".page-filter .dropdown-menu").each(function () {
+        //looping through filters
+        var internalName = $(this).find("input:checkbox").data("internal");
+        var fieldType = $(this).find("input:checkbox").data("type");
+        var BooleanfieldType = $(this)
+          .find("input:checkbox")
+          .data("columntype");
+        // console.log('BooleanfieldType', BooleanfieldType);
+        var selectedchoices = $(this)
+          .find("input:checked")
+          .map(function () {
+            //getting selected choices
+            return $(this).val();
+          })
+          .get();
+        if (selectedchoices.length) {
+          //checking if there are choices
+          if (BooleanfieldType == "Boolean") {
+            for (i = 0; i < selectedchoices.length; i++) {
+              if (
+                selectedchoices[i] == "true" ||
+                selectedchoices[i] == "Yes" ||
+                selectedchoices[i] == "yes"
+              ) {
+                selectedchoices[i] = 1;
+              } else selectedchoices[i] = 0;
+            }
+          }
+          FilterChoices.push({
+            internalName: internalName,
+            Type: fieldType,
+            Values: selectedchoices,
+          });
+        }
+      });
+      Project_Info_Request.g.camlfilterbuilder();
+    }
   },
 };
 //Risks
@@ -1579,7 +1580,7 @@ var Risks_Info_Request = {
       riskTitle;
     // ExistVar2=UProjects.includes(oListItem.get_item('ProjectCode'));
     //console.log(UProjects.includes(oListItem.get_item('ProjectCode')));
-    var riskcountForrsprt =0;
+    var riskcountForrsprt = 0;
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       ExistVar2 = UProjects.includes(oListItem.get_item("ProjectCode"));
@@ -1693,7 +1694,7 @@ var Issues_Info_Request = {
       issueTitle,
       ExistVar1;
 
-      var issuecountForrsprt=0;
+    var issuecountForrsprt = 0;
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       ExistVar1 = UProjects.includes(oListItem.get_item("ProjectCode"));
@@ -2024,24 +2025,24 @@ var Coc_Info_Request = {
     }
 
     for (var i = 0; i < UProjects.length; i++) {
-			let tempArray = EstimatedCostArr.filter(el => {
-				return el.code == UProjects[i]
-			})
+      let tempArray = EstimatedCostArr.filter(el => {
+        return el.code == UProjects[i]
+      })
 
-			var totalCost = 0
-			if (tempArray.length) {
+      var totalCost = 0
+      if (tempArray.length) {
 
-				tempArray.forEach(el => {
-					totalCost += el.amount
-				})
+        tempArray.forEach(el => {
+          totalCost += el.amount
+        })
 
-				$('.inner-data4 .inner-val[data-prname="' + tempArray[0].code + '"]').text(
-					Project_Info_Request.g.kFormatter(totalCost)
-				);
-			}
+        $('.inner-data4 .inner-val[data-prname="' + tempArray[0].code + '"]').text(
+          Project_Info_Request.g.kFormatter(totalCost)
+        );
+      }
 
 
-		}
+    }
 
     handleBudgetBarChart();
 
@@ -2600,30 +2601,45 @@ function handleStatusBarChart() {
     );
   }
   var bar_ctx1 = document.getElementById("statusChart").getContext("2d");
-  var background_1 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
-  var background_2 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
-  var background_3 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
-  var background_4 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
-  var background_5 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
+  var background_8 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
+  var background_9 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
+  var background_10 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
+  var background_11 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
+  var background_12 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
+  var background_13 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
+  var background_14 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
+  var background_28 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
 
-  background_1.addColorStop(0, "#428737");
-  background_1.addColorStop(1, "#5AB74C");
+
+  
   //green on plan
-  background_2.addColorStop(0, "#EBC866");
-  background_2.addColorStop(1, "#FCD66D");
+
   // yellow late
 
-  background_3.addColorStop(0, "#bc3434");
-  background_3.addColorStop(1, "#C53737");
+  background_8.addColorStop(0, "#bc3434");
+  background_8.addColorStop(1, "#C53737");
 
+  background_9.addColorStop(0, "#EBC866");
+  background_9.addColorStop(1, "#FCD66D");
   // red very late
+  background_10.addColorStop(0, "#428737");
+  background_10.addColorStop(1, "#5AB74C");
 
-  background_4.addColorStop(0, "#688393");
-  background_4.addColorStop(1, "#15425a");
+  background_11.addColorStop(0, "#688393");
+  background_11.addColorStop(1, "#15425a");
   // blue advanced
 
-  background_5.addColorStop(0, "#a9a9a9");
-  background_5.addColorStop(1, "#696969");
+  background_12.addColorStop(0, "#a9a9a9");
+  background_12.addColorStop(1, "#696969");
+
+  background_13.addColorStop(0, "#a9a9a9");
+  background_13.addColorStop(1, "#696969");
+
+  background_14.addColorStop(0, "#a9a9a9");
+  background_14.addColorStop(1, "#696969");
+
+  background_28.addColorStop(0, "#a9a9a9");
+  background_28.addColorStop(1, "#696969");
   // blue on plan
 
   // background_1.addColorStop(0, "rgba(0,170,0,255)");
@@ -2637,22 +2653,36 @@ function handleStatusBarChart() {
   // background_5.addColorStop(0, "rgba(0,0,255,255)");
   // background_5.addColorStop(1, "rgba(0,0,255,255)");
 
+  // var BackgroundsArray = [
+  //   background_8,
+  //   background_9,
+  //   background_10,
+  //   background_11,
+  //   background_12,
+  //   background_13,
+  //   background_14,
+  //   background_28,
+  // ];
   var BackgroundsArray = [
-    background_5,
-    background_2,
-    background_4,
-    background_3,
-    background_1,
+    background_28,
+    background_14,
+    background_13,
+    background_12,
+    background_11,
+    background_10,
+    background_9,
+    background_8,
   ];
-  if (
-    localStorage.getItem("lng") == null ||
-    localStorage.getItem("lng") == "ar"
-  ) {
-    progressOccurence = progressOccurence.reverse();
-    ProgressName = ProgressName.reverse();
-  } else {
-    BackgroundsArray = BackgroundsArray.reverse();
-  }
+
+  // if (
+  //   localStorage.getItem("lng") == null ||
+  //   localStorage.getItem("lng") == "ar"
+  // ) {
+  //   progressOccurence = progressOccurence.reverse();
+  //   ProgressName = ProgressName.reverse();
+  // } else {
+  //   BackgroundsArray = BackgroundsArray.reverse();
+  // }
 
   if (_.sum(progressOccurence) == 0) {
     ProgressNameLabels = [];
