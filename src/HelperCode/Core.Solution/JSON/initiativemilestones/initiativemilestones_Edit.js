@@ -44,6 +44,20 @@ var Information_Form = [
         security: {
           groups: ['VRO_E', 'LMS_E', 'System Admin Group', 'EPMO'],
         },
+      },    
+      {
+        InternalName: 'Weight',
+        DisplayName: 'الوزن(%)',
+        DisplayName: 'الوزن المكافئ للإنجاز %',
+        type: 'weightfloatpercentage',
+        listname: 'Milestones',
+        targetcode: 'InitiativeCode',
+        targetelement: 'Weight',
+        seconedtarget: 'Amount',
+        validation: 'required',
+        security: {
+            groups: ['VRO_E', 'LMS_E', 'System Admin Group', 'EPMO'],
+          },
       },
       {
         InternalName: 'Amount',
@@ -66,21 +80,6 @@ var Information_Form = [
     //       groups: ['VRO_E', 'LMS_E', 'System Admin Group', 'EPMO'],
     //     },
     //   },
-      {
-        InternalName: 'Weight',
-        DisplayName: 'الوزن(%)',
-        DisplayName: 'الوزن المكافئ للإنجاز %',
-        type: 'weightfloatpercentage',
-        listname: 'Milestones',
-        targetcode: 'InitiativeCode',
-        targetelement: 'Weight',
-        seconedtarget: 'Amount',
-        validation: 'required',
-        security: {
-            groups: ['VRO_E', 'LMS_E', 'System Admin Group', 'EPMO'],
-          },
-      },
-
       // {
       //     "InternalName": "Completed",
       //     "DisplayNameEn": "Completed",
@@ -146,11 +145,17 @@ var Information_Form = [
   {
     label: 'الوثائق الداعمة',
     labelEn: 'Supporting Documents',
-    description: '',
-    descriptionEn: '',
+    description: 'التفاصيل',
+    descriptionEn: 'Details',
     subFields: [
       {
-        // "InternalName": "getfile",
+        InternalName: 'SupportingDocuments',
+        DisplayName: 'وثائق داعمة',
+        DisplayNameEn: 'Supporting Documents',
+        type: 'file',
+        withAddBtn: 'true',
+      },
+      {
         InternalName: 'getfile',
         DisplayName: 'المرفقات',
         DisplayNameEn: 'Attachments',
@@ -159,4 +164,29 @@ var Information_Form = [
       },
     ],
   },
+  // {
+  //   label: 'المرفقات',
+  //   labelEn: 'Attachments',
+  //   description: 'التفاصيل',
+  //   descriptionEn: 'Details',
+  //   subFields: [
+      
+  //   ],
+  // },
+  // {
+  //   label: 'الوثائق الداعمة',
+  //   labelEn: 'Supporting Documents',
+  //   description: '',
+  //   descriptionEn: '',
+  //   subFields: [
+  //     {
+  //       // "InternalName": "getfile",
+  //       InternalName: 'getfile',
+  //       DisplayName: 'المرفقات',
+  //       DisplayNameEn: 'Attachments',
+  //       type: 'file',
+  //       withAddBtn: 'true',
+  //     },
+  //   ],
+  // },
 ]

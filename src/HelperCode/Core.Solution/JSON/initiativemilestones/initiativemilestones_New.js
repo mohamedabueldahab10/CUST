@@ -35,6 +35,18 @@ var Information_Form = [
         validation: 'required',
       },
       {
+        InternalName: 'Weight',
+        DisplayName: 'الوزن المكافئ للإنجاز %',
+        DisplayNameEn: 'Weight (%)',
+        type: 'weightfloatpercentage',
+        listname: 'Milestones',
+        targetcode: 'InitiativeCode',
+        targetelement: 'Weight',
+        seconedtarget: 'Amount',
+        // "state":"disabled",
+        validation: 'required',
+      },
+      {
         InternalName: 'Amount',
         DisplayName: 'القيمة',
         DisplayNameEn: 'Amount',
@@ -52,18 +64,6 @@ var Information_Form = [
       //     "type":"floatpercentage",
       //     "validation": "required",
       //   },
-      {
-        InternalName: 'Weight',
-        DisplayName: 'الوزن المكافئ للإنجاز %',
-        DisplayNameEn: 'Weight (%)',
-        type: 'weightfloatpercentage',
-        listname: 'Milestones',
-        targetcode: 'InitiativeCode',
-        targetelement: 'Weight',
-        seconedtarget: 'Amount',
-        // "state":"disabled",
-        validation: 'required',
-      },
       //   {
       //     InternalName: 'Weight',
       //     DisplayNameEn: 'Weight',
@@ -132,6 +132,12 @@ var Information_Form = [
     descriptionEn: 'Details',
     subFields: [
       {
+        InternalName: 'SupportingDocuments',
+        DisplayName: 'وثائق داعمة',
+        DisplayNameEn: 'Supporting Documents',
+        type: 'file',
+        withAddBtn: 'true',
+      },{
         InternalName: 'getfile',
         DisplayName: 'المرفقات',
         DisplayNameEn: 'Attachments',
@@ -140,4 +146,28 @@ var Information_Form = [
       },
     ],
   },
+  // {
+  //   label: 'المرفقات',
+  //   labelEn: 'Attachments',
+  //   description: 'التفاصيل',
+  //   descriptionEn: 'Details',
+  //   subFields: [
+      
+  //   ],
+  // },
+  // {
+  //   label: 'الوثائق الداعمة',
+  //   labelEn: 'Supporting Documents',
+  //   description: 'التفاصيل',
+  //   descriptionEn: 'Details',
+  //   subFields: [
+  //     {
+  //       InternalName: 'getfile',
+  //       DisplayName: 'المرفقات',
+  //       DisplayNameEn: 'Attachments',
+  //       type: 'file',
+  //       withAddBtn: 'true',
+  //     },
+  //   ],
+  // },
 ]

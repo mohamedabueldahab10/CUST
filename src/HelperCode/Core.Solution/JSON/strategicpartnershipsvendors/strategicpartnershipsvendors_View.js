@@ -270,8 +270,8 @@ var Information_Form = [
         InternalName: 'RepresentativePhone',
         DisplayName: 'هاتف ممثل الشريك',
         DisplayNameEn: 'Representative Phone',
-        // type: 'string',
-        type:'phonenumber',
+        type: 'string',
+        // type:'phonenumber',
         maxchar: '250',
         // validation: 'required',
       },
@@ -281,7 +281,7 @@ var Information_Form = [
         DisplayNameEn: 'Job Title',
         type: 'string',
         // validation: 'required',
-      },
+      }
     ],
   },
   {
@@ -302,6 +302,18 @@ var Information_Form = [
          DisplayNameEn: 'Attachments',
         type: 'file',
         withAddBtn: 'true',
+      },
+      {
+        InternalName: 'Modified',
+        DisplayName: 'تاريخ التعديل',
+        DisplayNameEn: 'Modified',
+        type: 'datetime',
+      },
+      {
+        InternalName: 'Created',
+        DisplayName: 'تاريخ الانشاء',
+        DisplayNameEn: 'Created',
+        type: 'datetime',
       },
     ],
   },

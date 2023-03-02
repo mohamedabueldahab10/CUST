@@ -34,6 +34,7 @@ var Information_Form = [
                 "DisplayName": "الوكالات",
                 "DisplayNameEn": "DeputyShip",
                 "type": "lookup",
+                // "type": "lookupmultiselect",
                 //from other list:
                 "source": "Internal Entities",
                 // "isSector": "True",
@@ -120,7 +121,8 @@ var Information_Form = [
         InternalName: 'PartnershipManager',
         DisplayName: 'مدير العلاقة',
         DisplayNameEn: 'Partnership Manager',
-        type: 'picker',
+        // type: 'picker',
+        type: 'multipicker',
         // "validation":"required"
       },
       {

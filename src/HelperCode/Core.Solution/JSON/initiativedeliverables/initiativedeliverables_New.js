@@ -58,6 +58,18 @@ var Information_Form = [
         type: 'float',
       },
       {
+        InternalName: 'Weight',
+        DisplayName: 'الوزن(%)',
+        DisplayNameEn: 'Weight (%)',
+        type: 'weightfloatpercentage',
+        listname: 'Deliverables',
+        targetcode: 'InitiativeCode',
+        targetelement: 'Weight',
+        seconedtarget: 'Amount',
+        // "state":"disabled",
+        validation: 'required',
+      },
+      {
         InternalName: 'Amount',
         DisplayName: 'القيمة',
         DisplayNameEn: 'Amount',
@@ -75,18 +87,6 @@ var Information_Form = [
       //   type: 'floatpercentage',
       //   validation: 'required',
       // },
-      {
-        InternalName: 'Weight',
-        DisplayName: 'الوزن(%)',
-        DisplayNameEn: 'Weight (%)',
-        type: 'weightfloatpercentage',
-        listname: 'Deliverables',
-        targetcode: 'InitiativeCode',
-        targetelement: 'Weight',
-        seconedtarget: 'Amount',
-        // "state":"disabled",
-        validation: 'required',
-      },
       {
         InternalName: 'ActualCompletedDate',
         DisplayNameEn: 'Actual Completed Date',
@@ -141,9 +141,24 @@ var Information_Form = [
     descriptionEn: 'Details',
     subFields: [
       {
+        InternalName: 'SupportingDocuments',
+        DisplayName: 'وثائق داعمة',
+        DisplayNameEn: 'Supporting Documents',
+        type: 'file',
+        withAddBtn: 'true',
+      },
+    ],
+  },
+  {
+    label: 'المرفقات',
+    labelEn: 'Attachments',
+    description: 'التفاصيل',
+    descriptionEn: 'Details',
+    subFields: [
+      {
         InternalName: 'getfile',
         DisplayName: 'المرفقات',
-        DisplayNameEn: 'Supporting Data',
+        DisplayNameEn: 'Attachments',
         type: 'file',
         withAddBtn: 'true',
       },

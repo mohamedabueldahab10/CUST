@@ -252,7 +252,7 @@ var Information_Form = [
         DisplayNameEn: 'Is Strategic Pillars/Vision Programs Exist?',
         DisplayName: 'هل يوجد محاور استراتيجية / برامج الرؤية ؟',
         // type: "dropdownValues",
-        dontSubmit: true,
+        // dontSubmit: true,
         type: 'yesnoradio',
         // state: 'disabled',
         options: {
