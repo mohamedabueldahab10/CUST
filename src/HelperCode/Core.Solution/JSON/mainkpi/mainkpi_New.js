@@ -410,13 +410,13 @@ var Information_Form = [
       {
         InternalName: 'TotalActual',
         DisplayNameEn: 'TotalActual',
-        DisplayName: '',
+        DisplayName: 'إجمالي الفعلي',
         type: 'number',
       },
       {
         InternalName: 'TotalPlanned',
         DisplayNameEn: 'TotalPlanned',
-        DisplayName: '',
+        DisplayName: 'إجمالي المخطط',
         type: 'number',
       },
       // {
@@ -1094,6 +1094,19 @@ var Information_Form = [
         DisplayName: 'المكون السابع',
         type: 'number',
         // type: "float",
+      },
+      {
+        InternalName: 'NotMeasurableNow',
+        DisplayNameEn: 'Not Measurable Now',
+        DisplayName: 'لايقاس حاليا',
+        // type: "dropdownValues",
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            { display: 'yes', value: 'yes' },
+            { display: 'no', value: 'no' },
+          ],
+        },
       },
     ],
   },

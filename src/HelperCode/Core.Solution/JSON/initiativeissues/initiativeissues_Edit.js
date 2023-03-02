@@ -205,12 +205,12 @@ var Information_Form = [{
             //         ]
             //     }
             // },
-            {
-                "InternalName": "RaisedBy",
-                "DisplayName": "مرفوع بواسطة",
-                "DisplayNameEn": "Reported By",
-                "type": "picker"
-            }
+            // {
+            //     "InternalName": "RaisedBy",
+            //     "DisplayName": "مرفوع بواسطة",
+            //     "DisplayNameEn": "Reported By",
+            //     "type": "picker"
+            // }
 
         ]
     },

@@ -14,6 +14,14 @@ var Information_Form  = [
                
             // },
             {
+                "InternalName": "Name",
+                "DisplayNameEn": "Budget Name",
+                "DisplayName":"اسم البند",
+                "type":"string",
+                "maxchar": "250",
+            
+            },
+            {
                 "InternalName": "Stakeholders",
                 "DisplayNameEn": "Stakeholders",
                 "DisplayName":"الجهة المعنية",
@@ -48,20 +56,20 @@ var Information_Form  = [
             //     "validation": "required"
             
             // },
-            {
-                "InternalName": "Expenses1",
-                "DisplayNameEn": "Expenses1",
-                "DisplayName":"تصنيف المصروف - مستوى أول (الإدارة المالية)",
-                "type":"float"
+            // {
+            //     "InternalName": "Expenses1",
+            //     "DisplayNameEn": "Expenses1",
+            //     "DisplayName":"تصنيف المصروف - مستوى أول (الإدارة المالية)",
+            //     "type":"float"
             
-            },
-            {
-                "InternalName": "Expenses2",
-                "DisplayNameEn": "Expenses2",
-                "DisplayName":"تصنيف المصروف - مستوى ثاني (الإدارة المالية)",
-                "type":"float"
+            // },
+            // {
+            //     "InternalName": "Expenses2",
+            //     "DisplayNameEn": "Expenses2",
+            //     "DisplayName":"تصنيف المصروف - مستوى ثاني (الإدارة المالية)",
+            //     "type":"float"
             
-            },
+            // },
             // {
             //     "InternalName": "Name",
             //     "DisplayNameEn": "Budget Name",
@@ -70,34 +78,34 @@ var Information_Form  = [
             //     "maxchar": "250",
             
             // },
-            {
-                "InternalName": "Amount",
-                "DisplayNameEn": "Amount",
-                "DisplayName":"التكاليف الإجمالية (لكامل السنوات)",
-                "type":"float"
+            // {
+            //     "InternalName": "Amount",
+            //     "DisplayNameEn": "Amount",
+            //     "DisplayName":"التكاليف الإجمالية (لكامل السنوات)",
+            //     "type":"float"
             
-            },
-            {
-                "InternalName": "Cost1",
-                "DisplayNameEn": "Cost1",
-                "DisplayName":"قيمة البند",
-                "type":"float",
-                "display":"none"
-            },
-            {
-                "InternalName": "Cost2",
-                "DisplayNameEn": "Cost2",
-                "DisplayName":"قيمة البند",
-                "type":"float",
-                "display":"none"
-            },
-            {
-                "InternalName": "Cost3",
-                "DisplayNameEn": "Cost3",
-                "DisplayName":"قيمة البند",
-                "type":"float",
-                "display":"none"
-            },
+            // },
+            // {
+            //     "InternalName": "Cost1",
+            //     "DisplayNameEn": "Cost1",
+            //     "DisplayName":"قيمة البند",
+            //     "type":"float",
+            //     "display":"none"
+            // },
+            // {
+            //     "InternalName": "Cost2",
+            //     "DisplayNameEn": "Cost2",
+            //     "DisplayName":"قيمة البند",
+            //     "type":"float",
+            //     "display":"none"
+            // },
+            // {
+            //     "InternalName": "Cost3",
+            //     "DisplayNameEn": "Cost3",
+            //     "DisplayName":"قيمة البند",
+            //     "type":"float",
+            //     "display":"none"
+            // },
             {
                 "InternalName": "Types",
                 "DsplayNameEn": "Type",
