@@ -16,6 +16,14 @@ var Listing_Info = [
 		infilter: true
 	},
 	{
+        "InternalName": "PlannedDate",
+        "DisplayName": "تاريخ الاكتمال المخطط",
+        "DisplayNameEn": "Planned Finish Date",
+        "type": "date",
+        inlisting: true,
+        infilter: true
+    },
+	{
 		"InternalName": "Weight",
 		"DisplayNameEn": "Weight",
 		"DisplayName": "الوزن المكافئ للإنجاز %",
@@ -42,14 +50,6 @@ var Listing_Info = [
 		inlisting: true,
 		infilter: true
 	},
-	{
-        "InternalName": "PlannedDate",
-        "DisplayName": "تاريخ الاكتمال المخطط",
-        "DisplayNameEn": "Planned Finish Date",
-        "type": "date",
-        inlisting: true,
-        infilter: true
-    },
 	// {
     //     "InternalName": "PlannedCompletedDate",
     //     "DisplayName": "تاريخ الاكتمال المخطط",
@@ -64,6 +64,6 @@ var Listing_Info = [
 		"DisplayName":"تاريخ الاكتمال الفعلي",
         "type": "date",
         inlisting: true,
-        infilter: true
+        infilter: false
     },
 ];

@@ -827,6 +827,7 @@ var Information_Form = [
           }, //we can put more than 1  field
           { value: 'no', fields: [] },
         ],
+        validation: 'required',
       },
 
       // {

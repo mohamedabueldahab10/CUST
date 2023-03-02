@@ -83,7 +83,7 @@ var Information_Form = [
         DisplayNameEn: 'Related Strategy',
         DisplayName: 'الاستراتيجية المرتبطة',
         type: 'lookup',
-        dontSubmit: true,
+        // dontSubmit: true,
         source: 'GoalStrategy',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
@@ -138,7 +138,7 @@ var Information_Form = [
         InternalName: 'RelatedObjectiveLevel',
         DisplayNameEn: 'Related Objective Level',
         DisplayName: 'مستوى الهدف المرتبط',
-        dontSubmit: true,
+        // dontSubmit: true,
         type: 'dropdownValues',
         options: {
           choices: [
@@ -217,15 +217,36 @@ var Information_Form = [
           },
         ],
       },
+      // {
+      //   InternalName: 'RelatedObjective',
+      //   DisplayNameEn: 'Related Objective',
+      //   DisplayName: 'الهدف المرتبط',
+      //   type: 'lookupmultiselect',
+      //   validation: 'required',
+      //   source: 'SOs',
+      //   Dispfieldkey: 'Name',
+      //   valfieldkey: 'Title',
+      //   grpfieldkey: 'Title',
+      //   initiativeCodeInList: true //value in look up drop down should be related to current project
+        
+      //   // queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
+      //   // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
+      //   // queryFieldValue: 'sublevel2,sublevel3', // if i need to make the field with filter should add this
+      // },
       {
         InternalName: 'RelatedProgram',
         DisplayNameEn: 'Related Program',
         DisplayName: 'اسم البرنامج التابع له',
-        type: 'string',
-        dontSubmit: true,
+        // type: 'string',
+        // dontSubmit: true,
         // "source": "Instruments",
         // "Dispfieldkey": "Title",
         // "valfieldkey": "Title"
+        type: 'lookup',
+        grpfieldkey: 'Title',
+        source: 'SPillars',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
       },
       {
         InternalName: 'InitiativeOwner',

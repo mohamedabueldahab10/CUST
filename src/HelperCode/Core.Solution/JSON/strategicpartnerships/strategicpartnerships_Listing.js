@@ -20,7 +20,8 @@ var Listing_Info = [
       "InternalName":"SubSector",
       "DisplayName":"الوكالة",
       "DisplayNameEn":"Deputyship",
-      "type": "lookup",
+      // "type": "lookup",
+      "type":"lookupmultiselect",
       "localStorageVariable":"Dynamo_Internal Entities",
       "inlisting":true,
       "infilter":true

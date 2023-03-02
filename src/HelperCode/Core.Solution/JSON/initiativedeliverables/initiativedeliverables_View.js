@@ -44,6 +44,12 @@ var Information_Form = [
         type: 'string',
       },
       {
+        InternalName: 'Weight',
+        DisplayNameEn: 'Weight (%)',
+        DisplayName: 'الوزن(%)',
+        type: 'floatpercentage',
+      },
+      {
         InternalName: 'Amount',
         DisplayName: 'القيمة',
         DisplayNameEn: 'Amount',
@@ -53,12 +59,6 @@ var Information_Form = [
         parentinternalname: 'InitiativeBudget',
         targetelement: 'Weight',
         // validation: 'required',
-      },
-      {
-        InternalName: 'Weight',
-        DisplayNameEn: 'Weight (%)',
-        DisplayName: 'الوزن(%)',
-        type: 'floatpercentage',
       },
       {
         InternalName: 'ActualCompletedDate',

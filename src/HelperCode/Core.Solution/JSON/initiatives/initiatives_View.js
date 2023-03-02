@@ -121,14 +121,16 @@ var Information_Form = [
         source: 'GoalStrategy',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        dontSubmit: true,
+        // dontSubmit: true,
+        showlink:true,
+        linkedto:"goalstrategy"
       },
 
       {
         InternalName: 'RelatedObjectiveLevel',
         DisplayNameEn: 'Related Objective Level',
         DisplayName: 'مستوى الهدف المرتبط',
-        dontSubmit: true,
+        // dontSubmit: true,
         type: 'dropdownValues',
         options: {
           choices: [
@@ -174,12 +176,36 @@ var Information_Form = [
         filterFieldType: 'Text',
         // "state": "disabled"
       },
+      // {
+      //   InternalName: 'RelatedObjective',
+      //   DisplayNameEn: 'Related Objective',
+      //   DisplayName: 'الهدف المرتبط',
+      //   type: 'lookupmultiselect',
+      //   validation: 'required',
+      //   source: 'SOs',
+      //   Dispfieldkey: 'Name',
+      //   valfieldkey: 'Title',
+      //   grpfieldkey: 'Title',
+      //   initiativeCodeInList: true, //value in look up drop down should be related to current project
+      //   showlink:true,
+      //   linkedto:"sos"
+      //   // queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
+      //   // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
+      //   // queryFieldValue: 'sublevel2,sublevel3', // if i need to make the field with filter should add this
+      // },
       {
         InternalName: 'RelatedProgram',
         DisplayNameEn: 'Related Program',
         DisplayName: 'اسم البرنامج التابع له',
-        type: 'string',
-        dontSubmit: true,
+        // type: 'string',
+        // dontSubmit: true,
+        type: 'lookup',
+        grpfieldkey: 'Title',
+        source: 'SPillars',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        showlink:true,
+        linkedto:'sos'
         // "source": "Instruments",
         // "Dispfieldkey": "Title",
         // "valfieldkey": "Title"

@@ -35,7 +35,8 @@ var Information_Form = [
         "InternalName": "SubSector",
         "DisplayName": "الوكالات",
         "DisplayNameEn": "DeputyShip",
-        "type": "lookup",
+        // "type": "lookup",
+        "type": "lookupmultiselect",
         //from other list:
         "source": "Internal Entities",
         // "isSector": "True",
@@ -276,7 +277,7 @@ var Information_Form = [
          "DisplayName":"مدير العلاقة",
          "DisplayNameEn":"Partnership Manager",
          "type":"multipicker",
-         "validation":"required"
+        //  "validation":"required"
       },
       {
          "InternalName":"RelatedStrategyObjective",
@@ -288,6 +289,33 @@ var Information_Form = [
          "Dispfieldkey":"Name",
          "valfieldkey":"Title",
          "validation":"required"
+      },
+      {
+        InternalName: 'RelatedKPI',
+        DisplayNameEn: 'Related KPI',
+        DisplayName: 'المؤشر الاستراتيجي المرتبط',
+        type: 'lookup',
+        source: 'MainKPI',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+      },
+      {
+        InternalName: 'RelatedInitiative',
+        DisplayNameEn: 'Related Initiative',
+        DisplayName: 'المبادرة المرتبطة',
+        type: 'lookup',
+        source: 'Initiatives',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+      },
+      {
+        InternalName: 'RelatedProject',
+        DisplayNameEn: 'Related Project',
+        DisplayName: 'المشروع المرتبط',
+        type: 'lookup',
+        source: 'Projects',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
       },
       {
          "InternalName":"StartDate",

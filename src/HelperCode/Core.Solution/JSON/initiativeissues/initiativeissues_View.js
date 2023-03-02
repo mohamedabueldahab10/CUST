@@ -16,6 +16,13 @@ var Information_Form = [{
             "type": "string"
         },
         {
+            "InternalName": "Description",
+            "DisplayName": "وصف التحدي",
+            "DisplayNameEn": "Description",
+            "type": "multiline",
+            "maxchar": 5000,
+        },
+        {
             "InternalName": "Category",
             "DisplayName": "نوع التحدي",
             "DisplayNameEn": "Category",

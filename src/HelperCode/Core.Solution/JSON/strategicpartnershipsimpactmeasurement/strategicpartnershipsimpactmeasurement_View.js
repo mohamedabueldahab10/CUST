@@ -182,6 +182,18 @@ var Information_Form = [
         type: 'multiline',
         // maxchar: '500',
       },
+      {
+        InternalName: 'Modified',
+        DisplayName: 'تاريخ التعديل',
+        DisplayNameEn: 'Modified',
+        type: 'datetime',
+      },
+      {
+        InternalName: 'Created',
+        DisplayName: 'تاريخ الانشاء',
+        DisplayNameEn: 'Created',
+        type: 'datetime',
+      },
       // {
       //   InternalName: 'getfile',
       //   DisplayName: 'مرفقات',

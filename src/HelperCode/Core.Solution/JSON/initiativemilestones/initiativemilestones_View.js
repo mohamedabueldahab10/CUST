@@ -32,22 +32,21 @@ var Information_Form = [
         type: 'datetime',
         validation: 'required',
       },
-
-      {
-        InternalName: 'Amount',
-        DisplayName: 'القيمة',
-        DisplayNameEn: 'Amount',
-        dontSubmit: true,
-        type: 'percentbyrelatedparent',
-        listname: 'Initiatives',
-        parentinternalname: 'InitiativeBudget',
-        targetelement: 'Weight',
-      },
       {
         InternalName: 'Weight',
         DisplayNameEn: 'Weight',
         DisplayName: 'الوزن المكافئ للإنجاز %',
         type: 'floatpercentage',
+      },
+      {
+        InternalName: 'Amount',
+        DisplayName: 'القيمة',
+        DisplayNameEn: 'Amount',
+        // dontSubmit: true,
+        type: 'percentbyrelatedparent',
+        listname: 'Initiatives',
+        parentinternalname: 'InitiativeBudget',
+        targetelement: 'Weight',
       },
 
       // {

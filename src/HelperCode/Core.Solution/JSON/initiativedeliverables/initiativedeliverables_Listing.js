@@ -34,7 +34,7 @@ var Listing_Info = [
 	{
 		"InternalName": "Weight",
 		"DisplayNameEn": "Weight",
-		"DisplayName":"القيمة",
+		"DisplayName":"الوزن(%)",
 		// "type":"text",
 		"type": "floatpercentage",
 		inlisting: true,
@@ -49,13 +49,13 @@ var Listing_Info = [
 	// 	inlisting: true,
 	// 	infilter: true
 	// },
-	{
-		"InternalName": "Delivered",
-		"DisplayNameEn": "Delivered",
-		"DisplayName":"تم التسليم",
-		"type": "text",
-		needTrans: true,
-		inlisting: true,
-		infilter: true
-	},
+	// {
+	// 	"InternalName": "Delivered",
+	// 	"DisplayNameEn": "Delivered",
+	// 	"DisplayName":"تم التسليم",
+	// 	"type": "text",
+	// 	needTrans: true,
+	// 	inlisting: true,
+	// 	infilter: true
+	// },
 ];
