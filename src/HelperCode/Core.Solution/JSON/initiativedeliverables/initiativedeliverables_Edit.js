@@ -175,46 +175,16 @@ var Information_Form = [
   {
     label: 'الوثائق الداعمة',
     labelEn: 'Supporting Documents',
-    description: 'التفاصيل',
-    descriptionEn: 'Details',
-    subFields: [
-      {
-        InternalName: 'SupportingDocuments',
-        DisplayName: 'وثائق داعمة',
-        DisplayNameEn: 'Supporting Documents',
-        type: 'file',
-        withAddBtn: 'true',
-      },
-    ],
-  },
-  {
-    label: 'المرفقات',
-    labelEn: 'Attachments',
-    description: 'التفاصيل',
-    descriptionEn: 'Details',
+    description: '',
+    descriptionEn: '',
     subFields: [
       {
         InternalName: 'getfile',
-        DisplayName: 'المرفقات',
-        DisplayNameEn: 'Attachments',
+        DisplayName: 'المستندات',
+        DisplayNameEn: 'Supporting Data',
         type: 'file',
         withAddBtn: 'true',
       },
     ],
   },
-  // {
-  //   label: 'الوثائق الداعمة',
-  //   labelEn: 'Supporting Documents',
-  //   description: '',
-  //   descriptionEn: '',
-  //   subFields: [
-  //     {
-  //       InternalName: 'getfile',
-  //       DisplayName: 'المستندات',
-  //       DisplayNameEn: 'Supporting Data',
-  //       type: 'file',
-  //       withAddBtn: 'true',
-  //     },
-  //   ],
-  // },
 ]
