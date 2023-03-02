@@ -129,11 +129,9 @@ var Information_Form = [
         source: 'GoalStrategy',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        // dynamically affected by other dropdown
         dynamic: 'parent', //"parentInternalName" or "parent" // if parent it will affect other fields
-
         //
-        notInvokeListiner: true,
+        notInvokeListiner: true,// to not invoke the lookup when change on parent > the filteration depends on other field also
         //
 
         //in case not parent add below attrs
@@ -187,9 +185,9 @@ var Information_Form = [
         DisplayName: 'مستوى الهدف المرتبط',
         dontSubmit: true,
         //
-        grandFieldId: "RelatedStrategy",
-        childFieldId: "RelatedObjective",
-        childFieldIdSource: "Types",
+        grandFieldId: "RelatedStrategy", // we add this field to handle the two field filtration(parent Id in current form) 
+        childFieldId: "RelatedObjective",// we add this field to handle the two field filtration (child Id in current form)
+        childFieldIdSource: "Types",// we add this field to handle the two field filtration (child internal name in destination list)
         //
         type: 'dropdownValues',
         options: {

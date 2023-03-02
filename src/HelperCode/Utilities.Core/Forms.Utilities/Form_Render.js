@@ -415,34 +415,34 @@ window.ListInfo = {
             });
 
             // added to handel the field to be dynamicparemntand other
-            $("[seconeddynamic*=" + parentFieldName + "]").each(function () {
-              let affectedFieldName = $(this).attr("id");
-              let listName = $(this).data("listname");
-              let filterField = $(this).data("filterfield");
-              let filterFieldType = $(this).data("filterfieldtype");
-              let valFieldKey = $(this).data("valfieldkey");
-              let dispFieldKey = $(this).data("dispfieldkey");
-              // let specificVal = $(this).data("queryfieldvalue");
-              let queryFieldValue = $(this).data("queryfieldvalue");
-              let queryFieldName = $(this).data("queryfield");
-              let queryFieldType = $(this).data("queryfieldtype");
-              // console.log($(this).data("queryFieldValue"), "sssssssa")
-              affectedSelectsInfo.push({
-                affectedFieldName: affectedFieldName,
-                listName: listName,
-                isCustomFilterValue: isCustomFilterValue,
-                filterField: filterField,
-                filterFieldType: filterField,
-                parentFieldValue: parentFieldValue,
-                customFilterValue: customFilterValue,
-                filterFieldType: filterFieldType,
-                valFieldKey: valFieldKey,
-                dispFieldKey: dispFieldKey,
-                queryFieldValue: queryFieldValue,
-                queryFieldName: queryFieldName,
-                queryFieldType: queryFieldType,
-              });
-            });
+            // $("[seconeddynamic*=" + parentFieldName + "]").each(function () {
+            //   let affectedFieldName = $(this).attr("id");
+            //   let listName = $(this).data("listname");
+            //   let filterField = $(this).data("filterfield");
+            //   let filterFieldType = $(this).data("filterfieldtype");
+            //   let valFieldKey = $(this).data("valfieldkey");
+            //   let dispFieldKey = $(this).data("dispfieldkey");
+            //   // let specificVal = $(this).data("queryfieldvalue");
+            //   let queryFieldValue = $(this).data("queryfieldvalue");
+            //   let queryFieldName = $(this).data("queryfield");
+            //   let queryFieldType = $(this).data("queryfieldtype");
+            //   // console.log($(this).data("queryFieldValue"), "sssssssa")
+            //   affectedSelectsInfo.push({
+            //     affectedFieldName: affectedFieldName,
+            //     listName: listName,
+            //     isCustomFilterValue: isCustomFilterValue,
+            //     filterField: filterField,
+            //     filterFieldType: filterField,
+            //     parentFieldValue: parentFieldValue,
+            //     customFilterValue: customFilterValue,
+            //     filterFieldType: filterFieldType,
+            //     valFieldKey: valFieldKey,
+            //     dispFieldKey: dispFieldKey,
+            //     queryFieldValue: queryFieldValue,
+            //     queryFieldName: queryFieldName,
+            //     queryFieldType: queryFieldType,
+            //   });
+            // });
             //
 
 
