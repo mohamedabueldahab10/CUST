@@ -89,6 +89,8 @@ var Information_Form = [
         valfieldkey: 'Title',
         // dynamically affected by other dropdown
         dynamic: 'parent', //"parentInternalName" or "parent" // if parent it will affect other fields
+        // seconeddynamic:"Types",
+        //
         notInvokeListiner:true,
         //in case not parent add below attrs
         //role access
