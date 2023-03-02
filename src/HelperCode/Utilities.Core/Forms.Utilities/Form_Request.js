@@ -765,6 +765,8 @@ window.Edit_Data_Request = {
 		});
 
 
+    $(".grandFieldInvoke").trigger("change")
+
     // to handle toggle disabled fields in edit
     $("[data-toggledisabledvalues]").each(function () {
       ListInfo.g.toggleDisabledFields($(this));

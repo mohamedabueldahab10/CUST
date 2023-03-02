@@ -122,7 +122,7 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         // dontSubmit: true,
-        showlink:true,
+        // showlink:true,
         linkedto:"goalstrategy"
       },
 
@@ -204,7 +204,7 @@ var Information_Form = [
         source: 'SPillars',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        showlink:true,
+        // showlink:true,
         linkedto:'sos'
         // "source": "Instruments",
         // "Dispfieldkey": "Title",

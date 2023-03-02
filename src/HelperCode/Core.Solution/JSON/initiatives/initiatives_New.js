@@ -83,12 +83,13 @@ var Information_Form = [
         DisplayNameEn: 'Related Strategy',
         DisplayName: 'الاستراتيجية المرتبطة',
         type: 'lookup',
-        // dontSubmit: true,
+        dontSubmit: true,
         source: 'GoalStrategy',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         // dynamically affected by other dropdown
         dynamic: 'parent', //"parentInternalName" or "parent" // if parent it will affect other fields
+        notInvokeListiner:true,
         //in case not parent add below attrs
         //role access
         accessFilter: [
@@ -138,22 +139,29 @@ var Information_Form = [
         InternalName: 'RelatedObjectiveLevel',
         DisplayNameEn: 'Related Objective Level',
         DisplayName: 'مستوى الهدف المرتبط',
-        // dontSubmit: true,
+        dontSubmit: true,
+        grandFieldId:"RelatedStrategy",
+        childFieldId:"RelatedObjective",
+        childFieldIdSource:"Types",
+        //
         type: 'dropdownValues',
         options: {
           choices: [
-            {
-              display: 'objl1',
-              value: 'objl1',
-            },
-            {
-              display: 'objl2',
-              value: 'objl2',
-            },
-            {
-              display: 'objl3',
-              value: 'objl3',
-            },
+            { display: 'main', value: 'main' },
+            { display: 'sublevel2', value: 'sublevel2' },
+            { display: 'sublevel3', value: 'sublevel3' },
+            // {
+            //   display: 'objl1',
+            //   value: 'objl1',
+            // },
+            // {
+            //   display: 'objl2',
+            //   value: 'objl2',
+            // },
+            // {
+            //   display: 'objl3',
+            //   value: 'objl3',
+            // },
           ],
         },
         validation: 'required',
