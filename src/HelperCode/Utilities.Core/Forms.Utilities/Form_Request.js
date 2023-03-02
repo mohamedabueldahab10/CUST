@@ -116,33 +116,33 @@ window.Edit_Data_Request = {
       }
     }
 
-    if (listkey == "initiatives") {
+    // if (listkey == "initiatives") {
 
-      var typeValue = $("#Types option:selected").val();
-      if (typeValue == "vision") {
-        $("#RelatedBudgetItem , #ProgramTotalCost ,#RelatedKPI")
-          .parent()
-          .css("display", "block");
-      } else {
-        $("#RelatedBudgetItem , #ProgramTotalCost, #RelatedKPI").parent().css("display", "none");
-      }
+    //   var typeValue = $("#Types option:selected").val();
+    //   if (typeValue == "vision") {
+    //     $("#RelatedBudgetItem , #ProgramTotalCost ,#RelatedKPI")
+    //       .parent()
+    //       .css("display", "block");
+    //   } else {
+    //     $("#RelatedBudgetItem , #ProgramTotalCost, #RelatedKPI").parent().css("display", "none");
+    //   }
 
-      if (isNew || isEdit) {
+    //   if (isNew || isEdit) {
 
-        $("#Types").on("change", function () {
-          var typeValueafterchange = $("#Types option:selected").val();
-          if (typeValueafterchange == "vision") {
-            $("#RelatedBudgetItem , #ProgramTotalCost , #RelatedKPI")
-              .parent()
-              .css("display", "block");
-          } else {
-            $("#RelatedBudgetItem , #ProgramTotalCost, #RelatedKPI")
-              .parent()
-              .css("display", "none");
-          }
-        });
-      }
-    }
+    //     $("#Types").on("change", function () {
+    //       var typeValueafterchange = $("#Types option:selected").val();
+    //       if (typeValueafterchange == "vision") {
+    //         $("#RelatedBudgetItem , #ProgramTotalCost , #RelatedKPI")
+    //           .parent()
+    //           .css("display", "block");
+    //       } else {
+    //         $("#RelatedBudgetItem , #ProgramTotalCost, #RelatedKPI")
+    //           .parent()
+    //           .css("display", "none");
+    //       }
+    //     });
+    //   }
+    // }
     // if(oListItem.get_item('DeletionStatus') && oListItem.get_item('DeletionStatus').toLowerCase()  == 'deleted'){
     //     window.location = _spPageContextInfo.webAbsoluteUrl;
     // }
@@ -440,7 +440,7 @@ window.Edit_Data_Request = {
       Edit_Data_Request.g.budgetitem();
     }
     if (listkey == "initiatives") {
-      Edit_Data_Request.g.showFieldsIfInitiativeVision();
+      // Edit_Data_Request.g.showFieldsIfInitiativeVision();
 
       var type = $('#Types').val()
       Initiative_Sos.init("SOs", type); //get related sos depends on type
@@ -718,6 +718,31 @@ window.Edit_Data_Request = {
       ListInfo.g.toggleRequiredFields($(this));
     });
 
+
+    // to handle dont submit in edit
+    $(
+			"[data-parentrelatedvalue]:not([data-parentrelatedvalue=undefined])"
+		).each(function () {
+			var elementId = $(this).parent().attr("id"); // get element Id
+			var elementValue = $(this).val(); // get element value
+			console.log(
+				oListItem.get_item(elementId),
+				"oListItem.get_item(elementId)"
+			);
+			if (
+				oListItem.get_item(elementId) &&
+				oListItem.get_item(elementId) == elementValue
+			) {
+				// matching between value on list
+				var parentElement = $(this).data("parentrelatedkey"); // parent internal name
+				var parenetValue = $(this).data("parentrelatedvalue"); // parent value
+				if (parentElement && parenetValue) {
+					$(`#${parentElement}`).val(parenetValue);
+				}
+			}
+		});
+
+
     // to handle toggle disabled fields in edit
     $("[data-toggledisabledvalues]").each(function () {
       ListInfo.g.toggleDisabledFields($(this));
@@ -971,31 +996,31 @@ window.Edit_Data_Request = {
         $("[id^=Cost]").parent().hide();
       }
     },
-    showFieldsIfInitiativeVision: function () {
-      var typeValue = $("#Types option:selected").val();
-      if (typeValue == "vision") {
-        $("#RelatedBudgetItem , #ProgramTotalCost,#RelatedKPI")
-          .parent()
-          .css("display", "block");
-      } else {
-        $("#RelatedBudgetItem , #ProgramTotalCost,#RelatedKPI").parent().css("display", "none");
-      }
-      if (isNew || isEdit) {
+    // showFieldsIfInitiativeVision: function () {
+    //   var typeValue = $("#Types option:selected").val();
+    //   if (typeValue == "vision") {
+    //     $("#RelatedBudgetItem , #ProgramTotalCost,#RelatedKPI")
+    //       .parent()
+    //       .css("display", "block");
+    //   } else {
+    //     $("#RelatedBudgetItem , #ProgramTotalCost,#RelatedKPI").parent().css("display", "none");
+    //   }
+    //   if (isNew || isEdit) {
 
-        $("#Types").on("change", function () {
-          var typeValueafterchange = $("#Types option:selected").val();
-          if (typeValueafterchange == "vision") {
-            $("#RelatedBudgetItem , #ProgramTotalCost , #RelatedKPI")
-              .parent()
-              .css("display", "block");
-          } else {
-            $("#RelatedBudgetItem , #ProgramTotalCost , #RelatedKPI")
-              .parent()
-              .css("display", "none");
-          }
-        });
-      }
-    }
+    //     $("#Types").on("change", function () {
+    //       var typeValueafterchange = $("#Types option:selected").val();
+    //       if (typeValueafterchange == "vision") {
+    //         $("#RelatedBudgetItem , #ProgramTotalCost , #RelatedKPI")
+    //           .parent()
+    //           .css("display", "block");
+    //       } else {
+    //         $("#RelatedBudgetItem , #ProgramTotalCost , #RelatedKPI")
+    //           .parent()
+    //           .css("display", "none");
+    //       }
+    //     });
+    //   }
+    // }
   },
 };
 //RelatedIdeaProject
@@ -1370,7 +1395,15 @@ window.View_Data_Request = {
           Dispfieldkey = $(this).data("dispfieldkey"),
           listname = $(this).data("listname"),
           linkedto = $(this).data("linkedto"),
+          parentrelatedfilterkey = $(this).data("parentrelatedfilterkey"),
           $this = $(this);
+
+          var listFields = ["ID",valfieldkey, Dispfieldkey];
+          if (parentrelatedfilterkey && parentrelatedfilterkey != "undefined") {
+            listFields = ["ID",valfieldkey, Dispfieldkey, parentrelatedfilterkey];
+          }
+
+
 
         if (oListItem.get_item($(this).attr("id")) == null) {
           // if (listkey == 'goalstrategy' && $(this).attr("id").toLowerCase() == 'ministry') {
@@ -1391,13 +1424,52 @@ window.View_Data_Request = {
             _spPageContextInfo.siteServerRelativeUrl,
             listname,
             customquery,
-            ["ID", valfieldkey, Dispfieldkey],
+            listFields,
             function (records, record, listItem, isDone) {
               if (isDone) {
                 debugger
                 records.forEach(function (el, index) {
                   $this.html(el[Dispfieldkey]);
                   $this.parent().find('a').attr('href', '/SitePages/View.aspx?ListKey=' + linkedto + '&IID=' + el["ID"] + '')
+
+                  // dont submit part
+
+                  if (
+										parentrelatedfilterkey &&
+										parentrelatedfilterkey != "undefined"
+									) {
+
+                    $this.attr(
+											"data-parentrelatedvalue",
+											el[parentrelatedfilterkey]
+										);
+                    $(
+											"[data-parentrelatedvalue]:not([data-parentrelatedvalue=undefined])"
+										).each(function () {
+                      var elementId = $(this).attr("id"); // get element Id
+											var elementValue = oListItem.get_item(elementId); // get element value
+                      if (
+												oListItem.get_item(elementId) &&
+												oListItem.get_item(elementId) == elementValue
+											) {
+												// matching between value on list
+												var parentElement = $(this).data("parentrelatedkey"); // parent internal name
+												var parenetValue = $(this).attr(
+													"data-parentrelatedvalue"
+												); // parent value
+												console.log(parentElement, "parentElement");
+												console.log(parenetValue, "parenetValue");
+
+												if (parentElement && parenetValue) {								
+													$(`#${parentElement}`).html(parenetValue);
+												}
+											}
+                    })
+
+                  }
+
+
+                  
                 });
               }
             }
@@ -1504,9 +1576,9 @@ window.View_Data_Request = {
     if (listkey == "budgetitems") {
       View_Data_Request.g.budgetitem();
     }
-    if (listkey == "initiatives") {
-      View_Data_Request.g.showFieldsIfInitiativeVision();
-    }
+    // if (listkey == "initiatives") {
+    //   View_Data_Request.g.showFieldsIfInitiativeVision();
+    // }
 
     if (listkey == "risks" && oListItem.get_item("Status") == "movedtoissue") {
       $(".form-row.justify-content-end button").hide();
@@ -1945,16 +2017,16 @@ window.View_Data_Request = {
         }
       }
     },
-    showFieldsIfInitiativeVision: function () {
-      var typeValue = $("#Types").text();
-      if (typeValue == "vision") {
-        $("#RelatedBudgetItem , #ProgramTotalCost , #RelatedKPI")
-          .parent()
-          .css("display", "block");
-      } else {
-        $("#RelatedBudgetItem , #ProgramTotalCost , #RelatedKPI").parent().css("display", "none");
-      }
-    }
+    // showFieldsIfInitiativeVision: function () {
+    //   var typeValue = $("#Types").text();
+    //   if (typeValue == "vision") {
+    //     $("#RelatedBudgetItem , #ProgramTotalCost , #RelatedKPI")
+    //       .parent()
+    //       .css("display", "block");
+    //   } else {
+    //     $("#RelatedBudgetItem , #ProgramTotalCost , #RelatedKPI").parent().css("display", "none");
+    //   }
+    // }
   },
 };
 // data related Access

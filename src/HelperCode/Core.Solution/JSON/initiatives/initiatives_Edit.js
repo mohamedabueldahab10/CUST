@@ -19,6 +19,7 @@ var Information_Form = [
         type: 'string',
         maxchar: '250',
         validation: 'required',
+        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
       },
       {
         InternalName: 'Portfolio',
@@ -29,6 +30,7 @@ var Information_Form = [
         source: 'Portfolio',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
       },
       {
         InternalName: 'Types',
@@ -75,7 +77,7 @@ var Information_Form = [
         },
         security: {
           groups: ['System Admin Group'],
-        },
+        }, disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
       },
       // {
       //   InternalName: 'RelatedKPI',
@@ -174,7 +176,7 @@ var Information_Form = [
               },
             ],
           },
-        ],
+        ], disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
       },
       {
         InternalName: 'RelatedObjectiveLevel',
@@ -197,7 +199,7 @@ var Information_Form = [
               value: 'objl3',
             },
           ],
-        },
+        }, disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01",
         "validation": "required",
       },
       {
@@ -210,13 +212,13 @@ var Information_Form = [
         valfieldkey: 'Title',
         // "state": "disabled"
         // "validation":"required"
-        // dynamic: 'RelatedStrategy',
-        // filterField: 'RelatedStrategy',
-        dynamic: 'parent',
-        filterField: 'RelatedObjectiveLevel',
+        isRelatedToParent:true, // to show parent value depends on child like sector and subsector
+        dynamic: 'RelatedStrategy',
+        fieldsinlookup:"RelatedStrategy", // fields in look up list
+        filterField: 'RelatedStrategy', // 
         filterFieldType: 'Text',
         // grpfieldkey: 'Title',
-        //
+        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01",
         accessFilter: [
           {
             role: 'VROE',
@@ -258,7 +260,7 @@ var Information_Form = [
               },
             ],
           },
-        ],
+        ], 
       },
       // {
       //   InternalName: 'RelatedObjective',
@@ -406,6 +408,7 @@ var Information_Form = [
         DisplayName: 'مالك المبادرة ',
         type: 'picker',
         validation: 'required',
+        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
       },
       {
         InternalName: 'InitiativeActualOwner',
@@ -413,6 +416,7 @@ var Information_Form = [
         DisplayName: 'المالك الفعلي للمبادرة',
         type: 'string',
         validation: 'required',
+        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
       },
       {
         InternalName: 'InitiativePM',
@@ -420,6 +424,7 @@ var Information_Form = [
         DisplayName: 'مدير المبادرة ',
         type: 'picker',
         validation: 'required',
+        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
       },
       {
         InternalName: 'Sector',
@@ -434,6 +439,7 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
+        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
       },
       {
         InternalName: 'SubSector',
@@ -448,6 +454,7 @@ var Information_Form = [
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
         validation: 'required',
+        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
         // "state": "disabled"
       },
       // {
@@ -477,6 +484,7 @@ var Information_Form = [
         type: 'datetime',
         max: 'FinishDate',
         validation: 'required',
+        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
       },
       {
         InternalName: 'FinishDate',
@@ -485,6 +493,7 @@ var Information_Form = [
         type: 'datetime',
         min: 'StartDate',
         validation: 'required',
+        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
       },
       // {
       //   InternalName: 'StartDate',
@@ -516,6 +525,7 @@ var Information_Form = [
         DisplayName: 'وصف المبادرة',
         type: 'multiline',
         maxchar: '500',
+        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
         // "validation": "required"
       },
       {
@@ -534,15 +544,14 @@ var Information_Form = [
               value: 'transformationally',
             }
           ],
-        },
+        }, disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
       },
       {
         InternalName: 'ExpenseStartDate',
         DisplayName: 'تاريخ بداية الصرف',
         DisplayNameEn: 'Expense Start Date',
         type: 'datetime',
-        enableOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
-        requireOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
+        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
       },
       {
         InternalName: 'DependencyCost',
@@ -550,6 +559,7 @@ var Information_Form = [
         DisplayNameEn: 'Dependency Cost',
         // type: 'float',
         type: 'floatpercentage',
+        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
       },
       // {
       //     "InternalName": "InitiativeStatus",
@@ -563,6 +573,7 @@ var Information_Form = [
         DisplayName: 'نسبة اكتمال المبادرة المخططة ',
         DisplayNameEn: 'Planned Percentage Completed',
         type: 'floatpercentage',
+        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
         // "state": "disabled"
       },
       {
@@ -570,6 +581,7 @@ var Information_Form = [
         DisplayName: 'نسبة الإكتمال الفعلية ',
         DisplayNameEn: 'Actual Percentage Completed',
         type: 'floatpercentage',
+        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
         // "state": "disabled"
       },
       // {
@@ -702,7 +714,8 @@ var Information_Form = [
         DisplayName: 'المرفقات',
         DisplayNameEn: 'Attachments',
         type: 'file',
-        withAddBtn: 'true',
+        withAddBtn: 'true',        
+        hideOnWfTaskStage  : "VInStage01,SInStage01,LInStage01",
       },
     ],
   },

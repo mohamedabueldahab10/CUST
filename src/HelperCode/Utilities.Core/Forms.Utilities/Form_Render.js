@@ -785,7 +785,7 @@ window.ListInfo = {
             // }
             if (listkey == "initiatives") {
               Sectors_Info.init(); // to get the department related to sector on edit
-              ListInfo.g.showFieldsIfInitiativeVision();
+              // ListInfo.g.showFieldsIfInitiativeVision();
               $("#Types").on("change", function () {
                 var type = $(this).val();
                 Initiative_Sos.init("SOs", type); //get related sos depends on type
@@ -851,7 +851,7 @@ window.ListInfo = {
             if (listkey == "initiatives") {
               // Initiative_Stages_Data_Request.init();
               Sectors_Info.init(); // sector
-              ListInfo.g.showFieldsIfInitiativeVision();
+              // ListInfo.g.showFieldsIfInitiativeVision();
               $("#Types").on("change", function () {
                 var type = $(this).val();
                 Initiative_Sos.init("SOs", type); //get related sos depends on type
@@ -4788,6 +4788,18 @@ window.ListInfo = {
         }
 
 
+        var listFields = [element.valfieldkey, dispfieldkey];
+
+
+        if (element.isRelatedToParent) {
+					// to handle sector and subsector (get the element from list)
+					parentFieldKey = element.fieldsinlookup;
+					listFields = [element.valfieldkey, dispfieldkey, element.filterField];
+				} else {
+					parentFieldKey = "";
+				}
+
+
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -4871,7 +4883,7 @@ window.ListInfo = {
           _spPageContextInfo.siteServerRelativeUrl,
           element.source,
           customQuery,
-          [element.valfieldkey, dispfieldkey],
+          listFields,
           function (records, record, listItem, isDone) {
             if (listItem) itemsID.push(listItem.get_id());
             if (isDone) {
@@ -4887,8 +4899,12 @@ window.ListInfo = {
                   '<option option-id="' +
                   itemsID[index] +
                   '" value="' +
-                  el[element.valfieldkey] +
-                  '">' +
+                  el[element.valfieldkey] + //data-parentrelatedkey > to get the target element,data-parentrelatedvalue > to save the value of parent like sector
+                  '" data-parentrelatedvalue=' +
+									el[element.filterField] +
+									" data-parentrelatedkey=" +
+									element.fieldsinlookup + // changed from dynamic to fieldsinlookup
+									">" +
                   optionText +
                   "</option>";
               });
@@ -5993,66 +6009,66 @@ window.ListInfo = {
       }
 
     },
-    showFieldsIfInitiativeVision: function () {
-      var typeValue = $("#Types option:selected").val();
+    // showFieldsIfInitiativeVision: function () {
+    //   var typeValue = $("#Types option:selected").val();
 
-      if (typeValue == "vision") {
-        $("#RelatedBudgetItem").parent().css("display", "block");
-      } else {
-        $("#RelatedBudgetItem").parent().css("display", "none");
-      }
-      if (isNew) {
-        // if (isEPMO) {
-        //   $("#Types").val("strategically");
-        //   $("#Types").prop("disabled", true);
-        // }
-        $("#Types").on("change", function () {
-          var typeValueafterchange = $("#Types option:selected").val();
-          if (typeValueafterchange == "vision") {
-            $("#RelatedBudgetItem").parent().css("display", "block");
-          } else {
-            $("#RelatedBudgetItem").parent().css("display", "none");
-          }
-        });
-      }
-      if (isEdit) {
-        // if (isEPMO) {
-        //   // $('#Types').val('strategically');
-        //   $("#Types").prop("disabled", true);
-        // }
-        $("#Types").on("change", function () {
-          var typeValueafterchange = $("#Types option:selected").val();
-          if (typeValueafterchange == "vision") {
-            $("#RelatedBudgetItem").parent().css("display", "block");
-          } else {
-            $("#RelatedBudgetItem").parent().css("display", "none");
-          }
-        });
-      }
-      // commented to can show the fields when use strategy type of initiative
-      // if (typeValue == "vision") {
-      //   $("#RelatedBudgetItem , #ProgramTotalCost")
-      //     .parent()
-      //     .css("display", "block");
-      // } else {
-      //   $("#RelatedBudgetItem , #ProgramTotalCost").parent().css("display", "none");
-      // }
-      // if (isNew || isEdit) {
+    //   if (typeValue == "vision") {
+    //     $("#RelatedBudgetItem").parent().css("display", "block");
+    //   } else {
+    //     $("#RelatedBudgetItem").parent().css("display", "none");
+    //   }
+    //   if (isNew) {
+    //     // if (isEPMO) {
+    //     //   $("#Types").val("strategically");
+    //     //   $("#Types").prop("disabled", true);
+    //     // }
+    //     $("#Types").on("change", function () {
+    //       var typeValueafterchange = $("#Types option:selected").val();
+    //       if (typeValueafterchange == "vision") {
+    //         $("#RelatedBudgetItem").parent().css("display", "block");
+    //       } else {
+    //         $("#RelatedBudgetItem").parent().css("display", "none");
+    //       }
+    //     });
+    //   }
+    //   if (isEdit) {
+    //     // if (isEPMO) {
+    //     //   // $('#Types').val('strategically');
+    //     //   $("#Types").prop("disabled", true);
+    //     // }
+    //     $("#Types").on("change", function () {
+    //       var typeValueafterchange = $("#Types option:selected").val();
+    //       if (typeValueafterchange == "vision") {
+    //         $("#RelatedBudgetItem").parent().css("display", "block");
+    //       } else {
+    //         $("#RelatedBudgetItem").parent().css("display", "none");
+    //       }
+    //     });
+    //   }
+    //   // commented to can show the fields when use strategy type of initiative
+    //   // if (typeValue == "vision") {
+    //   //   $("#RelatedBudgetItem , #ProgramTotalCost")
+    //   //     .parent()
+    //   //     .css("display", "block");
+    //   // } else {
+    //   //   $("#RelatedBudgetItem , #ProgramTotalCost").parent().css("display", "none");
+    //   // }
+    //   // if (isNew || isEdit) {
 
-      //   $("#Types").on("change", function () {
-      //     var typeValueafterchange = $("#Types option:selected").val();
-      //     if (typeValueafterchange == "vision") {
-      //       $("#RelatedBudgetItem , #ProgramTotalCost")
-      //         .parent()
-      //         .css("display", "block");
-      //     } else {
-      //       $("#RelatedBudgetItem , #ProgramTotalCost")
-      //         .parent()
-      //         .css("display", "none");
-      //     }
-      //   });
-      // }
-    },
+    //   //   $("#Types").on("change", function () {
+    //   //     var typeValueafterchange = $("#Types option:selected").val();
+    //   //     if (typeValueafterchange == "vision") {
+    //   //       $("#RelatedBudgetItem , #ProgramTotalCost")
+    //   //         .parent()
+    //   //         .css("display", "block");
+    //   //     } else {
+    //   //       $("#RelatedBudgetItem , #ProgramTotalCost")
+    //   //         .parent()
+    //   //         .css("display", "none");
+    //   //     }
+    //   //   });
+    //   // }
+    // },
   },
   roleQuery: async function (fieldsConditionConfig) {
     let whereBody = ``,
@@ -7842,15 +7858,19 @@ var View_ListInfo = {
             ">" +
             displayName +
             " " +
-            `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-info-circle iconfontawesome'></i></a></span>" : ""}` +
+            `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>" : ""}` +
             "</label>" +
             '<p type="lookup" data-listname="' +
             element.source +
             '" data-valfieldkey="' +
             element.valfieldkey +
             '" data-Dispfieldkey="' +
-            dispfieldkey +
-            '" class="viewmode-value" id="' +
+            dispfieldkey + //data-parentrelatedkey > to get the target element,data-parentrelatedvalue > to save the value of parent like sector,data-parentrelatedfilterkey >> to show the value on this column in list
+            '" data-parentrelatedkey=' +
+            element.fieldsinlookup + // change from dynamic to fieldsinlookup
+            ' data-parentrelatedvalue="" data-parentrelatedfilterkey=' +
+            element.filterField +
+            ' class="viewmode-value" id="' +
             element.InternalName +
             '" data-linkedto="' + element.linkedto + '"></p>' +
             "</div>";
@@ -7893,7 +7913,7 @@ var View_ListInfo = {
             ">" +
             displayName +
             " " +
-            `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-info-circle iconfontawesome'></i></a></span>" : ""}` +
+            `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>" : ""}` +
             "</label>" +
             '<p type="lookup" data-listname="' +
             element.source +
