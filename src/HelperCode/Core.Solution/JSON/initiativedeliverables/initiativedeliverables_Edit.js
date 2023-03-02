@@ -173,21 +173,6 @@ var Information_Form = [
     ],
   },
   {
-    label: 'الوثائق الداعمة',
-    labelEn: 'Supporting Documents',
-    description: 'التفاصيل',
-    descriptionEn: 'Details',
-    subFields: [
-      {
-        InternalName: 'SupportingDocuments',
-        DisplayName: 'وثائق داعمة',
-        DisplayNameEn: 'Supporting Documents',
-        type: 'file',
-        withAddBtn: 'true',
-      },
-    ],
-  },
-  {
     label: 'المرفقات',
     labelEn: 'Attachments',
     description: 'التفاصيل',
