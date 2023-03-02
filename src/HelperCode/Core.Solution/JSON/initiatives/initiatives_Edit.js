@@ -19,7 +19,6 @@ var Information_Form = [
         type: 'string',
         maxchar: '250',
         validation: 'required',
-        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
       },
       {
         InternalName: 'Portfolio',
@@ -30,7 +29,6 @@ var Information_Form = [
         source: 'Portfolio',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
       },
       {
         InternalName: 'Types',
@@ -77,7 +75,7 @@ var Information_Form = [
         },
         security: {
           groups: ['System Admin Group'],
-        }, disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
+        },
       },
       // {
       //   InternalName: 'RelatedKPI',
@@ -176,7 +174,7 @@ var Information_Form = [
               },
             ],
           },
-        ], disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
+        ],
       },
       {
         InternalName: 'RelatedObjectiveLevel',
@@ -187,19 +185,19 @@ var Information_Form = [
         options: {
           choices: [
             {
-              display: 'objl1',
-              value: 'objl1',
+              display: 'main',
+              value: 'main',
             },
             {
-              display: 'objl2',
-              value: 'objl2',
+              display: 'sublevel2',
+              value: 'sublevel2',
             },
             {
-              display: 'objl3',
-              value: 'objl3',
+              display: 'sublevel3',
+              value: 'sublevel3',
             },
           ],
-        }, disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01",
+        },
         "validation": "required",
       },
       {
@@ -212,13 +210,18 @@ var Information_Form = [
         valfieldkey: 'Title',
         // "state": "disabled"
         // "validation":"required"
-        isRelatedToParent:true, // to show parent value depends on child like sector and subsector
         dynamic: 'RelatedStrategy',
-        fieldsinlookup:"RelatedStrategy", // fields in look up list
+        //
+        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+        fieldsinformlvl1: "RelatedStrategy", // fields in look up list
+        sourcefieldlvl1: "RelatedStrategy",
+        fieldsinformlvl2: "RelatedObjectiveLevel", // fields in look up list
+        sourcefieldlvl2: "Types",
+        //
         filterField: 'RelatedStrategy', // 
         filterFieldType: 'Text',
         // grpfieldkey: 'Title',
-        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01",
+        //
         accessFilter: [
           {
             role: 'VROE',
@@ -260,7 +263,7 @@ var Information_Form = [
               },
             ],
           },
-        ], 
+        ],
       },
       // {
       //   InternalName: 'RelatedObjective',
@@ -401,14 +404,13 @@ var Information_Form = [
       //     "valfieldkey": "Title"
 
       // } ,
-      
+
       {
         InternalName: 'InitiativeOwner',
         DisplayNameEn: 'Initiative Owner',
         DisplayName: 'مالك المبادرة ',
         type: 'picker',
         validation: 'required',
-        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
       },
       {
         InternalName: 'InitiativeActualOwner',
@@ -416,7 +418,6 @@ var Information_Form = [
         DisplayName: 'المالك الفعلي للمبادرة',
         type: 'string',
         validation: 'required',
-        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
       },
       {
         InternalName: 'InitiativePM',
@@ -424,7 +425,6 @@ var Information_Form = [
         DisplayName: 'مدير المبادرة ',
         type: 'picker',
         validation: 'required',
-        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
       },
       {
         InternalName: 'Sector',
@@ -439,7 +439,6 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
-        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
       },
       {
         InternalName: 'SubSector',
@@ -454,7 +453,6 @@ var Information_Form = [
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
         validation: 'required',
-        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
         // "state": "disabled"
       },
       // {
@@ -484,7 +482,6 @@ var Information_Form = [
         type: 'datetime',
         max: 'FinishDate',
         validation: 'required',
-        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
       },
       {
         InternalName: 'FinishDate',
@@ -493,7 +490,6 @@ var Information_Form = [
         type: 'datetime',
         min: 'StartDate',
         validation: 'required',
-        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
       },
       // {
       //   InternalName: 'StartDate',
@@ -525,7 +521,6 @@ var Information_Form = [
         DisplayName: 'وصف المبادرة',
         type: 'multiline',
         maxchar: '500',
-        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
         // "validation": "required"
       },
       {
@@ -544,14 +539,15 @@ var Information_Form = [
               value: 'transformationally',
             }
           ],
-        }, disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
+        },
       },
       {
         InternalName: 'ExpenseStartDate',
         DisplayName: 'تاريخ بداية الصرف',
         DisplayNameEn: 'Expense Start Date',
         type: 'datetime',
-        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
+        enableOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
+        requireOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
       },
       {
         InternalName: 'DependencyCost',
@@ -559,7 +555,6 @@ var Information_Form = [
         DisplayNameEn: 'Dependency Cost',
         // type: 'float',
         type: 'floatpercentage',
-        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
       },
       // {
       //     "InternalName": "InitiativeStatus",
@@ -573,7 +568,6 @@ var Information_Form = [
         DisplayName: 'نسبة اكتمال المبادرة المخططة ',
         DisplayNameEn: 'Planned Percentage Completed',
         type: 'floatpercentage',
-        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
         // "state": "disabled"
       },
       {
@@ -581,7 +575,6 @@ var Information_Form = [
         DisplayName: 'نسبة الإكتمال الفعلية ',
         DisplayNameEn: 'Actual Percentage Completed',
         type: 'floatpercentage',
-        disableOnWfTaskStage : "VInStage01,SInStage01,LInStage01"
         // "state": "disabled"
       },
       // {
@@ -654,7 +647,7 @@ var Information_Form = [
         type: 'float',
         security: {
           groups: ['EPMO', 'System Admin Group'],
-        },  
+        },
         enableOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
         requireOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
       },
@@ -663,7 +656,7 @@ var Information_Form = [
         DisplayName: 'التكاليف الكلية حسب سقف البرنامج ',
         DisplayNameEn: 'Program Total Cost',
         type: 'float',
-        targetelement: 'ActualCost',    
+        targetelement: 'ActualCost',
         enableOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
         requireOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
       },
@@ -714,8 +707,7 @@ var Information_Form = [
         DisplayName: 'المرفقات',
         DisplayNameEn: 'Attachments',
         type: 'file',
-        withAddBtn: 'true',        
-        hideOnWfTaskStage  : "VInStage01,SInStage01,LInStage01",
+        withAddBtn: 'true',
       },
     ],
   },

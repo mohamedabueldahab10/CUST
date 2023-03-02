@@ -159,11 +159,19 @@ var Information_Form = [
         source: 'SOs',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        showlink:true,
-        linkedto:"sos",
-        isRelatedToParent:true, // to show parent value depends on child like sector and subsector
+        showlink: true,
+        linkedto: "sos",
         dynamic: 'RelatedStrategy',
-        fieldsinlookup:"RelatedStrategy",
+        //fieldsinlookup:"RelatedStrategy",
+        //
+        //
+        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+        fieldsinformlvl1: "RelatedStrategy", // fields in form list
+        sourcefieldlvl1: "RelatedStrategy", // field in look up list
+        fieldsinformlvl2: "RelatedObjectiveLevel", // fields in form  list lvl2
+        sourcefieldlvl2: "Types", //  field in look up list lvl2
+        //
+        //
         filterField: 'RelatedStrategy',
         filterFieldType: 'Text',
         // "state": "disabled"
