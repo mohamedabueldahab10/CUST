@@ -229,7 +229,7 @@ window.activeCode = istherePCODE ? USERPCODE : isthereICODE ? UserICode : "";
 
 // added for CR module
 //! Change Request
-debugger
+
 (window.crListKey = USERlistkey == "changerequest" ? true : false),
   (window.isCrMode = window.location.href.indexOf("RID=") > -1),
   (window.RID = isCrMode ? window.location.href.split("RID=")[1].split("&")[0] : ""),
@@ -534,7 +534,7 @@ window.userCalls = {
     }
   },
   get_AccessAction: function () {
-    debugger
+    
     switch (UserPage_Name) {
       case "listing.aspx":
         if (isArabic) {
@@ -6480,7 +6480,7 @@ var Access_Project_Info_Request = {
       //Access caml query for home page and listing pages
       //
       console.log("inside access project info req")
-      debugger
+      
       var fieldtoquery,
         isShowAll = false;
       if (USERProjRelated.indexOf(USERlistkey) > -1) {
@@ -6537,7 +6537,7 @@ var Access_Project_Info_Request = {
             forfilterQuery += "</div></div>";
             AccessQuery = PermissionQuery;
             console.log(AccessQuery, "AccessQuery")
-            debugger
+            
             if (USERisHome) {
               //call homepage
               window.checkHomeStatusHtml = setInterval(function () {
@@ -8329,7 +8329,7 @@ var Tasks_Info_Request_User = {
       puid,
       rurl //rurl,
     ) {
-      debugger
+      
       console.log(
         Generic_WF_Stages_Data_Request.g.GWFStagesArray,
         "GWFStagesArray "
@@ -8913,7 +8913,7 @@ function initiateDataLevelAccess() {
     if (myRoleConfig[0].hasOwnProperty("dataFilter")) {
       isRoleDataLevelAccess = true;
       myRoleConfig[0].dataFilter.hierarchies.forEach((el, i, a) => {
-        debugger
+        
         let accessConditions = el.accessConditions;
         let isListConditional1 = el.listName == currentMainList;
         let isListConditional2 = el.subRelation.listName == currentMainList;
@@ -9156,7 +9156,7 @@ let data_Level1_Access = {
 						</Query>
 					</View>`;
 
-        debugger
+        
         data_Level2_Access.g.dataLevelQuery = queryBody;
         dataLevelAccessQuery = queryBody;
         if (data_Level1_Access.g.dataLevel > 2) {
@@ -9171,7 +9171,7 @@ let data_Level2_Access = {
   // The main Initialization function
   init: function (dataListName) {
     var clientContext = new SP.ClientContext.get_current();
-    debugger
+    
     var oList = clientContext.get_web().get_lists().getByTitle(dataListName);
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(data_Level2_Access.g.dataLevelQuery);
@@ -9253,7 +9253,7 @@ let data_Level2_Access = {
         data_Level3_Access.g.dataLevelQuery = queryBody;
 
 
-        debugger
+        
 
         console.log("Data 3rd level access query", queryBody);
         if (data_Level1_Access.g.dataLevel > 3) {
@@ -9280,7 +9280,7 @@ let data_Level2_Access = {
 let data_Level3_Access = {
   // The main Initialization function
   init: function (dataListName) {
-    debugger
+    
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(dataListName);
     var camlQuery = new SP.CamlQuery();
@@ -9300,7 +9300,7 @@ let data_Level3_Access = {
     if (collListItem.getEnumerator().$2J_0 > 0) {
       //check if any items are returned we can use .getEnumerator().moveNext() //true
     }
-    debugger
+    
     let fourthLevelConfig =
       myRoleConfig[0].dataFilter.hierarchies[
         data_Level1_Access.g.hierarchyIndex
@@ -9317,7 +9317,7 @@ let data_Level3_Access = {
     if (data_Level3_Access.g.relationFieldData.length == 0) {
       data_Level3_Access.g.relationFieldData.push(null);
     }
-    debugger
+    
     data_Level3_Access.dynamicCamlQueryBuilder(
       fourthLevelConfig,
       data_Level3_Access.g.relationFieldData
@@ -9325,7 +9325,7 @@ let data_Level3_Access = {
   },
   //currenty handles one field not more
   dynamicCamlQueryBuilder: function (levelConfig, valuesArray) {
-    debugger
+    
     let listName = levelConfig.listName;
     let fieldToQuery = levelConfig.RelationField;
     let fieldType = levelConfig.RelationFieldType;
@@ -9365,7 +9365,7 @@ let data_Level3_Access = {
 
 
         console.log("Data 4rd level access query", queryBody);
-        debugger
+        
       }
     });
   },
@@ -9411,7 +9411,7 @@ var Get_Milestones = {
 
 
     console.log("in get_Milestones")
-    debugger
+    
 
 
 
@@ -9426,7 +9426,7 @@ var Get_Milestones = {
     );
   },
   onSuccess: async function (sender, args) {
-    debugger
+    
     var collListItem = Get_Milestones.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var itemhtml = [],
@@ -9550,7 +9550,7 @@ var Get_Milestones = {
       }
     } else if (UserICode) {
       console.log(initiativeStartToValidation, "initiativeStartToValidation")
-      debugger
+      
       if (allMilestonesArr.length > 0) {
 
         var initiativeStartDate = Get_Milestones.g.dateConvert2(initiativeStartToValidation) || '';

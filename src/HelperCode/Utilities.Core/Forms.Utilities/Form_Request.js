@@ -719,9 +719,9 @@ window.Edit_Data_Request = {
     });
 
 
-    // to handle dont submit in edit
+    // to handle dont submit in edit lvl1
     $(
-			"[data-parentrelatedvalue]:not([data-parentrelatedvalue=undefined])"
+			"[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
 		).each(function () {
 			var elementId = $(this).parent().attr("id"); // get element Id
 			var elementValue = $(this).val(); // get element value
@@ -734,9 +734,31 @@ window.Edit_Data_Request = {
 				oListItem.get_item(elementId) == elementValue
 			) {
 				// matching between value on list
-				var parentElement = $(this).data("parentrelatedkey"); // parent internal name
-				var parenetValue = $(this).data("parentrelatedvalue"); // parent value
+				var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
+				var parenetValue = $(this).data("parentrelatedvaluelvl1"); // parent value
 				if (parentElement && parenetValue) {
+					$(`#${parentElement}`).val(parenetValue);
+				}
+			}
+		});
+
+    // to handle dont submit in edit lvl2
+    $(
+			"[data-parentrelatedvaluelvl2]:not([data-parentrelatedvaluelvl2=undefined])"
+		).each(function () {
+			var elementId = $(this).parent().attr("id"); // get element Id
+			var elementValue = $(this).val(); // get element value
+      debugger
+			if (
+				oListItem.get_item(elementId) &&
+				oListItem.get_item(elementId) == elementValue
+			) {
+				// matching between value on list
+				var parentElement = $(this).data("parentrelatedkeylvl2"); // parent internal name
+				var parenetValue = $(this).data("parentrelatedvaluelvl2"); // parent value
+        debugger
+				if (parentElement && parenetValue) {
+          
 					$(`#${parentElement}`).val(parenetValue);
 				}
 			}
@@ -1395,23 +1417,25 @@ window.View_Data_Request = {
           Dispfieldkey = $(this).data("dispfieldkey"),
           listname = $(this).data("listname"),
           linkedto = $(this).data("linkedto"),
-          parentrelatedfilterkey = $(this).data("parentrelatedfilterkey"),
+          parentrelatedfilterkeylvl1 = $(this).data("parentrelatedfilterkeylvl1"),
+          parentrelatedfilterkeylvl2 = $(this).data("parentrelatedfilterkeylvl2"),
           $this = $(this);
 
           var listFields = ["ID",valfieldkey, Dispfieldkey];
-          if (parentrelatedfilterkey && parentrelatedfilterkey != "undefined") {
-            listFields = ["ID",valfieldkey, Dispfieldkey, parentrelatedfilterkey];
+          if (parentrelatedfilterkeylvl1 && parentrelatedfilterkeylvl1 != "undefined") {
+
+            listFields.push(parentrelatedfilterkeylvl1)
+            if(parentrelatedfilterkeylvl2 && parentrelatedfilterkeylvl2 != "undefined"){
+              listFields.push(parentrelatedfilterkeylvl2)
+            }
+            // listFields = ["ID",valfieldkey, Dispfieldkey, parentrelatedfilterkeylvl1];
           }
 
-
+          console.log(listFields,"listFields listFields")
 
         if (oListItem.get_item($(this).attr("id")) == null) {
-          // if (listkey == 'goalstrategy' && $(this).attr("id").toLowerCase() == 'ministry') {
-          //   $(`#${ $(this).attr("id")}`).closest("div")
-          //     .css("display", "none");
-          // } else {
+
           $(this).html(No_Data);
-          // }
         } else {
           customquery =
             '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="' +
@@ -1427,24 +1451,25 @@ window.View_Data_Request = {
             listFields,
             function (records, record, listItem, isDone) {
               if (isDone) {
-                debugger
+                
                 records.forEach(function (el, index) {
                   $this.html(el[Dispfieldkey]);
                   $this.parent().find('a').attr('href', '/SitePages/View.aspx?ListKey=' + linkedto + '&IID=' + el["ID"] + '')
 
+                  debugger
                   // dont submit part
 
                   if (
-										parentrelatedfilterkey &&
-										parentrelatedfilterkey != "undefined"
+										parentrelatedfilterkeylvl1 &&
+										parentrelatedfilterkeylvl1 != "undefined"
 									) {
-
+                    
                     $this.attr(
-											"data-parentrelatedvalue",
-											el[parentrelatedfilterkey]
+											"data-parentrelatedvaluelvl1",
+											el[parentrelatedfilterkeylvl1]
 										);
                     $(
-											"[data-parentrelatedvalue]:not([data-parentrelatedvalue=undefined])"
+											"[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
 										).each(function () {
                       var elementId = $(this).attr("id"); // get element Id
 											var elementValue = oListItem.get_item(elementId); // get element value
@@ -1453,9 +1478,9 @@ window.View_Data_Request = {
 												oListItem.get_item(elementId) == elementValue
 											) {
 												// matching between value on list
-												var parentElement = $(this).data("parentrelatedkey"); // parent internal name
+												var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
 												var parenetValue = $(this).attr(
-													"data-parentrelatedvalue"
+													"data-parentrelatedvaluelvl1"
 												); // parent value
 												console.log(parentElement, "parentElement");
 												console.log(parenetValue, "parenetValue");
@@ -1467,6 +1492,42 @@ window.View_Data_Request = {
                     })
 
                   }
+
+                  ////////////////////////////////////////////////////////////////
+
+                  if (
+										parentrelatedfilterkeylvl2 &&
+										parentrelatedfilterkeylvl2 != "undefined"
+									) {
+                    debugger
+                    $this.attr(
+											"data-parentrelatedvaluelvl2",
+											el[parentrelatedfilterkeylvl2]
+										);
+                    $(
+											"[data-parentrelatedvaluelvl2]:not([data-parentrelatedvaluelvl2=undefined])"
+										).each(function () {
+                      var elementId = $(this).attr("id"); // get element Id
+											var elementValue = oListItem.get_item(elementId); // get element value
+                      if (
+												oListItem.get_item(elementId) &&
+												oListItem.get_item(elementId) == elementValue
+											) {
+												// matching between value on list
+												var parentElement = $(this).data("parentrelatedkeylvl2"); // parent internal name
+												var parenetValue = $(this).attr(
+													"data-parentrelatedvaluelvl2"
+												); // parent value
+
+
+												if (parentElement && parenetValue) {								
+													$(`#${parentElement}`).html(parenetValue);
+												}
+											}
+                    })
+
+                  }
+
 
 
                   

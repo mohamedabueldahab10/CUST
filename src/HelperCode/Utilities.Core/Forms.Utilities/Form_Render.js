@@ -4791,13 +4791,19 @@ window.ListInfo = {
         var listFields = [element.valfieldkey, dispfieldkey];
 
 
-        if (element.isRelatedToParent) {
-					// to handle sector and subsector (get the element from list)
-					parentFieldKey = element.fieldsinlookup;
-					listFields = [element.valfieldkey, dispfieldkey, element.filterField];
-				} else {
-					parentFieldKey = "";
-				}
+        if (element.sourcefieldlvl1) {
+          // to handle sector and subsector (get the element from list)
+          parentFieldKey = element.fieldsinformlvl1;
+          // listFields = [element.valfieldkey, dispfieldkey, element.filterField];
+          listFields.push(element.sourcefieldlvl1)
+
+          if (element.sourcefieldlvl2) {
+            listFields.push(element.sourcefieldlvl2)
+          }
+
+        } else {
+          parentFieldKey = "";
+        }
 
 
         htmlBody =
@@ -4899,12 +4905,16 @@ window.ListInfo = {
                   '<option option-id="' +
                   itemsID[index] +
                   '" value="' +
-                  el[element.valfieldkey] + //data-parentrelatedkey > to get the target element,data-parentrelatedvalue > to save the value of parent like sector
-                  '" data-parentrelatedvalue=' +
-									el[element.filterField] +
-									" data-parentrelatedkey=" +
-									element.fieldsinlookup + // changed from dynamic to fieldsinlookup
-									">" +
+                  el[element.valfieldkey] + //data-parentrelatedkeylvl1 > to get the target element,data-parentrelatedvaluelvl1 > to save the value of parent like sector
+                  '" data-parentrelatedvaluelvl1=' +
+                  el[element.sourcefieldlvl1] +
+                  " data-parentrelatedkeylvl1=" +
+                  element.fieldsinformlvl1 + // changed from dynamic to fieldsinformlvl1
+                  " data-parentrelatedvaluelvl2=" +
+                  el[element.sourcefieldlvl2] +
+                  " data-parentrelatedkeylvl2=" +
+                  element.fieldsinformlvl2 +
+                  " >" +
                   optionText +
                   "</option>";
               });
@@ -7865,11 +7875,15 @@ var View_ListInfo = {
             '" data-valfieldkey="' +
             element.valfieldkey +
             '" data-Dispfieldkey="' +
-            dispfieldkey + //data-parentrelatedkey > to get the target element,data-parentrelatedvalue > to save the value of parent like sector,data-parentrelatedfilterkey >> to show the value on this column in list
-            '" data-parentrelatedkey=' +
-            element.fieldsinlookup + // change from dynamic to fieldsinlookup
-            ' data-parentrelatedvalue="" data-parentrelatedfilterkey=' +
-            element.filterField +
+            dispfieldkey + //data-parentrelatedkeylvl1 > to get the target element,data-parentrelatedvaluelvl1 > to save the value of parent like sector,data-parentrelatedfilterkeylvl1 >> to show the value on this column in list
+            '" data-parentrelatedkeylvl1=' +
+            element.sourcefieldlvl1 + // to handle the dont submit field in view lvl1
+            ' data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1=' +
+            element.sourcefieldlvl1 +
+            ' data-parentrelatedkeylvl2=' +
+            element.sourcefieldlvl2 + // change from dynamic to fieldsinformlvl1
+            ' data-parentrelatedvaluelvl2="" data-parentrelatedfilterkeylvl2=' +
+            element.sourcefieldlvl2 +
             ' class="viewmode-value" id="' +
             element.InternalName +
             '" data-linkedto="' + element.linkedto + '"></p>' +
