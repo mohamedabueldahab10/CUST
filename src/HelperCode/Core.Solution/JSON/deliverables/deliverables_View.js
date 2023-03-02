@@ -23,6 +23,12 @@ var Information_Form = [
         DisplayNameEn: 'Description',
         type: 'multiline',
       },
+      {
+        InternalName: 'Weight',
+        DisplayName: 'الوزن',
+        DisplayNameEn: 'Weight',
+        type: 'floatpercentage',
+      },
         {
           "InternalName": "Amount",
           "DisplayName": "القيمة",
@@ -32,12 +38,6 @@ var Information_Form = [
           "listname":"Projects",
           "parentinternalname":"ActualBudget",
           "targetelement":"Weight",
-      },
-      {
-        InternalName: 'Weight',
-        DisplayName: 'الوزن',
-        DisplayNameEn: 'Weight',
-        type: 'floatpercentage',
       },
       // {
       //   InternalName: 'Status',
@@ -76,12 +76,6 @@ var Information_Form = [
       //   type: 'datetime',
       //   max: 'today',
       // },
-      {
-        InternalName: 'DeliveredDate',
-        DisplayName: 'تاريخ التسليم',
-        DisplayNameEn: 'Delivered Date',
-        type: 'datetime',
-      },
       {
         InternalName: 'PlannedFinishDate',
         DisplayName: 'تاريخ الانتهاء المخطط',
@@ -137,6 +131,12 @@ var Information_Form = [
             },
           ],
         },
+      },
+      {
+        InternalName: 'DeliveredDate',
+        DisplayName: 'تاريخ التسليم',
+        DisplayNameEn: 'Delivered Date',
+        type: 'datetime',
       },
       {
         InternalName: 'AcceptanceCriteria',

@@ -221,6 +221,24 @@ var Information_Form = [
         // },
       },
       {
+        InternalName: 'Performance',
+        DisplayNameEn: 'Performance',
+        DisplayName: 'الأداء',
+        type: 'number',
+      },
+      {
+        InternalName: 'TotalActual',
+        DisplayNameEn: 'TotalActual',
+        DisplayName: 'إجمالي الفعلي',
+        type: 'number',
+      },
+      {
+        InternalName: 'TotalPlanned',
+        DisplayNameEn: 'TotalPlanned',
+        DisplayName: 'إجمالي المخطط',
+        type: 'number',
+      },
+      {
         InternalName: 'RecurrenceChanged',
         DisplayNameEn: 'Recurrence Changed',
         DisplayName: 'تغيير دورية القياس',
@@ -1003,6 +1021,18 @@ var Information_Form = [
         DisplayNameEn: 'G',
         type: 'float',
         //editableBy: "PerformanceLeader",
+      },
+      {
+        InternalName: 'NotMeasurableNow',
+        DisplayNameEn: 'Not Measurable Now',
+        DisplayName: 'لايقاس حاليا',
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            { display: 'yes', value: 'yes' },
+            { display: 'no', value: 'no' },
+          ],
+        },
       },
       {
         InternalName: 'Equation',

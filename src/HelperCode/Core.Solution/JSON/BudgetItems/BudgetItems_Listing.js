@@ -22,17 +22,17 @@ var Listing_Info = [{
 	inlisting: true,
 	infilter: true
   },
+//   {
+// 	"InternalName": "Amount",
+// 	"DisplayName": "المبالغ الإجمالية (لكامل السنوات)",
+// 	"DisplayNameEn": "Total Amounts (for all years)",
+// 	// "type": "text",
+// 	"type": "float",
+// 	inlisting: true,
+// 	infilter: false
+//   },
   {
-	"InternalName": "Amount",
-	"DisplayName": "المبالغ الإجمالية (لكامل السنوات)",
-	"DisplayNameEn": "Total Amounts (for all years)",
-	// "type": "text",
-	"type": "float",
-	inlisting: true,
-	infilter: false
-  },
-  {
-	"InternalName": "Type",
+	"InternalName": "Types",
 	"DisplayName": "النوع",
 	"DisplayNameEn": "Type",
 	"type": "text",

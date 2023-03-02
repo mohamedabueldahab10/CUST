@@ -254,6 +254,24 @@ var Information_Form = [
           ],
         },
       },
+      {
+        InternalName: 'InitiativeEscalation',
+        DisplayName: 'التصعيد لخطر مبادرة',
+        DisplayNameEn: 'Escalate As Initiative Risk',
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            {
+              display: 'yes',
+              value: 'yes',
+            },
+            {
+              display: 'no',
+              value: 'no',
+            },
+          ],
+        },
+      },
       // {
       //   label: 'الوثائق الداعمة',
       //   labelEn: 'Supporting Documents',

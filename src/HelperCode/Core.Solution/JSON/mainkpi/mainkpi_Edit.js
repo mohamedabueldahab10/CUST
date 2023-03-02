@@ -754,7 +754,24 @@ var Information_Form = [
         // 	],
         // },
       },
-
+      {
+        InternalName: 'Performance',
+        DisplayNameEn: 'Performance',
+        DisplayName: 'الأداء',
+        type: 'number',
+      },
+      {
+        InternalName: 'TotalActual',
+        DisplayNameEn: 'TotalActual',
+        DisplayName: 'إجمالي الفعلي',
+        type: 'number',
+      },
+      {
+        InternalName: 'TotalPlanned',
+        DisplayNameEn: 'TotalPlanned',
+        DisplayName: 'إجمالي المخطط',
+        type: 'number',
+      },
       // {
       //   InternalName: 'RecurrenceChanged',
       //   DisplayNameEn: 'Recurrence Changed',
@@ -1506,6 +1523,18 @@ var Information_Form = [
             'VRO_P',
             'Performance Leaders',
             'System Admin Group',
+          ],
+        },
+      },
+      {
+        InternalName: 'NotMeasurableNow',
+        DisplayNameEn: 'Not Measurable Now',
+        DisplayName: 'لايقاس حاليا',
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            { display: 'yes', value: 'yes' },
+            { display: 'no', value: 'no' },
           ],
         },
       },

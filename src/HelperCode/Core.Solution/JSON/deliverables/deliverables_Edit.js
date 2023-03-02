@@ -36,17 +36,6 @@ var Information_Form = [
 
       // },
       {
-        InternalName: 'Amount',
-        DisplayName: 'القيمة',
-        DisplayNameEn: 'Amount',
-        dontSubmit: true,
-        type: 'percentbyrelatedparent',
-        listname: 'Projects',
-        parentinternalname: 'ActualBudget',
-        targetelement: 'Weight',
-        validation: 'required',
-      },
-      {
         InternalName: 'Weight',
         DisplayName: 'الوزن(%)',
         DisplayNameEn: 'Weight (%)',
@@ -56,6 +45,17 @@ var Information_Form = [
         targetelement: 'Weight',
         seconedtarget: 'Amount',
         // "state":"disabled",
+        validation: 'required',
+      },
+      {
+        InternalName: 'Amount',
+        DisplayName: 'القيمة',
+        DisplayNameEn: 'Amount',
+        dontSubmit: true,
+        type: 'percentbyrelatedparent',
+        listname: 'Projects',
+        parentinternalname: 'ActualBudget',
+        targetelement: 'Weight',
         validation: 'required',
       },
       // {
@@ -85,14 +85,6 @@ var Information_Form = [
       //   max: 'today',
       //   validation: 'required',
       // },
-      {
-        InternalName: 'DeliveredDate',
-        DisplayName: 'تاريخ التسليم',
-        DisplayNameEn: 'Delivered Date',
-        type: 'datetime',
-        max: 'today',
-        // "validation": "required",
-      },
       {
         InternalName: 'PlannedFinishDate',
         DisplayName: 'تاريخ الانتهاء المخطط',
@@ -147,6 +139,14 @@ var Information_Form = [
             { display: 'no', value: 'no' },
           ],
         },
+      },
+      {
+        InternalName: 'DeliveredDate',
+        DisplayName: 'تاريخ التسليم',
+        DisplayNameEn: 'Delivered Date',
+        type: 'datetime',
+        max: 'today',
+        // "validation": "required",
       },
       {
         InternalName: 'AcceptanceCriteria',

@@ -149,19 +149,19 @@ var Information_Form = [
       },
     ],
   },
-  {
-    label: 'المرفقات',
-    labelEn: 'Attachments',
-    description: 'التفاصيل',
-    descriptionEn: 'Details',
-    subFields: [
-      {
-        InternalName: 'getfile',
-        DisplayName: 'المرفقات',
-        DisplayNameEn: 'Attachments',
-        type: 'file',
-        withAddBtn: 'true',
-      },
-    ],
-  },
+  // {
+  //   label: 'المرفقات',
+  //   labelEn: 'Attachments',
+  //   description: 'التفاصيل',
+  //   descriptionEn: 'Details',
+  //   subFields: [
+  //     {
+  //       InternalName: 'getfile',
+  //       DisplayName: 'المرفقات',
+  //       DisplayNameEn: 'Attachments',
+  //       type: 'file',
+  //       withAddBtn: 'true',
+  //     },
+  //   ],
+  // },
 ]
