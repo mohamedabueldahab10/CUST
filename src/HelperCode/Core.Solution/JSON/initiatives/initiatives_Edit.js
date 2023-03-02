@@ -124,13 +124,18 @@ var Information_Form = [
         InternalName: 'RelatedStrategy',
         DisplayNameEn: 'Related Strategy',
         DisplayName: 'الاستراتيجية المرتبطة',
-        // dontSubmit: true,
+        dontSubmit: true,
         type: 'lookup',
         source: 'GoalStrategy',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         // dynamically affected by other dropdown
         dynamic: 'parent', //"parentInternalName" or "parent" // if parent it will affect other fields
+
+        //
+        notInvokeListiner: true,
+        //
+
         //in case not parent add below attrs
         //role access
         accessFilter: [
@@ -180,7 +185,12 @@ var Information_Form = [
         InternalName: 'RelatedObjectiveLevel',
         DisplayNameEn: 'Related Objective Level',
         DisplayName: 'مستوى الهدف المرتبط',
-        // dontSubmit: true,
+        dontSubmit: true,
+        //
+        grandFieldId: "RelatedStrategy",
+        childFieldId: "RelatedObjective",
+        childFieldIdSource: "Types",
+        //
         type: 'dropdownValues',
         options: {
           choices: [
@@ -276,7 +286,7 @@ var Information_Form = [
       //   valfieldkey: 'Title',
       //   grpfieldkey: 'Title',
       //   initiativeCodeInList: true //value in look up drop down should be related to current project
-        
+
       //   // queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
       //   // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
       //   // queryFieldValue: 'sublevel2,sublevel3', // if i need to make the field with filter should add this

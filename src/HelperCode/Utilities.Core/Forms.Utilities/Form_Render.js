@@ -379,6 +379,10 @@ window.ListInfo = {
             let parentFieldValue = $(this).val();
 
             let affectedSelectsInfo = [];
+
+            let notInvokeListiner = $(this).data("notinvokelistiner")
+            console.log($(this).data("notinvokelistiner"), "AAAAAAAAAAAAAAAAAAAA")
+            debugger
             $("[dynamic=" + parentFieldName + "]").each(function () {
               console.log(parentFieldName, "parentFieldName")
               debugger
@@ -392,6 +396,10 @@ window.ListInfo = {
               let queryFieldValue = $(this).data("queryfieldvalue");
               let queryFieldName = $(this).data("queryfield");
               let queryFieldType = $(this).data("queryfieldtype");
+
+              // oday new enhanc
+              // notInvokeListiner = $(this).data("notinvokelistiner")
+              //
               // console.log($(this).data("queryFieldValue"), "sssssssa")
               affectedSelectsInfo.push({
                 affectedFieldName: affectedFieldName,
@@ -407,7 +415,13 @@ window.ListInfo = {
                 queryFieldType: queryFieldType
               });
             });
-            dynamicAffectSelect.init(affectedSelectsInfo);
+            debugger
+            if (notInvokeListiner) {
+              console.log("Inside not invoke listiner")
+
+            } else {
+              dynamicAffectSelect.init(affectedSelectsInfo);
+            }
           });
           //max min dates
           $("input[type=date]:not([minimumdate=undefined])").change(
@@ -669,11 +683,28 @@ window.ListInfo = {
 
 
 
-          ////////
+          //////// apply grandFieldInvoke
+          $(".grandFieldInvoke").on("change", function (event) {
+            debugger
+            var grandId = $(this).data("grandfieldid")
+            var childId = $(this).data("childfieldid")
+            var childFieldIdSource = $(this).data("childfieldidsource")
+            var elementValue = event.target.value
+            if (grandId && elementValue && childId && childFieldIdSource) {
+              $(`#${grandId}`).data("notinvokelistiner", false)
+              $(`#${grandId}`).attr("data-seconedvaluelistiner", elementValue)
+              $(`#${childId}`).data("queryfield", childFieldIdSource)
+              $(`#${childId}`).data("queryfieldvalue", elementValue)
+              $(`#${childId}`).data("queryfieldtype", "Text")
+
+              $("select[dynamic=parent]").trigger('change')
+            }
+
+          })
 
 
 
-
+          ///
           $("input.number").keyup(function (event) {
             // skip for arrow keys
             if (event.which >= 37 && event.which <= 40) return;
@@ -685,6 +716,8 @@ window.ListInfo = {
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             });
           });
+
+
 
           $("body").on("change", ".decimalnumber", function (event) {
             // add this to handle the num with dots in weight in initiative milestone
@@ -3187,6 +3220,28 @@ window.ListInfo = {
           ? element.customCr
           : false;
 
+        var grandFieldId = ""
+        if (element.grandFieldId) {
+          grandFieldId = `data-grandFieldId=${element.grandFieldId}`
+        } else {
+          grandFieldId = ""
+        }
+
+        var childFieldId = ""
+        if (element.childFieldId) {
+          childFieldId = `data-childFieldId=${element.childFieldId}`
+        } else {
+          childFieldId = ""
+        }
+
+        var childFieldIdSource = ""
+
+        if (element.childFieldIdSource) {
+          childFieldIdSource = `data-childFieldIdSource=${element.childFieldIdSource}`
+        } else {
+          childFieldIdSource = ""
+        }
+
         if (crListKey && isCrMode && customCr) {
           htmlBody = "";
           //ended
@@ -3242,11 +3297,18 @@ window.ListInfo = {
             RequiredName +
             " " +
             requiredValues +
+            " " +
+            grandFieldId +
+            " " +
+            childFieldId +
+            " " +
+            childFieldIdSource +
+
             ' type="dropdown" value="" placeholder="' +
             displayName +
             '" ' +
             dynamic +
-            ' class="form-control SPIField" id="' +
+            ' class="form-control SPIField grandFieldInvoke" id="' +
             element.InternalName +
             '" ' +
             element.state +
@@ -4805,7 +4867,19 @@ window.ListInfo = {
           parentFieldKey = "";
         }
 
-
+        ///////////////////////////////////////////////////////////
+        var grandFieldId = ""
+        if (element.grandFieldId) {
+          grandFieldId = `data-grandFieldId=${element.grandFieldId}`
+        } else {
+          grandFieldId = ""
+        }
+        var notInvokeListinerData = "", seconedValueListiner = "";
+        if (element.notInvokeListiner) {
+          notInvokeListinerData = `data-notInvokeListiner=${element.notInvokeListiner}`
+          seconedValueListiner = `data-seconedvaluelistiner=""`
+        }
+        /////////////////////////////////////////////////
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -4854,6 +4928,12 @@ window.ListInfo = {
           " " +
           inputLisKey +
           element.validation +
+          " " +
+          grandFieldId +
+          " " +
+          notInvokeListinerData +
+          " " +
+          seconedValueListiner +
           " " +
           dynamic +
           ' data-listname="' +
@@ -7585,6 +7665,7 @@ var View_ListInfo = {
           break;
 
         case "dropdownValues":
+
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -7877,11 +7958,11 @@ var View_ListInfo = {
             '" data-Dispfieldkey="' +
             dispfieldkey + //data-parentrelatedkeylvl1 > to get the target element,data-parentrelatedvaluelvl1 > to save the value of parent like sector,data-parentrelatedfilterkeylvl1 >> to show the value on this column in list
             '" data-parentrelatedkeylvl1=' +
-            element.sourcefieldlvl1 + // to handle the dont submit field in view lvl1
+            element.fieldsinformlvl1 + // to handle the dont submit field in view lvl1
             ' data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1=' +
             element.sourcefieldlvl1 +
             ' data-parentrelatedkeylvl2=' +
-            element.sourcefieldlvl2 + // change from dynamic to fieldsinformlvl1
+            element.fieldsinformlvl2 + // change from dynamic to fieldsinformlvl1
             ' data-parentrelatedvaluelvl2="" data-parentrelatedfilterkeylvl2=' +
             element.sourcefieldlvl2 +
             ' class="viewmode-value" id="' +
@@ -8375,6 +8456,10 @@ dynamicAffectSelect = {
     var queryFieldType = affectedSelectsInfo[0].queryFieldType
       ? affectedSelectsInfo[0].queryFieldType
       : "";
+
+    // queryFieldValue="sublevel3"
+    // queryFieldName="Types"
+    // queryFieldType="Text"
 
     dynamicAffectSelect.g.affectedSelectsInfo = affectedSelectsInfo;
     var clientContext = new SP.ClientContext.get_current();
