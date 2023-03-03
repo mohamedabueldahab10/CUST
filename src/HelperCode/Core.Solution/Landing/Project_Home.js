@@ -579,11 +579,17 @@ var Project_Home_Info_Request = {
       "<span data-trans-" +
       projectworkingstatus +
       ' class="Resources initiativeProjHomeInfoValueStyle"></span>'+
-      '<span class="initiativeProjHomeInfoValueStyle">(</span>'+
+      '<span class="statuscolor' +
+      projectProgressStatusSchedule +
+      '">(</span>'+
       "<span data-trans-" +
       projectProgressStatusSchedule +
-      ' class="Resources initiativeProjHomeInfoValueStyle"></span>'+
-      '<span class="initiativeProjHomeInfoValueStyle">)</span>'
+      ' class="Resources statuscolor' +
+      projectProgressStatusSchedule +
+      '"></span>'+
+      '<span class="statuscolor' +
+      projectProgressStatusSchedule +
+      '">)</span>'
     );
     $(
       ".project-info-ctx .media-body:nth-of-type(1) .icon-user > .user-name"

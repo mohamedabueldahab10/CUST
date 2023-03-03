@@ -1013,8 +1013,8 @@ export default class ProjectHomeWebPart extends BaseClientSideWebPart<IProjectHo
                         class="card-body project-status-info border-bottom pb-4 px-4"
                       >
                         <div class="">
-                          <div class="">
-                            <div class="col h-100">
+                          <div class="row">
+                            <div class="col-md-6 h-100">
                               <div class="d-flex flex-row align-items-center">
                                 <span class="sectionsideicontooltip">
                                   <img src="${important}" class="" />
@@ -1034,7 +1034,7 @@ export default class ProjectHomeWebPart extends BaseClientSideWebPart<IProjectHo
                               >
                               </span>
                             </div>
-                            <div class="col h-100">
+                            <div class="col-md-6 h-100">
                             <div class="d-flex flex-row align-items-center">
                               <span class="sectionsideicontooltip">
                                 <img src="${important}" class="" />
