@@ -6560,6 +6560,12 @@ a.a-important-link:hover>* {
     font-size: 1.6rem !important;
     margin-inline: 0 !important;
 }
+.initiativeProjHomeInfoValuefontStyle {
+    /* color: #1f2933 !important; */
+    font-weight: 500 !important;
+    font-size: 1.6rem !important;
+    margin-inline: 0 !important;
+}
 
 .inlineMargin0 {
     margin-inline: 0 !important

@@ -579,15 +579,15 @@ var Project_Home_Info_Request = {
       "<span data-trans-" +
       projectworkingstatus +
       ' class="Resources initiativeProjHomeInfoValueStyle"></span>'+
-      '<span class="statuscolor' +
+      '<span class="initiativeProjHomeInfoValuefontStyle statuscolor' +
       projectProgressStatusSchedule +
       '">(</span>'+
       "<span data-trans-" +
       projectProgressStatusSchedule +
-      ' class="Resources statuscolor' +
+      ' class="Resources initiativeProjHomeInfoValuefontStyle statuscolor' +
       projectProgressStatusSchedule +
       '"></span>'+
-      '<span class="statuscolor' +
+      '<span class="initiativeProjHomeInfoValuefontStyle statuscolor' +
       projectProgressStatusSchedule +
       '">)</span>'
     );
