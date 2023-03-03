@@ -254,7 +254,7 @@ var Information_Form = [
         // type: "dropdownValues",
         // dontSubmit: true,
         type: 'yesnoradio',
-        // state: 'disabled',
+        state: 'disabled',
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
@@ -442,7 +442,8 @@ var Information_Form = [
         DisplayName: 'وصف  المحور الإستراتيجى / برنامج الرؤية',
         type: 'multiline',
         maxchar: '500',
-        dontSubmit: true,
+        // dontSubmit: true,
+        state: 'disabled',
       },
     ],
   },

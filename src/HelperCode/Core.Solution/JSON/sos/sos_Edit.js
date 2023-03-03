@@ -258,8 +258,8 @@ var Information_Form = [
         DisplayNameEn: 'Is Pillar / program  Exist?',
         DisplayName: 'هل يوجد محور / برنامج ؟',
         // type: 'dropdownValues',
-        // state: 'disabled',
-        dontSubmit: true,
+        state: 'disabled',
+        // dontSubmit: true,
         type: 'yesnoradio',
         options: {
           choices: [
@@ -349,7 +349,7 @@ var Information_Form = [
         DisplayName: 'وصف  المحور الإستراتيجى / برنامج الرؤية',
         type: 'multiline',
         maxchar: '500',
-        dontSubmit: true,
+        // dontSubmit: true,
       },
     ],
   },
