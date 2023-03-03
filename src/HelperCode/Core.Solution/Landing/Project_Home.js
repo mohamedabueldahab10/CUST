@@ -20,6 +20,7 @@ var ActualBudget = 0,
   stagename,
   projectcode,
   projectimportance,
+  projectworkingstatus,
   Pstartdate,
   Pfinishdate,
   standardisedPstartdate,
@@ -544,6 +545,7 @@ var Project_Home_Info_Request = {
       $(".ProgressDate").text(ProgressLastModifiedDate);
 
       projectimportance = oListItem.get_item("Priority") || "nodata";
+      projectworkingstatus = oListItem.get_item("WorkingStatus") || "nodata";
       projectstatus = oListItem.get_item("Status") || "nodata";
       ProjectSponsor = oListItem.get_item("ProjectSponsor")
         ? oListItem.get_item("ProjectSponsor").get_lookupValue()
@@ -573,7 +575,16 @@ var Project_Home_Info_Request = {
       projectimportance +
       ' class="Resources initiativeProjHomeInfoValueStyle"></span>'
     );
-
+    $("#PJStatus").append(
+      "<span data-trans-" +
+      projectworkingstatus +
+      ' class="Resources initiativeProjHomeInfoValueStyle"></span>'+
+      '<span class="initiativeProjHomeInfoValueStyle">(</span>'+
+      "<span data-trans-" +
+      projectProgressStatusSchedule +
+      ' class="Resources initiativeProjHomeInfoValueStyle"></span>'+
+      '<span class="initiativeProjHomeInfoValueStyle">)</span>'
+    );
     $(
       ".project-info-ctx .media-body:nth-of-type(1) .icon-user > .user-name"
     ).text(
