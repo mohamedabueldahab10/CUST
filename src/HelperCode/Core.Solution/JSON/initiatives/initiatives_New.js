@@ -41,6 +41,7 @@ var Information_Form = [
         DisplayNameEn: 'Types',
         DisplayName: 'النوع',
         validation: 'required',
+        dynamic: 'parent', // parent to get the child depends on this field value
         toggleValues: [
           { value: 'vision', fields: ['RelatedStrategyObjective'] }, //we can put more than 1  field
         ],
@@ -87,7 +88,13 @@ var Information_Form = [
         source: 'GoalStrategy',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        dynamic: 'parent',
+        // dynamic: 'parent',
+        // dynamic: 'Types',
+        // dynamic:'parent',
+        seconeddynamic:"Types",
+				dynamic: "parent", //main field that affect on other chiled field
+        filterField: 'Types', 
+        filterFieldType: 'Text',
         notInvokeListiner: true, // to not invoke the lookup when change on parent > the filteration depends on other field also
         //in case not parent add below attrs
         //role access
@@ -232,9 +239,9 @@ var Information_Form = [
       //   valfieldkey: 'Name',
       //   grpfieldkey: 'Title',
       //   //
-      //   dynamic: 'RelatedStrategy',
-      //   filterField: 'RelatedStrategy',
-      //   filterFieldType: 'Text',
+      //   // dynamic: 'RelatedStrategy',
+      //   // filterField: 'RelatedStrategy',
+      //   // filterFieldType: 'Text',
       //   // queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
       //   // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
       //   // queryFieldValue: 'sublevel2,sublevel3', // if i need to make the field with filter should add this

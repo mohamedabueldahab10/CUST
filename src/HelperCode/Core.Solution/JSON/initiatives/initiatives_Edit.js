@@ -35,6 +35,7 @@ var Information_Form = [
         DisplayNameEn: 'Types',
         DisplayName: 'النوع',
         validation: 'required',
+        dynamic: 'parent', // parent to get the child depends on this field value
         toggleValues: [
           { value: 'vision', fields: ['RelatedStrategyObjective'] }, //we can put more than 1  field
         ],
@@ -129,7 +130,10 @@ var Information_Form = [
         source: 'GoalStrategy',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        dynamic: 'parent', //"parentInternalName" or "parent" // if parent it will affect other fields
+        seconeddynamic: "Types",// child for this field(add it to make the field as a parent and child at the same time) 
+        filterField: 'Types',
+        filterFieldType: 'Text',
+        dynamic: 'parent', // parent for this field
         //
         notInvokeListiner: true,// to not invoke the lookup when change on parent > the filteration depends on other field also
         //

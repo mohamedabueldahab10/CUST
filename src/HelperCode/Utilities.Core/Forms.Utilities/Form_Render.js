@@ -377,6 +377,10 @@ window.ListInfo = {
           $("select[dynamic=parent]").on("change", function () {
             let parentFieldName = $(this).attr("id");
             let parentFieldValue = $(this).val();
+            let customFilterValue = $(this)
+              .find("option[value=" + parentFieldValue + "]")
+              .data("customfiltervalue");
+            let isCustomFilterValue = $(this).attr("iscustomfiltervalue");
 
             let affectedSelectsInfo = [];
 
@@ -402,6 +406,7 @@ window.ListInfo = {
               affectedSelectsInfo.push({
                 affectedFieldName: affectedFieldName,
                 listName: listName,
+                isCustomFilterValue: isCustomFilterValue,
                 filterField: filterField,
                 filterFieldType: filterField,
                 parentFieldValue: parentFieldValue,
@@ -414,40 +419,39 @@ window.ListInfo = {
               });
             });
 
-            // added to handel the field to be dynamicparemntand other
-            // $("[seconeddynamic*=" + parentFieldName + "]").each(function () {
-            //   let affectedFieldName = $(this).attr("id");
-            //   let listName = $(this).data("listname");
-            //   let filterField = $(this).data("filterfield");
-            //   let filterFieldType = $(this).data("filterfieldtype");
-            //   let valFieldKey = $(this).data("valfieldkey");
-            //   let dispFieldKey = $(this).data("dispfieldkey");
-            //   // let specificVal = $(this).data("queryfieldvalue");
-            //   let queryFieldValue = $(this).data("queryfieldvalue");
-            //   let queryFieldName = $(this).data("queryfield");
-            //   let queryFieldType = $(this).data("queryfieldtype");
-            //   // console.log($(this).data("queryFieldValue"), "sssssssa")
-            //   affectedSelectsInfo.push({
-            //     affectedFieldName: affectedFieldName,
-            //     listName: listName,
-            //     isCustomFilterValue: isCustomFilterValue,
-            //     filterField: filterField,
-            //     filterFieldType: filterField,
-            //     parentFieldValue: parentFieldValue,
-            //     customFilterValue: customFilterValue,
-            //     filterFieldType: filterFieldType,
-            //     valFieldKey: valFieldKey,
-            //     dispFieldKey: dispFieldKey,
-            //     queryFieldValue: queryFieldValue,
-            //     queryFieldName: queryFieldName,
-            //     queryFieldType: queryFieldType,
-            //   });
-            // });
+            // added to handel the field to be dynamicparemnt and other (the filed can be parent and child on the same time)
+            $("[seconeddynamic*=" + parentFieldName + "]").each(function () {
+              let affectedFieldName = $(this).attr("id");
+              let listName = $(this).data("listname");
+              let filterField = $(this).data("filterfield");
+              let filterFieldType = $(this).data("filterfieldtype");
+              let valFieldKey = $(this).data("valfieldkey");
+              let dispFieldKey = $(this).data("dispfieldkey");
+              // let specificVal = $(this).data("queryfieldvalue");
+              let queryFieldValue = $(this).data("queryfieldvalue");
+              let queryFieldName = $(this).data("queryfield");
+              let queryFieldType = $(this).data("queryfieldtype");
+              // console.log($(this).data("queryFieldValue"), "sssssssa")
+              affectedSelectsInfo.push({
+                affectedFieldName: affectedFieldName,
+                listName: listName,
+                isCustomFilterValue: isCustomFilterValue,
+                filterField: filterField,
+                filterFieldType: filterField,
+                parentFieldValue: parentFieldValue,
+                customFilterValue: customFilterValue,
+                filterFieldType: filterFieldType,
+                valFieldKey: valFieldKey,
+                dispFieldKey: dispFieldKey,
+                queryFieldValue: queryFieldValue,
+                queryFieldName: queryFieldName,
+                queryFieldType: queryFieldType,
+              });
+            });
             //
-
-
+            //
             debugger
-            if (notInvokeListiner) {
+            if (notInvokeListiner) { // will not invoke the function if this attr true (we use it on hrsd initiative to filter on sos when chose startegy and level)
               console.log("Inside not invoke listiner")
 
             } else {
@@ -728,7 +732,7 @@ window.ListInfo = {
               $(`#${childId}`).data("queryfieldvalue", elementValue)
               $(`#${childId}`).data("queryfieldtype", "Text")
 
-              $("select[dynamic=parent]").trigger('change')
+              $(`select[dynamic=parent][id=${grandId}]`).trigger('change') // to trigger only one field (correct field)
             }
 
           })
@@ -1458,8 +1462,8 @@ window.ListInfo = {
     }
 
     if (element.hasOwnProperty("seconeddynamic")) {
-			seconeddynamic = "seconeddynamic=" + element.seconeddynamic;
-		}
+      seconeddynamic = "seconeddynamic=" + element.seconeddynamic;
+    }
 
     if (element.hasOwnProperty("toggleValues")) {
       element.toggleValues.forEach(function (item, i, arr) {
@@ -3269,6 +3273,13 @@ window.ListInfo = {
           childFieldId = ""
         }
 
+        var grandFieldInvokeclass = ""
+
+        if (grandFieldId && childFieldId) {
+          grandFieldInvokeclass = "grandFieldInvoke"
+        }
+
+
         var childFieldIdSource = ""
 
         if (element.childFieldIdSource) {
@@ -3343,7 +3354,25 @@ window.ListInfo = {
             displayName +
             '" ' +
             dynamic +
-            ' class="form-control SPIField grandFieldInvoke" id="' +
+            " " +
+            seconeddynamic +
+            ' data-listname="' +
+            element.source +
+            '" data-valfieldkey="' +
+            element.valfieldkey +
+            '" data-Dispfieldkey="' +
+            dispfieldkey +
+            '"data-filterfield="' +
+            element.filterField +
+            '"data-queryfieldvalue="' + // 
+            element.queryFieldValue +
+            '"data-queryfield="' + // 
+            element.queryField +
+            '"data-queryfieldtype="' + // 
+            element.queryFieldType +
+            '" data-filterfieldtype="' +
+            element.filterFieldType +
+            '" class="form-control SPIField ' + grandFieldInvokeclass + '" id="' +
             element.InternalName +
             '" ' +
             element.state +
@@ -3421,6 +3450,9 @@ window.ListInfo = {
             "</div>" +
             "</div>";
         }
+        // if(){
+        //   grandFieldInvoke
+        // }
         OnSuccess(flag, htmlBody);
         break;
 
@@ -4971,7 +5003,7 @@ window.ListInfo = {
           seconedValueListiner +
           " " +
           dynamic +
-          " "+
+          " " +
           seconeddynamic +
           ' data-listname="' +
           element.source +
@@ -8510,6 +8542,11 @@ dynamicAffectSelect = {
     var valueToFilter = affectedSelectsInfo[0].customFilterValue
       ? affectedSelectsInfo[0].customFilterValue
       : affectedSelectsInfo[0].parentFieldValue;
+
+
+    if (listkey == 'initiatives' && valueToFilter && valueToFilter == 'strategically') { // specially for trategically value
+      valueToFilter = 'ministry' // becuse there is a value we use it in GoalStrategy list
+    }
 
     if (
       affectedSelectsInfo[0].isCustomFilterValue === "true" &&
