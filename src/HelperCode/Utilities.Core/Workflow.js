@@ -117,7 +117,7 @@ var workflowname,
 
 	//
 	isRelatedProjectPage = window.location.href.indexOf("PCODE") > -1,
-	isDeliverablesPage = window.location.href.indexOf("deliverables") > -1,
+	// isDeliverablesPage = window.location.href.indexOf("deliverables") > -1,
 	isChangeRequestPage = window.location.href.indexOf("changerequest") > -1,
 	isStrategyWf = window.location.href.indexOf("strategies") > -1,
 	isSOsWf = window.location.href.indexOf("strategicobjectives") > -1,
@@ -240,21 +240,23 @@ if (isChangeRequestPage) {
 		'</Value></Eq><And><Eq><FieldRef Name="RelatedItemID" /><Value Type="Text">' +
 		IID2 +
 		'</Value></Eq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And></And></Where></Query></View>';
-} else if (isDeliverablesPage) {
-	workflowname = "DV";
-	bulkeditlist = "Deliverables";
-	IID2 = window.location.href.split("IID=")[1].split("&")[0];
-	bulkeditquery =
-		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
-		IID2 +
-		"</Value> </Eq></Where></Query></View>";
-	taskquery =
-		'<View><Query><Where><And><Eq><FieldRef Name="WorkflowName" /><Value Type="Text">' +
-		workflowname +
-		'</Value></Eq><And><Eq><FieldRef Name="RelatedItemID" /><Value Type="Text">' +
-		IID2 +
-		'</Value></Eq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And></And></Where></Query></View>';
-} else if (isStrategyWf) {
+} 
+// else if (isDeliverablesPage) {
+// 	workflowname = "DV";
+// 	bulkeditlist = "Deliverables";
+// 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+// 	bulkeditquery =
+// 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+// 		IID2 +
+// 		"</Value> </Eq></Where></Query></View>";
+// 	taskquery =
+// 		'<View><Query><Where><And><Eq><FieldRef Name="WorkflowName" /><Value Type="Text">' +
+// 		workflowname +
+// 		'</Value></Eq><And><Eq><FieldRef Name="RelatedItemID" /><Value Type="Text">' +
+// 		IID2 +
+// 		'</Value></Eq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And></And></Where></Query></View>';
+// } 
+else if (isStrategyWf) {
 	workflowname = "Strategies";
 	bulkeditlist = "Strategies";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -562,7 +564,7 @@ else if (isLMSInitiativeMilestone) {
 else if (isVROInitiativeDeliverable) {
 	debugger
 	workflowname = "VROInitiativeDeliverable";
-	bulkeditlist = "InitiativeDeliverable";
+	bulkeditlist = "InitiativeDeliverables";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -578,7 +580,7 @@ else if (isVROInitiativeDeliverable) {
 else if (isEPMOInitiativeDeliverable) {
 	debugger
 	workflowname = "EPMOInitiativeDeliverable";
-	bulkeditlist = "InitiativeDeliverable";
+	bulkeditlist = "InitiativeDeliverables";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -594,7 +596,7 @@ else if (isEPMOInitiativeDeliverable) {
 else if (isLMSInitiativeDeliverable) {
 	debugger
 	workflowname = "LMSInitiativeDeliverable";
-	bulkeditlist = "InitiativeDeliverable";
+	bulkeditlist = "InitiativeDeliverables";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -3108,11 +3110,11 @@ var Task_Edit_Data = {
 						_spPageContextInfo.siteAbsoluteUrl +
 						"/SitePages/Listing.aspx?ListKey=changerequest";
 				}
-				if (isDeliverablesPage) {
-					window.location =
-						_spPageContextInfo.siteAbsoluteUrl +
-						"/SitePages/Listing.aspx?ListKey=deliverables";
-				}
+				// if (isDeliverablesPage) {
+				// 	window.location =
+				// 		_spPageContextInfo.siteAbsoluteUrl +
+				// 		"/SitePages/Listing.aspx?ListKey=deliverables";
+				// }
 				if (isRiskPage) {
 					window.location =
 						_spPageContextInfo.siteAbsoluteUrl +
