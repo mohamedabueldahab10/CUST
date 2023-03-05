@@ -357,7 +357,7 @@ window.Edit_Data_Request = {
       });
     });
     //handle top menu navigation
-    debugger
+    
     if (SP_ListName == ListArray[0].projects) {
       PCODE = oListItem.get_item("Title");
       $(".headtwo").append(
@@ -372,7 +372,7 @@ window.Edit_Data_Request = {
     // added for CR module
     //! CR
     else if (crListKey) {
-      debugger
+      
       let UpdateType = oListItem.get_item("UpdateType") || "";
       let crIsGeneral = UpdateType.includes("general");
       changeRequestBody = oListItem.get_item("ChangeBody");
@@ -442,11 +442,11 @@ window.Edit_Data_Request = {
     if (listkey == "initiatives") {
       // Edit_Data_Request.g.showFieldsIfInitiativeVision();
 
-      var type = $('#Types').val()
-      Initiative_Sos.init("SOs", type); //get related sos depends on type
-      if (type == "vision") {
-        Initiative_Strategy_Sos.init("SOs")
-      }
+      // var type = $('#Types').val()
+      // Initiative_Sos.init("SOs", type); //get related sos depends on type
+      // if (type == "vision") {
+      //   Initiative_Strategy_Sos.init("SOs")
+      // }
 
       relatedObjInit = oListItem.get_item("RelatedObjective") ? oListItem.get_item("RelatedObjective") : ''
 
@@ -623,12 +623,12 @@ window.Edit_Data_Request = {
 
 
 
-    if (isVROE) {
-      if (listkey == "initiatives") {
-        $('#Types').val('vision');
-        $('#Types').prop('disabled', true);
-      }
-    }
+    // if (isVROE) {
+    //   if (listkey == "initiatives") {
+    //     $('#Types').val('vision');
+    //     $('#Types').prop('disabled', true);
+    //   }
+    // }
     // if (isNew && isEPMO) {
     //   if (listkey == "initiatives") {
     //     $('#Types').val('strategically');
@@ -709,6 +709,11 @@ window.Edit_Data_Request = {
 
     //hide show fields based on selection & onload
 
+
+    // trigger the dynamic parent field to get the data in edit
+
+
+
     $("[data-togglevalues]").each(function () {
       ListInfo.g.toggleFields($(this));
     });
@@ -718,62 +723,25 @@ window.Edit_Data_Request = {
       ListInfo.g.toggleRequiredFields($(this));
     });
 
+    $("select[dynamic=parent]").trigger("change")
+    // $(".grandFieldInvoke").trigger("change")
 
-    // to handle dont submit in edit lvl1
-    $(
-			"[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
-		).each(function () {
-			var elementId = $(this).parent().attr("id"); // get element Id
-			var elementValue = $(this).val(); // get element value
-			console.log(
-				oListItem.get_item(elementId),
-				"oListItem.get_item(elementId)"
-			);
-			if (
-				oListItem.get_item(elementId) &&
-				oListItem.get_item(elementId) == elementValue
-			) {
-				// matching between value on list
-				var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
-				var parenetValue = $(this).data("parentrelatedvaluelvl1"); // parent value
-				if (parentElement && parenetValue) {
-					$(`#${parentElement}`).val(parenetValue);
-				}
-			}
-		});
+    
 
-    // to handle dont submit in edit lvl2
-    $(
-			"[data-parentrelatedvaluelvl2]:not([data-parentrelatedvaluelvl2=undefined])"
-		).each(function () {
-			var elementId = $(this).parent().attr("id"); // get element Id
-			var elementValue = $(this).val(); // get element value
-      debugger
-			if (
-				oListItem.get_item(elementId) &&
-				oListItem.get_item(elementId) == elementValue
-			) {
-				// matching between value on list
-				var parentElement = $(this).data("parentrelatedkeylvl2"); // parent internal name
-				var parenetValue = $(this).data("parentrelatedvaluelvl2"); // parent value
-        debugger
-				if (parentElement && parenetValue) {
-          
-					$(`#${parentElement}`).val(parenetValue);
-				}
-			}
-		});
+    // setTimeout(function () {
+
+      DontSubmit_DataRequest.init()
+    // }, 1500)
 
 
-    $(".grandFieldInvoke").trigger("change")
+
 
     // to handle toggle disabled fields in edit
     $("[data-toggledisabledvalues]").each(function () {
       ListInfo.g.toggleDisabledFields($(this));
     })
 
-    // trigger the dynamic parent field to get the data in edit
-    $("select[dynamic=parent]").trigger("change")
+
 
 
     // to get the value of weight in delivrable correct in edit
@@ -1270,7 +1238,7 @@ window.View_Data_Request = {
                   $(this).text(Resources.ar[period.toLowerCase()]);
                 } else $(this).text(Resources.en[period.toLowerCase()]);
 
-                debugger
+                
                 // }
               } else {
                 if (
@@ -1364,11 +1332,23 @@ window.View_Data_Request = {
 
         $(this).text(value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
       } else if ($(this).attr("type") == "multiselect") {
-        debugger
+
         var valfieldkey = $(this).data("valfieldkey"),
           Dispfieldkey = $(this).data("dispfieldkey"),
           listname = $(this).data("listname"),
+          linkedto = $(this).data("linkedto"),
+          parentrelatedfilterkeylvl1 = $(this).data("parentrelatedfilterkeylvl1"),
+          parentrelatedfilterkeylvl2 = $(this).data("parentrelatedfilterkeylvl2"),
           $this = $(this);
+
+        var listFields = ["ID", valfieldkey, Dispfieldkey];
+        if (parentrelatedfilterkeylvl1 && parentrelatedfilterkeylvl1 != "undefined") {
+
+          listFields.push(parentrelatedfilterkeylvl1)
+          if (parentrelatedfilterkeylvl2 && parentrelatedfilterkeylvl2 != "undefined") {
+            listFields.push(parentrelatedfilterkeylvl2)
+          }
+        }
 
         var value =
           oListItem.get_item("" + $(this).attr("id") + "") == null
@@ -1390,14 +1370,91 @@ window.View_Data_Request = {
           _spPageContextInfo.siteServerRelativeUrl,
           listname,
           customquerymulti,
-          [valfieldkey, Dispfieldkey],
+          listFields,
           function (records, record, listItem, isDone) {
             if (isDone) {
               var items = ''
               console.log("ASddsadasdsadas")
               records.forEach(function (el, index) {
-                console.log(records, "RECOOOOOORED in render")
-                items += el[Dispfieldkey] + '<br>'
+
+                // $this.parent().find('a').attr('href', '/SitePages/View.aspx?ListKey=' + linkedto + '&IID=' + el["ID"] + '')
+
+                var handleHref = "javascript:"
+                if (el["ID"] && linkedto) {
+                  handleHref = `/SitePages/View.aspx?ListKey=${linkedto}&IID=${el["ID"]}`
+                }
+
+                var htmlLink = `<span><a class='elementLink' href=${handleHref} target='_blank'><i class='fas fa-external-link-alt'></i></a></span>`
+
+                items += el[Dispfieldkey] + htmlLink + '<br>'
+                
+                if (
+                  parentrelatedfilterkeylvl1 &&
+                  parentrelatedfilterkeylvl1 != "undefined"
+                ) {
+
+                  $this.attr(
+                    "data-parentrelatedvaluelvl1",
+                    el[parentrelatedfilterkeylvl1]
+                  );
+                  $(
+                    "[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
+                  ).each(function () {
+                    var elementId = $(this).attr("id"); // get element Id
+                    var elementValue = oListItem.get_item(elementId); // get element value
+                    if (
+                      oListItem.get_item(elementId) &&
+                      oListItem.get_item(elementId) == elementValue
+                    ) {
+                      // matching between value on list
+                      var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
+                      var parenetValue = $(this).attr(
+                        "data-parentrelatedvaluelvl1"
+                      ); // parent value
+                      console.log(parentElement, "parentElement");
+                      console.log(parenetValue, "parenetValue");
+
+                      if (parentElement && parenetValue) {
+                        $(`#${parentElement}`).html(parenetValue);
+                      }
+                    }
+                  })
+
+                }
+
+                if (
+                  parentrelatedfilterkeylvl2 &&
+                  parentrelatedfilterkeylvl2 != "undefined"
+                ) {
+                  
+                  $this.attr(
+                    "data-parentrelatedvaluelvl2",
+                    el[parentrelatedfilterkeylvl2]
+                  );
+                  $(
+                    "[data-parentrelatedvaluelvl2]:not([data-parentrelatedvaluelvl2=undefined])"
+                  ).each(function () {
+                    
+                    var elementId = $(this).attr("id"); // get element Id
+                    var elementValue = oListItem.get_item(elementId); // get element value
+                    if (
+                      oListItem.get_item(elementId) &&
+                      oListItem.get_item(elementId) == elementValue
+                    ) {
+                      // matching between value on list
+                      var parentElement = $(this).data("parentrelatedkeylvl2"); // parent internal name
+                      var parenetValue = $(this).attr(
+                        "data-parentrelatedvaluelvl2"
+                      ); // parent value
+
+
+                      if (parentElement && parenetValue) {
+                        $(`#${parentElement}`).html(parenetValue);
+                      }
+                    }
+                  })
+
+                }
 
               });
               $this.html(items);
@@ -1423,17 +1480,17 @@ window.View_Data_Request = {
           parentrelatedfilterkeylvl2 = $(this).data("parentrelatedfilterkeylvl2"),
           $this = $(this);
 
-          var listFields = ["ID",valfieldkey, Dispfieldkey];
-          if (parentrelatedfilterkeylvl1 && parentrelatedfilterkeylvl1 != "undefined") {
+        var listFields = ["ID", valfieldkey, Dispfieldkey];
+        if (parentrelatedfilterkeylvl1 && parentrelatedfilterkeylvl1 != "undefined") {
 
-            listFields.push(parentrelatedfilterkeylvl1)
-            if(parentrelatedfilterkeylvl2 && parentrelatedfilterkeylvl2 != "undefined"){
-              listFields.push(parentrelatedfilterkeylvl2)
-            }
-            // listFields = ["ID",valfieldkey, Dispfieldkey, parentrelatedfilterkeylvl1];
+          listFields.push(parentrelatedfilterkeylvl1)
+          if (parentrelatedfilterkeylvl2 && parentrelatedfilterkeylvl2 != "undefined") {
+            listFields.push(parentrelatedfilterkeylvl2)
           }
+          // listFields = ["ID",valfieldkey, Dispfieldkey, parentrelatedfilterkeylvl1];
+        }
 
-          console.log(listFields,"listFields listFields")
+        console.log(listFields, "listFields listFields")
 
         if (oListItem.get_item($(this).attr("id")) == null) {
 
@@ -1453,44 +1510,44 @@ window.View_Data_Request = {
             listFields,
             function (records, record, listItem, isDone) {
               if (isDone) {
-                
+
                 records.forEach(function (el, index) {
                   $this.html(el[Dispfieldkey]);
                   $this.parent().find('a').attr('href', '/SitePages/View.aspx?ListKey=' + linkedto + '&IID=' + el["ID"] + '')
 
-                  debugger
+
                   // dont submit part
 
                   if (
-										parentrelatedfilterkeylvl1 &&
-										parentrelatedfilterkeylvl1 != "undefined"
-									) {
-                    
-                    $this.attr(
-											"data-parentrelatedvaluelvl1",
-											el[parentrelatedfilterkeylvl1]
-										);
-                    $(
-											"[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
-										).each(function () {
-                      var elementId = $(this).attr("id"); // get element Id
-											var elementValue = oListItem.get_item(elementId); // get element value
-                      if (
-												oListItem.get_item(elementId) &&
-												oListItem.get_item(elementId) == elementValue
-											) {
-												// matching between value on list
-												var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
-												var parenetValue = $(this).attr(
-													"data-parentrelatedvaluelvl1"
-												); // parent value
-												console.log(parentElement, "parentElement");
-												console.log(parenetValue, "parenetValue");
+                    parentrelatedfilterkeylvl1 &&
+                    parentrelatedfilterkeylvl1 != "undefined"
+                  ) {
 
-												if (parentElement && parenetValue) {								
-													$(`#${parentElement}`).html(parenetValue);
-												}
-											}
+                    $this.attr(
+                      "data-parentrelatedvaluelvl1",
+                      el[parentrelatedfilterkeylvl1]
+                    );
+                    $(
+                      "[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
+                    ).each(function () {
+                      var elementId = $(this).attr("id"); // get element Id
+                      var elementValue = oListItem.get_item(elementId); // get element value
+                      if (
+                        oListItem.get_item(elementId) &&
+                        oListItem.get_item(elementId) == elementValue
+                      ) {
+                        // matching between value on list
+                        var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
+                        var parenetValue = $(this).attr(
+                          "data-parentrelatedvaluelvl1"
+                        ); // parent value
+                        console.log(parentElement, "parentElement");
+                        console.log(parenetValue, "parenetValue");
+
+                        if (parentElement && parenetValue) {
+                          $(`#${parentElement}`).html(parenetValue);
+                        }
+                      }
                     })
 
                   }
@@ -1498,41 +1555,41 @@ window.View_Data_Request = {
                   ////////////////////////////////////////////////////////////////
 
                   if (
-										parentrelatedfilterkeylvl2 &&
-										parentrelatedfilterkeylvl2 != "undefined"
-									) {
-                    debugger
+                    parentrelatedfilterkeylvl2 &&
+                    parentrelatedfilterkeylvl2 != "undefined"
+                  ) {
+                    
                     $this.attr(
-											"data-parentrelatedvaluelvl2",
-											el[parentrelatedfilterkeylvl2]
-										);
+                      "data-parentrelatedvaluelvl2",
+                      el[parentrelatedfilterkeylvl2]
+                    );
                     $(
-											"[data-parentrelatedvaluelvl2]:not([data-parentrelatedvaluelvl2=undefined])"
-										).each(function () {
+                      "[data-parentrelatedvaluelvl2]:not([data-parentrelatedvaluelvl2=undefined])"
+                    ).each(function () {
                       var elementId = $(this).attr("id"); // get element Id
-											var elementValue = oListItem.get_item(elementId); // get element value
+                      var elementValue = oListItem.get_item(elementId); // get element value
                       if (
-												oListItem.get_item(elementId) &&
-												oListItem.get_item(elementId) == elementValue
-											) {
-												// matching between value on list
-												var parentElement = $(this).data("parentrelatedkeylvl2"); // parent internal name
-												var parenetValue = $(this).attr(
-													"data-parentrelatedvaluelvl2"
-												); // parent value
+                        oListItem.get_item(elementId) &&
+                        oListItem.get_item(elementId) == elementValue
+                      ) {
+                        // matching between value on list
+                        var parentElement = $(this).data("parentrelatedkeylvl2"); // parent internal name
+                        var parenetValue = $(this).attr(
+                          "data-parentrelatedvaluelvl2"
+                        ); // parent value
 
 
-												if (parentElement && parenetValue) {								
-													$(`#${parentElement}`).html(parenetValue);
-												}
-											}
+                        if (parentElement && parenetValue) {
+                          $(`#${parentElement}`).html(parenetValue);
+                        }
+                      }
                     })
 
                   }
 
 
 
-                  
+
                 });
               }
             }
@@ -1697,7 +1754,7 @@ window.View_Data_Request = {
         $('#Months,#Quarter,#Midterms').parent().hide();
       }
 
-      debugger
+      
       if (recurrenceChanged == 'yes') {
         var htmlMsg = '<div data-trans-recurrencerepeat class="kpiPeriodChanged ErrorMsg Resources"></div>';
         $('.btnactionrow').html(htmlMsg);
@@ -1748,12 +1805,12 @@ window.View_Data_Request = {
       Get_ProjectData_ByCode.init()
     }
 
-    if (isVROE) {
-      if (listkey == "initiatives") {
-        $('#Types').val('vision');
-        $('#Types').prop('disabled', true);
-      }
-    }
+    // if (isVROE) {
+    //   if (listkey == "initiatives") {
+    //     $('#Types').val('vision');
+    //     $('#Types').prop('disabled', true);
+    //   }
+    // }
     // if (isNew && isEPMO) {
     //   if (listkey == "initiatives") {
     //     $('#Types').val('strategically');
@@ -2821,7 +2878,7 @@ window.Kpi_Related_Goal = {
     }
 
     // $("#RelatedStrategyObjective").prop("disabled", false);
-    debugger
+    
     // if (typeOfIndex == 'main') {
     //   objectiveId = "RelatedStrategyObjective"
     //   if (isPerformanceLeader) {
@@ -4135,7 +4192,7 @@ window.ViewAllFiles_Main_Strategy = {
     var query = SP.CamlQuery.createAllItemsQuery();
     var mytitle;
     mytitle = listkey;
-    debugger
+    
     if (PCODE || ICODE || STCODE) {
       // var code = PCODE ? PCODE : ICODE
       var code = ""
@@ -4224,7 +4281,7 @@ window.ViewAllFiles_Main_Strategy = {
 
 
     while (ListEnumerator.moveNext()) {
-      debugger
+      
       var currentFile = ListEnumerator.get_current();
       var FileID = currentFile.get_item("ItemID");
       var _contentType = currentFile.get_contentType();
@@ -4998,7 +5055,7 @@ var equationKPI = {
     })
     //
 
-    debugger
+    
 
     Update_Kpi_Results.init(kpiEquation)
 
@@ -5067,7 +5124,7 @@ var equationBenefit = {
         F: oListItem.get_item("F"),
         G: oListItem.get_item("G"),
       });
-      debugger
+      
       $('input#BenefitEquation').val(oListItem.get_item("Equation") || '');
       $('p#BenefitEquation').text(oListItem.get_item("Equation") || '');
     }
@@ -5160,7 +5217,7 @@ var equationBenefit = {
   init: function () {
 
     var clientContext = new SP.ClientContext.get_current();
-    debugger
+    
     var oList = clientContext.get_web().get_lists().getByTitle("BenefitsEquations");
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
@@ -5371,7 +5428,7 @@ window.Update_Kpi_Results = {
     //Get list from host web
     var programList = context.get_web().get_lists().getByTitle('KPIResults');
     var camlQuery = new SP.CamlQuery();
-    debugger
+    
     // camlQuery.set_viewXml(
     //   '<View><Query><Where><Eq><FieldRef Name="KPI" /> <Value Type="Text">' + value + "</Value></Eq></Where></Query></View>"
     // );
@@ -5388,7 +5445,7 @@ window.Update_Kpi_Results = {
         if (progColl.get_count() > 0) {
           var progEnum = progColl.getEnumerator();
           while (progEnum.moveNext()) {
-            debugger
+            
             var currentItem = progEnum.get_current();
             var currentId = currentItem.get_item("ID");
             var yearItem = currentItem.get_item("Year");
@@ -5956,7 +6013,7 @@ var Check_Item_Deleted = {
 
 var StrategicObjectives_Status = {
   init: function (value) {
-    debugger
+    
     var status = ''
     if (value && value != No_Data) {
       if (
@@ -6003,7 +6060,7 @@ window.Get_TaskHistory = {
     }
 
     console.log(camelQuery, "camelQuery")
-    debugger
+    
 
     SPHTTPitemsEnumerable = oList.getItems(Get_TaskHistory.g.camlQuery);
     clientContext.load(SPHTTPitemsEnumerable);
@@ -6021,7 +6078,7 @@ window.Get_TaskHistory = {
     console.log(peojectC, "peojectC")
     console.log(relateditemid, "relateditemid")
 
-    debugger
+    
 
     if (workflowname == "Project") {
       wfHistoryLink =
@@ -6186,7 +6243,7 @@ window.Get_TaskHistory = {
     );
   },
   loadMore: function () {
-    debugger
+    
     //Position will be null if all the items in the collection are fetched and there are no more items to be fetched.
     if (Get_TaskHistory.g.position != null) {
       isLoadMore = true;
@@ -6203,4 +6260,106 @@ window.Get_TaskHistory = {
   },
   // Global variables
   g: {},
+}
+
+
+var DontSubmit_DataRequest = {
+  init: function () {
+    // to handle dont submit in edit lvl1
+    $(
+      "[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
+    ).each(function (e) {
+
+      var elementId = ""
+      var elementValue = ""
+      var isMultiSelect = false
+
+
+      if ($(this).hasClass("limulti")) {
+        isMultiSelect = true
+        elementId = $(this).parent().parent().parent().attr("id"); // get element Id
+        elementValue = $(this).find("input:checked").val()
+      } else {
+        elementId = $(this).parent().attr("id"); // get element Id
+        elementValue = $(this).val(); // get element value
+      }
+
+
+      if (isMultiSelect) {
+
+        if (oListItem.get_item(elementId) && oListItem.get_item(elementId).includes(elementValue)) {
+          var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
+          var parenetValue = $(this).data("parentrelatedvaluelvl1"); // parent value
+
+          if (parentElement && parenetValue) {
+            $(`#${parentElement}`).val(parenetValue);
+          }
+        }
+      } else {
+        if (
+          oListItem.get_item(elementId) &&
+          oListItem.get_item(elementId) == elementValue
+        ) {
+          // matching between value on list
+          var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
+          var parenetValue = $(this).data("parentrelatedvaluelvl1"); // parent value
+          if (parentElement && parenetValue) {
+            $(`#${parentElement}`).val(parenetValue);
+          }
+        }
+      }
+    });
+
+
+    // to handle dont submit in edit lvl2
+    $(
+      "[data-parentrelatedvaluelvl2]:not([data-parentrelatedvaluelvl2=undefined])"
+    ).each(function () {
+      var elementId = ""; // get element Id
+      var elementValue = ""; // get element value
+      var isMultiSelect = false
+
+
+      if ($(this).hasClass("limulti")) {
+        isMultiSelect = true
+        elementId = $(this).parent().parent().parent().attr("id"); // get element Id
+        elementValue = $(this).find("input:checked").val()
+      } else {
+        elementId = $(this).parent().attr("id"); // get element Id
+        elementValue = $(this).val(); // get element value
+      }
+
+
+
+      if (isMultiSelect) {
+
+        if (oListItem.get_item(elementId) && oListItem.get_item(elementId).includes(elementValue)) {
+          var parentElement = $(this).data("parentrelatedkeylvl2"); // parent internal name
+          var parenetValue = $(this).data("parentrelatedvaluelvl2"); // parent value
+
+          if (parentElement && parenetValue) {
+            $(`#${parentElement}`).val(parenetValue);
+          }
+        }
+      } else {
+        if (
+          oListItem.get_item(elementId) &&
+          oListItem.get_item(elementId) == elementValue
+        ) {
+          // matching between value on list
+          var parentElement = $(this).data("parentrelatedkeylvl2"); // parent internal name
+          var parenetValue = $(this).data("parentrelatedvaluelvl2"); // parent value
+          if (parentElement && parenetValue) {
+            $(`#${parentElement}`).val(parenetValue);
+          }
+        }
+      }
+
+
+
+
+    });
+    $(".grandFieldInvoke").trigger("change")
+
+  }
 }

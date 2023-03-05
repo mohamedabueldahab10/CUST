@@ -385,11 +385,11 @@ window.ListInfo = {
             let affectedSelectsInfo = [];
 
             let notInvokeListiner = $(this).data("notinvokelistiner")
-            console.log($(this).data("notinvokelistiner"), "AAAAAAAAAAAAAAAAAAAA")
-            debugger
+            console.log($(this).data("notinvokelistiner"), "notinvokelistiner conso")
+
             $("[dynamic=" + parentFieldName + "]").each(function () {
               console.log(parentFieldName, "parentFieldName")
-              debugger
+              
               let affectedFieldName = $(this).attr("id");
               let listName = $(this).data("listname");
               let filterField = $(this).data("filterfield");
@@ -450,7 +450,7 @@ window.ListInfo = {
             });
             //
             //
-            debugger
+            
             if (notInvokeListiner) { // will not invoke the function if this attr true (we use it on hrsd initiative to filter on sos when chose startegy and level)
               console.log("Inside not invoke listiner")
 
@@ -498,8 +498,8 @@ window.ListInfo = {
           //////////////////////////////// get siblings value like AcceptanceCriteria in benefits when change on delivrable
 
           $('body').on('change', '.getsiblingdata', function (event) {
-            debugger
-            console.log($(this).find(':selected').data('siblingvalue'), "Ssssssssssssssssssss")
+            
+           
             var siblingData = $(this).find(':selected').data('siblingvalue')
             var siblingTarget = $(this).data('siblingtarget')
 
@@ -521,7 +521,7 @@ window.ListInfo = {
           ////////////////////////////// calculate the end date based on start date and duration
 
           $("input.autoEndDate").keyup(function (event) {
-            debugger
+            
             var duration = event.target.value;
             var sourceElement = $(this).data('sourceelementdate');
             var sourceElementValue = $(`#${sourceElement}`).val();
@@ -553,7 +553,7 @@ window.ListInfo = {
           ///////////////////////////////
           $("input.percentbyparent").keyup(function (event) {
             // calculate the target elemnt like in delivrable
-            debugger
+            
             var isMasterDetails = $(this).parent().parent().hasClass("Details-Item")
             var parentValue = 0,
               targetElement = "",
@@ -663,7 +663,7 @@ window.ListInfo = {
 
 
           // add new style for wf
-          debugger
+          
           if (isWF) {
             $(".FormContainer").addClass("wf-mode");
             $("#navbarsParent").addClass("wfMode");
@@ -720,7 +720,7 @@ window.ListInfo = {
 
           //////// apply grandFieldInvoke
           $(".grandFieldInvoke").on("change", function (event) {
-            debugger
+            
             var grandId = $(this).data("grandfieldid")
             var childId = $(this).data("childfieldid")
             var childFieldIdSource = $(this).data("childfieldidsource")
@@ -854,13 +854,13 @@ window.ListInfo = {
             if (listkey == "initiatives") {
               Sectors_Info.init(); // to get the department related to sector on edit
               // ListInfo.g.showFieldsIfInitiativeVision();
-              $("#Types").on("change", function () {
-                var type = $(this).val();
-                Initiative_Sos.init("SOs", type); //get related sos depends on type
-                if (type == "vision") {
-                  Initiative_Strategy_Sos.init("SOs");
-                }
-              });
+              // $("#Types").on("change", function () {
+              //   var type = $(this).val();
+              //   Initiative_Sos.init("SOs", type); //get related sos depends on type
+              //   if (type == "vision") {
+              //     Initiative_Strategy_Sos.init("SOs");
+              //   }
+              // });
             }
             //change in Edit
             if (listkey == "sos") {
@@ -920,14 +920,14 @@ window.ListInfo = {
               // Initiative_Stages_Data_Request.init();
               Sectors_Info.init(); // sector
               // ListInfo.g.showFieldsIfInitiativeVision();
-              $("#Types").on("change", function () {
-                var type = $(this).val();
-                Initiative_Sos.init("SOs", type); //get related sos depends on type
+              // $("#Types").on("change", function () {
+              //   var type = $(this).val();
+              //   Initiative_Sos.init("SOs", type); //get related sos depends on type
 
-                if (type == "vision") {
-                  Initiative_Strategy_Sos.init("SOs");
-                }
-              });
+              //   if (type == "vision") {
+              //     Initiative_Strategy_Sos.init("SOs");
+              //   }
+              // });
             }
             if (listkey == "deliverables") {
               console.log("IN NEEEEEEEEEEEEEEW");
@@ -959,12 +959,12 @@ window.ListInfo = {
             //     ListInfo.g.toggleFields($("#Types")); // call the toggle fied when field is disabled and should the type be vision on vrop
             //   }
             // }
-            if (isVROE) {
-              if (listkey == "initiatives") {
-                $("#Types").val("vision");
-                $("#Types").prop("disabled", true);
-              }
-            }
+            // if (isVROE) {
+            //   if (listkey == "initiatives") {
+            //     $("#Types").val("vision");
+            //     $("#Types").prop("disabled", true);
+            //   }
+            // }
             // if (isNew && isEPMO) {
             //   if (listkey == "initiatives") {
             //     $("#Types").val("strategically");
@@ -3946,6 +3946,40 @@ window.ListInfo = {
           //   }
           // }
         }
+
+        // to handle dont submit in edit
+
+        var listFields = [element.valfieldkey, dispfieldkey, element.grpfieldkey];
+
+
+        if (element.sourcefieldlvl1) {
+          // to handle sector and subsector (get the element from list)
+          parentFieldKey = element.fieldsinformlvl1;
+          // listFields = [element.valfieldkey, dispfieldkey, element.filterField];
+          listFields.push(element.sourcefieldlvl1)
+
+          if (element.sourcefieldlvl2) {
+            listFields.push(element.sourcefieldlvl2)
+          }
+
+        } else {
+          parentFieldKey = "";
+        }
+        //////////////////////////////////
+        var grandFieldId = ""
+        if (element.grandFieldId) {
+          grandFieldId = `data-grandFieldId=${element.grandFieldId}`
+        } else {
+          grandFieldId = ""
+        }
+        var notInvokeListinerData = "", seconedValueListiner = "";
+        if (element.notInvokeListiner) {
+          notInvokeListinerData = `data-notInvokeListiner=${element.notInvokeListiner}`
+          seconedValueListiner = `data-seconedvaluelistiner=""`
+        }
+        ////////////////////////////////////
+
+
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -3990,7 +4024,28 @@ window.ListInfo = {
           '" class="showhide-trigger" title="Show/Hide ' +
           displayName +
           '"></div>' +
-          '<ul myfield="' +
+          '<ul ' +
+          dynamic +
+          " " +
+          seconeddynamic +
+          " " +
+          'data-listname="' +
+          element.source +
+          '" data-valfieldkey="' +
+          element.valfieldkey +
+          '" data-Dispfieldkey="' +
+          dispfieldkey +
+          '"data-filterfield="' +
+          element.filterField +
+          '"data-queryfieldvalue="' + // 
+          element.queryFieldValue +
+          '"data-queryfield="' + // 
+          element.queryField +
+          '"data-queryfieldtype="' + // 
+          element.queryFieldType +
+          '" data-filterfieldtype="' +
+          element.filterFieldType +
+          '" myfield="' +
           element.InternalName +
           '" id="' +
           element.InternalName +
@@ -4005,7 +4060,7 @@ window.ListInfo = {
           _spPageContextInfo.siteServerRelativeUrl,
           element.source,
           customQuery,
-          [element.valfieldkey, dispfieldkey, element.grpfieldkey],
+          listFields,
           function (records, record, listItem, isDone) {
             if (isDone) {
               var grpfield = element.grpfieldkey;
@@ -4019,7 +4074,15 @@ window.ListInfo = {
                 htmlBody += '<label class="grp-select">' + el[0] + "</label>";
                 el[1].forEach((dl) => {
                   htmlBody +=
-                    "<li>" +
+                    "<li data-parentrelatedvaluelvl1=" +
+                    dl[element.sourcefieldlvl1] +
+                    " data-parentrelatedkeylvl1= " +
+                    element.fieldsinformlvl1
+                    + " data-parentrelatedvaluelvl2=" +
+                    dl[element.sourcefieldlvl2]
+                    + " data-parentrelatedkeylvl2=" +
+                    element.fieldsinformlvl2
+                    + " class='limulti'>" + // we add class limulti to can check if this element multi select or not in dontsubmit feature to get the data
                     '<div class="checkbox">' +
                     "<label>" +
                     '<input value="' +
@@ -4088,7 +4151,7 @@ window.ListInfo = {
               });
 
               internalQuery += "</Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
-              debugger
+              
               var filedsArr = [element.valfieldkey, element.Dispfieldkey]
               if (element.hasOwnProperty('valsiblingkey')) {
                 filedsArr = [element.valfieldkey, element.Dispfieldkey, element.valsiblingkey]
@@ -4102,8 +4165,7 @@ window.ListInfo = {
                   if (listItem) itemsID.push(listItem.get_id());
                   if (isDone) {
 
-                    console.log(records, "records")
-                    debugger
+            
                     htmlBody =
                       '<div class="col-md-6 CFIELD ' +
                       dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -4553,8 +4615,7 @@ window.ListInfo = {
         var customQuery;
         var sourcelistQuery;
         var RelatedItemUsed = [];
-        console.log("in lookupwithoutrepeat")
-        debugger
+  
         customQuery =
           "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
 
@@ -6532,7 +6593,6 @@ var View_ListInfo = {
         // console.log('Finishing label ' + Label + ' - IsDone: ' + isDone);
         htmlBuilder += "</div></div></div>";
         if (isDone) {
-          debugger
           actionTaskHeader = "";
           if (isWF) {
             actionTaskHeader =
@@ -8176,10 +8236,14 @@ var View_ListInfo = {
             element.validation +
             ">" +
             displayName +
+            // " " +
+            // `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>" : ""}` +
             "</label>" +
             '<p type="multiselect" class="viewmode-value" data-valfieldkey="' + element.valfieldkey + '" data-dispfieldkey="' + element.Dispfieldkey + '" data-listname="' + element.source + '" id="' +
             element.InternalName +
-            '" ></p>' +
+            '" data-parentrelatedkeylvl1="' + element.fieldsinformlvl1 + '" data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1="' +
+            element.sourcefieldlvl1
+            + '" data-parentrelatedkeylvl2="' + element.fieldsinformlvl2 + '" data-parentrelatedvaluelvl2="" data-parentrelatedfilterkeylvl2="' + element.sourcefieldlvl2 + '" data-linkedto="' + element.linkedto + '"></p>' +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -8514,8 +8578,7 @@ dynamicAffectSelect = {
   // The main Initialization function
   // The main Initialization function
   init: function (affectedSelectsInfo) {
-    console.log(affectedSelectsInfo, "affectedSelectsInfo");
-    debugger
+ 
     var queryFieldValue = affectedSelectsInfo[0].queryFieldValue
       ? affectedSelectsInfo[0].queryFieldValue
       : "";
@@ -8596,15 +8659,51 @@ dynamicAffectSelect = {
     var listItemEnum = collListItem.getEnumerator();
     let affectedSelectsInfo = dynamicAffectSelect.g.affectedSelectsInfo[0];
 
-    let selectedVal = $(`select#${affectedSelectsInfo.affectedFieldName}`).attr("value"); // get selected val to use it in edit
+    var targetFieldType = $(`#${affectedSelectsInfo.affectedFieldName}`).attr("type");
 
-    $(`select#${affectedSelectsInfo.affectedFieldName}`).html("");
+    
+    let selectedVal = ""
+    let optionsBody = ""
 
-    let optionsBody = '<option class="Resources" value="" selected="" disabled=""></option>'; // to not choose the first value in dropdown
+
+
+
+
+    if (targetFieldType == 'multiselect') {
+
+      // $(`ul#RelatedObjective ul.dropdown-menu`).html("");
+      // RelatedObjective  
+
+      // selectedVal = $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu`).find("input:checked").val() 
+      selectedVal = $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu`)
+        .find("input:checked")
+        .map(function () {
+          //getting selected choices
+          return $(this).val();
+        })
+        .get();
+
+      $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu`).html("");
+
+
+ 
+
+    } else {
+      selectedVal = $(`select#${affectedSelectsInfo.affectedFieldName}`).attr("value"); // get selected val to use it in edit
+
+      $(`select#${affectedSelectsInfo.affectedFieldName}`).html("");
+
+      optionsBody = '<option class="Resources" value="" selected="" disabled=""></option>'; // to not choose the first value in dropdown
+    }
+
+
 
 
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
+
+
+
       let dispfieldkey = oListItem.get_item(
         `${affectedSelectsInfo.dispFieldKey}`
       );
@@ -8616,18 +8715,83 @@ dynamicAffectSelect = {
       } else {
         var optionText = dispfieldkey;
       }
-      optionsBody +=
-        '<option option-id="' +
-        oListItem.get_id() +
-        '" value="' +
-        valfieldkey +
-        '">' +
-        optionText +
-        "</option>";
-    }
-    $(`select#${affectedSelectsInfo.affectedFieldName}`).html(optionsBody);
 
-    $(`select#${affectedSelectsInfo.affectedFieldName}`).val(selectedVal);
+
+      // Object.entries(result).forEach((el) => {
+      //   htmlBody += '<label class="grp-select">' + el[0] + "</label>";
+      //   el[1].forEach((dl) => {
+      //     htmlBody +=
+      //       "<li>" +
+      //       '<div class="checkbox">' +
+      //       "<label>" +
+      //       '<input value="' +
+      //       dl[element.valfieldkey] +
+      //       '" id="' +
+      //       element.InternalName +
+      //       '" type="checkbox">' +
+      //       dl[dispfieldkey] +
+      //       "</label>" +
+      //       "</div>" +
+      //       "</li>";
+      //   });
+      // });
+      console.log(valfieldkey, "valfieldkey")
+
+      if (targetFieldType == "multiselect") {
+        optionsBody +=
+          `<label class="grp-select">${valfieldkey}</label>
+        <li>
+        <div class="checkbox">
+        <label>
+          <input value="${valfieldkey}" id="${affectedSelectsInfo.affectedFieldName}" type="checkbox">
+          ${dispfieldkey}
+        </label>
+        </div>
+        </li>
+        `
+      } else {
+
+        optionsBody +=
+          '<option option-id="' +
+          oListItem.get_id() +
+          '" value="' +
+          valfieldkey +
+          '">' +
+          optionText +
+          "</option>";
+      }
+    }
+
+
+    if (targetFieldType == "multiselect") {
+
+      console.log(optionsBody, "optionsBody optionsBodyoptionsBody")
+      $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu`).html(optionsBody)
+      $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu li`).each(function () {
+        
+        var liInputValue = $(this).find("input").val()
+
+        if (selectedVal.includes(liInputValue)) {
+          $(this).find("input").attr("checked", true);
+        }
+
+
+      })
+
+      // $(`ul#RelatedObjective ul.dropdown-menu li`).each(function () {
+
+      //   console.log($(this).find("input").val(), "VVVVVVVVVVVVVVVVVv")
+      // })
+
+    } else {
+      $(`select#${affectedSelectsInfo.affectedFieldName}`).html(optionsBody);
+
+      $(`select#${affectedSelectsInfo.affectedFieldName}`).val(selectedVal);
+    }
+
+    console.log(affectedSelectsInfo.affectedFieldName, "affectedSelectsInfo")
+
+
 
     dynamicAffectSelect.g.affectedSelectsInfo =
       dynamicAffectSelect.g.affectedSelectsInfo.shift();

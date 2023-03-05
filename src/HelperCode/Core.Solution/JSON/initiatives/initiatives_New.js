@@ -172,80 +172,80 @@ var Information_Form = [
         },
         validation: 'required',
       },
-      {
-        InternalName: 'RelatedObjective',
-        DisplayNameEn: 'Related Objective',
-        DisplayName: 'الهدف المرتبط',
-        type: 'lookup',
-        source: 'SOs',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
-        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
-        dynamic: 'RelatedStrategy',
-        // fieldsinlookup: "RelatedStrategy",
-        filterField: 'RelatedStrategy',
-        filterFieldType: 'Text',
-        //
-        accessFilter: [
-          {
-            role: 'VROE',
-            conditions: [
-              {
-                field: 'Types',
-                type: 'Text',
-                values: ['vision'],
-              },
-            ],
-          },
-          {
-            role: 'VROP',
-            conditions: [
-              {
-                field: 'Types',
-                type: 'Text',
-                values: ['vision'],
-              },
-            ],
-          },
-          {
-            role: 'LMSE',
-            conditions: [
-              {
-                field: 'Types',
-                type: 'Text',
-                values: ['lms'],
-              },
-            ],
-          },
-          {
-            role: 'LMSP',
-            conditions: [
-              {
-                field: 'Types',
-                type: 'Text',
-                values: ['lms'],
-              },
-            ],
-          },
-        ],
-      },
       // {
       //   InternalName: 'RelatedObjective',
       //   DisplayNameEn: 'Related Objective',
       //   DisplayName: 'الهدف المرتبط',
-      //   type: 'lookupmultiselect',
+      //   type: 'lookup',
       //   source: 'SOs',
       //   Dispfieldkey: 'Name',
-      //   valfieldkey: 'Name',
-      //   grpfieldkey: 'Title',
+      //   valfieldkey: 'Title',
+      //   isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+      //   dynamic: 'RelatedStrategy',
+      //   // fieldsinlookup: "RelatedStrategy",
+      //   filterField: 'RelatedStrategy',
+      //   filterFieldType: 'Text',
       //   //
-      //   // dynamic: 'RelatedStrategy',
-      //   // filterField: 'RelatedStrategy',
-      //   // filterFieldType: 'Text',
-      //   // queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
-      //   // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
-      //   // queryFieldValue: 'sublevel2,sublevel3', // if i need to make the field with filter should add this
+      //   accessFilter: [
+      //     {
+      //       role: 'VROE',
+      //       conditions: [
+      //         {
+      //           field: 'Types',
+      //           type: 'Text',
+      //           values: ['vision'],
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       role: 'VROP',
+      //       conditions: [
+      //         {
+      //           field: 'Types',
+      //           type: 'Text',
+      //           values: ['vision'],
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       role: 'LMSE',
+      //       conditions: [
+      //         {
+      //           field: 'Types',
+      //           type: 'Text',
+      //           values: ['lms'],
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       role: 'LMSP',
+      //       conditions: [
+      //         {
+      //           field: 'Types',
+      //           type: 'Text',
+      //           values: ['lms'],
+      //         },
+      //       ],
+      //     },
+      //   ],
       // },
+      {
+        InternalName: 'RelatedObjective',
+        DisplayNameEn: 'Related Objective',
+        DisplayName: 'الهدف المرتبط',
+        type: 'lookupmultiselect',
+        source: 'SOs',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        grpfieldkey: 'Title',
+        //
+        dynamic: 'RelatedStrategy',
+        filterField: 'RelatedStrategy',
+        filterFieldType: 'Text',
+        // queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
+        // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
+        // queryFieldValue: 'sublevel2,sublevel3', // if i need to make the field with filter should add this
+      },
       {
         InternalName: 'RelatedProgram',
         DisplayNameEn: 'Related Program',
