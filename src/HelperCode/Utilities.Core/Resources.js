@@ -1171,7 +1171,7 @@
     capex: "CAPEX",
 
     //lesson learned source
-    department: "Departments",
+    department: "Department",
 
     subsector: "Deputyship",
     budgetitem: "Budget Item",
