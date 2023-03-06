@@ -575,7 +575,7 @@ var Project_Home_Info_Request = {
       projectimportance +
       ' class="Resources initiativeProjHomeInfoValueStyle"></span>'
     );
-    if(userIsActiveStatusForUseInProjectHome){
+    if(userIsActiveStatusForUseInProjectHome ==true){
     $("#PJStatus").append(
       "<span data-trans-" +
       projectworkingstatus +
