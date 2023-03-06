@@ -179,6 +179,7 @@
     sector: "القطاع",
     department: "الإدارات",
     subsector: "الوكالة",
+    unit:"وحدة",
     budgetitem: "البند المرتبط",
     pmo: "مكتب تحكم إدارة المشاريع",
     epmo: "مكتب إدارة مشروع المؤسسة",
@@ -1105,6 +1106,7 @@
     medium: "Medium",
     low: "Low",
     critical: "Critical",
+    cancelled3: "Cancelled",
     //budget item
     support: "Support",
     operational: "Operational",
@@ -1170,9 +1172,9 @@
     capex: "CAPEX",
 
     //lesson learned source
-    department: "Departments",
-
+    department: "Department",
     subsector: "Deputyship",
+    unit:"Unit",
     budgetitem: "Budget Item",
     sector: "Sector",
     pmo: "PMO",

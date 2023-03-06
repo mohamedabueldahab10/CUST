@@ -70,7 +70,7 @@ var ListArray = [
 		FormTitle: "الدروس المستفادة",
 		TitleEn: "Lessons Learned",
 		projnav: "Project Navigation",
-		projectrelated: true,
+		// projectrelated: true,
 		subfolder: true,
 	},
 	{
@@ -157,7 +157,7 @@ var ListArray = [
 		FormTitle: "مخرجات الشراكات الاستراتيجية",
 		TitleEn: "Strategic Partnerships Deliverables",
 		projnav: "Project Navigation",
-		projectrelated: true,
+		// projectrelated: true,
 		subfolder: true,
 	},
 	{
@@ -234,7 +234,7 @@ var ListArray = [
 		FormTitle: "معالم الشراكات الاستراتيجية",
 		TitleEn: "Strategic Partnerships Milestones ",
 		projnav: "Project Navigation",
-		projectrelated: true,
+		// projectrelated: true
 		subfolder: true,
 	},
 	{
@@ -446,7 +446,7 @@ var ListArray = [
 		TitleEn: "Achievements",
 		projnav: "Project Navigation",
 		subfolder: true,
-		projectrelated:true
+		// projectrelated:true
 	},
 	{
 		strategicpartnershipsvendors: "SPVendors",
@@ -455,7 +455,7 @@ var ListArray = [
 		TitleEn: "Srategic Parternship Vendors",
 		projnav: "Project Navigation",
 		subfolder: true,
-		projectrelated:true
+		// projectrelated:true
 	},
 	{
 		strategicpartnershipsimpactmeasurement: "SPImpactMeasurement",
@@ -464,7 +464,7 @@ var ListArray = [
 		TitleEn: "Srategic Parternship Impact Measurement",
 		projnav: "Project Navigation",
 		subfolder: true,
-		projectrelated:true
+		// projectrelated:true
 	},
 	{
 		strategicpartnershipsachievements: "SPAchievements",
@@ -473,7 +473,7 @@ var ListArray = [
 		TitleEn: "Srategic Parternship Achievements",
 		projnav: "Project Navigation",
 		subfolder: true,
-		projectrelated:true
+		// projectrelated:true
 	},
 	{
 		coc: "Certifications",
@@ -603,7 +603,7 @@ var ListArray = [
 		TitleEn: "Strategic Partnerships Issues",
 		projnav: "Project Navigation",
 		subfolder: true,
-		projectrelated:true
+		// projectrelated:true
 		
 	},
 	{
@@ -613,7 +613,7 @@ var ListArray = [
 		TitleEn: "Strategic Partnerships MOM",
 		projnav: "Project Navigation",
 		subfolder: true,
-		projectrelated:true
+		// projectrelated:true
 	},
 	{
 		initiativemom: "MOM",
@@ -638,7 +638,7 @@ var ListArray = [
 		TitleEn: "Initiative Risks",
 		projnav: "Project Navigation",
 		subfolder: true,
-		projectrelated:true
+		// projectrelated:true
 	},
 	{
 		instrumentexpenditures: "Instrument Expenditures",
