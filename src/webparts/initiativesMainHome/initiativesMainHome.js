@@ -83,7 +83,7 @@ var BudgetLabelsEn = [
 ];
 
 // var statusOccuresData = ["stat3", "stat1", "stat6", "stat2", "stat7"];
-var statusOccuresData = ["stat7", "stat6", "stat5", "stat4", "stat3","stat2","stat1"];
+var statusOccuresData = ["stat7", "stat6", "stat5", "stat4", "stat3", "stat2", "stat1"];
 
 
 if (
@@ -105,23 +105,23 @@ if (
   var No_Data = "Not Found";
 }
 window.UInitiatives = [];
-var iconstagesm = require("../../HelperRessources/img/icon-stage-sm.png");
-var iconstatustimesm = require("../../HelperRessources/img/icon-status-time-sm.png");
-var calendar = require("../../HelperRessources/img/calendar.svg");
-var iconimportantsm = require("../../HelperRessources/img/icon-important-sm.png");
-var iconstrategysm = require("../../HelperRessources/img/analysis.png");
-var risk = require("../../HelperRessources/img/risk.svg");
-var progress = require("../../HelperRessources/img/progress.svg");
-var mizania = require("../../HelperRessources/img/mizania.svg");
+// var iconstagesm = require("../../HelperRessources/img/icon-stage-sm.png");
+// var iconstatustimesm = require("../../HelperRessources/img/icon-status-time-sm.png");
+// var calendar = require("../../HelperRessources/img/calendar.svg");
+// var iconimportantsm = require("../../HelperRessources/img/icon-important-sm.png");
+// var iconstrategysm = require("../../HelperRessources/img/analysis.png");
+// var risk = require("../../HelperRessources/img/risk.svg");
+// var progress = require("../../HelperRessources/img/progress.svg");
+// var mizania = require("../../HelperRessources/img/mizania.svg");
 
-// var iconstagesm;// = require("../../HelperRessources/img/icon-stage-sm.png");
-// var iconstatustimesm;// = require("../../HelperRessources/img/icon-status-time-sm.png");
-// var calendar;// = require("../../HelperRessources/img/calendar.svg");
-// var iconimportantsm;// = require("../../HelperRessources/img/icon-important-sm.png");
-// var iconstrategysm;// = require("../../HelperRessources/img/analysis.png");
-// var risk;// = require("../../HelperRessources/img/risk.svg");
-// var progress;//= require("../../HelperRessources/img/progress.svg");
-// var mizania;// = require("../../HelperRessources/img/mizania.svg");
+var iconstagesm;// = require("../../HelperRessources/img/icon-stage-sm.png");
+var iconstatustimesm;// = require("../../HelperRessources/img/icon-status-time-sm.png");
+var calendar;// = require("../../HelperRessources/img/calendar.svg");
+var iconimportantsm;// = require("../../HelperRessources/img/icon-important-sm.png");
+var iconstrategysm;// = require("../../HelperRessources/img/analysis.png");
+var risk;// = require("../../HelperRessources/img/risk.svg");
+var progress;//= require("../../HelperRessources/img/progress.svg");
+var mizania;// = require("../../HelperRessources/img/mizania.svg");
 //filter vars
 var PQuery =
   "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>",
@@ -748,8 +748,8 @@ window.initiativeRequest = {
               checked: false,
               disabled: true,
             })
-            // .trigger("change");
-            initiativeRequest.g.clearFilterHandler()
+          // .trigger("change");
+          initiativeRequest.g.clearFilterHandler()
         }
       });
       initiativeRequest.g.filtertrigger(); // filter trigger
@@ -823,8 +823,8 @@ window.initiativeRequest = {
         portfoliosoptions = [];
 
         if (isRoleDataLevelAccess) {
-					FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
-				}
+          FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
+        }
 
         $(".page-filter .dropdown-menu").each(function () {
           //looping through filters
@@ -949,36 +949,18 @@ window.initiativeRequest = {
         for (var i = 0; i < FilterChoices.length; i++) {
           //only one choice
           if (FilterChoices.length == 1) {
-            Where_Body +=
-              '<In><FieldRef Name="' +
-              FilterChoices[i].internalName +
-              '" /><Values>';
-            for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-              Where_Body +=
-                '<Value Type="' +
-                FilterChoices[i].Type +
-                '">' +
-                FilterChoices[i].Values[j] +
-                "</Value>";
-            }
-            Where_Body += "</Values></In>";
-          }
-          //Two choices
-          else if (FilterChoices.length == 2) {
-            if (i == 0) {
-              Where_Body +=
-                '<And><In><FieldRef Name="' +
-                FilterChoices[i].internalName +
-                '" /><Values>';
+            if (FilterChoices[i].targetIsMultiFilter) {
               for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-                Where_Body +=
-                  '<Value Type="' +
-                  FilterChoices[i].Type +
-                  '">' +
-                  FilterChoices[i].Values[j] +
-                  "</Value>";
+                if (j == FilterChoices[i].Values.length - 1) {
+                  Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                } else {
+                  Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                }
               }
-              Where_Body += "</Values></In>";
+              var countOr = (Where_Body.match(/<Or>/g) || []).length;
+              var ORC = "</Or>".repeat(countOr);
+              Where_Body += ORC;
+
             } else {
               Where_Body +=
                 '<In><FieldRef Name="' +
@@ -992,27 +974,108 @@ window.initiativeRequest = {
                   FilterChoices[i].Values[j] +
                   "</Value>";
               }
-              Where_Body += "</Values></In></And>";
+              Where_Body += "</Values></In>";
+            }
+          }
+          //Two choices
+          else if (FilterChoices.length == 2) {
+
+            if (i == 0) {
+              if (FilterChoices[i].targetIsMultiFilter) {
+
+                Where_Body += '<And>'
+                for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                  if (j == FilterChoices[i].Values.length - 1) {
+                    Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  } else {
+                    Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  }
+                }
+
+                var countOr = (Where_Body.match(/<Or>/g) || []).length;
+                var ORC = "</Or>".repeat(countOr);
+                Where_Body += ORC;
+              } else {
+                Where_Body +=
+                  '<And><In><FieldRef Name="' +
+                  FilterChoices[i].internalName +
+                  '" /><Values>';
+                for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                  Where_Body +=
+                    '<Value Type="' +
+                    FilterChoices[i].Type +
+                    '">' +
+                    FilterChoices[i].Values[j] +
+                    "</Value>";
+                }
+                Where_Body += "</Values></In>";
+              }
+            } else {
+              if (FilterChoices[i].targetIsMultiFilter) {
+                Where_Body += ''
+                for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                  if (j == FilterChoices[i].Values.length - 1) {
+                    Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  } else {
+                    Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  }
+                }
+
+                var countOr = (Where_Body.match(/<Or>/g) || []).length;
+                var ORC = "</Or>".repeat(countOr);
+                Where_Body += ORC;
+                Where_Body += '</And>'
+
+
+              } else {
+                Where_Body +=
+                  '<In><FieldRef Name="' +
+                  FilterChoices[i].internalName +
+                  '" /><Values>';
+                for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                  Where_Body +=
+                    '<Value Type="' +
+                    FilterChoices[i].Type +
+                    '">' +
+                    FilterChoices[i].Values[j] +
+                    "</Value>";
+                }
+                Where_Body += "</Values></In></And>";
+              }
             }
           }
           //More than two choices
           else if (FilterChoices.length > 2) {
             //two Eqs in last And
             if (i == FilterChoices.length - 1) {
-              Where_Body +=
-                '<In><FieldRef Name="' +
-                FilterChoices[i].internalName +
-                '" /><Values>';
-              for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-                Where_Body +=
-                  '<Value Type="' +
-                  FilterChoices[i].Type +
-                  '">' +
-                  FilterChoices[i].Values[j] +
-                  "</Value>";
-              }
-              Where_Body += "</Values></In>";
+              if (FilterChoices[i].targetIsMultiFilter) {
 
+                Where_Body += ''
+                for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                  if (j == FilterChoices[i].Values.length - 1) {
+                    Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  } else {
+                    Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  }
+                }
+                var countOr = (Where_Body.match(/<Or>/g) || []).length;
+                var ORC = "</Or>".repeat(countOr);
+                Where_Body += ORC;
+              } else {
+                Where_Body +=
+                  '<In><FieldRef Name="' +
+                  FilterChoices[i].internalName +
+                  '" /><Values>';
+                for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                  Where_Body +=
+                    '<Value Type="' +
+                    FilterChoices[i].Type +
+                    '">' +
+                    FilterChoices[i].Values[j] +
+                    "</Value>";
+                }
+                Where_Body += "</Values></In>";
+              }
               //appending And closure
               var count = (Where_Body.match(/<And>/g) || []).length;
               var ANDC = "</And>".repeat(count);
@@ -1020,19 +1083,33 @@ window.initiativeRequest = {
             }
             //normal And
             else {
-              Where_Body +=
-                '<And><In><FieldRef Name="' +
-                FilterChoices[i].internalName +
-                '" /><Values>';
-              for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+              if (FilterChoices[i].targetIsMultiFilter) {
+                Where_Body += '<And>'
+                for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                  if (j == FilterChoices[i].Values.length - 1) {
+                    Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  } else {
+                    Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  }
+                }
+                var countOr = (Where_Body.match(/<Or>/g) || []).length;
+                var ORC = "</Or>".repeat(countOr);
+                Where_Body += ORC;
+              } else {
                 Where_Body +=
-                  '<Value Type="' +
-                  FilterChoices[i].Type +
-                  '">' +
-                  FilterChoices[i].Values[j] +
-                  "</Value>";
+                  '<And><In><FieldRef Name="' +
+                  FilterChoices[i].internalName +
+                  '" /><Values>';
+                for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                  Where_Body +=
+                    '<Value Type="' +
+                    FilterChoices[i].Type +
+                    '">' +
+                    FilterChoices[i].Values[j] +
+                    "</Value>";
+                }
+                Where_Body += "</Values></In>";
               }
-              Where_Body += "</Values></In>";
             }
           }
           // Where_Body += '</And>';
@@ -1091,8 +1168,8 @@ window.initiativeRequest = {
           FilterChoices = [];
 
           if (isRoleDataLevelAccess) {
-						FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
-					}
+            FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
+          }
 
           initiativeRequest.g.camlfilterbuilder();
 
@@ -1609,49 +1686,49 @@ window.initiativeRequest = {
     },
     clearFilterHandler: function () {
 
-			FilterChoices = [];
-			portfoliosdata = [];
-			portfoliosoptions = [];
-			if (isRoleDataLevelAccess) {
-				FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
-			}
-			$(".page-filter .dropdown-menu").each(function () {
-				//looping through filters
-				var internalName = $(this).find("input:checkbox").data("internal");
-				var fieldType = $(this).find("input:checkbox").data("type");
-				var BooleanfieldType = $(this)
-					.find("input:checkbox")
-					.data("columntype");
-				// console.log('BooleanfieldType', BooleanfieldType);
-				var selectedchoices = $(this)
-					.find("input:checked")
-					.map(function () {
-						//getting selected choices
-						return $(this).val();
-					})
-					.get();
-				if (selectedchoices.length) {
-					//checking if there are choices
-					if (BooleanfieldType == "Boolean") {
-						for (i = 0; i < selectedchoices.length; i++) {
-							if (
-								selectedchoices[i] == "true" ||
-								selectedchoices[i] == "Yes" ||
-								selectedchoices[i] == "yes"
-							) {
-								selectedchoices[i] = 1;
-							} else selectedchoices[i] = 0;
-						}
-					}
-					FilterChoices.push({
-						internalName: internalName,
-						Type: fieldType,
-						Values: selectedchoices,
-					});
-				}
-			});
-			initiativeRequest.g.camlfilterbuilder();
-		}
+      FilterChoices = [];
+      portfoliosdata = [];
+      portfoliosoptions = [];
+      if (isRoleDataLevelAccess) {
+        FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
+      }
+      $(".page-filter .dropdown-menu").each(function () {
+        //looping through filters
+        var internalName = $(this).find("input:checkbox").data("internal");
+        var fieldType = $(this).find("input:checkbox").data("type");
+        var BooleanfieldType = $(this)
+          .find("input:checkbox")
+          .data("columntype");
+        // console.log('BooleanfieldType', BooleanfieldType);
+        var selectedchoices = $(this)
+          .find("input:checked")
+          .map(function () {
+            //getting selected choices
+            return $(this).val();
+          })
+          .get();
+        if (selectedchoices.length) {
+          //checking if there are choices
+          if (BooleanfieldType == "Boolean") {
+            for (i = 0; i < selectedchoices.length; i++) {
+              if (
+                selectedchoices[i] == "true" ||
+                selectedchoices[i] == "Yes" ||
+                selectedchoices[i] == "yes"
+              ) {
+                selectedchoices[i] = 1;
+              } else selectedchoices[i] = 0;
+            }
+          }
+          FilterChoices.push({
+            internalName: internalName,
+            Type: fieldType,
+            Values: selectedchoices,
+          });
+        }
+      });
+      initiativeRequest.g.camlfilterbuilder();
+    }
   },
 };
 window.checkInitiativeHomeHtml = setInterval(function () {
@@ -2774,7 +2851,7 @@ function handleStatusBarChart() {
 
   background_7.addColorStop(0, "#a9a9a9");
   background_7.addColorStop(1, "#696969");
-  
+
 
   // background_4.addColorStop(0, "#688393");
   // background_4.addColorStop(1, "#15425a");

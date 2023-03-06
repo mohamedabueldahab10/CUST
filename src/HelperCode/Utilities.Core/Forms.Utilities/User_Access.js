@@ -9330,13 +9330,6 @@ let data_Level2_Access = {
 
 
 
-
-
-
-
-        console.log("Data 3rd level access queryBody", queryBody);
-        console.log("Data 3rd level access containqueryBody", containqueryBody);
-
         if (data_Level1_Access.g.dataLevel > 3) {
           data_Level3_Access.init(listName);
         }
