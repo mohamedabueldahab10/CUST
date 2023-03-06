@@ -16,7 +16,7 @@ window.USERisStrategicPartnershipHome =
   window.location.href.toLowerCase().indexOf("/strategicpartnershiphome.aspx") > -1;
 window.USERisTargets =
   window.location.href.toLowerCase().indexOf("/targets.aspx") > -1;
-window.userIsActiveStatusForUseInProjectHome=false;
+window.userIsActiveStatusForUseInProjectHome = false;
 var BreakException = {};
 var UserRole,
   UserAccessSectorCode,
@@ -536,7 +536,7 @@ window.userCalls = {
     }
   },
   get_AccessAction: function () {
-    
+
     switch (UserPage_Name) {
       case "listing.aspx":
         if (isArabic) {
@@ -3734,6 +3734,7 @@ window.userCalls = {
                   listName: "Initiatives",
                   parentRelationField: "Title",
                   RelationField: "RelatedObjective",
+                  isMultiSelectField: true,
                   RelationFieldType: "Text"
                 },
               },
@@ -6418,13 +6419,13 @@ var Access_Project_Info_Request = {
             oListItem.get_item("ClosureStatus") == "Cancelled"
             ? true
             : false;
-            var workingstatus =  oListItem.get_item("WorkingStatus");
+        var workingstatus = oListItem.get_item("WorkingStatus");
         User_isActiveStatus =
-      workingstatus !== "stat13" 
-      &&  workingstatus !== "stat14" 
-          ? true
-          : false;
-        userIsActiveStatusForUseInProjectHome =workingstatus =="active" ? true :false;
+          workingstatus !== "stat13"
+            && workingstatus !== "stat14"
+            ? true
+            : false;
+        userIsActiveStatusForUseInProjectHome = workingstatus == "active" ? true : false;
         User_ProjUID = oListItem.get_item("ProjectGUID") || UserNo_Data;
         //for milestones source
         User_ScheduleSource = oListItem.get_item("ScheduleSource") || No_Data;
@@ -6489,7 +6490,7 @@ var Access_Project_Info_Request = {
       //Access caml query for home page and listing pages
       //
       console.log("inside access project info req")
-      
+
       var fieldtoquery,
         isShowAll = false;
       if (USERProjRelated.indexOf(USERlistkey) > -1) {
@@ -6546,7 +6547,7 @@ var Access_Project_Info_Request = {
             forfilterQuery += "</div></div>";
             AccessQuery = PermissionQuery;
             console.log(AccessQuery, "AccessQuery")
-            
+
             if (USERisHome) {
               //call homepage
               window.checkHomeStatusHtml = setInterval(function () {
@@ -6803,27 +6804,27 @@ var Access_Project_Info_Request = {
         );
       }
     }
-       //if project is Cancelled or Holded
-       if (
-        !User_isActiveStatus &&
-        (USERlistkey == "projects" || USERProjRelated.indexOf(USERlistkey) > -1)
-      ) {
-        if ((USERisForm || USERisListing )) {
-          $("body").append(
-            "<style>" +
-            ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
-            ".form-control{color: #b1b1b1 !important;" +
-            "border-color: #e1e1e1 !important;" +
-            "background-color: #fdfdfd !important;" +
-            "background-color: #fdfdfd !important;" +
-            "opacity: .6;pointer-events: none;}" +
-            "</style>"
-          );
-          // if(isAdmin || isEPMO){
-          // $('#WorkingStatus').css({"background-color": "#ffffff !important", "border-color":"#ababab!important","opacity":"0.85","pointer-events":"all"});
-          // }
-        }
+    //if project is Cancelled or Holded
+    if (
+      !User_isActiveStatus &&
+      (USERlistkey == "projects" || USERProjRelated.indexOf(USERlistkey) > -1)
+    ) {
+      if ((USERisForm || USERisListing)) {
+        $("body").append(
+          "<style>" +
+          ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+          ".form-control{color: #b1b1b1 !important;" +
+          "border-color: #e1e1e1 !important;" +
+          "background-color: #fdfdfd !important;" +
+          "background-color: #fdfdfd !important;" +
+          "opacity: .6;pointer-events: none;}" +
+          "</style>"
+        );
+        // if(isAdmin || isEPMO){
+        // $('#WorkingStatus').css({"background-color": "#ffffff !important", "border-color":"#ababab!important","opacity":"0.85","pointer-events":"all"});
+        // }
       }
+    }
   },
   onError: function (sender, args) {
     //
@@ -8359,7 +8360,7 @@ var Tasks_Info_Request_User = {
       puid,
       rurl //rurl,
     ) {
-      
+
       console.log(
         Generic_WF_Stages_Data_Request.g.GWFStagesArray,
         "GWFStagesArray "
@@ -8943,7 +8944,7 @@ function initiateDataLevelAccess() {
     if (myRoleConfig[0].hasOwnProperty("dataFilter")) {
       isRoleDataLevelAccess = true;
       myRoleConfig[0].dataFilter.hierarchies.forEach((el, i, a) => {
-        
+
         let accessConditions = el.accessConditions;
         let isListConditional1 = el.listName == currentMainList;
         let isListConditional2 = el.subRelation.listName == currentMainList;
@@ -9186,7 +9187,7 @@ let data_Level1_Access = {
 						</Query>
 					</View>`;
 
-        
+
         data_Level2_Access.g.dataLevelQuery = queryBody;
         dataLevelAccessQuery = queryBody;
         if (data_Level1_Access.g.dataLevel > 2) {
@@ -9201,7 +9202,7 @@ let data_Level2_Access = {
   // The main Initialization function
   init: function (dataListName) {
     var clientContext = new SP.ClientContext.get_current();
-    
+
     var oList = clientContext.get_web().get_lists().getByTitle(dataListName);
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(data_Level2_Access.g.dataLevelQuery);
@@ -9226,6 +9227,8 @@ let data_Level2_Access = {
       ].subRelation.subRelation;
     let fieldName = thirdLevelConfig.parentRelationField;
     while (listItemEnum.moveNext()) {
+      console.log("Before fired the thired one")
+
       var oListItem = listItemEnum.get_current();
       let itemCode = oListItem.get_item(fieldName);
       data_Level2_Access.g.relationFieldData.push(itemCode);
@@ -9241,15 +9244,26 @@ let data_Level2_Access = {
       data_Level2_Access.g.relationFieldData
     );
   },
+
   //currenty handles one field not more
   dynamicCamlQueryBuilder: function (levelConfig, valuesArray) {
+    console.log(levelConfig, "dynamicCamlQueryBuilder before build 3 query")
+    debugger
     let listName = levelConfig.listName;
     let fieldToQuery = levelConfig.RelationField;
     let fieldType = levelConfig.RelationFieldType;
     let level = levelConfig.level;
+
+    let targetIsMulti = levelConfig.isMultiSelectField
+
     let whereBody = ``,
       queryBody = ``,
       whereBodyFinal = ``;
+
+    let containBody = ``,
+      containBodyFinal = ``,
+      containqueryBody = ``;
+
     //dynamic query building
     whereBody += `<In><FieldRef Name="${fieldToQuery}" /><Values>`;
     //handle case of filters on pages
@@ -9258,37 +9272,74 @@ let data_Level2_Access = {
       internalName: fieldToQuery,
       Type: fieldType,
       Values: valuesArray,
+      targetIsMultiFilter: targetIsMulti
     });
     valuesArray.forEach((el, i, a) => {
       //only one choice
       whereBody += `<Value Type="${fieldType}">${el}</Value>`;
+
       //Finish Line, make last changes and build query
       if (i == valuesArray.length - 1) {
+
         whereBody += `</Values></In>`;
         whereBody = whereBody.replaceAll(
           `Type="date"`,
           `IncludeTimeValue="TRUE" Type="DateTime"`
         );
+
+        //section to handle multi look up selected 
+        containBody += `<Contains><FieldRef Name="${fieldToQuery}" /><Value Type="${fieldType}">${el}</Value></Contains>`
+        var counttest = (containBody.match(/<Or>/g) || []).length;
+        var ORC = "</Or>".repeat(counttest);
+        containBody += ORC;
+
+        containBodyFinal = `<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>${containBody}</And></Where>`
+        containqueryBody = `<View>
+            <Query>
+            ${containBodyFinal}
+            <OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
+            </Query>
+        </View>`
+
+        console.log(containBody, "containBody")
+        // end section to handle multi look up selected 
+
         whereBodyFinal = `<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>${whereBody}
 				</And></Where>`;
+
         queryBody = `<View>
 					<Query>
 					${whereBodyFinal}
 					<OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
 					</Query>
 				</View>`;
-        data_Level2_Access.g.dataLevelQuery = queryBody;
-        dataLevelAccessQuery = queryBody;
-        //add it  to handle 4 th level query
-        data_Level3_Access.g.dataLevelQuery = queryBody;
+
+        if (targetIsMulti) { // to check if the target is multi
+          data_Level2_Access.g.dataLevelQuery = containqueryBody;
+          dataLevelAccessQuery = containqueryBody;
+          //add it  to handle 4 th level query
+          data_Level3_Access.g.dataLevelQuery = containqueryBody;
+        } else {
+          data_Level2_Access.g.dataLevelQuery = queryBody;
+          dataLevelAccessQuery = queryBody;
+          //add it  to handle 4 th level query
+          data_Level3_Access.g.dataLevelQuery = queryBody;
+        }
 
 
-        
 
-        console.log("Data 3rd level access query", queryBody);
+
+
+
+
+        console.log("Data 3rd level access queryBody", queryBody);
+        console.log("Data 3rd level access containqueryBody", containqueryBody);
+
         if (data_Level1_Access.g.dataLevel > 3) {
           data_Level3_Access.init(listName);
         }
+      } else {
+        containBody += `<Or><Contains><FieldRef Name="${fieldToQuery}" /><Value Type="${fieldType}">${el}</Value></Contains>`
       }
     });
   },
@@ -9310,7 +9361,9 @@ let data_Level2_Access = {
 let data_Level3_Access = {
   // The main Initialization function
   init: function (dataListName) {
-    
+
+    debugger
+
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(dataListName);
     var camlQuery = new SP.CamlQuery();
@@ -9330,7 +9383,7 @@ let data_Level3_Access = {
     if (collListItem.getEnumerator().$2J_0 > 0) {
       //check if any items are returned we can use .getEnumerator().moveNext() //true
     }
-    
+
     let fourthLevelConfig =
       myRoleConfig[0].dataFilter.hierarchies[
         data_Level1_Access.g.hierarchyIndex
@@ -9347,7 +9400,7 @@ let data_Level3_Access = {
     if (data_Level3_Access.g.relationFieldData.length == 0) {
       data_Level3_Access.g.relationFieldData.push(null);
     }
-    
+
     data_Level3_Access.dynamicCamlQueryBuilder(
       fourthLevelConfig,
       data_Level3_Access.g.relationFieldData
@@ -9355,7 +9408,7 @@ let data_Level3_Access = {
   },
   //currenty handles one field not more
   dynamicCamlQueryBuilder: function (levelConfig, valuesArray) {
-    
+
     let listName = levelConfig.listName;
     let fieldToQuery = levelConfig.RelationField;
     let fieldType = levelConfig.RelationFieldType;
@@ -9395,7 +9448,7 @@ let data_Level3_Access = {
 
 
         console.log("Data 4rd level access query", queryBody);
-        
+
       }
     });
   },
@@ -9441,7 +9494,7 @@ var Get_Milestones = {
 
 
     console.log("in get_Milestones")
-    
+
 
 
 
@@ -9456,7 +9509,7 @@ var Get_Milestones = {
     );
   },
   onSuccess: async function (sender, args) {
-    
+
     var collListItem = Get_Milestones.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var itemhtml = [],
@@ -9580,7 +9633,7 @@ var Get_Milestones = {
       }
     } else if (UserICode) {
       console.log(initiativeStartToValidation, "initiativeStartToValidation")
-      
+
       if (allMilestonesArr.length > 0) {
 
         var initiativeStartDate = Get_Milestones.g.dateConvert2(initiativeStartToValidation) || '';

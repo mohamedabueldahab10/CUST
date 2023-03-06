@@ -34,10 +34,10 @@ var projectTypeFilterQuery = '', typeClicked = 'Internal';
 window.indexofListing = 0;
 var taskClicked = 'relatedTasks', allTasksClicked = false, getNewFilterTask = false, isViewMoreClicked = false;
 
-var emptyData = require('../../../HelperRessources/img/empty-data.png');
-var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
-// var emptyData = ''
-// var exportExcel = ''
+// var emptyData = require('../../../HelperRessources/img/empty-data.png');
+// var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
+var emptyData = ''
+var exportExcel = ''
 //all data filter array
 allDataFilterArr = []
 //
@@ -451,6 +451,99 @@ window.ListingData = {
 
       if (isRoleDataLevelAccess && (!UserICode && !USERPCODE && isEmptyFilter)) {
         PQuery = dataLevelAccessQuery ? dataLevelAccessQuery : AccessQuery;
+        console.log(PQuery,"PQuery odddds")
+        //SO-23-0167:::SO-22-0174
+        debugger
+        //   PQuery = `<View>
+        //   <Query>
+        //   <Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name="RelatedObjective" /><Values><Contains><Value Type="Text">SO-23-0167</Value></Contains></Values></In> 
+        // </And></Where>
+        //   <OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
+        //   </Query>
+        // </View>`
+        ////////////////////////////////
+      //   PQuery = `<View>
+      //   <Query>
+      //     <Where>
+      //       <And>
+      //         <Neq>
+      //           <FieldRef Name='DeletionStatus' />
+      //           <Value Type='Text'>Deleted</Value>
+      //         </Neq>
+      //         <Or>
+      //           <Contains>
+      //             <FieldRef Name="RelatedObjective" />
+      //             <Value Type="Text">SO-23-0211</Value>
+      //           </Contains>
+      //           <Or>
+      //             <Contains>
+      //               <FieldRef Name="RelatedObjective" />
+      //               <Value Type="Text">SO-23-0199</Value>
+      //             </Contains>
+      //             <Or>
+      //               <Contains>
+      //                 <FieldRef Name="RelatedObjective" />
+      //                 <Value Type="Text">SO-22-0195</Value>
+      //               </Contains>
+      //               <Or>
+      //                 <Contains>
+      //                   <FieldRef Name="RelatedObjective" />
+      //                   <Value Type="Text">SO-22-0191</Value>
+      //                 </Contains>
+      //                 <Contains>
+      //                   <FieldRef Name="RelatedObjective" />
+      //                   <Value Type="Text">SO-22-0192</Value>
+      //                 </Contains>
+      //               </Or>
+      //             </Or>
+      //           </Or>
+      //         </Or>
+      //       </And>
+      //     </Where>
+      //     <OrderBy>
+      //       <FieldRef Name="Created" Ascending="False" />
+      //     </OrderBy>
+      //   </Query>
+      // </View>`
+        //   PQuery = `<View>
+        //   <Query>
+        //   <Where>
+        //   <And>
+        //   <Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>
+        //   <Or><Contains><FieldRef Name="RelatedObjective" /><Value Type="Text">SO-23-0167</Value></Contains><Or><Contains><FieldRef Name="RelatedObjective" /><Value Type="Text">SO-23-0193</Value></Contains><Contains><FieldRef Name="RelatedObjective" /><Value Type="Text">SO-22-0211</Value></Contains></Or></Or>
+        //   </And></Where>
+        //   <OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
+        //   </Query>
+        // </View>
+        // `
+
+        /////////////////////////////////
+        // PQuery = `<View>
+        //     <Query>
+        //     <Where>
+        //     <And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>
+        //     <Or><In><FieldRef Name="RelatedObjective" /><Values><Value Type="Text">SO-23-0211</Value><Value Type="Text">SO-23-0167</Value></Values></In>
+        //     <Contains><FieldRef Name="RelatedObjective" /><Value Type="Text">SO-23-0167</Value></Contains>
+        //     </Or></And></Where>
+        //     <OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
+        //     </Query>
+        //   </View>
+        //   `
+        //////////////////////////////////
+        //   `<View>
+        //   <Query>
+        //   <Where>
+        //   <And>
+        //   <Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>
+        //   <And>
+        //   <In><FieldRef Name="RelatedObjective" /><Values><Value Type="Text">SO-23-0211</Value><Value Type="Text">SO-23-0199</Value><Value Type="Text">SO-22-0195</Value><Value Type="Text">SO-22-0028</Value><Value Type="Text">SO-21-0002</Value></Values></In>
+        //  <And>
+        //  <Contain><FieldRef Name="RelatedObjective" /><Value Type="Text">SO-23-0167</Value></Contain>
+        //   </And>
+        // </And></Where>
+        //   <OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
+        //   </Query>
+        // </View>`
       } else {
         if (UserICode != null && UserICode != '') {
           if (listkey == 'initiativemilestones') { // to arrange the card depends on planned completed Date
@@ -1295,7 +1388,9 @@ window.ListingData = {
         for (var i = 0; i < FilterChoices.length; i++) {
           //only one choice
           if (FilterChoices.length == 1) {
-            if (FilterChoices[i].Type == "LoggedInUser") {
+            console.log(FilterChoices,"FilterChoices FilterChoices")
+            
+          if (FilterChoices[i].Type == "LoggedInUser") {
               Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
             } else {
               Where_Body += '<In><FieldRef Name="' + FilterChoices[i].internalName + '" /><Values>';
@@ -1471,7 +1566,7 @@ window.ListingData = {
             keyNameParams = "ideas"
           } else if (wfname == 'DV') {
             keyNameParams = 'deliverables'
-          } else if (wfname == 'CR' || 	wfname == 'VROCRInitiative' || wfname == 'EPMOCRInitiative' || wfname == 'LMSCRInitiative' || wfname == 'VROCRObjective' || wfname == 'MSCRObjective' || wfname == 'LMSCRObjective' || wfname == 'VROCRKPI' || wfname == 'MSCRKPI' || wfname == 'LMSCRKPI') {
+          } else if (wfname == 'CR' || wfname == 'VROCRInitiative' || wfname == 'EPMOCRInitiative' || wfname == 'LMSCRInitiative' || wfname == 'VROCRObjective' || wfname == 'MSCRObjective' || wfname == 'LMSCRObjective' || wfname == 'VROCRKPI' || wfname == 'MSCRKPI' || wfname == 'LMSCRKPI') {
             keyNameParams = 'changerequest'
           } else if (wfname == 'Issue') {
             keyNameParams = 'issues'
@@ -1487,15 +1582,15 @@ window.ListingData = {
             keyNameParams = 'strategicpartnerships'
           } else if (wfname == 'SPAchievements') {
             keyNameParams = 'strategicpartnershipsachievements'
-          } else if(wfname == 'VROBenefitActual' || wfname == 'EPMOBenefitActual' || wfname == 'LMSBenefitActual') {
+          } else if (wfname == 'VROBenefitActual' || wfname == 'EPMOBenefitActual' || wfname == 'LMSBenefitActual') {
             keyNameParams = 'benefits'
-          } else if(wfname == 'VROInitiativeMilestone' || wfname == 'EPMOInitiativeMilestone' || wfname == 'LMSInitiativeMilestone') {
+          } else if (wfname == 'VROInitiativeMilestone' || wfname == 'EPMOInitiativeMilestone' || wfname == 'LMSInitiativeMilestone') {
             keyNameParams = 'initiativemilestones'
-          } else if(wfname == 'VROInitiativeDeliverable' || wfname == 'EPMOInitiativeDeliverable' || wfname == 'LMSInitiativeDeliverable') {
+          } else if (wfname == 'VROInitiativeDeliverable' || wfname == 'EPMOInitiativeDeliverable' || wfname == 'LMSInitiativeDeliverable') {
             keyNameParams = 'initiativedeliverables'
-          } else if(wfname == 'VROProjMilestone' || wfname == 'EPMOProjMilestone' || wfname == 'LMSProjMilestone') {
+          } else if (wfname == 'VROProjMilestone' || wfname == 'EPMOProjMilestone' || wfname == 'LMSProjMilestone') {
             keyNameParams = 'milestones'
-          } else if(wfname == 'VROCOC' || wfname == 'EPMOCOC' || wfname == 'LMSCOC') {
+          } else if (wfname == 'VROCOC' || wfname == 'EPMOCOC' || wfname == 'LMSCOC') {
             keyNameParams = 'coc'
           }
           switch (tasktype) {
@@ -1525,7 +1620,7 @@ window.ListingData = {
               );
               break;
           }
-          
+
       }
     },
     ExportToExcel: function () {
@@ -1613,7 +1708,7 @@ window.ListingData = {
                   localStorage.getItem("lng") == null ||
                   localStorage.getItem("lng") == "ar"
                 ) {
-                  
+
                   translationData = Resources.ar[data] ? Resources.ar[data] : No_Data
                 } else {
                   translationData = Resources.en[data] ? Resources.en[data] : No_Data
@@ -1622,9 +1717,9 @@ window.ListingData = {
               mydata[i][IN[j]] = translationData
               break;
 
-              default:
-                console.log("no change on on value")
-                break;
+            default:
+              console.log("no change on on value")
+              break;
           }
 
 
