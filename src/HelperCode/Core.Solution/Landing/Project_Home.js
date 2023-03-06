@@ -575,6 +575,7 @@ var Project_Home_Info_Request = {
       projectimportance +
       ' class="Resources initiativeProjHomeInfoValueStyle"></span>'
     );
+    if(userIsActiveStatusForUseInProjectHome){
     $("#PJStatus").append(
       "<span data-trans-" +
       projectworkingstatus +
@@ -591,6 +592,13 @@ var Project_Home_Info_Request = {
       projectProgressStatusSchedule +
       '">)</span>'
     );
+  } else{
+    $("#PJStatus").append(
+      "<span data-trans-" +
+      projectworkingstatus +
+      ' class="Resources initiativeProjHomeInfoValueStyle"></span>'
+    );
+  }
     $(
       ".project-info-ctx .media-body:nth-of-type(1) .icon-user > .user-name"
     ).text(
