@@ -2955,7 +2955,7 @@ window.userCalls = {
         Read_Access = [];
         Edit_Access = [];
     }
-
+debugger
     //New CRUD Access Solution [will not affect below behavior]
     (Create_Access = Create_Access.map((name) => name.toLowerCase())), //making sure everything is lower case
       (Read_Access = Read_Access.map((name) => name.toLowerCase())),
@@ -6784,6 +6784,7 @@ var Access_Project_Info_Request = {
         }, 1000);
       }
     }
+    debugger
     //if project is closed or failed
     if (
       User_isClosureStatus &&
@@ -8691,6 +8692,7 @@ window.Generic_WF_Stages_Data_Request = {
 
 //check current project stage and disable related project pages if project is closed
 window.currentStage;
+debugger
 window.PCODE_Stage_Data_Request = {
   onSuccess: function (sender, args) {
     var collListItem = PCODE_Stage_Data_Request.g.collListItem;
