@@ -179,6 +179,7 @@
     sector: "القطاع",
     department: "الإدارات",
     subsector: "الوكالة",
+    unit:"وحدة",
     budgetitem: "البند المرتبط",
     pmo: "مكتب تحكم إدارة المشاريع",
     epmo: "مكتب إدارة مشروع المؤسسة",
@@ -1172,8 +1173,8 @@
 
     //lesson learned source
     department: "Department",
-
     subsector: "Deputyship",
+    unit:"Unit",
     budgetitem: "Budget Item",
     sector: "Sector",
     pmo: "PMO",
