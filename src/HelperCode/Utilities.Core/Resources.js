@@ -875,6 +875,7 @@
     sublevel2: "فرعي مستوى ثاني",
     sublevel3: "فرعي مستوى ثالث",
     projectprioritytooltip: "هذا الحقل يبين أهمية المشروع (مرتفعة -متوسطة - منخفضة)",
+    projectstatustooltip:"هذا الحقل يبين حالة سير العمل للمشروع (وحالة إنجازه وفق الجدول الزمني)",
     initiativetypetooltip: "هذا الحقل يبين نوع المبادرة (استراتيجية -رؤية - سوق عمل)",
     initiativestatustooltip: "هذا الحقل يبين حالة المبادرة",
     importantlinks: "روابط مهمة",
@@ -1842,6 +1843,8 @@
     sublevel3: "Sub Level 3",
     projectprioritytooltip:
       "This Field show the Priority of this project (Important or Medium or High)",
+    projectstatustooltip:"هذا الحقل يبين حالة سير العمل للمشروع (وحالة إنجازه وفق الجدول الزمني)",
+    projectstatustooltip:"This Field show the working status of this project (and the Baseline Progress Status)",
     initiativetypetooltip:
       "This Field show the type of this initiative (Strategic or Vision or LMS )",
     initiativestatustooltip: "This Field show the type of this initiative",

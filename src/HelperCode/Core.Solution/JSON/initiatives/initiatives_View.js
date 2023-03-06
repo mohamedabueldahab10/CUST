@@ -123,7 +123,7 @@ var Information_Form = [
         valfieldkey: 'Title',
         // dontSubmit: true,
         // showlink:true,
-        linkedto:"goalstrategy"
+        linkedto: "goalstrategy"
       },
 
       {
@@ -134,62 +134,70 @@ var Information_Form = [
         type: 'dropdownValues',
         options: {
           choices: [
-            {
-              display: 'objl1',
-              value: 'objl1',
-            },
-            {
-              display: 'objl2',
-              value: 'objl2',
-            },
-            {
-              display: 'objl3',
-              value: 'objl3',
-            },
+            { display: 'main', value: 'main' },
+            { display: 'sublevel2', value: 'sublevel2' },
+            { display: 'sublevel3', value: 'sublevel3' },
+            // {
+            //   display: 'objl1',
+            //   value: 'objl1',
+            // },
+            // {
+            //   display: 'objl2',
+            //   value: 'objl2',
+            // },
+            // {
+            //   display: 'objl3',
+            //   value: 'objl3',
+            // },
           ],
         },
         // validation: 'required',
-      },
-      {
-        InternalName: 'RelatedObjective',
-        DisplayNameEn: 'Related Objective',
-        DisplayName: 'الهدف المرتبط',
-        type: 'lookup',
-        grpfieldkey: 'Title',
-        source: 'SOs',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
-        showlink: true,
-        linkedto: "sos",
-        dynamic: 'RelatedStrategy',
-        //
-        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
-        fieldsinformlvl1: "RelatedStrategy", // fields in form list
-        sourcefieldlvl1: "RelatedStrategy", // field in look up list
-        fieldsinformlvl2: "RelatedObjectiveLevel", // fields in form  list lvl2
-        sourcefieldlvl2: "Types", //  field in look up list lvl2
-        //
-        filterField: 'RelatedStrategy',
-        filterFieldType: 'Text',
-        // "state": "disabled"
       },
       // {
       //   InternalName: 'RelatedObjective',
       //   DisplayNameEn: 'Related Objective',
       //   DisplayName: 'الهدف المرتبط',
-      //   type: 'lookupmultiselect',
-      //   validation: 'required',
+      //   type: 'lookup',
+      //   grpfieldkey: 'Title',
       //   source: 'SOs',
       //   Dispfieldkey: 'Name',
       //   valfieldkey: 'Title',
-      //   grpfieldkey: 'Title',
-      //   initiativeCodeInList: true, //value in look up drop down should be related to current project
-      //   showlink:true,
-      //   linkedto:"sos"
-      //   // queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
-      //   // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
-      //   // queryFieldValue: 'sublevel2,sublevel3', // if i need to make the field with filter should add this
+      //   showlink: true,
+      //   linkedto: "sos",
+      //   dynamic: 'RelatedStrategy',
+      //   //
+      //   isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+      //   fieldsinformlvl1: "RelatedStrategy", // fields in form list
+      //   sourcefieldlvl1: "RelatedStrategy", // field in look up list
+      //   fieldsinformlvl2: "RelatedObjectiveLevel", // fields in form  list lvl2
+      //   sourcefieldlvl2: "Types", //  field in look up list lvl2
+      //   //
+      //   filterField: 'RelatedStrategy',
+      //   filterFieldType: 'Text',
+      //   // "state": "disabled"
       // },
+      {
+        InternalName: 'RelatedObjective',
+        DisplayNameEn: 'Related Objective',
+        DisplayName: 'الهدف المرتبط',
+        type: 'lookupmultiselect',
+        validation: 'required',
+        source: 'SOs',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        grpfieldkey: 'Title',
+        initiativeCodeInList: true, //value in look up drop down should be related to current project
+        showlink: true,
+        linkedto: "sos",
+        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+        fieldsinformlvl1: "RelatedStrategy", // fields in form list
+        sourcefieldlvl1: "RelatedStrategy", // field in look up list
+        fieldsinformlvl2: "RelatedObjectiveLevel", // fields in form  list lvl2
+        sourcefieldlvl2: "Types", //  field in look up list lvl2
+        // queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
+        // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
+        // queryFieldValue: 'sublevel2,sublevel3', // if i need to make the field with filter should add this
+      },
       {
         InternalName: 'RelatedProgram',
         DisplayNameEn: 'Related Program',
@@ -202,7 +210,7 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         // showlink:true,
-        linkedto:'sos'
+        linkedto: 'sos'
         // "source": "Instruments",
         // "Dispfieldkey": "Title",
         // "valfieldkey": "Title"

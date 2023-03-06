@@ -350,6 +350,12 @@ var Information_Form = [
           ],
         },
       },
+      {
+        InternalName: 'DisbursementStatus',
+        DisplayNameEn: 'Disbursement Status',
+        DisplayName: 'حالة الصرف',
+        type: 'float'
+      },
 
       {
         InternalName: "IsZeroBudgetProject",

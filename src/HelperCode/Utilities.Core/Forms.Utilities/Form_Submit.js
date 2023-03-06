@@ -550,10 +550,10 @@ window.New_Data_Submit = {
     }
     if (listkey == 'initiatives') { //  to handle the initiative status when create a new one
 
-      if ($('#Types').val() == 'strategically') {
-        var RelatedObjective = $('#RelatedObjective').val()
-        New_Data_Submit.g.oListItem.set_item("RelatedStrategyObjective", RelatedObjective);
-      }
+      // if ($('#Types').val() == 'strategically') {
+      //   var RelatedObjective = $('#RelatedObjective').val()
+      //   New_Data_Submit.g.oListItem.set_item("RelatedStrategyObjective", RelatedObjective);
+      // }
       New_Data_Submit.g.oListItem.set_item("InitiativeProgressStatus", "stat6");
 
     }

@@ -16,6 +16,7 @@ window.USERisStrategicPartnershipHome =
   window.location.href.toLowerCase().indexOf("/strategicpartnershiphome.aspx") > -1;
 window.USERisTargets =
   window.location.href.toLowerCase().indexOf("/targets.aspx") > -1;
+window.userIsActiveStatusForUseInProjectHome=false;
 var BreakException = {};
 var UserRole,
   UserAccessSectorCode,
@@ -202,6 +203,7 @@ var UserRole,
   SecondLevel_FirstLevel_Field,
   SecondLevel_FirstLevel_FieldType,
   User_isClosureStatus,
+  User_isActiveStatus,
   User_ScheduleSource,
   User_ProjUID,
   User_ProjUID,
@@ -6416,6 +6418,13 @@ var Access_Project_Info_Request = {
             oListItem.get_item("ClosureStatus") == "Cancelled"
             ? true
             : false;
+            var workingstatus =  oListItem.get_item("WorkingStatus");
+        User_isActiveStatus =
+      workingstatus !== "stat13" 
+      &&  workingstatus !== "stat14" 
+          ? true
+          : false;
+        userIsActiveStatusForUseInProjectHome =workingstatus =="active" ? true :false;
         User_ProjUID = oListItem.get_item("ProjectGUID") || UserNo_Data;
         //for milestones source
         User_ScheduleSource = oListItem.get_item("ScheduleSource") || No_Data;
@@ -6794,6 +6803,27 @@ var Access_Project_Info_Request = {
         );
       }
     }
+       //if project is Cancelled or Holded
+       if (
+        !User_isActiveStatus &&
+        (USERlistkey == "projects" || USERProjRelated.indexOf(USERlistkey) > -1)
+      ) {
+        if ((USERisForm || USERisListing )) {
+          $("body").append(
+            "<style>" +
+            ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+            ".form-control{color: #b1b1b1 !important;" +
+            "border-color: #e1e1e1 !important;" +
+            "background-color: #fdfdfd !important;" +
+            "background-color: #fdfdfd !important;" +
+            "opacity: .6;pointer-events: none;}" +
+            "</style>"
+          );
+          // if(isAdmin || isEPMO){
+          // $('#WorkingStatus').css({"background-color": "#ffffff !important", "border-color":"#ababab!important","opacity":"0.85","pointer-events":"all"});
+          // }
+        }
+      }
   },
   onError: function (sender, args) {
     //
