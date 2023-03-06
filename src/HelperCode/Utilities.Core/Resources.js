@@ -1104,6 +1104,7 @@
     medium: "Medium",
     low: "Low",
     critical: "Critical",
+    cancelled3: "Cancelled",
     //budget item
     support: "Support",
     operational: "Operational",
