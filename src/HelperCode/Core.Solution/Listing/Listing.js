@@ -100,7 +100,7 @@ else if (isTasks) {
 window.sphttp = {
   get: function (listUrl, listDisplayName, camelQuery, internalFieldNames, isGetDdl, onEach, onError) {
 
-    debugger
+
     sphttp.g.isGetDdl = isGetDdl;
     var clientContext = new SP.ClientContext(listUrl);
     var oListsp = clientContext.get_web().get_lists().getByTitle(listDisplayName);
@@ -453,7 +453,7 @@ window.ListingData = {
         PQuery = dataLevelAccessQuery ? dataLevelAccessQuery : AccessQuery;
         console.log(PQuery, "PQuery odddds")
         //SO-23-0167:::SO-22-0174
-        debugger
+
         //   PQuery = `<View>
         //   <Query>
         //   <Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name="RelatedObjective" /><Values><Contains><Value Type="Text">SO-23-0167</Value></Contains></Values></In> 
@@ -1171,6 +1171,11 @@ window.ListingData = {
       $('.page-filter .dropdown-menu label input:checkbox').change(function (e) {
         FilterChoices = [];
 
+        if (isRoleDataLevelAccess) {
+          FilterChoices = Array.from(dataLevelAccessChoicesForFilters)
+
+        }
+
         $('.page-filter .dropdown-menu').each(function () { //looping through filters
           var selectedchoices = $(this).find('input:checked').map(function () { //getting selected choices
             if ($(this).attr('data-type') == 'floatpercentage')
@@ -1208,13 +1213,14 @@ window.ListingData = {
           }
         });
 
-        if (isRoleDataLevelAccess) {
-          dataLevelAccessChoicesForFilters.forEach(el =>{
-            FilterChoices.push(el)
-          })
-          // FilterChoices = Array.from(dataLevelAccessChoicesForFilters)
-        }
-        
+        // comment bachar change and back it to origin
+        // if (isRoleDataLevelAccess) {
+        //   dataLevelAccessChoicesForFilters.forEach(el => {
+        //     FilterChoices.push(el)
+        //   })
+        //   // FilterChoices = Array.from(dataLevelAccessChoicesForFilters)
+        // }
+
 
         ListingData.g.camlfilterbuilder();
       });
@@ -1394,12 +1400,25 @@ window.ListingData = {
         //dynamic query building
         for (var i = 0; i < FilterChoices.length; i++) {
           console.log(FilterChoices, "FilterChoices FilterChoices")
-          debugger
+
           //only one choice
           if (FilterChoices.length == 1) {
+
             console.log(FilterChoices, "FilterChoices FilterChoices")
 
-            if (FilterChoices[i].Type == "LoggedInUser") {
+            if (FilterChoices[i].targetIsMultiFilter) {
+              for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                if (j == FilterChoices[i].Values.length - 1) {
+                  Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                } else {
+                  Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                }
+              }
+              var countOr = (Where_Body.match(/<Or>/g) || []).length;
+              var ORC = "</Or>".repeat(countOr);
+              Where_Body += ORC;
+              
+            } else if (FilterChoices[i].Type == "LoggedInUser") {
               Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
             } else {
               Where_Body += '<In><FieldRef Name="' + FilterChoices[i].internalName + '" /><Values>';
@@ -1418,21 +1437,16 @@ window.ListingData = {
 
                 Where_Body += '<And>'
                 for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-                  if (j == 0) {
+                  if (j == FilterChoices[i].Values.length - 1) {
                     Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
                   } else {
                     Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
                   }
-
                 }
 
                 var countOr = (Where_Body.match(/<Or>/g) || []).length;
                 var ORC = "</Or>".repeat(countOr);
                 Where_Body += ORC;
-
-                // console.log(Where_Body, "Where_Body oday testttt")
-                // debugger
-
               }
               else if (FilterChoices[i].Type == "LoggedInUser") {
                 Where_Body += `<And><Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
@@ -1445,12 +1459,11 @@ window.ListingData = {
               }
             } else {
               if (FilterChoices[i].targetIsMultiFilter) {
-
                 Where_Body += ''
                 for (var j = 0; j < FilterChoices[i].Values.length; j++) {
                   if (j == FilterChoices[i].Values.length - 1) {
                     Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
-                  }else{
+                  } else {
                     Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
                   }
                 }
@@ -1458,9 +1471,8 @@ window.ListingData = {
                 var countOr = (Where_Body.match(/<Or>/g) || []).length;
                 var ORC = "</Or>".repeat(countOr);
                 Where_Body += ORC;
-                Where_Body +='</And>'
-                // console.log(Where_Body, "Where_Body oday testttt")
-                // debugger
+                Where_Body += '</And>'
+             
 
               } else if (FilterChoices[i].Type == "LoggedInUser") {
                 Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq></And>`;
@@ -1475,9 +1487,24 @@ window.ListingData = {
           }
           //More than two choices
           else if (FilterChoices.length > 2) {
+
             //two Eqs in last And
             if (i == FilterChoices.length - 1) {
-              if (FilterChoices[i].Type == "LoggedInUser") {
+              if (FilterChoices[i].targetIsMultiFilter) {
+                
+                Where_Body += ''
+                for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                  if (j == FilterChoices[i].Values.length - 1) {
+                    Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  } else {
+                    Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  }
+                }
+                var countOr = (Where_Body.match(/<Or>/g) || []).length;
+                var ORC = "</Or>".repeat(countOr);
+                Where_Body += ORC;
+              }
+              else if (FilterChoices[i].Type == "LoggedInUser") {
                 Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
               } else {
                 Where_Body += '<In><FieldRef Name="' + FilterChoices[i].internalName + '" /><Values>';
@@ -1493,7 +1520,20 @@ window.ListingData = {
             }
             //normal And
             else {
-              if (FilterChoices[i].Type == "LoggedInUser") {
+              if (FilterChoices[i].targetIsMultiFilter) {
+                Where_Body += '<And>'
+                for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                  if (j == FilterChoices[i].Values.length - 1) {
+                    Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  } else {
+                    Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  }
+                }
+                var countOr = (Where_Body.match(/<Or>/g) || []).length;
+                var ORC = "</Or>".repeat(countOr);
+                Where_Body += ORC;
+              }
+              else if (FilterChoices[i].Type == "LoggedInUser") {
                 Where_Body += `<And><Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
               } else {
                 Where_Body += '<And><In><FieldRef Name="' + FilterChoices[i].internalName + '" /><Values>';
@@ -1510,7 +1550,7 @@ window.ListingData = {
             Where_Body = Where_Body.replaceAll('Type="date"', 'IncludeTimeValue="TRUE" Type="DateTime"'); //IncludeTimeValue="false"
             //alert(Where_Body.includes('Type="date"')+'00'+Where_Body);
             //Where_Body.replace('Type="date"', '');
-            debugger
+
             if (!(PQueryFilteration.length > 0)) {
               // if (isTasks) {
               //   Where_Body_Final = "<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>"  + Where_Body + PQueryFilteration + 
@@ -1553,9 +1593,9 @@ window.ListingData = {
               '</Query>' +
               '</View>';
             PQuery = Query_Body;
-          
-            console.log(PQuery,"PQuery")
-           
+
+            console.log(PQuery, "PQuery")
+
 
             ListingData.init();
           }
