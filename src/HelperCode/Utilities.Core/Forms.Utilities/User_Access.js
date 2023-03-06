@@ -2955,7 +2955,7 @@ window.userCalls = {
         Read_Access = [];
         Edit_Access = [];
     }
-debugger
+    debugger
     //New CRUD Access Solution [will not affect below behavior]
     (Create_Access = Create_Access.map((name) => name.toLowerCase())), //making sure everything is lower case
       (Read_Access = Read_Access.map((name) => name.toLowerCase())),
@@ -9157,9 +9157,18 @@ let data_Level1_Access = {
     let fieldToQuery = levelConfig.RelationField;
     let fieldType = levelConfig.RelationFieldType;
     let level = levelConfig.level;
+
+    let targetIsMulti = levelConfig.isMultiSelectField
+
+
     let whereBody = ``,
       queryBody = ``,
       whereBodyFinal = ``;
+
+    let containBody = ``,
+      containBodyFinal = ``,
+      containqueryBody = ``;
+
     //dynamic query building
     whereBody += `<In><FieldRef Name="${fieldToQuery}" /><Values>`;
     //handle case of filters on pages
@@ -9180,6 +9189,24 @@ let data_Level1_Access = {
           `Type="date"`,
           `IncludeTimeValue="TRUE" Type="DateTime"`
         );
+
+
+        //section to handle multi look up selected 
+        containBody += `<Contains><FieldRef Name="${fieldToQuery}" /><Value Type="${fieldType}">${el}</Value></Contains>`
+        var counttest = (containBody.match(/<Or>/g) || []).length;
+        var ORC = "</Or>".repeat(counttest);
+        containBody += ORC;
+
+        containBodyFinal = `<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>${containBody}</And></Where>`
+        containqueryBody = `<View>
+                  <Query>
+                  ${containBodyFinal}
+                  <OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
+                  </Query>
+              </View>`
+
+        // end section to handle multi look up selected 
+
         whereBodyFinal = `<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>${whereBody}
 					</And></Where>`;
         queryBody = `<View>
@@ -9190,8 +9217,15 @@ let data_Level1_Access = {
 					</View>`;
 
 
-        data_Level2_Access.g.dataLevelQuery = queryBody;
-        dataLevelAccessQuery = queryBody;
+        if (targetIsMulti) { // to check if the target is multi
+          data_Level2_Access.g.dataLevelQuery = containqueryBody;
+          dataLevelAccessQuery = containqueryBody;
+        } else {
+
+          data_Level2_Access.g.dataLevelQuery = queryBody;
+          dataLevelAccessQuery = queryBody;
+        }
+
         if (data_Level1_Access.g.dataLevel > 2) {
           data_Level2_Access.init(listName);
         }
@@ -9408,9 +9442,17 @@ let data_Level3_Access = {
     let fieldToQuery = levelConfig.RelationField;
     let fieldType = levelConfig.RelationFieldType;
     let level = levelConfig.level;
+
+    let targetIsMulti = levelConfig.isMultiSelectField
+
     let whereBody = ``,
       queryBody = ``,
       whereBodyFinal = ``;
+
+    let containBody = ``,
+      containBodyFinal = ``,
+      containqueryBody = ``;
+
     //dynamic query building
     whereBody += `<In><FieldRef Name="${fieldToQuery}" /><Values>`;
     //handle case of filters on pages
@@ -9430,6 +9472,23 @@ let data_Level3_Access = {
           `Type="date"`,
           `IncludeTimeValue="TRUE" Type="DateTime"`
         );
+
+        //section to handle multi look up selected 
+        containBody += `<Contains><FieldRef Name="${fieldToQuery}" /><Value Type="${fieldType}">${el}</Value></Contains>`
+        var counttest = (containBody.match(/<Or>/g) || []).length;
+        var ORC = "</Or>".repeat(counttest);
+        containBody += ORC;
+
+        containBodyFinal = `<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>${containBody}</And></Where>`
+        containqueryBody = `<View>
+              <Query>
+              ${containBodyFinal}
+              <OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
+              </Query>
+          </View>`
+        // end section to handle multi look up selected 
+
+
         whereBodyFinal = `<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>${whereBody}
 					</And></Where>`;
         queryBody = `<View>
@@ -9438,8 +9497,14 @@ let data_Level3_Access = {
 						<OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
 						</Query>
 					</View>`;
-        data_Level3_Access.g.dataLevelQuery = queryBody;
-        dataLevelAccessQuery = queryBody;
+
+        if (targetIsMulti) { // to check if the target is multi
+          data_Level3_Access.g.dataLevelQuery = containqueryBody;
+          dataLevelAccessQuery = containqueryBody;
+        } else {
+          data_Level3_Access.g.dataLevelQuery = queryBody;
+          dataLevelAccessQuery = queryBody;
+        }
 
 
         console.log("Data 4rd level access query", queryBody);
