@@ -451,7 +451,7 @@ window.ListingData = {
 
       if (isRoleDataLevelAccess && (!UserICode && !USERPCODE && isEmptyFilter)) {
         PQuery = dataLevelAccessQuery ? dataLevelAccessQuery : AccessQuery;
-        console.log(PQuery,"PQuery odddds")
+        console.log(PQuery, "PQuery odddds")
         //SO-23-0167:::SO-22-0174
         debugger
         //   PQuery = `<View>
@@ -462,49 +462,49 @@ window.ListingData = {
         //   </Query>
         // </View>`
         ////////////////////////////////
-      //   PQuery = `<View>
-      //   <Query>
-      //     <Where>
-      //       <And>
-      //         <Neq>
-      //           <FieldRef Name='DeletionStatus' />
-      //           <Value Type='Text'>Deleted</Value>
-      //         </Neq>
-      //         <Or>
-      //           <Contains>
-      //             <FieldRef Name="RelatedObjective" />
-      //             <Value Type="Text">SO-23-0211</Value>
-      //           </Contains>
-      //           <Or>
-      //             <Contains>
-      //               <FieldRef Name="RelatedObjective" />
-      //               <Value Type="Text">SO-23-0199</Value>
-      //             </Contains>
-      //             <Or>
-      //               <Contains>
-      //                 <FieldRef Name="RelatedObjective" />
-      //                 <Value Type="Text">SO-22-0195</Value>
-      //               </Contains>
-      //               <Or>
-      //                 <Contains>
-      //                   <FieldRef Name="RelatedObjective" />
-      //                   <Value Type="Text">SO-22-0191</Value>
-      //                 </Contains>
-      //                 <Contains>
-      //                   <FieldRef Name="RelatedObjective" />
-      //                   <Value Type="Text">SO-22-0192</Value>
-      //                 </Contains>
-      //               </Or>
-      //             </Or>
-      //           </Or>
-      //         </Or>
-      //       </And>
-      //     </Where>
-      //     <OrderBy>
-      //       <FieldRef Name="Created" Ascending="False" />
-      //     </OrderBy>
-      //   </Query>
-      // </View>`
+        //   PQuery = `<View>
+        //   <Query>
+        //     <Where>
+        //       <And>
+        //         <Neq>
+        //           <FieldRef Name='DeletionStatus' />
+        //           <Value Type='Text'>Deleted</Value>
+        //         </Neq>
+        //         <Or>
+        //           <Contains>
+        //             <FieldRef Name="RelatedObjective" />
+        //             <Value Type="Text">SO-23-0211</Value>
+        //           </Contains>
+        //           <Or>
+        //             <Contains>
+        //               <FieldRef Name="RelatedObjective" />
+        //               <Value Type="Text">SO-23-0199</Value>
+        //             </Contains>
+        //             <Or>
+        //               <Contains>
+        //                 <FieldRef Name="RelatedObjective" />
+        //                 <Value Type="Text">SO-22-0195</Value>
+        //               </Contains>
+        //               <Or>
+        //                 <Contains>
+        //                   <FieldRef Name="RelatedObjective" />
+        //                   <Value Type="Text">SO-22-0191</Value>
+        //                 </Contains>
+        //                 <Contains>
+        //                   <FieldRef Name="RelatedObjective" />
+        //                   <Value Type="Text">SO-22-0192</Value>
+        //                 </Contains>
+        //               </Or>
+        //             </Or>
+        //           </Or>
+        //         </Or>
+        //       </And>
+        //     </Where>
+        //     <OrderBy>
+        //       <FieldRef Name="Created" Ascending="False" />
+        //     </OrderBy>
+        //   </Query>
+        // </View>`
         //   PQuery = `<View>
         //   <Query>
         //   <Where>
@@ -1170,9 +1170,7 @@ window.ListingData = {
     filtertrigger: function () {
       $('.page-filter .dropdown-menu label input:checkbox').change(function (e) {
         FilterChoices = [];
-        if (isRoleDataLevelAccess) {
-          FilterChoices = Array.from(dataLevelAccessChoicesForFilters)
-        }
+
         $('.page-filter .dropdown-menu').each(function () { //looping through filters
           var selectedchoices = $(this).find('input:checked').map(function () { //getting selected choices
             if ($(this).attr('data-type') == 'floatpercentage')
@@ -1209,6 +1207,15 @@ window.ListingData = {
             });
           }
         });
+
+        if (isRoleDataLevelAccess) {
+          dataLevelAccessChoicesForFilters.forEach(el =>{
+            FilterChoices.push(el)
+          })
+          // FilterChoices = Array.from(dataLevelAccessChoicesForFilters)
+        }
+        
+
         ListingData.g.camlfilterbuilder();
       });
       $('.page-filter .dropdown-menu label.dropdown-item').on("click", function (e) {
@@ -1386,11 +1393,13 @@ window.ListingData = {
         }
         //dynamic query building
         for (var i = 0; i < FilterChoices.length; i++) {
+          console.log(FilterChoices, "FilterChoices FilterChoices")
+          debugger
           //only one choice
           if (FilterChoices.length == 1) {
-            console.log(FilterChoices,"FilterChoices FilterChoices")
-            
-          if (FilterChoices[i].Type == "LoggedInUser") {
+            console.log(FilterChoices, "FilterChoices FilterChoices")
+
+            if (FilterChoices[i].Type == "LoggedInUser") {
               Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
             } else {
               Where_Body += '<In><FieldRef Name="' + FilterChoices[i].internalName + '" /><Values>';
@@ -1402,8 +1411,30 @@ window.ListingData = {
           }
           //Two choices
           else if (FilterChoices.length == 2) {
+            console.log(FilterChoices, "FilterChoices")
+
             if (i == 0) {
-              if (FilterChoices[i].Type == "LoggedInUser") {
+              if (FilterChoices[i].targetIsMultiFilter) {
+
+                Where_Body += '<And>'
+                for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                  if (j == 0) {
+                    Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  } else {
+                    Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  }
+
+                }
+
+                var countOr = (Where_Body.match(/<Or>/g) || []).length;
+                var ORC = "</Or>".repeat(countOr);
+                Where_Body += ORC;
+
+                // console.log(Where_Body, "Where_Body oday testttt")
+                // debugger
+
+              }
+              else if (FilterChoices[i].Type == "LoggedInUser") {
                 Where_Body += `<And><Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
               } else {
                 Where_Body += '<And><In><FieldRef Name="' + FilterChoices[i].internalName + '" /><Values>';
@@ -1413,7 +1444,25 @@ window.ListingData = {
                 Where_Body += '</Values></In>';
               }
             } else {
-              if (FilterChoices[i].Type == "LoggedInUser") {
+              if (FilterChoices[i].targetIsMultiFilter) {
+
+                Where_Body += ''
+                for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                  if (j == FilterChoices[i].Values.length - 1) {
+                    Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  }else{
+                    Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  }
+                }
+
+                var countOr = (Where_Body.match(/<Or>/g) || []).length;
+                var ORC = "</Or>".repeat(countOr);
+                Where_Body += ORC;
+                Where_Body +='</And>'
+                // console.log(Where_Body, "Where_Body oday testttt")
+                // debugger
+
+              } else if (FilterChoices[i].Type == "LoggedInUser") {
                 Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq></And>`;
               } else {
                 Where_Body += '<In><FieldRef Name="' + FilterChoices[i].internalName + '" /><Values>';
@@ -1504,6 +1553,9 @@ window.ListingData = {
               '</Query>' +
               '</View>';
             PQuery = Query_Body;
+          
+            console.log(PQuery,"PQuery")
+           
 
             ListingData.init();
           }
