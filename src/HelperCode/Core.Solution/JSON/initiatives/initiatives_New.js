@@ -242,6 +242,48 @@ var Information_Form = [
         dynamic: 'RelatedStrategy',
         filterField: 'RelatedStrategy',
         filterFieldType: 'Text',
+          accessFilter: [
+          {
+            role: 'VROE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['vision'],
+              },
+            ],
+          },
+          {
+            role: 'VROP',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['vision'],
+              },
+            ],
+          },
+          {
+            role: 'LMSE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['lms'],
+              },
+            ],
+          },
+          {
+            role: 'LMSP',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['lms'],
+              },
+            ],
+          },
+        ],
         // queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
         // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
         // queryFieldValue: 'sublevel2,sublevel3', // if i need to make the field with filter should add this

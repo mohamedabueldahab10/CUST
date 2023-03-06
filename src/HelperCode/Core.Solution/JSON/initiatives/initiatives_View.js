@@ -134,18 +134,21 @@ var Information_Form = [
         type: 'dropdownValues',
         options: {
           choices: [
-            {
-              display: 'objl1',
-              value: 'objl1',
-            },
-            {
-              display: 'objl2',
-              value: 'objl2',
-            },
-            {
-              display: 'objl3',
-              value: 'objl3',
-            },
+            { display: 'main', value: 'main' },
+            { display: 'sublevel2', value: 'sublevel2' },
+            { display: 'sublevel3', value: 'sublevel3' },
+            // {
+            //   display: 'objl1',
+            //   value: 'objl1',
+            // },
+            // {
+            //   display: 'objl2',
+            //   value: 'objl2',
+            // },
+            // {
+            //   display: 'objl3',
+            //   value: 'objl3',
+            // },
           ],
         },
         // validation: 'required',
