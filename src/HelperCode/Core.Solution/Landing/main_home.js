@@ -946,36 +946,18 @@ window.Project_Info_Request = {
         for (var i = 0; i < FilterChoices.length; i++) {
           //only one choice
           if (FilterChoices.length == 1) {
-            Where_Body +=
-              '<In><FieldRef Name="' +
-              FilterChoices[i].internalName +
-              '" /><Values>';
-            for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-              Where_Body +=
-                '<Value Type="' +
-                FilterChoices[i].Type +
-                '">' +
-                FilterChoices[i].Values[j] +
-                "</Value>";
-            }
-            Where_Body += "</Values></In>";
-          }
-          //Two choices
-          else if (FilterChoices.length == 2) {
-            if (i == 0) {
-              Where_Body +=
-                '<And><In><FieldRef Name="' +
-                FilterChoices[i].internalName +
-                '" /><Values>';
+            if (FilterChoices[i].targetIsMultiFilter) {
               for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-                Where_Body +=
-                  '<Value Type="' +
-                  FilterChoices[i].Type +
-                  '">' +
-                  FilterChoices[i].Values[j] +
-                  "</Value>";
+                if (j == FilterChoices[i].Values.length - 1) {
+                  Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                } else {
+                  Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                }
               }
-              Where_Body += "</Values></In>";
+              var countOr = (Where_Body.match(/<Or>/g) || []).length;
+              var ORC = "</Or>".repeat(countOr);
+              Where_Body += ORC;
+
             } else {
               Where_Body +=
                 '<In><FieldRef Name="' +
@@ -989,26 +971,107 @@ window.Project_Info_Request = {
                   FilterChoices[i].Values[j] +
                   "</Value>";
               }
-              Where_Body += "</Values></In></And>";
+              Where_Body += "</Values></In>";
+            }
+          }
+          //Two choices
+          else if (FilterChoices.length == 2) {
+            if (i == 0) {
+              if (FilterChoices[i].targetIsMultiFilter) {
+
+                Where_Body += '<And>'
+                for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                  if (j == FilterChoices[i].Values.length - 1) {
+                    Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  } else {
+                    Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  }
+                }
+
+                var countOr = (Where_Body.match(/<Or>/g) || []).length;
+                var ORC = "</Or>".repeat(countOr);
+                Where_Body += ORC;
+              } else {
+                Where_Body +=
+                  '<And><In><FieldRef Name="' +
+                  FilterChoices[i].internalName +
+                  '" /><Values>';
+                for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                  Where_Body +=
+                    '<Value Type="' +
+                    FilterChoices[i].Type +
+                    '">' +
+                    FilterChoices[i].Values[j] +
+                    "</Value>";
+                }
+                Where_Body += "</Values></In>";
+              }
+            } else {
+              if (FilterChoices[i].targetIsMultiFilter) {
+                Where_Body += ''
+                for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                  if (j == FilterChoices[i].Values.length - 1) {
+                    Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  } else {
+                    Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  }
+                }
+
+                var countOr = (Where_Body.match(/<Or>/g) || []).length;
+                var ORC = "</Or>".repeat(countOr);
+                Where_Body += ORC;
+                Where_Body += '</And>'
+
+
+              } else {
+                Where_Body +=
+                  '<In><FieldRef Name="' +
+                  FilterChoices[i].internalName +
+                  '" /><Values>';
+                for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                  Where_Body +=
+                    '<Value Type="' +
+                    FilterChoices[i].Type +
+                    '">' +
+                    FilterChoices[i].Values[j] +
+                    "</Value>";
+                }
+                Where_Body += "</Values></In></And>";
+              }
             }
           }
           //More than two choices
           else if (FilterChoices.length > 2) {
             //two Eqs in last And
             if (i == FilterChoices.length - 1) {
-              Where_Body +=
-                '<In><FieldRef Name="' +
-                FilterChoices[i].internalName +
-                '" /><Values>';
-              for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+              if (FilterChoices[i].targetIsMultiFilter) {
+
+                Where_Body += ''
+                for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                  if (j == FilterChoices[i].Values.length - 1) {
+                    Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  } else {
+                    Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  }
+                }
+                var countOr = (Where_Body.match(/<Or>/g) || []).length;
+                var ORC = "</Or>".repeat(countOr);
+                Where_Body += ORC;
+              } else {
                 Where_Body +=
-                  '<Value Type="' +
-                  FilterChoices[i].Type +
-                  '">' +
-                  FilterChoices[i].Values[j] +
-                  "</Value>";
+                  '<In><FieldRef Name="' +
+                  FilterChoices[i].internalName +
+                  '" /><Values>';
+                for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                  Where_Body +=
+                    '<Value Type="' +
+                    FilterChoices[i].Type +
+                    '">' +
+                    FilterChoices[i].Values[j] +
+                    "</Value>";
+                }
+                Where_Body += "</Values></In>";
               }
-              Where_Body += "</Values></In>";
 
               //appending And closure
               var count = (Where_Body.match(/<And>/g) || []).length;
@@ -1017,19 +1080,33 @@ window.Project_Info_Request = {
             }
             //normal And
             else {
-              Where_Body +=
-                '<And><In><FieldRef Name="' +
-                FilterChoices[i].internalName +
-                '" /><Values>';
-              for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+              if (FilterChoices[i].targetIsMultiFilter) {
+                Where_Body += '<And>'
+                for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                  if (j == FilterChoices[i].Values.length - 1) {
+                    Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  } else {
+                    Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  }
+                }
+                var countOr = (Where_Body.match(/<Or>/g) || []).length;
+                var ORC = "</Or>".repeat(countOr);
+                Where_Body += ORC;
+              } else {
                 Where_Body +=
-                  '<Value Type="' +
-                  FilterChoices[i].Type +
-                  '">' +
-                  FilterChoices[i].Values[j] +
-                  "</Value>";
+                  '<And><In><FieldRef Name="' +
+                  FilterChoices[i].internalName +
+                  '" /><Values>';
+                for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                  Where_Body +=
+                    '<Value Type="' +
+                    FilterChoices[i].Type +
+                    '">' +
+                    FilterChoices[i].Values[j] +
+                    "</Value>";
+                }
+                Where_Body += "</Values></In>";
               }
-              Where_Body += "</Values></In>";
             }
           }
           // Where_Body += '</And>';
@@ -2611,7 +2688,7 @@ function handleStatusBarChart() {
   var background_28 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
 
 
-  
+
   //green on plan
 
   // yellow late

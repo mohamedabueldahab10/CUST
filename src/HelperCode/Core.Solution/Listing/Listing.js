@@ -100,7 +100,7 @@ else if (isTasks) {
 window.sphttp = {
   get: function (listUrl, listDisplayName, camelQuery, internalFieldNames, isGetDdl, onEach, onError) {
 
-    debugger
+
     sphttp.g.isGetDdl = isGetDdl;
     var clientContext = new SP.ClientContext(listUrl);
     var oListsp = clientContext.get_web().get_lists().getByTitle(listDisplayName);
@@ -451,6 +451,99 @@ window.ListingData = {
 
       if (isRoleDataLevelAccess && (!UserICode && !USERPCODE && isEmptyFilter)) {
         PQuery = dataLevelAccessQuery ? dataLevelAccessQuery : AccessQuery;
+        console.log(PQuery, "PQuery odddds")
+        //SO-23-0167:::SO-22-0174
+
+        //   PQuery = `<View>
+        //   <Query>
+        //   <Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name="RelatedObjective" /><Values><Contains><Value Type="Text">SO-23-0167</Value></Contains></Values></In> 
+        // </And></Where>
+        //   <OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
+        //   </Query>
+        // </View>`
+        ////////////////////////////////
+        //   PQuery = `<View>
+        //   <Query>
+        //     <Where>
+        //       <And>
+        //         <Neq>
+        //           <FieldRef Name='DeletionStatus' />
+        //           <Value Type='Text'>Deleted</Value>
+        //         </Neq>
+        //         <Or>
+        //           <Contains>
+        //             <FieldRef Name="RelatedObjective" />
+        //             <Value Type="Text">SO-23-0211</Value>
+        //           </Contains>
+        //           <Or>
+        //             <Contains>
+        //               <FieldRef Name="RelatedObjective" />
+        //               <Value Type="Text">SO-23-0199</Value>
+        //             </Contains>
+        //             <Or>
+        //               <Contains>
+        //                 <FieldRef Name="RelatedObjective" />
+        //                 <Value Type="Text">SO-22-0195</Value>
+        //               </Contains>
+        //               <Or>
+        //                 <Contains>
+        //                   <FieldRef Name="RelatedObjective" />
+        //                   <Value Type="Text">SO-22-0191</Value>
+        //                 </Contains>
+        //                 <Contains>
+        //                   <FieldRef Name="RelatedObjective" />
+        //                   <Value Type="Text">SO-22-0192</Value>
+        //                 </Contains>
+        //               </Or>
+        //             </Or>
+        //           </Or>
+        //         </Or>
+        //       </And>
+        //     </Where>
+        //     <OrderBy>
+        //       <FieldRef Name="Created" Ascending="False" />
+        //     </OrderBy>
+        //   </Query>
+        // </View>`
+        //   PQuery = `<View>
+        //   <Query>
+        //   <Where>
+        //   <And>
+        //   <Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>
+        //   <Or><Contains><FieldRef Name="RelatedObjective" /><Value Type="Text">SO-23-0167</Value></Contains><Or><Contains><FieldRef Name="RelatedObjective" /><Value Type="Text">SO-23-0193</Value></Contains><Contains><FieldRef Name="RelatedObjective" /><Value Type="Text">SO-22-0211</Value></Contains></Or></Or>
+        //   </And></Where>
+        //   <OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
+        //   </Query>
+        // </View>
+        // `
+
+        /////////////////////////////////
+        // PQuery = `<View>
+        //     <Query>
+        //     <Where>
+        //     <And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>
+        //     <Or><In><FieldRef Name="RelatedObjective" /><Values><Value Type="Text">SO-23-0211</Value><Value Type="Text">SO-23-0167</Value></Values></In>
+        //     <Contains><FieldRef Name="RelatedObjective" /><Value Type="Text">SO-23-0167</Value></Contains>
+        //     </Or></And></Where>
+        //     <OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
+        //     </Query>
+        //   </View>
+        //   `
+        //////////////////////////////////
+        //   `<View>
+        //   <Query>
+        //   <Where>
+        //   <And>
+        //   <Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>
+        //   <And>
+        //   <In><FieldRef Name="RelatedObjective" /><Values><Value Type="Text">SO-23-0211</Value><Value Type="Text">SO-23-0199</Value><Value Type="Text">SO-22-0195</Value><Value Type="Text">SO-22-0028</Value><Value Type="Text">SO-21-0002</Value></Values></In>
+        //  <And>
+        //  <Contain><FieldRef Name="RelatedObjective" /><Value Type="Text">SO-23-0167</Value></Contain>
+        //   </And>
+        // </And></Where>
+        //   <OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
+        //   </Query>
+        // </View>`
       } else {
         if (UserICode != null && UserICode != '') {
           if (listkey == 'initiativemilestones') { // to arrange the card depends on planned completed Date
@@ -1077,9 +1170,12 @@ window.ListingData = {
     filtertrigger: function () {
       $('.page-filter .dropdown-menu label input:checkbox').change(function (e) {
         FilterChoices = [];
+
         if (isRoleDataLevelAccess) {
           FilterChoices = Array.from(dataLevelAccessChoicesForFilters)
+
         }
+
         $('.page-filter .dropdown-menu').each(function () { //looping through filters
           var selectedchoices = $(this).find('input:checked').map(function () { //getting selected choices
             if ($(this).attr('data-type') == 'floatpercentage')
@@ -1116,6 +1212,16 @@ window.ListingData = {
             });
           }
         });
+
+        // comment bachar change and back it to origin
+        // if (isRoleDataLevelAccess) {
+        //   dataLevelAccessChoicesForFilters.forEach(el => {
+        //     FilterChoices.push(el)
+        //   })
+        //   // FilterChoices = Array.from(dataLevelAccessChoicesForFilters)
+        // }
+
+
         ListingData.g.camlfilterbuilder();
       });
       $('.page-filter .dropdown-menu label.dropdown-item').on("click", function (e) {
@@ -1293,9 +1399,26 @@ window.ListingData = {
         }
         //dynamic query building
         for (var i = 0; i < FilterChoices.length; i++) {
+          console.log(FilterChoices, "FilterChoices FilterChoices")
+
           //only one choice
           if (FilterChoices.length == 1) {
-            if (FilterChoices[i].Type == "LoggedInUser") {
+
+            console.log(FilterChoices, "FilterChoices FilterChoices")
+
+            if (FilterChoices[i].targetIsMultiFilter) {
+              for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                if (j == FilterChoices[i].Values.length - 1) {
+                  Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                } else {
+                  Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                }
+              }
+              var countOr = (Where_Body.match(/<Or>/g) || []).length;
+              var ORC = "</Or>".repeat(countOr);
+              Where_Body += ORC;
+              
+            } else if (FilterChoices[i].Type == "LoggedInUser") {
               Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
             } else {
               Where_Body += '<In><FieldRef Name="' + FilterChoices[i].internalName + '" /><Values>';
@@ -1307,8 +1430,25 @@ window.ListingData = {
           }
           //Two choices
           else if (FilterChoices.length == 2) {
+            console.log(FilterChoices, "FilterChoices")
+
             if (i == 0) {
-              if (FilterChoices[i].Type == "LoggedInUser") {
+              if (FilterChoices[i].targetIsMultiFilter) {
+
+                Where_Body += '<And>'
+                for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                  if (j == FilterChoices[i].Values.length - 1) {
+                    Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  } else {
+                    Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  }
+                }
+
+                var countOr = (Where_Body.match(/<Or>/g) || []).length;
+                var ORC = "</Or>".repeat(countOr);
+                Where_Body += ORC;
+              }
+              else if (FilterChoices[i].Type == "LoggedInUser") {
                 Where_Body += `<And><Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
               } else {
                 Where_Body += '<And><In><FieldRef Name="' + FilterChoices[i].internalName + '" /><Values>';
@@ -1318,7 +1458,23 @@ window.ListingData = {
                 Where_Body += '</Values></In>';
               }
             } else {
-              if (FilterChoices[i].Type == "LoggedInUser") {
+              if (FilterChoices[i].targetIsMultiFilter) {
+                Where_Body += ''
+                for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                  if (j == FilterChoices[i].Values.length - 1) {
+                    Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  } else {
+                    Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  }
+                }
+
+                var countOr = (Where_Body.match(/<Or>/g) || []).length;
+                var ORC = "</Or>".repeat(countOr);
+                Where_Body += ORC;
+                Where_Body += '</And>'
+             
+
+              } else if (FilterChoices[i].Type == "LoggedInUser") {
                 Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq></And>`;
               } else {
                 Where_Body += '<In><FieldRef Name="' + FilterChoices[i].internalName + '" /><Values>';
@@ -1331,9 +1487,24 @@ window.ListingData = {
           }
           //More than two choices
           else if (FilterChoices.length > 2) {
+
             //two Eqs in last And
             if (i == FilterChoices.length - 1) {
-              if (FilterChoices[i].Type == "LoggedInUser") {
+              if (FilterChoices[i].targetIsMultiFilter) {
+                
+                Where_Body += ''
+                for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                  if (j == FilterChoices[i].Values.length - 1) {
+                    Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  } else {
+                    Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  }
+                }
+                var countOr = (Where_Body.match(/<Or>/g) || []).length;
+                var ORC = "</Or>".repeat(countOr);
+                Where_Body += ORC;
+              }
+              else if (FilterChoices[i].Type == "LoggedInUser") {
                 Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
               } else {
                 Where_Body += '<In><FieldRef Name="' + FilterChoices[i].internalName + '" /><Values>';
@@ -1349,7 +1520,20 @@ window.ListingData = {
             }
             //normal And
             else {
-              if (FilterChoices[i].Type == "LoggedInUser") {
+              if (FilterChoices[i].targetIsMultiFilter) {
+                Where_Body += '<And>'
+                for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                  if (j == FilterChoices[i].Values.length - 1) {
+                    Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  } else {
+                    Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+                  }
+                }
+                var countOr = (Where_Body.match(/<Or>/g) || []).length;
+                var ORC = "</Or>".repeat(countOr);
+                Where_Body += ORC;
+              }
+              else if (FilterChoices[i].Type == "LoggedInUser") {
                 Where_Body += `<And><Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
               } else {
                 Where_Body += '<And><In><FieldRef Name="' + FilterChoices[i].internalName + '" /><Values>';
@@ -1366,7 +1550,7 @@ window.ListingData = {
             Where_Body = Where_Body.replaceAll('Type="date"', 'IncludeTimeValue="TRUE" Type="DateTime"'); //IncludeTimeValue="false"
             //alert(Where_Body.includes('Type="date"')+'00'+Where_Body);
             //Where_Body.replace('Type="date"', '');
-            debugger
+
             if (!(PQueryFilteration.length > 0)) {
               // if (isTasks) {
               //   Where_Body_Final = "<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>"  + Where_Body + PQueryFilteration + 
@@ -1409,6 +1593,9 @@ window.ListingData = {
               '</Query>' +
               '</View>';
             PQuery = Query_Body;
+
+            console.log(PQuery, "PQuery")
+
 
             ListingData.init();
           }
@@ -1471,7 +1658,7 @@ window.ListingData = {
             keyNameParams = "ideas"
           } else if (wfname == 'DV') {
             keyNameParams = 'deliverables'
-          } else if (wfname == 'CR' || 	wfname == 'VROCRInitiative' || wfname == 'EPMOCRInitiative' || wfname == 'LMSCRInitiative' || wfname == 'VROCRObjective' || wfname == 'MSCRObjective' || wfname == 'LMSCRObjective' || wfname == 'VROCRKPI' || wfname == 'MSCRKPI' || wfname == 'LMSCRKPI') {
+          } else if (wfname == 'CR' || wfname == 'VROCRInitiative' || wfname == 'EPMOCRInitiative' || wfname == 'LMSCRInitiative' || wfname == 'VROCRObjective' || wfname == 'MSCRObjective' || wfname == 'LMSCRObjective' || wfname == 'VROCRKPI' || wfname == 'MSCRKPI' || wfname == 'LMSCRKPI') {
             keyNameParams = 'changerequest'
           } else if (wfname == 'Issue') {
             keyNameParams = 'issues'
@@ -1487,15 +1674,15 @@ window.ListingData = {
             keyNameParams = 'strategicpartnerships'
           } else if (wfname == 'SPAchievements') {
             keyNameParams = 'strategicpartnershipsachievements'
-          } else if(wfname == 'VROBenefitActual' || wfname == 'EPMOBenefitActual' || wfname == 'LMSBenefitActual') {
+          } else if (wfname == 'VROBenefitActual' || wfname == 'EPMOBenefitActual' || wfname == 'LMSBenefitActual') {
             keyNameParams = 'benefits'
-          } else if(wfname == 'VROInitiativeMilestone' || wfname == 'EPMOInitiativeMilestone' || wfname == 'LMSInitiativeMilestone') {
+          } else if (wfname == 'VROInitiativeMilestone' || wfname == 'EPMOInitiativeMilestone' || wfname == 'LMSInitiativeMilestone') {
             keyNameParams = 'initiativemilestones'
-          } else if(wfname == 'VROInitiativeDeliverable' || wfname == 'EPMOInitiativeDeliverable' || wfname == 'LMSInitiativeDeliverable') {
+          } else if (wfname == 'VROInitiativeDeliverable' || wfname == 'EPMOInitiativeDeliverable' || wfname == 'LMSInitiativeDeliverable') {
             keyNameParams = 'initiativedeliverables'
-          } else if(wfname == 'VROProjMilestone' || wfname == 'EPMOProjMilestone' || wfname == 'LMSProjMilestone') {
+          } else if (wfname == 'VROProjMilestone' || wfname == 'EPMOProjMilestone' || wfname == 'LMSProjMilestone') {
             keyNameParams = 'milestones'
-          } else if(wfname == 'VROCOC' || wfname == 'EPMOCOC' || wfname == 'LMSCOC') {
+          } else if (wfname == 'VROCOC' || wfname == 'EPMOCOC' || wfname == 'LMSCOC') {
             keyNameParams = 'coc'
           }
           switch (tasktype) {
@@ -1525,7 +1712,7 @@ window.ListingData = {
               );
               break;
           }
-          
+
       }
     },
     ExportToExcel: function () {
@@ -1613,7 +1800,7 @@ window.ListingData = {
                   localStorage.getItem("lng") == null ||
                   localStorage.getItem("lng") == "ar"
                 ) {
-                  
+
                   translationData = Resources.ar[data] ? Resources.ar[data] : No_Data
                 } else {
                   translationData = Resources.en[data] ? Resources.en[data] : No_Data
@@ -1622,9 +1809,9 @@ window.ListingData = {
               mydata[i][IN[j]] = translationData
               break;
 
-              default:
-                console.log("no change on on value")
-                break;
+            default:
+              console.log("no change on on value")
+              break;
           }
 
 
