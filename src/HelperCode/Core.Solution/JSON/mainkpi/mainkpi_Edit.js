@@ -754,24 +754,7 @@ var Information_Form = [
         // 	],
         // },
       },
-      {
-        InternalName: 'Performance',
-        DisplayNameEn: 'Performance',
-        DisplayName: 'الأداء',
-        type: 'number',
-      },
-      {
-        InternalName: 'TotalActual',
-        DisplayNameEn: 'TotalActual',
-        DisplayName: 'إجمالي الفعلي',
-        type: 'number',
-      },
-      {
-        InternalName: 'TotalPlanned',
-        DisplayNameEn: 'TotalPlanned',
-        DisplayName: 'إجمالي المخطط',
-        type: 'number',
-      },
+
       // {
       //   InternalName: 'RecurrenceChanged',
       //   DisplayNameEn: 'Recurrence Changed',
@@ -844,7 +827,6 @@ var Information_Form = [
           }, //we can put more than 1  field
           { value: 'no', fields: [] },
         ],
-        validation: 'required',
       },
 
       // {
@@ -1527,18 +1509,6 @@ var Information_Form = [
         },
       },
       {
-        InternalName: 'NotMeasurableNow',
-        DisplayNameEn: 'Not Measurable Now',
-        DisplayName: 'لايقاس حاليا',
-        type: 'yesnoradio',
-        options: {
-          choices: [
-            { display: 'yes', value: 'yes' },
-            { display: 'no', value: 'no' },
-          ],
-        },
-      },
-      {
         InternalName: 'Equation',
         DisplayNameEn: 'Actual value',
         DisplayName: 'القيمة الفعلية',
@@ -1570,6 +1540,22 @@ var Information_Form = [
       //       ],
       //     },
       //   },
+    ],
+  },
+  {
+    label: 'وثائق عمليات BRD',
+    labelEn: 'BRD Documents',
+    description: '',
+    descriptionEn: '',
+    subFields: [
+      {
+        InternalName: 'getfile',
+        DisplayName: 'مرفقات BRD',
+        DisplayNameEn: 'BRD Attachments',
+        type: 'file',
+        docPurpose:"BRD",
+        withAddBtn: 'true',
+      },
     ],
   },
   {

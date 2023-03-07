@@ -770,6 +770,9 @@ window.Edit_Data_Request = {
       DocumentLibraryName = PCODE ? ListArray[2].documents : "Initiative Documents";
     } else if (STCODE) {
       DocumentLibraryName = "StrategicPartnerships Documents"
+    } else if (listkey == 'mainkpi') {
+      getfolderurl = host + "/" + listkey + " Documents/";
+      DocumentLibraryName = listkey + " Documents";
     }
     else {
       // getfolderurl = host + "/" + listkey + " Documents/";
@@ -1838,6 +1841,9 @@ window.View_Data_Request = {
       DocumentLibraryName = PCODE ? ListArray[2].documents : "Initiative Documents";
     } else if (STCODE) {
       DocumentLibraryName = "StrategicPartnerships Documents"
+    } else if (listkey == 'mainkpi') {
+      getfolderurl = host + "/" + listkey + " Documents/";
+      DocumentLibraryName = listkey + " Documents";
     }
     else {
       // getfolderurl = host + "/" + listkey + " Documents/";
@@ -4565,7 +4571,7 @@ window.ViewAllFiles_Main_Strategy = {
                       ele.url +
                       "', '" +
                       filename +
-                      '\')"><i class="fas fa-times"></i></div>';
+                      '\')"><i class="fas fa-times"><span class="filePurpose">'+ele.filePurpose+'</span></i></div>';
                   } else {
                     var filename = ele.url.split("/").slice(-1)[0];
                     filename = filename.includes("_-_SystemUploadTime_-_") ? filename.split('_-_SystemUploadTime_-_')[1] : filename;
@@ -4580,6 +4586,7 @@ window.ViewAllFiles_Main_Strategy = {
                       '" download="' + filename + '" title="Download ' +
                       filename +
                       '"><i class="fas fa-file-download"></i>' +
+                      '<span class="filePurpose">' + ele.filePurpose + '</span>' +
                       filename +
                       "</a></div>";
                   }
@@ -4624,7 +4631,7 @@ window.ViewAllFiles_Main_Strategy = {
                   el.url +
                   "', '" +
                   filename +
-                  '\')"><i class="fas fa-times"></i></div>';
+                  '\')"><i class="fas fa-times"><span class="filePurpose">'+el.filePurpose+'</span></i></div>';
               } else {
                 generalAttach +=
                   '<div class="file-container"><a class="File-Link" file-id="' +
@@ -4636,6 +4643,7 @@ window.ViewAllFiles_Main_Strategy = {
                   '" download="' + filename + '" title="Download ' +
                   filename +
                   '"><i class="fas fa-file-download"></i>' +
+                  '<span class="filePurpose">' + el.filePurpose + '</span>'+
                   filename +
                   "</a></div>";
               }

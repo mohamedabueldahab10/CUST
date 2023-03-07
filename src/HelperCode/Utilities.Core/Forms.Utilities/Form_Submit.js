@@ -746,15 +746,14 @@ var Set_Code_Submit = {
           Documents_Library = "StrategicPartnerships Documents";
           folderdirectory = STCODE + "/" + listkey;
         }
-        // else {
-        //   Documents_Library = listkey + " Documents";
-        //   folderdirectory = "/";
-        //   // folderdirectory = host+'/'+listkey+' Documents/';
-        // }
+        else if (listkey == 'mainkpi') {
+          Documents_Library = listkey + " Documents";
+          folderdirectory = "/";
+          // folderdirectory = host+'/'+listkey+' Documents/';
+        }
         else {
-          // Documents_Library = listkey + " Documents";
+          //
           Documents_Library = "SPM General Services"
-          //folderdirectory = "/";
           folderdirectory = listkey
         } //
         if (listkey != "projects" && listkey != 'initiatives' && listkey != 'strategicpartnerships') {
@@ -1420,6 +1419,9 @@ window.Edit_Data_Submit = {
         } else if (STCODE || listkey == "strategicpartnerships") {
           Documents_Library = "StrategicPartnerships Documents";
           folderdirectory = STCODE + "/" + listkey;
+        } else if (listkey == 'mainkpi') {
+          Documents_Library = listkey + " Documents";
+          folderdirectory = ""; //_spPageContextInfo.webServerRelativeUrl+
         }
         else {
           // Documents_Library = listkey + " Documents";
@@ -2508,7 +2510,7 @@ function _uploadFile() {
 
   $("input[type=file]").each(function (e) {
 
-    var docPurpose = $(this).data("docpurpose") ? $(this).data("docpurpose") :"" 
+    var docPurpose = $(this).data("docpurpose") ? $(this).data("docpurpose") : ""
     // var filesArr = document.querySelectorAll("#" + $(this).attr("id"))
 
     // filesArr.forEach(el => {
@@ -2524,8 +2526,8 @@ function _uploadFile() {
       // get attribut
       if (acceptedExtensions.indexOf(fileExtension.toLowerCase()) > -1) {
         attachments.push(file);
-        
-        filesPurpose.push({name:file.name,purpose:docPurpose})
+
+        filesPurpose.push({ name: file.name, purpose: docPurpose })
       }
     }
     // })
@@ -2566,12 +2568,12 @@ function _uploadFile() {
   ).then(function (files) {
     // upload files
     return Promise.all(
-      files.map(function (file,index) {
+      files.map(function (file, index) {
         //
         var Doc_Title = "";
         console.log(file.name, "file name")
-        console.log(filesPurpose,"filesPurpose")
-        console.log(index,"index")
+        console.log(filesPurpose, "filesPurpose")
+        console.log(index, "index")
 
         debugger
 
@@ -2612,35 +2614,40 @@ function _uploadFile() {
               Title: Doc_Title,
               ItemID: IID,
               RelatedMonth: $('#Months').val(),
-              RelatedYear: $('#Year').val()
+              RelatedYear: $('#Year').val(),
+              docPurpose: purpose
             }
           } else if (kpiPeriodType == 'quarter') {
             fieldsObj = {
               Title: Doc_Title,
               ItemID: IID,
               RelatedQuarter: $('#Quarter').val(),
-              RelatedYear: $('#Year').val()
+              RelatedYear: $('#Year').val(),
+              docPurpose: purpose
             }
           } else if (kpiPeriodType == 'midterm') {
             fieldsObj = {
               Title: Doc_Title,
               ItemID: IID,
               RelatedMid: $('#Midterms').val(),
-              RelatedYear: $('#Year').val()
+              RelatedYear: $('#Year').val(),
+              docPurpose: purpose
             }
           } else if (kpiPeriodType == 'year') {
             fieldsObj = {
               Title: Doc_Title,
               ItemID: IID,
               RelatedActualY: $('#Years').val(),
-              RelatedYear: $('#Year').val()
+              RelatedYear: $('#Year').val(),
+              docPurpose: purpose
+
             }
           }
         } else {
           fieldsObj = {
             Title: Doc_Title,
             ItemID: IID,
-            docPurpose:purpose
+            docPurpose: purpose
           }
         }
 
