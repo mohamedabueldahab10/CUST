@@ -105,23 +105,23 @@ if (
   var No_Data = "Not Found";
 }
 window.UInitiatives = [];
-// var iconstagesm = require("../../HelperRessources/img/icon-stage-sm.png");
-// var iconstatustimesm = require("../../HelperRessources/img/icon-status-time-sm.png");
-// var calendar = require("../../HelperRessources/img/calendar.svg");
-// var iconimportantsm = require("../../HelperRessources/img/icon-important-sm.png");
-// var iconstrategysm = require("../../HelperRessources/img/analysis.png");
-// var risk = require("../../HelperRessources/img/risk.svg");
-// var progress = require("../../HelperRessources/img/progress.svg");
-// var mizania = require("../../HelperRessources/img/mizania.svg");
+var iconstagesm = require("../../HelperRessources/img/icon-stage-sm.png");
+var iconstatustimesm = require("../../HelperRessources/img/icon-status-time-sm.png");
+var calendar = require("../../HelperRessources/img/calendar.svg");
+var iconimportantsm = require("../../HelperRessources/img/icon-important-sm.png");
+var iconstrategysm = require("../../HelperRessources/img/analysis.png");
+var risk = require("../../HelperRessources/img/risk.svg");
+var progress = require("../../HelperRessources/img/progress.svg");
+var mizania = require("../../HelperRessources/img/mizania.svg");
 
-var iconstagesm;// = require("../../HelperRessources/img/icon-stage-sm.png");
-var iconstatustimesm;// = require("../../HelperRessources/img/icon-status-time-sm.png");
-var calendar;// = require("../../HelperRessources/img/calendar.svg");
-var iconimportantsm;// = require("../../HelperRessources/img/icon-important-sm.png");
-var iconstrategysm;// = require("../../HelperRessources/img/analysis.png");
-var risk;// = require("../../HelperRessources/img/risk.svg");
-var progress;//= require("../../HelperRessources/img/progress.svg");
-var mizania;// = require("../../HelperRessources/img/mizania.svg");
+// var iconstagesm;// = require("../../HelperRessources/img/icon-stage-sm.png");
+// var iconstatustimesm;// = require("../../HelperRessources/img/icon-status-time-sm.png");
+// var calendar;// = require("../../HelperRessources/img/calendar.svg");
+// var iconimportantsm;// = require("../../HelperRessources/img/icon-important-sm.png");
+// var iconstrategysm;// = require("../../HelperRessources/img/analysis.png");
+// var risk;// = require("../../HelperRessources/img/risk.svg");
+// var progress;//= require("../../HelperRessources/img/progress.svg");
+// var mizania;// = require("../../HelperRessources/img/mizania.svg");
 //filter vars
 var PQuery =
   "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>",
