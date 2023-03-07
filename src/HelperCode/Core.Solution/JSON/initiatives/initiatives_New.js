@@ -288,21 +288,21 @@ var Information_Form = [
         // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
         // queryFieldValue: 'sublevel2,sublevel3', // if i need to make the field with filter should add this
       },
-      {
-        InternalName: 'RelatedProgram',
-        DisplayNameEn: 'Related Program',
-        DisplayName: 'اسم البرنامج التابع له',
-        // type: 'string',
-        // dontSubmit: true,
-        // "source": "Instruments",
-        // "Dispfieldkey": "Title",
-        // "valfieldkey": "Title"
-        type: 'lookup',
-        grpfieldkey: 'Title',
-        source: 'SPillars',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
-      },
+      // {
+      //   InternalName: 'RelatedProgram',
+      //   DisplayNameEn: 'Related Program',
+      //   DisplayName: 'اسم البرنامج التابع له',
+      //   // type: 'string',
+      //   // dontSubmit: true,
+      //   // "source": "Instruments",
+      //   // "Dispfieldkey": "Title",
+      //   // "valfieldkey": "Title"
+      //   type: 'lookup',
+      //   grpfieldkey: 'Title',
+      //   source: 'SPillars',
+      //   Dispfieldkey: 'Name',
+      //   valfieldkey: 'Title',
+      // },
       {
         InternalName: 'InitiativeOwner',
         DisplayNameEn: 'Initiative Owner',

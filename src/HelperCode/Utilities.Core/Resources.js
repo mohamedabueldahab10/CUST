@@ -952,7 +952,9 @@
     ennamepattern: "يجب إدخال الإسم بالانجليزي",
     taskformtitle: "النموذج المعتمد",
     taskhistory: "العمليات السابقة",
-    taskdecision: "القرار"
+    taskdecision: "القرار",
+    enabled: "مفعل",
+    disabled:"معطل"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1922,7 +1924,9 @@
     ennamepattern: "Name must be entered in English",
     taskformtitle: "Task Form",
     taskhistory: "Task History",
-    taskdecision: "Decision"
+    taskdecision: "Decision",
+    enabled: "Enabled",
+    disabled:"Disabled"
   },
 };
 
