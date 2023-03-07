@@ -357,7 +357,7 @@ window.Edit_Data_Request = {
       });
     });
     //handle top menu navigation
-    
+
     if (SP_ListName == ListArray[0].projects) {
       PCODE = oListItem.get_item("Title");
       $(".headtwo").append(
@@ -372,7 +372,7 @@ window.Edit_Data_Request = {
     // added for CR module
     //! CR
     else if (crListKey) {
-      
+
       let UpdateType = oListItem.get_item("UpdateType") || "";
       let crIsGeneral = UpdateType.includes("general");
       changeRequestBody = oListItem.get_item("ChangeBody");
@@ -726,11 +726,11 @@ window.Edit_Data_Request = {
     $("select[dynamic=parent]").trigger("change")
     // $(".grandFieldInvoke").trigger("change")
 
-    
+
 
     // setTimeout(function () {
 
-      DontSubmit_DataRequest.init()
+    DontSubmit_DataRequest.init()
     // }, 1500)
 
 
@@ -770,13 +770,13 @@ window.Edit_Data_Request = {
       DocumentLibraryName = PCODE ? ListArray[2].documents : "Initiative Documents";
     } else if (STCODE) {
       DocumentLibraryName = "StrategicPartnerships Documents"
-    } 
+    }
     else {
-			// getfolderurl = host + "/" + listkey + " Documents/";
-			// DocumentLibraryName = listkey + " Documents";
-			getfolderurl = host + "/" + "SPM General Services" + "/" + listkey;
-			DocumentLibraryName = "SPM General Services";
-		}
+      // getfolderurl = host + "/" + listkey + " Documents/";
+      // DocumentLibraryName = listkey + " Documents";
+      getfolderurl = host + "/" + "SPM General Services" + "/" + listkey;
+      DocumentLibraryName = "SPM General Services";
+    }
     // else {
     //   getfolderurl = host + "/" + listkey + " Documents/";
     //   DocumentLibraryName = listkey + " Documents";
@@ -1245,7 +1245,7 @@ window.View_Data_Request = {
                   $(this).text(Resources.ar[period.toLowerCase()]);
                 } else $(this).text(Resources.en[period.toLowerCase()]);
 
-                
+
                 // }
               } else {
                 if (
@@ -1394,7 +1394,7 @@ window.View_Data_Request = {
                 var htmlLink = `<span><a class='elementLink' href=${handleHref} target='_blank'><i class='fas fa-external-link-alt'></i></a></span>`
 
                 items += el[Dispfieldkey] + htmlLink + '<br>'
-                
+
                 if (
                   parentrelatedfilterkeylvl1 &&
                   parentrelatedfilterkeylvl1 != "undefined"
@@ -1433,7 +1433,7 @@ window.View_Data_Request = {
                   parentrelatedfilterkeylvl2 &&
                   parentrelatedfilterkeylvl2 != "undefined"
                 ) {
-                  
+
                   $this.attr(
                     "data-parentrelatedvaluelvl2",
                     el[parentrelatedfilterkeylvl2]
@@ -1441,7 +1441,7 @@ window.View_Data_Request = {
                   $(
                     "[data-parentrelatedvaluelvl2]:not([data-parentrelatedvaluelvl2=undefined])"
                   ).each(function () {
-                    
+
                     var elementId = $(this).attr("id"); // get element Id
                     var elementValue = oListItem.get_item(elementId); // get element value
                     if (
@@ -1565,7 +1565,7 @@ window.View_Data_Request = {
                     parentrelatedfilterkeylvl2 &&
                     parentrelatedfilterkeylvl2 != "undefined"
                   ) {
-                    
+
                     $this.attr(
                       "data-parentrelatedvaluelvl2",
                       el[parentrelatedfilterkeylvl2]
@@ -1761,7 +1761,7 @@ window.View_Data_Request = {
         $('#Months,#Quarter,#Midterms').parent().hide();
       }
 
-      
+
       if (recurrenceChanged == 'yes') {
         var htmlMsg = '<div data-trans-recurrencerepeat class="kpiPeriodChanged ErrorMsg Resources"></div>';
         $('.btnactionrow').html(htmlMsg);
@@ -1840,11 +1840,11 @@ window.View_Data_Request = {
       DocumentLibraryName = "StrategicPartnerships Documents"
     }
     else {
-			// getfolderurl = host + "/" + listkey + " Documents/";
-			// DocumentLibraryName = listkey + " Documents";
-			getfolderurl = host + "/" + "SPM General Services" + "/" + listkey;
-			DocumentLibraryName = "SPM General Services";
-		} 
+      // getfolderurl = host + "/" + listkey + " Documents/";
+      // DocumentLibraryName = listkey + " Documents";
+      getfolderurl = host + "/" + "SPM General Services" + "/" + listkey;
+      DocumentLibraryName = "SPM General Services";
+    }
     // else {
     //   getfolderurl = host + "/" + listkey + " Documents/";
     //   DocumentLibraryName = listkey + " Documents";
@@ -2892,7 +2892,7 @@ window.Kpi_Related_Goal = {
     }
 
     // $("#RelatedStrategyObjective").prop("disabled", false);
-    
+
     // if (typeOfIndex == 'main') {
     //   objectiveId = "RelatedStrategyObjective"
     //   if (isPerformanceLeader) {
@@ -4206,7 +4206,7 @@ window.ViewAllFiles_Main_Strategy = {
     var query = SP.CamlQuery.createAllItemsQuery();
     var mytitle;
     mytitle = listkey;
-    
+
     if (PCODE || ICODE || STCODE) {
       // var code = PCODE ? PCODE : ICODE
       var code = ""
@@ -4272,12 +4272,12 @@ window.ViewAllFiles_Main_Strategy = {
     if (listkey == 'mainkpi') {
       context.load(
         ViewAllFiles_Main_Strategy.g.allItems,
-        "Include(ID, Title, ContentType, File, ItemID, RelatedYear, RelatedMonth, RelatedQuarter, RelatedMid, RelatedActualY)"
+        "Include(ID, Title, ContentType, File, ItemID, RelatedYear, RelatedMonth, RelatedQuarter, RelatedMid, RelatedActualY,docPurpose)"
       );
     } else {
       context.load(
         ViewAllFiles_Main_Strategy.g.allItems,
-        "Include(ID, Title, ContentType, File, ItemID)"
+        "Include(ID, Title, ContentType, File, ItemID,docPurpose)"
       );
     }
 
@@ -4295,7 +4295,7 @@ window.ViewAllFiles_Main_Strategy = {
 
 
     while (ListEnumerator.moveNext()) {
-      
+
       var currentFile = ListEnumerator.get_current();
       var FileID = currentFile.get_item("ItemID");
       var _contentType = currentFile.get_contentType();
@@ -4320,12 +4320,14 @@ window.ViewAllFiles_Main_Strategy = {
               RelatedQuarter: currentFile.get_item("RelatedQuarter") ? currentFile.get_item("RelatedQuarter") : '',
               RelatedMid: currentFile.get_item("RelatedMid") ? currentFile.get_item("RelatedMid") : '',
               RelatedActualY: currentFile.get_item("RelatedActualY") ? currentFile.get_item("RelatedActualY") : '',
+              filePurpose: currentFile.get_item("docPurpose") ? currentFile.get_item("docPurpose") : ""
             });
           } else {
             filesUrls.push({
               url: File.get_serverRelativeUrl(),
               id: currentFile.get_item("ID"),
-              title: title
+              title: title,
+              filePurpose: currentFile.get_item("docPurpose") ? currentFile.get_item("docPurpose") : ""
             });
           }
 
@@ -4335,6 +4337,9 @@ window.ViewAllFiles_Main_Strategy = {
     }
 
     if (filesUrls.length > 0) {
+
+      console.log(filesUrls, "filePurpose")
+      debugger
 
       var FilesLink =
         '<div class="py-5 border-bottom section-container " id="file_container" data-groups="">' +
@@ -4460,7 +4465,7 @@ window.ViewAllFiles_Main_Strategy = {
               filesUrls[i].url +
               "', '" +
               filename +
-              '\')"><i class="fas fa-times"></i></div>';
+              '\')"><i class="fas fa-times"><span class="filePurpose">' + filesUrls[i].filePurpose + '</span></i></div>';
           } else {
             FilesLink +=
               '<div class="file-container"><a class="File-Link" file-id="' +
@@ -4472,7 +4477,9 @@ window.ViewAllFiles_Main_Strategy = {
               '" download="' + filename + '" title="Download ' +
               filename +
               '"><i class="fas fa-file-download"></i>' +
+              '<span class="filePurpose">' + filesUrls[i].filePurpose + '</span>' +
               filename +
+
               "</a></div>";
           }
         }
@@ -5069,7 +5076,7 @@ var equationKPI = {
     })
     //
 
-    
+
 
     Update_Kpi_Results.init(kpiEquation)
 
@@ -5138,7 +5145,7 @@ var equationBenefit = {
         F: oListItem.get_item("F"),
         G: oListItem.get_item("G"),
       });
-      
+
       $('input#BenefitEquation').val(oListItem.get_item("Equation") || '');
       $('p#BenefitEquation').text(oListItem.get_item("Equation") || '');
     }
@@ -5231,7 +5238,7 @@ var equationBenefit = {
   init: function () {
 
     var clientContext = new SP.ClientContext.get_current();
-    
+
     var oList = clientContext.get_web().get_lists().getByTitle("BenefitsEquations");
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
@@ -5442,7 +5449,7 @@ window.Update_Kpi_Results = {
     //Get list from host web
     var programList = context.get_web().get_lists().getByTitle('KPIResults');
     var camlQuery = new SP.CamlQuery();
-    
+
     // camlQuery.set_viewXml(
     //   '<View><Query><Where><Eq><FieldRef Name="KPI" /> <Value Type="Text">' + value + "</Value></Eq></Where></Query></View>"
     // );
@@ -5459,7 +5466,7 @@ window.Update_Kpi_Results = {
         if (progColl.get_count() > 0) {
           var progEnum = progColl.getEnumerator();
           while (progEnum.moveNext()) {
-            
+
             var currentItem = progEnum.get_current();
             var currentId = currentItem.get_item("ID");
             var yearItem = currentItem.get_item("Year");
@@ -6027,7 +6034,7 @@ var Check_Item_Deleted = {
 
 var StrategicObjectives_Status = {
   init: function (value) {
-    
+
     var status = ''
     if (value && value != No_Data) {
       if (
@@ -6074,7 +6081,7 @@ window.Get_TaskHistory = {
     }
 
     console.log(camelQuery, "camelQuery")
-    
+
 
     SPHTTPitemsEnumerable = oList.getItems(Get_TaskHistory.g.camlQuery);
     clientContext.load(SPHTTPitemsEnumerable);
@@ -6092,7 +6099,7 @@ window.Get_TaskHistory = {
     console.log(peojectC, "peojectC")
     console.log(relateditemid, "relateditemid")
 
-    
+
 
     if (workflowname == "Project") {
       wfHistoryLink =
@@ -6257,7 +6264,7 @@ window.Get_TaskHistory = {
     );
   },
   loadMore: function () {
-    
+
     //Position will be null if all the items in the collection are fetched and there are no more items to be fetched.
     if (Get_TaskHistory.g.position != null) {
       isLoadMore = true;
