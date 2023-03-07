@@ -745,11 +745,18 @@ var Set_Code_Submit = {
         } else if (STCODE || listkey == "strategicpartnerships") {
           Documents_Library = "StrategicPartnerships Documents";
           folderdirectory = STCODE + "/" + listkey;
-        } else {
-          Documents_Library = listkey + " Documents";
-          folderdirectory = "/";
-          // folderdirectory = host+'/'+listkey+' Documents/';
-        }
+        } 
+        // else {
+        //   Documents_Library = listkey + " Documents";
+        //   folderdirectory = "/";
+        //   // folderdirectory = host+'/'+listkey+' Documents/';
+        // }
+        else {
+          // Documents_Library = listkey + " Documents";
+          Documents_Library = "SPM General Services"
+          //folderdirectory = "/";
+          folderdirectory = listkey
+        } //
         if (listkey != "projects" && listkey != 'initiatives' && listkey != 'strategicpartnerships') {
           //Get File Input Control and read the file name
           $("input[type=file]").each(function (e) {
@@ -1413,11 +1420,18 @@ window.Edit_Data_Submit = {
         } else if (STCODE || listkey == "strategicpartnerships") {
           Documents_Library = "StrategicPartnerships Documents";
           folderdirectory = STCODE + "/" + listkey;
-        } else {
-          Documents_Library = listkey + " Documents";
-          folderdirectory = ""; //_spPageContextInfo.webServerRelativeUrl+
-          // folderdirectory = '/'+listkey+' Documents/';//_spPageContextInfo.webServerRelativeUrl+
+        } 
+        else {
+          // Documents_Library = listkey + " Documents";
+          // folderdirectory = "";
+          Documents_Library = "SPM General Services"
+          folderdirectory = listkey
         }
+        // else {
+        //   Documents_Library = listkey + " Documents";
+        //   folderdirectory = ""; //_spPageContextInfo.webServerRelativeUrl+
+        //   // folderdirectory = '/'+listkey+' Documents/';//_spPageContextInfo.webServerRelativeUrl+
+        // }
 
         if (!PCODE && listkey == "projects") {
           PCODE = Edit_Data_Submit.g.oListItem.get_item("Title");

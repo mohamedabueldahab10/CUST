@@ -770,10 +770,17 @@ window.Edit_Data_Request = {
       DocumentLibraryName = PCODE ? ListArray[2].documents : "Initiative Documents";
     } else if (STCODE) {
       DocumentLibraryName = "StrategicPartnerships Documents"
-    } else {
-      getfolderurl = host + "/" + listkey + " Documents/";
-      DocumentLibraryName = listkey + " Documents";
-    }
+    } 
+    else {
+			// getfolderurl = host + "/" + listkey + " Documents/";
+			// DocumentLibraryName = listkey + " Documents";
+			getfolderurl = host + "/" + "SPM General Services" + "/" + listkey;
+			DocumentLibraryName = "SPM General Services";
+		}
+    // else {
+    //   getfolderurl = host + "/" + listkey + " Documents/";
+    //   DocumentLibraryName = listkey + " Documents";
+    // }
     // if (listkey == 'projects') {
     //     BudgetItem_Sector_Info.init($('#Sector').val());
     //     Department_Sector_Info.init($('#Sector').val());
@@ -1831,10 +1838,17 @@ window.View_Data_Request = {
       DocumentLibraryName = PCODE ? ListArray[2].documents : "Initiative Documents";
     } else if (STCODE) {
       DocumentLibraryName = "StrategicPartnerships Documents"
-    } else {
-      getfolderurl = host + "/" + listkey + " Documents/";
-      DocumentLibraryName = listkey + " Documents";
     }
+    else {
+			// getfolderurl = host + "/" + listkey + " Documents/";
+			// DocumentLibraryName = listkey + " Documents";
+			getfolderurl = host + "/" + "SPM General Services" + "/" + listkey;
+			DocumentLibraryName = "SPM General Services";
+		} 
+    // else {
+    //   getfolderurl = host + "/" + listkey + " Documents/";
+    //   DocumentLibraryName = listkey + " Documents";
+    // }
     if (isView && (listkey == "projects" || listkey == "ideas")) {
       UpcomingTasks_Info_Request.preinit();
     }
