@@ -1,5 +1,5 @@
 var Folders_Files_Array = [],
-  PCODE,ICODE, STCODE, listkey, SP_ListName, PageTitle, KeysFolders = [],
+  PCODE, ICODE, STCODE, listkey, SP_ListName, PageTitle, KeysFolders = [],
   NRisks = 0,
   NIssues = 0,
   Fileelements, fileCount = 0,
@@ -10,10 +10,10 @@ if (window.location.href.indexOf('PCODE=') > -1) {
   PCODE = window.location.href.split('PCODE=')[1].split('&')[0];
 }
 
-if(window.location.href.indexOf('ICODE=') > -1){
+if (window.location.href.indexOf('ICODE=') > -1) {
   ICODE = window.location.href.split('ICODE=')[1].split('&')[0];
 }
-if(window.location.href.indexOf('STCODE=') > -1){
+if (window.location.href.indexOf('STCODE=') > -1) {
   STCODE = window.location.href.split('STCODE=')[1].split('&')[0];
 }
 
@@ -40,19 +40,19 @@ if (window.location.href.indexOf('ListKey') > -1) {
       }
     }
   }
-  if(ICODE){
+  if (ICODE) {
     SP_ListName = 'Initiative Documents'
     if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
       PageTitle = 'مستندات المبادرة'
-    }else{
+    } else {
       PageTitle = 'Initiative Documents'
     }
   }
-  if(STCODE){
+  if (STCODE) {
     SP_ListName = 'StrategicPartnerships Documents'
     if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
       PageTitle = 'مستندات الشراكة الاستراتيجية'
-    }else{
+    } else {
       PageTitle = 'StrategicPartnerships Documents'
     }
   }
@@ -79,18 +79,18 @@ var GetFilesFromFolder = {
     var context = new SP.ClientContext.get_current();
     var web = context.get_web();
     var list = web.get_lists().getByTitle(SP_ListName);
-    console.log(SP_ListName,"SP_ListName SP_ListName")
+    console.log(SP_ListName, "SP_ListName SP_ListName")
 
     // Use createAllItemsQuery to get items inside subfolders as well. Otherwise use new SP.CamlQuery() to get items from a single folder only
     var camlQuery = SP.CamlQuery.createAllItemsQuery();
 
     var handleCode = ''
-    if(PCODE){
-      handleCode=PCODE
-    }else if(ICODE){
+    if (PCODE) {
+      handleCode = PCODE
+    } else if (ICODE) {
       handleCode = ICODE
     }
-    else if(STCODE){
+    else if (STCODE) {
       handleCode = STCODE
     }
     camlQuery.set_viewXml('<View Scope="RecursiveAll"> \
@@ -105,7 +105,7 @@ var GetFilesFromFolder = {
         <RowLimit>5000</RowLimit> \
     </View>');
     GetFilesFromFolder.g.allItems = list.getItems(camlQuery);
-    context.load(GetFilesFromFolder.g.allItems, 'Include(Title, File, FileSystemObjectType, RelatedItemName, PhaseGateItem, RelatedPhase)');
+    context.load(GetFilesFromFolder.g.allItems, 'Include(Title, File, FileSystemObjectType, RelatedItemName, PhaseGateItem, RelatedPhase, docPurpose)');
     // query.set_folderServerRelativeUrl(_spPageContextInfo.webServerRelativeUrl + '/' + SP_ListName + '/' + PCODE);
     // GetFilesFromFolder.g.allItems = list.getItems(query);
     // context.load(GetFilesFromFolder.g.allItems, 'Include(File, FileSystemObjectType, RelatedItemName, PhaseGateItem, RelatedPhase)');
@@ -127,7 +127,7 @@ var GetFilesFromFolder = {
       if (currentItem.get_fileSystemObjectType() == "0") {
         var file = currentItem.get_file();
         if (file != null) {
-          console.log(file.get_serverRelativeUrl().split('/'),"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+          console.log(file.get_serverRelativeUrl().split('/'), "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 
           // console.log('File Name: ' + file.get_name() + '\n' + 'File Url: ' + file.get_serverRelativeUrl());
           FolderName = file.get_serverRelativeUrl().split('/')[3].charAt(0).toUpperCase() + file.get_serverRelativeUrl().split('/')[3].slice(1);
@@ -139,7 +139,8 @@ var GetFilesFromFolder = {
               url: file.get_serverRelativeUrl(),
               itemname: currentItem.get_item('RelatedItemName'),
               phasegateitem: currentItem.get_item('PhaseGateItem'),
-              relatedphase: currentItem.get_item('RelatedPhase')
+              relatedphase: currentItem.get_item('RelatedPhase'),
+              filePurpose: currentItem.get_item("docPurpose") ? currentItem.get_item("docPurpose") : ""
             }],
           });
         }
@@ -163,7 +164,8 @@ var GetFilesFromFolder = {
           url: Folders_Files_Array[o].Files[0].url,
           itemname: Folders_Files_Array[o].Files[0].itemname,
           phasegateitem: Folders_Files_Array[o].Files[0].phasegateitem,
-          relatedphase: Folders_Files_Array[o].Files[0].relatedphase
+          relatedphase: Folders_Files_Array[o].Files[0].relatedphase,
+          filePurpose: Folders_Files_Array[o].Files[0].filePurpose,
         });
       } else {
         newarrayforfolder.push({
@@ -173,7 +175,8 @@ var GetFilesFromFolder = {
             url: Folders_Files_Array[o].Files[0].url,
             itemname: Folders_Files_Array[o].Files[0].itemname,
             phasegateitem: Folders_Files_Array[o].Files[0].phasegateitem,
-            relatedphase: Folders_Files_Array[o].Files[0].relatedphase
+            relatedphase: Folders_Files_Array[o].Files[0].relatedphase,
+            filePurpose: Folders_Files_Array[o].Files[0].filePurpose,
           }],
         });
         pastindex = newarrayforfolder.length - 1;
@@ -185,13 +188,13 @@ var GetFilesFromFolder = {
       FolderHTML = '<div class="folder-wrap level-current scrolling" >',
       FilesHTML = '';
     for (var i = 0; i < newarrayforfolder.length; i++) {
-      console.log(newarrayforfolder[i].Folder,"ffffffffffffffffff")
-      if(PCODE){
-      FolderHTML += '<div class="tile folder" data-target="#' + newarrayforfolder[i].Folder + '"><i class="fas fa-folder"></i><h3 data-trans-' + newarrayforfolder[i].Folder + ' class="Resources"></h3><p>' + PCODE + '</p></div><!-- .tile.folder -->';
-      }else if(ICODE){
+      console.log(newarrayforfolder[i].Folder, "ffffffffffffffffff")
+      if (PCODE) {
+        FolderHTML += '<div class="tile folder" data-target="#' + newarrayforfolder[i].Folder + '"><i class="fas fa-folder"></i><h3 data-trans-' + newarrayforfolder[i].Folder + ' class="Resources"></h3><p>' + PCODE + '</p></div><!-- .tile.folder -->';
+      } else if (ICODE) {
         FolderHTML += '<div class="tile folder" data-target="#' + newarrayforfolder[i].Folder + '"><i class="fas fa-folder"></i><h3 data-trans-' + newarrayforfolder[i].Folder + ' class="Resources"></h3><p>' + ICODE + '</p></div><!-- .tile.folder -->';
       }
-      else if(STCODE){
+      else if (STCODE) {
         FolderHTML += '<div class="tile folder" data-target="#' + newarrayforfolder[i].Folder + '"><i class="fas fa-folder"></i><h3 data-trans-' + newarrayforfolder[i].Folder + ' class="Resources"></h3><p>' + STCODE + '</p></div><!-- .tile.folder -->';
       }
 
@@ -201,7 +204,8 @@ var GetFilesFromFolder = {
       FilesHTML += '<div class="folder-wrap" id="' + newarrayforfolder[i].Folder + '">';
       FilesHTML += "<span data-trans-" + newarrayforfolder[i].Folder + " class='Foldertitle Resources'></span>";
       for (var t = 0; t < newarrayforfolder[i].Files.length; t++) {
-        FilesHTML += '<div class="tile form"><a class="library-download" href="' + newarrayforfolder[i].Files[t].url + '" download><i class="fas fa-file-download"></i><h3>' + newarrayforfolder[i].Files[t].name + '</h3><p></p></a></div><!-- .tile.form -->';
+        console.log(newarrayforfolder[i].Files, " newarrayforfolder[i].Files")
+        FilesHTML += '<div class="tile form"><a class="library-download" href="' + newarrayforfolder[i].Files[t].url + '" download><i class="fas fa-file-download"></i><h3>' + newarrayforfolder[i].Files[t].name + '</h3><span class="filePurpose">' + newarrayforfolder[i].Files[t].filePurpose + '</span><p></p></a></div><!-- .tile.form -->';
         if (t == newarrayforfolder[i].Files.length - 1) {
           FilesHTML += '</div><!-- .folder-wrap -->';
         }
