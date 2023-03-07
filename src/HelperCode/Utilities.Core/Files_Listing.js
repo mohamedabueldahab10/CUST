@@ -188,7 +188,6 @@ var GetFilesFromFolder = {
       FolderHTML = '<div class="folder-wrap level-current scrolling" >',
       FilesHTML = '';
     for (var i = 0; i < newarrayforfolder.length; i++) {
-      console.log(newarrayforfolder[i].Folder, "ffffffffffffffffff")
       if (PCODE) {
         FolderHTML += '<div class="tile folder" data-target="#' + newarrayforfolder[i].Folder + '"><i class="fas fa-folder"></i><h3 data-trans-' + newarrayforfolder[i].Folder + ' class="Resources"></h3><p>' + PCODE + '</p></div><!-- .tile.folder -->';
       } else if (ICODE) {
