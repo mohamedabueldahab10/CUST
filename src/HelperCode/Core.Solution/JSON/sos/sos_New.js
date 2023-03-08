@@ -51,7 +51,7 @@ var Information_Form = [
           { value: 'sublevel2', fields: ['RelatedObjective'] },
           { value: 'sublevel3', fields: ['RelatedObjective'] },
           { value: 'main', fields: ['RelatedPillar'] },
-          { value: 'jobmarket', fields: ['RelatedJobStrategy'] },
+          // { value: 'jobmarket', fields: ['RelatedJobStrategy'] },
           // {value:'strategically', fields:['StrategyRelatedObjective']}
         ],
         type: 'dropdownValues',
@@ -162,8 +162,6 @@ var Information_Form = [
         InternalName: 'RelatedObjective',
         DisplayNameEn: 'Related Objective',
         DisplayName: 'الهدف المرتبط',
-        // DisplayNameEn: 'Related Main Objective',
-        // DisplayName: 'الهدف الرئيسي المرتبط',
         ToggleName: 'RelatedObjective',
         RequiredName: 'RelatedObjective',
         type: 'lookupWithQuery',
@@ -251,10 +249,10 @@ var Information_Form = [
         InternalName: 'RelatedStrategyPillars',
         DisplayNameEn: 'Is Strategic Pillars/Vision Programs Exist?',
         DisplayName: 'هل يوجد محاور استراتيجية / برامج الرؤية ؟',
-        // type: "dropdownValues",
+        type: "dropdownValues",
         // dontSubmit: true,
-        type: 'yesnoradio',
-        state: 'disabled',
+        // type: 'yesnoradio',
+        // state: 'disabled',
         options: {
           choices: [
             { display: 'yes', value: 'yes' },

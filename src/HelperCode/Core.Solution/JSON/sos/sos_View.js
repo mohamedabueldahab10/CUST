@@ -204,10 +204,10 @@ var Information_Form = [
         InternalName: 'RelatedStrategyPillars',
         DisplayNameEn: 'Is Pillar / program  Exist?',
         DisplayName: 'هل يوجد محور / برنامج ؟',
-        // type: 'dropdownValues',
-        state: 'disabled',
+        type: 'dropdownValues',
+        // state: 'disabled',
         // dontSubmit: true,
-        type: 'yesnoradio',
+        // type: 'yesnoradio',
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
@@ -296,6 +296,10 @@ var Information_Form = [
         DisplayName: 'وصف  المحور الإستراتيجى / برنامج الرؤية',
         type: 'multiline',
         // dontSubmit: true,
+        // grandFieldId: "StrategicDescription", // we add this field to handle the two field filtration(parent Id in current form) 
+        // childFieldId: "StrategicDescription",// we add this field to handle the two field filtration (child Id in current form)
+        // childFieldIdSource: "StrategicDescription",// we add this field to handle the two field filtration (child internal name in destination list)
+        // notInvokeListiner: true,// to not invoke the lookup when change on parent > the filteration depends on other field also
       },
     ],
   },
