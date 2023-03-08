@@ -609,7 +609,9 @@ window.ListingData = {
 
             var InternalProjectsHtml = '';
             var ExternalProjectsHtml = '';
-
+            if(!originalstate && !isLoadMore){
+              indexofListing = 0;
+            }
             for (var i = 0; i < records.length; i++) { //looping items
               indexofListing = indexofListing + 1;
 
@@ -921,7 +923,6 @@ window.ListingData = {
             }
 
             var projectsListing = '';
-
             if (originalstate || (!isLoadMore)) { // fix project list tabs to show
               if (typeClicked == 'Internal') {
                 projectsListing = '<ul class="nav nav-tabs" id="projectType" role="tablist"><li class="nav-item"><a data-trans-Internal class="nav-link active Resources" id="Internal" data-toggle="tab" href="#InternalProjects" role="tab" aria-controls="InternalProjects" aria-selected="true"></a></li ><li class="nav-item"><a data-trans-External class="nav-link Resources" id="External" data-toggle="tab" href="#ExternalProjects" role="tab" aria-controls="ExternalProjects" aria-selected="false"></a></li></ul>'
