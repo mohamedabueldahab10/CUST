@@ -403,7 +403,7 @@ window.ListInfo = {
 
               let dataSiblingvalue = $(this).data("siblingvalue")
 
-              
+
 
               // console.log($(this).data("queryFieldValue"), "sssssssa")
               affectedSelectsInfo.push({
@@ -8609,6 +8609,8 @@ dynamicAffectSelect = {
   // The main Initialization function
   init: function (affectedSelectsInfo) {
 
+    debugger
+
     var queryFieldValue = affectedSelectsInfo[0].queryFieldValue
       ? affectedSelectsInfo[0].queryFieldValue
       : "";
@@ -8619,11 +8621,14 @@ dynamicAffectSelect = {
       ? affectedSelectsInfo[0].queryFieldType
       : "";
 
-      // var dataSeblingValue = affectedSelectsInfo[0].dataSiblingvalue
-      // ? affectedSelectsInfo[0].dataSiblingvalue
-      // : ""; 
 
-      // console.log(dataSeblingValue,"dataSeblingValue dataSeblingValue")
+      console.log(affectedSelectsInfo,"affectedSelectsInfo")
+
+    // var dataSeblingValue = affectedSelectsInfo[0].dataSiblingvalue
+    // ? affectedSelectsInfo[0].dataSiblingvalue
+    // : ""; 
+
+    // console.log(dataSeblingValue,"dataSeblingValue dataSeblingValue")
 
     // queryFieldValue="sublevel3"
     // queryFieldName="Types"
@@ -8701,7 +8706,6 @@ dynamicAffectSelect = {
     let selectedVal = ""
     let optionsBody = ""
 
-    let dataSiblingValue =""
 
 
 
@@ -8728,10 +8732,6 @@ dynamicAffectSelect = {
     } else {
       selectedVal = $(`select#${affectedSelectsInfo.affectedFieldName}`).attr("value"); // get selected val to use it in edit
 
-      // dataSiblingValue = $(`select#${affectedSelectsInfo.affectedFieldName}`).
-      console.log(dataSiblingValue,"dataSiblingValue")
-      debugger
-
       $(`select#${affectedSelectsInfo.affectedFieldName}`).html("");
 
       optionsBody = '<option class="Resources" value="" selected="" disabled=""></option>'; // to not choose the first value in dropdown
@@ -8742,7 +8742,6 @@ dynamicAffectSelect = {
 
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
-
 
 
       let dispfieldkey = oListItem.get_item(
@@ -8758,24 +8757,7 @@ dynamicAffectSelect = {
       }
 
 
-      // Object.entries(result).forEach((el) => {
-      //   htmlBody += '<label class="grp-select">' + el[0] + "</label>";
-      //   el[1].forEach((dl) => {
-      //     htmlBody +=
-      //       "<li>" +
-      //       '<div class="checkbox">' +
-      //       "<label>" +
-      //       '<input value="' +
-      //       dl[element.valfieldkey] +
-      //       '" id="' +
-      //       element.InternalName +
-      //       '" type="checkbox">' +
-      //       dl[dispfieldkey] +
-      //       "</label>" +
-      //       "</div>" +
-      //       "</li>";
-      //   });
-      // });
+   
       console.log(valfieldkey, "valfieldkey")
 
       if (targetFieldType == "multiselect") {

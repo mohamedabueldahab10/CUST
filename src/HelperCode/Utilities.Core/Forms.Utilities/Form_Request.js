@@ -460,7 +460,7 @@ window.Edit_Data_Request = {
       var relatedStrategy = $('#RelatedStrategy').val()
       relatedPiller = oListItem.get_item("PillarName")
 
-      // Goal_Strategy_Info.init(relatedStrategy)
+      Goal_Strategy_Info.init(relatedStrategy)
 
       var sector = oListItem.get_item("Sector") ? oListItem.get_item("Sector") : '';
       if (sector) {
@@ -3051,9 +3051,9 @@ window.Goal_Strategy_Info = {
       pillersExist = oListItem.get_item('PillarsExist') ? oListItem.get_item('PillarsExist') : ''
       strategyId = oListItem.get_id()
       $('#RelatedStrategyType').val(strategyType)
-      if (listkey == 'sos') {
-        $('#RelatedStrategyPillars').val(pillersExist)
-      }
+      // if (listkey == 'sos') {
+      //   $('#RelatedStrategyPillars').val(pillersExist)
+      // }
     }
 
     if (pillersExist === "Yes" || pillersExist == "yes") {
@@ -3229,16 +3229,17 @@ window.Get_Pillers_Info = {
         name: oListItem.get_item("Name"),
         code: oListItem.get_item("Title"),
         id: oListItem.get_id(),
+        description: oListItem.get_item("Description")
       });
     }
-
+    debugger
     $("#PillarName").html(
       '<option data-trans-pillersname class="Resources" value="" selected="" disabled=""></option>'
     );
 
     Get_Pillers_Info.g.array.forEach(function (item, i, arr) {
       $("#PillarName").append(
-        '<option option-id="' +
+        '<option data-siblingvalue="' + Get_Pillers_Info.g.array[i].description + '" option-id="' +
         Get_Pillers_Info.g.array[i].id +
         '" value="' +
         Get_Pillers_Info.g.array[i].code +
@@ -4571,7 +4572,7 @@ window.ViewAllFiles_Main_Strategy = {
                       ele.url +
                       "', '" +
                       filename +
-                      '\')"><i class="fas fa-times"><span class="filePurpose">'+ele.filePurpose+'</span></i></div>';
+                      '\')"><i class="fas fa-times"><span class="filePurpose">' + ele.filePurpose + '</span></i></div>';
                   } else {
                     var filename = ele.url.split("/").slice(-1)[0];
                     filename = filename.includes("_-_SystemUploadTime_-_") ? filename.split('_-_SystemUploadTime_-_')[1] : filename;
@@ -4631,7 +4632,7 @@ window.ViewAllFiles_Main_Strategy = {
                   el.url +
                   "', '" +
                   filename +
-                  '\')"><i class="fas fa-times"><span class="filePurpose">'+el.filePurpose+'</span></i></div>';
+                  '\')"><i class="fas fa-times"><span class="filePurpose">' + el.filePurpose + '</span></i></div>';
               } else {
                 generalAttach +=
                   '<div class="file-container"><a class="File-Link" file-id="' +
@@ -4643,7 +4644,7 @@ window.ViewAllFiles_Main_Strategy = {
                   '" download="' + filename + '" title="Download ' +
                   filename +
                   '"><i class="fas fa-file-download"></i>' +
-                  '<span class="filePurpose">' + el.filePurpose + '</span>'+
+                  '<span class="filePurpose">' + el.filePurpose + '</span>' +
                   filename +
                   "</a></div>";
               }

@@ -439,7 +439,6 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         ToggleName: 'PillarName',
-        dynamic: 'RelatedStrategy',
         // to get the seblings value
         valsiblingkey: 'Description', // internal name on sorce list
         targetsiblingkey: 'StrategicDescription', // internal name on current list
