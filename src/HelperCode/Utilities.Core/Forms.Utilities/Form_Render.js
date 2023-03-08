@@ -497,9 +497,9 @@ window.ListInfo = {
 
           //////////////////////////////// get siblings value like AcceptanceCriteria in benefits when change on delivrable
 
-          $('body').on('change', '.getsiblingdata', function (event) {
+          $('body').on('change', '.getsiblingdata', function (event) { // get sibling value based on oter value
 
-
+            
             var siblingData = $(this).find(':selected').data('siblingvalue')
             var siblingTarget = $(this).data('siblingtarget')
 
@@ -4994,6 +4994,11 @@ window.ListInfo = {
         } else {
           parentFieldKey = "";
         }
+        /////////////////////////////////////////////////////////// to get the seblings value
+
+        if (element.hasOwnProperty('valsiblingkey')) {
+          listFields.push(element.valsiblingkey)
+        }
 
         ///////////////////////////////////////////////////////////
         var grandFieldId = ""
@@ -5082,7 +5087,7 @@ window.ListInfo = {
           element.queryFieldType +
           '" data-filterfieldtype="' +
           element.filterFieldType +
-          '" class="form-control" type="dropdown" id="' +
+          '" data-siblingtarget="' + element.targetsiblingkey + '" class="form-control getsiblingdata" type="dropdown" id="' + // getsiblingdata to get the data based on selection value
           element.InternalName +
           '" value="" placeholder="' +
           displayName +
@@ -5112,7 +5117,7 @@ window.ListInfo = {
                   var optionText = el[dispfieldkey];
                 }
                 htmlBody +=
-                  '<option option-id="' +
+                  '<option data-siblingvalue="' + el[element.valsiblingkey] + '" option-id="' +
                   itemsID[index] +
                   '" value="' +
                   el[element.valfieldkey] + //data-parentrelatedkeylvl1 > to get the target element,data-parentrelatedvaluelvl1 > to save the value of parent like sector
@@ -5854,7 +5859,7 @@ window.ListInfo = {
           .append("" + acceptedExtensionsstr + ",");
 
         // pluseAttachCount = pluseAttachCount + 1;
-        attachCount = attachCount +1
+        attachCount = attachCount + 1
         changeResources();
       });
 

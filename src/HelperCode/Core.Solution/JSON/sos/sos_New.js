@@ -95,13 +95,16 @@ var Information_Form = [
         DisplayName: 'الاستراتيجية المرتبطة',
         // "ToggleName": "RelatedStrategy",
         type: 'lookup',
-
         source: 'GoalStrategy',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+        // to get the seblings value
+        valsiblingkey:'PillarsExist', // internal name on sorce list
+        targetsiblingkey:'RelatedStrategyPillars', // internal name on current list
         // dynamically affected by other dropdown
         dynamic: 'parent', //"parentInternalName" or "parent" // if parent it will affect other fields
         //in case not parent add below attrs
+        
         //role access
         accessFilter: [
           {
