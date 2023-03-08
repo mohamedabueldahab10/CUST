@@ -6903,3 +6903,8 @@ h4.black.Resources.myCompletionStatus.statuscolorstat28,
 }
 
 /* end for project status */
+
+.filePurpose{
+    margin: 0px 5px;
+    color: #f7941d;
+}

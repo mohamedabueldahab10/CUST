@@ -36,59 +36,28 @@ var Information_Form = [
         validation: 'required',
         DisplayName: 'نوع المؤشر',
         dynamic: 'parent', //main field that affect on other chiled field
-        toggleValues: [
-          // {
-          //   value: 'sub',
-          //   fields: ['SubRelatedObjective', 'RelatedMainKpis', 'Portfolio'],
-          // }, //we can put more than 1  field
-          {
-            value: 'sublevel2',
-            fields: ['SubRelatedObjective', 'RelatedMainKpis', 'Portfolio'],
-          },
-          {
-            value: 'sublevel3',
-            fields: ['SubRelatedObjective', 'RelatedMainKpis', 'Portfolio'],
-          },
-          { value: 'main', fields: ['RelatedMainObjective'] }, //we can put more than 1  field
-          { value: 'strategically', fields: ['StrategyRelatedObjective'] },
-        ],
         type: 'dropdownValues',
+        toggleValues: [
+          { value: 'sublevel2', fields: ['RelatedStrategyObjective', 'RelatedMainKpis'] }, //we can put more than 1  field
+          { value: 'sublevel3', fields: ['RelatedStrategyObjective', 'RelatedMainKpis'] }, //we can put more than 1  field
+        ],
         options: {
           choices: [
-            // { display: "strategically", value: "strategically" },
-            { display: 'main', value: 'main', customFilterValue: 'main' },
+            { display: 'main', value: 'main',customFilterValue: 'main', },
             {
               display: 'sublevel2',
               value: 'sublevel2',
-              customFilterValue: 'sublevel2',
+              customFilterValue: 'main',
             },
             {
               display: 'sublevel3',
               value: 'sublevel3',
-              customFilterValue: 'sublevel3',
+              customFilterValue: 'sublevel2',
             },
-            // { display: 'level2', value: 'level2' },
-            // { display: 'level3', value: 'level3' },
-            // { display: "sub", value: "sub" },
-            // { display: "vision", value: "vision" },
-            // { display: "jobmarket", value: "jobmarket" },
           ],
+        
         },
       },
-      // {
-      //   InternalName: 'RelatedStrategyObjective',
-      //   DisplayNameEn: 'Related Strategy Objective',
-      //   DisplayName: 'الهدف المرتبط',
-      //   type: 'lookup',
-      //   source: 'SOs',
-      //   Dispfieldkey: 'Name',
-      //   valfieldkey: 'Title',
-      //   validation: 'required',
-      //   // state: 'disabled'
-      //   dynamic: 'RelatedStrategy',
-      //   filterField: 'RelatedStrategy',
-      //   filterFieldType: 'Text',
-      // },
       {
         InternalName: 'RelatedStrategyObjective',
         DisplayNameEn: 'Related Strategy Objective',
@@ -98,11 +67,11 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         validation: 'required',
-        // state: 'disabled'
-        dynamic: 'RelatedStrategyObjective',
-        filterField: 'RelatedStrategyObjective',
-        filterFieldType: 'Text',
-        // ToggleName: 'RelatedStrategyObjective',
+        dynamic: "KPIType", //InternalName Of Parent field
+        filterField: "Types",//InternalName Of Parent field
+        filterFieldType: "Choice",
+        display: 'none',
+        ToggleName:'RelatedStrategyObjective',
       },
       {
         InternalName: 'Classification',

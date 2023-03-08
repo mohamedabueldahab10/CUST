@@ -389,7 +389,7 @@ window.ListInfo = {
 
             $("[dynamic=" + parentFieldName + "]").each(function () {
               console.log(parentFieldName, "parentFieldName")
-              
+
               let affectedFieldName = $(this).attr("id");
               let listName = $(this).data("listname");
               let filterField = $(this).data("filterfield");
@@ -450,7 +450,7 @@ window.ListInfo = {
             });
             //
             //
-            
+
             if (notInvokeListiner) { // will not invoke the function if this attr true (we use it on hrsd initiative to filter on sos when chose startegy and level)
               console.log("Inside not invoke listiner")
 
@@ -498,8 +498,8 @@ window.ListInfo = {
           //////////////////////////////// get siblings value like AcceptanceCriteria in benefits when change on delivrable
 
           $('body').on('change', '.getsiblingdata', function (event) {
-            
-           
+
+
             var siblingData = $(this).find(':selected').data('siblingvalue')
             var siblingTarget = $(this).data('siblingtarget')
 
@@ -521,7 +521,7 @@ window.ListInfo = {
           ////////////////////////////// calculate the end date based on start date and duration
 
           $("input.autoEndDate").keyup(function (event) {
-            
+
             var duration = event.target.value;
             var sourceElement = $(this).data('sourceelementdate');
             var sourceElementValue = $(`#${sourceElement}`).val();
@@ -553,7 +553,7 @@ window.ListInfo = {
           ///////////////////////////////
           $("input.percentbyparent").keyup(function (event) {
             // calculate the target elemnt like in delivrable
-            
+
             var isMasterDetails = $(this).parent().parent().hasClass("Details-Item")
             var parentValue = 0,
               targetElement = "",
@@ -663,7 +663,7 @@ window.ListInfo = {
 
 
           // add new style for wf
-          
+
           if (isWF) {
             $(".FormContainer").addClass("wf-mode");
             $("#navbarsParent").addClass("wfMode");
@@ -720,7 +720,7 @@ window.ListInfo = {
 
           //////// apply grandFieldInvoke
           $(".grandFieldInvoke").on("change", function (event) {
-            
+
             var grandId = $(this).data("grandfieldid")
             var childId = $(this).data("childfieldid")
             var childFieldIdSource = $(this).data("childfieldidsource")
@@ -4151,7 +4151,7 @@ window.ListInfo = {
               });
 
               internalQuery += "</Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
-              
+
               var filedsArr = [element.valfieldkey, element.Dispfieldkey]
               if (element.hasOwnProperty('valsiblingkey')) {
                 filedsArr = [element.valfieldkey, element.Dispfieldkey, element.valsiblingkey]
@@ -4165,7 +4165,7 @@ window.ListInfo = {
                   if (listItem) itemsID.push(listItem.get_id());
                   if (isDone) {
 
-            
+
                     htmlBody =
                       '<div class="col-md-6 CFIELD ' +
                       dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -4615,7 +4615,7 @@ window.ListInfo = {
         var customQuery;
         var sourcelistQuery;
         var RelatedItemUsed = [];
-  
+
         customQuery =
           "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
 
@@ -5481,6 +5481,10 @@ window.ListInfo = {
       case "file":
         var attachmentId =
           attachCount == 0 ? "getFile" : "getFile" + attachCount;
+
+        // to add the purpose of attach
+        let docPurpose = element.docPurpose ? `data-docpurpose=${element.docPurpose}` : ""
+
         htmlBody =
           '<div class="col-md-12 CFIELD ' +
           element.className +
@@ -5522,6 +5526,8 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
+          " " +
+          docPurpose +
           ' type="file" accept="' +
           acceptedExtensions +
           '" hidden multiple="multiple" placeholder="' +
@@ -5534,7 +5540,7 @@ window.ListInfo = {
           element.state +
           " " +
           element.validation +
-          ">" +
+          " >" +
           '<label data-trans-choosefile id="chooseFile" for="' +
           attachmentId +
           '" class="Resources"></label>' +
@@ -5554,6 +5560,7 @@ window.ListInfo = {
         }
 
         attachCount = attachCount + 1;
+
         OnSuccess(flag, htmlBody);
         break;
     }
@@ -5714,6 +5721,7 @@ window.ListInfo = {
             acceptedExtensions,
             "acceptedExtensions acceptedExtensions"
           );
+
           if (acceptedExtensions.indexOf(fileExtension.toLowerCase()) > -1) {
             validattachments.push(file);
             if (
@@ -5802,17 +5810,25 @@ window.ListInfo = {
         } else {
           pluseAttachTitle = "Attachments";
         }
-        console.log(
-          acceptedExtensions,
-          "acceptedExtensions acceptedExtensions"
-        );
-        var fileId = "getFile" + pluseAttachCount;
+
+        //check if have docpurpose to save it in doc library
+        var checkFilePurpose = ""
+        var filePurposeData = ""
+        if ($(this).parent().parent().find("input[data-docpurpose]").length > 0) {
+          filePurposeData = $(this).parent().parent().find("input[data-docpurpose]").data("docpurpose")
+          checkFilePurpose = `data-docpurpose=${filePurposeData}`
+        }
+        //
+
+        // var fileId = "getFile" + pluseAttachCount;
+        var fileId = "getFile" + attachCount;
+
         $(
           '<div class="col-md-12 CFIELD" data-groups="" >' + //style="display: flex;align-items: center;"
           '<label class="attlabel" for="getFile"  undefined="">' +
           pluseAttachTitle +
           "</label>" + //class="custom-file-upload"
-          '<input type="file" accept="' +
+          '<input ' + checkFilePurpose + ' type="file" accept="' +
           acceptedExtensions +
           '" hidden multiple="multiple" placeholder="' +
           pluseAttachTitle +
@@ -5837,8 +5853,8 @@ window.ListInfo = {
           .find(".acceptedfile")
           .append("" + acceptedExtensionsstr + ",");
 
-        pluseAttachCount = pluseAttachCount + 1;
-
+        // pluseAttachCount = pluseAttachCount + 1;
+        attachCount = attachCount +1
         changeResources();
       });
 
@@ -6100,11 +6116,11 @@ window.ListInfo = {
                 myFieldParent.find(">*").attr("required", false);
               }
             }
-            if (listkey == "sos") {
-              if (item == "RelatedPortfolio" || item == "RelatedObjective") {
-                myFieldParent.find(">*").attr("required", false);
-              }
-            }
+            // if (listkey == "sos") {
+            //   if (item == "RelatedPortfolio" || item == "RelatedObjective") {
+            //     myFieldParent.find(">*").attr("required", false);
+            //   }
+            // }
             //
           }
         });
@@ -8578,7 +8594,7 @@ dynamicAffectSelect = {
   // The main Initialization function
   // The main Initialization function
   init: function (affectedSelectsInfo) {
- 
+
     var queryFieldValue = affectedSelectsInfo[0].queryFieldValue
       ? affectedSelectsInfo[0].queryFieldValue
       : "";
@@ -8661,7 +8677,7 @@ dynamicAffectSelect = {
 
     var targetFieldType = $(`#${affectedSelectsInfo.affectedFieldName}`).attr("type");
 
-    
+
     let selectedVal = ""
     let optionsBody = ""
 
@@ -8686,7 +8702,7 @@ dynamicAffectSelect = {
       $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu`).html("");
 
 
- 
+
 
     } else {
       selectedVal = $(`select#${affectedSelectsInfo.affectedFieldName}`).attr("value"); // get selected val to use it in edit
@@ -8768,7 +8784,7 @@ dynamicAffectSelect = {
       console.log(optionsBody, "optionsBody optionsBodyoptionsBody")
       $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu`).html(optionsBody)
       $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu li`).each(function () {
-        
+
         var liInputValue = $(this).find("input").val()
 
         if (selectedVal.includes(liInputValue)) {

@@ -46,84 +46,43 @@ var Information_Form = [
         DisplayNameEn: 'KPI Type',
         validation: 'required',
         DisplayName: 'نوع المؤشر',
-        ToggleDisabledName: 'KPIType',
-        toggleValues: [
-          {
-            value: 'sub',
-            // fields: ['SubRelatedObjective', 'RelatedMainKpis', 'Portfolio'],
-            fields: ['SubRelatedObjective', 'Portfolio'],
-          }, //we can put more than 1  field
-          {
-            value: 'main',
-            fields: ['RelatedMainKpis', 'RelatedMainObjective'],
-          }, //we can put more than 1  field
-          { value: 'strategically', fields: ['StrategyRelatedObjective'] },
-        ],
+        dynamic: 'parent', //main field that affect on other chiled field
         type: 'dropdownValues',
+        toggleValues: [
+          { value: 'sublevel2', fields: ['RelatedStrategyObjective', 'RelatedMainKpis'] }, //we can put more than 1  field
+          { value: 'sublevel3', fields: ['RelatedStrategyObjective', 'RelatedMainKpis'] }, //we can put more than 1  field
+        ],
         options: {
           choices: [
-            // { display: "strategically", value: "strategically" },
-            { display: 'main', value: 'main' },
-            { display: 'sublevel2', value: 'sublevel2' },
-            { display: 'sublevel3', value: 'sublevel3' },
-            // { display: 'Level2', value: 'Level2' },
-            // { display: 'Level3', value: 'Level3' },
-            // { display: "sub", value: "sub" },
-            // { display: "vision", value: "vision" },
-            // { display: "jobmarket", value: "jobmarket" },
+            { display: 'main', value: 'main',customFilterValue: 'main', },
+            {
+              display: 'sublevel2',
+              value: 'sublevel2',
+              customFilterValue: 'main',
+            },
+            {
+              display: 'sublevel3',
+              value: 'sublevel3',
+              customFilterValue: 'sublevel2',
+            },
           ],
-        },
-        security: {
-          groups: [
-            'LMS_P',
-            'SPM Admin',
-            'SPM Team',
-            'VRO_P',
-            'System Admin Group',
-            'Performance Leaders',
-          ],
+        
         },
       },
-      // {
-      //   InternalName: 'RelatedStrategyObjective',
-      //   DisplayNameEn: 'Related Main Objective',
-      //   DisplayName: 'الهدف الرئيسي المرتبط ',
-      //   ToggleName: 'RelatedMainObjective',
-      //   type: 'lookupWithQuery',
-      //   queryField: 'Types',
-      //   queryFieldType: 'dropdownValues', //ex: "Choice"
-      //   queryFieldValue: 'main',
-      //   source: 'SOs',
-      //   Dispfieldkey: 'Name',
-      //   valfieldkey: 'Title',
-      //   display: 'none',
-      //   // "state": "disabled",
-      //   security: {
-      //     groups: [
-      //       'LMS_P',
-      //       'SPM Admin',
-      //       'SPM Team',
-      //       'VRO_P',
-      //       'System Admin Group',
-      //     ],
-      //   },
-      //   // projectCodeInList: true //value in look up drop down should be related to current project
-      // },
       {
         InternalName: 'RelatedStrategyObjective',
         DisplayNameEn: 'Related Strategy Objective',
         DisplayName: 'الهدف المرتبط',
-        ToggleDisabledName: 'RelatedStrategyObjective',
         type: 'lookup',
         source: 'SOs',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         validation: 'required',
-        // state: 'disabled'
-        dynamic: 'RelatedStrategyObjective',
-        filterField: 'RelatedStrategyObjective',
-        filterFieldType: 'Text',
-        // ToggleName: 'RelatedStrategyObjective',
+        dynamic: "KPIType", //InternalName Of Parent field
+        filterField: "Types",//InternalName Of Parent field
+        filterFieldType: "Choice",
+        display: 'none',
+        ToggleName:'RelatedStrategyObjective',
       },
       {
         InternalName: 'Classification',
@@ -754,24 +713,7 @@ var Information_Form = [
         // 	],
         // },
       },
-      {
-        InternalName: 'Performance',
-        DisplayNameEn: 'Performance',
-        DisplayName: 'الأداء',
-        type: 'number',
-      },
-      {
-        InternalName: 'TotalActual',
-        DisplayNameEn: 'TotalActual',
-        DisplayName: 'إجمالي الفعلي',
-        type: 'number',
-      },
-      {
-        InternalName: 'TotalPlanned',
-        DisplayNameEn: 'TotalPlanned',
-        DisplayName: 'إجمالي المخطط',
-        type: 'number',
-      },
+
       // {
       //   InternalName: 'RecurrenceChanged',
       //   DisplayNameEn: 'Recurrence Changed',
@@ -844,7 +786,6 @@ var Information_Form = [
           }, //we can put more than 1  field
           { value: 'no', fields: [] },
         ],
-        validation: 'required',
       },
 
       // {
@@ -1523,18 +1464,6 @@ var Information_Form = [
             'VRO_P',
             'Performance Leaders',
             'System Admin Group',
-          ],
-        },
-      },
-      {
-        InternalName: 'NotMeasurableNow',
-        DisplayNameEn: 'Not Measurable Now',
-        DisplayName: 'لايقاس حاليا',
-        type: 'yesnoradio',
-        options: {
-          choices: [
-            { display: 'yes', value: 'yes' },
-            { display: 'no', value: 'no' },
           ],
         },
       },
