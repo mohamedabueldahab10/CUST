@@ -2068,7 +2068,7 @@ var New_Master_Details_Submit = {
           if (type == 'vision') {
             New_Master_Details_Submit.g.oListItem.set_item("Types", "program");
           } else if (type == 'ministry') {
-            New_Master_Details_Submit.g.oListItem.set_item("Types", "piller");
+            New_Master_Details_Submit.g.oListItem.set_item("Types", "pillar");
           }
         }
 

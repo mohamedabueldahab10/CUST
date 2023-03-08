@@ -3057,12 +3057,12 @@ window.Goal_Strategy_Info = {
     }
 
     if (pillersExist === "Yes" || pillersExist == "yes") {
-      $('#PillarName').parent().css('display', 'block')
+      // $('#PillarName').parent().css('display', 'block')
       Get_Pillers_Info.init(strategyId)
     } else {
-      if (listkey == 'sos') {
-        $('#PillarName').parent().css('display', 'none')
-      }
+      // if (listkey == 'sos') {
+      //   $('#PillarName').parent().css('display', 'none')
+      // }
     }
 
   },

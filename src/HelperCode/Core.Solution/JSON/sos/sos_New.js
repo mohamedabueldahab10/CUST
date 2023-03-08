@@ -255,7 +255,7 @@ var Information_Form = [
         type: "dropdownValues",
         // dontSubmit: true,
         // type: 'yesnoradio',
-        // state: 'disabled',
+        state: 'disabled',
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
@@ -442,7 +442,7 @@ var Information_Form = [
         // to get the seblings value
         valsiblingkey: 'Description', // internal name on sorce list
         targetsiblingkey: 'StrategicDescription', // internal name on current list
-        // display: 'none',
+        display: 'none',
       },
       {
         InternalName: 'StrategicDescription',
