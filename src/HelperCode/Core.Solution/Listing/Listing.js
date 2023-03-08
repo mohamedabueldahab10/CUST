@@ -1178,6 +1178,7 @@ window.ListingData = {
         }
 
         $('.page-filter .dropdown-menu').each(function () { //looping through filters
+          // debugger
           var selectedchoices = $(this).find('input:checked').map(function () { //getting selected choices
             if ($(this).attr('data-type') == 'floatpercentage')
               return $(this).val().replace(' %', '');
@@ -1399,6 +1400,7 @@ window.ListingData = {
           ViewFields += '<FieldRef Name="' + FilterChoices[k].InternalName + '"/>'
         }
         //dynamic query building
+        // debugger
         for (var i = 0; i < FilterChoices.length; i++) {
           console.log(FilterChoices, "FilterChoices FilterChoices")
 
@@ -1409,6 +1411,7 @@ window.ListingData = {
 
             if (FilterChoices[i].targetIsMultiFilter) {
               for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+                // debugger
                 if (j == FilterChoices[i].Values.length - 1) {
                   Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
                 } else {
@@ -2026,7 +2029,7 @@ window.ListingData = {
               }
               else {
                 FilterationcontractsHTML +=
-                  '<label class="dropdown-item"><span title="' + AllData[L][z] + '" class="textintofilter">' + AllData[L][z] + '</span><input data-type="' + TypsFieldsAll[L] + '" data-internal="' + FilterNames[L] + '" type="checkbox" name="' + FilterNames[L] + '" value="' + AllData[L][z] + '">' +
+                  '<label class="dropdown-item"><span title="' + AllData[L][z] + '" class="textintofilter">' + AllData[L][z] + '</span><input data-type="' + TypsFieldsAll[L] + '" data-internal="' + FilterNames[L] + '" type="checkbox" name="' + FilterNames[L] + '" value=\'' + AllData[L][z] + '\'>' +
                   '</label>'
               }
 
@@ -2331,7 +2334,7 @@ window.ListingData = {
             });
           }
           FilterChoices = [];
-
+          //  debugger
           if (isRoleDataLevelAccess) {
             FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
           }
