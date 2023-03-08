@@ -401,6 +401,9 @@ window.ListInfo = {
               let queryFieldName = $(this).data("queryfield");
               let queryFieldType = $(this).data("queryfieldtype");
 
+              let dataSiblingvalue = $(this).data("siblingvalue")
+
+              
 
               // console.log($(this).data("queryFieldValue"), "sssssssa")
               affectedSelectsInfo.push({
@@ -415,7 +418,8 @@ window.ListInfo = {
                 dispFieldKey: dispFieldKey,
                 queryFieldValue: queryFieldValue,
                 queryFieldName: queryFieldName,
-                queryFieldType: queryFieldType
+                queryFieldType: queryFieldType,
+                // dataSiblingvalue:dataSiblingvalue
               });
             });
 
@@ -431,6 +435,9 @@ window.ListInfo = {
               let queryFieldValue = $(this).data("queryfieldvalue");
               let queryFieldName = $(this).data("queryfield");
               let queryFieldType = $(this).data("queryfieldtype");
+
+              // let dataSiblingvalue = $(this).data("siblingvalue")
+
               // console.log($(this).data("queryFieldValue"), "sssssssa")
               affectedSelectsInfo.push({
                 affectedFieldName: affectedFieldName,
@@ -446,6 +453,7 @@ window.ListInfo = {
                 queryFieldValue: queryFieldValue,
                 queryFieldName: queryFieldName,
                 queryFieldType: queryFieldType,
+                // dataSiblingvalue:dataSiblingvalue
               });
             });
             //
@@ -499,7 +507,8 @@ window.ListInfo = {
 
           $('body').on('change', '.getsiblingdata', function (event) { // get sibling value based on oter value
 
-            
+            debugger
+
             var siblingData = $(this).find(':selected').data('siblingvalue')
             var siblingTarget = $(this).data('siblingtarget')
 
@@ -8610,6 +8619,12 @@ dynamicAffectSelect = {
       ? affectedSelectsInfo[0].queryFieldType
       : "";
 
+      // var dataSeblingValue = affectedSelectsInfo[0].dataSiblingvalue
+      // ? affectedSelectsInfo[0].dataSiblingvalue
+      // : ""; 
+
+      // console.log(dataSeblingValue,"dataSeblingValue dataSeblingValue")
+
     // queryFieldValue="sublevel3"
     // queryFieldName="Types"
     // queryFieldType="Text"
@@ -8686,6 +8701,7 @@ dynamicAffectSelect = {
     let selectedVal = ""
     let optionsBody = ""
 
+    let dataSiblingValue =""
 
 
 
@@ -8711,6 +8727,10 @@ dynamicAffectSelect = {
 
     } else {
       selectedVal = $(`select#${affectedSelectsInfo.affectedFieldName}`).attr("value"); // get selected val to use it in edit
+
+      // dataSiblingValue = $(`select#${affectedSelectsInfo.affectedFieldName}`).
+      console.log(dataSiblingValue,"dataSiblingValue")
+      debugger
 
       $(`select#${affectedSelectsInfo.affectedFieldName}`).html("");
 

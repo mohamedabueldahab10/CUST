@@ -99,12 +99,12 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         // to get the seblings value
-        valsiblingkey:'PillarsExist', // internal name on sorce list
-        targetsiblingkey:'RelatedStrategyPillars', // internal name on current list
+        valsiblingkey: 'PillarsExist', // internal name on sorce list
+        targetsiblingkey: 'RelatedStrategyPillars', // internal name on current list
         // dynamically affected by other dropdown
         dynamic: 'parent', //"parentInternalName" or "parent" // if parent it will affect other fields
         //in case not parent add below attrs
-        
+
         //role access
         accessFilter: [
           {
@@ -262,6 +262,9 @@ var Information_Form = [
             { display: 'no', value: 'no' },
           ],
         },
+        toggleValues: [
+          { value: 'yes', fields: ['PillarName'] },
+        ]
       },
       // {
       // 	"InternalName": "RelatedStrategyPillars",
@@ -435,7 +438,12 @@ var Information_Form = [
         source: 'SPillars',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        display: 'none',
+        ToggleName: 'PillarName',
+        dynamic: 'RelatedStrategy',
+        // to get the seblings value
+        valsiblingkey: 'Description', // internal name on sorce list
+        targetsiblingkey: 'StrategicDescription', // internal name on current list
+        // display: 'none',
       },
       {
         InternalName: 'StrategicDescription',
@@ -454,7 +462,7 @@ var Information_Form = [
   //   description: 'التفاصيل',
   //   descriptionEn: 'Details',
   //   subFields: [
-      
+
   //   ],
   // },
 ]

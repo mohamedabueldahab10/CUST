@@ -460,7 +460,7 @@ window.Edit_Data_Request = {
       var relatedStrategy = $('#RelatedStrategy').val()
       relatedPiller = oListItem.get_item("PillarName")
 
-      Goal_Strategy_Info.init(relatedStrategy)
+      // Goal_Strategy_Info.init(relatedStrategy)
 
       var sector = oListItem.get_item("Sector") ? oListItem.get_item("Sector") : '';
       if (sector) {
