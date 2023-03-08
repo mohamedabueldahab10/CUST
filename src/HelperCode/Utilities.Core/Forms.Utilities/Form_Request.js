@@ -3057,12 +3057,14 @@ window.Goal_Strategy_Info = {
     }
 
     if (pillersExist === "Yes" || pillersExist == "yes") {
-      // $('#PillarName').parent().css('display', 'block')
+      $('#PillarName').parent().parent().parent().parent().css('display', 'block')
       Get_Pillers_Info.init(strategyId)
     } else {
-      // if (listkey == 'sos') {
-      //   $('#PillarName').parent().css('display', 'none')
-      // }
+      if (listkey == 'sos') {
+        $('#PillarName').parent().parent().parent().parent().css('display', 'none')
+        $('#PillarName').val("")
+        $('#StrategicDescription').val("")
+      }
     }
 
   },
@@ -6305,6 +6307,7 @@ var DontSubmit_DataRequest = {
       var isMultiSelect = false
 
 
+
       if ($(this).hasClass("limulti")) {
         isMultiSelect = true
         elementId = $(this).parent().parent().parent().attr("id"); // get element Id
@@ -6314,6 +6317,8 @@ var DontSubmit_DataRequest = {
         elementValue = $(this).val(); // get element value
       }
 
+
+      console.log(elementValue, "elementValue vvv")
 
       if (isMultiSelect) {
 
@@ -6389,7 +6394,12 @@ var DontSubmit_DataRequest = {
 
 
     });
-    $(".grandFieldInvoke").trigger("change")
+    if ($(".grandFieldInvoke").length > 0) { // to use it in initiative
+      $(".grandFieldInvoke").trigger("change")
+    }
+    if ($(".getsiblingdata").length > 0) {
+      $(".getsiblingdata").trigger("change")//to invoke the sibling data
+    }
 
   }
 }

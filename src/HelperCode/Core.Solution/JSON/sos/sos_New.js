@@ -254,7 +254,9 @@ var Information_Form = [
         DisplayName: 'هل يوجد محاور استراتيجية / برامج الرؤية ؟',
         type: "dropdownValues",
         // dontSubmit: true,
-        // type: 'yesnoradio',
+        // type: 'yesnoradio', 
+        dontSubmit: true,
+
         state: 'disabled',
         options: {
           choices: [
@@ -408,6 +410,7 @@ var Information_Form = [
   {
     label: 'الركيزة الاستراتيجية / برنامج الرؤية',
     labelEn: 'Strategic Pillar/Vision Program',
+    display:'none', // it's specific to pillers section only
     description: '',
     descriptionEn: '',
     subFields: [
@@ -429,7 +432,7 @@ var Information_Form = [
       // 	},
 
       // },
-      {
+      { 
         InternalName: 'PillarName',
         DisplayNameEn: 'Strategic Pillar/Vision Program Name',
         DisplayName: 'اسم المحور الإستراتيجى / برنامج الرؤية',
@@ -442,7 +445,7 @@ var Information_Form = [
         // to get the seblings value
         valsiblingkey: 'Description', // internal name on sorce list
         targetsiblingkey: 'StrategicDescription', // internal name on current list
-        display: 'none',
+        // display: 'none',
       },
       {
         InternalName: 'StrategicDescription',
@@ -451,6 +454,7 @@ var Information_Form = [
         type: 'multiline',
         maxchar: '500',
         // dontSubmit: true,
+        dontSubmit: true,
         state: 'disabled',
       },
     ],

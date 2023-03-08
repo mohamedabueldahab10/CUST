@@ -150,6 +150,7 @@ window.ListInfo = {
     var printHtml = "";
     var toggleSectionName;
 
+
     asyncFor.seqProcess(
       Information_Form,
       function (item, index, resolve) {
@@ -197,7 +198,9 @@ window.ListInfo = {
         }
 
         htmlBuilder +=
-          '<div class="py-5 border-bottom section-container ' +
+          '<div style="display:' +
+          item.display +
+          '" class="py-5 border-bottom section-container ' +
           listkey +
           ' " ' +
           targetList +
@@ -401,7 +404,6 @@ window.ListInfo = {
               let queryFieldName = $(this).data("queryfield");
               let queryFieldType = $(this).data("queryfieldtype");
 
-              let dataSiblingvalue = $(this).data("siblingvalue")
 
 
 
@@ -5021,6 +5023,11 @@ window.ListInfo = {
           notInvokeListinerData = `data-notInvokeListiner=${element.notInvokeListiner}`
           seconedValueListiner = `data-seconedvaluelistiner=""`
         }
+
+        var addSeblingClass = ""
+        if (element.targetsiblingkey && element.targetsiblingkey != 'undefined') {
+          addSeblingClass = "getsiblingdata"
+        }
         /////////////////////////////////////////////////
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
@@ -5096,7 +5103,7 @@ window.ListInfo = {
           element.queryFieldType +
           '" data-filterfieldtype="' +
           element.filterFieldType +
-          '" data-siblingtarget="' + element.targetsiblingkey + '" class="form-control getsiblingdata" type="dropdown" id="' + // getsiblingdata to get the data based on selection value
+          '" data-siblingtarget="' + element.targetsiblingkey + '" class="form-control ' + addSeblingClass + '" type="dropdown" id="' + // getsiblingdata to get the data based on selection value
           element.InternalName +
           '" value="" placeholder="' +
           displayName +
@@ -8622,7 +8629,7 @@ dynamicAffectSelect = {
       : "";
 
 
-      console.log(affectedSelectsInfo,"affectedSelectsInfo")
+    console.log(affectedSelectsInfo, "affectedSelectsInfo")
 
     // var dataSeblingValue = affectedSelectsInfo[0].dataSiblingvalue
     // ? affectedSelectsInfo[0].dataSiblingvalue
@@ -8757,7 +8764,7 @@ dynamicAffectSelect = {
       }
 
 
-   
+
       console.log(valfieldkey, "valfieldkey")
 
       if (targetFieldType == "multiselect") {

@@ -80,16 +80,19 @@ var Information_Form = [
         DisplayNameEn: 'Related Vision Strategy',
         DisplayName: 'الاستراتيجية المرتبطة',
         ToggleName: 'RelatedStrategy',
-        type: 'lookupWithQuery',
-        queryField: 'Types',
-        queryFieldType: 'dropdownValues', //ex: "Choice"
-        queryFieldValue: 'vision',
+        type: 'lookup',
+        // queryField: 'Types',
+        // queryFieldType: 'dropdownValues', //ex: "Choice"
+        // queryFieldValue: 'vision',
         //from other list:
 
         source: 'GoalStrategy',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         // "display":"none"
+        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+        fieldsinformlvl1: "RelatedStrategyPillars", // fields in form list
+        sourcefieldlvl1: "PillarsExist", // field in look up list
       },
       {
         InternalName: 'RelatedObjective',
@@ -288,6 +291,9 @@ var Information_Form = [
         source: 'SPillars',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+        fieldsinformlvl1: "StrategicDescription", // fields in form list
+        sourcefieldlvl1: "Description", // field in look up list
         // "display": "none"
       },
       {

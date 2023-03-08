@@ -93,10 +93,15 @@ var Information_Form = [
         source: 'GoalStrategy',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        // "display":"none"
+        // to get the seblings value
+        valsiblingkey: 'PillarsExist', // internal name on sorce list
+        targetsiblingkey: 'RelatedStrategyPillars', // internal name on current list
         // dynamically affected by other dropdown
         dynamic: 'parent', //"parentInternalName" or "parent" // if parent it will affect other fields
         //in case not parent add below attrs
+        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+        fieldsinformlvl1: "RelatedStrategyPillars", // fields in look up list
+        sourcefieldlvl1: "PillarsExist",
         //role access
         accessFilter: [
           {
@@ -259,6 +264,8 @@ var Information_Form = [
         DisplayNameEn: 'Is Pillar / program  Exist?',
         DisplayName: 'هل يوجد محور / برنامج ؟',
         type: 'dropdownValues',
+        state: 'disabled',
+
         // state: 'disabled',
         // dontSubmit: true,
         // type: 'yesnoradio',
@@ -268,6 +275,9 @@ var Information_Form = [
             { display: 'no', value: 'no' },
           ],
         },
+        toggleValues: [
+          { value: 'yes', fields: ['PillarName'] },
+        ]
       },
       //   {
       //     InternalName: 'RelatedJobStrategy',
@@ -342,7 +352,12 @@ var Information_Form = [
         source: 'SPillars',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        display: 'none',
+        valsiblingkey: 'Description', // internal name on sorce list
+        targetsiblingkey: 'StrategicDescription', // internal name on current list
+        // display: 'none',
+        // isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+        // fieldsinformlvl1: "StrategicDescription", // fields in form list
+        // sourcefieldlvl1: "Description", // field in look up list
       },
       {
         InternalName: 'StrategicDescription',
@@ -350,6 +365,8 @@ var Information_Form = [
         DisplayName: 'وصف  المحور الإستراتيجى / برنامج الرؤية',
         type: 'multiline',
         maxchar: '500',
+        state: 'disabled',
+
         // dontSubmit: true,
         // grandFieldId: "StrategicDescription", // we add this field to handle the two field filtration(parent Id in current form) 
         // childFieldId: "StrategicDescription",// we add this field to handle the two field filtration (child Id in current form)
