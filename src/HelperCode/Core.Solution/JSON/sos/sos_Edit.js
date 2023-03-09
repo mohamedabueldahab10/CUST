@@ -268,6 +268,8 @@ var Information_Form = [
 
         // state: 'disabled',
         // dontSubmit: true,
+        dontSubmit: true,
+
         // type: 'yesnoradio',
         options: {
           choices: [
@@ -366,6 +368,8 @@ var Information_Form = [
         type: 'multiline',
         maxchar: '500',
         state: 'disabled',
+        dontSubmit: true,
+
 
         // dontSubmit: true,
         // grandFieldId: "StrategicDescription", // we add this field to handle the two field filtration(parent Id in current form) 

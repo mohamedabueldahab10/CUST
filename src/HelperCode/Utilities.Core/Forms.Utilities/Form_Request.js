@@ -2942,9 +2942,10 @@ window.Kpi_Related_Goal = {
     if (isEdit) {
       if (indexTypekpi == 'main') {
         $('#RelatedStrategyObjective').val(relatedMainGoal)
-      } else if (indexTypekpi == 'sub') {
-        $('#SubRelatedObjective').val(relatedSubGoal)
       }
+      //  else if (indexTypekpi == 'sub') {
+      //   $('#SubRelatedObjective').val(relatedSubGoal)
+      // }
 
 
     }
@@ -5938,14 +5939,15 @@ var Check_Item_Deleted = {
               $('#Sector').html(No_Data)
               $('#SubSector').html(No_Data)
             }
-          } else if (indexTypekpi == 'sub') {
-            var sosVal = $('#SubRelatedObjective').html()
-            if (!sosVal) {
-              $('#Sector').html(No_Data)
-              $('#SubSector').html(No_Data)
-              $('#Portfolio').html(No_Data)
-            }
-          }
+          } 
+          // else if (indexTypekpi == 'sub') {
+          //   var sosVal = $('#SubRelatedObjective').html()
+          //   if (!sosVal) {
+          //     $('#Sector').html(No_Data)
+          //     $('#SubSector').html(No_Data)
+          //     $('#Portfolio').html(No_Data)
+          //   }
+          // }
         }
 
       } else if (isEdit) { // to remove the child from view
@@ -5959,14 +5961,15 @@ var Check_Item_Deleted = {
               $('#Sector').val('')
               $('#SubSector').val('')
             }
-          } else if (indexTypekpi == 'sub') {
-            var sosVal = $('#SubRelatedObjective').val()
-            if (!sosVal) {
-              $('#Sector').val('')
-              $('#SubSector').val('')
-              $('#Portfolio').val('')
-            }
           }
+          //  else if (indexTypekpi == 'sub') {
+          //   var sosVal = $('#SubRelatedObjective').val()
+          //   if (!sosVal) {
+          //     $('#Sector').val('')
+          //     $('#SubSector').val('')
+          //     $('#Portfolio').val('')
+          //   }
+          // }
         }
       }
     } else {
@@ -5980,14 +5983,15 @@ var Check_Item_Deleted = {
               $('#Sector').html(No_Data)
               $('#SubSector').html(No_Data)
             }
-          } else if (indexTypekpi == 'sub') {
-            var sosVal = $('#SubRelatedObjective').html()
-            if (!sosVal) {
-              $('#Sector').html(No_Data)
-              $('#SubSector').html(No_Data)
-              $('#Portfolio').html(No_Data)
-            }
-          }
+          } 
+          // else if (indexTypekpi == 'sub') {
+          //   var sosVal = $('#SubRelatedObjective').html()
+          //   if (!sosVal) {
+          //     $('#Sector').html(No_Data)
+          //     $('#SubSector').html(No_Data)
+          //     $('#Portfolio').html(No_Data)
+          //   }
+          // }
         }
       } else if (isEdit) {
         if (listkey == 'projects') {
