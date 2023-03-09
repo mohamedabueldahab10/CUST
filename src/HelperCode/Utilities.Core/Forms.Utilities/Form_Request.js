@@ -2995,19 +2995,23 @@ window.Get_Related_Sos_Sector = {
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
 
+      debugger
+
       var type = $('#Types').val()
       var sector = oListItem.get_item("Sector") ? oListItem.get_item("Sector") : '';
       var subSector = oListItem.get_item("SubSector") ? oListItem.get_item("SubSector") : ''
       var portfolio = oListItem.get_item("RelatedPortfolio") ? oListItem.get_item("RelatedPortfolio") : ""
-      if (type == 'main') {
-        $('#Sector').val(sector)
-        $('#SubSector').val(subSector)
-      } else if (type == 'sub') {
-        $('#Sector').val(sector)
-        $('#SubSector').val(subSector)
-        $('#Portfolio').val(portfolio)
+      $('#Sector').val(sector)
+      $('#SubSector').val(subSector)
+      // if (type == 'main') {
+      //   $('#Sector').val(sector)
+      //   $('#SubSector').val(subSector)
+      // } else if (type == 'sub') {
+      //   $('#Sector').val(sector)
+      //   $('#SubSector').val(subSector)
+      //   $('#Portfolio').val(portfolio)
 
-      }
+      // }
     }
     changeResources();
 

@@ -56,16 +56,19 @@ var Information_Form = [
       },
       {
         InternalName: 'RelatedStrategyObjective',
-        DisplayNameEn: 'Related Main Objective',
-        DisplayName: 'الهدف الرئيسي المرتبط ',
+        DisplayNameEn: 'Related Objective',
+        DisplayName: 'الهدف المرتبط ',
         // ToggleName: "RelatedMainObjective",
-        type: 'lookupWithQuery',
-        queryField: 'Types',
-        queryFieldType: 'dropdownValues', //ex: "Choice"
-        queryFieldValue: 'main',
+        type: 'lookup',
+        // queryField: 'Types',
+        // queryFieldType: 'dropdownValues', //ex: "Choice"
+        // queryFieldValue: 'main',
         source: 'SOs',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+        isRelatedToParent: true, 
+        fieldsinformlvl1: "Sector", // fields in form list
+        sourcefieldlvl1: "Sector", // field in look up list
         // display: "none",
         // validation: 'required',
       },
@@ -428,7 +431,7 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
-        validation: 'required',
+        // validation: 'required',
       },
       {
         InternalName: 'SubSector',
@@ -442,7 +445,7 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
-        validation: 'required',
+        // validation: 'required',
         isRelatedToParent: true, // to show parent value depends on child like sector and subsector
         dynamic: 'Sector', //InternalName Of Parent field
         filterField: 'ParentEntity', //InternalName Of Parent field

@@ -8714,7 +8714,7 @@ dynamicAffectSelect = {
     let optionsBody = ""
 
 
-
+debugger
 
 
     if (targetFieldType == 'multiselect') {
@@ -8763,6 +8763,8 @@ dynamicAffectSelect = {
         var optionText = dispfieldkey;
       }
 
+
+ 
 
 
       console.log(valfieldkey, "valfieldkey")

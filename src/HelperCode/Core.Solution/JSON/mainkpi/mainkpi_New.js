@@ -38,8 +38,8 @@ var Information_Form = [
         dynamic: 'parent', //main field that affect on other chiled field
         type: 'dropdownValues',
         toggleValues: [
-          { value: 'sublevel2', fields: ['RelatedStrategyObjective', 'RelatedMainKpis'] }, //we can put more than 1  field
-          { value: 'sublevel3', fields: ['RelatedStrategyObjective', 'RelatedMainKpis'] }, //we can put more than 1  field
+          { value: 'sublevel2', fields: ['RelatedStrategyObjective', 'RelatedMainKpis','Sector','SubSector'] }, //we can put more than 1  field
+          { value: 'sublevel3', fields: ['RelatedStrategyObjective', 'RelatedMainKpis','Sector','SubSector'] }, //we can put more than 1  field
         ],
         options: {
           choices: [
@@ -70,8 +70,53 @@ var Information_Form = [
         dynamic: "KPIType", //InternalName Of Parent field
         filterField: "Types",//InternalName Of Parent field
         filterFieldType: "Choice",
+        ///
+        ///
         display: 'none',
         ToggleName:'RelatedStrategyObjective',
+      },
+      {
+        InternalName: 'Sector',
+        DisplayName: 'القطاع',
+        DisplayNameEn: 'Sector',
+        ToggleName:"Sector",
+        type: 'lookupWithQuery',
+        queryField: 'EntityType',
+        queryFieldType: 'dropdownValues', //ex: "Choice"
+        dontSubmit: true,
+        queryFieldValue: 'Sector',
+        dynamic: 'parent',
+        source: 'Internal Entities',
+        // "state": "disabled",
+        Dispfieldkey: 'Name',
+        DispfieldkeyEn: 'NameEn',
+        valfieldkey: 'Title',
+        display:'none',
+        state:'disabled'
+        // validation: 'required',
+      },
+      {
+        InternalName: 'SubSector',
+        DisplayName: 'الوكالات',
+        DisplayNameEn: 'DeputyShip',
+        ToggleName:"SubSector",
+        type: 'lookup',
+        //from other list:
+        source: 'Internal Entities',
+        // "isSector": "True",
+        // "EntityType": "Department",
+        dontSubmit: true,
+        Dispfieldkey: 'Name',
+        DispfieldkeyEn: 'NameEn',
+        valfieldkey: 'Title',
+        validation: 'required',
+        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+        dynamic: 'Sector', //InternalName Of Parent field
+        filterField: 'ParentEntity', //InternalName Of Parent field
+        filterFieldType: 'Text', //Type In Sharepoint List for Parent field
+        display:'none',
+        state:'disabled'
+
       },
       {
         InternalName: 'Classification',
@@ -212,62 +257,6 @@ var Information_Form = [
         maxchar: '500',
         type: 'multiline',
       },
-      // {
-      //   InternalName: 'RelatedMainKpis',
-      //   ToggleName: 'RelatedMainKpis',
-      //   DisplayNameEn: 'Related Main Kpis',
-      //   DisplayName: 'المؤشر المرتبط',
-      //   type: 'lookup',
-      //   //add queryField,type,value to can filter in spcific val on dynamic func (dynamicAffectSelect)
-      //   queryField: 'Types',
-      //   queryFieldType: 'Choice', //ex: "Choice"
-      //   queryFieldValue: 'main',
-      //   source: 'MainKPI',
-      //   // "state": "disabled",
-      //   Dispfieldkey: 'Name',
-      //   valfieldkey: 'Title',
-      //   display: 'none',
-      //   // dynamic: 'RelatedStrategy',
-      //   // filterField: 'RelatedStrategy',
-      //   // filterFieldType: 'Text',
-
-      // 	dynamic: "KPIType", //InternalName Of Parent field
-      // 	filterField: "KPIType",//InternalName Of Parent field
-      // 	filterFieldType: "Choice",//Type In Sharepoint List for Parent field
-      //   //role access
-      //   accessFilter: [
-      //     {
-      //       role: 'VROE',
-      //       conditions: [
-      //         {
-      //           field: 'RelatedStrategyType',
-      //           type: 'Choice',
-      //           values: ['vision'],
-      //         },
-      //         {
-      //           field: 'Types',
-      //           type: 'Choice',
-      //           values: ['main'],
-      //         },
-      //       ],
-      //     },
-      //     {
-      //       role: 'LMSP',
-      //       conditions: [
-      //         {
-      //           field: 'RelatedStrategyType',
-      //           type: 'Choice',
-      //           values: ['lms'],
-      //         },
-      //         {
-      //           field: 'Types',
-      //           type: 'Choice',
-      //           values: ['main'],
-      //         },
-      //       ],
-      //     },
-      //   ],
-      // },
       {
         InternalName: 'RelatedMainKpis',
         ToggleName: 'RelatedMainKpis',
@@ -388,509 +377,7 @@ var Information_Form = [
         DisplayName: 'إجمالي المخطط',
         type: 'number',
       },
-      // {
-      //   InternalName: 'Sector',
-      //   DisplayName: 'القطاع المرتبط',
-      //   DisplayNameEn: 'Sector',
-      //   type: 'lookup',
-      //   // "validation": "required",
-      //   //from other list:
-      //   source: 'Internal Entities',
-      //   isSector: 'True',
-      //   EntityType: 'Sector',
-      //   Dispfieldkey: 'Name',
-      //   DispfieldkeyEn: 'NameEn',
-      //   valfieldkey: 'Title',
-      //   dontSubmit: true,
-      //   dynamic: 'parent',
-      //   // state: 'disabled',
-      //   // security: {
-      //   //     groups: ["LMS_P",
-      //   //         'EPMO', 'System Admin Group'
-      //   //     ]
-      //   // },
-      // },
-      // {
-      //   InternalName: 'SubSector',
-      //   DisplayName: 'الادارة المرتبطة',
-      //   DisplayNameEn: 'DeputyShip',
-      //   type: 'lookup',
-      //   //from other list:
-      //   source: 'Internal Entities',
-      //   isSector: 'True',
-      //   EntityType: 'Department',
-      //   Dispfieldkey: 'Name',
-      //   DispfieldkeyEn: 'NameEn',
-      //   valfieldkey: 'Title',
-      //   dontSubmit: true,
-      //   "isRelatedToParent":true, // to show parent value depends on child like sector and subsector
-      //   filterField: "Sector",//InternalName Of Parent field
-      //   filterFieldType: "Text",//Type In Sharepoint List for Parent field
-      //   // state: 'disabled',
-      // },
-      // {
-      //   InternalName: 'Sector',
-      //   DisplayName: 'القطاع',
-      //   DisplayNameEn: 'Sector',
-      //   type: 'lookup',
-      //   validation: 'required',
-      //   //from other list:
-      //   source: 'Internal Entities',
-      //   isSector: 'True',
-      //   EntityType: 'Sector',
-      //   Dispfieldkey: 'Name',
-      //   DispfieldkeyEn: 'NameEn',
-      //   valfieldkey: 'Title',
-      // },
-      // {
-      //   InternalName: 'SubSector',
-      //   DisplayName: 'الوكالة',
-      //   DisplayNameEn: 'DeputyShip',
-      //   type: 'lookup',
-      //   validation: 'required',
-      //   //from other list:
-      //   source: 'Internal Entities',
-      //   isSector: 'True',
-      //   EntityType: 'Department',
-      //   Dispfieldkey: 'Name',
-      //   DispfieldkeyEn: 'NameEn',
-      //   valfieldkey: 'Title',
-      // },
-      {
-        InternalName: 'Sector',
-        DisplayName: 'القطاع',
-        DisplayNameEn: 'Sector',
-        type: 'lookupWithQuery',
-        queryField: 'EntityType',
-        queryFieldType: 'dropdownValues', //ex: "Choice"
-        // dontSubmit: true,
-        queryFieldValue: 'Sector',
-        dynamic: 'parent',
-        source: 'Internal Entities',
-        // "state": "disabled",
-        Dispfieldkey: 'Name',
-        DispfieldkeyEn: 'NameEn',
-        valfieldkey: 'Title',
-        validation: 'required',
-      },
-      {
-        InternalName: 'SubSector',
-        DisplayName: 'الوكالات',
-        DisplayNameEn: 'DeputyShip',
-        type: 'lookup',
-        //from other list:
-        source: 'Internal Entities',
-        // "isSector": "True",
-        // "EntityType": "Department",
-        Dispfieldkey: 'Name',
-        DispfieldkeyEn: 'NameEn',
-        valfieldkey: 'Title',
-        validation: 'required',
-        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
-        dynamic: 'Sector', //InternalName Of Parent field
-        filterField: 'ParentEntity', //InternalName Of Parent field
-        filterFieldType: 'Text', //Type In Sharepoint List for Parent field
-      },
-      // {
-      // 	InternalName: "RecurrenceChanged",
-      // 	DisplayNameEn: "Recurrence Changed",
-      // 	DisplayName: "تغيير دورية القياس",
-      // 	type: "yesnoradio",
-      // 	options: {
-      // 		choices: [
-      // 			{ display: "yes", value: "yes" },
-      // 			{ display: "no", value: "no" },
-      // 		],
-      // 	},
-      // 	// security: {
-      // 	// 	groups: [
-      // 	// 		"LMS_P",
-      // 	// 		"SPM Admin",
-      // 	// 		"SPM Team",
-      // 	// 		"VRO_P",
-      // 	// 		"System Admin Group"
-      // 	// 	],
-      // 	// },
-      // },
-      // {
-      //   "InternalName": "KPIEquation",
-      //   "DisplayNameEn": "KPI Equation",
-      //   "DisplayName": "معادلة المؤشر",
-      //   "type": "string",
-      //   "maxchar": "500",
-      // },
 
-      //mahmoud
-
-      // {
-      // 	//
-      // 	InternalName: "RelatedStrategy",
-      // 	DisplayNameEn: "Related Vision Strategy",
-      // 	DisplayName: "الاستراتيجية المرتبطة",
-      // 	// "ToggleName": "RelatedStrategy",
-      // 	type: "lookup",
-
-      // 	source: "GoalStrategy",
-      // 	Dispfieldkey: "Name",
-      // 	valfieldkey: "Title",
-      // 	validation: "required",
-      // 	dynamic: "parent", //"parentInternalName" or "parent" // if parent it will affect other fields
-      // 	security: {
-      // 		groups: [
-      // 			"LMS_P",
-      // 			"SPM Admin",
-      // 			"SPM Team",
-      // 			"VRO_P",
-      // 			"Administrators for Project Web App",
-      // 			"Project Managers for Project Web App",
-      // 		],
-      // 	},
-      // 	//role access
-      // 	accessFilter: [
-      // 		{
-      // 			role: "SPMTeam",
-      // 			conditions: [
-      // 				{
-      // 					field: "Types",
-      // 					type: "Choice",
-      // 					values: ["ministry"],
-      // 				},
-      // 			],
-      // 		},
-      // 		{
-      // 			role: "SPMAdmin",
-      // 			conditions: [
-      // 				{
-      // 					field: "Types",
-      // 					type: "Choice",
-      // 					values: ["ministry"],
-      // 				},
-      // 			],
-      // 		},
-      // 		{
-      // 			role: "VROE",
-      // 			conditions: [
-      // 				{
-      // 					field: "Types",
-      // 					type: "Choice",
-      // 					values: ["vision"],
-      // 				},
-      // 			],
-      // 		},
-      // 		{
-      // 			role: "VROP",
-      // 			conditions: [
-      // 				{
-      // 					field: "Types",
-      // 					type: "Choice",
-      // 					values: ["vision"],
-      // 				},
-      // 			],
-      // 		},
-      // 		{
-      // 			role: "LMSE",
-      // 			conditions: [
-      // 				{
-      // 					field: "Types",
-      // 					type: "Choice",
-      // 					values: ["lms"],
-      // 				},
-      // 			],
-      // 		},
-      // 		{
-      // 			role: "LMSP",
-      // 			conditions: [
-      // 				{
-      // 					field: "Types",
-      // 					type: "Choice",
-      // 					values: ["lms"],
-      // 				},
-      // 			],
-      // 		},
-      // 	],
-      // 	// "display":"none"
-      // },
-      // {
-      // 	//
-      // 	InternalName: "RelatedStrategyType",
-      // 	DisplayNameEn: "Strategy Type",
-      // 	DisplayName: "نوع  الاستراتيجية",
-      // 	type: "dropdownValues",
-      // 	state: "disabled",
-      // 	options: {
-      // 		choices: [
-      // 			{ display: "sub", value: "sub" },
-      // 			{ display: "vision", value: "vision" },
-      // 			{ display: "ministry", value: "ministry" },
-      // 			{ display: "sectorial", value: "sectorial" },
-      // 			{ display: "lms", value: "lms" },
-      // 		],
-      // 	},
-      // },
-      // {
-      // 	InternalName: "SubRelatedObjective", // = هدف الوكالة hadaf al wikala
-      // 	DisplayNameEn: " Related Sub Objective",
-      // 	DisplayName: "الهدف الفرعي المرتبط",
-      // 	ToggleName: "SubRelatedObjective",
-      // 	type: "lookupWithQuery",
-      // 	queryField: "Types",
-      // 	queryFieldType: "dropdownValues", //ex: "Choice"
-      // 	queryFieldValue: "sub",
-      // 	//from other list:
-      // 	source: "SOs",
-      // 	Dispfieldkey: "Name",
-      // 	valfieldkey: "Title",
-      // 	display: "none",
-      // 	state: "disabled",
-      // },
-      // {
-      // 	InternalName: "RelatedObjective", //هدف الوكالة = hadaf al wikala
-      // 	DisplayNameEn: "Strategy Related Objective",
-      // 	DisplayName: "الهدف الاستراتيجي المرتبط",
-      // 	ToggleName: "StrategyRelatedObjective",
-      // 	type: "lookupWithQuery",
-      // 	queryField: "Types",
-      // 	queryFieldType: "dropdownValues", //ex: "Choice"
-      // 	queryFieldValue: "strategically",
-      // 	//from other list:
-      // 	source: "SOs",
-      // 	Dispfieldkey: "Name",
-      // 	valfieldkey: "Title",
-      // 	display: "none",
-      // },
-
-      // {
-      //   "InternalName": "MinistryGoal",
-      //   "DisplayNameEn": "Ministry Goal",
-      //   "DisplayName": "هدف الوزارة",
-      //   // "ToggleName":"SubRelatedObjective",
-      //   "type": "lookupWithQuery",
-      //   "queryField": "Types",
-      //   "queryFieldType": "dropdownValues", //ex: "Choice"
-      //   "queryFieldValue": "ministry",
-      //   //from other list:
-      //   "source": "SOs",
-      //   "Dispfieldkey": "Name",
-      //   "valfieldkey": "Title",
-      //   // "display":"none"
-
-      // },
-      // {
-      // 	InternalName: "RelatedStrategyObjective",
-      // 	DisplayNameEn: "Related Main Objective",
-      // 	DisplayName: "الهدف الرئيسي المرتبط ", //hada al wizara  هدف الوزارة =
-      // 	ToggleName: "RelatedMainObjective",
-      // 	type: "lookupWithQuery",
-      // 	queryField: "Types",
-      // 	queryFieldType: "dropdownValues", //ex: "Choice"
-      // 	queryFieldValue: "main",
-      // 	source: "SOs",
-      // 	Dispfieldkey: "Name",
-      // 	valfieldkey: "Title",
-      // 	display: "none",
-      // 	state: "disabled",
-      // },
-      // {
-      // 	InternalName: "Portfolio",
-      // 	DisplayName: "المحفظة المرتبطة",
-      // 	DisplayNameEn: "Portfolio",
-      // 	type: "lookup",
-      // 	ToggleName: "Portfolio",
-      // 	// "validation": "required",
-      // 	//from other list:
-      // 	source: "Portfolio",
-      // 	Dispfieldkey: "Name",
-      // 	valfieldkey: "Title",
-      // 	BIlanguage: true, //added to handle portfolio bilangual
-      // 	DispfieldkeyEn: "NameEn", //added to handle portfolio bilangual
-      // 	state: "disabled",
-      // 	// "className":"autofill"
-      // },
-
-      // {
-      //   "InternalName": "ModifiedDate",
-      //   "DisplayName": "تاريخ التعديل",
-      //   "DisplayNameEn": "Modified Date",
-      //   "type": "datetime"
-      // },
-      // {
-      //   "InternalName": "CreatedDate",
-      //   "DisplayName": "تاريخ الإنشاء",
-      //   "DisplayNameEn": "Created Date",
-      //   "type": "datetime"
-      // },
-      // {
-      //   "InternalName": "CreatedBy",
-      //   "DisplayName": "إنشاء بواسطة",
-      //   "DisplayNameEn": "Created By",
-      //   "type": "picker"
-      // },
-      // {
-      //   "InternalName": "ModifiedBy",
-      //   "DisplayName": "تم التعديل بواسطة",
-      //   "DisplayNameEn": "Modified By",
-      //   "type": "picker"
-      // },
-
-      // {
-      //   "InternalName": "Dimensions",
-      //   "DisplayNameEn": "Dimensions",
-      //   "DisplayName": "بعد الاطار",
-      //   "type": "lookup",
-      //   "source": "Dimensions",
-      //   "Dispfieldkey": "Dimension",
-      //   "valfieldkey": "Title"
-      // },
-      // {
-      //   "InternalName": "Benchmarking",
-      //   "DisplayNameEn": "Benchmarking",
-      //   "DisplayName": "المقارنة المعيارية",
-      //   "type": "string",
-      //   "maxchar": "500",
-      // },
-
-      // {
-      //   "InternalName": "Calculation",
-      //   "DisplayNameEn": "Calculation",
-      //   "DisplayName": "آلية حساب المؤشر",
-      //   "type": "dropdownValues",
-      //   options: {
-      //     choices: [
-      //       { display: 'last', value: 'last' },
-      //       { display: 'sum', value: 'sum' },
-      //       { display: 'average', value: 'average' },
-      //     ]
-      //   }
-      // },
-
-      // {
-      //   "InternalName": "CalculationMethod",
-      //   "DisplayNameEn": "Calculation Method",
-      //   "DisplayName": "طريقة الحساب",
-      //   "type": "dropdown",
-      //   options: {
-      //     choices: ['يدوي',
-      //       ' مؤشرات مبادرات',
-      //       'مؤشرات تشغيلية'
-
-      //     ]
-      //   }
-      // },
-      // {
-      //   "InternalName": "Status",
-      //   "DisplayNameEn": "Status",
-      //   "DisplayName": "الحالة",
-      //   "type": "dropdownValues",
-      //   options: {
-      //     choices: [
-      //       { display: 'new', value: 'new' },
-      //       { display: 'actual', value: 'actual' },
-      //       { display: 'target', value: 'target' },
-      //       { display: 'actualcompleted', value: 'actualcompleted' },
-      //       { display: 'targetcompleted', value: 'targetcompleted' },
-      //     ]
-      //   }
-      // },
-
-      // {
-      //   "InternalName": "Target",
-      //   "DisplayNameEn": "Target",
-      //   "DisplayName": "المستهدف",
-      //   "type": "floatpercentage"
-      // },
-      // {
-      //   "InternalName": "Actual",
-      //   "DisplayNameEn": "Actual",
-      //   "DisplayName": "المحقق",
-      //   "type": "float"
-      // },
-      // {
-      //   "InternalName": "Total",
-      //   "DisplayNameEn": "Total",
-      //   "DisplayName": "الاجمالي",
-      //   "type": "float"
-      // },
-
-      // {
-      //   "InternalName": "MesurePriority",
-      //   "DisplayNameEn": "Mesure Priority",
-      //   "DisplayName": "أولوية قياس المؤشر",
-      //   "type": "dropdownValues",
-      //   options: {
-      //     choices: [
-      //       { display: 'low', value: 'low' },
-      //       { display: 'high', value: 'high' },
-      //     ]
-      //   }
-      // },
-      // {
-      //   "InternalName": "KPIActivationStatus",
-      //   "DisplayNameEn": "KPI Activation Status",
-      //   "DisplayName": "حالة تفعيل المؤشر",
-      //   "type": "dropdown",
-      //   options: {
-      //     choices: [
-      //       'مفعّل', 'يتمّ تفعيله', 'يتمّ تفعيله في الربع الأوّل', 'يتمّ تفعيله في الربع الثاني', 'يتمّ تفعيله في الربع الثالث'
-      //     ]
-      //   }
-      // },
-
-      // // {
-      // //   "InternalName": "RelatedStrategyObjective",
-      // //   "DisplayNameEn": "Related Strategy Objective",
-      // //   "DisplayName": "الأهداف الاستراتيجية المرتبطة",
-      // //   "type": "lookup",
-      // //   "source": "SOs",
-      // //   "Dispfieldkey": "Name",
-      // //   "valfieldkey": "Title"
-      // // },
-      // {
-      //   "InternalName": "RelatedInitiativesKPIs",
-      //   "DisplayNameEn": "Related Initiatives KPIs",
-      //   "DisplayName": "مؤشر المبادرة المرتبطة",
-      //   "type": "lookup",
-      //   "source": "InitiativeKPI",
-      //   "Dispfieldkey": "Name",
-      //   "valfieldkey": "Title"
-      // },
-      // // {
-      // //   "InternalName": "Formula",
-      // //   "DisplayName": "المعادلة",
-      // //   "type": "string"
-      // // },
-      // {
-      //   "InternalName": "Sector",
-      //   "DisplayNameEn": "Sector",
-      //   "DisplayName": "القطاع",
-      //   "type": "lookup",
-      //   "source": "Internal Entities",
-      //   "Dispfieldkey": "Name",
-      //   "valfieldkey": "Title"
-      // },
-      // {
-      //   "InternalName": "RelatedBenefits",
-      //   "DisplayNameEn": "Related Benefits",
-      //   "DisplayName": "المنافع المرتبطة",
-      //   "type": "lookup",
-      //   "source": "Benefits",
-      //   "Dispfieldkey": "Title",
-      //   "valfieldkey": "Title"
-      // },
-
-      // {
-      //   "InternalName": "Dimensions",
-      //   "DisplayName": "الأبعاد الرئيسية",
-      //   "type": "lookup",
-      //   "source": "Dimensions",
-      //   "Dispfieldkey": "Dimension",
-      //   "valfieldkey": "Title"
-      // },
-      // {
-      //     "InternalName": "OwnerName",
-      //     "DisplayNameEn": "Owner Name",
-      //     "DisplayName": "اسم مالك المؤشر",
-      //     "type": "string"
-      // },
     ],
   },
   {
