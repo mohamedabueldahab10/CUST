@@ -136,8 +136,8 @@ var StrategicPS_Home_Info_Request = {
           localStorage.getItem("lng") == null ||
           localStorage.getItem("lng") == "ar"
         ) {
-          strategicSector = strategicsectorarr[0].name;
-        } else strategicSector = strategicsectorarr[0].nameEn;
+          strategicSector = strategicsectorarr.length ? strategicsectorarr[0].name : No_Data;
+        } else strategicSector = strategicsectorarr.length ? strategicsectorarr[0].nameEn : No_Data;
       }
       var strategicSubsectorarr = [];
 
@@ -152,8 +152,8 @@ var StrategicPS_Home_Info_Request = {
           localStorage.getItem("lng") == null ||
           localStorage.getItem("lng") == "ar"
         ) {
-          strategicSubSector = strategicSubsectorarr[0].name;
-        } else strategicSubSector = strategicSubsectorarr[0].nameEn;
+          strategicSubSector = strategicSubsectorarr.length ? strategicSubsectorarr[0].name : No_Data;
+        } else strategicSubSector = strategicSubsectorarr.length ? strategicSubsectorarr[0].nameEn : No_Data;
       }
 
       if (strategicPartnershipDuration) {
