@@ -215,8 +215,8 @@ var Project_Home_Info_Request = {
           localStorage.getItem("lng") == null ||
           localStorage.getItem("lng") == "ar"
         ) {
-          projectSubsector = projectSubsectorarr[0].name;
-        } else projectSubsector = projectSubsectorarr[0].nameEn;
+          projectSubsector = projectSubsectorarr.length ? projectSubsectorarr[0].name : No_Data;
+        } else projectSubsector = projectSubsectorarr.length ? projectSubsectorarr[0].nameEn : No_Data;
       }
       stagename = oListItem.get_item("Stage") || No_Data;
 
@@ -581,25 +581,25 @@ var Project_Home_Info_Request = {
       ' class="Resources initiativeProjHomeInfoValueStyle"></span>'
     );
 
-    
+
     if (projectIsNotActiveStatus) {
       $("#PJStatus").append(
         "<span data-trans-" +
         projectworkingstatus +
-        ' class="Resources initiativeProjHomeInfoValueStyle"></span>'+
+        ' class="Resources initiativeProjHomeInfoValueStyle"></span>' +
         '<span class="initiativeProjHomeInfoValuefontStyle statuscolor' +
         projectProgressStatusSchedule +
-        '">(</span>'+
+        '">(</span>' +
         "<span data-trans-" +
         projectProgressStatusSchedule +
         ' class="Resources initiativeProjHomeInfoValuefontStyle statuscolor' +
         projectProgressStatusSchedule +
-        '"></span>'+
+        '"></span>' +
         '<span class="initiativeProjHomeInfoValuefontStyle statuscolor' +
         projectProgressStatusSchedule +
         '">)</span>'
       );
-    }else{
+    } else {
       $("#PJStatus").append(
         "<span data-trans-" +
         projectworkingstatus +
