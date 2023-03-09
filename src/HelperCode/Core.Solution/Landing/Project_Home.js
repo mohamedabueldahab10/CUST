@@ -581,7 +581,7 @@ var Project_Home_Info_Request = {
       ' class="Resources initiativeProjHomeInfoValueStyle"></span>'
     );
 
-    debugger
+    
     if (projectIsNotActiveStatus) {
       $("#PJStatus").append(
         "<span data-trans-" +
@@ -606,30 +606,6 @@ var Project_Home_Info_Request = {
         ' class="Resources initiativeProjHomeInfoValueStyle"></span>'
       );
     }
-    //   if(userIsActiveStatusForUseInProjectHome ==true){
-    //   $("#PJStatus").append(
-    //     "<span data-trans-" +
-    //     projectworkingstatus +
-    //     ' class="Resources initiativeProjHomeInfoValueStyle"></span>'+
-    //     '<span class="initiativeProjHomeInfoValuefontStyle statuscolor' +
-    //     projectProgressStatusSchedule +
-    //     '">(</span>'+
-    //     "<span data-trans-" +
-    //     projectProgressStatusSchedule +
-    //     ' class="Resources initiativeProjHomeInfoValuefontStyle statuscolor' +
-    //     projectProgressStatusSchedule +
-    //     '"></span>'+
-    //     '<span class="initiativeProjHomeInfoValuefontStyle statuscolor' +
-    //     projectProgressStatusSchedule +
-    //     '">)</span>'
-    //   );
-    // } else{
-    //   $("#PJStatus").append(
-    //     "<span data-trans-" +
-    //     projectworkingstatus +
-    //     ' class="Resources initiativeProjHomeInfoValueStyle"></span>'
-    //   );
-    // }
     $(
       ".project-info-ctx .media-body:nth-of-type(1) .icon-user > .user-name"
     ).text(
