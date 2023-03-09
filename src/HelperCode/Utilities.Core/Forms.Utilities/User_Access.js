@@ -16,8 +16,9 @@ window.USERisStrategicPartnershipHome =
   window.location.href.toLowerCase().indexOf("/strategicpartnershiphome.aspx") > -1;
 window.USERisTargets =
   window.location.href.toLowerCase().indexOf("/targets.aspx") > -1;
-window.userIsActiveStatusForUseInProjectHome = false;
+// window.userIsActiveStatusForUseInProjectHome = false;
 var BreakException = {};
+var workingstatus = "";
 var UserRole,
   UserAccessSectorCode,
   UserNTasks = 0,
@@ -203,7 +204,7 @@ var UserRole,
   SecondLevel_FirstLevel_Field,
   SecondLevel_FirstLevel_FieldType,
   User_isClosureStatus,
-  User_isActiveStatus,
+  User_NotActiveStatus,
   User_ScheduleSource,
   User_ProjUID,
   User_ProjUID,
@@ -6418,18 +6419,15 @@ var Access_Project_Info_Request = {
           ? oListItem.get_item("Name")
           : UserNo_Data;
         USERPID = oListItem.get_id();
-        User_isClosureStatus =
-          oListItem.get_item("ClosureStatus") == "Failed" ||
-            oListItem.get_item("ClosureStatus") == "Cancelled"
-            ? true
-            : false;
-        var workingstatus = oListItem.get_item("WorkingStatus");
-        User_isActiveStatus =
-          workingstatus !== "stat13"
-            && workingstatus !== "stat14"
-            ? true
-            : false;
-        userIsActiveStatusForUseInProjectHome = workingstatus == "active" ? true : false;
+        User_isClosureStatus = oListItem.get_item("ClosureStatus") == "Failed" || oListItem.get_item("ClosureStatus") == "Cancelled" ? true : false;
+        debugger
+        /// ghoufran work
+        // var workingstatus = oListItem.get_item("WorkingStatus");
+        // User_isActiveStatus = workingstatus !== "stat13" && workingstatus !== "stat14" ? true : false;
+        // userIsActiveStatusForUseInProjectHome = workingstatus == "active" ? true : false;
+        //////////
+        User_NotActiveStatus = oListItem.get_item("WorkingStatus") != 'active' ? true : false;
+
         User_ProjUID = oListItem.get_item("ProjectGUID") || UserNo_Data;
         //for milestones source
         User_ScheduleSource = oListItem.get_item("ScheduleSource") || No_Data;
@@ -6448,6 +6446,8 @@ var Access_Project_Info_Request = {
       );
       userProjects.push(oListItem.get_item("Title"));
     }
+
+    console.log(workingstatus, "After")
 
     //should uncomment when need to applt the validation on milstones every month for proj and every 3 months for initiative
 
@@ -6789,11 +6789,12 @@ var Access_Project_Info_Request = {
         }, 1000);
       }
     }
+    console.log(User_NotActiveStatus, "User_NotActiveStatus")
     debugger
+
     //if project is closed or failed
     if (
-      User_isClosureStatus &&
-      (USERlistkey == "projects" || USERProjRelated.indexOf(USERlistkey) > -1)
+      User_isClosureStatus && (USERlistkey == "projects" || USERProjRelated.indexOf(USERlistkey) > -1)
     ) {
       if (USERlistkey == "issues" && (USERisListing || USERisNew)) {
       } else {
@@ -6810,35 +6811,67 @@ var Access_Project_Info_Request = {
       }
     }
     // if project is Cancelled or Holded
+
     if (
-      !User_isActiveStatus &&
-      ((USERlistkey == "projects" && !USERisListing) || USERProjRelated.indexOf(USERlistkey) > -1 || istherePCODE)
-      ) {
+      User_NotActiveStatus &&
+      (USERlistkey == "projects" || USERProjRelated.indexOf(USERlistkey) > -1 || istherePCODE)
+    ) {
+      $("body").append(
+        "<style>" +
+        `.btn-add, .btn-add[href*="ListKey"], .btn-save{opacity: .6!important;pointer-events: none!important;display:none!important}` +
+        "</style>"
+      );
+      if ((USERisNew || USERisEdit)) {
         $("body").append(
           "<style>" +
-          `.btn-add, .btn-add[href*="ListKey"], .btn-save{opacity: .6!important;pointer-events: none!important;display:none!important}` +
+          ".add-New-Detail-wrapper," +
+          ".form-control{color: #b1b1b1 !important;" +
+          "border-color: #e1e1e1 !important;" +
+          "background-color: #fdfdfd !important;" +
+          "background-color: #fdfdfd !important;" +
+          "opacity: .6;pointer-events: none;}" +
           "</style>"
         );
-        if ((USERisNew || USERisEdit)) {
-          $("body").append(
-            "<style>" +
-            ".add-New-Detail-wrapper,"+
-            ".form-control{color: #b1b1b1 !important;" +
-            "border-color: #e1e1e1 !important;" +
-            "background-color: #fdfdfd !important;" +
-            "background-color: #fdfdfd !important;" +
-            "opacity: .6;pointer-events: none;}" +
-            "</style>"
-          );
-        }
       }
-    if (!User_isActiveStatus && USERisProjectHome){
+
+    }
+    if (User_NotActiveStatus && USERisProjectHome) {
       $("body").append(
         "<style>" +
         ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none!important}" +
         "</style>"
       );
     }
+
+    // if (
+    //   !User_isActiveStatus &&
+    //   ((USERlistkey == "projects" && !USERisListing) || USERProjRelated.indexOf(USERlistkey) > -1 || istherePCODE)
+    //   ) {
+    //     $("body").append(
+    //       "<style>" +
+    //       `.btn-add, .btn-add[href*="ListKey"], .btn-save{opacity: .6!important;pointer-events: none!important;display:none!important}` +
+    //       "</style>"
+    //     );
+    //     if ((USERisNew || USERisEdit)) {
+    //       $("body").append(
+    //         "<style>" +
+    //         ".add-New-Detail-wrapper,"+
+    //         ".form-control{color: #b1b1b1 !important;" +
+    //         "border-color: #e1e1e1 !important;" +
+    //         "background-color: #fdfdfd !important;" +
+    //         "background-color: #fdfdfd !important;" +
+    //         "opacity: .6;pointer-events: none;}" +
+    //         "</style>"
+    //       );
+    //     }
+    //   }
+    // if (!User_isActiveStatus && USERisProjectHome){
+    //   $("body").append(
+    //     "<style>" +
+    //     ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none!important}" +
+    //     "</style>"
+    //   );
+    // }
   },
 
   onError: function (sender, args) {

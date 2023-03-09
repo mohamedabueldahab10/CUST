@@ -82,6 +82,8 @@ var actualImplementationRate = 0,
 var lstMonthCLicked = "";
 var TLlstMonthCLicked = "";
 
+var projectIsNotActiveStatus = ""
+
 if (
   localStorage.getItem("lng") == null ||
   localStorage.getItem("lng") == "ar"
@@ -156,9 +158,12 @@ var Project_Home_Info_Request = {
         Project_Home_Info_Request.g.PCODE
       );
 
+
       //getting 1st stats data
       ActualBudget += oListItem.get_item("ActualBudget") || 0; //masroufa
       AssignedBudget = oListItem.get_item("ActualBudget") || 0; //total budget
+
+      projectIsNotActiveStatus = oListItem.get_item("WorkingStatus") != 'active' ? true : false;
 
       // if (oListItem.get_item('ActualBudget') != null) {
       //   $('.assigned').hide();
@@ -575,30 +580,56 @@ var Project_Home_Info_Request = {
       projectimportance +
       ' class="Resources initiativeProjHomeInfoValueStyle"></span>'
     );
-    if(userIsActiveStatusForUseInProjectHome ==true){
-    $("#PJStatus").append(
-      "<span data-trans-" +
-      projectworkingstatus +
-      ' class="Resources initiativeProjHomeInfoValueStyle"></span>'+
-      '<span class="initiativeProjHomeInfoValuefontStyle statuscolor' +
-      projectProgressStatusSchedule +
-      '">(</span>'+
-      "<span data-trans-" +
-      projectProgressStatusSchedule +
-      ' class="Resources initiativeProjHomeInfoValuefontStyle statuscolor' +
-      projectProgressStatusSchedule +
-      '"></span>'+
-      '<span class="initiativeProjHomeInfoValuefontStyle statuscolor' +
-      projectProgressStatusSchedule +
-      '">)</span>'
-    );
-  } else{
-    $("#PJStatus").append(
-      "<span data-trans-" +
-      projectworkingstatus +
-      ' class="Resources initiativeProjHomeInfoValueStyle"></span>'
-    );
-  }
+
+    debugger
+    if (projectIsNotActiveStatus) {
+      $("#PJStatus").append(
+        "<span data-trans-" +
+        projectworkingstatus +
+        ' class="Resources initiativeProjHomeInfoValueStyle"></span>'+
+        '<span class="initiativeProjHomeInfoValuefontStyle statuscolor' +
+        projectProgressStatusSchedule +
+        '">(</span>'+
+        "<span data-trans-" +
+        projectProgressStatusSchedule +
+        ' class="Resources initiativeProjHomeInfoValuefontStyle statuscolor' +
+        projectProgressStatusSchedule +
+        '"></span>'+
+        '<span class="initiativeProjHomeInfoValuefontStyle statuscolor' +
+        projectProgressStatusSchedule +
+        '">)</span>'
+      );
+    }else{
+      $("#PJStatus").append(
+        "<span data-trans-" +
+        projectworkingstatus +
+        ' class="Resources initiativeProjHomeInfoValueStyle"></span>'
+      );
+    }
+    //   if(userIsActiveStatusForUseInProjectHome ==true){
+    //   $("#PJStatus").append(
+    //     "<span data-trans-" +
+    //     projectworkingstatus +
+    //     ' class="Resources initiativeProjHomeInfoValueStyle"></span>'+
+    //     '<span class="initiativeProjHomeInfoValuefontStyle statuscolor' +
+    //     projectProgressStatusSchedule +
+    //     '">(</span>'+
+    //     "<span data-trans-" +
+    //     projectProgressStatusSchedule +
+    //     ' class="Resources initiativeProjHomeInfoValuefontStyle statuscolor' +
+    //     projectProgressStatusSchedule +
+    //     '"></span>'+
+    //     '<span class="initiativeProjHomeInfoValuefontStyle statuscolor' +
+    //     projectProgressStatusSchedule +
+    //     '">)</span>'
+    //   );
+    // } else{
+    //   $("#PJStatus").append(
+    //     "<span data-trans-" +
+    //     projectworkingstatus +
+    //     ' class="Resources initiativeProjHomeInfoValueStyle"></span>'
+    //   );
+    // }
     $(
       ".project-info-ctx .media-body:nth-of-type(1) .icon-user > .user-name"
     ).text(
@@ -2307,7 +2338,7 @@ var Stages_Data_Request = {
       }
     );
 
-    
+
     // to check that if the previous phase percentage not 100% should change the percentage to be 100%
     for (var i = 0; i < PhasesProgressArr.length; i++) {
       if (PhasesProgressArr[i + 1]) {
