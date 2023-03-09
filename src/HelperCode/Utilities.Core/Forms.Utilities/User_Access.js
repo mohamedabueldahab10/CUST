@@ -6812,12 +6812,13 @@ var Access_Project_Info_Request = {
     //if project is Cancelled or Holded
     if (
       !User_isActiveStatus &&
-      (USERlistkey == "projects" || USERProjRelated.indexOf(USERlistkey) > -1)
-    ) {
-      if ((USERisForm || USERisListing)) {
+      ((USERlistkey == "projects" && !USERisListing) || USERProjRelated.indexOf(USERlistkey) > -1)
+      ) {
+        // if (USERlistkey == "issues" && (USERisListing || USERisNew)) {
+        // } else {
         $("body").append(
           "<style>" +
-          ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+          ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none!important}" +
           ".form-control{color: #b1b1b1 !important;" +
           "border-color: #e1e1e1 !important;" +
           "background-color: #fdfdfd !important;" +
@@ -6828,9 +6829,17 @@ var Access_Project_Info_Request = {
         // if(isAdmin || isEPMO){
         // $('#WorkingStatus').css({"background-color": "#ffffff !important", "border-color":"#ababab!important","opacity":"0.85","pointer-events":"all"});
         // }
-      }
+      // }
+    }
+    if (!User_isActiveStatus && USERisProjectHome){
+      $("body").append(
+        "<style>" +
+        ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none!important}" +
+        "</style>"
+      );
     }
   },
+
   onError: function (sender, args) {
     //
     console.log(
