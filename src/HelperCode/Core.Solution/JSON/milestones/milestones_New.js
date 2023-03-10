@@ -167,7 +167,15 @@ var Information_Form = [
             },
           ],
         },
-      },
+      }
+    ],
+  },
+  {
+    label: 'الوثائق داعمة',
+    labelEn: 'Supporting Documents',
+    description: '',
+    descriptionEn: '',
+    subFields: [
       {
         InternalName: 'SupportDocumentsDescription',
         DisplayNameEn: 'Support Documents Description',
@@ -175,53 +183,45 @@ var Information_Form = [
         type: 'multiline',
         maxchar: '500',
       },
+      {
+        InternalName: 'getfile',
+        DisplayName: 'الوثائق داعمة',
+        DisplayNameEn: 'Supporting Documents',
+        type: 'file',
+        docPurpose:"Spporting_Documents",
+        withAddBtn: 'true',
+      },
     ],
   },
-
-  // {
-  //   label: 'وثائق داعمة',
-  //   labelEn: 'Supporting Documents',
-  //   description: 'التفاصيل',
-  //   descriptionEn: 'Details',
-  //   subFields: [
-  //     {
-  //       InternalName: 'SupportDocumentsDescription',
-  //       DisplayNameEn: 'Support Documents Description',
-  //       DisplayName: 'وصف الوثائق الداعمة',
-  //       type: 'multiline',
-  //       maxchar: '500',
-  //     },
-  //     {
-  //       InternalName: 'getfile',
-  //       DisplayName: 'مرفقات',
-  //       DisplayNameEn: 'Attachments',
-  //       type: 'file',
-  //       withAddBtn: 'true',
-  //       // validation: 'required',
-  //     },
-  //     // {
-  //     //   InternalName: 'Attachment',
-  //     //   DisplayName: 'المرفقات',
-  //     //   DisplayNameEn: 'Attachment',
-  //     //   type: 'file',
-  //     //   withAddBtn: 'true',
-  //     // },
-  //   ],
-  // },
-  
   {
-    label: 'الوثائق الداعمة',
-    labelEn: 'Supporting Documents',
-    description: '',
-    descriptionEn: '',
+    label: 'المرفقات',
+    labelEn: 'Attachments',
+    description: 'التفاصيل',
+    descriptionEn: 'Details',
     subFields: [
       {
         InternalName: 'getfile',
         DisplayName: 'المرفقات',
         DisplayNameEn: 'Attachments',
         type: 'file',
+        docPurpose:"Attachments",
         withAddBtn: 'true',
       },
     ],
   },
+  // {
+  //   label: 'الوثائق الداعمة',
+  //   labelEn: 'Supporting Documents',
+  //   description: '',
+  //   descriptionEn: '',
+  //   subFields: [
+  //     {
+  //       InternalName: 'getfile',
+  //       DisplayName: 'المرفقات',
+  //       DisplayNameEn: 'Attachments',
+  //       type: 'file',
+  //       withAddBtn: 'true',
+  //     },
+  //   ],
+  // },
 ]

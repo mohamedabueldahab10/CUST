@@ -135,6 +135,22 @@ var Information_Form = [
     ],
   },
   {
+    label: 'الوثائق داعمة',
+    labelEn: 'Supporting Documents',
+    description: '',
+    descriptionEn: '',
+    subFields: [
+      {
+        InternalName: 'getfile',
+        DisplayName: 'الوثائق داعمة',
+        DisplayNameEn: 'Supporting Documents',
+        type: 'file',
+        docPurpose:"Spporting_Documents",
+        withAddBtn: 'true',
+      },
+    ],
+  },
+  {
     label: 'المرفقات',
     labelEn: 'Attachments',
     description: 'التفاصيل',
@@ -145,6 +161,7 @@ var Information_Form = [
         DisplayName: 'المرفقات',
         DisplayNameEn: 'Attachments',
         type: 'file',
+        docPurpose:"Attachments",
         withAddBtn: 'true',
       },
     ],
