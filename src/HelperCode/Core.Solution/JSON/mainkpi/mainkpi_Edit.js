@@ -49,8 +49,8 @@ var Information_Form = [
         dynamic: 'parent', //main field that affect on other chiled field
         type: 'dropdownValues',
         toggleValues: [
-          { value: 'sublevel2', fields: ['RelatedStrategyObjective', 'RelatedMainKpis'] }, //we can put more than 1  field
-          { value: 'sublevel3', fields: ['RelatedStrategyObjective', 'RelatedMainKpis'] }, //we can put more than 1  field
+          { value: 'sublevel2', fields: ['RelatedStrategyObjective', 'RelatedMainKpis','Sector','SubSector'] }, //we can put more than 1  field
+          { value: 'sublevel3', fields: ['RelatedStrategyObjective', 'RelatedMainKpis','Sector','SubSector'] }, //we can put more than 1  field
         ],
         options: {
           choices: [
@@ -83,7 +83,54 @@ var Information_Form = [
         filterFieldType: "Choice",
         display: 'none',
         ToggleName:'RelatedStrategyObjective',
+        fieldsinformlvl1: "Sector", // fields in look up list
+        sourcefieldlvl1: "Sector",
+        fieldsinformlvl2: "SubSector", // fields in look up list
+        sourcefieldlvl2: "SubSector",
       },
+      {
+        "InternalName": "Sector",
+        "DisplayName": "القطاع",
+        "DisplayNameEn": "Sector",
+        "type": "lookupWithQuery",
+        "queryField": "EntityType",
+        "queryFieldType": "dropdownValues", //ex: "Choice"
+        // dontSubmit: true,
+        "queryFieldValue": "Sector",
+        // dynamic: "parent",
+        "source": "Internal Entities",
+        // "state": "disabled",
+        "Dispfieldkey": "Name",
+        "DispfieldkeyEn": "NameEn",
+        "valfieldkey": "Title",
+        // "validation": "required",
+        display:'none',
+        state:'disabled',
+        ToggleName:"Sector",
+        dontSubmit: true,
+    },
+    {
+        "InternalName": "SubSector",
+        "DisplayName": "الوكالات",
+        "DisplayNameEn": "DeputyShip",
+        "type": "lookup",
+        //from other list:
+        "source": "Internal Entities",
+        // "isSector": "True",
+        // "EntityType": "Department",
+        "Dispfieldkey": "Name",
+        "DispfieldkeyEn": "NameEn",
+        "valfieldkey": "Title",
+        // "validation": "required",
+        "isRelatedToParent":true, // to show parent value depends on child like sector and subsector
+        // dynamic: "Sector", //InternalName Of Parent field
+        filterField: "ParentEntity",//InternalName Of Parent field
+        filterFieldType: "Text",//Type In Sharepoint List for Parent field
+        display:'none',
+        state:'disabled',
+        ToggleName:"SubSector",
+        dontSubmit: true,
+    },
       {
         InternalName: 'Classification',
         DisplayNameEn: 'Classification',
@@ -859,42 +906,7 @@ var Information_Form = [
       //   valfieldkey: 'Title',
       // },
       
-      {
-        "InternalName": "Sector",
-        "DisplayName": "القطاع",
-        "DisplayNameEn": "Sector",
-        "type": "lookupWithQuery",
-        "queryField": "EntityType",
-        "queryFieldType": "dropdownValues", //ex: "Choice"
-        // dontSubmit: true,
-        "queryFieldValue": "Sector",
-        dynamic: "parent",
-        "source": "Internal Entities",
-        // "state": "disabled",
-        "Dispfieldkey": "Name",
-        "DispfieldkeyEn": "NameEn",
-        "valfieldkey": "Title",
-        "validation": "required"
-    },
-    {
-        "InternalName": "SubSector",
-        "DisplayName": "الوكالات",
-        "DisplayNameEn": "DeputyShip",
-        "type": "lookup",
-        //from other list:
-        "source": "Internal Entities",
-        // "isSector": "True",
-        // "EntityType": "Department",
-        "Dispfieldkey": "Name",
-        "DispfieldkeyEn": "NameEn",
-        "valfieldkey": "Title",
-        "validation": "required",
-        "isRelatedToParent":true, // to show parent value depends on child like sector and subsector
-        dynamic: "Sector", //InternalName Of Parent field
-        filterField: "ParentEntity",//InternalName Of Parent field
-        filterFieldType: "Text",//Type In Sharepoint List for Parent field
 
-    },
     ],
   },
   {

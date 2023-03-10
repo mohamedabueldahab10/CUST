@@ -891,24 +891,26 @@ window.ListInfo = {
               // Goal_Strategy_Info.init(relatedStrategyCode)
               // Kpi_Related_Goal.init(relatedStrategyCode, indexType)
 
-              $("select#Types").change(function () {
-                var relatedStrategyCode = $("#RelatedStrategy").val();
-                var indexType = $(this).val();
-                Goal_Strategy_Info.init(relatedStrategyCode);
-                Kpi_Related_Goal.init(relatedStrategyCode, indexType);
-              });
+              // $("select#Types").change(function () {
+              //   var relatedStrategyCode = $("#RelatedStrategy").val();
+              //   var indexType = $(this).val();
+              //   Goal_Strategy_Info.init(relatedStrategyCode);
+              //   Kpi_Related_Goal.init(relatedStrategyCode, indexType);
+              // });
 
-              $("select#RelatedStrategy").change(function () {
-                var relatedStrategyCode = $(this).val();
-                var indexType = $("#Types").val();
-                Goal_Strategy_Info.init(relatedStrategyCode);
-                Kpi_Related_Goal.init(relatedStrategyCode, indexType);
-              });
+              // $("select#RelatedStrategy").change(function () {
+              //   var relatedStrategyCode = $(this).val();
+              //   var indexType = $("#Types").val();
+              //   Goal_Strategy_Info.init(relatedStrategyCode);
+              //   Kpi_Related_Goal.init(relatedStrategyCode, indexType);
+              // });
 
-              $("select#SubRelatedObjective").change(function () {
-                var sosStrategy = $(this).val();
-                Get_Related_Sos_Sector.init(sosStrategy);
-              });
+              // $("select#SubRelatedObjective").change(function () {
+              //   var sosStrategy = $(this).val();
+              //   Get_Related_Sos_Sector.init(sosStrategy);
+              // });
+
+              // get the sector of related strategy obj from sos limk we cant us dynamic cause there is no name for sector just code
 
               $("select#RelatedStrategyObjective").change(function () {
                 var sosStrategy = $(this).val();
@@ -1051,19 +1053,19 @@ window.ListInfo = {
               });
             }
             if (listkey == "mainkpi") {
-              $("select#RelatedStrategy").change(function () {
-                var relatedStrategyCode = $(this).val();
-                var indexType = $("#Types").val();
-                Goal_Strategy_Info.init(relatedStrategyCode);
-                Kpi_Related_Goal.init(relatedStrategyCode, indexType);
-              });
+              // $("select#RelatedStrategy").change(function () {
+              //   var relatedStrategyCode = $(this).val();
+              //   var indexType = $("#Types").val();
+              //   Goal_Strategy_Info.init(relatedStrategyCode);
+              //   Kpi_Related_Goal.init(relatedStrategyCode, indexType);
+              // });
 
               // get the sector from goal strategy i choosed
 
-              $("select#SubRelatedObjective").change(function () {
-                var sosStrategy = $(this).val();
-                Get_Related_Sos_Sector.init(sosStrategy);
-              });
+              // $("select#SubRelatedObjective").change(function () {
+              //   var sosStrategy = $(this).val();
+              //   Get_Related_Sos_Sector.init(sosStrategy);
+              // });
 
               $("select#RelatedStrategyObjective").change(function () {
                 var sosStrategy = $(this).val();
@@ -6126,7 +6128,6 @@ window.ListInfo = {
               if (
                 item == "RelatedMainKpis" ||
                 item == "RelatedMainObjective" ||
-                item == "SubRelatedObjective" ||
                 item == "Portfolio"
               ) {
                 myFieldParent.find(">*").attr("required", false);

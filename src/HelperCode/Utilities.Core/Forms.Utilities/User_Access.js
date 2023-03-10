@@ -16,8 +16,8 @@ window.USERisStrategicPartnershipHome =
   window.location.href.toLowerCase().indexOf("/strategicpartnershiphome.aspx") > -1;
 window.USERisTargets =
   window.location.href.toLowerCase().indexOf("/targets.aspx") > -1;
-window.userIsActiveStatusForUseInProjectHome = false;
 var BreakException = {};
+var workingstatus = "";
 var UserRole,
   UserAccessSectorCode,
   UserNTasks = 0,
@@ -203,7 +203,7 @@ var UserRole,
   SecondLevel_FirstLevel_Field,
   SecondLevel_FirstLevel_FieldType,
   User_isClosureStatus,
-  User_isActiveStatus,
+  User_NotActiveStatus,
   User_ScheduleSource,
   User_ProjUID,
   User_ProjUID,
@@ -355,9 +355,7 @@ window.userCalls = {
     });
   },
   isMember: function (groupName, userLoginName, fieldID) {
-    console.log(groupName, "groupName groupName");
-    console.log(userLoginName, "userLoginName");
-    console.log(fieldID, "fieldID");
+
     $.ajax({
       url:
         _spPageContextInfo.webAbsoluteUrl +
@@ -2955,7 +2953,7 @@ window.userCalls = {
         Read_Access = [];
         Edit_Access = [];
     }
-    debugger
+    
     //New CRUD Access Solution [will not affect below behavior]
     (Create_Access = Create_Access.map((name) => name.toLowerCase())), //making sure everything is lower case
       (Read_Access = Read_Access.map((name) => name.toLowerCase())),
@@ -3071,7 +3069,6 @@ window.userCalls = {
         );
         break;
     }
-    // debugger
     // switch (
     //   true //Create Access
     //   ) {
@@ -6361,7 +6358,6 @@ window.userCalls = {
   },
 };
 $(document).ready(function () {
-  console.log("INSIDE DOCUMENT READY");
   userCalls.get_CurrentUser();
 });
 
@@ -6409,7 +6405,6 @@ var Access_Project_Info_Request = {
   onSuccess: function (sender, args) {
     var collListItem = Access_Project_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-    console.log("on success");
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       if (USERPCODE == oListItem.get_item("Title")) {
@@ -6418,18 +6413,10 @@ var Access_Project_Info_Request = {
           ? oListItem.get_item("Name")
           : UserNo_Data;
         USERPID = oListItem.get_id();
-        User_isClosureStatus =
-          oListItem.get_item("ClosureStatus") == "Failed" ||
-            oListItem.get_item("ClosureStatus") == "Cancelled"
-            ? true
-            : false;
-        var workingstatus = oListItem.get_item("WorkingStatus");
-        User_isActiveStatus =
-          workingstatus !== "stat13"
-            && workingstatus !== "stat14"
-            ? true
-            : false;
-        userIsActiveStatusForUseInProjectHome = workingstatus == "active" ? true : false;
+        User_isClosureStatus = oListItem.get_item("ClosureStatus") == "Failed" || oListItem.get_item("ClosureStatus") == "Cancelled" ? true : false;
+        //////////
+        User_NotActiveStatus = oListItem.get_item("WorkingStatus") != 'active' ? true : false;
+
         User_ProjUID = oListItem.get_item("ProjectGUID") || UserNo_Data;
         //for milestones source
         User_ScheduleSource = oListItem.get_item("ScheduleSource") || No_Data;
@@ -6448,6 +6435,7 @@ var Access_Project_Info_Request = {
       );
       userProjects.push(oListItem.get_item("Title"));
     }
+
 
     //should uncomment when need to applt the validation on milstones every month for proj and every 3 months for initiative
 
@@ -6493,7 +6481,6 @@ var Access_Project_Info_Request = {
     if (!isAdmin && !isMinister && !isITSteering && !isEPMO && !isBITeam && !isBudgetManager) {
       //Access caml query for home page and listing pages
       //
-      console.log("inside access project info req")
 
       var fieldtoquery,
         isShowAll = false;
@@ -6509,7 +6496,7 @@ var Access_Project_Info_Request = {
         fieldtoquery = "Title";
       }
 
-      console.log(isShowAll);
+     
       if (Access_Project_Info_Request.g.User_Projects.length > 0) {
         var PermissionQuery =
           "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"" +
@@ -6550,7 +6537,7 @@ var Access_Project_Info_Request = {
               "</Values></In></And></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
             forfilterQuery += "</div></div>";
             AccessQuery = PermissionQuery;
-            console.log(AccessQuery, "AccessQuery")
+          
 
             if (USERisHome) {
               //call homepage
@@ -6789,11 +6776,10 @@ var Access_Project_Info_Request = {
         }, 1000);
       }
     }
-    debugger
+
     //if project is closed or failed
     if (
-      User_isClosureStatus &&
-      (USERlistkey == "projects" || USERProjRelated.indexOf(USERlistkey) > -1)
+      User_isClosureStatus && (USERlistkey == "projects" || USERProjRelated.indexOf(USERlistkey) > -1)
     ) {
       if (USERlistkey == "issues" && (USERisListing || USERisNew)) {
       } else {
@@ -6809,15 +6795,22 @@ var Access_Project_Info_Request = {
         );
       }
     }
-    //if project is Cancelled or Holded
+
+    // if project is Cancelled or Holded
+
     if (
-      !User_isActiveStatus &&
-      (USERlistkey == "projects" || USERProjRelated.indexOf(USERlistkey) > -1)
+      User_NotActiveStatus &&
+      (USERlistkey == "projects" || USERProjRelated.indexOf(USERlistkey) > -1 || istherePCODE)
     ) {
-      if ((USERisForm || USERisListing)) {
+      $("body").append(
+        "<style>" +
+        `.btn-add, .btn-add[href*="ListKey"], .btn-save{opacity: .6!important;pointer-events: none!important;display:none!important}` +
+        "</style>"
+      );
+      if ((USERisNew || USERisEdit)) {
         $("body").append(
           "<style>" +
-          ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+          ".add-New-Detail-wrapper," +
           ".form-control{color: #b1b1b1 !important;" +
           "border-color: #e1e1e1 !important;" +
           "background-color: #fdfdfd !important;" +
@@ -6825,12 +6818,19 @@ var Access_Project_Info_Request = {
           "opacity: .6;pointer-events: none;}" +
           "</style>"
         );
-        // if(isAdmin || isEPMO){
-        // $('#WorkingStatus').css({"background-color": "#ffffff !important", "border-color":"#ababab!important","opacity":"0.85","pointer-events":"all"});
-        // }
       }
+
     }
+    if (User_NotActiveStatus && USERisProjectHome) {
+      $("body").append(
+        "<style>" +
+        ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none!important}" +
+        "</style>"
+      );
+    }
+
   },
+
   onError: function (sender, args) {
     //
     console.log(
@@ -6925,7 +6925,7 @@ var Access_Project_Info_Request = {
         "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where></Query><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></View>"
       );
     }
-    console.log(camlQuery, "cammmmlll");
+    
     Access_Project_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Access_Project_Info_Request.g.collListItem);
     clientContext.executeQueryAsync(
@@ -7234,7 +7234,6 @@ var Access_Project_Info_Request = {
 // 						// to get the project related to user
 // 						if (USERlistkey == "initiatives") {
 // 							AccessQuery = PermissionQuery;
-// 							console.log("ODYES");
 // 							//
 // 							window.checkListingStatusHtml = setInterval(function () {
 // 								ListingData.preinit();
@@ -7274,7 +7273,7 @@ var Access_Project_Info_Request = {
 // 					// to get the project related to user
 // 					if (USERlistkey == "initiatives") {
 // 						AccessQuery = noDataQuery;
-// 						console.log("ODYES");
+
 // 						//
 // 						window.checkListingStatusHtml = setInterval(function () {
 // 							ListingData.preinit();
@@ -7524,12 +7523,12 @@ window.Get_Initiative_Info_Request = {
         //   initiativeEndDate = oListItem.get_item("FinishDate") ? oListItem.get_item("FinishDate") : ""
         //   initiativeBudget = oListItem.get_item("Cost") ? oListItem.get_item("Cost") : 0
         initiativeActualBudget = oListItem.get_item("InitiativeBudget")
-        console.log("INSIDE INITIativeInfoRequest")
+     
       }
 
     }
 
-    console.log("USER initiatative")
+ 
 
     //should uncomment when need to applt the validation on milstones every month for proj and every 3 months for initiative
     if (isthereICODE && initiativeStartToValidation) {
@@ -7615,7 +7614,7 @@ var Access_Sector_Info_Request = {
     //   //|| isSubSectorHead
     //   //|| isSectorHead
     // ) {
-    //   console.log(UserAccessSectorCode);
+   
 
     //   var subsectorname, substorcode;
     //   if (localStorage.getItem("Dynamo_Internal Entities") != null) {
@@ -7689,7 +7688,7 @@ var Access_Sector_Info_Request = {
   // The main Initialization function
   init: function () {
     //
-    // console.log('mmmmmmmmmmmmmmmmmmmmmmmmmmm')
+   
     var clientContext = new SP.ClientContext.get_current();
 
     var oList = clientContext
@@ -7784,7 +7783,7 @@ var Issues_Info_Request = {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("Issues");
     var camlQuery = new SP.CamlQuery();
-    // console.log('query', IssueQuery);
+   
     camlQuery.set_viewXml(IssueQuery);
     Issues_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
 
@@ -7890,7 +7889,7 @@ var Notifications_Info_Request = {
         "</li>";
       NNotifications = ++NNotifications;
     }
-    //console.log(UProjects.length);
+   
     if (!notificationshtml) {
       notificationshtml = "<p>" + No_Data + "</p>";
     }
@@ -8366,10 +8365,7 @@ var Tasks_Info_Request_User = {
       rurl //rurl,
     ) {
 
-      console.log(
-        Generic_WF_Stages_Data_Request.g.GWFStagesArray,
-        "GWFStagesArray "
-      );
+
 
 
       if (wfname == "Project") {
@@ -8390,7 +8386,7 @@ var Tasks_Info_Request_User = {
           }
         );
         var rurl = targerstage_org[0].relatedURL;
-        console.log(rurl, "RUUUUUUUUUUUUUUREL");
+   
       }
       Tasks_Info_Request_User.g.handlelinks(
         pcode,
@@ -8697,7 +8693,7 @@ window.Generic_WF_Stages_Data_Request = {
 
 //check current project stage and disable related project pages if project is closed
 window.currentStage;
-debugger
+
 window.PCODE_Stage_Data_Request = {
   onSuccess: function (sender, args) {
     var collListItem = PCODE_Stage_Data_Request.g.collListItem;
@@ -8760,7 +8756,7 @@ if (!USERisHome) {
     if (e.target == except) {
       return e.stopPropagation();
     }
-    if (document.getElementById("navcheckboxId").checked) {
+    if (document.getElementById("navcheckboxId") && document.getElementById("navcheckboxId").checked) {
       document.getElementById("navcheckboxId").checked = false;
     } else {
     }
@@ -8842,7 +8838,7 @@ var GetInitiativeTitle_Request = {
         : UserNo_Data;
       InitiativeStartDate = oListItem.get_item("StartDate");
       InitiativeFinishDate = oListItem.get_item("FinishDate");
-      console.log("titleinti", InitiativeTitle);
+    
     }
 
     if (USERlistkey == "initiativemilestones" && (isEdit || isNew)) {
@@ -9073,7 +9069,7 @@ let data_Level1_Access = {
       }
       //Finish Line, make last changes and build query
       if (i == fieldsConditionConfig.length - 1) {
-        // console.log(PQueryFilteration);
+      
         whereBody = whereBody.replaceAll(
           `Type="date"`,
           `IncludeTimeValue="TRUE" Type="DateTime"`
@@ -9114,7 +9110,7 @@ let data_Level1_Access = {
   },
   onSuccess: function (sender, args) {
     var collListItem = data_Level1_Access.g.collListItem;
-    console.log(collListItem);
+   
     var listItemEnum = collListItem.getEnumerator();
 
     if (collListItem.getEnumerator().$2J_0 > 0) {
@@ -9127,7 +9123,7 @@ let data_Level1_Access = {
     let fieldName = secondLevelConfig.parentRelationField;
 
     while (listItemEnum.moveNext()) {
-      console.log("LEVEL ONE INSIDE WHILE")
+      
       var oListItem = listItemEnum.get_current();
       let itemCode = oListItem.get_item(fieldName);
       data_Level1_Access.g.relationFieldData.push(itemCode);
@@ -9255,7 +9251,7 @@ let data_Level2_Access = {
   },
   onSuccess: function (sender, args) {
     var collListItem = data_Level2_Access.g.collListItem;
-    console.log(collListItem);
+ 
     var listItemEnum = collListItem.getEnumerator();
 
     if (collListItem.getEnumerator().$2J_0 > 0) {
@@ -9267,7 +9263,7 @@ let data_Level2_Access = {
       ].subRelation.subRelation;
     let fieldName = thirdLevelConfig.parentRelationField;
     while (listItemEnum.moveNext()) {
-      console.log("Before fired the thired one")
+   
 
       var oListItem = listItemEnum.get_current();
       let itemCode = oListItem.get_item(fieldName);
@@ -9287,8 +9283,7 @@ let data_Level2_Access = {
 
   //currenty handles one field not more
   dynamicCamlQueryBuilder: function (levelConfig, valuesArray) {
-    console.log(levelConfig, "dynamicCamlQueryBuilder before build 3 query")
-    debugger
+    
     let listName = levelConfig.listName;
     let fieldToQuery = levelConfig.RelationField;
     let fieldType = levelConfig.RelationFieldType;
@@ -9341,7 +9336,7 @@ let data_Level2_Access = {
             </Query>
         </View>`
 
-        console.log(containBody, "containBody")
+      
         // end section to handle multi look up selected 
 
         whereBodyFinal = `<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>${whereBody}
@@ -9395,7 +9390,7 @@ let data_Level3_Access = {
   // The main Initialization function
   init: function (dataListName) {
 
-    debugger
+    
 
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(dataListName);
@@ -9410,7 +9405,7 @@ let data_Level3_Access = {
   },
   onSuccess: function (sender, args) {
     var collListItem = data_Level3_Access.g.collListItem;
-    console.log(collListItem);
+  
     var listItemEnum = collListItem.getEnumerator();
 
     if (collListItem.getEnumerator().$2J_0 > 0) {
@@ -9557,12 +9552,6 @@ var Get_Milestones = {
     var camlQuery = new SP.CamlQuery();
 
 
-    console.log("in get_Milestones")
-
-
-
-
-
     camlQuery.set_viewXml(query);
 
     Get_Milestones.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -9617,7 +9606,6 @@ var Get_Milestones = {
     if (USERPCODE) {
       if (allMilestonesArr.length > 0) {
         var projectStartDate = Get_Milestones.g.dateConvert2(projectStartToValidation);
-        // var projectFinishDate = Get_Milestones.g.dateConvert2(projectEndDate);
         var now = new Date();
         var day = ("0" + now.getDate()).slice(-2);
         var month = ("0" + (now.getMonth() + 1)).slice(-2);
@@ -9625,41 +9613,22 @@ var Get_Milestones = {
         var today = now.getFullYear() + "-" + month + "-" + day;
         var todayArr = [today]
 
-        console.log(projectStartDate, "projectStartDate")
-        console.log(today, "today")
-
         var dateRangeArr = await dateRange(projectStartDate, today)
 
         var datesWithoutMilesArr = dateRangeArr
 
-        console.log(dateRangeArr, "dateRangeArr")
-
-
-        // 2022-10-20
-        //2022-12-28
         var isMatch = false
 
         allMilestonesArr.forEach(el => {
 
-
-
           isMatch = dateRangeArr.some((e) => e.match(el.date.slice(0, -2)))
 
           if (isMatch) {
-
             let index = datesWithoutMilesArr.indexOf(el.date.slice(0, -2));
             datesWithoutMilesArr.splice(index, 1)
 
-
-            // datesWithoutMilesArr.splice(index, 1);
-
           } else {
-            console.log(el.date, "Dddddddddddddddddd in else")
-            // return el.date
           }
-
-          // console.log(isMatch,"isMatch")
-
         })
 
         if (datesWithoutMilesArr.length > 0) {
@@ -9687,7 +9656,7 @@ var Get_Milestones = {
           }
         }
 
-        console.log(datesWithoutMilesArr, "datesWithoutMilesArr")
+       
 
       } else {
         $('.page-nav').after('<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;justify-content:flex-start;margin-top:10%">' +
@@ -9696,7 +9665,7 @@ var Get_Milestones = {
           '\'"><span>معالم</span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>')
       }
     } else if (UserICode) {
-      console.log(initiativeStartToValidation, "initiativeStartToValidation")
+ 
 
       if (allMilestonesArr.length > 0) {
 
@@ -9710,9 +9679,6 @@ var Get_Milestones = {
         var todayArr = [today]
         var splitThreeMontshArr = []
 
-
-        console.log(initiativeStartDate, "initiativeStartDate")
-        console.log(today, "today initiaative")
 
         var dateRangeArr = await dateRange(initiativeStartDate, today)
 
@@ -9732,7 +9698,7 @@ var Get_Milestones = {
         }, [])
 
         splitThreeMontshArr = result
-        console.log(splitThreeMontshArr, "splitThreeMontshArr"); // result: [['a','b'], ['c','d'], ['e']]
+    
 
         var datesWithoutMilesArrFiltered = splitThreeMontshArr
 
@@ -9741,18 +9707,17 @@ var Get_Milestones = {
 
           splitThreeMontshArr.forEach(item => {
             isMatch = item.some((e) => e.match(el.date.slice(0, -2)))
-            console.log(isMatch, "ISSSSSSSS MATCH")
             if (isMatch) {
               let index = splitThreeMontshArr.indexOf(item);
               datesWithoutMilesArrFiltered.splice(index, 1)
             } else {
-              console.log(el.date, "Dddddddddddddddddd in else")
+              console.log(el.date, "Date")
             }
           })
 
         })
 
-        console.log(datesWithoutMilesArrFiltered, "datesWithoutMilesArrFiltered")
+      
         if (datesWithoutMilesArrFiltered.length > 0) {
           if (datesWithoutMilesArrFiltered.length == 1) {
             var internalArr = datesWithoutMilesArrFiltered[0]

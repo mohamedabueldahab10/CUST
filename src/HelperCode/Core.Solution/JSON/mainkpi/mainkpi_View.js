@@ -69,6 +69,8 @@ var Information_Form = [
         isRelatedToParent: true, 
         fieldsinformlvl1: "Sector", // fields in form list
         sourcefieldlvl1: "Sector", // field in look up list
+        fieldsinformlvl2: "SubSector", // fields in form list
+        sourcefieldlvl2: "SubSector", // field in look up list
         // display: "none",
         // validation: 'required',
       },
