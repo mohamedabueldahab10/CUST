@@ -1186,6 +1186,7 @@ window.View_Data_Request = {
             ? No_Data
             : oListItem.get_item("" + $(this).attr("id") + "");
         // $(this).text(value);
+        $(this).attr("data-viewtogglevalue", value);
         if (listkey == 'goalstrategy') {
           // to handle the title change
           if ($(this).attr("id") == 'Types') {
@@ -1951,7 +1952,9 @@ window.View_Data_Request = {
     // retrieveListItems()
     ViewAllFiles_Main_Strategy.init();
     // getAttachements.get_All();
-
+    $("[data-togglevalues]").each(function () {
+			ListInfo.g.toggleFields($(this));
+		});
     View_Data_Request.g.clickbait();
     View_Data_Request.g.Cancel();
     if (MasterDetailsArrayRequest.length > 0) {
