@@ -383,6 +383,12 @@ var Information_Form = [
         type: 'float',
         state: 'disabled',
         //editableBy: "PerformanceLeader",
+        security: {
+          groups: [
+            'Performance Leaders',
+            'System Admin Group',
+          ],
+        },
       },
     ],
   },

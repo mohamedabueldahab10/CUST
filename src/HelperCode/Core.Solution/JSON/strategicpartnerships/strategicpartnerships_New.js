@@ -37,15 +37,16 @@ var Information_Form = [
                 // "type": "lookupmultiselect",
                 //from other list:
                 "source": "Internal Entities",
-                // "isSector": "True",
-                // "EntityType": "Department",
+                "isSector": "True",
+                "EntityType": "Department",
                 "Dispfieldkey": "Name",
                 "DispfieldkeyEn": "NameEn",
                 "valfieldkey": "Title",
                 "validation": "required",
                 "isRelatedToParent":true, // to show parent value depends on child like sector and subsector
                 dynamic: "Sector", //InternalName Of Parent field
-                filterField: "ParentEntity",//InternalName Of Parent field
+                // filterField: "ParentEntity",
+                filterField: "Sector",//InternalName Of Parent field
                 filterFieldType: "Text",//Type In Sharepoint List for Parent field
 
             },
