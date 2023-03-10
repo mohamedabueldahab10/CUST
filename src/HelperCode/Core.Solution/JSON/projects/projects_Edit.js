@@ -397,8 +397,8 @@ var Information_Form = [
         type: "yesnoradio",
         options: {
           choices: [
-            { display: "yes", value: "true" },
-            { display: "no", value: "false" },
+            { display: "yes", value: "yes" },
+            { display: "no", value: "no" },
           ],
         },
         validation: "required",
@@ -1028,13 +1028,15 @@ var Information_Form = [
         DisplayNameEn: "Contractual Date",
         type: "datetime",
       },
-      // {
-      //   InternalName: 'ApprovedBrochure',
-      //   DisplayName: 'المرفقات',
-      //   DisplayNameEn: 'Attachments',
-      //   type: 'file',
-      //   withAddBtn: 'true',
-      // },
+      {
+        InternalName: 'ApprovedBrochure',
+        DisplayName: 'الكراسة المعتمدة',
+        DisplayNameEn: 'Approved RFP',
+        type: 'file',
+        withAddBtn: 'true',
+        // InternalName: 'getfile',
+        docPurpose:"Approved_RFP",
+      },
       {
         InternalName: "RFPStatus",
         DisplayName: "حالة الكراسة",

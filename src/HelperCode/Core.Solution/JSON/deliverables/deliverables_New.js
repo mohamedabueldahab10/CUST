@@ -221,19 +221,51 @@ var Information_Form = [
     ],
   },
   {
-    label: 'وثائق داعمة',
+    label: 'الوثائق داعمة',
     labelEn: 'Supporting Documents',
+    description: '',
+    descriptionEn: '',
+    subFields: [
+      {
+        InternalName: 'getfile',
+        DisplayName: 'الوثائق داعمة',
+        DisplayNameEn: 'Supporting Documents',
+        type: 'file',
+        docPurpose:"Spporting_Documents",
+        withAddBtn: 'true',
+      },
+    ],
+  },
+  {
+    label: 'المرفقات',
+    labelEn: 'Attachments',
     description: 'التفاصيل',
     descriptionEn: 'Details',
     subFields: [
       {
         InternalName: 'getfile',
-        DisplayName: 'مرفقات',
+        DisplayName: 'المرفقات',
         DisplayNameEn: 'Attachments',
         type: 'file',
+        docPurpose:"Attachments",
         withAddBtn: 'true',
-        // validation: 'required',
       },
     ],
   },
+  // {
+  //   label: 'وثائق داعمة',
+  //   labelEn: 'Supporting Documents',
+  //   description: 'التفاصيل',
+  //   descriptionEn: 'Details',
+  //   subFields: [
+  //     {
+  //       InternalName: 'getfile',
+  //       DisplayName: 'مرفقات',
+  //       DisplayNameEn: 'Attachments',
+  //       type: 'file',
+  //       withAddBtn: 'true',
+  //       // validation: 'required',
+  //     },
+  //   ],
+  // },
 ]

@@ -116,12 +116,27 @@ var Information_Form = [
         DisplayNameEn: 'Show In Report',
         type: 'radio',
       },
+      // {
+      //     "InternalName": "SupportDocumentsDescription",
+      //     "DisplayNameEn": "Support Documents Description",
+      //     "DisplayName": "وصف الوثائق الداعمة",
+      //     "type": "multiline",
+      //     "maxchar": "500",
+      // }
+    ],
+  },
+  {
+    label: 'الوثائق داعمة',
+    labelEn: 'Supporting Documents',
+    description: '',
+    descriptionEn: '',
+    subFields: [
       {
-          "InternalName": "SupportDocumentsDescription",
-          "DisplayNameEn": "Support Documents Description",
-          "DisplayName": "وصف الوثائق الداعمة",
-          "type": "multiline",
-          "maxchar": "500",
+        InternalName: 'SupportDocumentsDescription',
+        DisplayNameEn: 'Support Documents Description',
+        DisplayName: 'وصف الوثائق الداعمة',
+        type: 'multiline',
+        maxchar: '500',
       }
     ],
   },
