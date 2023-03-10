@@ -8191,10 +8191,10 @@ var View_ListInfo = {
             ' data-parentrelatedvaluelvl2="" data-parentrelatedfilterkeylvl2=' +
             element.sourcefieldlvl2 +
             ' class="viewmode-value" id="' +
-            element.InternalName +
+						element.InternalName +
 						'" ' +
 						ToggleName +
-            '" data-linkedto="' + element.linkedto + '"></p>' +
+            ' data-linkedto="' + element.linkedto + '"></p>' +
             "</div>";
           OnSuccess(flag, htmlBody);
           ///////////////////////////////////////////////
@@ -8244,10 +8244,10 @@ var View_ListInfo = {
             '" data-Dispfieldkey="' +
             element.Dispfieldkey +
             '" class="viewmode-value" id="' +
-            element.InternalName +
+						element.InternalName +
 						'" ' +
 						ToggleName +
-            '" data-linkedto="' + element.linkedto + '"></p>' +
+            ' data-linkedto="' + element.linkedto + '"></p>' +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -8342,10 +8342,10 @@ var View_ListInfo = {
             // `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>" : ""}` +
             "</label>" +
             '<p type="multiselect" class="viewmode-value" data-valfieldkey="' + element.valfieldkey + '" data-dispfieldkey="' + element.Dispfieldkey + '" data-listname="' + element.source + '" id="' +
-            element.InternalName +
+						element.InternalName +
 						'" ' +
 						ToggleName +
-            '" data-parentrelatedkeylvl1="' + element.fieldsinformlvl1 + '" data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1="' +
+            'data-parentrelatedkeylvl1="' + element.fieldsinformlvl1 + '" data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1="' +
             element.sourcefieldlvl1
             + '" data-parentrelatedkeylvl2="' + element.fieldsinformlvl2 + '" data-parentrelatedvaluelvl2="" data-parentrelatedfilterkeylvl2="' + element.sourcefieldlvl2 + '" data-linkedto="' + element.linkedto + '"></p>' +
             "</div>";
