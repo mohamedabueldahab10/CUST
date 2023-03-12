@@ -1089,8 +1089,8 @@ var Information_Form = [
         DisplayNameEn: 'Weight',
         DisplayName: 'وزن المؤشر',
         ToggleDisabledName: 'Weight',
-        // type: 'floatpercentage',
-        type: 'float',
+        type: 'floatpercentage',
+        // type: 'float',
         security: {
           groups: [
             'LMS_P',

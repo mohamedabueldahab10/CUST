@@ -476,8 +476,8 @@ var Information_Form = [
         InternalName: 'Weight',
         DisplayNameEn: 'Weight',
         DisplayName: 'وزن المؤشر',
-        // type: "floatpercentage",
-        type: 'float',
+        type: "floatpercentage",
+        // type: 'float',
       },
       {
         InternalName: 'Baseline',
