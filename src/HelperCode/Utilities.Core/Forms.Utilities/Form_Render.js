@@ -532,8 +532,16 @@ window.ListInfo = {
           ////////////////////////////// calculate the end date based on start date and duration
 
           $("input.autoEndDate").keyup(function (event) {
+            // debugger
+            if (event.which >= 37 && event.which <= 40) return;
 
-            var duration = event.target.value;
+            $(this).val(function (index, value) {
+              return value
+                .replace(/\D/g, "")
+            });
+
+            var duration = event.target.value
+
             var sourceElement = $(this).data('sourceelementdate');
             var sourceElementValue = $(`#${sourceElement}`).val();
             var targetElement = $(this).data('targetelementdate');
@@ -2085,6 +2093,12 @@ window.ListInfo = {
         break;
 
       case "floatDuration":
+
+        var numberOfDigits = ""
+        if (element.numberOfDigits) {
+          numberOfDigits = `maxlength=${element.numberOfDigits}`
+        }
+
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -2130,7 +2144,7 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
-          ' type="float" placeholder="' +
+          ' type="float" ' + numberOfDigits + ' placeholder="' +
           displayName +
           '" ' +
           dynamic +
@@ -5500,7 +5514,7 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
-          ' type="multiline" maxlength="1000" rows="3" value="" placeholder="' +
+          ' type="multiline" maxlength=' + element.maxchar + ' rows="3" value="" placeholder="' +
           displayName +
           '" ' +
           dynamic +
