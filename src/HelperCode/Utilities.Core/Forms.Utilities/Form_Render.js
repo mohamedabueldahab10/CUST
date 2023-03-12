@@ -1595,7 +1595,7 @@ window.ListInfo = {
 
     switch (element.type) {
       case "string":
-        debugger
+
         var letterPattern = ""
         if (element.withletters) {
           letterPattern = `pattern="^\\d*[a-zA-Z\\u0600-\\u06FF][a-zA-Z0-9\\u0600-\\u06FF_ -]*$"`
@@ -1737,6 +1737,11 @@ window.ListInfo = {
         break;
 
       case "number":
+        var numberOfDigits = ""
+        if (element.numberOfDigits) {
+          numberOfDigits = `maxlength=${element.numberOfDigits}`
+        }
+
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -1782,7 +1787,7 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
-          ' type="number" step="any" placeholder="' +
+          ' type="number" ' + numberOfDigits + ' step="any" placeholder="' +
           displayName +
           '" ' +
           dynamic +
@@ -2156,6 +2161,12 @@ window.ListInfo = {
         break;
 
       case "float":
+
+        var numberOfDigits = ""
+        if (element.numberOfDigits) {
+          numberOfDigits = `maxlength=${element.numberOfDigits}`
+        }
+
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -2201,7 +2212,7 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
-          ' type="float" placeholder="' +
+          ' type="float" ' + numberOfDigits + ' placeholder="' +
           displayName +
           '" ' +
           dynamic +
@@ -2291,6 +2302,12 @@ window.ListInfo = {
         break;
 
       case "floatwithoutformatting":
+
+        var numberOfDigits = ""
+        if (element.numberOfDigits) {
+          numberOfDigits = `maxlength=${element.numberOfDigits}`
+        }
+
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -2336,7 +2353,7 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
-          ' type="float" placeholder="' +
+          ' type="float" ' + numberOfDigits + ' placeholder="' +
           displayName +
           '" ' +
           dynamic +
@@ -2478,6 +2495,7 @@ window.ListInfo = {
         break;
 
       case "floatpercentage":
+
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -2643,6 +2661,7 @@ window.ListInfo = {
         );
         break;
       case "decimalpercentage":
+
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +

@@ -1367,6 +1367,7 @@ var Information_Form = [
         DisplayNameEn: 'A',
         type: 'float',
         ToggleDisabledName: 'A',
+        numberOfDigits:"3", // max length of digits in field
         // type: 'number',
         //editableBy: "PerformanceLeader",
         security: {
@@ -1384,6 +1385,7 @@ var Information_Form = [
         DisplayNameEn: 'B',
         ToggleDisabledName: 'B',
         type: 'float',
+        numberOfDigits:"3", // max length of digits in field
         //editableBy: "PerformanceLeader",
         security: {
           groups: [
@@ -1401,6 +1403,7 @@ var Information_Form = [
         ToggleDisabledName: 'CC',
         // type: 'number',
         type: 'float',
+        numberOfDigits:"3", // max length of digits in field
         //editableBy: "PerformanceLeader",
         security: {
           groups: [
@@ -1418,6 +1421,7 @@ var Information_Form = [
         ToggleDisabledName: 'D',
         // type: 'number',
         type: 'float',
+        numberOfDigits:"3", // max length of digits in field
         //editableBy: "PerformanceLeader",
         security: {
           groups: [
@@ -1435,6 +1439,7 @@ var Information_Form = [
         ToggleDisabledName: 'E',
         // type: 'number',
         type: 'float',
+        numberOfDigits:"3", // max length of digits in field
         //editableBy: "PerformanceLeader",
         security: {
           groups: [
@@ -1452,6 +1457,7 @@ var Information_Form = [
         ToggleDisabledName: 'F',
         // type: 'number',
         type: 'float',
+        numberOfDigits:"3", // max length of digits in field
         //editableBy: "PerformanceLeader",
         security: {
           groups: [
@@ -1469,6 +1475,7 @@ var Information_Form = [
         ToggleDisabledName: 'G',
         // type: 'number',
         type: 'float',
+        numberOfDigits:"3", // max length of digits in field
         //editableBy: "PerformanceLeader",
         security: {
           groups: [
