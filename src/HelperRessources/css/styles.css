@@ -6917,3 +6917,8 @@ h4.black.Resources.myCompletionStatus.statuscolorstat28,
     max-height: 54rem;
     overflow-y: auto;
 }
+
+.remove-New-Detail{
+    display: none;
+    color: #f49e49;
+}
