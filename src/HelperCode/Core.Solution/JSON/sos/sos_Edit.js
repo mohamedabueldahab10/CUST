@@ -237,6 +237,7 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
+        RequiredName: 'Department',
       },
       // {
       //     "InternalName": "RelatedPillar",
