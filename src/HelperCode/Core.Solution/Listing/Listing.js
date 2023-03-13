@@ -1688,6 +1688,8 @@ window.ListingData = {
             keyNameParams = 'milestones'
           } else if (wfname == 'VROCOC' || wfname == 'EPMOCOC' || wfname == 'LMSCOC') {
             keyNameParams = 'coc'
+          } else if (wfname == 'VROProjDeliverable' || wfname == 'EPMOProjDeliverable' || wfname == 'LMSProjDeliverable') {
+            keyNameParams = 'deliverables'
           }
           switch (tasktype) {
             case 'SubmitField':
