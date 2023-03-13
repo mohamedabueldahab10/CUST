@@ -3779,7 +3779,7 @@ window.ListInfo = {
           '<a href="#" data-toggle="dropdown" class="dropdown-toggle">' +
           displayName +
           '<b class="caret"></b></a>' +
-          '<ul type="" class="dropdown-menu">';
+          '<ul type="" class="dropdown-menu multiselect_scroll">';
         for (var i = 0; i < element.options.choices.length; i++) {
           htmlBody +=
             "<li>" +
@@ -4105,7 +4105,7 @@ window.ListInfo = {
           '<a href="#" data-toggle="dropdown" class="dropdown-toggle">' +
           displayName +
           '<b class="caret"></b></a>' +
-          '<ul class="dropdown-menu">';
+          '<ul class="dropdown-menu multiselect_scroll">';
 
         sphttp.get(
           _spPageContextInfo.siteServerRelativeUrl,
@@ -4600,7 +4600,7 @@ window.ListInfo = {
                 '<a href="#" data-toggle="dropdown" class="dropdown-toggle">' +
                 displayName +
                 '<b class="caret"></b></a>' +
-                '<ul class="dropdown-menu">';
+                '<ul class="dropdown-menu multiselect_scroll">';
 
               sphttp.get(
                 _spPageContextInfo.siteServerRelativeUrl,

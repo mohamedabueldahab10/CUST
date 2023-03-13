@@ -6912,3 +6912,8 @@ h4.black.Resources.myCompletionStatus.statuscolorstat28,
 .content-list-head.d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.py-4.mb-3 {
   flex-wrap: wrap !important;
 }
+
+.multiselect_scroll{
+    max-height: 54rem;
+    overflow-y: auto;
+}
