@@ -5683,22 +5683,45 @@ window.ListInfo = {
       });
     },
     newDetail: function () {
-      //pluss
 
+
+      //to check the length of new master 
+      var masterLength = 0
+
+
+      //pluss
       $("[data-target_list] .fieldset-container").append(
-        '<div class="add-New-Detail-wrapper"><a class="add-New-Detail" href="javascript:"><i class="fas fa-plus"></i></a></div>'
+        '<div class="add-New-Detail-wrapper"><a class="add-New-Detail" href="javascript:"><i class="fas fa-plus"></i></a><a class="remove-New-Detail" href="javascript:"><i class="fas fa-minus"></i></a></div>'
       );
 
+
       $(".add-New-Detail").on("click", function () {
+
         var toappend = $(this)
           .closest("[data-target_list]")
           .find(".Details-Item:first-child")
           .html()
           .toString(); //.replaceAll('value', 'value=""');
-        // console.log(toappend);
-        $(
-          '<div class="Details-Item NewItem">' + toappend + "</div>"
-        ).insertBefore($(this).parent());
+
+
+        $('<div class="Details-Item NewItem">' + toappend + "</div>").insertBefore($(this).parent());
+
+        masterLength = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").length
+
+
+        if (isNew) {
+          // in new > 1 because on render the form there is a new Item so it will be  before click on + 
+          if (masterLength > 1) {
+            $(this).closest("[data-target_list]").find(".remove-New-Detail").show()
+          }
+        } else if (isEdit) {
+          // in edit > 0 because on render the form there is no new Item till will click on + 
+          if (masterLength > 0) {
+            $(this).closest("[data-target_list]").find(".remove-New-Detail").show()
+          }
+        }
+
+
         var myPPicker = [];
         $(this)
           .closest(".fieldset-container")
@@ -5738,6 +5761,39 @@ window.ListInfo = {
               .text("ادخل الإسم أو البريد الإلكتروني ...");
           });
       });
+
+      // remove new section
+      $(".remove-New-Detail").on("click", function () {
+        masterLength = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").length
+
+        if (isNew) {
+          // in new > 1 because on render the form there is a new Item so it will be  before click on + 
+          if (masterLength > 1) {
+            masterLength = masterLength - 1
+            $(this).closest("[data-target_list]").find(".Details-Item.NewItem")[masterLength].remove()
+          }
+        } else if (isEdit) {
+          // in edit > 0 because on render the form there is no new Item till will click on + 
+          if (masterLength > 0) {
+            masterLength = masterLength - 1
+            $(this).closest("[data-target_list]").find(".Details-Item.NewItem")[masterLength].remove()
+          }
+        }
+
+
+        if (isNew) {
+          if (masterLength == 1) {
+            // to return the form as rendered
+            $(this).closest("[data-target_list]").find(".remove-New-Detail").hide()
+          }
+        } else if (isEdit) {
+          if (masterLength == 0) {
+            // to return the form as rendered
+            $(this).closest("[data-target_list]").find(".remove-New-Detail").hide()
+          }
+        }
+      })
+      //
 
       // $('.add-New-Detail').click(function()
       // {
