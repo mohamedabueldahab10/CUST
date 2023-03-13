@@ -55,7 +55,7 @@ var Information_Form = [
         DisplayName: 'نوع الهدف',
         toggleValues: [
           // { value: "sub", fields: ["RelatedObjective", "RelatedPortfolio"] },
-          { value: 'main', fields: ['RelatedPillar'] },
+          // { value: 'main', fields: ['RelatedPillar'] },
           { value: 'sublevel2', fields: ['RelatedObjective'] },
           { value: 'sublevel3', fields: ['RelatedObjective'] },
           // { value: "jobmarket", fields: ["RelatedJobStrategy"] },
