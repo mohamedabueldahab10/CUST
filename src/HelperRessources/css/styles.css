@@ -5869,7 +5869,9 @@ a.btn-addTarget {
 
 /* // fix the listing view */
 .wordBreak {
-    word-break: break-all;
+    /* word-break: break-all; */
+    /* to keep the value on one line */
+    white-space: nowrap; 
 }
 
 .filterTarget.btn-toolbar.mb-2.mb-md-0 {
