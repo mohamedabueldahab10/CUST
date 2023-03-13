@@ -22,16 +22,19 @@ var Information_Form = [
             { display: 'stackholderexternal', value: 'stackholderexternal' },
           ],
         },
-
-        "toggleValues": [{ value: 'stackholderinternal', fields: ['Username'] }],
+        toggleValues: [
+          {value: 'stackholderexternal', fields: []},
+          { value: 'stackholderinternal', fields: ['Username'] }],
+        validation: 'required',
       },
       {
         InternalName: 'Username',
         DisplayNameEn: 'Username',
         DisplayName: 'اسم المستخدم',
         type: 'picker', //user
+        validation: 'required',
+        // display: 'none',
         ToggleName: 'Username',
-        // display: 'none'
       },
       {
         InternalName: 'Name',

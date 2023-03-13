@@ -532,8 +532,16 @@ window.ListInfo = {
           ////////////////////////////// calculate the end date based on start date and duration
 
           $("input.autoEndDate").keyup(function (event) {
+            // debugger
+            if (event.which >= 37 && event.which <= 40) return;
 
-            var duration = event.target.value;
+            $(this).val(function (index, value) {
+              return value
+                .replace(/\D/g, "")
+            });
+
+            var duration = event.target.value
+
             var sourceElement = $(this).data('sourceelementdate');
             var sourceElementValue = $(`#${sourceElement}`).val();
             var targetElement = $(this).data('targetelementdate');
@@ -1595,6 +1603,11 @@ window.ListInfo = {
 
     switch (element.type) {
       case "string":
+
+        var letterPattern = ""
+        if (element.withletters) {
+          letterPattern = `pattern="^\\d*[a-zA-Z\\u0600-\\u06FF][a-zA-Z0-9\\u0600-\\u06FF_ -]*$"`
+        }
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -1640,7 +1653,7 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
-          ' type="text" maxlength="' +
+          ' type="text" ' + letterPattern + ' maxlength="' +
           element.maxchar +
           '" placeholder="' +
           displayName +
@@ -1732,6 +1745,11 @@ window.ListInfo = {
         break;
 
       case "number":
+        var numberOfDigits = ""
+        if (element.numberOfDigits) {
+          numberOfDigits = `maxlength=${element.numberOfDigits}`
+        }
+
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -1777,7 +1795,7 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
-          ' type="number" step="any" placeholder="' +
+          ' type="number" ' + numberOfDigits + ' step="any" placeholder="' +
           displayName +
           '" ' +
           dynamic +
@@ -2075,6 +2093,12 @@ window.ListInfo = {
         break;
 
       case "floatDuration":
+
+        var numberOfDigits = ""
+        if (element.numberOfDigits) {
+          numberOfDigits = `maxlength=${element.numberOfDigits}`
+        }
+
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -2120,7 +2144,7 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
-          ' type="float" placeholder="' +
+          ' type="float" ' + numberOfDigits + ' placeholder="' +
           displayName +
           '" ' +
           dynamic +
@@ -2151,6 +2175,12 @@ window.ListInfo = {
         break;
 
       case "float":
+
+        var numberOfDigits = ""
+        if (element.numberOfDigits) {
+          numberOfDigits = `maxlength=${element.numberOfDigits}`
+        }
+
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -2196,7 +2226,7 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
-          ' type="float" placeholder="' +
+          ' type="float" ' + numberOfDigits + ' placeholder="' +
           displayName +
           '" ' +
           dynamic +
@@ -2286,6 +2316,12 @@ window.ListInfo = {
         break;
 
       case "floatwithoutformatting":
+
+        var numberOfDigits = ""
+        if (element.numberOfDigits) {
+          numberOfDigits = `maxlength=${element.numberOfDigits}`
+        }
+
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -2331,7 +2367,7 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
-          ' type="float" placeholder="' +
+          ' type="float" ' + numberOfDigits + ' placeholder="' +
           displayName +
           '" ' +
           dynamic +
@@ -2473,6 +2509,7 @@ window.ListInfo = {
         break;
 
       case "floatpercentage":
+
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -2638,6 +2675,7 @@ window.ListInfo = {
         );
         break;
       case "decimalpercentage":
+
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -3741,7 +3779,7 @@ window.ListInfo = {
           '<a href="#" data-toggle="dropdown" class="dropdown-toggle">' +
           displayName +
           '<b class="caret"></b></a>' +
-          '<ul type="" class="dropdown-menu">';
+          '<ul type="" class="dropdown-menu multiselect_scroll">';
         for (var i = 0; i < element.options.choices.length; i++) {
           htmlBody +=
             "<li>" +
@@ -4067,7 +4105,7 @@ window.ListInfo = {
           '<a href="#" data-toggle="dropdown" class="dropdown-toggle">' +
           displayName +
           '<b class="caret"></b></a>' +
-          '<ul class="dropdown-menu">';
+          '<ul class="dropdown-menu multiselect_scroll">';
 
         sphttp.get(
           _spPageContextInfo.siteServerRelativeUrl,
@@ -4562,7 +4600,7 @@ window.ListInfo = {
                 '<a href="#" data-toggle="dropdown" class="dropdown-toggle">' +
                 displayName +
                 '<b class="caret"></b></a>' +
-                '<ul class="dropdown-menu">';
+                '<ul class="dropdown-menu multiselect_scroll">';
 
               sphttp.get(
                 _spPageContextInfo.siteServerRelativeUrl,
@@ -5476,7 +5514,7 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
-          ' type="multiline" maxlength="1000" rows="3" value="" placeholder="' +
+          ' type="multiline" maxlength=' + element.maxchar + ' rows="3" value="" placeholder="' +
           displayName +
           '" ' +
           dynamic +
@@ -6071,9 +6109,14 @@ window.ListInfo = {
     },
 
     toggleFields: function ($this) {
-
-      var myValue = $this.val(),
-        mytype = $this,
+      debugger
+      if (isView) {
+        console.log('enter in view');
+        var myValue = $this.data("viewtogglevalue");
+      } else {
+        var myValue = $this.val();
+      }
+      var mytype = $this,
         toggleValues =
           $this.data("togglevalues").indexOf(":::") > -1
             ? $this.data("togglevalues").split(":::")
@@ -6836,7 +6879,20 @@ var View_ListInfo = {
     if (element.hasOwnProperty("enableonstage") && !USERisWF) {
       enablestagesIDs = 'data-enablestageID="' + element.enableonstage;
     }
-
+    if (element.hasOwnProperty("toggleValues")) {
+      element.toggleValues.forEach(function (item, i, arr) {
+        var seperator = i == arr.length - 1 ? '"' : ":::";
+        toggleValues +=
+          i == 0
+            ? 'data-toggleValues="' +
+            item.value +
+            "[" +
+            item.fields.join(",") +
+            "]" +
+            seperator
+            : item.value + "[" + item.fields.join(",") + "]" + seperator;
+      });
+    }
     if (element.tooltip == undefined) {
       thistip = "";
     } else {
@@ -6901,7 +6957,9 @@ var View_ListInfo = {
             "</label>" +
             '<p type="text" class="viewmode-value" id="' +
             element.InternalName +
-            '" ></p>' +
+            '" ' +
+            ToggleName +
+            "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -7012,7 +7070,9 @@ var View_ListInfo = {
             "</label>" +
             '<p type="number" class="viewmode-value" id="' +
             element.InternalName +
-            '" ></p>' +
+            '" ' +
+            ToggleName +
+            "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -7061,7 +7121,9 @@ var View_ListInfo = {
             dispfieldkey +
             '" class="viewmode-value" id="' +
             element.InternalName +
-            '" ></p>' +
+            '" ' +
+            ToggleName +
+            "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -7105,7 +7167,9 @@ var View_ListInfo = {
             "</label>" +
             '<p type="text" class="viewmode-value" id="' +
             element.InternalName +
-            '" style="direction: ltr !important;"></p>' +
+            '" ' +
+            ToggleName
+          '" style="direction: ltr !important;"></p>' +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -7150,7 +7214,9 @@ var View_ListInfo = {
             "</label>" +
             '<p type="text" class="viewmode-value" id="' +
             element.InternalName +
-            '" ></p>' +
+            '" ' +
+            ToggleName +
+            "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -7244,7 +7310,9 @@ var View_ListInfo = {
             "</label>" +
             '<p type="number" class="viewmode-value number" id="' +
             element.InternalName +
-            '" ></p>' +
+            '" ' +
+            ToggleName +
+            "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -7339,7 +7407,9 @@ var View_ListInfo = {
             "</label>" +
             '<p type="number" class="viewmode-value" id="' +
             element.InternalName +
-            '" ></p>' +
+            '" ' +
+            ToggleName +
+            "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -7384,7 +7454,9 @@ var View_ListInfo = {
             "</label>" +
             '<p type="number" class="viewmode-value" id="' +
             element.InternalName +
-            '" ></p>' +
+            '" ' +
+            ToggleName +
+            "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -7504,7 +7576,9 @@ var View_ListInfo = {
             "</label>" +
             '<p type="number" class="viewmode-value" id="' +
             element.InternalName +
-            '" ></p>' +
+            '" ' +
+            ToggleName +
+            "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -7548,7 +7622,9 @@ var View_ListInfo = {
             "</label>" +
             '<p type="percentage" class="viewmode-value" id="' +
             element.InternalName +
-            '" ></p>' +
+            '" ' +
+            ToggleName +
+            "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -7593,7 +7669,9 @@ var View_ListInfo = {
             "</label>" +
             '<p type="date" class="viewmode-value" id="' +
             element.InternalName +
-            '" ></p>' +
+            '" ' +
+            ToggleName +
+            "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -7688,7 +7766,9 @@ var View_ListInfo = {
             "</label>" +
             '<p type="date" class="viewmode-value withTime" id="' +
             element.InternalName +
-            '" ></p>' +
+            '" ' +
+            ToggleName +
+            "></p>" +
             '</div><div class="col-md-6 CFIELDTime">' +
             '<label data-trans-datetime class="Resources"></label>' +
             '<p type="time" class="viewmode-value" id="time" ></p>' +
@@ -7736,7 +7816,9 @@ var View_ListInfo = {
             "</label>" +
             '<p type="picker" class="viewmode-value" id="' +
             element.InternalName +
-            '" ></p>' +
+            '" ' +
+            ToggleName +
+            "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -7781,7 +7863,9 @@ var View_ListInfo = {
             "</label>" +
             '<p type="multipicker" class="viewmode-value" id="' +
             element.InternalName +
-            '" ></p>' +
+            '" ' +
+            ToggleName +
+            "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -7826,7 +7910,9 @@ var View_ListInfo = {
             "</label>" +
             '<p type="dropdown" class="viewmode-value" id="' +
             element.InternalName +
-            '" ></p>' +
+            '" ' +
+            ToggleName +
+            "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -7870,9 +7956,13 @@ var View_ListInfo = {
             ">" +
             displayName +
             "</label>" +
-            '<p type="dropdown" class="viewmode-value" id="' +
+            "<p " +
+            toggleValues +
+            ' type="dropdown"  data-viewtogglevalue="" class="viewmode-value" id="' +
             element.InternalName +
-            '" ></p>' +
+            '" ' +
+            ToggleName +
+            " ></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -7917,7 +8007,9 @@ var View_ListInfo = {
             "</label>" +
             '<p type="radio" class="viewmode-value" id="' +
             element.InternalName +
-            '" ></p>' +
+            '" ' +
+            ToggleName +
+            "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -7962,7 +8054,9 @@ var View_ListInfo = {
             "</label>" +
             '<p type="radio" class="viewmode-value" id="' +
             element.InternalName +
-            '" ></p>' +
+            '" ' +
+            ToggleName +
+            "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -8007,7 +8101,9 @@ var View_ListInfo = {
             "</label>" +
             '<p type="checkbox" class="viewmode-value" id="' +
             element.InternalName +
-            '" ></p>' +
+            '" ' +
+            ToggleName +
+            "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -8134,7 +8230,9 @@ var View_ListInfo = {
             element.sourcefieldlvl2 +
             ' class="viewmode-value" id="' +
             element.InternalName +
-            '" data-linkedto="' + element.linkedto + '"></p>' +
+            '" ' +
+            ToggleName +
+            ' data-linkedto="' + element.linkedto + '"></p>' +
             "</div>";
           OnSuccess(flag, htmlBody);
           ///////////////////////////////////////////////
@@ -8185,7 +8283,9 @@ var View_ListInfo = {
             element.Dispfieldkey +
             '" class="viewmode-value" id="' +
             element.InternalName +
-            '" data-linkedto="' + element.linkedto + '"></p>' +
+            '" ' +
+            ToggleName +
+            ' data-linkedto="' + element.linkedto + '"></p>' +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -8231,7 +8331,9 @@ var View_ListInfo = {
             "</label>" +
             '<p type="multiselect" class="viewmode-value" data-valfieldkey="' + element.valfieldkey + '" data-dispfieldkey="' + element.Dispfieldkey + '" data-listname="' + element.source + '" id="' +
             element.InternalName +
-            '" ></p>' +
+            '" ' +
+            ToggleName +
+            "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -8279,7 +8381,9 @@ var View_ListInfo = {
             "</label>" +
             '<p type="multiselect" class="viewmode-value" data-valfieldkey="' + element.valfieldkey + '" data-dispfieldkey="' + element.Dispfieldkey + '" data-listname="' + element.source + '" id="' +
             element.InternalName +
-            '" data-parentrelatedkeylvl1="' + element.fieldsinformlvl1 + '" data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1="' +
+            '" ' +
+            ToggleName +
+            'data-parentrelatedkeylvl1="' + element.fieldsinformlvl1 + '" data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1="' +
             element.sourcefieldlvl1
             + '" data-parentrelatedkeylvl2="' + element.fieldsinformlvl2 + '" data-parentrelatedvaluelvl2="" data-parentrelatedfilterkeylvl2="' + element.sourcefieldlvl2 + '" data-linkedto="' + element.linkedto + '"></p>' +
             "</div>";
@@ -8326,7 +8430,9 @@ var View_ListInfo = {
             "</label>" +
             '<p type="multiselect" class="viewmode-value" id="' +
             element.InternalName +
-            '" ></p>' +
+            '" ' +
+            ToggleName +
+            "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -8351,7 +8457,9 @@ var View_ListInfo = {
             "</label>" +
             '<p type="text" class="viewmode-value" id="' +
             element.InternalName +
-            '" ></p>' +
+            '" ' +
+            ToggleName +
+            "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
@@ -8715,7 +8823,7 @@ dynamicAffectSelect = {
     let optionsBody = ""
 
 
-debugger
+    debugger
 
 
     if (targetFieldType == 'multiselect') {
@@ -8765,7 +8873,7 @@ debugger
       }
 
 
- 
+
 
 
       console.log(valfieldkey, "valfieldkey")

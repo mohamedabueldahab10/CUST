@@ -16,6 +16,8 @@ var Information_Form = [
         DisplayName: 'اسم الخطر',
         DisplayNameEn: 'Risk Name',
         type: 'string',
+        //maxchar:"200", // max length of chart in input
+        // withletters:true, // when true you should insert at least one letter in input
         validation: 'required',
       },
       {

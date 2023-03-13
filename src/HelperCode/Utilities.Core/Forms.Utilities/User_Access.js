@@ -8562,6 +8562,8 @@ var Tasks_Info_Request_User = {
             keyNameParams = 'milestones'
           } else if (wfname == 'VROCOC' || wfname == 'EPMOCOC' || wfname == 'LMSCOC') {
             keyNameParams = 'coc'
+          } else if (wfname == 'VROProjDeliverable' || wfname == 'EPMOProjDeliverable' || wfname == 'LMSProjDeliverable') {
+            keyNameParams = 'deliverables'
           }
           switch (tasktype) {
             case "SubmitProject":

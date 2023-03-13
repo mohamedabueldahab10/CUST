@@ -1186,6 +1186,7 @@ window.View_Data_Request = {
             ? No_Data
             : oListItem.get_item("" + $(this).attr("id") + "");
         // $(this).text(value);
+        $(this).attr("data-viewtogglevalue", value);
         if (listkey == 'goalstrategy') {
           // to handle the title change
           if ($(this).attr("id") == 'Types') {
@@ -1951,7 +1952,9 @@ window.View_Data_Request = {
     // retrieveListItems()
     ViewAllFiles_Main_Strategy.init();
     // getAttachements.get_All();
-
+    $("[data-togglevalues]").each(function () {
+      ListInfo.g.toggleFields($(this));
+    });
     View_Data_Request.g.clickbait();
     View_Data_Request.g.Cancel();
     if (MasterDetailsArrayRequest.length > 0) {
@@ -5939,7 +5942,7 @@ var Check_Item_Deleted = {
               $('#Sector').html(No_Data)
               $('#SubSector').html(No_Data)
             }
-          } 
+          }
           // else if (indexTypekpi == 'sub') {
           //   var sosVal = $('#SubRelatedObjective').html()
           //   if (!sosVal) {
@@ -5983,7 +5986,7 @@ var Check_Item_Deleted = {
               $('#Sector').html(No_Data)
               $('#SubSector').html(No_Data)
             }
-          } 
+          }
           // else if (indexTypekpi == 'sub') {
           //   var sosVal = $('#SubRelatedObjective').html()
           //   if (!sosVal) {
@@ -6113,7 +6116,9 @@ window.Get_TaskHistory = {
     var listItemEnum = SPHTTPitemsEnumerable.getEnumerator();
     let historyHTML = ``;
 
-    let wfHistoryLink = ""
+    let wfHistoryLink = "";
+
+    let isThereHistory = false
     console.log(workflowname, "workflowname")
     console.log(peojectC, "peojectC")
     console.log(relateditemid, "relateditemid")
@@ -6148,7 +6153,7 @@ window.Get_TaskHistory = {
                 <h2 class="Resources" data-trans-taskHistory>
 				العمليات السابقة
                 </h2>
-                <a href=${wfHistoryLink}><span data-trans-viewhistory class="Resources">fffff</span></a>
+                <a href=${wfHistoryLink}><span data-trans-viewhistory class="Resources"></span></a>
             </div>
                 <div class="taskHistory row mx-0 mt-5 col-12 flex-column">
         `;
@@ -6167,6 +6172,8 @@ window.Get_TaskHistory = {
 
 
       let takenAction = oListItem.get_item('TakenAction');
+
+      isThereHistory = true
 
       if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
         takenAction = takenAction ? Resources.ar[takenAction.toLowerCase()] : No_Data;
@@ -6249,14 +6256,14 @@ window.Get_TaskHistory = {
             `;
     }
 
-    let noTaskhistory = historyHTML ? "" : UserNo_Data;
+    
+    let noTaskhistory = isThereHistory ? "" : UserNo_Data;
     if (!$(".task-history-ctx").length) {
-      historyHTML += `<p>${noTaskhistory}</p>
-                    <button type="button"
-                    class="loadMore Resources mb-3" data-trans-viewmore
-                    >
+      historyHTML += `<p style="text-align:center">${noTaskhistory}</p>
+                    ${isThereHistory ? `<button type="button"class="loadMore Resources mb-3" data-trans-viewmore>
                         loadmore
-                    </button>
+                    </button>`
+          : ''}
                 </div>
             </div>
             `;

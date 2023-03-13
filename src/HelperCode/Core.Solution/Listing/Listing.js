@@ -34,10 +34,10 @@ var projectTypeFilterQuery = '', typeClicked = 'Internal';
 window.indexofListing = 0;
 var taskClicked = 'relatedTasks', allTasksClicked = false, getNewFilterTask = false, isViewMoreClicked = false;
 
-var emptyData = require('../../../HelperRessources/img/empty-data.png');
-var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
-// var emptyData = ''
-// var exportExcel = ''
+// var emptyData = require('../../../HelperRessources/img/empty-data.png');
+// var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
+var emptyData = ''
+var exportExcel = ''
 //all data filter array
 allDataFilterArr = []
 //
@@ -609,7 +609,7 @@ window.ListingData = {
 
             var InternalProjectsHtml = '';
             var ExternalProjectsHtml = '';
-            if(!originalstate && !isLoadMore){
+            if (!originalstate && !isLoadMore) {
               indexofListing = 0;
             }
             for (var i = 0; i < records.length; i++) { //looping items
@@ -1421,7 +1421,7 @@ window.ListingData = {
               var countOr = (Where_Body.match(/<Or>/g) || []).length;
               var ORC = "</Or>".repeat(countOr);
               Where_Body += ORC;
-              
+
             } else if (FilterChoices[i].Type == "LoggedInUser") {
               Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
             } else {
@@ -1476,7 +1476,7 @@ window.ListingData = {
                 var ORC = "</Or>".repeat(countOr);
                 Where_Body += ORC;
                 Where_Body += '</And>'
-             
+
 
               } else if (FilterChoices[i].Type == "LoggedInUser") {
                 Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq></And>`;
@@ -1495,7 +1495,7 @@ window.ListingData = {
             //two Eqs in last And
             if (i == FilterChoices.length - 1) {
               if (FilterChoices[i].targetIsMultiFilter) {
-                
+
                 Where_Body += ''
                 for (var j = 0; j < FilterChoices[i].Values.length; j++) {
                   if (j == FilterChoices[i].Values.length - 1) {
@@ -1688,6 +1688,8 @@ window.ListingData = {
             keyNameParams = 'milestones'
           } else if (wfname == 'VROCOC' || wfname == 'EPMOCOC' || wfname == 'LMSCOC') {
             keyNameParams = 'coc'
+          } else if (wfname == 'VROProjDeliverable' || wfname == 'EPMOProjDeliverable' || wfname == 'LMSProjDeliverable') {
+            keyNameParams = 'deliverables'
           }
           switch (tasktype) {
             case 'SubmitField':
@@ -2109,9 +2111,13 @@ window.ListingData = {
           // $('body').animate({ opacity: 1 }, { duration: 333, complete: function () { } });
         });
 
+         // add .dropdown-menu.show to filter only on open dropdown
         $("body").on('keyup', '.filterSearch', function (e) {
+
           var value = $(this).val().toLowerCase();
-          $(".page-filter .dropdown-item").filter(function () {
+        
+          $(".page-filter .dropdown-menu.show .dropdown-item").filter(function () {
+            
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
           });
         })
