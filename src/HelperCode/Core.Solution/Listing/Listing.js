@@ -1773,6 +1773,10 @@ window.ListingData = {
       }
       table += "</tr></thead><tbody>";
 
+
+      console.log(table,"table")
+      debugger
+
       for (var i = 0; i < mydata.length; i++) {
 
         table += "<tr>";

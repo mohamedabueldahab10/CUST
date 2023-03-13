@@ -30,7 +30,7 @@ var Listing_Info = [
       "InternalName": "PartnershipType",
 	  "DisplayName": "نوع الشراكة",
 	  "DisplayNameEn": "Partnership Type",
-      "type":"text",
+      "type":"dropdownValues",
       "inlisting":true,
       "infilter":true,
       "needTrans": true
@@ -66,10 +66,11 @@ var Listing_Info = [
       "InternalName":"Status",
       "DisplayName":"حالة الشراكة",
       "DisplayNameEn":"Status",
-      "type":"text",
+      // "type":"text",
+      "type":"dropdownValues",
       "inlisting":true,
       "infilter":true,
-      "needTrans": true
+      "needTrans": true,
    }
 ];
   
