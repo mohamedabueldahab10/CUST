@@ -54,22 +54,32 @@ var Information_Form = [
         DisplayNameEn: 'Objective Type',
         DisplayName: 'نوع الهدف',
         toggleValues: [
-          // { value: "sub", fields: ["RelatedObjective", "RelatedPortfolio"] },
-          // { value: 'main', fields: ['RelatedPillar'] },
+          // { value: 'sub', fields: ['RelatedObjective', 'RelatedPortfolio'] },
+          // { value: 'level2', fields: ['RelatedObjective', 'RelatedPortfolio'] },
+          // { value: 'level3', fields: ['RelatedObjective', 'RelatedPortfolio'] },
           { value: 'sublevel2', fields: ['RelatedObjective'] },
           { value: 'sublevel3', fields: ['RelatedObjective'] },
-          // { value: "jobmarket", fields: ["RelatedJobStrategy"] },
+          // { value: 'main', fields: ['RelatedPillar'] },
+          // { value: 'jobmarket', fields: ['RelatedJobStrategy'] },
           // {value:'strategically', fields:['StrategyRelatedObjective']}
         ],
         type: 'dropdownValues',
         options: {
           choices: [
             { display: 'main', value: 'main' },
-            { display: 'sublevel2', value: 'sublevel2' },
-            { display: 'sublevel3', value: 'sublevel3' },
+            {
+              display: 'sublevel2',
+              value: 'sublevel2',
+              customFilterValue: 'main',
+            },
+            {
+              display: 'sublevel3',
+              value: 'sublevel3',
+              customFilterValue: 'sublevel2',
+            },
             // { display: 'level2', value: 'level2' },
             // { display: 'level3', value: 'level3' },
-            // { display: "sub", value: "sub" },
+            // { display: 'sub', value: 'sub' },
             // { display: 'vision', value: 'vision' },
             // { display: 'ministry', value: 'ministry' },
             // { display: 'jobmarket', value: 'jobmarket' },
@@ -78,6 +88,7 @@ var Information_Form = [
           ],
         },
         validation: 'required',
+        dynamic: 'parent', //main field that affect on other chiled field
         requiredValues: [
           { value: 'sublevel2', fields: ['RelatedObjective'] }, //we can put more than 1  field
           { value: 'sublevel3', fields: ['RelatedObjective'] },
@@ -160,24 +171,21 @@ var Information_Form = [
         InternalName: 'RelatedObjective',
         DisplayNameEn: 'Related Objective',
         DisplayName: 'الهدف المرتبط',
-        // DisplayNameEn: 'Related Main Objective',
-        // DisplayName: 'الهدف الرئيسي المرتبط',
-        ToggleName: 'RelatedObjective',
-        RequiredName: 'RelatedObjective',
-        type: 'lookupWithQuery',
-        queryField: 'Types',
-        queryFieldType: 'dropdownValues', //ex: "Choice"
-        queryFieldValue: 'main',
+        type: 'lookup',
+        // queryField: 'Types',
+        // queryFieldType: 'dropdownValues', //ex: "Choice"
+        // queryFieldValue: 'main',
         //from other list:
         source: 'SOs',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+        validation: 'required',
+        dynamic: "Types", //InternalName Of Parent field
+        filterField: "Types",//InternalName Of Parent field
+        filterFieldType: "Choice",
         display: 'none',
-        // validation: 'required',
-        //
-        dynamic: 'RelatedStrategy',
-        filterField: 'RelatedStrategy',
-        filterFieldType: 'Text',
+        ToggleName: 'RelatedObjective',
+        RequiredName: 'RelatedObjective',
       },
       {
         InternalName: 'RelatedPortfolio',

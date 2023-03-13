@@ -58,8 +58,16 @@ var Information_Form = [
         options: {
           choices: [
             { display: 'main', value: 'main' },
-            { display: 'sublevel2', value: 'sublevel2' },
-            { display: 'sublevel3', value: 'sublevel3' },
+            {
+              display: 'sublevel2',
+              value: 'sublevel2',
+              customFilterValue: 'main',
+            },
+            {
+              display: 'sublevel3',
+              value: 'sublevel3',
+              customFilterValue: 'sublevel2',
+            },
             // { display: 'level2', value: 'level2' },
             // { display: 'level3', value: 'level3' },
             // { display: 'sub', value: 'sub' },
@@ -71,6 +79,7 @@ var Information_Form = [
           ],
         },
         validation: 'required',
+        dynamic: 'parent', //main field that affect on other chiled field
         requiredValues: [
           { value: 'sublevel2', fields: ['RelatedObjective'] }, //we can put more than 1  field
           { value: 'sublevel3', fields: ['RelatedObjective'] },
@@ -165,21 +174,21 @@ var Information_Form = [
         InternalName: 'RelatedObjective',
         DisplayNameEn: 'Related Objective',
         DisplayName: 'الهدف المرتبط',
-        ToggleName: 'RelatedObjective',
-        RequiredName: 'RelatedObjective',
-        type: 'lookupWithQuery',
-        queryField: 'Types',
-        queryFieldType: 'dropdownValues', //ex: "Choice"
-        queryFieldValue: 'main',
+        type: 'lookup',
+        // queryField: 'Types',
+        // queryFieldType: 'dropdownValues', //ex: "Choice"
+        // queryFieldValue: 'main',
         //from other list:
         source: 'SOs',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+        validation: 'required',
+        dynamic: "Types", //InternalName Of Parent field
+        filterField: "Types",//InternalName Of Parent field
+        filterFieldType: "Choice",
         display: 'none',
-        //
-        dynamic: 'RelatedStrategy',
-        filterField: 'RelatedStrategy',
-        filterFieldType: 'Text',
+        ToggleName: 'RelatedObjective',
+        RequiredName: 'RelatedObjective',
       },
       {
         InternalName: 'RelatedPortfolio',

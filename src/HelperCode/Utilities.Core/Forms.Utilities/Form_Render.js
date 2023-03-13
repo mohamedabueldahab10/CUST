@@ -389,7 +389,7 @@ window.ListInfo = {
 
             let notInvokeListiner = $(this).data("notinvokelistiner")
             console.log($(this).data("notinvokelistiner"), "notinvokelistiner conso")
-
+             debugger
             $("[dynamic=" + parentFieldName + "]").each(function () {
               console.log(parentFieldName, "parentFieldName")
 
