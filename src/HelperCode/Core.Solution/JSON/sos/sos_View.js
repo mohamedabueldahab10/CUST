@@ -217,6 +217,9 @@ var Information_Form = [
             { display: 'no', value: 'no' },
           ],
         },
+        // toggleValues: [
+        //   { value: 'yes', fields: ['PillarName'] },
+        // ]
       },
     //   {
     //     InternalName: 'RelatedJobStrategy',
@@ -284,13 +287,14 @@ var Information_Form = [
     subFields: [
       {
         InternalName: 'PillarName',
-        DisplayNameEn: 'Pillar Name',
-        DisplayName: 'اسم المحور / البرنامج',
+        DisplayNameEn: 'Strategic Pillar/Vision Program Name',
+        DisplayName: 'اسم المحور الإستراتيجى / برنامج الرؤية',
         type: 'lookup',
         //from other list:
         source: 'SPillars',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+        // ToggleName: 'PillarName',
         isRelatedToParent: true, // to show parent value depends on child like sector and subsector
         fieldsinformlvl1: "StrategicDescription", // fields in form list
         sourcefieldlvl1: "Description", // field in look up list

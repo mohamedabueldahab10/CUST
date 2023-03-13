@@ -264,9 +264,9 @@ var Information_Form = [
             { display: 'no', value: 'no' },
           ],
         },
-        toggleValues: [
-          { value: 'yes', fields: ['PillarName'] },
-        ]
+        // toggleValues: [
+        //   { value: 'yes', fields: ['PillarName'] },
+        // ]
       },
       // {
       // 	"InternalName": "RelatedStrategyPillars",
@@ -441,7 +441,8 @@ var Information_Form = [
         source: 'SPillars',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        ToggleName: 'PillarName',
+        // ToggleName: 'PillarName',
+        // isRelatedToParent: true, // to show parent value depends on child like sector and subsector
         // to get the seblings value
         valsiblingkey: 'Description', // internal name on sorce list
         targetsiblingkey: 'StrategicDescription', // internal name on current list

@@ -347,13 +347,14 @@ var Information_Form = [
     subFields: [
       {
         InternalName: 'PillarName',
-        DisplayNameEn: 'Pillar Name',
-        DisplayName: 'اسم المحور / البرنامج',
+        DisplayNameEn: 'Strategic Pillar/Vision Program Name',
+        DisplayName: 'اسم المحور الإستراتيجى / برنامج الرؤية',
         type: 'lookup',
         //from other list:
         source: 'SPillars',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+        // ToggleName: 'PillarName',
         valsiblingkey: 'Description', // internal name on sorce list
         targetsiblingkey: 'StrategicDescription', // internal name on current list
         // display: 'none',
