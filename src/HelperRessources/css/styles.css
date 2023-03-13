@@ -2311,6 +2311,7 @@ ul[disabled],
     bottom: 4px;
     right: 0;
 }
+
 /* end kpi status */
 
 /*
@@ -4260,33 +4261,41 @@ a.taskButton:hover {
 .circlecolorstat23 {
     background: #bc3434 !important;
 }
+
 .circlecolorstat24 {
     background: #EBC866 !important;
 }
+
 .circlecolorstat25 {
     background: #5AB74C !important;
 }
+
 .circlecolorstat26 {
     background: #15425a !important;
 }
+
 .circlecolorstat27 {
     background: #696969 !important;
 }
 
 .stat23 h4.Resources {
-    color: #C53737 !important; 
+    color: #C53737 !important;
 }
+
 .stat24 h4.Resources {
-    color: #EBC866 !important; 
+    color: #EBC866 !important;
 }
+
 .stat25 h4.Resources {
-    color: #5AB74C !important; 
+    color: #5AB74C !important;
 }
+
 .stat26 h4.Resources {
-    color: #15425a !important; 
+    color: #15425a !important;
 }
+
 .stat27 h4.Resources {
-    color: #696969 !important; 
+    color: #696969 !important;
 }
 
 /* end of strategic partnership */
@@ -4324,11 +4333,12 @@ a.taskButton:hover {
 .circlecolorcomplete {
     background: #5B9BD5 !important;
 }
+
 /* for initiative status */
 h4.black.Resources.myCompletionStatus.statuscolorstat1,
 .stat1 h4.Resources,
 span.statuscolorstat1 {
-    color: #C53737 !important; 
+    color: #C53737 !important;
 }
 
 h4.black.Resources.myCompletionStatus.statuscolorstat2,
@@ -4344,25 +4354,29 @@ span.statuscolorstat3 {
 }
 
 h4.black.Resources.myCompletionStatus.statuscolorstat4,
-.stat4 h4.Resources ,
-span.statuscolorstat4{
+.stat4 h4.Resources,
+span.statuscolorstat4 {
     color: #15425a !important;
 }
 
 h4.black.Resources.myCompletionStatus.statuscolorstat5,
-.stat5 h4.Resources,span.statuscolorstat5 {
+.stat5 h4.Resources,
+span.statuscolorstat5 {
     color: #696969 !important;
 }
 
 h4.black.Resources.myCompletionStatus.statuscolorstat6,
-.stat6 h4.Resources ,span.statuscolorstat6{
+.stat6 h4.Resources,
+span.statuscolorstat6 {
     color: #696969 !important;
 }
 
 h4.black.Resources.myCompletionStatus.statuscolorstat7,
-.stat7 h4.Resources ,span.statuscolorstat7{
+.stat7 h4.Resources,
+span.statuscolorstat7 {
     color: #696969 !important;
 }
+
 /* end for initiative status */
 
 .control-ctx.project-info-ctx.projects .project-status-info span,
@@ -5870,9 +5884,23 @@ a.btn-addTarget {
 /* // fix the listing view */
 .wordBreak {
     /* word-break: break-all; */
-    /* to keep the value on one line */
-    white-space: nowrap; 
+    white-space: normal;
 }
+/* add ... in listing for name and value when be too length*/
+.wordBreak>h4 {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 14rem;
+}
+
+.wordBreak>span {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 14rem;
+}
+
 
 .filterTarget.btn-toolbar.mb-2.mb-md-0 {
     margin-bottom: 27px !important;
@@ -6562,6 +6590,7 @@ a.a-important-link:hover>* {
     font-size: 1.6rem !important;
     margin-inline: 0 !important;
 }
+
 .initiativeProjHomeInfoValuefontStyle {
     /* color: #1f2933 !important; */
     font-weight: 500 !important;
@@ -6668,12 +6697,13 @@ span.errMsgField.Resources {
     justify-content: space-between;
 } */
 
-.approvalHeader > h2 {
+.approvalHeader>h2 {
     margin: 0;
-    color: #fff !important;;
+    color: #fff !important;
+    ;
 }
 
-.approvalHeader > a {
+.approvalHeader>a {
     color: #fff;
 }
 
@@ -6866,61 +6896,77 @@ div#accordionRequiredSupport ul.list-group {
     color: #148282;
 }
 
-.elementLink{
+.elementLink {
     color: #148282;
     font-size: 13px;
 }
+
 /* for project status */
 h4.black.Resources.myCompletionStatus.statuscolorstat8,
-.stat8 h4.Resources, span.statuscolorstat8 {
-    color: #C53737 !important; 
+.stat8 h4.Resources,
+span.statuscolorstat8 {
+    color: #C53737 !important;
 }
+
 h4.black.Resources.myCompletionStatus.statuscolorstat9,
 .stat9 h4.Resources span.statuscolorstat9 {
     color: #FCD66D !important;
 }
+
 h4.black.Resources.myCompletionStatus.statuscolorstat10,
-.stat10 h4.Resources,span.statuscolorstat10 {
+.stat10 h4.Resources,
+span.statuscolorstat10 {
     color: #5AB74C !important;
 }
+
 h4.black.Resources.myCompletionStatus.statuscolorstat11,
-.stat11 h4.Resources , span.statuscolorstat11 {
+.stat11 h4.Resources,
+span.statuscolorstat11 {
     color: #15425a !important;
 }
+
 h4.black.Resources.myCompletionStatus.statuscolorstat12,
-.stat12 h4.Resources , span.statuscolorstat12 {
+.stat12 h4.Resources,
+span.statuscolorstat12 {
     color: #696969 !important;
 }
+
 h4.black.Resources.myCompletionStatus.statuscolorstat13,
-.stat13 h4.Resources , span.statuscolorstat13{
+.stat13 h4.Resources,
+span.statuscolorstat13 {
     color: #696969 !important;
 }
+
 h4.black.Resources.myCompletionStatus.statuscolorstat14,
-.stat14 h4.Resources , span.statuscolorstat14{
+.stat14 h4.Resources,
+span.statuscolorstat14 {
     color: #696969 !important;
 }
+
 h4.black.Resources.myCompletionStatus.statuscolorstat28,
-.stat28 h4.Resources , span.statuscolorstat28{
+.stat28 h4.Resources,
+span.statuscolorstat28 {
     color: #696969 !important;
 }
 
 /* end for project status */
 
-.filePurpose{
+.filePurpose {
     margin: 0px 5px;
     color: #f7941d;
 }
+
 /* fix filrer wrap  */
 .content-list-head.d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.py-4.mb-3 {
-  flex-wrap: wrap !important;
+    flex-wrap: wrap !important;
 }
 
-.multiselect_scroll{
+.multiselect_scroll {
     max-height: 54rem;
     overflow-y: auto;
 }
 
-.remove-New-Detail{
+.remove-New-Detail {
     display: none;
     color: #f49e49;
 }
