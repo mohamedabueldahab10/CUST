@@ -2,6 +2,7 @@ window.currentUserRole;
 window.GroupsIds = [];
 window.UserN;
 window.checkHomeInitiativeStatus = "";
+window.strategicPartnerShipStatus = "";
 window.myRoleConfig = [];
 window.isRoleDataLevelAccess = false;
 window.currentMainList = "";
@@ -2953,7 +2954,7 @@ window.userCalls = {
         Read_Access = [];
         Edit_Access = [];
     }
-    
+
     //New CRUD Access Solution [will not affect below behavior]
     (Create_Access = Create_Access.map((name) => name.toLowerCase())), //making sure everything is lower case
       (Read_Access = Read_Access.map((name) => name.toLowerCase())),
@@ -3092,6 +3093,10 @@ window.userCalls = {
 
     if (isthereICODE) { // to get the info of initiatives
       Get_Initiative_Info_Request.preinit()
+    }
+
+    if (isthereSTCODE) { // to render the info of strategic partnership
+      Get_StrategicPartnerShip_Info_Request.preinit()
     }
 
     // if (
@@ -6496,7 +6501,7 @@ var Access_Project_Info_Request = {
         fieldtoquery = "Title";
       }
 
-     
+
       if (Access_Project_Info_Request.g.User_Projects.length > 0) {
         var PermissionQuery =
           "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"" +
@@ -6537,7 +6542,7 @@ var Access_Project_Info_Request = {
               "</Values></In></And></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
             forfilterQuery += "</div></div>";
             AccessQuery = PermissionQuery;
-          
+
 
             if (USERisHome) {
               //call homepage
@@ -6925,7 +6930,7 @@ var Access_Project_Info_Request = {
         "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where></Query><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></View>"
       );
     }
-    
+
     Access_Project_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Access_Project_Info_Request.g.collListItem);
     clientContext.executeQueryAsync(
@@ -7510,6 +7515,69 @@ var Access_Project_Info_Request = {
 //
 // to get the data of initiative 
 
+// get related Strategic partnership
+
+window.Get_StrategicPartnerShip_Info_Request = {
+  onSuccess: function (sender, args) {
+    var collListItem = Get_StrategicPartnerShip_Info_Request.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      if (UserSTCode == oListItem.get_item("Title")) {
+        strategicPartnerShipStatus = oListItem.get_item("Status")
+      }
+    }
+
+    // make the fields disabled and remove the add btns when status is notstandard
+    if(strategicPartnerShipStatus == 'notstandard' && isthereSTCODE){
+      $("body").append(
+        "<style>" +
+        ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+        ".form-control{color: #b1b1b1 !important;" +
+        "border-color: #e1e1e1 !important;" +
+        "background-color: #fdfdfd !important;" +
+        "background-color: #fdfdfd !important;" +
+        "opacity: .6;pointer-events: none;}" +
+        "</style>"
+      );
+    }
+
+  },
+  onError: function (sender, args) {
+    //
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  preinit: function () {
+    SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
+      Get_StrategicPartnerShip_Info_Request.init();
+    });
+  },
+  init: function () {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("Strategic Partnerships");
+    var camlQuery = new SP.CamlQuery();
+    //
+    var SQuery = "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where></Query><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></View>"
+    if (UserSTCode) {
+      SQuery = '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' + UserSTCode + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query><RowLimit>1</RowLimit></View>'
+    }
+
+    camlQuery.set_viewXml(SQuery);
+
+
+    Get_StrategicPartnerShip_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(Get_StrategicPartnerShip_Info_Request.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Get_StrategicPartnerShip_Info_Request.onSuccess),
+      Function.createDelegate(this, Get_StrategicPartnerShip_Info_Request.onError)
+    );
+  },
+  g: {},
+}
+
+
 //getting Related Initiatives
 window.Get_Initiative_Info_Request = {
   onSuccess: function (sender, args) {
@@ -7523,12 +7591,12 @@ window.Get_Initiative_Info_Request = {
         //   initiativeEndDate = oListItem.get_item("FinishDate") ? oListItem.get_item("FinishDate") : ""
         //   initiativeBudget = oListItem.get_item("Cost") ? oListItem.get_item("Cost") : 0
         initiativeActualBudget = oListItem.get_item("InitiativeBudget")
-     
+
       }
 
     }
 
- 
+
 
     //should uncomment when need to applt the validation on milstones every month for proj and every 3 months for initiative
     if (isthereICODE && initiativeStartToValidation) {
@@ -7614,7 +7682,7 @@ var Access_Sector_Info_Request = {
     //   //|| isSubSectorHead
     //   //|| isSectorHead
     // ) {
-   
+
 
     //   var subsectorname, substorcode;
     //   if (localStorage.getItem("Dynamo_Internal Entities") != null) {
@@ -7688,7 +7756,7 @@ var Access_Sector_Info_Request = {
   // The main Initialization function
   init: function () {
     //
-   
+
     var clientContext = new SP.ClientContext.get_current();
 
     var oList = clientContext
@@ -7783,7 +7851,7 @@ var Issues_Info_Request = {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("Issues");
     var camlQuery = new SP.CamlQuery();
-   
+
     camlQuery.set_viewXml(IssueQuery);
     Issues_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
 
@@ -7889,7 +7957,7 @@ var Notifications_Info_Request = {
         "</li>";
       NNotifications = ++NNotifications;
     }
-   
+
     if (!notificationshtml) {
       notificationshtml = "<p>" + No_Data + "</p>";
     }
@@ -8386,7 +8454,7 @@ var Tasks_Info_Request_User = {
           }
         );
         var rurl = targerstage_org[0].relatedURL;
-   
+
       }
       Tasks_Info_Request_User.g.handlelinks(
         pcode,
@@ -8840,7 +8908,7 @@ var GetInitiativeTitle_Request = {
         : UserNo_Data;
       InitiativeStartDate = oListItem.get_item("StartDate");
       InitiativeFinishDate = oListItem.get_item("FinishDate");
-    
+
     }
 
     if (USERlistkey == "initiativemilestones" && (isEdit || isNew)) {
@@ -9071,7 +9139,7 @@ let data_Level1_Access = {
       }
       //Finish Line, make last changes and build query
       if (i == fieldsConditionConfig.length - 1) {
-      
+
         whereBody = whereBody.replaceAll(
           `Type="date"`,
           `IncludeTimeValue="TRUE" Type="DateTime"`
@@ -9112,7 +9180,7 @@ let data_Level1_Access = {
   },
   onSuccess: function (sender, args) {
     var collListItem = data_Level1_Access.g.collListItem;
-   
+
     var listItemEnum = collListItem.getEnumerator();
 
     if (collListItem.getEnumerator().$2J_0 > 0) {
@@ -9125,7 +9193,7 @@ let data_Level1_Access = {
     let fieldName = secondLevelConfig.parentRelationField;
 
     while (listItemEnum.moveNext()) {
-      
+
       var oListItem = listItemEnum.get_current();
       let itemCode = oListItem.get_item(fieldName);
       data_Level1_Access.g.relationFieldData.push(itemCode);
@@ -9253,7 +9321,7 @@ let data_Level2_Access = {
   },
   onSuccess: function (sender, args) {
     var collListItem = data_Level2_Access.g.collListItem;
- 
+
     var listItemEnum = collListItem.getEnumerator();
 
     if (collListItem.getEnumerator().$2J_0 > 0) {
@@ -9265,7 +9333,7 @@ let data_Level2_Access = {
       ].subRelation.subRelation;
     let fieldName = thirdLevelConfig.parentRelationField;
     while (listItemEnum.moveNext()) {
-   
+
 
       var oListItem = listItemEnum.get_current();
       let itemCode = oListItem.get_item(fieldName);
@@ -9285,7 +9353,7 @@ let data_Level2_Access = {
 
   //currenty handles one field not more
   dynamicCamlQueryBuilder: function (levelConfig, valuesArray) {
-    
+
     let listName = levelConfig.listName;
     let fieldToQuery = levelConfig.RelationField;
     let fieldType = levelConfig.RelationFieldType;
@@ -9338,7 +9406,7 @@ let data_Level2_Access = {
             </Query>
         </View>`
 
-      
+
         // end section to handle multi look up selected 
 
         whereBodyFinal = `<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>${whereBody}
@@ -9392,7 +9460,7 @@ let data_Level3_Access = {
   // The main Initialization function
   init: function (dataListName) {
 
-    
+
 
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(dataListName);
@@ -9407,7 +9475,7 @@ let data_Level3_Access = {
   },
   onSuccess: function (sender, args) {
     var collListItem = data_Level3_Access.g.collListItem;
-  
+
     var listItemEnum = collListItem.getEnumerator();
 
     if (collListItem.getEnumerator().$2J_0 > 0) {
@@ -9658,7 +9726,7 @@ var Get_Milestones = {
           }
         }
 
-       
+
 
       } else {
         $('.page-nav').after('<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;justify-content:flex-start;margin-top:10%">' +
@@ -9667,7 +9735,7 @@ var Get_Milestones = {
           '\'"><span>معالم</span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>')
       }
     } else if (UserICode) {
- 
+
 
       if (allMilestonesArr.length > 0) {
 
@@ -9700,7 +9768,7 @@ var Get_Milestones = {
         }, [])
 
         splitThreeMontshArr = result
-    
+
 
         var datesWithoutMilesArrFiltered = splitThreeMontshArr
 
@@ -9719,7 +9787,7 @@ var Get_Milestones = {
 
         })
 
-      
+
         if (datesWithoutMilesArrFiltered.length > 0) {
           if (datesWithoutMilesArrFiltered.length == 1) {
             var internalArr = datesWithoutMilesArrFiltered[0]
