@@ -15,6 +15,8 @@ var Information_Form = [
         type: 'string',
         maxchar: '250',
         validation: 'required',
+        withletters:true,
+        Errmsgkey:"withletterpattern",
       },
       {
         InternalName: 'Classification',

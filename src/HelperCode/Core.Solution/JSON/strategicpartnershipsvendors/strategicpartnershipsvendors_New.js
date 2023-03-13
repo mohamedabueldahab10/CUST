@@ -11,7 +11,9 @@ var Information_Form = [
             "DisplayNameEn":"Partner Name",
             "type":"string",
             "maxchar":"250",
-            "validation":"required"
+            "validation":"required",
+            withletters:true,
+            Errmsgkey:"withletterpattern",
          },
          {
             "InternalName":"Classification",
