@@ -80,25 +80,19 @@ var Information_Form = [
         InternalName: 'Vision',
         DisplayNameEn: 'Vision',
         DisplayName: 'الرؤية',
-        type: 'string',
+        type: 'multiline',
       },
       {
         InternalName: 'Value',
         DisplayNameEn: 'Value',
         DisplayName: 'القيم',
-        type: 'string',
+        type: 'multiline',
       },
-      // {
-      //     "InternalName": "Goals",
-      //     "DisplayNameEn": "Goals",
-      //     "DisplayName":"الأهداف",
-      //     "type": "string",
-      // },
       {
         InternalName: 'Mission',
         DisplayNameEn: 'Mission',
         DisplayName: 'الرسالة',
-        type: 'string',
+        type: 'multiline',
       },
       {
         InternalName: 'ApprovalDate',
