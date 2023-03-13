@@ -34,6 +34,8 @@ var Information_Form = [
         // "toggleFields": ['Ministry'],
         toggleValues: [
           { value: 'sub', fields: ['Ministry'] },
+          { value: 'ministry', fields: ['PillarsExist'] },
+          { value: 'vision', fields: ['PillarsExist'] },
           // {value:'strategically', fields:['StrategyRelatedObjective']}
         ],
         type: 'dropdownValues',
@@ -109,6 +111,7 @@ var Information_Form = [
         DisplayName: 'هل يوجد محاور؟',
         DisplayNameEn: 'Is Pillars Exist?',
         // "validation": "required",
+        ToggleName: 'PillarsExist',
         type: 'yesnoradio',
         options: {
           choices: [

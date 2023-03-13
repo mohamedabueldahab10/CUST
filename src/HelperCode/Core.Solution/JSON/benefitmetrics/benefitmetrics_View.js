@@ -50,7 +50,7 @@ var Information_Form = [
       {
         InternalName: 'PeriodType',
         DisplayNameEn: 'Period Type',
-        DisplayName: 'تكرار القياس',
+        DisplayName: 'دورية القياس',
         type: 'dropdownValues',
         toggleValues: [
           { value: 'monthly', fields: ['Months'] }, //we can put more than 1  field

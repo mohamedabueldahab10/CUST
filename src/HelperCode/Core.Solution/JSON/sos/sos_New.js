@@ -50,7 +50,7 @@ var Information_Form = [
           // { value: 'level3', fields: ['RelatedObjective', 'RelatedPortfolio'] },
           { value: 'sublevel2', fields: ['RelatedObjective'] },
           { value: 'sublevel3', fields: ['RelatedObjective'] },
-          { value: 'main', fields: ['RelatedPillar'] },
+          // { value: 'main', fields: ['RelatedPillar'] },
           // { value: 'jobmarket', fields: ['RelatedJobStrategy'] },
           // {value:'strategically', fields:['StrategyRelatedObjective']}
         ],

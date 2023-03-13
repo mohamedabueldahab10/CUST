@@ -35,8 +35,8 @@ var Information_Form = [
         "InternalName": "SubSector",
         "DisplayName": "الوكالات",
         "DisplayNameEn": "DeputyShip",
-        // "type": "lookup",
-        "type": "lookupmultiselect",
+        "type": "lookup",
+        // "type": "lookupmultiselect",
         //from other list:
         "source": "Internal Entities",
         // "isSector": "True",

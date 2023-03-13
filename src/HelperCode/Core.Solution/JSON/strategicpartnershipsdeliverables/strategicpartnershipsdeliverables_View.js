@@ -34,19 +34,19 @@ var Information_Form = [{
     //     "validation": "required",
 
     // },
-    {
-      "InternalName": "Amount",
-      "DisplayName": "القيمة",
-      "DisplayNameEn": "Amount",
-      dontSubmit: true,
-      "type": "float",
-      // "type": "percentbyrelatedparent",
-      // "listname": "Projects",
-      // "parentinternalname": "ActualBudget",
-      // "targetelement": "Weight",
-      // "validation": "required"
+    // {
+    //   "InternalName": "Amount",
+    //   "DisplayName": "القيمة",
+    //   "DisplayNameEn": "Amount",
+    //   dontSubmit: true,
+    //   "type": "float",
+    //   // "type": "percentbyrelatedparent",
+    //   // "listname": "Projects",
+    //   // "parentinternalname": "ActualBudget",
+    //   // "targetelement": "Weight",
+    //   // "validation": "required"
 
-    },
+    // },
     {
       "InternalName": "Weight",
       "DisplayName": "الوزن(%)",

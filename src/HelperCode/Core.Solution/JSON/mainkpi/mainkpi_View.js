@@ -35,9 +35,11 @@ var Information_Form = [
         // validation: 'required',
         DisplayName: 'نوع المؤشر',
         toggleValues: [
-          { value: 'sub', fields: ['SubRelatedObjective', 'RelatedMainKpis'] }, //we can put more than 1  field
-          { value: 'main', fields: ['RelatedMainObjective'] }, //we can put more than 1  field
-          { value: 'strategically', fields: ['StrategyRelatedObjective'] },
+          { value: 'sublevel2', fields: ['RelatedStrategyObjective', 'RelatedMainKpis','Sector','SubSector'] }, //we can put more than 1  field
+          { value: 'sublevel3', fields: ['RelatedStrategyObjective', 'RelatedMainKpis','Sector','SubSector'] }, //we can put more than 1  field
+          // { value: 'sub', fields: ['SubRelatedObjective', 'RelatedMainKpis'] }, //we can put more than 1  field
+          // { value: 'main', fields: ['RelatedMainObjective'] }, //we can put more than 1  field
+          // { value: 'strategically', fields: ['StrategyRelatedObjective'] },
         ],
         type: 'dropdownValues',
         options: {
@@ -58,7 +60,7 @@ var Information_Form = [
         InternalName: 'RelatedStrategyObjective',
         DisplayNameEn: 'Related Objective',
         DisplayName: 'الهدف المرتبط ',
-        // ToggleName: "RelatedMainObjective",
+        ToggleName: "RelatedMainObjective",
         type: 'lookup',
         // queryField: 'Types',
         // queryFieldType: 'dropdownValues', //ex: "Choice"
@@ -422,6 +424,7 @@ var Information_Form = [
         InternalName: 'Sector',
         DisplayName: 'القطاع',
         DisplayNameEn: 'Sector',
+        ToggleName: 'Sector',
         type: 'lookupWithQuery',
         queryField: 'EntityType',
         queryFieldType: 'dropdownValues', //ex: "Choice"
@@ -439,6 +442,7 @@ var Information_Form = [
         InternalName: 'SubSector',
         DisplayName: 'الوكالات',
         DisplayNameEn: 'DeputyShip',
+        ToggleName: 'SubSector',
         type: 'lookup',
         //from other list:
         source: 'Internal Entities',
