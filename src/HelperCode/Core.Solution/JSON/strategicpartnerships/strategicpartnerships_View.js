@@ -416,6 +416,7 @@ var Information_Form = [
         DisplayName: 'تاريخ الإلغاء في حال الغيت الشراكة',
         DisplayNameEn: 'Cancelation Date',
         type: 'datetime',
+        RequiredName: 'CancelationDate',
       },
       {
         InternalName: 'Status',
@@ -440,6 +441,9 @@ var Information_Form = [
             },
           ],
         },
+        requiredValues: [
+          { value: 'notstandard', fields: ['CancelationDate'] },
+        ],
       },
       {
         InternalName: 'EscalationNeeded',
