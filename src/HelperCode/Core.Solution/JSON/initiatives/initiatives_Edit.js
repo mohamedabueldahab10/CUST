@@ -17,7 +17,9 @@ var Information_Form = [
         DisplayNameEn: 'Name',
         DisplayName: 'اسم المبادرة',
         type: 'string',
-        maxchar: '250',
+        maxchar: '255',
+        withletters:true,
+        Errmsgkey:"withletterpattern",
         validation: 'required',
       },
       {
@@ -493,6 +495,7 @@ var Information_Form = [
         DisplayNameEn: 'Initiative Actual Owner',
         DisplayName: 'المالك الفعلي للمبادرة',
         type: 'string',
+        maxchar: 255,
         validation: 'required',
       },
       {
@@ -596,7 +599,7 @@ var Information_Form = [
         DisplayNameEn: 'Description',
         DisplayName: 'وصف المبادرة',
         type: 'multiline',
-        maxchar: '500',
+        maxchar: '5000',
         // "validation": "required"
       },
       {

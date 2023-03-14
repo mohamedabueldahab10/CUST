@@ -18,6 +18,9 @@ var Information_Form = [
         DisplayNameEn: 'Name',
         type: 'string',
         validation: 'required',
+        maxchar: '255',
+        withletters:true,
+        Errmsgkey:"withletterpattern",
       },
       // {
       //   InternalName: 'Amount',

@@ -31,6 +31,7 @@ var Information_Form = [
         DisplayNameEn: 'Subject',
         type: 'string',
         validation: 'required',
+        maxchar: 255,
       },
       {
         InternalName: 'Date',
@@ -45,6 +46,7 @@ var Information_Form = [
         DisplayNameEn: 'Meeting Location',
         type: 'string', //from other list:
         // "source": "Regions", //"Dispfieldkey": "Title", //"valfieldkey": "Title"
+        maxchar: 255,
       },
       {
         InternalName: 'Attendees',

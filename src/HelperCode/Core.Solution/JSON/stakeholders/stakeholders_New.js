@@ -34,12 +34,16 @@ var Information_Form = [
         DisplayNameEn: 'Name',
         type: 'string',
         validation: 'required',
+        maxchar: '255',
+        withletters:true,
+        Errmsgkey:"withletterpattern",
       },
       {
         InternalName: 'JobTitle',
         DisplayName: 'المسمى الوظيفي',
         DisplayNameEn: 'Job Title',
         type: 'string',
+        maxchar: 255,
         validation: 'required',
       },
       {
@@ -63,6 +67,7 @@ var Information_Form = [
         DisplayName: 'الدور في المشروع',
         DisplayNameEn: 'Role',
         type: 'string',
+        maxchar: 255,
       },
 
       {
@@ -70,6 +75,7 @@ var Information_Form = [
         DisplayName: 'الإدارة',
         DisplayNameEn: 'Department',
         type: 'string',
+        maxchar: 255,
       },
       {
         InternalName: 'Interest',
@@ -89,18 +95,24 @@ var Information_Form = [
         DisplayName: 'الوصف',
         DisplayNameEn: 'Description',
         type: 'multiline',
+        maxchar: 5000,        
+
       },
       {
         InternalName: 'Requirements',
         DisplayName: 'المتطلبات',
         DisplayNameEn: 'Requirements',
         type: 'multiline',
+        maxchar: 5000,        
+
       },
       {
         InternalName: 'Expectations',
         DisplayName: 'التوقعات',
         DisplayNameEn: 'Expectations',
         type: 'multiline',
+        maxchar: 5000,        
+
       },
       {
         InternalName: 'InfluenceLevel',

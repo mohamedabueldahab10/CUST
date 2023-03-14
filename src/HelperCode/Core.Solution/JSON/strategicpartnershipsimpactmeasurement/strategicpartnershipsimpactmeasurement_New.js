@@ -10,7 +10,7 @@ var Information_Form = [
             "DisplayName":"الفئة المستهدفة",
             "DisplayNameEn":"Target Group",
             "type":"string",
-            "maxchar":"250",
+            "maxchar":"255",
             "validation":"required"
          },
          {
@@ -64,9 +64,11 @@ var Information_Form = [
             "DisplayName":"وصف الأثر",
             "DisplayNameEn":"Impact Description",
             // "type":"string",
-            // "maxchar":"250",
+            // "maxchar":"255",
             "type": "multiline",
-            "validation":"required"
+            "validation":"required",
+            maxchar: 5000,        
+
          },
          {
             "InternalName":"ImpactDuration",
@@ -150,7 +152,7 @@ var Information_Form = [
             DisplayName:'تكلفة المنجز',
             DisplayNameEn:'Achievement Cost',
             type:'string',
-            maxchar:'250',
+            maxchar:'255',
            validation: 'required',
          },
          {
@@ -158,7 +160,7 @@ var Information_Form = [
             DisplayName:'مصدر التمويل',
             DisplayNameEn:'Funding Source',
             type:'string',
-            maxchar:'250',
+            maxchar:'255',
            validation: 'required',
          },
       ]
@@ -174,7 +176,7 @@ var Information_Form = [
             "DisplayNameEn":"Comments",
             "DisplayName":"ملاحظات",
             "type":"multiline",
-            "maxchar":"500"
+            "maxchar":"5000"
          },
          {
             "InternalName": "getfile",

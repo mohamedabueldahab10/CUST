@@ -239,7 +239,10 @@ var Information_Form = [
                "DisplayNameEn": "Achievement Name",
                "DisplayName": "اسم المنجز",
                "type": "string",
-               "validation": "required"
+               "validation": "required",
+               maxchar: '255',
+               withletters:true,
+               Errmsgkey:"withletterpattern",
            },
            {
                "InternalName": "AchievementDate",
@@ -263,6 +266,8 @@ var Information_Form = [
                "DisplayName": "وصف المنجز",
                "type": "multiline",
                "validation": "required",
+               maxchar: 5000,        
+
            }
        ]
    },
@@ -276,7 +281,9 @@ var Information_Form = [
                "InternalName": "Comments",
                "DisplayName": "ملاحظات",
                "DisplayNameEn": "Comments",
-               "type": "multiline"
+               "type": "multiline",
+               maxchar: 5000,        
+
            },
            {
                "InternalName": "getfile",
