@@ -42,60 +42,69 @@ var Information_Form  = [
                 "InternalName": "Description",
                 "DisplayName":"الوصف",
                 "DisplayNameEn": "Description",
-                "type":"multiline"
+                "type":"multiline",
+                maxchar: 5000, 
             },
             {
                 "InternalName": "FutureAdvice",
                 "DisplayName":"نصيحة للشراكات القادمة",
                 "DisplayNameEn": "Future Advice",
-                "type":"multiline"
+                "type":"multiline",
+                maxchar: 5000, 
             },
             {
                 "InternalName": "DevelopmentAreas",
                 "DisplayName":"مناطق التحسن ",
                 "DisplayNameEn": "Development Areas",
-                "type":"multiline"
+                "type":"multiline",
+                maxchar: 5000, 
             },
             {
                 "InternalName": "StrengthAreas",
                 "DisplayName":"مناطق القوة في الشراكة",
                 "DisplayNameEn": "Strength Areas",
-                "type":"multiline"
+                "type":"multiline",
+                maxchar: 5000, 
                
             },
             {
                 "InternalName": "AchievementsPlan",
                 "DisplayName":"خطة الإنجازات",
                 "DisplayNameEn": "Achievements Plan",
-                "type":"multiline"
+                "type":"multiline",
+                maxchar: 5000, 
                
             },
             {
                 "InternalName": "ProjectAchievements",
                 "DisplayName":"إنجازات الشراكة",
                 "DisplayNameEn": "Achievements",
-                "type":"multiline"
+                "type":"multiline",
+                maxchar: 5000, 
                
             },
             {
                 "InternalName": "MajorCauses",
                 "DisplayName":"الأسباب الرئيسية",
                 "DisplayNameEn": "Major Causes",
-                "type":"multiline"
+                "type":"multiline",
+                maxchar: 5000, 
                
             },
             {
                 "InternalName": "Recommendation",
                 "DisplayName":"التوصية",
                 "DisplayNameEn": "Recommendation",
-                "type":"multiline"
+                "type":"multiline",
+                maxchar: 5000, 
                
             },
             {
                 "InternalName": "NextSteps",
                 "DisplayName":"الخطوة القادمة",
                 "DisplayNameEn": "Next Steps",
-                "type":"multiline"
+                "type":"multiline",
+                maxchar: 5000, 
                
             }
         ]
