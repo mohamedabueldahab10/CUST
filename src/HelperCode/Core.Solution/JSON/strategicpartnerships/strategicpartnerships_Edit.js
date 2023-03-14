@@ -13,6 +13,9 @@ var Information_Form = [
         DisplayNameEn: 'Partnership Name',
         type: 'string',
         validation: 'required',
+        withletters:true,
+        Errmsgkey:'withletterpattern',
+        maxchar: '255',
       },
       {
         "InternalName": "Sector",
@@ -285,7 +288,7 @@ var Information_Form = [
         DisplayNameEn: 'Description',
         DisplayName: 'وصف الشراكة',
         type: 'multiline',
-        maxchar: '500',
+        maxchar: '5000',
         validation: 'required',
       },
       {
@@ -348,6 +351,7 @@ var Information_Form = [
         sourceelementdate:"StartDate", // date from
         targetelementdate:"FinishDate",// destination 
         validation: 'required',
+        numberOfDigits:"3"
       },
       {
         InternalName: 'FinishDate',
@@ -436,7 +440,7 @@ var Information_Form = [
          "DisplayNameEn":"Comments",
          "DisplayName":"ملاحظات",
          "type":"multiline",
-         "maxchar":"500"
+         "maxchar":"5000"
       },
      ],
   },

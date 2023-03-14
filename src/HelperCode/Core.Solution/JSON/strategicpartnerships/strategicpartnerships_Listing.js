@@ -40,7 +40,6 @@ var Listing_Info = [
       "DisplayName":"اسم الشريك",
       "DisplayNameEn":"Partner Name",
       "type":"lookup",
-      // "localStorageVariable":"Dynamo_Internal Entities",
       "inlisting":true,
       "infilter":false
    },
@@ -49,7 +48,6 @@ var Listing_Info = [
       "DisplayName":"الهدف الاستراتيجي المرتبط",
       "DisplayNameEn":"Related Strategy Objective",
       "type":"lookup",
-      // "localStorageVariable":"Dynamo_Internal Entities",
       "inlisting":true,
       "infilter":false
    },
