@@ -33,9 +33,11 @@ var Information_Form = [
         // "toggleValues": ['sub'],
         // "toggleFields": ['Ministry'],
         toggleValues: [
-          { value: 'sub', fields: ['Ministry'] },
+          { value: 'sub', fields: ['Ministry','PillarsExist'] },
           { value: 'ministry', fields: ['PillarsExist'] },
           { value: 'vision', fields: ['PillarsExist'] },
+          { value: 'lms', fields: ['PillarsExist'] },
+          { value: 'sectorial', fields: ['PillarsExist'] },
           // {value:'strategically', fields:['StrategyRelatedObjective']}
         ],
         type: 'dropdownValues',
