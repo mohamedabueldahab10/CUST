@@ -853,7 +853,6 @@
     memorandumofunderstanding: "مذكرة تفاهم",
     memorandumofcooperation: "مذكرة تعاون",
     acooperationagreement: "اتفاقية تعاون",
-    datasharingagreement: "Data Sharing Agreement",
     standard: "سارية",
     repeatedstandard: "سارية-مجددة",
     notstandard: "غير سارية",
@@ -1791,7 +1790,7 @@
     memorandumofunderstanding: "Memorandum Of Understanding",
     memorandumofcooperation: "Memorandum Of Cooperation",
     acooperationagreement: "A Cooperation Agreement",
-
+    datasharingagreement: "Data Sharing Agreement",
     launchstraightvital: "Launch Straight Vital",
     launchesconferencesworkshopselectronicplatforms:
       "launchesconferencesworkshopselectronicplatforms",
