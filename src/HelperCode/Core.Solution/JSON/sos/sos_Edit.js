@@ -62,6 +62,7 @@ var Information_Form = [
           { value: 'sublevel2', fields: ['RelatedObjective'] },
           { value: 'sublevel3', fields: ['RelatedObjective'] },
           // { value: 'main', fields: ['RelatedPillar'] },
+          { value: 'main', fields: [''] },
           // { value: 'jobmarket', fields: ['RelatedJobStrategy'] },
           // {value:'strategically', fields:['StrategyRelatedObjective']}
         ],
@@ -72,12 +73,12 @@ var Information_Form = [
             {
               display: 'sublevel2',
               value: 'sublevel2',
-              customFilterValue: 'main',
+              // customFilterValue: 'main',
             },
             {
               display: 'sublevel3',
               value: 'sublevel3',
-              customFilterValue: 'sublevel2',
+              // customFilterValue: 'sublevel2',
             },
             // { display: 'level2', value: 'level2' },
             // { display: 'level3', value: 'level3' },
@@ -90,7 +91,7 @@ var Information_Form = [
           ],
         },
         validation: 'required',
-        dynamic: 'parent', //main field that affect on other chiled field
+        // dynamic: 'parent', //main field that affect on other chiled field
         requiredValues: [
           { value: 'sublevel2', fields: ['RelatedObjective', 'SubSector'] }, //we can put more than 1  field
           {
@@ -192,7 +193,6 @@ var Information_Form = [
         filterField: 'RelatedStrategy',
         filterFieldType: 'Text',
       },
-
       {
         InternalName: 'RelatedPortfolio',
         DisplayNameEn: 'Related Portfolio',
