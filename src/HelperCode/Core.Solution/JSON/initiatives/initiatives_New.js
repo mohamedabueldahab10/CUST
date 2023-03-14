@@ -5,8 +5,8 @@ var Information_Form = [
     description: 'التفاصيل',
     descriptionEn: 'Details',
     // formDefaultValues: [
-    //   { fieldName: 'WFModuleCode', value: 'testOdayModuleCode',roles:["Administrator","InitiativeManager"] },
-    //   { fieldName: 'WFStage', value: 'testOdayStage',roles:["allRoles"] }
+    //   { fieldName: 'WFModuleCode', value: 'test',roles:["Administrator","InitiativeManager"] },
+    //   { fieldName: 'WFStage', value: 'testStage',roles:["allRoles"] }
 
     // ],
     subFields: [
