@@ -8,6 +8,14 @@ var Listing_Info = [
       "infilter":false
    },
    {
+      "InternalName":"Name",
+      "DisplayName":"اسم الشراكة",
+      "DisplayNameEn":"Partnership Name",
+      "type":"lookup",
+      "inlisting":true,
+      "infilter":true
+   },
+   {
       "InternalName":"Sector",
       "DisplayName":"القطاع",
       "DisplayNameEn":"Sector",

@@ -126,25 +126,6 @@ var Information_Form = [
         filterField: 'RelatedStrategy',
         filterFieldType: 'Text',
       },
-      
-      {
-        InternalName: 'RelatedObjective',
-        DisplayNameEn: 'Related Objective',
-        DisplayName: 'الهدف المرتبط',
-        // DisplayNameEn: 'Related Main Objective',
-        // DisplayName: 'الهدف الرئيسي المرتبط',
-        ToggleName: 'RelatedObjective',
-        RequiredName: 'RelatedObjective',
-        type: 'lookupWithQuery',
-        queryField: 'Types',
-        queryFieldType: 'dropdownValues', //ex: "Choice"
-        queryFieldValue: 'main',
-        //from other list:
-        source: 'SOs',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
-        //// "display":"none"
-      },
       {
         InternalName: 'RelatedPortfolio',
         DisplayNameEn: 'Related Portfolio',
