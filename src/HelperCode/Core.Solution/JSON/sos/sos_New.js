@@ -81,8 +81,8 @@ var Information_Form = [
         validation: 'required',
         dynamic: 'parent', //main field that affect on other chiled field
         requiredValues: [
-          { value: 'sublevel2', fields: ['RelatedObjective'] }, //we can put more than 1  field
-          { value: 'sublevel3', fields: ['RelatedObjective','Department'] },
+          { value: 'sublevel2', fields: ['RelatedObjective','SubSector'] }, //we can put more than 1  field
+          { value: 'sublevel3', fields: ['RelatedObjective','Department','SubSector'] }, 
         ],
       },
       // {
@@ -228,6 +228,7 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
+        RequiredName: 'SubSector',
       },
       {
         InternalName: 'Department',

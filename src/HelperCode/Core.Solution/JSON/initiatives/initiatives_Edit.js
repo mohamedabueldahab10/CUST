@@ -9,7 +9,7 @@ var Information_Form = [
       //     "InternalName": "Title",
       //     "DisplayName":"رمز المبادرة ",
       //     "type":"string" ,
-      //     "state":"disabled"
+      //     "state":"disabled" 
 
       // },
       {
