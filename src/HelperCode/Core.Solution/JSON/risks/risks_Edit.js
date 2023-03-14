@@ -17,6 +17,9 @@ var Information_Form = [
         DisplayNameEn: 'Risk Name',
         type: 'string',
         validation: 'required',
+        maxchar: '255',
+        withletters:true,
+        Errmsgkey:"withletterpattern",
       },
       {
         InternalName: 'Category',

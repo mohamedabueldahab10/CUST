@@ -11,6 +11,9 @@ var Information_Form = [
         DisplayNameEn: "Project Name",
         type: "string",
         // validation: 'required',
+        maxchar: '255',
+        withletters:true,
+        Errmsgkey:"withletterpattern",
         state: "disabled",
         security: {
           groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
@@ -324,6 +327,7 @@ var Information_Form = [
         DisplayName: "الخطة التصحيحية",
         DisplayNameEn: "Corrective Plan",
         type: "multiline",
+        maxchar: 5000,        
         security: {
           groups: [
             "VRO_E",
@@ -489,6 +493,7 @@ var Information_Form = [
         DisplayName: "الجهة المنفذة",
         DisplayNameEn: "Execution Channels",
         type: "multiline",
+        maxchar: 5000,        
       },
       {
         InternalName: "ProjectOverview",
@@ -549,6 +554,7 @@ var Information_Form = [
         DisplayName: "اسم الشركة المنفذة",
         DisplayNameEn: "Company Name",
         type: "string",
+        maxchar: 255,
       },
       {
         InternalName: "IsZeroBudgetProject",
@@ -786,6 +792,7 @@ var Information_Form = [
         DisplayName: "مصادر التمويل",
         DisplayNameEn: "Funding Sources",
         type: "string",
+        maxchar: 255,
       },
       {
         InternalName: "FundingStatus",
@@ -814,13 +821,14 @@ var Information_Form = [
         DisplayName: "رمز المشتريات",
         DisplayNameEn: "Purchase code",
         type: "string",
+        maxchar: 255,
       },
       {
         InternalName: "ERPCode",
         DisplayNameEn: "ERP Code",
         DisplayName: "ترميز موارد",
         type: "string",
-        maxchar: "250",
+        maxchar: "255",
         // "validation": "required"
       },
       {
@@ -1213,6 +1221,7 @@ var Information_Form = [
         DisplayName: "وصف الإعتمادية",
         DisplayNameEn: "Description",
         type: "multiline",
+        maxchar: 5000,        
         // type: 'string',
         //"state": "disabled"
       },

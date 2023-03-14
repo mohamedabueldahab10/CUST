@@ -31,6 +31,7 @@ var Information_Form = [
         DisplayNameEn: 'Meeting Subject',
         type: 'string',
         validation: 'required',
+        maxchar: 255,
       },
       {
         InternalName: 'Date',
@@ -44,6 +45,7 @@ var Information_Form = [
         DisplayName: 'مكان الاجتماع',
         DisplayNameEn: 'Meeting Location',
         type: 'string',
+        maxchar: 255,
         //  //from other list:
         //  "source": "Regions",
         //  "Dispfieldkey": "Title",
@@ -54,30 +56,35 @@ var Information_Form = [
         DisplayName: 'الحضور',
         DisplayNameEn: 'Attendees',
         type: 'multiline',
+        maxchar: 5000, 
       },
       {
         InternalName: 'MeetingObjectives',
         DisplayName: 'أهداف الاجتماع وأهم محاور النقاش ',
         DisplayNameEn: 'Meeting Objectives',
         type: 'multiline',
+        maxchar: 5000, 
       },
       {
         InternalName: 'FormalAgenda',
         DisplayName: 'جدول الأعمال الرسمي',
         DisplayNameEn: 'Formal Agenda',
         type: 'multiline',
+        maxchar: 5000, 
       },
       {
         InternalName: 'Decisions',
         DisplayName: 'المقررات',
         DisplayNameEn: 'Decisions',
         type: 'multiline',
+        maxchar: 5000, 
       },
       {
         InternalName: 'Comments',
         DisplayName: 'ملاحظات',
         DisplayNameEn: 'Comments',
         type: 'multiline',
+        maxchar: 5000, 
       },
       {
         InternalName: 'getfile',

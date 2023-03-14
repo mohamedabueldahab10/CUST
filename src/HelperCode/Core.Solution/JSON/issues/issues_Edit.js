@@ -15,7 +15,10 @@ var Information_Form = [{
                 "DisplayName": "اسم التحدي",
                 "DisplayNameEn": "Name",
                 "type": "string",
-                "validation": "required"
+                "validation": "required",
+                maxchar: '255',
+                withletters:true,
+                Errmsgkey:"withletterpattern",
             },
             {
                 "InternalName": "Description",
