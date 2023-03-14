@@ -14,13 +14,15 @@ var Information_Form = [{
                 "DisplayName": "النشاط/الفعالية",
                 "DisplayNameEn": "Activity",
                 "type": "string",
-                "validation": "required"
+                "validation": "required",
+                maxchar: 255,        
             },
             {
                 "InternalName": "Periodic",
                 "DisplayName": "الدورية",
                 "DisplayNameEn": "Periodic",
-                "type": "string"
+                "type": "string",
+                maxchar: 255,
             },
             {
                 "InternalName": "Impact",

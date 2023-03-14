@@ -33,6 +33,7 @@ var Information_Form = [
         DisplayName: "شرح أسباب اغلاق المشروع",
         DisplayNameEn: "Closure Reasons Desc",
         type: "multiline",
+        maxchar: 5000,        
         validation: "required",
       },
     ],
@@ -70,6 +71,8 @@ var Information_Form = [
         DisplayNameEn:
           "Description of documents related to procurement such as requests for proposals, proposals and contracts",
         type: "multiline",
+        maxchar: 5000,        
+
       },
       {
         DisplayName: "المتسلمات النهائية للمشروع",
@@ -94,6 +97,8 @@ var Information_Form = [
         DisplayName: "وصف المتسلمات النهائية للمشروع",
         DisplayNameEn: "Description of the final deliverables of the project",
         type: "multiline",
+        maxchar: 5000,        
+
       },
 
       {
@@ -123,6 +128,8 @@ var Information_Form = [
         DisplayNameEn:
           "Describe the different versions of the project charter, plan, schedule, and budget",
         type: "multiline",
+        maxchar: 5000,        
+
       },
 
       {
@@ -148,6 +155,8 @@ var Information_Form = [
         DisplayName: "وصف تقارير الحالة الخاصة بالمشروع",
         DisplayNameEn: "Description of project status reports",
         type: "multiline",
+        maxchar: 5000,        
+
       },
 
       {
@@ -173,6 +182,8 @@ var Information_Form = [
         DisplayNameEn: "Description  minutes of meeting",
         DisplayName: "وصف محاضر الاجتماعات",
         type: "multiline",
+        maxchar: 5000,        
+
       },
 
       {
@@ -198,6 +209,8 @@ var Information_Form = [
         DisplayName: "وصف خطط العمل الفرعية",
         DisplayNameEn: "Description of sub-work plans",
         type: "multiline",
+        maxchar: 5000,        
+
       },
 
       {
@@ -223,6 +236,8 @@ var Information_Form = [
         DisplayName: "وصف سجل المخاطر",
         DisplayNameEn: "Description of the risk register",
         type: "multiline",
+        maxchar: 5000,        
+
       },
       {
         DisplayName: "سجل المشكلات",
@@ -247,6 +262,8 @@ var Information_Form = [
         DisplayName: "وصف سجل المشكلات",
         DisplayNameEn: "Description of the problem log",
         type: "multiline",
+        maxchar: 5000,        
+
       },
       {
         DisplayName:
@@ -275,6 +292,8 @@ var Information_Form = [
         DisplayNameEn:
           "Description of change records and any change request forms or change impact statements",
         type: "multiline",
+        maxchar: 5000,        
+
       },
       {
         DisplayName: "مستند قبول المشروع",
@@ -299,6 +318,8 @@ var Information_Form = [
         DisplayName: "وصف مستند قبول المشروع",
         DisplayNameEn: "Description of the project acceptance document",
         type: "multiline",
+        maxchar: 5000,        
+
       },
       {
         DisplayName: "لجنة استلام المشاريع",
@@ -323,6 +344,8 @@ var Information_Form = [
         DisplayName: "وصف لجنة استلام المشاريع",
         DisplayNameEn: "Description of the project receiving committee",
         type: "multiline",
+        maxchar: 5000,        
+
       },
     ],
   },

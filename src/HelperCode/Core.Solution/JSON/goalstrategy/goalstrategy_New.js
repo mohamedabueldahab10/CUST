@@ -11,12 +11,16 @@ var Information_Form = [
         DisplayName: 'الأسم',
         type: 'string',
         validation: 'required',
+        maxchar: '255',
+        withletters:true,
+        Errmsgkey:"withletterpattern",
       },
       {
         InternalName: 'Description',
         DisplayNameEn: 'Description',
         DisplayName: 'الوصف',
         type: 'multiline',
+        maxchar: 5000,        
         // "validation": "required"
       },
       {
@@ -98,18 +102,24 @@ var Information_Form = [
         DisplayNameEn: 'Vision',
         DisplayName: 'الرؤية',
         type: 'multiline',
+        maxchar: 5000,        
+
       },
       {
         InternalName: 'Value',
         DisplayNameEn: 'Value',
         DisplayName: 'القيم',
         type: 'multiline',
+        maxchar: 5000,        
+
       },
       {
         InternalName: 'Mission',
         DisplayNameEn: 'Mission',
         DisplayName: 'الرسالة',
         type: 'multiline',
+        maxchar: 5000,        
+
       },
       {
         InternalName: 'ApprovalDate',
@@ -161,7 +171,10 @@ var Information_Form = [
         DisplayNameEn: 'Name',
         DisplayName: 'المحور الاستراتيجي',
         type: 'string',
-        // "validation": "required"
+        validation: 'required',
+        maxchar: '255',
+        withletters:true,
+        Errmsgkey:"withletterpattern",
       },
       // {
       //     "InternalName": "RelatedStrategy",
@@ -196,6 +209,7 @@ var Information_Form = [
         DisplayNameEn: 'Description',
         DisplayName: 'الوصف',
         type: 'multiline',
+        maxchar: 5000,        
         // "validation": "required"
       },
     ],

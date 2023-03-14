@@ -18,8 +18,17 @@ var Information_Form = [
         DisplayNameEn: 'Name',
         DisplayName: 'مقياس المنفعة',
         type: 'string',
-        maxchar: '250',
         validation: 'required',
+        maxchar: '255',
+        withletters:true,
+        Errmsgkey:"withletterpattern",
+      },
+      {
+        InternalName: 'Description',
+        DisplayName: 'وصف المقياس',
+        DisplayNameEn: 'Description',
+        type: 'multiline',
+        maxchar: 5000,
       },
       // {
       //   // hol dynamic 3ala l lookup
@@ -189,7 +198,7 @@ var Information_Form = [
         DisplayNameEn: 'Data Source',
         DisplayName: 'مصدر البيانات',
         type: 'string',
-        maxchar: '500',
+        maxchar: '255',
         // "state": "disabled",
         // dynamic: "Initiative"
       },
@@ -227,6 +236,7 @@ var Information_Form = [
         DisplayName: 'معادلة مقياس المنفعة',
         type: 'string',
         state: 'disabled',
+        maxchar: 255,        
         //editableBy: "PerformanceLeader",
       },
       {

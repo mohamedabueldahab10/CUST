@@ -17,6 +17,9 @@ var Information_Form = [
         DisplayNameEn: 'Deliverable Name',
         type: 'string',
         validation: 'required',
+        maxchar: '255',
+        withletters:true,
+        Errmsgkey:"withletterpattern",
       },
       {
         InternalName: 'Description',
@@ -112,8 +115,8 @@ var Information_Form = [
         InternalName: 'AcceptanceCriteria',
         DisplayName: 'معايير قبول المخرج',
         DisplayNameEn: 'Acceptance Criteria',
-        // type: 'string',
         type: 'multiline',
+        maxchar: 5000,        
       },
       // {
       //     "InternalName": "PlannedStartDate",

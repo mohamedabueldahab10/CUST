@@ -19,6 +19,7 @@ var Information_Form = [
         DisplayNameEn: 'Contract Name',
         type: 'string',
         validation: 'required',
+        maxchar: 255,
       },
       // {
       //     "InternalName": "Vendor",
@@ -89,6 +90,7 @@ var Information_Form = [
         DisplayName: 'الجهة المستفيدة من العمل',
         DisplayNameEn: 'Beneficiary',
         type: 'string',
+        maxchar: 255,
       },
       {
         InternalName: 'Description',
@@ -109,12 +111,14 @@ var Information_Form = [
         DisplayName: 'الطرف الأول',
         DisplayNameEn: 'First Party',
         type: 'string',
+        maxchar: 255,
       },
       {
         InternalName: 'Second',
         DisplayName: 'الطرف الثاني',
         DisplayNameEn: 'Second Party',
         type: 'string',
+        maxchar: 255,
       },
       // {
       //     "InternalName": "First",

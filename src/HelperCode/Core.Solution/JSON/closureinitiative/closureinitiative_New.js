@@ -93,14 +93,16 @@ var Information_Form = [
         DisplayNameEn: 'Closure Reasons Desc',
         DisplayName: 'أسباب إلغاء المشروع (في حالة الإلغاء)',
         type: 'multiline',
-        maxchar: '250',
+        maxchar: 5000,        
+
       },
       {
         InternalName: 'Description',
         DisplayNameEn: 'Initiative Completion Check list',
         DisplayName: 'قائمة تحقق اكتمال المبادرة  ',
         type: 'multiline',
-        maxchar: '250',
+        maxchar: 5000,        
+
       },
     ],
   },

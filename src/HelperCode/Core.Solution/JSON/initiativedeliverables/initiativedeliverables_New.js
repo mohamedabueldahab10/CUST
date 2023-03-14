@@ -17,7 +17,9 @@ var Information_Form = [
         DisplayNameEn: 'Name',
         DisplayName: 'اسم المخرج',
         type: 'string',
-        maxchar: '250',
+        maxchar: '255',
+        withletters:true,
+        Errmsgkey:"withletterpattern",
         validation: 'required',
       },
       //   {
@@ -44,6 +46,7 @@ var Information_Form = [
         DisplayNameEn: 'Deliverable Success KPI',
         DisplayName: 'مقياس نجاح المخرج  (إن وجد)',
         type: 'multiline',
+        maxchar: 5000,        
       },
       // {
       //     "InternalName": "CommittedDate",

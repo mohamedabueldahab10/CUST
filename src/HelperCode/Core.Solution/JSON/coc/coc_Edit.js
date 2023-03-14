@@ -97,6 +97,8 @@ var Information_Form = [
         DisplayName: 'ملاحظات',
         DisplayNameEn: 'Comments',
         type: 'multiline',
+        maxchar: 5000,        
+
       },
       {
         InternalName: 'getfile',

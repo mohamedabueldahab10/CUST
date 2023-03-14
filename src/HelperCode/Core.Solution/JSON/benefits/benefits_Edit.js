@@ -18,8 +18,10 @@ var Information_Form = [
         DisplayNameEn: 'Name',
         DisplayName: 'المنفعة',
         type: 'string',
-        maxchar: '250',
         validation: 'required',
+        maxchar: '255',
+        withletters:true,
+        Errmsgkey:"withletterpattern",
       },
       // {
       //   // hol dynamic 3ala l lookup
@@ -43,7 +45,7 @@ var Information_Form = [
         InternalName: 'Description',
         DisplayNameEn: 'Description',
         DisplayName: 'وصف المنفعة',
-        maxchar: '500',
+        maxchar: 5000,        
         type: 'multiline',
         validation: 'required',
       },
@@ -214,6 +216,8 @@ var Information_Form = [
         DisplayName: 'المقياس',
         type: 'multiline',         
         "state": "disabled",
+        maxchar: 5000,        
+
       },
     ],
   },

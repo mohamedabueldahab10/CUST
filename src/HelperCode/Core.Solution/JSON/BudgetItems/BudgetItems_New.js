@@ -31,7 +31,9 @@ var Information_Form  = [
                 "DisplayNameEn": "Budget Name",
                 "DisplayName":"اسم البند",
                 "type":"string",
-                "maxchar": "250",
+                maxchar: '255',
+                withletters:true,
+                Errmsgkey:"withletterpattern",
             
             },
             {
@@ -40,6 +42,7 @@ var Information_Form  = [
                 "DisplayName":"الجهة المعنية",
                 // "type": "lookup",
                 "type": "string",
+                maxchar: 255,        
                 //from other list:
                 // "source": "Internal Entities",
                 // "Dispfieldkey": "Name",
