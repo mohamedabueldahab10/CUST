@@ -29,7 +29,8 @@ var Information_Form = [{
             "DisplayName": "الموضوع",
             "DisplayNameEn": "Subject",
             "type": "string",
-            "validation": "required"
+            "validation": "required",
+            maxchar: 255,
         },
         {
             "InternalName": "Date",
@@ -43,6 +44,7 @@ var Information_Form = [{
             "DisplayName": "مكان الاجتماع",
             "DisplayNameEn": "Meeting Location",
             "type":   "string",
+            maxchar: 255,
               //from other list:
             // "source": "Regions",
               //"Dispfieldkey": "Title",   

@@ -17,6 +17,9 @@ var Information_Form = [
         DisplayName: 'اسم المعلم',
         DisplayNameEn: 'Name',
         type: 'string',
+        maxchar: '255',
+        withletters:true,
+        Errmsgkey:"withletterpatteWrn",
         validation: 'required',
       },
       // {
@@ -187,7 +190,7 @@ var Information_Form = [
         DisplayNameEn: 'Support Documents Description',
         DisplayName: 'وصف الوثائق الداعمة',
         type: 'multiline',
-        maxchar: '500',
+        maxchar: '5000',
       },
       {
         InternalName: 'getfile',

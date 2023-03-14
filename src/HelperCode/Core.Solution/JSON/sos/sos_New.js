@@ -17,7 +17,9 @@ var Information_Form = [
         DisplayNameEn: 'Name',
         DisplayName: 'اسم الهدف',
         type: 'string',
-        maxchar: '250',
+        maxchar: '255',
+        withletters:true,
+        Errmsgkey:"withletterpattern",
         validation: 'required',
       },
       {
@@ -32,7 +34,7 @@ var Information_Form = [
         DisplayNameEn: 'Description',
         DisplayName: 'وصف الهدف',
         type: 'multiline',
-        maxchar: '500',
+        maxchar: '5000',
       },
       // {
       //     "InternalName": "SOSsecdOwner",
@@ -467,7 +469,7 @@ var Information_Form = [
         DisplayNameEn: 'Strategic Description',
         DisplayName: 'وصف  المحور الإستراتيجى / برنامج الرؤية',
         type: 'multiline',
-        maxchar: '500',
+        maxchar: '5000',
         // dontSubmit: true,
         dontSubmit: true,
         state: 'disabled',

@@ -28,7 +28,9 @@ var Information_Form = [
         DisplayNameEn: 'Name',
         DisplayName: 'المؤشر ',
         type: 'string',
-        maxchar: '250',
+        maxchar: '255',
+        withletters:true,
+        Errmsgkey:"withletterpattern",
         validation: 'required',
         ToggleDisabledName: 'Name',
         security: {
@@ -183,7 +185,7 @@ var Information_Form = [
         DisplayNameEn: 'Description',
         DisplayName: 'وصف المؤشر',
         ToggleDisabledName: 'Description',
-        maxchar: '500',
+        maxchar: '5000',
         type: 'multiline',
         validation: 'required',
         security: {
@@ -201,7 +203,7 @@ var Information_Form = [
         DisplayNameEn: 'Issues',
         DisplayName: 'التحديات',
         ToggleDisabledName: 'Issues',
-        maxchar: '500',
+        maxchar: '5000',
         type: 'multiline',
       },
       {
@@ -209,7 +211,7 @@ var Information_Form = [
         DisplayNameEn: 'Risks',
         DisplayName: 'المخاطر',
         ToggleDisabledName: 'Risks',
-        maxchar: '500',
+        maxchar: '5000',
         type: 'multiline',
       },
       {
@@ -217,7 +219,7 @@ var Information_Form = [
         DisplayNameEn: 'External Factors',
         DisplayName: 'العوامل الخارجية',
         ToggleDisabledName: 'ExternalFactors',
-        maxchar: '500',
+        maxchar: '5000',
         type: 'multiline',
       },
       {
@@ -225,7 +227,7 @@ var Information_Form = [
         DisplayNameEn: 'Assumptions',
         DisplayName: 'الافتراضات',
         ToggleDisabledName: 'Assumptions',
-        maxchar: '500',
+        maxchar: '5000',
         type: 'multiline',
         security: {
           groups: [
@@ -921,7 +923,7 @@ var Information_Form = [
         DisplayName: 'مصدر البيانات',
         ToggleDisabledName: 'DataSource',
         type: 'string',
-        maxchar: '500',
+        maxchar: '255',
         security: {
           groups: [
             'LMS_P',
@@ -938,7 +940,7 @@ var Information_Form = [
         DisplayName: 'مسؤول مصدر البيانات',
         ToggleDisabledName: 'DataSourceResponsible',
         type: 'string',
-        maxchar: '500',
+        maxchar: '255',
         security: {
           groups: [
             'LMS_P',
@@ -1178,6 +1180,7 @@ var Information_Form = [
         DisplayNameEn: 'KPI Equation',
         DisplayName: 'معادلة المؤشر',
         type: 'string',
+        maxchar: 255,
         state: 'disabled',
         security: {
           groups: [
@@ -1507,7 +1510,7 @@ var Information_Form = [
       //     InternalName: 'PerformanceAnalysis',
       //     DisplayNameEn: 'Performance Analysis',
       //     DisplayName: 'تحليل الأداء',
-      //     maxchar: '500',
+      //     maxchar: '5000',
       //     type: 'multiline',
       //     security: {
       //       groups: [
