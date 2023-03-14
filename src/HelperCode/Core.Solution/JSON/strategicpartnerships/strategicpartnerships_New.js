@@ -249,6 +249,7 @@ var Information_Form = [
         DisplayNameEn: 'Cancelation Date',
         type: 'datetime',
         RequiredName: 'CancelationDate',
+        max: 'today',
         Errmsgkey:'cancelationdatepattern',
       },
       {
