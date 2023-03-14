@@ -81,8 +81,11 @@ var Information_Form = [
         validation: 'required',
         dynamic: 'parent', //main field that affect on other chiled field
         requiredValues: [
-          { value: 'sublevel2', fields: ['RelatedObjective','SubSector'] }, //we can put more than 1  field
-          { value: 'sublevel3', fields: ['RelatedObjective','Department','SubSector'] }, 
+          { value: 'sublevel2', fields: ['RelatedObjective', 'SubSector'] }, //we can put more than 1  field
+          {
+            value: 'sublevel3',
+            fields: ['RelatedObjective', 'Department', 'SubSector'],
+          },
         ],
       },
       // {
@@ -174,21 +177,21 @@ var Information_Form = [
         InternalName: 'RelatedObjective',
         DisplayNameEn: 'Related Objective',
         DisplayName: 'الهدف المرتبط',
-        type: 'lookup',
-        // queryField: 'Types',
-        // queryFieldType: 'dropdownValues', //ex: "Choice"
-        // queryFieldValue: 'main',
+        ToggleName: 'RelatedObjective',
+        RequiredName: 'RelatedObjective',
+        type: 'lookupWithQuery',
+        queryField: 'Types',
+        queryFieldType: 'dropdownValues', //ex: "Choice"
+        queryFieldValue: 'main',
         //from other list:
         source: 'SOs',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        validation: 'required',
-        dynamic: "Types", //InternalName Of Parent field
-        filterField: "Types",//InternalName Of Parent field
-        filterFieldType: "Choice",
         display: 'none',
-        ToggleName: 'RelatedObjective',
-        RequiredName: 'RelatedObjective',
+        //
+        dynamic: 'RelatedStrategy',
+        filterField: 'RelatedStrategy',
+        filterFieldType: 'Text',
       },
       {
         InternalName: 'RelatedPortfolio',
@@ -263,9 +266,9 @@ var Information_Form = [
         InternalName: 'RelatedStrategyPillars',
         DisplayNameEn: 'Is Strategic Pillars/Vision Programs Exist?',
         DisplayName: 'هل يوجد محاور استراتيجية / برامج الرؤية ؟',
-        type: "dropdownValues",
+        type: 'dropdownValues',
         // dontSubmit: true,
-        // type: 'yesnoradio', 
+        // type: 'yesnoradio',
         dontSubmit: true,
 
         state: 'disabled',
@@ -421,7 +424,7 @@ var Information_Form = [
   {
     label: 'الركيزة الاستراتيجية / برنامج الرؤية',
     labelEn: 'Strategic Pillar/Vision Program',
-    display:'none', // it's specific to pillers section only
+    display: 'none', // it's specific to pillers section only
     description: '',
     descriptionEn: '',
     subFields: [
@@ -443,7 +446,7 @@ var Information_Form = [
       // 	},
 
       // },
-      { 
+      {
         InternalName: 'PillarName',
         DisplayNameEn: 'Strategic Pillar/Vision Program Name',
         DisplayName: 'اسم المحور الإستراتيجى / برنامج الرؤية',

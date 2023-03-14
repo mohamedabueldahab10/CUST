@@ -90,8 +90,12 @@ var Information_Form = [
         validation: 'required',
         dynamic: 'parent', //main field that affect on other chiled field
         requiredValues: [
-          { value: 'sublevel2', fields: ['RelatedObjective','SubSector'] }, //we can put more than 1  field
-          { value: 'sublevel3', fields: ['RelatedObjective','Department','SubSector'] },        ],
+          { value: 'sublevel2', fields: ['RelatedObjective', 'SubSector'] }, //we can put more than 1  field
+          {
+            value: 'sublevel3',
+            fields: ['RelatedObjective', 'Department', 'SubSector'],
+          },
+        ],
       },
       {
         InternalName: 'RelatedStrategy',
@@ -110,8 +114,8 @@ var Information_Form = [
         dynamic: 'parent', //"parentInternalName" or "parent" // if parent it will affect other fields
         //in case not parent add below attrs
         isRelatedToParent: true, // to show parent value depends on child like sector and subsector
-        fieldsinformlvl1: "RelatedStrategyPillars", // fields in look up list
-        sourcefieldlvl1: "PillarsExist",
+        fieldsinformlvl1: 'RelatedStrategyPillars', // fields in look up list
+        sourcefieldlvl1: 'PillarsExist',
         //role access
         accessFilter: [
           {
@@ -170,22 +174,23 @@ var Information_Form = [
         InternalName: 'RelatedObjective',
         DisplayNameEn: 'Related Objective',
         DisplayName: 'الهدف المرتبط',
-        type: 'lookup',
-        // queryField: 'Types',
-        // queryFieldType: 'dropdownValues', //ex: "Choice"
-        // queryFieldValue: 'main',
+        ToggleName: 'RelatedObjective',
+        RequiredName: 'RelatedObjective',
+        type: 'lookupWithQuery',
+        queryField: 'Types',
+        queryFieldType: 'dropdownValues', //ex: "Choice"
+        queryFieldValue: 'main',
         //from other list:
         source: 'SOs',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        validation: 'required',
-        dynamic: "Types", //InternalName Of Parent field
-        filterField: "Types",//InternalName Of Parent field
-        filterFieldType: "Choice",
         display: 'none',
-        ToggleName: 'RelatedObjective',
-        RequiredName: 'RelatedObjective',
+        //
+        dynamic: 'RelatedStrategy',
+        filterField: 'RelatedStrategy',
+        filterFieldType: 'Text',
       },
+
       {
         InternalName: 'RelatedPortfolio',
         DisplayNameEn: 'Related Portfolio',
@@ -286,9 +291,7 @@ var Information_Form = [
             { display: 'no', value: 'no' },
           ],
         },
-        toggleValues: [
-          { value: 'yes', fields: ['PillarName'] },
-        ]
+        toggleValues: [{ value: 'yes', fields: ['PillarName'] }],
       },
       //   {
       //     InternalName: 'RelatedJobStrategy',
@@ -380,9 +383,8 @@ var Information_Form = [
         state: 'disabled',
         dontSubmit: true,
 
-
         // dontSubmit: true,
-        // grandFieldId: "StrategicDescription", // we add this field to handle the two field filtration(parent Id in current form) 
+        // grandFieldId: "StrategicDescription", // we add this field to handle the two field filtration(parent Id in current form)
         // childFieldId: "StrategicDescription",// we add this field to handle the two field filtration (child Id in current form)
         // childFieldIdSource: "StrategicDescription",// we add this field to handle the two field filtration (child internal name in destination list)
         //

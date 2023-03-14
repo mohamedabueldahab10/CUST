@@ -109,21 +109,21 @@ var Information_Form = [
         InternalName: 'RelatedObjective',
         DisplayNameEn: 'Related Objective',
         DisplayName: 'الهدف المرتبط',
-        type: 'lookup',
-        // queryField: 'Types',
-        // queryFieldType: 'dropdownValues', //ex: "Choice"
-        // queryFieldValue: 'main',
+        ToggleName: 'RelatedObjective',
+        RequiredName: 'RelatedObjective',
+        type: 'lookupWithQuery',
+        queryField: 'Types',
+        queryFieldType: 'dropdownValues', //ex: "Choice"
+        queryFieldValue: 'main',
         //from other list:
         source: 'SOs',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        validation: 'required',
-        dynamic: "Types", //InternalName Of Parent field
-        filterField: "Types",//InternalName Of Parent field
-        filterFieldType: "Choice",
         display: 'none',
-        ToggleName: 'RelatedObjective',
-        RequiredName: 'RelatedObjective',
+        //
+        dynamic: 'RelatedStrategy',
+        filterField: 'RelatedStrategy',
+        filterFieldType: 'Text',
       },
       {
         InternalName: 'RelatedPortfolio',
