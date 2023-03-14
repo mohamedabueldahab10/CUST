@@ -4,6 +4,11 @@ var Information_Form = [
     labelEn: 'Initiative Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
+    // formDefaultValues: [
+    //   { fieldName: 'WFModuleCode', value: 'test',roles:["Administrator","InitiativeManager"] },
+    //   { fieldName: 'WFStage', value: 'testStage',roles:["allRoles"] }
+
+    // ],
     subFields: [
       // {
       //     "InternalName": "Title",
@@ -91,9 +96,9 @@ var Information_Form = [
         // dynamic: 'parent',
         // dynamic: 'Types',
         // dynamic:'parent',
-        seconeddynamic:"Types",
-				dynamic: "parent", //main field that affect on other chiled field
-        filterField: 'Types', 
+        seconeddynamic: "Types",
+        dynamic: "parent", //main field that affect on other chiled field
+        filterField: 'Types',
         filterFieldType: 'Text',
         notInvokeListiner: true, // to not invoke the lookup when change on parent > the filteration depends on other field also
         //in case not parent add below attrs
@@ -242,7 +247,7 @@ var Information_Form = [
         dynamic: 'RelatedStrategy',
         filterField: 'RelatedStrategy',
         filterFieldType: 'Text',
-          accessFilter: [
+        accessFilter: [
           {
             role: 'VROE',
             conditions: [

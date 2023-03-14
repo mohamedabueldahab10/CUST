@@ -150,6 +150,9 @@ window.ListInfo = {
     var printHtml = "";
     var toggleSectionName;
 
+    // to handle the default form value
+    var formDefaultValues = [], dataFormDefaultValue = "";
+
 
     asyncFor.seqProcess(
       Information_Form,
@@ -163,6 +166,20 @@ window.ListInfo = {
         } else {
           Label = item.labelEn;
           Description = item.descriptionEn;
+        }
+
+   // to handle the default form value
+        formDefaultValues = item.formDefaultValues
+
+        if (formDefaultValues && formDefaultValues.length) {
+          dataFormDefaultValue = 'data-formDefaultValue="' +
+            JSON.stringify(formDefaultValues).replaceAll(
+              `"`,
+              `'`
+            ) +
+            '"'
+        } else {
+          dataFormDefaultValue = ""
         }
 
 
@@ -218,7 +235,7 @@ window.ListInfo = {
           Description +
           "</span>" +
           "</div>" +
-          '<div data-togglename=' + toggleSectionName + ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container">';
+          '<div data-togglename=' + toggleSectionName + ' ' + dataFormDefaultValue + ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container">';
 
         asyncFor.seqProcess(
           item.subFields,
@@ -389,7 +406,7 @@ window.ListInfo = {
 
             let notInvokeListiner = $(this).data("notinvokelistiner")
             console.log($(this).data("notinvokelistiner"), "notinvokelistiner conso")
-             debugger
+            debugger
             $("[dynamic=" + parentFieldName + "]").each(function () {
               console.log(parentFieldName, "parentFieldName")
 
