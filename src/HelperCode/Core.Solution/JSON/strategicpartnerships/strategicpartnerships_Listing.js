@@ -11,7 +11,7 @@ var Listing_Info = [
       "InternalName":"Name",
       "DisplayName":"اسم الشراكة",
       "DisplayNameEn":"Partnership Name",
-      "type":"lookup",
+      "type":"text",
       "inlisting":true,
       "infilter":true
    },
