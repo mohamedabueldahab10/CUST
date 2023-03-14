@@ -227,14 +227,15 @@ window.Edit_Data_Request = {
           mp.init($(this).attr("id"), { AllowMultipleValues: false });
           break;
         case "multipicker":
-
+          
           var pemail =
             oListItem.get_item("" + $(this).attr("id") + "") == null
-              ? enternameemail
+              ? []
               : oListItem
                 .get_item("" + $(this).attr("id") + "");
 
           var userItems = [];
+          
           pemail.forEach(function (element) {
             userItems.push(element.get_lookupValue());
           })
@@ -1389,13 +1390,17 @@ window.View_Data_Request = {
               records.forEach(function (el, index) {
 
                 // $this.parent().find('a').attr('href', '/SitePages/View.aspx?ListKey=' + linkedto + '&IID=' + el["ID"] + '')
-
+                var htmlLink = ""
                 var handleHref = "javascript:"
-                if (el["ID"] && linkedto) {
+
+                if (el["ID"] && linkedto && linkedto != 'undefined') {
                   handleHref = `/SitePages/View.aspx?ListKey=${linkedto}&IID=${el["ID"]}`
+                  htmlLink = `<span><a class='elementLink' href=${handleHref} target='_blank'><i class='fas fa-external-link-alt'></i></a></span>`
                 }
 
-                var htmlLink = `<span><a class='elementLink' href=${handleHref} target='_blank'><i class='fas fa-external-link-alt'></i></a></span>`
+
+
+                // var htmlLink = `<span><a class='elementLink' href=${handleHref} target='_blank'><i class='fas fa-external-link-alt'></i></a></span>`
 
                 items += el[Dispfieldkey] + htmlLink + '<br>'
 
@@ -6256,7 +6261,7 @@ window.Get_TaskHistory = {
             `;
     }
 
-    
+
     let noTaskhistory = isThereHistory ? "" : UserNo_Data;
     if (!$(".task-history-ctx").length) {
       historyHTML += `<p style="text-align:center">${noTaskhistory}</p>

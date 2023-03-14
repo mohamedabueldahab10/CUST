@@ -32,25 +32,41 @@ var Information_Form = [
         "validation": "required"
     },
     {
-        "InternalName": "SubSector",
-        "DisplayName": "الوكالات",
-        "DisplayNameEn": "DeputyShip",
-        "type": "lookup",
-        // "type": "lookupmultiselect",
-        //from other list:
-        "source": "Internal Entities",
-        // "isSector": "True",
-        // "EntityType": "Department",
-        "Dispfieldkey": "Name",
-        "DispfieldkeyEn": "NameEn",
-        "valfieldkey": "Title",
-        "validation": "required",
-        "isRelatedToParent":true, // to show parent value depends on child like sector and subsector
-        dynamic: "Sector", //InternalName Of Parent field
-        filterField: "ParentEntity",//InternalName Of Parent field
-        filterFieldType: "Text",//Type In Sharepoint List for Parent field
-
+      "InternalName": "SubSector",
+      "DisplayName": "الوكالات",
+      "DisplayNameEn": "DeputyShip",
+      type: "lookupmultiselect",
+      //from other list:
+      source: "Internal Entities",
+      Dispfieldkey: "Name",
+      valfieldkey: "Title",
+      grpfieldkey: 'Title',
+      // "isRelatedToParent": true, // to show parent value depends on child like sector and subsector
+      dynamic: "Sector", //InternalName Of Parent field
+      filterField: "ParentEntity", 
+      filterFieldType: "Text",//Type In Sharepoint List for Parent field
+      // "validation": "required"
     },
+    // {
+    //     "InternalName": "SubSector",
+    //     "DisplayName": "الوكالات",
+    //     "DisplayNameEn": "DeputyShip",
+    //     "type": "lookup",
+    //     // "type": "lookupmultiselect",
+    //     //from other list:
+    //     "source": "Internal Entities",
+    //     // "isSector": "True",
+    //     // "EntityType": "Department",
+    //     "Dispfieldkey": "Name",
+    //     "DispfieldkeyEn": "NameEn",
+    //     "valfieldkey": "Title",
+    //     "validation": "required",
+    //     "isRelatedToParent":true, // to show parent value depends on child like sector and subsector
+    //     dynamic: "Sector", //InternalName Of Parent field
+    //     filterField: "ParentEntity",//InternalName Of Parent field
+    //     filterFieldType: "Text",//Type In Sharepoint List for Parent field
+
+    // },
       {
         InternalName: 'PartnershipType',
         DisplayName: 'نوع الشراكة',

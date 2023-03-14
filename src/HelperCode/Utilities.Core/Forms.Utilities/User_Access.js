@@ -7529,7 +7529,7 @@ window.Get_StrategicPartnerShip_Info_Request = {
     }
 
     // make the fields disabled and remove the add btns when status is notstandard
-    if(strategicPartnerShipStatus == 'notstandard' && isthereSTCODE){
+    if (strategicPartnerShipStatus == 'notstandard' && isthereSTCODE) {
       $("body").append(
         "<style>" +
         ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
@@ -8079,8 +8079,8 @@ var Tasks_Info_Request_User = {
           localStorage.getItem("lng") == null ||
           localStorage.getItem("lng") == "ar"
         ) {
-          tasktitle = tasktitlearr[0].name;
-        } else tasktitle = tasktitlearr[0].nameEn;
+          tasktitle = tasktitlearr.length ? tasktitlearr[0].name : "";
+        } else tasktitle = tasktitlearr.length ? tasktitlearr[0].nameEn : "";
       }
 
       window.historyLinkNotification;

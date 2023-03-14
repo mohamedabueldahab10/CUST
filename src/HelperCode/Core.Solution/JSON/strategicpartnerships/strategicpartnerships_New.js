@@ -13,43 +13,73 @@ var Information_Form = [
         validation: 'required',
       },
       {
-                "InternalName": "Sector",
-                "DisplayName": "القطاع",
-                "DisplayNameEn": "Sector",
-                "type": "lookupWithQuery",
-                "queryField": "EntityType",
-                "queryFieldType": "dropdownValues", //ex: "Choice"
-                // dontSubmit: true,
-                "queryFieldValue": "Sector",
-                dynamic: "parent",
-                "source": "Internal Entities",
-                // "state": "disabled",
-                "Dispfieldkey": "Name",
-                "DispfieldkeyEn": "NameEn",
-                "valfieldkey": "Title",
-                "validation": "required"
-            },
-            {
-                "InternalName": "SubSector",
-                "DisplayName": "الوكالات",
-                "DisplayNameEn": "DeputyShip",
-                "type": "lookup",
-                // "type": "lookupmultiselect",
-                //from other list:
-                "source": "Internal Entities",
-                // "isSector": "True",
-                // "EntityType": "Department",
-                "Dispfieldkey": "Name",
-                "DispfieldkeyEn": "NameEn",
-                "valfieldkey": "Title",
-                "validation": "required",
-                "isRelatedToParent":true, // to show parent value depends on child like sector and subsector
-                dynamic: "Sector", //InternalName Of Parent field
-                filterField: "ParentEntity",
-                // filterField: "Sector",//InternalName Of Parent field
-                filterFieldType: "Text",//Type In Sharepoint List for Parent field
+        "InternalName": "Sector",
+        "DisplayName": "القطاع",
+        "DisplayNameEn": "Sector",
+        "type": "lookupWithQuery",
+        "queryField": "EntityType",
+        "queryFieldType": "dropdownValues", //ex: "Choice"
+        "queryFieldValue": "Sector",
+        dynamic: "parent",
+        "source": "Internal Entities",
+        "Dispfieldkey": "Name",
+        "DispfieldkeyEn": "NameEn",
+        "valfieldkey": "Title",
+        "validation": "required"
+      },
+      // {
+      //   InternalName: 'RelatedObjective',
+      //   DisplayNameEn: 'Related Objective',
+      //   DisplayName: 'الهدف المرتبط',
+      //   type: 'lookupmultiselect',
+      //   source: 'SOs',
+      //   Dispfieldkey: 'Name',
+      //   valfieldkey: 'Title',
+      //   grpfieldkey: 'Title',
+      //   //
+      //   dynamic: 'RelatedStrategy',
+      //   filterField: 'RelatedStrategy',
+      //   filterFieldType: 'Text',
+      // },
 
-            },
+      {
+        "InternalName": "SubSector",
+        "DisplayName": "الوكالات",
+        "DisplayNameEn": "DeputyShip",
+        type: "lookupmultiselect",
+        //from other list:
+        source: "Internal Entities",
+        Dispfieldkey: "Name",
+        valfieldkey: "Title",
+        grpfieldkey: 'Title',
+        // "isRelatedToParent": true, // to show parent value depends on child like sector and subsector
+        dynamic: "Sector", //InternalName Of Parent field
+        filterField: "ParentEntity", 
+        filterFieldType: "Text",//Type In Sharepoint List for Parent field
+        // "validation": "required"
+      },
+      ////////////////////////////////////////////////////////////////////////////
+      // {
+      //   "InternalName": "SubSector",
+      //   "DisplayName": "الوكالات",
+      //   "DisplayNameEn": "DeputyShip",
+      //   "type": "lookup",
+      //   // "type": "lookupmultiselect",
+      //   //from other list:
+      //   "source": "Internal Entities",
+      //   // "isSector": "True",
+      //   // "EntityType": "Department",
+      //   "Dispfieldkey": "Name",
+      //   "DispfieldkeyEn": "NameEn",
+      //   "valfieldkey": "Title",
+      //   "validation": "required",
+      //   "isRelatedToParent": true, // to show parent value depends on child like sector and subsector
+      //   dynamic: "Sector", //InternalName Of Parent field
+      //   filterField: "ParentEntity",
+      //   // filterField: "Sector",//InternalName Of Parent field
+      //   filterFieldType: "Text",//Type In Sharepoint List for Parent field
+
+      // },
       {
         InternalName: 'PartnershipType',
         DisplayName: 'نوع الشراكة',
@@ -176,13 +206,13 @@ var Information_Form = [
         DisplayName: 'مدة الشراكة (شهر)',
         DisplayNameEn: 'Duration (Month)',
         type: 'floatDuration',
-        sourceelementdate:"StartDate",
-        targetelementdate:"FinishDate",
+        sourceelementdate: "StartDate",
+        targetelementdate: "FinishDate",
         validation: 'required',
       },
       {
         InternalName: 'FinishDate',
-        DisplayName: 'تاريخ نهاية الشراكة', 
+        DisplayName: 'تاريخ نهاية الشراكة',
         DisplayNameEn: 'Finish Date',
         type: 'datetime',
         state: 'disabled',
@@ -264,20 +294,19 @@ var Information_Form = [
       },
     ],
   },
+  {
+    label: 'الوثائق الداعمة',
+    labelEn: 'Supporting Documents',
+    description: 'التفاصيل',
+    descriptionEn: 'Details',
+    subFields: [
       {
-        label: 'الوثائق الداعمة',
-        labelEn: 'Supporting Documents',
-        description: 'التفاصيل',
-        descriptionEn: 'Details',
-        subFields: [
-          {
-            InternalName: 'getfile',
-            DisplayName: 'المرفقات',
-            DisplayNameEn: 'Attachments',
-            type: 'file',
-            // withAddBtn: 'true',
-          },
-        ],
+        InternalName: 'getfile',
+        DisplayName: 'المرفقات',
+        DisplayNameEn: 'Attachments',
+        type: 'file',
+        // withAddBtn: 'true',
       },
-    ]
-    
+    ],
+  },
+]
