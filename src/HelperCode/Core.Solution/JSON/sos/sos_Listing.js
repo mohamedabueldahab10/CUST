@@ -49,14 +49,14 @@ var Listing_Info = [
     //     inlisting: false,
     //     infilter: true
     // },
-    {
-        "InternalName": "Status",
-        "DisplayName": " الحالة",
-        "DisplayNameEn": "Status",
-        "type": "status", //create this type to handle status in listing specially for strategicobjectivestatus
-        inlisting: true,
-        infilter: true
-    },
+    // {
+    //     "InternalName": "Status",
+    //     "DisplayName": " الحالة",
+    //     "DisplayNameEn": "Status",
+    //     "type": "status", //create this type to handle status in listing specially for strategicobjectivestatus
+    //     inlisting: true,
+    //     infilter: true
+    // },
     {
         "InternalName": "Sector",
         "DisplayName": "القطاع",

@@ -28,14 +28,14 @@ var Information_Form = [
         type: 'multipicker',
         validation: 'required',
       },
-      {  // status type string cause it's auto calculated and just want to handle it
-        "InternalName": "Status",
-        "DisplayName": " الحالة",
-        "DisplayNameEn": "Status",
-        dontSubmit: true,
-        "type": "string",
-        "state": "disabled"
-      },
+      // {  // status type string cause it's auto calculated and just want to handle it
+      //   "InternalName": "Status",
+      //   "DisplayName": " الحالة",
+      //   "DisplayNameEn": "Status",
+      //   dontSubmit: true,
+      //   "type": "string",
+      //   "state": "disabled"
+      // },
       {
         InternalName: 'Description',
         DisplayNameEn: 'Description',
