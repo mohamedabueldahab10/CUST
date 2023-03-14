@@ -494,7 +494,25 @@ window.New_Data_Submit = {
       } else
         New_Data_Submit.g.oListItem.set_item($(this).attr("id"), $(this).val());
     });
-    // console.log(PCODE);
+
+
+    //to handle the for default value submittion
+    $(`[data-formdefaultvalue]`).each(function (index) {
+
+      var parsingData = eval($(this).data('formdefaultvalue'))
+      console.log(parsingData, "parsingData")
+      // var listColumnName = parsingData[index].fieldName;
+      // var listColumnValue = parsingData[index].value;
+      // var allowToRole = parsingData[index].roles;
+      parsingData.forEach(el => {
+        if (el.roles.includes("allRoles")) {
+          New_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
+        } else if (el.roles.includes(currentUserRole)) {
+          New_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
+        }
+      })
+    })
+    //
 
     if (PCODE && listkey != "projects") {
       console.log(PCODE, "ProjectCodeeeee 1111111111 insiiiiiiiiiiiiiiiiiiiiiiiiide ")
@@ -1325,10 +1343,23 @@ window.Edit_Data_Submit = {
       }
     }
 
-    console.log("edit form submit")
 
+    //to handle the for default value submittion
+    $(`[data-formdefaultvalue]`).each(function (index) {
 
+      var parsingData = eval($(this).data('formdefaultvalue'))
+      console.log(parsingData, "parsingData ediiiiiit")
+      parsingData.forEach(el => {
+        if (el.roles.includes("allRoles")) {
+          Edit_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
+        } else if (el.roles.includes(currentUserRole)) {
+          Edit_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
+        }
+      })
+    })
+    //
 
+    debugger
     if (listkey == "issues") {
       if ($("#ResolutionStatus").val() == "Closed") {
         var now = new Date();
