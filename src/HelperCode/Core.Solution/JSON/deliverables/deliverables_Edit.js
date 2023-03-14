@@ -19,6 +19,9 @@ var Information_Form = [
         DisplayNameEn: 'Name',
         type: 'string',
         validation: 'required',
+        maxchar: '255',
+        withletters:true,
+        Errmsgkey:"withletterpattern",
       },
       {
         InternalName: 'Description',
@@ -153,6 +156,8 @@ var Information_Form = [
         DisplayName: 'معايير قبول المخرج',
         DisplayNameEn: 'Acceptance Criteria',
         type: 'multiline',
+        maxchar: 5000,        
+
       },
       {
         InternalName: 'Comments',

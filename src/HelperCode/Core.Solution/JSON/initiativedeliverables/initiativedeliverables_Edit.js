@@ -17,7 +17,9 @@ var Information_Form = [
         DisplayNameEn: 'Name',
         DisplayName: 'اسم المخرج',
         type: 'string',
-        maxchar: '250',
+        maxchar: '255',
+        withletters:true,
+        Errmsgkey:"withletterpattern",
         validation: 'required',
         security: {
           groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
@@ -53,6 +55,7 @@ var Information_Form = [
         DisplayNameEn: 'Deliverable Success KPI',
         DisplayName: 'مقياس نجاح المخرج  (إن وجد)',
         type: 'string',
+        maxchar: 255,
         security: {
           groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
         },
@@ -62,6 +65,7 @@ var Information_Form = [
         DisplayNameEn: 'Target',
         DisplayName: 'المستهدف (إن وجد)',
         type: 'string',
+        maxchar: 255,
         security: {
           groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
         },

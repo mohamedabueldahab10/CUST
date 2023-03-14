@@ -18,7 +18,9 @@ var Information_Form  = [
                 "DisplayNameEn": "Budget Name",
                 "DisplayName":"اسم البند",
                 "type":"string",
-                "maxchar": "250",
+                maxchar: '255',
+                withletters:true,
+                Errmsgkey:"withletterpattern",
             
             },
             {

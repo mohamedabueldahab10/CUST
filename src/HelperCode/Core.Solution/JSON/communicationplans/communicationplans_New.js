@@ -16,30 +16,37 @@ var Information_Form = [
         DisplayNameEn: 'Activity',
         type: 'string',
         validation: 'required',
+        maxchar: 255,
       },
       {
         InternalName: 'Periodic',
         DisplayName: 'الدورية',
         DisplayNameEn: 'Periodic',
         type: 'string',
+        maxchar: 255,
       },
       {
         InternalName: 'Impact',
         DisplayName: 'الأثر',
         DisplayNameEn: 'Impact',
         type: 'multiline',
+        maxchar: 5000,        
+
       },
       {
         InternalName: 'Objective',
         DisplayName: 'الهدف',
         DisplayNameEn: 'Objective',
         type: 'multiline',
+        maxchar: 5000,        
+
       },
       {
         InternalName: 'CommunicationTools',
         DisplayName: 'أدوات التواصل',
         DisplayNameEn: 'Communication Tools',
         type: 'multiline',
+        maxchar: 5000,        
       },
       // ,
       // {
