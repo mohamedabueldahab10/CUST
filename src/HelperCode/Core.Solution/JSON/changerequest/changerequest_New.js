@@ -33,7 +33,7 @@ window.Information_Form = [
 						
 						//--------VRO CR Section -------------
 						{ display: "strategicobjectives", value: "SOs",
-							roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'],
+							roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','Administrator'],
 							otherFields:[
 								{fieldName:"WFModuleCode",value:"VROCRObjective"},
 								{fieldName:"WFStage",value:"VROCRSOS01"},
@@ -41,7 +41,7 @@ window.Information_Form = [
 						},
 
 						{ display: "initiatives", value: "Initiatives" ,
-						roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'],
+						roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','Administrator'],
 							otherFields:[
 								{fieldName:"WFModuleCode",value:"VROCRInitiative"},
 								{fieldName:"WFStage",value:"VROCRInitiative01"},
@@ -49,7 +49,7 @@ window.Information_Form = [
 						},
 
 						{ display: "kpi", value: "MainKPI",
-							roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'],
+							roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','Administrator'],
 								otherFields:[
 									{fieldName:"WFModuleCode",value:"VROCRKPI"},
 									{fieldName:"WFStage",value:"VROCRKPI01"},
@@ -337,6 +337,7 @@ window.Information_Form = [
 
 							],
 						},
+						{display:"deletion",value:"delete"}
 					],
 				},
 			},

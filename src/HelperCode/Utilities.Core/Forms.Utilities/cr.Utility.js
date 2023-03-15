@@ -356,7 +356,7 @@ window.CrModeFunctionality = {
 window.handleCustomeCr = {
 	init: function () {
 		$('[data-togglename*="UpdateType"]').on("change", function () {
-			debugger
+			console.log($(this).val(),"VVVVVVVVVVVVVVVVVVVVVVsss")
 			isGeneral =
 				$(this).find(">option:selected").attr("data-trans-generalchange") == ""
 					? true

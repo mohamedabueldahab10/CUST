@@ -408,7 +408,7 @@ window.ListInfo = {
 
             let parentCustomFilterValueFromSibling = $(this).attr("data-parentcustomfiltervalue")
             let notInvokeListiner = $(this).data("notinvokelistiner")
-            
+
             $("[dynamic=" + parentFieldName + "]").each(function () {
               console.log(parentFieldName, "parentFieldName")
 
@@ -779,9 +779,9 @@ window.ListInfo = {
               $(`#${childId}`).data("queryfield", childFieldIdSource)
               $(`#${childId}`).data("queryfieldvalue", elementValue)
               $(`#${childId}`).data("queryfieldtype", "Text")
-              
+
               // window.setTimeout(function(){
-                $(`select[dynamic=parent][id=${grandId}]`).trigger('change') // to trigger only one field (correct field)
+              $(`select[dynamic=parent][id=${grandId}]`).trigger('change') // to trigger only one field (correct field)
               // },1500)
             }
 
@@ -1287,7 +1287,7 @@ window.ListInfo = {
                   });
                   // $("[data-section_type]").show()
                 }
-              } else if ($(this).val() == "ministry" || $(this).val() == "sectorial"|| $(this).val() == "lms"|| $(this).val() == "sub" ) {
+              } else if ($(this).val() == "ministry" || $(this).val() == "sectorial" || $(this).val() == "lms" || $(this).val() == "sub") {
                 if ($("[data-section_type]").length > 0) {
                   $("[data-section_type]").each(function () {
                     if (
@@ -8570,6 +8570,56 @@ var View_ListInfo = {
           OnSuccess(flag, htmlBody);
           break;
 
+        case "anchor":
+
+           htmlBody =
+          '<div class="col-md-6 CFIELD ' +
+          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          " " +
+          element.className +
+          ' " ' +
+          thistip +
+          " " +
+          hidestagesIDs +
+          " " +
+          editableBy +
+          " " +
+          showstagesIDs +
+          "  " +
+          disablestagesIDs +
+          "  " +
+          enablestagesIDs +
+          "   " +
+          isWfhidestagesIDs +
+          " " +
+          requireOnWfTaskstagesIDs +
+          " " +
+          isWfshowstagesIDs +
+          "  " +
+          isWfdisablestagesIDs +
+          "  " +
+          isWfenablestagesIDs +
+          '       data-groups="' +
+          groups +
+          '" style="display:' +
+          element.display +
+          '">' +
+          "<a " +
+          ToggleName +
+          " " +
+          toggleDisabledName +
+          " " +
+          RequiredName +
+          ' href="/" class="form-control SPIField" id="' +
+          element.InternalName +
+          '" ' +
+          element.state +
+          ">" + '</a>'
+          "</div>";
+          
+          OnSuccess(flag, htmlBody);
+          break;
+
         case "file":
           htmlBody = "";
           OnSuccess(flag, htmlBody);
@@ -8907,7 +8957,7 @@ dynamicAffectSelect = {
         <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`;
     }
 
-    console.log(Query,"Query")
+    console.log(Query, "Query")
     debugger
 
     camlQuery.set_viewXml(Query);

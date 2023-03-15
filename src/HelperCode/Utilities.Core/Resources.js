@@ -957,7 +957,8 @@
     taskhistory: "العمليات السابقة",
     taskdecision: "القرار",
     enabled: "مفعل",
-    disabled:"معطل"
+    disabled:"معطل",
+    deletion:"حذف",
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1931,7 +1932,8 @@
     taskhistory: "Task History",
     taskdecision: "Decision",
     enabled: "Enabled",
-    disabled:"Disabled"
+    disabled:"Disabled",
+    deletion:"Delete",
   },
 };
 
