@@ -432,6 +432,7 @@ window.ListInfo = {
                 filterField: filterField,
                 filterFieldType: filterField,
                 parentFieldValue: parentFieldValue,
+                //customFilterValue: customFilterValue,
                 filterFieldType: filterFieldType,
                 valFieldKey: valFieldKey,
                 dispFieldKey: dispFieldKey,
