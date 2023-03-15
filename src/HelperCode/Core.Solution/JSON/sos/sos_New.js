@@ -126,12 +126,12 @@ var Information_Form = [
             {
               display: 'sublevel2',
               value: 'sublevel2',
-              customFilterValue: 'main',
+              customFilterValue: 'main', // to filter on this value when build the query in dynamic
             },
             {
               display: 'sublevel3',
               value: 'sublevel3',
-              customFilterValue: 'sublevel2',
+              customFilterValue: 'sublevel2',// to filter on this value when build the query in dynamic
             },
           ],
         },
