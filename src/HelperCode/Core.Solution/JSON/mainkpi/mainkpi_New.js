@@ -23,7 +23,7 @@ var Information_Form = [
         dynamic: 'parent', //main field that affect on other chiled field
         type: 'dropdownValues',
         toggleValues: [
-          { value: 'main', fields: ['RelatedMainKpis','Sector','SubSector'] }, //we can put more than 1  field
+          { value: 'main', fields: ['Sector','SubSector'] }, //we can put more than 1  field
           { value: 'sublevel2', fields: ['RelatedMainKpis','Sector','SubSector'] }, //we can put more than 1  field
           { value: 'sublevel3', fields: ['RelatedMainKpis','Sector','SubSector'] }, //we can put more than 1  field
         ],
