@@ -1287,7 +1287,7 @@ window.ListInfo = {
                   });
                   // $("[data-section_type]").show()
                 }
-              } else if ($(this).val() == "ministry") {
+              } else if ($(this).val() == "ministry" || $(this).val() == "sectorial"|| $(this).val() == "lms"|| $(this).val() == "sub" ) {
                 if ($("[data-section_type]").length > 0) {
                   $("[data-section_type]").each(function () {
                     if (
