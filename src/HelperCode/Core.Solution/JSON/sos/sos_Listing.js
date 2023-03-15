@@ -41,14 +41,14 @@ var Listing_Info = [
         infilter: true,
         needTrans:true
     },
-    // {
-    //     "InternalName": "RelatedStrategy",
-    //     "DisplayNameEn": "Related Vision Strategy",
-    //     "DisplayName": "الاستراتيجية المرتبطة",
-    //     "type": "lookup",
-    //     inlisting: false,
-    //     infilter: true
-    // },
+    {
+        "InternalName": "RelatedStrategy",
+        "DisplayNameEn": "Related Vision Strategy",
+        "DisplayName": "الاستراتيجية المرتبطة",
+        "type": "lookup",
+        inlisting: false,
+        infilter: true
+    },
     // {
     //     "InternalName": "Status",
     //     "DisplayName": " الحالة",
