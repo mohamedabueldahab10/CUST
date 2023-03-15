@@ -168,7 +168,7 @@ window.ListInfo = {
           Description = item.descriptionEn;
         }
 
-   // to handle the default form value
+        // to handle the default form value
         formDefaultValues = item.formDefaultValues
 
         if (formDefaultValues && formDefaultValues.length) {
@@ -400,13 +400,15 @@ window.ListInfo = {
             let customFilterValue = $(this)
               .find("option[value=" + parentFieldValue + "]")
               .data("customfiltervalue");
+
+
             let isCustomFilterValue = $(this).attr("iscustomfiltervalue");
 
             let affectedSelectsInfo = [];
 
+            let parentCustomFilterValueFromSibling = $(this).attr("data-parentcustomfiltervalue")
             let notInvokeListiner = $(this).data("notinvokelistiner")
-            console.log($(this).data("notinvokelistiner"), "notinvokelistiner conso")
-            debugger
+            
             $("[dynamic=" + parentFieldName + "]").each(function () {
               console.log(parentFieldName, "parentFieldName")
 
@@ -439,6 +441,7 @@ window.ListInfo = {
                 queryFieldValue: queryFieldValue,
                 queryFieldName: queryFieldName,
                 queryFieldType: queryFieldType,
+                parentCustomFilterValueFromSibling: parentCustomFilterValueFromSibling
                 // dataSiblingvalue:dataSiblingvalue
               });
             });
@@ -473,6 +476,7 @@ window.ListInfo = {
                 queryFieldValue: queryFieldValue,
                 queryFieldName: queryFieldName,
                 queryFieldType: queryFieldType,
+                parentCustomFilterValueFromSibling: parentCustomFilterValueFromSibling
                 // dataSiblingvalue:dataSiblingvalue
               });
             });
@@ -757,19 +761,28 @@ window.ListInfo = {
 
           //////// apply grandFieldInvoke
           $(".grandFieldInvoke").on("change", function (event) {
+            debugger
+
+
 
             var grandId = $(this).data("grandfieldid")
             var childId = $(this).data("childfieldid")
             var childFieldIdSource = $(this).data("childfieldidsource")
+
             var elementValue = event.target.value
+            var customFilterValue = $(this).find("option[value=" + elementValue + "]").data("customfiltervalue"); // will add the value on parent to can handle the query in dynamic func
+
             if (grandId && elementValue && childId && childFieldIdSource) {
               $(`#${grandId}`).data("notinvokelistiner", false)
               $(`#${grandId}`).attr("data-seconedvaluelistiner", elementValue)
+              $(`#${grandId}`).attr("data-parentcustomfiltervalue", customFilterValue)
               $(`#${childId}`).data("queryfield", childFieldIdSource)
               $(`#${childId}`).data("queryfieldvalue", elementValue)
               $(`#${childId}`).data("queryfieldtype", "Text")
-
-              $(`select[dynamic=parent][id=${grandId}]`).trigger('change') // to trigger only one field (correct field)
+              
+              // window.setTimeout(function(){
+                $(`select[dynamic=parent][id=${grandId}]`).trigger('change') // to trigger only one field (correct field)
+              // },1500)
             }
 
           })
@@ -4041,10 +4054,12 @@ window.ListInfo = {
         } else {
           grandFieldId = ""
         }
-        var notInvokeListinerData = "", seconedValueListiner = "";
+        var notInvokeListinerData = "", seconedValueListiner = "", parentCustomFilterValue = "";
         if (element.notInvokeListiner) {
-          notInvokeListinerData = `data-notInvokeListiner=${element.notInvokeListiner}`
-          seconedValueListiner = `data-seconedvaluelistiner=""`
+          notInvokeListinerData = `data-notInvokeListiner=${element.notInvokeListiner}`;
+          seconedValueListiner = `data-seconedvaluelistiner=""`;
+
+          parentCustomFilterValue = `data-parentcustomfiltervalue=""`;
         }
         ////////////////////////////////////
 
@@ -4094,6 +4109,14 @@ window.ListInfo = {
           displayName +
           '"></div>' +
           '<ul ' +
+          grandFieldId +
+          " " +
+          notInvokeListinerData +
+          " " +
+          parentCustomFilterValue +
+          " " +
+          seconedValueListiner +
+          " " +
           dynamic +
           " " +
           seconeddynamic +
@@ -5076,10 +5099,12 @@ window.ListInfo = {
         } else {
           grandFieldId = ""
         }
-        var notInvokeListinerData = "", seconedValueListiner = "";
+        var notInvokeListinerData = "", seconedValueListiner = "", parentCustomFilterValue = "";
         if (element.notInvokeListiner) {
           notInvokeListinerData = `data-notInvokeListiner=${element.notInvokeListiner}`
           seconedValueListiner = `data-seconedvaluelistiner=""`
+
+          parentCustomFilterValue = `data-parentcustomfiltervalue=""`
         }
 
         var addSeblingClass = ""
@@ -5139,6 +5164,8 @@ window.ListInfo = {
           grandFieldId +
           " " +
           notInvokeListinerData +
+          " " +
+          parentCustomFilterValue +
           " " +
           seconedValueListiner +
           " " +
@@ -8837,6 +8864,10 @@ dynamicAffectSelect = {
       ? affectedSelectsInfo[0].customFilterValue
       : affectedSelectsInfo[0].parentFieldValue;
 
+    if (affectedSelectsInfo[0].parentCustomFilterValueFromSibling && affectedSelectsInfo[0].parentCustomFilterValueFromSibling != undefined) {
+      queryFieldValue = affectedSelectsInfo[0].parentCustomFilterValueFromSibling
+    }
+
 
     if (listkey == 'initiatives' && valueToFilter && valueToFilter == 'strategically') { // specially for trategically value
       valueToFilter = 'ministry' // becuse there is a value we use it in GoalStrategy list
@@ -8875,6 +8906,9 @@ dynamicAffectSelect = {
         </And></Where>
         <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`;
     }
+
+    console.log(Query,"Query")
+    debugger
 
     camlQuery.set_viewXml(Query);
 
