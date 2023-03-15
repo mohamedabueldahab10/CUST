@@ -4,6 +4,20 @@ var Information_Form = [
     labelEn: 'Basic Info',
     description: 'التفاصيل',
     descriptionEn: 'Details',
+    formDefaultValues: [
+      // //VRO
+      // { fieldName: 'WFModuleCode', value: 'VROCOC',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+      // { fieldName: 'WFStage', value: 'VROCOC01',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+      
+      // //EPMOCOC
+      // { fieldName: 'WFModuleCode', value: 'EPMOCOC',roles: ['EPMO'], },
+      // { fieldName: 'WFStage', value: 'EPMOCOC01',roles: ['EPMO'], },
+
+      // //LMS
+      // { fieldName: 'WFModuleCode', value: 'LMSCOC',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+      // { fieldName: 'WFStage', value: 'LMSCOC01',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+
+    ],
     subFields: [
       {
         InternalName: 'Deliverables',
