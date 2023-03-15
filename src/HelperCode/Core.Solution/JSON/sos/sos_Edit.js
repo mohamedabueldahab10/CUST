@@ -20,7 +20,7 @@ var Information_Form = [
         InternalName: 'ObjectiveOwner',
         DisplayName: 'مالك الهدف',
         DisplayNameEn: 'Objective Owner',
-        type: 'multipicker',
+        type: 'picker',
         validation: 'required',
       },
       // {  // status type string cause it's auto calculated and just want to handle it
