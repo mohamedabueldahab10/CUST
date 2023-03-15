@@ -4,22 +4,22 @@ var Information_Form = [
     labelEn: 'Strategy objective Data',
     description: '',
     descriptionEn: '',
-    subFields: [
-      //     "InternalName": "Title",
-      //     "DisplayName":"رمز الهدف",
-      //     "type":"string",
-      // "maxchar": "250",
-      //     "state":"disabled"
+    //   formDefaultValues: [
+    //   { fieldName: 'WFModuleCode', value: 'Administrator',roles:["Administrator","InitiativeManager"] },
+    //   { fieldName: 'WFModuleCode', value: 'InitiativeManager',roles:["InitiativeManager","SPMAdmin"] },
+    //   { fieldName: 'WFStage', value: 'Administrator',roles:["Administrator"]},
+    //   { fieldName: 'WFStage', value: 'InitiativeManager',roles:["InitiativeManager","SPMAdmin"] },
 
-      // },
+    // ],
+    subFields: [
       {
         InternalName: 'Name',
         DisplayNameEn: 'Name',
         DisplayName: 'اسم الهدف',
         type: 'string',
         maxchar: '255',
-        withletters:true,
-        Errmsgkey:"withletterpattern",
+        withletters: true,
+        Errmsgkey: "withletterpattern",
         validation: 'required',
       },
       {
@@ -36,74 +36,6 @@ var Information_Form = [
         type: 'multiline',
         maxchar: '5000',
       },
-      // {
-      //     "InternalName": "SOSsecdOwner",
-      //     "DisplayName": "صاحب الهدف",
-      //     "DisplayNameEn": "Objective Holder",
-      //     "type": "string"
-      // },
-      {
-        InternalName: 'Types',
-        DisplayNameEn: 'Objective Type',
-        DisplayName: 'نوع الهدف',
-        toggleValues: [
-          // { value: 'sub', fields: ['RelatedObjective', 'RelatedPortfolio'] },
-          // { value: 'level2', fields: ['RelatedObjective', 'RelatedPortfolio'] },
-          // { value: 'level3', fields: ['RelatedObjective', 'RelatedPortfolio'] },
-          { value: 'sublevel2', fields: ['RelatedObjective'] },
-          { value: 'sublevel3', fields: ['RelatedObjective'] },
-          // { value: 'main', fields: ['RelatedPillar'] },
-          { value: 'main', fields: [''] },
-          // { value: 'jobmarket', fields: ['RelatedJobStrategy'] },
-          // {value:'strategically', fields:['StrategyRelatedObjective']}
-        ],
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            { display: 'main', value: 'main' },
-            {
-              display: 'sublevel2',
-              value: 'sublevel2',
-              // customFilterValue: 'main',
-            },
-            {
-              display: 'sublevel3',
-              value: 'sublevel3',
-              // customFilterValue: 'sublevel2',
-            },
-            // { display: 'level2', value: 'level2' },
-            // { display: 'level3', value: 'level3' },
-            // { display: 'sub', value: 'sub' },
-            // { display: 'vision', value: 'vision' },
-            // { display: 'ministry', value: 'ministry' },
-            // { display: 'jobmarket', value: 'jobmarket' },
-            // { display: 'strategically', value: 'strategically' },
-            // { display: 'transformationally', value: 'transformationally' },
-          ],
-        },
-        validation: 'required',
-        // dynamic: 'parent', //main field that affect on other chiled field
-        requiredValues: [
-          { value: 'sublevel2', fields: ['RelatedObjective', 'SubSector'] }, //we can put more than 1  field
-          {
-            value: 'sublevel3',
-            fields: ['RelatedObjective', 'Department', 'SubSector'],
-          },
-        ],
-      },
-      // {
-      // 	"InternalName": "RelatedPillar",
-      // 	"DisplayNameEn": "Related Pillar",
-      // 	"ToggleName": "RelatedPillar",
-      // 	"DisplayName": "المحور المرتبط",
-      // 	"type": "lookup",
-      // 	//from other list:
-      // 	"source": "SPillars",
-      // 	"Dispfieldkey": "Name",
-      // 	"valfieldkey": "Title",
-      // 	"display": "none"
-
-      // },
       {
         InternalName: 'RelatedStrategy',
         DisplayNameEn: 'Related Vision Strategy',
@@ -115,10 +47,12 @@ var Information_Form = [
         valfieldkey: 'Title',
         // to get the seblings value
         valsiblingkey: 'PillarsExist', // internal name on sorce list
-        targetsiblingkey: 'RelatedStrategyPillars', // internal name on current list
-        // dynamically affected by other dropdown
-        dynamic: 'parent', //"parentInternalName" or "parent" // if parent it will affect other fields
-        //in case not parent add below attrs
+        targetsiblingkey: 'RelatedStrategyPillars', // internal name on current list       
+        //
+        dynamic: "parent", //main field that affect on other chiled field
+        // filterField: 'RelatedStrategy',
+        // filterFieldType: 'Text',
+        notInvokeListiner: true, // to not invoke the lookup when change on parent > the filteration depends on other field also
 
         //role access
         accessFilter: [
@@ -176,6 +110,46 @@ var Information_Form = [
         // "display":"none"
         validation: 'required',
       },
+      {
+        InternalName: 'Types',
+        DisplayNameEn: 'Objective Type',
+        DisplayName: 'نوع الهدف',
+        toggleValues: [
+          { value: 'sublevel2', fields: ['RelatedObjective'] },
+          { value: 'sublevel3', fields: ['RelatedObjective'] },
+          { value: 'main', fields: [''] },
+        ],
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'main', value: 'main' },
+            {
+              display: 'sublevel2',
+              value: 'sublevel2',
+              customFilterValue: 'main', // to filter on this value when build the query in dynamic
+            },
+            {
+              display: 'sublevel3',
+              value: 'sublevel3',
+              customFilterValue: 'sublevel2',// to filter on this value when build the query in dynamic
+            },
+          ],
+        },
+        validation: 'required',
+        // dynamic: 'parent', //main field that affect on other chiled field
+        requiredValues: [
+          { value: 'sublevel2', fields: ['RelatedObjective', 'SubSector'] }, //we can put more than 1  field
+          {
+            value: 'sublevel3',
+            fields: ['RelatedObjective', 'Department', 'SubSector'],
+          },
+        ],
+        //
+        grandFieldId: "RelatedStrategy", // we add this field to handle the two field filtration(parent Id in current form) 
+        childFieldId: "RelatedObjective",// we add this field to handle the two field filtration (child Id in current form)
+        childFieldIdSource: "Types",// we add this field to handle the two field filtration (child internal name in destination list)
+      },
+  
       {
         InternalName: 'RelatedObjective',
         DisplayNameEn: 'Related Objective',

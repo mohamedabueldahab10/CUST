@@ -2098,7 +2098,7 @@ var New_Master_Details_Submit = {
           var type = $('#Types').val()
           if (type == 'vision') {
             New_Master_Details_Submit.g.oListItem.set_item("Types", "program");
-          } else if (type == 'ministry') {
+          } else if (type == 'ministry'|| type == 'sectorial'|| type == 'lms'|| type == 'sub') {
             New_Master_Details_Submit.g.oListItem.set_item("Types", "pillar");
           }
         }
@@ -2370,7 +2370,7 @@ var Edit_Master_Details_Submit = {
         var type = $('#Types').val()
         if (type == 'vision') {
           Edit_Master_Details_Submit.g.oListItem.set_item("Types", "program");
-        } else if (type == 'ministry') {
+        } else if (type == 'ministry'|| type == 'sectorial'|| type == 'lms'|| type == 'sub') {
           Edit_Master_Details_Submit.g.oListItem.set_item("Types", "piller");
         }
       }

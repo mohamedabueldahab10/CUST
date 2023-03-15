@@ -5,13 +5,6 @@ var Information_Form = [
     description: 'التفاصيل',
     descriptionEn: 'Details',
     subFields: [
-      //     "InternalName": "Title",
-      //     "DisplayName":"رمز الهدف",
-      //     "type":"string",
-      // "maxchar": "250",
-      //     "state":"disabled"
-
-      // },
       {
         InternalName: 'Name',
         DisplayNameEn: 'Name',
@@ -45,26 +38,15 @@ var Information_Form = [
         type: 'multiline',
         maxchar: '5000',
       },
-      // {
-      //     "InternalName": "SOSsecdOwner",
-      //     "DisplayName": "صاحب الهدف",
-      //     "DisplayNameEn": "Objective Holder",
-      //     "type": "string"
-      // },
       {
         InternalName: 'Types',
         DisplayNameEn: 'Objective Type',
         DisplayName: 'نوع الهدف',
         toggleValues: [
-          // { value: 'sub', fields: ['RelatedObjective', 'RelatedPortfolio'] },
-          // { value: 'level2', fields: ['RelatedObjective', 'RelatedPortfolio'] },
-          // { value: 'level3', fields: ['RelatedObjective', 'RelatedPortfolio'] },
+      
           { value: 'sublevel2', fields: ['RelatedObjective'] },
           { value: 'sublevel3', fields: ['RelatedObjective'] },
-          // { value: 'main', fields: ['RelatedPillar'] },
           { value: 'main', fields: [''] },
-          // { value: 'jobmarket', fields: ['RelatedJobStrategy'] },
-          // {value:'strategically', fields:['StrategyRelatedObjective']}
         ],
         type: 'dropdownValues',
         options: {
@@ -73,21 +55,13 @@ var Information_Form = [
             {
               display: 'sublevel2',
               value: 'sublevel2',
-              // customFilterValue: 'main',
+              customFilterValue: 'main',
             },
             {
               display: 'sublevel3',
               value: 'sublevel3',
-              // customFilterValue: 'sublevel2',
+              customFilterValue: 'sublevel2',
             },
-            // { display: 'level2', value: 'level2' },
-            // { display: 'level3', value: 'level3' },
-            // { display: 'sub', value: 'sub' },
-            // { display: 'vision', value: 'vision' },
-            // { display: 'ministry', value: 'ministry' },
-            // { display: 'jobmarket', value: 'jobmarket' },
-            // { display: 'strategically', value: 'strategically' },
-            // { display: 'transformationally', value: 'transformationally' },
           ],
         },
         validation: 'required',
@@ -99,6 +73,9 @@ var Information_Form = [
             fields: ['RelatedObjective', 'Department', 'SubSector'],
           },
         ],
+        grandFieldId: "RelatedStrategy", // we add this field to handle the two field filtration(parent Id in current form) 
+        childFieldId: "RelatedObjective",// we add this field to handle the two field filtration (child Id in current form)
+        childFieldIdSource: "Types",// we add this field to handle the two field filtration (child internal name in destination list)
       },
       {
         InternalName: 'RelatedStrategy',
@@ -120,6 +97,8 @@ var Information_Form = [
         fieldsinformlvl1: 'RelatedStrategyPillars', // fields in look up list
         sourcefieldlvl1: 'PillarsExist',
         //role access
+        notInvokeListiner: true, // to not invoke the lookup when change on parent > the filteration depends on other field also
+
         accessFilter: [
           {
             role: 'VROE',

@@ -5,31 +5,14 @@ var Information_Form = [
     description: 'التفاصيل',
     descriptionEn: 'Details',
     subFields: [
-      // {
-      //   "InternalName": "Title",
-      //   "DisplayNameEn": "KPI code",
-      //   "DisplayName": "رمز المؤشر",
-      //   "type": "string",
-      //   "maxchar": "250",
-      //   "validation": "required"
-      // },
-      // {
-      //   "InternalName": "KPICode",
-      //   "DisplayNameEn": "KPI code",
-      //   "DisplayName": "رمز المؤشر",
-      //   "type": "string",
-      //   "maxchar": "250",
-      //   "validation": "required"
-
-      // },
       {
         InternalName: 'Name',
         DisplayNameEn: 'Name',
         DisplayName: 'المؤشر ',
         type: 'string',
         maxchar: '255',
-        withletters:true,
-        Errmsgkey:"withletterpattern",
+        withletters: true,
+        Errmsgkey: "withletterpattern",
         validation: 'required',
       },
       {
@@ -40,24 +23,29 @@ var Information_Form = [
         dynamic: 'parent', //main field that affect on other chiled field
         type: 'dropdownValues',
         toggleValues: [
-          { value: 'sublevel2', fields: ['RelatedStrategyObjective', 'RelatedMainKpis','Sector','SubSector'] }, //we can put more than 1  field
-          { value: 'sublevel3', fields: ['RelatedStrategyObjective', 'RelatedMainKpis','Sector','SubSector'] }, //we can put more than 1  field
+          { value: 'main', fields: ['Sector','SubSector'] }, //we can put more than 1  field
+          { value: 'sublevel2', fields: ['RelatedMainKpis','Sector','SubSector'] }, //we can put more than 1  field
+          { value: 'sublevel3', fields: ['RelatedMainKpis','Sector','SubSector'] }, //we can put more than 1  field
         ],
         options: {
           choices: [
-            { display: 'main', value: 'main',customFilterValue: 'main', },
+            {
+              display: 'main',
+              value: 'main',
+             // customFilterValue: 'main',
+            },
             {
               display: 'sublevel2',
               value: 'sublevel2',
-              customFilterValue: 'main',
+              // customFilterValue: 'sublevel2',
             },
             {
               display: 'sublevel3',
               value: 'sublevel3',
-              customFilterValue: 'sublevel2',
+              //customFilterValue: 'sublevel3',
             },
           ],
-        
+
         },
       },
       {
@@ -74,14 +62,14 @@ var Information_Form = [
         filterFieldType: "Choice",
         ///
         ///
-        display: 'none',
-        ToggleName:'RelatedStrategyObjective',
+        // display: 'none',
+        // ToggleName:'RelatedStrategyObjective',
       },
       {
         InternalName: 'Sector',
         DisplayName: 'القطاع',
         DisplayNameEn: 'Sector',
-        ToggleName:"Sector",
+        ToggleName: "Sector",
         type: 'lookupWithQuery',
         queryField: 'EntityType',
         queryFieldType: 'dropdownValues', //ex: "Choice"
@@ -93,15 +81,15 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
-        display:'none',
-        state:'disabled'
+        display: 'none',
+        state: 'disabled'
         // validation: 'required',
       },
       {
         InternalName: 'SubSector',
         DisplayName: 'الوكالات',
         DisplayNameEn: 'DeputyShip',
-        ToggleName:"SubSector",
+        ToggleName: "SubSector",
         type: 'lookup',
         //from other list:
         source: 'Internal Entities',
@@ -116,8 +104,8 @@ var Information_Form = [
         dynamic: 'Sector', //InternalName Of Parent field
         filterField: 'ParentEntity', //InternalName Of Parent field
         filterFieldType: 'Text', //Type In Sharepoint List for Parent field
-        display:'none',
-        state:'disabled'
+        display: 'none',
+        state: 'disabled'
 
       },
       {

@@ -692,7 +692,7 @@ window.Edit_Data_Request = {
           })
         }
       }
-      if ($('#Types').val() == 'vision' || $('#Types').val() == 'ministry') {
+      if ($('#Types').val() == 'vision' || $('#Types').val() == 'ministry' || $('#Types').val() == 'sub' || $('#Types').val() == 'lms' || $('#Types').val() == 'sectorial') {
 
         if (pillersRadio == 'yes') {
           $("[data-section_type]").show()
@@ -1903,7 +1903,7 @@ window.View_Data_Request = {
           })
         }
       }
-      if (strategyType == 'vision' || strategyType == 'ministry') {
+      if (strategyType == 'vision' || strategyType == 'ministry' || strategyType == 'sub' || strategyType == 'lms' || strategyType == 'sectorial' ) {
         if (pillersRadio == 'yes') {
           $("[data-section_type]").show()
         } else {
