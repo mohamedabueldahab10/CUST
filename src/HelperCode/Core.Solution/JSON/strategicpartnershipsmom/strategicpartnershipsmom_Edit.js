@@ -32,7 +32,8 @@ var Information_Form  = [
                 "DisplayName":"موضوع الاجتماع",
                 "DisplayNameEn": "Meeting Subject",
                 "type":"string",
-                "validation": "required"
+                "validation": "required",
+                maxchar: 255,
                 
             },
             {
@@ -47,7 +48,8 @@ var Information_Form  = [
                 "InternalName": "Location",
                 "DisplayName":"مكان الاجتماع",
                 "DisplayNameEn": "Meeting Location",
-                "type": "string"
+                "type": "string",
+                maxchar: 255,
                 //  //from other list:
                 //  "source": "Regions",
                 //  "Dispfieldkey": "Title",   
@@ -58,7 +60,8 @@ var Information_Form  = [
                 "InternalName": "Attendees",
                 "DisplayName":"الحضور",
                 "DisplayNameEn": "Attendees",
-                "type":"multiline"
+                "type":"multiline",
+                maxchar: 5000, 
                 
                 
             },
@@ -66,7 +69,8 @@ var Information_Form  = [
                 "InternalName": "MeetingObjectives",
                 "DisplayName":"أهداف الاجتماع وأهم محاور النقاش ",
                 "DisplayNameEn": "Meeting Objectives",
-                "type":"multiline"
+                "type":"multiline",
+                maxchar: 5000, 
                 
                 
             },
@@ -74,7 +78,8 @@ var Information_Form  = [
                 "InternalName": "FormalAgenda",
                 "DisplayName":"جدول الأعمال الرسمي",
                 "DisplayNameEn": "Formal Agenda",
-                "type":"multiline"
+                "type":"multiline",
+                maxchar: 5000, 
                 
                 
             },
@@ -82,13 +87,15 @@ var Information_Form  = [
                 "InternalName": "Decisions",
                 "DisplayName":"المقررات",
                 "DisplayNameEn": "Decisions",
-                "type":"multiline"                
+                "type":"multiline",
+                maxchar: 5000,                 
             },
             {
                 "InternalName": "Comments",
                 "DisplayName":"ملاحظات",
                 "DisplayNameEn": "Comments",
-                "type":"multiline"
+                "type":"multiline",
+                maxchar: 5000, 
                 
                 
             },
