@@ -29,8 +29,8 @@ var Information_Form = [
         DisplayName: 'المؤشر ',
         type: 'string',
         maxchar: '255',
-        withletters:true,
-        Errmsgkey:"withletterpattern",
+        withletters: true,
+        Errmsgkey: "withletterpattern",
         validation: 'required',
         ToggleDisabledName: 'Name',
         security: {
@@ -51,24 +51,29 @@ var Information_Form = [
         dynamic: 'parent', //main field that affect on other chiled field
         type: 'dropdownValues',
         toggleValues: [
-          { value: 'sublevel2', fields: ['RelatedStrategyObjective', 'RelatedMainKpis','Sector','SubSector'] }, //we can put more than 1  field
-          { value: 'sublevel3', fields: ['RelatedStrategyObjective', 'RelatedMainKpis','Sector','SubSector'] }, //we can put more than 1  field
+          { value: 'main', fields: ['RelatedMainKpis', 'Sector', 'SubSector'] }, //we can put more than 1  field
+          { value: 'sublevel2', fields: ['RelatedMainKpis', 'Sector', 'SubSector'] }, //we can put more than 1  field
+          { value: 'sublevel3', fields: ['RelatedMainKpis', 'Sector', 'SubSector'] }, //we can put more than 1  field
         ],
         options: {
           choices: [
-            { display: 'main', value: 'main',customFilterValue: 'main', },
+            {
+              display: 'main', value: 'main',
+              // customFilterValue: 'main',
+
+            },
             {
               display: 'sublevel2',
               value: 'sublevel2',
-              customFilterValue: 'main',
+              //customFilterValue: 'main',
             },
             {
               display: 'sublevel3',
               value: 'sublevel3',
-              customFilterValue: 'sublevel2',
+              //customFilterValue: 'sublevel2',
             },
           ],
-        
+
         },
       },
       {
@@ -84,7 +89,7 @@ var Information_Form = [
         filterField: "Types",//InternalName Of Parent field
         filterFieldType: "Choice",
         display: 'none',
-        ToggleName:'RelatedStrategyObjective',
+        // ToggleName:'RelatedStrategyObjective',
         fieldsinformlvl1: "Sector", // fields in look up list
         sourcefieldlvl1: "Sector",
         fieldsinformlvl2: "SubSector", // fields in look up list
@@ -106,12 +111,12 @@ var Information_Form = [
         "DispfieldkeyEn": "NameEn",
         "valfieldkey": "Title",
         // "validation": "required",
-        display:'none',
-        state:'disabled',
-        ToggleName:"Sector",
+        display: 'none',
+        state: 'disabled',
+        ToggleName: "Sector",
         dontSubmit: true,
-    },
-    {
+      },
+      {
         "InternalName": "SubSector",
         "DisplayName": "الوكالات",
         "DisplayNameEn": "DeputyShip",
@@ -124,15 +129,15 @@ var Information_Form = [
         "DispfieldkeyEn": "NameEn",
         "valfieldkey": "Title",
         // "validation": "required",
-        "isRelatedToParent":true, // to show parent value depends on child like sector and subsector
+        "isRelatedToParent": true, // to show parent value depends on child like sector and subsector
         // dynamic: "Sector", //InternalName Of Parent field
         filterField: "ParentEntity",//InternalName Of Parent field
         filterFieldType: "Text",//Type In Sharepoint List for Parent field
-        display:'none',
-        state:'disabled',
-        ToggleName:"SubSector",
+        display: 'none',
+        state: 'disabled',
+        ToggleName: "SubSector",
         dontSubmit: true,
-    },
+      },
       {
         InternalName: 'Classification',
         DisplayNameEn: 'Classification',
@@ -907,7 +912,7 @@ var Information_Form = [
       //   DispfieldkeyEn: 'NameEn',
       //   valfieldkey: 'Title',
       // },
-      
+
 
     ],
   },
@@ -1370,7 +1375,7 @@ var Information_Form = [
         DisplayNameEn: 'A',
         type: 'float',
         ToggleDisabledName: 'A',
-        numberOfDigits:"3", // max length of digits in field
+        numberOfDigits: "3", // max length of digits in field
         // type: 'number',
         //editableBy: "PerformanceLeader",
         security: {
@@ -1388,7 +1393,7 @@ var Information_Form = [
         DisplayNameEn: 'B',
         ToggleDisabledName: 'B',
         type: 'float',
-        numberOfDigits:"3", // max length of digits in field
+        numberOfDigits: "3", // max length of digits in field
         //editableBy: "PerformanceLeader",
         security: {
           groups: [
@@ -1406,7 +1411,7 @@ var Information_Form = [
         ToggleDisabledName: 'CC',
         // type: 'number',
         type: 'float',
-        numberOfDigits:"3", // max length of digits in field
+        numberOfDigits: "3", // max length of digits in field
         //editableBy: "PerformanceLeader",
         security: {
           groups: [
@@ -1424,7 +1429,7 @@ var Information_Form = [
         ToggleDisabledName: 'D',
         // type: 'number',
         type: 'float',
-        numberOfDigits:"3", // max length of digits in field
+        numberOfDigits: "3", // max length of digits in field
         //editableBy: "PerformanceLeader",
         security: {
           groups: [
@@ -1442,7 +1447,7 @@ var Information_Form = [
         ToggleDisabledName: 'E',
         // type: 'number',
         type: 'float',
-        numberOfDigits:"3", // max length of digits in field
+        numberOfDigits: "3", // max length of digits in field
         //editableBy: "PerformanceLeader",
         security: {
           groups: [
@@ -1460,7 +1465,7 @@ var Information_Form = [
         ToggleDisabledName: 'F',
         // type: 'number',
         type: 'float',
-        numberOfDigits:"3", // max length of digits in field
+        numberOfDigits: "3", // max length of digits in field
         //editableBy: "PerformanceLeader",
         security: {
           groups: [
@@ -1478,7 +1483,7 @@ var Information_Form = [
         ToggleDisabledName: 'G',
         // type: 'number',
         type: 'float',
-        numberOfDigits:"3", // max length of digits in field
+        numberOfDigits: "3", // max length of digits in field
         //editableBy: "PerformanceLeader",
         security: {
           groups: [
