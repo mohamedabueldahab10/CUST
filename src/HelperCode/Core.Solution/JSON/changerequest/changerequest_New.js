@@ -297,6 +297,7 @@ window.Information_Form = [
 								},
 							],
 						},
+						{display:"deletion",value:"delete"}
 					],
 				},
 			},
@@ -377,6 +378,7 @@ window.Information_Form = [
 
 							],
 						},
+						{display:"deletion",value:"delete"}
 					],
 				},
 			},
@@ -415,6 +417,7 @@ window.Information_Form = [
 
 							],
 						},
+						{display:"deletion",value:"delete"}
 					],
 				},
 			},
