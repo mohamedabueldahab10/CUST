@@ -5220,6 +5220,7 @@ window.userCalls = {
                 parentRelationField: "Title",
                 RelationField: "SubSector",
                 RelationFieldType: "Choice",
+                isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain 
                 subRelation: {
                   level: 3,
                   listName: "",
