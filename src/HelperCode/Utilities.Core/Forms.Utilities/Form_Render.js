@@ -5655,6 +5655,63 @@ window.ListInfo = {
         OnSuccess(flag, htmlBody);
         break;
 
+      case "anchor":
+        
+        htmlBody =
+          '<div class="col-md-3 CFIELD ' +
+          element.className +
+          " " +
+          hideField +
+          ' " ' +
+          thistip +
+          " " +
+          hidestagesIDs +
+          " " +
+          editableBy +
+          " " +
+          showstagesIDs +
+          "  " +
+          disablestagesIDs +
+          "  " +
+          enablestagesIDs +
+          "   " +
+          isWfhidestagesIDs +
+          " " +
+          requireOnWfTaskstagesIDs +
+          " " +
+          isWfshowstagesIDs +
+          "  " +
+          isWfdisablestagesIDs +
+          "  " +
+          isWfenablestagesIDs +
+          '       data-groups="' +
+          groups +
+          '" style="display:' +
+          element.display +
+          '">' +
+          "<a " +
+          ToggleName +
+          " " +
+          toggleDisabledName +
+          " " +
+          RequiredName +
+          ' href="' + element.href + '" ' +
+          dynamic +
+          ' class="formLink" id="' +
+          element.InternalName +
+          '" ' +
+          element.state +
+          " " +
+          element.validation +
+          " target='_blank'>" +
+          displayName +
+          '<i class="icon-plus"></i>' +
+          "</a>" +
+          "</div>";
+        // htmlBody = '<div class="col-md-12"></div>';
+        OnSuccess(flag, htmlBody);
+        break;
+
       case "file":
         var attachmentId =
           attachCount == 0 ? "getFile" : "getFile" + attachCount;
@@ -6321,7 +6378,7 @@ window.ListInfo = {
         allToggleFields.forEach((item, i, arr) => {
 
           $('[data-togglename="' + item + '"]')
-          .parent().addClass("hide-field")
+            .parent().addClass("hide-field")
 
 
           $('[data-togglename="' + item + '"]')
@@ -6372,6 +6429,12 @@ window.ListInfo = {
       } else {
 
         allToggleFields.forEach((item, i, arr) => {
+
+
+
+          $('[data-togglename="' + item + '"]')
+            .parent()
+            .addClass("hide-field");
 
           $('[data-togglename="' + item + '"]')
             .parent()
@@ -8652,13 +8715,10 @@ var View_ListInfo = {
           htmlBody = '<div class="col-md-12"></div>';
           OnSuccess(flag, htmlBody);
           break;
-
-        case "anchor":
-
+          case "anchor":
+        
           htmlBody =
-            '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-            " " +
+            '<div class="col-md-3 CFIELD ' +
             element.className +
             ' " ' +
             thistip +
@@ -8689,17 +8749,20 @@ var View_ListInfo = {
             '">' +
             "<a " +
             ToggleName +
-            " " +
-            toggleDisabledName +
-            " " +
-            RequiredName +
-            ' href="/" class="form-control SPIField" id="' +
+            ' href="' + element.href + '" ' +
+            dynamic +
+            ' class="formLink" id="' +
             element.InternalName +
             '" ' +
             element.state +
-            ">" + '</a>'
-          "</div>";
-
+            " " +
+            element.validation +
+            " target='_blank'>" +
+            displayName +
+            '<i class="icon-plus"></i>' +
+            "</a>" +
+            "</div>";
+          // htmlBody = '<div class="col-md-12"></div>';
           OnSuccess(flag, htmlBody);
           break;
 

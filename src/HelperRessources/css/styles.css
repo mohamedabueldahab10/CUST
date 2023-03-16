@@ -6901,6 +6901,13 @@ div#accordionRequiredSupport ul.list-group {
     font-size: 13px;
 }
 
+.formLink {
+    color: #148282;
+}
+.formLink:visited {
+    color: #148282;
+}
+
 /* for project status */
 h4.black.Resources.myCompletionStatus.statuscolorstat8,
 .stat8 h4.Resources,
