@@ -271,7 +271,7 @@ var Information_Form = [
       {
         InternalName: 'SubSector',
         DisplayNameEn: 'Deputyship',
-        DisplayName: 'الوكالة/الجهة ',
+        DisplayName: 'الوكالة',
         type: 'lookup',
         //from other list:
         source: 'Internal Entities',

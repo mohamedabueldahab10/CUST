@@ -154,7 +154,7 @@ var Information_Form = [
       },
       {
         InternalName: 'SubSector',
-        DisplayName: 'الجهة/الوكالة',
+        DisplayName: 'الوكالة',
         DisplayNameEn: 'DeputyShip',
         type: 'lookup',
         //from other list:
