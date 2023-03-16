@@ -76,6 +76,81 @@ var Information_Form = [
         // display: "none",
         // validation: 'required',
       },
+      // {
+      //   InternalName: 'Sector',
+      //   DisplayName: 'القطاع',
+      //   DisplayNameEn: 'Sector',
+      //   ToggleName: 'Sector',
+      //   type: 'lookupWithQuery',
+      //   queryField: 'EntityType',
+      //   queryFieldType: 'dropdownValues', //ex: "Choice"
+      //   // dontSubmit: true,
+      //   queryFieldValue: 'Sector',
+      //   // dynamic: 'parent',
+      //   source: 'Internal Entities',
+      //   // "state": "disabled",
+      //   Dispfieldkey: 'Name',
+      //   DispfieldkeyEn: 'NameEn',
+      //   valfieldkey: 'Title',
+      //   // validation: 'required',
+      //   // display: 'none',
+      // },
+      // {
+      //   InternalName: 'SubSector',
+      //   DisplayName: 'الوكالات',
+      //   DisplayNameEn: 'DeputyShip',
+      //   ToggleName: 'SubSector',
+      //   type: 'lookup',
+      //   //from other list:
+      //   source: 'Internal Entities',
+      //   // "isSector": "True",
+      //   // "EntityType": "Department",
+      //   Dispfieldkey: 'Name',
+      //   DispfieldkeyEn: 'NameEn',
+      //   valfieldkey: 'Title',
+      //   // validation: 'required',
+      //   isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+      //   // dynamic: 'Sector', //InternalName Of Parent field
+      //   filterField: 'ParentEntity', //InternalName Of Parent field
+      //   filterFieldType: 'Text', //Type In Sharepoint List for Parent field
+      //   // display: 'none',
+      //   // dontSubmit: true,
+      // },
+      {
+        InternalName: 'Sector',
+        DisplayName: 'القطاع',
+        DisplayNameEn: 'Sector',
+        type: 'lookupWithQuery',
+        queryField: 'EntityType',
+        queryFieldType: 'dropdownValues', //ex: "Choice"
+        // dontSubmit: true,
+        queryFieldValue: 'Sector',
+        dynamic: 'parent',
+        source: 'Internal Entities',
+        // "state": "disabled",
+        Dispfieldkey: 'Name',
+        DispfieldkeyEn: 'NameEn',
+        valfieldkey: 'Title',
+        // validation: 'required',
+      },
+      {
+        InternalName: 'SubSector',
+        DisplayName: 'الوكالات',
+        DisplayNameEn: 'DeputyShip',
+        type: 'lookup',
+        //from other list:
+        source: 'Internal Entities',
+        // "isSector": "True",
+        // "EntityType": "Department",
+        Dispfieldkey: 'Name',
+        DispfieldkeyEn: 'NameEn',
+        valfieldkey: 'Title',
+        // validation: 'required',
+        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+        dynamic: 'Sector', //InternalName Of Parent field
+        filterField: 'ParentEntity', //InternalName Of Parent field
+        filterFieldType: 'Text', //Type In Sharepoint List for Parent field
+      },
       {
         InternalName: 'Classification',
         DisplayNameEn: 'Classification',
@@ -228,24 +303,6 @@ var Information_Form = [
         // },
       },
       {
-        InternalName: 'Performance',
-        DisplayNameEn: 'Performance',
-        DisplayName: 'الأداء',
-        type: 'number',
-      },
-      {
-        InternalName: 'TotalActual',
-        DisplayNameEn: 'TotalActual',
-        DisplayName: 'إجمالي الفعلي',
-        type: 'number',
-      },
-      {
-        InternalName: 'TotalPlanned',
-        DisplayNameEn: 'TotalPlanned',
-        DisplayName: 'إجمالي المخطط',
-        type: 'number',
-      },
-      {
         InternalName: 'RecurrenceChanged',
         DisplayNameEn: 'Recurrence Changed',
         DisplayName: 'تغيير دورية القياس',
@@ -272,6 +329,36 @@ var Information_Form = [
         DisplayName: 'حالة الإنجاز',
         DisplayNameEn: 'Progress Status',
         type: 'string',
+      },
+      {
+        InternalName: 'NotMeasurableNow',
+        DisplayNameEn: 'Not Measurable Now',
+        DisplayName: 'لايقاس حاليا',
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            { display: 'yes', value: 'yes' },
+            { display: 'no', value: 'no' },
+          ],
+        },
+      },
+      {
+        InternalName: 'Performance',
+        DisplayNameEn: 'Performance',
+        DisplayName: 'الأداء',
+        type: 'number',
+      },
+      {
+        InternalName: 'TotalActual',
+        DisplayNameEn: 'Total Actual',
+        DisplayName: 'إجمالي الفعلي',
+        type: 'number',
+      },
+      {
+        InternalName: 'TotalPlanned',
+        DisplayNameEn: 'Total Planned',
+        DisplayName: 'إجمالي المخطط',
+        type: 'number',
       },
       // {
       //     InternalName: "Types",
@@ -419,44 +506,6 @@ var Information_Form = [
       //   dynamic: "Sector", //InternalName Of Parent field
       //   // "state": "disabled",
       // },
-
-      {
-        InternalName: 'Sector',
-        DisplayName: 'القطاع',
-        DisplayNameEn: 'Sector',
-        ToggleName: 'Sector',
-        type: 'lookupWithQuery',
-        queryField: 'EntityType',
-        queryFieldType: 'dropdownValues', //ex: "Choice"
-        // dontSubmit: true,
-        queryFieldValue: 'Sector',
-        dynamic: 'parent',
-        source: 'Internal Entities',
-        // "state": "disabled",
-        Dispfieldkey: 'Name',
-        DispfieldkeyEn: 'NameEn',
-        valfieldkey: 'Title',
-        // validation: 'required',
-      },
-      {
-        InternalName: 'SubSector',
-        DisplayName: 'الوكالات',
-        DisplayNameEn: 'DeputyShip',
-        ToggleName: 'SubSector',
-        type: 'lookup',
-        //from other list:
-        source: 'Internal Entities',
-        // "isSector": "True",
-        // "EntityType": "Department",
-        Dispfieldkey: 'Name',
-        DispfieldkeyEn: 'NameEn',
-        valfieldkey: 'Title',
-        // validation: 'required',
-        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
-        dynamic: 'Sector', //InternalName Of Parent field
-        filterField: 'ParentEntity', //InternalName Of Parent field
-        filterFieldType: 'Text', //Type In Sharepoint List for Parent field
-      },
       // {
       //   InternalName: 'Portfolio',
       //   DisplayName: 'المحفظة المرتبطة',
@@ -1031,26 +1080,14 @@ var Information_Form = [
         type: 'float',
         //editableBy: "PerformanceLeader",
       },
-      {
-        InternalName: 'NotMeasurableNow',
-        DisplayNameEn: 'Not Measurable Now',
-        DisplayName: 'لايقاس حاليا',
-        type: 'yesnoradio',
-        options: {
-          choices: [
-            { display: 'yes', value: 'yes' },
-            { display: 'no', value: 'no' },
-          ],
-        },
-      },
-      {
-        InternalName: 'Equation',
-        DisplayNameEn: 'Actual value',
-        DisplayName: 'القيمة الفعلية',
-        type: 'float',
-        state: 'disabled',
-        //editableBy: "PerformanceLeader",
-      },
+      // {
+      //   InternalName: 'Equation',
+      //   DisplayNameEn: 'Actual value',
+      //   DisplayName: 'القيمة الفعلية',
+      //   type: 'float',
+      //   state: 'disabled',
+      //   //editableBy: "PerformanceLeader",
+      // },
       // {
       //   InternalName: 'PerformanceAnalysis',
       //   DisplayNameEn: 'Performance Analysis',
