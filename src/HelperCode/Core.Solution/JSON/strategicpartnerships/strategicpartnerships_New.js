@@ -135,7 +135,7 @@ var Information_Form = [
         DisplayNameEn: 'Partner Name',
         type: 'lookup',
         validation: 'required',
-        source: 'SPVendors',
+        source: 'Vendors',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
       },

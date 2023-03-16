@@ -119,7 +119,7 @@ var Information_Form = [
         validation: 'required',
         type: 'lookup',
         // source:'SOs',
-        source: 'SPVendors',
+        source: 'Vendors',
         Dispfieldkey:'Name',
         valfieldkey:'Title',
       },

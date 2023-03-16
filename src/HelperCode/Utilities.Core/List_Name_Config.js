@@ -449,7 +449,7 @@ var ListArray = [
 		// projectrelated:true
 	},
 	{
-		strategicpartnershipsvendors: "SPVendors",
+		strategicpartnershipsvendors: "Vendors",
 		ListingTitle: "الشريك الخارجي",
 		FormTitle:"الشريك الخارجي",
 		TitleEn: "Srategic Parternship Vendors",
