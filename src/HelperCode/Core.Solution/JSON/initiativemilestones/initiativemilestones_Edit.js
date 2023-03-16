@@ -52,7 +52,7 @@ var Information_Form = [
         DisplayName: 'الوزن(%)',
         DisplayName: 'الوزن المكافئ للإنجاز %',
         type: 'weightfloatpercentage',
-        listname: 'Milestones',
+        listname: 'InitiativeMilestones',
         targetcode: 'InitiativeCode',
         targetelement: 'Weight',
         seconedtarget: 'Amount',

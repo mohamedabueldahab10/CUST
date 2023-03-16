@@ -1911,17 +1911,15 @@ window.ListingData = {
               var month2 = formatedactualdatemilestone.split("/").at(1);
               var year2 = formatedactualdatemilestone.split("/").at(2);
               var finalformatedactualdate = new Date(year2 + "-" + month2 + "-" + day2);
-
-              if (today < finalformatedactualdate && item.Delivered !== true) {
-                countOfnostarted += 1;
-              }
               var formatedplaneddatemilestone =
                 item.PlannedDate.split("T").at(0);
               var day = formatedplaneddatemilestone.split("/").at(0);
               var month = formatedplaneddatemilestone.split("/").at(1);
               var year = formatedplaneddatemilestone.split("/").at(2);
               var finalformatedPlanneddate = new Date(year + "-" + month + "-" + day);
-
+              if (today < finalformatedPlanneddate && item.Delivered !== true) {
+                countOfnostarted += 1;
+              }
               if (today > finalformatedPlanneddate && item.Delivered !== true) {
                 latecount += 1;
               }

@@ -186,6 +186,38 @@ var Information_Form = [
         },
       },
       {
+        InternalName: 'PeriodType',
+        DisplayNameEn: 'Period Type',
+        DisplayName: 'تكرار القياس',
+        type: 'dropdownValues',
+        validation: 'required',
+        toggleValues: [
+          { value: 'monthly', fields: ['Months'] }, //we can put more than 1  field
+          { value: 'quarter', fields: ['Quarter'] }, //we can put more than 1  field
+          { value: 'midterm', fields: ['Midterms'] },
+          { value: 'year', fields: ['Years'] },
+        ],
+        state: 'disabled',
+        options: {
+          choices: [
+            { display: 'monthly', value: 'monthly' },
+            { display: 'quarter', value: 'quarter' },
+            { display: 'midterm', value: 'midterm' },
+            { display: 'year', value: 'year' },
+          ],
+        },
+        security: {
+          groups: [
+            'LMS_P',
+            'SPM Admin',
+            'Performance Leaders',
+            'SPM Team',
+            'VRO_P',
+            'System Admin Group',
+          ],
+        },
+      },
+      {
         InternalName: 'Description',
         DisplayNameEn: 'Description',
         DisplayName: 'وصف المؤشر',
@@ -840,8 +872,39 @@ var Information_Form = [
           }, //we can put more than 1  field
           { value: 'no', fields: [] },
         ],
+        validation: 'required',
       },
-
+      {
+        InternalName: 'NotMeasurableNow',
+        DisplayNameEn: 'Not Measurable Now',
+        DisplayName: 'لايقاس حاليا',
+        // type: "dropdownValues",
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            { display: 'yes', value: 'yes' },
+            { display: 'no', value: 'no' },
+          ],
+        },
+      }, 
+      {
+        InternalName: 'Performance',
+        DisplayNameEn: 'Performance',
+        DisplayName: 'الأداء',
+        type: 'number',
+      },
+      {
+        InternalName: 'TotalActual',
+        DisplayNameEn: 'Total Actual',
+        DisplayName: 'إجمالي الفعلي',
+        type: 'number',
+      },
+      {
+        InternalName: 'TotalPlanned',
+        DisplayNameEn: 'Total Planned',
+        DisplayName: 'إجمالي المخطط',
+        type: 'number',
+      },
       // {
       //   InternalName: 'Sector',
       //   DisplayName: 'القطاع المرتبط',
@@ -1001,38 +1064,6 @@ var Information_Form = [
           ],
         },
       },
-      {
-        InternalName: 'PeriodType',
-        DisplayNameEn: 'Period Type',
-        DisplayName: 'تكرار القياس',
-        type: 'dropdownValues',
-        toggleValues: [
-          { value: 'monthly', fields: ['Months'] }, //we can put more than 1  field
-          { value: 'quarter', fields: ['Quarter'] }, //we can put more than 1  field
-          { value: 'midterm', fields: ['Midterms'] },
-          { value: 'year', fields: ['Years'] },
-        ],
-        state: 'disabled',
-        options: {
-          choices: [
-            { display: 'monthly', value: 'monthly' },
-            { display: 'quarter', value: 'quarter' },
-            { display: 'midterm', value: 'midterm' },
-            { display: 'year', value: 'year' },
-          ],
-        },
-        security: {
-          groups: [
-            'LMS_P',
-            'SPM Admin',
-            'Performance Leaders',
-            'SPM Team',
-            'VRO_P',
-            'System Admin Group',
-          ],
-        },
-      },
-
       {
         InternalName: 'ResultType',
         DisplayNameEn: 'Result Type',
@@ -1494,23 +1525,23 @@ var Information_Form = [
           ],
         },
       },
-      {
-        InternalName: 'Equation',
-        DisplayNameEn: 'Actual value',
-        DisplayName: 'القيمة الفعلية',
-        // type: 'number',
-        type: 'float',
-        state: 'disabled',
-        //editableBy: "PerformanceLeader",
-        security: {
-          groups: [
-            'LMS_P',
-            'VRO_P',
-            'Performance Leaders',
-            'System Admin Group',
-          ],
-        },
-      },
+      // {
+      //   InternalName: 'Equation',
+      //   DisplayNameEn: 'Actual value',
+      //   DisplayName: 'القيمة الفعلية',
+      //   // type: 'number',
+      //   type: 'float',
+      //   state: 'disabled',
+      //   //editableBy: "PerformanceLeader",
+      //   security: {
+      //     groups: [
+      //       'LMS_P',
+      //       'VRO_P',
+      //       'Performance Leaders',
+      //       'System Admin Group',
+      //     ],
+      //   },
+      // },
       //   {
       //     InternalName: 'PerformanceAnalysis',
       //     DisplayNameEn: 'Performance Analysis',

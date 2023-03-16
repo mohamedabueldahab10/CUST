@@ -112,7 +112,7 @@ var Information_Form = [
         // source: 'SOs',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        source: 'SPVendors',
+        source: 'Vendors',
         // validation: 'required',
       },
       // {

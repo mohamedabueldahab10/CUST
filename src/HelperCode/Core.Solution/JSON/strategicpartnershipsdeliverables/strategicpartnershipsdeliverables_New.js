@@ -55,6 +55,7 @@ var Information_Form = [{
       "DisplayName": "الوزن(%)",
       "DisplayNameEn": "Weight (%)",
       "type": "float",
+      "validation": "required"
       // "type": "weightfloatpercentage",
       // "listname": "Deliverables",
       // "targetcode": "ProjectCode",

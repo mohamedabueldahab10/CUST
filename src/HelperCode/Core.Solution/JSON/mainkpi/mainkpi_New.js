@@ -99,7 +99,7 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
-        validation: 'required',
+        // validation: 'required',
         isRelatedToParent: true, // to show parent value depends on child like sector and subsector
         dynamic: 'Sector', //InternalName Of Parent field
         filterField: 'ParentEntity', //InternalName Of Parent field
@@ -348,6 +348,19 @@ var Information_Form = [
         // 		"System Admin Group"
         // 	],
         // },
+      },
+      {
+        InternalName: 'NotMeasurableNow',
+        DisplayNameEn: 'Not Measurable Now',
+        DisplayName: 'لايقاس حاليا',
+        // type: "dropdownValues",
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            { display: 'yes', value: 'yes' },
+            { display: 'no', value: 'no' },
+          ],
+        },
       },
       {
         InternalName: 'Performance',
