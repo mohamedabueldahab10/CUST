@@ -6977,3 +6977,8 @@ span.statuscolorstat28 {
     display: none;
     color: #f49e49;
 }
+
+.disable_section{
+    opacity: 0.5;
+    pointer-events: none;
+}
