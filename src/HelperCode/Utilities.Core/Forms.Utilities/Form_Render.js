@@ -408,7 +408,7 @@ window.ListInfo = {
 
             let parentCustomFilterValueFromSibling = $(this).attr("data-parentcustomfiltervalue")
             let notInvokeListiner = $(this).data("notinvokelistiner")
-            
+
             $("[dynamic=" + parentFieldName + "]").each(function () {
               console.log(parentFieldName, "parentFieldName")
 
@@ -779,9 +779,9 @@ window.ListInfo = {
               $(`#${childId}`).data("queryfield", childFieldIdSource)
               $(`#${childId}`).data("queryfieldvalue", elementValue)
               $(`#${childId}`).data("queryfieldtype", "Text")
-              
+
               // window.setTimeout(function(){
-                $(`select[dynamic=parent][id=${grandId}]`).trigger('change') // to trigger only one field (correct field)
+              $(`select[dynamic=parent][id=${grandId}]`).trigger('change') // to trigger only one field (correct field)
               // },1500)
             }
 
@@ -1287,7 +1287,7 @@ window.ListInfo = {
                   });
                   // $("[data-section_type]").show()
                 }
-              } else if ($(this).val() == "ministry" || $(this).val() == "sectorial"|| $(this).val() == "lms"|| $(this).val() == "sub" ) {
+              } else if ($(this).val() == "ministry" || $(this).val() == "sectorial" || $(this).val() == "lms" || $(this).val() == "sub") {
                 if ($("[data-section_type]").length > 0) {
                   $("[data-section_type]").each(function () {
                     if (
@@ -1441,6 +1441,7 @@ window.ListInfo = {
         ? 'data-editableby="' + element.editableBy + '"'
         : "",
       dontSubmit = element.hasOwnProperty("dontSubmit") ? "dont-submit" : "",
+      hideField = element.display == "none" ? "hide-field" : "",
       dontSubmitRequired = element.hasOwnProperty("dontSubmitRequired") ? "dont-submit even-required" : "",
       dontRequest = element.hasOwnProperty("dontRequest") ? "dont-request" : "", // to avoid err on view
       inputLisKey = element.hasOwnProperty("listKey")
@@ -1644,6 +1645,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -1711,6 +1714,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -1786,6 +1791,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -1852,6 +1859,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -1920,6 +1929,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -1987,6 +1998,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -2053,6 +2066,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -2135,6 +2150,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -2217,6 +2234,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -2283,6 +2302,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -2358,6 +2379,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -2464,6 +2487,8 @@ window.ListInfo = {
                 dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
                 " " +
                 element.className +
+                " " +
+                hideField +
                 ' " ' +
                 thistip +
                 " " +
@@ -2546,6 +2571,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -2634,6 +2661,8 @@ window.ListInfo = {
                 dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
                 " " +
                 element.className +
+                " " +
+                hideField +
                 ' " ' +
                 thistip +
                 " " +
@@ -2712,6 +2741,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -2778,6 +2809,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -2844,6 +2877,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -2944,6 +2979,8 @@ window.ListInfo = {
                 dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
                 " " +
                 element.className +
+                " " +
+                hideField +
                 ' " ' +
                 thistip +
                 " " +
@@ -3028,6 +3065,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -3113,6 +3152,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -3181,6 +3222,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -3249,6 +3292,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -3379,6 +3424,8 @@ window.ListInfo = {
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
             " " +
             element.className +
+            " " +
+            hideField +
             ' " ' +
             thistip +
             " " +
@@ -3544,6 +3591,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -3699,6 +3748,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -3767,6 +3818,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -4069,6 +4122,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -4263,6 +4318,8 @@ window.ListInfo = {
                       dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
                       " " +
                       element.className +
+                      " " +
+                      hideField +
                       ' " ' +
                       thistip +
                       " " +
@@ -4411,6 +4468,8 @@ window.ListInfo = {
                       dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
                       " " +
                       element.className +
+                      " " +
+                      hideField +
                       ' " ' +
                       thistip +
                       " " +
@@ -4593,6 +4652,8 @@ window.ListInfo = {
                 dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
                 " " +
                 element.className +
+                " " +
+                hideField +
                 ' " ' +
                 thistip +
                 " " +
@@ -4764,6 +4825,8 @@ window.ListInfo = {
                 dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
                 " " +
                 element.className +
+                " " +
+                hideField +
                 ' " ' +
                 thistip +
                 " " +
@@ -5117,6 +5180,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -5266,6 +5331,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -5420,6 +5487,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -5519,6 +5588,8 @@ window.ListInfo = {
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
           " " +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -5584,6 +5655,63 @@ window.ListInfo = {
         OnSuccess(flag, htmlBody);
         break;
 
+      case "anchor":
+        
+        htmlBody =
+          '<div class="col-md-3 CFIELD ' +
+          element.className +
+          " " +
+          hideField +
+          ' " ' +
+          thistip +
+          " " +
+          hidestagesIDs +
+          " " +
+          editableBy +
+          " " +
+          showstagesIDs +
+          "  " +
+          disablestagesIDs +
+          "  " +
+          enablestagesIDs +
+          "   " +
+          isWfhidestagesIDs +
+          " " +
+          requireOnWfTaskstagesIDs +
+          " " +
+          isWfshowstagesIDs +
+          "  " +
+          isWfdisablestagesIDs +
+          "  " +
+          isWfenablestagesIDs +
+          '       data-groups="' +
+          groups +
+          '" style="display:' +
+          element.display +
+          '">' +
+          "<a " +
+          ToggleName +
+          " " +
+          toggleDisabledName +
+          " " +
+          RequiredName +
+          ' href="' + element.href + '" ' +
+          dynamic +
+          ' class="formLink" id="' +
+          element.InternalName +
+          '" ' +
+          element.state +
+          " " +
+          element.validation +
+          " target='_blank'>" +
+          displayName +
+          '<i class="icon-plus"></i>' +
+          "</a>" +
+          "</div>";
+        // htmlBody = '<div class="col-md-12"></div>';
+        OnSuccess(flag, htmlBody);
+        break;
+
       case "file":
         var attachmentId =
           attachCount == 0 ? "getFile" : "getFile" + attachCount;
@@ -5594,6 +5722,8 @@ window.ListInfo = {
         htmlBody =
           '<div class="col-md-12 CFIELD ' +
           element.className +
+          " " +
+          hideField +
           ' " ' +
           thistip +
           " " +
@@ -6210,13 +6340,13 @@ window.ListInfo = {
     },
 
     toggleFields: function ($this) {
-      debugger
       if (isView) {
         console.log('enter in view');
         var myValue = $this.data("viewtogglevalue");
       } else {
         var myValue = $this.val();
       }
+      debugger
       var mytype = $this,
         toggleValues =
           $this.data("togglevalues").indexOf(":::") > -1
@@ -6248,6 +6378,10 @@ window.ListInfo = {
         allToggleFields.forEach((item, i, arr) => {
 
           $('[data-togglename="' + item + '"]')
+            .parent().addClass("hide-field")
+
+
+          $('[data-togglename="' + item + '"]')
             .parent()
             .hide();
           // $('[data-togglename="' + item + '"]').val("");
@@ -6263,7 +6397,9 @@ window.ListInfo = {
             myFieldParent = $('[data-togglename="' + item + '"]').parent();
           myFieldParentofParent = $('[data-togglename="' + item + '"]');
           if (isHidden) {
+
             myFieldParent.show();
+            myFieldParent.removeClass("hide-field")
             myFieldParentofParent.show();
             myFieldParent.find(">*").attr("required", true);
 
@@ -6293,9 +6429,19 @@ window.ListInfo = {
       } else {
 
         allToggleFields.forEach((item, i, arr) => {
+
+
+
+          $('[data-togglename="' + item + '"]')
+            .parent()
+            .addClass("hide-field");
+
           $('[data-togglename="' + item + '"]')
             .parent()
             .hide();
+
+
+
           $('[data-togglename="' + item + '"]').val("");
           $('[data-togglename="' + item + '"]')
             .parent()
@@ -8569,6 +8715,56 @@ var View_ListInfo = {
           htmlBody = '<div class="col-md-12"></div>';
           OnSuccess(flag, htmlBody);
           break;
+          case "anchor":
+        
+          htmlBody =
+            '<div class="col-md-3 CFIELD ' +
+            element.className +
+            ' " ' +
+            thistip +
+            " " +
+            hidestagesIDs +
+            " " +
+            editableBy +
+            " " +
+            showstagesIDs +
+            "  " +
+            disablestagesIDs +
+            "  " +
+            enablestagesIDs +
+            "   " +
+            isWfhidestagesIDs +
+            " " +
+            requireOnWfTaskstagesIDs +
+            " " +
+            isWfshowstagesIDs +
+            "  " +
+            isWfdisablestagesIDs +
+            "  " +
+            isWfenablestagesIDs +
+            '       data-groups="' +
+            groups +
+            '" style="display:' +
+            element.display +
+            '">' +
+            "<a " +
+            ToggleName +
+            ' href="' + element.href + '" ' +
+            dynamic +
+            ' class="formLink" id="' +
+            element.InternalName +
+            '" ' +
+            element.state +
+            " " +
+            element.validation +
+            " target='_blank'>" +
+            displayName +
+            '<i class="icon-plus"></i>' +
+            "</a>" +
+            "</div>";
+          // htmlBody = '<div class="col-md-12"></div>';
+          OnSuccess(flag, htmlBody);
+          break;
 
         case "file":
           htmlBody = "";
@@ -8907,7 +9103,7 @@ dynamicAffectSelect = {
         <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`;
     }
 
-    console.log(Query,"Query")
+    console.log(Query, "Query")
     debugger
 
     camlQuery.set_viewXml(Query);

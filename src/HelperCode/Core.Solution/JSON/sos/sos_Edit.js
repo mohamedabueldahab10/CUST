@@ -20,7 +20,7 @@ var Information_Form = [
         InternalName: 'ObjectiveOwner',
         DisplayName: 'مالك الهدف',
         DisplayNameEn: 'Objective Owner',
-        type: 'multipicker',
+        type: 'picker',
         validation: 'required',
       },
       // {  // status type string cause it's auto calculated and just want to handle it
@@ -200,7 +200,7 @@ var Information_Form = [
       },
       {
         InternalName: 'SubSector',
-        DisplayName: 'الجهة/الوكالة',
+        DisplayName: 'الوكالة',
         DisplayNameEn: 'Deputyship',
         type: 'lookup',
         //from other list:

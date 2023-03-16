@@ -86,7 +86,7 @@ var Information_Form = [
         DisplayName: 'الوزن(%)',
         DisplayNameEn: 'Weight (%)',
         type: 'weightfloatpercentage',
-        listname: 'Deliverables',
+        listname: 'InitiativeDeliverables',
         targetcode: 'InitiativeCode',
         targetelement: 'Weight',
         seconedtarget: 'Amount',

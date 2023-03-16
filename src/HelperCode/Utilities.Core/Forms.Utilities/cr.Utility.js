@@ -356,35 +356,38 @@ window.CrModeFunctionality = {
 window.handleCustomeCr = {
 	init: function () {
 		$('[data-togglename*="UpdateType"]').on("change", function () {
-			debugger
-			isGeneral =
-				$(this).find(">option:selected").attr("data-trans-generalchange") == ""
-					? true
-					: false;
-			let toggleName = $(this).data("togglename");
-			let toggleParent = $(`[data-togglevalues*="${toggleName}"]`);
-			let relevantDropdown = $(`select[data-listname="${toggleParent.val()}"]`);
-			RListKey = relevantDropdown.data("listkey");
-			isRListKey = RListKey ? true : false;
-			CrRelatedList = relevantDropdown.data("listname");
-			RID = relevantDropdown.find(">option:selected").attr("option-id");
-			$(this).parent().find(">label").addClass("loader-action");
-			if (!isGeneral) {
-				let fieldsJSON = eval(
-					$(this).find("option:checked").data("fieldsvalue")
-				);
-				let sectionJSON = [
-					{
-						label: fieldsJSON[0].label,
-						labelEn: fieldsJSON[0].labelEn,
-						description: fieldsJSON[0].description,
-						descriptionEn: fieldsJSON[0].descriptionEn,
-						subFields: fieldsJSON,
-					},
-				];
-				CrModeFunctionality.init(sectionJSON);
-			} else {
-				CrModeFunctionality.preinit();
+			console.log($(this).val(), "VVVVVVVVVVVVVVVVVVVVVVsss")
+			var currentValue = $(this).val()
+			if (currentValue != 'delete') {
+				isGeneral =
+					$(this).find(">option:selected").attr("data-trans-generalchange") == ""
+						? true
+						: false;
+				let toggleName = $(this).data("togglename");
+				let toggleParent = $(`[data-togglevalues*="${toggleName}"]`);
+				let relevantDropdown = $(`select[data-listname="${toggleParent.val()}"]`);
+				RListKey = relevantDropdown.data("listkey");
+				isRListKey = RListKey ? true : false;
+				CrRelatedList = relevantDropdown.data("listname");
+				RID = relevantDropdown.find(">option:selected").attr("option-id");
+				$(this).parent().find(">label").addClass("loader-action");
+				if (!isGeneral) {
+					let fieldsJSON = eval(
+						$(this).find("option:checked").data("fieldsvalue")
+					);
+					let sectionJSON = [
+						{
+							label: fieldsJSON[0].label,
+							labelEn: fieldsJSON[0].labelEn,
+							description: fieldsJSON[0].description,
+							descriptionEn: fieldsJSON[0].descriptionEn,
+							subFields: fieldsJSON,
+						},
+					];
+					CrModeFunctionality.init(sectionJSON);
+				} else {
+					CrModeFunctionality.preinit();
+				}
 			}
 		});
 		$(`[id*="CRRelated"]`).on("change", function () {

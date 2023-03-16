@@ -19,7 +19,7 @@ var Listing_Info = [
         "InternalName": "ObjectiveOwner",
         "DisplayName": "مالك الهدف",
         "DisplayNameEn": "Objective Owner",
-        "type": "multipicker",
+        "type": "picker",
         inlisting: true,
         infilter: false,
     },

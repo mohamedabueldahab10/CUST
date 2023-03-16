@@ -349,7 +349,7 @@ var Information_Form = [
       },
       {
         InternalName: 'SubSector',
-        DisplayName: 'الوكالة/الجهة',
+        DisplayName: 'الوكالة',
         DisplayNameEn: 'Deputyship',
         type: 'lookup',
         //from other list:

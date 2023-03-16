@@ -25,7 +25,7 @@ var Information_Form = [
         InternalName: 'ObjectiveOwner',
         DisplayName: 'مالك الهدف',
         DisplayNameEn: 'Objective Owner',
-        type: 'multipicker',
+        type: 'picker',
         // validation: 'required',
       },
       {
@@ -83,8 +83,8 @@ var Information_Form = [
         validation: 'required',
         // dynamic: 'parent', //main field that affect on other chiled field
         requiredValues: [
-          { value: 'sublevel2', fields: ['RelatedObjective'] }, //we can put more than 1  field
-          { value: 'sublevel3', fields: ['RelatedObjective'] },
+          { value: 'sublevel2', fields: ['RelatedObjective', 'SubSector'] }, //we can put more than 1  field
+          { value: 'sublevel3', fields: ['RelatedObjective', 'Department', 'SubSector'] },
         ],
       },
       {
@@ -154,7 +154,7 @@ var Information_Form = [
       },
       {
         InternalName: 'SubSector',
-        DisplayName: 'الجهة/الوكالة',
+        DisplayName: 'الوكالة',
         DisplayNameEn: 'DeputyShip',
         type: 'lookup',
         //from other list:
@@ -164,6 +164,7 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
+        RequiredName: 'SubSector',
       },
       {
         InternalName: 'Department',
@@ -177,6 +178,7 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
+        RequiredName: 'Department',
       },
       {
         InternalName: 'ProgressPercentage',
