@@ -293,21 +293,22 @@ window.New_Data_Submit = {
     var oList = clientContext.get_web().get_lists().getByTitle(SP_ListName);
     var itemCreateInfo = new SP.ListItemCreationInformation();
     New_Data_Submit.g.oListItem = oList.addItem(itemCreateInfo);
+    //.dont-submit,.hide-field need to test more about it
     $(
-      `.section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=text],
-       .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=number],
-       .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=email],
-        .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=float],
-         .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=date],
-        .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=date],
-        .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> .datetimeinputs input[type=datetime-local],
-         .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=radio],
-          .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=checkbox],
-           .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> div[type=picker],
-           .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> div[type=multipicker],
-            .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> select[type=dropdown],
-             .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> textarea,
-              .section-container:not([data-target_list]) .CFIELD:not(.dont-submit) > .multiselect-container`
+      `.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=text],
+       .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=number],
+       .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=email],
+        .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=float],
+         .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=date],
+        .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=date],
+        .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> .datetimeinputs input[type=datetime-local],
+         .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=radio],
+          .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=checkbox],
+           .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> div[type=picker],
+           .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> div[type=multipicker],
+            .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> select[type=dropdown],
+             .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> textarea,
+              .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field) > .multiselect-container`
     ).each(function () {
       if ($(this).attr("type") == "picker") {
         if ($(this).find("span.sp-peoplepicker-userSpan").length) {
@@ -1104,26 +1105,27 @@ window.Edit_Data_Submit = {
       checkinProjectEditSubmit.checkin(User_ProjUID);
 
     }
-    // $('div.CSformbuttons').prepend('<div class="loading-wait">  Please Wait... <div class="cust-loader"></div></div>');
+    // $('div.CSformbuttons').prepend('<div class="loading-wait">  Please Wait... <div class="cust-loader"></div></div>');+
+    //.dont-submit,.hide-field
     $(".btn-save").attr("disabled", true);
     $("#preloader,#formloader").css("display", "block");
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(SP_ListName);
     Edit_Data_Submit.g.oListItem = oList.getItemById(IID); //declared inside object scope only
-    $(`.section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=text],
-     .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=number],
-     .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=email],
-     .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=float],
-      .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)>  input[type=date],
-      .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> .datetimeinputs input[type=date],
-      .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> .datetimeinputs input[type=datetime-local],
-      .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=radio],
-       .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=checkbox],
-        .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> div[type=multipicker],
-        .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> div[type=picker],
-         .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)> select[type=dropdown],
-          .section-container:not([data-target_list]) .CFIELD:not(.dont-submit)>  textarea,
-           .section-container:not([data-target_list]) .CFIELD:not(.dont-submit) > .multiselect-container`
+    $(`.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=text],
+     .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=number],
+     .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=email],
+     .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=float],
+      .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)>  input[type=date],
+      .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> .datetimeinputs input[type=date],
+      .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> .datetimeinputs input[type=datetime-local],
+      .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=radio],
+       .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=checkbox],
+        .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> div[type=multipicker],
+        .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> div[type=picker],
+         .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field):not(.hide-field)> select[type=dropdown],
+          .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)>  textarea,
+           .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field) > .multiselect-container`
     ).each(function () {
       console.log($(this).attr("id"), "while id")
 
@@ -2098,7 +2100,7 @@ var New_Master_Details_Submit = {
           var type = $('#Types').val()
           if (type == 'vision') {
             New_Master_Details_Submit.g.oListItem.set_item("Types", "program");
-          } else if (type == 'ministry'|| type == 'sectorial'|| type == 'lms'|| type == 'sub') {
+          } else if (type == 'ministry' || type == 'sectorial' || type == 'lms' || type == 'sub') {
             New_Master_Details_Submit.g.oListItem.set_item("Types", "pillar");
           }
         }
@@ -2370,7 +2372,7 @@ var Edit_Master_Details_Submit = {
         var type = $('#Types').val()
         if (type == 'vision') {
           Edit_Master_Details_Submit.g.oListItem.set_item("Types", "program");
-        } else if (type == 'ministry'|| type == 'sectorial'|| type == 'lms'|| type == 'sub') {
+        } else if (type == 'ministry' || type == 'sectorial' || type == 'lms' || type == 'sub') {
           Edit_Master_Details_Submit.g.oListItem.set_item("Types", "piller");
         }
       }
