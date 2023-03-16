@@ -250,7 +250,7 @@ var Information_Form = [
       {
         InternalName: 'AcceptanceCriteria',
         DisplayNameEn: 'Acceptance Criteria',
-        DisplayName: 'المقياس',
+        DisplayName: 'المقياس - معايير قبول المخرج',
         type: 'multiline',
         state: 'disabled',
         maxchar: 5000,        
