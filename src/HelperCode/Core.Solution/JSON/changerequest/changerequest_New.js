@@ -20,92 +20,102 @@ window.Information_Form = [
 					choices: [
 						// { display: "projects", value: "Projects" },
 
-						{ display: "projects", value: "Projects" ,
-						// roles: ['SPMAdmin'],
-						// 	otherFields:[
-						// 		{fieldName:"WFModuleCode",value:"SPMAdmin"},
-						// 		{fieldName:"WFStage",value:"SPMAdminStage"},
-						// 	]
+						{
+							display: "projects", value: "Projects",
+							// roles: ['SPMAdmin'],
+							// 	otherFields:[
+							// 		{fieldName:"WFModuleCode",value:"SPMAdmin"},
+							// 		{fieldName:"WFStage",value:"SPMAdminStage"},
+							// 	]
 						},
 						///// For a
 
-						
-						
+
+
 						//--------VRO CR Section -------------
-						{ display: "strategicobjectives", value: "SOs",
-							roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','Administrator'],
-							otherFields:[
-								{fieldName:"WFModuleCode",value:"VROCRObjective"},
-								{fieldName:"WFStage",value:"VROCRSOS01"},
+						{
+							display: "strategicobjectives", value: "SOs",
+							roles: ['VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE', 'Administrator'],
+							otherFields: [
+								{ fieldName: "WFModuleCode", value: "VROCRObjective" },
+								{ fieldName: "WFStage", value: "VROCRSOS01" },
 							]
 						},
 
-						{ display: "initiatives", value: "Initiatives" ,
-						roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','Administrator'],
-							otherFields:[
-								{fieldName:"WFModuleCode",value:"VROCRInitiative"},
-								{fieldName:"WFStage",value:"VROCRInitiative01"},
+						{
+							display: "initiatives", value: "Initiatives",
+							roles: ['VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE', 'Administrator'],
+							otherFields: [
+								{ fieldName: "WFModuleCode", value: "VROCRInitiative" },
+								{ fieldName: "WFStage", value: "VROCRInitiative01" },
 							]
 						},
 
-						{ display: "kpi", value: "MainKPI",
-							roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','Administrator'],
-								otherFields:[
-									{fieldName:"WFModuleCode",value:"VROCRKPI"},
-									{fieldName:"WFStage",value:"VROCRKPI01"},
-							] 
+						{
+							display: "kpi", value: "MainKPI",
+							roles: ['VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE', 'Administrator'],
+							otherFields: [
+								{ fieldName: "WFModuleCode", value: "VROCRKPI" },
+								{ fieldName: "WFStage", value: "VROCRKPI01" },
+							]
 						},
 						//-----------End VRO ---------------------------
 
 						//--------LMS CR Section -------------
-						{ display: "strategicobjectives", value: "SOs",
-							roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'],
-							otherFields:[
-								{fieldName:"WFModuleCode",value:"LMSCRObjective"},
-								{fieldName:"WFStage",value:"LMSCRSOS01"},
+						{
+							display: "strategicobjectives", value: "SOs",
+							roles: ['LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'],
+							otherFields: [
+								{ fieldName: "WFModuleCode", value: "LMSCRObjective" },
+								{ fieldName: "WFStage", value: "LMSCRSOS01" },
 							]
 						},
 
-						{ display: "initiatives", value: "Initiatives" ,
-						roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'],
-							otherFields:[
-								{fieldName:"WFModuleCode",value:"LMSCRInitiative"},
-								{fieldName:"WFStage",value:"LMSCRInitiative01"},
+						{
+							display: "initiatives", value: "Initiatives",
+							roles: ['LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'],
+							otherFields: [
+								{ fieldName: "WFModuleCode", value: "LMSCRInitiative" },
+								{ fieldName: "WFStage", value: "LMSCRInitiative01" },
 							]
 						},
 
-						{ display: "kpi", value: "MainKPI",
-							roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'],
-								otherFields:[
-									{fieldName:"WFModuleCode",value:"LMSCRKPI"},
-									{fieldName:"WFStage",value:"LMSCRKPI01"},
-							] 
+						{
+							display: "kpi", value: "MainKPI",
+							roles: ['LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'],
+							otherFields: [
+								{ fieldName: "WFModuleCode", value: "LMSCRKPI" },
+								{ fieldName: "WFStage", value: "LMSCRKPI01" },
+							]
 						},
 						//-----------LMS VRO ---------------------------
 
 						//--------EPMO CR Section -------------
-						{ display: "strategicobjectives", value: "SOs",
+						{
+							display: "strategicobjectives", value: "SOs",
 							roles: ['EPMO'],
-							otherFields:[
-								{fieldName:"WFModuleCode",value:"LMSCRObjective"},
-								{fieldName:"WFStage",value:"LMSCRSOS01"},
+							otherFields: [
+								{ fieldName: "WFModuleCode", value: "LMSCRObjective" },
+								{ fieldName: "WFStage", value: "LMSCRSOS01" },
 							]
 						},
 
-						{ display: "initiatives", value: "Initiatives" ,
-						roles: ['EPMO'],
-							otherFields:[
-								{fieldName:"WFModuleCode",value:"EPMOCRInitiative"},
-								{fieldName:"WFStage",value:"EPMOCRInitiative01"},
+						{
+							display: "initiatives", value: "Initiatives",
+							roles: ['EPMO'],
+							otherFields: [
+								{ fieldName: "WFModuleCode", value: "EPMOCRInitiative" },
+								{ fieldName: "WFStage", value: "EPMOCRInitiative01" },
 							]
 						},
 
-						{ display: "kpi", value: "MainKPI",
-						roles: ['EPMO'],
-								otherFields:[
-									{fieldName:"WFModuleCode",value:"MSCRKPI"},
-									{fieldName:"WFStage",value:"MSCRKPI01"},
-							] 
+						{
+							display: "kpi", value: "MainKPI",
+							roles: ['EPMO'],
+							otherFields: [
+								{ fieldName: "WFModuleCode", value: "MSCRKPI" },
+								{ fieldName: "WFStage", value: "MSCRKPI01" },
+							]
 						},
 						//-----------EPMO VRO ---------------------------
 					],
@@ -297,7 +307,7 @@ window.Information_Form = [
 								},
 							],
 						},
-						{display:"deletion",value:"delete"}
+						{ display: "deletion", value: "delete" }
 					],
 				},
 			},
@@ -338,7 +348,7 @@ window.Information_Form = [
 
 							],
 						},
-						{display:"deletion",value:"delete"}
+						{ display: "deletion", value: "delete" }
 					],
 				},
 			},
@@ -378,7 +388,7 @@ window.Information_Form = [
 
 							],
 						},
-						{display:"deletion",value:"delete"}
+						{ display: "deletion", value: "delete" }
 					],
 				},
 			},
@@ -417,7 +427,7 @@ window.Information_Form = [
 
 							],
 						},
-						{display:"deletion",value:"delete"}
+						{ display: "deletion", value: "delete" }
 					],
 				},
 			},
@@ -714,6 +724,42 @@ window.Information_Form = [
 			// },
 		],
 	},
+	{
+		label: "بيانات طلب اضافة",
+		labelEn: "Add Request Data",
+		description: "التفاصيل",
+		descriptionEn: "Details",
+		subFields: [
+			{
+				// InternalName: 'Title',
+				DisplayNameEn: 'Create Project',
+				DisplayName: 'اضافة مشروع',
+				type: 'anchor',
+				href: "/SitePages/new.aspx?ListKey=projects"
+			},
+			{
+				// InternalName: 'Title',
+				DisplayNameEn: 'Create Initiative',
+				DisplayName: 'اضافة مبادرة',
+				type: 'anchor',
+				href: "/SitePages/new.aspx?ListKey=initiatives"
+			},
+			{
+				// InternalName: 'Title',
+				DisplayNameEn: 'Create Strategic objective',
+				DisplayName: 'اضافة هدف استراتيجي',
+				type: 'anchor',
+				href: "/SitePages/new.aspx?ListKey=sos"
+			},
+			{
+				// InternalName: 'Title',
+				DisplayNameEn: 'Create KPI',
+				DisplayName: 'اضافة مؤشر',
+				type: 'anchor',
+				href: "/SitePages/new.aspx?ListKey=mainkpi"
+			},
+		]
+	}
 	// {
 	// 	label: 'الدراسات الخاصة بطلب التغيير ',
 	// 	labelEn: 'Change Requests Studies',
