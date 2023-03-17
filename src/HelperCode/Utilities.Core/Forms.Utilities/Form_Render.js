@@ -1710,6 +1710,9 @@ window.ListInfo = {
           " " +
           element.validation +
           ">" +
+          "<span data-trans-" +
+          Errmsgkey +
+          ' class="errMsgField Resources"></span>' +
           '<div class="inputInfo ' +
           isexist +
           '">' +
