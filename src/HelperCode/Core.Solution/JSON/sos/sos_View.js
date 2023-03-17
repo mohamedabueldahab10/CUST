@@ -174,7 +174,7 @@ var Information_Form = [
         //from other list:
         source: 'Internal Entities',
         isSector: 'True',
-        EntityType: 'Department',
+        EntityType: 'SubDepartment',
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',

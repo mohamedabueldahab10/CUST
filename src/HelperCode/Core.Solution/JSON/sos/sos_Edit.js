@@ -188,29 +188,34 @@ var Information_Form = [
         InternalName: 'Sector',
         DisplayName: 'القطاع',
         DisplayNameEn: 'Sector',
-        type: 'lookup',
-        validation: 'required',
-        //from other list:
+        type: 'lookupWithQuery',
+        queryField: 'EntityType',
+        queryFieldType: 'dropdownValues', 
+        queryFieldValue: 'Sector',
+        dynamic: 'parent',
         source: 'Internal Entities',
-        isSector: 'True',
-        EntityType: 'Sector',
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
+        validation: 'required',
       },
       {
         InternalName: 'SubSector',
         DisplayName: 'الوكالة',
-        DisplayNameEn: 'Deputyship',
+        DisplayNameEn: 'DeputyShip',
         type: 'lookup',
         //from other list:
         source: 'Internal Entities',
-        isSector: 'True',
-        EntityType: 'Department',
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
+        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+        dynamic: 'parent', //InternalName Of Parent field
+        seconeddynamic: "Sector",
+        filterField: 'ParentEntity', //InternalName Of Parent field
+        filterFieldType: 'Text', //Type In Sharepoint List for Parent field
         RequiredName: 'SubSector',
+
       },
       {
         InternalName: 'Department',
@@ -219,11 +224,13 @@ var Information_Form = [
         type: 'lookup',
         //from other list:
         source: 'Internal Entities',
-        isSector: 'True',
-        EntityType: 'Department',
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
+        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+        dynamic: 'SubSector', //InternalName Of Parent field
+        filterField: 'ParentEntity', //InternalName Of Parent field
+        filterFieldType: 'Text', //Type In Sharepoint List for Parent field
         RequiredName: 'Department',
       },
       // {

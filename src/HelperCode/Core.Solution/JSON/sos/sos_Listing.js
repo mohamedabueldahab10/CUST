@@ -79,7 +79,8 @@ var Listing_Info = [
         "InternalName": "Department",
         "DisplayNameEn": "Department",
         "DisplayName":"الإدارة",
-        "type":"text",
+        "type": "lookup",
+        "localStorageVariable":"Dynamo_Internal Entities",
         inlisting: true,
         infilter: true
     },
