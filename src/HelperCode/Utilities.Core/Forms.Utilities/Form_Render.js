@@ -592,7 +592,9 @@ window.ListInfo = {
 
 
           ///////////////////////////////
-          $("input.percentbyparent").keyup(function (event) {
+          $("body").on("keyup", "input.percentbyparent", function (event) { // change it to body to can invoke the listiner in master details
+
+            // $("input.percentbyparent").keyup(function (event) {
             // calculate the target elemnt like in delivrable
 
             var isMasterDetails = $(this).parent().parent().hasClass("Details-Item")
@@ -600,58 +602,66 @@ window.ListInfo = {
               targetElement = "",
               fieldValue = 0,
               weight = 0;
-            // if (isMasterDetails) { // for new validation in master details
-            //   if (listkey == "projects") {
-            //     parentValue = $('#ActualBudget').val()
-            //   }
-            //   if (parentValue) {
-            //     parentValue = parentValue.replaceAll(",", "")
-            //     parentValue = Number(parentValue)
-            //     targetElement = $(this).data("targetelem");
-            //     fieldValue = event.target.value;
-            //     weight = (fieldValue / parentValue) * 100;
-            //     weight = weight.toFixed(2);
-            //     $(this).parent().parent().find(`#${targetElement}`).val(weight)
-            //   }
-            // } else {
-            targetElement = $(this).data("targetelem");
-            parentValue = $(this).data("parentval");
-            fieldValue = event.target.value;
-            weight = (fieldValue / parentValue) * 100;
-            weight = weight.toFixed(2);
-            $(`#${targetElement}`).val(weight);
-            //}
+            if (isMasterDetails) { // for new validation in master details
+              if (listkey == "projects") {
+                var actualBudget = $('#ActualBudget').val()
+                var assignedBudget = $('#AssignedBudget').val()
+                parentValue = (actualBudget && actualBudget != 0) ? actualBudget : assignedBudget
+              }
+              if (parentValue) {
+                parentValue = parentValue.replaceAll(",", "")
+                parentValue = Number(parentValue)
+                targetElement = $(this).data("targetelem");
+                fieldValue = event.target.value;
+                weight = (fieldValue / parentValue) * 100;
+                weight = weight.toFixed(2);
+                $(this).parent().parent().find(`#${targetElement}`).val(weight)
+              }
+            } else {
+              targetElement = $(this).data("targetelem");
+              parentValue = $(this).data("parentval");
+              fieldValue = event.target.value;
+              weight = (fieldValue / parentValue) * 100;
+              weight = weight.toFixed(2);
+              $(`#${targetElement}`).val(weight);
+            }
           });
 
           ///////////////////////////////
-          $("input.weightfloatpercentage").keyup(function (event) {
+          $("body").on("keyup", "input.weightfloatpercentage", function (event) { // change it to body to can invoke the listiner in master details
+
+            // $("input.weightfloatpercentage").keyup(function (event) {
+            //   debugger
             var isMasterDetails = $(this).parent().parent().hasClass("Details-Item")
             var parentValue = 0,
               targetElement = "",
               fieldValue = 0,
               amount = 0;
 
-            // if (isMasterDetails) { // for new validation in master details
-            //   if (listkey == "projects") {
-            //     parentValue = $('#ActualBudget').val()
-            //   }
-            //   if (parentValue) {
-            //     parentValue = parentValue.replaceAll(",", "")
-            //     parentValue = Number(parentValue)
-            //     targetElement = $(this).data("targetelem");
-            //     fieldValue = event.target.value;
-            //     amount = (parentValue * fieldValue) / 100;
-            //     amount = amount.toFixed(2);
-            //     $(this).parent().parent().find(`#${targetElement}`).val(amount)
-            //   }
-            // } else {
-            parentValue = parentBudgetValue;
-            targetElement = $(this).data("targetelem");
-            fieldValue = event.target.value;
-            amount = (parentValue * fieldValue) / 100;
-            amount = amount.toFixed(2);
-            $(`#${targetElement}`).val(amount);
-            // }
+            if (isMasterDetails) { // for new validation in master details
+              debugger
+              if (listkey == "projects") {
+                var actualBudget = $('#ActualBudget').val()
+                var assignedBudget = $('#AssignedBudget').val()
+                parentValue = (actualBudget && actualBudget != 0) ? actualBudget : assignedBudget
+              }
+              if (parentValue && parentValue != 0) {
+                parentValue = parentValue.replaceAll(",", "")
+                parentValue = Number(parentValue)
+                targetElement = $(this).data("targetelem");
+                fieldValue = event.target.value;
+                amount = (parentValue * fieldValue) / 100;
+                amount = amount.toFixed(2);
+                $(this).parent().parent().find(`#${targetElement}`).val(amount)
+              }
+            } else {
+              parentValue = parentBudgetValue;
+              targetElement = $(this).data("targetelem");
+              fieldValue = event.target.value;
+              amount = (parentValue * fieldValue) / 100;
+              amount = amount.toFixed(2);
+              $(`#${targetElement}`).val(amount);
+            }
           });
           //////////////////////////////// make attachement required when change on radio yes
           var previuosTargetVal = "";
@@ -1700,6 +1710,9 @@ window.ListInfo = {
           " " +
           element.validation +
           ">" +
+          "<span data-trans-" +
+          Errmsgkey +
+          ' class="errMsgField Resources"></span>' +
           '<div class="inputInfo ' +
           isexist +
           '">' +
@@ -2522,7 +2535,7 @@ window.ListInfo = {
                 element.validation +
                 ">" +
                 displayName +
-                '<span data-trans-remainperc class="Resources remainpercstyle"></span><span class="remainpercstyle">' +
+                '<span data-trans-remainperc class="Resources remainpercstyle"></span><span class="remainpercstyle remainPercentageVal">' +
                 newVal +
                 "]</span>" +
                 "</label>" +
@@ -5656,7 +5669,7 @@ window.ListInfo = {
         break;
 
       case "anchor":
-        
+
         htmlBody =
           '<div class="col-md-3 CFIELD ' +
           element.className +
@@ -5872,6 +5885,25 @@ window.ListInfo = {
 
       $(".add-New-Detail").on("click", function () {
 
+
+        if (listkey == 'projects' && isNew) {
+          var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item").last()
+          lastDetailsItemBeforeAdd.addClass('disable_section')
+        }
+
+
+
+        var totalWeight = 0
+
+
+        $(this).parent().parent().children('.Details-Item').each(function () {
+          console.log($(this).find('.weightfloatpercentage').val())
+          var value = $(this).find('.weightfloatpercentage').val()
+          value = value ? value : 0
+          totalWeight += Number(value)
+        })
+
+
         var toappend = $(this)
           .closest("[data-target_list]")
           .find(".Details-Item:first-child")
@@ -5880,6 +5912,12 @@ window.ListInfo = {
 
 
         $('<div class="Details-Item NewItem">' + toappend + "</div>").insertBefore($(this).parent());
+
+        // insert new max for weight deliv
+        var lastDetailsItem = $(this).closest("[data-target_list]").find(".Details-Item").last()
+        lastDetailsItem.find('.remainpercstyle.remainPercentageVal').html(`${100 - totalWeight}]`) // add new title weight
+        lastDetailsItem.find('.weightfloatpercentage').attr("max", 100 - totalWeight) // add new max weight
+        //
 
         masterLength = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").length
 
@@ -5939,7 +5977,10 @@ window.ListInfo = {
 
       // remove new section
       $(".remove-New-Detail").on("click", function () {
+
+
         masterLength = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").length
+
 
         if (isNew) {
           // in new > 1 because on render the form there is a new Item so it will be  before click on + 
@@ -5967,8 +6008,30 @@ window.ListInfo = {
             $(this).closest("[data-target_list]").find(".remove-New-Detail").hide()
           }
         }
+
+
+        //to remeove disabled class on the last section
+        if (listkey == 'projects' && isNew) {
+
+          var lastDetailsItemAfterRemove = $(this).closest("[data-target_list]").find(".Details-Item").last()
+          lastDetailsItemAfterRemove.removeClass('disable_section')
+        }
+        //
+
+
       })
+
+
+
       //
+
+
+
+
+
+
+
+
 
       // $('.add-New-Detail').click(function()
       // {
@@ -8715,8 +8778,8 @@ var View_ListInfo = {
           htmlBody = '<div class="col-md-12"></div>';
           OnSuccess(flag, htmlBody);
           break;
-          case "anchor":
-        
+        case "anchor":
+
           htmlBody =
             '<div class="col-md-3 CFIELD ' +
             element.className +
@@ -10201,7 +10264,7 @@ var deliverabePercent = {
           .parent()
           .find(" > label")
           .append(
-            '<span data-trans-remainperc class="Resources remainpercstyle"></span><span class="remainpercstyle">' +
+            '<span data-trans-remainperc class="Resources remainpercstyle"></span><span class="remainpercstyle ">' +
             RemainingBudget +
             "]</span>"
           );
