@@ -48,6 +48,9 @@ var Listing_Info = [
       "DisplayName":"اسم الشريك",
       "DisplayNameEn":"Partner Name",
       "type":"lookup",
+      // source: 'Vendors',
+      // Dispfieldkey: 'Name',
+      // valfieldkey: 'Title',
       "inlisting":true,
       "infilter":false
    },

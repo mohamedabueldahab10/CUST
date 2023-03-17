@@ -282,6 +282,33 @@ window.sphttp = {
                           record[internalFieldNames[i]] = No_Data;
                         }
                       }
+                      // // for lookup havn't local storage
+                      // else if(Listing_Info[i].source !=undefined && Listing_Info[i].Dispfieldkey !=undefined && Listing_Info[i].valfieldkey !=undefined) {
+                      //   var valueInLookup =oListItem.get_item(internalFieldNames[i]);
+                      //   var valfieldkeyInOtherList = Listing_Info[i].valfieldkey;
+                      //   var DispfieldkeyInOtherList =  Listing_Info[i].Dispfieldkey;
+                      //   var otherListName = Listing_Info[i].source;
+                      //   var isDone = true;
+                      //   customquery =
+                      //   '<View><Query><Where><Eq><FieldRef Name="' +
+                      //   valfieldkeyInOtherList +
+                      //   '" /><Value Type="Text">' +
+                      //   valueInLookup +
+                      //   "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+                      //   sphttp.get(
+                      //     _spPageContextInfo.siteServerRelativeUrl,
+                      //     otherListName,
+                      //     customquery,
+                      //     [valfieldkeyInOtherList, DispfieldkeyInOtherList],
+                      //     function (records, record, listItem, isDone) {
+                      //       if (isDone) {
+                      //         records.forEach(function (el, index) {
+                      //           record[internalFieldNames[i]] = el[DispfieldkeyInOtherList];
+                      //         });
+                      //       }
+                      //     }
+                      //   );
+                      //  }
                       else {
                         record[internalFieldNames[i]] = No_Data;
                       }

@@ -6982,3 +6982,7 @@ span.statuscolorstat28 {
     opacity: 0.5;
     pointer-events: none;
 }
+.control-ctx.project-listing-ctx li.list-group-item.link-arrow span.des-13 {
+    word-break:break-word;
+}
+
