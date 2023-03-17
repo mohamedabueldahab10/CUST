@@ -173,7 +173,7 @@ var Information_Form = [
         maxchar: '255',
         withletters:true,
         Errmsgkey:"withletterpattern",
-        // "validation": "required"
+        // validation: 'required',
       },
       // {
       //     "InternalName": "RelatedStrategy",
@@ -209,7 +209,7 @@ var Information_Form = [
         DisplayName: 'الوصف',
         type: 'multiline',
         maxchar: 5000,        
-        // "validation": "required"
+        // validation: 'required',
       },
     ],
   },

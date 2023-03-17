@@ -15,6 +15,7 @@ var Information_Form = [
         InternalName: 'Name',
         DisplayNameEn: 'Name',
         DisplayName: 'الأسم',
+        maxchar: '255',
         type: 'string',
         // "validation": "required"
       },
@@ -23,6 +24,7 @@ var Information_Form = [
         DisplayNameEn: 'Description',
         DisplayName: 'الوصف',
         type: 'multiline',
+        maxchar: 5000,        
         // "validation": "required"
       },
       {

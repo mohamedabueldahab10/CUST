@@ -149,6 +149,9 @@ var Information_Form = [
             },
           ],
         },
+        // requiredValues: [
+        //   { value: 'yes', fields: ['Name','Description'] }, //we can put more than 1  field
+        // ],
       },
     ],
   },
@@ -173,10 +176,11 @@ var Information_Form = [
         DisplayNameEn: 'Name',
         DisplayName: 'المحور الاستراتيجي',
         type: 'string',
-        validation: 'required',
+        // validation: 'required',
         maxchar: '255',
         withletters:true,
         Errmsgkey:"withletterpattern",
+        // RequiredName: 'Name',
       },
       // {
       //     "InternalName": "RelatedStrategy",
@@ -212,7 +216,8 @@ var Information_Form = [
         DisplayName: 'الوصف',
         type: 'multiline',
         maxchar: 5000,        
-        // "validation": "required"
+        // validation: 'required',
+        // RequiredName: 'Description',
       },
     ],
   },
