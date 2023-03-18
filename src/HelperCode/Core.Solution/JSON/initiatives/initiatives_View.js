@@ -277,6 +277,9 @@ var Information_Form = [
         source: 'Internal Entities',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+        dynamic: 'Sector', //InternalName Of Parent field
+        filterField: 'ParentEntity', 
+        filterFieldType: 'Text',//Type In Sharepoint List for Parent field
       },
       // {
       //   InternalName: 'OwnerEmail',

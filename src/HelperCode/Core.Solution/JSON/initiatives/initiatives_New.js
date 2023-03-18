@@ -23,8 +23,8 @@ var Information_Form = [
         DisplayName: 'اسم المبادرة',
         type: 'string',
         maxchar: '255',
-        withletters:true,
-        Errmsgkey:"withletterpattern",
+        withletters: true,
+        Errmsgkey: 'withletterpattern',
         validation: 'required',
       },
       {
@@ -99,8 +99,8 @@ var Information_Form = [
         // dynamic: 'parent',
         // dynamic: 'Types',
         // dynamic:'parent',
-        seconeddynamic: "Types",
-        dynamic: "parent", //main field that affect on other chiled field
+        seconeddynamic: 'Types',
+        dynamic: 'parent', //main field that affect on other chiled field
         filterField: 'Types',
         filterFieldType: 'Text',
         notInvokeListiner: true, // to not invoke the lookup when change on parent > the filteration depends on other field also
@@ -154,9 +154,9 @@ var Information_Form = [
         DisplayNameEn: 'Related Objective Level',
         DisplayName: 'مستوى الهدف المرتبط',
         dontSubmit: true,
-        grandFieldId: "RelatedStrategy", // we add this field to handle the two field filtration(parent Id in current form) 
-        childFieldId: "RelatedObjective",// we add this field to handle the two field filtration (child Id in current form)
-        childFieldIdSource: "Types",// we add this field to handle the two field filtration (child internal name in destination list)
+        grandFieldId: 'RelatedStrategy', // we add this field to handle the two field filtration(parent Id in current form)
+        childFieldId: 'RelatedObjective', // we add this field to handle the two field filtration (child Id in current form)
+        childFieldIdSource: 'Types', // we add this field to handle the two field filtration (child internal name in destination list)
         //
         type: 'dropdownValues',
         options: {
@@ -337,12 +337,17 @@ var Information_Form = [
         InternalName: 'Sector',
         DisplayName: 'القطاع',
         DisplayNameEn: 'Sector',
-        type: 'lookup',
+        type: 'lookupWithQuery',
+        queryField: 'EntityType',
+        queryFieldType: 'dropdownValues', //ex: "Choice"
+        queryFieldValue: 'Sector',
+        dynamic: 'parent',
+        // type: 'lookup',
         validation: 'required',
         //from other list:
         source: 'Internal Entities',
-        isSector: 'True',
-        EntityType: 'Sector',
+        // isSector: 'True',
+        // EntityType: 'Sector',
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
@@ -354,13 +359,17 @@ var Information_Form = [
         type: 'lookup',
         //from other list:
         source: 'Internal Entities',
-        isSector: 'True',
-        EntityType: 'Department',
+        // isSector: 'True',
+        // EntityType: 'Department',
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
         // "state": "disabled"
         validation: 'required',
+        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+        dynamic: 'Sector', //InternalName Of Parent field
+        filterField: 'ParentEntity', //InternalName Of Parent field
+        filterFieldType: 'Text', //Type In Sharepoint List for Parent field
       },
       {
         InternalName: 'StartDate',

@@ -9,7 +9,7 @@ var Information_Form = [
       //     "InternalName": "Title",
       //     "DisplayName":"رمز المبادرة ",
       //     "type":"string" ,
-      //     "state":"disabled" 
+      //     "state":"disabled"
 
       // },
       {
@@ -18,8 +18,8 @@ var Information_Form = [
         DisplayName: 'اسم المبادرة',
         type: 'string',
         maxchar: '255',
-        withletters:true,
-        Errmsgkey:"withletterpattern",
+        withletters: true,
+        Errmsgkey: 'withletterpattern',
         validation: 'required',
       },
       {
@@ -132,12 +132,12 @@ var Information_Form = [
         source: 'GoalStrategy',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        seconeddynamic: "Types",// child for this field(add it to make the field as a parent and child at the same time) 
+        seconeddynamic: 'Types', // child for this field(add it to make the field as a parent and child at the same time)
         filterField: 'Types',
         filterFieldType: 'Text',
         dynamic: 'parent', // parent for this field
         //
-        notInvokeListiner: true,// to not invoke the lookup when change on parent > the filteration depends on other field also
+        notInvokeListiner: true, // to not invoke the lookup when change on parent > the filteration depends on other field also
         //
 
         //in case not parent add below attrs
@@ -191,9 +191,9 @@ var Information_Form = [
         DisplayName: 'مستوى الهدف المرتبط',
         dontSubmit: true,
         //
-        grandFieldId: "RelatedStrategy", // we add this field to handle the two field filtration(parent Id in current form) 
-        childFieldId: "RelatedObjective",// we add this field to handle the two field filtration (child Id in current form)
-        childFieldIdSource: "Types",// we add this field to handle the two field filtration (child internal name in destination list)
+        grandFieldId: 'RelatedStrategy', // we add this field to handle the two field filtration(parent Id in current form)
+        childFieldId: 'RelatedObjective', // we add this field to handle the two field filtration (child Id in current form)
+        childFieldIdSource: 'Types', // we add this field to handle the two field filtration (child internal name in destination list)
         //
         type: 'dropdownValues',
         options: {
@@ -212,7 +212,7 @@ var Information_Form = [
             },
           ],
         },
-        "validation": "required",
+        validation: 'required',
       },
       {
         InternalName: 'RelatedObjective',
@@ -228,10 +228,10 @@ var Information_Form = [
         filterField: 'RelatedStrategy',
         filterFieldType: 'Text',
         isRelatedToParent: true, // to show parent value depends on child like sector and subsector
-        fieldsinformlvl1: "RelatedStrategy", // fields in look up list
-        sourcefieldlvl1: "RelatedStrategy",
-        fieldsinformlvl2: "RelatedObjectiveLevel", // fields in look up list
-        sourcefieldlvl2: "Types",
+        fieldsinformlvl1: 'RelatedStrategy', // fields in look up list
+        sourcefieldlvl1: 'RelatedStrategy',
+        fieldsinformlvl2: 'RelatedObjectiveLevel', // fields in look up list
+        sourcefieldlvl2: 'Types',
         accessFilter: [
           {
             role: 'VROE',
@@ -296,7 +296,7 @@ var Information_Form = [
       //   fieldsinformlvl2: "RelatedObjectiveLevel", // fields in look up list
       //   sourcefieldlvl2: "Types",
       //   //
-      //   filterField: 'RelatedStrategy', // 
+      //   filterField: 'RelatedStrategy', //
       //   filterFieldType: 'Text',
       //   // grpfieldkey: 'Title',
       //   //
@@ -509,12 +509,17 @@ var Information_Form = [
         InternalName: 'Sector',
         DisplayName: 'القطاع',
         DisplayNameEn: 'Sector',
-        type: 'lookup',
+        // type: 'lookup',
+        type: 'lookupWithQuery',
+        queryField: 'EntityType',
+        queryFieldType: 'dropdownValues', //ex: "Choice"
+        queryFieldValue: 'Sector',
+        dynamic: 'parent',
         validation: 'required',
         //from other list:
         source: 'Internal Entities',
-        isSector: 'True',
-        EntityType: 'Sector',
+        // isSector: 'True',
+        // EntityType: 'Sector',
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
@@ -526,11 +531,14 @@ var Information_Form = [
         type: 'lookup',
         //from other list:
         source: 'Internal Entities',
-        isSector: 'True',
-        EntityType: 'Department',
+        // isSector: 'True',
+        // EntityType: 'Department',
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
+        dynamic: 'Sector', //InternalName Of Parent field
+        filterField: "ParentEntity",//InternalName Of Parent field
+        filterFieldType: "Text",//Type In Sharepoint List for Parent field
         validation: 'required',
         // "state": "disabled"
       },
@@ -616,7 +624,7 @@ var Information_Form = [
             {
               display: 'transformationally',
               value: 'transformationally',
-            }
+            },
           ],
         },
       },
@@ -625,8 +633,8 @@ var Information_Form = [
         DisplayName: 'تاريخ بداية الصرف',
         DisplayNameEn: 'Expense Start Date',
         type: 'datetime',
-        enableOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
-        requireOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
+        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
       },
       {
         InternalName: 'DependencyCost',
@@ -693,8 +701,8 @@ var Information_Form = [
     labelEn: 'Financial Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
-    enableOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
-    requireOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
+    enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+    requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
     subFields: [
       {
         InternalName: 'RelatedBudgetItem',
@@ -707,16 +715,16 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         // "display":"none"
-        enableOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
-        requireOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
+        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
       },
       {
         InternalName: 'EstimatedCost',
         DisplayName: 'التكلفة التقديرية ',
         DisplayNameEn: 'Estimated Cost',
         type: 'float',
-        enableOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
-        requireOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
+        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
       },
       {
         InternalName: 'InitiativeBudget',
@@ -727,8 +735,8 @@ var Information_Form = [
         security: {
           groups: ['EPMO', 'System Admin Group'],
         },
-        enableOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
-        requireOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
+        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
       },
       {
         InternalName: 'ProgramTotalCost',
@@ -736,8 +744,8 @@ var Information_Form = [
         DisplayNameEn: 'Program Total Cost',
         type: 'float',
         targetelement: 'ActualCost',
-        enableOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
-        requireOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
+        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
       },
       {
         InternalName: 'ActualCost',
@@ -746,32 +754,32 @@ var Information_Form = [
         type: 'float',
         targetelement: 'ActualCost',
         seconedtarget: 'ProgramTotalCost',
-        enableOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
-        requireOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
+        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
       },
       {
         InternalName: 'CurrentBuget',
         DisplayName: 'السيولة المخصصة للعام المالي الحالي ',
         DisplayNameEn: 'Current Budget',
         type: 'float',
-        enableOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
-        requireOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
+        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
       },
       {
         InternalName: 'Expenditures',
         DisplayName: 'المنصرف الأجمالي ',
         DisplayNameEn: 'Expenditures',
         type: 'float',
-        enableOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
-        requireOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
+        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
       },
       {
         InternalName: 'CurrentExpenditures',
         DisplayName: 'المنصرف من العالم المالي الحالي ',
         DisplayNameEn: 'Current Expenditures',
         type: 'float',
-        enableOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
-        requireOnWfTaskStage: "VInStage01,SInStage01,LInStage01",
+        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
       },
     ],
   },
