@@ -917,6 +917,7 @@ var Information_Form = [
         DisplayName: "الميزانية المعتمدة",
         DisplayNameEn: "Assigned Budget",
         type: "float",
+        // className:"toggle_Section"
         //"state": "disabled"
         // "showonstage":"1"
       },
@@ -1272,6 +1273,7 @@ var Information_Form = [
     description: 'التفاصيل',
     descriptionEn: 'Details',
     sectiontype: 'master',
+    className:"disable_section", // to make the section disabled on form render
     targetlist: 'Deliverables',
     subFields: [
       {

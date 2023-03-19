@@ -235,7 +235,7 @@ window.ListInfo = {
           Description +
           "</span>" +
           "</div>" +
-          '<div data-togglename=' + toggleSectionName + ' ' + dataFormDefaultValue + ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container">';
+          '<div data-togglename=' + toggleSectionName + ' ' + dataFormDefaultValue + ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container '+ item.className+'">';
 
         asyncFor.seqProcess(
           item.subFields,
