@@ -235,7 +235,7 @@ window.ListInfo = {
           Description +
           "</span>" +
           "</div>" +
-          '<div data-togglename=' + toggleSectionName + ' ' + dataFormDefaultValue + ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container '+ item.className+'">';
+          '<div data-togglename=' + toggleSectionName + ' ' + dataFormDefaultValue + ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container ' + item.className + '">';
 
         asyncFor.seqProcess(
           item.subFields,
@@ -663,6 +663,23 @@ window.ListInfo = {
               $(`#${targetElement}`).val(amount);
             }
           });
+
+          //////////////////////////////// disable_enable_section like master details if there is a value or not
+
+
+          $("body").on("keyup", ".disable_enable_section", function (event) {
+
+            var value = event.target.value
+            if(value){
+            $("[data-target_list=Deliverables] .fieldset-container").removeClass("disable_section")
+            $("[data-target_list=Milestones] .fieldset-container").removeClass("disable_section")
+            
+            }else{
+              $("[data-target_list=Deliverables] .fieldset-container").addClass("disable_section")
+              $("[data-target_list=Milestones] .fieldset-container").addClass("disable_section")
+            }
+          })
+
           //////////////////////////////// make attachement required when change on radio yes
           var previuosTargetVal = "";
           $("input.yesnolistener").on("change", function (event) {

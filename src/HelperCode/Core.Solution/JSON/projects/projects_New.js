@@ -916,6 +916,7 @@ var Information_Form = [
         InternalName: "AssignedBudget",
         DisplayName: "الميزانية المعتمدة",
         DisplayNameEn: "Assigned Budget",
+        className:"disable_enable_section",
         type: "float",
         // className:"toggle_Section"
         //"state": "disabled"
@@ -933,7 +934,7 @@ var Information_Form = [
         DisplayName: "التكلفة الفعلية",
         DisplayNameEn: "Actual Budget",
         type: "float",
-        // "state": "disabled"
+        // "state": "disabled",
         RequiredName: "ActualBudget",
       },
       // {
@@ -1270,8 +1271,8 @@ var Information_Form = [
   {
     label: 'بيانات المخرج',
     labelEn: 'Delivrable Data',
-    description: 'التفاصيل',
-    descriptionEn: 'Details',
+    description: 'التفاصيل (يمكن ادخال القيم عند ادخال الميزانية المعتمدة)',
+    descriptionEn: 'Details (you can enter the values when enter the Assigned Budget)',
     sectiontype: 'master',
     className:"disable_section", // to make the section disabled on form render
     targetlist: 'Deliverables',
@@ -1483,9 +1484,10 @@ var Information_Form = [
   {
     label: 'بيانات المعلم',
     labelEn: 'Milestone Data',
-    description: 'التفاصيل',
-    descriptionEn: 'Details',
+    description: 'التفاصيل (يمكن ادخال القيم عند ادخال الميزانية المعتمدة)',
+    descriptionEn: 'Details (you can enter the values when enter the Assigned Budget)',
     sectiontype: 'master',
+    className:"disable_section", // to make the section disabled on form render
     targetlist: 'Milestones',
     subFields: [
 
