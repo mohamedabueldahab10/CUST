@@ -4,6 +4,20 @@ var Information_Form = [
     labelEn: 'Initiative Milestone',
     description: 'التفاصيل',
     descriptionEn: 'Details',
+    formDefaultValues: [
+    //VRO
+    { fieldName: 'WFModuleCode', value: 'VROInitiativeMilestone',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+    { fieldName: 'WFStage', value: 'VROInitiativeMilestone01',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+    
+    //EPMOCOC
+    { fieldName: 'WFModuleCode', value: 'EPMOInitiativeMilestone',roles: ['EPMO'], },
+    { fieldName: 'WFStage', value: 'EPMOInitiativeMilestone01',roles: ['EPMO'], },
+
+    //LMS
+    { fieldName: 'WFModuleCode', value: 'LMSInitiativeMilestone',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+    { fieldName: 'WFStage', value: 'LMSInitiativeMilestone01',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+
+  ],
     subFields: [
       // {
       //     "InternalName": "Title",
