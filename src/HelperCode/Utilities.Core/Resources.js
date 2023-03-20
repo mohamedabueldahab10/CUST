@@ -258,7 +258,7 @@
     others: "أخرى",
     mersurable: "يقاس",
     unmersurable: "لا يقاس",
-    unspecific: "محذوف",
+    unspecific: "غير محدد",
     novalue: "لا توجد له قيمة",
     toissue: "نقل إلى عائق",
 
@@ -1411,7 +1411,7 @@
     //
     mersurable: "Mersurable",
     unmersurable: "Unmersurable",
-    unspecific: "Deleted",
+    unspecific: "Unspecific",
     novalue: "No Value",
     quarter1: "Quarter 1",
     ActualQ1: "Quarter 1",
