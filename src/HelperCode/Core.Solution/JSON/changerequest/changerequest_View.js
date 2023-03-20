@@ -44,6 +44,112 @@ window.Information_Form = [
 				validation: "required",
 			},
 
+			//////////////////////////////////////////////////////////////////////added for cr wf
+			{
+				InternalName: "moduleSelect",
+				DisplayNameEn: "Select Type",
+				DisplayName: "اختر النوع",
+				validation: "required",
+				// dontSubmit: true,
+				// display: "none",
+				customCr: true,
+				type: "dropdownValues",
+				options: {
+					choices: [
+
+						{
+							display: "projects", value: "Projects",
+
+						},
+						///// For a
+
+
+
+						//--------VRO CR Section -------------
+						{
+							display: "strategicobjectives", value: "SOs",
+
+						},
+
+						{
+							display: "initiatives", value: "Initiatives",
+
+						},
+
+						{
+							display: "kpi", value: "MainKPI",
+
+						},
+						//-----------End VRO ---------------------------
+
+						//--------LMS CR Section -------------
+						{
+							display: "strategicobjectives", value: "SOs",
+						},
+
+						{
+							display: "initiatives", value: "Initiatives",
+						},
+
+						{
+							display: "kpi", value: "MainKPI",
+						},
+						//-----------LMS VRO ---------------------------
+
+						//--------EPMO CR Section -------------
+						{
+							display: "strategicobjectives", value: "SOs",
+						},
+						{
+							display: "initiatives", value: "Initiatives",
+						},
+						{
+							display: "kpi", value: "MainKPI",
+						},
+						//-----------EPMO VRO ---------------------------
+					],
+				},
+				toggleValues: [
+					{ value: "Projects", fields: ["ProjectCode", "projectsUpdateType"] }, //we can put more than 1  field
+					{ value: "Initiatives", fields: ["InitiativeCode", "initiativeUpdateType"] }, //we can put more than 1  field
+					{
+						value: "SOs",
+						fields: ["CRRelatedStrategyObjective", "strategicobjectivesUpdateType"],
+					}, //we can put more than 1  field
+					{ value: "MainKPI", fields: ["CRRelatedMainKpis", "mainkpiUpdateType"] }, //we can put more than 1  field
+				],
+			},
+			// {
+			// 	InternalName: "ProjectCode",
+			// 	DisplayNameEn: "Related Project",
+			// 	DisplayName: "المشروع المرتبط",
+			// 	display: "none",
+			// 	type: "lookup",
+			// 	listKey: "projects",
+			// 	ToggleName: "ProjectCode",
+			// 	customCr: true,
+			// 	source: "Projects",
+			// 	Dispfieldkey: "Name",
+			// 	valfieldkey: "Title",
+			// },
+			{
+				InternalName: "InitiativeCode",
+				DisplayName: " المبادرة المرتبطة",
+				DisplayNameEn: "Related Initiative",
+				listKey: "initiatives",
+				display: "none",
+				type: "lookup",
+				ToggleName: "InitiativeCode",
+				customCr: true,
+				//from other list:ma
+				source: "Initiatives",
+				Dispfieldkey: "Name",
+				valfieldkey: "Title",
+				validation: "required",
+			},
+			
+		
+			/////////////////////////////////////////////////////////////////////////////////////////////////////////// end added for cr wf
 			// {
 			// 	InternalName: "RequestDate",
 			// 	DisplayName: "تاريخ الطلب",

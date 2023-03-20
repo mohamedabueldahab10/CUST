@@ -1626,6 +1626,7 @@ window.View_Data_Request = {
       }
     });
 
+
     if (listkey == 'projects') {
 
       var myselections = oListItem.get_item("RelatedInitiativeDeliverable") ? oListItem.get_item("RelatedInitiativeDeliverable").split(":::") : [] // to get the name of delivrable over the code
@@ -1647,6 +1648,7 @@ window.View_Data_Request = {
     if (USERisWF) {
       $(".container-body .d-flex.btnactionrow").hide();
     }
+    
     //handle top menu navigation
     if (SP_ListName == ListArray[0].projects) {
       PCODE = oListItem.get_item("Title");
