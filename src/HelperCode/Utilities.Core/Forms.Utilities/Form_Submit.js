@@ -2077,17 +2077,24 @@ var New_Master_Details_Submit = {
           });
         New_Master_Details_Submit.g.oListItem.set_item("MasterID", IID);
         New_Master_Details_Submit.g.oListItem.set_item("MasterKey", listkey);
-        if (listkey == "projects") {
-          // New_Master_Details_Submit.g.oListItem.set_item('ProjectCode', $('#Title').val());
+        // if (listkey == "projects") {
+        // New_Master_Details_Submit.g.oListItem.set_item('ProjectCode', $('#Title').val());
 
-          var prt1 = CurrList.substring(0, 2).toUpperCase(),
-            prt2 = String(new Date().getFullYear()).slice(4 - 2),
-            prt3 = IID.toString().padStart(4, "0");
-          Code = prt1 + "-" + prt2 + "-" + prt3;
-          New_Master_Details_Submit.g.oListItem.set_item("Title", Code);
+        var prt1 = CurrList.substring(0, 2).toUpperCase(),
+          prt2 = String(new Date().getFullYear()).slice(4 - 2),
+          prt3 = IID.toString().padStart(4, "0");
+        Code = prt1 + "-" + prt2 + "-" + prt3;
 
+
+
+        New_Master_Details_Submit.g.oListItem.set_item("Title", Code);
+
+        if (PCODE) {
           New_Master_Details_Submit.g.oListItem.set_item("ProjectCode", PCODE);
+        } else if (ICODE) {
+          New_Master_Details_Submit.g.oListItem.set_item("InitiativeCode", ICODE);
         }
+
 
         if (listkey == 'goalstrategy') {
           var itemId = IID + pillerCount // to save a newTitle for mult master details item
