@@ -607,6 +607,11 @@ window.ListInfo = {
                 var actualBudget = $('#ActualBudget').val()
                 var assignedBudget = $('#AssignedBudget').val()
                 parentValue = (actualBudget && actualBudget != 0) ? actualBudget : assignedBudget
+              } else if (listkey == "initiatives") {
+                var initiativeBudget = $('#InitiativeBudget').val()
+
+                parentValue = initiativeBudget
+
               }
               if (parentValue) {
                 parentValue = parentValue.replaceAll(",", "")
@@ -639,11 +644,15 @@ window.ListInfo = {
               amount = 0;
 
             if (isMasterDetails) { // for new validation in master details
-              debugger
+
               if (listkey == "projects") {
                 var actualBudget = $('#ActualBudget').val()
                 var assignedBudget = $('#AssignedBudget').val()
                 parentValue = (actualBudget && actualBudget != 0) ? actualBudget : assignedBudget
+              } else if (listkey == "initiatives") {
+                var initiativeBudget = $('#InitiativeBudget').val()
+
+                parentValue = initiativeBudget
               }
               if (parentValue && parentValue != 0) {
                 parentValue = parentValue.replaceAll(",", "")
@@ -670,13 +679,23 @@ window.ListInfo = {
           $("body").on("keyup", ".disable_enable_section", function (event) {
 
             var value = event.target.value
-            if(value){
-            $("[data-target_list=Deliverables] .fieldset-container").removeClass("disable_section")
-            $("[data-target_list=Milestones] .fieldset-container").removeClass("disable_section")
-            
-            }else{
-              $("[data-target_list=Deliverables] .fieldset-container").addClass("disable_section")
-              $("[data-target_list=Milestones] .fieldset-container").addClass("disable_section")
+            if (value) {
+              if (listkey == 'projects') {
+                $("[data-target_list=Deliverables] .fieldset-container").removeClass("disable_section")
+                $("[data-target_list=Milestones] .fieldset-container").removeClass("disable_section")
+              } else if (listkey == 'initiatives'){
+                $("[data-target_list=InitiativeDeliverables] .fieldset-container").removeClass("disable_section")
+                $("[data-target_list=InitiativeMilestones] .fieldset-container").removeClass("disable_section")
+              }
+
+            } else {
+              if (listkey == 'projects') {
+                $("[data-target_list=Deliverables] .fieldset-container").addClass("disable_section")
+                $("[data-target_list=Milestones] .fieldset-container").addClass("disable_section")
+              }else if(listkey == 'initiatives'){
+                $("[data-target_list=InitiativeDeliverables] .fieldset-container").addClass("disable_section")
+                $("[data-target_list=InitiativeMilestones] .fieldset-container").addClass("disable_section")
+              }
             }
           })
 
@@ -5903,7 +5922,7 @@ window.ListInfo = {
       $(".add-New-Detail").on("click", function () {
 
 
-        if (listkey == 'projects' && isNew) {
+        if ((listkey == 'projects' || listkey == 'initiatives') && isNew) {
           var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item").last()
           lastDetailsItemBeforeAdd.addClass('disable_section')
         }
@@ -6028,7 +6047,7 @@ window.ListInfo = {
 
 
         //to remeove disabled class on the last section
-        if (listkey == 'projects' && isNew) {
+        if ((listkey == 'projects' || listkey == 'initiatives') && isNew) {
 
           var lastDetailsItemAfterRemove = $(this).closest("[data-target_list]").find(".Details-Item").last()
           lastDetailsItemAfterRemove.removeClass('disable_section')
