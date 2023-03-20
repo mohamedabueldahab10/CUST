@@ -4,7 +4,7 @@ var Information_Form = [
     labelEn: 'Basic Info',
     description: 'التفاصيل',
     descriptionEn: 'Details',
-    formDefaultValues: [
+    // formDefaultValues: [
       // //VRO
       // { fieldName: 'WFModuleCode', value: 'VROCOC',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
       // { fieldName: 'WFStage', value: 'VROCOC01',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
@@ -17,7 +17,7 @@ var Information_Form = [
       // { fieldName: 'WFModuleCode', value: 'LMSCOC',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
       // { fieldName: 'WFStage', value: 'LMSCOC01',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
 
-    ],
+    // ],
     subFields: [
       {
         InternalName: 'Deliverables',
