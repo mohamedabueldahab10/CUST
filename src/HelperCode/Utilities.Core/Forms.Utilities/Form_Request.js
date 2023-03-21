@@ -227,7 +227,7 @@ window.Edit_Data_Request = {
           mp.init($(this).attr("id"), { AllowMultipleValues: false });
           break;
         case "multipicker":
-          
+
           var pemail =
             oListItem.get_item("" + $(this).attr("id") + "") == null
               ? []
@@ -235,7 +235,7 @@ window.Edit_Data_Request = {
                 .get_item("" + $(this).attr("id") + "");
 
           var userItems = [];
-          
+
           pemail.forEach(function (element) {
             userItems.push(element.get_lookupValue());
           })
@@ -1648,7 +1648,7 @@ window.View_Data_Request = {
     if (USERisWF) {
       $(".container-body .d-flex.btnactionrow").hide();
     }
-    
+
     //handle top menu navigation
     if (SP_ListName == ListArray[0].projects) {
       PCODE = oListItem.get_item("Title");
@@ -1742,6 +1742,8 @@ window.View_Data_Request = {
 
       var recurrenceChanged = oListItem.get_item("RecurrenceChanged") ? oListItem.get_item("RecurrenceChanged") : '';
 
+      var kpiDraftStatus = oListItem.get_item("DraftStatus") ? oListItem.get_item("DraftStatus") : ''
+
       KPICode = oListItem.get_item("Title");
       KPIYear = oListItem.get_item("Year");
       KPIMonth = oListItem.get_item("Months") ? oListItem.get_item("Months") : '';
@@ -1776,8 +1778,11 @@ window.View_Data_Request = {
       if (recurrenceChanged == 'yes') {
         var htmlMsg = '<div data-trans-recurrencerepeat class="kpiPeriodChanged ErrorMsg Resources"></div>';
         $('.btnactionrow').html(htmlMsg);
+      }
 
-
+      if(kpiDraftStatus){
+        var htmlMsg = '<div data-trans-draftkpi class="kpiPeriodChanged ErrorMsg Resources"></div>';
+        $('.btnactionrow').html(htmlMsg);
       }
 
 
@@ -1786,6 +1791,14 @@ window.View_Data_Request = {
           "</span></a>")
       }
 
+    }
+    if(listkey == "sos"){
+      var sosDraftStatus = oListItem.get_item("DraftStatus") ? oListItem.get_item("DraftStatus") : ''
+
+      if(sosDraftStatus){
+        var htmlMsg = '<div data-trans-draftsos class="kpiPeriodChanged ErrorMsg Resources"></div>';
+        $('.btnactionrow').html(htmlMsg);
+      }
     }
 
     if (listkey == 'benefitmetrics') {
@@ -1905,7 +1918,7 @@ window.View_Data_Request = {
           })
         }
       }
-      if (strategyType == 'vision' || strategyType == 'ministry' || strategyType == 'sub' || strategyType == 'lms' || strategyType == 'sectorial' ) {
+      if (strategyType == 'vision' || strategyType == 'ministry' || strategyType == 'sub' || strategyType == 'lms' || strategyType == 'sectorial') {
         if (pillersRadio == 'yes') {
           $("[data-section_type]").show()
         } else {

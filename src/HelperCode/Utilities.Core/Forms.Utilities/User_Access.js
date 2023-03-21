@@ -205,6 +205,7 @@ var UserRole,
   SecondLevel_FirstLevel_FieldType,
   User_isClosureStatus,
   User_NotActiveStatus,
+  ProjectIsDraft,
   User_ScheduleSource,
   User_ProjUID,
   User_ProjUID,
@@ -6421,7 +6422,10 @@ var Access_Project_Info_Request = {
         USERPID = oListItem.get_id();
         User_isClosureStatus = oListItem.get_item("ClosureStatus") == "Failed" || oListItem.get_item("ClosureStatus") == "Cancelled" ? true : false;
         //////////
-        User_NotActiveStatus = oListItem.get_item("WorkingStatus") != 'active' ? true : false;
+        debugger
+        User_NotActiveStatus = (oListItem.get_item("WorkingStatus") != 'active' && oListItem.get_item("WorkingStatus") ) ? true : false;
+
+        ProjectIsDraft = oListItem.get_item("DraftStatus") == 'draft' ? true : false;
 
         User_ProjUID = oListItem.get_item("ProjectGUID") || UserNo_Data;
         //for milestones source
@@ -6805,8 +6809,7 @@ var Access_Project_Info_Request = {
     // if project is Cancelled or Holded
 
     if (
-      User_NotActiveStatus &&
-      (USERlistkey == "projects" || USERProjRelated.indexOf(USERlistkey) > -1 || istherePCODE)
+      User_NotActiveStatus && (USERlistkey == "projects" || USERProjRelated.indexOf(USERlistkey) > -1 || istherePCODE) || (ProjectIsDraft && istherePCODE)
     ) {
       $("body").append(
         "<style>" +
@@ -7526,6 +7529,7 @@ window.Get_StrategicPartnerShip_Info_Request = {
       var oListItem = listItemEnum.get_current();
       if (UserSTCode == oListItem.get_item("Title")) {
         strategicPartnerShipStatus = oListItem.get_item("Status")
+
       }
     }
 
@@ -7542,6 +7546,7 @@ window.Get_StrategicPartnerShip_Info_Request = {
         "</style>"
       );
     }
+
 
   },
   onError: function (sender, args) {
@@ -7584,20 +7589,49 @@ window.Get_Initiative_Info_Request = {
   onSuccess: function (sender, args) {
     var collListItem = Get_Initiative_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
+
+    var initiativeDraftStatus = false
+
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       if (UserICode == oListItem.get_item("Title")) {
-        //   initiativeStartDate = oListItem.get_item("StartDate") ? oListItem.get_item("StartDate") : ""
         initiativeStartToValidation = oListItem.get_item("StartDate") ? oListItem.get_item("StartDate") : ""
-        //   initiativeEndDate = oListItem.get_item("FinishDate") ? oListItem.get_item("FinishDate") : ""
-        //   initiativeBudget = oListItem.get_item("Cost") ? oListItem.get_item("Cost") : 0
+
         initiativeActualBudget = oListItem.get_item("InitiativeBudget")
+
+        initiativeDraftStatus = oListItem.get_item("DraftStatus") == 'draft' ? true : false
+
+
+
+
 
       }
 
     }
 
 
+    if (initiativeDraftStatus && isthereICODE) {
+      $("body").append(
+        "<style>" +
+        ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+        ".form-control{color: #b1b1b1 !important;" +
+        "border-color: #e1e1e1 !important;" +
+        "background-color: #fdfdfd !important;" +
+        "background-color: #fdfdfd !important;" +
+        "opacity: .6;pointer-events: none;}" +
+        "</style>"
+      );
+
+
+      if (initiativeDraftStatus && USERisInitiativeHome) {
+        $("body").append(
+          "<style>" +
+          ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none!important}" +
+          "</style>"
+        );
+      }
+
+    }
 
     //should uncomment when need to applt the validation on milstones every month for proj and every 3 months for initiative
     if (isthereICODE && initiativeStartToValidation) {
@@ -8607,11 +8641,11 @@ var Tasks_Info_Request_User = {
           }
           else if (wfname == "DV") {
             keyNameParams = "deliverables";
-          } else if (wfname == "CR" || wfname == "VROCRInitiative" || wfname == "EPMOCRInitiative" || wfname == "LMSCRInitiative"  ) {
+          } else if (wfname == "CR" || wfname == "VROCRInitiative" || wfname == "EPMOCRInitiative" || wfname == "LMSCRInitiative") {
             keyNameParams = "initiatives";
-            } else if (wfname == "VROCRObjective" || wfname == "MSCRObjective" || wfname == "LMSCRObjective") {
+          } else if (wfname == "VROCRObjective" || wfname == "MSCRObjective" || wfname == "LMSCRObjective") {
             keyNameParams = "sos";
-          } else if ( wfname == "VROCRKPI" || wfname == "MSCRKPI" || wfname == "LMSCRKPI") {
+          } else if (wfname == "VROCRKPI" || wfname == "MSCRKPI" || wfname == "LMSCRKPI") {
             keyNameParams = "mainkpi";
           } else if (wfname == "Issue") {
             keyNameParams = "issues";
