@@ -63,7 +63,7 @@ var Information_Form = [
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'VROCRInitiative' },
                 { fieldName: 'WFStage', value: 'VROCRInitiative01' },
-                // { fieldName: 'DraftStatus', value: 'Draft' },
+                { fieldName: 'DraftStatus', value: 'draft' },
               ],
             },
             {
@@ -71,8 +71,9 @@ var Information_Form = [
               value: 'strategically',
               roles: ['Administrator', 'EPMO'],
               otherFields: [
-                { fieldName: 'WFModuleCode', value: 'StrategicallyInitiative' },
-                { fieldName: 'WFStage', value: 'SInStage01' },
+                { fieldName: 'WFModuleCode', value: 'EPMOCRInitiative' },
+                { fieldName: 'WFStage', value: 'EPMOCRInitiative01' },
+                { fieldName: 'DraftStatus', value: 'draft' },
               ],
             },
             {
@@ -80,11 +81,13 @@ var Information_Form = [
               value: 'lms',
               roles: ['Administrator', 'LMSE', 'LMSP'],
               otherFields: [
-                { fieldName: 'WFModuleCode', value: 'LmsInitiative' },
-                { fieldName: 'WFStage', value: 'LInStage01' },
+                { fieldName: 'WFModuleCode', value: 'LMSCRInitiative' },
+                { fieldName: 'WFStage', value: 'LMSCRInitiative01' },
+                { fieldName: 'DraftStatus', value: 'draft' },
               ],
             },
             // { display: 'others', value: 'others' },
+            
           ],
         },
       },
