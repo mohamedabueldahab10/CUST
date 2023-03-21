@@ -5219,7 +5219,7 @@ window.userCalls = {
                 listName: "Strategic Partnerships",
                 parentRelationField: "Title",
                 RelationField: "SubSector",
-                RelationFieldType: "Choice",
+                RelationFieldType: "Text",
                 isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain 
                 subRelation: {
                   level: 3,
