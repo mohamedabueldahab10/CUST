@@ -2167,7 +2167,8 @@ window.userCalls = {
           "Targets.aspx",
           "sos",
           "goalstrategy",
-          "budgetitems"
+          "budgetitems",
+          "coc",
         ];
         Edit_Access = [
           "initiatives",
