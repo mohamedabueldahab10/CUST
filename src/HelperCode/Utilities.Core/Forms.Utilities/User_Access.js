@@ -6422,7 +6422,7 @@ var Access_Project_Info_Request = {
         USERPID = oListItem.get_id();
         User_isClosureStatus = oListItem.get_item("ClosureStatus") == "Failed" || oListItem.get_item("ClosureStatus") == "Cancelled" ? true : false;
         //////////
-        debugger
+        
         User_NotActiveStatus = (oListItem.get_item("WorkingStatus") != 'active' && oListItem.get_item("WorkingStatus") ) ? true : false;
 
         ProjectIsDraft = oListItem.get_item("DraftStatus") == 'draft' ? true : false;
