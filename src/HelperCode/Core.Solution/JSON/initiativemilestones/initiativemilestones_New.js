@@ -10,8 +10,8 @@ var Information_Form = [
     { fieldName: 'WFStage', value: 'VROInitiativeMilestone01',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
     
     //EPMOCOC
-    { fieldName: 'WFModuleCode', value: 'EPMOInitiativeMilestone',roles: ['EPMO'], },
-    { fieldName: 'WFStage', value: 'EPMOInitiativeMilestone01',roles: ['EPMO'], },
+    { fieldName: 'WFModuleCode', value: 'EPMOInitiativeMilestone',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+    { fieldName: 'WFStage', value: 'EPMOInitiativeMilestone01',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
 
     //LMS
     { fieldName: 'WFModuleCode', value: 'LMSInitiativeMilestone',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
