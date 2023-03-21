@@ -153,6 +153,8 @@ window.ListInfo = {
     // to handle the default form value
     var formDefaultValues = [], dataFormDefaultValue = "";
 
+    var workflowSetValues = [], dataWorkflowSetValues = "";
+
 
     asyncFor.seqProcess(
       Information_Form,
@@ -181,6 +183,22 @@ window.ListInfo = {
         } else {
           dataFormDefaultValue = ""
         }
+
+        // to handle the workflowSetValues
+
+        workflowSetValues = item.workflowSetValues
+
+        if (workflowSetValues && workflowSetValues.length) {
+          dataWorkflowSetValues = 'data-workflowSetValue="' +
+            JSON.stringify(workflowSetValues).replaceAll(
+              `"`,
+              `'`
+            ) +
+            '"'
+        } else {
+          dataWorkflowSetValues = ""
+        }
+        //
 
 
         toggleSectionName = item.togglename
@@ -235,7 +253,7 @@ window.ListInfo = {
           Description +
           "</span>" +
           "</div>" +
-          '<div data-togglename=' + toggleSectionName + ' ' + dataFormDefaultValue + ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container ' + item.className + '">';
+          '<div data-togglename=' + toggleSectionName + ' ' + dataFormDefaultValue + ' ' + dataWorkflowSetValues + ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container ' + item.className + '">';
 
         asyncFor.seqProcess(
           item.subFields,
@@ -683,7 +701,7 @@ window.ListInfo = {
               if (listkey == 'projects') {
                 $("[data-target_list=Deliverables] .fieldset-container").removeClass("disable_section")
                 $("[data-target_list=Milestones] .fieldset-container").removeClass("disable_section")
-              } else if (listkey == 'initiatives'){
+              } else if (listkey == 'initiatives') {
                 $("[data-target_list=InitiativeDeliverables] .fieldset-container").removeClass("disable_section")
                 $("[data-target_list=InitiativeMilestones] .fieldset-container").removeClass("disable_section")
               }
@@ -692,7 +710,7 @@ window.ListInfo = {
               if (listkey == 'projects') {
                 $("[data-target_list=Deliverables] .fieldset-container").addClass("disable_section")
                 $("[data-target_list=Milestones] .fieldset-container").addClass("disable_section")
-              }else if(listkey == 'initiatives'){
+              } else if (listkey == 'initiatives') {
                 $("[data-target_list=InitiativeDeliverables] .fieldset-container").addClass("disable_section")
                 $("[data-target_list=InitiativeMilestones] .fieldset-container").addClass("disable_section")
               }
@@ -6882,6 +6900,24 @@ var View_ListInfo = {
           printDate = "Date : ";
         }
 
+        // to handle the workflowSetValues
+        var workflowSetValues = [], dataWorkflowSetValues = "";
+
+        workflowSetValues = item.workflowSetValues
+
+        if (workflowSetValues && workflowSetValues.length) {
+          dataWorkflowSetValues = 'data-workflowSetValue="' +
+            JSON.stringify(workflowSetValues).replaceAll(
+              `"`,
+              `'`
+            ) +
+            '"'
+        } else {
+          dataWorkflowSetValues = ""
+        }
+        //
+
+
         toggleSectionName = item.togglename
 
         var printFooter = "";
@@ -6976,7 +7012,7 @@ var View_ListInfo = {
           Description +
           "</span>" +
           "</div>" +
-          '<div data-togglename=' + toggleSectionName + ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container">';
+          '<div data-togglename=' + toggleSectionName + ' ' + dataWorkflowSetValues + ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container">';
         asyncFor.seqProcess(
           item.subFields,
           function (subitemField, indexField, resolveField) {

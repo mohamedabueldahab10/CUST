@@ -4,6 +4,11 @@ var Information_Form = [
     labelEn: 'Initiative Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
+    // workflowSetValues: [
+    //   { fieldName: 'DraftStatus', value: '', stages:["VInStage02"] },
+    //   { fieldName: 'WFModuleCode', value: 'testWFModuleCodeWf',stages:["VInStage02"]}
+
+    // ],
     subFields: [
       {
         InternalName: 'Title',
@@ -278,7 +283,7 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         dynamic: 'Sector', //InternalName Of Parent field
-        filterField: 'ParentEntity', 
+        filterField: 'ParentEntity',
         filterFieldType: 'Text',//Type In Sharepoint List for Parent field
       },
       // {
