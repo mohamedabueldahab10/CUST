@@ -1671,6 +1671,7 @@ var kpiResults = {
     kpiResults.g.oListItem.set_item("Sector", Sector);
     kpiResults.g.oListItem.set_item("SubSector", SubSector);
     kpiResults.g.oListItem.set_item("Portfolio", Portfolio);
+    kpiResults.g.oListItem.set_item("DraftStatus", 'draft');
     if (Types == 'main') {
       kpiResults.g.oListItem.set_item("RelatedGoal", MainGoalRelated)
     } else if (Types == 'sub') {
