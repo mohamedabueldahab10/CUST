@@ -61,8 +61,9 @@ var Information_Form = [
               value: 'vision',
               roles: ['Administrator', 'VROE', 'VROP'],
               otherFields: [
-                { fieldName: 'WFModuleCode', value: 'VisionInitiative' },
-                { fieldName: 'WFStage', value: 'VInStage01' },
+                { fieldName: 'WFModuleCode', value: 'VROCRInitiative' },
+                { fieldName: 'WFStage', value: 'VROCRInitiative01' },
+                // { fieldName: 'DraftStatus', value: 'Draft' },
               ],
             },
             {

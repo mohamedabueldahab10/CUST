@@ -128,9 +128,9 @@ var workflowname,
 	isStrategicPartnerships = window.location.href.indexOf("strategicpartnerships&STP") > -1,
 	isSPAchievements = window.location.href.indexOf("strategicpartnershipsachievements") > -1,
 	// ghufran
-	isVROCRInitiative = window.location.href.indexOf("changerequest&VROCRInitiative") > -1,
-	isEPMOCRInitiative = window.location.href.indexOf("changerequest&EPMOCRInitiative") > -1,
-	isLMSCRInitiative = window.location.href.indexOf("changerequest&LMSCRInitiative") > -1,
+	isVROCRInitiative = window.location.href.indexOf("initiatives&VROCRInitiative") > -1,
+	isEPMOCRInitiative = window.location.href.indexOf("initiatives&EPMOCRInitiative") > -1,
+	isLMSCRInitiative = window.location.href.indexOf("initiatives&LMSCRInitiative") > -1,
 	isVROBenefitActual = window.location.href.indexOf("benefits&VROBenefitActual") > -1,
 	isEPMOBenefitActual = window.location.href.indexOf("benefits&EPMOBenefitActual") > -1,
 	isLMSBenefitActual = window.location.href.indexOf("benefits&LMSBenefitActual") > -1,
@@ -146,12 +146,12 @@ var workflowname,
 	isVROCOC = window.location.href.indexOf("coc&VROCOC") > -1,
 	isEPMOCOC = window.location.href.indexOf("coc&EPMOCOC") > -1,
 	isLMSCOC = window.location.href.indexOf("coc&LMSCOC") > -1,
-	isVROCRObjective = window.location.href.indexOf("changerequest&VROCRObjective") > -1,
-	isMSCRObjective = window.location.href.indexOf("changerequest&MSCRObjective") > -1,
-	isLMSCRObjective = window.location.href.indexOf("changerequest&LMSCRObjective") > -1,
-	isVROCRKPI = window.location.href.indexOf("changerequest&VROCRKPI") > -1,
-	isMSCRKPI = window.location.href.indexOf("changerequest&MSCRKPI") > -1,
-	isLMSCRKPI = window.location.href.indexOf("changerequest&LMSCRKPI") > -1,
+	isVROCRObjective = window.location.href.indexOf("sos&VROCRObjective") > -1,
+	isMSCRObjective = window.location.href.indexOf("sos&MSCRObjective") > -1,
+	isLMSCRObjective = window.location.href.indexOf("sos&LMSCRObjective") > -1,
+	isVROCRKPI = window.location.href.indexOf("mainkpi&VROCRKPI") > -1,
+	isMSCRKPI = window.location.href.indexOf("mainkpi&MSCRKPI") > -1,
+	isLMSCRKPI = window.location.href.indexOf("mainkpi&LMSCRKPI") > -1,
 	isVROProjDeliverable  = window.location.href.indexOf("deliverables&VROProjDeliverable") > -1,
 	isEPMOProjDeliverable= window.location.href.indexOf("deliverables&EPMOProjDeliverable") > -1,
 	isLMSProjDeliverable = window.location.href.indexOf("deliverables&LMSProjDeliverable") > -1,
@@ -423,7 +423,7 @@ else if (isLMSInitiative) {
 else if (isVROCRInitiative) {
 	debugger
 	workflowname = "VROCRInitiative";
-	bulkeditlist = "ChangeRequest";
+	bulkeditlist = "Initiatives";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -439,7 +439,7 @@ else if (isVROCRInitiative) {
 else if (isEPMOCRInitiative) {
 	debugger
 	workflowname = "EPMOCRInitiative";
-	bulkeditlist = "ChangeRequest";
+	bulkeditlist = "Initiatives";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -455,7 +455,7 @@ else if (isEPMOCRInitiative) {
 else if (isLMSCRInitiative) {
 	debugger
 	workflowname = "LMSCRInitiative";
-	bulkeditlist = "ChangeRequest";
+	bulkeditlist = "Initiatives";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -759,7 +759,7 @@ else if (isLMSProjDeliverable) {
 else if (isVROCRObjective) {
 	debugger
 	workflowname = "VROCRObjective";
-	bulkeditlist = "ChangeRequest";
+	bulkeditlist = "SOs";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -775,7 +775,7 @@ else if (isVROCRObjective) {
 else if (isMSCRObjective) {
 	debugger
 	workflowname = "MSCRObjective";
-	bulkeditlist = "ChangeRequest";
+	bulkeditlist = "SOs";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -791,7 +791,7 @@ else if (isMSCRObjective) {
 else if (isLMSCRObjective) {
 	debugger
 	workflowname = "LMSCRObjective";
-	bulkeditlist = "ChangeRequest";
+	bulkeditlist = "SOs";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -807,7 +807,7 @@ else if (isLMSCRObjective) {
 else if (isVROCRKPI) {
 	debugger
 	workflowname = "VROCRKPI";
-	bulkeditlist = "ChangeRequest";
+	bulkeditlist = "MainKPI";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -823,7 +823,7 @@ else if (isVROCRKPI) {
 else if (isMSCRKPI) {
 	debugger
 	workflowname = "MSCRKPI";
-	bulkeditlist = "ChangeRequest";
+	bulkeditlist = "MainKPI";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -839,7 +839,7 @@ else if (isMSCRKPI) {
 else if (isLMSCRKPI) {
 	debugger
 	workflowname = "LMSCRKPI";
-	bulkeditlist = "ChangeRequest";
+	bulkeditlist = "MainKPI";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +

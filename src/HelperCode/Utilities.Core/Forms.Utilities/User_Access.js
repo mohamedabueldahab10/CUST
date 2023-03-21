@@ -8607,8 +8607,12 @@ var Tasks_Info_Request_User = {
           }
           else if (wfname == "DV") {
             keyNameParams = "deliverables";
-          } else if (wfname == "CR" || wfname == "VROCRInitiative" || wfname == "EPMOCRInitiative" || wfname == "LMSCRInitiative" || wfname == "VROCRObjective" || wfname == "MSCRObjective" || wfname == "LMSCRObjective" || wfname == "VROCRKPI" || wfname == "MSCRKPI" || wfname == "LMSCRKPI") {
-            keyNameParams = "changerequest";
+          } else if (wfname == "CR" || wfname == "VROCRInitiative" || wfname == "EPMOCRInitiative" || wfname == "LMSCRInitiative"  ) {
+            keyNameParams = "initiatives";
+            } else if (wfname == "VROCRObjective" || wfname == "MSCRObjective" || wfname == "LMSCRObjective") {
+            keyNameParams = "sos";
+          } else if ( wfname == "VROCRKPI" || wfname == "MSCRKPI" || wfname == "LMSCRKPI") {
+            keyNameParams = "mainkpi";
           } else if (wfname == "Issue") {
             keyNameParams = "issues";
           } else if (wfname == "Risk") {
