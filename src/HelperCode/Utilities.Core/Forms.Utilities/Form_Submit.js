@@ -532,7 +532,6 @@ window.New_Data_Submit = {
       New_Data_Submit.g.oListItem.set_item("StrategicPartnershipCode", UserSTCode);
     }
     if (listkey == "projects") {
-      // console.log('Phases_Data_Request.g.PhasesArray[0]', Phases_Data_Request.g.PhasesArray[0]);
 
       New_Data_Submit.g.oListItem.set_item(
         "Phase",
@@ -543,13 +542,13 @@ window.New_Data_Submit = {
         "Stage",
         Stages_Data_Request.g.StagesArray[0].stage
       );
-      // New_Data_Submit.g.oListItem.set_item("ProjectProgressStatus", "stat5");
       New_Data_Submit.g.oListItem.set_item("ProgressStatusDeliverable", "stat6");
       New_Data_Submit.g.oListItem.set_item("ProgressStatusMilestone", "stat6");
       New_Data_Submit.g.oListItem.set_item("ProgressStatusSchedule", "stat6");
-
       New_Data_Submit.g.oListItem.set_item("Status", "inprogress");
-
+      //  for draft status
+      New_Data_Submit.g.oListItem.set_item("DraftStatus", "draft");
+      //
       //لحساب مدة الاساس
       var BaselineStartDate = $('#BaselineStartDate').val()
       var BaselineFinishDate = $('#BaselineFinishDate').val()
@@ -568,14 +567,18 @@ window.New_Data_Submit = {
       }
     }
     if (listkey == 'initiatives') { //  to handle the initiative status when create a new one
-
-      // if ($('#Types').val() == 'strategically') {
-      //   var RelatedObjective = $('#RelatedObjective').val()
-      //   New_Data_Submit.g.oListItem.set_item("RelatedStrategyObjective", RelatedObjective);
-      // }
       New_Data_Submit.g.oListItem.set_item("InitiativeProgressStatus", "stat6");
-
+      New_Data_Submit.g.oListItem.set_item("DraftStatus", "draft");
     }
+    if (listkey == "mainkpi") {
+      New_Data_Submit.g.oListItem.set_item("DraftStatus", "draft");
+    }
+
+    if(listkey == "sos"){
+      New_Data_Submit.g.oListItem.set_item("DraftStatus", "draft");
+    }
+
+
     New_Data_Submit.g.oListItem.update();
     clientContext.load(New_Data_Submit.g.oListItem);
     clientContext.executeQueryAsync(
