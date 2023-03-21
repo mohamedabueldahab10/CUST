@@ -546,9 +546,7 @@ window.New_Data_Submit = {
       New_Data_Submit.g.oListItem.set_item("ProgressStatusMilestone", "stat6");
       New_Data_Submit.g.oListItem.set_item("ProgressStatusSchedule", "stat6");
       New_Data_Submit.g.oListItem.set_item("Status", "inprogress");
-      //  for draft status
-      New_Data_Submit.g.oListItem.set_item("DraftStatus", "draft");
-      //
+ 
       //لحساب مدة الاساس
       var BaselineStartDate = $('#BaselineStartDate').val()
       var BaselineFinishDate = $('#BaselineFinishDate').val()
@@ -568,15 +566,8 @@ window.New_Data_Submit = {
     }
     if (listkey == 'initiatives') { //  to handle the initiative status when create a new one
       New_Data_Submit.g.oListItem.set_item("InitiativeProgressStatus", "stat6");
-      New_Data_Submit.g.oListItem.set_item("DraftStatus", "draft");
-    }
-    if (listkey == "mainkpi") {
-      New_Data_Submit.g.oListItem.set_item("DraftStatus", "draft");
     }
 
-    if(listkey == "sos"){
-      New_Data_Submit.g.oListItem.set_item("DraftStatus", "draft");
-    }
 
 
     New_Data_Submit.g.oListItem.update();
@@ -1680,6 +1671,7 @@ var kpiResults = {
     kpiResults.g.oListItem.set_item("Sector", Sector);
     kpiResults.g.oListItem.set_item("SubSector", SubSector);
     kpiResults.g.oListItem.set_item("Portfolio", Portfolio);
+    kpiResults.g.oListItem.set_item("DraftStatus", 'draft');
     if (Types == 'main') {
       kpiResults.g.oListItem.set_item("RelatedGoal", MainGoalRelated)
     } else if (Types == 'sub') {

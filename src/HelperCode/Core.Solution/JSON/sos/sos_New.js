@@ -4,13 +4,23 @@ var Information_Form = [
     labelEn: 'Strategy objective Data',
     description: '',
     descriptionEn: '',
-    //   formDefaultValues: [
-    //   { fieldName: 'WFModuleCode', value: 'Administrator',roles:["Administrator","InitiativeManager"] },
-    //   { fieldName: 'WFModuleCode', value: 'InitiativeManager',roles:["InitiativeManager","SPMAdmin"] },
-    //   { fieldName: 'WFStage', value: 'Administrator',roles:["Administrator"]},
-    //   { fieldName: 'WFStage', value: 'InitiativeManager',roles:["InitiativeManager","SPMAdmin"] },
-
-    // ],
+    formDefaultValues: [
+      //VRO
+      { fieldName: 'WFModuleCode', value: 'VROCRObjective',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+      { fieldName: 'WFStage', value: 'VROCRSOS01',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+      { fieldName: 'DraftStatus', value: 'draft' ,roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+      
+      //EPMOCOC
+      { fieldName: 'WFModuleCode', value: 'MSCRObjective',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+      { fieldName: 'WFStage', value: 'MSCRSOS01',roles:  ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+      { fieldName: 'DraftStatus', value: 'draft',roles:  ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+  
+      //LMS
+      { fieldName: 'WFModuleCode', value: 'LMSCRObjective',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+      { fieldName: 'WFStage', value: 'LMSCRSOS01',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+      { fieldName: 'DraftStatus', value: 'draft',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+  
+    ],
     subFields: [
       {
         InternalName: 'Name',
