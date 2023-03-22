@@ -26,13 +26,12 @@ var Listing_Info = [
    },
    {
       "InternalName":"SubSector",
-      "DisplayName":"الوكالة",
+      "DisplayName":"الوكالة", 
       "DisplayNameEn":"Deputyship",
-      // "type": "lookup",
       "type":"lookupmultiselect",
       "localStorageVariable":"Dynamo_Internal Entities",
       "inlisting":true,
-      "infilter":true
+      "infilter":false 
    },
    {
       "InternalName": "PartnershipType",
@@ -48,9 +47,6 @@ var Listing_Info = [
       "DisplayName":"اسم الشريك",
       "DisplayNameEn":"Partner Name",
       "type":"lookup",
-      // source: 'Vendors',
-      // Dispfieldkey: 'Name',
-      // valfieldkey: 'Title',
       "inlisting":true,
       "infilter":false
    },

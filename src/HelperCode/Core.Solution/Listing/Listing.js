@@ -266,6 +266,42 @@ window.sphttp = {
                     } else if (Listing_Info[i].type == "money") {
                       record[internalFieldNames[i]] = (oListItem.get_item(internalFieldNames[i]) == null) ? No_Data : oListItem.get_item(internalFieldNames[i]).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     }
+                    else if (Listing_Info[i].type == "lookupmultiselect") {
+                      var items = ''
+                      var value = oListItem.get_item(internalFieldNames[i]) == null ? '' : oListItem.get_item(internalFieldNames[i]).split(":::")
+
+                      if (value && value.length) {
+                        var multiLookUpItemsArr = []
+                        var multiLookUpValuesArr = []
+                        
+                        value.forEach(el => {
+                          if ((localStorage.getItem('' + Listing_Info[i].localStorageVariable) != null) && (oListItem.get_item(internalFieldNames[i]) !== null)) {
+                            multiLookUpItemsArr = JSON.parse(localStorage.getItem('' + Listing_Info[i].localStorageVariable));
+
+                            multiLookUpItemsArr.filter(function (a) {
+                              if (a.code == el) {
+                                multiLookUpValuesArr.push(a)
+                              }
+                            });
+                          }
+                        })
+                      }
+                      if (multiLookUpValuesArr.length) {
+                        multiLookUpValuesArr.forEach(el => {
+                          if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+                            items += el.name + '<br>'
+                          } else {
+                            items += el.nameEn + '<br>'
+                          }
+                        })
+
+                        record[internalFieldNames[i]] = items
+                      } else {
+                        record[internalFieldNames[i]] = No_Data;
+                      }
+
+
+                    }
                     else if (Listing_Info[i].type == "lookup") {
                       var lookupItemarr = [], Itemdisplayname = "";
                       if ((localStorage.getItem('' + Listing_Info[i].localStorageVariable) != null) && (oListItem.get_item(internalFieldNames[i]) !== null)) {
@@ -1430,7 +1466,7 @@ window.ListingData = {
         // debugger
         for (var i = 0; i < FilterChoices.length; i++) {
           console.log(FilterChoices, "FilterChoices FilterChoices")
-
+          debugger
           //only one choice
           if (FilterChoices.length == 1) {
 
@@ -1689,11 +1725,11 @@ window.ListingData = {
             keyNameParams = "ideas"
           } else if (wfname == 'DV') {
             keyNameParams = 'deliverables'
-          } else if (wfname == 'VROCRInitiative' || wfname == 'EPMOCRInitiative' || wfname == 'LMSCRInitiative' ) {
+          } else if (wfname == 'VROCRInitiative' || wfname == 'EPMOCRInitiative' || wfname == 'LMSCRInitiative') {
             keyNameParams = 'initiatives'
-          } else if ( wfname == 'VROCRObjective' || wfname == 'MSCRObjective' || wfname == 'LMSCRObjective' ) {
+          } else if (wfname == 'VROCRObjective' || wfname == 'MSCRObjective' || wfname == 'LMSCRObjective') {
             keyNameParams = 'sos'
-          }  else if (wfname == 'VROCRKPI' || wfname == 'MSCRKPI' || wfname == 'LMSCRKPI') {
+          } else if (wfname == 'VROCRKPI' || wfname == 'MSCRKPI' || wfname == 'LMSCRKPI') {
             keyNameParams = 'mainkpi'
           } else if (wfname == 'Issue') {
             keyNameParams = 'issues'
@@ -1805,7 +1841,7 @@ window.ListingData = {
       table += "</tr></thead><tbody>";
 
 
-      console.log(table,"table")
+      console.log(table, "table")
       debugger
 
       for (var i = 0; i < mydata.length; i++) {
@@ -2054,7 +2090,44 @@ window.ListingData = {
                   '<label class="dropdown-item">' + AllData[L][z] + '<input data-type="' + TypsFieldsAll[L] + '" data-internal="' + FilterNames[L] + '" type="checkbox" name="' + FilterNames[L] + '" value="' + lookupItemarray[0].code + '">' +
                   '</label>'
               }
-            }
+            } 
+            // else if (TypsFieldsAll[L] == "lookupmultiselect") {
+            //   var multiLookUpItemsArr = []
+            //   var multiLookUpValuesArr = []
+            //   var codeMulti = ""
+            //   if (localStorage.getItem('' + localStorageVariables[L]) != null) {
+            //     multiLookUpItemsArr = JSON.parse(localStorage.getItem('' + localStorageVariables[L]));
+
+            //     multiLookUpItemsArr.filter(function (a) {
+            //       if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+            //         if (a.name && AllData[L][z].includes(a.name)) {
+            //           multiLookUpValuesArr.push(a)
+            //         }
+            //       } else {
+            //         if (a.nameEn && AllData[L][z].includes(a.nameEn)) {
+            //           multiLookUpValuesArr.push(a)
+            //         }
+            //       }
+            //     });
+
+
+            //   }
+            //   multiLookUpValuesArr.forEach((item,i)=> {
+            //     if(i == multiLookUpValuesArr.length-1 ){
+            //       codeMulti += item.code
+
+            //     }else{
+            //     codeMulti += item.code + ":::"
+            //     }
+
+            //   })
+
+              
+            //   FilterationcontractsHTML +=
+            //     '<label class="dropdown-item">' + AllData[L][z] + '<input data-type="' + TypsFieldsAll[L] + '" data-internal="' + FilterNames[L] + '" type="checkbox" name="' + FilterNames[L] + '" value="' + codeMulti  + '">' +
+            //     '</label>'
+            //   console.log(multiLookUpValuesArr, " AllData[L][multiLookUpValuesArr] ")
+            // }
             else {
               if (TypsFieldsAll[L] == "date" && AllData[L][z] != No_Data) {
                 var dateDisplay = AllData[L][z].slice(0, AllData[L][z].indexOf('T'))
@@ -2144,13 +2217,13 @@ window.ListingData = {
           // $('body').animate({ opacity: 1 }, { duration: 333, complete: function () { } });
         });
 
-         // add .dropdown-menu.show to filter only on open dropdown
+        // add .dropdown-menu.show to filter only on open dropdown
         $("body").on('keyup', '.filterSearch', function (e) {
 
           var value = $(this).val().toLowerCase();
-        
+
           $(".page-filter .dropdown-menu.show .dropdown-item").filter(function () {
-            
+
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
           });
         })
