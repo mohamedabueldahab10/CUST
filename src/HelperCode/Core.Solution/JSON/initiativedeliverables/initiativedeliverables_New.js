@@ -10,7 +10,7 @@ var Information_Form = [
       { fieldName: 'WFStage', value: 'VROInitiativeDeliverable01',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
       
       //EPMOInitiativeDeliverable
-      { fieldName: 'WFModuleCode', value: 'EPMOInitiativeDeliverable',roles: ['EPMO'], },
+      { fieldName: 'WFModuleCode', value: 'EPMOInitiativeDeliverable',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
       { fieldName: 'WFStage', value: 'EPMOInitiativeDeliverable01',roles: ['EPMO'], },
 
       //LMS
