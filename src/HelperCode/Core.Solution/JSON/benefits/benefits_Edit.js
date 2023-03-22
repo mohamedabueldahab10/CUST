@@ -1,6 +1,6 @@
 var Information_Form = [
   {
-    label: 'بطاقة مقياس المنفعة',
+    label: 'بيانات المنفعة',
     labelEn: ' Benefit Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
@@ -185,7 +185,7 @@ var Information_Form = [
     ],
   },
   {
-    label: 'المخرجات المرتبطة بالمنفعة',
+    label: 'بيانات المخرجات',
     labelEn: 'Benefit Deliverables',
     description: 'التفاصيل',
     descriptionEn: 'Details',

@@ -122,15 +122,15 @@ var workflowname,
 	isStrategyWf = window.location.href.indexOf("strategies") > -1,
 	isSOsWf = window.location.href.indexOf("strategicobjectives") > -1,
 	isKPIResultWf = window.location.href.indexOf("Targets") > -1,
-	isVisionInitiative = window.location.href.indexOf("initiatives&VisionInitiative") > -1, 
+	isVisionInitiative = window.location.href.indexOf("initiatives&VisionInitiative") > -1,
 	isStrategicallyInitiative = window.location.href.indexOf("initiatives&StrategicallyInitiative") > -1,
 	isLMSInitiative = window.location.href.indexOf("initiatives&LMSInitiative") > -1,
 	isStrategicPartnerships = window.location.href.indexOf("strategicpartnerships&STP") > -1,
 	isSPAchievements = window.location.href.indexOf("strategicpartnershipsachievements") > -1,
 	// ghufran
-	isVROCRInitiative = window.location.href.indexOf("changerequest&VROCRInitiative") > -1,
-	isEPMOCRInitiative = window.location.href.indexOf("changerequest&EPMOCRInitiative") > -1,
-	isLMSCRInitiative = window.location.href.indexOf("changerequest&LMSCRInitiative") > -1,
+	isVROCRInitiative = window.location.href.indexOf("initiatives&VROCRInitiative") > -1,
+	isEPMOCRInitiative = window.location.href.indexOf("initiatives&EPMOCRInitiative") > -1,
+	isLMSCRInitiative = window.location.href.indexOf("initiatives&LMSCRInitiative") > -1,
 	isVROBenefitActual = window.location.href.indexOf("benefits&VROBenefitActual") > -1,
 	isEPMOBenefitActual = window.location.href.indexOf("benefits&EPMOBenefitActual") > -1,
 	isLMSBenefitActual = window.location.href.indexOf("benefits&LMSBenefitActual") > -1,
@@ -146,14 +146,14 @@ var workflowname,
 	isVROCOC = window.location.href.indexOf("coc&VROCOC") > -1,
 	isEPMOCOC = window.location.href.indexOf("coc&EPMOCOC") > -1,
 	isLMSCOC = window.location.href.indexOf("coc&LMSCOC") > -1,
-	isVROCRObjective = window.location.href.indexOf("changerequest&VROCRObjective") > -1,
-	isMSCRObjective = window.location.href.indexOf("changerequest&MSCRObjective") > -1,
-	isLMSCRObjective = window.location.href.indexOf("changerequest&LMSCRObjective") > -1,
-	isVROCRKPI = window.location.href.indexOf("changerequest&VROCRKPI") > -1,
-	isMSCRKPI = window.location.href.indexOf("changerequest&MSCRKPI") > -1,
-	isLMSCRKPI = window.location.href.indexOf("changerequest&LMSCRKPI") > -1,
-	isVROProjDeliverable  = window.location.href.indexOf("deliverables&VROProjDeliverable") > -1,
-	isEPMOProjDeliverable= window.location.href.indexOf("deliverables&EPMOProjDeliverable") > -1,
+	isVROCRObjective = window.location.href.indexOf("sos&VROCRObjective") > -1,
+	isMSCRObjective = window.location.href.indexOf("sos&MSCRObjective") > -1,
+	isLMSCRObjective = window.location.href.indexOf("sos&LMSCRObjective") > -1,
+	isVROCRKPI = window.location.href.indexOf("mainkpi&VROCRKPI") > -1,
+	isMSCRKPI = window.location.href.indexOf("mainkpi&MSCRKPI") > -1,
+	isLMSCRKPI = window.location.href.indexOf("mainkpi&LMSCRKPI") > -1,
+	isVROProjDeliverable = window.location.href.indexOf("deliverables&VROProjDeliverable") > -1,
+	isEPMOProjDeliverable = window.location.href.indexOf("deliverables&EPMOProjDeliverable") > -1,
 	isLMSProjDeliverable = window.location.href.indexOf("deliverables&LMSProjDeliverable") > -1,
 	// 
 	isProjectCancellationRequestWF =
@@ -243,7 +243,7 @@ if (isChangeRequestPage) {
 		'</Value></Eq><And><Eq><FieldRef Name="RelatedItemID" /><Value Type="Text">' +
 		IID2 +
 		'</Value></Eq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And></And></Where></Query></View>';
-} 
+}
 // else if (isDeliverablesPage) {
 // 	workflowname = "DV";
 // 	bulkeditlist = "Deliverables";
@@ -329,7 +329,7 @@ else if (isStrategyWf) {
 		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
 		workflowname +
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
-}  else if (isSOsWf) {
+} else if (isSOsWf) {
 	workflowname = "StrategicObjectives";
 	bulkeditlist = "StrategicObjectives";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -357,9 +357,9 @@ else if (isStrategyWf) {
 		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
 		workflowname +
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
-} 
+}
 else if (isVisionInitiative) {
-	
+
 	workflowname = "VisionInitiative";
 	bulkeditlist = "Initiatives";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -375,7 +375,7 @@ else if (isVisionInitiative) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 
 }
- else if (isStrategicPartnerships) {
+else if (isStrategicPartnerships) {
 	workflowname = "StrategicPartnerships";
 	bulkeditlist = "Strategic Partnerships";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -389,7 +389,7 @@ else if (isVisionInitiative) {
 		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
 		workflowname +
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
-}else if (isStrategicallyInitiative) {
+} else if (isStrategicallyInitiative) {
 	workflowname = "StrategicallyInitiative";
 	bulkeditlist = "Initiatives";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -423,7 +423,7 @@ else if (isLMSInitiative) {
 else if (isVROCRInitiative) {
 	debugger
 	workflowname = "VROCRInitiative";
-	bulkeditlist = "ChangeRequest";
+	bulkeditlist = "Initiatives";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -439,7 +439,7 @@ else if (isVROCRInitiative) {
 else if (isEPMOCRInitiative) {
 	debugger
 	workflowname = "EPMOCRInitiative";
-	bulkeditlist = "ChangeRequest";
+	bulkeditlist = "Initiatives";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -455,7 +455,7 @@ else if (isEPMOCRInitiative) {
 else if (isLMSCRInitiative) {
 	debugger
 	workflowname = "LMSCRInitiative";
-	bulkeditlist = "ChangeRequest";
+	bulkeditlist = "Initiatives";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -759,7 +759,7 @@ else if (isLMSProjDeliverable) {
 else if (isVROCRObjective) {
 	debugger
 	workflowname = "VROCRObjective";
-	bulkeditlist = "ChangeRequest";
+	bulkeditlist = "SOs";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -775,7 +775,7 @@ else if (isVROCRObjective) {
 else if (isMSCRObjective) {
 	debugger
 	workflowname = "MSCRObjective";
-	bulkeditlist = "ChangeRequest";
+	bulkeditlist = "SOs";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -791,7 +791,7 @@ else if (isMSCRObjective) {
 else if (isLMSCRObjective) {
 	debugger
 	workflowname = "LMSCRObjective";
-	bulkeditlist = "ChangeRequest";
+	bulkeditlist = "SOs";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -807,7 +807,7 @@ else if (isLMSCRObjective) {
 else if (isVROCRKPI) {
 	debugger
 	workflowname = "VROCRKPI";
-	bulkeditlist = "ChangeRequest";
+	bulkeditlist = "MainKPI";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -823,7 +823,7 @@ else if (isVROCRKPI) {
 else if (isMSCRKPI) {
 	debugger
 	workflowname = "MSCRKPI";
-	bulkeditlist = "ChangeRequest";
+	bulkeditlist = "MainKPI";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -839,7 +839,7 @@ else if (isMSCRKPI) {
 else if (isLMSCRKPI) {
 	debugger
 	workflowname = "LMSCRKPI";
-	bulkeditlist = "ChangeRequest";
+	bulkeditlist = "MainKPI";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -1264,7 +1264,7 @@ var DeleteDelegate_Data_Submit = {
 var Task_PCODE_Data_Request_WFs = {
 	// Pre-initialization functions ensure scripts, SharePoint dependencies are loaded
 	preinit: function () {
-		
+
 		// console.log('321');
 		if (
 			$(".DahsFormTitle").length ||
@@ -1300,7 +1300,7 @@ var Task_PCODE_Data_Request_WFs = {
 		var oList = clientContext.get_web().get_lists().getByTitle("Tasks"); //list name
 		var camlQuery = new SP.CamlQuery();
 		camlQuery.set_viewXml(taskquery); //caml query
-		
+
 		Task_PCODE_Data_Request_WFs.g.collListItem = oList.getItems(camlQuery);
 		clientContext.load(Task_PCODE_Data_Request_WFs.g.collListItem);
 		clientContext.executeQueryAsync(
@@ -1313,8 +1313,8 @@ var Task_PCODE_Data_Request_WFs = {
 		var listItemEnum = collListItem.getEnumerator();
 
 		while (listItemEnum.moveNext()) {
-			
-			
+
+
 			accessCurrentTask = true
 
 			//loop through list items
@@ -1457,8 +1457,8 @@ var Task_PCODE_Data_Request_WFs = {
 						'"</button></div></div>'
 					);
 					$(".btnactionrow > h2.approvalHeader").append('<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-					taskid +
-					'\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>')
+						taskid +
+						'\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>')
 					$(".btnactionrow .form-btns-wrapper").append(
 						'<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><button data-trans-task onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" > "' +
 						stagename +
@@ -1501,7 +1501,7 @@ var Task_PCODE_Data_Request_WFs = {
 					);
 					//delegation btn
 					$(".btnactionrow > h2.approvalHeader").append('<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-					taskid +
+						taskid +
 						'\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>')
 					//main action
 					$(".btnactionrow .form-btns-wrapper").append(
@@ -1543,7 +1543,7 @@ var Task_PCODE_Data_Request_WFs = {
 					);
 					//delegation btn
 					$(".btnactionrow > h2.approvalHeader").append('<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-					taskid +
+						taskid +
 						'\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>')
 					$(".btnactionrow .form-btns-wrapper").append(
 						'<div class="WF-btn"><div class="apprv"><span class="approveStageName"><p class="Resources task-name" data-trans-taskname></p>' +
@@ -2537,6 +2537,20 @@ var SubmitField_BulkEdit = {
 							if (state) items.set_item("WFStage", nxtstageid);
 							else items.set_item("WFStage", prvstageid);
 						}
+
+						// to handle workflowSetValues from json will use it for cr wf purpose
+						$(`[data-workflowSetValue]`).each(function (index) {
+							var parsingData = eval($(this).data('workflowsetvalue'))
+							parsingData.forEach(el => {
+								if (el.stages.includes(stageid)) {
+									items.set_item(el.fieldName, el.value);
+								}
+							})
+						})
+						//
+
+
+
 						//Update the item
 						items.update();
 						//Push item on the array
@@ -2911,7 +2925,6 @@ function program_BulkEdit(state) {
 			if (progColl.get_count() > 0) {
 				var progEnum = progColl.getEnumerator();
 				while (progEnum.moveNext()) {
-					console.log("INNNNNNNNNNNNNN loop");
 
 					var currentItem = progEnum.get_current();
 					var progTitle = currentItem.get_item("Title");
@@ -2924,13 +2937,7 @@ function program_BulkEdit(state) {
 					ProjectSponsorPicker = currentItem.get_item("ProjectSponsor")
 						? currentItem.get_item("ProjectSponsor")
 						: "";
-					// projectManagerPicker = currentItem.get_item("ProjectManager")
-					// 	? currentItem.get_item("ProjectManager")
-					// 	: "";
-					// projectGuid = currentItem.get_item("ProjectGUID")
-					// 	? currentItem.get_item("ProjectGUID")
-					// 	: "";
-					// console.log(currentId);
+
 					//Get Item by current ID
 					var items = programList.getItemById(currentId);
 					//set
@@ -2990,6 +2997,20 @@ function program_BulkEdit(state) {
 							items.set_item("Stage", prjstage.join(";")); // set multiple stages value
 						}
 					}
+
+					// to handle workflowSetValues from json for Project will use it for cr workflow purpose
+					$(`[data-workflowSetValue]`).each(function (index) {
+						var parsingData = eval($(this).data('workflowsetvalue'))
+						parsingData.forEach(el => {
+							if (el.stages.includes(stageid)) {
+								items.set_item(el.fieldName, el.value);
+							}
+						})
+					})
+
+					//
+
+
 					items.set_item("Comments", $("textarea#commenttext").val());
 					//Update the item
 					items.update();
@@ -3994,11 +4015,11 @@ function ChangeProjectOwnerEpmWF(projectGuid, newPmId) {
 	draftProject.set_owner(userPicked);
 	var publishJob = draftProject.publish(true);
 	projContext.waitForQueueAsync(
-	  publishJob,
-	  100,
-	  QueueJobSentOwnerEpmCreateProj
+		publishJob,
+		100,
+		QueueJobSentOwnerEpmCreateProj
 	);
-  }
-  function QueueJobSentOwnerEpmWF(response) {
-	  console.log(response);
-  }
+}
+function QueueJobSentOwnerEpmWF(response) {
+	console.log(response);
+}

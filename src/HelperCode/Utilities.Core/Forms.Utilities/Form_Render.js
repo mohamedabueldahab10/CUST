@@ -153,6 +153,8 @@ window.ListInfo = {
     // to handle the default form value
     var formDefaultValues = [], dataFormDefaultValue = "";
 
+    var workflowSetValues = [], dataWorkflowSetValues = "";
+
 
     asyncFor.seqProcess(
       Information_Form,
@@ -181,6 +183,22 @@ window.ListInfo = {
         } else {
           dataFormDefaultValue = ""
         }
+
+        // to handle the workflowSetValues
+
+        workflowSetValues = item.workflowSetValues
+
+        if (workflowSetValues && workflowSetValues.length) {
+          dataWorkflowSetValues = 'data-workflowSetValue="' +
+            JSON.stringify(workflowSetValues).replaceAll(
+              `"`,
+              `'`
+            ) +
+            '"'
+        } else {
+          dataWorkflowSetValues = ""
+        }
+        //
 
 
         toggleSectionName = item.togglename
@@ -235,7 +253,7 @@ window.ListInfo = {
           Description +
           "</span>" +
           "</div>" +
-          '<div data-togglename=' + toggleSectionName + ' ' + dataFormDefaultValue + ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container '+ item.className+'">';
+          '<div data-togglename=' + toggleSectionName + ' ' + dataFormDefaultValue + ' ' + dataWorkflowSetValues + ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container ' + item.className + '">';
 
         asyncFor.seqProcess(
           item.subFields,
@@ -607,6 +625,11 @@ window.ListInfo = {
                 var actualBudget = $('#ActualBudget').val()
                 var assignedBudget = $('#AssignedBudget').val()
                 parentValue = (actualBudget && actualBudget != 0) ? actualBudget : assignedBudget
+              } else if (listkey == "initiatives") {
+                var initiativeBudget = $('#InitiativeBudget').val()
+
+                parentValue = initiativeBudget
+
               }
               if (parentValue) {
                 parentValue = parentValue.replaceAll(",", "")
@@ -639,11 +662,15 @@ window.ListInfo = {
               amount = 0;
 
             if (isMasterDetails) { // for new validation in master details
-              debugger
+
               if (listkey == "projects") {
                 var actualBudget = $('#ActualBudget').val()
                 var assignedBudget = $('#AssignedBudget').val()
                 parentValue = (actualBudget && actualBudget != 0) ? actualBudget : assignedBudget
+              } else if (listkey == "initiatives") {
+                var initiativeBudget = $('#InitiativeBudget').val()
+
+                parentValue = initiativeBudget
               }
               if (parentValue && parentValue != 0) {
                 parentValue = parentValue.replaceAll(",", "")
@@ -663,6 +690,33 @@ window.ListInfo = {
               $(`#${targetElement}`).val(amount);
             }
           });
+
+          //////////////////////////////// disable_enable_section like master details if there is a value or not
+
+
+          $("body").on("keyup", ".disable_enable_section", function (event) {
+
+            var value = event.target.value
+            if (value) {
+              if (listkey == 'projects') {
+                $("[data-target_list=Deliverables] .fieldset-container").removeClass("disable_section")
+                $("[data-target_list=Milestones] .fieldset-container").removeClass("disable_section")
+              } else if (listkey == 'initiatives') {
+                $("[data-target_list=InitiativeDeliverables] .fieldset-container").removeClass("disable_section")
+                $("[data-target_list=InitiativeMilestones] .fieldset-container").removeClass("disable_section")
+              }
+
+            } else {
+              if (listkey == 'projects') {
+                $("[data-target_list=Deliverables] .fieldset-container").addClass("disable_section")
+                $("[data-target_list=Milestones] .fieldset-container").addClass("disable_section")
+              } else if (listkey == 'initiatives') {
+                $("[data-target_list=InitiativeDeliverables] .fieldset-container").addClass("disable_section")
+                $("[data-target_list=InitiativeMilestones] .fieldset-container").addClass("disable_section")
+              }
+            }
+          })
+
           //////////////////////////////// make attachement required when change on radio yes
           var previuosTargetVal = "";
           $("input.yesnolistener").on("change", function (event) {
@@ -5886,7 +5940,7 @@ window.ListInfo = {
       $(".add-New-Detail").on("click", function () {
 
 
-        if (listkey == 'projects' && isNew) {
+        if ((listkey == 'projects' || listkey == 'initiatives') && isNew) {
           var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item").last()
           lastDetailsItemBeforeAdd.addClass('disable_section')
         }
@@ -6011,7 +6065,7 @@ window.ListInfo = {
 
 
         //to remeove disabled class on the last section
-        if (listkey == 'projects' && isNew) {
+        if ((listkey == 'projects' || listkey == 'initiatives') && isNew) {
 
           var lastDetailsItemAfterRemove = $(this).closest("[data-target_list]").find(".Details-Item").last()
           lastDetailsItemAfterRemove.removeClass('disable_section')
@@ -6846,6 +6900,24 @@ var View_ListInfo = {
           printDate = "Date : ";
         }
 
+        // to handle the workflowSetValues
+        var workflowSetValues = [], dataWorkflowSetValues = "";
+
+        workflowSetValues = item.workflowSetValues
+
+        if (workflowSetValues && workflowSetValues.length) {
+          dataWorkflowSetValues = 'data-workflowSetValue="' +
+            JSON.stringify(workflowSetValues).replaceAll(
+              `"`,
+              `'`
+            ) +
+            '"'
+        } else {
+          dataWorkflowSetValues = ""
+        }
+        //
+
+
         toggleSectionName = item.togglename
 
         var printFooter = "";
@@ -6940,7 +7012,7 @@ var View_ListInfo = {
           Description +
           "</span>" +
           "</div>" +
-          '<div data-togglename=' + toggleSectionName + ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container">';
+          '<div data-togglename=' + toggleSectionName + ' ' + dataWorkflowSetValues + ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container">';
         asyncFor.seqProcess(
           item.subFields,
           function (subitemField, indexField, resolveField) {

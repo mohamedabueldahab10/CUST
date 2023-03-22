@@ -106,6 +106,10 @@ var MainKPIs_Info_Request = {
 
       var name = oListItem.get_item("Name") || UserNo_Data,
         code = oListItem.get_item("Title") || UserNo_Data,
+        kpiType = oListItem.get_item("KPIType") || UserNo_Data,
+        kpiOwner = oListItem.get_item("Owner") ? oListItem.get_item("Owner").get_lookupValue() : UserNo_Data,
+        performanceLeader = oListItem.get_item("PerformanceLeader") ? oListItem.get_item("PerformanceLeader").get_lookupValue() : UserNo_Data,
+        performanceLeader2 = oListItem.get_item("PerformanceLeader2") ? oListItem.get_item("PerformanceLeader2").get_lookupValue() : UserNo_Data,
         kpiPerformance = oListItem.get_item("Performance") || 0,
         kpiPolarity = oListItem.get_item("Polarity"),
         totalPlanned = oListItem.get_item("TotalPlanned") || 0,
@@ -138,6 +142,43 @@ var MainKPIs_Info_Request = {
         "</h4>" +
 
         "</a>" +
+        //////////////////
+        '<div class="col-md-12" style="display:flex;font-size:12px;font-weight:bold;padding:5px 7px">' +
+        '<div class="col-6" style="padding:0">' +
+        '<span class="Resources">' + code + '</span>' +
+        '</div>' +
+        '<div class="col-6">' +
+        '<span data-trans-' + kpiType + '  class="Resources"></span>' +
+        '</div>' +
+        '</div>' +
+        //////////////////
+        '<div class="col-md-12" style="display:flex;font-size:12px;font-weight:bold;padding:5px 7px">' +
+        '<div class="col-6" style="padding:0">' +
+        '<span data-trans-kpiownername class="Resources"></span>' +
+        '</div>' +
+        '<div class="col-6">' +
+        '<span  class="Resources">' + kpiOwner + '</span>' +
+        '</div>' +
+        '</div>' +
+        //////////////////
+        '<div class="col-md-12" style="display:flex;font-size:12px;font-weight:bold;padding:5px 7px">' +
+        '<div class="col-6" style="padding:0">' +
+        '<span data-trans-performanceleader class="Resources"></span>' +
+        '</div>' +
+        '<div class="col-6">' +
+        '<span  class="Resources">' + performanceLeader + '</span>' +
+        '</div>' +
+        '</div>' +
+        //////////////////
+        '<div class="col-md-12" style="display:flex;font-size:12px;font-weight:bold;padding:5px 7px">' +
+        '<div class="col-6" style="padding:0">' +
+        '<span data-trans-performanceleadersec class="Resources"></span>' +
+        '</div>' +
+        '<div class="col-6">' +
+        '<span  class="Resources">' + performanceLeader2 + '</span>' +
+        '</div>' +
+        '</div>' +
+        /////////////////
         '<div class="col-md-12" style="display:flex;font-size:12px;font-weight:bold;padding:5px 7px">' +
         '<div class="col-6" style="padding:0">' +
         '<span data-trans-repeatmeas class="Resources"></span>' +
@@ -785,7 +826,7 @@ var GoalsKPIs_Info_Request = {
     })
 
     /////////////////////////////////////////
-     if (firstRender) {
+    if (firstRender) {
       $('.card').show();
     }
   },

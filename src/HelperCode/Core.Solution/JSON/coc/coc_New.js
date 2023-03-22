@@ -5,17 +5,19 @@ var Information_Form = [
     description: 'التفاصيل',
     descriptionEn: 'Details',
     formDefaultValues: [
-      // //VRO
-      // { fieldName: 'WFModuleCode', value: 'VROCOC',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
-      // { fieldName: 'WFStage', value: 'VROCOC01',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+      //VRO
+      { fieldName: 'WFModuleCode', value: 'VROCOC',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+      { fieldName: 'WFStage', value: 'VROCOC01',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
       
-      // //EPMOCOC
-      // { fieldName: 'WFModuleCode', value: 'EPMOCOC',roles: ['EPMO'], },
-      // { fieldName: 'WFStage', value: 'EPMOCOC01',roles: ['EPMO'], },
+      //EPMOCOC
+      
+      { fieldName: 'WFModuleCode', value: 'VROCOC',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+      { fieldName: 'WFStage', value: 'VROCOC01',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
 
-      // //LMS
-      // { fieldName: 'WFModuleCode', value: 'LMSCOC',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
-      // { fieldName: 'WFStage', value: 'LMSCOC01',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+
+      //LMS
+      { fieldName: 'WFModuleCode', value: 'VROCOC',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+      { fieldName: 'WFStage', value: 'VROCOC01',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
 
     ],
     subFields: [
