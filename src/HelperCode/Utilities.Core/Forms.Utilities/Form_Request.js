@@ -1780,7 +1780,7 @@ window.View_Data_Request = {
         $('.btnactionrow').html(htmlMsg);
       }
 
-      if(kpiDraftStatus){
+      if (kpiDraftStatus && !USERisWF) {
         var htmlMsg = '<div data-trans-draftkpi class="kpiPeriodChanged ErrorMsg Resources"></div>';
         $('.btnactionrow').html(htmlMsg);
       }
@@ -1792,10 +1792,10 @@ window.View_Data_Request = {
       }
 
     }
-    if(listkey == "sos"){
+    if (listkey == "sos") {
       var sosDraftStatus = oListItem.get_item("DraftStatus") ? oListItem.get_item("DraftStatus") : ''
 
-      if(sosDraftStatus){
+      if (sosDraftStatus && !USERisWF) {
         var htmlMsg = '<div data-trans-draftsos class="kpiPeriodChanged ErrorMsg Resources"></div>';
         $('.btnactionrow').html(htmlMsg);
       }
@@ -1983,6 +1983,7 @@ window.View_Data_Request = {
     }
 
     $(".loader-box").fadeOut();
+    changeResources()
     //alert(PCODE_STRING);
   },
   onError: function (sender, args) {
@@ -5093,7 +5094,7 @@ var equationKPI = {
         $("p#Equation").text(kpiEquation || 0);
       }
     }
-    if (isAdmin || isSPMAdmin || isVROP || isLMSP) { // remove attr disabled for this roles in equation
+    if ((isAdmin || isSPMAdmin || isVROP || isLMSP) && !USERisWF) { // remove attr disabled for this roles in equation
       $(".savecancelBtns > div, .btnactionrow > .rightBtns").append(
         '<button data-trans-editequation class="btn btn-action Resources btn-edit-equation bg-warning" type="button"></button>'
       );

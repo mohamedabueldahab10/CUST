@@ -2418,6 +2418,7 @@ window.userCalls = {
           "sos",
           "goalstrategy",
           "budgetitems",
+          "coc",
 
         ];
 
@@ -6810,7 +6811,7 @@ var Access_Project_Info_Request = {
     // if project is Cancelled or Holded
 
     if (
-      User_NotActiveStatus && (USERlistkey == "projects" || USERProjRelated.indexOf(USERlistkey) > -1 || istherePCODE) || (ProjectIsDraft && istherePCODE)
+      User_NotActiveStatus && (USERlistkey == "projects" || USERProjRelated.indexOf(USERlistkey) > -1 || istherePCODE) || (ProjectIsDraft && istherePCODE && !isWF)
     ) {
       $("body").append(
         "<style>" +
@@ -7611,7 +7612,7 @@ window.Get_Initiative_Info_Request = {
     }
 
 
-    if (initiativeDraftStatus && isthereICODE) {
+    if (initiativeDraftStatus && isthereICODE && !isWF) {
       $("body").append(
         "<style>" +
         ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +

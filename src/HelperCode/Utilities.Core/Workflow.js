@@ -169,7 +169,7 @@ var workflowname,
 	isRiskPage = window.location.href.indexOf("risks") > -1,
 	isIssuePage = window.location.href.indexOf("issues") > -1,
 	isMomPage = window.location.href.indexOf("mom") > -1,
-	isMainKPIPage = window.location.href.indexOf("mainkpi") > -1,
+	// isMainKPIPage = window.location.href.indexOf("mainkpi") > -1,
 	isProjectPage = window.location.href.indexOf("projects") > -1,
 	fieldtoedit,
 	bulkeditlist,
@@ -315,21 +315,23 @@ else if (isStrategyWf) {
 		'</Value></Eq><And><Eq><FieldRef Name="RelatedItemID" /><Value Type="Text">' +
 		IID2 +
 		'</Value></Eq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And></And></Where></Query></View>';
-} else if (isMainKPIPage) {
-	workflowname = "MainKPI";
-	bulkeditlist = "MainKPI";
-	IID2 = window.location.href.split("IID=")[1].split("&")[0];
-	bulkeditquery =
-		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
-		IID2 +
-		"</Value> </Eq></Where></Query></View>";
-	taskquery =
-		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
-		taskID +
-		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
-		workflowname +
-		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
-} else if (isSOsWf) {
+} 
+// else if (isMainKPIPage) {
+// 	workflowname = "MainKPI";
+// 	bulkeditlist = "MainKPI";
+// 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+// 	bulkeditquery =
+// 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+// 		IID2 +
+// 		"</Value> </Eq></Where></Query></View>";
+// 	taskquery =
+// 		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+// 		taskID +
+// 		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+// 		workflowname +
+// 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+// } 
+else if (isSOsWf) {
 	workflowname = "StrategicObjectives";
 	bulkeditlist = "StrategicObjectives";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
