@@ -156,6 +156,10 @@ var workflowname,
 	isVROProjDeliverable = window.location.href.indexOf("deliverables&VROProjDeliverable") > -1,
 	isEPMOProjDeliverable = window.location.href.indexOf("deliverables&EPMOProjDeliverable") > -1,
 	isLMSProjDeliverable = window.location.href.indexOf("deliverables&LMSProjDeliverable") > -1,
+	isVROCRDeleteObjective = window.location.href.indexOf("changerequest&VROCRDeleteObjective") > -1,
+	isMSCRDeleteObjective = window.location.href.indexOf("changerequest&MSCRDeleteObjective") > -1,
+	isLMSCRDeletedObjective = window.location.href.indexOf("changerequest&LMSCRDeletedObjective") > -1
+	
 	// 
 	isProjectCancellationRequestWF =
 		window.location.href.indexOf("projectcancellationrequest") > -1,
@@ -794,6 +798,54 @@ else if (isMSCRObjective) {
 else if (isLMSCRObjective) {
 	
 	workflowname = "LMSCRObjective";
+	bulkeditlist = "SOs";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isVROCRDeleteObjective) {
+	
+	workflowname = "VROCRDeleteObjective";
+	bulkeditlist = "SOs";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isMSCRDeleteObjective) {
+	
+	workflowname = "MSCRDeleteObjective";
+	bulkeditlist = "SOs";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isLMSCRDeletedObjective) {
+	
+	workflowname = "LMSCRDeletedObjective";
 	bulkeditlist = "SOs";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
