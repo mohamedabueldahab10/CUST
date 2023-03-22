@@ -4,6 +4,20 @@ var Information_Form = [
     labelEn: 'Initiative Deliverable',
     description: 'التفاصيل',
     descriptionEn: 'Details',
+    formDefaultValues: [
+      //VRO
+      { fieldName: 'WFModuleCode', value: 'VROInitiativeDeliverable',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+      { fieldName: 'WFStage', value: 'VROInitiativeDeliverable01',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+      
+      //EPMOInitiativeDeliverable
+      { fieldName: 'WFModuleCode', value: 'EPMOInitiativeDeliverable',roles: ['EPMO'], },
+      { fieldName: 'WFStage', value: 'EPMOInitiativeDeliverable01',roles: ['EPMO'], },
+
+      //LMS
+      { fieldName: 'WFModuleCode', value: 'LMSInitiativeDeliverable',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+      { fieldName: 'WFStage', value: 'LMSInitiativeDeliverable01',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+
+    ],
     subFields: [
       // {
       //     "InternalName": "Title",
