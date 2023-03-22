@@ -5,6 +5,15 @@ var Information_Form = [
     description: 'التفاصيل',
     descriptionEn: 'Details',
     workflowSetValues: [
+      //VRO
+      { fieldName: 'DraftStatus', value: '', stages:["VROCRInitiative04"] },
+      { fieldName: 'WFModuleCode', value: 'VisionInitiative',stages:["VROCRInitiative04"]} ,
+      { fieldName: 'WFStage', value: 'VInStage01',stages:["VROCRInitiative04"]} ,
+    //EPMO
+      { fieldName: 'DraftStatus', value: '', stages:["VROCRInitiative04","EPMOCRInitiative03","LMSCRInitiative03"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["VROCRInitiative04","EPMOCRInitiative03","LMSCRInitiative03"]} ,
+      { fieldName: 'WFStage', value: 'approved',stages:["VROCRInitiative04","EPMOCRInitiative03","LMSCRInitiative03"]} ,
+      //LMS
       { fieldName: 'DraftStatus', value: '', stages:["VROCRInitiative04","EPMOCRInitiative03","LMSCRInitiative03"] },
       { fieldName: 'WFModuleCode', value: '',stages:["VROCRInitiative04","EPMOCRInitiative03","LMSCRInitiative03"]} ,
       { fieldName: 'WFStage', value: 'approved',stages:["VROCRInitiative04","EPMOCRInitiative03","LMSCRInitiative03"]} 
