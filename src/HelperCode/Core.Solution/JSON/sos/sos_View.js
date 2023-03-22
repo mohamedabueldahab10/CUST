@@ -4,6 +4,11 @@ var Information_Form = [
     labelEn: 'Strategy objective Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
+    workflowSetValues: [
+      { fieldName: 'DraftStatus', value: '', stages:["VROCRSOS02","MSCRSOS03","LMSCRSOS02"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["VROCRSOS02","MSCRSOS03","LMSCRSOS02"]} ,
+      { fieldName: 'WFStage', value: 'approved',stages:["VROCRSOS02","MSCRSOS03","LMSCRSOS02"]} 
+    ],
     subFields: [
       {
         InternalName: 'Title',
