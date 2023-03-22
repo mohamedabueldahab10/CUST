@@ -5,9 +5,18 @@ var Information_Form = [
     description: 'التفاصيل',
     descriptionEn: 'Details',
     workflowSetValues: [
-      { fieldName: 'DraftStatus', value: '', stages:["VROCRKPI02","MSCRKPI03","LMSCRKPI02"] },
-      { fieldName: 'WFModuleCode', value: '',stages:["VROCRKPI02","MSCRKPI03","LMSCRKPI02"] } ,
-      { fieldName: 'WFStage', value: 'approved',stages:["VROCRKPI02","MSCRKPI03","LMSCRKPI02"] } 
+      //vro
+      { fieldName: 'DraftStatus', value: '', stages:["VROCRKPI02"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["VROCRKPI02"] } ,
+      { fieldName: 'WFStage', value: '',stages:["VROCRKPI02"] } ,
+      //EPMO
+      { fieldName: 'DraftStatus', value: '', stages:["MSCRKPI03"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["MSCRKPI03"] } ,
+      { fieldName: 'WFStage', value: '',stages:["MSCRKPI03"] } ,
+      //LMS
+      { fieldName: 'DraftStatus', value: '', stages:["LMSCRKPI02"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["LMSCRKPI02"] } ,
+      { fieldName: 'WFStage', value: '',stages:["LMSCRKPI02"] } ,
     ],
     subFields: [
       {
