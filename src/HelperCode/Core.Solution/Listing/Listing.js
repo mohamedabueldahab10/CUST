@@ -1758,6 +1758,9 @@ window.ListingData = {
           } else if (wfname == 'VROProjDeliverable' || wfname == 'EPMOProjDeliverable' || wfname == 'LMSProjDeliverable') {
             keyNameParams = 'deliverables'
           }
+          else if (wfname == 'VROCRDeleteObjective' || wfname == 'MSCRDeleteObjective' || wfname == 'LMSCRDeletedObjective') {     
+            keyNameParams = 'changerequest';
+          }
           switch (tasktype) {
             case 'SubmitField':
               window.open(
