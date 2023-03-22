@@ -4,6 +4,11 @@ var Information_Form = [
     labelEn: 'KPIs Management',
     description: 'التفاصيل',
     descriptionEn: 'Details',
+    workflowSetValues: [
+      { fieldName: 'DraftStatus', value: '', stages:["VROCRKPI02","MSCRKPI03","LMSCRKPI02"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["VROCRKPI02","MSCRKPI03","LMSCRKPI02"] } ,
+      { fieldName: 'WFStage', value: 'approved',stages:["VROCRKPI02","MSCRKPI03","LMSCRKPI02"] } 
+    ],
     subFields: [
       {
         InternalName: 'Title',

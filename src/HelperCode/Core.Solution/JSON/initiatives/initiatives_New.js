@@ -4,11 +4,20 @@ var Information_Form = [
     labelEn: 'Initiative Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
-    // formDefaultValues: [
-    //   { fieldName: 'WFModuleCode', value: 'test',roles:["Administrator","InitiativeManager"] },
-    //   { fieldName: 'WFStage', value: 'testStage',roles:["allRoles"] }
+    formDefaultValues: [
+      //VRO
+      { fieldName: 'WFModuleCode', value: 'VROCRInitiative',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+      { fieldName: 'WFStage', value: 'VROCRInitiative01',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+      
+      //EPMOCRInitiative
+      { fieldName: 'WFModuleCode', value: 'EPMOCRInitiative',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+      { fieldName: 'WFStage', value: 'EPMOCRInitiative01',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
 
-    // ],
+      //LMS
+      { fieldName: 'WFModuleCode', value: 'LMSCRInitiative',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+      { fieldName: 'WFStage', value: 'LMSCRInitiative01',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+
+    ],
     subFields: [
       // {
       //     "InternalName": "Title",
