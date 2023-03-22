@@ -11,7 +11,7 @@ var Information_Form = [
       
       //EPMOInitiativeDeliverable
       { fieldName: 'WFModuleCode', value: 'EPMOInitiativeDeliverable',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
-      { fieldName: 'WFStage', value: 'EPMOInitiativeDeliverable01',roles: ['EPMO'], },
+      { fieldName: 'WFStage', value: 'EPMOInitiativeDeliverable01',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
 
       //LMS
       { fieldName: 'WFModuleCode', value: 'LMSInitiativeDeliverable',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
