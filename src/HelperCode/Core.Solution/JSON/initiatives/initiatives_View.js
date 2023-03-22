@@ -4,11 +4,11 @@ var Information_Form = [
     labelEn: 'Initiative Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
-    // workflowSetValues: [
-    //   { fieldName: 'DraftStatus', value: '', stages:["VInStage02"] },
-    //   { fieldName: 'WFModuleCode', value: 'testWFModuleCodeWf',stages:["VInStage02"]}
-
-    // ],
+    workflowSetValues: [
+      { fieldName: 'DraftStatus', value: '', stages:["VROCRInitiative04","EPMOCRInitiative03","LMSCRInitiative03"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["VROCRInitiative04","EPMOCRInitiative03","LMSCRInitiative03"]} ,
+      { fieldName: 'WFStage', value: 'approved',stages:["VROCRInitiative04","EPMOCRInitiative03","LMSCRInitiative03"]} 
+    ],
     subFields: [
       {
         InternalName: 'Title',
