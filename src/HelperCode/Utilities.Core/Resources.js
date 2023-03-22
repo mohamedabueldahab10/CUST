@@ -889,7 +889,7 @@
     businessowner: "صاحب العمل",
     strategyspecialist: "أخصائي إستراتيجية",
     projectmanagersforprojectwebapp: "مديرو المشروع لتطبيق موقع المشروع",
-    spmteam: "الفريق الاستراتيجي",
+    spmteam: "إدارة الأداء الإستراتيجي",
     vrop: "مكتب التخطيط الإستراتيجي",
     spmo: "مكتب إدارة المشاريع القطاعي",
     vroe: "مكتب ضمان التنفيذ",
