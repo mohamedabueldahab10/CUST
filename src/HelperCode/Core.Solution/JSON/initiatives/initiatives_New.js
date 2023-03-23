@@ -705,17 +705,29 @@ var Information_Form = [
     description: 'التفاصيل',
     descriptionEn: 'Details',
     subFields: [
+      // {
+      //   InternalName: 'RelatedBudgetItem',
+      //   // "ToggleName": "RelatedBudgetItem", //ToggleName to select which field
+      //   DisplayNameEn: 'Related Budget Item',
+      //   DisplayName: 'البند المالي المرتبط',
+      //   type: 'lookup',
+      //   //from other list:
+      //   source: 'Budget Items',
+      //   Dispfieldkey: 'Name',
+      //   valfieldkey: 'Title',
+      //   // "display":"none"
+      // },
       {
-        InternalName: 'RelatedBudgetItem',
-        // "ToggleName": "RelatedBudgetItem", //ToggleName to select which field
-        DisplayNameEn: 'Related Budget Item',
-        DisplayName: 'البند المالي المرتبط',
-        type: 'lookup',
+        "InternalName": "RelatedBudgetItem",
+        "DisplayName": "البند المالي المرتبط",
+        "DisplayNameEn": "Related Budget Item",
+        type: "lookupmultiselect",
         //from other list:
-        source: 'Budget Items',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
-        // "display":"none"
+        source: "Budget Items",
+        Dispfieldkey: "Name",
+        valfieldkey: "Title",
+        grpfieldkey: 'Title',
+ 
       },
       {
         InternalName: 'EstimatedCost',
