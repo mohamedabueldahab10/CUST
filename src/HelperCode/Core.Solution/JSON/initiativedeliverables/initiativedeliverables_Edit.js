@@ -64,8 +64,8 @@ var Information_Form = [
         InternalName: 'Target',
         DisplayNameEn: 'Target',
         DisplayName: 'المستهدف (إن وجد)',
-        type: 'string',
-        maxchar: 255,
+        type: 'float',
+        numberOfDigits:255,
         security: {
           groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
         },

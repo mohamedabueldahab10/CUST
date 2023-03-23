@@ -73,6 +73,7 @@ var Information_Form = [
         DisplayNameEn: 'Target',
         DisplayName: 'المستهدف (إن وجد)',
         type: 'float',
+        numberOfDigits:255
       },
       {
         InternalName: 'Weight',
