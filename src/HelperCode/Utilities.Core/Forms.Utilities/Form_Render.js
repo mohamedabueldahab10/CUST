@@ -722,7 +722,7 @@ window.ListInfo = {
           $("input.yesnolistener").on("change", function (event) {
             debugger
             var value = event.target.value;
-     
+
             var targetElementRequired = $(this).data("targetfieldrequired");
 
             // if we need to apply that when click on is delivered yes the status will be completed
@@ -747,46 +747,92 @@ window.ListInfo = {
               targetElementRequired &&
               targetElementRequired != "undefined"
             ) {
-              $(`#${targetElementRequired}`).attr("required", true);
 
-              var checkAttach =$(`#${targetElementRequired}`).parent().find(">*").closest(".attlabel")
+              targetElementRequired = targetElementRequired.split(",")
 
-              if(checkAttach.length > 0){
-              $(`#${targetElementRequired}`)
-                .parent()
-                .find(">*")
-                .closest(".attlabel")
-                .attr("required", true);
-              }else{
-                $(`#${targetElementRequired}`)
-                .parent()
-                .find(">*")
-                .attr("required", true);
-              }
+
+              targetElementRequired.forEach(el => {
+                $(`#${el}`).attr("required", true);
+
+                var checkAttach = $(`#${el}`).parent().find(">*").closest(".attlabel")
+
+                if (checkAttach.length > 0) {
+                  $(`#${el}`)
+                    .parent()
+                    .find(">*")
+                    .closest(".attlabel")
+                    .attr("required", true);
+                } else {
+                  $(`#${el}`)
+                    .parent()
+                    .find(">*")
+                    .attr("required", true);
+                }
+              })
+
+              // $(`#${targetElementRequired}`).attr("required", true);
+
+              // var checkAttach =$(`#${targetElementRequired}`).parent().find(">*").closest(".attlabel")
+
+              // if(checkAttach.length > 0){
+              // $(`#${targetElementRequired}`)
+              //   .parent()
+              //   .find(">*")
+              //   .closest(".attlabel")
+              //   .attr("required", true);
+              // }else{
+              //   $(`#${targetElementRequired}`)
+              //   .parent()
+              //   .find(">*")
+              //   .attr("required", true);
+              // }
             } else if (
               (value == "no" || value == "false") &&
               targetElementRequired &&
               targetElementRequired != "undefined"
             ) {
-              $(`#${targetElementRequired}`).attr("required", false);
+              targetElementRequired = targetElementRequired.split(",")
+
+              targetElementRequired.forEach(el => {
+
+                $(`#${el}`).attr("required", false);
 
 
-              var checkAttach =$(`#${targetElementRequired}`).parent().find(">*").closest(".attlabel")
+                var checkAttach = $(`#${el}`).parent().find(">*").closest(".attlabel")
 
-              if(checkAttach.length > 0){
-                $(`#${targetElementRequired}`)
-                .parent()
-                .find(">*")
-                .closest(".attlabel")
-                .attr("required", false);
-              }else{
-                $(`#${targetElementRequired}`)
-                .parent()
-                .find(">*")
-                .attr("required", false);
-              }
+                if (checkAttach.length > 0) {
+                  $(`#${el}`)
+                    .parent()
+                    .find(">*")
+                    .closest(".attlabel")
+                    .attr("required", false);
+                } else {
+                  $(`#${el}`)
+                    .parent()
+                    .find(">*")
+                    .attr("required", false);
+                }
+              })
 
-             
+              // $(`#${targetElementRequired}`).attr("required", false);
+
+
+              // var checkAttach =$(`#${targetElementRequired}`).parent().find(">*").closest(".attlabel")
+
+              // if(checkAttach.length > 0){
+              //   $(`#${targetElementRequired}`)
+              //   .parent()
+              //   .find(">*")
+              //   .closest(".attlabel")
+              //   .attr("required", false);
+              // }else{
+              //   $(`#${targetElementRequired}`)
+              //   .parent()
+              //   .find(">*")
+              //   .attr("required", false);
+              // }
+
+
             }
             //
           });

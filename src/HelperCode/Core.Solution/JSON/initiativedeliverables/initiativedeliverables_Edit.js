@@ -118,6 +118,22 @@ var Information_Form = [
       //   },
       // },
       {
+        InternalName: 'Delivered',
+        DisplayName: 'تم التسليم',
+        DisplayNameEn: 'Delivered',
+        type: 'yesnoradio',
+        targetfieldrequired:"ActualCompletedDate",
+        options: {
+          choices: [
+            { display: 'yes', value: 'true' },
+            { display: 'no', value: 'false' },
+          ],
+        },
+        security: {
+          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
+        },
+      },
+      {
         InternalName: 'ActualCompletedDate',
         DisplayNameEn: 'Actual Completed Date',
         DisplayName: 'تاريخ الاكتمال الفعلي',
@@ -145,21 +161,7 @@ var Information_Form = [
       //       groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
       //     },
       //   },
-      {
-        InternalName: 'Delivered',
-        DisplayName: 'تم التسليم',
-        DisplayNameEn: 'Delivered',
-        type: 'yesnoradio',
-        options: {
-          choices: [
-            { display: 'yes', value: 'true' },
-            { display: 'no', value: 'false' },
-          ],
-        },
-        security: {
-          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
-        },
-      },
+  
       // {
       //     "InternalName": "RelatedBenefits",
       //     "DisplayNameEn": "Related Benefits",

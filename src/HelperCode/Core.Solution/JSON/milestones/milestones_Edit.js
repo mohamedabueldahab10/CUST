@@ -65,13 +65,7 @@ var Information_Form = [
         DisplayNameEn: 'Planned Finish Date',
         type: 'datetime',
       },
-      {
-        InternalName: 'ActualDate',
-        DisplayName: 'تاريخ الاكتمال الفعلي',
-        DisplayNameEn: 'Actual Date',
-        type: 'datetime',
-        max: 'today',
-      },
+
     //   {
     //     InternalName: 'CommittedDate',
     //     DisplayName: 'تاريخ الالتزام',
@@ -140,7 +134,7 @@ var Information_Form = [
         InternalName: 'Delivered',
         DisplayName: 'تم التسليم',
         DisplayNameEn: 'Delivered',
-        targetfieldrequired: 'getFile', // to make the attache required on yes
+        targetfieldrequired: 'getFile,ActualDate', // to make the attache required on yes
         targetfield: 'Status',
         targetfieldvalue: 'completed',
         // validation: 'required',
@@ -151,6 +145,13 @@ var Information_Form = [
             { display: 'no', value: 'no' },
           ],
         },
+      },
+      {
+        InternalName: 'ActualDate',
+        DisplayName: 'تاريخ الاكتمال الفعلي',
+        DisplayNameEn: 'Actual Date',
+        type: 'datetime',
+        max: 'today',
       },
       {
         InternalName: 'ShowInProgramReport',
