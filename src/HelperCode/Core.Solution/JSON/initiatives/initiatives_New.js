@@ -722,6 +722,7 @@ var Information_Form = [
         DisplayName: 'التكلفة التقديرية ',
         DisplayNameEn: 'Estimated Cost',
         type: 'float',
+        numberOfDigits:"12"
       },
       {
         InternalName: 'InitiativeBudget',
@@ -730,6 +731,7 @@ var Information_Form = [
         className:"disable_enable_section", // disable and enable section master  details specific for project and initiative cr
         // "state": "disabled",
         type: 'float',
+        numberOfDigits:"12"
       },
       {
         InternalName: 'ProgramTotalCost',
@@ -739,6 +741,7 @@ var Information_Form = [
         // listname: 'Initiatives',
         // parentinternalname: 'InitiativeCode',
         targetelement: 'ActualCost',
+        numberOfDigits:"12"
       },
 
       {
@@ -746,8 +749,7 @@ var Information_Form = [
         DisplayName: 'التكاليف الكلية المعتمدة ',
         DisplayNameEn: 'Actual Cost',
         type: 'float',
-        // listname: 'Initiatives',
-        // targetcode: 'InitiativeCode',
+        numberOfDigits:"12",
         targetelement: 'ActualCost',
         seconedtarget: 'ProgramTotalCost',
       },
@@ -756,18 +758,21 @@ var Information_Form = [
         DisplayName: 'السيولة المخصصة للعام المالي الحالي ',
         DisplayNameEn: 'Current Budget',
         type: 'float',
+        numberOfDigits:"12"
       },
       {
         InternalName: 'Expenditures',
         DisplayName: 'المنصرف الأجمالي ',
         DisplayNameEn: 'Expenditures',
         type: 'float',
+        numberOfDigits:"12"
       },
       {
         InternalName: 'CurrentExpenditures',
         DisplayName: 'المنصرف من العالم المالي الحالي ',
         DisplayNameEn: 'Current Expenditures',
         type: 'float',
+        numberOfDigits:"12"
       },
     ],
   },
