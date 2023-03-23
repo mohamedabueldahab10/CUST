@@ -180,6 +180,12 @@ window.New_Data_Submit = {
         $(this).addClass("picker-error");
         $(this).removeClass("picker-valid");
       }
+
+      if ($(this).find('span.ms-formvalidation.sp-peoplepicker-errorMsg').length) {
+        pickervalid = false;
+        $(this).addClass("picker-error");
+        $(this).removeClass("picker-valid");
+      }
     })
 
     //////////
@@ -971,6 +977,13 @@ window.Edit_Data_Submit = {
         $(this).addClass("picker-error");
         $(this).removeClass("picker-valid");
       }
+      
+      if ($(this).find('span.ms-formvalidation.sp-peoplepicker-errorMsg').length) {
+        pickervalid = false;
+        $(this).addClass("picker-error");
+        $(this).removeClass("picker-valid");
+      }
+
     })
 
     ////////////////////////for multi picker

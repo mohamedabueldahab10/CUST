@@ -131,7 +131,7 @@ var Information_Form = [
       },
       {
         InternalName: 'PartnerName',
-        DisplayName: 'اسم الشريك',
+        DisplayName: 'اسم الشريك', 
         DisplayNameEn: 'Partner Name',
         type: 'lookup',
         validation: 'required',

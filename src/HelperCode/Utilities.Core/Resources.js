@@ -177,7 +177,7 @@
 
     //lesson learned source
     sector: "القطاع",
-    department: "الإدارات",
+    department: "الوكالات",
     subsector: "الوكالة",
     unit:"وحدة",
     budgetitem: "البند المرتبط",
