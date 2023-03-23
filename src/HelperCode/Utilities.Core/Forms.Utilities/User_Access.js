@@ -8645,6 +8645,8 @@ var Tasks_Info_Request_User = {
             keyNameParams = "deliverables";
           } else if (wfname == "CR" || wfname == "VROCRInitiative" || wfname == "EPMOCRInitiative" || wfname == "LMSCRInitiative") {
             keyNameParams = "initiatives";
+          } else if (wfname == "CR" || wfname == "VROCRProject" || wfname == "EPMOCRProject" || wfname == "LMSCRProject") {
+            keyNameParams = "projects";
           } else if (wfname == "VROCRObjective" || wfname == "MSCRObjective" || wfname == "LMSCRObjective") {
             keyNameParams = "sos";
           } else if (wfname == "VROCRKPI" || wfname == "MSCRKPI" || wfname == "LMSCRKPI") {
