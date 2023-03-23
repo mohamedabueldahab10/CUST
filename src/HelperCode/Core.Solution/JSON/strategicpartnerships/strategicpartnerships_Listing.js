@@ -46,15 +46,15 @@ var Listing_Info = [
       "InternalName":"PartnerName",
       "DisplayName":"اسم الشريك",
       "DisplayNameEn":"Partner Name",
-      "type":"lookup",
+      "type":"text",
       "inlisting":true,
       "infilter":false
    },
    {
-      "InternalName":"RelatedStrategyObjective",
+      "InternalName":"RelatedStrategicObjective",
       "DisplayName":"الهدف الاستراتيجي المرتبط",
       "DisplayNameEn":"Related Strategy Objective",
-      "type":"lookup",
+      "type":"text",
       "inlisting":true,
       "infilter":false
    },

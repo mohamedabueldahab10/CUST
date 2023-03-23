@@ -164,9 +164,8 @@ var Information_Form = [
         // "validation":"required"
       },
       {
-        InternalName: 'RelatedStrategyObjective',
+        InternalName: 'RelatedStrategicObjective',
         DisplayNameEn: 'Related Strategy Objective',
-        ToggleName: 'RelatedStrategyObjective',
         DisplayName: 'الهدف الاستراتيجي المرتبط',
         type: 'lookup',
         source: 'SOs',
