@@ -119,7 +119,7 @@ var workflowname,
 	//
 	isRelatedProjectPage = window.location.href.indexOf("PCODE") > -1,
 	// isDeliverablesPage = window.location.href.indexOf("deliverables") > -1,
-	isChangeRequestPage = window.location.href.indexOf("changerequest") > -1,
+	// isChangeRequestPage = window.location.href.indexOf("changerequest") > -1,
 	isStrategyWf = window.location.href.indexOf("strategies") > -1,
 	isSOsWf = window.location.href.indexOf("strategicobjectives") > -1,
 	isKPIResultWf = window.location.href.indexOf("Targets") > -1,
@@ -233,22 +233,22 @@ if (
 }
 
 
-if (isChangeRequestPage) {
-	workflowname = "CR";
-	fieldtoedit = "SubmitForApproval";
-	bulkeditlist = "ChangeRequest";
-	IID2 = window.location.href.split("IID=")[1].split("&")[0];
-	bulkeditquery =
-		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
-		IID2 +
-		"</Value> </Eq></Where></Query></View>";
-	taskquery =
-		'<View><Query><Where><And><Eq><FieldRef Name="ID" /><Value Type="Text">' +
-		taskID +
-		'</Value></Eq><And><Eq><FieldRef Name="RelatedItemID" /><Value Type="Text">' +
-		IID2 +
-		'</Value></Eq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And></And></Where></Query></View>';
-}
+// if (isChangeRequestPage) {
+// 	workflowname = "CR";
+// 	fieldtoedit = "SubmitForApproval";
+// 	bulkeditlist = "ChangeRequest";
+// 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+// 	bulkeditquery =
+// 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+// 		IID2 +
+// 		"</Value> </Eq></Where></Query></View>";
+// 	taskquery =
+// 		'<View><Query><Where><And><Eq><FieldRef Name="ID" /><Value Type="Text">' +
+// 		taskID +
+// 		'</Value></Eq><And><Eq><FieldRef Name="RelatedItemID" /><Value Type="Text">' +
+// 		IID2 +
+// 		'</Value></Eq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And></And></Where></Query></View>';
+// }
 // else if (isDeliverablesPage) {
 // 	workflowname = "DV";
 // 	bulkeditlist = "Deliverables";
@@ -264,7 +264,7 @@ if (isChangeRequestPage) {
 // 		IID2 +
 // 		'</Value></Eq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And></And></Where></Query></View>';
 // } 
-else if (isStrategyWf) {
+if (isStrategyWf) {
 	workflowname = "Strategies";
 	bulkeditlist = "Strategies";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -814,7 +814,7 @@ else if (isLMSCRObjective) {
 else if (isVROCRDeleteObjective) {
 	
 	workflowname = "VROCRDeleteObjective";
-	bulkeditlist = "SOs";
+	bulkeditlist = "Change Request";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -830,7 +830,7 @@ else if (isVROCRDeleteObjective) {
 else if (isMSCRDeleteObjective) {
 	
 	workflowname = "MSCRDeleteObjective";
-	bulkeditlist = "SOs";
+	bulkeditlist = "Change Request";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -846,7 +846,7 @@ else if (isMSCRDeleteObjective) {
 else if (isLMSCRDeletedObjective) {
 	
 	workflowname = "LMSCRDeletedObjective";
-	bulkeditlist = "SOs";
+	bulkeditlist = "Change Request";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -3235,11 +3235,11 @@ var Task_Edit_Data = {
 				// console.log('successful');
 				$(".errormsg").hide();
 
-				if (isChangeRequestPage) {
-					window.location =
-						_spPageContextInfo.siteAbsoluteUrl +
-						"/SitePages/Listing.aspx?ListKey=changerequest";
-				}
+				// if (isChangeRequestPage) {
+				// 	window.location =
+				// 		_spPageContextInfo.siteAbsoluteUrl +
+				// 		"/SitePages/Listing.aspx?ListKey=changerequest";
+				// }
 				// if (isDeliverablesPage) {
 				// 	window.location =
 				// 		_spPageContextInfo.siteAbsoluteUrl +
