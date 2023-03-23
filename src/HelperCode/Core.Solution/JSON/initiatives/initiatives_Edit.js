@@ -212,7 +212,7 @@ var Information_Form = [
             },
           ],
         },
-        validation: 'required',
+        // validation: 'required',
       },
       {
         InternalName: 'RelatedObjective',
@@ -568,7 +568,7 @@ var Information_Form = [
         DisplayNameEn: 'Start Date',
         type: 'datetime',
         max: 'FinishDate',
-        validation: 'required',
+        // validation: 'required',
       },
       {
         InternalName: 'FinishDate',
@@ -576,7 +576,7 @@ var Information_Form = [
         DisplayNameEn: 'Finish Date',
         type: 'datetime',
         min: 'StartDate',
-        validation: 'required',
+        // validation: 'required',
       },
       // {
       //   InternalName: 'StartDate',
