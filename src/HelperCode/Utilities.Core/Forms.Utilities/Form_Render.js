@@ -720,7 +720,9 @@ window.ListInfo = {
           //////////////////////////////// make attachement required when change on radio yes
           var previuosTargetVal = "";
           $("input.yesnolistener").on("change", function (event) {
+            debugger
             var value = event.target.value;
+     
             var targetElementRequired = $(this).data("targetfieldrequired");
 
             // if we need to apply that when click on is delivered yes the status will be completed
@@ -741,27 +743,50 @@ window.ListInfo = {
 
             // to handle required on attachement
             if (
-              value == "yes" &&
+              (value == "yes" || value == "true") &&
               targetElementRequired &&
               targetElementRequired != "undefined"
             ) {
               $(`#${targetElementRequired}`).attr("required", true);
+
+              var checkAttach =$(`#${targetElementRequired}`).parent().find(">*").closest(".attlabel")
+
+              if(checkAttach.length > 0){
               $(`#${targetElementRequired}`)
                 .parent()
                 .find(">*")
                 .closest(".attlabel")
                 .attr("required", true);
+              }else{
+                $(`#${targetElementRequired}`)
+                .parent()
+                .find(">*")
+                .attr("required", true);
+              }
             } else if (
-              value == "no" &&
+              (value == "no" || value == "false") &&
               targetElementRequired &&
               targetElementRequired != "undefined"
             ) {
               $(`#${targetElementRequired}`).attr("required", false);
-              $(`#${targetElementRequired}`)
+
+
+              var checkAttach =$(`#${targetElementRequired}`).parent().find(">*").closest(".attlabel")
+
+              if(checkAttach.length > 0){
+                $(`#${targetElementRequired}`)
                 .parent()
                 .find(">*")
                 .closest(".attlabel")
                 .attr("required", false);
+              }else{
+                $(`#${targetElementRequired}`)
+                .parent()
+                .find(">*")
+                .attr("required", false);
+              }
+
+             
             }
             //
           });

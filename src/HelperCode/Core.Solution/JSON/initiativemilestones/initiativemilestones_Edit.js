@@ -109,6 +109,7 @@ var Information_Form = [
         DisplayName: 'تم التسليم',
         DisplayNameEn: 'Delivered',
         type: 'yesnoradio',
+        targetfieldrequired:"ActualCompletedDate",
         options: {
           choices: [
             { display: 'yes', value: 'true' },
