@@ -36,10 +36,10 @@ window.Information_Form = [
 						{
 							display: "strategicobjectives", value: "SOs",
 							roles: ['VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE', 'Administrator'],
-							otherFields: [
-								{ fieldName: "WFModuleCode", value: "VROCRObjective" },
-								{ fieldName: "WFStage", value: "VROCRSOS01" },
-							]
+							// otherFields: [
+							// 	{ fieldName: "WFModuleCode", value: "VROCRObjective" },
+							// 	{ fieldName: "WFStage", value: "VROCRSOS01" },
+							// ]
 						},
 
 						{
