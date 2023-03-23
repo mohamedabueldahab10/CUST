@@ -1727,6 +1727,8 @@ window.ListingData = {
             keyNameParams = 'deliverables'
           } else if (wfname == 'VROCRInitiative' || wfname == 'EPMOCRInitiative' || wfname == 'LMSCRInitiative') {
             keyNameParams = 'initiatives'
+          } else if (wfname == 'CR' || wfname == 'VROCRProject' || wfname == 'EPMOCRProject' || wfname == 'LMSCRProject') {
+            keyNameParams = 'projects';
           } else if (wfname == 'VROCRObjective' || wfname == 'MSCRObjective' || wfname == 'LMSCRObjective') {
             keyNameParams = 'sos'
           } else if (wfname == 'VROCRKPI' || wfname == 'MSCRKPI' || wfname == 'LMSCRKPI') {

@@ -20,14 +20,7 @@ window.Information_Form = [
 					choices: [
 						// { display: "projects", value: "Projects" },
 
-						{
-							display: "projects", value: "Projects",
-							// roles: ['SPMAdmin'],
-							// 	otherFields:[
-							// 		{fieldName:"WFModuleCode",value:"SPMAdmin"},
-							// 		{fieldName:"WFStage",value:"SPMAdminStage"},
-							// 	]
-						},
+						
 						///// For a
 
 
@@ -41,7 +34,14 @@ window.Information_Form = [
 							// 	{ fieldName: "WFStage", value: "VROCRSOS01" },
 							// ]
 						},
-
+						{
+							display: "projects", value: "Projects",
+							// roles: ['SPMAdmin'],
+							// 	otherFields:[
+							// 		{fieldName:"WFModuleCode",value:"SPMAdmin"},
+							// 		{fieldName:"WFStage",value:"SPMAdminStage"},
+							// 	]
+						},
 						{
 							display: "initiatives", value: "Initiatives",
 							roles: ['VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE', 'Administrator'],
