@@ -4,6 +4,26 @@ var Information_Form = [
     labelEn: "Project Data",
     description: "",
     descriptionEn: "",
+    workflowSetValues: [
+      //VRO
+      { fieldName: 'DraftStatus', value: '', stages:["approved"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["VROCRProject02"]} ,
+      { fieldName: 'WFStage', value: '',stages:["VROCRProject02"]} ,
+      { fieldName: 'Stage', value: 'S01',stages:["VROCRProject02"]} ,
+      { fieldName: 'Phase', value: 'P1',stages:["VROCRProject02"]} ,
+    //EPMO
+      { fieldName: 'DraftStatus', value: '', stages:["EPMOCRProject02"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["EPMOCRProject02"]} ,
+      { fieldName: 'WFStage', value: '',stages:["EPMOCRProject02"]} ,
+      { fieldName: 'Stage', value: 'S01',stages:["EPMOCRProject02"]} ,
+      { fieldName: 'Phase', value: 'P1',stages:["EPMOCRProject02"]} ,
+      //LMS
+      { fieldName: 'DraftStatus', value: '', stages:["approved"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["approved"]} ,
+      { fieldName: 'WFStage', value: '',stages:["approved"]} ,
+      { fieldName: 'Stage', value: 'S01',stages:["approved"]} ,
+      { fieldName: 'Phase', value: 'P1',stages:["approved"]} ,
+    ],
     subFields: [
       {
         InternalName: "Title",

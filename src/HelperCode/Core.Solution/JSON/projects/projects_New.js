@@ -4,6 +4,20 @@ var Information_Form = [
     labelEn: "Project Data",
     description: "",
     descriptionEn: "",
+    formDefaultValues: [
+      //VRO
+      { fieldName: 'WFModuleCode', value: 'VROCRProject',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+      { fieldName: 'WFStage', value: 'VROCRProject01',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+      
+      //EPMOCRProject
+      { fieldName: 'WFModuleCode', value: 'EPMOCRProject',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+      { fieldName: 'WFStage', value: 'EPMOCRProject01',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+
+      //LMS
+      { fieldName: 'WFModuleCode', value: 'LMSCRProject',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+      { fieldName: 'WFStage', value: 'LMSCRProject01',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+
+    ], 
     subFields: [
       {
         InternalName: "Name",
@@ -886,6 +900,7 @@ var Information_Form = [
         type: "float",
         // "state": "disabled",
         dynamic: "BudgetItem", //being controlled by main field
+        numberOfDigits:"12",
       },
 
       {
@@ -918,6 +933,7 @@ var Information_Form = [
         DisplayNameEn: "Assigned Budget",
         className:"disable_enable_section",
         type: "float",
+        numberOfDigits:"12",
         // className:"toggle_Section"
         //"state": "disabled"
         // "showonstage":"1"
@@ -928,6 +944,7 @@ var Information_Form = [
         DisplayNameEn: "Expected Budget",
         type: "float",
         state: "disabled",
+        numberOfDigits:"12",
       },
       {
         InternalName: "ActualBudget",
@@ -936,6 +953,8 @@ var Information_Form = [
         type: "float",
         // "state": "disabled",
         RequiredName: "ActualBudget",
+        numberOfDigits:"12",
+
       },
       // {
       //     "InternalName": "Cost4",
@@ -980,6 +999,8 @@ var Information_Form = [
         DisplayNameEn: "ContractualEngagements",
         type: "float",
         // "state": "disabled"
+        numberOfDigits:"12",
+
       },
       {
         InternalName: "EngagementPercentage",
@@ -993,6 +1014,8 @@ var Information_Form = [
         DisplayName: "المنصرف حتى تاريخه",
         DisplayNameEn: "Expenses",
         type: "float",
+        numberOfDigits:"12",
+
         // "state": "disabled"
       },
       {
@@ -1000,6 +1023,8 @@ var Information_Form = [
         DisplayName: "التكلفة المتبقية",
         DisplayNameEn: "Remaining Cost",
         type: "float",
+        numberOfDigits:"12",
+
         // "state": "disabled"
       },
       {
@@ -1007,6 +1032,7 @@ var Information_Form = [
         DisplayName: "نسبة المنصرف من السيولة ",
         DisplayNameEn: "Out Of Cash",
         type: "floatpercentage",
+        numberOfDigits:"12",
         // "state": "disabled"
       },
       // {
