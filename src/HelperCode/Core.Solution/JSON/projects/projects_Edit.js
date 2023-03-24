@@ -15,9 +15,9 @@ var Information_Form = [
         withletters:true,
         Errmsgkey:"withletterpattern",
         state: "disabled",
-        security: {
-          groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
-        },
+        // security: {
+        //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
+        // },
       },
       {
         InternalName: "Portfolio",
@@ -437,9 +437,9 @@ var Information_Form = [
         Dispfieldkey: "Name",
         DispfieldkeyEn: "NameEn",
         valfieldkey: "Title",
-        security: {
-          groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
-        },
+        // security: {
+        //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
+        // },
       },
       {
         InternalName: "SubSector",
@@ -454,9 +454,9 @@ var Information_Form = [
         Dispfieldkey: "Name",
         DispfieldkeyEn: "NameEn",
         valfieldkey: "Title",
-        security: {
-          groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
-        },
+        // security: {
+        //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
+        // },
       },
 
       {
@@ -1110,17 +1110,17 @@ var Information_Form = [
         DisplayNameEn: "Project Owner",
         type: "picker",
         validation: "required",
-        security: {
-          groups: [
-            "VRO_E",
-            "LMS_E",
-            "EPMO",
-            "System Admin Group",
-            "SPMO",
-            "Development Unit",
-            "Project Managers for Project Web App",
-          ],
-        },
+        // security: {
+        //   groups: [
+        //     "VRO_E",
+        //     "LMS_E",
+        //     "EPMO",
+        //     "System Admin Group",
+        //     "SPMO",
+        //     "Development Unit",
+        //     "Project Managers for Project Web App",
+        //   ],
+        // },
       },
       {
         InternalName: "ProjectManager",
@@ -1144,17 +1144,17 @@ var Information_Form = [
         DisplayNameEn: "Project Sponsor",
         type: "picker",
         validation: "required",
-        security: {
-          groups: [
-            "VRO_E",
-            "LMS_E",
-            "EPMO",
-            "System Admin Group",
-            "SPMO",
-            "Development Unit",
-            "Project Managers for Project Web App",
-          ],
-        },
+        // security: {
+        //   groups: [
+        //     "VRO_E",
+        //     "LMS_E",
+        //     "EPMO",
+        //     "System Admin Group",
+        //     "SPMO",
+        //     "Development Unit",
+        //     "Project Managers for Project Web App",
+        //   ],
+        // },
       },
       //   {
       //     InternalName: 'ObjectiveOwner',
