@@ -20,6 +20,13 @@ var Information_Form = [
         // "maxchar": "250",
         // "validation": "required"
       },
+      {
+        InternalName: 'Description',
+        DisplayName: 'وصف المقياس',
+        DisplayNameEn: 'Description',
+        type: 'multiline',
+        maxchar: 5000,
+      },
       {// hol dynamic 3ala l lookup 
         "InternalName": "RelatedBenefit",
         "DisplayNameEn": "RelatedBenefit",
