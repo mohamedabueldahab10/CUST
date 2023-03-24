@@ -29,7 +29,7 @@ var Listing_Info = [
 		"DisplayName":"تاريخ الاكتمال المخطط",
 		"type":"date",
 		inlisting: true,
-		infilter: false
+		infilter: true
 	},
 	{
 		"InternalName": "Weight",

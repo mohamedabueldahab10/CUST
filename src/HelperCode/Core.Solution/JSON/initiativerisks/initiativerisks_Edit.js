@@ -154,18 +154,18 @@ var Information_Form = [{
                 "DisplayNameEn": "Mitigation Status",
                 "type": "dropdownValues",
                 options: {
-                    choices: [{
-                            display: 'completed',
-                            value: 'completed'
-                        },
-                        {
-                            display: 'inprogress',
-                            value: 'inprogress'
-                        },
-                        {
-                            display: 'done',
-                            value: 'done'
-                        }
+                    choices: [   {
+                        display: 'notstarted',
+                        value: 'notstarted',
+                      },
+                      {
+                        display: 'inprogress2',
+                        value: 'inprogress2',
+                      },
+                      {
+                        display: 'donecomplete',
+                        value: 'donecomplete',
+                      },
                         // ,
                         // {
                         //   display: 'new',

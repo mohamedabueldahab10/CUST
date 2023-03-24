@@ -143,16 +143,16 @@ var Information_Form = [
         options: {
           choices: [
             {
-              display: 'completed',
-              value: 'completed',
+              display: 'notstarted',
+              value: 'notstarted',
             },
             {
-              display: 'inprogress',
-              value: 'inprogress',
+              display: 'inprogress2',
+              value: 'inprogress2',
             },
             {
-              display: 'done',
-              value: 'done',
+              display: 'donecomplete',
+              value: 'donecomplete',
             },
             // ,
             // {

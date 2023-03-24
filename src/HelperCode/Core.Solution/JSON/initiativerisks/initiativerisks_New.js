@@ -164,12 +164,12 @@ var Information_Form = [
               value: 'notstarted',
             },
             {
-              display: 'inprogress',
-              value: 'inprogress',
+              display: 'inprogress2',
+              value: 'inprogress2',
             },
             {
-              display: 'done',
-              value: 'done',
+              display: 'donecomplete',
+              value: 'donecomplete',
             },
             // ,
             // {

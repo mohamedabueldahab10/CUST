@@ -231,6 +231,7 @@
     mitigationstatus: "حالة الاستجابة",
     completed: "مكتمل",
     inprogress: "قيد التنفيذ",
+    inprogress2: "في تقدم",
     onhold: "في الانتظار",
     //argreedaction
 
@@ -264,6 +265,7 @@
 
     //Resolution Status
     done: "تم",
+    donecomplete:"منجز",
     funded: "ممولة",
     unfunded: "غير ممولة",
     partiallyfunded: "ممولة جزئيا",
@@ -474,7 +476,7 @@
     issues: "التحديات",
     risks: "المخاطر",
     projects: "المشاريع",
-    strategicobjectives: "الأهداف",
+    strategicobjectives: "الأهداف الاستراتيجية",
     completionpercentage: "نسبة الإنجاز",
     budgetexpenditure: "الصرف من الميزانية",
     portfolio: "المحفظة",
@@ -1198,7 +1200,7 @@
     issue: "Issue",
     risk: "Risk",
     projects: "projects",
-    strategicobjectives: "Objectives",
+    strategicobjectives: "Strategic Objectives",
     newrequest: "New Request",
 
     //Resolution Status
@@ -1404,6 +1406,7 @@
     notstarted1: "Not Started",
     dateend: "Actual Completed Date",
     done: "Done",
+    donecomplete:"Done",
     funded: "Funded",
     unfunded: "Unfunded",
     partiallyfunded: "Partially Funded",
