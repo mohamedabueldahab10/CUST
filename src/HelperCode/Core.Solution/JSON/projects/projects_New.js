@@ -4,20 +4,20 @@ var Information_Form = [
     labelEn: "Project Data",
     description: "",
     descriptionEn: "",
-    formDefaultValues: [
-      //VRO
-      { fieldName: 'WFModuleCode', value: 'VROCRProject',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
-      { fieldName: 'WFStage', value: 'VROCRProject01',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+    // formDefaultValues: [
+    //   //VRO
+    //   { fieldName: 'WFModuleCode', value: 'VROCRProject',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+    //   { fieldName: 'WFStage', value: 'VROCRProject01',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
       
-      //EPMOCRProject
-      { fieldName: 'WFModuleCode', value: 'EPMOCRProject',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
-      { fieldName: 'WFStage', value: 'EPMOCRProject01',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+    //   //EPMOCRProject
+    //   { fieldName: 'WFModuleCode', value: 'EPMOCRProject',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+    //   { fieldName: 'WFStage', value: 'EPMOCRProject01',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
 
-      //LMS
-      { fieldName: 'WFModuleCode', value: 'LMSCRProject',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
-      { fieldName: 'WFStage', value: 'LMSCRProject01',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+    //   //LMS
+    //   { fieldName: 'WFModuleCode', value: 'LMSCRProject',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+    //   { fieldName: 'WFStage', value: 'LMSCRProject01',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
 
-    ], 
+    // ], 
     subFields: [
       {
         InternalName: "Name",
