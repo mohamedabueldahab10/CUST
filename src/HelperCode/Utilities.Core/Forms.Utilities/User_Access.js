@@ -136,7 +136,7 @@ var UserRole,
   // USERisProjectHome =
   //   window.location.href.toLowerCase().indexOf("/projecthome.aspx") > -1,
   // USERisInitiativeHome =
-  //   window.location.href.toLowerCase().indexOf("/initiativehome.aspx") > -1,  
+  //   window.location.href.toLowerCase().indexOf("/initiativehome.aspx") > -1,
   // USERisStrategicPartnershipHome =
   //   window.location.href.toLowerCase().indexOf("/strategicpartnershiphome.aspx") > -1,
   USERProjRelated = [],
@@ -241,7 +241,7 @@ window.activeCode = istherePCODE ? USERPCODE : isthereICODE ? UserICode : "";
   (window.RListKey = isCrMode ? window.location.href.split("RKey=")[1].split("&")[0] : ""),
   (window.CrRelatedList = ""),
   (window.changeRequestBody = []);
-// ended 
+// ended
 
 
 
@@ -271,7 +271,7 @@ if (window.location.href.indexOf("ListKey") > -1) {
       if (key == RListKey) {
         CrRelatedList = obj[key];
       }
-      // ended 
+      // ended
     }
   }
 } else {
@@ -3149,7 +3149,7 @@ window.userCalls = {
     }
     // else if (isthereICODE && isDU) {
     //   Access_Sector_Info_Request.preinit();
-    // } 
+    // }
     else {
       window.checkBreadCrumbsStatusHtml = setInterval(function () {
         Access_Project_Info_Request.g.handleBreadcrumbs();
@@ -3627,7 +3627,7 @@ window.userCalls = {
                   listName: "Initiatives",
                   parentRelationField: "Title",
                   RelationField: "RelatedObjective",
-                  isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain 
+                  isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
                   RelationFieldType: "Text"
                 },
               },
@@ -3740,7 +3740,7 @@ window.userCalls = {
                   listName: "Initiatives",
                   parentRelationField: "Title",
                   RelationField: "RelatedObjective",
-                  isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain 
+                  isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
                   RelationFieldType: "Text"
                 },
               },
@@ -4173,7 +4173,7 @@ window.userCalls = {
                   listName: "Initiatives",
                   parentRelationField: "Title",
                   RelationField: "RelatedObjective",
-                  isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain 
+                  isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
                   RelationFieldType: "Text",
                   subRelation: {
                     level: 4,
@@ -5182,7 +5182,7 @@ window.userCalls = {
                   listName: "Initiatives",
                   parentRelationField: "Title",
                   RelationField: "RelatedObjective",
-                  isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain 
+                  isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
                   RelationFieldType: "Text"
                 },
               }
@@ -5223,7 +5223,7 @@ window.userCalls = {
                 parentRelationField: "Title",
                 RelationField: "SubSector",
                 RelationFieldType: "Text",
-                isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain 
+                isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
                 subRelation: {
                   level: 3,
                   listName: "",
@@ -5898,7 +5898,7 @@ window.userCalls = {
                   listName: "Initiatives",
                   parentRelationField: "Title",
                   RelationField: "RelatedObjective",
-                  isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain 
+                  isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
                   RelationFieldType: "Text",
                   subRelation: {
                     level: 4,
@@ -6424,7 +6424,7 @@ var Access_Project_Info_Request = {
         USERPID = oListItem.get_id();
         User_isClosureStatus = oListItem.get_item("ClosureStatus") == "Failed" || oListItem.get_item("ClosureStatus") == "Cancelled" ? true : false;
         //////////
-        
+
         User_NotActiveStatus = (oListItem.get_item("WorkingStatus") != 'active' && oListItem.get_item("WorkingStatus") ) ? true : false;
 
         ProjectIsDraft = oListItem.get_item("DraftStatus") == 'draft' ? true : false;
@@ -6652,7 +6652,7 @@ var Access_Project_Info_Request = {
         //   AccessQuery =
         //     "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">vision</Value></Eq></And></Where></Query></View>";
         // }
-        // else if (USERisListing 
+        // else if (USERisListing
         // 	&& USERlistkey == "mainkpi"
         // 	) {
         // 	if (
@@ -6692,7 +6692,7 @@ var Access_Project_Info_Request = {
         // 		//
         // 		AccessQuery = SectorHeadQuery;
         // 	}
-        // } 
+        // }
         // if (USERisListing && USERlistkey == "initiatives") {
         //
         // if (isVROE) {
@@ -6735,7 +6735,7 @@ var Access_Project_Info_Request = {
         // ) {
         // 	AccessQuery =
         // 		"<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">sub</Value></Eq></And></Where></Query></View>";
-        // } 
+        // }
         // else if (
         //   // isMinisterAssistant ||
         //   //isSectorHead ||
@@ -6744,7 +6744,7 @@ var Access_Project_Info_Request = {
         //   (isGeneralManager && USERlistkey == "sos")
         // ) {
         //   AccessQuery = SectorHeadQuery;
-        // } 
+        // }
         // else {
         AccessQuery =
           "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
@@ -7519,7 +7519,7 @@ var Access_Project_Info_Request = {
 // 	},
 // };
 //
-// to get the data of initiative 
+// to get the data of initiative
 
 // get related Strategic partnership
 
@@ -8675,7 +8675,7 @@ var Tasks_Info_Request_User = {
             keyNameParams = 'coc'
           } else if (wfname == 'VROProjDeliverable' || wfname == 'EPMOProjDeliverable' || wfname == 'LMSProjDeliverable') {
             keyNameParams = 'deliverables'
-          } else if (wfname == "VROCRDeleteObjective" || wfname == "MSCRDeleteObjective" || wfname == "LMSCRDeletedObjective") {     
+          } else if (wfname == "VROCRDeleteObjective" || wfname == "MSCRDeleteObjective" || wfname == "LMSCRDeletedObjective") {
             keyNameParams = "changerequest";
           }
           switch (tasktype) {
@@ -9056,17 +9056,30 @@ var GetStrategicPartnershipTitle_Request = {
 };
 
 // data level access
-function initiateDataLevelAccess() {
+async function initiateDataLevelAccess (lookupList) {
   try {
     if (myRoleConfig[0].hasOwnProperty("dataFilter")) {
       isRoleDataLevelAccess = true;
       myRoleConfig[0].dataFilter.hierarchies.forEach((el, i, a) => {
 
-        let accessConditions = el.accessConditions;
-        let isListConditional1 = el.listName == currentMainList;
-        let isListConditional2 = el.subRelation.listName == currentMainList;
-        let isListConditional3 = el.subRelation.subRelation.listName == currentMainList;
-        let isListConditional4 = (el.subRelation.subRelation.subRelation ? el.subRelation.subRelation.subRelation.listName == currentMainList : false);
+		let accessConditions = el.accessConditions;
+		let isListConditional1;
+		let isListConditional2;
+		let isListConditional3;
+		let isListConditional4;
+		if (!lookupList) {
+			isListConditional1 = el.listName == currentMainList;
+			isListConditional2 = el.subRelation.listName == currentMainList;
+			isListConditional3 =
+				el.subRelation.subRelation.listName == currentMainList;
+			isListConditional4 = (el.subRelation.subRelation.subRelation ? el.subRelation.subRelation.subRelation.listName == currentMainList : false);
+		} else {
+			isListConditional1 = el.listName == lookupList;
+			isListConditional2 = el.subRelation.listName == lookupList;
+			isListConditional3 =
+				el.subRelation.subRelation.listName == lookupList;
+			isListConditional4 = (el.subRelation.subRelation.subRelation ? el.subRelation.subRelation.subRelation.listName == lookupList : false);
+		}
         if (isListConditional1) {
           data_Level1_Access.buildCamlQuery(
             el.listName,
@@ -9306,7 +9319,7 @@ let data_Level1_Access = {
         );
 
 
-        //section to handle multi look up selected 
+        //section to handle multi look up selected
         containBody += `<Contains><FieldRef Name="${fieldToQuery}" /><Value Type="${fieldType}">${el}</Value></Contains>`
         var counttest = (containBody.match(/<Or>/g) || []).length;
         var ORC = "</Or>".repeat(counttest);
@@ -9320,7 +9333,7 @@ let data_Level1_Access = {
                   </Query>
               </View>`
 
-        // end section to handle multi look up selected 
+        // end section to handle multi look up selected
 
         whereBodyFinal = `<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>${whereBody}
 					</And></Where>`;
@@ -9437,7 +9450,7 @@ let data_Level2_Access = {
           `IncludeTimeValue="TRUE" Type="DateTime"`
         );
 
-        //section to handle multi look up selected 
+        //section to handle multi look up selected
         containBody += `<Contains><FieldRef Name="${fieldToQuery}" /><Value Type="${fieldType}">${el}</Value></Contains>`
         var counttest = (containBody.match(/<Or>/g) || []).length;
         var ORC = "</Or>".repeat(counttest);
@@ -9452,7 +9465,7 @@ let data_Level2_Access = {
         </View>`
 
 
-        // end section to handle multi look up selected 
+        // end section to handle multi look up selected
 
         whereBodyFinal = `<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>${whereBody}
 				</And></Where>`;
@@ -9465,12 +9478,10 @@ let data_Level2_Access = {
 				</View>`;
 
         if (targetIsMulti) { // to check if the target is multi
-          data_Level2_Access.g.dataLevelQuery = containqueryBody;
           dataLevelAccessQuery = containqueryBody;
           //add it  to handle 4 th level query
           data_Level3_Access.g.dataLevelQuery = containqueryBody;
         } else {
-          data_Level2_Access.g.dataLevelQuery = queryBody;
           dataLevelAccessQuery = queryBody;
           //add it  to handle 4 th level query
           data_Level3_Access.g.dataLevelQuery = queryBody;
@@ -9587,7 +9598,7 @@ let data_Level3_Access = {
           `IncludeTimeValue="TRUE" Type="DateTime"`
         );
 
-        //section to handle multi look up selected 
+        //section to handle multi look up selected
         containBody += `<Contains><FieldRef Name="${fieldToQuery}" /><Value Type="${fieldType}">${el}</Value></Contains>`
         var counttest = (containBody.match(/<Or>/g) || []).length;
         var ORC = "</Or>".repeat(counttest);
@@ -9600,7 +9611,7 @@ let data_Level3_Access = {
               <OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
               </Query>
           </View>`
-        // end section to handle multi look up selected 
+        // end section to handle multi look up selected
 
 
         whereBodyFinal = `<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>${whereBody}

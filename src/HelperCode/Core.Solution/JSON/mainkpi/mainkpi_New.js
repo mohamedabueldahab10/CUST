@@ -9,17 +9,17 @@ var Information_Form = [
       { fieldName: 'WFModuleCode', value: 'VROCRKPI',roles: ['Administrator','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
       { fieldName: 'WFStage', value: 'VROCRKPI01',roles: ['Administrator','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
       { fieldName: 'DraftStatus', value: 'draft' ,roles: ['Administrator','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
-      
+
       //EPMOCOC
       { fieldName: 'WFModuleCode', value: 'MSCRKPI',roles: ['Administrator','EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
       { fieldName: 'WFStage', value: 'MSCRKPI01',roles:  ['Administrator','EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
       { fieldName: 'DraftStatus', value: 'draft',roles:  ['Administrator','EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
-  
+
       //LMS
       { fieldName: 'WFModuleCode', value: 'LMSCRKPI',roles: ['Administrator','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
       { fieldName: 'WFStage', value: 'LMSCRKPI01',roles: ['Administrator','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
       { fieldName: 'DraftStatus', value: 'draft',roles: ['Administrator','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
-  
+
     ],
     subFields: [
       {
@@ -77,6 +77,7 @@ var Information_Form = [
         dynamic: "KPIType", //InternalName Of Parent field
         filterField: "Types",//InternalName Of Parent field
         filterFieldType: "Choice",
+        useAccessPolicy:true,
         ///
         ///
         // display: 'none',

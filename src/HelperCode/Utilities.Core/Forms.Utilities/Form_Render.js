@@ -3631,11 +3631,11 @@ window.ListInfo = {
             dispfieldkey +
             '"data-filterfield="' +
             element.filterField +
-            '"data-queryfieldvalue="' + // 
+            '"data-queryfieldvalue="' + //
             element.queryFieldValue +
-            '"data-queryfield="' + // 
+            '"data-queryfield="' + //
             element.queryField +
-            '"data-queryfieldtype="' + // 
+            '"data-queryfieldtype="' + //
             element.queryFieldType +
             '" data-filterfieldtype="' +
             element.filterFieldType +
@@ -4048,7 +4048,7 @@ window.ListInfo = {
         }
         //ghufran User dropdown security
         // if (isEPMO
-        //   // || isSPMAdmin 
+        //   // || isSPMAdmin
         //   //|| isSPMTeam
 
         //   ) {
@@ -4322,11 +4322,11 @@ window.ListInfo = {
           dispfieldkey +
           '"data-filterfield="' +
           element.filterField +
-          '"data-queryfieldvalue="' + // 
+          '"data-queryfieldvalue="' + //
           element.queryFieldValue +
-          '"data-queryfield="' + // 
+          '"data-queryfield="' + //
           element.queryField +
-          '"data-queryfieldtype="' + // 
+          '"data-queryfieldtype="' + //
           element.queryFieldType +
           '" data-filterfieldtype="' +
           element.filterFieldType +
@@ -4416,7 +4416,7 @@ window.ListInfo = {
           [element.childinternalname],
           function (records, record, listItem, isDone) {
 
-            var allRelatedChild = [] // to get all related child 
+            var allRelatedChild = [] // to get all related child
             if (isDone) {
               records.forEach(function (el, index) {
                 allRelatedChild.push(el[element.childinternalname]);
@@ -5084,9 +5084,33 @@ window.ListInfo = {
         var customQuery;
         let roleAccess = []
 
+        if (element.hasOwnProperty("useAccessPolicy") && element.useAccessPolicy) {
+          if (myRoleConfig[0].hasOwnProperty("dataFilter")) {
+            isRoleDataLevelAccess = true;
+            myRoleConfig[0].dataFilter.hierarchies.forEach((el, i, a) => {
 
+              let accessConditions = el.accessConditions;
+              let isListConditional1 = el.listName == element.source;
+              let isListConditional2 = el.subRelation.listName == element.source;
+              let isListConditional3 =
+                el.subRelation.subRelation.listName == element.source;
+              let isListConditional4 = (el.subRelation.subRelation.subRelation ? el.subRelation.subRelation.subRelation.listName == element.source : false);
+
+              if (isListConditional1) {
+                customQuery=data_Level1_Access.g.dataLevelQuery
+              } else if (isListConditional2) {
+                customQuery=data_Level2_Access.g.dataLevelQuery
+              } else if (isListConditional3) {
+                customQuery=data_Level3_Access.g.dataLevelQuery
+              } else if (isListConditional4) {
+                customQuery=data_Level3_Access.g.dataLevelQuery
+
+              }
+            })
+          }
+        }
         // filter data based on role access
-        if (element.hasOwnProperty("accessFilter")) {
+        else if (element.hasOwnProperty("accessFilter")) {
           roleAccess = element.accessFilter.filter((el) => {
             return el.role == myRoleConfig[0].Role;
           });
@@ -5095,7 +5119,7 @@ window.ListInfo = {
           }
           console.log(roleAccess, "roleAccessss roleAccessss")
         }
-        if (roleAccess.length == 0) { // can't put else cause when the roleAccess will be empty arrray will nor render a query so all data(deleted and not deleted will appear)
+        if (roleAccess.length == 0 && !element.hasOwnProperty("useAccessPolicy")) { // can't put else cause when the roleAccess will be empty arrray will nor render a query so all data(deleted and not deleted will appear)
           if (element.isSector == "True") {
             customQuery =
               "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"EntityType\" /><Value Type=\"Choice\">" +
@@ -5383,11 +5407,11 @@ window.ListInfo = {
           dispfieldkey +
           '"data-filterfield="' +
           element.filterField +
-          '"data-queryfieldvalue="' + // 
+          '"data-queryfieldvalue="' + //
           element.queryFieldValue +
-          '"data-queryfield="' + // 
+          '"data-queryfield="' + //
           element.queryField +
-          '"data-queryfieldtype="' + // 
+          '"data-queryfieldtype="' + //
           element.queryFieldType +
           '" data-filterfieldtype="' +
           element.filterFieldType +
@@ -5998,7 +6022,7 @@ window.ListInfo = {
     newDetail: function () {
 
 
-      //to check the length of new master 
+      //to check the length of new master
       var masterLength = 0
 
 
@@ -6048,12 +6072,12 @@ window.ListInfo = {
 
 
         if (isNew) {
-          // in new > 1 because on render the form there is a new Item so it will be  before click on + 
+          // in new > 1 because on render the form there is a new Item so it will be  before click on +
           if (masterLength > 1) {
             $(this).closest("[data-target_list]").find(".remove-New-Detail").show()
           }
         } else if (isEdit) {
-          // in edit > 0 because on render the form there is no new Item till will click on + 
+          // in edit > 0 because on render the form there is no new Item till will click on +
           if (masterLength > 0) {
             $(this).closest("[data-target_list]").find(".remove-New-Detail").show()
           }
@@ -6108,13 +6132,13 @@ window.ListInfo = {
 
 
         if (isNew) {
-          // in new > 1 because on render the form there is a new Item so it will be  before click on + 
+          // in new > 1 because on render the form there is a new Item so it will be  before click on +
           if (masterLength > 1) {
             masterLength = masterLength - 1
             $(this).closest("[data-target_list]").find(".Details-Item.NewItem")[masterLength].remove()
           }
         } else if (isEdit) {
-          // in edit > 0 because on render the form there is no new Item till will click on + 
+          // in edit > 0 because on render the form there is no new Item till will click on +
           if (masterLength > 0) {
             masterLength = masterLength - 1
             $(this).closest("[data-target_list]").find(".Details-Item.NewItem")[masterLength].remove()
@@ -7202,7 +7226,7 @@ var View_ListInfo = {
               }
             );
           }
-          // ended 
+          // ended
 
           //handle new style of wf
           if (isWF) {
@@ -9245,7 +9269,7 @@ dynamicAffectSelect = {
 
     // var dataSeblingValue = affectedSelectsInfo[0].dataSiblingvalue
     // ? affectedSelectsInfo[0].dataSiblingvalue
-    // : ""; 
+    // : "";
 
     // console.log(dataSeblingValue,"dataSeblingValue dataSeblingValue")
 
@@ -9339,9 +9363,9 @@ dynamicAffectSelect = {
     if (targetFieldType == 'multiselect') {
 
       // $(`ul#RelatedObjective ul.dropdown-menu`).html("");
-      // RelatedObjective  
+      // RelatedObjective
 
-      // selectedVal = $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu`).find("input:checked").val() 
+      // selectedVal = $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu`).find("input:checked").val()
       selectedVal = $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu`)
         .find("input:checked")
         .map(function () {
