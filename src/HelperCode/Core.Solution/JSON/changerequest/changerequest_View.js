@@ -19,18 +19,19 @@ window.Information_Form = [
 				type: "dropdownValues",
 				options: {
 					choices: [
+						//SOS
 						{ display: "strategicsbjectives", value: "strategicsbjectives" },
 						{ display: "visionobjectives", value: "visionobjectives" },
 						{ display: "lmsobjectives", value: "lmsobjectives" },
-
+						//projects
 						{ display: "vroprojects", value: "vroprojects" },
 						{ display: "epmoprojects", value: "epmorojects" },
 						{ display: "lmsprojects", value: "lmsrojects" },
-
+						//Initiatives
 						{ display: "strategicinitiatives", value: "strategicinitiatives" },						
 						{ display: "vroinitiatives", value: "vroinitiatives" },						
-						{ display: "lmsobjectives", value: "lmsobjectives" },	
-
+						{ display: "lmsinitiatives", value: "lmsinitiatives" },	
+						//KPI
 						{ display: "strategickpi", value: "strategickpi" },						
 						{ display: "vrokpi", value: "vrokpi" },						
 						{ display: "lmskpi", value: "lmskpi" },	
@@ -38,24 +39,20 @@ window.Information_Form = [
 				},
 				toggleValues: [
 					{ value: "Projects", fields: ["ProjectCode", "projectsUpdateType"] }, //we can put more than 1  field
-					{ value: "Initiatives", fields: ["InitiativeCode", "initiativeUpdateType"] }, //we can put more than 1  field
+					//Initiatives
+					{ value: "strategicinitiatives", fields: ["InitiativeCode", "strategicinitiatives"] }, //we can put more than 1  field
+					{ value: "vroinitiatives", fields: ["InitiativeCode", "vroinitiatives"] }, //we can put more than 1  field
+					{ value: "lmsinitiatives", fields: ["InitiativeCode", "lmsinitiatives"] }, //we can put more than 1  field
 					//SOS
-					{
-						value: "strategicsbjectives",
-						fields: ["CRRelatedStrategyObjective", "strategicobjectivesUpdateType"],
-					}, //we can put more than 1  field
-					{
-						value: "visionobjectives",
-						fields: ["CRRelatedStrategyObjective", "visionobjectivesstrategicobjectivesUpdateType"],
-					}, //we can put more than 1  field
-					{
-						value: "lmsobjectives",
-						fields: ["CRRelatedStrategyObjective", "lmsobjectivesstrategicobjectivesUpdateType"],
-					}, //we can put more than 1  field
-
+					{	value: "strategicsbjectives",fields: ["CRRelatedStrategyObjective", "strategicsbjectives"],					},
+					{	value: "visionobjectives",fields: ["CRRelatedStrategyObjective", "visionobjectives"],					},
+					{	value: "lmsobjectives",	fields: ["CRRelatedStrategyObjective", "lmsobjectives"],
+					},
 					//	-----SOS----
-
-					{ value: "MainKPI", fields: ["CRRelatedMainKpis", "mainkpiUpdateType"] }, //we can put more than 1  field
+					//---KPI------
+					{ value: "strategickpi", fields: ["CRRelatedMainKpis", "strategickpi"] }, //we can put more than 1  field
+					{ value: "vrokpi", fields: ["CRRelatedMainKpis", "vrokpi"] }, //we can put more than 1  field
+					{ value: "lmskpi", fields: ["CRRelatedMainKpis", "lmskpi"] }, //we can put more than 1  field
 				],
 			},
 			{
@@ -261,6 +258,94 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
+				ToggleName: "strategicinitiatives",
+				type: "dropdownValues",
+				options: {
+					choices: [
+						{
+							display: "generalchange",
+							value: "automatic",
+							//
+							fields: [
+								{
+									InternalName: "getall",
+								},
+
+							],	otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'LMSCRInitiative' },
+								{ fieldName: 'WFStage', value: 'LMSCRInitiative01' },
+							]
+						},
+						{ display: "deletion", value: "delete",
+						otherFields: [
+							{ fieldName: 'WFModuleCode', value: 'LMSCRInitiative' },
+							{ fieldName: 'WFStage', value: 'LMSCRInitiative01' },
+						] }
+					],
+				},
+			},
+			{
+				InternalName: "UpdateType",
+				DisplayName: "نوع طلب التغيير",
+				DisplayNameEn: "Change Request Type",
+				display: "none",
+				customCr: true,
+				ToggleName: "vroinitiatives",
+				type: "dropdownValues",
+				options: {
+					choices: [
+						{
+							display: "generalchange",
+							value: "automatic",
+							//
+							fields: [
+								{
+									InternalName: "getall",
+								},
+
+							],	otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'VROCRInitiative' },
+								{ fieldName: 'WFStage', value: 'VROCRInitiative01' },
+							]
+						},
+						{ display: "deletion", value: "delete" }
+					],
+				},
+			},
+			{
+				InternalName: "UpdateType",
+				DisplayName: "نوع طلب التغيير",
+				DisplayNameEn: "Change Request Type",
+				display: "none",
+				customCr: true,
+				ToggleName: "lmsinitiatives",
+				type: "dropdownValues",
+				options: {
+					choices: [
+						{
+							display: "generalchange",
+							value: "automatic",
+							//
+							fields: [
+								{
+									InternalName: "getall",
+								},
+
+							],	otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'LMSCRInitiative' },
+								{ fieldName: 'WFStage', value: 'LMSCRInitiative01' },
+							]
+						},
+						{ display: "deletion", value: "delete" }
+					],
+				},
+			},
+			{
+				InternalName: "UpdateType",
+				DisplayName: "نوع طلب التغيير",
+				DisplayNameEn: "Change Request Type",
+				display: "none",
+				customCr: true,
 				ToggleName: "initiativeUpdateType",
 				type: "dropdownValues",
 				options: {
@@ -294,7 +379,7 @@ window.Information_Form = [
 				source: "SOs",
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
-				dontSubmit: true,
+				// dontSubmit: true,
 				useAccessPolicy:true
 				// dynamic: 'moduleSelect',
 				// filterField: 'Types',
@@ -308,7 +393,7 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
-				ToggleName: "strategicobjectivesUpdateType",
+				ToggleName: "strategicsbjectives",
 				type: "dropdownValues",
 				options: {
 					choices: [
@@ -319,17 +404,23 @@ window.Information_Form = [
 							fields: [
 								{
 									InternalName: "getall",
+									
 								},
 
 							],
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'MSCRObjective' },
+								{ fieldName: 'WFStage', value: 'MSCRObjective01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
 						},
-					{ display: "deletion", value: "delete",
-						otherFields: [
-							{ fieldName: 'WFModuleCode', value: 'MSCRDeleteObjective' },
-							{ fieldName: 'WFStage', value: 'MSCRDeleteObjective01' },
-							// { fieldName: 'DraftStatus', value: 'draft' },
-					 	 ],
-					}
+						{ display: "deletion", value: "delete",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'MSCRObjective' },
+								{ fieldName: 'WFStage', value: 'MSCRObjective01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
+						}
 					],
 				},
 			},
@@ -340,7 +431,7 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
-				ToggleName: "visionobjectivesstrategicobjectivesUpdateType",
+				ToggleName: "visionobjectives",
 				type: "dropdownValues",
 				options: {
 					choices: [
@@ -353,15 +444,19 @@ window.Information_Form = [
 									InternalName: "getall",
 								},
 
-							],
+							],otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'VROCRObjective' },
+								{ fieldName: 'WFStage', value: 'VROCRSOS01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							  ],
 						},
-					{ display: "deletion", value: "delete",
-						otherFields: [
-							{ fieldName: 'WFModuleCode', value: 'VROCRDeleteObjective' },
-							{ fieldName: 'WFStage', value: 'VROCRDeleteObjective01' },
-							// { fieldName: 'DraftStatus', value: 'draft' },
-					 	 ],
-					}
+						{ display: "deletion", value: "delete",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'VROCRObjective' },
+								{ fieldName: 'WFStage', value: 'VROCRSOS01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
+						}
 					],
 				},
 			},
@@ -372,7 +467,7 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
-				ToggleName: "lmsobjectivesstrategicobjectivesUpdateType",
+				ToggleName: "lmsobjectives",
 				type: "dropdownValues",
 				options: {
 					choices: [
@@ -385,15 +480,19 @@ window.Information_Form = [
 									InternalName: "getall",
 								},
 
-							],
+							],otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'LMSCRObjective' },
+								{ fieldName: 'WFStage', value: 'LMSCRObjective01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							  ],
 						},
-					{ display: "deletion", value: "delete",
-						otherFields: [
-							{ fieldName: 'WFModuleCode', value: 'LMSCRDeletedObjective' },
-							{ fieldName: 'WFStage', value: 'LMSCRDeletedObjective01' },
-							// { fieldName: 'DraftStatus', value: 'draft' },
-					 	 ],
-					}
+						{ display: "deletion", value: "delete",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'LMSCRObjective' },
+								{ fieldName: 'WFStage', value: 'LMSCRObjective01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
+						}
 					],
 				},
 			},
@@ -417,7 +516,7 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
-				ToggleName: "mainkpiUpdateType",
+				ToggleName: "strategickpi",
 				type: "dropdownValues",
 				options: {
 					choices: [
@@ -430,9 +529,86 @@ window.Information_Form = [
 									InternalName: "getall",
 								},
 
+							],otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'MSCRKPI' },
+								{ fieldName: 'WFStage', value: 'MSCRKPI01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
 							],
 						},
-						{ display: "deletion", value: "delete" }
+						{ display: "deletion", value: "delete",
+						otherFields: [
+							{ fieldName: 'WFModuleCode', value: 'MSCRKPI' },
+							{ fieldName: 'WFStage', value: 'MSCRKPI01' },
+							// { fieldName: 'DraftStatus', value: 'draft' },
+						], }
+					],
+				},
+			},
+			{
+				InternalName: "UpdateType",
+				DisplayName: "نوع طلب التغيير",
+				DisplayNameEn: "Change Request Type",
+				display: "none",
+				customCr: true,
+				ToggleName: "vrokpi",
+				type: "dropdownValues",
+				options: {
+					choices: [
+						{
+							display: "generalchange",
+							value: "automatic",
+							//
+							fields: [
+								{
+									InternalName: "getall",
+								},
+
+							],otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'VROCRKPI' },
+								{ fieldName: 'WFStage', value: 'VROCRKPI01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
+						},
+						{ display: "deletion", value: "delete",
+						otherFields: [
+							{ fieldName: 'WFModuleCode', value: 'VROCRKPI' },
+							{ fieldName: 'WFStage', value: 'VROCRKPI01' },
+							// { fieldName: 'DraftStatus', value: 'draft' },
+						], }
+					],
+				},
+			},
+			{
+				InternalName: "UpdateType",
+				DisplayName: "نوع طلب التغيير",
+				DisplayNameEn: "Change Request Type",
+				display: "none",
+				customCr: true,
+				ToggleName: "lmskpi",
+				type: "dropdownValues",
+				options: {
+					choices: [
+						{
+							display: "generalchange",
+							value: "automatic",
+							//
+							fields: [
+								{
+									InternalName: "getall",
+								},
+
+							],otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'LMSCRKPI' },
+								{ fieldName: 'WFStage', value: 'LMSCRKPI01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
+						},
+						{ display: "deletion", value: "delete",
+						otherFields: [
+							{ fieldName: 'WFModuleCode', value: 'LMSCRKPI' },
+								{ fieldName: 'WFStage', value: 'LMSCRKPI01' },
+							// { fieldName: 'DraftStatus', value: 'draft' },
+						], }
 					],
 				},
 			},

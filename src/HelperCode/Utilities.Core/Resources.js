@@ -479,7 +479,7 @@
     strategicobjectives: "أهداف استراتيجية",
     strategicinitiatives: "مبادرات استراتيجية",    
     vroinitiatives: "مبادرات الرؤية",       
-    lmsobjectives: "مبادرات سوق العمل",
+    lmsinitiatives: "مبادرات سوق العمل",
     visionobjectives: "اهداف الرؤية", 
     lmsobjectives: "اهداف سوق العمل",
     vroprojects: "مشاريع سوق العمل ",
