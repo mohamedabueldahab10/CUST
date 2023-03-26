@@ -477,8 +477,19 @@
     risks: "المخاطر",
     projects: "المشاريع",
     strategicobjectives: "أهداف استراتيجية",
-    visionobjectives: "اهداف الرؤية",
+    strategicinitiatives: "مبادرات استراتيجية",    
+    vroinitiatives: "مبادرات الرؤية",       
+    lmsobjectives: "مبادرات سوق العمل",
+    visionobjectives: "اهداف الرؤية", 
     lmsobjectives: "اهداف سوق العمل",
+    vroprojects: "مشاريع سوق العمل ",
+    epmoprojects: "مشاريع مؤسسية",
+    lmsprojects: " مشاريع سوق عمل",
+
+    strategickpi: "مؤشرات استراتيجية",    
+    vrokpi: "مؤشرات الرؤية",       
+    lmskpi: "مؤشرات سوق عمل",       
+
     completionpercentage: "نسبة الإنجاز",
     budgetexpenditure: "الصرف من الميزانية",
     portfolio: "المحفظة",
@@ -1207,6 +1218,17 @@
     lmsobjectives: "LMS Objectives",
     newrequest: "New Request",
 
+    strategicinitiatives: "Strategic Initiatives",    
+    vroinitiatives: "VRO initiatives",       
+    lmsobjectives: "LMS Objectives",
+
+    strategickpi: "Strategic KPI",    
+    vrokpi: "Vision KPI",       
+    lmskpi: "LMS KPI",  
+
+    vroprojects: "LMS Projects",
+    epmoprojects: "EPMO Projects",
+    lmsprojects: "LMS Projects",
     //Resolution Status
     new: "New",
     inprogress: "In Progress",

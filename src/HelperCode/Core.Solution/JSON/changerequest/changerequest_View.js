@@ -53,71 +53,64 @@ window.Information_Form = [
 				// dontSubmit: true,
 				// display: "none",
 				customCr: true,
+				// dynamic: "parent", //main field that affect on other chiled field  
 				type: "dropdownValues",
 				options: {
 					choices: [
+						{ display: "strategicsbjectives", value: "strategicsbjectives" },
+						{ display: "visionobjectives", value: "visionobjectives" },
+						{ display: "lmsobjectives", value: "lmsobjectives" },
 
-						{
-							display: "projects", value: "Projects",
+						{ display: "vroprojects", value: "vroprojects" },
+						{ display: "epmoprojects", value: "epmorojects" },
+						{ display: "lmsprojects", value: "lmsrojects" },
 
-						},
-						///// For a
+						{ display: "strategicinitiatives", value: "strategicinitiatives" },						
+						{ display: "vroinitiatives", value: "vroinitiatives" },						
+						{ display: "lmsobjectives", value: "lmsobjectives" },	
 
-
-
-						//--------VRO CR Section -------------
-						{
-							display: "strategicobjectives", value: "SOs",
-
-						},
-
-						{
-							display: "initiatives", value: "Initiatives",
-
-						},
-
-						{
-							display: "kpi", value: "MainKPI",
-
-						},
-						//-----------End VRO ---------------------------
-
-						//--------LMS CR Section -------------
-						{
-							display: "strategicobjectives", value: "SOs",
-						},
-
-						{
-							display: "initiatives", value: "Initiatives",
-						},
-
-						{
-							display: "kpi", value: "MainKPI",
-						},
-						//-----------LMS VRO ---------------------------
-
-						//--------EPMO CR Section -------------
-						{
-							display: "strategicobjectives", value: "SOs",
-						},
-						{
-							display: "initiatives", value: "Initiatives",
-						},
-						{
-							display: "kpi", value: "MainKPI",
-						},
-						//-----------EPMO VRO ---------------------------
+						{ display: "strategickpi", value: "strategickpi" },						
+						{ display: "vrokpi", value: "vrokpi" },						
+						{ display: "lmskpi", value: "lmskpi" },	
 					],
 				},
 				toggleValues: [
 					{ value: "Projects", fields: ["ProjectCode", "projectsUpdateType"] }, //we can put more than 1  field
 					{ value: "Initiatives", fields: ["InitiativeCode", "initiativeUpdateType"] }, //we can put more than 1  field
+					//SOS
 					{
-						value: "SOs",
+						value: "StrategicObjectives",
 						fields: ["CRRelatedStrategyObjective", "strategicobjectivesUpdateType"],
 					}, //we can put more than 1  field
+					// {
+					// 	value: "VisionObjectives",
+					// 	fields: ["CRRelatedStrategyObjective", "strategicobjectivesUpdateType"],
+					// }, //we can put more than 1  field
+					// {
+					// 	value: "LMSObjectives",
+					// 	fields: ["CRRelatedStrategyObjective", "strategicobjectivesUpdateType"],
+					// }, //we can put more than 1  field
 					{ value: "MainKPI", fields: ["CRRelatedMainKpis", "mainkpiUpdateType"] }, //we can put more than 1  field
 				],
+			},
+			{
+				InternalName: "CRRelatedStrategyObjective",
+				DisplayNameEn: "Related Objective",
+				DisplayName: "الهدف  المرتبط ",
+				listKey: "sos",//hada al wizara  هدف الوزارة =
+				// ToggleName: "RelatedMainObjective",
+				// display: "none",
+				customCr: true,
+				// ToggleName: "CRRelatedStrategyObjective",
+				type: "lookup",
+				source: "SOs",
+				Dispfieldkey: "Name",
+				valfieldkey: "Title",
+				// dontSubmit: true,
+				// useAccessPolicy:true
+				// dynamic: 'moduleSelect',
+				// filterField: 'Types',
+				// filterFieldType: 'Text',
 			},
 			// {
 			// 	InternalName: "ProjectCode",
