@@ -1878,6 +1878,7 @@ window.ListingData = {
             case "dropdownValues":
               var data = mydata[i][IN[j]]
               if (data) {
+                
                 if (
                   localStorage.getItem("lng") == null ||
                   localStorage.getItem("lng") == "ar"
