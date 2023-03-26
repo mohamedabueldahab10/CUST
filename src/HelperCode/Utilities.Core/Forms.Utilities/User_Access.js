@@ -9,6 +9,7 @@ window.currentMainList = "";
 window.projectActualBudget = 0;
 window.initiativeActualBudget = 0;
 window.CurrentUserTasksCount = 0;
+//window.finishRenderAccessRole = false
 window.USERisProjectHome =
   window.location.href.toLowerCase().indexOf("/projecthome.aspx") > -1;
 window.USERisInitiativeHome =
@@ -229,8 +230,9 @@ window.userProjects = [];
 window.USERINID; // to get the initiative id
 
 window.activeCode = istherePCODE ? USERPCODE : isthereICODE ? UserICode : "";
-
-
+//
+window.tempRoleHierarchies = [];
+window.accessCallisDone = false;
 // added for CR module
 //! Change Request
 
@@ -6425,7 +6427,7 @@ var Access_Project_Info_Request = {
         User_isClosureStatus = oListItem.get_item("ClosureStatus") == "Failed" || oListItem.get_item("ClosureStatus") == "Cancelled" ? true : false;
         //////////
 
-        User_NotActiveStatus = (oListItem.get_item("WorkingStatus") != 'active' && oListItem.get_item("WorkingStatus") ) ? true : false;
+        User_NotActiveStatus = (oListItem.get_item("WorkingStatus") != 'active' && oListItem.get_item("WorkingStatus")) ? true : false;
 
         ProjectIsDraft = oListItem.get_item("DraftStatus") == 'draft' ? true : false;
 
@@ -9056,30 +9058,32 @@ var GetStrategicPartnershipTitle_Request = {
 };
 
 // data level access
-async function initiateDataLevelAccess (lookupList) {
+async function initiateDataLevelAccess(lookupList) {
+
   try {
+    debugger
     if (myRoleConfig[0].hasOwnProperty("dataFilter")) {
       isRoleDataLevelAccess = true;
       myRoleConfig[0].dataFilter.hierarchies.forEach((el, i, a) => {
 
-		let accessConditions = el.accessConditions;
-		let isListConditional1;
-		let isListConditional2;
-		let isListConditional3;
-		let isListConditional4;
-		if (!lookupList) {
-			isListConditional1 = el.listName == currentMainList;
-			isListConditional2 = el.subRelation.listName == currentMainList;
-			isListConditional3 =
-				el.subRelation.subRelation.listName == currentMainList;
-			isListConditional4 = (el.subRelation.subRelation.subRelation ? el.subRelation.subRelation.subRelation.listName == currentMainList : false);
-		} else {
-			isListConditional1 = el.listName == lookupList;
-			isListConditional2 = el.subRelation.listName == lookupList;
-			isListConditional3 =
-				el.subRelation.subRelation.listName == lookupList;
-			isListConditional4 = (el.subRelation.subRelation.subRelation ? el.subRelation.subRelation.subRelation.listName == lookupList : false);
-		}
+        let accessConditions = el.accessConditions;
+        let isListConditional1;
+        let isListConditional2;
+        let isListConditional3;
+        let isListConditional4;
+        if (!lookupList) {
+          isListConditional1 = el.listName == currentMainList;
+          isListConditional2 = el.subRelation.listName == currentMainList;
+          isListConditional3 =
+            el.subRelation.subRelation.listName == currentMainList;
+          isListConditional4 = (el.subRelation.subRelation.subRelation ? el.subRelation.subRelation.subRelation.listName == currentMainList : false);
+        } else {
+          isListConditional1 = el.listName == lookupList;
+          isListConditional2 = el.subRelation.listName == lookupList;
+          isListConditional3 =
+            el.subRelation.subRelation.listName == lookupList;
+          isListConditional4 = (el.subRelation.subRelation.subRelation ? el.subRelation.subRelation.subRelation.listName == lookupList : false);
+        }
         if (isListConditional1) {
           data_Level1_Access.buildCamlQuery(
             el.listName,
@@ -9218,6 +9222,9 @@ let data_Level1_Access = {
           SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
             data_Level1_Access.init(dataListName);
           });
+        }else {
+          tempRoleHierarchies=[]
+          accessCallisDone = true;
         }
         console.log("Data 1st level access query", queryBody);
       }
@@ -9354,10 +9361,19 @@ let data_Level1_Access = {
           dataLevelAccessQuery = queryBody;
         }
 
+
+
         if (data_Level1_Access.g.dataLevel > 2) {
           data_Level2_Access.init(listName);
+        }else {
+          tempRoleHierarchies=[]
+          accessCallisDone = true;
+
+          
         }
         console.log("Data 2nd level access query", queryBody);
+        // finishRenderAccessRole = true
+
       }
     });
   },
@@ -9491,7 +9507,12 @@ let data_Level2_Access = {
 
         if (data_Level1_Access.g.dataLevel > 3) {
           data_Level3_Access.init(listName);
+        }else {
+          tempRoleHierarchies=[]
+          accessCallisDone = true;
         }
+        console.log("Data3nd level access query", queryBody);
+
       } else {
         containBody += `<Or><Contains><FieldRef Name="${fieldToQuery}" /><Value Type="${fieldType}">${el}</Value></Contains>`
       }
@@ -9631,7 +9652,9 @@ let data_Level3_Access = {
           dataLevelAccessQuery = queryBody;
         }
 
-
+        tempRoleHierarchies=[]
+        accessCallisDone = true;
+        
         console.log("Data 4rd level access query", queryBody);
 
       }

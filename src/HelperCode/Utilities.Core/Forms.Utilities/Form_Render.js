@@ -109,8 +109,10 @@ if (isNew) {
 //calling relevant function
 var checkStatusHtml = setInterval(function () {
   if (isView) View_ListInfo.preinit();
-  else if (!isView) ListInfo.preinit();
-}, 777);
+  else if (!isView) {
+    ListInfo.preinit();
+  }
+}, 2000);
 //for edit and new forms
 window.ListInfo = {
   // Pre-initialization functions ensure scripts, SharePoint dependencies are loaded
@@ -156,6 +158,8 @@ window.ListInfo = {
     var workflowSetValues = [], dataWorkflowSetValues = "";
 
 
+
+
     asyncFor.seqProcess(
       Information_Form,
       function (item, index, resolve) {
@@ -199,6 +203,22 @@ window.ListInfo = {
           dataWorkflowSetValues = ""
         }
         //
+
+
+        /////////////////cr security
+
+
+        // var getdataDependsOnRoleSource = item.getdataDependsOnRoleSource ? item.getdataDependsOnRoleSource : []
+
+        // if (getdataDependsOnRoleSource && getdataDependsOnRoleSource != undefined) {
+        //   getdataDependsOnRoleSource.forEach(async function (el) {
+
+        //     await initiateDataLevelAccess(el)
+        //   })
+        // }
+
+
+        /////////////////
 
 
         toggleSectionName = item.togglename
@@ -549,7 +569,7 @@ window.ListInfo = {
 
           $('body').on('change', '.getsiblingdata', function (event) { // get sibling value based on oter value
 
-            debugger
+
 
             var siblingData = $(this).find(':selected').data('siblingvalue')
             var siblingTarget = $(this).data('siblingtarget')
@@ -572,7 +592,7 @@ window.ListInfo = {
           ////////////////////////////// calculate the end date based on start date and duration
 
           $("input.autoEndDate").keyup(function (event) {
-            // debugger
+            // 
             if (event.which >= 37 && event.which <= 40) return;
 
             $(this).val(function (index, value) {
@@ -654,7 +674,7 @@ window.ListInfo = {
           $("body").on("keyup", "input.weightfloatpercentage", function (event) { // change it to body to can invoke the listiner in master details
 
             // $("input.weightfloatpercentage").keyup(function (event) {
-            //   debugger
+            //   
             var isMasterDetails = $(this).parent().parent().hasClass("Details-Item")
             var parentValue = 0,
               targetElement = "",
@@ -720,7 +740,7 @@ window.ListInfo = {
           //////////////////////////////// make attachement required when change on radio yes
           var previuosTargetVal = "";
           $("input.yesnolistener").on("change", function (event) {
-            debugger
+
             var value = event.target.value;
 
             var targetElementRequired = $(this).data("targetfieldrequired");
@@ -893,10 +913,19 @@ window.ListInfo = {
           }
 
 
+          //get data depends on role
+          // $("body").on("change", ".getdataDependsOnRole", async function (event) {
+          //   
+          //   await initiateDataLevelAccess("SOs")
+
+          // })
+          // ///
+
+
 
           //////// apply grandFieldInvoke
           $(".grandFieldInvoke").on("change", function (event) {
-            debugger
+
 
 
 
@@ -1552,6 +1581,13 @@ window.ListInfo = {
     if (listkey == "goalstrategy") {
       ListInfo.g.requiredSpillarsName();
     }
+
+    
+
+    // if(element.useAccessPolicy){
+    //   await FunctionAsync(element.useAccessPolicyList)
+    // //  initiateDataLevelAccess(element.useAccessPolicyList)
+    // }
     // console.log('render', element.InternalName);
     var htmlBody = "";
     var groups = [],
@@ -1766,6 +1802,7 @@ window.ListInfo = {
     else {
       Errmsgkey = element.Errmsgkey;
     }
+
 
 
     switch (element.type) {
@@ -3514,6 +3551,16 @@ window.ListInfo = {
         break;
 
       case "dropdownValues":
+
+
+
+        // add listiner on change
+
+        let getdataDependsOnRole = element.hasOwnProperty("getdataDependsOnRole") == true
+          ? 'getdataDependsOnRole' : "";
+
+
+
         // added for CR module
         let customFilter = element.options.choices[0].hasOwnProperty(
           "customFilterValue"
@@ -3639,7 +3686,7 @@ window.ListInfo = {
             element.queryFieldType +
             '" data-filterfieldtype="' +
             element.filterFieldType +
-            '" class="form-control SPIField ' + grandFieldInvokeclass + '" id="' +
+            '" class="form-control SPIField ' + grandFieldInvokeclass + ' ' + getdataDependsOnRole + '" id="' +
             element.InternalName +
             '" ' +
             element.state +
@@ -5084,29 +5131,48 @@ window.ListInfo = {
         var customQuery;
         let roleAccess = []
 
+
         if (element.hasOwnProperty("useAccessPolicy") && element.useAccessPolicy) {
+
           if (myRoleConfig[0].hasOwnProperty("dataFilter")) {
             isRoleDataLevelAccess = true;
-            myRoleConfig[0].dataFilter.hierarchies.forEach((el, i, a) => {
+            // console.log("inside form render")
 
+            // var x = ["Projects"]
+
+            //  initiateDataLevelAccess("Projects")
+            //  var queryTest = ""
+            //  queryTest = await get_hierarchies.init()
+            await get_hierarchies.init(element.source)
+
+            // console.log(queryTest, "query queryquery")
+            // console.log(query, "After hirercies")
+
+            // customQuery = query
+            // if (queryTest) {
+            myRoleConfig[0].dataFilter.hierarchies.forEach((el, i, a) => {
+              
               let accessConditions = el.accessConditions;
               let isListConditional1 = el.listName == element.source;
               let isListConditional2 = el.subRelation.listName == element.source;
               let isListConditional3 =
                 el.subRelation.subRelation.listName == element.source;
               let isListConditional4 = (el.subRelation.subRelation.subRelation ? el.subRelation.subRelation.subRelation.listName == element.source : false);
-
               if (isListConditional1) {
-                customQuery=data_Level1_Access.g.dataLevelQuery
+                customQuery = data_Level1_Access.g.dataLevelQuery
               } else if (isListConditional2) {
-                customQuery=data_Level2_Access.g.dataLevelQuery
+                customQuery = data_Level2_Access.g.dataLevelQuery
               } else if (isListConditional3) {
-                customQuery=data_Level3_Access.g.dataLevelQuery
+                customQuery = data_Level3_Access.g.dataLevelQuery
               } else if (isListConditional4) {
-                customQuery=data_Level3_Access.g.dataLevelQuery
+                customQuery = data_Level3_Access.g.dataLevelQuery
 
               }
             })
+
+            
+            console.log(customQuery, "customQuery in lookup")
+            // }
           }
         }
         // filter data based on role access
@@ -5436,6 +5502,7 @@ window.ListInfo = {
           function (records, record, listItem, isDone) {
             if (listItem) itemsID.push(listItem.get_id());
             if (isDone) {
+
               records.forEach(function (el, index) {
                 // console.log(el[dispfieldkey].length,"Aaaaaaaaaaaaaaaaa")
                 if (el[dispfieldkey] && el[dispfieldkey].length > 100) {
@@ -6558,7 +6625,7 @@ window.ListInfo = {
       } else {
         var myValue = $this.val();
       }
-      debugger
+
       var mytype = $this,
         toggleValues =
           $this.data("togglevalues").indexOf(":::") > -1
@@ -8396,6 +8463,7 @@ var View_ListInfo = {
 
         case "dropdownValues":
 
+
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -9252,7 +9320,7 @@ dynamicAffectSelect = {
   // The main Initialization function
   init: function (affectedSelectsInfo) {
 
-    debugger
+
 
     var queryFieldValue = affectedSelectsInfo[0].queryFieldValue
       ? affectedSelectsInfo[0].queryFieldValue
@@ -9333,8 +9401,7 @@ dynamicAffectSelect = {
         <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`;
     }
 
-    console.log(Query, "Query")
-    debugger
+
 
     camlQuery.set_viewXml(Query);
 
@@ -9357,7 +9424,7 @@ dynamicAffectSelect = {
     let optionsBody = ""
 
 
-    debugger
+
 
 
     if (targetFieldType == 'multiselect') {
@@ -11625,3 +11692,47 @@ var GetCurrentStage_Info = {
   // Global variables
   g: {},
 };
+
+var get_hierarchies = {
+  init: async function (lookupList) {
+    accessCallisDone = false;
+    let isListConditional1
+    let isListConditional2
+    let isListConditional3
+    let isListConditional4
+
+    if (!tempRoleHierarchies.length) {
+      tempRoleHierarchies = Array.from(myRoleConfig[0].dataFilter.hierarchies);
+    } 
+    if(tempRoleHierarchies.length) {
+      isListConditional1 = tempRoleHierarchies[0].listName == lookupList;
+      isListConditional2 = tempRoleHierarchies[0].subRelation.listName == lookupList;
+      isListConditional3 =
+        tempRoleHierarchies[0].subRelation.subRelation.listName == lookupList;
+      isListConditional4 = (tempRoleHierarchies[0].subRelation.subRelation.subRelation ? tempRoleHierarchies[0].subRelation.subRelation.subRelation.listName == lookupList : false);
+    }
+    let allGood = isListConditional1 || isListConditional2 || isListConditional3 || isListConditional4;
+    if (allGood) {
+      tempRoleHierarchies.shift();
+      initiateDataLevelAccess(lookupList);
+    } else if (tempRoleHierarchies.length) {
+      tempRoleHierarchies.shift();
+      if (tempRoleHierarchies.length) {
+        get_hierarchies.init(lookupList);
+      }else{
+        accessCallisDone = true
+      }
+    } else {
+      accessCallisDone = true
+    }
+    await waitUntil(() => accessCallisDone === true);
+  }
+
+
+}
+
+async function waitUntil(condition, time = 500) {
+  while (!condition()) {
+    await new Promise((resolve) => setTimeout(resolve, time));
+  }
+}

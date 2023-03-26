@@ -12,19 +12,21 @@ window.Information_Form = [
 				DisplayNameEn: "Select Type",
 				DisplayName: "اختر النوع",
 				validation: "required",
-				// dontSubmit: true,
-				// display: "none",
 				customCr: true,
-				// dynamic: "parent", //main field that affect on other chiled field  
+				getdataDependsOnRole: true,
+				// getdataDependsOnRoleSource:["SOs","MainKPI","Projects"],
+				getdataDependsOnRoleSource: ["Projects"],
 				type: "dropdownValues",
 				options: {
 					choices: [
-						{ display: "strategicobjectives", value: "StrategicObjectives" },
-						{ display: "VisionObjectives", value: "VisionObjectives" },
+						{
+							display: "strategicobjectives", value: "StrategicObjectives", roles: ['Administrator', 'SPMAdmin'],
+						},
+						{ display: "VisionObjectives", value: "VisionObjectives", roles: ['Administrator', 'VROP'] },
 						{ display: "LMSObjectives", value: "LMSObjectives" },
 
 						{ display: "projects", value: "Projects" },
-						{ display: "initiatives", value: "Initiatives" },						
+						{ display: "initiatives", value: "Initiatives" },
 						{ display: "kpi", value: "MainKPI" },
 					],
 				},
@@ -36,14 +38,10 @@ window.Information_Form = [
 						value: "StrategicObjectives",
 						fields: ["CRRelatedStrategyObjective", "strategicobjectivesUpdateType"],
 					}, //we can put more than 1  field
-					// {
-					// 	value: "VisionObjectives",
-					// 	fields: ["CRRelatedStrategyObjective", "strategicobjectivesUpdateType"],
-					// }, //we can put more than 1  field
-					// {
-					// 	value: "LMSObjectives",
-					// 	fields: ["CRRelatedStrategyObjective", "strategicobjectivesUpdateType"],
-					// }, //we can put more than 1  field
+					{
+						value: "VisionObjectives",
+						fields: ["CRRelatedStrategyObjective", "strategicobjectivesUpdateType"],
+					}, //we can put more than 1  field
 					{ value: "MainKPI", fields: ["CRRelatedMainKpis", "mainkpiUpdateType"] }, //we can put more than 1  field
 				],
 			},
@@ -59,6 +57,7 @@ window.Information_Form = [
 				source: "Projects",
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
+				useAccessPolicy: true
 			},
 			{
 				InternalName: "UpdateType",
@@ -243,6 +242,7 @@ window.Information_Form = [
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
 				validation: "required",
+				useAccessPolicy:true
 			},
 			{
 				InternalName: "UpdateType",
@@ -274,7 +274,6 @@ window.Information_Form = [
 				DisplayNameEn: "Related Objective",
 				DisplayName: "الهدف  المرتبط ",
 				listKey: "sos",//hada al wizara  هدف الوزارة =
-				// ToggleName: "RelatedMainObjective",
 				display: "none",
 				customCr: true,
 				ToggleName: "CRRelatedStrategyObjective",
@@ -283,7 +282,8 @@ window.Information_Form = [
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
 				dontSubmit: true,
-				useAccessPolicy:true
+				useAccessPolicy: true,
+				// useAccessPolicyList :'SOs'
 				// dynamic: 'moduleSelect',
 				// filterField: 'Types',
 				// filterFieldType: 'Text',
@@ -310,13 +310,14 @@ window.Information_Form = [
 
 							],
 						},
-					{ display: "deletion", value: "delete",
-						otherFields: [
-							{ fieldName: 'WFModuleCode', value: 'MSCRObjective' },
-							{ fieldName: 'WFStage', value: 'MSCRObjective01' },
-							// { fieldName: 'DraftStatus', value: 'draft' },
-					 	 ],
-					}
+						{
+							display: "deletion", value: "delete",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'MSCRObjective' },
+								{ fieldName: 'WFStage', value: 'MSCRObjective01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
+						}
 					],
 				},
 			},
@@ -333,6 +334,8 @@ window.Information_Form = [
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
 				dontSubmit: true,
+				useAccessPolicy: true
+
 			},
 			{
 				InternalName: "UpdateType",

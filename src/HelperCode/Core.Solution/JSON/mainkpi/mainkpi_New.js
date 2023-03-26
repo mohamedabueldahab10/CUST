@@ -77,7 +77,7 @@ var Information_Form = [
         dynamic: "KPIType", //InternalName Of Parent field
         filterField: "Types",//InternalName Of Parent field
         filterFieldType: "Choice",
-        useAccessPolicy:true,
+        // useAccessPolicy:true, // bachar work he add userAccessPolicy
         ///
         ///
         // display: 'none',
