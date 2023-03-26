@@ -8,44 +8,6 @@ window.Information_Form = [
 		descriptionEn: "Details",
 		subFields: [
 			{
-				InternalName: "Title",
-				DisplayName: "الرمز",
-				type: "string",
-				validation: "required",
-			},
-			{
-				InternalName: "Requester",
-				DisplayName: "مقدم الطلب",
-				DisplayNameEn: "Requester",
-				type: "picker",
-				validation: "required",
-			},
-			{
-				InternalName: "Level",
-				DisplayName: "مستوى الاعتماد",
-				DisplayNameEn: "Level",
-				type: "string",
-				validation: "required",
-			},
-			{
-				InternalName: "Description",
-				DisplayName: "وصف التغيير",
-				DisplayNameEn: "Description",
-				type: "multiline",
-				maxchar: 5000,
-				validation: "required",
-			},
-			{
-				InternalName: "ChangeJustifications0",
-				DisplayName: "مبررات التغيير",
-				DisplayNameEn: "Change Justifications",
-				type: "multiline",
-				maxchar: 5000,
-				validation: "required",
-			},
-
-			//////////////////////////////////////////////////////////////////////added for cr wf
-			{
 				InternalName: "moduleSelect",
 				DisplayNameEn: "Select Type",
 				DisplayName: "اختر النوع",
@@ -79,52 +41,205 @@ window.Information_Form = [
 					{ value: "Initiatives", fields: ["InitiativeCode", "initiativeUpdateType"] }, //we can put more than 1  field
 					//SOS
 					{
-						value: "StrategicObjectives",
+						value: "strategicsbjectives",
 						fields: ["CRRelatedStrategyObjective", "strategicobjectivesUpdateType"],
 					}, //we can put more than 1  field
-					// {
-					// 	value: "VisionObjectives",
-					// 	fields: ["CRRelatedStrategyObjective", "strategicobjectivesUpdateType"],
-					// }, //we can put more than 1  field
-					// {
-					// 	value: "LMSObjectives",
-					// 	fields: ["CRRelatedStrategyObjective", "strategicobjectivesUpdateType"],
-					// }, //we can put more than 1  field
+					{
+						value: "visionobjectives",
+						fields: ["CRRelatedStrategyObjective", "visionobjectivesstrategicobjectivesUpdateType"],
+					}, //we can put more than 1  field
+					{
+						value: "lmsobjectives",
+						fields: ["CRRelatedStrategyObjective", "lmsobjectivesstrategicobjectivesUpdateType"],
+					}, //we can put more than 1  field
+
+					//	-----SOS----
+
 					{ value: "MainKPI", fields: ["CRRelatedMainKpis", "mainkpiUpdateType"] }, //we can put more than 1  field
 				],
 			},
 			{
-				InternalName: "CRRelatedStrategyObjective",
-				DisplayNameEn: "Related Objective",
-				DisplayName: "الهدف  المرتبط ",
-				listKey: "sos",//hada al wizara  هدف الوزارة =
-				// ToggleName: "RelatedMainObjective",
-				// display: "none",
-				customCr: true,
-				// ToggleName: "CRRelatedStrategyObjective",
+				InternalName: "ProjectCode",
+				DisplayNameEn: "Related Project",
+				DisplayName: "المشروع المرتبط",
+				display: "none",
 				type: "lookup",
-				source: "SOs",
+				listKey: "projects",
+				ToggleName: "ProjectCode",
+				customCr: true,
+				source: "Projects",
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
-				// dontSubmit: true,
-				// useAccessPolicy:true
-				// dynamic: 'moduleSelect',
-				// filterField: 'Types',
-				// filterFieldType: 'Text',
 			},
-			// {
-			// 	InternalName: "ProjectCode",
-			// 	DisplayNameEn: "Related Project",
-			// 	DisplayName: "المشروع المرتبط",
-			// 	display: "none",
-			// 	type: "lookup",
-			// 	listKey: "projects",
-			// 	ToggleName: "ProjectCode",
-			// 	customCr: true,
-			// 	source: "Projects",
-			// 	Dispfieldkey: "Name",
-			// 	valfieldkey: "Title",
-			// },
+			{
+				InternalName: "UpdateType",
+				DisplayName: "نوع طلب التغيير",
+				DisplayNameEn: "Change Request Type",
+				display: "none",
+				customCr: true,
+				ToggleName: "projectsUpdateType",
+				type: "dropdownValues",
+				options: {
+					choices: [
+						{
+							display: "baseline",
+							value: "manual",
+							//
+							fields: [
+								{
+									listName: "Projects",
+									label: "المشروع",
+									labelEn: "Project",
+									description: "",
+									descriptionEn: "",
+									//
+									InternalName: "Baseline",
+									DisplayName: "خط الأساس",
+									DisplayNameEn: "Baseline",
+									type: "datetime",
+								},
+
+							],
+						},
+						{
+							display: "performanceindicators",
+							value: "automatic",
+							fields: [
+								{
+									listName: "ProjectsGoalsAndKPIs",
+									label: "بيانات هدف المشروع ",
+									labelEn: "Goal  Data",
+									description: "التفاصيل",
+									descriptionEn: "Details",
+									//
+									InternalName: "ProjectKPI",
+									DisplayNameEn: "Project KPI",
+									DisplayName: "مؤشر المشروع ",
+									type: "lookup",
+									source: "MainKPI",
+									Dispfieldkey: "Name",
+									valfieldkey: "Title",
+									validation: "required",
+								},
+							],
+						},
+						// { display: "stakeholders", value: "automatic" },
+						{
+							display: "budget",
+							value: "manual",
+							fields: [
+								{
+									listName: "",
+									label: "طلب تغيير الميزانية",
+									labelEn: "Budget Change Request",
+									description: "التفاصيل",
+									descriptionEn: "Details",
+									//
+									InternalName: "",
+									DisplayName: "تفاصيل طلب التغيير",
+									DisplayNameEn: "Change Request Details",
+									type: "multiline",
+								},
+							],
+						},
+						{ display: "projectseparation", value: "automatic" },
+						{
+							display: "projecthold",
+							value: "automatic",
+							fields: [
+								{
+									InternalName: "Status",
+									DisplayName: "حالة المشروع",
+									DisplayNameEn: "Project Status",
+									type: "dropdownValues",
+									validation: "required",
+									options: {
+										choices: [{ value: "cancelled", display: "cancelled" }],
+									},
+								},
+							],
+						},
+						{
+							display: "pattr40",
+							value: "automatic",
+							fields: [
+								{
+									listName: "Projects",
+									label: "المشروع",
+									labelEn: "Project",
+									description: "",
+									descriptionEn: "",
+									InternalName: "PlannedStartDate",
+									DisplayName: "تاريخ بداية المشروع المخطط",
+									DisplayNameEn: "Expected Start Date ",
+									type: "datetime",
+									max: "PlannedFinishDate",
+								},
+								{
+									listName: "Projects",
+									label: "المشروع",
+									labelEn: "Project",
+									description: "",
+									descriptionEn: "",
+									InternalName: "PlannedFinishDate",
+									DisplayName: " تاريخ الانتهاء المخطط",
+									DisplayNameEn: "Expected End Date ",
+									type: "datetime",
+									min: "PlannedStartDate",
+								},
+							],
+						},
+						{
+							display: "range",
+							value: "automatic",
+							fields: [
+								{
+									listName: "Projects",
+									label: "المشروع",
+									labelEn: "Project",
+									description: "",
+									descriptionEn: "",
+									InternalName: "ScopeOfWork",
+									DisplayName: "نطاق العمل",
+									DisplayNameEn: "ScopeOfWork",
+									type: "multiline",
+									validation: "required",
+									maxchar: 5000,
+								},
+							],
+						},
+						{
+							display: "contract",
+							value: "manual",
+							fields: [
+								{
+									listName: "",
+									InternalName: "",
+									DisplayName: "تفاصيل طلب التغيير",
+									DisplayNameEn: "Change Request Details",
+									type: "multiline",
+								},
+							],
+						},
+						{ display: "implementationconsultant", value: "automatic" },
+						{
+							display: "others",
+							value: "manual",
+							fields: [
+								{
+									listName: "",
+									InternalName: "",
+									DisplayName: "تفاصيل طلب التغيير",
+									DisplayNameEn: "Change Request Details",
+									type: "multiline",
+								},
+							],
+						},
+						{ display: "deletion", value: "delete" }
+					],
+				},
+			},
+
 			{
 				InternalName: "InitiativeCode",
 				DisplayName: " المبادرة المرتبطة",
@@ -140,9 +255,219 @@ window.Information_Form = [
 				valfieldkey: "Title",
 				validation: "required",
 			},
-			
-		
-			/////////////////////////////////////////////////////////////////////////////////////////////////////////// end added for cr wf
+			{
+				InternalName: "UpdateType",
+				DisplayName: "نوع طلب التغيير",
+				DisplayNameEn: "Change Request Type",
+				display: "none",
+				customCr: true,
+				ToggleName: "initiativeUpdateType",
+				type: "dropdownValues",
+				options: {
+					choices: [
+						{
+							display: "generalchange",
+							value: "automatic",
+							//
+							fields: [
+								{
+									InternalName: "getall",
+								},
+
+							],
+						},
+						{ display: "deletion", value: "delete" }
+					],
+				},
+			},
+			{
+				//startegy
+				InternalName: "CRRelatedStrategyObjective",
+				DisplayNameEn: "Related Objective",
+				DisplayName: "الهدف  المرتبط ",
+				listKey: "sos",//hada al wizara  هدف الوزارة =
+				// ToggleName: "RelatedMainObjective",
+				display: "none",
+				customCr: true,
+				ToggleName: "CRRelatedStrategyObjective",
+				type: "lookup",
+				source: "SOs",
+				Dispfieldkey: "Name",
+				valfieldkey: "Title",
+				dontSubmit: true,
+				useAccessPolicy:true
+				// dynamic: 'moduleSelect',
+				// filterField: 'Types',
+				// filterFieldType: 'Text',
+			},
+
+			{
+				//StrategicObjectives
+				InternalName: "UpdateType",
+				DisplayName: "نوع طلب التغيير",
+				DisplayNameEn: "Change Request Type",
+				display: "none",
+				customCr: true,
+				ToggleName: "strategicobjectivesUpdateType",
+				type: "dropdownValues",
+				options: {
+					choices: [
+						{
+							display: "generalchange",
+							value: "automatic",
+							//
+							fields: [
+								{
+									InternalName: "getall",
+								},
+
+							],
+						},
+					{ display: "deletion", value: "delete",
+						otherFields: [
+							{ fieldName: 'WFModuleCode', value: 'MSCRDeleteObjective' },
+							{ fieldName: 'WFStage', value: 'MSCRDeleteObjective01' },
+							// { fieldName: 'DraftStatus', value: 'draft' },
+					 	 ],
+					}
+					],
+				},
+			},
+			{
+				//Vision Objective
+				InternalName: "UpdateType",
+				DisplayName: "نوع طلب التغيير",
+				DisplayNameEn: "Change Request Type",
+				display: "none",
+				customCr: true,
+				ToggleName: "visionobjectivesstrategicobjectivesUpdateType",
+				type: "dropdownValues",
+				options: {
+					choices: [
+						{
+							display: "generalchange",
+							value: "automatic",
+							//
+							fields: [
+								{
+									InternalName: "getall",
+								},
+
+							],
+						},
+					{ display: "deletion", value: "delete",
+						otherFields: [
+							{ fieldName: 'WFModuleCode', value: 'VROCRDeleteObjective' },
+							{ fieldName: 'WFStage', value: 'VROCRDeleteObjective01' },
+							// { fieldName: 'DraftStatus', value: 'draft' },
+					 	 ],
+					}
+					],
+				},
+			},
+			{
+				//Vision Objective
+				InternalName: "UpdateType",
+				DisplayName: "نوع طلب التغيير",
+				DisplayNameEn: "Change Request Type",
+				display: "none",
+				customCr: true,
+				ToggleName: "lmsobjectivesstrategicobjectivesUpdateType",
+				type: "dropdownValues",
+				options: {
+					choices: [
+						{
+							display: "generalchange",
+							value: "automatic",
+							//
+							fields: [
+								{
+									InternalName: "getall",
+								},
+
+							],
+						},
+					{ display: "deletion", value: "delete",
+						otherFields: [
+							{ fieldName: 'WFModuleCode', value: 'LMSCRDeletedObjective' },
+							{ fieldName: 'WFStage', value: 'LMSCRDeletedObjective01' },
+							// { fieldName: 'DraftStatus', value: 'draft' },
+					 	 ],
+					}
+					],
+				},
+			},
+			{
+				InternalName: "CRRelatedMainKpis",
+				DisplayNameEn: "Related KPI",
+				DisplayName: "المؤشر المرتبط",
+				listKey: "mainkpi",
+				display: "none",
+				customCr: true,
+				ToggleName: "CRRelatedMainKpis",
+				type: "lookup",
+				source: "MainKPI",
+				Dispfieldkey: "Name",
+				valfieldkey: "Title",
+				dontSubmit: true,
+			},
+			{
+				InternalName: "UpdateType",
+				DisplayName: "نوع طلب التغيير",
+				DisplayNameEn: "Change Request Type",
+				display: "none",
+				customCr: true,
+				ToggleName: "mainkpiUpdateType",
+				type: "dropdownValues",
+				options: {
+					choices: [
+						{
+							display: "generalchange",
+							value: "automatic",
+							//
+							fields: [
+								{
+									InternalName: "getall",
+								},
+
+							],
+						},
+						{ display: "deletion", value: "delete" }
+					],
+				},
+			},
+			{
+				InternalName: "Requester",
+				DisplayName: "مقدم الطلب",
+				DisplayNameEn: "Requester",
+				type: "picker",
+				validation: "required",
+			},
+			{
+				InternalName: "Level",
+				DisplayName: "مستوى الاعتماد",
+				DisplayNameEn: "Level",
+				type: "string",
+				validation: "required",
+			},
+			{
+				InternalName: "Description",
+				DisplayName: "وصف التغيير",
+				DisplayNameEn: "Description",
+				type: "multiline",
+				maxchar: 5000,
+				validation: "required",
+			},
+			{
+				InternalName: "ChangeJustifications0",
+				DisplayName: "مبررات التغيير",
+				DisplayNameEn: "Change Justifications",
+				type: "multiline",
+				maxchar: 5000,
+				validation: "required",
+			},
+			//
+
 			// {
 			// 	InternalName: "RequestDate",
 			// 	DisplayName: "تاريخ الطلب",
@@ -162,35 +487,36 @@ window.Information_Form = [
 			// 		],
 			// 	},
 			// },
-			// {
-			// 	InternalName: "Types",
-			// 	DisplayName: "نوع التغيير",
-			// 	DisplayNameEn: "Types",
-			// 	validation: "required",
-			// 	type: "dropdownValues",
-			// 	options: {
-			// 		choices: [
-			// 			{ display: "baseline", value: "baseline" },
-			// 			{
-			// 				display: "performanceindicators",
-			// 				value: "performanceindicators",
-			// 			},
-			// 			{ display: "stakeholders", value: "stakeholders" },
-			// 			{ display: "budget", value: "budget" },
-			// 			{ display: "projectseparation", value: "projectseparation" },
-			// 			{ display: "projectstatus", value: "projectstatus" },
-			// 			{ display: "durationoftheproject", value: "durationoftheproject" },
-			// 			{ display: "range", value: "range" },
-			// 			{ display: "contract", value: "contract" },
-			// 			{
-			// 				display: "implementationconsultant",
-			// 				value: "implementationconsultant",
-			// 			},
-			// 			{ display: "projectintegration", value: "projectintegration" },
-			// 			{ display: "others", value: "others" },
-			// 		],
-			// 	},
-			// },
+
+			// // {
+			// // 	InternalName: "Types",
+			// // 	DisplayName: "نوع التغيير",
+			// // 	DisplayNameEn: "Types",
+			// // 	validation: "required",
+			// // 	type: "dropdownValues",
+			// // 	options: {
+			// // 		choices: [
+			// // 			{ display: "baseline", value: "baseline" },
+			// // 			{
+			// // 				display: "performanceindicators",
+			// // 				value: "performanceindicators",
+			// // 			},
+			// // 			{ display: "stakeholders", value: "stakeholders" },
+			// // 			{ display: "budget", value: "budget" },
+			// // 			{ display: "projectseparation", value: "projectseparation" },
+			// // 			{ display: "projectstatus", value: "projectstatus" },
+			// // 			{ display: "durationoftheproject", value: "durationoftheproject" },
+			// // 			{ display: "range", value: "range" },
+			// // 			{ display: "contract", value: "contract" },
+			// // 			{
+			// // 				display: "implementationconsultant",
+			// // 				value: "implementationconsultant",
+			// // 			},
+			// // 			{ display: "projectintegration", value: "projectintegration" },
+			// // 			{ display: "others", value: "others" },
+			// // 		],
+			// // 	},
+			// // },
 
 			// {
 			// 	InternalName: "ImpactOftheChange",
@@ -403,16 +729,454 @@ window.Information_Form = [
 			// },
 		],
 	},
+	{
+		label: "بيانات طلب اضافة",
+		labelEn: "Add Request Data",
+		description: "التفاصيل",
+		descriptionEn: "Details",
+		subFields: [
+			{
+				// InternalName: 'Title',
+				DisplayNameEn: 'Create Project',
+				DisplayName: 'اضافة مشروع',
+				type: 'anchor',
+				href: "/SitePages/new.aspx?ListKey=projects"
+			},
+			{
+				// InternalName: 'Title',
+				DisplayNameEn: 'Create Initiative',
+				DisplayName: 'اضافة مبادرة',
+				type: 'anchor',
+				href: "/SitePages/new.aspx?ListKey=initiatives"
+			},
+			{
+				// InternalName: 'Title',
+				DisplayNameEn: 'Create Strategic objective',
+				DisplayName: 'اضافة هدف استراتيجي',
+				type: 'anchor',
+				href: "/SitePages/new.aspx?ListKey=sos"
+			},
+			{
+				// InternalName: 'Title',
+				DisplayNameEn: 'Create KPI',
+				DisplayName: 'اضافة مؤشر',
+				type: 'anchor',
+				href: "/SitePages/new.aspx?ListKey=mainkpi"
+			},
+		]
+	}
 	// {
-	//     label: 'المرفقات',
-	//     labelEn: 'Attachments',
-	//     description: "",
-	//     descriptionEn: "",
-	//     subFields: [{
-	//         "InternalName": "getfile",
-	//         "DisplayName": "المرفقات",
-	//         "DisplayNameEn": "Attachments",
-	//         "type": "file"
-	//     }]
-	// }
+	// 	label: 'الدراسات الخاصة بطلب التغيير ',
+	// 	labelEn: 'Change Requests Studies',
+	// 	description: "التفاصيل",
+	// 	descriptionEn: "Details",
+	// 	sectiontype: "master",
+	// 	layout:"table",targetlist: "ChangeRequestsStudies",
+	// 	subFields: [
+	// 		// {
+	// 		//     "InternalName": "Title",
+	// 		//     "DisplayName":"الرمز",
+	// 		//     "type":"string"
+	// 		// },
+	// 		{
+	// 			"InternalName": "CannotQuickTrack",
+	// 			"DisplayName": "لا يمكن عمل مسار سريع",
+	// 			"DisplayNameEn": "Cannot Quick Track",
+	// 			"type": "yesnoradio",
+	// 			      options: {
+	// 				choices: [
+	// 					{ display: 'yes', value: 'yes' },
+	// 					{ display: 'no', value: 'no' }
+	// 				]
+	// 			}
+
+	// 		},
+	// 		{
+	// 			"InternalName": "CannotDecreaseDuration",
+	// 			"DisplayName": "لا يمكن تقليل مدة الكراسة",
+	// 			"DisplayNameEn": "Cannot Decrease Duration",
+	// 			"type": "yesnoradio",
+	// 			      options: {
+	// 				choices: [
+	// 					{ display: 'yes', value: 'yes' },
+	// 					{ display: 'no', value: 'no' }
+	// 				]
+	// 			}
+
+	// 		},
+	// 		{
+	// 			"InternalName": "CannotReschedule",
+	// 			"DisplayName": "لا يمكن إعادة جدولت التسليمات الرئيسية",
+	// 			"DisplayNameEn": "Cannot Reschedule",
+	// 			"type": "yesnoradio",
+	// 			      options: {
+	// 				choices: [
+	// 					{ display: 'yes', value: 'yes' },
+	// 					{ display: 'no', value: 'no' }
+	// 				]
+	// 			}
+
+	// 		},
+	// 		{
+	// 			"InternalName": "CannotDecreaseTasksDuration",
+	// 			"DisplayName": "لا يمكن تقليل مدة المهام في المسار الحرج",
+	// 			"DisplayNameEn": "Cannot Decrease Tasks Duration",
+	// 			"type": "yesnoradio",
+	// 			      options: {
+	// 				choices: [
+	// 					{ display: 'yes', value: 'yes' },
+	// 					{ display: 'no', value: 'no' }
+	// 				]
+	// 			}
+
+	// 		},
+	// 		{
+	// 			"InternalName": "Others",
+	// 			"DisplayName": "أخرى",
+	// 			"DisplayNameEn": "Others",
+	// 			"type": "string",
+	// 		},
+
+	// 		// {
+	// 		//     "InternalName": "RelatedCR",
+	// 		//     "DisplayName": "طلب التغيير المرتبط",
+	// 		//     "DisplayNameEn": "Related CR",
+	// 		//     "type": "lookup",
+	// 		//     "source": "ChangeRequest",
+	// 		//     "Dispfieldkey": "Title",
+	// 		//     "valfieldkey": "Title"
+	// 		// },
+	// 	],
+	// },
+	// {
+	// 	label: 'بيان اثار التغيير المطلوب',
+	// 	labelEn: 'Change Requests Impacts',
+	// 	description: "التفاصيل",
+	// 	descriptionEn: "Details",
+	// 	sectiontype: "master",
+	// 	layout:"table",targetlist: "ChangeRequestsImpacts",
+	// 	subFields: [
+	// 		// {
+	// 		//     "InternalName": "Title",
+	// 		//     "DisplayName":"الرمز",
+	// 		//     "type":"string"
+	// 		// },
+	// 		{
+	// 			"InternalName": "ElementsAffectedByChange",
+	// 			"DisplayName": "العناصر المتأثرة بالتغيير",
+	// 			"DisplayNameEn": "Elements Affected By Change",
+	// 			"type": "dropdownValues",
+	// 			      options: {
+	// 				choices: [
+	// 					{ display: 'yes', value: 'yes' },
+	// 					{ display: 'no', value: 'no' }
+	// 				]
+	// 			}
+
+	// 		},
+	// 		{
+	// 			"InternalName": "Total",
+	// 			"DisplayName": "إجمالي الزيادة/ الانخفاض",
+	// 			"DisplayNameEn": "Total",
+	// 			"type": "float",
+
+
+	// 		},
+	// 		{
+	// 			"InternalName": "Baseline",
+	// 			"DisplayName": "خط الأساس",
+	// 			"DisplayNameEn": "Baseline",
+	// 			"type": "datetime"
+
+	// 		},
+	// 		{
+	// 			"InternalName": "CurrentDate",
+	// 			"DisplayName": "الحالي",
+	// 			"DisplayNameEn": "Current Date",
+	// 			"type": "datetime"
+
+	// 		},
+	// 		{
+	// 			"InternalName": "NewDate",
+	// 			"DisplayName": "الجديد",
+	// 			"DisplayNameEn": "New Date",
+	// 			"type": "datetime"
+
+	// 		},
+
+
+	// 		// {
+	// 		//     "InternalName": "RelatedCR",
+	// 		//     "DisplayName": "طلب التغيير المرتبط",
+	// 		//     "DisplayNameEn": "Related CR",
+	// 		//     "type": "lookup",
+	// 		//     "source": "ChangeRequest",
+	// 		//     "Dispfieldkey": "Title",
+	// 		//     "valfieldkey": "Title"
+	// 		// },
+	// 	],
+	// },
+	// {
+	// 	label: '	التسليمات أو المعالم المتأثرة بالتغيير',
+	// 	labelEn: 'Impacted Milestones',
+	// 	description: "التفاصيل",
+	// 	descriptionEn: "Details",
+	// 	sectiontype: "master",
+	// 	layout:"table",targetlist: "ImpactedMilestones",
+	// 	subFields: [
+	// 		// {
+	// 		//     "InternalName": "Title",
+	// 		//     "DisplayName":"الرمز",
+	// 		//     "type":"string"
+	// 		// },
+	// 		{
+	// 			"InternalName": "Name",
+	// 			"DisplayName": "اسم التسليمة أو المعلم",
+	// 			"DisplayNameEn": "Name",
+	// 			"type": "string",
+
+
+	// 		},
+
+	// 		{
+	// 			"InternalName": "StartDate",
+	// 			"DisplayName": "تاريخ البدء الحالي",
+	// 			"DisplayNameEn": "Start Date",
+	// 			"type": "datetime"
+
+	// 		},
+	// 		{
+	// 			"InternalName": "NewStartDate",
+	// 			"DisplayName": "تاريخ البدء الجديد",
+	// 			"DisplayNameEn": "New Start Date",
+	// 			"type": "datetime"
+
+	// 		},
+	// 		{
+	// 			"InternalName": "FinishDate",
+	// 			"DisplayName": "تاريخ الانتهاء الحالي",
+	// 			"DisplayNameEn": "Finish Date",
+	// 			"type": "datetime"
+
+	// 		},
+	// 		{
+	// 			"InternalName": "NewFinishDate",
+	// 			"DisplayName": "تاريخ الانتهاء الجديد",
+	// 			"DisplayNameEn": "New Finish Date",
+	// 			"type": "datetime"
+
+	// 		},
+
+
+	// 		// {
+	// 		//     "InternalName": "RelatedCR",
+	// 		//     "DisplayName": "طلب التغيير المرتبط",
+	// 		//     "DisplayNameEn": "Related CR",
+	// 		//     "type": "lookup",
+	// 		//     "source": "ChangeRequest",
+	// 		//     "Dispfieldkey": "Title",
+	// 		//     "valfieldkey": "Title"
+	// 		// },
+	// 	],
+	// },
+	// {
+	// 	label: 'جدول الكميات',
+	// 	labelEn: 'Quantities Table',
+	// 	description: "التفاصيل",
+	// 	descriptionEn: "Details",
+	// 	sectiontype: "master",
+	// 	layout:"table",targetlist: "QuantitiesTable",
+	// 	subFields: [
+	// 		// {
+	// 		//     "InternalName": "Title",
+	// 		//     "DisplayName":"الرمز",
+	// 		//     "type":"string"
+	// 		// },
+	// 		{
+	// 			"InternalName": "Name",
+	// 			"DisplayName": "اسم المخرج الحالي حسب جدول الكميات",
+	// 			"DisplayNameEn": "Name",
+	// 			"type": "string",
+
+
+	// 		},
+	// 		{
+	// 			"InternalName": "NewName",
+	// 			"DisplayName": "اسم المخرج الجديد",
+	// 			"DisplayNameEn": "New Name",
+	// 			"type": "string",
+
+
+	// 		},
+	// 		{
+	// 			"InternalName": "Number",
+	// 			"DisplayName": "العدد",
+	// 			"DisplayNameEn": "Number",
+	// 			"type": "float",
+
+
+	// 		},
+	// 		{
+	// 			"InternalName": "ResultType",
+	// 			"DisplayName": "الوحدة",
+	// 			"DisplayNameEn": "Result Type",
+	// 			"type": "float",
+
+
+	// 		},
+	// 		{
+	// 			"InternalName": "Cost",
+	// 			"DisplayName": "تكلفة المخرج",
+	// 			"DisplayNameEn": "Cost",
+	// 			"type": "float",
+
+
+	// 		},
+	// 		{
+	// 			InternalName: "IsUniqueOutput",
+	// 			DisplayNameEn: "Is Unique Output",
+	// 			DisplayName: "هل المخرج له مثيل",
+	// 			type: "dropdownValues",
+	// 			// validation: "required",
+	// 			options: {
+	// 			  choices: [
+	// 				{ display: "yes", value: "yes" },
+	// 				{ display: "no", value: "no" },
+	// 				{ display: "noneed", value: "noneed" },
+	// 			  ],
+	// 			},
+	// 		  },
+	// 		  {
+	// 			"InternalName": "CurrentCost",
+	// 			"DisplayName": "التكلفة الاجمالية الحالية",
+	// 			"DisplayNameEn": "Current Cost",
+	// 			"type": "float",
+
+
+	// 		},
+	// 		  {
+	// 			"InternalName": "NewCost",
+	// 			"DisplayName": "التكلفة الاجمالية الجديدة",
+	// 			"DisplayNameEn": "New Cost",
+	// 			"type": "float",
+
+
+	// 		},
+
+
+
+	// 	],
+	// },
+
+	// {
+	// 	label: "المخاطر ذات العلاقة ",
+	// 	labelEn: "Risk Data",
+	// 	description: "التفاصيل",
+	// 	descriptionEn: "Details",
+	// 	sectiontype: "master",
+	// 	layout:"table",targetlist: "Risks",
+	// 	subFields: [
+	// 		// {
+	// 		//     "InternalName": "Title",
+	// 		//     "DisplayName":"رمز الخطر",
+	// 		//     "type":"string",
+	// 		//     "validation": "required"
+	// 		// },
+	// 		{
+	// 			InternalName: "Name",
+	// 			DisplayName: "اسم الخطر",
+	// 			DisplayNameEn: "Risk Name",
+	// 			type: "string",
+	// 			validation: "required",
+	// 		},
+	// 		{
+	// 			InternalName: "ResolutionPlan",
+	// 			DisplayName: "خطة التعامل مع الخطر",
+	// 			DisplayNameEn: "Resolution Plan",
+	// 			type: "multiline",
+	// 			maxchar: 5000,
+	// 		},
+
+	// 		{
+	// 			InternalName: "Description",
+	// 			DisplayName: "وصف الخطر",
+	// 			DisplayNameEn: "Description",
+	// 			type: "multiline",
+	// 			maxchar: 5000,
+	// 		},
+	// 		// {
+	// 		// 	InternalName: "RiskPercentage",
+	// 		// 	DisplayName: "نسبة التعرض للخطر ",
+	// 		// 	DisplayNameEn: "Risk Percentage",
+	// 		// 	type: "float",
+	// 		// },
+
+
+	// 	],
+	// },
+	// {
+	// 	label: 'العوائق',
+	// 	labelEn: 'Issues Data',
+	// 	description: "التفاصيل",
+	// 	descriptionEn: "Details",
+	// 	sectiontype: "master",
+	// 	layout:"table",targetlist: "Issues",
+	// 	subFields: [
+	// 		// {
+	// 		//     "InternalName": "Title",
+	// 		//     "DisplayName":"رمز العائق",
+	// 		//     "type":"string",
+	// 		//     "validation": "required"
+	// 		// },
+	// 		{
+	// 			"InternalName": "Name",
+	// 			"DisplayName": "عنوان العائق",
+	// 			"DisplayNameEn": "Issue Name",
+	// 			"type": "string",
+	// 			"validation": "required"
+	// 		},
+	// 		{
+	// 			"InternalName": "Description",
+	// 			"DisplayName": "وصف العائق",
+	// 			"DisplayNameEn": "Description",
+	// 			"type": "multiline",
+	// 			"maxchar": 5000,
+	// 		},
+	// 		{
+	// 			"InternalName": "Priority",
+	// 			"DisplayName": "الأولوية",
+	// 			"DisplayNameEn": "Priority",
+	// 			"type": "dropdownValues",
+	// 			options: {
+	// 				choices: [
+	// 					{ display: 'critical', value: 'critical' },
+	// 					{ display: 'hight', value: 'hight' },
+	// 					{ display: 'medium', value: 'medium' },
+	// 					{ display: 'low', value: 'low' }
+	// 				]
+	// 			}
+	// 		},
+	// 		{
+	// 			"InternalName": "Resolution",
+	// 			"DisplayName": "وصف الحل",
+	// 			"DisplayNameEn": "Resolution",
+	// 			"type": "multiline",
+	// 			"maxchar": 5000,
+	// 		},
+	// 	]
+	// },
+	// {
+	// 	label: "المرفقات",
+	// 	labelEn: "Attachments",
+	// 	description: "",
+	// 	descriptionEn: "",
+	// 	subFields: [
+	// 		{
+	// 			InternalName: "getfile",
+	// 			DisplayName: "المرفقات",
+	// 			DisplayNameEn: "Attachments",
+	// 			type: "file",
+	// 		},
+	// 	],
+	// },
 ];
