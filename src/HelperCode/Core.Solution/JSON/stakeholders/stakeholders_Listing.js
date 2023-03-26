@@ -15,7 +15,7 @@ var Listing_Info = [
         "InternalName": "StakeholderType",
         "DisplayName": "النوع",
         "DisplayNameEn": "Type",
-        "type": "text",
+        "type": "dropdownValues",
         needTrans: true,
         inlisting: true,
         infilter: true
@@ -52,7 +52,7 @@ var Listing_Info = [
         "InternalName": "Interest",
         "DisplayName": "الاهتمامات",
         "DisplayNameEn": "Interest",
-        "type": "text",
+        "type": "dropdownValues",
         inlisting: true,
         infilter: true,
         needTrans:true
