@@ -108,7 +108,7 @@ var Listing_Info = [
     type: "text",
     needTrans: true,
     inlisting: false,
-    infilter: true,
+    //infilter: true,
   },
   {
     InternalName: "ProgressStatusDeliverable",
@@ -117,7 +117,7 @@ var Listing_Info = [
     type: "text",
     needTrans: true,
     inlisting: false,
-    infilter: true,
+    //infilter: true,
   },
   {
     InternalName: "ProgressStatusSchedule",
@@ -126,7 +126,7 @@ var Listing_Info = [
     type: "text",
     needTrans: true,
     inlisting: false,
-    infilter: true,
+    //infilter: true,
   },
   //   {
   //     InternalName: 'Priority',

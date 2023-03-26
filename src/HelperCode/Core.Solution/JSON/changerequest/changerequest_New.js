@@ -15,118 +15,35 @@ window.Information_Form = [
 				// dontSubmit: true,
 				// display: "none",
 				customCr: true,
+				// dynamic: "parent", //main field that affect on other chiled field  
 				type: "dropdownValues",
 				options: {
 					choices: [
-						// { display: "projects", value: "Projects" },
+						{ display: "strategicobjectives", value: "StrategicObjectives" },
+						{ display: "VisionObjectives", value: "VisionObjectives" },
+						{ display: "LMSObjectives", value: "LMSObjectives" },
 
-						
-						///// For a
-
-
-
-						//--------VRO CR Section -------------
-						{
-							display: "strategicobjectives", value: "SOs",
-							roles: ['VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE', 'Administrator'],
-							// otherFields: [
-							// 	{ fieldName: "WFModuleCode", value: "VROCRObjective" },
-							// 	{ fieldName: "WFStage", value: "VROCRSOS01" },
-							// ]
-						},
-						{
-							display: "projects", value: "Projects",
-							// roles: ['SPMAdmin'],
-							// 	otherFields:[
-							// 		{fieldName:"WFModuleCode",value:"SPMAdmin"},
-							// 		{fieldName:"WFStage",value:"SPMAdminStage"},
-							// 	]
-						},
-						{
-							display: "initiatives", value: "Initiatives",
-							roles: ['VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE', 'Administrator'],
-							otherFields: [
-								{ fieldName: "WFModuleCode", value: "VROCRInitiative" },
-								{ fieldName: "WFStage", value: "VROCRInitiative01" },
-							]
-						},
-
-						{
-							display: "kpi", value: "MainKPI",
-							roles: ['VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE', 'Administrator'],
-							otherFields: [
-								{ fieldName: "WFModuleCode", value: "VROCRKPI" },
-								{ fieldName: "WFStage", value: "VROCRKPI01" },
-							]
-						},
-						//-----------End VRO ---------------------------
-
-						//--------LMS CR Section -------------
-						{
-							display: "strategicobjectives", value: "SOs",
-							roles: ['LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'],
-							otherFields: [
-								{ fieldName: "WFModuleCode", value: "LMSCRObjective" },
-								{ fieldName: "WFStage", value: "LMSCRSOS01" },
-							]
-						},
-
-						{
-							display: "initiatives", value: "Initiatives",
-							roles: ['LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'],
-							otherFields: [
-								{ fieldName: "WFModuleCode", value: "LMSCRInitiative" },
-								{ fieldName: "WFStage", value: "LMSCRInitiative01" },
-							]
-						},
-
-						{
-							display: "kpi", value: "MainKPI",
-							roles: ['LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'],
-							otherFields: [
-								{ fieldName: "WFModuleCode", value: "LMSCRKPI" },
-								{ fieldName: "WFStage", value: "LMSCRKPI01" },
-							]
-						},
-						//-----------LMS VRO ---------------------------
-
-						//--------EPMO CR Section -------------
-						{
-							display: "strategicobjectives", value: "SOs",
-							roles: ['EPMO'],
-							otherFields: [
-								{ fieldName: "WFModuleCode", value: "LMSCRObjective" },
-								{ fieldName: "WFStage", value: "LMSCRSOS01" },
-							]
-						},
-
-						{
-							display: "initiatives", value: "Initiatives",
-							roles: ['EPMO'],
-							otherFields: [
-								{ fieldName: "WFModuleCode", value: "EPMOCRInitiative" },
-								{ fieldName: "WFStage", value: "EPMOCRInitiative01" },
-							]
-						},
-
-						{
-							display: "kpi", value: "MainKPI",
-							roles: ['EPMO'],
-							otherFields: [
-								{ fieldName: "WFModuleCode", value: "MSCRKPI" },
-								{ fieldName: "WFStage", value: "MSCRKPI01" },
-							]
-						},
-						//-----------EPMO VRO ---------------------------
+						{ display: "projects", value: "Projects" },
+						{ display: "initiatives", value: "Initiatives" },						
+						{ display: "kpi", value: "MainKPI" },
 					],
 				},
 				toggleValues: [
 					{ value: "Projects", fields: ["ProjectCode", "projectsUpdateType"] }, //we can put more than 1  field
 					{ value: "Initiatives", fields: ["InitiativeCode", "initiativeUpdateType"] }, //we can put more than 1  field
+					//SOS
 					{
-						value: "SOs",
+						value: "StrategicObjectives",
 						fields: ["CRRelatedStrategyObjective", "strategicobjectivesUpdateType"],
 					}, //we can put more than 1  field
+					// {
+					// 	value: "VisionObjectives",
+					// 	fields: ["CRRelatedStrategyObjective", "strategicobjectivesUpdateType"],
+					// }, //we can put more than 1  field
+					// {
+					// 	value: "LMSObjectives",
+					// 	fields: ["CRRelatedStrategyObjective", "strategicobjectivesUpdateType"],
+					// }, //we can put more than 1  field
 					{ value: "MainKPI", fields: ["CRRelatedMainKpis", "mainkpiUpdateType"] }, //we can put more than 1  field
 				],
 			},
@@ -366,8 +283,13 @@ window.Information_Form = [
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
 				dontSubmit: true,
+				useAccessPolicy:true
+				// dynamic: 'moduleSelect',
+				// filterField: 'Types',
+				// filterFieldType: 'Text',
 			},
 			{
+				//StrategicObjectives
 				InternalName: "UpdateType",
 				DisplayName: "نوع طلب التغيير",
 				DisplayNameEn: "Change Request Type",
@@ -388,7 +310,13 @@ window.Information_Form = [
 
 							],
 						},
-						{ display: "deletion", value: "delete" }
+					{ display: "deletion", value: "delete",
+						otherFields: [
+							{ fieldName: 'WFModuleCode', value: 'MSCRObjective' },
+							{ fieldName: 'WFStage', value: 'MSCRObjective01' },
+							// { fieldName: 'DraftStatus', value: 'draft' },
+					 	 ],
+					}
 					],
 				},
 			},

@@ -476,7 +476,9 @@
     issues: "التحديات",
     risks: "المخاطر",
     projects: "المشاريع",
-    strategicobjectives: "الأهداف الاستراتيجية",
+    strategicobjectives: "أهداف استراتيجية",
+    visionobjectives: "اهداف الرؤية",
+    lmsobjectives: "اهداف سوق العمل",
     completionpercentage: "نسبة الإنجاز",
     budgetexpenditure: "الصرف من الميزانية",
     portfolio: "المحفظة",
@@ -1201,6 +1203,8 @@
     risk: "Risk",
     projects: "projects",
     strategicobjectives: "Strategic Objectives",
+    visionobjectives: "Vision Objectives",
+    lmsobjectives: "LMS Objectives",
     newrequest: "New Request",
 
     //Resolution Status
