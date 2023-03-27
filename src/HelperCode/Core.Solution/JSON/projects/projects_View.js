@@ -135,6 +135,56 @@ var Information_Form = [
         // hideonstage: "1"
       },
       {
+        InternalName: 'InitiativeType',
+        DisplayNameEn: 'Initiative Type',
+        DisplayName: 'نوع المبادرة',
+        validation: 'required',
+        dynamic: 'parent', // parent to get the child depends on this field value
+        type: 'dropdownValues',
+        // dontSubmit: true,
+        options: {
+          choices: [
+            {
+              display: 'vision',
+              value: 'vision',
+              customFilterValue:  "vision",
+              roles: ['Administrator', 'VROE', 'VROP'],
+              otherFields: [
+                { fieldName: 'WFModuleCode', value: 'VROCRProject' },
+                { fieldName: 'WFStage', value: 'VROCRProject01' },
+                { fieldName: 'DraftStatus', value: 'draft' },
+              ],
+            },
+            {
+              display: 'strategically',
+              value: 'strategically',
+              customFilterValue:  "strategically",
+
+                roles: ['Administrator', 'EPMO'],
+              otherFields: [
+                { fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
+                { fieldName: 'WFStage', value: 'EPMOCRProject01' },
+                { fieldName: 'DraftStatus', value: 'draft' },
+              ],
+            },
+            {
+              display: 'lms',
+              value: 'lms',
+              customFilterValue:  "lms",
+
+              roles: ['Administrator', 'LMSE', 'LMSP'],
+              otherFields: [
+                { fieldName: 'WFModuleCode', value: 'LMSCRProject' },
+                { fieldName: 'WFStage', value: 'LMSCRProject01' },
+                { fieldName: 'DraftStatus', value: 'draft' },
+              ],
+            },
+            // { display: 'others', value: 'others' },
+            
+          ],
+        },
+      },
+      {
         InternalName: "RelatedInitiative",
         DisplayName: " المبادرة المرتبطة",
         DisplayNameEn: "Related Initiative",
