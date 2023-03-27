@@ -753,7 +753,8 @@ var Information_Form = [
         // listname: 'Initiatives',
         // parentinternalname: 'InitiativeCode',
         // targetelement: 'ActualCost',
-        numberOfDigits: "12"
+        numberOfDigits: "12",
+        resetElement:"ActualCost" // reset value of this element when there is no val in current element
       },
 
       {

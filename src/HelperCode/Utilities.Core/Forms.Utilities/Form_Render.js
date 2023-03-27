@@ -939,12 +939,14 @@ window.ListInfo = {
             if (event.which >= 37 && event.which <= 40) return;
             
             var max = $(this).data("maxfield")
+            var resetElement = $(this).data('resetelement')
             var elementVal = event.target.value
             // set max value
             if (max && max != 'undefined') {
+              
               var maxValue = $(`#${max}`).val() ? $(`#${max}`).val() : 0
-              maxValue = maxValue.replaceAll(",","")
-              elementVal = elementVal.replaceAll(",","")
+              maxValue = maxValue.replaceAll(",", "")
+              elementVal = elementVal.replaceAll(",", "")
               elementVal = Number(elementVal)
               maxValue = Number(maxValue)
               if (elementVal <= maxValue) {
@@ -957,6 +959,8 @@ window.ListInfo = {
                 $(this).val(null)
               }
 
+            }else if(resetElement && resetElement!= 'undefined' && !elementVal){
+              $(`#${resetElement}`).val(null) 
             } else {
               // format number
               $(this).val(function (index, value) {
@@ -2407,9 +2411,13 @@ window.ListInfo = {
 
         // to handle that the value should be smaller than other value
         var max = ""
-
+        var resetElement = ""
         if (element.max) {
           max = `data-maxField=${element.max}`
+        }
+
+        if (element.resetElement) {
+          resetElement = `data-resetElement=${element.resetElement}`
         }
 
         htmlBody =
@@ -2455,6 +2463,8 @@ window.ListInfo = {
           "</label>" +
           "<input " +
           max +
+          " " +
+          resetElement +
           " " +
           ToggleName +
           " " +
