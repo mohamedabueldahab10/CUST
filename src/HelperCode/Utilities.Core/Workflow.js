@@ -3058,7 +3058,9 @@ function program_BulkEdit(state) {
 						if (state) {
 							if (taskActionType == "Conditional") {
 								try {
+									debugger
 									taskCondition.forEach((el) => {
+										debugger
 										let conditionalValue = currentItem.get_item(el.field);
 										let conditionalExpression = el.condition;
 										conditionalExpression = conditionalExpression.replaceAll(
