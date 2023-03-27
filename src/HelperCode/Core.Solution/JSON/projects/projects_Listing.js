@@ -27,7 +27,7 @@ var Listing_Info = [
     InternalName: "ProjectType",
     DisplayName: "نوع المشروع",
     DisplayNameEn: "Project Type",
-    type: "text",
+    type: "dropdownValues",
     needTrans: true, 
     inlisting: true,
     infilter: false,
