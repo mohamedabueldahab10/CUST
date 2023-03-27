@@ -17,6 +17,7 @@ var Information_Form = [
         projectCodeInList: true,
         source: 'Deliverables',
         grpfieldkey: 'Title',
+        validation: 'required',
       },
       // {
       //   InternalName: 'Deliverables',
