@@ -34,10 +34,10 @@ var projectTypeFilterQuery = '', typeClicked = 'Internal';
 window.indexofListing = 0;
 var taskClicked = 'relatedTasks', allTasksClicked = false, getNewFilterTask = false, isViewMoreClicked = false;
 
-// var emptyData = require('../../../HelperRessources/img/empty-data.png');
-// var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
-var emptyData = ''
-var exportExcel = ''
+var emptyData = require('../../../HelperRessources/img/empty-data.png');
+var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
+// var emptyData = ''
+// var exportExcel = ''
 //all data filter array
 allDataFilterArr = []
 //
@@ -273,7 +273,7 @@ window.sphttp = {
                       if (value && value.length) {
                         var multiLookUpItemsArr = []
                         var multiLookUpValuesArr = []
-                        
+
                         value.forEach(el => {
                           if ((localStorage.getItem('' + Listing_Info[i].localStorageVariable) != null) && (oListItem.get_item(internalFieldNames[i]) !== null)) {
                             multiLookUpItemsArr = JSON.parse(localStorage.getItem('' + Listing_Info[i].localStorageVariable));
@@ -1760,7 +1760,7 @@ window.ListingData = {
           } else if (wfname == 'VROProjDeliverable' || wfname == 'EPMOProjDeliverable' || wfname == 'LMSProjDeliverable') {
             keyNameParams = 'deliverables'
           }
-          else if (wfname == 'VROCRDeleteObjective' || wfname == 'MSCRDeleteObjective' || wfname == 'LMSCRDeletedObjective') {     
+          else if (wfname == 'VROCRDeleteObjective' || wfname == 'MSCRDeleteObjective' || wfname == 'LMSCRDeletedObjective') {
             keyNameParams = 'changerequest';
           }
           switch (tasktype) {
@@ -1875,12 +1875,40 @@ window.ListingData = {
               }
               break;
 
+            case "yesnoradio":
+              var data = mydata[i][IN[j]]
+              if (data) {                
+                if (
+                  localStorage.getItem("lng") == null ||
+                  localStorage.getItem("lng") == "ar"
+                ) {
+
+                  translationData = Resources.ar[data] ? Resources.ar[data] : No_Data
+                } else {
+                  translationData = Resources.en[data] ? Resources.en[data] : No_Data
+                }
+              }else{
+                if (typeof (data) == 'boolean'){
+                  if (
+                    localStorage.getItem("lng") == null ||
+                    localStorage.getItem("lng") == "ar"
+                  ) {
+  
+                    translationData = Resources.ar[data] ? Resources.ar[data] : No_Data
+                  } else {
+                    translationData = Resources.en[data] ? Resources.en[data] : No_Data
+                  }
+                }
+
+              }
+              mydata[i][IN[j]] = translationData
+              break;
+
             case "dropdownValues":
               var data = mydata[i][IN[j]]
+              
               if (data) {
-
                 data = data.toLowerCase()
-                
                 if (
                   localStorage.getItem("lng") == null ||
                   localStorage.getItem("lng") == "ar"
@@ -2098,7 +2126,7 @@ window.ListingData = {
                   '<label class="dropdown-item">' + AllData[L][z] + '<input data-type="' + TypsFieldsAll[L] + '" data-internal="' + FilterNames[L] + '" type="checkbox" name="' + FilterNames[L] + '" value="' + lookupItemarray[0].code + '">' +
                   '</label>'
               }
-            } 
+            }
             // else if (TypsFieldsAll[L] == "lookupmultiselect") {
             //   var multiLookUpItemsArr = []
             //   var multiLookUpValuesArr = []
@@ -2130,7 +2158,7 @@ window.ListingData = {
 
             //   })
 
-              
+
             //   FilterationcontractsHTML +=
             //     '<label class="dropdown-item">' + AllData[L][z] + '<input data-type="' + TypsFieldsAll[L] + '" data-internal="' + FilterNames[L] + '" type="checkbox" name="' + FilterNames[L] + '" value="' + codeMulti  + '">' +
             //     '</label>'
