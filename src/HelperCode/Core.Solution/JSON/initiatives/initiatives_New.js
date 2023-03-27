@@ -928,6 +928,67 @@ var Information_Form = [
     ]
   },
   {
+    label: 'بيانات المنفعة',
+    labelEn: 'Benefit Data',
+    description: '',
+    descriptionEn: '',
+    sectiontype: 'master',
+    // className: "disable_section", // to make the section disabled on form render
+    targetlist: 'Benefits',
+    subFields: [
+      {
+        InternalName: 'Name',
+        DisplayNameEn: 'Name',
+        DisplayName: 'المنفعة',
+        type: 'string',
+        validation: 'required',
+        maxchar: '255',
+        withletters:true,
+        Errmsgkey:"withletterpattern",
+      },
+    
+      {
+        InternalName: 'Owner',
+        DisplayNameEn: 'Benefit Owner',
+        DisplayName: ' مالك المنفعة ',
+        type: 'picker',
+        validation: 'required',
+      },
+      {
+        InternalName: 'Description',
+        DisplayNameEn: 'Description',
+        DisplayName: 'وصف المنفعة',
+        maxchar: 5000,        
+        type: 'multiline',
+        validation: 'required',
+      },
+      {
+        InternalName: 'Weight',
+        DisplayNameEn: 'Weight',
+        DisplayName: 'وزن',
+        type: 'floatpercentage',
+        // "state": "disabled",
+        // dynamic: "Initiative"
+      },
+      {
+        InternalName: 'RelatedSubKpis',
+        DisplayNameEn: 'Related Sub Kpis',
+        DisplayName: 'المؤشرات الفرعية المرتبطة',
+        type: 'lookupmultiselect',
+        validation: 'required',
+        source: 'MainKPI',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        grpfieldkey: 'Title',
+        initiativeCodeInList: true //value in look up drop down should be related to current project
+        
+        // queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
+        // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
+        // queryFieldValue: 'sublevel2,sublevel3', // if i need to make the field with filter should add this
+      },
+    ]
+  },
+  {
     label: 'الوثائق الداعمة',
     labelEn: 'Supporting Documents',
     description: '',
