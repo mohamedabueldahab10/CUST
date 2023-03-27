@@ -33,6 +33,7 @@ var Information_Form = [
         projectCodeInList: true, 
         source: 'Deliverables',// target list
         grpfieldkey: 'Title',
+        validation: 'required',
       },
       // {
       //   InternalName: 'Deliverables',
