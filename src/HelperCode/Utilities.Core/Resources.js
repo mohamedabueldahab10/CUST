@@ -482,7 +482,7 @@
     lmsinitiatives: "مبادرات سوق العمل",
     visionobjectives: "اهداف الرؤية", 
     lmsobjectives: "اهداف سوق العمل",
-    vroprojects: "مشاريع سوق العمل ",
+    vroprojects: "مشاريع  الرؤية ",
     epmoprojects: "مشاريع مؤسسية",
     lmsprojects: " مشاريع سوق عمل",
 
