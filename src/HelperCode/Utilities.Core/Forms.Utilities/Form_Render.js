@@ -573,7 +573,7 @@ window.ListInfo = {
             if (arraySibling && arraySibling.length) {
               arraySibling = eval(arraySibling)
 
-              arraySibling.forEach(el=>{
+              arraySibling.forEach(el => {
                 $(this).parent().parent().find(`#${el.name}`).val(el.value)
               })
 
@@ -5448,7 +5448,7 @@ window.ListInfo = {
         if (element.hasOwnProperty('valsiblingkey')) {
           listFields.push(element.valsiblingkey)
         }
-        /////////////////////////////////////////////////////////// to get the seblings array of name and values
+        /////////////////////////////////////////////////////////// to get the seblings array of name and values and assign it on siblings fields
         if (element.hasOwnProperty('targetsiblingarr')) {
           element.targetsiblingarr.forEach(el => {
             listFields.push(el)
@@ -5469,7 +5469,8 @@ window.ListInfo = {
 
           parentCustomFilterValue = `data-parentcustomfiltervalue=""`
         }
-        debugger
+
+        // validation of siblings to add a listiner class 
         var addSeblingClass = ""
         if ((element.targetsiblingkey && element.targetsiblingkey != 'undefined') || (element.targetsiblingarr && element.targetsiblingarr != 'undefined')) {
           addSeblingClass = "getsiblingdata"
@@ -5577,31 +5578,26 @@ window.ListInfo = {
 
               records.forEach(function (el, index) {
 
-                console.log(el, "elllllll")
-                console.log(element.targetsiblingarr, "element.targetsiblingarr")
-                
-                var arraysiblingvalues =[]
-                var dataArraySiblingValues =[]
+                // to handle sibling array values 
+                var arraysiblingvalues = []
+                var dataArraySiblingValues = []
                 if (element.targetsiblingarr && element.targetsiblingarr != "undefined") {
-                  element.targetsiblingarr.forEach(item =>{
-                    arraysiblingvalues.push({name:item,value:el[item]})
+                  element.targetsiblingarr.forEach(item => {
+                    arraysiblingvalues.push({ name: item, value: el[item] })
                   })
 
                   dataArraySiblingValues = 'data-arraysiblingvalues="' +
-                  JSON.stringify(arraysiblingvalues).replaceAll(
-                    `"`,
-                    `'`
-                  ) +
-                  '"'
-
+                    JSON.stringify(arraysiblingvalues).replaceAll(
+                      `"`,
+                      `'`
+                    ) +
+                    '"'
                 }
-         
+                //
 
 
-                // console.log(el[dispfieldkey].length,"Aaaaaaaaaaaaaaaaa")
                 if (el[dispfieldkey] && el[dispfieldkey].length > 100) {
                   var optionText = el[dispfieldkey].substr(0, 100) + "...";
-                  // console.log(x, "Xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 } else {
                   var optionText = el[dispfieldkey];
                 }

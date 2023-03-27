@@ -20,6 +20,9 @@ var Information_Form = [
           { value: 'stackholderinternal', fields: ['Username'] }, 
           { value: 'stackholderexternal', fields: ['Name'] }, 
         ],
+        toggleDisabledValues: [
+          { value: 'stackholderexternal', fields: ['JobTitle','Email','PhoneNumber'] }, 
+        ],
         validation: 'required',
       },
       {
@@ -42,6 +45,7 @@ var Information_Form = [
         validation: 'required',
         display: 'none',
         ToggleName: 'Name',
+        targetsiblingarr:["JobTitle","Email","PhoneNumber"] // to get the value of this fields and set it on it dynamiclly
       },
       {
         InternalName: 'JobTitle',
@@ -50,6 +54,8 @@ var Information_Form = [
         type: 'string',
         maxchar: 255,
         validation: 'required',
+        ToggleDisabledName:"JobTitle"
+
       },
       {
         InternalName: 'Email',
@@ -57,6 +63,8 @@ var Information_Form = [
         DisplayNameEn: 'Email',
         type: 'email',
         validation: 'required',
+        ToggleDisabledName:"Email"
+
       },
       {
         InternalName: 'PhoneNumber',
@@ -66,6 +74,8 @@ var Information_Form = [
         type:'phonenumber',
         Errmsgkey:"phonenumberpattern",
         validation: 'required',
+        ToggleDisabledName:"PhoneNumber"
+
       },
       {
         InternalName: 'Role',
