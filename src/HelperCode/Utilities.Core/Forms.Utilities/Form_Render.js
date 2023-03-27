@@ -937,13 +937,34 @@ window.ListInfo = {
           $("input.number").keyup(function (event) {
             // skip for arrow keys
             if (event.which >= 37 && event.which <= 40) return;
-            // format number
+            
+            var max = $(this).data("maxfield")
+            var elementVal = event.target.value
+            // set max value
+            if (max && max != 'undefined') {
+              var maxValue = $(`#${max}`).val() ? $(`#${max}`).val() : 0
+              maxValue = maxValue.replaceAll(",","")
+              elementVal = elementVal.replaceAll(",","")
+              elementVal = Number(elementVal)
+              maxValue = Number(maxValue)
+              if (elementVal <= maxValue) {
+                $(this).val(function (index, value) {
+                  return value
+                    .replace(/\D/g, "")
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                });
+              } else {
+                $(this).val(null)
+              }
 
-            $(this).val(function (index, value) {
-              return value
-                .replace(/\D/g, "")
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            });
+            } else {
+              // format number
+              $(this).val(function (index, value) {
+                return value
+                  .replace(/\D/g, "")
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              });
+            }
           });
 
 
@@ -1562,7 +1583,7 @@ window.ListInfo = {
       ListInfo.g.requiredSpillarsName();
     }
 
-    
+
 
     // if(element.useAccessPolicy){
     //   await FunctionAsync(element.useAccessPolicyList)
@@ -2384,6 +2405,13 @@ window.ListInfo = {
           numberOfDigits = `maxlength=${element.numberOfDigits}`
         }
 
+        // to handle that the value should be smaller than other value
+        var max = ""
+
+        if (element.max) {
+          max = `data-maxField=${element.max}`
+        }
+
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -2426,6 +2454,8 @@ window.ListInfo = {
           displayName +
           "</label>" +
           "<input " +
+          max +
+          " " +
           ToggleName +
           " " +
           toggleDisabledName +
@@ -5123,7 +5153,7 @@ window.ListInfo = {
             // customQuery = query
             // if (queryTest) {
             myRoleConfig[0].dataFilter.hierarchies.forEach((el, i, a) => {
-              
+
               let accessConditions = el.accessConditions;
               let isListConditional1 = el.listName == element.source;
               let isListConditional2 = el.subRelation.listName == element.source;
@@ -5142,7 +5172,7 @@ window.ListInfo = {
               }
             })
 
-            
+
             console.log(customQuery, "customQuery in lookup")
             // }
           }
@@ -11675,8 +11705,8 @@ var get_hierarchies = {
 
     if (!tempRoleHierarchies.length) {
       tempRoleHierarchies = Array.from(myRoleConfig[0].dataFilter.hierarchies);
-    } 
-    if(tempRoleHierarchies.length) {
+    }
+    if (tempRoleHierarchies.length) {
       isListConditional1 = tempRoleHierarchies[0].listName == lookupList;
       isListConditional2 = tempRoleHierarchies[0].subRelation.listName == lookupList;
       isListConditional3 =
@@ -11691,7 +11721,7 @@ var get_hierarchies = {
       tempRoleHierarchies.shift();
       if (tempRoleHierarchies.length) {
         get_hierarchies.init(lookupList);
-      }else{
+      } else {
         accessCallisDone = true
       }
     } else {

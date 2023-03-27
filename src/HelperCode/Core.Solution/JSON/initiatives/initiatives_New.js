@@ -6,16 +6,16 @@ var Information_Form = [
     descriptionEn: 'Details',
     formDefaultValues: [
       //VRO
-      { fieldName: 'WFModuleCode', value: 'VROCRInitiative',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
-      { fieldName: 'WFStage', value: 'VROCRInitiative01',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
-      
+      { fieldName: 'WFModuleCode', value: 'VROCRInitiative', roles: ['VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'], },
+      { fieldName: 'WFStage', value: 'VROCRInitiative01', roles: ['VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'], },
+
       //EPMOCRInitiative
-      { fieldName: 'WFModuleCode', value: 'EPMOCRInitiative',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
-      { fieldName: 'WFStage', value: 'EPMOCRInitiative01',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+      { fieldName: 'WFModuleCode', value: 'EPMOCRInitiative', roles: ['EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'], },
+      { fieldName: 'WFStage', value: 'EPMOCRInitiative01', roles: ['EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'], },
 
       //LMS
-      { fieldName: 'WFModuleCode', value: 'LMSCRInitiative',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
-      { fieldName: 'WFStage', value: 'LMSCRInitiative01',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+      { fieldName: 'WFModuleCode', value: 'LMSCRInitiative', roles: ['LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
+      { fieldName: 'WFStage', value: 'LMSCRInitiative01', roles: ['LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
 
     ],
     subFields: [
@@ -96,7 +96,7 @@ var Information_Form = [
               ],
             },
             // { display: 'others', value: 'others' },
-            
+
           ],
         },
       },
@@ -727,23 +727,23 @@ var Information_Form = [
         Dispfieldkey: "Name",
         valfieldkey: "Title",
         grpfieldkey: 'Title',
- 
+
       },
       {
         InternalName: 'EstimatedCost',
         DisplayName: 'التكلفة التقديرية ',
         DisplayNameEn: 'Estimated Cost',
         type: 'float',
-        numberOfDigits:"12"
+        numberOfDigits: "12"
       },
       {
         InternalName: 'InitiativeBudget',
         DisplayName: 'ميزانية المبادرة ',
         DisplayNameEn: 'InitiativeBudget',
-        className:"disable_enable_section", // disable and enable section master  details specific for project and initiative cr
+        className: "disable_enable_section", // disable and enable section master  details specific for project and initiative cr
         // "state": "disabled",
         type: 'float',
-        numberOfDigits:"12"
+        numberOfDigits: "12"
       },
       {
         InternalName: 'ProgramTotalCost',
@@ -752,8 +752,8 @@ var Information_Form = [
         type: 'float',
         // listname: 'Initiatives',
         // parentinternalname: 'InitiativeCode',
-        targetelement: 'ActualCost',
-        numberOfDigits:"12"
+        // targetelement: 'ActualCost',
+        numberOfDigits: "12"
       },
 
       {
@@ -761,30 +761,33 @@ var Information_Form = [
         DisplayName: 'التكاليف الكلية المعتمدة ',
         DisplayNameEn: 'Actual Cost',
         type: 'float',
-        numberOfDigits:"12",
-        targetelement: 'ActualCost',
-        seconedtarget: 'ProgramTotalCost',
+        numberOfDigits: "12",
+        // targetelement: 'ActualCost',
+        // seconedtarget: 'ProgramTotalCost',
+        max: 'ProgramTotalCost', // max value will be smaller than or equal ProgramTotalCost
+        descPhraseAr:"القيمة يجب ان تكون اقل او يساوي التكاليف الكلية حسب سقف البرنامج",
+        descPhraseEn:"Should be less than or equal Program Total Cost"
       },
       {
         InternalName: 'CurrentBuget',
         DisplayName: 'السيولة المخصصة للعام المالي الحالي ',
         DisplayNameEn: 'Current Budget',
         type: 'float',
-        numberOfDigits:"12"
+        numberOfDigits: "12"
       },
       {
         InternalName: 'Expenditures',
         DisplayName: 'المنصرف الأجمالي ',
         DisplayNameEn: 'Expenditures',
         type: 'float',
-        numberOfDigits:"12"
+        numberOfDigits: "12"
       },
       {
         InternalName: 'CurrentExpenditures',
         DisplayName: 'المنصرف من العالم المالي الحالي ',
         DisplayNameEn: 'Current Expenditures',
         type: 'float',
-        numberOfDigits:"12"
+        numberOfDigits: "12"
       },
     ],
   },
@@ -810,7 +813,7 @@ var Information_Form = [
     description: 'التفاصيل (يمكن ادخال القيم عند ادخال ميزانية المبادرة)',
     descriptionEn: 'Details (you can enter the values when enter the Initiative Budget)',
     sectiontype: 'master',
-    className:"disable_section", // to make the section disabled on form render
+    className: "disable_section", // to make the section disabled on form render
     targetlist: 'InitiativeDeliverables',
     subFields: [
 
@@ -820,8 +823,8 @@ var Information_Form = [
         DisplayName: 'اسم المخرج',
         type: 'string',
         maxchar: '255',
-        withletters:true,
-        Errmsgkey:"withletterpattern",
+        withletters: true,
+        Errmsgkey: "withletterpattern",
         validation: 'required',
       },
       {
@@ -867,7 +870,7 @@ var Information_Form = [
     description: 'التفاصيل (يمكن ادخال القيم عند ادخال ميزانية المبادرة)',
     descriptionEn: 'Details (you can enter the values when enter the Initiative Budget)',
     sectiontype: 'master',
-    className:"disable_section", // to make the section disabled on form render
+    className: "disable_section", // to make the section disabled on form render
     targetlist: 'InitiativeMilestones',
     subFields: [
       {
@@ -876,8 +879,8 @@ var Information_Form = [
         DisplayName: 'اسم المعلم',
         type: 'string',
         maxchar: '255',
-        withletters:true,
-        Errmsgkey:"withletterpattern",
+        withletters: true,
+        Errmsgkey: "withletterpattern",
         validation: 'required',
       },
       {
@@ -910,7 +913,8 @@ var Information_Form = [
         targetelement: 'Weight',
         validation: 'required',
       },
-    ]},
+    ]
+  },
   {
     label: 'الوثائق الداعمة',
     labelEn: 'Supporting Documents',
