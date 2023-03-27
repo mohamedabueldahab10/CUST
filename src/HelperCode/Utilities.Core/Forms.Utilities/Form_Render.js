@@ -205,20 +205,7 @@ window.ListInfo = {
         //
 
 
-        /////////////////cr security
 
-
-        // var getdataDependsOnRoleSource = item.getdataDependsOnRoleSource ? item.getdataDependsOnRoleSource : []
-
-        // if (getdataDependsOnRoleSource && getdataDependsOnRoleSource != undefined) {
-        //   getdataDependsOnRoleSource.forEach(async function (el) {
-
-        //     await initiateDataLevelAccess(el)
-        //   })
-        // }
-
-
-        /////////////////
 
 
         toggleSectionName = item.togglename
@@ -913,13 +900,6 @@ window.ListInfo = {
           }
 
 
-          //get data depends on role
-          // $("body").on("change", ".getdataDependsOnRole", async function (event) {
-          //   
-          //   await initiateDataLevelAccess("SOs")
-
-          // })
-          // ///
 
 
 
@@ -3553,14 +3533,6 @@ window.ListInfo = {
       case "dropdownValues":
 
 
-
-        // add listiner on change
-
-        let getdataDependsOnRole = element.hasOwnProperty("getdataDependsOnRole") == true
-          ? 'getdataDependsOnRole' : "";
-
-
-
         // added for CR module
         let customFilter = element.options.choices[0].hasOwnProperty(
           "customFilterValue"
@@ -3686,7 +3658,7 @@ window.ListInfo = {
             element.queryFieldType +
             '" data-filterfieldtype="' +
             element.filterFieldType +
-            '" class="form-control SPIField ' + grandFieldInvokeclass + ' ' + getdataDependsOnRole + '" id="' +
+            '" class="form-control SPIField ' + grandFieldInvokeclass + '" id="' +
             element.InternalName +
             '" ' +
             element.state +
