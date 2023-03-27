@@ -38,24 +38,22 @@ window.Information_Form = [
 					],
 				},
 				toggleValues: [
-					{ value: "vroprojects", fields: ["ProjectCode", "vroprojects"] }, //we can put more than 1  field
-					{ value: "epmoprojects", fields: ["ProjectCode", "epmoprojects"] }, //we can put more than 1  field
-					{ value: "lmsprojects", fields: ["ProjectCode", "lmsprojects"] }, //we can put more than 1  field
+					{ value: "vroprojects", fields: ["ProjectCode", "vroprojectsUpdateType"] }, //we can put more than 1  field
+					{ value: "epmoprojects", fields: ["ProjectCode", "epmoprojectsUpdateType"] }, //we can put more than 1  field
+					{ value: "lmsprojects", fields: ["ProjectCode", "lmsprojectsUpdateType"] }, //we can put more than 1  field
 					//Initiatives
-					{ value: "strategicinitiatives", fields: ["InitiativeCode", "strategicinitiatives"] }, //we can put more than 1  field
-					{ value: "vroinitiatives", fields: ["InitiativeCode", "vroinitiatives"] }, //we can put more than 1  field
-					{ value: "lmsinitiatives", fields: ["InitiativeCode", "lmsinitiatives"] }, //we can put more than 1  field
+					{ value: "strategicinitiatives", fields: ["InitiativeCode", "strategicinitiativesUpdateType"] }, //we can put more than 1  field
+					{ value: "vroinitiatives", fields: ["InitiativeCode", "vroinitiativesUpdateType"] }, //we can put more than 1  field
+					{ value: "lmsinitiatives", fields: ["InitiativeCode", "lmsinitiativesUpdateType"] }, //we can put more than 1  field
 					//SOS
-					{ value: "strategicbjectives", fields: ["CRRelatedStrategyObjective", "strategicbjectives"], },
-					{ value: "visionobjectives", fields: ["CRRelatedStrategyObjective", "visionobjectives"], },
-					{
-						value: "lmsobjectives", fields: ["CRRelatedStrategyObjective", "lmsobjectives"],
-					},
+					{ value: "strategicbjectives", fields: ["CRRelatedStrategyObjective", "strategicbjectivesUpdateType"], },
+					{ value: "visionobjectives", fields: ["CRRelatedStrategyObjective", "visionobjectivesUpdateType"], },
+					{ value: "lmsobjectives", fields: ["CRRelatedStrategyObjective", "lmsobjectivesUpdateType"],},
 					//	-----SOS----
 					//---KPI------
-					{ value: "strategickpi", fields: ["CRRelatedMainKpis", "strategickpi"] }, //we can put more than 1  field
-					{ value: "vrokpi", fields: ["CRRelatedMainKpis", "vrokpi"] }, //we can put more than 1  field
-					{ value: "lmskpi", fields: ["CRRelatedMainKpis", "lmskpi"] }, //we can put more than 1  field
+					{ value: "strategickpi", fields: ["CRRelatedMainKpis", "strategickpiUpdateType"] }, //we can put more than 1  field
+					{ value: "vrokpi", fields: ["CRRelatedMainKpis", "vrokpiUpdateType"] }, //we can put more than 1  field
+					{ value: "lmskpi", fields: ["CRRelatedMainKpis", "lmskpiUpdateType"] }, //we can put more than 1  field
 				],
 			},
 			{
@@ -78,7 +76,7 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
-				ToggleName: "vroprojects",
+				ToggleName: "vroprojectsUpdateType",
 				type: "dropdownValues",
 				options: {
 					choices: [
@@ -251,7 +249,7 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
-				ToggleName: "lmsprojects",
+				ToggleName: "lmsprojectsUpdateType",
 				type: "dropdownValues",
 				options: {
 					choices: [
@@ -424,7 +422,7 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
-				ToggleName: "epmoprojects",
+				ToggleName: "epmoprojectsUpdateType",
 				type: "dropdownValues",
 				options: {
 					choices: [
@@ -614,7 +612,7 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
-				ToggleName: "strategicinitiatives",
+				ToggleName: "strategicinitiativesUpdateType",
 				type: "dropdownValues",
 				options: {
 					choices: [
@@ -648,7 +646,7 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
-				ToggleName: "vroinitiatives",
+				ToggleName: "vroinitiativesUpdateType",
 				type: "dropdownValues",
 				options: {
 					choices: [
@@ -676,7 +674,7 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
-				ToggleName: "lmsinitiatives",
+				ToggleName: "lmsinitiativesUpdateType",
 				type: "dropdownValues",
 				options: {
 					choices: [
@@ -751,7 +749,7 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
-				ToggleName: "strategicbjectives",
+				ToggleName: "strategicbjectivesUpdateType",
 				type: "dropdownValues",
 				options: {
 					choices: [
@@ -790,7 +788,7 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
-				ToggleName: "visionobjectives",
+				ToggleName: "visionobjectivesUpdateType",
 				type: "dropdownValues",
 				options: {
 					choices: [
@@ -827,7 +825,7 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
-				ToggleName: "lmsobjectives",
+				ToggleName: "lmsobjectivesUpdateType",
 				type: "dropdownValues",
 				options: {
 					choices: [
@@ -878,7 +876,7 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
-				ToggleName: "strategickpi",
+				ToggleName: "strategickpiUpdateType",
 				type: "dropdownValues",
 				options: {
 					choices: [
@@ -914,7 +912,7 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
-				ToggleName: "vrokpi",
+				ToggleName: "vrokpiUpdateType",
 				type: "dropdownValues",
 				options: {
 					choices: [
@@ -950,7 +948,7 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
-				ToggleName: "lmskpi",
+				ToggleName: "lmskpiUpdateType",
 				type: "dropdownValues",
 				options: {
 					choices: [
