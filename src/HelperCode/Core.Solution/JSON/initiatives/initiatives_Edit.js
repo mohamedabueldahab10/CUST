@@ -773,6 +773,9 @@ var Information_Form = [
         seconedtarget: 'ProgramTotalCost',
         enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        max: 'ProgramTotalCost', // max value will be smaller than or equal ProgramTotalCost
+        descPhraseAr: "القيمة يجب ان تكون اقل او يساوي التكاليف الكلية حسب سقف البرنامج",
+        descPhraseEn: "Should be less than or equal Program Total Cost"
       },
       {
         InternalName: 'CurrentBuget',

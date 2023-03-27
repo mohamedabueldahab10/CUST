@@ -6986,3 +6986,8 @@ span.statuscolorstat28 {
     word-break:break-word;
 }
 
+.add-New-Detail-wrapper {
+    width: 100%;
+    padding-inline: 15px;
+    padding-bottom: 15px;
+}
