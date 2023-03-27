@@ -20,7 +20,7 @@ window.Information_Form = [
 				options: {
 					choices: [
 						//SOS
-						{ display: "strategicsbjectives", value: "strategicsbjectives" },
+						{ display: "strategicbjectives", value: "strategicbjectives" },
 						{ display: "visionobjectives", value: "visionobjectives" },
 						{ display: "lmsobjectives", value: "lmsobjectives" },
 						//projects
@@ -44,7 +44,7 @@ window.Information_Form = [
 					{ value: "vroinitiatives", fields: ["InitiativeCode", "vroinitiatives"] }, //we can put more than 1  field
 					{ value: "lmsinitiatives", fields: ["InitiativeCode", "lmsinitiatives"] }, //we can put more than 1  field
 					//SOS
-					{	value: "strategicsbjectives",fields: ["CRRelatedStrategyObjective", "strategicsbjectives"],					},
+					{	value: "strategicbjectives",fields: ["CRRelatedStrategyObjective", "strategicbjectives"],					},
 					{	value: "visionobjectives",fields: ["CRRelatedStrategyObjective", "visionobjectives"],					},
 					{	value: "lmsobjectives",	fields: ["CRRelatedStrategyObjective", "lmsobjectives"],
 					},
@@ -395,7 +395,7 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
-				ToggleName: "strategicsbjectives",
+				ToggleName: "strategicbjectives",
 				type: "dropdownValues",
 				options: {
 					choices: [
