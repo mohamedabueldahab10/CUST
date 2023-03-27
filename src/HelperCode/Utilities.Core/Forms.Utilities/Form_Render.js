@@ -2259,6 +2259,10 @@ window.ListInfo = {
         break;
 
       case "floattax":
+        var numberOfDigits = ""
+        if (element.numberOfDigits) {
+          numberOfDigits = `maxlength=${element.numberOfDigits}`
+        }
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -2306,7 +2310,7 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
-          ' type="float"  placeholder="' +
+          ' type="float"  ' + numberOfDigits + '  placeholder="' +
           displayName +
           '" ' +
           dynamic +
