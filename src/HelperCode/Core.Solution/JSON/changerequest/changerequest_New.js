@@ -20,21 +20,21 @@ window.Information_Form = [
 				options: {
 					choices: [
 						//SOS
-						{ display: "strategicbjectives", value: "strategicbjectives" },
-						{ display: "visionobjectives", value: "visionobjectives" },
-						{ display: "lmsobjectives", value: "lmsobjectives" },
+						{ display: "strategicbjectives", value: "strategicbjectives", roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'] },
+						{ display: "visionobjectives", value: "visionobjectives", roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'], },
+						{ display: "lmsobjectives", value: "lmsobjectives", roles: ['Administrator', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
 						//projects
-						{ display: "vroprojects", value: "vroprojects" },
-						{ display: "epmoprojects", value: "epmorojects" },
-						{ display: "lmsprojects", value: "lmsrojects" },
+						{ display: "vroprojects", value: "vroprojects", roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'] },
+						{ display: "epmoprojects", value: "epmorojects", roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'] },
+						{ display: "lmsprojects", value: "lmsrojects", roles: ['Administrator', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
 						//Initiatives
-						{ display: "strategicinitiatives", value: "strategicinitiatives" },						
-						{ display: "vroinitiatives", value: "vroinitiatives" },						
-						{ display: "lmsinitiatives", value: "lmsinitiatives" },	
+						{ display: "strategicinitiatives", value: "strategicinitiatives", roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'] },
+						{ display: "vroinitiatives", value: "vroinitiatives", roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'] },
+						{ display: "lmsinitiatives", value: "lmsinitiatives", roles: ['Administrator', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
 						//KPI
-						{ display: "strategickpi", value: "strategickpi" },						
-						{ display: "vrokpi", value: "vrokpi" },						
-						{ display: "lmskpi", value: "lmskpi" },	
+						{ display: "strategickpi", value: "strategickpi", roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'] },
+						{ display: "vrokpi", value: "vrokpi", roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'] },
+						{ display: "lmskpi", value: "lmskpi", roles: ['Administrator', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
 					],
 				},
 				toggleValues: [
@@ -44,9 +44,10 @@ window.Information_Form = [
 					{ value: "vroinitiatives", fields: ["InitiativeCode", "vroinitiatives"] }, //we can put more than 1  field
 					{ value: "lmsinitiatives", fields: ["InitiativeCode", "lmsinitiatives"] }, //we can put more than 1  field
 					//SOS
-					{	value: "strategicbjectives",fields: ["CRRelatedStrategyObjective", "strategicbjectives"],					},
-					{	value: "visionobjectives",fields: ["CRRelatedStrategyObjective", "visionobjectives"],					},
-					{	value: "lmsobjectives",	fields: ["CRRelatedStrategyObjective", "lmsobjectives"],
+					{ value: "strategicbjectives", fields: ["CRRelatedStrategyObjective", "strategicbjectives"], },
+					{ value: "visionobjectives", fields: ["CRRelatedStrategyObjective", "visionobjectives"], },
+					{
+						value: "lmsobjectives", fields: ["CRRelatedStrategyObjective", "lmsobjectives"],
 					},
 					//	-----SOS----
 					//---KPI------
@@ -251,8 +252,8 @@ window.Information_Form = [
 				source: "Initiatives",
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
-				validation: "required",				
-				useAccessPolicy:true
+				validation: "required",
+				useAccessPolicy: true
 			},
 			{
 				InternalName: "UpdateType",
@@ -273,16 +274,18 @@ window.Information_Form = [
 									InternalName: "getall",
 								},
 
-							],	otherFields: [
+							], otherFields: [
 								{ fieldName: 'WFModuleCode', value: 'LMSCRInitiative' },
 								{ fieldName: 'WFStage', value: 'LMSCRInitiative01' },
 							]
 						},
-						{ display: "deletion", value: "delete",
-						otherFields: [
-							{ fieldName: 'WFModuleCode', value: 'LMSCRInitiative' },
-							{ fieldName: 'WFStage', value: 'LMSCRInitiative01' },
-						] }
+						{
+							display: "deletion", value: "delete",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'LMSCRInitiative' },
+								{ fieldName: 'WFStage', value: 'LMSCRInitiative01' },
+							]
+						}
 					],
 				},
 			},
@@ -305,7 +308,7 @@ window.Information_Form = [
 									InternalName: "getall",
 								},
 
-							],	otherFields: [
+							], otherFields: [
 								{ fieldName: 'WFModuleCode', value: 'VROCRInitiative' },
 								{ fieldName: 'WFStage', value: 'VROCRInitiative01' },
 							]
@@ -333,7 +336,7 @@ window.Information_Form = [
 									InternalName: "getall",
 								},
 
-							],	otherFields: [
+							], otherFields: [
 								{ fieldName: 'WFModuleCode', value: 'LMSCRInitiative' },
 								{ fieldName: 'WFStage', value: 'LMSCRInitiative01' },
 							]
@@ -382,7 +385,7 @@ window.Information_Form = [
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
 				// dontSubmit: true,
-				useAccessPolicy:true
+				useAccessPolicy: true
 				// dynamic: 'moduleSelect',
 				// filterField: 'Types',
 				// filterFieldType: 'Text',
@@ -406,7 +409,7 @@ window.Information_Form = [
 							fields: [
 								{
 									InternalName: "getall",
-									
+
 								},
 
 							],
@@ -416,7 +419,8 @@ window.Information_Form = [
 								// { fieldName: 'DraftStatus', value: 'draft' },
 							],
 						},
-						{ display: "deletion", value: "delete",
+						{
+							display: "deletion", value: "delete",
 							otherFields: [
 								{ fieldName: 'WFModuleCode', value: 'MSCRObjective' },
 								{ fieldName: 'WFStage', value: 'MSCRObjective01' },
@@ -446,13 +450,14 @@ window.Information_Form = [
 									InternalName: "getall",
 								},
 
-							],otherFields: [
+							], otherFields: [
 								{ fieldName: 'WFModuleCode', value: 'VROCRObjective' },
 								{ fieldName: 'WFStage', value: 'VROCRSOS01' },
 								// { fieldName: 'DraftStatus', value: 'draft' },
-							  ],
+							],
 						},
-						{ display: "deletion", value: "delete",
+						{
+							display: "deletion", value: "delete",
 							otherFields: [
 								{ fieldName: 'WFModuleCode', value: 'VROCRObjective' },
 								{ fieldName: 'WFStage', value: 'VROCRSOS01' },
@@ -482,13 +487,14 @@ window.Information_Form = [
 									InternalName: "getall",
 								},
 
-							],otherFields: [
+							], otherFields: [
 								{ fieldName: 'WFModuleCode', value: 'LMSCRObjective' },
 								{ fieldName: 'WFStage', value: 'LMSCRObjective01' },
 								// { fieldName: 'DraftStatus', value: 'draft' },
-							  ],
+							],
 						},
-						{ display: "deletion", value: "delete",
+						{
+							display: "deletion", value: "delete",
 							otherFields: [
 								{ fieldName: 'WFModuleCode', value: 'LMSCRObjective' },
 								{ fieldName: 'WFStage', value: 'LMSCRObjective01' },
@@ -509,7 +515,7 @@ window.Information_Form = [
 				type: "lookup",
 				source: "MainKPI",
 				Dispfieldkey: "Name",
-				valfieldkey: "Title",				
+				valfieldkey: "Title",
 				useAccessPolicy: true,
 				dontSubmit: true,
 			},
@@ -532,18 +538,20 @@ window.Information_Form = [
 									InternalName: "getall",
 								},
 
-							],otherFields: [
+							], otherFields: [
 								{ fieldName: 'WFModuleCode', value: 'MSCRKPI' },
 								{ fieldName: 'WFStage', value: 'MSCRKPI01' },
 								// { fieldName: 'DraftStatus', value: 'draft' },
 							],
 						},
-						{ display: "deletion", value: "delete",
-						otherFields: [
-							{ fieldName: 'WFModuleCode', value: 'MSCRKPI' },
-							{ fieldName: 'WFStage', value: 'MSCRKPI01' },
-							// { fieldName: 'DraftStatus', value: 'draft' },
-						], }
+						{
+							display: "deletion", value: "delete",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'MSCRKPI' },
+								{ fieldName: 'WFStage', value: 'MSCRKPI01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
+						}
 					],
 				},
 			},
@@ -566,18 +574,20 @@ window.Information_Form = [
 									InternalName: "getall",
 								},
 
-							],otherFields: [
+							], otherFields: [
 								{ fieldName: 'WFModuleCode', value: 'VROCRKPI' },
 								{ fieldName: 'WFStage', value: 'VROCRKPI01' },
 								// { fieldName: 'DraftStatus', value: 'draft' },
 							],
 						},
-						{ display: "deletion", value: "delete",
-						otherFields: [
-							{ fieldName: 'WFModuleCode', value: 'VROCRKPI' },
-							{ fieldName: 'WFStage', value: 'VROCRKPI01' },
-							// { fieldName: 'DraftStatus', value: 'draft' },
-						], }
+						{
+							display: "deletion", value: "delete",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'VROCRKPI' },
+								{ fieldName: 'WFStage', value: 'VROCRKPI01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
+						}
 					],
 				},
 			},
@@ -600,18 +610,20 @@ window.Information_Form = [
 									InternalName: "getall",
 								},
 
-							],otherFields: [
+							], otherFields: [
 								{ fieldName: 'WFModuleCode', value: 'LMSCRKPI' },
 								{ fieldName: 'WFStage', value: 'LMSCRKPI01' },
 								// { fieldName: 'DraftStatus', value: 'draft' },
 							],
 						},
-						{ display: "deletion", value: "delete",
-						otherFields: [
-							{ fieldName: 'WFModuleCode', value: 'LMSCRKPI' },
+						{
+							display: "deletion", value: "delete",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'LMSCRKPI' },
 								{ fieldName: 'WFStage', value: 'LMSCRKPI01' },
-							// { fieldName: 'DraftStatus', value: 'draft' },
-						], }
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
+						}
 					],
 				},
 			},
