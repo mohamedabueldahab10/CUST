@@ -557,6 +557,7 @@ window.ListInfo = {
           $('body').on('change', '.getsiblingdata', function (event) { // get sibling value based on oter value
 
 
+            debugger
 
             var siblingData = $(this).find(':selected').data('siblingvalue')
             var siblingTarget = $(this).data('siblingtarget')
@@ -564,6 +565,22 @@ window.ListInfo = {
             if (siblingTarget && siblingTarget != 'undefined') {
               $(this).parent().parent().find(`#${siblingTarget}`).val(siblingData)
             }
+
+            // handle array values
+
+            var arraySibling = $(this).find(':selected').data('arraysiblingvalues')
+
+            if (arraySibling && arraySibling.length) {
+              arraySibling = eval(arraySibling)
+
+              arraySibling.forEach(el=>{
+                $(this).parent().parent().find(`#${el.name}`).val(el.value)
+              })
+
+            }
+
+
+
           })
           ////////////////////////////// calculate the tax 15% as ksa
           $("input.tax").keyup(function (event) {
@@ -979,10 +996,10 @@ window.ListInfo = {
 
             if (totalElement && totalElement != 'undefined' && sum1 && sum1 != 'undefined' && sum2 && sum2 != 'undefined') {
               var value1 = $(`#${sum1}`).val()
-              value1 = value1.replaceAll(",","")
+              value1 = value1.replaceAll(",", "")
               value1 = Number(value1)
               var value2 = $(`#${sum2}`).val()
-              value2 = value2.replaceAll(",","")
+              value2 = value2.replaceAll(",", "")
               value2 = Number(value2)
               var total = value1 + value2
               $(`#${totalElement}`).val(total)
@@ -5431,6 +5448,12 @@ window.ListInfo = {
         if (element.hasOwnProperty('valsiblingkey')) {
           listFields.push(element.valsiblingkey)
         }
+        /////////////////////////////////////////////////////////// to get the seblings array of name and values
+        if (element.hasOwnProperty('targetsiblingarr')) {
+          element.targetsiblingarr.forEach(el => {
+            listFields.push(el)
+          })
+        }
 
         ///////////////////////////////////////////////////////////
         var grandFieldId = ""
@@ -5446,9 +5469,9 @@ window.ListInfo = {
 
           parentCustomFilterValue = `data-parentcustomfiltervalue=""`
         }
-
+        debugger
         var addSeblingClass = ""
-        if (element.targetsiblingkey && element.targetsiblingkey != 'undefined') {
+        if ((element.targetsiblingkey && element.targetsiblingkey != 'undefined') || (element.targetsiblingarr && element.targetsiblingarr != 'undefined')) {
           addSeblingClass = "getsiblingdata"
         }
         /////////////////////////////////////////////////
@@ -5553,6 +5576,28 @@ window.ListInfo = {
             if (isDone) {
 
               records.forEach(function (el, index) {
+
+                console.log(el, "elllllll")
+                console.log(element.targetsiblingarr, "element.targetsiblingarr")
+                
+                var arraysiblingvalues =[]
+                var dataArraySiblingValues =[]
+                if (element.targetsiblingarr && element.targetsiblingarr != "undefined") {
+                  element.targetsiblingarr.forEach(item =>{
+                    arraysiblingvalues.push({name:item,value:el[item]})
+                  })
+
+                  dataArraySiblingValues = 'data-arraysiblingvalues="' +
+                  JSON.stringify(arraysiblingvalues).replaceAll(
+                    `"`,
+                    `'`
+                  ) +
+                  '"'
+
+                }
+         
+
+
                 // console.log(el[dispfieldkey].length,"Aaaaaaaaaaaaaaaaa")
                 if (el[dispfieldkey] && el[dispfieldkey].length > 100) {
                   var optionText = el[dispfieldkey].substr(0, 100) + "...";
@@ -5561,7 +5606,7 @@ window.ListInfo = {
                   var optionText = el[dispfieldkey];
                 }
                 htmlBody +=
-                  '<option data-siblingvalue="' + el[element.valsiblingkey] + '" option-id="' +
+                  '<option data-siblingvalue="' + el[element.valsiblingkey] + '" ' + dataArraySiblingValues + ' option-id="' +
                   itemsID[index] +
                   '" value="' +
                   el[element.valfieldkey] + //data-parentrelatedkeylvl1 > to get the target element,data-parentrelatedvaluelvl1 > to save the value of parent like sector
