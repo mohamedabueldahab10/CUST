@@ -80,51 +80,56 @@ window.Information_Form = [
 				type: "dropdownValues",
 				options: {
 					choices: [
-						{
-							display: "baseline",
-							value: "manual",
-							//
-							fields: [
-								{
-									listName: "Projects",
-									label: "المشروع",
-									labelEn: "Project",
-									description: "",
-									descriptionEn: "",
-									//
-									InternalName: "Baseline",
-									DisplayName: "خط الأساس",
-									DisplayNameEn: "Baseline",
-									type: "datetime",
-								},
+						// {
+						// 	display: "baseline",
+						// 	value: "manual",
+						// 	//
+						// 	fields: [
+						// 		{
+						// 			listName: "Projects",
+						// 			label: "المشروع",
+						// 			labelEn: "Project",
+						// 			description: "",
+						// 			descriptionEn: "",
+						// 			//
+						// 			InternalName: "Baseline",
+						// 			DisplayName: "خط الأساس",
+						// 			DisplayNameEn: "Baseline",
+						// 			type: "datetime",
+						// 		},
 
-							],
-						},
-						{
-							display: "performanceindicators",
-							value: "automatic",
-							fields: [
-								{
-									listName: "ProjectsGoalsAndKPIs",
-									label: "بيانات هدف المشروع ",
-									labelEn: "Goal  Data",
-									description: "التفاصيل",
-									descriptionEn: "Details",
-									//
-									InternalName: "ProjectKPI",
-									DisplayNameEn: "Project KPI",
-									DisplayName: "مؤشر المشروع ",
-									type: "lookup",
-									source: "MainKPI",
-									Dispfieldkey: "Name",
-									valfieldkey: "Title",
-									validation: "required",
-								},
-							],
-						},
+						// 	],
+						// },
+						// {
+						// 	display: "performanceindicators",
+						// 	value: "automatic",
+						// 	fields: [
+						// 		{
+						// 			listName: "ProjectsGoalsAndKPIs",
+						// 			label: "بيانات هدف المشروع ",
+						// 			labelEn: "Goal  Data",
+						// 			description: "التفاصيل",
+						// 			descriptionEn: "Details",
+						// 			//
+						// 			InternalName: "ProjectKPI",
+						// 			DisplayNameEn: "Project KPI",
+						// 			DisplayName: "مؤشر المشروع ",
+						// 			type: "lookup",
+						// 			source: "MainKPI",
+						// 			Dispfieldkey: "Name",
+						// 			valfieldkey: "Title",
+						// 			validation: "required",
+						// 		},
+						// 	],
+						// },
 						// { display: "stakeholders", value: "automatic" },
 						{
 							display: "budget",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
+								{ fieldName: 'WFStage', value: 'VROCRProject01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
 							value: "manual",
 							fields: [
 								{
@@ -141,25 +146,35 @@ window.Information_Form = [
 								},
 							],
 						},
-						{ display: "projectseparation", value: "automatic" },
-						{
-							display: "projecthold",
-							value: "automatic",
-							fields: [
-								{
-									InternalName: "Status",
-									DisplayName: "حالة المشروع",
-									DisplayNameEn: "Project Status",
-									type: "dropdownValues",
-									validation: "required",
-									options: {
-										choices: [{ value: "cancelled", display: "cancelled" }],
-									},
-								},
-							],
-						},
+						{ display: "projectseparation", value: "automatic",	
+						otherFields: [
+							{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
+							{ fieldName: 'WFStage', value: 'VROCRProject01' },
+							// { fieldName: 'DraftStatus', value: 'draft' },
+						], },
+						// {
+						// 	display: "projecthold",
+						// 	value: "automatic",
+						// 	fields: [
+						// 		{
+						// 			InternalName: "Status",
+						// 			DisplayName: "حالة المشروع",
+						// 			DisplayNameEn: "Project Status",
+						// 			type: "dropdownValues",
+						// 			validation: "required",
+						// 			options: {
+						// 				choices: [{ value: "cancelled", display: "cancelled" }],
+						// 			},
+						// 		},
+						// 	],
+						// },
 						{
 							display: "pattr40",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
+								{ fieldName: 'WFStage', value: 'VROCRProject01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
 							value: "automatic",
 							fields: [
 								{
@@ -168,11 +183,11 @@ window.Information_Form = [
 									labelEn: "Project",
 									description: "",
 									descriptionEn: "",
-									InternalName: "PlannedStartDate",
-									DisplayName: "تاريخ بداية المشروع المخطط",
-									DisplayNameEn: "Expected Start Date ",
+									InternalName: "BaselineStartDate",
+									DisplayName: "تاريخ بدء الأساس",
+									DisplayNameEn: "Baseline Start Date",
 									type: "datetime",
-									max: "PlannedFinishDate",
+									max: "BaselineFinishDate",
 								},
 								{
 									listName: "Projects",
@@ -180,16 +195,21 @@ window.Information_Form = [
 									labelEn: "Project",
 									description: "",
 									descriptionEn: "",
-									InternalName: "PlannedFinishDate",
-									DisplayName: " تاريخ الانتهاء المخطط",
-									DisplayNameEn: "Expected End Date ",
+									InternalName: "BaselineFinishDate",
+									DisplayName: "تاريخ إنهاء الأساس",
+									DisplayNameEn: "Baseline Finish Date",
 									type: "datetime",
-									min: "PlannedStartDate",
+									min: "BaselineStartDate",
 								},
 							],
 						},
 						{
 							display: "range",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
+								{ fieldName: 'WFStage', value: 'VROCRProject01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
 							value: "automatic",
 							fields: [
 								{
@@ -209,6 +229,11 @@ window.Information_Form = [
 						},
 						{
 							display: "contract",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
+								{ fieldName: 'WFStage', value: 'VROCRProject01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
 							value: "manual",
 							fields: [
 								{
@@ -220,9 +245,18 @@ window.Information_Form = [
 								},
 							],
 						},
-						{ display: "implementationconsultant", value: "automatic" },
+						{ display: "implementationconsultant", value: "automatic",	otherFields: [
+							{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
+							{ fieldName: 'WFStage', value: 'VROCRProject01' },
+							// { fieldName: 'DraftStatus', value: 'draft' },
+						], },
 						{
 							display: "others",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
+								{ fieldName: 'WFStage', value: 'VROCRProject01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
 							value: "manual",
 							fields: [
 								{
@@ -251,53 +285,59 @@ window.Information_Form = [
 				customCr: true,
 				ToggleName: "lmsprojectsUpdateType",
 				type: "dropdownValues",
+				
 				options: {
 					choices: [
-						{
-							display: "baseline",
-							value: "manual",
-							//
-							fields: [
-								{
-									listName: "Projects",
-									label: "المشروع",
-									labelEn: "Project",
-									description: "",
-									descriptionEn: "",
-									//
-									InternalName: "Baseline",
-									DisplayName: "خط الأساس",
-									DisplayNameEn: "Baseline",
-									type: "datetime",
-								},
+						// {
+						// 	display: "baseline",
+						// 	value: "manual",
+						// 	//
+						// 	fields: [
+						// 		{
+						// 			listName: "Projects",
+						// 			label: "المشروع",
+						// 			labelEn: "Project",
+						// 			description: "",
+						// 			descriptionEn: "",
+						// 			//
+						// 			InternalName: "Baseline",
+						// 			DisplayName: "خط الأساس",
+						// 			DisplayNameEn: "Baseline",
+						// 			type: "datetime",
+						// 		},
 
-							],
-						},
-						{
-							display: "performanceindicators",
-							value: "automatic",
-							fields: [
-								{
-									listName: "ProjectsGoalsAndKPIs",
-									label: "بيانات هدف المشروع ",
-									labelEn: "Goal  Data",
-									description: "التفاصيل",
-									descriptionEn: "Details",
-									//
-									InternalName: "ProjectKPI",
-									DisplayNameEn: "Project KPI",
-									DisplayName: "مؤشر المشروع ",
-									type: "lookup",
-									source: "MainKPI",
-									Dispfieldkey: "Name",
-									valfieldkey: "Title",
-									validation: "required",
-								},
-							],
-						},
+						// 	],
+						// },
+						// {
+						// 	display: "performanceindicators",
+						// 	value: "automatic",
+						// 	fields: [
+						// 		{
+						// 			listName: "ProjectsGoalsAndKPIs",
+						// 			label: "بيانات هدف المشروع ",
+						// 			labelEn: "Goal  Data",
+						// 			description: "التفاصيل",
+						// 			descriptionEn: "Details",
+						// 			//
+						// 			InternalName: "ProjectKPI",
+						// 			DisplayNameEn: "Project KPI",
+						// 			DisplayName: "مؤشر المشروع ",
+						// 			type: "lookup",
+						// 			source: "MainKPI",
+						// 			Dispfieldkey: "Name",
+						// 			valfieldkey: "Title",
+						// 			validation: "required",
+						// 		},
+						// 	],
+						// },
 						// { display: "stakeholders", value: "automatic" },
 						{
 							display: "budget",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
+								{ fieldName: 'WFStage', value: 'LMSCRProject01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
 							value: "manual",
 							fields: [
 								{
@@ -314,25 +354,34 @@ window.Information_Form = [
 								},
 							],
 						},
-						{ display: "projectseparation", value: "automatic" },
-						{
-							display: "projecthold",
-							value: "automatic",
-							fields: [
-								{
-									InternalName: "Status",
-									DisplayName: "حالة المشروع",
-									DisplayNameEn: "Project Status",
-									type: "dropdownValues",
-									validation: "required",
-									options: {
-										choices: [{ value: "cancelled", display: "cancelled" }],
-									},
-								},
-							],
-						},
+						{ display: "projectseparation", value: "automatic",otherFields: [
+							{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
+							{ fieldName: 'WFStage', value: 'LMSCRProject01' },
+							// { fieldName: 'DraftStatus', value: 'draft' },
+						], },
+						// {
+						// 	display: "projecthold",
+						// 	value: "automatic",
+						// 	fields: [
+						// 		{
+						// 			InternalName: "Status",
+						// 			DisplayName: "حالة المشروع",
+						// 			DisplayNameEn: "Project Status",
+						// 			type: "dropdownValues",
+						// 			validation: "required",
+						// 			options: {
+						// 				choices: [{ value: "cancelled", display: "cancelled" }],
+						// 			},
+						// 		},
+						// 	],
+						// },
 						{
 							display: "pattr40",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
+								{ fieldName: 'WFStage', value: 'LMSCRProject01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
 							value: "automatic",
 							fields: [
 								{
@@ -341,11 +390,11 @@ window.Information_Form = [
 									labelEn: "Project",
 									description: "",
 									descriptionEn: "",
-									InternalName: "PlannedStartDate",
-									DisplayName: "تاريخ بداية المشروع المخطط",
-									DisplayNameEn: "Expected Start Date ",
+									InternalName: "BaselineStartDate",
+									DisplayName: "تاريخ بدء الأساس",
+									DisplayNameEn: "Baseline Start Date",
 									type: "datetime",
-									max: "PlannedFinishDate",
+									max: "BaselineFinishDate",
 								},
 								{
 									listName: "Projects",
@@ -353,16 +402,21 @@ window.Information_Form = [
 									labelEn: "Project",
 									description: "",
 									descriptionEn: "",
-									InternalName: "PlannedFinishDate",
-									DisplayName: " تاريخ الانتهاء المخطط",
-									DisplayNameEn: "Expected End Date ",
+									InternalName: "BaselineFinishDate",
+									DisplayName: "تاريخ إنهاء الأساس",
+									DisplayNameEn: "Baseline Finish Date",
 									type: "datetime",
-									min: "PlannedStartDate",
+									min: "BaselineStartDate",
 								},
 							],
 						},
 						{
 							display: "range",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
+								{ fieldName: 'WFStage', value: 'LMSCRProject01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
 							value: "automatic",
 							fields: [
 								{
@@ -382,6 +436,11 @@ window.Information_Form = [
 						},
 						{
 							display: "contract",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
+								{ fieldName: 'WFStage', value: 'LMSCRProject01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
 							value: "manual",
 							fields: [
 								{
@@ -393,9 +452,19 @@ window.Information_Form = [
 								},
 							],
 						},
-						{ display: "implementationconsultant", value: "automatic" },
+						{ display: "implementationconsultant", value: "automatic",
+						otherFields: [
+							{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
+							{ fieldName: 'WFStage', value: 'LMSCRProject01' },
+							// { fieldName: 'DraftStatus', value: 'draft' },
+						], },
 						{
 							display: "others",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
+								{ fieldName: 'WFStage', value: 'LMSCRProject01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
 							value: "manual",
 							fields: [
 								{
@@ -423,51 +492,52 @@ window.Information_Form = [
 				display: "none",
 				customCr: true,
 				ToggleName: "epmoprojectsUpdateType",
+				
 				type: "dropdownValues",
 				options: {
 					choices: [
-						{
-							display: "baseline",
-							value: "manual",
-							//
-							fields: [
-								{
-									listName: "Projects",
-									label: "المشروع",
-									labelEn: "Project",
-									description: "",
-									descriptionEn: "",
-									//
-									InternalName: "Baseline",
-									DisplayName: "خط الأساس",
-									DisplayNameEn: "Baseline",
-									type: "datetime",
-								},
+						// {
+						// 	display: "baseline",
+						// 	value: "manual",
+						// 	//
+						// 	fields: [
+						// 		{
+						// 			listName: "Projects",
+						// 			label: "المشروع",
+						// 			labelEn: "Project",
+						// 			description: "",
+						// 			descriptionEn: "",
+						// 			//
+						// 			InternalName: "Baseline",
+						// 			DisplayName: "خط الأساس",
+						// 			DisplayNameEn: "Baseline",
+						// 			type: "datetime",
+						// 		},
 
-							],
-						},
-						{
-							display: "performanceindicators",
-							value: "automatic",
-							fields: [
-								{
-									listName: "ProjectsGoalsAndKPIs",
-									label: "بيانات هدف المشروع ",
-									labelEn: "Goal  Data",
-									description: "التفاصيل",
-									descriptionEn: "Details",
-									//
-									InternalName: "ProjectKPI",
-									DisplayNameEn: "Project KPI",
-									DisplayName: "مؤشر المشروع ",
-									type: "lookup",
-									source: "MainKPI",
-									Dispfieldkey: "Name",
-									valfieldkey: "Title",
-									validation: "required",
-								},
-							],
-						},
+						// 	],
+						// },
+						// {
+						// 	display: "performanceindicators",
+						// 	value: "automatic",
+						// 	fields: [
+						// 		{
+						// 			listName: "ProjectsGoalsAndKPIs",
+						// 			label: "بيانات هدف المشروع ",
+						// 			labelEn: "Goal  Data",
+						// 			description: "التفاصيل",
+						// 			descriptionEn: "Details",
+						// 			//
+						// 			InternalName: "ProjectKPI",
+						// 			DisplayNameEn: "Project KPI",
+						// 			DisplayName: "مؤشر المشروع ",
+						// 			type: "lookup",
+						// 			source: "MainKPI",
+						// 			Dispfieldkey: "Name",
+						// 			valfieldkey: "Title",
+						// 			validation: "required",
+						// 		},
+						// 	],
+						// },
 						// { display: "stakeholders", value: "automatic" },
 						{
 							display: "budget",
@@ -485,28 +555,41 @@ window.Information_Form = [
 									DisplayNameEn: "Change Request Details",
 									type: "multiline",
 								},
+							],otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
+								{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
 							],
 						},
-						{ display: "projectseparation", value: "automatic" },
-						{
-							display: "projecthold",
-							value: "automatic",
-							fields: [
-								{
-									InternalName: "Status",
-									DisplayName: "حالة المشروع",
-									DisplayNameEn: "Project Status",
-									type: "dropdownValues",
-									validation: "required",
-									options: {
-										choices: [{ value: "cancelled", display: "cancelled" }],
-									},
-								},
-							],
-						},
+						{ display: "projectseparation", value: "automatic", otherFields: [
+							{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
+							{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
+							// { fieldName: 'DraftStatus', value: 'draft' },
+						],},
+						// {
+						// 	display: "projecthold",
+						// 	value: "automatic",
+						// 	fields: [
+						// 		{
+						// 			InternalName: "Status",
+						// 			DisplayName: "حالة المشروع",
+						// 			DisplayNameEn: "Project Status",
+						// 			type: "dropdownValues",
+						// 			validation: "required",
+						// 			options: {
+						// 				choices: [{ value: "cancelled", display: "cancelled" }],
+						// 			},
+						// 		},
+						// 	],
+						// },
 						{
 							display: "pattr40",
 							value: "automatic",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
+								{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
 							fields: [
 								{
 									listName: "Projects",
@@ -514,11 +597,11 @@ window.Information_Form = [
 									labelEn: "Project",
 									description: "",
 									descriptionEn: "",
-									InternalName: "PlannedStartDate",
-									DisplayName: "تاريخ بداية المشروع المخطط",
-									DisplayNameEn: "Expected Start Date ",
+									InternalName: "BaselineStartDate",
+									DisplayName: "تاريخ بدء الأساس",
+									DisplayNameEn: "Baseline Start Date",
 									type: "datetime",
-									max: "PlannedFinishDate",
+									max: "BaselineFinishDate",
 								},
 								{
 									listName: "Projects",
@@ -526,17 +609,22 @@ window.Information_Form = [
 									labelEn: "Project",
 									description: "",
 									descriptionEn: "",
-									InternalName: "PlannedFinishDate",
-									DisplayName: " تاريخ الانتهاء المخطط",
-									DisplayNameEn: "Expected End Date ",
+									InternalName: "BaselineFinishDate",
+									DisplayName: "تاريخ إنهاء الأساس",
+									DisplayNameEn: "Baseline Finish Date",
 									type: "datetime",
-									min: "PlannedStartDate",
+									min: "BaselineStartDate",
 								},
 							],
 						},
 						{
 							display: "range",
 							value: "automatic",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
+								{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
 							fields: [
 								{
 									listName: "Projects",
@@ -555,6 +643,11 @@ window.Information_Form = [
 						},
 						{
 							display: "contract",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
+								{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
 							value: "manual",
 							fields: [
 								{
@@ -566,10 +659,20 @@ window.Information_Form = [
 								},
 							],
 						},
-						{ display: "implementationconsultant", value: "automatic" },
+						{ display: "implementationconsultant", value: "automatic",
+						otherFields: [
+							{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
+							{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
+							// { fieldName: 'DraftStatus', value: 'draft' },
+						], },
 						{
 							display: "others",
 							value: "manual",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
+								{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
 							fields: [
 								{
 									listName: "",
