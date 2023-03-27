@@ -23,8 +23,9 @@ var Information_Form = [
           ],
         },
         toggleValues: [
-          {value: 'stackholderexternal', fields: []},
-          { value: 'stackholderinternal', fields: ['Username'] }],
+          { value: 'stackholderinternal', fields: ['Username'] }, 
+          { value: 'stackholderexternal', fields: ['Name'] }, 
+        ],
         validation: 'required',
       },
       {
@@ -40,7 +41,13 @@ var Information_Form = [
         InternalName: 'Name',
         DisplayName: 'الاسم',
         DisplayNameEn: 'Name',
-        type: 'string',
+        type: 'lookup',
+        source: 'External Owners',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        validation: 'required',
+        // display: 'none',
+        ToggleName: 'Name',
       },
       {
         InternalName: 'JobTitle',

@@ -16,7 +16,10 @@ var Information_Form = [
             { display: 'stackholderexternal', value: 'stackholderexternal' },
           ],
         },
-        "toggleValues": [{ value: 'stackholderinternal', fields: ['Username'] }],
+        toggleValues: [
+          { value: 'stackholderinternal', fields: ['Username'] }, 
+          { value: 'stackholderexternal', fields: ['Name'] }, 
+        ],
         validation: 'required',
       },
       {
@@ -25,19 +28,20 @@ var Information_Form = [
         DisplayName: 'اسم المستخدم',
         type: 'picker', //user
         validation: 'required',
+        display: 'none',
         ToggleName: 'Username',
-        display: 'none'
       },
-
       {
         InternalName: 'Name',
         DisplayName: 'الاسم',
         DisplayNameEn: 'Name',
-        type: 'string',
+        type: 'lookup',
+        source: 'External Owners',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
         validation: 'required',
-        maxchar: '255',
-        withletters:true,
-        Errmsgkey:"withletterpattern",
+        display: 'none',
+        ToggleName: 'Name',
       },
       {
         InternalName: 'JobTitle',
