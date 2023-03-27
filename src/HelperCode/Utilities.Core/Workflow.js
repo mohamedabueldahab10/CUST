@@ -159,18 +159,18 @@ var workflowname,
 	isVROCreateObjective = window.location.href.indexOf("sos&VROCreateObjective") > -1,
 	isMSCreateObjective = window.location.href.indexOf("sos&MSCreateObjective") > -1,
 	isLMSCreateObjective = window.location.href.indexOf("sos&LMSCreateObjective") > -1
-	// ghufran
-	isVROCRProject = window.location.href.indexOf("projects&VROCRProject") > -1,
+// ghufran
+isVROCRProject = window.location.href.indexOf("projects&VROCRProject") > -1,
 	isEPMOCRProject = window.location.href.indexOf("projects&EPMOCRProject") > -1,
 	isLMSCRProject = window.location.href.indexOf("projects&LMSCRProject") > -1,
 	// 
 	isProjectCancellationRequestWF =
-		window.location.href.indexOf("projectcancellationrequest") > -1,
+	window.location.href.indexOf("projectcancellationrequest") > -1,
 	isDeliverabletWF = window.location.href.indexOf("deliveriesreport") > -1,
 	isInitiativeBenefitWF =
-		window.location.href.indexOf("initiativebenefits") > -1,
+	window.location.href.indexOf("initiativebenefits") > -1,
 	isProjectDeligationsWf =
-		window.location.href.indexOf("projectdeligations") > -1,
+	window.location.href.indexOf("projectdeligations") > -1,
 	isExceptionRequestWf = window.location.href.indexOf("exceptionrequest") > -1,
 	isGatesWf = window.location.href.indexOf("gates") > -1,
 	isExecutiveTasksWf = window.location.href.indexOf("executivetasks") > -1,
@@ -178,15 +178,17 @@ var workflowname,
 	isIssuePage = window.location.href.indexOf("issues") > -1,
 	isMomPage = window.location.href.indexOf("mom") > -1,
 	// isMainKPIPage = window.location.href.indexOf("mainkpi") > -1,
-	isProjectPage = window.location.href.indexOf("projects") > -1,
-	fieldtoedit,
+	isProjectPage = window.location.href.indexOf("projects") > -1;
+
+var fieldtoedit,
 	bulkeditlist,
 	bulkeditquery,
 	taskquery,
 	IID2,
 	RID,
-	isschedule = window.location.href.indexOf("schedule.aspx") > -1,
-	isExecuteCR = false;
+	isExecuteCR = false,
+	isschedule = window.location.href.indexOf("schedule.aspx") > -1;
+
 window.lastIdeaQuery;
 window.isView = window.location.href.toLowerCase().indexOf("view.aspx") > -1;
 var thirdActionInfo = "";
@@ -235,7 +237,7 @@ if (
 	No_Data = "No Data";
 }
 
-
+debugger
 // if (isChangeRequestPage) {
 // 	workflowname = "CR";
 // 	fieldtoedit = "SubmitForApproval";
@@ -415,7 +417,7 @@ else if (isStrategicPartnerships) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isLMSInitiative) {
-	
+
 	workflowname = "LMSInitiative";
 	bulkeditlist = "Initiatives";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -431,7 +433,7 @@ else if (isLMSInitiative) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isVROCRInitiative) {
-	
+
 	workflowname = "VROCRInitiative";
 	bulkeditlist = "Initiatives";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -447,7 +449,7 @@ else if (isVROCRInitiative) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isEPMOCRInitiative) {
-	
+
 	workflowname = "EPMOCRInitiative";
 	bulkeditlist = "Initiatives";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -463,7 +465,7 @@ else if (isEPMOCRInitiative) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isLMSCRInitiative) {
-	
+
 	workflowname = "LMSCRInitiative";
 	bulkeditlist = "Initiatives";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -479,7 +481,7 @@ else if (isLMSCRInitiative) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isVROCRProject) {
-	
+
 	workflowname = "VROCRProject";
 	bulkeditlist = "Projects";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -495,7 +497,7 @@ else if (isVROCRProject) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isEPMOCRProject) {
-	
+
 	workflowname = "EPMOCRProject";
 	bulkeditlist = "Projects";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -511,7 +513,7 @@ else if (isEPMOCRProject) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isLMSCRProject) {
-	
+
 	workflowname = "LMSCRProject";
 	bulkeditlist = "Projects";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -527,7 +529,7 @@ else if (isLMSCRProject) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isVROBenefitActual) {
-	
+
 	workflowname = "VROBenefitActual";
 	bulkeditlist = "Benefits";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -543,7 +545,7 @@ else if (isVROBenefitActual) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isEPMOBenefitActual) {
-	
+
 	workflowname = "EPMOBenefitActual";
 	bulkeditlist = "Benefits";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -559,7 +561,7 @@ else if (isEPMOBenefitActual) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isLMSBenefitActual) {
-	
+
 	workflowname = "LMSBenefitActual";
 	bulkeditlist = "Benefits";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -575,7 +577,7 @@ else if (isLMSBenefitActual) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isVROInitiativeMilestone) {
-	
+
 	workflowname = "VROInitiativeMilestone";
 	bulkeditlist = "InitiativeMilestones";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -591,7 +593,7 @@ else if (isVROInitiativeMilestone) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isEPMOInitiativeMilestone) {
-	
+
 	workflowname = "EPMOInitiativeMilestone";
 	bulkeditlist = "InitiativeMilestones";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -607,7 +609,7 @@ else if (isEPMOInitiativeMilestone) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isLMSInitiativeMilestone) {
-	
+
 	workflowname = "LMSInitiativeMilestone";
 	bulkeditlist = "InitiativeMilestones";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -623,7 +625,7 @@ else if (isLMSInitiativeMilestone) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isVROInitiativeDeliverable) {
-	
+
 	workflowname = "VROInitiativeDeliverable";
 	bulkeditlist = "InitiativeDeliverables";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -639,7 +641,7 @@ else if (isVROInitiativeDeliverable) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isEPMOInitiativeDeliverable) {
-	
+
 	workflowname = "EPMOInitiativeDeliverable";
 	bulkeditlist = "InitiativeDeliverables";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -655,7 +657,7 @@ else if (isEPMOInitiativeDeliverable) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isLMSInitiativeDeliverable) {
-	
+
 	workflowname = "LMSInitiativeDeliverable";
 	bulkeditlist = "InitiativeDeliverables";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -671,7 +673,7 @@ else if (isLMSInitiativeDeliverable) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isVROProjMilestone) {
-	
+
 	workflowname = "VROProjMilestone";
 	bulkeditlist = "Milestones";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -687,7 +689,7 @@ else if (isVROProjMilestone) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isEPMOProjMilestone) {
-	
+
 	workflowname = "EPMOProjMilestone";
 	bulkeditlist = "Milestones";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -703,7 +705,7 @@ else if (isEPMOProjMilestone) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isLMSProjMilestone) {
-	
+
 	workflowname = "LMSProjMilestone";
 	bulkeditlist = "Milestones";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -719,7 +721,7 @@ else if (isLMSProjMilestone) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isVROCOC) {
-	
+
 	workflowname = "VROCOC";
 	bulkeditlist = "Certifications";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -735,7 +737,7 @@ else if (isVROCOC) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isEPMOCOC) {
-	
+
 	workflowname = "EPMOCOC";
 	bulkeditlist = "Certifications";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -751,7 +753,7 @@ else if (isEPMOCOC) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isLMSCOC) {
-	
+
 	workflowname = "LMSCOC";
 	bulkeditlist = "Certifications";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -767,7 +769,7 @@ else if (isLMSCOC) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isVROProjDeliverable) {
-	
+
 	workflowname = "VROProjDeliverable";
 	bulkeditlist = "Deliverables";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -783,7 +785,7 @@ else if (isVROProjDeliverable) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isEPMOProjDeliverable) {
-	
+
 	workflowname = "EPMOProjDeliverable";
 	bulkeditlist = "Deliverables";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -799,7 +801,7 @@ else if (isEPMOProjDeliverable) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isLMSProjDeliverable) {
-	
+
 	workflowname = "LMSProjDeliverable";
 	bulkeditlist = "Deliverables";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -815,7 +817,7 @@ else if (isLMSProjDeliverable) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isVROCRObjective) {
-	
+
 	workflowname = "VROCRObjective";
 	bulkeditlist = "Change Request";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -831,7 +833,7 @@ else if (isVROCRObjective) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isMSCRObjective) {
-	
+
 	workflowname = "MSCRObjective";
 	bulkeditlist = "Change Request";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -847,7 +849,7 @@ else if (isMSCRObjective) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isLMSCRObjective) {
-	
+
 	workflowname = "LMSCRObjective";
 	bulkeditlist = "Change Request";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -863,7 +865,7 @@ else if (isLMSCRObjective) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isVROCreateObjective) {
-	
+
 	workflowname = "VROCreateObjective";
 	bulkeditlist = "SOs";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -879,7 +881,7 @@ else if (isVROCreateObjective) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isMSCreateObjective) {
-	
+
 	workflowname = "MSCreateObjective";
 	bulkeditlist = "SOs";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -895,7 +897,7 @@ else if (isMSCreateObjective) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isLMSCreateObjective) {
-	
+
 	workflowname = "LMSCreateObjective";
 	bulkeditlist = "SOs";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -911,7 +913,7 @@ else if (isLMSCreateObjective) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isVROCRKPI) {
-	
+
 	workflowname = "VROCRKPI";
 	bulkeditlist = "MainKPI";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -927,7 +929,7 @@ else if (isVROCRKPI) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isMSCRKPI) {
-	
+
 	workflowname = "MSCRKPI";
 	bulkeditlist = "MainKPI";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -943,7 +945,7 @@ else if (isMSCRKPI) {
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
 else if (isLMSCRKPI) {
-	
+
 	workflowname = "LMSCRKPI";
 	bulkeditlist = "MainKPI";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -1455,7 +1457,7 @@ var Task_PCODE_Data_Request_WFs = {
 				: "";
 			// condition = oListItem.get_item('Condition');
 			var tasktitlearr = [];
-			
+
 			if (localStorage.getItem("Dynamo_Tasks Configuration") != null) {
 				tasktitlearr = JSON.parse(
 					localStorage.getItem("Dynamo_Tasks Configuration") || "[]"
@@ -1550,7 +1552,7 @@ var Task_PCODE_Data_Request_WFs = {
 			}
 			console.log("in handle tak action")
 
-			
+
 			//  alert(tasktype);
 			switch (tasktype) {
 				case "ProjectTask":
@@ -2350,7 +2352,7 @@ window.isWfFirst_Upload = true;
 var SubmitField_BulkEdit = {
 	preinit: function (state, withNote = false) {
 
-		
+
 
 		globalStateSubmitField = state;
 		if (stageid == "S01" && isWfFirst_Upload) {
@@ -4182,7 +4184,7 @@ function changeOnKpiResultDraft(state) {
 					function () {
 
 						dfd.resolve();
-						
+
 						Task_Edit_Data.init();
 
 					},
