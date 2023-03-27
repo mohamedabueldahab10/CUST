@@ -25,8 +25,8 @@ window.Information_Form = [
 						{ display: "lmsobjectives", value: "lmsobjectives", roles: ['Administrator', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
 						//projects
 						{ display: "vroprojects", value: "vroprojects", roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'] },
-						{ display: "epmoprojects", value: "epmorojects", roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'] },
-						{ display: "lmsprojects", value: "lmsrojects", roles: ['Administrator', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
+						{ display: "epmoprojects", value: "epmoprojects", roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'] },
+						{ display: "lmsprojects", value: "lmsprojects", roles: ['Administrator', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
 						//Initiatives
 						{ display: "strategicinitiatives", value: "strategicinitiatives", roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'] },
 						{ display: "vroinitiatives", value: "vroinitiatives", roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'] },
@@ -38,7 +38,9 @@ window.Information_Form = [
 					],
 				},
 				toggleValues: [
-					{ value: "Projects", fields: ["ProjectCode", "projectsUpdateType"] }, //we can put more than 1  field
+					{ value: "vroprojects", fields: ["ProjectCode", "vroprojects"] }, //we can put more than 1  field
+					{ value: "epmoprojects", fields: ["ProjectCode", "epmoprojects"] }, //we can put more than 1  field
+					{ value: "lmsprojects", fields: ["ProjectCode", "lmsprojects"] }, //we can put more than 1  field
 					//Initiatives
 					{ value: "strategicinitiatives", fields: ["InitiativeCode", "strategicinitiatives"] }, //we can put more than 1  field
 					{ value: "vroinitiatives", fields: ["InitiativeCode", "vroinitiatives"] }, //we can put more than 1  field
@@ -76,7 +78,9 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
-				ToggleName: "projectsUpdateType",
+				ToggleName: "vroprojects",
+				// ToggleName: "epmoprojects",
+				// ToggleName: "lmsprojects",
 				type: "dropdownValues",
 				options: {
 					choices: [
@@ -234,7 +238,362 @@ window.Information_Form = [
 								},
 							],
 						},
-						{ display: "deletion", value: "delete" }
+						{ display: "deletion", value: "delete",
+						otherFields: [
+							{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
+							{ fieldName: 'WFStage', value: 'VROCRProject01' },
+							// { fieldName: 'DraftStatus', value: 'draft' },
+						], }
+					],
+				},
+			},
+			{
+				InternalName: "UpdateType",
+				DisplayName: "نوع طلب التغيير",
+				DisplayNameEn: "Change Request Type",
+				display: "none",
+				customCr: true,
+				// ToggleName: "vroprojects",
+				// ToggleName: "epmoprojects",
+				ToggleName: "lmsprojects",
+				type: "dropdownValues",
+				options: {
+					choices: [
+						{
+							display: "baseline",
+							value: "manual",
+							//
+							fields: [
+								{
+									listName: "Projects",
+									label: "المشروع",
+									labelEn: "Project",
+									description: "",
+									descriptionEn: "",
+									//
+									InternalName: "Baseline",
+									DisplayName: "خط الأساس",
+									DisplayNameEn: "Baseline",
+									type: "datetime",
+								},
+
+							],
+						},
+						{
+							display: "performanceindicators",
+							value: "automatic",
+							fields: [
+								{
+									listName: "ProjectsGoalsAndKPIs",
+									label: "بيانات هدف المشروع ",
+									labelEn: "Goal  Data",
+									description: "التفاصيل",
+									descriptionEn: "Details",
+									//
+									InternalName: "ProjectKPI",
+									DisplayNameEn: "Project KPI",
+									DisplayName: "مؤشر المشروع ",
+									type: "lookup",
+									source: "MainKPI",
+									Dispfieldkey: "Name",
+									valfieldkey: "Title",
+									validation: "required",
+								},
+							],
+						},
+						// { display: "stakeholders", value: "automatic" },
+						{
+							display: "budget",
+							value: "manual",
+							fields: [
+								{
+									listName: "",
+									label: "طلب تغيير الميزانية",
+									labelEn: "Budget Change Request",
+									description: "التفاصيل",
+									descriptionEn: "Details",
+									//
+									InternalName: "",
+									DisplayName: "تفاصيل طلب التغيير",
+									DisplayNameEn: "Change Request Details",
+									type: "multiline",
+								},
+							],
+						},
+						{ display: "projectseparation", value: "automatic" },
+						{
+							display: "projecthold",
+							value: "automatic",
+							fields: [
+								{
+									InternalName: "Status",
+									DisplayName: "حالة المشروع",
+									DisplayNameEn: "Project Status",
+									type: "dropdownValues",
+									validation: "required",
+									options: {
+										choices: [{ value: "cancelled", display: "cancelled" }],
+									},
+								},
+							],
+						},
+						{
+							display: "pattr40",
+							value: "automatic",
+							fields: [
+								{
+									listName: "Projects",
+									label: "المشروع",
+									labelEn: "Project",
+									description: "",
+									descriptionEn: "",
+									InternalName: "PlannedStartDate",
+									DisplayName: "تاريخ بداية المشروع المخطط",
+									DisplayNameEn: "Expected Start Date ",
+									type: "datetime",
+									max: "PlannedFinishDate",
+								},
+								{
+									listName: "Projects",
+									label: "المشروع",
+									labelEn: "Project",
+									description: "",
+									descriptionEn: "",
+									InternalName: "PlannedFinishDate",
+									DisplayName: " تاريخ الانتهاء المخطط",
+									DisplayNameEn: "Expected End Date ",
+									type: "datetime",
+									min: "PlannedStartDate",
+								},
+							],
+						},
+						{
+							display: "range",
+							value: "automatic",
+							fields: [
+								{
+									listName: "Projects",
+									label: "المشروع",
+									labelEn: "Project",
+									description: "",
+									descriptionEn: "",
+									InternalName: "ScopeOfWork",
+									DisplayName: "نطاق العمل",
+									DisplayNameEn: "ScopeOfWork",
+									type: "multiline",
+									validation: "required",
+									maxchar: 5000,
+								},
+							],
+						},
+						{
+							display: "contract",
+							value: "manual",
+							fields: [
+								{
+									listName: "",
+									InternalName: "",
+									DisplayName: "تفاصيل طلب التغيير",
+									DisplayNameEn: "Change Request Details",
+									type: "multiline",
+								},
+							],
+						},
+						{ display: "implementationconsultant", value: "automatic" },
+						{
+							display: "others",
+							value: "manual",
+							fields: [
+								{
+									listName: "",
+									InternalName: "",
+									DisplayName: "تفاصيل طلب التغيير",
+									DisplayNameEn: "Change Request Details",
+									type: "multiline",
+								},
+							],
+						},
+						{ display: "deletion", value: "delete",
+						otherFields: [
+							{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
+							{ fieldName: 'WFStage', value: 'LMSCRProject01' },
+							// { fieldName: 'DraftStatus', value: 'draft' },
+						], }
+					],
+				},
+			},
+			{
+				InternalName: "UpdateType",
+				DisplayName: "نوع طلب التغيير",
+				DisplayNameEn: "Change Request Type",
+				display: "none",
+				customCr: true,
+				// ToggleName: "vroprojects",
+				ToggleName: "epmoprojects",
+				// ToggleName: "lmsprojects",
+				type: "dropdownValues",
+				options: {
+					choices: [
+						{
+							display: "baseline",
+							value: "manual",
+							//
+							fields: [
+								{
+									listName: "Projects",
+									label: "المشروع",
+									labelEn: "Project",
+									description: "",
+									descriptionEn: "",
+									//
+									InternalName: "Baseline",
+									DisplayName: "خط الأساس",
+									DisplayNameEn: "Baseline",
+									type: "datetime",
+								},
+
+							],
+						},
+						{
+							display: "performanceindicators",
+							value: "automatic",
+							fields: [
+								{
+									listName: "ProjectsGoalsAndKPIs",
+									label: "بيانات هدف المشروع ",
+									labelEn: "Goal  Data",
+									description: "التفاصيل",
+									descriptionEn: "Details",
+									//
+									InternalName: "ProjectKPI",
+									DisplayNameEn: "Project KPI",
+									DisplayName: "مؤشر المشروع ",
+									type: "lookup",
+									source: "MainKPI",
+									Dispfieldkey: "Name",
+									valfieldkey: "Title",
+									validation: "required",
+								},
+							],
+						},
+						// { display: "stakeholders", value: "automatic" },
+						{
+							display: "budget",
+							value: "manual",
+							fields: [
+								{
+									listName: "",
+									label: "طلب تغيير الميزانية",
+									labelEn: "Budget Change Request",
+									description: "التفاصيل",
+									descriptionEn: "Details",
+									//
+									InternalName: "",
+									DisplayName: "تفاصيل طلب التغيير",
+									DisplayNameEn: "Change Request Details",
+									type: "multiline",
+								},
+							],
+						},
+						{ display: "projectseparation", value: "automatic" },
+						{
+							display: "projecthold",
+							value: "automatic",
+							fields: [
+								{
+									InternalName: "Status",
+									DisplayName: "حالة المشروع",
+									DisplayNameEn: "Project Status",
+									type: "dropdownValues",
+									validation: "required",
+									options: {
+										choices: [{ value: "cancelled", display: "cancelled" }],
+									},
+								},
+							],
+						},
+						{
+							display: "pattr40",
+							value: "automatic",
+							fields: [
+								{
+									listName: "Projects",
+									label: "المشروع",
+									labelEn: "Project",
+									description: "",
+									descriptionEn: "",
+									InternalName: "PlannedStartDate",
+									DisplayName: "تاريخ بداية المشروع المخطط",
+									DisplayNameEn: "Expected Start Date ",
+									type: "datetime",
+									max: "PlannedFinishDate",
+								},
+								{
+									listName: "Projects",
+									label: "المشروع",
+									labelEn: "Project",
+									description: "",
+									descriptionEn: "",
+									InternalName: "PlannedFinishDate",
+									DisplayName: " تاريخ الانتهاء المخطط",
+									DisplayNameEn: "Expected End Date ",
+									type: "datetime",
+									min: "PlannedStartDate",
+								},
+							],
+						},
+						{
+							display: "range",
+							value: "automatic",
+							fields: [
+								{
+									listName: "Projects",
+									label: "المشروع",
+									labelEn: "Project",
+									description: "",
+									descriptionEn: "",
+									InternalName: "ScopeOfWork",
+									DisplayName: "نطاق العمل",
+									DisplayNameEn: "ScopeOfWork",
+									type: "multiline",
+									validation: "required",
+									maxchar: 5000,
+								},
+							],
+						},
+						{
+							display: "contract",
+							value: "manual",
+							fields: [
+								{
+									listName: "",
+									InternalName: "",
+									DisplayName: "تفاصيل طلب التغيير",
+									DisplayNameEn: "Change Request Details",
+									type: "multiline",
+								},
+							],
+						},
+						{ display: "implementationconsultant", value: "automatic" },
+						{
+							display: "others",
+							value: "manual",
+							fields: [
+								{
+									listName: "",
+									InternalName: "",
+									DisplayName: "تفاصيل طلب التغيير",
+									DisplayNameEn: "Change Request Details",
+									type: "multiline",
+								},
+							],
+						},
+						{ display: "deletion", value: "delete",
+						otherFields: [
+							{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
+							{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
+							// { fieldName: 'DraftStatus', value: 'draft' },
+						], }
 					],
 				},
 			},
@@ -415,7 +774,7 @@ window.Information_Form = [
 							],
 							otherFields: [
 								{ fieldName: 'WFModuleCode', value: 'MSCRObjective' },
-								{ fieldName: 'WFStage', value: 'MSCRObjective01' },
+								{ fieldName: 'WFStage', value: 'MSCRSOS01' },
 								// { fieldName: 'DraftStatus', value: 'draft' },
 							],
 						},
@@ -423,7 +782,7 @@ window.Information_Form = [
 							display: "deletion", value: "delete",
 							otherFields: [
 								{ fieldName: 'WFModuleCode', value: 'MSCRObjective' },
-								{ fieldName: 'WFStage', value: 'MSCRObjective01' },
+								{ fieldName: 'WFStage', value: 'MSCRSOS01' },
 								// { fieldName: 'DraftStatus', value: 'draft' },
 							],
 						}
@@ -489,7 +848,7 @@ window.Information_Form = [
 
 							], otherFields: [
 								{ fieldName: 'WFModuleCode', value: 'LMSCRObjective' },
-								{ fieldName: 'WFStage', value: 'LMSCRObjective01' },
+								{ fieldName: 'WFStage', value: 'LMSCRSOS01' },
 								// { fieldName: 'DraftStatus', value: 'draft' },
 							],
 						},
@@ -497,7 +856,7 @@ window.Information_Form = [
 							display: "deletion", value: "delete",
 							otherFields: [
 								{ fieldName: 'WFModuleCode', value: 'LMSCRObjective' },
-								{ fieldName: 'WFStage', value: 'LMSCRObjective01' },
+								{ fieldName: 'WFStage', value: 'LMSCRSOS01' },
 								// { fieldName: 'DraftStatus', value: 'draft' },
 							],
 						}
