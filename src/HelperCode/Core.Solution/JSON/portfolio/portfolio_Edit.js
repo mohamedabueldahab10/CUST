@@ -5,8 +5,8 @@ var Information_Form = [{
     descriptionEn: "Details",
     subFields: [{
             "InternalName": "Name",
-            "DisplayName": "إسم المحفظة",
-            "DisplayNameEn": "Portfolio Name",
+            "DisplayName": "إسم المحفظة باللغة العربية",
+            "DisplayNameEn": "Portfolio Name (Arabic)",
             "type": "string",
             "validation": "required",
             "Errmsgkey":"arnamepattern",
@@ -14,7 +14,7 @@ var Information_Form = [{
         {
             "InternalName": "NameEn",
             "DisplayName": "إسم المحفظة باللغة الانجليزية",
-            "DisplayNameEn": "Portfolio Name(English)",
+            "DisplayNameEn": "Portfolio Name (English)",
             "type": "string",
             "validation": "required",
             "Errmsgkey":"ennamepattern",

@@ -45,7 +45,7 @@ var Listing_Info = [
 		"InternalName": "Delivered",
 		"DisplayName": "تم التسليم",
 		"DisplayNameEn": "Delivered",
-		"type": "text",
+		"type": "yesnoradio",
 		needTrans: true,
 		inlisting: true,
 		infilter: true

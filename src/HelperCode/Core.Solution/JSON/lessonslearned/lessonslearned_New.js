@@ -24,6 +24,7 @@ var Information_Form  = [
                 "DisplayName":"المصدر",
                 "DisplayNameEn": "Source",
                 "type":"dropdownValues",
+                "validation": "required",
                 options:{
                     choices:
                     [
@@ -36,7 +37,8 @@ var Information_Form  = [
                 "InternalName": "Date",
                 "DisplayName":"التاريخ",
                 "DisplayNameEn": "Date",
-                "type":"datetime"
+                "type":"datetime",
+                "validation": "required",
             },
             {
                 "InternalName": "Description",
