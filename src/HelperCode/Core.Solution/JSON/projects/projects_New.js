@@ -193,8 +193,8 @@ var Information_Form = [
         // hideonstage: "1"
       },
       {
-        InternalName: 'Types',
-        DisplayNameEn: 'Types',
+        InternalName: 'InitiativeType',
+        DisplayNameEn: 'Initiative Type',
         DisplayName: 'نوع المبادرة',
         validation: 'required',
         dynamic: 'parent', // parent to get the child depends on this field value

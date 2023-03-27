@@ -8650,7 +8650,7 @@ var Tasks_Info_Request_User = {
           } else if (wfname == "CR" || wfname == "VROCRProject" || wfname == "EPMOCRProject" || wfname == "LMSCRProject") {
             keyNameParams = "projects";
           } else if (wfname == "VROCRObjective" || wfname == "MSCRObjective" || wfname == "LMSCRObjective") {
-            keyNameParams = "sos";
+            keyNameParams = "changerequest";
           } else if (wfname == "VROCRKPI" || wfname == "MSCRKPI" || wfname == "LMSCRKPI") {
             keyNameParams = "mainkpi";
           } else if (wfname == "Issue") {
