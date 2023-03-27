@@ -747,9 +747,9 @@ var Information_Form = [
         // targetelement: 'ActualCost',
         numberOfDigits: "12",
         resetElement: "ActualCost", // reset value of this element when there is no val in current element
-        sum1Element: "ProgramTotalCost", 
-        sum2Element: "ActualCost",
-        totalElement: "InitiativeBudget",
+        sum1Element: "ProgramTotalCost", // get the value for this elem
+        sum2Element: "ActualCost",// get the value for this elem
+        totalElement: "InitiativeBudget",// set sum value in this elem
         className: "disable_enable_section", // disable and enable section master  details specific for project and initiative cr
       },
 
@@ -764,9 +764,9 @@ var Information_Form = [
         max: 'ProgramTotalCost', // max value will be smaller than or equal ProgramTotalCost
         descPhraseAr: "القيمة يجب ان تكون اقل او يساوي التكاليف الكلية حسب سقف البرنامج",
         descPhraseEn: "Should be less than or equal Program Total Cost",
-        sum1Element: "ProgramTotalCost",
-        sum2Element: "ActualCost",
-        totalElement: "InitiativeBudget"
+        sum1Element: "ProgramTotalCost", // get the value for this elem
+        sum2Element: "ActualCost",// get the value for this elem
+        totalElement: "InitiativeBudget"// set sum value in this elem
       },
       {
         InternalName: 'InitiativeBudget',
@@ -776,7 +776,9 @@ var Information_Form = [
         // "state": "disabled",
         type: 'float',
         numberOfDigits: "20",
-        state: "disabled"
+        state: "disabled",
+        descPhraseAr:"مجموع التكاليف الكلية حسب سقف البرنامج و التكاليف الكلية المعتمدة",
+        descPhraseEn:"total of ProgramTotalCost and ActualCost"
       },
       {
         InternalName: 'CurrentBuget',

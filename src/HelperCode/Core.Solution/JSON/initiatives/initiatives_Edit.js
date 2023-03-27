@@ -753,6 +753,7 @@ var Information_Form = [
         sum1Element: "ProgramTotalCost", 
         sum2Element: "ActualCost",
         totalElement: "InitiativeBudget",
+        resetElement: "ActualCost", // reset value of this element when there is no val in current element
       },
       {
         InternalName: 'ActualCost',
@@ -783,7 +784,9 @@ var Information_Form = [
         },
         enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
-        state: "disabled"
+        state: "disabled",
+        descPhraseAr:"مجموع التكاليف الكلية حسب سقف البرنامج و التكاليف الكلية المعتمدة",
+        descPhraseEn:"total of ProgramTotalCost and ActualCost"
 
       },
       {
