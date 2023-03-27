@@ -1,7 +1,7 @@
 var Listing_Info = [{
         "InternalName": "Name",
-        "DisplayName": "إسم المحفظة",
-        "DisplayNameEn": "Portfolio Name",
+        "DisplayName": "إسم المحفظة باللغة العربية",
+        "DisplayNameEn": "Portfolio Name (Arabic)",
         "type": "text",
         inlisting: true,
         infilter: true
