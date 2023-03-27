@@ -8677,8 +8677,8 @@ var Tasks_Info_Request_User = {
             keyNameParams = 'coc'
           } else if (wfname == 'VROProjDeliverable' || wfname == 'EPMOProjDeliverable' || wfname == 'LMSProjDeliverable') {
             keyNameParams = 'deliverables'
-          } else if (wfname == "VROCRDeleteObjective" || wfname == "MSCRDeleteObjective" || wfname == "LMSCRDeletedObjective") {
-            keyNameParams = "changerequest";
+          } else if (wfname == "VROCreateObjective" || wfname == "LMSCreateObjective" || wfname == "MSCreateObjective") {
+            keyNameParams = "sos";
           }
           switch (tasktype) {
             case "SubmitProject":

@@ -1731,6 +1731,8 @@ window.ListingData = {
             keyNameParams = 'projects';
           } else if (wfname == 'VROCRObjective' || wfname == 'MSCRObjective' || wfname == 'LMSCRObjective') {
             keyNameParams = 'changerequest'
+          } else if (wfname == 'VROCreateObjective' || wfname == 'LMSCreateObjective' || wfname == 'MSCreateObjective') {
+            keyNameParams = 'sos'
           } else if (wfname == 'VROCRKPI' || wfname == 'MSCRKPI' || wfname == 'LMSCRKPI') {
             keyNameParams = 'mainkpi'
           } else if (wfname == 'Issue') {
@@ -1760,9 +1762,9 @@ window.ListingData = {
           } else if (wfname == 'VROProjDeliverable' || wfname == 'EPMOProjDeliverable' || wfname == 'LMSProjDeliverable') {
             keyNameParams = 'deliverables'
           }
-          else if (wfname == 'VROCRDeleteObjective' || wfname == 'MSCRDeleteObjective' || wfname == 'LMSCRDeletedObjective') {
-            keyNameParams = 'changerequest';
-          }
+          // else if (wfname == 'VROCRDeleteObjective' || wfname == 'MSCRDeleteObjective' || wfname == 'LMSCRDeletedObjective') {
+          //   keyNameParams = 'changerequest';
+          // }
           switch (tasktype) {
             case 'SubmitField':
               window.open(
