@@ -147,18 +147,18 @@ var workflowname,
 	isVROCOC = window.location.href.indexOf("coc&VROCOC") > -1,
 	isEPMOCOC = window.location.href.indexOf("coc&EPMOCOC") > -1,
 	isLMSCOC = window.location.href.indexOf("coc&LMSCOC") > -1,
-	isVROCRObjective = window.location.href.indexOf("sos&VROCRObjective") > -1,
-	isMSCRObjective = window.location.href.indexOf("sos&MSCRObjective") > -1,
-	isLMSCRObjective = window.location.href.indexOf("sos&LMSCRObjective") > -1,
+	isVROCRObjective = window.location.href.indexOf("changerequest&VROCRObjective") > -1,
+	isMSCRObjective = window.location.href.indexOf("changerequest&MSCRObjective") > -1,
+	isLMSCRObjective = window.location.href.indexOf("changerequest&LMSCRObjective") > -1,
 	isVROCRKPI = window.location.href.indexOf("mainkpi&VROCRKPI") > -1,
 	isMSCRKPI = window.location.href.indexOf("mainkpi&MSCRKPI") > -1,
 	isLMSCRKPI = window.location.href.indexOf("mainkpi&LMSCRKPI") > -1,
 	isVROProjDeliverable = window.location.href.indexOf("deliverables&VROProjDeliverable") > -1,
 	isEPMOProjDeliverable = window.location.href.indexOf("deliverables&EPMOProjDeliverable") > -1,
 	isLMSProjDeliverable = window.location.href.indexOf("deliverables&LMSProjDeliverable") > -1,
-	isVROCRDeleteObjective = window.location.href.indexOf("changerequest&VROCRDeleteObjective") > -1,
-	isMSCRDeleteObjective = window.location.href.indexOf("changerequest&MSCRDeleteObjective") > -1,
-	isLMSCRDeletedObjective = window.location.href.indexOf("changerequest&LMSCRDeletedObjective") > -1
+	isVROCreateObjective = window.location.href.indexOf("sos&VROCreateObjective") > -1,
+	isMSCreateObjective = window.location.href.indexOf("sos&MSCreateObjective") > -1,
+	isLMSCreateObjective = window.location.href.indexOf("sos&LMSCreateObjective") > -1
 	// ghufran
 	isVROCRProject = window.location.href.indexOf("projects&VROCRProject") > -1,
 	isEPMOCRProject = window.location.href.indexOf("projects&EPMOCRProject") > -1,
@@ -817,7 +817,7 @@ else if (isLMSProjDeliverable) {
 else if (isVROCRObjective) {
 	
 	workflowname = "VROCRObjective";
-	bulkeditlist = "SOs";
+	bulkeditlist = "Change Request";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -833,7 +833,7 @@ else if (isVROCRObjective) {
 else if (isMSCRObjective) {
 	
 	workflowname = "MSCRObjective";
-	bulkeditlist = "SOs";
+	bulkeditlist = "Change Request";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -849,6 +849,22 @@ else if (isMSCRObjective) {
 else if (isLMSCRObjective) {
 	
 	workflowname = "LMSCRObjective";
+	bulkeditlist = "Change Request";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isVROCreateObjective) {
+	
+	workflowname = "VROCreateObjective";
 	bulkeditlist = "SOs";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
@@ -862,10 +878,10 @@ else if (isLMSCRObjective) {
 		workflowname +
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
-else if (isVROCRDeleteObjective) {
+else if (isMSCreateObjective) {
 	
-	workflowname = "VROCRDeleteObjective";
-	bulkeditlist = "Change Request";
+	workflowname = "MSCreateObjective";
+	bulkeditlist = "SOs";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -878,26 +894,10 @@ else if (isVROCRDeleteObjective) {
 		workflowname +
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
-else if (isMSCRDeleteObjective) {
+else if (isLMSCreateObjective) {
 	
-	workflowname = "MSCRDeleteObjective";
-	bulkeditlist = "Change Request";
-	IID2 = window.location.href.split("IID=")[1].split("&")[0];
-	bulkeditquery =
-		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
-		IID2 +
-		"</Value> </Eq></Where></Query></View>";
-	taskquery =
-		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
-		taskID +
-		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
-		workflowname +
-		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
-}
-else if (isLMSCRDeletedObjective) {
-	
-	workflowname = "LMSCRDeletedObjective";
-	bulkeditlist = "Change Request";
+	workflowname = "LMSCreateObjective";
+	bulkeditlist = "SOs";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
