@@ -238,8 +238,8 @@ var Information_Form = [
         source: "Initiatives",
         Dispfieldkey: "Name",
         valfieldkey: "Title",
-        dynamic: "Types", //InternalName Of Parent field
-				filterField: "Types",//InternalName Of Parent field
+        dynamic: "InitiativeType", //InternalName Of Parent field
+				filterField: "InitiativeType",//InternalName Of Parent field
 				filterFieldType: "Text",//Type In Sharepoint List for Parent field
 
         security: {

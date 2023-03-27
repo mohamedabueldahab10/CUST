@@ -79,8 +79,6 @@ window.Information_Form = [
 				display: "none",
 				customCr: true,
 				ToggleName: "vroprojects",
-				// ToggleName: "epmoprojects",
-				// ToggleName: "lmsprojects",
 				type: "dropdownValues",
 				options: {
 					choices: [
@@ -253,8 +251,6 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
-				// ToggleName: "vroprojects",
-				// ToggleName: "epmoprojects",
 				ToggleName: "lmsprojects",
 				type: "dropdownValues",
 				options: {
@@ -428,9 +424,7 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
-				// ToggleName: "vroprojects",
 				ToggleName: "epmoprojects",
-				// ToggleName: "lmsprojects",
 				type: "dropdownValues",
 				options: {
 					choices: [
