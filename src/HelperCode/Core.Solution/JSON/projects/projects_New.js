@@ -1144,6 +1144,7 @@ var Information_Form = [
         DisplayName: "تاريخ  الطرح الفعلى",
         DisplayNameEn: "Actual Offering Date",
         type: "datetime",
+        max: "today"
       },
       {
         InternalName: "AwardDate",
