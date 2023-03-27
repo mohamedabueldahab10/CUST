@@ -740,19 +740,7 @@ var Information_Form = [
         enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
       },
-      {
-        InternalName: 'InitiativeBudget',
-        DisplayName: 'ميزانية المبادرة ',
-        DisplayNameEn: 'InitiativeBudget',
-        // "state": "disabled",
-        type: 'float',
-        numberOfDigits: "12",
-        security: {
-          groups: ['EPMO', 'System Admin Group'],
-        },
-        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
-        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
-      },
+
       {
         InternalName: 'ProgramTotalCost',
         DisplayName: 'التكاليف الكلية حسب سقف البرنامج ',
@@ -762,6 +750,9 @@ var Information_Form = [
         targetelement: 'ActualCost',
         enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        sum1Element: "ProgramTotalCost", 
+        sum2Element: "ActualCost",
+        totalElement: "InitiativeBudget",
       },
       {
         InternalName: 'ActualCost',
@@ -775,7 +766,25 @@ var Information_Form = [
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         max: 'ProgramTotalCost', // max value will be smaller than or equal ProgramTotalCost
         descPhraseAr: "القيمة يجب ان تكون اقل او يساوي التكاليف الكلية حسب سقف البرنامج",
-        descPhraseEn: "Should be less than or equal Program Total Cost"
+        descPhraseEn: "Should be less than or equal Program Total Cost",
+        sum1Element: "ProgramTotalCost",
+        sum2Element: "ActualCost",
+        totalElement: "InitiativeBudget"
+      },
+      {
+        InternalName: 'InitiativeBudget',
+        DisplayName: 'ميزانية المبادرة ',
+        DisplayNameEn: 'InitiativeBudget',
+        // "state": "disabled",
+        type: 'float',
+        numberOfDigits: "20",
+        security: {
+          groups: ['EPMO', 'System Admin Group'],
+        },
+        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        state: "disabled"
+
       },
       {
         InternalName: 'CurrentBuget',

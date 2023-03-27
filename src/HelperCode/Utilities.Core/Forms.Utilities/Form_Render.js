@@ -937,13 +937,18 @@ window.ListInfo = {
           $("input.number").keyup(function (event) {
             // skip for arrow keys
             if (event.which >= 37 && event.which <= 40) return;
-            
+
+            debugger
+            var totalElement = $(this).data("totalelement")
+            var sum1 = $(this).data("sum1element")
+            var sum2 = $(this).data("sum2element")
+
             var max = $(this).data("maxfield")
             var resetElement = $(this).data('resetelement')
             var elementVal = event.target.value
             // set max value
             if (max && max != 'undefined') {
-              
+
               var maxValue = $(`#${max}`).val() ? $(`#${max}`).val() : 0
               maxValue = maxValue.replaceAll(",", "")
               elementVal = elementVal.replaceAll(",", "")
@@ -959,8 +964,8 @@ window.ListInfo = {
                 $(this).val(null)
               }
 
-            }else if(resetElement && resetElement!= 'undefined' && !elementVal){
-              $(`#${resetElement}`).val(null) 
+            } else if (resetElement && resetElement != 'undefined' && !elementVal) {
+              $(`#${resetElement}`).val(null)
             } else {
               // format number
               $(this).val(function (index, value) {
@@ -968,6 +973,19 @@ window.ListInfo = {
                   .replace(/\D/g, "")
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
               });
+            }
+
+            /// 
+
+            if (totalElement && totalElement != 'undefined' && sum1 && sum1 != 'undefined' && sum2 && sum2 != 'undefined') {
+              var value1 = $(`#${sum1}`).val()
+              value1 = value1.replaceAll(",","")
+              value1 = Number(value1)
+              var value2 = $(`#${sum2}`).val()
+              value2 = value2.replaceAll(",","")
+              value2 = Number(value2)
+              var total = value1 + value2
+              $(`#${totalElement}`).val(total)
             }
           });
 
@@ -2410,14 +2428,23 @@ window.ListInfo = {
         }
 
         // to handle that the value should be smaller than other value
-        var max = ""
-        var resetElement = ""
+        var max = "", resetElement = "";
+
+        var totalElement = "", sum1Element = "", sum2Element = "";
+
         if (element.max) {
           max = `data-maxField=${element.max}`
         }
 
+
         if (element.resetElement) {
           resetElement = `data-resetElement=${element.resetElement}`
+        }
+
+        if (element.totalElement && element.sum1Element && element.sum2Element) {
+          totalElement = `data-totalElement=${element.totalElement}`
+          sum1Element = `data-sum1Element=${element.sum1Element}`
+          sum2Element = `data-sum2Element=${element.sum2Element}`
         }
 
         htmlBody =
@@ -2462,6 +2489,12 @@ window.ListInfo = {
           displayName +
           "</label>" +
           "<input " +
+          totalElement +
+          " " +
+          sum1Element +
+          " " +
+          sum2Element +
+          " " +
           max +
           " " +
           resetElement +

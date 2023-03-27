@@ -736,15 +736,7 @@ var Information_Form = [
         type: 'float',
         numberOfDigits: "12"
       },
-      {
-        InternalName: 'InitiativeBudget',
-        DisplayName: 'ميزانية المبادرة ',
-        DisplayNameEn: 'InitiativeBudget',
-        className: "disable_enable_section", // disable and enable section master  details specific for project and initiative cr
-        // "state": "disabled",
-        type: 'float',
-        numberOfDigits: "12"
-      },
+
       {
         InternalName: 'ProgramTotalCost',
         DisplayName: 'التكاليف الكلية حسب سقف البرنامج ',
@@ -754,7 +746,11 @@ var Information_Form = [
         // parentinternalname: 'InitiativeCode',
         // targetelement: 'ActualCost',
         numberOfDigits: "12",
-        resetElement:"ActualCost" // reset value of this element when there is no val in current element
+        resetElement: "ActualCost", // reset value of this element when there is no val in current element
+        sum1Element: "ProgramTotalCost", 
+        sum2Element: "ActualCost",
+        totalElement: "InitiativeBudget",
+        className: "disable_enable_section", // disable and enable section master  details specific for project and initiative cr
       },
 
       {
@@ -766,8 +762,21 @@ var Information_Form = [
         // targetelement: 'ActualCost',
         // seconedtarget: 'ProgramTotalCost',
         max: 'ProgramTotalCost', // max value will be smaller than or equal ProgramTotalCost
-        descPhraseAr:"القيمة يجب ان تكون اقل او يساوي التكاليف الكلية حسب سقف البرنامج",
-        descPhraseEn:"Should be less than or equal Program Total Cost"
+        descPhraseAr: "القيمة يجب ان تكون اقل او يساوي التكاليف الكلية حسب سقف البرنامج",
+        descPhraseEn: "Should be less than or equal Program Total Cost",
+        sum1Element: "ProgramTotalCost",
+        sum2Element: "ActualCost",
+        totalElement: "InitiativeBudget"
+      },
+      {
+        InternalName: 'InitiativeBudget',
+        DisplayName: 'ميزانية المبادرة ',
+        DisplayNameEn: 'InitiativeBudget',
+        // className: "disable_enable_section", // disable and enable section master  details specific for project and initiative cr
+        // "state": "disabled",
+        type: 'float',
+        numberOfDigits: "20",
+        state: "disabled"
       },
       {
         InternalName: 'CurrentBuget',
