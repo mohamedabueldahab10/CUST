@@ -365,7 +365,7 @@ window.handleCustomeCr = {
 						: false;
 				let toggleName = $(this).data("togglename");
 				let toggleParent = $(`[data-togglevalues*="${toggleName}"]`);
-				let relevantDropdown = $(`select[data-listname="${toggleParent.val()}"]`);
+				let relevantDropdown = $(`select[data-listname="${toggleParent.val().split("_")[1]}"]`);
 				RListKey = relevantDropdown.data("listkey");
 				isRListKey = RListKey ? true : false;
 				CrRelatedList = relevantDropdown.data("listname");

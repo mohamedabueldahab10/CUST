@@ -20,38 +20,38 @@ window.Information_Form = [
 				options: {
 					choices: [
 						//SOS
-						{ display: "strategicbjectives", value: "strategicbjectives", roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'] },
+						{ display: "strategicobjectives", value: "SOs", roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'] },
 						{ display: "visionobjectives", value: "visionobjectives", roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'], },
 						{ display: "lmsobjectives", value: "lmsobjectives", roles: ['Administrator', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
 						//projects
-						{ display: "vroprojects", value: "vroprojects", roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'] },
-						{ display: "epmoprojects", value: "epmoprojects", roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'] },
+						{ display: "vroprojects", value: "vro_Projects", roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'] },
+						{ display: "epmoprojects", value: "Projects", roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'] },
 						{ display: "lmsprojects", value: "lmsprojects", roles: ['Administrator', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
 						//Initiatives
-						{ display: "strategicinitiatives", value: "strategicinitiatives", roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'] },
+						{ display: "strategicinitiatives", value: "Initiatives", roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'] },
 						{ display: "vroinitiatives", value: "vroinitiatives", roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'] },
 						{ display: "lmsinitiatives", value: "lmsinitiatives", roles: ['Administrator', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
 						//KPI
-						{ display: "strategickpi", value: "strategickpi", roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'] },
+						{ display: "strategickpi", value: "MainKPI", roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'] },
 						{ display: "vrokpi", value: "vrokpi", roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'] },
 						{ display: "lmskpi", value: "lmskpi", roles: ['Administrator', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
 					],
 				},
 				toggleValues: [
-					{ value: "vroprojects", fields: ["ProjectCode", "vroprojectsUpdateType"] }, //we can put more than 1  field
+					{ value: "vro_Projects", fields: ["ProjectCode", "vroprojectsUpdateType"] }, //we can put more than 1  field
 					{ value: "epmoprojects", fields: ["ProjectCode", "epmoprojectsUpdateType"] }, //we can put more than 1  field
 					{ value: "lmsprojects", fields: ["ProjectCode", "lmsprojectsUpdateType"] }, //we can put more than 1  field
 					//Initiatives
-					{ value: "strategicinitiatives", fields: ["InitiativeCode", "strategicinitiativesUpdateType"] }, //we can put more than 1  field
+					{ value: "Initiatives", fields: ["InitiativeCode", "strategicinitiativesUpdateType"] }, //we can put more than 1  field
 					{ value: "vroinitiatives", fields: ["InitiativeCode", "vroinitiativesUpdateType"] }, //we can put more than 1  field
 					{ value: "lmsinitiatives", fields: ["InitiativeCode", "lmsinitiativesUpdateType"] }, //we can put more than 1  field
 					//SOS
-					{ value: "strategicbjectives", fields: ["CRRelatedStrategyObjective", "strategicbjectivesUpdateType"], },
+					{ value: "SOs", fields: ["CRRelatedStrategyObjective", "strategicbjectivesUpdateType"], },
 					{ value: "visionobjectives", fields: ["CRRelatedStrategyObjective", "visionobjectivesUpdateType"], },
 					{ value: "lmsobjectives", fields: ["CRRelatedStrategyObjective", "lmsobjectivesUpdateType"],},
 					//	-----SOS----
 					//---KPI------
-					{ value: "strategickpi", fields: ["CRRelatedMainKpis", "strategickpiUpdateType"] }, //we can put more than 1  field
+					{ value: "MainKPI", fields: ["CRRelatedMainKpis", "strategickpiUpdateType"] }, //we can put more than 1  field
 					{ value: "vrokpi", fields: ["CRRelatedMainKpis", "vrokpiUpdateType"] }, //we can put more than 1  field
 					{ value: "lmskpi", fields: ["CRRelatedMainKpis", "lmskpiUpdateType"] }, //we can put more than 1  field
 				],
