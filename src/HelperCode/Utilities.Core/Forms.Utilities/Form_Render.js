@@ -15,6 +15,7 @@ var logo = "";
       ? ""
       : _spPageContextInfo.siteServerRelativeUrl);
 window.isPrint = false;
+window.valueBasedOnParent = [] //valueBasedOnParent for wf delivrable as an ex
 var attachCount = 0;
 var printDate;
 var pluseAttachCount = 0;
@@ -157,7 +158,7 @@ window.ListInfo = {
 
     var workflowSetValues = [], dataWorkflowSetValues = "";
 
-
+    var basedOnParentSetValues = [], dataBasedOnParentSetValues = "";
 
 
     asyncFor.seqProcess(
@@ -204,7 +205,28 @@ window.ListInfo = {
         //
 
         //to handle set value based on parent
-        // get_parent_data.init()
+        basedOnParentSetValues = item.formValuesBasedOnParent
+        if (basedOnParentSetValues && basedOnParentSetValues.length) {
+          dataBasedOnParentSetValues = 'data-basedOnParentSetValues="' +
+            JSON.stringify(basedOnParentSetValues).replaceAll(
+              `"`,
+              `'`
+            ) +
+            '"'
+
+          var code = ""
+          if (PCODE) {
+            code = PCODE
+          } else if (ICODE) {
+            code = ICODE
+          }
+          basedOnParentSetValues.forEach(el => {
+            get_parent_data.init(el.parentList, code, el.parentFieldName, el.fieldName) // to get value from parent list to use it when submit
+          })
+
+        } else {
+          dataBasedOnParentSetValues = ""
+        }
         //
 
 
@@ -262,7 +284,7 @@ window.ListInfo = {
           Description +
           "</span>" +
           "</div>" +
-          '<div data-togglename=' + toggleSectionName + ' ' + dataFormDefaultValue + ' ' + dataWorkflowSetValues + ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container ' + item.className + '">';
+          '<div data-togglename=' + toggleSectionName + ' ' + dataFormDefaultValue + ' ' + dataWorkflowSetValues + ' ' + dataBasedOnParentSetValues + ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container ' + item.className + '">';
 
         asyncFor.seqProcess(
           item.subFields,
@@ -11836,17 +11858,21 @@ async function waitUntil(condition, time = 500) {
 
 
 var get_parent_data = {
-  init: function (listName, code, fieldName, fieldType) {
+  init: function (listName, code, parentFieldName, fieldName) {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(listName);
     var camlQuery = new SP.CamlQuery();
     debugger
+
     camlQuery.set_viewXml(
-      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=" + fieldName + " /><Value Type=\"Text\">" +
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef  Name=\"" + parentFieldName + "\" /><Value Type=\"Text\">" +
       code +
       "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
+
     get_parent_data.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    get_parent_data.g.fieldName = fieldName
+
     clientContext.load(get_parent_data.g.collListItem);
     clientContext.executeQueryAsync(
       Function.createDelegate(this, get_parent_data.onSuccess),
@@ -11856,14 +11882,15 @@ var get_parent_data = {
   onSuccess: function (sender, args) {
     var collListItem = get_parent_data.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-
-
+    debugger
+    var dynamicFieldName = get_parent_data.g.fieldName
+    var dynamicVal = ""
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       itemID = oListItem.get_id();
-      console.log("Inside while")
-      debugger
 
+      dynamicVal = oListItem.get_item(dynamicFieldName) || '';
+      valueBasedOnParent.push(dynamicVal)
     }
 
   },

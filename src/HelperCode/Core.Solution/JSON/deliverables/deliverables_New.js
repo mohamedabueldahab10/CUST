@@ -4,22 +4,33 @@ var Information_Form = [
     labelEn: 'Delivrable Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
+    // formValuesBasedOnParent: [
+    //   {
+    //     parentList: 'Projects', parentFieldName: 'Title', fieldName: 'InitiativeType',
+    //     valueToSet: [
+    //       { condition: "vision", values: [{ fieldNameInList: "WFStage", fieldValueInList: "vision1" }, { fieldNameInList: "DraftStatus", fieldValueInList: "draftvision" }] },
+    //       { condition: "lms", values: [{ fieldNameInList: "WFStage", fieldValueInList: "lms1" }, { fieldNameInList: "DraftStatus", fieldValueInList: "draftlms" }] },
+    //       { condition: "strategically", values: [{ fieldNameInList: "WFStage", fieldValueInList: "strategically1" }, { fieldNameInList: "DraftStatus", fieldValueInList: "draftstrategically" }] },
+
+    //     ]
+    //   }
+    // ],
     formDefaultValues: [
       //VRO
-      { fieldName: 'WFModuleCode', value: 'VROProjDeliverable',roles: ['Administrator','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
-      { fieldName: 'WFStage', value: 'VROProjDeliverable01',roles: ['Administrator','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
-      { fieldName: 'DraftStatus', value: 'draft' ,roles: ['Administrator','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
-      
+      { fieldName: 'WFModuleCode', value: 'VROProjDeliverable', roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'], },
+      { fieldName: 'WFStage', value: 'VROProjDeliverable01', roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'], },
+      { fieldName: 'DraftStatus', value: 'draft', roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'], },
+
       //EPMOCOC
-      { fieldName: 'WFModuleCode', value: 'EPMOProjDeliverable',roles: ['Administrator','EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
-      { fieldName: 'WFStage', value: 'EPMOProjDeliverable01',roles:  ['Administrator','EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
-      { fieldName: 'DraftStatus', value: 'draft',roles:  ['Administrator','EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
-  
+      { fieldName: 'WFModuleCode', value: 'EPMOProjDeliverable', roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'], },
+      { fieldName: 'WFStage', value: 'EPMOProjDeliverable01', roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'], },
+      { fieldName: 'DraftStatus', value: 'draft', roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'], },
+
       //LMS
-      { fieldName: 'WFModuleCode', value: 'LMSProjDeliverable',roles: ['Administrator','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
-      { fieldName: 'WFStage', value: 'LMSProjDeliverable01',roles: ['Administrator','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
-      { fieldName: 'DraftStatus', value: 'draft',roles: ['Administrator','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
-  
+      { fieldName: 'WFModuleCode', value: 'LMSProjDeliverable', roles: ['Administrator', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
+      { fieldName: 'WFStage', value: 'LMSProjDeliverable01', roles: ['Administrator', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
+      { fieldName: 'DraftStatus', value: 'draft', roles: ['Administrator', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
+
     ],
     subFields: [
       // {
@@ -35,8 +46,8 @@ var Information_Form = [
         type: 'string',
         validation: 'required',
         maxchar: '255',
-        withletters:true,
-        Errmsgkey:"withletterpattern",
+        withletters: true,
+        Errmsgkey: "withletterpattern",
       },
       {
         InternalName: 'Description',
@@ -133,7 +144,7 @@ var Information_Form = [
         DisplayName: 'معايير قبول المخرج',
         DisplayNameEn: 'Acceptance Criteria',
         type: 'multiline',
-        maxchar: 5000,        
+        maxchar: 5000,
       },
       // {
       //     "InternalName": "PlannedStartDate",
@@ -251,7 +262,7 @@ var Information_Form = [
         DisplayName: 'الوثائق داعمة',
         DisplayNameEn: 'Supporting Documents',
         type: 'file',
-        docPurpose:"Spporting_Documents",
+        docPurpose: "Spporting_Documents",
         withAddBtn: 'true',
       },
     ],
@@ -267,7 +278,7 @@ var Information_Form = [
         DisplayName: 'المرفقات',
         DisplayNameEn: 'Attachments',
         type: 'file',
-        docPurpose:"Attachments",
+        docPurpose: "Attachments",
         withAddBtn: 'true',
       },
     ],

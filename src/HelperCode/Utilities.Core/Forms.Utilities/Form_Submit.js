@@ -538,13 +538,30 @@ window.New_Data_Submit = {
     })
     //
 
+    // to handle set data based on parent values
+    $(`[data-basedonparentsetvalues]`).each(function (index) {
+      var parsingData = eval($(this).data('basedonparentsetvalues'))
+      parsingData.forEach(el => {
+        el.valueToSet.forEach(item => {
+          if (valueBasedOnParent.includes(item.condition)) {
+            item.values.forEach(field => {
+              New_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
+            })
+          }
+        })
+      })
+      console.log(parsingData, "parsingData parsingData")
+    })
+    //
+
+
     if (PCODE && listkey != "projects") {
 
       New_Data_Submit.g.oListItem.set_item("ProjectCode", PCODE);
       if (listkey == "issues") {
         New_Data_Submit.g.oListItem.set_item("ResolutionStatus", "new");
       }
-      
+
       //save value based on parent type
 
       //
@@ -1050,7 +1067,7 @@ window.Edit_Data_Submit = {
 
     //validation of multiselect
     $('.dropdown-menu.multiselect_scroll.required').each(function () {
-      
+
       if ($(this).length) {
         if ($('.dropdown-menu.multiselect_scroll.required :checkbox:checked').length == 0) {
           multiSelectValid = false
@@ -1407,7 +1424,9 @@ window.Edit_Data_Submit = {
     })
     //
 
-    debugger
+
+
+
     if (listkey == "issues") {
       if ($("#ResolutionStatus").val() == "Closed") {
         var now = new Date();
