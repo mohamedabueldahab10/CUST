@@ -127,6 +127,22 @@ var Information_Form = [
         },
       },
       {
+        InternalName: "IsStrategicProject",
+        DisplayName: "هل هو مشروع استراتيجي؟",
+        DisplayNameEn: "Is Strategic Project?",
+        type: "dropdownValues",
+        options: {
+          choices: [
+            { display: "yes", value: "yes" },
+            { display: "no", value: "no" },
+          ],
+        },
+        toggleValues: [
+          { value: 'yes', fields: ['InitiativeType','RelatedInitiative','RelatedInitiativeDeliverable'] }, //we can put more than 1  field
+          { value: 'no', fields: [''] }, //we can put more than 1  field
+        ],
+      },
+      {
         InternalName: "Committees",
         DisplayName: "اللجان",
         DisplayNameEn: "Committees",
@@ -138,6 +154,7 @@ var Information_Form = [
         InternalName: 'InitiativeType',
         DisplayNameEn: 'Initiative Type',
         DisplayName: 'نوع المبادرة',
+        ToggleName: "InitiativeType",
         validation: 'required',
         dynamic: 'parent', // parent to get the child depends on this field value
         type: 'dropdownValues',
@@ -188,6 +205,7 @@ var Information_Form = [
         InternalName: "RelatedInitiative",
         DisplayName: " المبادرة المرتبطة",
         DisplayNameEn: "Related Initiative",
+        ToggleName: "RelatedInitiative",
         // type: 'string',
         type: "lookup",
         //from other list:ma
@@ -206,6 +224,7 @@ var Information_Form = [
         InternalName: "RelatedInitiativeDeliverable",
         DisplayNameEn: "Related Initiative Deliverable",
         DisplayName: "مخرج المبادرة المرتبط",
+        ToggleName: "RelatedInitiativeDeliverable",
         // type: 'string',
         type: "multiselectstring",
         Dispfieldkey: "Name",
@@ -255,25 +274,6 @@ var Information_Form = [
               value: "transformativeproject",
             },
             { display: "operationalproject", value: "operationalproject" },
-          ],
-        },
-      },
-      {
-        InternalName: "IsStrategicProject",
-        DisplayName: "هل هو مشروع استراتيجي؟",
-        DisplayNameEn: "Is Strategic Project?",
-        type: "yesnoradio",
-        // validation: 'required',
-        options: {
-          choices: [
-            {
-              display: "yes",
-              value: "yes",
-            },
-            {
-              display: "no",
-              value: "no",
-            },
           ],
         },
       },

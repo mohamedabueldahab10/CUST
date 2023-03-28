@@ -170,6 +170,22 @@ var Information_Form = [
         },
       },
       {
+        InternalName: "IsStrategicProject",
+        DisplayName: "هل هو مشروع استراتيجي؟",
+        DisplayNameEn: "Is Strategic Project?",
+        type: "dropdownValues",
+        options: {
+          choices: [
+            { display: "yes", value: "yes" },
+            { display: "no", value: "no" },
+          ],
+        },
+        toggleValues: [
+          { value: 'yes', fields: ['InitiativeType','RelatedInitiative','RelatedInitiativeDeliverable'] }, //we can put more than 1  field
+        ],
+        validation: "required",
+      },
+      {
         InternalName: "Committees",
         DisplayName: "اللجان",
         DisplayNameEn: "Committees",
@@ -196,7 +212,9 @@ var Information_Form = [
         InternalName: 'InitiativeType',
         DisplayNameEn: 'Initiative Type',
         DisplayName: 'نوع المبادرة',
+        ToggleName: "InitiativeType",
         validation: 'required',
+        display:'none',
         dynamic: 'parent', // parent to get the child depends on this field value
         type: 'dropdownValues',
         // dontSubmit: true,
@@ -244,15 +262,16 @@ var Information_Form = [
       },
       {
         InternalName: "RelatedInitiative",
-        DisplayName: " المبادرة المرتبطة",
+        DisplayName: "المبادرة المرتبطة",
         DisplayNameEn: "Related Initiative",
+        ToggleName: "RelatedInitiative",
         type: "lookup",
         //from other list:ma
         source: "Initiatives",
         Dispfieldkey: "Name",
         valfieldkey: "Title",
         dynamic: "InitiativeType", //InternalName Of Parent field
-				filterField: "InitiativeType",//InternalName Of Parent field
+				filterField: "Types",//InternalName Of Parent field
 				filterFieldType: "Text",//Type In Sharepoint List for Parent field
 
         security: {
@@ -309,11 +328,14 @@ var Information_Form = [
         ],
         // "state": "disabled",
         // "className":"autofill"
+        display:'none',
       },
       {
         InternalName: "RelatedInitiativeDeliverable",
         DisplayName: " مخرج المبادرة المرتبط",
         DisplayNameEn: "Related Initiative Deliverable",
+        ToggleName: "RelatedInitiativeDeliverable",
+        // display:'none',
         type: "lookupmultiselect",
         //from other list:ma
         source: "InitiativeDeliverables",
@@ -460,19 +482,6 @@ var Information_Form = [
             { display: "operationalproject", value: "operationalproject" },
           ],
         },
-      },
-      {
-        InternalName: "IsStrategicProject",
-        DisplayName: "هل هو مشروع استراتيجي؟",
-        DisplayNameEn: "Is Strategic Project?",
-        type: "yesnoradio",
-        options: {
-          choices: [
-            { display: "yes", value: "yes" },
-            { display: "no", value: "no" },
-          ],
-        },
-        validation: "required",
       },
       {
         InternalName: "BaselineStartDate",
