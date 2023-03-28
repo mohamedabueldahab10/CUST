@@ -1728,7 +1728,7 @@ window.ListingData = {
           } else if (wfname == 'VROCRInitiative' || wfname == 'EPMOCRInitiative' || wfname == 'LMSCRInitiative') {
             keyNameParams = 'initiatives'
           } else if (wfname == 'CR' || wfname == 'VROCRProject' || wfname == 'EPMOCRProject' || wfname == 'LMSCRProject') {
-            keyNameParams = 'projects';
+            keyNameParams = 'changerequest';
           } else if (wfname == 'VROCRObjective' || wfname == 'MSCRObjective' || wfname == 'LMSCRObjective') {
             keyNameParams = 'changerequest'
           } else if (wfname == 'VROCreateObjective' || wfname == 'LMSCreateObjective' || wfname == 'MSCreateObjective') {

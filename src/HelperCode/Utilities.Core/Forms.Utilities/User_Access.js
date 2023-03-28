@@ -8650,7 +8650,7 @@ var Tasks_Info_Request_User = {
           } else if (wfname == "CR" || wfname == "VROCRInitiative" || wfname == "EPMOCRInitiative" || wfname == "LMSCRInitiative") {
             keyNameParams = "initiatives";
           } else if (wfname == "CR" || wfname == "VROCRProject" || wfname == "EPMOCRProject" || wfname == "LMSCRProject") {
-            keyNameParams = "projects";
+            keyNameParams = "changerequest";
           } else if (wfname == "VROCRObjective" || wfname == "MSCRObjective" || wfname == "LMSCRObjective") {
             keyNameParams = "changerequest";
           } else if (wfname == "VROCRKPI" || wfname == "MSCRKPI" || wfname == "LMSCRKPI") {

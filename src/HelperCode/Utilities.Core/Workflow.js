@@ -160,9 +160,9 @@ var workflowname,
 	isMSCreateObjective = window.location.href.indexOf("sos&MSCreateObjective") > -1,
 	isLMSCreateObjective = window.location.href.indexOf("sos&LMSCreateObjective") > -1
 // ghufran
-isVROCRProject = window.location.href.indexOf("projects&VROCRProject") > -1,
-	isEPMOCRProject = window.location.href.indexOf("projects&EPMOCRProject") > -1,
-	isLMSCRProject = window.location.href.indexOf("projects&LMSCRProject") > -1,
+isVROCRProject = window.location.href.indexOf("changerequest&VROCRProject") > -1,
+	isEPMOCRProject = window.location.href.indexOf("changerequest&EPMOCRProject") > -1,
+	isLMSCRProject = window.location.href.indexOf("changerequest&LMSCRProject") > -1,
 	// 
 	isProjectCancellationRequestWF =
 	window.location.href.indexOf("projectcancellationrequest") > -1,
@@ -483,7 +483,8 @@ else if (isLMSCRInitiative) {
 else if (isVROCRProject) {
 
 	workflowname = "VROCRProject";
-	bulkeditlist = "Projects";
+	// bulkeditlist = "Projects";
+	bulkeditlist = "Change Request";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -499,7 +500,8 @@ else if (isVROCRProject) {
 else if (isEPMOCRProject) {
 
 	workflowname = "EPMOCRProject";
-	bulkeditlist = "Projects";
+	// bulkeditlist = "Projects";
+	bulkeditlist = "Change Request";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -515,7 +517,8 @@ else if (isEPMOCRProject) {
 else if (isLMSCRProject) {
 
 	workflowname = "LMSCRProject";
-	bulkeditlist = "Projects";
+	// bulkeditlist = "Projects";
+	bulkeditlist = "Change Request";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
