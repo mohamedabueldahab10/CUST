@@ -745,8 +745,10 @@ window.Edit_Data_Request = {
 
 
 
-    // to get the value of weight in delivrable correct in edit
-    $("[data-weightvalue]").each(function () {
+    // to get the value of weight in delivrable and milestone correct in edit
+    
+    if(MasterDetailsArrayRequest.length == 0){ // to avoid the error if there is master details like project ana initiative
+    $("[data-weightvalue]").each(function () { 
       var elementId = $(this).attr('id')
       var inputVal = oListItem.get_item(elementId) ? oListItem.get_item(elementId) : 0
       var remainingBudget = $(this).attr('max')
@@ -756,6 +758,7 @@ window.Edit_Data_Request = {
 
       remainingBudget == 100 ? $(this).attr("max", remainingBudget) : $(this).attr("max", newVal);
     })
+    }
 
 
 
@@ -2392,6 +2395,9 @@ var Risk_To_Issue_Code = {
 var Master_Details_Request = {
   // The main Initialization function
   init: function (DetailsList) {
+    console.log("INSide Master DEtails")
+    debugger
+    
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(DetailsList);
     Master_Details_Request.g.DetailsList = DetailsList;
@@ -2611,6 +2617,7 @@ var Master_Details_Request = {
           }
         });
       } else if (isEdit) {
+        debugger
         $(
           '[data-target_list="' +
           CurrList +
@@ -2632,6 +2639,8 @@ var Master_Details_Request = {
           '"] [data-ID="' +
           oListItem.get_id() +
           '"] > .CFIELD>  textarea,' +
+          ///////////////////////
+          //////////////////////
           '[data-target_list="' +
           CurrList +
           '"] [data-ID="' +
@@ -2766,6 +2775,7 @@ var Master_Details_Request = {
               break;
 
             case "number":
+              debugger
               if ($(this).hasClass("percentagefield")) {
                 var num = oListItem.get_item($(this).attr("id")) * 100;
                 if (num % 1 != 0)

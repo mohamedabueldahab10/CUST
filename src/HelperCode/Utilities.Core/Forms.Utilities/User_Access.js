@@ -16,8 +16,8 @@ window.USERisInitiativeHome =
   window.location.href.toLowerCase().indexOf("/initiativehome.aspx") > -1;
 window.USERisStrategicPartnershipHome =
   window.location.href.toLowerCase().indexOf("/strategicpartnershiphome.aspx") > -1;
-window.USERisTargets =
-  window.location.href.toLowerCase().indexOf("/targets.aspx") > -1;
+window.USERisTargets = window.location.href.toLowerCase().indexOf("/targets.aspx") > -1;
+
 var BreakException = {};
 var workingstatus = "";
 var UserRole,
@@ -6438,6 +6438,8 @@ var Access_Project_Info_Request = {
         projectStartToValidation = oListItem.get_item("BaselineStartDate") || '';
 
         projectActualBudget = oListItem.get_item('ActualBudget') || 0;
+
+       
         // if (User_ScheduleSource == 'عبر النظام') {
         //     $('body').append('<style>.navbar.page-nav.px-5 li.nav-item[data-href*="schedule.aspx"]{display:none}</style>');
         // } else if (User_ScheduleSource == 'عبر الجدول الزمني') {
@@ -9222,8 +9224,8 @@ let data_Level1_Access = {
           SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
             data_Level1_Access.init(dataListName);
           });
-        }else {
-          tempRoleHierarchies=[]
+        } else {
+          tempRoleHierarchies = []
           accessCallisDone = true;
         }
         console.log("Data 1st level access query", queryBody);
@@ -9365,11 +9367,11 @@ let data_Level1_Access = {
 
         if (data_Level1_Access.g.dataLevel > 2) {
           data_Level2_Access.init(listName);
-        }else {
-          tempRoleHierarchies=[]
+        } else {
+          tempRoleHierarchies = []
           accessCallisDone = true;
 
-          
+
         }
         console.log("Data 2nd level access query", queryBody);
         // finishRenderAccessRole = true
@@ -9507,8 +9509,8 @@ let data_Level2_Access = {
 
         if (data_Level1_Access.g.dataLevel > 3) {
           data_Level3_Access.init(listName);
-        }else {
-          tempRoleHierarchies=[]
+        } else {
+          tempRoleHierarchies = []
           accessCallisDone = true;
         }
         console.log("Data3nd level access query", queryBody);
@@ -9652,9 +9654,9 @@ let data_Level3_Access = {
           dataLevelAccessQuery = queryBody;
         }
 
-        tempRoleHierarchies=[]
+        tempRoleHierarchies = []
         accessCallisDone = true;
-        
+
         console.log("Data 4rd level access query", queryBody);
 
       }

@@ -162,6 +162,7 @@ window.New_Data_Submit = {
     }
     // membersGroupCheckArray.length > 0 ? userCalls.isMember(membersGroupCheckArray[0].groupName, membersGroupCheckArray[0].userLoginName, membersGroupCheckArray[0].fieldID) : '';
     var pickervalid = true; //check required people picker
+    var multiSelectValid = true
     $("[type=picker][required]").each(function () {
       if ($(this).find("span.sp-peoplepicker-userSpan").length == 0) {
         pickervalid = false;
@@ -187,6 +188,7 @@ window.New_Data_Submit = {
         $(this).removeClass("picker-valid");
       }
     })
+
 
     //////////
     $("[type=multipicker][required]").each(function () {
@@ -225,13 +227,28 @@ window.New_Data_Submit = {
         $(this).siblings('.errMsgField').show();
       })
     }
+    //validation of multiselect
+    $('.dropdown-menu.multiselect_scroll.required').each(function () {
+      if ($(this).length) {
+        if ($('.dropdown-menu.multiselect_scroll.required :checkbox:checked').length == 0) {
+          multiSelectValid = false
+          $('.dropdown-menu.multiselect_scroll.required').parent().parent().siblings('.errMsgField').show()
+        } else {
+          multiSelectValid = true
+        }
+      }
+    })
+
+
+
     changeResources();
 
 
     if (
       $(".was-validated .form-control:invalid").length == 0 &&
       pickervalid &&
-      !isCheckMember
+      !isCheckMember &&
+      multiSelectValid
     ) {
       New_Data_Submit.init();
       $("[data-target_list] .Details-Item.NewItem").each(function () {
@@ -522,12 +539,17 @@ window.New_Data_Submit = {
     //
 
     if (PCODE && listkey != "projects") {
-      console.log(PCODE, "ProjectCodeeeee 1111111111 insiiiiiiiiiiiiiiiiiiiiiiiiide ")
 
       New_Data_Submit.g.oListItem.set_item("ProjectCode", PCODE);
       if (listkey == "issues") {
         New_Data_Submit.g.oListItem.set_item("ResolutionStatus", "new");
       }
+      
+      //save value based on parent type
+
+      //
+
+
       // New_Data_Submit.g.oListItem.set_item("MasterKey", PCODE);
       // New_Data_Submit.g.oListItem.set_item("MasterID", PCODE);
     }
@@ -552,7 +574,7 @@ window.New_Data_Submit = {
       New_Data_Submit.g.oListItem.set_item("ProgressStatusMilestone", "stat6");
       New_Data_Submit.g.oListItem.set_item("ProgressStatusSchedule", "stat6");
       New_Data_Submit.g.oListItem.set_item("Status", "inprogress");
- 
+
       //لحساب مدة الاساس
       var BaselineStartDate = $('#BaselineStartDate').val()
       var BaselineFinishDate = $('#BaselineFinishDate').val()
@@ -573,6 +595,9 @@ window.New_Data_Submit = {
     if (listkey == 'initiatives') { //  to handle the initiative status when create a new one
       New_Data_Submit.g.oListItem.set_item("InitiativeProgressStatus", "stat6");
     }
+
+
+
 
 
 
@@ -953,7 +978,7 @@ window.Edit_Data_Submit = {
 
     membersGroupCheckArray.length > 0 ? userCalls.isMember(membersGroupCheckArray[0].groupName, membersGroupCheckArray[0].userLoginName, membersGroupCheckArray[0].fieldID) : '';
     var pickervalid = true; //check required people picker
-
+    var multiSelectValid = true;
 
     $("[type=picker][required]").each(function () {
 
@@ -977,7 +1002,7 @@ window.Edit_Data_Submit = {
         $(this).addClass("picker-error");
         $(this).removeClass("picker-valid");
       }
-      
+
       if ($(this).find('span.ms-formvalidation.sp-peoplepicker-errorMsg').length) {
         pickervalid = false;
         $(this).addClass("picker-error");
@@ -1022,6 +1047,20 @@ window.Edit_Data_Submit = {
       })
     }
 
+
+    //validation of multiselect
+    $('.dropdown-menu.multiselect_scroll.required').each(function () {
+      
+      if ($(this).length) {
+        if ($('.dropdown-menu.multiselect_scroll.required :checkbox:checked').length == 0) {
+          multiSelectValid = false
+          $('.dropdown-menu.multiselect_scroll.required').parent().parent().siblings('.errMsgField').show()
+        } else {
+          multiSelectValid = true
+        }
+      }
+    })
+
     changeResources();
 
 
@@ -1030,7 +1069,7 @@ window.Edit_Data_Submit = {
         Risk_To_Issue_Submit.preinit();
       }
     }
-    if ($(".was-validated .form-control:invalid").length == 0 && pickervalid && !isCheckMember) {
+    if ($(".was-validated .form-control:invalid").length == 0 && pickervalid && !isCheckMember && multiSelectValid) {
 
       if (listkey == "risks") {
         if (
