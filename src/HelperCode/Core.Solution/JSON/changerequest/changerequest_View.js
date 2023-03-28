@@ -20,21 +20,21 @@ window.Information_Form = [
 				options: {
 					choices: [
 						//SOS
-						{ display: "strategicsbjectives", value: "strategicsbjectives" },
-						{ display: "visionobjectives", value: "visionobjectives" },
-						{ display: "lmsobjectives", value: "lmsobjectives" },
+						{ display: "strategicobjectives", value: "strategic_SOs", roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'] },
+						{ display: "visionobjectives", value: "vision_SOs", roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'], },
+						{ display: "lmsobjectives", value: "lms_SOs", roles: ['Administrator', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
 						//projects
-						{ display: "vroprojects", value: "vroprojects" },
-						{ display: "epmoprojects", value: "epmorojects" },
-						{ display: "lmsprojects", value: "lmsrojects" },
+						{ display: "vroprojects", value: "vro_Projects", roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'] },
+						{ display: "epmoprojects", value: "epmo_Projects", roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'] },
+						{ display: "lmsprojects", value: "lms_Projects", roles: ['Administrator', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
 						//Initiatives
-						{ display: "strategicinitiatives", value: "strategicinitiatives" },						
-						{ display: "vroinitiatives", value: "vroinitiatives" },						
-						{ display: "lmsinitiatives", value: "lmsinitiatives" },	
+						{ display: "strategicinitiatives", value: "strategic_Initiatives", roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'] },
+						{ display: "strategicinitiatives", value: "vro_Initiatives", roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'] },
+						{ display: "lmsinitiatives", value: "lms_Initiatives", roles: ['Administrator', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
 						//KPI
-						{ display: "strategickpi", value: "strategickpi" },						
-						{ display: "vrokpi", value: "vrokpi" },						
-						{ display: "lmskpi", value: "lmskpi" },	
+						{ display: "strategickpi", value: "strategic_MainKPI", roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'] },
+						{ display: "vrokpi", value: "vro_MainKPI", roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'] },
+						{ display: "lmskpi", value: "lms_MainKPI", roles: ['Administrator', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
 					],
 				},
 				toggleValues: [
@@ -365,26 +365,26 @@ window.Information_Form = [
 					],
 				},
 			},
-			{
-				//startegy
-				InternalName: "CRRelatedStrategyObjective",
-				DisplayNameEn: "Related Objective",
-				DisplayName: "الهدف  المرتبط ",
-				listKey: "sos",//hada al wizara  هدف الوزارة =
-				// ToggleName: "RelatedMainObjective",
-				display: "none",
-				customCr: true,
-				ToggleName: "CRRelatedStrategyObjective",
-				type: "lookup",
-				source: "SOs",
-				Dispfieldkey: "Name",
-				valfieldkey: "Title",
-				// dontSubmit: true,
-				useAccessPolicy:true
-				// dynamic: 'moduleSelect',
-				// filterField: 'Types',
-				// filterFieldType: 'Text',
-			},
+			// {
+			// 	//startegy
+			// 	InternalName: "CRRelatedStrategyObjective",
+			// 	DisplayNameEn: "Related Objective",
+			// 	DisplayName: "الهدف  المرتبط ",
+			// 	listKey: "sos",//hada al wizara  هدف الوزارة =
+			// 	// ToggleName: "RelatedMainObjective",
+			// 	display: "none",
+			// 	customCr: true,
+			// 	ToggleName: "CRRelatedStrategyObjective",
+			// 	type: "lookup",
+			// 	source: "SOs",
+			// 	Dispfieldkey: "Name",
+			// 	valfieldkey: "Title",
+			// 	// dontSubmit: true,
+			// 	useAccessPolicy:true
+			// 	// dynamic: 'moduleSelect',
+			// 	// filterField: 'Types',
+			// 	// filterFieldType: 'Text',
+			// },
 
 			{
 				//StrategicObjectives
@@ -905,42 +905,42 @@ window.Information_Form = [
 			// },
 		],
 	},
-	{
-		label: "بيانات طلب اضافة",
-		labelEn: "Add Request Data",
-		description: "التفاصيل",
-		descriptionEn: "Details",
-		subFields: [
-			{
-				// InternalName: 'Title',
-				DisplayNameEn: 'Create Project',
-				DisplayName: 'اضافة مشروع',
-				type: 'anchor',
-				href: "/SitePages/new.aspx?ListKey=projects"
-			},
-			{
-				// InternalName: 'Title',
-				DisplayNameEn: 'Create Initiative',
-				DisplayName: 'اضافة مبادرة',
-				type: 'anchor',
-				href: "/SitePages/new.aspx?ListKey=initiatives"
-			},
-			{
-				// InternalName: 'Title',
-				DisplayNameEn: 'Create Strategic objective',
-				DisplayName: 'اضافة هدف استراتيجي',
-				type: 'anchor',
-				href: "/SitePages/new.aspx?ListKey=sos"
-			},
-			{
-				// InternalName: 'Title',
-				DisplayNameEn: 'Create KPI',
-				DisplayName: 'اضافة مؤشر',
-				type: 'anchor',
-				href: "/SitePages/new.aspx?ListKey=mainkpi"
-			},
-		]
-	}
+	// {
+	// 	label: "بيانات طلب اضافة",
+	// 	labelEn: "Add Request Data",
+	// 	description: "التفاصيل",
+	// 	descriptionEn: "Details",
+	// 	subFields: [
+	// 		{
+	// 			// InternalName: 'Title',
+	// 			DisplayNameEn: 'Create Project',
+	// 			DisplayName: 'اضافة مشروع',
+	// 			type: 'anchor',
+	// 			href: "/SitePages/new.aspx?ListKey=projects"
+	// 		},
+	// 		{
+	// 			// InternalName: 'Title',
+	// 			DisplayNameEn: 'Create Initiative',
+	// 			DisplayName: 'اضافة مبادرة',
+	// 			type: 'anchor',
+	// 			href: "/SitePages/new.aspx?ListKey=initiatives"
+	// 		},
+	// 		{
+	// 			// InternalName: 'Title',
+	// 			DisplayNameEn: 'Create Strategic objective',
+	// 			DisplayName: 'اضافة هدف استراتيجي',
+	// 			type: 'anchor',
+	// 			href: "/SitePages/new.aspx?ListKey=sos"
+	// 		},
+	// 		{
+	// 			// InternalName: 'Title',
+	// 			DisplayNameEn: 'Create KPI',
+	// 			DisplayName: 'اضافة مؤشر',
+	// 			type: 'anchor',
+	// 			href: "/SitePages/new.aspx?ListKey=mainkpi"
+	// 		},
+	// 	]
+	// }
 	// {
 	// 	label: 'الدراسات الخاصة بطلب التغيير ',
 	// 	labelEn: 'Change Requests Studies',
