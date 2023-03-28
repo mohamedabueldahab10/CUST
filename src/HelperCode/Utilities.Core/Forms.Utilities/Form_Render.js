@@ -189,7 +189,6 @@ window.ListInfo = {
         }
 
         // to handle the workflowSetValues
-
         workflowSetValues = item.workflowSetValues
 
         if (workflowSetValues && workflowSetValues.length) {
@@ -204,6 +203,9 @@ window.ListInfo = {
         }
         //
 
+        //to handle set value based on parent
+        // get_parent_data.init()
+        //
 
 
 
@@ -11829,3 +11831,47 @@ async function waitUntil(condition, time = 500) {
     await new Promise((resolve) => setTimeout(resolve, time));
   }
 }
+///////////////////////////////////
+//working on parent type
+
+
+var get_parent_data = {
+  init: function (listName, code, fieldName, fieldType) {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle(listName);
+    var camlQuery = new SP.CamlQuery();
+    debugger
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=" + fieldName + " /><Value Type=\"Text\">" +
+      code +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+    );
+    get_parent_data.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(get_parent_data.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, get_parent_data.onSuccess),
+      Function.createDelegate(this, get_parent_data.onError)
+    );
+  },
+  onSuccess: function (sender, args) {
+    var collListItem = get_parent_data.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+
+
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      itemID = oListItem.get_id();
+      console.log("Inside while")
+      debugger
+
+    }
+
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  // Global variables
+  g: {},
+};

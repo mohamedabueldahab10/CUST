@@ -539,12 +539,17 @@ window.New_Data_Submit = {
     //
 
     if (PCODE && listkey != "projects") {
-      console.log(PCODE, "ProjectCodeeeee 1111111111 insiiiiiiiiiiiiiiiiiiiiiiiiide ")
 
       New_Data_Submit.g.oListItem.set_item("ProjectCode", PCODE);
       if (listkey == "issues") {
         New_Data_Submit.g.oListItem.set_item("ResolutionStatus", "new");
       }
+      
+      //save value based on parent type
+
+      //
+
+
       // New_Data_Submit.g.oListItem.set_item("MasterKey", PCODE);
       // New_Data_Submit.g.oListItem.set_item("MasterID", PCODE);
     }
@@ -590,6 +595,9 @@ window.New_Data_Submit = {
     if (listkey == 'initiatives') { //  to handle the initiative status when create a new one
       New_Data_Submit.g.oListItem.set_item("InitiativeProgressStatus", "stat6");
     }
+
+
+
 
 
 
