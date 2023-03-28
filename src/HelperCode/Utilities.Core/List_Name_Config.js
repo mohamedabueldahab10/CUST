@@ -88,7 +88,7 @@ var ListArray = [
 		FormTitle: "طلبات التغيير",
 		TitleEn: "Change Request",
 		projnav: "Project Navigation",
-		projectrelated: true,
+		projectrelated: false,
 		subfolder: true,
 	},
 	{
