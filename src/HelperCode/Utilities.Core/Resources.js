@@ -1011,6 +1011,7 @@
     enabled: "مفعل",
     disabled:"معطل",
     deletion:"حذف",
+    multiselecterr:"يجب اختيار خيار واحد على الاقل"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -2036,6 +2037,7 @@
     enabled: "Enabled",
     disabled:"Disabled",
     deletion:"Delete",
+    multiselecterr:"should choose at least one option"
   },
 };
 
