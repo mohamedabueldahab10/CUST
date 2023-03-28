@@ -80,6 +80,27 @@ window.Information_Form = [
 				type: "dropdownValues",
 				options: {
 					choices: [
+						{
+							display: "generalchange",
+							value: "automatic",
+							//
+							fields: [
+								{
+									InternalName: "getall",
+								},
+
+							], otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
+								{ fieldName: 'WFStage', value: 'VROCRProject01' },
+							]
+						},
+						{
+							display: "deletion", value: "delete",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
+								{ fieldName: 'WFStage', value: 'VROCRProject01' },
+							]
+						}
 						// {
 						// 	display: "baseline",
 						// 	value: "manual",
@@ -123,157 +144,157 @@ window.Information_Form = [
 						// 	],
 						// },
 						// { display: "stakeholders", value: "automatic" },
-						{
-							display: "budget",
-							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
-								{ fieldName: 'WFStage', value: 'VROCRProject01' },
-								// { fieldName: 'DraftStatus', value: 'draft' },
-							],
-							value: "manual",
-							fields: [
-								{
-									listName: "",
-									label: "طلب تغيير الميزانية",
-									labelEn: "Budget Change Request",
-									description: "التفاصيل",
-									descriptionEn: "Details",
-									//
-									InternalName: "",
-									DisplayName: "تفاصيل طلب التغيير",
-									DisplayNameEn: "Change Request Details",
-									type: "multiline",
-								},
-							],
-						},
-						{ display: "projectseparation", value: "automatic",	
-						otherFields: [
-							{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
-							{ fieldName: 'WFStage', value: 'VROCRProject01' },
-							// { fieldName: 'DraftStatus', value: 'draft' },
-						], },
-						// {
-						// 	display: "projecthold",
-						// 	value: "automatic",
-						// 	fields: [
-						// 		{
-						// 			InternalName: "Status",
-						// 			DisplayName: "حالة المشروع",
-						// 			DisplayNameEn: "Project Status",
-						// 			type: "dropdownValues",
-						// 			validation: "required",
-						// 			options: {
-						// 				choices: [{ value: "cancelled", display: "cancelled" }],
-						// 			},
-						// 		},
-						// 	],
-						// },
-						{
-							display: "pattr40",
-							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
-								{ fieldName: 'WFStage', value: 'VROCRProject01' },
-								// { fieldName: 'DraftStatus', value: 'draft' },
-							],
-							value: "automatic",
-							fields: [
-								{
-									listName: "Projects",
-									label: "المشروع",
-									labelEn: "Project",
-									description: "",
-									descriptionEn: "",
-									InternalName: "BaselineStartDate",
-									DisplayName: "تاريخ بدء الأساس",
-									DisplayNameEn: "Baseline Start Date",
-									type: "datetime",
-									max: "BaselineFinishDate",
-								},
-								{
-									listName: "Projects",
-									label: "المشروع",
-									labelEn: "Project",
-									description: "",
-									descriptionEn: "",
-									InternalName: "BaselineFinishDate",
-									DisplayName: "تاريخ إنهاء الأساس",
-									DisplayNameEn: "Baseline Finish Date",
-									type: "datetime",
-									min: "BaselineStartDate",
-								},
-							],
-						},
-						{
-							display: "range",
-							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
-								{ fieldName: 'WFStage', value: 'VROCRProject01' },
-								// { fieldName: 'DraftStatus', value: 'draft' },
-							],
-							value: "automatic",
-							fields: [
-								{
-									listName: "Projects",
-									label: "المشروع",
-									labelEn: "Project",
-									description: "",
-									descriptionEn: "",
-									InternalName: "ScopeOfWork",
-									DisplayName: "نطاق العمل",
-									DisplayNameEn: "ScopeOfWork",
-									type: "multiline",
-									validation: "required",
-									maxchar: 5000,
-								},
-							],
-						},
-						{
-							display: "contract",
-							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
-								{ fieldName: 'WFStage', value: 'VROCRProject01' },
-								// { fieldName: 'DraftStatus', value: 'draft' },
-							],
-							value: "manual",
-							fields: [
-								{
-									listName: "",
-									InternalName: "",
-									DisplayName: "تفاصيل طلب التغيير",
-									DisplayNameEn: "Change Request Details",
-									type: "multiline",
-								},
-							],
-						},
-						{ display: "implementationconsultant", value: "automatic",	otherFields: [
-							{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
-							{ fieldName: 'WFStage', value: 'VROCRProject01' },
-							// { fieldName: 'DraftStatus', value: 'draft' },
-						], },
-						{
-							display: "others",
-							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
-								{ fieldName: 'WFStage', value: 'VROCRProject01' },
-								// { fieldName: 'DraftStatus', value: 'draft' },
-							],
-							value: "manual",
-							fields: [
-								{
-									listName: "",
-									InternalName: "",
-									DisplayName: "تفاصيل طلب التغيير",
-									DisplayNameEn: "Change Request Details",
-									type: "multiline",
-								},
-							],
-						},
-						{ display: "deletion", value: "delete",
-						otherFields: [
-							{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
-							{ fieldName: 'WFStage', value: 'VROCRProject01' },
-							// { fieldName: 'DraftStatus', value: 'draft' },
-						], }
+				// 		{
+				// 			display: "budget",
+				// 			otherFields: [
+				// 				{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
+				// 				{ fieldName: 'WFStage', value: 'VROCRProject01' },
+				// 				// { fieldName: 'DraftStatus', value: 'draft' },
+				// 			],
+				// 			value: "manual",
+				// 			fields: [
+				// 				{
+				// 					listName: "",
+				// 					label: "طلب تغيير الميزانية",
+				// 					labelEn: "Budget Change Request",
+				// 					description: "التفاصيل",
+				// 					descriptionEn: "Details",
+				// 					//
+				// 					InternalName: "",
+				// 					DisplayName: "تفاصيل طلب التغيير",
+				// 					DisplayNameEn: "Change Request Details",
+				// 					type: "multiline",
+				// 				},
+				// 			],
+				// 		},
+				// 		{ display: "projectseparation", value: "automatic",	
+				// 		otherFields: [
+				// 			{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
+				// 			{ fieldName: 'WFStage', value: 'VROCRProject01' },
+				// 			// { fieldName: 'DraftStatus', value: 'draft' },
+				// 		], },
+				// 		// {
+				// 		// 	display: "projecthold",
+				// 		// 	value: "automatic",
+				// 		// 	fields: [
+				// 		// 		{
+				// 		// 			InternalName: "Status",
+				// 		// 			DisplayName: "حالة المشروع",
+				// 		// 			DisplayNameEn: "Project Status",
+				// 		// 			type: "dropdownValues",
+				// 		// 			validation: "required",
+				// 		// 			options: {
+				// 		// 				choices: [{ value: "cancelled", display: "cancelled" }],
+				// 		// 			},
+				// 		// 		},
+				// 		// 	],
+				// 		// },
+				// 		{
+				// 			display: "pattr40",
+				// 			otherFields: [
+				// 				{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
+				// 				{ fieldName: 'WFStage', value: 'VROCRProject01' },
+				// 				// { fieldName: 'DraftStatus', value: 'draft' },
+				// 			],
+				// 			value: "automatic",
+				// 			fields: [
+				// 				{
+				// 					listName: "Projects",
+				// 					label: "المشروع",
+				// 					labelEn: "Project",
+				// 					description: "",
+				// 					descriptionEn: "",
+				// 					InternalName: "BaselineStartDate",
+				// 					DisplayName: "تاريخ بدء الأساس",
+				// 					DisplayNameEn: "Baseline Start Date",
+				// 					type: "datetime",
+				// 					max: "BaselineFinishDate",
+				// 				},
+				// 				{
+				// 					listName: "Projects",
+				// 					label: "المشروع",
+				// 					labelEn: "Project",
+				// 					description: "",
+				// 					descriptionEn: "",
+				// 					InternalName: "BaselineFinishDate",
+				// 					DisplayName: "تاريخ إنهاء الأساس",
+				// 					DisplayNameEn: "Baseline Finish Date",
+				// 					type: "datetime",
+				// 					min: "BaselineStartDate",
+				// 				},
+				// 			],
+				// 		},
+				// 		{
+				// 			display: "range",
+				// 			otherFields: [
+				// 				{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
+				// 				{ fieldName: 'WFStage', value: 'VROCRProject01' },
+				// 				// { fieldName: 'DraftStatus', value: 'draft' },
+				// 			],
+				// 			value: "automatic",
+				// 			fields: [
+				// 				{
+				// 					listName: "Projects",
+				// 					label: "المشروع",
+				// 					labelEn: "Project",
+				// 					description: "",
+				// 					descriptionEn: "",
+				// 					InternalName: "ScopeOfWork",
+				// 					DisplayName: "نطاق العمل",
+				// 					DisplayNameEn: "ScopeOfWork",
+				// 					type: "multiline",
+				// 					validation: "required",
+				// 					maxchar: 5000,
+				// 				},
+				// 			],
+				// 		},
+				// 		{
+				// 			display: "contract",
+				// 			otherFields: [
+				// 				{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
+				// 				{ fieldName: 'WFStage', value: 'VROCRProject01' },
+				// 				// { fieldName: 'DraftStatus', value: 'draft' },
+				// 			],
+				// 			value: "manual",
+				// 			fields: [
+				// 				{
+				// 					listName: "",
+				// 					InternalName: "",
+				// 					DisplayName: "تفاصيل طلب التغيير",
+				// 					DisplayNameEn: "Change Request Details",
+				// 					type: "multiline",
+				// 				},
+				// 			],
+				// 		},
+				// 		{ display: "implementationconsultant", value: "automatic",	otherFields: [
+				// 			{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
+				// 			{ fieldName: 'WFStage', value: 'VROCRProject01' },
+				// 			// { fieldName: 'DraftStatus', value: 'draft' },
+				// 		], },
+				// 		{
+				// 			display: "others",
+				// 			otherFields: [
+				// 				{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
+				// 				{ fieldName: 'WFStage', value: 'VROCRProject01' },
+				// 				// { fieldName: 'DraftStatus', value: 'draft' },
+				// 			],
+				// 			value: "manual",
+				// 			fields: [
+				// 				{
+				// 					listName: "",
+				// 					InternalName: "",
+				// 					DisplayName: "تفاصيل طلب التغيير",
+				// 					DisplayNameEn: "Change Request Details",
+				// 					type: "multiline",
+				// 				},
+				// 			],
+				// 		},
+				// 		{ display: "deletion", value: "delete",
+				// 		otherFields: [
+				// 			{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
+				// 			{ fieldName: 'WFStage', value: 'VROCRProject01' },
+				// 			// { fieldName: 'DraftStatus', value: 'draft' },
+				// 		], }
 					],
 				},
 			},
@@ -288,6 +309,29 @@ window.Information_Form = [
 				
 				options: {
 					choices: [
+						{
+							display: "generalchange",
+							value: "automatic",
+							//
+							fields: [
+								{
+									InternalName: "getall",
+								},
+
+							],otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
+								{ fieldName: 'WFStage', value: 'LMSCRProject01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
+						},
+						{
+							display: "deletion", value: "delete",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
+								{ fieldName: 'WFStage', value: 'LMSCRProject01' },
+								// { fieldName: 'DraftStatus', value: 'draft' },
+							],
+						}
 						// {
 						// 	display: "baseline",
 						// 	value: "manual",
@@ -331,157 +375,153 @@ window.Information_Form = [
 						// 	],
 						// },
 						// { display: "stakeholders", value: "automatic" },
-						{
-							display: "budget",
-							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
-								{ fieldName: 'WFStage', value: 'LMSCRProject01' },
-								// { fieldName: 'DraftStatus', value: 'draft' },
-							],
-							value: "manual",
-							fields: [
-								{
-									listName: "",
-									label: "طلب تغيير الميزانية",
-									labelEn: "Budget Change Request",
-									description: "التفاصيل",
-									descriptionEn: "Details",
-									//
-									InternalName: "",
-									DisplayName: "تفاصيل طلب التغيير",
-									DisplayNameEn: "Change Request Details",
-									type: "multiline",
-								},
-							],
-						},
-						{ display: "projectseparation", value: "automatic",otherFields: [
-							{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
-							{ fieldName: 'WFStage', value: 'LMSCRProject01' },
-							// { fieldName: 'DraftStatus', value: 'draft' },
-						], },
 						// {
-						// 	display: "projecthold",
-						// 	value: "automatic",
+						// 	display: "budget",
+						
+						// 	value: "manual",
 						// 	fields: [
 						// 		{
-						// 			InternalName: "Status",
-						// 			DisplayName: "حالة المشروع",
-						// 			DisplayNameEn: "Project Status",
-						// 			type: "dropdownValues",
-						// 			validation: "required",
-						// 			options: {
-						// 				choices: [{ value: "cancelled", display: "cancelled" }],
-						// 			},
+						// 			listName: "",
+						// 			label: "طلب تغيير الميزانية",
+						// 			labelEn: "Budget Change Request",
+						// 			description: "التفاصيل",
+						// 			descriptionEn: "Details",
+						// 			//
+						// 			InternalName: "",
+						// 			DisplayName: "تفاصيل طلب التغيير",
+						// 			DisplayNameEn: "Change Request Details",
+						// 			type: "multiline",
 						// 		},
 						// 	],
 						// },
-						{
-							display: "pattr40",
-							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
-								{ fieldName: 'WFStage', value: 'LMSCRProject01' },
-								// { fieldName: 'DraftStatus', value: 'draft' },
-							],
-							value: "automatic",
-							fields: [
-								{
-									listName: "Projects",
-									label: "المشروع",
-									labelEn: "Project",
-									description: "",
-									descriptionEn: "",
-									InternalName: "BaselineStartDate",
-									DisplayName: "تاريخ بدء الأساس",
-									DisplayNameEn: "Baseline Start Date",
-									type: "datetime",
-									max: "BaselineFinishDate",
-								},
-								{
-									listName: "Projects",
-									label: "المشروع",
-									labelEn: "Project",
-									description: "",
-									descriptionEn: "",
-									InternalName: "BaselineFinishDate",
-									DisplayName: "تاريخ إنهاء الأساس",
-									DisplayNameEn: "Baseline Finish Date",
-									type: "datetime",
-									min: "BaselineStartDate",
-								},
-							],
-						},
-						{
-							display: "range",
-							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
-								{ fieldName: 'WFStage', value: 'LMSCRProject01' },
-								// { fieldName: 'DraftStatus', value: 'draft' },
-							],
-							value: "automatic",
-							fields: [
-								{
-									listName: "Projects",
-									label: "المشروع",
-									labelEn: "Project",
-									description: "",
-									descriptionEn: "",
-									InternalName: "ScopeOfWork",
-									DisplayName: "نطاق العمل",
-									DisplayNameEn: "ScopeOfWork",
-									type: "multiline",
-									validation: "required",
-									maxchar: 5000,
-								},
-							],
-						},
-						{
-							display: "contract",
-							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
-								{ fieldName: 'WFStage', value: 'LMSCRProject01' },
-								// { fieldName: 'DraftStatus', value: 'draft' },
-							],
-							value: "manual",
-							fields: [
-								{
-									listName: "",
-									InternalName: "",
-									DisplayName: "تفاصيل طلب التغيير",
-									DisplayNameEn: "Change Request Details",
-									type: "multiline",
-								},
-							],
-						},
-						{ display: "implementationconsultant", value: "automatic",
-						otherFields: [
-							{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
-							{ fieldName: 'WFStage', value: 'LMSCRProject01' },
-							// { fieldName: 'DraftStatus', value: 'draft' },
-						], },
-						{
-							display: "others",
-							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
-								{ fieldName: 'WFStage', value: 'LMSCRProject01' },
-								// { fieldName: 'DraftStatus', value: 'draft' },
-							],
-							value: "manual",
-							fields: [
-								{
-									listName: "",
-									InternalName: "",
-									DisplayName: "تفاصيل طلب التغيير",
-									DisplayNameEn: "Change Request Details",
-									type: "multiline",
-								},
-							],
-						},
-						{ display: "deletion", value: "delete",
-						otherFields: [
-							{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
-							{ fieldName: 'WFStage', value: 'LMSCRProject01' },
-							// { fieldName: 'DraftStatus', value: 'draft' },
-						], }
+						// { display: "projectseparation", value: "automatic",otherFields: [
+						// 	{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
+						// 	{ fieldName: 'WFStage', value: 'LMSCRProject01' },
+						// 	// { fieldName: 'DraftStatus', value: 'draft' },
+						// ], },
+						// // {
+						// // 	display: "projecthold",
+						// // 	value: "automatic",
+						// // 	fields: [
+						// // 		{
+						// // 			InternalName: "Status",
+						// // 			DisplayName: "حالة المشروع",
+						// // 			DisplayNameEn: "Project Status",
+						// // 			type: "dropdownValues",
+						// // 			validation: "required",
+						// // 			options: {
+						// // 				choices: [{ value: "cancelled", display: "cancelled" }],
+						// // 			},
+						// // 		},
+						// // 	],
+						// // },
+						// {
+						// 	display: "pattr40",
+						// 	otherFields: [
+						// 		{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
+						// 		{ fieldName: 'WFStage', value: 'LMSCRProject01' },
+						// 		// { fieldName: 'DraftStatus', value: 'draft' },
+						// 	],
+						// 	value: "automatic",
+						// 	fields: [
+						// 		{
+						// 			listName: "Projects",
+						// 			label: "المشروع",
+						// 			labelEn: "Project",
+						// 			description: "",
+						// 			descriptionEn: "",
+						// 			InternalName: "BaselineStartDate",
+						// 			DisplayName: "تاريخ بدء الأساس",
+						// 			DisplayNameEn: "Baseline Start Date",
+						// 			type: "datetime",
+						// 			max: "BaselineFinishDate",
+						// 		},
+						// 		{
+						// 			listName: "Projects",
+						// 			label: "المشروع",
+						// 			labelEn: "Project",
+						// 			description: "",
+						// 			descriptionEn: "",
+						// 			InternalName: "BaselineFinishDate",
+						// 			DisplayName: "تاريخ إنهاء الأساس",
+						// 			DisplayNameEn: "Baseline Finish Date",
+						// 			type: "datetime",
+						// 			min: "BaselineStartDate",
+						// 		},
+						// 	],
+						// },
+						// {
+						// 	display: "range",
+						// 	otherFields: [
+						// 		{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
+						// 		{ fieldName: 'WFStage', value: 'LMSCRProject01' },
+						// 		// { fieldName: 'DraftStatus', value: 'draft' },
+						// 	],
+						// 	value: "automatic",
+						// 	fields: [
+						// 		{
+						// 			listName: "Projects",
+						// 			label: "المشروع",
+						// 			labelEn: "Project",
+						// 			description: "",
+						// 			descriptionEn: "",
+						// 			InternalName: "ScopeOfWork",
+						// 			DisplayName: "نطاق العمل",
+						// 			DisplayNameEn: "ScopeOfWork",
+						// 			type: "multiline",
+						// 			validation: "required",
+						// 			maxchar: 5000,
+						// 		},
+						// 	],
+						// },
+						// {
+						// 	display: "contract",
+						// 	otherFields: [
+						// 		{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
+						// 		{ fieldName: 'WFStage', value: 'LMSCRProject01' },
+						// 		// { fieldName: 'DraftStatus', value: 'draft' },
+						// 	],
+						// 	value: "manual",
+						// 	fields: [
+						// 		{
+						// 			listName: "",
+						// 			InternalName: "",
+						// 			DisplayName: "تفاصيل طلب التغيير",
+						// 			DisplayNameEn: "Change Request Details",
+						// 			type: "multiline",
+						// 		},
+						// 	],
+						// },
+						// { display: "implementationconsultant", value: "automatic",
+						// otherFields: [
+						// 	{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
+						// 	{ fieldName: 'WFStage', value: 'LMSCRProject01' },
+						// 	// { fieldName: 'DraftStatus', value: 'draft' },
+						// ], },
+						// {
+						// 	display: "others",
+						// 	otherFields: [
+						// 		{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
+						// 		{ fieldName: 'WFStage', value: 'LMSCRProject01' },
+						// 		// { fieldName: 'DraftStatus', value: 'draft' },
+						// 	],
+						// 	value: "manual",
+						// 	fields: [
+						// 		{
+						// 			listName: "",
+						// 			InternalName: "",
+						// 			DisplayName: "تفاصيل طلب التغيير",
+						// 			DisplayNameEn: "Change Request Details",
+						// 			type: "multiline",
+						// 		},
+						// 	],
+						// },
+						// { display: "deletion", value: "delete",
+						// otherFields: [
+						// 	{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
+						// 	{ fieldName: 'WFStage', value: 'LMSCRProject01' },
+						// 	// { fieldName: 'DraftStatus', value: 'draft' },
+						// ], }
 					],
 				},
 			},
@@ -496,6 +536,27 @@ window.Information_Form = [
 				type: "dropdownValues",
 				options: {
 					choices: [
+						{
+							display: "generalchange",
+							value: "automatic",
+							//
+							fields: [
+								{
+									InternalName: "getall",
+								},
+
+							], otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
+								{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
+							]
+						},
+						{
+							display: "deletion", value: "delete",
+							otherFields: [
+								{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
+								{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
+							]
+						}
 						// {
 						// 	display: "baseline",
 						// 	value: "manual",
@@ -539,156 +600,156 @@ window.Information_Form = [
 						// 	],
 						// },
 						// { display: "stakeholders", value: "automatic" },
-						{
-							display: "budget",
-							value: "manual",
-							fields: [
-								{
-									listName: "",
-									label: "طلب تغيير الميزانية",
-									labelEn: "Budget Change Request",
-									description: "التفاصيل",
-									descriptionEn: "Details",
-									//
-									InternalName: "",
-									DisplayName: "تفاصيل طلب التغيير",
-									DisplayNameEn: "Change Request Details",
-									type: "multiline",
-								},
-							],otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
-								{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
-								// { fieldName: 'DraftStatus', value: 'draft' },
-							],
-						},
-						{ display: "projectseparation", value: "automatic", otherFields: [
-							{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
-							{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
-							// { fieldName: 'DraftStatus', value: 'draft' },
-						],},
 						// {
-						// 	display: "projecthold",
-						// 	value: "automatic",
+						// 	display: "budget",
+						// 	value: "manual",
 						// 	fields: [
 						// 		{
-						// 			InternalName: "Status",
-						// 			DisplayName: "حالة المشروع",
-						// 			DisplayNameEn: "Project Status",
-						// 			type: "dropdownValues",
-						// 			validation: "required",
-						// 			options: {
-						// 				choices: [{ value: "cancelled", display: "cancelled" }],
-						// 			},
+						// 			listName: "",
+						// 			label: "طلب تغيير الميزانية",
+						// 			labelEn: "Budget Change Request",
+						// 			description: "التفاصيل",
+						// 			descriptionEn: "Details",
+						// 			//
+						// 			InternalName: "",
+						// 			DisplayName: "تفاصيل طلب التغيير",
+						// 			DisplayNameEn: "Change Request Details",
+						// 			type: "multiline",
+						// 		},
+						// 	],otherFields: [
+						// 		{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
+						// 		{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
+						// 		// { fieldName: 'DraftStatus', value: 'draft' },
+						// 	],
+						// },
+						// { display: "projectseparation", value: "automatic", otherFields: [
+						// 	{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
+						// 	{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
+						// 	// { fieldName: 'DraftStatus', value: 'draft' },
+						// ],},
+						// // {
+						// // 	display: "projecthold",
+						// // 	value: "automatic",
+						// // 	fields: [
+						// // 		{
+						// // 			InternalName: "Status",
+						// // 			DisplayName: "حالة المشروع",
+						// // 			DisplayNameEn: "Project Status",
+						// // 			type: "dropdownValues",
+						// // 			validation: "required",
+						// // 			options: {
+						// // 				choices: [{ value: "cancelled", display: "cancelled" }],
+						// // 			},
+						// // 		},
+						// // 	],
+						// // },
+						// {
+						// 	display: "pattr40",
+						// 	value: "automatic",
+						// 	otherFields: [
+						// 		{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
+						// 		{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
+						// 		// { fieldName: 'DraftStatus', value: 'draft' },
+						// 	],
+						// 	fields: [
+						// 		{
+						// 			listName: "Projects",
+						// 			label: "المشروع",
+						// 			labelEn: "Project",
+						// 			description: "",
+						// 			descriptionEn: "",
+						// 			InternalName: "BaselineStartDate",
+						// 			DisplayName: "تاريخ بدء الأساس",
+						// 			DisplayNameEn: "Baseline Start Date",
+						// 			type: "datetime",
+						// 			max: "BaselineFinishDate",
+						// 		},
+						// 		{
+						// 			listName: "Projects",
+						// 			label: "المشروع",
+						// 			labelEn: "Project",
+						// 			description: "",
+						// 			descriptionEn: "",
+						// 			InternalName: "BaselineFinishDate",
+						// 			DisplayName: "تاريخ إنهاء الأساس",
+						// 			DisplayNameEn: "Baseline Finish Date",
+						// 			type: "datetime",
+						// 			min: "BaselineStartDate",
 						// 		},
 						// 	],
 						// },
-						{
-							display: "pattr40",
-							value: "automatic",
-							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
-								{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
-								// { fieldName: 'DraftStatus', value: 'draft' },
-							],
-							fields: [
-								{
-									listName: "Projects",
-									label: "المشروع",
-									labelEn: "Project",
-									description: "",
-									descriptionEn: "",
-									InternalName: "BaselineStartDate",
-									DisplayName: "تاريخ بدء الأساس",
-									DisplayNameEn: "Baseline Start Date",
-									type: "datetime",
-									max: "BaselineFinishDate",
-								},
-								{
-									listName: "Projects",
-									label: "المشروع",
-									labelEn: "Project",
-									description: "",
-									descriptionEn: "",
-									InternalName: "BaselineFinishDate",
-									DisplayName: "تاريخ إنهاء الأساس",
-									DisplayNameEn: "Baseline Finish Date",
-									type: "datetime",
-									min: "BaselineStartDate",
-								},
-							],
-						},
-						{
-							display: "range",
-							value: "automatic",
-							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
-								{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
-								// { fieldName: 'DraftStatus', value: 'draft' },
-							],
-							fields: [
-								{
-									listName: "Projects",
-									label: "المشروع",
-									labelEn: "Project",
-									description: "",
-									descriptionEn: "",
-									InternalName: "ScopeOfWork",
-									DisplayName: "نطاق العمل",
-									DisplayNameEn: "ScopeOfWork",
-									type: "multiline",
-									validation: "required",
-									maxchar: 5000,
-								},
-							],
-						},
-						{
-							display: "contract",
-							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
-								{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
-								// { fieldName: 'DraftStatus', value: 'draft' },
-							],
-							value: "manual",
-							fields: [
-								{
-									listName: "",
-									InternalName: "",
-									DisplayName: "تفاصيل طلب التغيير",
-									DisplayNameEn: "Change Request Details",
-									type: "multiline",
-								},
-							],
-						},
-						{ display: "implementationconsultant", value: "automatic",
-						otherFields: [
-							{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
-							{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
-							// { fieldName: 'DraftStatus', value: 'draft' },
-						], },
-						{
-							display: "others",
-							value: "manual",
-							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
-								{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
-								// { fieldName: 'DraftStatus', value: 'draft' },
-							],
-							fields: [
-								{
-									listName: "",
-									InternalName: "",
-									DisplayName: "تفاصيل طلب التغيير",
-									DisplayNameEn: "Change Request Details",
-									type: "multiline",
-								},
-							],
-						},
-						{ display: "deletion", value: "delete",
-						otherFields: [
-							{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
-							{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
-							// { fieldName: 'DraftStatus', value: 'draft' },
-						], }
+						// {
+						// 	display: "range",
+						// 	value: "automatic",
+						// 	otherFields: [
+						// 		{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
+						// 		{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
+						// 		// { fieldName: 'DraftStatus', value: 'draft' },
+						// 	],
+						// 	fields: [
+						// 		{
+						// 			listName: "Projects",
+						// 			label: "المشروع",
+						// 			labelEn: "Project",
+						// 			description: "",
+						// 			descriptionEn: "",
+						// 			InternalName: "ScopeOfWork",
+						// 			DisplayName: "نطاق العمل",
+						// 			DisplayNameEn: "ScopeOfWork",
+						// 			type: "multiline",
+						// 			validation: "required",
+						// 			maxchar: 5000,
+						// 		},
+						// 	],
+						// },
+						// {
+						// 	display: "contract",
+						// 	otherFields: [
+						// 		{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
+						// 		{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
+						// 		// { fieldName: 'DraftStatus', value: 'draft' },
+						// 	],
+						// 	value: "manual",
+						// 	fields: [
+						// 		{
+						// 			listName: "",
+						// 			InternalName: "",
+						// 			DisplayName: "تفاصيل طلب التغيير",
+						// 			DisplayNameEn: "Change Request Details",
+						// 			type: "multiline",
+						// 		},
+						// 	],
+						// },
+						// { display: "implementationconsultant", value: "automatic",
+						// otherFields: [
+						// 	{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
+						// 	{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
+						// 	// { fieldName: 'DraftStatus', value: 'draft' },
+						// ], },
+						// {
+						// 	display: "others",
+						// 	value: "manual",
+						// 	otherFields: [
+						// 		{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
+						// 		{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
+						// 		// { fieldName: 'DraftStatus', value: 'draft' },
+						// 	],
+						// 	fields: [
+						// 		{
+						// 			listName: "",
+						// 			InternalName: "",
+						// 			DisplayName: "تفاصيل طلب التغيير",
+						// 			DisplayNameEn: "Change Request Details",
+						// 			type: "multiline",
+						// 		},
+						// 	],
+						// },
+						// { display: "deletion", value: "delete",
+						// otherFields: [
+						// 	{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
+						// 	{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
+						// 	// { fieldName: 'DraftStatus', value: 'draft' },
+						// ], }
 					],
 				},
 			},
