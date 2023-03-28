@@ -483,7 +483,7 @@
     visionobjectives: "اهداف الرؤية", 
     lmsobjectives: "اهداف سوق العمل",
     vroprojects: "مشاريع  الرؤية ",
-    epmoprojects: "مشاريع مؤسسية",
+    epmoprojects: "مشاريع استراتيجية",
     lmsprojects: " مشاريع سوق عمل",
 
     strategickpi: "مؤشرات استراتيجية",    
