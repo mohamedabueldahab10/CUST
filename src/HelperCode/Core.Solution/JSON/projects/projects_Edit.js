@@ -332,7 +332,7 @@ var Information_Form = [
         Dispfieldkey: "Name",
         valfieldkey: "Title",
         grpfieldkey: "Title",
-        // display:'none',
+        display:'none',
         state: "disabled",
       },
       // {
