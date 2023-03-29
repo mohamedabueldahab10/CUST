@@ -1736,7 +1736,7 @@ window.ListingData = {
             keyNameParams = 'changerequest'
           } else if (wfname == 'VROCreateObjective' || wfname == 'LMSCreateObjective' || wfname == 'MSCreateObjective') {
             keyNameParams = 'sos'
-          } else if (wfname == 'VROCRKPI' || wfname == 'MSCRKPI' || wfname == 'LMSCRKPI') {
+          } else if (wfname == 'VROCRKPI' || wfname == 'MSCRKPI' || wfname == 'LMSCRKPI' || wfname == 'VROActualKPI' || wfname == 'MSActualKPI' || wfname == 'LMSActualKPI' ) {
             keyNameParams = 'mainkpi'
           } else if (wfname == 'Issue') {
             keyNameParams = 'issues'
