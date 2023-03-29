@@ -6415,11 +6415,17 @@ window.ListInfo = {
 
       $(".add-New-Detail").on("click", function () {
 
-
+        
         if ((listkey == 'projects' || listkey == 'initiatives') && isNew) {
           var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item").last()
           lastDetailsItemBeforeAdd.addClass('disable_section')
         }
+        // else if((listkey == 'projects' || listkey == 'initiatives') && isEdit){
+          
+        //   var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item").last()
+        //   lastDetailsItemBeforeAdd.addClass('disable_section')
+        //   // Details-Item EditItem
+        // }
 
 
 
@@ -9731,7 +9737,7 @@ dynamicAffectSelect = {
     var listItemEnum = collListItem.getEnumerator();
     let affectedSelectsInfo = dynamicAffectSelect.g.affectedSelectsInfo[0];
 
-    debugger
+    
     var targetFieldType =''
     if(affectedSelectsInfo && affectedSelectsInfo !="undefined"){
       targetFieldType = $(`#${affectedSelectsInfo.affectedFieldName}`).attr("type");

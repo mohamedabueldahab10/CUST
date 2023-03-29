@@ -2134,8 +2134,7 @@ var New_Master_Details_Submit = {
                 $(this).val() / 100
               );
             } else if ($(this).attr("type") == "multiselect") {
-              console.log("Inside master details multi")
-              debugger
+         
               var myselections = [];
               $(this).find("input:checkbox:checked").each(function () {
                 myselections.push($(this).val());
@@ -2339,27 +2338,27 @@ var Edit_Master_Details_Submit = {
         CurrList +
         '"] [data-ID="' +
         itemID +
-        '"] > .CFIELD> input,' +
+        '"] > .CFIELD:not(.dont-submit):not(.dont-request)> input,' +
         '[data-target_list="' +
         CurrList +
         '"] [data-ID="' +
         itemID +
-        '"] > .CFIELD> div[type=picker],' +
+        '"] > .CFIELD:not(.dont-submit):not(.dont-request)> div[type=picker],' +
         '[data-target_list="' +
         CurrList +
         '"] [data-ID="' +
         itemID +
-        '"] > .CFIELD> select[type=dropdown],' +
+        '"] > .CFIELD:not(.dont-submit):not(.dont-request)> select[type=dropdown],' +
         '[data-target_list="' +
         CurrList +
         '"] [data-ID="' +
         itemID +
-        '"] > .CFIELD>  textarea,' +
+        '"] > .CFIELD:not(.dont-submit):not(.dont-request)>  textarea,' +
         '[data-target_list="' +
         CurrList +
         '"] [data-ID="' +
         itemID +
-        '"] > .CFIELD > .multiselect-container'
+        '"] > .CFIELD:not(.dont-submit):not(.dont-request) > .multiselect-container'
       ).each(function () {
         if ($(this).attr("type") == "picker") {
           if ($(this).find("span.sp-peoplepicker-userSpan").length) {

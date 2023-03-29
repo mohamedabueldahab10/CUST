@@ -726,7 +726,7 @@ window.Edit_Data_Request = {
 
     $("select[dynamic=parent]").trigger("change")
 
-    
+
     // $(".grandFieldInvoke").trigger("change")
 
 
@@ -748,18 +748,18 @@ window.Edit_Data_Request = {
 
 
     // to get the value of weight in delivrable and milestone correct in edit
-    
-    if(MasterDetailsArrayRequest.length == 0){ // to avoid the error if there is master details like project ana initiative
-    $("[data-weightvalue]").each(function () { 
-      var elementId = $(this).attr('id')
-      var inputVal = oListItem.get_item(elementId) ? oListItem.get_item(elementId) : 0
-      var remainingBudget = $(this).attr('max')
-      remainingBudget = Number(remainingBudget)
-      var newVal = remainingBudget + inputVal >= 100 ? inputVal : remainingBudget + inputVal;
-      newVal = Number(newVal.toFixed("2"));
 
-      remainingBudget == 100 ? $(this).attr("max", remainingBudget) : $(this).attr("max", newVal);
-    })
+    if (MasterDetailsArrayRequest.length == 0) { // to avoid the error if there is master details like project ana initiative
+      $("[data-weightvalue]").each(function () {
+        var elementId = $(this).attr('id')
+        var inputVal = oListItem.get_item(elementId) ? oListItem.get_item(elementId) : 0
+        var remainingBudget = $(this).attr('max')
+        remainingBudget = Number(remainingBudget)
+        var newVal = remainingBudget + inputVal >= 100 ? inputVal : remainingBudget + inputVal;
+        newVal = Number(newVal.toFixed("2"));
+
+        remainingBudget == 100 ? $(this).attr("max", remainingBudget) : $(this).attr("max", newVal);
+      })
     }
 
 
@@ -2398,8 +2398,8 @@ var Master_Details_Request = {
   // The main Initialization function
   init: function (DetailsList) {
     console.log("INSide Master DEtails")
-    debugger
     
+
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(DetailsList);
     Master_Details_Request.g.DetailsList = DetailsList;
@@ -2437,6 +2437,7 @@ var Master_Details_Request = {
       $('[data-target_list="' + CurrList + '"] .fieldset-container').html(""); //remove html
     }
     while (listItemEnum.moveNext()) {
+
       console.log("in while");
       var oListItem = listItemEnum.get_current();
       HTMLtoAppend = "";
@@ -2619,35 +2620,35 @@ var Master_Details_Request = {
           }
         });
       } else if (isEdit) {
-        debugger
+
         $(
           '[data-target_list="' +
           CurrList +
           '"] [data-ID="' +
           oListItem.get_id() +
-          '"] > .CFIELD> input,' +
+          '"] > .CFIELD:not(.dont-submit):not(.dont-request)> input,' +
           '[data-target_list="' +
           CurrList +
           '"] [data-ID="' +
           oListItem.get_id() +
-          '"] > .CFIELD> div[type=picker],' +
+          '"] > .CFIELD:not(.dont-submit):not(.dont-request)> div[type=picker],' +
           '[data-target_list="' +
           CurrList +
           '"] [data-ID="' +
           oListItem.get_id() +
-          '"] > .CFIELD> select[type=dropdown],' +
+          '"] > .CFIELD:not(.dont-submit):not(.dont-request)> select[type=dropdown],' +
           '[data-target_list="' +
           CurrList +
           '"] [data-ID="' +
           oListItem.get_id() +
-          '"] > .CFIELD>  textarea,' +
+          '"] > .CFIELD:not(.dont-submit):not(.dont-request)>  textarea,' +
           ///////////////////////
           //////////////////////
           '[data-target_list="' +
           CurrList +
           '"] [data-ID="' +
           oListItem.get_id() +
-          '"] > .CFIELD > .multiselect-container'
+          '"] > .CFIELD:not(.dont-submit):not(.dont-request) > .multiselect-container'
         ).each(function () {
           switch ($(this).attr("type")) {
             case "date":
@@ -2777,7 +2778,7 @@ var Master_Details_Request = {
               break;
 
             case "number":
-              debugger
+
               if ($(this).hasClass("percentagefield")) {
                 var num = oListItem.get_item($(this).attr("id")) * 100;
                 if (num % 1 != 0)
@@ -2787,6 +2788,33 @@ var Master_Details_Request = {
                 else $(this).val(num);
               } else {
                 $(this).val(oListItem.get_item("" + $(this).attr("id") + ""));
+              }
+
+              if ((listkey == 'initiatives' || listkey == 'projects')) { // to handle amount in master details based on weight in project and initiative
+                
+                if (MasterDetailsArrayRequest.length == 0) {
+                  if ($("[data-targetelem]").length > 0) {
+                    $("[data-targetelem]").each(function () {
+                      var targetElem = $(this).data('targetelem')
+
+                      if (targetElem == 'Weight') {
+                        var parentValue = $(this).data('parentval')
+                        var weight = $(this).parent().parent().find(`#${targetElem}`).val()
+                        var maxAttr = $(this).parent().parent().find(`#${targetElem}`).attr('max')
+
+                        console.log(maxAttr, "$(this).parent().parent()")
+
+                        weight = Number(weight)
+                        var newMax = Number(maxAttr) + weight
+                        $(this).parent().parent().find(`#${targetElem}`).attr('max',newMax)
+                        
+                        var Amount = (weight * parentValue) / 100
+                        Amount = Amount.toFixed(2)
+                        $(this).val(Amount)
+                      }
+                    })
+                  }
+                }
               }
               break;
 
@@ -3032,7 +3060,7 @@ window.Get_Related_Sos_Sector = {
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
 
-      debugger
+      
 
       var type = $('#Types').val()
       var sector = oListItem.get_item("Sector") ? oListItem.get_item("Sector") : '';
@@ -3275,7 +3303,7 @@ window.Get_Pillers_Info = {
         description: oListItem.get_item("Description")
       });
     }
-    debugger
+    
     $("#PillarName").html(
       '<option data-trans-pillersname class="Resources" value="" selected="" disabled=""></option>'
     );
@@ -4389,7 +4417,7 @@ window.ViewAllFiles_Main_Strategy = {
     if (filesUrls.length > 0) {
 
       console.log(filesUrls, "filePurpose")
-      debugger
+      
 
       var FilesLink =
         '<div class="py-5 border-bottom section-container " id="file_container" data-groups="">' +
@@ -6346,7 +6374,7 @@ window.Get_TaskHistory = {
 var DontSubmit_DataRequest = {
   init: function () {
     // to handle dont submit in edit lvl1
-    
+
     $(
       "[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
     ).each(function (e) {
@@ -6398,7 +6426,7 @@ var DontSubmit_DataRequest = {
     $(
       "[data-parentrelatedvaluelvl2]:not([data-parentrelatedvaluelvl2=undefined])"
     ).each(function () {
-      
+
       var elementId = ""; // get element Id
       var elementValue = ""; // get element value
       var isMultiSelect = false
@@ -6443,7 +6471,7 @@ var DontSubmit_DataRequest = {
 
 
     });
-    
+
     if ($(".grandFieldInvoke").length > 0) { // to use it in initiative
       $(".grandFieldInvoke").trigger("change")
     }

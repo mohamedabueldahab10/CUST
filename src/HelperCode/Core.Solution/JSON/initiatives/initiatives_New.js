@@ -986,6 +986,24 @@ var Information_Form = [
         // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
         // queryFieldValue: 'sublevel2,sublevel3', // if i need to make the field with filter should add this
       },
+      {
+        InternalName: 'DeliverableID',
+        DisplayNameEn: 'Name',
+        DisplayName: 'المخرج',
+  
+        type: 'lookupchildtoparentmultiselect',
+        childlist: 'Projects', //child list name
+        childinternalparentname: 'RelatedInitiative', // child internal name related to parent
+        childinternalparenttype:'Text',
+        childinternalname:"Title", // child internal name need to use to parent
+        source: 'Deliverables', // target list
+        sourceinternalname: 'ProjectCode', // column in target list
+        Dispfieldkey: 'Name', //display in dropdown
+        valfieldkey: 'Title', // value in dropdown
+        grpfieldkey: 'Title',
+        // valsiblingkey:'AcceptanceCriteria', // internal name on sorce list
+        // targetsiblingkey:'AcceptanceCriteria' // internal name on current list
+      },
     ]
   },
   {
