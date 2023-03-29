@@ -1216,428 +1216,101 @@ var Information_Form = [
       },
     ],
   },
-  // {
-  //   label: 'بيانات المخرج',
-  //   labelEn: 'Delivrable Data',
-  //   description: 'التفاصيل',
-  //   descriptionEn: 'Details',
-  //   sectiontype: 'master',
-  //   targetlist: 'Deliverables',
-  //   subFields: [
-  //     {
-  //       InternalName: 'Title',
-  //       DisplayName: 'رمز المخرج',
-  //       DisplayNameEn: 'Code',
-  //       type: 'string',
-  //     },
-  //     {
-  //       InternalName: 'Name',
-  //       DisplayName: 'اسم المخرج',
-  //       DisplayNameEn: 'Name',
-  //       type: 'string',
-  //     },
-  //     {
-  //       InternalName: 'Description',
-  //       DisplayName: 'الوصف',
-  //       DisplayNameEn: 'Description',
-  //       type: 'multiline',
-  //     },
-  //     {
-  //       InternalName: 'Amount',
-  //       DisplayName: 'القيمة',
-  //       DisplayNameEn: 'Amount',
-  //       dontSubmit: true,
-  //       type: 'percentbyrelatedparent',
-  //       listname: 'Projects',
-  //       parentinternalname: 'ActualBudget',
-  //       targetelement: 'Weight',
-  //     },
-  //     {
-  //       InternalName: 'Weight',
-  //       DisplayName: 'الوزن',
-  //       DisplayNameEn: 'Weight',
-  //       type: 'floatpercentage',
-  //     },
-  //     // {
-  //     //   InternalName: 'Status',
-  //     //   DisplayName: 'الحالة',
-  //     //   DisplayNameEn: 'Status',
-  //     //   type: 'dropdownValues',
-  //     //   options: {
-  //     //     choices: [
-  //     //       {
-  //     //         display: 'workinprogress',
-  //     //         value: 'workinprogress',
-  //     //       },
-  //     //       {
-  //     //         display: 'completed',
-  //     //         value: 'completed',
-  //     //       },
-  //     //     ],
-  //     //   },
-  //     // },
-  //     // {
-  //     //     "InternalName": "Quantity",
-  //     //     "DisplayName":"الكمية",
-  //     //     "type":"float"
-  //     // },
-  //     // {
-  //     //     "InternalName": "PlannedStartDate",
-  //     //     "DisplayName": "تاريخ البدء المخطط",
-  //     //     "DisplayNameEn": "Planned Start Date",
-  //     //     "type": "datetime",
-  //     //     "max": "PlannedFinishDate"
-  //     // },
-  //     // {
-  //     //   InternalName: 'ActualDate',
-  //     //   DisplayName: 'تاريخ الاكتمال الفعلي',
-  //     //   DisplayNameEn: 'Actual Date',
-  //     //   type: 'datetime',
-  //     //   max: 'today',
-  //     // },
-  //     {
-  //       InternalName: 'DeliveredDate',
-  //       DisplayName: 'تاريخ التسليم',
-  //       DisplayNameEn: 'Delivered Date',
-  //       type: 'datetime',
-  //     },
-  //     {
-  //       InternalName: 'PlannedFinishDate',
-  //       DisplayName: 'تاريخ الانتهاء المخطط',
-  //       DisplayNameEn: 'Planned Finish Date',
-  //       type: 'datetime',
-  //       // type: 'datetimetoparent',
-  //       // listname: 'Projects',
-  //       // startinternalname: 'BaselineStartDate',
-  //       // endinternalname: 'BaselineFinishDate',
-  //       // "min": "PlannedStartDate"
-  //     },
-  //     // {
-  //     //     "InternalName": "SupplyDate",
-  //     //     "DisplayName": "تاريخ التوريد",
-  //     //     "DisplayNameEn": "Supply Date",
-  //     //     "type": "datetime"
-  //     // },
-  //     // {
-  //     //     "InternalName": "CommittedDate",
-  //     //     "DisplayName": "تاريخ الالتزام",
-  //     //     "DisplayNameEn": "Committed Date",
-  //     //     "type": "datetime"
-  //     // },
-  //     // {
-  //     //     "InternalName": "StartDate",
-  //     //     "DisplayName": "تاريخ البدءالفعلي",
-  //     //     "DisplayNameEn": "Start Date",
-  //     //     "type": "datetime",
-  //     //     "max":"today"
-  //     // },
-  //     // {
-  //     //     "InternalName": "FinishDate",
-  //     //     "DisplayName": "تاريخ الانتهاء الفعلي",
-  //     //     "DisplayNameEn": "Finish Date",
-  //     //     "type": "datetime",
-  //     //     "min": "StartDate",
-  //     //     "max":"today"
-  //     // },
-  //     {
-  //       InternalName: 'Delivered',
-  //       DisplayName: 'تم التسليم',
-  //       DisplayNameEn: 'Delivered',
-  //       type: 'yesnoradio',
-  //       options: {
-  //         choices: [
-  //           {
-  //             display: 'yes',
-  //             value: 'yes',
-  //           },
-  //           {
-  //             display: 'no',
-  //             value: 'no',
-  //           },
-  //         ],
-  //       },
-  //     },
-  //     {
-  //       InternalName: 'AcceptanceCriteria',
-  //       DisplayName: 'معايير قبول المخرج',
-  //       DisplayNameEn: 'Acceptance Criteria',
-  //       type: 'multiline',
-  //     },
-  //     {
-  //       InternalName: 'Comments',
-  //       DisplayName: 'الملاحظات',
-  //       DisplayNameEn: 'Comments',
-  //       type: 'multiline',
-  //     },
-  //     {
-  //       InternalName: 'RelatedInitiativeDeliverable',
-  //       DisplayNameEn: 'Related Initiative Deliverable',
-  //       DisplayName: 'مخرج المبادرة المرتبط',
-  //       type: 'lookup',
-  //       source: 'InitiativeDeliverables',
-  //       Dispfieldkey: 'Name',
-  //       valfieldkey: 'Title',
-  //     },
-  //     {
-  //       InternalName: 'ShowInProgramReport',
-  //       DisplayName: 'اظهار في التقرير',
-  //       DisplayNameEn: 'Show In Program Report',
-  //       type: 'yesnoradio',
-  //       options: {
-  //         choices: [
-  //           {
-  //             display: 'yes',
-  //             value: 'yes',
-  //           },
-  //           {
-  //             display: 'no',
-  //             value: 'no',
-  //           },
-  //         ],
-  //       },
-  //     },
-  //   ],
-  // },
-  // {
-  //   label: 'بيانات المعلم',
-  //   labelEn: 'Milestone Data',
-  //   description: 'التفاصيل',
-  //   descriptionEn: 'Details',
-  //   sectiontype: 'master',
-  //   targetlist: 'Milestones',
-  //   subFields: [
-  //     {
-  //       InternalName: 'Title',
-  //       DisplayName: 'رمز المعلم',
-  //       DisplayNameEn: 'Milestone Code',
-  //       type: 'string',
-  //     },
-  //     {
-  //       InternalName: 'Name',
-  //       DisplayName: 'اسم المعلم',
-  //       DisplayNameEn: 'Name',
-  //       type: 'string',
-  //     },
-  //     // {
-  //     //   InternalName: 'Weight',
-  //     //   DisplayNameEn: 'Weight',
-  //     //   DisplayName: 'الوزن المكافئ للإنجاز %',
-  //     //   type: 'floatpercentage',
-  //     // },
-  //     {
-  //       InternalName: 'Weight',
-  //       DisplayName: 'الوزن',
-  //       DisplayNameEn: 'Weight',
-  //       type: 'floatpercentage',
-  //     },
-  //     {
-  //       InternalName: 'Amount',
-  //       DisplayName: 'القيمة',
-  //       DisplayNameEn: 'Amount',
-  //       dontSubmit: true,
-  //       type: 'percentbyrelatedparent',
-  //       listname: 'Projects',
-  //       parentinternalname: 'ActualBudget',
-  //       targetelement: 'Weight',
-  //     },
-  //     {
-  //       InternalName: 'PlannedDate',
-  //       DisplayName: 'تاريخ الاكتمال المخطط',
-  //       DisplayNameEn: 'Planned Finish Date',
-  //       type: 'datetime',
-  //     },
-  //     {
-  //       InternalName: 'ActualDate',
-  //       DisplayName: 'تاريخ الاكتمال الفعلي',
-  //       DisplayNameEn: 'Actual Date',
-  //       type: 'datetime',
-  //       max: 'today',
-  //     },
-  //     // {
-  //     //   InternalName: 'CommittedDate',
-  //     //   DisplayName: 'تاريخ الالتزام',
-  //     //   DisplayNameEn: 'Committed Date',
-  //     //   type: 'datetime',
-  //     // },
-  //     {
-  //       InternalName: 'Deliverables',
-  //       DisplayName: 'المخرجات',
-  //       DisplayNameEn: 'Deliverables',
-  //       type: 'multiline',
-  //       maxchar: 5000,
-  //     },
-  //     {
-  //       InternalName: 'Description',
-  //       DisplayName: 'الوصف',
-  //       DisplayNameEn: 'Description',
-  //       type: 'multiline',
-  //       maxchar: 5000,
-  //     },
-  //     // {
-  //     //   InternalName: 'Status',
-  //     //   DisplayName: 'الحالة',
-  //     //   DisplayNameEn: 'Status',
-  //     //   type: 'dropdownValues',
-  //     //   options: {
-  //     //     choices: [
-  //     //       { display: 'onschedule', value: 'onschedule' },
-  //     //       { display: 'completed', value: 'completed' },
-  //     //       { display: 'late', value: 'late' },
-  //     //     ],
-  //     //   },
-  //     // },
-  //     {
-  //       InternalName: 'RelatedInitiativeMilestone',
-  //       DisplayName: 'معلم المبادرة المرتبط',
-  //       DisplayNameEn: 'Related Initiative Milestone',
-  //       type: 'lookup',
-  //       // source: 'InitiativeMilestones',
-  //       source: 'Milestones',
-  //       Dispfieldkey: 'Name',
-  //       valfieldkey: 'Title',
-  //     },
-  //     {
-  //       InternalName: 'Delivered',
-  //       DisplayName: 'تم التسليم',
-  //       DisplayNameEn: 'Delivered',
-  //       targetfieldrequired: 'getFile', // to make the attache required on yes
-  //       targetfield: 'Status',
-  //       targetfieldvalue: 'completed',
-  //       type: 'yesnoradio',
-  //       options: {
-  //         choices: [
-  //           { display: 'yes', value: 'yes' },
-  //           { display: 'no', value: 'no' },
-  //         ],
-  //       },
-  //     },
-  //     {
-  //       InternalName: 'ShowInProgramReport',
-  //       DisplayName: 'اظهار في التقرير',
-  //       DisplayNameEn: 'Show In Report',
-  //       type: 'radio',
-  //     },
-  //     {
-  //       InternalName: 'SupportDocumentsDescription',
-  //       DisplayNameEn: 'Support Documents Description',
-  //       DisplayName: 'وصف الوثائق الداعمة',
-  //       type: 'multiline',
-  //       maxchar: '500',
-  //     },
-  //   ],
-  // },
-  // {
-  //     label: 'المنافع المتوقعة',
-  //     labelEn: 'Expected Benefits',
-  //     description: "",
-  //     descriptionEn: "",
-  //     subFields: [{
-  //             "InternalName": "ExpectedBenefits",
-  //             "DisplayName": "المنافع المتوقعة",
-  //             "DisplayNameEn": "Expected Benefits",
-  //             "type": "string"
-  //         }
-  //         // ,
-  //         // {
-  //         //     "InternalName": "Impacts",
-  //         //     "DisplayName": "الأثر المتوقع",
-  //         //     "DisplayNameEn": "Impact",
-  //         //     "type": "multiline"
-  //         // }
+  {
+    label: 'بيانات المخرج',
+    labelEn: 'Delivrable Data',
+    description: 'التفاصيل',
+    descriptionEn: 'Details',
+    sectiontype: 'master',
+    // className: "disable_section", // to make the section disabled on form render
+    targetlist: 'Deliverables',
+    subFields: [
+      {
+        InternalName: 'Name',
+        DisplayName: 'اسم المخرج',
+        DisplayNameEn: 'Deliverable Name',
+        type: 'string',
+        validation: 'required',
+      },
+      {
+        InternalName: 'Description',
+        DisplayName: 'الوصف',
+        DisplayNameEn: 'Description',
+        type: 'multiline',
+        maxchar: 5000,
+      },
+      // {
+      //   InternalName: 'Amount',
+      //   DisplayName: 'القيمة',
+      //   DisplayNameEn: 'Amount',
+      //   dontSubmit: true,
+      //   type: 'percentbyrelatedparent',
+      //   listname: 'Projects',
+      //   parentinternalname: 'ActualBudget',
+      //   targetelement: 'Weight',
+      //   validation: 'required',
+      // },
+      {
+        InternalName: 'Weight',
+        DisplayName: 'الوزن(%)',
+        DisplayNameEn: 'Weight (%)',
+        type: 'string',
+      },
+ 
+    ],
+  },
+  {
+    label: 'بيانات المعلم',
+    labelEn: 'Milestone Data',
+    description: 'التفاصيل',
+    descriptionEn: 'Details',
+    sectiontype: 'master',
+    targetlist: 'Milestones',
+    subFields: [
 
-  //     ]
-  // },
-  // {
-  //     label: 'المساهمة بمؤشرات الأداء الرئيسية',
-  //     description: "",
-  //     sectiontype:"master",
-  //     targetlist:"Project KPIs",
-  //     subFields:[
-  //         {
-  //             "InternalName": "Title",
-  //             "DisplayName":"المؤشر التشغيلي",
-  //             "DisplayNameEn":"",
-  //             "type":"lookup",
-  //              "source": "OPKPIs",
-  //              "Dispfieldkey": "Name",
-  //              "valfieldkey": "Title"
-  //         },
-  //         {
-  //             "InternalName": "ProjectContribution",
-  //             "DisplayName":"الأثر المتوقع",
-  //             "DisplayNameEn":"Project Contribution",
-  //             "type":"string"
-  //         },
-  //         {
-  //             "InternalName": "Description",
-  //             "DisplayName":"الوصف",
-  //             "DisplayNameEn":"Description",
-  //             "type":"multiline"
-  //         },
-  //     ]
-  // },
+      {
+        InternalName: 'Name',
+        DisplayName: 'اسم المعلم',
+        DisplayNameEn: 'Name',
+        type: 'string',
+        validation: 'required',
+      },
+      {
+        InternalName: 'Weight',
+        DisplayName: 'الوزن(%)',
+        DisplayNameEn: 'Weight (%)',
+        type: 'string',
+      },
 
-  // {
-  //     label: 'الجهات المشاركة الأساسية',
-  //     labelEn: 'The Main Participants',
-  //     description: "",
-  //     descriptionEn: "",
-  //     sectiontype: "master",
-  //     targetlist: "Stakeholders",
-  //     subFields: [{
-  //             "InternalName": "Name",
-  //             "DisplayName": "الجهة",
-  //             "DisplayNameEn": "Authority Name",
-  //             "type": "string"
-  //         },
-  //         {
-  //             "InternalName": "Role",
-  //             "DisplayName": "الدور",
-  //             "DisplayNameEn": "Role",
-  //             "type": "string"
-  //         }
-  //     ]
-  // },
+      {
+        InternalName: 'PlannedDate',
+        DisplayName: 'تاريخ الاكتمال المخطط',
+        DisplayNameEn: 'Planned Finish Date',
+        type: 'datetime',
+        validation: 'required',
+      },
+      {
+        InternalName: 'ActualDate',
+        DisplayName: 'تاريخ الاكتمال الفعلي',
+        DisplayNameEn: 'Actual Date',
+        type: 'datetime',
+        max: 'today',
+      },
+      {
+        InternalName: 'Description',
+        DisplayName: 'الوصف',
+        DisplayNameEn: 'Description',
+        type: 'multiline',
+        maxchar: 5000,
+      },
 
-  // {
-  //     label: 'مخاطر المشروع',
-  //     labelEn: 'Project Risks',
-  //     description: "",
-  //     descriptionEn: "",
-  //     sectiontype: "master",
-  //     targetlist: "Risks",
-  //     subFields: [{
-  //             "InternalName": "Name",
-  //             "DisplayName": "المخاطر المحتملة",
-  //             "DisplayNameEn": "Potential Risks",
-  //             "type": "string"
-  //         },
-  //         {
-  //             "InternalName": "Probability",
-  //             "DisplayName": "إحتمالية الحدوث",
-  //             "DisplayNameEn": "Probability",
-  //             "type": "string"
-  //         },
-  //         {
-  //             "InternalName": "ResolutionPlan",
-  //             "DisplayName": "خطة التعامل مع المخاطر",
-  //             "DisplayNameEn": "Resolution Plan",
-  //             "type": "multiline"
-  //         }
-  //     ]
-  // },
-  //   {
-  //     label: 'البدء بعملية المشتريات',
-  //     labelEn: 'Purchase Start',
-  //     description: '',
-  //     descriptionEn: '',
-  //     subFields: [
-  //     //   {
-  //     //     InternalName: 'PRCode',
-  //     //     DisplayName: 'رمز المشتريات',
-  //     //     DisplayNameEn: 'Purchase code',
-  //     //     type: 'float',
-  //     //   },
-  //     ],
-  //   },
+      {
+        InternalName: 'SupportDocumentsDescription',
+        DisplayNameEn: 'Support Documents Description',
+        DisplayName: 'وصف الوثائق الداعمة',
+        type: 'multiline',
+        maxchar: '500',
+      },
+    ],
+  },
 ];

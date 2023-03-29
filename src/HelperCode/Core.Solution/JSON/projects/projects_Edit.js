@@ -1310,8 +1310,8 @@ var Information_Form = [
   {
     label: 'بيانات المخرج',
     labelEn: 'Delivrable Data',
-    description: 'التفاصيل (يمكن ادخال القيم عند ادخال الميزانية المعتمدة)',
-    descriptionEn: 'Details (you can enter the values when enter the Assigned Budget)',
+    description: 'التفاصيل',
+    descriptionEn: 'Details',
     sectiontype: 'master',
     // className: "disable_section", // to make the section disabled on form render
     targetlist: 'Deliverables',
@@ -1523,8 +1523,8 @@ var Information_Form = [
   {
     label: 'بيانات المعلم',
     labelEn: 'Milestone Data',
-    description: 'التفاصيل (يمكن ادخال القيم عند ادخال الميزانية المعتمدة)',
-    descriptionEn: 'Details (you can enter the values when enter the Assigned Budget)',
+    description: 'التفاصيل',
+    descriptionEn: 'Details',
     sectiontype: 'master',
     // className: "disable_section", // to make the section disabled on form render
     targetlist: 'Milestones',
