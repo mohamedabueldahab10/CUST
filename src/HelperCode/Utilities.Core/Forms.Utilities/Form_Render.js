@@ -536,7 +536,7 @@ window.ListInfo = {
               console.log("Inside not invoke listiner")
 
             } else {
-              de
+
               // if(affectedSelectsInfo && affectedSelectsInfo !="undefined"){
               dynamicAffectSelect.init(affectedSelectsInfo);
               // }
@@ -584,7 +584,7 @@ window.ListInfo = {
           $('body').on('change', '.getsiblingdata', function (event) { // get sibling value based on oter value
 
 
-            debugger
+
 
             var siblingData = $(this).find(':selected').data('siblingvalue')
             var siblingTarget = $(this).data('siblingtarget')
@@ -982,7 +982,7 @@ window.ListInfo = {
             // skip for arrow keys
             if (event.which >= 37 && event.which <= 40) return;
 
-            debugger
+
             var totalElement = $(this).data("totalelement")
             var sum1 = $(this).data("sum1element")
             var sum2 = $(this).data("sum2element")
@@ -5789,6 +5789,7 @@ window.ListInfo = {
           displayName +
           "</option>";
 
+
         var itemsID = [];
         sphttp.get(
           _spPageContextInfo.siteServerRelativeUrl,
@@ -5798,12 +5799,11 @@ window.ListInfo = {
           function (records, record, listItem, isDone) {
             if (listItem) itemsID.push(listItem.get_id());
             if (isDone) {
-
+              // to handle sibling array values 
+              var dataArraySiblingValues = []
               records.forEach(function (el, index) {
-
-                // to handle sibling array values 
                 var arraysiblingvalues = []
-                var dataArraySiblingValues = []
+
                 if (element.targetsiblingarr && element.targetsiblingarr != "undefined") {
                   element.targetsiblingarr.forEach(item => {
                     arraysiblingvalues.push({ name: item, value: el[item] })
@@ -5817,7 +5817,6 @@ window.ListInfo = {
                     '"'
                 }
                 //
-
 
                 if (el[dispfieldkey] && el[dispfieldkey].length > 100) {
                   var optionText = el[dispfieldkey].substr(0, 100) + "...";
@@ -9729,7 +9728,7 @@ dynamicAffectSelect = {
     var collListItem = dynamicAffectSelect.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     let affectedSelectsInfo = dynamicAffectSelect.g.affectedSelectsInfo[0];
-    debugger
+
     var targetFieldType = $(`#${affectedSelectsInfo.affectedFieldName}`).attr("type");
 
 
@@ -9737,15 +9736,20 @@ dynamicAffectSelect = {
     let optionsBody = ""
 
 
+    var getSiblingsValues = []
 
+
+    $(`#${affectedSelectsInfo.affectedFieldName} > option`).each(function () {
+      var optionId = $(this).attr("option-id")
+      var arraysiblingsVal = $(this).attr("data-arraysiblingvalues")
+      if(arraysiblingsVal && arraysiblingsVal != 'undefined'){
+      getSiblingsValues.push({ "id": optionId, 'arraySiblings': arraysiblingsVal })
+      }
+    })
 
 
     if (targetFieldType == 'multiselect') {
 
-      // $(`ul#RelatedObjective ul.dropdown-menu`).html("");
-      // RelatedObjective
-
-      // selectedVal = $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu`).find("input:checked").val()
       selectedVal = $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu`)
         .find("input:checked")
         .map(function () {
@@ -9767,7 +9771,9 @@ dynamicAffectSelect = {
       optionsBody = '<option class="Resources" value="" selected="" disabled=""></option>'; // to not choose the first value in dropdown
     }
 
-    
+
+
+
 
 
     while (listItemEnum.moveNext()) {
@@ -9788,10 +9794,6 @@ dynamicAffectSelect = {
 
 
 
-
-
-      console.log(valfieldkey, "valfieldkey")
-
       if (targetFieldType == "multiselect") {
         optionsBody +=
           `<label class="grp-select">${valfieldkey}</label>
@@ -9805,22 +9807,36 @@ dynamicAffectSelect = {
         </li>
         `
       } else {
-
-        optionsBody +=
-          '<option option-id="' +
-          oListItem.get_id() +
-          '" value="' +
-          valfieldkey +
-          '">' +
-          optionText +
-          "</option>";
+        if (getSiblingsValues.length) {
+          getSiblingsValues.forEach(el => {
+            if (el.id == oListItem.get_id()) {
+              optionsBody +=
+                '<option data-arraysiblingvalues=' + el.arraySiblings + ' option-id="' +
+                oListItem.get_id() +
+                '" value="' +
+                valfieldkey +
+                '">' +
+                optionText +
+                "</option>";
+            }
+          })
+        } else {
+          optionsBody +=
+            '<option option-id="' +
+            oListItem.get_id() +
+            '" value="' +
+            valfieldkey +
+            '">' +
+            optionText +
+            "</option>";
+        }
       }
     }
 
 
     if (targetFieldType == "multiselect") {
 
-      console.log(optionsBody, "optionsBody optionsBodyoptionsBody")
+ 
       $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu`).html(optionsBody)
       $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu li`).each(function () {
 
@@ -9833,20 +9849,13 @@ dynamicAffectSelect = {
 
       })
 
-      // $(`ul#RelatedObjective ul.dropdown-menu li`).each(function () {
-
-      //   console.log($(this).find("input").val(), "VVVVVVVVVVVVVVVVVv")
-      // })
-
     } else {
       $(`select#${affectedSelectsInfo.affectedFieldName}`).html(optionsBody);
 
       $(`select#${affectedSelectsInfo.affectedFieldName}`).val(selectedVal);
     }
 
-    console.log(affectedSelectsInfo.affectedFieldName, "affectedSelectsInfo")
 
-    
 
     dynamicAffectSelect.g.affectedSelectsInfo =
       dynamicAffectSelect.g.affectedSelectsInfo.shift();
@@ -12058,7 +12067,7 @@ var get_parent_data = {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(listName);
     var camlQuery = new SP.CamlQuery();
-    debugger
+
 
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef  Name=\"" + parentFieldName + "\" /><Value Type=\"Text\">" +
@@ -12078,7 +12087,7 @@ var get_parent_data = {
   onSuccess: function (sender, args) {
     var collListItem = get_parent_data.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-    debugger
+
     var dynamicFieldName = get_parent_data.g.fieldName
     var dynamicVal = ""
     while (listItemEnum.moveNext()) {

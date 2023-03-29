@@ -6,9 +6,9 @@ var Information_Form = [
     descriptionEn: "",
     formDefaultValues: [
       //VRO
-      { fieldName: 'WFModuleCode', value: 'VROCreateProject',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
-      { fieldName: 'WFStage', value: 'VROCreateProject01',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
-      
+      { fieldName: 'WFModuleCode', value: 'VROCreateProject', roles: ['VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'], },
+      { fieldName: 'WFStage', value: 'VROCreateProject01', roles: ['VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'], },
+
       // //EPMOCRProject
       // { fieldName: 'WFModuleCode', value: 'EPMOCRProject',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
       // { fieldName: 'WFStage', value: 'EPMOCRProject01',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
@@ -17,7 +17,7 @@ var Information_Form = [
       // { fieldName: 'WFModuleCode', value: 'LMSCRProject',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
       // { fieldName: 'WFStage', value: 'LMSCRProject01',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
 
-    ], 
+    ],
     subFields: [
       {
         InternalName: "Name",
@@ -25,8 +25,8 @@ var Information_Form = [
         DisplayNameEn: "Project Name",
         type: "string",
         maxchar: '255',
-        withletters:true,
-        Errmsgkey:"withletterpattern",
+        withletters: true,
+        Errmsgkey: "withletterpattern",
         validation: "required",
         // security: {
         //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
@@ -181,7 +181,7 @@ var Information_Form = [
           ],
         },
         toggleValues: [
-          { value: 'yes', fields: ['InitiativeType','RelatedInitiative','RelatedInitiativeDeliverable'] }, //we can put more than 1  field
+          { value: 'yes', fields: ['InitiativeType', 'RelatedInitiative', 'RelatedInitiativeDeliverable'] }, //we can put more than 1  field
         ],
         // toggleDisabledValues: [
         //   { value: 'yes', fields: ['Sector','SubSector'] }, 
@@ -217,7 +217,7 @@ var Information_Form = [
         DisplayName: 'نوع المبادرة',
         ToggleName: "InitiativeType",
         validation: 'required',
-        display:'none',
+        display: 'none',
         dynamic: 'parent', // parent to get the child depends on this field value
         type: 'dropdownValues',
         // dontSubmit: true,
@@ -226,7 +226,7 @@ var Information_Form = [
             {
               display: 'vision',
               value: 'vision',
-              customFilterValue:  "vision",
+              customFilterValue: "vision",
               roles: ['Administrator', 'VROE', 'VROP'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'VROCreateProject' },
@@ -237,9 +237,9 @@ var Information_Form = [
             {
               display: 'strategically',
               value: 'strategically',
-              customFilterValue:  "strategically",
+              customFilterValue: "strategically",
 
-                roles: ['Administrator', 'EPMO'],
+              roles: ['Administrator', 'EPMO'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
                 { fieldName: 'WFStage', value: 'EPMOCRProject01' },
@@ -249,7 +249,7 @@ var Information_Form = [
             {
               display: 'lms',
               value: 'lms',
-              customFilterValue:  "lms",
+              customFilterValue: "lms",
 
               roles: ['Administrator', 'LMSE', 'LMSP'],
               otherFields: [
@@ -259,7 +259,7 @@ var Information_Form = [
               ],
             },
             // { display: 'others', value: 'others' },
-            
+
           ],
         },
       },
@@ -274,9 +274,9 @@ var Information_Form = [
         Dispfieldkey: "Name",
         valfieldkey: "Title",
         dynamic: "InitiativeType", //InternalName Of Parent field
-				filterField: "Types",//InternalName Of Parent field
-				filterFieldType: "Text",//Type In Sharepoint List for Parent field
-
+        filterField: "Types",//InternalName Of Parent field
+        filterFieldType: "Text",//Type In Sharepoint List for Parent field
+        targetsiblingarr: ["Sector","SubSector"],
         security: {
           groups: [
             "VRO_E",
@@ -331,7 +331,7 @@ var Information_Form = [
         ],
         // "state": "disabled",
         // "className":"autofill"
-        display:'none',
+        display: 'none',
       },
       {
         InternalName: "RelatedInitiativeDeliverable",
@@ -578,7 +578,7 @@ var Information_Form = [
         DisplayName: "الجهة المنفذة",
         DisplayNameEn: "Execution Channels",
         type: "multiline",
-        maxchar: 5000,        
+        maxchar: 5000,
 
       },
       {
@@ -641,7 +641,7 @@ var Information_Form = [
         DisplayNameEn: "DisbursementStatus",
         type: "float",
       },
-      
+
       {
         InternalName: "CompanyName",
         DisplayName: "اسم الشركة المنفذة",
@@ -879,7 +879,7 @@ var Information_Form = [
         type: "dropdownValues",
         options: {
           choices: [
-            { display: "active", value: "active" , selected: 'selected'},
+            { display: "active", value: "active", selected: 'selected' },
             // { display: "stat14", value: "stat14" },
             // { display: "stat13", value: "stat13" },
           ],
@@ -968,7 +968,7 @@ var Information_Form = [
         type: "float",
         // "state": "disabled",
         dynamic: "BudgetItem", //being controlled by main field
-        numberOfDigits:"12",
+        numberOfDigits: "12",
       },
 
       {
@@ -999,9 +999,9 @@ var Information_Form = [
         InternalName: "AssignedBudget",
         DisplayName: "الميزانية المعتمدة",
         DisplayNameEn: "Assigned Budget",
-        className:"disable_enable_section",
+        className: "disable_enable_section",
         type: "float",
-        numberOfDigits:"12",
+        numberOfDigits: "12",
         // className:"toggle_Section"
         //"state": "disabled"
         // "showonstage":"1"
@@ -1012,7 +1012,7 @@ var Information_Form = [
         DisplayNameEn: "Expected Budget",
         type: "float",
         state: "disabled",
-        numberOfDigits:"12",
+        numberOfDigits: "12",
       },
       {
         InternalName: "ActualBudget",
@@ -1021,7 +1021,7 @@ var Information_Form = [
         type: "float",
         // "state": "disabled",
         RequiredName: "ActualBudget",
-        numberOfDigits:"12",
+        numberOfDigits: "12",
 
       },
       // {
@@ -1067,7 +1067,7 @@ var Information_Form = [
         DisplayNameEn: "ContractualEngagements",
         type: "float",
         // "state": "disabled"
-        numberOfDigits:"12",
+        numberOfDigits: "12",
 
       },
       {
@@ -1082,7 +1082,7 @@ var Information_Form = [
         DisplayName: "المنصرف حتى تاريخه",
         DisplayNameEn: "Expenses",
         type: "float",
-        numberOfDigits:"12",
+        numberOfDigits: "12",
 
         // "state": "disabled"
       },
@@ -1091,7 +1091,7 @@ var Information_Form = [
         DisplayName: "التكلفة المتبقية",
         DisplayNameEn: "Remaining Cost",
         type: "float",
-        numberOfDigits:"12",
+        numberOfDigits: "12",
 
         // "state": "disabled"
       },
@@ -1100,7 +1100,7 @@ var Information_Form = [
         DisplayName: "نسبة المنصرف من السيولة ",
         DisplayNameEn: "Out Of Cash",
         type: "floatpercentage",
-        numberOfDigits:"12",
+        numberOfDigits: "12",
         // "state": "disabled"
       },
       // {
@@ -1179,7 +1179,7 @@ var Information_Form = [
         type: 'file',
         withAddBtn: 'true',
         // InternalName: 'getfile',
-        docPurpose:"Approved_RFP",
+        docPurpose: "Approved_RFP",
       },
       {
         InternalName: "RFPStatus",
@@ -1357,7 +1357,7 @@ var Information_Form = [
         DisplayName: "وصف الإعتمادية",
         DisplayNameEn: "Description",
         type: "multiline",
-        maxchar: 5000,        
+        maxchar: 5000,
         // type: 'string',
         //"state": "disabled"
       },
@@ -1369,7 +1369,7 @@ var Information_Form = [
     description: 'التفاصيل (يمكن ادخال القيم عند ادخال الميزانية المعتمدة)',
     descriptionEn: 'Details (you can enter the values when enter the Assigned Budget)',
     sectiontype: 'master',
-    className:"disable_section", // to make the section disabled on form render
+    className: "disable_section", // to make the section disabled on form render
     targetlist: 'Deliverables',
     subFields: [
       {
@@ -1582,7 +1582,7 @@ var Information_Form = [
     description: 'التفاصيل (يمكن ادخال القيم عند ادخال الميزانية المعتمدة)',
     descriptionEn: 'Details (you can enter the values when enter the Assigned Budget)',
     sectiontype: 'master',
-    className:"disable_section", // to make the section disabled on form render
+    className: "disable_section", // to make the section disabled on form render
     targetlist: 'Milestones',
     subFields: [
 
@@ -1637,7 +1637,7 @@ var Information_Form = [
       //   type: 'multiline',
       //   maxchar: 5000,
       // },
-     
+
       {
         InternalName: 'Description',
         DisplayName: 'الوصف',
