@@ -4442,6 +4442,8 @@ window.ListInfo = {
           displayName +
           '"></div>' +
           '<ul ' +
+          ToggleName +
+          " " +
           grandFieldId +
           " " +
           notInvokeListinerData +
@@ -9742,8 +9744,8 @@ dynamicAffectSelect = {
     $(`#${affectedSelectsInfo.affectedFieldName} > option`).each(function () {
       var optionId = $(this).attr("option-id")
       var arraysiblingsVal = $(this).attr("data-arraysiblingvalues")
-      if(arraysiblingsVal && arraysiblingsVal != 'undefined'){
-      getSiblingsValues.push({ "id": optionId, 'arraySiblings': arraysiblingsVal })
+      if (arraysiblingsVal && arraysiblingsVal != 'undefined') {
+        getSiblingsValues.push({ "id": optionId, 'arraySiblings': arraysiblingsVal })
       }
     })
 
@@ -9836,7 +9838,7 @@ dynamicAffectSelect = {
 
     if (targetFieldType == "multiselect") {
 
- 
+
       $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu`).html(optionsBody)
       $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu li`).each(function () {
 
@@ -9853,7 +9855,7 @@ dynamicAffectSelect = {
       $(`select#${affectedSelectsInfo.affectedFieldName}`).html(optionsBody);
 
       $(`select#${affectedSelectsInfo.affectedFieldName}`).val(selectedVal);
- 
+
     }
 
 

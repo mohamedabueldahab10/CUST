@@ -183,9 +183,9 @@ var Information_Form = [
         toggleValues: [
           { value: 'yes', fields: ['InitiativeType', 'RelatedInitiative', 'RelatedInitiativeDeliverable'] }, //we can put more than 1  field
         ],
-        // toggleDisabledValues: [
-        //   { value: 'yes', fields: ['Sector','SubSector'] }, 
-        // ],
+        toggleDisabledValues: [
+          { value: 'yes', fields: ['Sector','SubSector'] }, 
+        ],
         validation: "required",
       },
       {
@@ -338,7 +338,7 @@ var Information_Form = [
         DisplayName: " مخرج المبادرة المرتبط",
         DisplayNameEn: "Related Initiative Deliverable",
         ToggleName: "RelatedInitiativeDeliverable",
-        // display:'none',
+        display:'none',
         type: "lookupmultiselect",
         //from other list:ma
         source: "InitiativeDeliverables",
@@ -520,7 +520,7 @@ var Information_Form = [
         Dispfieldkey: "Name",
         DispfieldkeyEn: "NameEn",
         valfieldkey: "Title",
-        // ToggleDisabledName:"Sector"
+        ToggleDisabledName:"Sector"
         // security: {
         //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
         // },
@@ -538,7 +538,7 @@ var Information_Form = [
         Dispfieldkey: "Name",
         DispfieldkeyEn: "NameEn",
         valfieldkey: "Title",
-        // ToggleDisabledName:"SubSector"
+        ToggleDisabledName:"SubSector"
         // security: {
         //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
         // },
