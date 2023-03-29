@@ -2134,12 +2134,19 @@ var New_Master_Details_Submit = {
                 $(this).val() / 100
               );
             } else if ($(this).attr("type") == "multiselect") {
+              console.log("Inside master details multi")
+              debugger
               var myselections = [];
-              $(this)
-                .find("input#Revenue:checked")
-                .each(function () {
-                  myselections.push($(this).val());
-                });
+              $(this).find("input:checkbox:checked").each(function () {
+                myselections.push($(this).val());
+      
+              });
+      
+              // $(this)
+              //   .find("input#Revenue:checked")
+              //   .each(function () {
+              //     myselections.push($(this).val());
+              //   });
               myselections = myselections.join(":::");
               New_Master_Details_Submit.g.oListItem.set_item(
                 $(this).attr("myfield"),

@@ -725,6 +725,8 @@ window.Edit_Data_Request = {
     });
 
     $("select[dynamic=parent]").trigger("change")
+
+    
     // $(".grandFieldInvoke").trigger("change")
 
 
@@ -2417,6 +2419,7 @@ var Master_Details_Request = {
     );
   },
   onSuccess: function (sender, args) {
+    
     var collListItem = Master_Details_Request.g.collListItem;
     console.log(collListItem);
     var listItemEnum = collListItem.getEnumerator();
@@ -2445,8 +2448,7 @@ var Master_Details_Request = {
         '">';
       HTMLtoAppend += FieldsToRender;
       HTMLtoAppend += "</div>";
-      console.log(oListItem.get_item("Title"));
-      console.log(HTMLtoAppend);
+
 
       if (HTMLtoAppend)
         $('[data-target_list="' + CurrList + '"] .fieldset-container').append(
@@ -6344,6 +6346,7 @@ window.Get_TaskHistory = {
 var DontSubmit_DataRequest = {
   init: function () {
     // to handle dont submit in edit lvl1
+    
     $(
       "[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
     ).each(function (e) {
@@ -6364,7 +6367,6 @@ var DontSubmit_DataRequest = {
       }
 
 
-      console.log(elementValue, "elementValue vvv")
 
       if (isMultiSelect) {
 
@@ -6396,6 +6398,7 @@ var DontSubmit_DataRequest = {
     $(
       "[data-parentrelatedvaluelvl2]:not([data-parentrelatedvaluelvl2=undefined])"
     ).each(function () {
+      
       var elementId = ""; // get element Id
       var elementValue = ""; // get element value
       var isMultiSelect = false
@@ -6440,6 +6443,7 @@ var DontSubmit_DataRequest = {
 
 
     });
+    
     if ($(".grandFieldInvoke").length > 0) { // to use it in initiative
       $(".grandFieldInvoke").trigger("change")
     }

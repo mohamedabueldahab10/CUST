@@ -874,24 +874,24 @@ var Information_Form = [
         initiativeCodeInList: true //value in look up drop down should be related to current project
         
       },
-      // {
-      //   InternalName: 'DeliverableID',
-      //   DisplayNameEn: 'Name',
-      //   DisplayName: 'المخرج',
+      {
+        InternalName: 'DeliverableID',
+        DisplayNameEn: 'Name',
+        DisplayName: 'المخرج',
   
-      //   type: 'lookupchildtoparentmultiselect',
-      //   childlist: 'Projects', //child list name
-      //   childinternalparentname: 'RelatedInitiative', // child internal name related to parent
-      //   childinternalparenttype:'Text',
-      //   childinternalname:"Title", // child internal name need to use to parent
-      //   source: 'Deliverables', // target list
-      //   sourceinternalname: 'ProjectCode', // column in target list
-      //   Dispfieldkey: 'Name', //display in dropdown
-      //   valfieldkey: 'Title', // value in dropdown
-      //   grpfieldkey: 'Title',
-      //   // valsiblingkey:'AcceptanceCriteria', // internal name on sorce list
-      //   // targetsiblingkey:'AcceptanceCriteria' // internal name on current list
-      // },
+        type: 'lookupchildtoparentmultiselect',
+        childlist: 'Projects', //child list name
+        childinternalparentname: 'RelatedInitiative', // child internal name related to parent
+        childinternalparenttype:'Text',
+        childinternalname:"Title", // child internal name need to use to parent
+        source: 'Deliverables', // target list
+        sourceinternalname: 'ProjectCode', // column in target list
+        Dispfieldkey: 'Name', //display in dropdown
+        valfieldkey: 'Title', // value in dropdown
+        grpfieldkey: 'Title',
+        // valsiblingkey:'AcceptanceCriteria', // internal name on sorce list
+        // targetsiblingkey:'AcceptanceCriteria' // internal name on current list
+      },
     ]
   },
   // {

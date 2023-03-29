@@ -113,7 +113,7 @@ var checkStatusHtml = setInterval(function () {
   else if (!isView) {
     ListInfo.preinit();
   }
-}, 2000);
+}, 1000);
 //for edit and new forms
 window.ListInfo = {
   // Pre-initialization functions ensure scripts, SharePoint dependencies are loaded

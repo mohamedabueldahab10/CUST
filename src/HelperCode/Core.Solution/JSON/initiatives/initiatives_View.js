@@ -488,6 +488,75 @@ var Information_Form = [
       },
     ],
   },
+  {
+    label: 'بيانات المنفعة',
+    labelEn: 'Benefit Data',
+    description: '',
+    descriptionEn: '',
+    sectiontype: 'master',
+    // className: "disable_section", // to make the section disabled on form render
+    targetlist: 'Benefits',
+    subFields: [
+      {
+        InternalName: 'Name',
+        DisplayNameEn: 'Name',
+        DisplayName: 'المنفعة',
+        type: 'string',
+        validation: 'required',
+        maxchar: '255',
+        withletters:true,
+        Errmsgkey:"withletterpattern",
+      },
+    
+      {
+        InternalName: 'Owner',
+        DisplayNameEn: 'Benefit Owner',
+        DisplayName: ' مالك المنفعة ',
+        type: 'picker',
+        validation: 'required',
+      },
+      {
+        InternalName: 'Description',
+        DisplayNameEn: 'Description',
+        DisplayName: 'وصف المنفعة',
+        maxchar: 5000,        
+        type: 'multiline',
+        validation: 'required',
+      },
+      {
+        InternalName: 'Weight',
+        DisplayNameEn: 'Weight',
+        DisplayName: 'وزن',
+        type: 'floatpercentage',
+        // "state": "disabled",
+        // dynamic: "Initiative"
+      },
+      {
+        InternalName: 'RelatedSubKpis',
+        DisplayNameEn: 'Related Sub Kpis',
+        DisplayName: 'المؤشرات الفرعية المرتبطة',
+        type: 'lookupmultiselect',
+        source: 'MainKPI',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        grpfieldkey: 'Title',
+        
+      },
+      {
+        InternalName: 'DeliverableID',
+        DisplayNameEn: 'Name',
+        DisplayName: 'المخرج',
+        type: 'lookupmultiselect',
+        source: 'Deliverables', // target list
+
+        Dispfieldkey: 'Name', //display in dropdown
+        valfieldkey: 'Title', // value in dropdown
+        grpfieldkey: 'Title',
+        // valsiblingkey:'AcceptanceCriteria', // internal name on sorce list
+        // targetsiblingkey:'AcceptanceCriteria' // internal name on current list
+      },
+    ]
+  },
   //   {
   //   label: 'بيانات المنفعة',
   //   labelEn: 'Benefit Data',
