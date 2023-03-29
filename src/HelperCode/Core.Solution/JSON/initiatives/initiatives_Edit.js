@@ -819,6 +819,82 @@ var Information_Form = [
     ],
   },
   // {
+  //   label: 'بيانات المنفعة',
+  //   labelEn: 'Benefit Data',
+  //   description: '',
+  //   descriptionEn: '',
+  //   sectiontype: 'master',
+  //   // className: "disable_section", // to make the section disabled on form render
+  //   targetlist: 'Benefits',
+  //   subFields: [
+  //     {
+  //       InternalName: 'Name',
+  //       DisplayNameEn: 'Name',
+  //       DisplayName: 'المنفعة',
+  //       type: 'string',
+  //       validation: 'required',
+  //       maxchar: '255',
+  //       withletters:true,
+  //       Errmsgkey:"withletterpattern",
+  //     },
+    
+  //     {
+  //       InternalName: 'Owner',
+  //       DisplayNameEn: 'Benefit Owner',
+  //       DisplayName: ' مالك المنفعة ',
+  //       type: 'picker',
+  //       validation: 'required',
+  //     },
+  //     {
+  //       InternalName: 'Description',
+  //       DisplayNameEn: 'Description',
+  //       DisplayName: 'وصف المنفعة',
+  //       maxchar: 5000,        
+  //       type: 'multiline',
+  //       validation: 'required',
+  //     },
+  //     {
+  //       InternalName: 'Weight',
+  //       DisplayNameEn: 'Weight',
+  //       DisplayName: 'وزن',
+  //       type: 'floatpercentage',
+  //       // "state": "disabled",
+  //       // dynamic: "Initiative"
+  //     },
+  //     {
+  //       InternalName: 'RelatedSubKpis',
+  //       DisplayNameEn: 'Related Sub Kpis',
+  //       DisplayName: 'المؤشرات الفرعية المرتبطة',
+  //       type: 'lookupmultiselect',
+  //       validation: 'required',
+  //       source: 'MainKPI',
+  //       Dispfieldkey: 'Name',
+  //       valfieldkey: 'Title',
+  //       grpfieldkey: 'Title',
+  //       initiativeCodeInList: true //value in look up drop down should be related to current project
+        
+  //     },
+  //     {
+  //       InternalName: 'DeliverableID',
+  //       DisplayNameEn: 'Name',
+  //       DisplayName: 'المخرج',
+  
+  //       type: 'lookupchildtoparentmultiselect',
+  //       childlist: 'Projects', //child list name
+  //       childinternalparentname: 'RelatedInitiative', // child internal name related to parent
+  //       childinternalparenttype:'Text',
+  //       childinternalname:"Title", // child internal name need to use to parent
+  //       source: 'Deliverables', // target list
+  //       sourceinternalname: 'ProjectCode', // column in target list
+  //       Dispfieldkey: 'Name', //display in dropdown
+  //       valfieldkey: 'Title', // value in dropdown
+  //       grpfieldkey: 'Title',
+  //       // valsiblingkey:'AcceptanceCriteria', // internal name on sorce list
+  //       // targetsiblingkey:'AcceptanceCriteria' // internal name on current list
+  //     },
+  //   ]
+  // },
+  // {
   //   label: 'وثائق عمليات BRD',
   //   labelEn: 'BRD Documents',
   //   description: '',

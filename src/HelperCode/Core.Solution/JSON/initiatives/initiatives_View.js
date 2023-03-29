@@ -488,4 +488,75 @@ var Information_Form = [
       },
     ],
   },
+  //   {
+  //   label: 'بيانات المنفعة',
+  //   labelEn: 'Benefit Data',
+  //   description: '',
+  //   descriptionEn: '',
+  //   sectiontype: 'master',
+  //   // className: "disable_section", // to make the section disabled on form render
+  //   targetlist: 'Benefits',
+  //   subFields: [
+  //     {
+  //       InternalName: 'Name',
+  //       DisplayNameEn: 'Name',
+  //       DisplayName: 'المنفعة',
+  //       type: 'string',
+  //       validation: 'required',
+  //       maxchar: '255',
+  //       withletters:true,
+  //       Errmsgkey:"withletterpattern",
+  //     },
+    
+  //     {
+  //       InternalName: 'Owner',
+  //       DisplayNameEn: 'Benefit Owner',
+  //       DisplayName: ' مالك المنفعة ',
+  //       type: 'picker',
+  //       validation: 'required',
+  //     },
+  //     {
+  //       InternalName: 'Description',
+  //       DisplayNameEn: 'Description',
+  //       DisplayName: 'وصف المنفعة',
+  //       maxchar: 5000,        
+  //       type: 'multiline',
+  //       validation: 'required',
+  //     },
+  //     {
+  //       InternalName: 'Weight',
+  //       DisplayNameEn: 'Weight',
+  //       DisplayName: 'وزن',
+  //       type: 'floatpercentage',
+  //       // "state": "disabled",
+  //       // dynamic: "Initiative"
+  //     },
+  //     {
+  //       InternalName: 'RelatedSubKpis',
+  //       DisplayNameEn: 'Related Sub Kpis',
+  //       DisplayName: 'المؤشرات الفرعية المرتبطة',
+  //       type: 'multiselectstring',
+  //       validation: 'required',
+  //       source: 'MainKPI',
+  //       Dispfieldkey: 'Name',
+  //       valfieldkey: 'Title',
+  //       grpfieldkey: 'Title',
+  //       initiativeCodeInList: true //value in look up drop down should be related to current project
+        
+  //     },
+  //     {
+  //       InternalName: 'DeliverableID',
+  //       DisplayNameEn: 'Name',
+  //       DisplayName: 'المخرج',
+  
+  //       type: 'multiselectstring',
+  //       source: 'Deliverables',
+  //       Dispfieldkey: 'Name',
+  //       valfieldkey: 'Title',
+  //       grpfieldkey: 'Title',
+  //       // valsiblingkey:'AcceptanceCriteria', // internal name on sorce list
+  //       // targetsiblingkey:'AcceptanceCriteria' // internal name on current list
+  //     },
+  //   ]
+  // },
 ]

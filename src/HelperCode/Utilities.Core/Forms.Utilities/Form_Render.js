@@ -536,7 +536,10 @@ window.ListInfo = {
               console.log("Inside not invoke listiner")
 
             } else {
+              de
+              // if(affectedSelectsInfo && affectedSelectsInfo !="undefined"){
               dynamicAffectSelect.init(affectedSelectsInfo);
+              // }
             }
           });
           //max min dates
@@ -4699,6 +4702,199 @@ window.ListInfo = {
                   }
                 })
 
+            }
+          })
+        break;
+
+      case "lookupchildtoparentmultiselect": // need more test
+        var code = activeCode
+        var customQuery =
+          '<View><Query><Where><And><Eq><FieldRef Name=' + element.childinternalparentname + ' /><Value Type=' + element.childinternalparenttype + '>' +
+          code +
+          "</Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+
+        var itemsID = [];
+
+
+
+        sphttp.get(
+          _spPageContextInfo.siteServerRelativeUrl,
+          element.childlist,
+          customQuery,
+          [element.childinternalname],
+          function (records, record, listItem, isDone) {
+
+            var allRelatedChild = [] // to get all related child
+            if (isDone) {
+
+              htmlBody =
+                '<div class="col-md-6 CFIELD ' +
+                dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+                " " +
+                element.className +
+                " " +
+                hideField +
+                ' " ' +
+                thistip +
+                " " +
+                hidestagesIDs +
+                " " +
+                editableBy +
+                " " +
+                showstagesIDs +
+                "  " +
+                disablestagesIDs +
+                "  " +
+                enablestagesIDs +
+                "   " +
+                isWfhidestagesIDs +
+                " " +
+                requireOnWfTaskstagesIDs +
+                " " +
+                isWfshowstagesIDs +
+                "  " +
+                isWfdisablestagesIDs +
+                "  " +
+                isWfenablestagesIDs +
+                '        data-groups="' +
+                groups +
+                '" style="display:' +
+                element.display +
+                '">' +
+                '<label for="' +
+                element.InternalName +
+                '" ' +
+                element.validation +
+                ">" +
+                displayName +
+                "</label>" +
+                '<div style="display:inline-' +
+                element.toggledisplay +
+                '" class="showhide-trigger" title="Show/Hide ' +
+                displayName +
+                '"></div>' +
+                '<ul ' +
+                grandFieldId +
+                " " +
+                notInvokeListinerData +
+                " " +
+                parentCustomFilterValue +
+                " " +
+                seconedValueListiner +
+                " " +
+                dynamic +
+                " " +
+                seconeddynamic +
+                " " +
+                'data-listname="' +
+                element.source +
+                '" data-valfieldkey="' +
+                element.valfieldkey +
+                '" data-Dispfieldkey="' +
+                dispfieldkey +
+                '"data-filterfield="' +
+                element.filterField +
+                '"data-queryfieldvalue="' + //
+                element.queryFieldValue +
+                '"data-queryfield="' + //
+                element.queryField +
+                '"data-queryfieldtype="' + //
+                element.queryFieldType +
+                '" data-filterfieldtype="' +
+                element.filterFieldType +
+                '" myfield="' +
+                element.InternalName +
+                '" id="' +
+                element.InternalName +
+                '" type="multiselect" class="multiselect-container form-control" type="multiselect">' +
+                '<li class="dropdown ul-bullet-remove">' +
+                '<a href="#" data-toggle="dropdown" class="dropdown-toggle">' +
+                displayName +
+                '<b class="caret"></b></a>' +
+                '<ul class="dropdown-menu multiselect_scroll ' + element.validation + '">';
+
+              records.forEach(function (el, index) {
+                allRelatedChild.push(el[element.childinternalname]);
+
+              });
+
+              if (allRelatedChild.length == 0) { // to render an empty drop down when there is no item or related child value
+                allRelatedChild.push("")
+              }
+
+              var internalQuery =
+                '<View><Query><Where><And><In><FieldRef Name="' + element.sourceinternalname +
+                '" /><Values>'
+
+              allRelatedChild.forEach(function (item) {
+                internalQuery += '<Value Type="Text">' + item + "</Value>";
+              });
+
+              internalQuery += "</Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+
+              var filedsArr = [element.valfieldkey, element.Dispfieldkey]
+              if (element.hasOwnProperty('valsiblingkey')) {
+                filedsArr = [element.valfieldkey, element.Dispfieldkey, element.valsiblingkey]
+              }
+              sphttp.get(
+                _spPageContextInfo.siteServerRelativeUrl,
+                element.source,
+                internalQuery,
+                filedsArr,
+                function (records, record, listItem, isDone) {
+                  if (listItem) itemsID.push(listItem.get_id());
+                  if (isDone) {
+
+                    var grpfield = element.grpfieldkey;
+                    window.result = records.reduce(function (r, a) {
+                      r[a[grpfield]] = r[a[grpfield]] || [];
+                      r[a[grpfield]].push(a);
+                      return r;
+                    }, Object.create(null));
+
+                    Object.entries(result).forEach((el) => {
+
+                      el[1].forEach((dl) => {
+                        htmlBody +=
+                          "<li data-parentrelatedvaluelvl1=" +
+                          dl[element.sourcefieldlvl1] +
+                          " data-parentrelatedkeylvl1= " +
+                          element.fieldsinformlvl1
+                          + " data-parentrelatedvaluelvl2=" +
+                          dl[element.sourcefieldlvl2]
+                          + " data-parentrelatedkeylvl2=" +
+                          element.fieldsinformlvl2
+                          + " class='limulti'>" + // we add class limulti to can check if this element multi select or not in dontsubmit feature to get the data
+                          '<div class="checkbox">' +
+                          "<label>" +
+                          '<input value="' +
+                          dl[element.valfieldkey] +
+                          '" id="' +
+                          element.InternalName +
+                          '" type="checkbox">' +
+                          dl[dispfieldkey] +
+                          "</label>" +
+                          "</div>" +
+                          "</li>";
+                      });
+                    });
+
+                    htmlBody +=
+                      "</ul>" +
+                      "</li>" +
+                      "</ul>" +
+                      "<span data-trans-" +
+                      Errmsgkey +
+                      ' class="errMsgField Resources"></span>' +
+                      '<div class="inputInfo ' +
+                      isexist +
+                      '">' +
+                      descPhrase +
+                      "</div>" +
+                      "</div>";
+                    OnSuccess(flag, htmlBody);
+                  }
+                })
             }
           })
         break;
@@ -9533,7 +9729,7 @@ dynamicAffectSelect = {
     var collListItem = dynamicAffectSelect.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     let affectedSelectsInfo = dynamicAffectSelect.g.affectedSelectsInfo[0];
-
+    debugger
     var targetFieldType = $(`#${affectedSelectsInfo.affectedFieldName}`).attr("type");
 
 
@@ -9571,7 +9767,7 @@ dynamicAffectSelect = {
       optionsBody = '<option class="Resources" value="" selected="" disabled=""></option>'; // to not choose the first value in dropdown
     }
 
-
+    
 
 
     while (listItemEnum.moveNext()) {
@@ -9650,7 +9846,7 @@ dynamicAffectSelect = {
 
     console.log(affectedSelectsInfo.affectedFieldName, "affectedSelectsInfo")
 
-
+    
 
     dynamicAffectSelect.g.affectedSelectsInfo =
       dynamicAffectSelect.g.affectedSelectsInfo.shift();
