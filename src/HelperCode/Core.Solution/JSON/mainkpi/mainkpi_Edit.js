@@ -452,13 +452,13 @@ var Information_Form = [
           {
             role: 'VROE',
             conditions: [
+              // {
+              //   field: 'RelatedStrategyType',
+              //   type: 'Choice',
+              //   values: ['vision'],
+              // },
               {
-                field: 'RelatedStrategyType',
-                type: 'Choice',
-                values: ['vision'],
-              },
-              {
-                field: 'Types',
+                field: 'KPIType',
                 type: 'Choice',
                 values: ['main'],
               },
@@ -467,13 +467,13 @@ var Information_Form = [
           {
             role: 'LMSP',
             conditions: [
+              // {
+              //   field: 'RelatedStrategyType',
+              //   type: 'Choice',
+              //   values: ['lms'],
+              // },
               {
-                field: 'RelatedStrategyType',
-                type: 'Choice',
-                values: ['lms'],
-              },
-              {
-                field: 'Types',
+                field: 'KPIType',
                 type: 'Choice',
                 values: ['main'],
               },
