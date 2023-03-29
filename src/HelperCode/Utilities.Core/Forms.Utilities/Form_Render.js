@@ -9731,7 +9731,12 @@ dynamicAffectSelect = {
     var listItemEnum = collListItem.getEnumerator();
     let affectedSelectsInfo = dynamicAffectSelect.g.affectedSelectsInfo[0];
 
-    var targetFieldType = $(`#${affectedSelectsInfo.affectedFieldName}`).attr("type");
+    debugger
+    var targetFieldType =''
+    if(affectedSelectsInfo && affectedSelectsInfo !="undefined"){
+      targetFieldType = $(`#${affectedSelectsInfo.affectedFieldName}`).attr("type");
+    }
+     
 
 
     let selectedVal = ""
@@ -9740,6 +9745,7 @@ dynamicAffectSelect = {
 
     var getSiblingsValues = []
 
+    if(affectedSelectsInfo && affectedSelectsInfo !="undefined"){
 
     $(`#${affectedSelectsInfo.affectedFieldName} > option`).each(function () {
       var optionId = $(this).attr("option-id")
@@ -9748,7 +9754,7 @@ dynamicAffectSelect = {
         getSiblingsValues.push({ "id": optionId, 'arraySiblings': arraysiblingsVal })
       }
     })
-
+  }
 
     if (targetFieldType == 'multiselect') {
 
