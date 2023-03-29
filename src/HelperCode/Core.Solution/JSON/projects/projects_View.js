@@ -4,13 +4,13 @@ var Information_Form = [
     labelEn: "Project Data",
     description: "",
     descriptionEn: "",
-    // workflowSetValues: [
-    //   //VRO
-    //   { fieldName: 'DraftStatus', value: '', stages:["approved"] },
-    //   { fieldName: 'WFModuleCode', value: '',stages:["VROCRProject02"]} ,
-    //   { fieldName: 'WFStage', value: '',stages:["VROCRProject02"]} ,
-    //   { fieldName: 'Stage', value: 'S01',stages:["VROCRProject02"]} ,
-    //   { fieldName: 'Phase', value: 'P1',stages:["VROCRProject02"]} ,
+    workflowSetValues: [
+      //VRO
+      { fieldName: 'DraftStatus', value: '', stages:["approved"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["VROCreateProject02"]} ,
+      { fieldName: 'WFStage', value: '',stages:["VROCreateProject02"]} ,
+      { fieldName: 'Stage', value: 'S01',stages:["VROCreateProject02"]} ,
+      { fieldName: 'Phase', value: 'P1',stages:["VROCreateProject02"]} ,
     // //EPMO
     //   { fieldName: 'DraftStatus', value: '', stages:["EPMOCRProject02"] },
     //   { fieldName: 'WFModuleCode', value: '',stages:["EPMOCRProject02"]} ,
@@ -23,7 +23,7 @@ var Information_Form = [
     //   { fieldName: 'WFStage', value: '',stages:["approved"]} ,
     //   { fieldName: 'Stage', value: 'S01',stages:["approved"]} ,
     //   { fieldName: 'Phase', value: 'P1',stages:["approved"]} ,
-    // ],
+    ],
     subFields: [
       {
         InternalName: "Title",
@@ -167,8 +167,8 @@ var Information_Form = [
               customFilterValue:  "vision",
               roles: ['Administrator', 'VROE', 'VROP'],
               otherFields: [
-                { fieldName: 'WFModuleCode', value: 'VROCRProject' },
-                { fieldName: 'WFStage', value: 'VROCRProject01' },
+                { fieldName: 'WFModuleCode', value: 'VROCreateProject' },
+                { fieldName: 'WFStage', value: 'VROCreateProject01' },
                 { fieldName: 'DraftStatus', value: 'draft' },
               ],
             },
