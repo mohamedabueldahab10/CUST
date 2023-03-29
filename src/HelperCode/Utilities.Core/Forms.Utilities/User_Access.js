@@ -8670,7 +8670,7 @@ var Tasks_Info_Request_User = {
           } else if (wfname == 'SPAchievements') {
             keyNameParams = 'strategicpartnershipsachievements'
           } else if (wfname == 'VROBenefitActual' || wfname == 'EPMOBenefitActual' || wfname == 'LMSBenefitActual') {
-            keyNameParams = 'benefits'
+            keyNameParams = 'benefitmetrics'
           } else if (wfname == 'VROInitiativeMilestone' || wfname == 'EPMOInitiativeMilestone' || wfname == 'LMSInitiativeMilestone') {
             keyNameParams = 'initiativemilestones'
           } else if (wfname == 'VROInitiativeDeliverable' || wfname == 'EPMOInitiativeDeliverable' || wfname == 'LMSInitiativeDeliverable') {

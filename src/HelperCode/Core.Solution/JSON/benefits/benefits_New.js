@@ -4,20 +4,20 @@ var Information_Form = [
     labelEn: ' Benefit Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
-    formDefaultValues: [
-      //VRO
-      { fieldName: 'WFModuleCode', value: 'VROBenefitActual',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
-      { fieldName: 'WFStage', value: 'VROBenefitActual01',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+    // formDefaultValues: [
+    //   //VRO
+    //   { fieldName: 'WFModuleCode', value: 'VROBenefitActual',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+    //   { fieldName: 'WFStage', value: 'VROBenefitActual01',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
       
-      //EPMOCRInitiative
-      { fieldName: 'WFModuleCode', value: 'EPMOBenefitActual',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
-      { fieldName: 'WFStage', value: 'EPMOBenefitActual01',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+    //   //EPMOCRInitiative
+    //   { fieldName: 'WFModuleCode', value: 'EPMOBenefitActual',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+    //   { fieldName: 'WFStage', value: 'EPMOBenefitActual01',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
 
-      //LMS
-      { fieldName: 'WFModuleCode', value: 'LMSBenefitActual',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
-      { fieldName: 'WFStage', value: 'LMSBenefitActual01',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+    //   //LMS
+    //   { fieldName: 'WFModuleCode', value: 'LMSBenefitActual',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+    //   { fieldName: 'WFStage', value: 'LMSBenefitActual01',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
 
-    ],
+    // ],
     subFields: [
       // {
       //     "InternalName": "Title",
