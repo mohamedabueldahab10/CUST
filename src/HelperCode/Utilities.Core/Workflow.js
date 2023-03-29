@@ -132,9 +132,9 @@ var workflowname,
 	isVROCRInitiative = window.location.href.indexOf("initiatives&VROCRInitiative") > -1,
 	isEPMOCRInitiative = window.location.href.indexOf("initiatives&EPMOCRInitiative") > -1,
 	isLMSCRInitiative = window.location.href.indexOf("initiatives&LMSCRInitiative") > -1,
-	isVROBenefitActual = window.location.href.indexOf("benefits&VROBenefitActual") > -1,
-	isEPMOBenefitActual = window.location.href.indexOf("benefits&EPMOBenefitActual") > -1,
-	isLMSBenefitActual = window.location.href.indexOf("benefits&LMSBenefitActual") > -1,
+	isVROBenefitActual = window.location.href.indexOf("benefitmetrics&VROBenefitActual") > -1,
+	isEPMOBenefitActual = window.location.href.indexOf("benefitmetrics&EPMOBenefitActual") > -1,
+	isLMSBenefitActual = window.location.href.indexOf("benefitmetrics&LMSBenefitActual") > -1,
 	isVROInitiativeMilestone = window.location.href.indexOf("initiativemilestones&VROInitiativeMilestone") > -1,
 	isEPMOInitiativeMilestone = window.location.href.indexOf("initiativemilestones&EPMOInitiativeMilestone") > -1,
 	isLMSInitiativeMilestone = window.location.href.indexOf("initiativemilestones&LMSInitiativeMilestone") > -1,
@@ -558,7 +558,7 @@ else if (isLMSCRProject) {
 else if (isVROBenefitActual) {
 
 	workflowname = "VROBenefitActual";
-	bulkeditlist = "Benefits";
+	bulkeditlist = "BenefitMetrics";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -574,7 +574,7 @@ else if (isVROBenefitActual) {
 else if (isEPMOBenefitActual) {
 
 	workflowname = "EPMOBenefitActual";
-	bulkeditlist = "Benefits";
+	bulkeditlist = "BenefitMetrics";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -590,7 +590,7 @@ else if (isEPMOBenefitActual) {
 else if (isLMSBenefitActual) {
 
 	workflowname = "LMSBenefitActual";
-	bulkeditlist = "Benefits";
+	bulkeditlist = "BenefitMetrics";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
