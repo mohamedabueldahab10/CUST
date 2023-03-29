@@ -8655,7 +8655,7 @@ var Tasks_Info_Request_User = {
             keyNameParams = "projects";
           } else if (wfname == "VROCRObjective" || wfname == "MSCRObjective" || wfname == "LMSCRObjective") {
             keyNameParams = "changerequest";
-          } else if (wfname == "VROCRKPI" || wfname == "MSCRKPI" || wfname == "LMSCRKPI") {
+          } else if (wfname == "VROCRKPI" || wfname == "MSCRKPI" || wfname == "LMSCRKPI" || wfname == "VROActualKPI" || wfname == "MSActualKPI" || wfname == "LMSActualKPI") {
             keyNameParams = "mainkpi";
           } else if (wfname == "Issue") {
             keyNameParams = "issues";
