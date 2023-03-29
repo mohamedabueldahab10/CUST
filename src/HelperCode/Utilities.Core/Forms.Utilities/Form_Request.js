@@ -2398,7 +2398,7 @@ var Master_Details_Request = {
   // The main Initialization function
   init: function (DetailsList) {
     console.log("INSide Master DEtails")
-    
+
 
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(DetailsList);
@@ -2419,7 +2419,7 @@ var Master_Details_Request = {
     );
   },
   onSuccess: function (sender, args) {
-    
+
     var collListItem = Master_Details_Request.g.collListItem;
     console.log(collListItem);
     var listItemEnum = collListItem.getEnumerator();
@@ -2457,7 +2457,6 @@ var Master_Details_Request = {
         );
       //show data
       if (isView) {
-        console.log("asdasdasdasd");
         $(
           '[data-target_list="' +
           CurrList +
@@ -2465,6 +2464,7 @@ var Master_Details_Request = {
           oListItem.get_id() +
           '"] > .CFIELD > .viewmode-value'
         ).each(function () {
+   
           if ($(this).attr("type") == "date") {
             var d =
               oListItem.get_item("" + $(this).attr("id") + "") == null
@@ -2578,15 +2578,59 @@ var Master_Details_Request = {
               value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             );
           } else if ($(this).attr("type") == "multiselect") {
+            // var value =
+            //   oListItem.get_item("" + $(this).attr("id") + "") == null
+            //     ? No_Data
+            //     : oListItem
+            //       .get_item("" + $(this).attr("id") + "")
+            //       .split(":::")
+            //       .join("; <br>");
+
+            // $(this).html(value);
+
+            // to get the name of multi select in master details
+            var valfieldkey = $(this).data("valfieldkey"),
+              Dispfieldkey = $(this).data("dispfieldkey"),
+              listname = $(this).data("listname"),
+              $this = $(this);
+
+            var listFields = ["ID", valfieldkey, Dispfieldkey];
+
+
             var value =
               oListItem.get_item("" + $(this).attr("id") + "") == null
                 ? No_Data
                 : oListItem
                   .get_item("" + $(this).attr("id") + "")
                   .split(":::")
-                  .join("; <br>");
 
-            $(this).html(value);
+            var customquerymulti =
+              '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="' + valfieldkey + '" /><Values>';
+            for (var i = 0; i <= value.length; i++) {
+              customquerymulti += '<Value Type="Text">' + value[i] + '</Value>';
+            }
+            customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
+
+
+
+            sphttp.get(
+              _spPageContextInfo.siteServerRelativeUrl,
+              listname,
+              customquerymulti,
+              listFields,
+              function (records, record, listItem, isDone) {
+                if (isDone) {
+                  var items = ''
+                  records.forEach(function (el, index) {
+
+                    items += el[Dispfieldkey] + '<br>'
+
+
+                  });
+                  $this.html(items);
+                }
+              }
+            );
           } else if ($(this).attr("type") == "lookup") {
             var valfieldkey = $(this).data("valfieldkey"),
               Dispfieldkey = $(this).data("dispfieldkey"),
@@ -2791,7 +2835,7 @@ var Master_Details_Request = {
               }
 
               if ((listkey == 'initiatives' || listkey == 'projects')) { // to handle amount in master details based on weight in project and initiative
-                
+
                 if (MasterDetailsArrayRequest.length == 0) {
                   if ($("[data-targetelem]").length > 0) {
                     $("[data-targetelem]").each(function () {
@@ -2806,8 +2850,8 @@ var Master_Details_Request = {
 
                         weight = Number(weight)
                         var newMax = Number(maxAttr) + weight
-                        $(this).parent().parent().find(`#${targetElem}`).attr('max',newMax)
-                        
+                        $(this).parent().parent().find(`#${targetElem}`).attr('max', newMax)
+
                         var Amount = (weight * parentValue) / 100
                         Amount = Amount.toFixed(2)
                         $(this).val(Amount)
@@ -3060,7 +3104,7 @@ window.Get_Related_Sos_Sector = {
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
 
-      
+
 
       var type = $('#Types').val()
       var sector = oListItem.get_item("Sector") ? oListItem.get_item("Sector") : '';
@@ -3303,7 +3347,7 @@ window.Get_Pillers_Info = {
         description: oListItem.get_item("Description")
       });
     }
-    
+
     $("#PillarName").html(
       '<option data-trans-pillersname class="Resources" value="" selected="" disabled=""></option>'
     );
@@ -4417,7 +4461,7 @@ window.ViewAllFiles_Main_Strategy = {
     if (filesUrls.length > 0) {
 
       console.log(filesUrls, "filePurpose")
-      
+
 
       var FilesLink =
         '<div class="py-5 border-bottom section-container " id="file_container" data-groups="">' +

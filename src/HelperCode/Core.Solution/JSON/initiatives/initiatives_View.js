@@ -489,6 +489,93 @@ var Information_Form = [
     ],
   },
   {
+    label: 'بيانات المخرج',
+    labelEn: 'Delivrable Data',
+    description: 'التفاصيل',
+    descriptionEn: 'Details',
+    sectiontype: 'master',
+    // className: "disable_section", // to make the section disabled on form render
+    targetlist: 'InitiativeDeliverables',
+    subFields: [
+
+      {
+        InternalName: 'Name',
+        DisplayNameEn: 'Name',
+        DisplayName: 'اسم المخرج',
+        type: 'string',
+        maxchar: '255',
+        withletters: true,
+        Errmsgkey: "withletterpattern",
+        validation: 'required',
+      },
+      {
+        InternalName: 'PlannedFinishDate',
+        DisplayName: 'تاريخ الانتهاء المخطط',
+        DisplayNameEn: 'Planned Finish Date',
+        // "type": "datetime",
+        type: 'datetimetoparent',
+        listname: 'Initiatives',
+        startinternalname: 'StartDate',
+        endinternalname: 'FinishDate',
+        // "min": "PlannedStartDate",
+        validation: 'required',
+      },
+      {
+        InternalName: 'Weight',
+        DisplayName: 'الوزن(%)',
+        DisplayNameEn: 'Weight (%)',
+        type: 'string',
+
+      },
+
+    ]
+  },
+  {
+    label: 'بيانات المعلم',
+    labelEn: 'Milestone Data',
+    description: 'التفاصيل',
+    descriptionEn: 'Details',
+    sectiontype: 'master',
+    // className: "disable_section", // to make the section disabled on form render
+    targetlist: 'InitiativeMilestones',
+    subFields: [
+      {
+        InternalName: 'Name',
+        DisplayNameEn: 'Name',
+        DisplayName: 'اسم المعلم',
+        type: 'string',
+        maxchar: '255',
+        withletters: true,
+        Errmsgkey: "withletterpattern",
+        validation: 'required',
+      },
+      {
+        InternalName: 'PlannedDate',
+        DisplayName: 'تاريخ الاكتمال المخطط',
+        DisplayNameEn: 'Planned Finish Date',
+        type: 'datetime',
+        validation: 'required',
+      },
+      {
+        InternalName: 'Weight',
+        DisplayName: 'الوزن',
+        DisplayNameEn: 'Weight (%)',
+        type: 'string',
+      },
+      // {
+      //   InternalName: 'Amount',
+      //   DisplayName: 'القيمة',
+      //   DisplayNameEn: 'Amount',
+      //   dontSubmit: true,
+      //   type: 'percentbyrelatedparent',
+      //   listname: 'Initiatives',
+      //   parentinternalname: 'InitiativeBudget',
+      //   targetelement: 'Weight',
+      //   validation: 'required',
+      // },
+    ]
+  },
+  {
     label: 'بيانات المنفعة',
     labelEn: 'Benefit Data',
     description: '',
@@ -557,75 +644,5 @@ var Information_Form = [
       },
     ]
   },
-  //   {
-  //   label: 'بيانات المنفعة',
-  //   labelEn: 'Benefit Data',
-  //   description: '',
-  //   descriptionEn: '',
-  //   sectiontype: 'master',
-  //   // className: "disable_section", // to make the section disabled on form render
-  //   targetlist: 'Benefits',
-  //   subFields: [
-  //     {
-  //       InternalName: 'Name',
-  //       DisplayNameEn: 'Name',
-  //       DisplayName: 'المنفعة',
-  //       type: 'string',
-  //       validation: 'required',
-  //       maxchar: '255',
-  //       withletters:true,
-  //       Errmsgkey:"withletterpattern",
-  //     },
-    
-  //     {
-  //       InternalName: 'Owner',
-  //       DisplayNameEn: 'Benefit Owner',
-  //       DisplayName: ' مالك المنفعة ',
-  //       type: 'picker',
-  //       validation: 'required',
-  //     },
-  //     {
-  //       InternalName: 'Description',
-  //       DisplayNameEn: 'Description',
-  //       DisplayName: 'وصف المنفعة',
-  //       maxchar: 5000,        
-  //       type: 'multiline',
-  //       validation: 'required',
-  //     },
-  //     {
-  //       InternalName: 'Weight',
-  //       DisplayNameEn: 'Weight',
-  //       DisplayName: 'وزن',
-  //       type: 'floatpercentage',
-  //       // "state": "disabled",
-  //       // dynamic: "Initiative"
-  //     },
-  //     {
-  //       InternalName: 'RelatedSubKpis',
-  //       DisplayNameEn: 'Related Sub Kpis',
-  //       DisplayName: 'المؤشرات الفرعية المرتبطة',
-  //       type: 'multiselectstring',
-  //       validation: 'required',
-  //       source: 'MainKPI',
-  //       Dispfieldkey: 'Name',
-  //       valfieldkey: 'Title',
-  //       grpfieldkey: 'Title',
-  //       initiativeCodeInList: true //value in look up drop down should be related to current project
-        
-  //     },
-  //     {
-  //       InternalName: 'DeliverableID',
-  //       DisplayNameEn: 'Name',
-  //       DisplayName: 'المخرج',
   
-  //       type: 'multiselectstring',
-  //       source: 'Deliverables',
-  //       Dispfieldkey: 'Name',
-  //       valfieldkey: 'Title',
-  //       grpfieldkey: 'Title',
-  //       // valsiblingkey:'AcceptanceCriteria', // internal name on sorce list
-  //       // targetsiblingkey:'AcceptanceCriteria' // internal name on current list
-  //     },
-  //   ]
-  // },
 ]
