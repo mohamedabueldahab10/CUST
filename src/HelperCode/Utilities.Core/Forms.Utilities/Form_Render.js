@@ -6415,17 +6415,26 @@ window.ListInfo = {
 
       $(".add-New-Detail").on("click", function () {
 
-        
+
         if ((listkey == 'projects' || listkey == 'initiatives') && isNew) {
           var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item").last()
           lastDetailsItemBeforeAdd.addClass('disable_section')
         }
-        // else if((listkey == 'projects' || listkey == 'initiatives') && isEdit){
-          
-        //   var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item").last()
-        //   lastDetailsItemBeforeAdd.addClass('disable_section')
-        //   // Details-Item EditItem
-        // }
+        else if ((listkey == 'projects' || listkey == 'initiatives') && isEdit) {
+
+          var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last()
+          if (lastDetailsItemBeforeAdd.length == 0) {
+            var onLoadMaster = $(this).closest("[data-target_list]").find(".Details-Item.EditItem")
+            if (onLoadMaster.length) {
+              onLoadMaster.each(function () {
+                $(this).addClass("disable_section")
+              })
+            }
+          } else {
+            lastDetailsItemBeforeAdd.addClass('disable_section')
+          }
+
+        }
 
 
 
@@ -6551,6 +6560,20 @@ window.ListInfo = {
 
           var lastDetailsItemAfterRemove = $(this).closest("[data-target_list]").find(".Details-Item").last()
           lastDetailsItemAfterRemove.removeClass('disable_section')
+        } else if ((listkey == 'projects' || listkey == 'initiatives') && isEdit) {
+
+          var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last()
+          if (lastDetailsItemBeforeAdd.length == 0) {
+            var onLoadMaster = $(this).closest("[data-target_list]").find(".Details-Item.EditItem")
+            if (onLoadMaster.length) {
+              onLoadMaster.each(function () {
+                $(this).removeClass("disable_section")
+              })
+            }
+          } else {
+            lastDetailsItemBeforeAdd.removeClass('disable_section')
+          }
+
         }
         //
 
@@ -9737,12 +9760,12 @@ dynamicAffectSelect = {
     var listItemEnum = collListItem.getEnumerator();
     let affectedSelectsInfo = dynamicAffectSelect.g.affectedSelectsInfo[0];
 
-    
-    var targetFieldType =''
-    if(affectedSelectsInfo && affectedSelectsInfo !="undefined"){
+
+    var targetFieldType = ''
+    if (affectedSelectsInfo && affectedSelectsInfo != "undefined") {
       targetFieldType = $(`#${affectedSelectsInfo.affectedFieldName}`).attr("type");
     }
-     
+
 
 
     let selectedVal = ""
@@ -9751,16 +9774,16 @@ dynamicAffectSelect = {
 
     var getSiblingsValues = []
 
-    if(affectedSelectsInfo && affectedSelectsInfo !="undefined"){
+    if (affectedSelectsInfo && affectedSelectsInfo != "undefined") {
 
-    $(`#${affectedSelectsInfo.affectedFieldName} > option`).each(function () {
-      var optionId = $(this).attr("option-id")
-      var arraysiblingsVal = $(this).attr("data-arraysiblingvalues")
-      if (arraysiblingsVal && arraysiblingsVal != 'undefined') {
-        getSiblingsValues.push({ "id": optionId, 'arraySiblings': arraysiblingsVal })
-      }
-    })
-  }
+      $(`#${affectedSelectsInfo.affectedFieldName} > option`).each(function () {
+        var optionId = $(this).attr("option-id")
+        var arraysiblingsVal = $(this).attr("data-arraysiblingvalues")
+        if (arraysiblingsVal && arraysiblingsVal != 'undefined') {
+          getSiblingsValues.push({ "id": optionId, 'arraySiblings': arraysiblingsVal })
+        }
+      })
+    }
 
     if (targetFieldType == 'multiselect') {
 
