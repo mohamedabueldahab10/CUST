@@ -276,7 +276,7 @@ var Information_Form = [
         dynamic: "InitiativeType", //InternalName Of Parent field
         filterField: "Types",//InternalName Of Parent field
         filterFieldType: "Text",//Type In Sharepoint List for Parent field
-        targetsiblingarr: ["Sector","SubSector"],
+        targetsiblingarr: ["Sector","SubSector"], // get siblings value
         security: {
           groups: [
             "VRO_E",

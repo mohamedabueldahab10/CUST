@@ -785,6 +785,16 @@ var Set_Code_Submit = {
         Set_Code_Submit.g.oListItem.set_item("ProjectCode", PCODE);
       }
     } else if (listkey == "projects") {
+
+      var sectorValue = $("#Sector").val()
+
+      if (sectorValue) { // to save the code depends on sector you chose (this is specific whe the sector be autogenerat)
+        var year = String(new Date().getFullYear()),
+          year = year.slice(year.length - 2); //get last 2 characters
+        PCODE = sectorValue + "-" + year;
+      }
+
+
       Code = PCODE + "-" + IID.toString().padStart(4, "0");
       PCODE = Code;
       Set_Code_Submit.g.oListItem.set_item("Title", Code);

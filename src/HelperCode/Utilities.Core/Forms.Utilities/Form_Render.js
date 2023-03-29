@@ -9853,6 +9853,7 @@ dynamicAffectSelect = {
       $(`select#${affectedSelectsInfo.affectedFieldName}`).html(optionsBody);
 
       $(`select#${affectedSelectsInfo.affectedFieldName}`).val(selectedVal);
+ 
     }
 
 
@@ -10142,7 +10143,7 @@ var Projects_Info = {
         occurence =
           countOccurrences(Projects_Info.g.PSectorArray, sectorcode) + 1;
         occurence = occurence < 10 ? "0" + occurence : occurence;
-        PCODE = sectorcode + "-" + year; //+'-'+(occurence) // add +'-'+IID on submission [line 163 in Form_Submit.js]
+        // PCODE = sectorcode + "-" + year; //+'-'+(occurence) // move it to set code submit to can save the code correctly if the sector be auto generated
         // $('#Title').val(PCODE);
         // console.log(PCODE);
       }
