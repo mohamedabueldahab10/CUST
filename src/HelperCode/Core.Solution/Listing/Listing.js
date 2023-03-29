@@ -1729,7 +1729,10 @@ window.ListingData = {
             keyNameParams = 'initiatives'
           } else if (wfname == 'CR' || wfname == 'VROCRProject' || wfname == 'EPMOCRProject' || wfname == 'LMSCRProject') {
             keyNameParams = 'changerequest';
-          } else if (wfname == 'VROCRObjective' || wfname == 'MSCRObjective' || wfname == 'LMSCRObjective') {
+          } else if ( wfname == 'VROCreateProject') {
+            keyNameParams = 'projects';
+          } 
+          else if (wfname == 'VROCRObjective' || wfname == 'MSCRObjective' || wfname == 'LMSCRObjective') {
             keyNameParams = 'changerequest'
           } else if (wfname == 'VROCreateObjective' || wfname == 'LMSCreateObjective' || wfname == 'MSCreateObjective') {
             keyNameParams = 'sos'
