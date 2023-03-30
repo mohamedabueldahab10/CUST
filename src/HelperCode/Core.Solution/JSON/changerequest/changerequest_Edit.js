@@ -2,6 +2,42 @@
 //module.exports = Information_Form;
 window.Information_Form = [
 	{
+		label: "بيانات طلب اضافة",
+		labelEn: "Add Request Data",
+		description: "التفاصيل",
+		descriptionEn: "Details",
+		subFields: [
+			{
+				// InternalName: 'Title',
+				DisplayNameEn: 'Create Project',
+				DisplayName: 'اضافة مشروع',
+				type: 'anchor',
+				href: "/SitePages/new.aspx?ListKey=projects"
+			},
+			{
+				// InternalName: 'Title',
+				DisplayNameEn: 'Create Initiative',
+				DisplayName: 'اضافة مبادرة',
+				type: 'anchor',
+				href: "/SitePages/new.aspx?ListKey=initiatives"
+			},
+			{
+				// InternalName: 'Title',
+				DisplayNameEn: 'Create Strategic objective',
+				DisplayName: 'اضافة هدف استراتيجي',
+				type: 'anchor',
+				href: "/SitePages/new.aspx?ListKey=sos"
+			},
+			{
+				// InternalName: 'Title',
+				DisplayNameEn: 'Create KPI',
+				DisplayName: 'اضافة مؤشر',
+				type: 'anchor',
+				href: "/SitePages/new.aspx?ListKey=mainkpi"
+			},
+		]
+	},
+	{
 		label: "بيانات طلب التغيير",
 		labelEn: "Change Request Data",
 		description: "التفاصيل",
@@ -1435,42 +1471,7 @@ window.Information_Form = [
 			// },
 		],
 	},
-	{
-		label: "بيانات طلب اضافة",
-		labelEn: "Add Request Data",
-		description: "التفاصيل",
-		descriptionEn: "Details",
-		subFields: [
-			{
-				// InternalName: 'Title',
-				DisplayNameEn: 'Create Project',
-				DisplayName: 'اضافة مشروع',
-				type: 'anchor',
-				href: "/SitePages/new.aspx?ListKey=projects"
-			},
-			{
-				// InternalName: 'Title',
-				DisplayNameEn: 'Create Initiative',
-				DisplayName: 'اضافة مبادرة',
-				type: 'anchor',
-				href: "/SitePages/new.aspx?ListKey=initiatives"
-			},
-			{
-				// InternalName: 'Title',
-				DisplayNameEn: 'Create Strategic objective',
-				DisplayName: 'اضافة هدف استراتيجي',
-				type: 'anchor',
-				href: "/SitePages/new.aspx?ListKey=sos"
-			},
-			{
-				// InternalName: 'Title',
-				DisplayNameEn: 'Create KPI',
-				DisplayName: 'اضافة مؤشر',
-				type: 'anchor',
-				href: "/SitePages/new.aspx?ListKey=mainkpi"
-			},
-		]
-	}
+	
 	// {
 	// 	label: 'الدراسات الخاصة بطلب التغيير ',
 	// 	labelEn: 'Change Requests Studies',
