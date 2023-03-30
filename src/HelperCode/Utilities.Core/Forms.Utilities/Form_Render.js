@@ -945,8 +945,44 @@ window.ListInfo = {
 
 
 
+          // get getTotalSelectedValues 
+          var totalValuesWeight=0
+          $("input.getTotalSelectedValues").change(function(){
+            debugger
+            var fieldValue = $(this).data("getothervalue")
+            
+            projectActualBudget ? projectActualBudget : projectAssignedBudget;
+            var budget = 0;
+            var amount = 0
 
+            if(projectActualBudget > 0){
+              budget = projectActualBudget
+            }else{
+              budget = projectAssignedBudget
+            }
+            
+            if(fieldValue && fieldValue != 'undefined'){
+              fieldValue = Number(fieldValue)
+            }else{
+              fieldValue = 0
+            }
 
+            amount = (budget * fieldValue) / 100;
+            
+            console.log(amount,"amount amount")
+
+            // amount = (parentValue * fieldValue) / 100;
+            // amount = amount.toFixed(2);
+            // $(`#${targetElement}`).val(amount);
+
+            if ($(this).is(':checked')) {
+              
+              console.log(fieldValue,"Checkbox is checked..")
+            } else {
+              console.log(fieldValue,"Checkbox is not checked..")
+            }
+          })
+          //
           //////// apply grandFieldInvoke
           $(".grandFieldInvoke").on("change", function (event) {
 
@@ -5056,6 +5092,9 @@ window.ListInfo = {
         var customQuery;
         var sourcelistQuery;
         var RelatedItemUsed = [];
+        var listItemArr = [element.valfieldkey, element.Dispfieldkey];
+        var getValuesfor = element.getValuesfor ? element.getValuesfor : ""
+        var listenerClass = ""
 
         customQuery =
           "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
@@ -5087,6 +5126,13 @@ window.ListInfo = {
             element.queryFieldValue +
             "</Value></Eq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
         }
+
+        // to handle get thired value like weight in coc list in delivrables field 
+        if (getValuesfor) {
+          listItemArr.push(getValuesfor)
+          listenerClass = "getTotalSelectedValues"
+        }
+        //
 
 
         var itemIDlist = [],
@@ -5184,7 +5230,7 @@ window.ListInfo = {
                 _spPageContextInfo.siteServerRelativeUrl,
                 element.source,
                 sourcelistQuery,
-                [element.valfieldkey, element.Dispfieldkey],
+                listItemArr,
                 function (records, record, listItem, isDone) {
                   if (isDone) {
 
@@ -5203,15 +5249,16 @@ window.ListInfo = {
                     Object.entries(resultMulti).forEach((el) => {
                       htmlBody += '<label class="grp-select">' + el[0] + "</label>";
                       el[1].forEach((dl) => {
+                        debugger
                         htmlBody +=
                           "<li>" +
                           '<div class="checkbox">' +
                           "<label>" +
-                          '<input value="' +
+                          '<input class="' + listenerClass + '" value="' +
                           dl[element.valfieldkey] +
                           '" id="' +
                           element.InternalName +
-                          '" type="checkbox">' +
+                          '" type="checkbox" data-getothervalue=' + dl[element.getValuesfor] + '>' +
                           dl[dispfieldkey] +
                           "</label>" +
                           "</div>" +

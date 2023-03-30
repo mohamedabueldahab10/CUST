@@ -34,6 +34,7 @@ var Information_Form = [
         source: 'Deliverables',// target list
         grpfieldkey: 'Title',
         validation: 'required',
+        getValuesfor:'Weight' // add this internal name to get ther values
       },
       // {
       //   InternalName: 'Deliverables',

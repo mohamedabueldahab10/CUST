@@ -7,6 +7,7 @@ window.myRoleConfig = [];
 window.isRoleDataLevelAccess = false;
 window.currentMainList = "";
 window.projectActualBudget = 0;
+window.projectAssignedBudget =0;
 window.initiativeActualBudget = 0;
 window.CurrentUserTasksCount = 0;
 //window.finishRenderAccessRole = false
@@ -6438,7 +6439,7 @@ var Access_Project_Info_Request = {
         projectStartToValidation = oListItem.get_item("BaselineStartDate") || '';
 
         projectActualBudget = oListItem.get_item('ActualBudget') || 0;
-
+        projectAssignedBudget = oListItem.get_item('AssignedBudget') || 0;
        
         // if (User_ScheduleSource == 'عبر النظام') {
         //     $('body').append('<style>.navbar.page-nav.px-5 li.nav-item[data-href*="schedule.aspx"]{display:none}</style>');
