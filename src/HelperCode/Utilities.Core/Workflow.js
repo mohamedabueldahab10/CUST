@@ -4341,30 +4341,70 @@ function changeOnKpiResultDraft(state) {
 var Delete_Item_FromCR = {
 	init: function (relatedItemInCr) {
 		Task_Edit_Data.init();
-		// var urlHandler = ""
-		// var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiT2RheSBBYnVlaWQiLCJlbWFpbCI6IiIsInVzZXJJZCI6IjI0IiwiZ3JvdXBpZHMiOiI3LDExMCwxNzMiLCJqdGkiOiI1MmRlMTRjNi1kYmQyLTRmYjYtYTFjZC02YTE2ODQ1YTQ1M2MiLCJpYXQiOiIzLzMwLzIwMjMgMTA6Mjg6MTMgQU0iLCJleHAiOjE2OTIxNzIwOTMsImlzcyI6Ik1PRiBBcGkiLCJhdWQiOiJNT0YgQXBpIn0.e_4d9S738HmJR87az3XULwZhVJIfajPGX4Ar9pvgdbk";
 
-		// if (isMSCRObjective) {
-		// 	urlHandler = `https://hrsd-api.netways1.com/api/general/deletestratgeicobjectiveitembysocode?soCode=${token}`
+		// will remove comment when need to apply api
+		// var requestData = {
+		// 	userName: "oabueid", // should insert username and password
+		// 	password: ""
 		// }
-	    // $.ajax({
-		// 	url:urlHandler,
+
+		// var stringData = JSON.stringify(requestData)
+
+		// $.ajax({
+		// 	url: `https://hrsd-api.netways1.com/api/user/login`,
 		// 	method: "POST",
 		// 	contentType: "application/json;odata=verbose",
+		// 	data: stringData,
 		// 	headers: {
-		// 	  Accept: "application/json; odata=verbose",
-		// 	  "X-HTTP-Method": "POST",
-		// 	  "if-Match": "*",
-		// 	  Authorization: `Bearer ${token}`
+		// 		Accept: "application/json; odata=verbose",
+		// 		// "X-requestDigest": digest,
+		// 		"X-HTTP-Method": "POST",
+		// 		"if-Match": "*"
 		// 	},
 		// 	success: function (data) {
-		// 		Task_Edit_Data.init();
+		// 		console.log(data, "data added successfully")
+		// 		var token = data.result.token
+
+		// 		Delete_Item_FromCR_Token.init(relatedItemInCr, token)
+
 		// 	},
-		// 	error: function (data) {
-		// 		console.log("call Delete_Item_FromCR failed", data);
+		// 	error: function (err) {
+		// 		console.log("call failed", err);
 		// 	},
-		//   });
+		// });
+
 
 	},
 	g: {},
 };
+
+
+// var Delete_Item_FromCR_Token = {
+// 	init: function (relatedItemInCr, token) {
+
+// 		console.log(relatedItemInCr,"relatedItemInCr")
+
+// 		if (isMSCRObjective) {
+// 			urlHandler = `https://hrsd-api.netways1.com/api/general/deletestratgeicobjectiveitembysocode?soCode=${relatedItemInCr}`
+// 		}
+// 		$.ajax({
+// 			url: urlHandler,
+// 			method: "POST",
+// 			contentType: "application/json;odata=verbose",
+// 			data: '',
+// 			headers: {
+// 				Accept: "application/json; odata=verbose",
+// 				Authorization: `Bearer ${token}`,
+// 				"X-HTTP-Method": "POST",
+// 				"if-Match": "*"
+// 			},
+// 			success: function (data) {
+// 				Task_Edit_Data.init();
+// 			},
+// 			error: function (err) {
+// 				console.log("call failed", err);
+// 			},
+// 		});
+
+// 	}
+// }
