@@ -2111,7 +2111,9 @@ window.ListingData = {
       for (var L = 0; L < DisplayNames.length; L++) {
         //buld ddl html
         for (var z = 0; z < AllData[L].length; z++) {
+          
           if (transFields[L] == true) {
+            
             FilterationcontractsHTML +=
               '<label class="dropdown-item"><span data-trans-' + AllData[L][z] + ' class="Resources"></span><input data-type="' + TypsFieldsAll[L] + '" data-internal="' + FilterNames[L] + '" type="checkbox" name="' + FilterNames[L] + '" value="' + AllData[L][z] + '">' +
               '</label>'

@@ -1011,7 +1011,8 @@
     enabled: "مفعل",
     disabled:"معطل",
     deletion:"حذف",
-    multiselecterr:"يجب اختيار خيار واحد على الاقل"
+    multiselecterr:"يجب اختيار خيار واحد على الاقل",
+    strategicpartnerships:"شراكة استراتيجية"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -2037,7 +2038,8 @@
     enabled: "Enabled",
     disabled:"Disabled",
     deletion:"Delete",
-    multiselecterr:"should choose at least one option"
+    multiselecterr:"should choose at least one option",
+    strategicpartnerships:"Strategic Partnerships"
   },
 };
 
