@@ -944,12 +944,20 @@ window.ListInfo = {
           // get getTotalSelectedValues 
           var totalValuesWeight = 0
           $("input.getTotalSelectedValues").change(function () {
-            
+
+     
+            debugger
             var fieldValue = $(this).data("getothervalue")
             var targettotalelement = $(this).data("targettotalelement")
 
             var budget = 0;
             var amount = 0
+
+
+            if (isEdit) {
+              totalValuesWeight = $(`#${targettotalelement}`).val()
+              totalValuesWeight = Number(totalValuesWeight)
+            }
 
             if (projectActualBudget > 0) {
               budget = projectActualBudget

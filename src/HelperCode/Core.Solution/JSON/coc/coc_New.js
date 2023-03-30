@@ -59,6 +59,7 @@ var Information_Form = [
         targetelementtax: 'TAX', // tax amount field
         targetelementamount: 'Amount', // amount after tax field
         numberOfDigits:"12",
+        state: 'disabled',
       },
       {
         InternalName: 'TAX',

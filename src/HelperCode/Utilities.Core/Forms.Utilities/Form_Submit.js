@@ -2134,13 +2134,13 @@ var New_Master_Details_Submit = {
                 $(this).val() / 100
               );
             } else if ($(this).attr("type") == "multiselect") {
-         
+
               var myselections = [];
               $(this).find("input:checkbox:checked").each(function () {
                 myselections.push($(this).val());
-      
+
               });
-      
+
               // $(this)
               //   .find("input#Revenue:checked")
               //   .each(function () {
