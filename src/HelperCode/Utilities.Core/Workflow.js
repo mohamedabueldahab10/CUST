@@ -169,8 +169,8 @@ isVROCRProject = window.location.href.indexOf("changerequest&VROCRProject") > -1
 	isEPMOCRProject = window.location.href.indexOf("changerequest&EPMOCRProject") > -1,
 	isLMSCRProject = window.location.href.indexOf("changerequest&LMSCRProject") > -1,
 	isVROCreateProject = window.location.href.indexOf("projects&VROCRProject") > -1,
-	// isEPMOCRProject = window.location.href.indexOf("changerequest&EPMOCRProject") > -1,
-	// isLMSCRProject = window.location.href.indexOf("changerequest&LMSCRProject") > -1,
+	isEPMOCreateProject = window.location.href.indexOf("projects&EPMOCreateProject") > -1,
+	isLMSCreateProject = window.location.href.indexOf("projects&LMSCreateProject") > -1,
 	// 
 	isProjectCancellationRequestWF =
 	window.location.href.indexOf("projectcancellationrequest") > -1,
@@ -508,6 +508,40 @@ else if (isVROCRProject) {
 else if (isVROCreateProject) {
 
 	workflowname = "VROCreateProject";
+	bulkeditlist = "Projects";
+	// bulkeditlist = "Change Request";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isEPMOCreateProject) {
+
+	workflowname = "EPMOCreateProject";
+	bulkeditlist = "Projects";
+	// bulkeditlist = "Change Request";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isLMSCreateProject) {
+
+	workflowname = "LMSCreateProject";
 	bulkeditlist = "Projects";
 	// bulkeditlist = "Change Request";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];

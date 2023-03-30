@@ -11,18 +11,18 @@ var Information_Form = [
       { fieldName: 'WFStage', value: '',stages:["VROCreateProject02"]} ,
       { fieldName: 'Stage', value: 'S01',stages:["VROCreateProject02"]} ,
       { fieldName: 'Phase', value: 'P1',stages:["VROCreateProject02"]} ,
-    // //EPMO
-    //   { fieldName: 'DraftStatus', value: '', stages:["EPMOCRProject02"] },
-    //   { fieldName: 'WFModuleCode', value: '',stages:["EPMOCRProject02"]} ,
-    //   { fieldName: 'WFStage', value: '',stages:["EPMOCRProject02"]} ,
-    //   { fieldName: 'Stage', value: 'S01',stages:["EPMOCRProject02"]} ,
-    //   { fieldName: 'Phase', value: 'P1',stages:["EPMOCRProject02"]} ,
-    //   //LMS
-    //   { fieldName: 'DraftStatus', value: '', stages:["approved"] },
-    //   { fieldName: 'WFModuleCode', value: '',stages:["approved"]} ,
-    //   { fieldName: 'WFStage', value: '',stages:["approved"]} ,
-    //   { fieldName: 'Stage', value: 'S01',stages:["approved"]} ,
-    //   { fieldName: 'Phase', value: 'P1',stages:["approved"]} ,
+      //EPMO
+      { fieldName: 'DraftStatus', value: '', stages:["approved"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["EPMOCreateProject02"]} ,
+      { fieldName: 'WFStage', value: '',stages:["EPMOCreateProject02"]} ,
+      { fieldName: 'Stage', value: 'S01',stages:["EPMOCreateProject02"]} ,
+      { fieldName: 'Phase', value: 'P1',stages:["EPMOCreateProject02"]} ,
+      //LMS
+      { fieldName: 'DraftStatus', value: '', stages:["approved"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["LMSCreateProject02"]} ,
+      { fieldName: 'WFStage', value: '',stages:["LMSCreateProject02"]} ,
+      { fieldName: 'Stage', value: 'S01',stages:["LMSCreateProject02"]} ,
+      { fieldName: 'Phase', value: 'P1',stages:["LMSCreateProject02"]} ,
     ],
     subFields: [
       {

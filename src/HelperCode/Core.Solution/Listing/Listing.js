@@ -1728,7 +1728,7 @@ window.ListingData = {
             keyNameParams = 'initiatives'
           } else if (wfname == 'CR' || wfname == 'VROCRProject' || wfname == 'EPMOCRProject' || wfname == 'LMSCRProject') {
             keyNameParams = 'changerequest';
-          } else if ( wfname == 'VROCreateProject') {
+          } else if ( wfname == 'VROCreateProject' || wfname == 'EPMOCreateProject' || wfname == 'LMSCreateProject') {
             keyNameParams = 'projects';
           } 
           else if (wfname == 'VROCRObjective' || wfname == 'MSCRObjective' || wfname == 'LMSCRObjective') {

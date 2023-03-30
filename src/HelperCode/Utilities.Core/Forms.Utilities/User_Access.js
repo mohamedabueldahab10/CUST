@@ -8652,7 +8652,7 @@ var Tasks_Info_Request_User = {
             keyNameParams = "initiatives";
           } else if (wfname == "CR" || wfname == "VROCRProject" || wfname == "EPMOCRProject" || wfname == "LMSCRProject") {
             keyNameParams = "changerequest";
-          } else if ( wfname == "VROCreateProject") {
+          } else if ( wfname == "VROCreateProject" ||  wfname == "EPMOCreateProject" ||  wfname == "LMSCreateProject" ) {
             keyNameParams = "projects";
           } else if (wfname == "VROCRObjective" || wfname == "MSCRObjective" || wfname == "LMSCRObjective") {
             keyNameParams = "changerequest";
