@@ -578,15 +578,15 @@ window.New_Data_Submit = {
     }
     if (listkey == "projects") {
 
-      New_Data_Submit.g.oListItem.set_item(
-        "Phase",
-        // Phases_Data_Request.g.PhasesArray[1].phase // this save P5 (الطرح والتعاقد) as a first phase
-        Phases_Data_Request.g.PhasesArray[0].phase
-      );
-      New_Data_Submit.g.oListItem.set_item(
-        "Stage",
-        Stages_Data_Request.g.StagesArray[0].stage
-      );
+      // New_Data_Submit.g.oListItem.set_item(
+      //   "Phase",
+      //   // Phases_Data_Request.g.PhasesArray[1].phase // this save P5 (الطرح والتعاقد) as a first phase
+      //   Phases_Data_Request.g.PhasesArray[0].phase
+      // );
+      // New_Data_Submit.g.oListItem.set_item(
+      //   "Stage",
+      //   Stages_Data_Request.g.StagesArray[0].stage
+      // );
       New_Data_Submit.g.oListItem.set_item("ProgressStatusDeliverable", "stat6");
       New_Data_Submit.g.oListItem.set_item("ProgressStatusMilestone", "stat6");
       New_Data_Submit.g.oListItem.set_item("ProgressStatusSchedule", "stat6");
