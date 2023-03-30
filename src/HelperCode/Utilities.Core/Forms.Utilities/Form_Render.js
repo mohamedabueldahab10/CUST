@@ -377,14 +377,16 @@ window.ListInfo = {
           });
           changeResources();
           //handle master details
+          // var masterDetailsIndex = 1
           if ($("[data-section_type]").length > 0) {
             $("[data-section_type]").each(function () {
+              Masterindex = '1'
               MasterDetailsArrayRequest.push($(this).attr("data-target_list"));
               // if(isNew)
               // {
               $(this)
                 .find(".fieldset-container > .CFIELD")
-                .wrapAll('<div class="Details-Item NewItem"></div>');
+                .wrapAll('<div class="Details-Item NewItem" data-index="' + Masterindex + '"></div>');
               // }
               // else if(isEdit)
               // {
@@ -945,7 +947,7 @@ window.ListInfo = {
           var totalValuesWeight = 0
           $("input.getTotalSelectedValues").change(function () {
 
-     
+
             debugger
             var fieldValue = $(this).data("getothervalue")
             var targettotalelement = $(this).data("targettotalelement")
@@ -6463,6 +6465,25 @@ window.ListInfo = {
 
       $(".add-New-Detail").on("click", function () {
 
+        // to handle the index on master details
+        var getMasterIndex = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last().attr('data-index')
+        if (isNew) {
+          getMasterIndex = getMasterIndex ? Number(getMasterIndex) : ""
+          getMasterIndex = getMasterIndex + 1
+        } else if (isEdit) {
+          var checkEditMasterCount = $(this).closest("[data-target_list]").find(".Details-Item.EditItem")
+          var checkNewMasterCount = $(this).closest("[data-target_list]").find(".Details-Item.NewItem")
+          checkEditMasterCount = checkEditMasterCount ? checkEditMasterCount.length : 0
+          checkEditMasterCount = Number(checkEditMasterCount)
+          checkNewMasterCount = checkNewMasterCount ? checkNewMasterCount.length : 0
+          checkNewMasterCount = Number(checkNewMasterCount)
+          getMasterIndex = checkEditMasterCount + checkNewMasterCount + 1
+        }
+
+
+        // console.log($(this).closest("[data-target_list]").find(".Details-Item.NewItem").attr('data-index'), "INDEEEEEEEEEEEEEX")
+
+
 
         if ((listkey == 'projects' || listkey == 'initiatives') && isNew) {
           var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item").last()
@@ -6504,7 +6525,7 @@ window.ListInfo = {
           .toString(); //.replaceAll('value', 'value=""');
 
 
-        $('<div class="Details-Item NewItem">' + toappend + "</div>").insertBefore($(this).parent());
+        $('<div class="Details-Item NewItem" data-index="' + getMasterIndex + '">' + toappend + "</div>").insertBefore($(this).parent());
 
         // insert new max for weight deliv
         var lastDetailsItem = $(this).closest("[data-target_list]").find(".Details-Item").last()
@@ -6573,6 +6594,7 @@ window.ListInfo = {
 
 
         masterLength = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").length
+
 
 
         if (isNew) {

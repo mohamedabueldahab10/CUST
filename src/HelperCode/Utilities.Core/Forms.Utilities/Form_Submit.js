@@ -2164,8 +2164,11 @@ var New_Master_Details_Submit = {
 
         var prt1 = CurrList.substring(0, 2).toUpperCase(),
           prt2 = String(new Date().getFullYear()).slice(4 - 2),
-          prt3 = IID.toString().padStart(4, "0");
-        Code = prt1 + "-" + prt2 + "-" + prt3;
+          prt3 = IID.toString().padStart(4, "0"),
+          prt4 = $(this).data('index').toString().padStart(4, "0");
+        ;
+
+        Code = prt1 + "-" + prt2 + "-" + prt3 + "-" + prt4;
 
 
 
