@@ -902,7 +902,6 @@ window.ListInfo = {
           }
           //
           //////add section to cr
-
           if (!isCrMode && crListKey) {
             //on new custom cr
             handleCustomeCr.init();
@@ -942,45 +941,38 @@ window.ListInfo = {
               }
             );
           }
-
-
-
           // get getTotalSelectedValues 
-          var totalValuesWeight=0
-          $("input.getTotalSelectedValues").change(function(){
-            debugger
-            var fieldValue = $(this).data("getothervalue")
+          var totalValuesWeight = 0
+          $("input.getTotalSelectedValues").change(function () {
             
-            projectActualBudget ? projectActualBudget : projectAssignedBudget;
+            var fieldValue = $(this).data("getothervalue")
+            var targettotalelement = $(this).data("targettotalelement")
+
             var budget = 0;
             var amount = 0
 
-            if(projectActualBudget > 0){
+            if (projectActualBudget > 0) {
               budget = projectActualBudget
-            }else{
+            } else {
               budget = projectAssignedBudget
             }
-            
-            if(fieldValue && fieldValue != 'undefined'){
+
+            if (fieldValue && fieldValue != 'undefined') {
               fieldValue = Number(fieldValue)
-            }else{
+            } else {
               fieldValue = 0
             }
 
             amount = (budget * fieldValue) / 100;
-            
-            console.log(amount,"amount amount")
-
-            // amount = (parentValue * fieldValue) / 100;
-            // amount = amount.toFixed(2);
-            // $(`#${targetElement}`).val(amount);
 
             if ($(this).is(':checked')) {
-              
-              console.log(fieldValue,"Checkbox is checked..")
+
+              totalValuesWeight = totalValuesWeight + amount
             } else {
-              console.log(fieldValue,"Checkbox is not checked..")
+              totalValuesWeight = totalValuesWeight - amount
             }
+            $(`#${targettotalelement}`).val(totalValuesWeight)
+            $("input.tax").trigger('keyup') // invoke tax  feature after fill the total amount
           })
           //
           //////// apply grandFieldInvoke
@@ -5094,7 +5086,8 @@ window.ListInfo = {
         var RelatedItemUsed = [];
         var listItemArr = [element.valfieldkey, element.Dispfieldkey];
         var getValuesfor = element.getValuesfor ? element.getValuesfor : ""
-        var listenerClass = ""
+        var listenerClass = "";
+        var targetTotalElement = element.targetTotalElement
 
         customQuery =
           "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
@@ -5258,7 +5251,7 @@ window.ListInfo = {
                           dl[element.valfieldkey] +
                           '" id="' +
                           element.InternalName +
-                          '" type="checkbox" data-getothervalue=' + dl[element.getValuesfor] + '>' +
+                          '" type="checkbox" data-targettotalelement=' + element.targetTotalElement + ' data-getothervalue=' + dl[element.getValuesfor] + '>' +
                           dl[dispfieldkey] +
                           "</label>" +
                           "</div>" +
