@@ -427,10 +427,10 @@ window.userCalls = {
           localStorage.getItem("lng") == "ar"
         ) {
           ErrorMsg =
-            '<div class="userExist ms-formvalidation sp-peoplepicker-errorMsg">ليس لديك الصلاحية الكافية للاطلاع على أعضاء المجموعة</div>';
+            '<div class="userExist ms-formvalidation sp-peoplepicker-errorMsg">يجب اضافة مستخدم من مجموعة فريق مكتب ادارة المشاريع (PMO Team)</div>';
         } else {
           ErrorMsg =
-            '<div class="userExist ms-formvalidation sp-peoplepicker-errorMsg">You are not authorized to view the membership of the SP Group</div>';
+            '<div class="userExist ms-formvalidation sp-peoplepicker-errorMsg">User Must be in "PMO Team" group</div>';
         }
         if (USERlistkey == "portfolio") {
           $("#Manager").parent().append(ErrorMsg);

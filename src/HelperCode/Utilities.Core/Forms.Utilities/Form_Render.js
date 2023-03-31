@@ -7110,6 +7110,11 @@ window.ListInfo = {
                 myFieldParent.find(">*").attr("required", false);
               }
             }
+            if (listkey == "projects") {
+              if (item == "RelatedInitiativeDeliverable") {
+                myFieldParent.find(">*").attr("required", false);
+              }
+            }
             // if (listkey == "sos") {
             //   if (item == "RelatedPortfolio" || item == "RelatedObjective") {
             //     myFieldParent.find(">*").attr("required", false);

@@ -58,7 +58,7 @@ var Information_Form = [
         type: 'floattax', // to discount the tax in ksa 15%
         targetelementtax: 'TAX', // tax amount field
         targetelementamount: 'Amount', // amount after tax field
-        numberOfDigits:"12",
+        numberOfDigits:"15",
         state: 'disabled',
       },
       {
