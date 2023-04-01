@@ -1321,8 +1321,7 @@ window.ListingData = {
         if (allTasksClicked) {
           PQueryFilteration = '<And><Neq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Neq><In><FieldRef Name="Status" /><Values><Value Type="Choice">Open</Value></Values></In></And>';
         } else {
-          PQueryFilteration = '<And><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And>';
-
+          PQueryFilteration = '<And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And>';
         }
       }
       // else if (isInManager || isInOwner) {
@@ -1729,7 +1728,7 @@ window.ListingData = {
             keyNameParams = 'initiatives'
           } else if (wfname == 'CR' || wfname == 'VROCRProject' || wfname == 'EPMOCRProject' || wfname == 'LMSCRProject') {
             keyNameParams = 'changerequest';
-          } else if ( wfname == 'VROCreateProject') {
+          } else if ( wfname == 'VROCreateProject' || wfname == 'EPMOCreateProject' || wfname == 'LMSCreateProject') {
             keyNameParams = 'projects';
           } 
           else if (wfname == 'VROCRObjective' || wfname == 'MSCRObjective' || wfname == 'LMSCRObjective') {
@@ -2113,7 +2112,9 @@ window.ListingData = {
       for (var L = 0; L < DisplayNames.length; L++) {
         //buld ddl html
         for (var z = 0; z < AllData[L].length; z++) {
+          
           if (transFields[L] == true) {
+            
             FilterationcontractsHTML +=
               '<label class="dropdown-item"><span data-trans-' + AllData[L][z] + ' class="Resources"></span><input data-type="' + TypsFieldsAll[L] + '" data-internal="' + FilterNames[L] + '" type="checkbox" name="' + FilterNames[L] + '" value="' + AllData[L][z] + '">' +
               '</label>'

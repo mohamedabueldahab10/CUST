@@ -34,6 +34,8 @@ var Information_Form = [
         source: 'Deliverables',// target list
         grpfieldkey: 'Title',
         validation: 'required',
+        getValuesfor:'Weight', // add this internal name to get ther values
+        targetTotalElement:"TotalAmount" // targetTotalElement to set the values inside it
       },
       // {
       //   InternalName: 'Deliverables',
@@ -57,6 +59,7 @@ var Information_Form = [
         targetelementtax: 'TAX', // tax amount field
         targetelementamount: 'Amount', // amount after tax field
         numberOfDigits:"12",
+        state: 'disabled',
       },
       {
         InternalName: 'TAX',

@@ -578,15 +578,15 @@ window.New_Data_Submit = {
     }
     if (listkey == "projects") {
 
-      New_Data_Submit.g.oListItem.set_item(
-        "Phase",
-        // Phases_Data_Request.g.PhasesArray[1].phase // this save P5 (الطرح والتعاقد) as a first phase
-        Phases_Data_Request.g.PhasesArray[0].phase
-      );
-      New_Data_Submit.g.oListItem.set_item(
-        "Stage",
-        Stages_Data_Request.g.StagesArray[0].stage
-      );
+      // New_Data_Submit.g.oListItem.set_item(
+      //   "Phase",
+      //   // Phases_Data_Request.g.PhasesArray[1].phase // this save P5 (الطرح والتعاقد) as a first phase
+      //   Phases_Data_Request.g.PhasesArray[0].phase
+      // );
+      // New_Data_Submit.g.oListItem.set_item(
+      //   "Stage",
+      //   Stages_Data_Request.g.StagesArray[0].stage
+      // );
       New_Data_Submit.g.oListItem.set_item("ProgressStatusDeliverable", "stat6");
       New_Data_Submit.g.oListItem.set_item("ProgressStatusMilestone", "stat6");
       New_Data_Submit.g.oListItem.set_item("ProgressStatusSchedule", "stat6");
@@ -2134,13 +2134,13 @@ var New_Master_Details_Submit = {
                 $(this).val() / 100
               );
             } else if ($(this).attr("type") == "multiselect") {
-         
+
               var myselections = [];
               $(this).find("input:checkbox:checked").each(function () {
                 myselections.push($(this).val());
-      
+
               });
-      
+
               // $(this)
               //   .find("input#Revenue:checked")
               //   .each(function () {
@@ -2164,8 +2164,11 @@ var New_Master_Details_Submit = {
 
         var prt1 = CurrList.substring(0, 2).toUpperCase(),
           prt2 = String(new Date().getFullYear()).slice(4 - 2),
-          prt3 = IID.toString().padStart(4, "0");
-        Code = prt1 + "-" + prt2 + "-" + prt3;
+          prt3 = IID.toString().padStart(4, "0"),
+          prt4 = $(this).data('index').toString().padStart(4, "0");
+        ;
+
+        Code = prt1 + "-" + prt2 + "-" + prt3 + "-" + prt4;
 
 
 

@@ -1381,7 +1381,8 @@ window.View_Data_Request = {
         }
         customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
 
-
+        
+        debugger
 
         sphttp.get(
           _spPageContextInfo.siteServerRelativeUrl,
@@ -1393,7 +1394,7 @@ window.View_Data_Request = {
               var items = ''
               console.log("ASddsadasdsadas")
               records.forEach(function (el, index) {
-
+                
                 // $this.parent().find('a').attr('href', '/SitePages/View.aspx?ListKey=' + linkedto + '&IID=' + el["ID"] + '')
                 var htmlLink = ""
                 var handleHref = "javascript:"
@@ -2464,7 +2465,7 @@ var Master_Details_Request = {
           oListItem.get_id() +
           '"] > .CFIELD > .viewmode-value'
         ).each(function () {
-   
+
           if ($(this).attr("type") == "date") {
             var d =
               oListItem.get_item("" + $(this).attr("id") + "") == null

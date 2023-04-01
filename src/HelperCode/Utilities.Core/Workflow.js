@@ -65,6 +65,7 @@ var WFuserCalls = {
 };
 var wfHistoryLink;
 var thiredActionName = "";
+var relatedItemInCr = "";
 window.projectstagename;
 var workflowname,
 	stageid,
@@ -156,20 +157,20 @@ var workflowname,
 	isVROActualKPI = window.location.href.indexOf("mainkpi&VROActualKPI") > -1,
 	isMSActualKPI = window.location.href.indexOf("mainkpi&MSActualKPI") > -1,
 	isLMSActualKPI = window.location.href.indexOf("mainkpi&LMSActualKPI") > -1,
-	
+
 	isVROProjDeliverable = window.location.href.indexOf("deliverables&VROProjDeliverable") > -1,
 	isEPMOProjDeliverable = window.location.href.indexOf("deliverables&EPMOProjDeliverable") > -1,
 	isLMSProjDeliverable = window.location.href.indexOf("deliverables&LMSProjDeliverable") > -1,
 	isVROCreateObjective = window.location.href.indexOf("sos&VROCreateObjective") > -1,
 	isMSCreateObjective = window.location.href.indexOf("sos&MSCreateObjective") > -1,
 	isLMSCreateObjective = window.location.href.indexOf("sos&LMSCreateObjective") > -1
-    // ghufran
-    isVROCRProject = window.location.href.indexOf("changerequest&VROCRProject") > -1,
+// ghufran
+isVROCRProject = window.location.href.indexOf("changerequest&VROCRProject") > -1,
 	isEPMOCRProject = window.location.href.indexOf("changerequest&EPMOCRProject") > -1,
 	isLMSCRProject = window.location.href.indexOf("changerequest&LMSCRProject") > -1,
 	isVROCreateProject = window.location.href.indexOf("projects&VROCRProject") > -1,
-	// isEPMOCRProject = window.location.href.indexOf("changerequest&EPMOCRProject") > -1,
-	// isLMSCRProject = window.location.href.indexOf("changerequest&LMSCRProject") > -1,
+	isEPMOCreateProject = window.location.href.indexOf("projects&EPMOCreateProject") > -1,
+	isLMSCreateProject = window.location.href.indexOf("projects&LMSCreateProject") > -1,
 	// 
 	isProjectCancellationRequestWF =
 	window.location.href.indexOf("projectcancellationrequest") > -1,
@@ -507,6 +508,40 @@ else if (isVROCRProject) {
 else if (isVROCreateProject) {
 
 	workflowname = "VROCreateProject";
+	bulkeditlist = "Projects";
+	// bulkeditlist = "Change Request";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isEPMOCreateProject) {
+
+	workflowname = "EPMOCreateProject";
+	bulkeditlist = "Projects";
+	// bulkeditlist = "Change Request";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isLMSCreateProject) {
+
+	workflowname = "LMSCreateProject";
 	bulkeditlist = "Projects";
 	// bulkeditlist = "Change Request";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -868,6 +903,7 @@ else if (isMSCRObjective) {
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
 		IID2 +
 		"</Value> </Eq></Where></Query></View>";
+
 	taskquery =
 		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
 		taskID +
@@ -2556,6 +2592,16 @@ var SubmitField_BulkEdit = {
 							crBody = eval(currentItem.get_item("ChangeBody"));
 							crUpdateType = currentItem.get_item("UpdateType");
 						}
+
+						// get the related item in cr to use it in delete api
+						if (isMSCRObjective) {
+							debugger
+							relatedItemInCr = currentItem.get_item("CRRelatedStrategyObjective");
+
+						}
+						//
+
+
 						//set
 						if (workflowname == "Project") {
 							$(
@@ -2723,14 +2769,16 @@ var SubmitField_BulkEdit = {
 						}
 
 						// to handle workflowSetValues from json will use it for cr wf purpose
-						$(`[data-workflowSetValue]`).each(function (index) {
-							var parsingData = eval($(this).data('workflowsetvalue'))
-							parsingData.forEach(el => {
-								if (el.stages.includes(stageid)) {
-									items.set_item(el.fieldName, el.value);
-								}
+						if (state) {
+							$(`[data-workflowSetValue]`).each(function (index) {
+								var parsingData = eval($(this).data('workflowsetvalue'))
+								parsingData.forEach(el => {
+									if (el.stages.includes(stageid)) {
+										items.set_item(el.fieldName, el.value);
+									}
+								})
 							})
-						})
+						}
 						//
 
 
@@ -2761,6 +2809,9 @@ var SubmitField_BulkEdit = {
 								executeCR.init(crBody);
 							} else if ((isVROCRKPI || isMSCRKPI || isLMSCRKPI) && nxtstageid == "approved") {
 								changeOnKpiResultDraft(state)
+							} else if (isMSCRObjective && state) {
+								debugger
+								Delete_Item_FromCR.init(relatedItemInCr)
 							} else {
 								Task_Edit_Data.init();
 							}
@@ -3187,15 +3238,16 @@ function program_BulkEdit(state) {
 					}
 
 					// to handle workflowSetValues from json for Project will use it for cr workflow purpose
-					$(`[data-workflowSetValue]`).each(function (index) {
-						var parsingData = eval($(this).data('workflowsetvalue'))
-						parsingData.forEach(el => {
-							if (el.stages.includes(stageid)) {
-								items.set_item(el.fieldName, el.value);
-							}
+					if (state) {
+						$(`[data-workflowSetValue]`).each(function (index) {
+							var parsingData = eval($(this).data('workflowsetvalue'))
+							parsingData.forEach(el => {
+								if (el.stages.includes(stageid)) {
+									items.set_item(el.fieldName, el.value);
+								}
+							})
 						})
-					})
-
+					}
 					//
 
 
@@ -4283,3 +4335,76 @@ function changeOnKpiResultDraft(state) {
 	);
 	return dfd.promise();
 }
+
+
+
+var Delete_Item_FromCR = {
+	init: function (relatedItemInCr) {
+		Task_Edit_Data.init();
+
+		// will remove comment when need to apply api
+		// var requestData = {
+		// 	userName: "oabueid", // should insert username and password
+		// 	password: ""
+		// }
+
+		// var stringData = JSON.stringify(requestData)
+
+		// $.ajax({
+		// 	url: `https://hrsd-api.netways1.com/api/user/login`,
+		// 	method: "POST",
+		// 	contentType: "application/json;odata=verbose",
+		// 	data: stringData,
+		// 	headers: {
+		// 		Accept: "application/json; odata=verbose",
+		// 		// "X-requestDigest": digest,
+		// 		"X-HTTP-Method": "POST",
+		// 		"if-Match": "*"
+		// 	},
+		// 	success: function (data) {
+		// 		console.log(data, "data added successfully")
+		// 		var token = data.result.token
+
+		// 		Delete_Item_FromCR_Token.init(relatedItemInCr, token)
+
+		// 	},
+		// 	error: function (err) {
+		// 		console.log("call failed", err);
+		// 	},
+		// });
+
+
+	},
+	g: {},
+};
+
+
+// var Delete_Item_FromCR_Token = {
+// 	init: function (relatedItemInCr, token) {
+
+// 		console.log(relatedItemInCr,"relatedItemInCr")
+
+// 		if (isMSCRObjective) {
+// 			urlHandler = `https://hrsd-api.netways1.com/api/general/deletestratgeicobjectiveitembysocode?soCode=${relatedItemInCr}`
+// 		}
+// 		$.ajax({
+// 			url: urlHandler,
+// 			method: "POST",
+// 			contentType: "application/json;odata=verbose",
+// 			data: '',
+// 			headers: {
+// 				Accept: "application/json; odata=verbose",
+// 				Authorization: `Bearer ${token}`,
+// 				"X-HTTP-Method": "POST",
+// 				"if-Match": "*"
+// 			},
+// 			success: function (data) {
+// 				Task_Edit_Data.init();
+// 			},
+// 			error: function (err) {
+// 				console.log("call failed", err);
+// 			},
+// 		});
+
+// 	}
+// }

@@ -7,6 +7,7 @@ window.myRoleConfig = [];
 window.isRoleDataLevelAccess = false;
 window.currentMainList = "";
 window.projectActualBudget = 0;
+window.projectAssignedBudget =0;
 window.initiativeActualBudget = 0;
 window.CurrentUserTasksCount = 0;
 //window.finishRenderAccessRole = false
@@ -426,10 +427,10 @@ window.userCalls = {
           localStorage.getItem("lng") == "ar"
         ) {
           ErrorMsg =
-            '<div class="userExist ms-formvalidation sp-peoplepicker-errorMsg">ليس لديك الصلاحية الكافية للاطلاع على أعضاء المجموعة</div>';
+            '<div class="userExist ms-formvalidation sp-peoplepicker-errorMsg">يجب اضافة مستخدم من مجموعة فريق مكتب ادارة المشاريع (PMO Team)</div>';
         } else {
           ErrorMsg =
-            '<div class="userExist ms-formvalidation sp-peoplepicker-errorMsg">You are not authorized to view the membership of the SP Group</div>';
+            '<div class="userExist ms-formvalidation sp-peoplepicker-errorMsg">User Must be in "PMO Team" group</div>';
         }
         if (USERlistkey == "portfolio") {
           $("#Manager").parent().append(ErrorMsg);
@@ -6438,7 +6439,7 @@ var Access_Project_Info_Request = {
         projectStartToValidation = oListItem.get_item("BaselineStartDate") || '';
 
         projectActualBudget = oListItem.get_item('ActualBudget') || 0;
-
+        projectAssignedBudget = oListItem.get_item('AssignedBudget') || 0;
        
         // if (User_ScheduleSource == 'عبر النظام') {
         //     $('body').append('<style>.navbar.page-nav.px-5 li.nav-item[data-href*="schedule.aspx"]{display:none}</style>');
@@ -8651,7 +8652,7 @@ var Tasks_Info_Request_User = {
             keyNameParams = "initiatives";
           } else if (wfname == "CR" || wfname == "VROCRProject" || wfname == "EPMOCRProject" || wfname == "LMSCRProject") {
             keyNameParams = "changerequest";
-          } else if ( wfname == "VROCreateProject") {
+          } else if ( wfname == "VROCreateProject" ||  wfname == "EPMOCreateProject" ||  wfname == "LMSCreateProject" ) {
             keyNameParams = "projects";
           } else if (wfname == "VROCRObjective" || wfname == "MSCRObjective" || wfname == "LMSCRObjective") {
             keyNameParams = "changerequest";

@@ -745,7 +745,7 @@ var Information_Form = [
         // listname: 'Initiatives',
         // parentinternalname: 'InitiativeCode',
         // targetelement: 'ActualCost',
-        numberOfDigits: "12",
+        numberOfDigits:"15",
         resetElement: "ActualCost", // reset value of this element when there is no val in current element
         sum1Element: "ProgramTotalCost", // get the value for this elem
         sum2Element: "ActualCost",// get the value for this elem
@@ -758,7 +758,7 @@ var Information_Form = [
         DisplayName: 'التكاليف الكلية المعتمدة ',
         DisplayNameEn: 'Actual Cost',
         type: 'float',
-        numberOfDigits: "12",
+        numberOfDigits:"15",
         // targetelement: 'ActualCost',
         // seconedtarget: 'ProgramTotalCost',
         max: 'ProgramTotalCost', // max value will be smaller than or equal ProgramTotalCost

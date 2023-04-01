@@ -377,14 +377,16 @@ window.ListInfo = {
           });
           changeResources();
           //handle master details
+          // var masterDetailsIndex = 1
           if ($("[data-section_type]").length > 0) {
             $("[data-section_type]").each(function () {
+              Masterindex = '1'
               MasterDetailsArrayRequest.push($(this).attr("data-target_list"));
               // if(isNew)
               // {
               $(this)
                 .find(".fieldset-container > .CFIELD")
-                .wrapAll('<div class="Details-Item NewItem"></div>');
+                .wrapAll('<div class="Details-Item NewItem" data-index="' + Masterindex + '"></div>');
               // }
               // else if(isEdit)
               // {
@@ -902,7 +904,6 @@ window.ListInfo = {
           }
           //
           //////add section to cr
-
           if (!isCrMode && crListKey) {
             //on new custom cr
             handleCustomeCr.init();
@@ -942,11 +943,48 @@ window.ListInfo = {
               }
             );
           }
+          // get getTotalSelectedValues 
+          var totalValuesWeight = 0
+          $("input.getTotalSelectedValues").change(function () {
 
 
+            debugger
+            var fieldValue = $(this).data("getothervalue")
+            var targettotalelement = $(this).data("targettotalelement")
+
+            var budget = 0;
+            var amount = 0
 
 
+            if (isEdit) {
+              totalValuesWeight = $(`#${targettotalelement}`).val()
+              totalValuesWeight = Number(totalValuesWeight)
+            }
 
+            if (projectActualBudget > 0) {
+              budget = projectActualBudget
+            } else {
+              budget = projectAssignedBudget
+            }
+
+            if (fieldValue && fieldValue != 'undefined') {
+              fieldValue = Number(fieldValue)
+            } else {
+              fieldValue = 0
+            }
+
+            amount = (budget * fieldValue) / 100;
+
+            if ($(this).is(':checked')) {
+
+              totalValuesWeight = totalValuesWeight + amount
+            } else {
+              totalValuesWeight = totalValuesWeight - amount
+            }
+            $(`#${targettotalelement}`).val(totalValuesWeight)
+            $("input.tax").trigger('keyup') // invoke tax  feature after fill the total amount
+          })
+          //
           //////// apply grandFieldInvoke
           $(".grandFieldInvoke").on("change", function (event) {
 
@@ -5056,6 +5094,10 @@ window.ListInfo = {
         var customQuery;
         var sourcelistQuery;
         var RelatedItemUsed = [];
+        var listItemArr = [element.valfieldkey, element.Dispfieldkey];
+        var getValuesfor = element.getValuesfor ? element.getValuesfor : ""
+        var listenerClass = "";
+        var targetTotalElement = element.targetTotalElement
 
         customQuery =
           "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
@@ -5087,6 +5129,13 @@ window.ListInfo = {
             element.queryFieldValue +
             "</Value></Eq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
         }
+
+        // to handle get thired value like weight in coc list in delivrables field 
+        if (getValuesfor) {
+          listItemArr.push(getValuesfor)
+          listenerClass = "getTotalSelectedValues"
+        }
+        //
 
 
         var itemIDlist = [],
@@ -5184,7 +5233,7 @@ window.ListInfo = {
                 _spPageContextInfo.siteServerRelativeUrl,
                 element.source,
                 sourcelistQuery,
-                [element.valfieldkey, element.Dispfieldkey],
+                listItemArr,
                 function (records, record, listItem, isDone) {
                   if (isDone) {
 
@@ -5203,15 +5252,16 @@ window.ListInfo = {
                     Object.entries(resultMulti).forEach((el) => {
                       htmlBody += '<label class="grp-select">' + el[0] + "</label>";
                       el[1].forEach((dl) => {
+                        debugger
                         htmlBody +=
                           "<li>" +
                           '<div class="checkbox">' +
                           "<label>" +
-                          '<input value="' +
+                          '<input class="' + listenerClass + '" value="' +
                           dl[element.valfieldkey] +
                           '" id="' +
                           element.InternalName +
-                          '" type="checkbox">' +
+                          '" type="checkbox" data-targettotalelement=' + element.targetTotalElement + ' data-getothervalue=' + dl[element.getValuesfor] + '>' +
                           dl[dispfieldkey] +
                           "</label>" +
                           "</div>" +
@@ -6415,6 +6465,25 @@ window.ListInfo = {
 
       $(".add-New-Detail").on("click", function () {
 
+        // to handle the index on master details
+        var getMasterIndex = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last().attr('data-index')
+        if (isNew) {
+          getMasterIndex = getMasterIndex ? Number(getMasterIndex) : ""
+          getMasterIndex = getMasterIndex + 1
+        } else if (isEdit) {
+          var checkEditMasterCount = $(this).closest("[data-target_list]").find(".Details-Item.EditItem")
+          var checkNewMasterCount = $(this).closest("[data-target_list]").find(".Details-Item.NewItem")
+          checkEditMasterCount = checkEditMasterCount ? checkEditMasterCount.length : 0
+          checkEditMasterCount = Number(checkEditMasterCount)
+          checkNewMasterCount = checkNewMasterCount ? checkNewMasterCount.length : 0
+          checkNewMasterCount = Number(checkNewMasterCount)
+          getMasterIndex = checkEditMasterCount + checkNewMasterCount + 1
+        }
+
+
+        // console.log($(this).closest("[data-target_list]").find(".Details-Item.NewItem").attr('data-index'), "INDEEEEEEEEEEEEEX")
+
+
 
         if ((listkey == 'projects' || listkey == 'initiatives') && isNew) {
           var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item").last()
@@ -6456,7 +6525,7 @@ window.ListInfo = {
           .toString(); //.replaceAll('value', 'value=""');
 
 
-        $('<div class="Details-Item NewItem">' + toappend + "</div>").insertBefore($(this).parent());
+        $('<div class="Details-Item NewItem" data-index="' + getMasterIndex + '">' + toappend + "</div>").insertBefore($(this).parent());
 
         // insert new max for weight deliv
         var lastDetailsItem = $(this).closest("[data-target_list]").find(".Details-Item").last()
@@ -6525,6 +6594,7 @@ window.ListInfo = {
 
 
         masterLength = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").length
+
 
 
         if (isNew) {
@@ -7037,6 +7107,11 @@ window.ListInfo = {
             }
             if (listkey == "initiatives") {
               if (item == "RelatedStrategyObjective") {
+                myFieldParent.find(">*").attr("required", false);
+              }
+            }
+            if (listkey == "projects") {
+              if (item == "RelatedInitiativeDeliverable") {
                 myFieldParent.find(">*").attr("required", false);
               }
             }

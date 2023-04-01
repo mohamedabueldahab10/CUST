@@ -18,6 +18,8 @@ var Information_Form = [
         source: 'Deliverables',
         grpfieldkey: 'Title',
         validation: 'required',
+        getValuesfor:'Weight', // add this internal name to get ther values
+        targetTotalElement:"TotalAmount" // targetTotalElement to set the values inside it
       },
       // {
       //   InternalName: 'Deliverables',
