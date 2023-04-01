@@ -151,6 +151,11 @@ var workflowname,
 	isVROCRObjective = window.location.href.indexOf("changerequest&VROCRObjective") > -1,
 	isMSCRObjective = window.location.href.indexOf("changerequest&MSCRObjective") > -1,
 	isLMSCRObjective = window.location.href.indexOf("changerequest&LMSCRObjective") > -1,
+	//Create KPI
+	isVROCreateKPI = window.location.href.indexOf("mainkpi&VROCreateKPI") > -1,
+	isEPMOCreateKPI = window.location.href.indexOf("mainkpi&EPMOCreateKPI") > -1,
+	isLMSCreateKPI = window.location.href.indexOf("mainkpi&LMSCreateKPI") > -1,
+	
 	isVROCRKPI = window.location.href.indexOf("changerequest&VROCRKPI") > -1,
 	isMSCRKPI = window.location.href.indexOf("changerequest&MSCRKPI") > -1,
 	isLMSCRKPI = window.location.href.indexOf("changerequest&LMSCRKPI") > -1,
@@ -979,6 +984,54 @@ else if (isVROCRKPI) {
 
 	workflowname = "VROCRKPI";
 	bulkeditlist = "Change Request";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isVROCreateKPI) {
+
+	workflowname = "VROCreateKPI";
+	bulkeditlist = "MainKPI";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isEPMOCreateKPI) {
+
+	workflowname = "EPMOCreateKPI";
+	bulkeditlist = "MainKPI";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isLMSCreateKPI) {
+
+	workflowname = "LMSCreateKPI";
+	bulkeditlist = "MainKPI";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
