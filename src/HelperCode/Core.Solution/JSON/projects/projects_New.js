@@ -968,7 +968,7 @@ var Information_Form = [
         type: "float",
         // "state": "disabled",
         dynamic: "BudgetItem", //being controlled by main field
-        numberOfDigits:"15",
+        numberOfDigits:"12",
       },
 
       {
@@ -1001,7 +1001,7 @@ var Information_Form = [
         DisplayNameEn: "Assigned Budget",
         className: "disable_enable_section",
         type: "float",
-        numberOfDigits:"15",
+        numberOfDigits:"12",
         // className:"toggle_Section"
         //"state": "disabled"
         // "showonstage":"1"
@@ -1012,7 +1012,7 @@ var Information_Form = [
         DisplayNameEn: "Expected Budget",
         type: "float",
         state: "disabled",
-        numberOfDigits:"15",
+        numberOfDigits:"12",
       },
       {
         InternalName: "ActualBudget",
@@ -1021,7 +1021,7 @@ var Information_Form = [
         type: "float",
         // "state": "disabled",
         RequiredName: "ActualBudget",
-        numberOfDigits:"15",
+        numberOfDigits:"12",
 
       },
       // {
@@ -1067,7 +1067,7 @@ var Information_Form = [
         DisplayNameEn: "ContractualEngagements",
         type: "float",
         // "state": "disabled"
-        numberOfDigits:"15",
+        numberOfDigits:"12",
 
       },
       {
@@ -1082,7 +1082,7 @@ var Information_Form = [
         DisplayName: "المنصرف حتى تاريخه",
         DisplayNameEn: "Expenses",
         type: "float",
-        numberOfDigits:"15",
+        numberOfDigits:"12",
 
         // "state": "disabled"
       },
@@ -1091,7 +1091,7 @@ var Information_Form = [
         DisplayName: "التكلفة المتبقية",
         DisplayNameEn: "Remaining Cost",
         type: "float",
-        numberOfDigits:"15",
+        numberOfDigits:"12",
 
         // "state": "disabled"
       },
@@ -1100,7 +1100,7 @@ var Information_Form = [
         DisplayName: "نسبة المنصرف من السيولة ",
         DisplayNameEn: "Out Of Cash",
         type: "floatpercentage",
-        numberOfDigits:"15",
+        numberOfDigits:"12",
         // "state": "disabled"
       },
       // {

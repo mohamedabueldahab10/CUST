@@ -920,7 +920,7 @@ var Information_Form = [
         type: "float",
         // "state": "disabled",
         dynamic: "BudgetItem", //being controlled by main field
-        numberOfDigits:"15",
+        numberOfDigits:"12",
       },
 
       {
@@ -952,7 +952,7 @@ var Information_Form = [
         DisplayName: "الميزانية المعتمدة",
         DisplayNameEn: "Assigned Budget",
         type: "float",
-        numberOfDigits:"15",
+        numberOfDigits:"12",
         //"state": "disabled"
         // "showonstage":"1"
       },
@@ -962,7 +962,7 @@ var Information_Form = [
         DisplayNameEn: "Expected Budget",
         type: "float",
         state: "disabled",
-        numberOfDigits:"15",
+        numberOfDigits:"12",
       },
       {
         InternalName: "ActualBudget",
@@ -971,7 +971,7 @@ var Information_Form = [
         type: "float",
         // "state": "disabled"
         RequiredName: "ActualBudget",
-        numberOfDigits:"15",
+        numberOfDigits:"12",
       },
       // {
       //     "InternalName": "Cost4",
@@ -1015,7 +1015,7 @@ var Information_Form = [
         DisplayName: "الارتباطات التعاقدية",
         DisplayNameEn: "ContractualEngagements",
         type: "float",
-        numberOfDigits:"15",
+        numberOfDigits:"12",
         // "state": "disabled"
       },
       {
@@ -1030,7 +1030,7 @@ var Information_Form = [
         DisplayName: "المنصرف حتى تاريخه",
         DisplayNameEn: "Expenses",
         type: "float",
-        numberOfDigits:"15",
+        numberOfDigits:"12",
         // "state": "disabled"
       },
       {
@@ -1038,7 +1038,7 @@ var Information_Form = [
         DisplayName: "التكلفة المتبقية",
         DisplayNameEn: "Remaining Cost",
         type: "float",
-        numberOfDigits:"15",
+        numberOfDigits:"12",
 
         // "state": "disabled"
       },
@@ -1047,7 +1047,7 @@ var Information_Form = [
         DisplayName: "نسبة المنصرف من السيولة ",
         DisplayNameEn: "Out Of Cash",
         type: "floatpercentage",
-        numberOfDigits:"15",
+        numberOfDigits:"12",
 
         // "state": "disabled"
       },
