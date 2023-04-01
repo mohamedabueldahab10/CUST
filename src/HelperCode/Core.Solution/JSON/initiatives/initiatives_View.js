@@ -6,17 +6,17 @@ var Information_Form = [
     descriptionEn: 'Details',
     workflowSetValues: [
       //VRO
-      { fieldName: 'DraftStatus', value: '', stages:["VROCRInitiative04"] },
-      { fieldName: 'WFModuleCode', value: 'VisionInitiative',stages:["VROCRInitiative04"]} ,
-      { fieldName: 'WFStage', value: 'VInStage01',stages:["VROCRInitiative04"]} ,
+      { fieldName: 'DraftStatus', value: '', stages:["VROCreateInitiative04"] },
+      { fieldName: 'WFModuleCode', value: 'VisionInitiative',stages:["VROCreateInitiative04"]} ,
+      { fieldName: 'WFStage', value: 'VInStage01',stages:["VROCreateInitiative04"]} ,
     //EPMO
-      { fieldName: 'DraftStatus', value: '', stages:["EPMOCRInitiative03"] },
-      { fieldName: 'WFModuleCode', value: 'StrategicallyInitiative',stages:["EPMOCRInitiative03"]} ,
-      { fieldName: 'WFStage', value: 'SInStage01',stages:["EPMOCRInitiative03"]} ,
+      { fieldName: 'DraftStatus', value: '', stages:["EPMOCreateInitiative03"] },
+      { fieldName: 'WFModuleCode', value: 'StrategicallyInitiative',stages:["EPMOCreateInitiative03"]} ,
+      { fieldName: 'WFStage', value: 'SInStage01',stages:["EPMOCreateInitiative03"]} ,
       //LMS
-      { fieldName: 'DraftStatus', value: '', stages:["LMSCRInitiative03"] },
-      { fieldName: 'WFModuleCode', value: 'LMSInitiative',stages:["LMSCRInitiative03"]} ,
-      { fieldName: 'WFStage', value: 'LInStage01',stages:["LMSCRInitiative03"]} 
+      { fieldName: 'DraftStatus', value: '', stages:["LMSCreateInitiative03"] },
+      { fieldName: 'WFModuleCode', value: 'LMSInitiative',stages:["LMSCreateInitiative03"]} ,
+      { fieldName: 'WFStage', value: 'LInStage01',stages:["LMSCreateInitiative03"]} 
     ],
     subFields: [
       {

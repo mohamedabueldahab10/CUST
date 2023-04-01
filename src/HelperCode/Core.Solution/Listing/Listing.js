@@ -1725,8 +1725,10 @@ window.ListingData = {
           } else if (wfname == 'DV') {
             keyNameParams = 'deliverables'
           } else if (wfname == 'VROCRInitiative' || wfname == 'EPMOCRInitiative' || wfname == 'LMSCRInitiative') {
+            keyNameParams = 'changerequest'
+          } else if (wfname == 'VROCreateInitiative' || wfname == 'EPMOCreateInitiative' || wfname == 'LMSCreateInitiative') {
             keyNameParams = 'initiatives'
-          } else if (wfname == 'CR' || wfname == 'VROCRProject' || wfname == 'EPMOCRProject' || wfname == 'LMSCRProject') {
+          }  else if (wfname == 'CR' || wfname == 'VROCRProject' || wfname == 'EPMOCRProject' || wfname == 'LMSCRProject') {
             keyNameParams = 'changerequest';
           } else if ( wfname == 'VROCreateProject' || wfname == 'EPMOCreateProject' || wfname == 'LMSCreateProject') {
             keyNameParams = 'projects';

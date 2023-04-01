@@ -1068,7 +1068,7 @@ window.Information_Form = [
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
 				useAccessPolicy: true,
-				dontSubmit: true,
+				// dontSubmit: true,
 			},
 			{
 				InternalName: "UpdateType",

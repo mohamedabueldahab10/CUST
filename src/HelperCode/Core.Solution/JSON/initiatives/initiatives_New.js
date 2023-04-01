@@ -4,20 +4,20 @@ var Information_Form = [
     labelEn: 'Initiative Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
-    formDefaultValues: [
-      //VRO
-      { fieldName: 'WFModuleCode', value: 'VROCRInitiative', roles: ['VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'], },
-      { fieldName: 'WFStage', value: 'VROCRInitiative01', roles: ['VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'], },
+    // formDefaultValues: [
+    //   //VRO
+    //   { fieldName: 'WFModuleCode', value: 'VROCRInitiative', roles: ['VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'], },
+    //   { fieldName: 'WFStage', value: 'VROCRInitiative01', roles: ['VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'], },
 
-      //EPMOCRInitiative
-      { fieldName: 'WFModuleCode', value: 'EPMOCRInitiative', roles: ['EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'], },
-      { fieldName: 'WFStage', value: 'EPMOCRInitiative01', roles: ['EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'], },
+    //   //EPMOCRInitiative
+    //   { fieldName: 'WFModuleCode', value: 'EPMOCRInitiative', roles: ['EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'], },
+    //   { fieldName: 'WFStage', value: 'EPMOCRInitiative01', roles: ['EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'], },
 
-      //LMS
-      { fieldName: 'WFModuleCode', value: 'LMSCRInitiative', roles: ['LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
-      { fieldName: 'WFStage', value: 'LMSCRInitiative01', roles: ['LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
+    //   //LMS
+    //   { fieldName: 'WFModuleCode', value: 'LMSCRInitiative', roles: ['LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
+    //   { fieldName: 'WFStage', value: 'LMSCRInitiative01', roles: ['LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
 
-    ],
+    // ],
     subFields: [
       // {
       //     "InternalName": "Title",
@@ -70,8 +70,8 @@ var Information_Form = [
               value: 'vision',
               roles: ['Administrator', 'VROE', 'VROP'],
               otherFields: [
-                { fieldName: 'WFModuleCode', value: 'VROCRInitiative' },
-                { fieldName: 'WFStage', value: 'VROCRInitiative01' },
+                { fieldName: 'WFModuleCode', value: 'VROCreateInitiative' },
+                { fieldName: 'WFStage', value: 'VROCreateInitiative01' },
                 { fieldName: 'DraftStatus', value: 'draft' },
               ],
             },
@@ -80,8 +80,8 @@ var Information_Form = [
               value: 'strategically',
               roles: ['Administrator', 'EPMO'],
               otherFields: [
-                { fieldName: 'WFModuleCode', value: 'EPMOCRInitiative' },
-                { fieldName: 'WFStage', value: 'EPMOCRInitiative01' },
+                { fieldName: 'WFModuleCode', value: 'EPMOCreateInitiative' },
+                { fieldName: 'WFStage', value: 'EPMOCreateInitiative01' },
                 { fieldName: 'DraftStatus', value: 'draft' },
               ],
             },
@@ -90,8 +90,8 @@ var Information_Form = [
               value: 'lms',
               roles: ['Administrator', 'LMSE', 'LMSP'],
               otherFields: [
-                { fieldName: 'WFModuleCode', value: 'LMSCRInitiative' },
-                { fieldName: 'WFStage', value: 'LMSCRInitiative01' },
+                { fieldName: 'WFModuleCode', value: 'LMSCreateInitiative' },
+                { fieldName: 'WFStage', value: 'LMSCreateInitiative01' },
                 { fieldName: 'DraftStatus', value: 'draft' },
               ],
             },

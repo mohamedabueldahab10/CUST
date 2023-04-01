@@ -129,10 +129,16 @@ var workflowname,
 	isLMSInitiative = window.location.href.indexOf("initiatives&LMSInitiative") > -1,
 	isStrategicPartnerships = window.location.href.indexOf("strategicpartnerships&STP") > -1,
 	isSPAchievements = window.location.href.indexOf("strategicpartnershipsachievements") > -1,
-	// ghufran
-	isVROCRInitiative = window.location.href.indexOf("initiatives&VROCRInitiative") > -1,
-	isEPMOCRInitiative = window.location.href.indexOf("initiatives&EPMOCRInitiative") > -1,
-	isLMSCRInitiative = window.location.href.indexOf("initiatives&LMSCRInitiative") > -1,
+
+	isVROCRInitiative = window.location.href.indexOf("changerequest&VROCRInitiative") > -1,
+	isVROCreateInitiative = window.location.href.indexOf("initiatives&VROCreateInitiative") > -1,
+
+	isEPMOCRInitiative = window.location.href.indexOf("changerequest&EPMOCRInitiative") > -1,
+	isEPMOCreateInitiative = window.location.href.indexOf("initiatives&EPMOCreateInitiative") > -1,
+
+	isLMSCRInitiative = window.location.href.indexOf("changerequest&LMSCRInitiative") > -1,
+	isLMSCreateInitiative = window.location.href.indexOf("initiatives&LMSCreateInitiative") > -1,
+
 	isVROBenefitActual = window.location.href.indexOf("benefitmetrics&VROBenefitActual") > -1,
 	isEPMOBenefitActual = window.location.href.indexOf("benefitmetrics&EPMOBenefitActual") > -1,
 	isLMSBenefitActual = window.location.href.indexOf("benefitmetrics&LMSBenefitActual") > -1,
@@ -448,6 +454,22 @@ else if (isLMSInitiative) {
 else if (isVROCRInitiative) {
 
 	workflowname = "VROCRInitiative";
+	bulkeditlist = "Change Request";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isVROCreateInitiative) {
+
+	workflowname = "VROCreateInitiative";
 	bulkeditlist = "Initiatives";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
@@ -477,9 +499,41 @@ else if (isEPMOCRInitiative) {
 		workflowname +
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
+else if (isEPMOCreateInitiative) {
+
+	workflowname = "EPMOCreateInitiative";
+	bulkeditlist = "Change Request";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
 else if (isLMSCRInitiative) {
 
 	workflowname = "LMSCRInitiative";
+	bulkeditlist = "Change Request";
+	IID2 = window.location.href.split("IID=")[1].split("&")[0];
+	bulkeditquery =
+		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+		IID2 +
+		"</Value> </Eq></Where></Query></View>";
+	taskquery =
+		'<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+		taskID +
+		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+		workflowname +
+		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isLMSCreateInitiative) {
+
+	workflowname = "LMSCreateInitiative";
 	bulkeditlist = "Initiatives";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
