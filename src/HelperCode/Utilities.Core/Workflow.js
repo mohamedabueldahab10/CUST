@@ -150,9 +150,9 @@ var workflowname,
 	isVROCRObjective = window.location.href.indexOf("changerequest&VROCRObjective") > -1,
 	isMSCRObjective = window.location.href.indexOf("changerequest&MSCRObjective") > -1,
 	isLMSCRObjective = window.location.href.indexOf("changerequest&LMSCRObjective") > -1,
-	isVROCRKPI = window.location.href.indexOf("mainkpi&VROCRKPI") > -1,
-	isMSCRKPI = window.location.href.indexOf("mainkpi&MSCRKPI") > -1,
-	isLMSCRKPI = window.location.href.indexOf("mainkpi&LMSCRKPI") > -1,
+	isVROCRKPI = window.location.href.indexOf("changerequest&VROCRKPI") > -1,
+	isMSCRKPI = window.location.href.indexOf("changerequest&MSCRKPI") > -1,
+	isLMSCRKPI = window.location.href.indexOf("changerequest&LMSCRKPI") > -1,
 	isVROActualKPI = window.location.href.indexOf("mainkpi&VROActualKPI") > -1,
 	isMSActualKPI = window.location.href.indexOf("mainkpi&MSActualKPI") > -1,
 	isLMSActualKPI = window.location.href.indexOf("mainkpi&LMSActualKPI") > -1,
@@ -942,7 +942,7 @@ else if (isLMSCreateObjective) {
 else if (isVROCRKPI) {
 
 	workflowname = "VROCRKPI";
-	bulkeditlist = "MainKPI";
+	bulkeditlist = "Change Request";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -958,7 +958,7 @@ else if (isVROCRKPI) {
 else if (isMSCRKPI) {
 
 	workflowname = "MSCRKPI";
-	bulkeditlist = "MainKPI";
+	bulkeditlist = "Change Request";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -974,7 +974,7 @@ else if (isMSCRKPI) {
 else if (isLMSCRKPI) {
 
 	workflowname = "LMSCRKPI";
-	bulkeditlist = "MainKPI";
+	bulkeditlist = "Change Request";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
