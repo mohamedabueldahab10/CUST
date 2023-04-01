@@ -864,7 +864,10 @@ window.Information_Form = [
 								{ fieldName: 'WFStage', value: 'VROCRInitiative01' },
 							]
 						},
-						{ display: "deletion", value: "delete" }
+						{ display: "deletion", value: "delete", otherFields: [
+							{ fieldName: 'WFModuleCode', value: 'VROCRInitiative' },
+							{ fieldName: 'WFStage', value: 'VROCRInitiative01' },
+						] }
 					],
 				},
 			},
@@ -892,7 +895,10 @@ window.Information_Form = [
 								{ fieldName: 'WFStage', value: 'LMSCRInitiative01' },
 							]
 						},
-						{ display: "deletion", value: "delete" }
+						{ display: "deletion", value: "delete", otherFields: [
+							{ fieldName: 'WFModuleCode', value: 'LMSCRInitiative' },
+							{ fieldName: 'WFStage', value: 'LMSCRInitiative01' },
+						] }
 					],
 				},
 			},
