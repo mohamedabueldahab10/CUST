@@ -23,9 +23,17 @@ var Listing_Info = [
 
     {
         "InternalName": "Name",
-        "DisplayName": "الاسم",
-        "DisplayNameEn": "Name",
+        "DisplayName": "الاسم الخارجي",
+        "DisplayNameEn": "External Name",
         "type": "text",
+        inlisting: true,
+        infilter: false
+    },
+    {
+        "InternalName": "Username",
+        "DisplayName": "الاسم الداخلي",
+        "DisplayNameEn": "Internal Name",
+        "type": "picker",
         inlisting: true,
         infilter: false
     },
