@@ -937,6 +937,29 @@ window.Edit_Data_Submit = {
     $(".container-body").addClass("was-validated");
 
     var isCheckMember = false;
+
+    if ( // in portfolio the user should be in PMO Team group 
+      listkey == "portfolio" &&
+      $("#Manager").find("span.sp-peoplepicker-userSpan").attr("sid")
+    ) {
+      debugger
+      pickerValidationDone = true;
+      isCheckMember = true;
+      var portfoliomanager =
+        $("#Manager").find("span.sp-peoplepicker-userSpan").attr("sid") ==
+          undefined
+          ? ""
+          : SP.FieldUserValue.fromUser(
+            $("#Manager").find("span.sp-peoplepicker-userSpan").attr("sid")
+          );
+      var portfoliomanagername = encodeURIComponent(
+        portfoliomanager.get_lookupValue()
+      );
+      userCalls.isMember("PMO Team", portfoliomanagername, 'Manager');
+    }
+
+
+
     if (
       listkey == "mainkpi" &&
       $("#Owner").find("span.sp-peoplepicker-userSpan").attr("sid")
