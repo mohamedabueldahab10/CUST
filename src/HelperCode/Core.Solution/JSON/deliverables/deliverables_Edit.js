@@ -4,6 +4,29 @@ var Information_Form = [
     labelEn: 'Delivrable Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
+    // formValuesBasedOnParent: [
+    //     {
+    //       parentList: 'Projects', parentFieldName: 'Title', fieldName: 'InitiativeType',
+    //       valueToSet: [
+    //         {
+    //           condition: "vision", values: [
+    //             { fieldNameInList: "WFModuleCode", fieldValueInList: "VROProjDeliverable" },
+    //             { fieldNameInList: "WFStage", fieldValueInList: "VROProjDeliverable01" },]
+    //         },
+    //         {
+    //           condition: "lms",
+    //           values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "LMSProjDeliverable" },
+    //           { fieldNameInList: "WFStage", fieldValueInList: "LMSProjDeliverable01" }]
+    //         },
+    //         {
+    //           condition: "strategically",
+    //           values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "EPMOProjDeliverable" },
+    //           { fieldNameInList: "WFStage", fieldValueInList: "EPMOProjDeliverable01" }]
+    //         },
+  
+    //       ]
+    //     }
+    //   ],
     subFields: [
       // {
       //     "InternalName": "Title",
@@ -20,8 +43,8 @@ var Information_Form = [
         type: 'string',
         validation: 'required',
         maxchar: '255',
-        withletters:true,
-        Errmsgkey:"withletterpattern",
+        withletters: true,
+        Errmsgkey: "withletterpattern",
       },
       {
         InternalName: 'Description',
@@ -139,7 +162,9 @@ var Information_Form = [
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
-            { display: 'no', value: 'no' },
+            {
+              display: 'no', value: 'no',
+            },
           ],
         },
       },
@@ -156,7 +181,7 @@ var Information_Form = [
         DisplayName: 'معايير قبول المخرج',
         DisplayNameEn: 'Acceptance Criteria',
         type: 'multiline',
-        maxchar: 5000,        
+        maxchar: 5000,
 
       },
       {
@@ -219,7 +244,7 @@ var Information_Form = [
         DisplayName: 'الوثائق داعمة',
         DisplayNameEn: 'Supporting Documents',
         type: 'file',
-        docPurpose:"Spporting_Documents",
+        docPurpose: "Spporting_Documents",
         withAddBtn: 'true',
       },
     ],
@@ -235,7 +260,7 @@ var Information_Form = [
         DisplayName: 'المرفقات',
         DisplayNameEn: 'Attachments',
         type: 'file',
-        docPurpose:"Attachments",
+        docPurpose: "Attachments",
         withAddBtn: 'true',
       },
     ],

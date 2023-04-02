@@ -8,30 +8,42 @@ var Information_Form = [
     //   {
     //     parentList: 'Projects', parentFieldName: 'Title', fieldName: 'InitiativeType',
     //     valueToSet: [
-    //       { condition: "vision", values: [{ fieldNameInList: "WFStage", fieldValueInList: "vision1" }, { fieldNameInList: "DraftStatus", fieldValueInList: "draftvision" }] },
-    //       { condition: "lms", values: [{ fieldNameInList: "WFStage", fieldValueInList: "lms1" }, { fieldNameInList: "DraftStatus", fieldValueInList: "draftlms" }] },
-    //       { condition: "strategically", values: [{ fieldNameInList: "WFStage", fieldValueInList: "strategically1" }, { fieldNameInList: "DraftStatus", fieldValueInList: "draftstrategically" }] },
+    //       {
+    //         condition: "vision", values: [
+    //           { fieldNameInList: "WFModuleCode", fieldValueInList: "VROProjDeliverable" },
+    //           { fieldNameInList: "WFStage", fieldValueInList: "VROProjDeliverable01" },]
+    //       },
+    //       {
+    //         condition: "lms",
+    //         values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "LMSProjDeliverable" },
+    //         { fieldNameInList: "WFStage", fieldValueInList: "LMSProjDeliverable01" }]
+    //       },
+    //       {
+    //         condition: "strategically",
+    //         values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "EPMOProjDeliverable" },
+    //         { fieldNameInList: "WFStage", fieldValueInList: "EPMOProjDeliverable01" }]
+    //       },
 
     //     ]
     //   }
     // ],
-    formDefaultValues: [
-      //VRO
-      { fieldName: 'WFModuleCode', value: 'VROProjDeliverable', roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'], },
-      { fieldName: 'WFStage', value: 'VROProjDeliverable01', roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'], },
-      { fieldName: 'DraftStatus', value: 'draft', roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'], },
+    // formDefaultValues: [
+    //   //VRO
+    //   { fieldName: 'WFModuleCode', value: 'VROProjDeliverable', roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'], },
+    //   { fieldName: 'WFStage', value: 'VROProjDeliverable01', roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'], },
+    //   { fieldName: 'DraftStatus', value: 'draft', roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'], },
 
-      //EPMOCOC
-      { fieldName: 'WFModuleCode', value: 'EPMOProjDeliverable', roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'], },
-      { fieldName: 'WFStage', value: 'EPMOProjDeliverable01', roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'], },
-      { fieldName: 'DraftStatus', value: 'draft', roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'], },
+    //   //EPMOCOC
+    //   { fieldName: 'WFModuleCode', value: 'EPMOProjDeliverable', roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'], },
+    //   { fieldName: 'WFStage', value: 'EPMOProjDeliverable01', roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'], },
+    //   { fieldName: 'DraftStatus', value: 'draft', roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'], },
 
-      //LMS
-      { fieldName: 'WFModuleCode', value: 'LMSProjDeliverable', roles: ['Administrator', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
-      { fieldName: 'WFStage', value: 'LMSProjDeliverable01', roles: ['Administrator', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
-      { fieldName: 'DraftStatus', value: 'draft', roles: ['Administrator', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
+    //   //LMS
+    //   { fieldName: 'WFModuleCode', value: 'LMSProjDeliverable', roles: ['Administrator', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
+    //   { fieldName: 'WFStage', value: 'LMSProjDeliverable01', roles: ['Administrator', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
+    //   { fieldName: 'DraftStatus', value: 'draft', roles: ['Administrator', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
 
-    ],
+    // ],
     subFields: [
       // {
       //     "InternalName": "Title",
