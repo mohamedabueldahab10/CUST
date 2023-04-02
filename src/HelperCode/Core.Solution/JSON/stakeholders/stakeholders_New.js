@@ -22,6 +22,7 @@ var Information_Form = [
         ],
         toggleDisabledValues: [
           { value: 'stackholderexternal', fields: ['JobTitle','Email','PhoneNumber'] }, 
+          { value: 'stackholderinternal', fields: ['JobTitle','Email'] }, 
         ],
         validation: 'required',
 
@@ -34,6 +35,7 @@ var Information_Form = [
         validation: 'required',
         display: 'none',
         ToggleName: 'Username',
+        targetsiblingarr:["JobTitle","Email","PhoneNumber"] // to get the values from ppicker attr and update in these fields(special for stakholders)
       },
       {
         InternalName: 'Name',

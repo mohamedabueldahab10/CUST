@@ -744,9 +744,20 @@ window.ListInfo = {
             }
           });
 
+
+          // listiner on ppicker
+          //   $("div[type=picker] input[id$='TopSpan_HiddenInput']").on("change", function () { 
+          //     console.log("fffffffffffffffff")
+          //     alert('People Picker Value Changed');
+          // })
+          // $("body").on('change',"div[type=picker] input[id$='TopSpan_HiddenInput']",function(){
+          //   console.log("BHHHHHHHHHHHHHHHHHHHHHHHHH")
+          // })
+          // $('input[id$="TopSpan_HiddenInput"]').on('change', function () {
+          //   alert('People Picker Value Changed');
+          // });
+          //
           //////////////////////////////// disable_enable_section like master details if there is a value or not
-
-
           $("body").on("keyup", ".disable_enable_section", function (event) {
 
             var value = event.target.value
@@ -3461,9 +3472,22 @@ window.ListInfo = {
       //     break;
 
       case "picker":
+
+        var targetsiblingarr = ""
+        var addSeblingClass = ""
+
+        if (element.targetsiblingarr && element.targetsiblingarr != 'undefined') {
+          targetsiblingarr = element.targetsiblingarr
+          addSeblingClass = "getpickersiblingdata";
+          targetsiblingarr = 'data-targetsiblingarr="' +
+            JSON.stringify(element.targetsiblingarr).replaceAll(`"`, `'`) + '"';
+
+        }
+
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit + " " + dontRequest + " " + dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -3508,7 +3532,7 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
-          ' class="PPField SPIField form-control" type="picker" id="' +
+          ' class="PPField SPIField form-control ' + addSeblingClass + '" type="picker" id="' +
           element.InternalName +
           '" value="" placeholder="' +
           displayName +
@@ -3516,7 +3540,7 @@ window.ListInfo = {
           element.InternalName +
           '" ' +
           element.state +
-          ' style="display:' +
+          ' ' + targetsiblingarr + ' style="display:' +
           element.display +
           '" ' +
           element.validation +

@@ -125,8 +125,32 @@ window.MyPeoplePicker = function () {
             } else {
                 if (_this.monitorValue !== el.value) {
                     $('#' + _this.pickerID).trigger("user:changed");
+
                     //validation code
                     if ($('#' + _this.pickerID + '[required]').find('span.sp-peoplepicker-userSpan').length > 0) {
+                        if (listkey == 'stakeholders') { // this validation is special for stakeholders that when picke a name will fill the title,email and phone number auto
+                            var checkPickerSibling = $('#' + _this.pickerID + '[required]').hasClass('getpickersiblingdata')
+                            var checkSiblingData = $('#' + _this.pickerID + '[required]').data('targetsiblingarr')
+                            var userPickedData = ''
+
+                            if (checkPickerSibling) {
+                                userPickedData = eval(el.value)
+                                userPickedData = userPickedData.length ? userPickedData[0].EntityData : ""
+                            }
+                            if (checkSiblingData && checkSiblingData != 'undefined') {
+                                checkSiblingData = eval(checkSiblingData)
+                                checkSiblingData.forEach(element => {
+                                    if (element == 'JobTitle') {
+                                        $(`#${element}`).val(userPickedData.Title)
+                                    } else if (element == 'Email') {
+                                        $(`#${element}`).val(userPickedData.Email)
+                                    } else if (element == 'PhoneNumber') {
+                                        $(`#${element}`).val(userPickedData.MobilePhone)
+                                    }
+                                });
+                            }
+                        }
+
                         $('#' + _this.pickerID + '[required]').removeClass('picker-error');
                         $('#' + _this.pickerID + '[required]').addClass('picker-valid');
                     } else {
@@ -166,9 +190,8 @@ window.MyPeoplePicker = function () {
                     }
                     // error in picker not required
                     if ($('#' + _this.pickerID + ' span.ms-formvalidation.sp-peoplepicker-errorMsg').length) {
-                        
-                        if ($('#' + _this.pickerID).find(' span.sp-peoplepicker-userSpan').length > 0) {
 
+                        if ($('#' + _this.pickerID).find(' span.sp-peoplepicker-userSpan').length > 0) {
                             $('#' + _this.pickerID).find(' span.sp-peoplepicker-userSpan').each(function () {
                                 if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
                                     if ($(this).attr("aria-invalid") == 'true') {
@@ -199,7 +222,7 @@ window.MyPeoplePicker = function () {
             if (val) $(this).find('.sp-peoplepicker-initialHelpText').text(val);
             else $('.sp-peoplepicker-initialHelpText').text(enternameemail);
             $(this).find('.sp-peoplepicker-initialHelpText').fadeIn();
-            $(this).find('.sp-peoplepicker-topLevel').attr('title',enternameemail)
+            $(this).find('.sp-peoplepicker-topLevel').attr('title', enternameemail)
         });
 
         // if (isEdit) {
