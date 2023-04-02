@@ -486,7 +486,7 @@ else if (isVROCreateInitiative) {
 else if (isEPMOCRInitiative) {
 
 	workflowname = "EPMOCRInitiative";
-	bulkeditlist = "Initiatives";
+	bulkeditlist = "Change Request";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +

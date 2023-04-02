@@ -826,15 +826,15 @@ window.Information_Form = [
 								},
 
 							], otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'LMSCRInitiative' },
-								{ fieldName: 'WFStage', value: 'LMSCRInitiative01' },
+								{ fieldName: 'WFModuleCode', value: 'EPMOCRInitiative' },
+								{ fieldName: 'WFStage', value: 'EPMOCRInitiative01' },
 							]
 						},
 						{
 							display: "deletion", value: "delete",
 							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'LMSCRInitiative' },
-								{ fieldName: 'WFStage', value: 'LMSCRInitiative01' },
+								{ fieldName: 'WFModuleCode', value: 'EPMOCRInitiative' },
+								{ fieldName: 'WFStage', value: 'EPMOCRInitiative01' },
 							]
 						}
 					],
