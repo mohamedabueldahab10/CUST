@@ -5,28 +5,28 @@ var Information_Form = [
     description: 'التفاصيل',
     descriptionEn: 'Details',
     // formValuesBasedOnParent: [
-    //     {
-    //       parentList: 'Projects', parentFieldName: 'Title', fieldName: 'InitiativeType',
-    //       valueToSet: [
-    //         {
-    //           condition: "vision", values: [
-    //             { fieldNameInList: "WFModuleCode", fieldValueInList: "VROProjDeliverable" },
-    //             { fieldNameInList: "WFStage", fieldValueInList: "VROProjDeliverable01" },]
-    //         },
-    //         {
-    //           condition: "lms",
-    //           values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "LMSProjDeliverable" },
-    //           { fieldNameInList: "WFStage", fieldValueInList: "LMSProjDeliverable01" }]
-    //         },
-    //         {
-    //           condition: "strategically",
-    //           values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "EPMOProjDeliverable" },
-    //           { fieldNameInList: "WFStage", fieldValueInList: "EPMOProjDeliverable01" }]
-    //         },
-  
-    //       ]
-    //     }
-    //   ],
+    //   {
+    //     parentList: 'Projects', parentFieldName: 'Title', fieldName: 'InitiativeType', basedOnFieldName: "Delivered", basedOnFieldValue: "yes",
+    //     valueToSet: [
+    //       {
+    //         condition: "vision", values: [
+    //           { fieldNameInList: "WFModuleCode", fieldValueInList: "VROProjDeliverable" },
+    //           { fieldNameInList: "WFStage", fieldValueInList: "VROProjDeliverable01" },]
+    //       },
+    //       {
+    //         condition: "lms",
+    //         values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "LMSProjDeliverable" },
+    //         { fieldNameInList: "WFStage", fieldValueInList: "LMSProjDeliverable01" }]
+    //       },
+    //       {
+    //         condition: "strategically",
+    //         values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "EPMOProjDeliverable" },
+    //         { fieldNameInList: "WFStage", fieldValueInList: "EPMOProjDeliverable01" }]
+    //       },
+
+    //     ]
+    //   }
+    // ],
     subFields: [
       // {
       //     "InternalName": "Title",
@@ -151,6 +151,20 @@ var Information_Form = [
       //     "min": "StartDate",
       //     "max":"today"
       // },
+
+      // {
+      //   InternalName: 'Delivered',
+      //   DisplayName: 'تم التسليم',
+      //   DisplayNameEn: 'Delivered',
+      //   type: 'dropdownValues',
+      //   options: {
+      //     choices: [
+      //       { display: 'yes', value: 'yes' },
+      //       { display: 'no', value: 'no' },
+      //     ],
+      //   },
+      // },
+
       {
         InternalName: 'Delivered',
         DisplayName: 'تم التسليم',

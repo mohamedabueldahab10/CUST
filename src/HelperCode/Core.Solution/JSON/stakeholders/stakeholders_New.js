@@ -29,8 +29,8 @@ var Information_Form = [
       },
       {
         InternalName: 'Username',
-        DisplayNameEn: 'Username',
-        DisplayName: 'اسم المستخدم',
+        DisplayNameEn: 'Internal Name',
+        DisplayName: 'الاسم الداخلي',
         type: 'picker', //user
         validation: 'required',
         display: 'none',
@@ -39,8 +39,8 @@ var Information_Form = [
       },
       {
         InternalName: 'Name',
-        DisplayName: 'الاسم',
-        DisplayNameEn: 'Name',
+        DisplayName: 'الاسم الخارجي',
+        DisplayNameEn: 'External Name',
         type: 'lookup',
         source: 'External Owners',
         Dispfieldkey: 'Name',
