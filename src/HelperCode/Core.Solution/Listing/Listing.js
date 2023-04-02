@@ -34,10 +34,10 @@ var projectTypeFilterQuery = '', typeClicked = 'Internal';
 window.indexofListing = 0;
 var taskClicked = 'relatedTasks', allTasksClicked = false, getNewFilterTask = false, isViewMoreClicked = false;
 
-var emptyData = require('../../../HelperRessources/img/empty-data.png');
-var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
-// var emptyData = ''
-// var exportExcel = ''
+// var emptyData = require('../../../HelperRessources/img/empty-data.png');
+// var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
+var emptyData = ''
+var exportExcel = ''
 //all data filter array
 allDataFilterArr = []
 //
@@ -100,7 +100,7 @@ else if (isTasks) {
 window.sphttp = {
   get: function (listUrl, listDisplayName, camelQuery, internalFieldNames, isGetDdl, onEach, onError) {
 
-
+    
     sphttp.g.isGetDdl = isGetDdl;
     var clientContext = new SP.ClientContext(listUrl);
     var oListsp = clientContext.get_web().get_lists().getByTitle(listDisplayName);
@@ -130,12 +130,13 @@ window.sphttp = {
     sphttp.g.camlQuery.set_viewXml(camelQuery);
 
 
-
+    
     SPHTTPitemsEnumerable = oListsp.getItems(sphttp.g.camlQuery);
     clientContext.load(SPHTTPitemsEnumerable); //, 'Include(Id, '+fields+')'
     clientContext.executeQueryAsync(
       Function.createDelegate(this,
         function (sender, args) {
+          
           var listItems = SPHTTPitemsEnumerable.getEnumerator();
           window.records = [];
           window.RecordsWithID = [];
@@ -215,6 +216,7 @@ window.sphttp = {
                 }
               }
             } else {
+              
               if (internalFieldNames && internalFieldNames.length > 0) {
                 for (var i = 0; i < internalFieldNames.length; i++) {
                   if (internalFieldNames[i] = Listing_Info[i].InternalName) {
@@ -303,48 +305,27 @@ window.sphttp = {
 
                     }
                     else if (Listing_Info[i].type == "lookup") {
+                      
                       var lookupItemarr = [], Itemdisplayname = "";
                       if ((localStorage.getItem('' + Listing_Info[i].localStorageVariable) != null) && (oListItem.get_item(internalFieldNames[i]) !== null)) {
                         lookupItemarr = JSON.parse(localStorage.getItem('' + Listing_Info[i].localStorageVariable));
                         lookupItemarr = lookupItemarr.filter(function (a) {
+                       
                           return a.code === oListItem.get_item(internalFieldNames[i])
                         });
+                         
                         if (lookupItemarr[0]) {
                           if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
                             record[internalFieldNames[i]] = lookupItemarr[0].name;
                           } else record[internalFieldNames[i]] = lookupItemarr[0].nameEn;
+                        }else if(oListItem.get_item(internalFieldNames[i])){
+                          record[internalFieldNames[i]] = oListItem.get_item(internalFieldNames[i])
                         }
                         else {
                           record[internalFieldNames[i]] = No_Data;
                         }
                       }
-                      // // for lookup havn't local storage
-                      // else if(Listing_Info[i].source !=undefined && Listing_Info[i].Dispfieldkey !=undefined && Listing_Info[i].valfieldkey !=undefined) {
-                      //   var valueInLookup =oListItem.get_item(internalFieldNames[i]);
-                      //   var valfieldkeyInOtherList = Listing_Info[i].valfieldkey;
-                      //   var DispfieldkeyInOtherList =  Listing_Info[i].Dispfieldkey;
-                      //   var otherListName = Listing_Info[i].source;
-                      //   var isDone = true;
-                      //   customquery =
-                      //   '<View><Query><Where><Eq><FieldRef Name="' +
-                      //   valfieldkeyInOtherList +
-                      //   '" /><Value Type="Text">' +
-                      //   valueInLookup +
-                      //   "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
-                      //   sphttp.get(
-                      //     _spPageContextInfo.siteServerRelativeUrl,
-                      //     otherListName,
-                      //     customquery,
-                      //     [valfieldkeyInOtherList, DispfieldkeyInOtherList],
-                      //     function (records, record, listItem, isDone) {
-                      //       if (isDone) {
-                      //         records.forEach(function (el, index) {
-                      //           record[internalFieldNames[i]] = el[DispfieldkeyInOtherList];
-                      //         });
-                      //       }
-                      //     }
-                      //   );
-                      //  }
+      
                       else {
                         record[internalFieldNames[i]] = No_Data;
                       }
@@ -511,7 +492,7 @@ window.ListingData = {
   init: function () {
 
     if (!isTasks && originalstate) {
-
+      
       if (isRoleDataLevelAccess && (!UserICode && !USERPCODE && isEmptyFilter)) {
         PQuery = dataLevelAccessQuery ? dataLevelAccessQuery : AccessQuery;
         console.log(PQuery, "PQuery odddds")
@@ -637,7 +618,7 @@ window.ListingData = {
       changeResources();
     } else {
 
-
+      
       sphttp.get(
         ListURL,
         SP_ListName,
@@ -646,7 +627,7 @@ window.ListingData = {
         false,
         async function (records, record, listItem, isDone) {
 
-
+          
           // records.forEach((element, i) => { 
           //   if ((element.ProjectCode && element.ProjectCode != No_Data) && !isthereICODE) { // add element.projectCode !=No_Data to show the initiative in task list
           //     if (!userProjects.includes(element.ProjectCode)) {
@@ -1465,7 +1446,7 @@ window.ListingData = {
         // debugger
         for (var i = 0; i < FilterChoices.length; i++) {
           console.log(FilterChoices, "FilterChoices FilterChoices")
-          debugger
+          
           //only one choice
           if (FilterChoices.length == 1) {
 
@@ -1857,7 +1838,7 @@ window.ListingData = {
 
 
       console.log(table, "table")
-      debugger
+      
 
       for (var i = 0; i < mydata.length; i++) {
 
@@ -2102,7 +2083,7 @@ window.ListingData = {
       });
     }, //build html and split data to DDLS
     Build_HTML: function (AllData, FilterNames, DisplayNames, TypsFieldsAll, transFields, localStorageVariables) {
-
+      
       var FilterationcontractsHTML = '';
       my_split = '';
 
