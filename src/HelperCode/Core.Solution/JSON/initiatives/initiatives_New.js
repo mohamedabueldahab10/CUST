@@ -68,7 +68,7 @@ var Information_Form = [
             {
               display: 'vision',
               value: 'vision',
-              roles: ['Administrator', 'VROE', 'VROP'],
+              roles: ['Administrator', 'VROE', 'VROP','InitiativeManager','InitiativeOwner'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'VROCreateInitiative' },
                 { fieldName: 'WFStage', value: 'VROCreateInitiative01' },
@@ -78,7 +78,7 @@ var Information_Form = [
             {
               display: 'strategically',
               value: 'strategically',
-              roles: ['Administrator', 'EPMO'],
+              roles: ['Administrator', 'EPMO','InitiativeManager','InitiativeOwner'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'EPMOCreateInitiative' },
                 { fieldName: 'WFStage', value: 'EPMOCreateInitiative01' },
@@ -88,7 +88,7 @@ var Information_Form = [
             {
               display: 'lms',
               value: 'lms',
-              roles: ['Administrator', 'LMSE', 'LMSP'],
+              roles: ['Administrator', 'LMSE', 'LMSP','InitiativeManager','InitiativeOwner'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'LMSCreateInitiative' },
                 { fieldName: 'WFStage', value: 'LMSCreateInitiative01' },
