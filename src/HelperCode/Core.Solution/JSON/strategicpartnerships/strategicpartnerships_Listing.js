@@ -46,15 +46,17 @@ var Listing_Info = [
       "InternalName":"PartnerName",
       "DisplayName":"اسم الشريك",
       "DisplayNameEn":"Partner Name",
-      "type":"text",
+      "type":"lookup",
+      "localStorageVariable":"Dynamo_Vendors",
       "inlisting":true,
       "infilter":false
    },
    {
-      "InternalName":"RelatedStrategicObjective",
+      "InternalName":"RelatedStrategyObjective",
       "DisplayName":"الهدف الاستراتيجي المرتبط",
       "DisplayNameEn":"Related Strategy Objective",
-      "type":"text",
+      "type": "lookup",
+      "localStorageVariable":"Dynamo_SOs",
       "inlisting":true,
       "infilter":false
    },
