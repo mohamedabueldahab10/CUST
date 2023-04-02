@@ -5,9 +5,9 @@ var Information_Form = [
     description: 'التفاصيل',
     descriptionEn: 'Details',
     workflowSetValues: [
-      { fieldName: 'DraftStatus', value: '', stages:["VROCRSOS02","MSCRSOS03","LMSCRSOS02"] },
-      { fieldName: 'WFModuleCode', value: '',stages:["VROCRSOS02","MSCRSOS03","LMSCRSOS02"]} ,
-      { fieldName: 'WFStage', value: 'approved',stages:["VROCRSOS02","MSCRSOS03","LMSCRSOS02"]} 
+      { fieldName: 'DraftStatus', value: '', stages:["MSCreateObjective03","VROCreateObjective02","LMSCreateObjective02"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["MSCreateObjective03","VROCreateObjective02","LMSCreateObjective02"]} ,
+      { fieldName: 'WFStage', value: 'approved',stages:["MSCreateObjective03","VROCreateObjective02","LMSCreateObjective02"]} 
     ],
     subFields: [
       {

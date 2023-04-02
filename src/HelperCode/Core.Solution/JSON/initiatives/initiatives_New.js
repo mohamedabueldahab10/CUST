@@ -65,20 +65,54 @@ var Information_Form = [
         type: 'dropdownValues',
         options: {
           choices: [
+        
+              //---start EPMO and Admin Section ----
             {
               display: 'vision',
               value: 'vision',
-              roles: ['Administrator', 'VROE', 'VROP','InitiativeManager','InitiativeOwner'],
+              roles: ['Administrator','EPMO'],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
               otherFields: [
-                { fieldName: 'WFModuleCode', value: 'VROCreateInitiative' },
-                { fieldName: 'WFStage', value: 'VROCreateInitiative01' },
-                { fieldName: 'DraftStatus', value: 'draft' },
+                { fieldName: 'WFModuleCode', value: 'VisionInitiative' },
+                { fieldName: 'WFStage', value: 'VInStage01' },
+                { fieldName: 'DraftStatus', value: '' },
               ],
             },
             {
               display: 'strategically',
               value: 'strategically',
-              roles: ['Administrator', 'EPMO','InitiativeManager','InitiativeOwner'],
+              roles: ['Administrator','EPMO'],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
+              otherFields: [
+                { fieldName: 'WFModuleCode', value: 'StrategicallyInitiative' },
+                { fieldName: 'WFStage', value: 'SInStage01' },
+                { fieldName: 'DraftStatus', value: '' },
+              ],
+            },
+            {
+              display: 'lms',
+              value: 'lms',
+              roles: ['Administrator','EPMO','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','InitiativeManager','InitiativeOwner'],
+              otherFields: [
+                { fieldName: 'WFModuleCode', value: 'LMSInitiative' },
+                { fieldName: 'WFStage', value: 'LInStage01' },
+                { fieldName: 'DraftStatus', value: '' },
+              ],
+            },
+
+          //---end EPMO and Admin Section ----
+          {
+            display: 'vision',
+            value: 'vision',
+            roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','InitiativeManager','InitiativeOwner'],
+            otherFields: [
+              { fieldName: 'WFModuleCode', value: 'VROCreateInitiative' },
+              { fieldName: 'WFStage', value: 'VROCreateInitiative01' },
+              { fieldName: 'DraftStatus', value: 'draft' },
+            ],
+          },
+            {
+              display: 'strategically',
+              value: 'strategically',
+              roles: ['SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','InitiativeManager','InitiativeOwner'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'EPMOCreateInitiative' },
                 { fieldName: 'WFStage', value: 'EPMOCreateInitiative01' },
@@ -88,7 +122,7 @@ var Information_Form = [
             {
               display: 'lms',
               value: 'lms',
-              roles: ['Administrator', 'LMSE', 'LMSP','InitiativeManager','InitiativeOwner'],
+              roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','InitiativeManager','InitiativeOwner'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'LMSCreateInitiative' },
                 { fieldName: 'WFStage', value: 'LMSCreateInitiative01' },
