@@ -6,17 +6,17 @@ var Information_Form = [
     descriptionEn: 'Details',
     workflowSetValues: [
       //vro
-      { fieldName: 'DraftStatus', value: '', stages:["VROCRKPI02"] },
-      { fieldName: 'WFModuleCode', value: '',stages:["VROCRKPI02"] } ,
-      { fieldName: 'WFStage', value: '',stages:["VROCRKPI02"] } ,
+      { fieldName: 'DraftStatus', value: '', stages:["VROCreateKPI02"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["VROCreateKPI02"] } ,
+      { fieldName: 'WFStage', value: '',stages:["VROCreateKPI02"] } ,
       //EPMO
-      { fieldName: 'DraftStatus', value: '', stages:["MSCRKPI03"] },
-      { fieldName: 'WFModuleCode', value: '',stages:["MSCRKPI03"] } ,
-      { fieldName: 'WFStage', value: '',stages:["MSCRKPI03"] } ,
+      { fieldName: 'DraftStatus', value: '', stages:["EPMOCreateKPI03"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["EPMOCreateKPI03"] } ,
+      { fieldName: 'WFStage', value: '',stages:["EPMOCreateKPI03"] } ,
       //LMS
-      { fieldName: 'DraftStatus', value: '', stages:["LMSCRKPI02"] },
-      { fieldName: 'WFModuleCode', value: '',stages:["LMSCRKPI02"] } ,
-      { fieldName: 'WFStage', value: '',stages:["LMSCRKPI02"] } ,
+      { fieldName: 'DraftStatus', value: '', stages:["LMSCreateKPI02"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["LMSCreateKPI02"] } ,
+      { fieldName: 'WFStage', value: '',stages:["LMSCreateKPI02"] } ,
     ],
     subFields: [
       {
