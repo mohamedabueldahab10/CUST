@@ -2914,7 +2914,7 @@ var SubmitField_BulkEdit = {
 								addCOC.init()
 							} else if (isExecuteCR && crUpdateType.includes("automatic")) {
 								executeCR.init(crBody);
-							} else if ((isVROCRKPI || isMSCRKPI || isLMSCRKPI) && nxtstageid == "approved") {
+							} else if ((isVROCreateKPI || isEPMOCreateKPI || isLMSCreateKPI) && nxtstageid == "approved") {
 								changeOnKpiResultDraft(state)
 							} else if (isMSCRObjective && state) {
 								debugger
