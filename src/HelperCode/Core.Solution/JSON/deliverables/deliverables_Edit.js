@@ -4,29 +4,29 @@ var Information_Form = [
     labelEn: 'Delivrable Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
-    // formValuesBasedOnParent: [
-    //   {
-    //     parentList: 'Projects', parentFieldName: 'Title', fieldName: 'InitiativeType', basedOnFieldName: "Delivered", basedOnFieldValue: "yes",
-    //     valueToSet: [
-    //       {
-    //         condition: "vision", values: [
-    //           { fieldNameInList: "WFModuleCode", fieldValueInList: "VROProjDeliverable" },
-    //           { fieldNameInList: "WFStage", fieldValueInList: "VROProjDeliverable01" },]
-    //       },
-    //       {
-    //         condition: "lms",
-    //         values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "LMSProjDeliverable" },
-    //         { fieldNameInList: "WFStage", fieldValueInList: "LMSProjDeliverable01" }]
-    //       },
-    //       {
-    //         condition: "strategically",
-    //         values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "EPMOProjDeliverable" },
-    //         { fieldNameInList: "WFStage", fieldValueInList: "EPMOProjDeliverable01" }]
-    //       },
+    formValuesBasedOnParent: [
+      {
+        parentList: 'Projects', parentFieldName: 'Title', fieldName: 'InitiativeType', basedOnFieldName: "Delivered", basedOnFieldValue: "yes",
+        valueToSet: [
+          {
+            condition: "vision", values: [
+              { fieldNameInList: "WFModuleCode", fieldValueInList: "VROProjDeliverable" },
+              { fieldNameInList: "WFStage", fieldValueInList: "VROProjDeliverable01" },]
+          },
+          {
+            condition: "lms",
+            values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "LMSProjDeliverable" },
+            { fieldNameInList: "WFStage", fieldValueInList: "LMSProjDeliverable01" }]
+          },
+          {
+            condition: "strategically",
+            values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "EPMOProjDeliverable" },
+            { fieldNameInList: "WFStage", fieldValueInList: "EPMOProjDeliverable01" }]
+          },
 
-    //     ]
-    //   }
-    // ],
+        ]
+      }
+    ],
     subFields: [
       // {
       //     "InternalName": "Title",
