@@ -83,7 +83,7 @@ var BudgetLabelsEn = [
 ];
 
 // var statusOccuresData = ["stat3", "stat1", "stat6", "stat2", "stat7"];
-var statusOccuresData = ["stat7", "stat6", "stat5", "stat4", "stat3", "stat2", "stat1"];
+var statusOccuresData = ["stat29","stat7", "stat6", "stat5", "stat4", "stat3", "stat2", "stat1"];
 
 
 if (
@@ -2808,27 +2808,9 @@ function handleStatusBarChart() {
   var background_5 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
   var background_6 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
   var background_7 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
+  var background_29 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
 
 
-  // background_1.addColorStop(0, "#73bfb2");
-  // background_1.addColorStop(1, "#ada38d");
-  // //grey
-
-  // background_2.addColorStop(0, "#EBC866");
-  // background_2.addColorStop(1, "#FCD66D");
-  // // yellow late
-
-  // background_3.addColorStop(0, "#428737");
-  // background_3.addColorStop(1, "#5AB74C");
-  // //green advanced
-
-  // background_4.addColorStop(0, "#bc3434");
-  // background_4.addColorStop(1, "#C53737");
-  // // red very late
-
-  // background_5.addColorStop(0, "#688393");
-  // background_5.addColorStop(1, "#15425a");
-  //////////////////////
 
   background_1.addColorStop(0, "#bc3434");
   background_1.addColorStop(1, "#C53737");
@@ -2852,15 +2834,13 @@ function handleStatusBarChart() {
   background_7.addColorStop(0, "#a9a9a9");
   background_7.addColorStop(1, "#696969");
 
+  background_29.addColorStop(0, "#a9a9a9");
+  background_29.addColorStop(1, "#696969");
 
-  // background_4.addColorStop(0, "#688393");
-  // background_4.addColorStop(1, "#15425a");
-  // // blue advanced
 
-  // background_5.addColorStop(0, "#ddd");
-  // background_5.addColorStop(1, "#ccc");
   /////////////////////
   var BackgroundsArray = [
+    background_29,
     background_7,
     background_6,
     background_5,
@@ -2869,16 +2849,7 @@ function handleStatusBarChart() {
     background_2,
     background_1,
   ];
-  // if (
-  //   localStorage.getItem("lng") == null ||
-  //   localStorage.getItem("lng") == "ar"
-  // ) {
-  //   // progressOccurence = progressOccurence.reverse();
-  //   // ProgressName = ProgressName.reverse();
-  // } else {
-  //   // BackgroundsArray = BackgroundsArray.reverse();
-  // }
-  console.log(progressOccurence, "progressOccurence progressOccurence");
+
   /* data */
   var data1 = {
     labels: ProgressName,

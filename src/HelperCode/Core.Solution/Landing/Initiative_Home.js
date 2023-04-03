@@ -2255,7 +2255,7 @@ var Get_InitiativeStatus_Info = {
     }
 
     $(".myCompletionStatus").removeAttr(
-      "data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4 data-trans-stat5 data-trans-stat6 data-trans-stat7"
+      "data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4 data-trans-stat5 data-trans-stat6 data-trans-stat7 data-trans-stat29"
     );
 
     $(".myCompletionStatus").removeClass("statuscolor" + listInitiativeProgress);
