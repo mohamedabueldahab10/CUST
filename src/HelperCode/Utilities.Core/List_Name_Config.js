@@ -440,7 +440,7 @@ var ListArray = [
 		subfolder: true,
 	},
 	{
-		strategicpartnershipsachievements: "Achievements",
+		achievements: "Achievements",
 		ListingTitle: "المنجزات",
 		FormTitle:"المنجزات",
 		TitleEn: "Achievements",
