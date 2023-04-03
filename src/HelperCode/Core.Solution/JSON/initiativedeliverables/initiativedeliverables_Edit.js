@@ -6,7 +6,7 @@ var Information_Form = [
     descriptionEn: 'Details',
     formValuesBasedOnParent: [
       {
-        parentList: 'Initiatives', parentFieldName: 'Title', fieldName: 'Types', basedOnFieldName: "Delivered", basedOnFieldValue: "yes",
+        parentList: 'Initiatives', parentFieldName: 'Title', fieldName: 'Types', basedOnCondition: true,basedOnFieldName: "Delivered", basedOnFieldValue: "yes",
         valueToSet: [
           {
             condition: "vision", values: [
