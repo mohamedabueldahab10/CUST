@@ -73,8 +73,8 @@ var Information_Form = [
         type: 'yesnoradio',
         options: {
           choices: [
-            { display: 'yes', value: 'true' },
-            { display: 'no', value: 'false' },
+            { display: 'yes', value: 'yes' },
+            { display: 'no', value: 'no' },
           ],
         },
       },
