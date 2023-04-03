@@ -161,7 +161,7 @@ var workflowname,
 	isVROCreateKPI = window.location.href.indexOf("mainkpi&VROCreateKPI") > -1,
 	isEPMOCreateKPI = window.location.href.indexOf("mainkpi&EPMOCreateKPI") > -1,
 	isLMSCreateKPI = window.location.href.indexOf("mainkpi&LMSCreateKPI") > -1,
-	
+
 	isVROCRKPI = window.location.href.indexOf("changerequest&VROCRKPI") > -1,
 	isMSCRKPI = window.location.href.indexOf("changerequest&MSCRKPI") > -1,
 	isLMSCRKPI = window.location.href.indexOf("changerequest&LMSCRKPI") > -1,
@@ -174,9 +174,9 @@ var workflowname,
 	isLMSProjDeliverable = window.location.href.indexOf("deliverables&LMSProjDeliverable") > -1,
 	isVROCreateObjective = window.location.href.indexOf("sos&VROCreateObjective") > -1,
 	isMSCreateObjective = window.location.href.indexOf("sos&MSCreateObjective") > -1,
-	isLMSCreateObjective = window.location.href.indexOf("sos&LMSCreateObjective") > -1
-// ghufran
-isVROCRProject = window.location.href.indexOf("changerequest&VROCRProject") > -1,
+	isLMSCreateObjective = window.location.href.indexOf("sos&LMSCreateObjective") > -1,
+	// ghufran
+	isVROCRProject = window.location.href.indexOf("changerequest&VROCRProject") > -1,
 	isEPMOCRProject = window.location.href.indexOf("changerequest&EPMOCRProject") > -1,
 	isLMSCRProject = window.location.href.indexOf("changerequest&LMSCRProject") > -1,
 	isVROCreateProject = window.location.href.indexOf("projects&VROCRProject") > -1,
@@ -184,12 +184,12 @@ isVROCRProject = window.location.href.indexOf("changerequest&VROCRProject") > -1
 	isLMSCreateProject = window.location.href.indexOf("projects&LMSCreateProject") > -1,
 	// 
 	isProjectCancellationRequestWF =
-	window.location.href.indexOf("projectcancellationrequest") > -1,
+		window.location.href.indexOf("projectcancellationrequest") > -1,
 	isDeliverabletWF = window.location.href.indexOf("deliveriesreport") > -1,
 	isInitiativeBenefitWF =
-	window.location.href.indexOf("initiativebenefits") > -1,
+		window.location.href.indexOf("initiativebenefits") > -1,
 	isProjectDeligationsWf =
-	window.location.href.indexOf("projectdeligations") > -1,
+		window.location.href.indexOf("projectdeligations") > -1,
 	isExceptionRequestWf = window.location.href.indexOf("exceptionrequest") > -1,
 	isGatesWf = window.location.href.indexOf("gates") > -1,
 	isExecutiveTasksWf = window.location.href.indexOf("executivetasks") > -1,
@@ -2701,10 +2701,14 @@ var SubmitField_BulkEdit = {
 						}
 
 						// get the related item in cr to use it in delete api
-						if (isMSCRObjective) {
-							debugger
+						if (isMSCRObjective || isVROCRObjective || isLMSCRObjective) {
 							relatedItemInCr = currentItem.get_item("CRRelatedStrategyObjective");
-
+						} else if (isVROCRProject || isEPMOCRProject || isLMSCRProject) {
+							relatedItemInCr = currentItem.get_item("ProjectCode");
+						} else if (isEPMOCRInitiative || isVROCRInitiative || isLMSCRInitiative) {
+							relatedItemInCr = currentItem.get_item("InitiativeCode");
+						} else if (isMSCRKPI || isVROCRKPI || isLMSCRKPI) {
+							relatedItemInCr = currentItem.get_item("CRRelatedMainKpis");
 						}
 						//
 
@@ -2916,8 +2920,8 @@ var SubmitField_BulkEdit = {
 								executeCR.init(crBody);
 							} else if ((isVROCreateKPI || isEPMOCreateKPI || isLMSCreateKPI) && nxtstageid == "approved") {
 								changeOnKpiResultDraft(state)
-							} else if (isMSCRObjective && state) {
-								debugger
+							} else if ((isMSCRObjective || isVROCRObjective || isLMSCRObjective || isVROCRProject || isEPMOCRProject || isLMSCRProject || isEPMOCRInitiative || isVROCRInitiative || isLMSCRInitiative || isMSCRKPI || isVROCRKPI || isLMSCRKPI) && state && nxtstageid == "approved") { // invoke delete item from cr on these workflows
+								
 								Delete_Item_FromCR.init(relatedItemInCr)
 							} else {
 								Task_Edit_Data.init();
@@ -4447,7 +4451,40 @@ function changeOnKpiResultDraft(state) {
 
 var Delete_Item_FromCR = {
 	init: function (relatedItemInCr) {
-		Task_Edit_Data.init();
+
+
+		if (isMSCRObjective || isVROCRObjective || isLMSCRObjective) {
+			urlHandler = `https://hrsd-api.netways1.com/api/general/deletestratgeicobjectiveitembysocode?soCode=${relatedItemInCr}`
+		} else if (isVROCRProject || isEPMOCRProject || isLMSCRProject) {
+			urlHandler = `https://hrsd-api.netways1.com/api/general/deleteprojectbyprojectcode?projectCode=${relatedItemInCr}`
+		} else if (isEPMOCRInitiative || isVROCRInitiative || isLMSCRInitiative) {
+			urlHandler = `https://hrsd-api.netways1.com/api/general/deleteinitiativeitembyinitiativecode?initiativeCode=${relatedItemInCr}`
+		} else if (isMSCRKPI || isVROCRKPI || isLMSCRKPI) {
+			urlHandler = `https://hrsd-api.netways1.com/api/general/deletemainkpiitembykpicode?kpiCode=${relatedItemInCr}`
+		}
+		$.ajax({
+			url: urlHandler,
+			method: "POST",
+			contentType: "application/json;odata=verbose",
+			data: '',
+			headers: {
+				Accept: "application/json; odata=verbose",
+				// Authorization: `Bearer ${token}`,
+				"X-HTTP-Method": "POST",
+				"if-Match": "*"
+			},
+			success: function (data) {
+				Task_Edit_Data.init();
+			},
+			error: function (err) {
+				console.log("call failed", err);
+			},
+		});
+
+
+
+		/////////////////////////////////////////////////////////////////////////////////////////////////////
+		// Task_Edit_Data.init();
 
 		// will remove comment when need to apply api
 		// var requestData = {

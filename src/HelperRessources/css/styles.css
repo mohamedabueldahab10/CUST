@@ -1521,8 +1521,8 @@ i.icon-plus {
     content: "";
     position: absolute;
     left: 10px;
-    background-image: url("../../HelperRessources/img/icon-arrow-down.png");
-    background-repeat: no-repeat;
+    /* background-image: url("../../HelperRessources/img/icon-arrow-down.png"); // remove arrow from listing page
+    background-repeat: no-repeat; */
     -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
     -ms-transform: rotate(90deg);
@@ -2277,6 +2277,11 @@ ul[disabled],
     border-right-color: #696969;
 }
 
+.progress-semi .bar.stat31 {
+    border-bottom-color: #696969;
+    border-right-color: #696969;
+}
+
 .kpistatus.stat15 {
     color: #bc3434;
 }
@@ -2294,6 +2299,10 @@ ul[disabled],
 }
 
 .kpistatus.stat19 {
+    color: #696969;
+}
+
+.kpistatus.stat31 {
     color: #696969;
 }
 
@@ -4322,6 +4331,10 @@ a.taskButton:hover {
     background: #696969 !important;
 }
 
+.circlecolorstat29 {
+    background: #696969 !important;
+}
+
 .circlecolorstat6 {
     background: #696969 !important;
 }
@@ -4362,6 +4375,12 @@ span.statuscolorstat4 {
 h4.black.Resources.myCompletionStatus.statuscolorstat5,
 .stat5 h4.Resources,
 span.statuscolorstat5 {
+    color: #696969 !important;
+}
+
+h4.black.Resources.myCompletionStatus.statuscolorstat29,
+.stat29 h4.Resources,
+span.statuscolorstat29 {
     color: #696969 !important;
 }
 
@@ -6624,6 +6643,10 @@ a.a-important-link:hover>* {
     color: #428737 !important;
 }
 
+.startegicobjstat32 {
+    color: #696969 !important;
+}
+
 /* end of Sos Status */
 
 .actualBudget.ErrorMsg {
@@ -6935,6 +6958,12 @@ span.statuscolorstat11 {
 h4.black.Resources.myCompletionStatus.statuscolorstat12,
 .stat12 h4.Resources,
 span.statuscolorstat12 {
+    color: #696969 !important;
+}
+
+h4.black.Resources.myCompletionStatus.statuscolorstat30,
+.stat30 h4.Resources,
+span.statuscolorstat30 {
     color: #696969 !important;
 }
 

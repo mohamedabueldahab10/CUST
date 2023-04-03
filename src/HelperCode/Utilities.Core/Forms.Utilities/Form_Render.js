@@ -160,6 +160,7 @@ window.ListInfo = {
 
     var basedOnParentSetValues = [], dataBasedOnParentSetValues = "";
 
+    var basedOnParentSetValuesListiner = ""
 
     asyncFor.seqProcess(
       Information_Form,
@@ -220,9 +221,21 @@ window.ListInfo = {
           } else if (ICODE) {
             code = ICODE
           }
-          basedOnParentSetValues.forEach(el => {
-            get_parent_data.init(el.parentList, code, el.parentFieldName, el.fieldName) // to get value from parent list to use it when submit
-          })
+          if (PCODE || ICODE) {
+            basedOnParentSetValues.forEach(el => {
+              get_parent_data.init(el.parentList, code, el.parentFieldName, el.fieldName, el.getGrandParent) // to get value from parent list to use it when submit
+            })
+          }
+          else {
+            basedOnParentSetValuesListiner = basedOnParentSetValues
+    
+            var listinerField = basedOnParentSetValuesListiner[0].listinerField
+
+            $("body").on("change", `#${listinerField}`, function (event) { // change it to body to can invoke the listiner in master details
+              get_parent_data.init(basedOnParentSetValuesListiner[0].parentList, event.target.value, basedOnParentSetValuesListiner[0].parentFieldName, basedOnParentSetValuesListiner[0].fieldName, basedOnParentSetValuesListiner[0].getGrandParent) // to get value from parent list to use it when submit
+            })
+
+          }
 
         } else {
           dataBasedOnParentSetValues = ""
@@ -959,7 +972,7 @@ window.ListInfo = {
           $("input.getTotalSelectedValues").change(function () {
 
 
-            debugger
+            
             var fieldValue = $(this).data("getothervalue")
             var targettotalelement = $(this).data("targettotalelement")
 
@@ -5276,7 +5289,7 @@ window.ListInfo = {
                     Object.entries(resultMulti).forEach((el) => {
                       htmlBody += '<label class="grp-select">' + el[0] + "</label>";
                       el[1].forEach((dl) => {
-                        debugger
+                        
                         htmlBody +=
                           "<li>" +
                           '<div class="checkbox">' +
@@ -12200,11 +12213,13 @@ async function waitUntil(condition, time = 500) {
 
 
 var get_parent_data = {
-  init: function (listName, code, parentFieldName, fieldName) {
+  init: function (listName, code, parentFieldName, fieldName, getGrandParent) {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(listName);
     var camlQuery = new SP.CamlQuery();
 
+
+    valueBasedOnParent = []
 
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef  Name=\"" + parentFieldName + "\" /><Value Type=\"Text\">" +
@@ -12214,7 +12229,8 @@ var get_parent_data = {
 
     get_parent_data.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     get_parent_data.g.fieldName = fieldName
-
+    get_parent_data.g.getGrandParent = getGrandParent
+    
     clientContext.load(get_parent_data.g.collListItem);
     clientContext.executeQueryAsync(
       Function.createDelegate(this, get_parent_data.onSuccess),
@@ -12226,13 +12242,20 @@ var get_parent_data = {
     var listItemEnum = collListItem.getEnumerator();
 
     var dynamicFieldName = get_parent_data.g.fieldName
+    var getGrandParent = get_parent_data.g.getGrandParent
     var dynamicVal = ""
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       itemID = oListItem.get_id();
 
       dynamicVal = oListItem.get_item(dynamicFieldName) || '';
-      valueBasedOnParent.push(dynamicVal)
+
+      if(getGrandParent && getGrandParent.length){
+        get_grandparent_data.init(getGrandParent[0].grandParentList,dynamicVal,getGrandParent[0].grandParentFieldName,getGrandParent[0].grandParentTargetFieldName)
+      }else{
+        valueBasedOnParent.push(dynamicVal)
+      }
+
     }
 
   },
@@ -12244,3 +12267,56 @@ var get_parent_data = {
   // Global variables
   g: {},
 };
+
+//////////////////////////////////
+
+var get_grandparent_data = {
+  init: function (listName, code, grandParentFieldName, grandParentTargetFieldName) {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle(listName);
+    var camlQuery = new SP.CamlQuery();
+
+
+    valueBasedOnParent = []
+    
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef  Name=\"" + grandParentFieldName + "\" /><Value Type=\"Text\">" +
+      code +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+    );
+
+    get_grandparent_data.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    get_grandparent_data.g.grandParentTargetFieldName = grandParentTargetFieldName
+
+    
+    clientContext.load(get_grandparent_data.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, get_grandparent_data.onSuccess),
+      Function.createDelegate(this, get_grandparent_data.onError)
+    );
+  },
+  onSuccess: function (sender, args) {
+    var collListItem = get_grandparent_data.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+
+   var grandParentTargetFieldName = get_grandparent_data.g.grandParentTargetFieldName
+    var dynamicGrandParentVal = ""
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      itemID = oListItem.get_id();
+
+      dynamicGrandParentVal = oListItem.get_item(grandParentTargetFieldName) || '';
+      
+        valueBasedOnParent.push(dynamicGrandParentVal)
+      console.log(valueBasedOnParent,"valueBasedOnParent in grand parent")
+    }
+
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  // Global variables
+  g: {},
+}

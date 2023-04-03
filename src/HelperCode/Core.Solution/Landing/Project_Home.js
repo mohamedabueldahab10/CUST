@@ -3856,8 +3856,9 @@ var Get_ProjectStatus_Info = {
     $(
       ".myCompletionStatusSchedual,.myCompletionStatusMilestone,.myCompletionStatusDelivrables"
     ).removeAttr(
-      "data-trans-stat8 data-trans-stat9 data-trans-stat10 data-trans-stat11 data-trans-stat12 data-trans-stat13 data-trans-stat14 data-trans-stat28"
+      "data-trans-stat8 data-trans-stat9 data-trans-stat10 data-trans-stat11 data-trans-stat12 data-trans-stat13 data-trans-stat14 data-trans-stat28 data-trans-stat30"
     );
+    
 
     if (ProgressStatusSchedule != No_Data) {
       $(".myCompletionStatusSchedual").attr(
@@ -3876,19 +3877,19 @@ var Get_ProjectStatus_Info = {
 
     $(".myCompletionStatusSchedual")
       .parent()
-      .removeClass("stat8 stat9 stat10 stat11 stat12 stat13 stat14 stat28");
+      .removeClass("stat8 stat9 stat10 stat11 stat12 stat13 stat14 stat28 stat30");
     $(".myCompletionStatusSchedual").parent().addClass(ProgressStatusSchedule);
 
     $(".myCompletionStatusMilestone")
       .parent()
-      .removeClass("stat8 stat9 stat10 stat11 stat12 stat13 stat14 stat28");
+      .removeClass("stat8 stat9 stat10 stat11 stat12 stat13 stat14 stat28 stat30");
     $(".myCompletionStatusMilestone")
       .parent()
       .addClass(ProgressStatusMilestone);
 
     $(".myCompletionStatusDelivrables")
       .parent()
-      .removeClass("stat8 stat9 stat10 stat11 stat12 stat13 stat14 stat28");
+      .removeClass("stat8 stat9 stat10 stat11 stat12 stat13 stat14 stat28 stat30");
     $(".myCompletionStatusDelivrables")
       .parent()
       .addClass(ProgressStatusDeliverable);

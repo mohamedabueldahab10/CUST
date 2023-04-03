@@ -287,6 +287,7 @@
     stat5: "لم تبدأ",
     stat6: "معلقة",
     stat7: "ملغية",
+    stat29: "قيد الموافقة",
     ////////////////// for Project Status
     stat8: "متأخر جدا",
     stat9: "متأخر",
@@ -296,16 +297,19 @@
     stat13: "معلق",
     stat14: "ملغي",
     stat28: "لا يوجد خط أساس",
+    stat30: "قيد الموافقة",
     ////////////////// for main kpi
     stat15: "لم يتم تحقيقه",
     stat16: "تم تحقيقه جزئيا",
     stat17: "تم تحقيق المستهدف",
     stat18: "لا يقاس",
     stat19: "لا توجد قيمة",
+    stat31: "قيد الموافقة",
     /////////////////// for Sos
     stat20: "تم تحقيقه جزئيا",
     stat21: "تم تحقيق المستهدف",
     stat22: "مكتمل",
+    stat32: "قيد الموافقة",
     ///////////////////for strategic partnership
     stat23: "متأخر جدا",
     stat24: "متأخر",
@@ -1348,6 +1352,7 @@
     stat5: "Not Started",
     stat6: "On Hold",
     stat7: "Canceled",
+    stat29: "Under Approval",
     //////////////////// for project status
     stat8: "Too Late",
     stat9: "Late",
@@ -1357,16 +1362,19 @@
     stat13: "On Hold",
     stat14: "Canceled",
     stat28: "No Baseline",
+    stat30: "Under Approval",
     ////////////////// for main kpi
     stat15: "Not achieved",
     stat16: "Partially achieved",
     stat17: "Target achieved",
     stat18: "Currently not applicable",
     stat19: "No Value",
+    stat31: "Under Approval",
     /////////////////// for Sos
     stat20: "Partially achieved",
     stat21: "Target achieved",
     stat22: "Completed",
+    stat32: "Under Approval",
     ///////////////////for strategic partnership
     stat23: "Too Late",
     stat24: "Late",
@@ -2139,13 +2147,13 @@
 function changeResources() {
   jQuery.fn.translate = function (opt) {
     var sett = $.extend(
-        {
-          default_lang: "ar",
-          langs: "#langs",
-          source: "text",
-        },
-        opt
-      ),
+      {
+        default_lang: "ar",
+        langs: "#langs",
+        source: "text",
+      },
+      opt
+    ),
       attributes = {},
       el = this;
 

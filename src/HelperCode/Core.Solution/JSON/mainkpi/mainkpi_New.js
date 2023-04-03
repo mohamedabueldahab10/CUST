@@ -4,22 +4,49 @@ var Information_Form = [
     labelEn: 'KPIs Management',
     description: 'التفاصيل',
     descriptionEn: 'Details',
+    // formValuesBasedOnParent: [
+    //   // add getGrandParent if the value based on grandParent and basedOnCondition to check if based on condition or not
+    //   {
+    //     parentList: 'SOs', listinerField: "RelatedStrategyObjective", parentFieldName: 'Title', fieldName: 'RelatedStrategy', basedOnCondition: false, 
+    //     getGrandParent: [
+    //       { grandParentList: "GoalStrategy", grandParentFieldName: "Title", grandParentTargetFieldName: "Types" }
+    //     ],
+    //     valueToSet: [
+    //       {
+    //         condition: "vision", values: [
+    //           { fieldNameInList: "WFModuleCode", fieldValueInList: "VROProjDeliverableGrandParent" },
+    //           { fieldNameInList: "WFStage", fieldValueInList: "VROProjDeliverable01GrandParent" },]
+    //       },
+    //       {
+    //         condition: "lms",
+    //         values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "LMSProjDeliverableGrandParent" },
+    //         { fieldNameInList: "WFStage", fieldValueInList: "LMSProjDeliverable01GrandParent" }]
+    //       },
+    //       {
+    //         condition: "ministry",
+    //         values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "EPMOProjDeliverableGrandParent" },
+    //         { fieldNameInList: "WFStage", fieldValueInList: "EPMOProjDeliverable01GrandParent" }]
+    //       },
+
+    //     ]
+    //   }
+    // ],
     formDefaultValues: [
       //VRO
       { fieldName: 'WFModuleCode', value: 'VROCreateKPI',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
       { fieldName: 'WFStage', value: 'VROCreateKPI01',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
       { fieldName: 'DraftStatus', value: 'draft' ,roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
-      
+
       //EPMOCOC
       { fieldName: 'WFModuleCode', value: 'EPMOCreateKPI',roles: ['SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
       { fieldName: 'WFStage', value: 'EPMOCreateKPI01',roles:  ['SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
       { fieldName: 'DraftStatus', value: 'draft',roles:  ['SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
-  
+
       //LMS
       { fieldName: 'WFModuleCode', value: 'LMSCreateKPI',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
       { fieldName: 'WFStage', value: 'LMSCreateKPI01',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
       { fieldName: 'DraftStatus', value: 'draft',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
-  
+
     ],
     subFields: [
       {
@@ -40,16 +67,16 @@ var Information_Form = [
         dynamic: 'parent', //main field that affect on other chiled field
         type: 'dropdownValues',
         toggleValues: [
-          { value: 'main', fields: ['Sector','SubSector'] }, //we can put more than 1  field
-          { value: 'sublevel2', fields: ['RelatedMainKpis','Sector','SubSector'] }, //we can put more than 1  field
-          { value: 'sublevel3', fields: ['RelatedMainKpis','Sector','SubSector'] }, //we can put more than 1  field
+          { value: 'main', fields: ['Sector', 'SubSector'] }, //we can put more than 1  field
+          { value: 'sublevel2', fields: ['RelatedMainKpis', 'Sector', 'SubSector'] }, //we can put more than 1  field
+          { value: 'sublevel3', fields: ['RelatedMainKpis', 'Sector', 'SubSector'] }, //we can put more than 1  field
         ],
         options: {
           choices: [
             {
               display: 'main',
               value: 'main',
-             // customFilterValue: 'main',
+              // customFilterValue: 'main',
             },
             {
               display: 'sublevel2',

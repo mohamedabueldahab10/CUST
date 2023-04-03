@@ -79,7 +79,7 @@ var BudgetLabelsEn = [
 // HRSD-R2 new branch
 
 // var statusOccuresData = ["stat3", "stat1", "stat7", "stat2", "stat6"];
-var statusOccuresData = ["stat28", "stat14", "stat13", "stat12", "stat11", "stat10", "stat9", "stat8"];
+var statusOccuresData = ["stat30","stat28", "stat14", "stat13", "stat12", "stat11", "stat10", "stat9", "stat8"];
 
 if (
   localStorage.getItem("lng") == null ||
@@ -2686,6 +2686,7 @@ function handleStatusBarChart() {
   var background_13 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
   var background_14 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
   var background_28 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
+  var background_30 = bar_ctx1.createLinearGradient(0, 0, 0, 270);
 
 
 
@@ -2717,6 +2718,11 @@ function handleStatusBarChart() {
 
   background_28.addColorStop(0, "#a9a9a9");
   background_28.addColorStop(1, "#696969");
+
+  background_30.addColorStop(0, "#a9a9a9");
+  background_30.addColorStop(1, "#696969");
+
+
   // blue on plan
 
   // background_1.addColorStop(0, "rgba(0,170,0,255)");
@@ -2741,6 +2747,7 @@ function handleStatusBarChart() {
   //   background_28,
   // ];
   var BackgroundsArray = [
+    background_30,
     background_28,
     background_14,
     background_13,

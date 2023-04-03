@@ -540,19 +540,32 @@ window.New_Data_Submit = {
 
     // to handle set data based on parent values and current list condition
     $(`[data-basedonparentsetvalues]`).each(function (index) {
+      
       var parsingData = eval($(this).data('basedonparentsetvalues'))
-      var basedOnFieldName = "", basedOnFieldValue = "", basedOnFieldCurrentValue = "", basedOnFieldType = "";
+      var basedOnFieldName = "", basedOnFieldValue = "", basedOnFieldCurrentValue = "", basedOnFieldType = "", basedOnCondition = false;
       parsingData.forEach(el => {
+        
         basedOnFieldName = el.basedOnFieldName
         basedOnFieldValue = el.basedOnFieldValue
-
+        basedOnCondition = el.basedOnCondition ? el.basedOnCondition : false
         basedOnFieldType = $(`#${basedOnFieldName}`).attr('type')
         if (basedOnFieldType == 'radio') {
           basedOnFieldCurrentValue = $(`#${basedOnFieldName}:checked`).val()
         } else {
           basedOnFieldCurrentValue = $(`#${basedOnFieldName}`).val()
         }
-        if (basedOnFieldValue == basedOnFieldCurrentValue) {
+
+        if (basedOnCondition) {
+          if (basedOnFieldValue == basedOnFieldCurrentValue) {
+            el.valueToSet.forEach(item => {
+              if (valueBasedOnParent.includes(item.condition)) {
+                item.values.forEach(field => {
+                  New_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
+                })
+              }
+            })
+          }
+        }else{
           el.valueToSet.forEach(item => {
             if (valueBasedOnParent.includes(item.condition)) {
               item.values.forEach(field => {
@@ -562,7 +575,7 @@ window.New_Data_Submit = {
           })
         }
       })
-     
+
     })
     //
 
@@ -954,7 +967,7 @@ window.Edit_Data_Submit = {
       listkey == "portfolio" &&
       $("#Manager").find("span.sp-peoplepicker-userSpan").attr("sid")
     ) {
-      debugger
+      
       pickerValidationDone = true;
       isCheckMember = true;
       var portfoliomanager =
@@ -1470,20 +1483,32 @@ window.Edit_Data_Submit = {
     //
     // to handle set data based on parent values and current list condition
     $(`[data-basedonparentsetvalues]`).each(function (index) {
-      debugger
+      
       var parsingData = eval($(this).data('basedonparentsetvalues'))
-      var basedOnFieldName = "", basedOnFieldValue = "", basedOnFieldCurrentValue = "", basedOnFieldType = "";
+      var basedOnFieldName = "", basedOnFieldValue = "", basedOnFieldCurrentValue = "", basedOnFieldType = "", basedOnCondition = false;
       parsingData.forEach(el => {
+        
         basedOnFieldName = el.basedOnFieldName
         basedOnFieldValue = el.basedOnFieldValue
-
+        basedOnCondition = el.basedOnCondition ? el.basedOnCondition : false
         basedOnFieldType = $(`#${basedOnFieldName}`).attr('type')
         if (basedOnFieldType == 'radio') {
           basedOnFieldCurrentValue = $(`#${basedOnFieldName}:checked`).val()
         } else {
           basedOnFieldCurrentValue = $(`#${basedOnFieldName}`).val()
         }
-        if (basedOnFieldValue == basedOnFieldCurrentValue) {
+        
+        if (basedOnCondition) {
+          if (basedOnFieldValue == basedOnFieldCurrentValue) {
+            el.valueToSet.forEach(item => {
+              if (valueBasedOnParent.includes(item.condition)) {
+                item.values.forEach(field => {
+                  Edit_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
+                })
+              }
+            })
+          }
+        }else{
           el.valueToSet.forEach(item => {
             if (valueBasedOnParent.includes(item.condition)) {
               item.values.forEach(field => {
@@ -1493,8 +1518,9 @@ window.Edit_Data_Submit = {
           })
         }
       })
-     
+
     })
+    //
 
 
 
@@ -2761,7 +2787,7 @@ function _uploadFile() {
         console.log(filesPurpose, "filesPurpose")
         console.log(index, "index")
 
-        debugger
+        
 
         var purpose = filesPurpose[index].purpose
 
