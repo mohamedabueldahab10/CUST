@@ -7,7 +7,7 @@ window.myRoleConfig = [];
 window.isRoleDataLevelAccess = false;
 window.currentMainList = "";
 window.projectActualBudget = 0;
-window.projectAssignedBudget =0;
+window.projectAssignedBudget = 0;
 window.initiativeActualBudget = 0;
 window.CurrentUserTasksCount = 0;
 //window.finishRenderAccessRole = false
@@ -6440,7 +6440,7 @@ var Access_Project_Info_Request = {
 
         projectActualBudget = oListItem.get_item('ActualBudget') || 0;
         projectAssignedBudget = oListItem.get_item('AssignedBudget') || 0;
-       
+
         // if (User_ScheduleSource == 'عبر النظام') {
         //     $('body').append('<style>.navbar.page-nav.px-5 li.nav-item[data-href*="schedule.aspx"]{display:none}</style>');
         // } else if (User_ScheduleSource == 'عبر الجدول الزمني') {
@@ -6816,7 +6816,7 @@ var Access_Project_Info_Request = {
     // if project is Cancelled or Holded
 
     if (
-      User_NotActiveStatus && (USERlistkey == "projects" || USERProjRelated.indexOf(USERlistkey) > -1 || istherePCODE) || (ProjectIsDraft && istherePCODE && !isWF)
+      User_NotActiveStatus && (USERlistkey == "projects" || USERProjRelated.indexOf(USERlistkey) > -1 || istherePCODE) || (ProjectIsDraft && (istherePCODE || USERlistkey == "projects") && !isWF)
     ) {
       $("body").append(
         "<style>" +
@@ -8650,19 +8650,19 @@ var Tasks_Info_Request_User = {
             keyNameParams = "deliverables";
           } else if (wfname == "CR" || wfname == "VROCRInitiative" || wfname == "EPMOCRInitiative" || wfname == "LMSCRInitiative") {
             keyNameParams = "changerequest";
-          }else if (wfname == 'VROCreateInitiative' || wfname == 'EPMOCreateInitiative' || wfname == 'LMSCreateInitiative') {
+          } else if (wfname == 'VROCreateInitiative' || wfname == 'EPMOCreateInitiative' || wfname == 'LMSCreateInitiative') {
             keyNameParams = 'initiatives'
-          }  else if (wfname == "CR" || wfname == "VROCRProject" || wfname == "EPMOCRProject" || wfname == "LMSCRProject") {
+          } else if (wfname == "CR" || wfname == "VROCRProject" || wfname == "EPMOCRProject" || wfname == "LMSCRProject") {
             keyNameParams = "changerequest";
-          } else if ( wfname == "VROCreateProject" ||  wfname == "EPMOCreateProject" ||  wfname == "LMSCreateProject" ) {
+          } else if (wfname == "VROCreateProject" || wfname == "EPMOCreateProject" || wfname == "LMSCreateProject") {
             keyNameParams = "projects";
           } else if (wfname == "VROCRObjective" || wfname == "MSCRObjective" || wfname == "LMSCRObjective") {
             keyNameParams = "changerequest";
-          } else if ( wfname == "VROActualKPI" || wfname == "MSActualKPI" || wfname == "LMSActualKPI") {
+          } else if (wfname == "VROActualKPI" || wfname == "MSActualKPI" || wfname == "LMSActualKPI") {
             keyNameParams = "mainkpi";
-          }else if ( wfname == 'VROCreateKPI' || wfname == 'EPMOCreateKPI' || wfname == 'LMSCreateKPI' ) {
+          } else if (wfname == 'VROCreateKPI' || wfname == 'EPMOCreateKPI' || wfname == 'LMSCreateKPI') {
             keyNameParams = 'mainkpi'
-          } else if (wfname == "VROCRKPI" || wfname == "MSCRKPI" || wfname == "LMSCRKPI" ) {
+          } else if (wfname == "VROCRKPI" || wfname == "MSCRKPI" || wfname == "LMSCRKPI") {
             keyNameParams = "changerequest";
           } else if (wfname == "Issue") {
             keyNameParams = "issues";
