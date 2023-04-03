@@ -56,19 +56,19 @@ window.Information_Form = [
 				options: {
 					choices: [
 						//SOS
-						{ display: "strategicobjectives", value: "strategic_SOs", roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'] },
+						{ display: "strategicobjectives", value: "strategic_SOs", roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam'] },
 						{ display: "visionobjectives", value: "vision_SOs", roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', ], },
 						{ display: "lmsobjectives", value: "lms_SOs", roles: ['Administrator',  'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
 						//projects
 						{ display: "vroprojects", value: "vro_Projects", roles: ['Administrator','ProjectManager','InitiativeManager','InitiativeOwner',  'VROEHead', 'VROE'] },
-						{ display: "epmoprojects", value: "epmo_Projects", roles: ['Administrator', 'ProjectManager','InitiativeManager','InitiativeOwner', 'EPMO', 'SPMOHead', 'SPMO', 'DU','SPMTeam', 'StrategyTeam', 'CRCommittee'] },
+						{ display: "epmoprojects", value: "epmo_Projects", roles: ['Administrator', 'ProjectManager','InitiativeManager','InitiativeOwner', 'EPMO', 'SPMOHead', 'SPMO', 'DU','SPMTeam', 'StrategyTeam'] },
 						{ display: "lmsprojects", value: "lms_Projects", roles: ['Administrator', 'ProjectManager','InitiativeManager','InitiativeOwner', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
 						//Initiatives
-						{ display: "strategicinitiatives", value: "strategic_Initiatives", roles: ['Administrator','InitiativeManager', 'InitiativeOwner', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMTeam', 'StrategyTeam', 'CRCommittee'] },
+						{ display: "strategicinitiatives", value: "strategic_Initiatives", roles: ['Administrator','InitiativeManager', 'InitiativeOwner', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMTeam', 'StrategyTeam'] },
 						{ display: "vroinitiatives", value: "vro_Initiatives", roles: ['Administrator', 'InitiativeManager','InitiativeOwner', 'VROEHead', 'VROE'] },
 						{ display: "lmsinitiatives", value: "lms_Initiatives", roles: ['Administrator', 'LMSE', 'InitiativeManager','InitiativeOwner', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
 						//KPI
-						{ display: "strategickpi", value: "strategic_MainKPI", roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'] },
+						{ display: "strategickpi", value: "strategic_MainKPI", roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam'] },
 						{ display: "vrokpi", value: "vro_MainKPI", roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead',] },
 						{ display: "lmskpi", value: "lms_MainKPI", roles: ['Administrator','LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
 					],
