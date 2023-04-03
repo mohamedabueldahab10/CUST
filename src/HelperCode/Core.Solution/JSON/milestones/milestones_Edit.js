@@ -4,6 +4,29 @@ var Information_Form = [
     labelEn: 'Milestone Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
+    formValuesBasedOnParent: [
+      {
+        parentList: 'Projects', parentFieldName: 'Title', fieldName: 'InitiativeType', basedOnFieldName: "Delivered", basedOnFieldValue: "yes",
+        valueToSet: [
+          {
+            condition: "vision", values: [
+              { fieldNameInList: "WFModuleCode", fieldValueInList: "VROProjMilestone" },
+              { fieldNameInList: "WFStage", fieldValueInList: "VROProjMilestone01" },]
+          },
+          {
+            condition: "lms",
+            values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "LMSProjMilestone" },
+            { fieldNameInList: "WFStage", fieldValueInList: "LMSProjMilestone01" }]
+          },
+          {
+            condition: "strategically",
+            values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "EPMOProjMilestone" },
+            { fieldNameInList: "WFStage", fieldValueInList: "EPMOProjMilestone01" }]
+          },
+
+        ]
+      }
+    ],
     subFields: [
       // {
       //     "InternalName": "Title",

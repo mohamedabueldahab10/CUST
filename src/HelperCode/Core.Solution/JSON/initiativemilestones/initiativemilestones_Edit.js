@@ -4,6 +4,28 @@ var Information_Form = [
     labelEn: 'Initiative Milestone',
     description: 'التفاصيل',
     descriptionEn: 'Details',
+    formValuesBasedOnParent: [
+      {
+        parentList: 'Initiatives', parentFieldName: 'Title', fieldName: 'Types', basedOnFieldName: "Delivered", basedOnFieldValue: "yes",
+        valueToSet: [
+          {
+            condition: "vision", values: [
+              { fieldNameInList: "WFModuleCode", fieldValueInList: "VROInitiativeMilestone" },
+              { fieldNameInList: "WFStage", fieldValueInList: "VROInitiativeMilestone01" },]
+          },
+          {
+            condition: "lms",
+            values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "LMSInitiativeMilestone" },
+            { fieldNameInList: "WFStage", fieldValueInList: "LMSInitiativeMilestone01" }]
+          },
+          {
+            condition: "strategically",
+            values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "EPMOInitiativeMilestone" },
+            { fieldNameInList: "WFStage", fieldValueInList: "EPMOInitiativeMilestone01" }]
+          },
+        ]
+      }
+    ],
     subFields: [
       // {
       //     "InternalName": "Title",
@@ -112,8 +134,8 @@ var Information_Form = [
         targetfieldrequired:"ActualCompletedDate",
         options: {
           choices: [
-            { display: 'yes', value: 'true' },
-            { display: 'no', value: 'false' },
+            { display: 'yes', value: 'yes' },
+            { display: 'no', value: 'no' },
           ],
         },
         security: {
