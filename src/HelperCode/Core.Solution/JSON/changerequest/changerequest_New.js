@@ -51,7 +51,7 @@ window.Information_Form = [
 				// dontSubmit: true,
 				// display: "none",
 				customCr: true,
-				// dynamic: "parent", //main field that affect on other chiled field  
+				dynamic: "parent", //main field that affect on other chiled field  
 				type: "dropdownValues",
 				options: {
 					choices: [
@@ -60,13 +60,13 @@ window.Information_Form = [
 						{ display: "visionobjectives", value: "vision_SOs", roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', ], },
 						{ display: "lmsobjectives", value: "lms_SOs", roles: ['Administrator',  'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
 						//projects
-						{ display: "vroprojects", value: "vro_Projects", roles: ['Administrator','ProjectManager','InitiativeManager','InitiativeOwner',  'VROEHead', 'VROE'] },
-						{ display: "epmoprojects", value: "epmo_Projects", roles: ['Administrator', 'ProjectManager','InitiativeManager','InitiativeOwner', 'EPMO', 'SPMOHead', 'SPMO', 'DU','SPMTeam', 'StrategyTeam'] },
-						{ display: "lmsprojects", value: "lms_Projects", roles: ['Administrator', 'ProjectManager','InitiativeManager','InitiativeOwner', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
+						{ display: "vroprojects", value: "vro_Projects",customFilterValue: "vision", roles: ['Administrator','ProjectManager','InitiativeManager','InitiativeOwner',  'VROEHead', 'VROE'] },
+						{ display: "epmoprojects", value: "epmo_Projects",customFilterValue: "strategically", roles: ['Administrator', 'ProjectManager','InitiativeManager','InitiativeOwner', 'EPMO', 'SPMOHead', 'SPMO', 'DU','SPMTeam', 'StrategyTeam'] },
+						{ display: "lmsprojects", value: "lms_Projects",customFilterValue: "lms", roles: ['Administrator', 'ProjectManager','InitiativeManager','InitiativeOwner', 'LMSE', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
 						//Initiatives
-						{ display: "strategicinitiatives", value: "strategic_Initiatives", roles: ['Administrator','InitiativeManager', 'InitiativeOwner', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMTeam', 'StrategyTeam'] },
-						{ display: "vroinitiatives", value: "vro_Initiatives", roles: ['Administrator', 'InitiativeManager','InitiativeOwner', 'VROEHead', 'VROE'] },
-						{ display: "lmsinitiatives", value: "lms_Initiatives", roles: ['Administrator', 'LMSE', 'InitiativeManager','InitiativeOwner', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
+						{ display: "strategicinitiatives", value: "strategic_Initiatives",customFilterValue: "strategically", roles: ['Administrator','InitiativeManager', 'InitiativeOwner', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMTeam', 'StrategyTeam'] },
+						{ display: "vroinitiatives", value: "vro_Initiatives",customFilterValue: "vision", roles: ['Administrator', 'InitiativeManager','InitiativeOwner', 'VROEHead', 'VROE'] },
+						{ display: "lmsinitiatives", value: "lms_Initiatives",customFilterValue: "lms", roles: ['Administrator', 'LMSE', 'InitiativeManager','InitiativeOwner', 'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl'], },
 						//KPI
 						{ display: "strategickpi", value: "strategic_MainKPI", roles: ['Administrator', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam'] },
 						{ display: "vrokpi", value: "vro_MainKPI", roles: ['Administrator', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead',] },
@@ -74,7 +74,7 @@ window.Information_Form = [
 					],
 				},
 				toggleValues: [
-					{ value: "vro_Projects", fields: ["ProjectCode", "vroprojectsUpdateType"] }, //we can put more than 1  field
+					{ value: "vro_Projects", fields: ["ProjectCode", "vroprojectsUpdateType"]}, //we can put more than 1  field
 					{ value: "epmo_Projects", fields: ["ProjectCode", "epmoprojectsUpdateType"] }, //we can put more than 1  field
 					{ value: "lms_Projects", fields: ["ProjectCode", "lmsprojectsUpdateType"] }, //we can put more than 1  field
 					//Initiatives
@@ -104,7 +104,10 @@ window.Information_Form = [
 				source: "Projects",
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
-				useAccessPolicy: true
+				useAccessPolicy: true,
+				dynamic: "moduleSelect", //InternalName Of Parent field
+				filterField: "InitiativeType",//InternalName Of Parent field
+				filterFieldType: "Text",//Type In Sharepoint List for Parent field
 			},
 			{
 				InternalName: "UpdateType",
@@ -804,7 +807,10 @@ window.Information_Form = [
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
 				validation: "required",
-				useAccessPolicy: true
+				useAccessPolicy: true,
+				dynamic: "moduleSelect", //InternalName Of Parent field
+				filterField: "Types",//InternalName Of Parent field
+				filterFieldType: "Text",//Type In Sharepoint List for Parent field
 			},
 			{
 				InternalName: "UpdateType",
