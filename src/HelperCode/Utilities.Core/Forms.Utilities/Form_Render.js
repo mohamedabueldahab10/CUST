@@ -972,7 +972,7 @@ window.ListInfo = {
           $("input.getTotalSelectedValues").change(function () {
 
 
-            debugger
+            
             var fieldValue = $(this).data("getothervalue")
             var targettotalelement = $(this).data("targettotalelement")
 
@@ -5289,7 +5289,7 @@ window.ListInfo = {
                     Object.entries(resultMulti).forEach((el) => {
                       htmlBody += '<label class="grp-select">' + el[0] + "</label>";
                       el[1].forEach((dl) => {
-                        debugger
+                        
                         htmlBody +=
                           "<li>" +
                           '<div class="checkbox">' +
