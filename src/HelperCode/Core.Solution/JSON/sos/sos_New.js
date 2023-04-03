@@ -4,24 +4,52 @@ var Information_Form = [
     labelEn: 'Strategy objective Data',
     description: '',
     descriptionEn: '',
-    formDefaultValues: [
-      //VRO
-      { fieldName: 'WFModuleCode', value: 'VROCreateObjective',roles: ['Administrator','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
-      { fieldName: 'WFStage', value: 'VROCreateObjective01',roles: ['Administrator','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
-      { fieldName: 'DraftStatus', value: 'draft' ,roles: ['Administrator','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+    // formDefaultValues: [
+    //   //VRO
+    //   { fieldName: 'WFModuleCode', value: 'VROCreateObjective',roles: ['Administrator','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+    //   { fieldName: 'WFStage', value: 'VROCreateObjective01',roles: ['Administrator','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+    //   { fieldName: 'DraftStatus', value: 'draft' ,roles: ['Administrator','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
       
-      //EPMOCOC
-      { fieldName: 'WFModuleCode', value: 'MSCreateObjective',roles: ['Administrator','EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
-      { fieldName: 'WFStage', value: 'MSCreateObjective01',roles:  ['Administrator','EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
-      { fieldName: 'DraftStatus', value: 'draft',roles:  ['Administrator','EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+    //   //EPMOCOC
+    //   { fieldName: 'WFModuleCode', value: 'MSCreateObjective',roles: ['Administrator','EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+    //   { fieldName: 'WFStage', value: 'MSCreateObjective01',roles:  ['Administrator','EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+    //   { fieldName: 'DraftStatus', value: 'draft',roles:  ['Administrator','EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
   
-      //LMS
-      { fieldName: 'WFModuleCode', value: 'LMSCreateObjective',roles: ['Administrator','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
-      { fieldName: 'WFStage', value: 'LMSCreateObjective01',roles: ['Administrator','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
-      { fieldName: 'DraftStatus', value: 'draft',roles: ['Administrator','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+    //   //LMS
+    //   { fieldName: 'WFModuleCode', value: 'LMSCreateObjective',roles: ['Administrator','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+    //   { fieldName: 'WFStage', value: 'LMSCreateObjective01',roles: ['Administrator','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+    //   { fieldName: 'DraftStatus', value: 'draft',roles: ['Administrator','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
   
+    // ],
+    formValuesBasedOnParent: [
+      // add getGrandParent if the value based on grandParent and basedOnCondition to check if based on condition or not
+      {
+        parentList: 'GoalStrategy', listinerField: "RelatedStrategy", parentFieldName: 'Title', fieldName: 'Types', basedOnCondition: false, 
+       //listinerField : current field for this form , Field NAme : the field in Parent List that contains the conditions
+        valueToSet: [
+          {
+            condition: "vision", values: [
+              { fieldNameInList: "WFModuleCode", fieldValueInList: "VROCreateObjective" },
+              { fieldNameInList: "WFStage", fieldValueInList: "VROCreateObjective01" },
+              { fieldNameInList: "DraftStatus", fieldValueInList: "draft" },
+            ]
+          },
+          {
+            condition: "lms",
+            values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "LMSCreateObjective" },
+            { fieldNameInList: "WFStage", fieldValueInList: "LMSCreateObjective01" },
+            { fieldNameInList: "DraftStatus", fieldValueInList: "draft" },]
+          },
+          {
+            condition: "ministry",
+            values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "MSCreateObjective" },
+            { fieldNameInList: "WFStage", fieldValueInList: "MSCreateObjective01" },
+            { fieldNameInList: "DraftStatus", fieldValueInList: "draft" },]
+          },
+
+        ]
+      }
     ],
-    
     subFields: [
       {
         InternalName: 'Name',
