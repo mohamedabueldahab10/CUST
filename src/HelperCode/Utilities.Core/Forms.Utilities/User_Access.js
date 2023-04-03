@@ -2601,7 +2601,9 @@ window.userCalls = {
         ar_UserRole = "مالك المؤشرات";
         en_UserRole = "KPIs Owner";
         //CRUD
-        Create_Access = [];
+        Create_Access = [
+          "changerequest"
+        ];
         Read_Access = [
           "mainkpi",
           "sos",
@@ -2673,7 +2675,8 @@ window.userCalls = {
         en_UserRole = "Performance Leader";
         //CRUD
         Create_Access = ["Targets.aspx",
-          "BenefitMetrics.aspx"];
+          "BenefitMetrics.aspx",
+          "changerequest"];
         Read_Access = [
           "mainkpi",
           "sos",
