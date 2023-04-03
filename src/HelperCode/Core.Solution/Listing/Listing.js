@@ -34,10 +34,10 @@ var projectTypeFilterQuery = '', typeClicked = 'Internal';
 window.indexofListing = 0;
 var taskClicked = 'relatedTasks', allTasksClicked = false, getNewFilterTask = false, isViewMoreClicked = false;
 
-// var emptyData = require('../../../HelperRessources/img/empty-data.png');
-// var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
-var emptyData = ''
-var exportExcel = ''
+var emptyData = require('../../../HelperRessources/img/empty-data.png');
+var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
+// var emptyData = ''
+// var exportExcel = ''
 //all data filter array
 allDataFilterArr = []
 //
@@ -100,7 +100,7 @@ else if (isTasks) {
 window.sphttp = {
   get: function (listUrl, listDisplayName, camelQuery, internalFieldNames, isGetDdl, onEach, onError) {
 
-    
+
     sphttp.g.isGetDdl = isGetDdl;
     var clientContext = new SP.ClientContext(listUrl);
     var oListsp = clientContext.get_web().get_lists().getByTitle(listDisplayName);
@@ -130,13 +130,13 @@ window.sphttp = {
     sphttp.g.camlQuery.set_viewXml(camelQuery);
 
 
-    
+
     SPHTTPitemsEnumerable = oListsp.getItems(sphttp.g.camlQuery);
     clientContext.load(SPHTTPitemsEnumerable); //, 'Include(Id, '+fields+')'
     clientContext.executeQueryAsync(
       Function.createDelegate(this,
         function (sender, args) {
-          
+
           var listItems = SPHTTPitemsEnumerable.getEnumerator();
           window.records = [];
           window.RecordsWithID = [];
@@ -216,7 +216,7 @@ window.sphttp = {
                 }
               }
             } else {
-              
+
               if (internalFieldNames && internalFieldNames.length > 0) {
                 for (var i = 0; i < internalFieldNames.length; i++) {
                   if (internalFieldNames[i] = Listing_Info[i].InternalName) {
@@ -305,27 +305,27 @@ window.sphttp = {
 
                     }
                     else if (Listing_Info[i].type == "lookup") {
-                      
+
                       var lookupItemarr = [], Itemdisplayname = "";
                       if ((localStorage.getItem('' + Listing_Info[i].localStorageVariable) != null) && (oListItem.get_item(internalFieldNames[i]) !== null)) {
                         lookupItemarr = JSON.parse(localStorage.getItem('' + Listing_Info[i].localStorageVariable));
                         lookupItemarr = lookupItemarr.filter(function (a) {
-                       
+
                           return a.code === oListItem.get_item(internalFieldNames[i])
                         });
-                         
+
                         if (lookupItemarr[0]) {
                           if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
                             record[internalFieldNames[i]] = lookupItemarr[0].name;
                           } else record[internalFieldNames[i]] = lookupItemarr[0].nameEn;
-                        }else if(oListItem.get_item(internalFieldNames[i])){
+                        } else if (oListItem.get_item(internalFieldNames[i])) {
                           record[internalFieldNames[i]] = oListItem.get_item(internalFieldNames[i])
                         }
                         else {
                           record[internalFieldNames[i]] = No_Data;
                         }
                       }
-      
+
                       else {
                         record[internalFieldNames[i]] = No_Data;
                       }
@@ -492,7 +492,7 @@ window.ListingData = {
   init: function () {
 
     if (!isTasks && originalstate) {
-      
+
       if (isRoleDataLevelAccess && (!UserICode && !USERPCODE && isEmptyFilter)) {
         PQuery = dataLevelAccessQuery ? dataLevelAccessQuery : AccessQuery;
         console.log(PQuery, "PQuery odddds")
@@ -618,7 +618,7 @@ window.ListingData = {
       changeResources();
     } else {
 
-      
+
       sphttp.get(
         ListURL,
         SP_ListName,
@@ -627,7 +627,7 @@ window.ListingData = {
         false,
         async function (records, record, listItem, isDone) {
 
-          
+
           // records.forEach((element, i) => { 
           //   if ((element.ProjectCode && element.ProjectCode != No_Data) && !isthereICODE) { // add element.projectCode !=No_Data to show the initiative in task list
           //     if (!userProjects.includes(element.ProjectCode)) {
@@ -1446,7 +1446,7 @@ window.ListingData = {
         // debugger
         for (var i = 0; i < FilterChoices.length; i++) {
           console.log(FilterChoices, "FilterChoices FilterChoices")
-          
+
           //only one choice
           if (FilterChoices.length == 1) {
 
@@ -1709,20 +1709,20 @@ window.ListingData = {
             keyNameParams = 'changerequest'
           } else if (wfname == 'VROCreateInitiative' || wfname == 'EPMOCreateInitiative' || wfname == 'LMSCreateInitiative') {
             keyNameParams = 'initiatives'
-          }  else if (wfname == 'CR' || wfname == 'VROCRProject' || wfname == 'EPMOCRProject' || wfname == 'LMSCRProject') {
+          } else if (wfname == 'CR' || wfname == 'VROCRProject' || wfname == 'EPMOCRProject' || wfname == 'LMSCRProject') {
             keyNameParams = 'changerequest';
-          } else if ( wfname == 'VROCreateProject' || wfname == 'EPMOCreateProject' || wfname == 'LMSCreateProject') {
+          } else if (wfname == 'VROCreateProject' || wfname == 'EPMOCreateProject' || wfname == 'LMSCreateProject') {
             keyNameParams = 'projects';
-          } 
+          }
           else if (wfname == 'VROCRObjective' || wfname == 'MSCRObjective' || wfname == 'LMSCRObjective') {
             keyNameParams = 'changerequest'
           } else if (wfname == 'VROCreateObjective' || wfname == 'LMSCreateObjective' || wfname == 'MSCreateObjective') {
             keyNameParams = 'sos'
-          } else if ( wfname == 'VROActualKPI' || wfname == 'MSActualKPI' || wfname == 'LMSActualKPI' ) {
+          } else if (wfname == 'VROActualKPI' || wfname == 'MSActualKPI' || wfname == 'LMSActualKPI') {
             keyNameParams = 'mainkpi'
-          } else if ( wfname == 'VROCreateKPI' || wfname == 'EPMOCreateKPI' || wfname == 'LMSCreateKPI' ) {
+          } else if (wfname == 'VROCreateKPI' || wfname == 'EPMOCreateKPI' || wfname == 'LMSCreateKPI') {
             keyNameParams = 'mainkpi'
-          } else if (wfname == 'VROCreateKPI' || wfname == 'MSCRKPI' || wfname == 'LMSCRKPI' ) {
+          } else if (wfname == 'VROCreateKPI' || wfname == 'MSCRKPI' || wfname == 'LMSCRKPI') {
             keyNameParams = 'changerequest'
           } else if (wfname == 'Issue') {
             keyNameParams = 'issues'
@@ -1785,7 +1785,8 @@ window.ListingData = {
       }
     },
     ExportToExcel: function () {
-      var DN = Listing_Info.map((a) => a.DisplayName);
+      // var DN = Listing_Info.map((a) => a.DisplayName);
+      var DN = ""
       var FT = Listing_Info.map((a) => a.type);
       var fields = IN;
       var filter = "";
@@ -1822,6 +1823,15 @@ window.ListingData = {
         "December",
       ];
 
+      if (
+        localStorage.getItem("lng") == null ||
+        localStorage.getItem("lng") == "ar"
+      ) {
+        Listing_Info.map((a) => a.DisplayName);
+      } else {
+        DN = Listing_Info.map((a) => a.DisplayNameEn);
+      }
+
       AllRecordsWithID.forEach(function (a, i) {
         //getting listing records
         mydata.push(a.record);
@@ -1832,13 +1842,15 @@ window.ListingData = {
       // var head = Object.keys(mydata[0]);//Using internal names
       var head = DN;
       for (var i = 0; i < head.length; i++) {
+        console.log(head, "HEAAAAAAAAAAD")
+        debugger
         table += "<th>" + head[i].replaceAll(" ", "%20") + "</th>";
       }
       table += "</tr></thead><tbody>";
 
 
       console.log(table, "table")
-      
+
 
       for (var i = 0; i < mydata.length; i++) {
 
@@ -1868,7 +1880,7 @@ window.ListingData = {
 
             case "yesnoradio":
               var data = mydata[i][IN[j]]
-              if (data) {                
+              if (data) {
                 if (
                   localStorage.getItem("lng") == null ||
                   localStorage.getItem("lng") == "ar"
@@ -1878,13 +1890,13 @@ window.ListingData = {
                 } else {
                   translationData = Resources.en[data] ? Resources.en[data] : No_Data
                 }
-              }else{
-                if (typeof (data) == 'boolean'){
+              } else {
+                if (typeof (data) == 'boolean') {
                   if (
                     localStorage.getItem("lng") == null ||
                     localStorage.getItem("lng") == "ar"
                   ) {
-  
+
                     translationData = Resources.ar[data] ? Resources.ar[data] : No_Data
                   } else {
                     translationData = Resources.en[data] ? Resources.en[data] : No_Data
@@ -1897,7 +1909,7 @@ window.ListingData = {
 
             case "dropdownValues":
               var data = mydata[i][IN[j]]
-              
+
               if (data) {
                 data = data.toLowerCase()
                 if (
@@ -2083,7 +2095,7 @@ window.ListingData = {
       });
     }, //build html and split data to DDLS
     Build_HTML: function (AllData, FilterNames, DisplayNames, TypsFieldsAll, transFields, localStorageVariables) {
-      
+
       var FilterationcontractsHTML = '';
       my_split = '';
 
@@ -2097,9 +2109,9 @@ window.ListingData = {
       for (var L = 0; L < DisplayNames.length; L++) {
         //buld ddl html
         for (var z = 0; z < AllData[L].length; z++) {
-          
+
           if (transFields[L] == true) {
-            
+
             FilterationcontractsHTML +=
               '<label class="dropdown-item"><span data-trans-' + AllData[L][z] + ' class="Resources"></span><input data-type="' + TypsFieldsAll[L] + '" data-internal="' + FilterNames[L] + '" type="checkbox" name="' + FilterNames[L] + '" value="' + AllData[L][z] + '">' +
               '</label>'

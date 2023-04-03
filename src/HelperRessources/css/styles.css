@@ -1521,8 +1521,8 @@ i.icon-plus {
     content: "";
     position: absolute;
     left: 10px;
-    background-image: url("../../HelperRessources/img/icon-arrow-down.png");
-    background-repeat: no-repeat;
+    /* background-image: url("../../HelperRessources/img/icon-arrow-down.png"); // remove arrow from listing page
+    background-repeat: no-repeat; */
     -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
     -ms-transform: rotate(90deg);
