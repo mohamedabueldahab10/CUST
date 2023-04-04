@@ -4,6 +4,12 @@ var Information_Form = [
     labelEn: 'Basic Info',
     description: 'التفاصيل',
     descriptionEn: 'Details',
+        formDefaultValues: [
+      //VRO
+      { fieldName: 'WFModuleCode', value: 'Achievements', roles: ['SPMO'], },
+      { fieldName: 'WFStage', value: 'A01', roles: ['SPMO'], },
+    
+    ],
     subFields: [
       {
         InternalName: 'AchievementName',
