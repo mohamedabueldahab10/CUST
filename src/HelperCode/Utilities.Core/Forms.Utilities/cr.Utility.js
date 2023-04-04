@@ -48,6 +48,8 @@ window.CrModeFunctionality = {
 		var renderFunction = USERisNew || USERisEdit ? "ListInfo" : "View_ListInfo";
 		var Label, Description;
 		var printHtml = "";
+		console.log("inside cr utility")
+		debugger
 		newJSON.forEach(function (o, i, a) {
 			if (o.labelEn == "Attachments") {
 				a.splice(i, 1);
@@ -123,6 +125,8 @@ window.CrModeFunctionality = {
 				asyncFor.seqProcess(
 					item.subFields,
 					function (subitemField, indexField, resolveField) {
+						console.log("BEfore render form err")
+						debugger
 						window[`${renderFunction}`].RenderForm(
 							subitemField,
 							null,
@@ -142,6 +146,8 @@ window.CrModeFunctionality = {
 				);
 			},
 			function (item, index, data, isDone) {
+				console.log("HERERERRERERERERER")
+				debugger
 				if (
 					localStorage.getItem("lng") == null ||
 					localStorage.getItem("lng") == "ar"
@@ -1401,6 +1407,7 @@ window.CrItemDataRenderFromJSON_Edit = {
 //! on View
 window.CrItemDataRenderFromJSON_View = {
 	init: function () {
+		debugger
 		var fieldType = "";
 		var $this;
 		var originalValue = "";

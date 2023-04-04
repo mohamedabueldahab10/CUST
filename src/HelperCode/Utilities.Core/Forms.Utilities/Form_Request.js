@@ -1383,7 +1383,7 @@ window.View_Data_Request = {
         customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
 
         
-        debugger
+        
 
         sphttp.get(
           _spPageContextInfo.siteServerRelativeUrl,
@@ -1513,8 +1513,7 @@ window.View_Data_Request = {
           // listFields = ["ID",valfieldkey, Dispfieldkey, parentrelatedfilterkeylvl1];
         }
 
-        console.log(listFields, "listFields listFields")
-        debugger
+  
 
         if (oListItem.get_item($(this).attr("id")) == null) {
 
