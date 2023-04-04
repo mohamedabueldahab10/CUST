@@ -283,7 +283,9 @@ var Information_Form = [
           ],
         },
         requiredValues: [
+          { value: 'standard', fields: [''] },
           { value: 'notstandard', fields: ['CancelationDate'] },
+        
         ],
       },
       {

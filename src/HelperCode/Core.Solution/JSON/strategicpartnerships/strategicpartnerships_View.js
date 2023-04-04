@@ -110,9 +110,9 @@ var Information_Form = [
         DisplayNameEn: 'Partner Name',        
         type: 'lookup',
         // source: 'SOs',
+        source: 'Vendors',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        source: 'Vendors',
         // validation: 'required',
       },
       // {
