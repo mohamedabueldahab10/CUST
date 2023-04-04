@@ -332,7 +332,7 @@ window.CrModeFunctionality = {
 							ListInfo.g.toggleFields($(this));
 						}
 					);
-					//$(".cr-related-item-section .CFIELD").addClass("dont-submit");
+					//$(".cr-related-item-section .CFIELD").addClass("dont-submit"); // remove it to not apply dont-submit on all fields
 					// afterRenderEditAndNewForms.init();
 					if (USERisNew && isRListKey) CrItemDataRequest.init();
 					else if (USERisEdit) CrItemDataRenderFromJSON_Edit.init();
