@@ -951,6 +951,7 @@
     crcommitteevision: "لجنة طلبات التغيير (الرؤية)",
     budgetmanager: "مدير الميزانية",
     portfoliomanager: "مدير المحفظة",
+    objectiveowner:"مالك الهدف",
 
     excelexport: "تصدير إلى Excel",
     planneddisbursement: "المخطط من الصرف",
@@ -2028,6 +2029,7 @@
     crcommitteevision: "Change Request Committee (Vision)",
     budgetmanager: "Budget Manager",
     portfoliomanager: "Portfolio Manager",
+    objectiveowner:"Objective Owner",
     excelexport: "Export to excel",
     planneddisbursement: "Planned Disbursement",
     planneddisbursementpercent: "Planned Disbursement Percent",
