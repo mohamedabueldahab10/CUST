@@ -66,6 +66,7 @@ var WFuserCalls = {
 var wfHistoryLink;
 var thiredActionName = "";
 var relatedItemInCr = "";
+var crBody, crUpdateType;
 window.projectstagename;
 var workflowname,
 	stageid,
@@ -2694,21 +2695,30 @@ var SubmitField_BulkEdit = {
 						var currentId = currentItem.get_item("ID");
 
 						var items = programList.getItemById(currentId);
-						var crBody, crUpdateType;
+						// var crBody, crUpdateType;
 						if (isExecuteCR) {
 							crBody = eval(currentItem.get_item("ChangeBody"));
 							crUpdateType = currentItem.get_item("UpdateType");
 						}
 
 						// get the related item in cr to use it in delete api
+						debugger
 						if (isMSCRObjective || isVROCRObjective || isLMSCRObjective) {
 							relatedItemInCr = currentItem.get_item("CRRelatedStrategyObjective");
+							crUpdateType = currentItem.get_item("UpdateType");
+							crBody = eval(currentItem.get_item("ChangeBody"));
 						} else if (isVROCRProject || isEPMOCRProject || isLMSCRProject) {
 							relatedItemInCr = currentItem.get_item("ProjectCode");
+							crUpdateType = currentItem.get_item("UpdateType");
+							crBody = eval(currentItem.get_item("ChangeBody"));
 						} else if (isEPMOCRInitiative || isVROCRInitiative || isLMSCRInitiative) {
 							relatedItemInCr = currentItem.get_item("InitiativeCode");
+							crUpdateType = currentItem.get_item("UpdateType");
+							crBody = eval(currentItem.get_item("ChangeBody"));
 						} else if (isMSCRKPI || isVROCRKPI || isLMSCRKPI) {
 							relatedItemInCr = currentItem.get_item("CRRelatedMainKpis");
+							crUpdateType = currentItem.get_item("UpdateType");
+							crBody = eval(currentItem.get_item("ChangeBody"));
 						}
 						//
 
@@ -2920,8 +2930,8 @@ var SubmitField_BulkEdit = {
 								executeCR.init(crBody);
 							} else if ((isVROCreateKPI || isEPMOCreateKPI || isLMSCreateKPI) && nxtstageid == "approved") {
 								changeOnKpiResultDraft(state)
-							} else if ((isMSCRObjective || isVROCRObjective || isLMSCRObjective || isVROCRProject || isEPMOCRProject || isLMSCRProject || isEPMOCRInitiative || isVROCRInitiative || isLMSCRInitiative || isMSCRKPI || isVROCRKPI || isLMSCRKPI) && state && nxtstageid == "approved") { // invoke delete item from cr on these workflows
-								
+							} else if ((isMSCRObjective || isVROCRObjective || isLMSCRObjective || isVROCRProject || isEPMOCRProject || isLMSCRProject || isEPMOCRInitiative || isVROCRInitiative || isLMSCRInitiative || isMSCRKPI || isVROCRKPI || isLMSCRKPI) && state && nxtstageid == "approved" && crUpdateType.includes("delete")) { // invoke delete item from cr on these workflows
+
 								Delete_Item_FromCR.init(relatedItemInCr)
 							} else {
 								Task_Edit_Data.init();

@@ -316,6 +316,7 @@ window.New_Data_Submit = {
     var oList = clientContext.get_web().get_lists().getByTitle(SP_ListName);
     var itemCreateInfo = new SP.ListItemCreationInformation();
     New_Data_Submit.g.oListItem = oList.addItem(itemCreateInfo);
+    if (isRListKey) CrSetChangeBody.init(New_Data_Submit.g.oListItem); // for cr module
     //.dont-submit,.hide-field need to test more about it
     $(
       `.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=text],
@@ -1233,6 +1234,9 @@ window.Edit_Data_Submit = {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(SP_ListName);
     Edit_Data_Submit.g.oListItem = oList.getItemById(IID); //declared inside object scope only
+
+    if (isRListKey) CrSetChangeBody.init(Edit_Data_Submit.g.oListItem); // for cr set body
+
     $(`.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=text],
      .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=number],
      .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=email],

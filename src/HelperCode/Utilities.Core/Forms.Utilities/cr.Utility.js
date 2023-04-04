@@ -1598,15 +1598,16 @@ window.CrItemDataRenderFromJSON_View = {
 window.CrSetChangeBody = {
 	init: function (Data_Submit) {
 		var jsonValues;
+		debugger
 		if (USERisNew) {
-			let wfStage = "";
-			if (CrRelatedList == "Projects") wfStage = "CR01";
-			if (CrRelatedList == "Initiatives") wfStage = "CRIni01";
-			if (CrRelatedList == "MainKPI") wfStage = "CRKPI01";
-			if (CrRelatedList == "StrategicObjectives") wfStage = "CRSos01";
+			// let wfStage = "";
+			// if (CrRelatedList == "Projects") wfStage = "CR01";
+			// if (CrRelatedList == "Initiatives") wfStage = "CRIni01";
+			// if (CrRelatedList == "MainKPI") wfStage = "CRKPI01";
+			// if (CrRelatedList == "StrategicObjectives") wfStage = "CRSos01";
 
-			Data_Submit.set_item("WFModuleCode", "CR" + CrRelatedList);
-			Data_Submit.set_item("WFStage", wfStage);
+			// Data_Submit.set_item("WFModuleCode", "CR" + CrRelatedList);
+			// Data_Submit.set_item("WFStage", wfStage);
 			Data_Submit.set_item("RelatedItemCode", crRelatedItemCode);
 			if (!isGeneral) {
 				jsonValues = eval(
@@ -1617,20 +1618,30 @@ window.CrSetChangeBody = {
 			}
 		}
 		changeRequestBody.forEach(function (o, i, a) {
+			debugger
 			var $this = $(".cr-related-item-section #" + o.InternalName);
 			let newJsonValues = jsonValues ? jsonValues : Information_Form;
 
 			// let tempJSON = newJsonValues.filter(function (el) {
 			// 	return el.InternalName == o.InternalName;
 			// });
-			let tempJSON = newJsonValues.filter((el) => el.InternalName == o.InternalName).map(el => el);
+			// let tempJSON = newJsonValues.filter((el) => el.InternalName == o.InternalName).map(el => el);
+			let tempJSON = newJsonValues[0].hasOwnProperty("subFields")
+				? newJsonValues[0].subFields
+					.filter((el) => el.InternalName == o.InternalName)
+					.map((el) => el)
+				:
+				newJsonValues
+					.filter((el) => el.InternalName == o.InternalName)
+					.map((el) => el);
 
-			o.DisplayName = tempJSON[0].DisplayName || "";
-			o.DisplayNameEn = tempJSON[0].DisplayNameEn || "";
-			o.label = tempJSON[0].label || "";
-			o.labelEn = tempJSON[0].labelEn || "";
-			o.type = tempJSON[0].type || "";
-			o.InternalName = tempJSON[0].InternalName || "";
+
+			o.DisplayName = tempJSON.length ? tempJSON[0].DisplayName || "" : "";
+			o.DisplayNameEn = tempJSON.length ? tempJSON[0].DisplayNameEn || "" : "";
+			o.label = tempJSON.length ? tempJSON[0].label || "" : "";
+			o.labelEn = tempJSON.length ? tempJSON[0].labelEn || "" : "";
+			o.type = tempJSON.length ? tempJSON[0].type || "" : "";
+			o.InternalName = tempJSON.length ? tempJSON[0].InternalName || "" : "";
 
 			if (o.type == "picker") {
 				if ($this.find("span.sp-peoplepicker-userSpan").length) {

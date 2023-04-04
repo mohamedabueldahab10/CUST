@@ -1098,6 +1098,7 @@ window.View_Data_Request = {
       ".section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request) > .viewmode-value"
     ).each(async function () {
 
+      
 
       if ($(this).attr("type") == "date") {
         var d =
@@ -1513,6 +1514,7 @@ window.View_Data_Request = {
         }
 
         console.log(listFields, "listFields listFields")
+        debugger
 
         if (oListItem.get_item($(this).attr("id")) == null) {
 
