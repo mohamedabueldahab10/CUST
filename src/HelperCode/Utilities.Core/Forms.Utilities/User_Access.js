@@ -7101,7 +7101,7 @@ var Access_Project_Info_Request = {
 
         }
         else if (isthereSTCODE) {
-          if (window.location.href.indexOf("StrategicPartnership") > -1) {
+          if (window.location.href.indexOf("strategicpartnerships") > -1) {
             $(".page-title").html(
               '<a href="' +
               _spPageContextInfo.webAbsoluteUrl +
