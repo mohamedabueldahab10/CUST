@@ -32,6 +32,8 @@ if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar
 
 var projectTypeFilterQuery = '', typeClicked = 'Internal';
 window.indexofListing = 0;
+window.indexoflistinginternalproject = 0;
+window.indexoflistingexternalproject = 0;
 var taskClicked = 'relatedTasks', allTasksClicked = false, getNewFilterTask = false, isViewMoreClicked = false;
 
 var emptyData = require('../../../HelperRessources/img/empty-data.png');
@@ -655,6 +657,8 @@ window.ListingData = {
             var ExternalProjectsHtml = '';
             if (!originalstate && !isLoadMore) {
               indexofListing = 0;
+              indexoflistingexternalproject = 0;
+              indexoflistinginternalproject = 0;
             }
             for (var i = 0; i < records.length; i++) { //looping items
               indexofListing = indexofListing + 1;
@@ -662,15 +666,17 @@ window.ListingData = {
               // ghufranChange
               if (listkey == 'projects') {
                 if (records[i].ProjectType == 'Internal') {
-                  // InternalProjectsHtml += '<li class="list-group-item link-arrow">' +
-                  //   '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexofListing + '</span>';
+                  indexoflistinginternalproject = indexoflistinginternalproject + 1;
                   InternalProjectsHtml += '<li class="list-group-item link-arrow">' +
-                    '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '';
+                    '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexoflistinginternalproject + '</span>';
+                  // InternalProjectsHtml += '<li class="list-group-item link-arrow">' +
+                  //   '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '';
                 } else if (records[i].ProjectType == 'External') {
-                  // ExternalProjectsHtml += '<li class="list-group-item link-arrow">' +
-                  //   '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexofListing + '</span>';
+                  indexoflistingexternalproject = indexoflistingexternalproject + 1;
                   ExternalProjectsHtml += '<li class="list-group-item link-arrow">' +
-                    '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '';
+                    '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexoflistingexternalproject + '</span>';
+                  // ExternalProjectsHtml += '<li class="list-group-item link-arrow">' +
+                  //   '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '';
                 }
               } else if (listkey == 'initiatives') {
                 html += '<li class="list-group-item link-arrow">' +
