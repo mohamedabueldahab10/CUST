@@ -129,7 +129,7 @@ var workflowname,
 	isStrategicallyInitiative = window.location.href.indexOf("initiatives&StrategicallyInitiative") > -1,
 	isLMSInitiative = window.location.href.indexOf("initiatives&LMSInitiative") > -1,
 	isStrategicPartnerships = window.location.href.indexOf("strategicpartnerships&STP") > -1,
-	isSPAchievements = window.location.href.indexOf("strategicpartnershipsachievements") > -1,
+	isAchievements = window.location.href.indexOf("achievements") > -1,
 
 	isVROCRInitiative = window.location.href.indexOf("changerequest&VROCRInitiative") > -1,
 	isVROCreateInitiative = window.location.href.indexOf("initiatives&VROCreateInitiative") > -1,
@@ -1179,9 +1179,9 @@ else if (isLMSActualKPI) {
 		workflowname +
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
-else if (isSPAchievements) {
-	workflowname = "SPAchievements";
-	bulkeditlist = "SPAchievements";
+else if (isAchievements) {
+	workflowname = "Achievements";
+	bulkeditlist = "Achievements";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +

@@ -6,8 +6,8 @@ var Information_Form = [
     descriptionEn: 'Details',
         formDefaultValues: [
       //VRO
-      { fieldName: 'WFModuleCode', value: 'Achievements', roles: ['SPMO'], },
-      { fieldName: 'WFStage', value: 'A01', roles: ['SPMO'], },
+      { fieldName: 'WFModuleCode', value: 'Achievements', roles: ['Administrator','SPMO'], },
+      { fieldName: 'WFStage', value: 'A01', roles: ['Administrator','SPMO'], },
     
     ],
     subFields: [
@@ -64,6 +64,25 @@ var Information_Form = [
             { display: 'jobmarket', value: 'jobmarket' },
           ],
         },
+      },
+      {
+        InternalName: 'Sector',
+        DisplayName: 'القطاع',
+        DisplayNameEn: 'Sector',
+        type: 'lookupWithQuery',
+        queryField: 'EntityType',
+        queryFieldType: 'dropdownValues', //ex: "Choice"
+        queryFieldValue: 'Sector',
+        // dynamic: 'parent',
+        // type: 'lookup',
+        validation: 'required',
+        //from other list:
+        source: 'Internal Entities',
+        // isSector: 'True',
+        // EntityType: 'Sector',
+        Dispfieldkey: 'Name',
+        DispfieldkeyEn: 'NameEn',
+        valfieldkey: 'Title',
       },
     ],
   },

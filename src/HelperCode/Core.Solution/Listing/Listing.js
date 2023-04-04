@@ -1742,8 +1742,8 @@ window.ListingData = {
             keyNameParams = "initiatives"
           } else if (wfname == 'StrategicPartnerships') {
             keyNameParams = 'strategicpartnerships'
-          } else if (wfname == 'SPAchievements') {
-            keyNameParams = 'strategicpartnershipsachievements'
+          } else if (wfname == 'Achievements') {
+            keyNameParams = 'achievements'
           } else if (wfname == 'VROBenefitActual' || wfname == 'EPMOBenefitActual' || wfname == 'LMSBenefitActual') {
             keyNameParams = 'benefitmetrics'
           } else if (wfname == 'VROInitiativeMilestone' || wfname == 'EPMOInitiativeMilestone' || wfname == 'LMSInitiativeMilestone') {
