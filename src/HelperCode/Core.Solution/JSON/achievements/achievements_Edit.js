@@ -105,13 +105,11 @@ var Information_Form = [
             { display: 'initiative', value: 'initiative' },
           ],
         },
-        toggleDisabledValues: [
+        toggleValues: [
           { value: 'objective', fields: ['RelatedObjective', 'RelatedKPI'] },
-          {
-            value: 'initiative',
-            fields: ['RelatedInitiative', 'RelatedMilestone'],
-          },
+          { value: 'initiative', fields: ['RelatedInitiative', 'RelatedMilestone'] },
         ],
+
       },
       {
         InternalName: 'RelatedObjective',
@@ -119,10 +117,11 @@ var Information_Form = [
         DisplayName: 'الهدف المرتبط',
         type: 'lookup',
         source: 'SOs',
+        dynamic: 'parent',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         validation: 'required',
-        ToggleDisabledName: 'RelatedObjective',
+        ToggleName: 'RelatedObjective',
         // "state": "disabled"
       },
       {
@@ -133,7 +132,11 @@ var Information_Form = [
         source: 'MainKPI',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        ToggleDisabledName: 'RelatedKPI',
+        ToggleName: 'RelatedKPI',
+        //
+        dynamic: 'RelatedObjective',
+        filterField: 'RelatedStrategyObjective',
+        filterFieldType: 'Text',
       },
       {
         InternalName: 'RelatedInitiative',
@@ -141,11 +144,12 @@ var Information_Form = [
         DisplayName: 'المبادرة المرتبطة',
         type: 'lookup',
         source: 'Initiatives',
+        dynamic: 'parent',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         validation: 'required',
         dontSubmit: true,
-        ToggleDisabledName: 'RelatedInitiative',
+        ToggleName: 'RelatedInitiative',
       },
       {
         InternalName: 'RelatedMilestone',
@@ -156,7 +160,15 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         validation: 'required',
-        ToggleDisabledName: 'RelatedMilestone',
+        ToggleName: 'RelatedMilestone',
+        //
+        dynamic: 'RelatedInitiative',
+        filterField: 'InitiativeCode',
+        filterFieldType: 'Text',
+        //
+        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+        fieldsinformlvl1: "RelatedInitiative", // fields in form list
+        sourcefieldlvl1: "InitiativeCode", // field in look up list
       },
     ],
   },

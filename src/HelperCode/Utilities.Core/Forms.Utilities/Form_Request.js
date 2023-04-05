@@ -621,42 +621,9 @@ window.Edit_Data_Request = {
     }
     //}
 
+    DontSubmit_DataRequest.init()
 
 
-
-    // if (isVROE) {
-    //   if (listkey == "initiatives") {
-    //     $('#Types').val('vision');
-    //     $('#Types').prop('disabled', true);
-    //   }
-    // }
-    // if (isNew && isEPMO) {
-    //   if (listkey == "initiatives") {
-    //     $('#Types').val('strategically');
-    //     $('#Types').prop('disabled', true);
-    //   }
-    // }
-    // if (isEdit && isEPMO) {
-    //   if (listkey == "initiatives") {
-    //     // $('#Types').val('strategically');
-    //     $('#Types').prop('disabled', true);
-    //   }
-    // }
-    // if (Groups.includes("Strategy Specialist") || isVROP) {
-    //   if (listkey == "sos") {
-    //     $('#Types').val('main');
-    //     $('#Types').prop('disabled', true);
-    //   }
-    // }
-    // if (isSPMAdmin) {
-    //   if (listkey == "sos") {
-    //     $('#Types').val('sub');
-    //     $('#Types').prop('disabled', true);
-    //     $("#RelatedObjective").parent().css("display", "block");
-    //   }
-    // }
-
-    ///////////////////////////
     // to handle the title change and the master details section show and hide
     if (isEdit && listkey == 'goalstrategy') {
       if ($('#Types').val() == 'vision') {
@@ -714,7 +681,6 @@ window.Edit_Data_Request = {
     // trigger the dynamic parent field to get the data in edit
 
 
-
     $("[data-togglevalues]").each(function () {
       ListInfo.g.toggleFields($(this));
     });
@@ -724,18 +690,9 @@ window.Edit_Data_Request = {
       ListInfo.g.toggleRequiredFields($(this));
     });
 
-    $("select[dynamic=parent]").trigger("change")
 
 
     // $(".grandFieldInvoke").trigger("change")
-
-
-
-    // setTimeout(function () {
-
-    DontSubmit_DataRequest.init()
-    // }, 1500)
-
 
 
 
@@ -762,6 +719,7 @@ window.Edit_Data_Request = {
       })
     }
 
+    $("select[dynamic=parent]").trigger("change")
 
 
     //getting related files
@@ -6426,6 +6384,8 @@ var DontSubmit_DataRequest = {
       "[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
     ).each(function (e) {
 
+      
+
       var elementId = ""
       var elementValue = ""
       var isMultiSelect = false
@@ -6454,10 +6414,12 @@ var DontSubmit_DataRequest = {
           }
         }
       } else {
+
         if (
           oListItem.get_item(elementId) &&
           oListItem.get_item(elementId) == elementValue
         ) {
+          debugger
           // matching between value on list
           var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
           var parenetValue = $(this).data("parentrelatedvaluelvl1"); // parent value

@@ -1,5 +1,5 @@
-// var logo = require('../../../HelperRessources/img/print-logo.png');
-var logo = "";
+var logo = require('../../../HelperRessources/img/print-logo.png');
+// var logo = "";
 //= isArabic ? require('../../../HelperRessources/img/main-logo.svg') : require('../../../HelperRessources/img/main-logo-en.svg');
 (window.isNew = window.location.href.toLowerCase().indexOf("new.aspx") > -1),
   (window.isEdit =
@@ -9779,70 +9779,71 @@ dynamicAffectSelect = {
   init: function (affectedSelectsInfo) {
 
 
+    // if (affectedSelectsInfo.length) {
 
-    var queryFieldValue = affectedSelectsInfo[0].queryFieldValue
-      ? affectedSelectsInfo[0].queryFieldValue
-      : "";
-    var queryFieldName = affectedSelectsInfo[0].queryFieldName
-      ? affectedSelectsInfo[0].queryFieldName
-      : "";
-    var queryFieldType = affectedSelectsInfo[0].queryFieldType
-      ? affectedSelectsInfo[0].queryFieldType
-      : "";
-
-
-    console.log(affectedSelectsInfo, "affectedSelectsInfo")
-
-    // var dataSeblingValue = affectedSelectsInfo[0].dataSiblingvalue
-    // ? affectedSelectsInfo[0].dataSiblingvalue
-    // : "";
-
-    // console.log(dataSeblingValue,"dataSeblingValue dataSeblingValue")
-
-    // queryFieldValue="sublevel3"
-    // queryFieldName="Types"
-    // queryFieldType="Text"
-
-    dynamicAffectSelect.g.affectedSelectsInfo = affectedSelectsInfo;
-    var clientContext = new SP.ClientContext.get_current();
-    var oList = clientContext
-      .get_web()
-      .get_lists()
-      .getByTitle(affectedSelectsInfo[0].listName);
-    var camlQuery = new SP.CamlQuery();
-
-    var Query = "";
-    var valueToFilter = affectedSelectsInfo[0].customFilterValue
-      ? affectedSelectsInfo[0].customFilterValue
-      : affectedSelectsInfo[0].parentFieldValue;
-
-    if (affectedSelectsInfo[0].parentCustomFilterValueFromSibling && affectedSelectsInfo[0].parentCustomFilterValueFromSibling != undefined) {
-      queryFieldValue = affectedSelectsInfo[0].parentCustomFilterValueFromSibling
-    }
+      var queryFieldValue = affectedSelectsInfo[0].queryFieldValue
+        ? affectedSelectsInfo[0].queryFieldValue
+        : "";
+      var queryFieldName = affectedSelectsInfo[0].queryFieldName
+        ? affectedSelectsInfo[0].queryFieldName
+        : "";
+      var queryFieldType = affectedSelectsInfo[0].queryFieldType
+        ? affectedSelectsInfo[0].queryFieldType
+        : "";
 
 
-    if (listkey == 'initiatives' && valueToFilter && valueToFilter == 'strategically') { // specially for trategically value
-      valueToFilter = 'ministry' // becuse there is a value we use it in GoalStrategy list
-    }
+      console.log(affectedSelectsInfo, "affectedSelectsInfo")
 
-    if (
-      affectedSelectsInfo[0].isCustomFilterValue === "true" &&
-      !affectedSelectsInfo[0].customFilterValue
-    ) {
-      Query = `<View><Query>
+      // var dataSeblingValue = affectedSelectsInfo[0].dataSiblingvalue
+      // ? affectedSelectsInfo[0].dataSiblingvalue
+      // : "";
+
+      // console.log(dataSeblingValue,"dataSeblingValue dataSeblingValue")
+
+      // queryFieldValue="sublevel3"
+      // queryFieldName="Types"
+      // queryFieldType="Text"
+
+      dynamicAffectSelect.g.affectedSelectsInfo = affectedSelectsInfo;
+      var clientContext = new SP.ClientContext.get_current();
+      var oList = clientContext
+        .get_web()
+        .get_lists()
+        .getByTitle(affectedSelectsInfo[0].listName);
+      var camlQuery = new SP.CamlQuery();
+
+      var Query = "";
+      var valueToFilter = affectedSelectsInfo[0].customFilterValue
+        ? affectedSelectsInfo[0].customFilterValue
+        : affectedSelectsInfo[0].parentFieldValue;
+
+      if (affectedSelectsInfo[0].parentCustomFilterValueFromSibling && affectedSelectsInfo[0].parentCustomFilterValueFromSibling != undefined) {
+        queryFieldValue = affectedSelectsInfo[0].parentCustomFilterValueFromSibling
+      }
+
+
+      if (listkey == 'initiatives' && valueToFilter && valueToFilter == 'strategically') { // specially for trategically value
+        valueToFilter = 'ministry' // becuse there is a value we use it in GoalStrategy list
+      }
+
+      if (
+        affectedSelectsInfo[0].isCustomFilterValue === "true" &&
+        !affectedSelectsInfo[0].customFilterValue
+      ) {
+        Query = `<View><Query>
         <Where>
           <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
           </Where>
         <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`;
-    } else if (
-      queryFieldValue &&
-      queryFieldValue != "undefined" &&
-      queryFieldName &&
-      queryFieldName != "undefined" &&
-      queryFieldType &&
-      queryFieldType != "undefined"
-    ) {
-      Query = `<View><Query>
+      } else if (
+        queryFieldValue &&
+        queryFieldValue != "undefined" &&
+        queryFieldName &&
+        queryFieldName != "undefined" &&
+        queryFieldType &&
+        queryFieldType != "undefined"
+      ) {
+        Query = `<View><Query>
         <Where><And>
         <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
         <And>
@@ -9850,25 +9851,26 @@ dynamicAffectSelect = {
         <Eq><FieldRef Name="${queryFieldName}" /><Value Type="${queryFieldType}">${queryFieldValue}</Value></Eq></Eq>
         </And></And></Where>
         <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`;
-    } else {
-      Query = `<View><Query>
+      } else {
+        Query = `<View><Query>
         <Where><And>
           <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
           <Eq><FieldRef Name="${affectedSelectsInfo[0].filterField}"/><Value Type="${affectedSelectsInfo[0].filterFieldType}">${valueToFilter}</Value></Eq>
         </And></Where>
         <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`;
-    }
+      }
 
 
 
-    camlQuery.set_viewXml(Query);
+      camlQuery.set_viewXml(Query);
 
-    dynamicAffectSelect.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
-    clientContext.load(dynamicAffectSelect.g.collListItem);
-    clientContext.executeQueryAsync(
-      Function.createDelegate(this, dynamicAffectSelect.onSuccess),
-      Function.createDelegate(this, dynamicAffectSelect.onError)
-    );
+      dynamicAffectSelect.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+      clientContext.load(dynamicAffectSelect.g.collListItem);
+      clientContext.executeQueryAsync(
+        Function.createDelegate(this, dynamicAffectSelect.onSuccess),
+        Function.createDelegate(this, dynamicAffectSelect.onError)
+      );
+    // }
   },
   onSuccess: function (sender, args) {
     var collListItem = dynamicAffectSelect.g.collListItem;
