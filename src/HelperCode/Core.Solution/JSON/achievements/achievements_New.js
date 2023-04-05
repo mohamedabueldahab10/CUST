@@ -8,7 +8,7 @@ var Information_Form = [
     //   //VRO
     //   { fieldName: 'WFModuleCode', value: 'Achievements', roles: ['Administrator','SPMO'], },
     //   { fieldName: 'WFStage', value: 'A01', roles: ['Administrator','SPMO'], },
-    
+
     // ],
     subFields: [
       {
@@ -111,10 +111,12 @@ var Information_Form = [
             { display: 'initiative', value: 'initiative' },
           ],
         },
-        toggleDisabledValues: [
-          { value: 'objective', fields: ['RelatedObjective','RelatedKPI'] }, 
-          { value: 'initiative', fields: ['RelatedInitiative','RelatedMilestone'] }, 
+        toggleValues: [
+          { value: 'objective', fields: ['RelatedObjective', 'RelatedKPI'] },
+          { value: 'initiative', fields: ['RelatedInitiative', 'RelatedMilestone'] },
         ],
+
+
       },
       {
         InternalName: 'RelatedObjective',
@@ -122,10 +124,12 @@ var Information_Form = [
         DisplayName: 'الهدف المرتبط',
         type: 'lookup',
         source: 'SOs',
+        display: "none",
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+        dynamic: 'parent',
         validation: 'required',
-        ToggleDisabledName:"RelatedObjective",
+        ToggleName: "RelatedObjective",
         // "state": "disabled"
       },
       {
@@ -134,9 +138,14 @@ var Information_Form = [
         DisplayName: 'المؤشر المرتبط',
         type: 'lookup',
         source: 'MainKPI',
+        display: "none",
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        ToggleDisabledName:"RelatedKPI",
+        ToggleName: "RelatedKPI",
+        //
+        dynamic: 'RelatedObjective',
+        filterField: 'RelatedStrategyObjective',
+        filterFieldType: 'Text',
       },
       {
         InternalName: 'RelatedInitiative',
@@ -144,11 +153,13 @@ var Information_Form = [
         DisplayName: 'المبادرة المرتبطة',
         type: 'lookup',
         source: 'Initiatives',
+        dynamic: 'parent',
+        display: "none",
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         validation: 'required',
         dontSubmit: true,
-        ToggleDisabledName:"RelatedInitiative",
+        ToggleName: "RelatedInitiative",
       },
       {
         InternalName: 'RelatedMilestone',
@@ -156,10 +167,15 @@ var Information_Form = [
         DisplayName: 'معلم المبادرة المرتبط',
         type: 'lookup',
         source: 'InitiativeMilestones',
+        display: "none",
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         validation: 'required',
-        ToggleDisabledName:"RelatedMilestone",
+        ToggleName: "RelatedMilestone",
+        //
+        dynamic: 'RelatedInitiative',
+        filterField: 'InitiativeCode',
+        filterFieldType: 'Text',
       },
     ],
   },
