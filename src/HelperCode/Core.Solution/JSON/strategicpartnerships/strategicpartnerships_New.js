@@ -4,6 +4,11 @@ var Information_Form = [
     labelEn: 'Principal data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
+     formDefaultValues: [
+      //VRO
+      { fieldName: 'DraftStatus', value: 'draft' ,roles: ['allRoles'], },
+    
+    ],
     subFields: [
       {
         InternalName: 'Name',

@@ -6,6 +6,11 @@ var Information_Form = [
     labelEn: 'Principal data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
+    workflowSetValues: [
+      //VRO
+      { fieldName: 'DraftStatus', value: '', stages:["SP04"] },//if stage pass SP04 remove draft
+   
+    ],
     subFields: [
       {
         InternalName: 'Title',
