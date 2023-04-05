@@ -1093,7 +1093,7 @@ window.View_Data_Request = {
   onSuccess: function (sender, args) {
     var strategyType = ''
     var pillersRadio = ''
-
+    
     $(
       ".section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request) > .viewmode-value"
     ).each(async function () {
@@ -1656,6 +1656,7 @@ window.View_Data_Request = {
       $(".container-body .d-flex.btnactionrow").hide();
     }
 
+    
     //handle top menu navigation
     if (SP_ListName == ListArray[0].projects) {
       PCODE = oListItem.get_item("Title");

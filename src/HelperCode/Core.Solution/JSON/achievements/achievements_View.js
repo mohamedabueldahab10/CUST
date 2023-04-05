@@ -66,6 +66,25 @@ var Information_Form = [
             ],
           },
         },
+        {
+          InternalName: 'Sector',
+          DisplayName: 'القطاع',
+          DisplayNameEn: 'Sector',
+          type: 'lookupWithQuery',
+          queryField: 'EntityType',
+          queryFieldType: 'dropdownValues', //ex: "Choice"
+          queryFieldValue: 'Sector',
+          // dynamic: 'parent',
+          // type: 'lookup',
+          validation: 'required',
+          //from other list:
+          source: 'Internal Entities',
+          // isSector: 'True',
+          // EntityType: 'Sector',
+          Dispfieldkey: 'Name',
+          DispfieldkeyEn: 'NameEn',
+          valfieldkey: 'Title',
+        },
       ],
     },
     {

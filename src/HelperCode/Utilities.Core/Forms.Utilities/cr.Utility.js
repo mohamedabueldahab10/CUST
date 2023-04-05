@@ -26,7 +26,7 @@ window.CrModeFunctionality = {
 			prefix = "_Edit.js";
 		}
 		let CR_JSON_File_Name = RListKey + prefix;
-		debugger
+
 		//get form's json
 		$.getScript(
 			_spPageContextInfo.webAbsoluteUrl +
@@ -35,6 +35,7 @@ window.CrModeFunctionality = {
 			"/" +
 			CR_JSON_File_Name
 		).done(function (script, textStatus) {
+
 			crlabel = Information_Form[0].label;
 			crlabelEn = Information_Form[0].labelEn;
 			crdescription = Information_Form[0].description;
@@ -48,8 +49,8 @@ window.CrModeFunctionality = {
 		var renderFunction = USERisNew || USERisEdit ? "ListInfo" : "View_ListInfo";
 		var Label, Description;
 		var printHtml = "";
-		console.log("inside cr utility")
-		debugger
+	
+
 		newJSON.forEach(function (o, i, a) {
 			if (o.labelEn == "Attachments") {
 				a.splice(i, 1);
@@ -125,8 +126,7 @@ window.CrModeFunctionality = {
 				asyncFor.seqProcess(
 					item.subFields,
 					function (subitemField, indexField, resolveField) {
-						console.log("BEfore render form err")
-						debugger
+						// if(subitemField.type != "picker" && subitemField.InternalName){
 						window[`${renderFunction}`].RenderForm(
 							subitemField,
 							null,
@@ -136,8 +136,10 @@ window.CrModeFunctionality = {
 								});
 							}
 						);
+						//}
 					},
 					function (subitemField, indexField, dataField, isDoneField) {
+
 						htmlBuilder += dataField.htmlResult;
 						if (isDoneField) {
 							resolve(item, index, dataField, true);
@@ -146,8 +148,7 @@ window.CrModeFunctionality = {
 				);
 			},
 			function (item, index, data, isDone) {
-				console.log("HERERERRERERERERER")
-				debugger
+
 				if (
 					localStorage.getItem("lng") == null ||
 					localStorage.getItem("lng") == "ar"
@@ -160,14 +161,7 @@ window.CrModeFunctionality = {
 				htmlBuilder += "</div></div></div>";
 				if (isDone) {
 					actionTaskHeader = "";
-					// htmlBuilder +=
-					// 	'<div class="py-5 btnactionrow savecancelBtns">' +
-					// 	actionTaskHeader +
-					// 	'<div class="form-row justify-content-end form-btns-wrapper">' +
-					// 	'<button data-trans-CancelButton class="btn btn-action btn-cancel cancel Resources" type="button"></button>' +
-					// 	'<button data-trans-SaveButton class="btn btn-action btn-save Resources" type="button"></button>' +
-					// 	"</div>" +
-					// 	"</div>";
+		
 					$('div[class*="cr-related-item-"]').remove();
 					$(".btnactionrow").before(htmlBuilder);
 
@@ -211,6 +205,10 @@ window.CrModeFunctionality = {
 						); //remove duplicates
 						crMasterDetailsArrayNew = crMasterDetailsArrayRequest;
 						crMasterDetailsArrayEdit = crMasterDetailsArrayRequest;
+
+
+
+						CR_Master_Details_Request.init(crMasterDetailsArrayRequest[0])
 					}
 					//handle people picker inputs
 					$(".cr-related-item-section div[type=picker]").each(function () {
@@ -334,7 +332,7 @@ window.CrModeFunctionality = {
 							ListInfo.g.toggleFields($(this));
 						}
 					);
-					$(".cr-related-item-section .CFIELD").addClass("dont-submit");
+					//$(".cr-related-item-section .CFIELD").addClass("dont-submit"); // remove it to not apply dont-submit on all fields
 					// afterRenderEditAndNewForms.init();
 					if (USERisNew && isRListKey) CrItemDataRequest.init();
 					else if (USERisEdit) CrItemDataRenderFromJSON_Edit.init();
@@ -349,10 +347,10 @@ window.CrModeFunctionality = {
 					}
 					$(".CFIELD>label").removeClass("loader-action");
 					//initiate master detail
-					if (crMasterDetailsArrayRequest.length > 0) {
-						Master_Details_Request.init(crMasterDetailsArrayRequest[0], true);
-						crMasterDetailsArrayRequest.shift(); //remove 0 index
-					}
+					// if (crMasterDetailsArrayRequest.length > 0) {
+					// 	crMasterDetailsArrayRequest.init(crMasterDetailsArrayRequest[0], true);
+					// 	crMasterDetailsArrayRequest.shift(); //remove 0 index
+					// }
 				}
 			}
 		);
@@ -362,9 +360,10 @@ window.CrModeFunctionality = {
 window.handleCustomeCr = {
 	init: function () {
 		$('[data-togglename*="UpdateType"]').on("change", function () {
-			console.log($(this).val(), "VVVVVVVVVVVVVVVVVVVVVVsss")
+
 			var currentValue = $(this).val()
 			if (currentValue != 'delete') {
+
 				isGeneral =
 					$(this).find(">option:selected").attr("data-trans-generalchange") == ""
 						? true
@@ -430,14 +429,12 @@ window.CrItemDataRequest = {
 		}
 
 		var fieldType = "";
-		debugger
+
 		$(
 			".cr-related-item-section:not([data-target_list]) .CFIELD> input:not([type=file]), .cr-related-item-section:not([data-target_list]) .CFIELD> input[type=checkbox], .cr-related-item-section:not([data-target_list]) .CFIELD> div[type=picker], .cr-related-item-section:not([data-target_list]) .CFIELD> select[type=dropdown], .cr-related-item-section:not([data-target_list]) .CFIELD>  textarea,.cr-related-item-section:not([data-target_list]) .CFIELD> .datetimeinputs input[type=date], .cr-related-item-section:not([data-target_list]) .CFIELD> .datetimeinputs input[type=datetime-local], .cr-related-item-section:not([data-target_list]) .CFIELD > .multiselect-container, .cr-related-item-section:not([data-target_list]) .CFIELD > div.richTextEdits , .cr-related-item-section:not([data-target_list]) .CFIELD> div[type=multipicker]"
 		).each(function () {
 
-			console.log($(this).attr("type"), 'typeeeeeeeeeeeeeeeeeeeeee');
-			console.log($(this).attr("id"), "Attr id");
-			debugger
+
 
 			fieldType = $(this).attr("type");
 			let newJsonValues = jsonValues ? jsonValues : Information_Form;
@@ -563,7 +560,7 @@ window.CrItemDataRequest = {
 
 
 				case "multipicker":
-					debugger
+
 					var pemail =
 						oListItem.get_item("" + $(this).attr("id") + "") == null
 							? enternameemail
@@ -1407,176 +1404,181 @@ window.CrItemDataRenderFromJSON_Edit = {
 //! on View
 window.CrItemDataRenderFromJSON_View = {
 	init: function () {
-		debugger
+
 		var fieldType = "";
 		var $this;
 		var originalValue = "";
 		var newValue = "";
 		var value = "";
+
 		changeRequestBody.forEach(function (o, i, a) {
-			$this = $(".cr-related-item-section #" + o.InternalName);
-			fieldType = $this.attr("type");
-			value = o.value ? o.value : o.originalValue;
-			isOriginalValue = value == originalValue ? true : false;
-			if (o.isChanged) {
-				$this.parent().addClass("crHighlight");
-				$this.parent().attr("data-toggle", "tooltip");
-				$this.parent().attr("data-placement", isArabic ? "right" : "left");
-				$this.parent().attr("title", o.originalValue);
-			}
-			switch (o.type) {
-				case "datetime":
-					var d = value == "null" ? "empty" : new Date(value);
-					if (d != "empty") {
-						var local = d.getTime();
-						var offset = d.getTimezoneOffset() * (60 * 1000);
-						var utc = new Date(local + offset);
-						var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
-						var datetouse = riyadh
-							.toLocaleString("en-US")
-							.split(",")[0]
-							.split("/");
-						datetouse[0] =
-							datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
-						datetouse[1] =
-							datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
-						var datetouse2 =
-							datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
-						if ($this.hasClass("withTime")) {
-							var hour = d.getHours();
-							var minutes = d.getMinutes();
-							var timehour = hour + ":" + minutes + ":00";
-							$("#Time").val("" + timehour);
+
+			if (o.InternalName) {
+
+				$this = $(".cr-related-item-section #" + o.InternalName);
+				fieldType = $this.attr("type");
+				value = o.value ? o.value : o.originalValue;
+				isOriginalValue = value == originalValue ? true : false;
+				if (o.isChanged) {
+					$this.parent().addClass("crHighlight");
+					$this.parent().attr("data-toggle", "tooltip");
+					$this.parent().attr("data-placement", isArabic ? "right" : "left");
+					$this.parent().attr("title", o.originalValue);
+				}
+				switch (o.type) {
+					case "datetime":
+						var d = value == "null" ? "empty" : new Date(value);
+						if (d != "empty") {
+							var local = d.getTime();
+							var offset = d.getTimezoneOffset() * (60 * 1000);
+							var utc = new Date(local + offset);
+							var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+							var datetouse = riyadh
+								.toLocaleString("en-US")
+								.split(",")[0]
+								.split("/");
+							datetouse[0] =
+								datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
+							datetouse[1] =
+								datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
+							var datetouse2 =
+								datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
+							if ($this.hasClass("withTime")) {
+								var hour = d.getHours();
+								var minutes = d.getMinutes();
+								var timehour = hour + ":" + minutes + ":00";
+								$("#Time").val("" + timehour);
+							}
 						}
-					}
 
-					$this.text(datetouse2);
-					break;
+						$this.text(datetouse2);
+						break;
 
-				case "datetime-local":
-					var d = value == "null" ? "empty" : new Date(value);
-					if (d != "empty") {
-						var local = d.getTime();
-						var offset = d.getTimezoneOffset() * (60 * 1000);
-						var utc = new Date(local + offset);
-						var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
-						var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
-						var datetouse = riyadh
-							.toLocaleString("en-US")
-							.split(",")[0]
-							.split("/");
-						var hourtouse = riyadh
-							.toLocaleString("en-US")
-							.split(",")[1]
-							.split(":");
-						hourtouse[0] =
-							$.trim(hourtouse[0]).length == 1
-								? "0" + $.trim(hourtouse[0])
-								: $.trim(hourtouse[0]);
-						hourtouse[1] =
-							$.trim(hourtouse[1]).length == 1
-								? "0" + $.trim(hourtouse[1])
-								: $.trim(hourtouse[1]);
-						datetouse[0] =
-							datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
-						datetouse[1] =
-							datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
-						var datetouse2 =
-							datetouse[2] +
-							"-" +
-							datetouse[0] +
-							"-" +
-							datetouse[1] +
-							"T" +
-							hourtouse[0] +
-							":" +
-							hourtouse[1];
-					}
-					$this.text(datetouse2);
-					break;
-
-				case "picker":
-					//
-					var pemail;
-					if (isOriginalValue) {
-						pemail = value == "null" ? enternameemail : value.get_lookupValue();
-					} else {
-						pemail = !value ? enternameemail : value.$5c_1;
-					}
-
-					$this.attr("data-email", pemail);
-
-					var idinternal = $this.attr("id");
-					var mp = new MyPeoplePicker();
-					mp.init($this.attr("id"), { AllowMultipleValues: false });
-					break;
-
-				case "dropdown":
-					$this.text(value);
-					if ($this.attr("id") == "SubSector") {
-						departmenetValue = value;
-					}
-					if ($this.attr("id") == "BudgetItem") {
-						budgetitemValue = value;
-					}
-
-					break;
-
-				case "radio":
-					var radioval = value;
-					if (radioval == "Yes" || radioval == "yes") {
-						$('input[id="' + $this.attr("id") + '"]')
-							.filter('[value="yes"]')
-							.attr("checked", true);
-					} else if (
-						radioval == "No" ||
-						radioval == "no" ||
-						radioval == "undefined" ||
-						radioval == "null"
-					) {
-						$('input[id="' + $this.attr("id") + '"]')
-							.filter('[value="no"]')
-							.attr("checked", true);
-					} else
-						$('input[id="' + $this.attr("id") + '"]')
-							.filter('[value="' + value + '"]')
-							.attr("checked", true);
-					break;
-
-				case "checkbox":
-					if (value) $this.prop("checked", true);
-					break;
-
-				case "multiselect":
-					if (value) {
-						var myselections = value.split(":::");
-						for (var i = 0; i < myselections.length; i++) {
-							$this
-								.find("input:checkbox[value='" + myselections[i] + "']")
-								.prop("checked", true);
+					case "datetime-local":
+						var d = value == "null" ? "empty" : new Date(value);
+						if (d != "empty") {
+							var local = d.getTime();
+							var offset = d.getTimezoneOffset() * (60 * 1000);
+							var utc = new Date(local + offset);
+							var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+							var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+							var datetouse = riyadh
+								.toLocaleString("en-US")
+								.split(",")[0]
+								.split("/");
+							var hourtouse = riyadh
+								.toLocaleString("en-US")
+								.split(",")[1]
+								.split(":");
+							hourtouse[0] =
+								$.trim(hourtouse[0]).length == 1
+									? "0" + $.trim(hourtouse[0])
+									: $.trim(hourtouse[0]);
+							hourtouse[1] =
+								$.trim(hourtouse[1]).length == 1
+									? "0" + $.trim(hourtouse[1])
+									: $.trim(hourtouse[1]);
+							datetouse[0] =
+								datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
+							datetouse[1] =
+								datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
+							var datetouse2 =
+								datetouse[2] +
+								"-" +
+								datetouse[0] +
+								"-" +
+								datetouse[1] +
+								"T" +
+								hourtouse[0] +
+								":" +
+								hourtouse[1];
 						}
-					}
-					break;
+						$this.text(datetouse2);
+						break;
 
-				case "number":
-					if ($this.hasClass("percentagefield")) {
-						var num = eval(value) * 100;
-						if (num % 1 != 0)
-							$this.text(parseFloat(Math.round(num * 100) / 100).toFixed(2));
-						else $this.text(num);
-					} else {
+					case "picker":
+						//
+						var pemail;
+						if (isOriginalValue) {
+							pemail = value == "null" ? enternameemail : value.get_lookupValue();
+						} else {
+							pemail = !value ? enternameemail : value.$5c_1;
+						}
+
+						$this.attr("data-email", pemail);
+
+						var idinternal = $this.attr("id");
+						var mp = new MyPeoplePicker();
+						mp.init($this.attr("id"), { AllowMultipleValues: false });
+						break;
+
+					case "dropdown":
 						$this.text(value);
-					}
-					break;
-				case "richtext":
-					var HTMLContent = value;
-					HTMLContent
-						? $this.html(HTMLContent.replaceAll('href="/TOREMOVE', "href="))
-						: "";
-					break;
-				default:
-					$this.text(value);
-					break;
+						if ($this.attr("id") == "SubSector") {
+							departmenetValue = value;
+						}
+						if ($this.attr("id") == "BudgetItem") {
+							budgetitemValue = value;
+						}
+
+						break;
+
+					case "radio":
+						var radioval = value;
+						if (radioval == "Yes" || radioval == "yes") {
+							$('input[id="' + $this.attr("id") + '"]')
+								.filter('[value="yes"]')
+								.attr("checked", true);
+						} else if (
+							radioval == "No" ||
+							radioval == "no" ||
+							radioval == "undefined" ||
+							radioval == "null"
+						) {
+							$('input[id="' + $this.attr("id") + '"]')
+								.filter('[value="no"]')
+								.attr("checked", true);
+						} else
+							$('input[id="' + $this.attr("id") + '"]')
+								.filter('[value="' + value + '"]')
+								.attr("checked", true);
+						break;
+
+					case "checkbox":
+						if (value) $this.prop("checked", true);
+						break;
+
+					case "multiselect":
+						if (value) {
+							var myselections = value.split(":::");
+							for (var i = 0; i < myselections.length; i++) {
+								$this
+									.find("input:checkbox[value='" + myselections[i] + "']")
+									.prop("checked", true);
+							}
+						}
+						break;
+
+					case "number":
+						if ($this.hasClass("percentagefield")) {
+							var num = eval(value) * 100;
+							if (num % 1 != 0)
+								$this.text(parseFloat(Math.round(num * 100) / 100).toFixed(2));
+							else $this.text(num);
+						} else {
+							$this.text(value);
+						}
+						break;
+					case "richtext":
+						var HTMLContent = value;
+						HTMLContent
+							? $this.html(HTMLContent.replaceAll('href="/TOREMOVE', "href="))
+							: "";
+						break;
+					default:
+						$this.text(value);
+						break;
+				}
 			}
 		});
 		$('[data-toggle="tooltip"]').tooltip();
@@ -1605,16 +1607,9 @@ window.CrItemDataRenderFromJSON_View = {
 window.CrSetChangeBody = {
 	init: function (Data_Submit) {
 		var jsonValues;
-		debugger
-		if (USERisNew) {
-			// let wfStage = "";
-			// if (CrRelatedList == "Projects") wfStage = "CR01";
-			// if (CrRelatedList == "Initiatives") wfStage = "CRIni01";
-			// if (CrRelatedList == "MainKPI") wfStage = "CRKPI01";
-			// if (CrRelatedList == "StrategicObjectives") wfStage = "CRSos01";
 
-			// Data_Submit.set_item("WFModuleCode", "CR" + CrRelatedList);
-			// Data_Submit.set_item("WFStage", wfStage);
+		if (USERisNew) {
+
 			Data_Submit.set_item("RelatedItemCode", crRelatedItemCode);
 			if (!isGeneral) {
 				jsonValues = eval(
@@ -1625,146 +1620,280 @@ window.CrSetChangeBody = {
 			}
 		}
 		changeRequestBody.forEach(function (o, i, a) {
-			debugger
+
+
 			var $this = $(".cr-related-item-section #" + o.InternalName);
 			let newJsonValues = jsonValues ? jsonValues : Information_Form;
 
-			// let tempJSON = newJsonValues.filter(function (el) {
-			// 	return el.InternalName == o.InternalName;
-			// });
-			// let tempJSON = newJsonValues.filter((el) => el.InternalName == o.InternalName).map(el => el);
-			let tempJSON = newJsonValues[0].hasOwnProperty("subFields")
-				? newJsonValues[0].subFields
-					.filter((el) => el.InternalName == o.InternalName)
-					.map((el) => el)
-				:
-				newJsonValues
-					.filter((el) => el.InternalName == o.InternalName)
-					.map((el) => el);
+			// change on it to be validation on multi json values not only for one value
+			newJsonValues.forEach(element => {
+
+				if (element.hasOwnProperty("subFields")) { // if there is subfields
+					element.subFields.forEach(item => {
+						if (item.InternalName == o.InternalName) {
+							o.DisplayName = item.DisplayName || ""
+							o.DisplayNameEn = item.DisplayNameEn || ""
+							o.label = item.label || ""
+							o.labelEn = item.labelEn || ""
+							o.type = item.type || ""
+							o.InternalName = item.InternalName || "";
+
+							if (o.type == "picker") {
+								if ($this.find("span.sp-peoplepicker-userSpan").length) {
+									var id = $this.attr("INppicker");
+									var ppp =
+										$this.find("span.sp-peoplepicker-userSpan").attr("sid") == undefined
+											? ""
+											: SP.FieldUserValue.fromUser(
+												$this
+													.find("span.sp-peoplepicker-userSpan")
+													.attr("sid")
+													.split("|")
+													.slice(-1)[0]
+											);
+
+									o.value = ppp;
+									// o.value = "";
+
+								}
+							} else if (o.type == "datetime") {
+								if ($this.hasClass("withTime")) {
+									var dateval = $this.val();
+									var timeval = $this.closest(".CFIELD").find("#Time").val();
+									var datetime = new Date(dateval);
+									// format the output
+									var month = datetime.getMonth() + 1;
+									var day = datetime.getDate();
+									var year = datetime.getFullYear();
+									var timezoneOffset = datetime.getTimezoneOffset() / 60;
+									var hour = datetime.getHours() + timezoneOffset;
+									if (hour < 10) {
+										hour = "0" + hour;
+									}
+									var min = datetime.getMinutes();
+									if (min < 10) {
+										min = "0" + min;
+									}
+									var sec = datetime.getSeconds();
+									if (sec < 10) {
+										sec = "0" + sec;
+									}
+
+									var ydate =
+										month + "/" + day + "/" + year + " " + hour + ":" + min + ":" + sec;
+
+									if (dateval && timeval)
+										New_Data_Submit.g.oListItem.set_item($this.attr("id"), ydate);
+								} else {
+									var dateval = $this.val().replace("-", "/");
+									var ydate = !dateval
+										? ""
+										: [dateval.slice(5, 10), dateval.slice(0, 4)]
+											.join("/")
+											.replace("-", "/");
+									if (dateval) o.value = ydate;
+								}
+							} else if (o.type == "datetime-local") {
+								if ($this.hasClass("withTime")) {
+									var dateval = $this.val();
+									var datetime = new Date(dateval);
+									console.log("datetime", datetime);
+									// format the output
+									var month = datetime.getMonth() + 1;
+									var day = datetime.getDate();
+									var year = datetime.getFullYear();
+									var timezoneOffset = datetime.getTimezoneOffset() / 60;
+									var hour = datetime.getHours() + timezoneOffset;
+									if (hour < 10) {
+										hour = "0" + hour;
+									}
+									var min = datetime.getMinutes();
+									if (min < 10) {
+										min = "0" + min;
+									}
+									var sec = datetime.getSeconds();
+									if (sec < 10) {
+										sec = "0" + sec;
+									}
+
+									var ydate =
+										month + "/" + day + "/" + year + " " + hour + ":" + min + ":" + sec;
+
+									if (dateval) o.value = ydate;
+								}
+							} else if (o.type == "radio") {
+								var checkedvalue = $(
+									'input[id="' + $this.attr("id") + '"]:checked'
+								).val();
+								if (checkedvalue == "yes") {
+									o.value = "yes";
+								} else if (checkedvalue == "no") {
+									o.value = "no";
+								} else o.value = checkedvalue;
+
+								if (SP_ListName == "Deliverables" && checkedvalue == "yes") {
+									o.value = DVfirstStage;
+								}
+							} else if (o.type == "checkbox") {
+								var checkedvalue = $(
+									'input[id="' + $this.attr("id") + '"]:checked'
+								).length;
+								if (checkedvalue) o.value = true;
+								else o.value = false;
+							} else if (o.type == "dropdown") {
+								o.value = $this.val();
+							} else if ($this.hasClass("percentagefield")) {
+								o.value = $this.val() / 100;
+							} else if (o.type == "multiselect") {
+								var myselections = [];
+								$this.find("input#Revenue:checked").each(function () {
+									myselections.push($this.val());
+								});
+								myselections = myselections.join(":::");
+								o.value = myselections;
+							} else if (o.type == "richtext") {
+								var HTMLContent = $this.html();
+								HTMLContent ? (o.value = HTMLContent) : "";
+							} else o.value = $this.val();
 
 
-			o.DisplayName = tempJSON.length ? tempJSON[0].DisplayName || "" : "";
-			o.DisplayNameEn = tempJSON.length ? tempJSON[0].DisplayNameEn || "" : "";
-			o.label = tempJSON.length ? tempJSON[0].label || "" : "";
-			o.labelEn = tempJSON.length ? tempJSON[0].labelEn || "" : "";
-			o.type = tempJSON.length ? tempJSON[0].type || "" : "";
-			o.InternalName = tempJSON.length ? tempJSON[0].InternalName || "" : "";
-
-			if (o.type == "picker") {
-				if ($this.find("span.sp-peoplepicker-userSpan").length) {
-					var id = $this.attr("INppicker");
-					var ppp =
-						$this.find("span.sp-peoplepicker-userSpan").attr("sid") == undefined
-							? ""
-							: SP.FieldUserValue.fromUser(
-								$this
-									.find("span.sp-peoplepicker-userSpan")
-									.attr("sid")
-									.split("|")
-									.slice(-1)[0]
-							);
-					o.value = ppp;
-				}
-			} else if (o.type == "datetime") {
-				if ($this.hasClass("withTime")) {
-					var dateval = $this.val();
-					var timeval = $this.closest(".CFIELD").find("#Time").val();
-					var datetime = new Date(dateval);
-					// format the output
-					var month = datetime.getMonth() + 1;
-					var day = datetime.getDate();
-					var year = datetime.getFullYear();
-					var timezoneOffset = datetime.getTimezoneOffset() / 60;
-					var hour = datetime.getHours() + timezoneOffset;
-					if (hour < 10) {
-						hour = "0" + hour;
-					}
-					var min = datetime.getMinutes();
-					if (min < 10) {
-						min = "0" + min;
-					}
-					var sec = datetime.getSeconds();
-					if (sec < 10) {
-						sec = "0" + sec;
-					}
-
-					var ydate =
-						month + "/" + day + "/" + year + " " + hour + ":" + min + ":" + sec;
-
-					if (dateval && timeval)
-						New_Data_Submit.g.oListItem.set_item($this.attr("id"), ydate);
+							o.isChanged = o.value != o.originalValue;
+						}
+					})
 				} else {
-					var dateval = $this.val().replace("-", "/");
-					var ydate = !dateval
-						? ""
-						: [dateval.slice(5, 10), dateval.slice(0, 4)]
-							.join("/")
-							.replace("-", "/");
-					if (dateval) o.value = ydate;
-				}
-			} else if (o.type == "datetime-local") {
-				if ($this.hasClass("withTime")) {
-					var dateval = $this.val();
-					var datetime = new Date(dateval);
-					console.log("datetime", datetime);
-					// format the output
-					var month = datetime.getMonth() + 1;
-					var day = datetime.getDate();
-					var year = datetime.getFullYear();
-					var timezoneOffset = datetime.getTimezoneOffset() / 60;
-					var hour = datetime.getHours() + timezoneOffset;
-					if (hour < 10) {
-						hour = "0" + hour;
-					}
-					var min = datetime.getMinutes();
-					if (min < 10) {
-						min = "0" + min;
-					}
-					var sec = datetime.getSeconds();
-					if (sec < 10) {
-						sec = "0" + sec;
-					}
+					element.forEach(item => {
+						if (item.InternalName == o.InternalName) {
+							o.DisplayName = item.DisplayName || ""
+							o.DisplayNameEn = item.DisplayNameEn || ""
+							o.label = item.label || ""
+							o.labelEn = item.labelEn || ""
+							o.type = item.type || ""
+							o.InternalName = item.InternalName || "";
 
-					var ydate =
-						month + "/" + day + "/" + year + " " + hour + ":" + min + ":" + sec;
+							if (o.type == "picker") {
+								if ($this.find("span.sp-peoplepicker-userSpan").length) {
+									var id = $this.attr("INppicker");
+									var ppp =
+										$this.find("span.sp-peoplepicker-userSpan").attr("sid") == undefined
+											? ""
+											: SP.FieldUserValue.fromUser(
+												$this
+													.find("span.sp-peoplepicker-userSpan")
+													.attr("sid")
+													.split("|")
+													.slice(-1)[0]
+											);
 
-					if (dateval) o.value = ydate;
-				}
-			} else if (o.type == "radio") {
-				var checkedvalue = $(
-					'input[id="' + $this.attr("id") + '"]:checked'
-				).val();
-				if (checkedvalue == "yes") {
-					o.value = "yes";
-				} else if (checkedvalue == "no") {
-					o.value = "no";
-				} else o.value = checkedvalue;
+									o.value = ppp;
+									// o.value = "";
 
-				if (SP_ListName == "Deliverables" && checkedvalue == "yes") {
-					o.value = DVfirstStage;
+								}
+							} else if (o.type == "datetime") {
+								if ($this.hasClass("withTime")) {
+									var dateval = $this.val();
+									var timeval = $this.closest(".CFIELD").find("#Time").val();
+									var datetime = new Date(dateval);
+									// format the output
+									var month = datetime.getMonth() + 1;
+									var day = datetime.getDate();
+									var year = datetime.getFullYear();
+									var timezoneOffset = datetime.getTimezoneOffset() / 60;
+									var hour = datetime.getHours() + timezoneOffset;
+									if (hour < 10) {
+										hour = "0" + hour;
+									}
+									var min = datetime.getMinutes();
+									if (min < 10) {
+										min = "0" + min;
+									}
+									var sec = datetime.getSeconds();
+									if (sec < 10) {
+										sec = "0" + sec;
+									}
+
+									var ydate =
+										month + "/" + day + "/" + year + " " + hour + ":" + min + ":" + sec;
+
+									if (dateval && timeval)
+										New_Data_Submit.g.oListItem.set_item($this.attr("id"), ydate);
+								} else {
+									var dateval = $this.val().replace("-", "/");
+									var ydate = !dateval
+										? ""
+										: [dateval.slice(5, 10), dateval.slice(0, 4)]
+											.join("/")
+											.replace("-", "/");
+									if (dateval) o.value = ydate;
+								}
+							} else if (o.type == "datetime-local") {
+								if ($this.hasClass("withTime")) {
+									var dateval = $this.val();
+									var datetime = new Date(dateval);
+									console.log("datetime", datetime);
+									// format the output
+									var month = datetime.getMonth() + 1;
+									var day = datetime.getDate();
+									var year = datetime.getFullYear();
+									var timezoneOffset = datetime.getTimezoneOffset() / 60;
+									var hour = datetime.getHours() + timezoneOffset;
+									if (hour < 10) {
+										hour = "0" + hour;
+									}
+									var min = datetime.getMinutes();
+									if (min < 10) {
+										min = "0" + min;
+									}
+									var sec = datetime.getSeconds();
+									if (sec < 10) {
+										sec = "0" + sec;
+									}
+
+									var ydate =
+										month + "/" + day + "/" + year + " " + hour + ":" + min + ":" + sec;
+
+									if (dateval) o.value = ydate;
+								}
+							} else if (o.type == "radio") {
+								var checkedvalue = $(
+									'input[id="' + $this.attr("id") + '"]:checked'
+								).val();
+								if (checkedvalue == "yes") {
+									o.value = "yes";
+								} else if (checkedvalue == "no") {
+									o.value = "no";
+								} else o.value = checkedvalue;
+
+								if (SP_ListName == "Deliverables" && checkedvalue == "yes") {
+									o.value = DVfirstStage;
+								}
+							} else if (o.type == "checkbox") {
+								var checkedvalue = $(
+									'input[id="' + $this.attr("id") + '"]:checked'
+								).length;
+								if (checkedvalue) o.value = true;
+								else o.value = false;
+							} else if (o.type == "dropdown") {
+								o.value = $this.val();
+							} else if ($this.hasClass("percentagefield")) {
+								o.value = $this.val() / 100;
+							} else if (o.type == "multiselect") {
+								var myselections = [];
+								$this.find("input#Revenue:checked").each(function () {
+									myselections.push($this.val());
+								});
+								myselections = myselections.join(":::");
+								o.value = myselections;
+							} else if (o.type == "richtext") {
+								var HTMLContent = $this.html();
+								HTMLContent ? (o.value = HTMLContent) : "";
+							} else o.value = $this.val();
+
+
+							o.isChanged = o.value != o.originalValue;
+						}
+					})
 				}
-			} else if (o.type == "checkbox") {
-				var checkedvalue = $(
-					'input[id="' + $this.attr("id") + '"]:checked'
-				).length;
-				if (checkedvalue) o.value = true;
-				else o.value = false;
-			} else if (o.type == "dropdown") {
-				o.value = $this.val();
-			} else if ($this.hasClass("percentagefield")) {
-				o.value = $this.val() / 100;
-			} else if (o.type == "multiselect") {
-				var myselections = [];
-				$this.find("input#Revenue:checked").each(function () {
-					myselections.push($this.val());
-				});
-				myselections = myselections.join(":::");
-				o.value = myselections;
-			} else if (o.type == "richtext") {
-				var HTMLContent = $this.html();
-				HTMLContent ? (o.value = HTMLContent) : "";
-			} else o.value = $this.val();
-			o.isChanged = o.value != o.originalValue;
+			})
 			if (i == a.length - 1) {
 				Data_Submit.set_item("ChangeBody", JSON.stringify(changeRequestBody));
 			}
@@ -1841,5 +1970,504 @@ window.executeCR = {
 			);
 		}
 	},
+	g: {},
+};
+
+
+//master Data
+var CR_Master_Details_Request = {
+	// The main Initialization function
+	init: function (DetailsList) {
+
+		
+		var clientContext = new SP.ClientContext.get_current();
+		var oList = clientContext.get_web().get_lists().getByTitle(DetailsList);
+		CR_Master_Details_Request.g.DetailsList = DetailsList;
+		var camlQuery = new SP.CamlQuery();
+		camlQuery.set_viewXml(
+			'<View><Query><Where><And><Eq><FieldRef Name="MasterID" /><Value Type="Text">' +
+			RID +
+			'</Value></Eq><Eq><FieldRef Name="MasterKey" /><Value Type="Text">' +
+			RListKey +
+			"</Value></Eq></And></Where><OrderBy><FieldRef Name='Created' Ascending='True' /></OrderBy></Query></View>"
+		);
+		CR_Master_Details_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+		clientContext.load(CR_Master_Details_Request.g.collListItem);
+		clientContext.executeQueryAsync(
+			Function.createDelegate(this, CR_Master_Details_Request.onSuccess),
+			Function.createDelegate(this, CR_Master_Details_Request.onError)
+		);
+	},
+	onSuccess: function (sender, args) {
+
+		var collListItem = CR_Master_Details_Request.g.collListItem;
+		
+		var listItemEnum = collListItem.getEnumerator();
+		var CurrList = CR_Master_Details_Request.g.DetailsList,
+			FieldsToRender = $(
+				'[data-target_list="' +
+				CurrList +
+				'"] .fieldset-container .Details-Item'
+			).html(),
+			HTMLtoAppend,
+			MyValues = [];
+
+		if (collListItem.getEnumerator().$2J_0 > 0) {
+			//check if any items are returned we can use .getEnumerator().moveNext() //true
+			$('[data-target_list="' + CurrList + '"] .fieldset-container').html(""); //remove html
+		}
+		while (listItemEnum.moveNext()) {
+
+			console.log("in while");
+			debugger
+			var oListItem = listItemEnum.get_current();
+			HTMLtoAppend = "";
+			HTMLtoAppend +=
+				'<div class="Details-Item EditItem" data-ID="' +
+				oListItem.get_id() +
+				'" data-masterkey="' +
+				oListItem.get_item("MasterKey") +
+				'">';
+			HTMLtoAppend += FieldsToRender;
+			HTMLtoAppend += "</div>";
+
+
+			if (HTMLtoAppend)
+				$('[data-target_list="' + CurrList + '"] .fieldset-container').append(
+					HTMLtoAppend
+				);
+			//show data
+			//isView
+			if (false) {
+				$(
+					'[data-target_list="' +
+					CurrList +
+					'"] [data-ID="' +
+					oListItem.get_id() +
+					'"] > .CFIELD > .viewmode-value'
+				).each(function () {
+
+					if ($(this).attr("type") == "date") {
+						var d =
+							oListItem.get_item("" + $(this).attr("id") + "") == null
+								? "empty"
+								: oListItem.get_item("" + $(this).attr("id") + "");
+						if (d != "empty") {
+							var local = d.getTime();
+							var offset = d.getTimezoneOffset() * (60 * 1000);
+							var utc = new Date(local + offset);
+							var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+							var datetouse = riyadh
+								.toLocaleString("en-US")
+								.split(",")[0]
+								.split("/");
+							datetouse[0] =
+								datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
+							datetouse[1] =
+								datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
+							if (
+								localStorage.getItem("lng") == null ||
+								localStorage.getItem("lng") == "ar"
+							) {
+								var datetouse2 =
+									datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
+							} else {
+								var datetouse2 =
+									datetouse[1] + "-" + datetouse[0] + "-" + datetouse[2];
+							}
+
+							if ($(this).hasClass("withTime")) {
+								var hour = d.getHours();
+								var minutes = d.getMinutes();
+								var meridian;
+								if (hour > 12) {
+									meridian = "PM";
+									hour -= 12;
+								} else if (hour < 12) {
+									meridian = "AM";
+									if (hour == 0) {
+										hour = 12;
+									}
+								} else {
+									meridian = "PM";
+								}
+								var timehour = hour + ":" + minutes + ":" + meridian;
+								$("#Time").text(timehour);
+							}
+						}
+						$(this).text(datetouse2);
+					} else if ($(this).attr("type") == "picker") {
+						var pp =
+							oListItem.get_item("" + $(this).attr("id") + "") == null
+								? No_Data
+								: oListItem
+									.get_item("" + $(this).attr("id") + "")
+									.get_lookupValue();
+						$(this).text(pp);
+					} else if ($(this).attr("type") == "dropdown") {
+						var value =
+							oListItem.get_item("" + $(this).attr("id") + "") == null
+								? No_Data
+								: oListItem.get_item("" + $(this).attr("id") + "");
+						if (
+							localStorage.getItem("lng") == null ||
+							localStorage.getItem("lng") == "ar"
+						) {
+							$(this).text(Resources.ar[value]);
+						} else $(this).text(Resources.en[value]);
+					} else if ($(this).attr("type") == "radio") {
+						var value =
+							oListItem.get_item("" + $(this).attr("id") + "") == null
+								? "no"
+								: oListItem.get_item("" + $(this).attr("id") + "");
+						$(this).text(value);
+					} else if ($(this).attr("type") == "checkbox") {
+						var value =
+							oListItem.get_item("" + $(this).attr("id") + "") == null
+								? No_Data
+								: oListItem.get_item("" + $(this).attr("id") + "");
+						if (value)
+							if (
+								localStorage.getItem("lng") == null ||
+								localStorage.getItem("lng") == "ar"
+							) {
+								$(this).text(Resources.ar["yes"]);
+							} else $(this).text(Resources.en["yes"]);
+						else if (
+							localStorage.getItem("lng") == null ||
+							localStorage.getItem("lng") == "ar"
+						) {
+							$(this).text(Resources.ar["no"]);
+						} else $(this).text(Resources.en["no"]);
+					} else if ($(this).attr("type") == "percentage") {
+						var num =
+							oListItem.get_item("" + $(this).attr("id") + "") == null
+								? No_Data
+								: oListItem.get_item($(this).attr("id")) * 100;
+						if (num % 1 != 0)
+							$(this).text(parseFloat(Math.round(num * 100) / 100).toFixed(2));
+						else $(this).text(num);
+					} else if (
+						$(this).attr("type") == "number" ||
+						$(this).attr("type") == "float"
+					) {
+						var value =
+							oListItem.get_item("" + $(this).attr("id") + "") == null
+								? No_Data
+								: oListItem.get_item("" + $(this).attr("id") + "");
+
+						$(this).text(
+							value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+						);
+					} else if ($(this).attr("type") == "multiselect") {
+						// var value =
+						//   oListItem.get_item("" + $(this).attr("id") + "") == null
+						//     ? No_Data
+						//     : oListItem
+						//       .get_item("" + $(this).attr("id") + "")
+						//       .split(":::")
+						//       .join("; <br>");
+
+						// $(this).html(value);
+
+						// to get the name of multi select in master details
+						var valfieldkey = $(this).data("valfieldkey"),
+							Dispfieldkey = $(this).data("dispfieldkey"),
+							listname = $(this).data("listname"),
+							$this = $(this);
+
+						var listFields = ["ID", valfieldkey, Dispfieldkey];
+
+
+						var value =
+							oListItem.get_item("" + $(this).attr("id") + "") == null
+								? No_Data
+								: oListItem
+									.get_item("" + $(this).attr("id") + "")
+									.split(":::")
+
+						var customquerymulti =
+							'<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="' + valfieldkey + '" /><Values>';
+						for (var i = 0; i <= value.length; i++) {
+							customquerymulti += '<Value Type="Text">' + value[i] + '</Value>';
+						}
+						customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
+
+
+
+						sphttp.get(
+							_spPageContextInfo.siteServerRelativeUrl,
+							listname,
+							customquerymulti,
+							listFields,
+							function (records, record, listItem, isDone) {
+								if (isDone) {
+									var items = ''
+									records.forEach(function (el, index) {
+
+										items += el[Dispfieldkey] + '<br>'
+
+
+									});
+									$this.html(items);
+								}
+							}
+						);
+					} else if ($(this).attr("type") == "lookup") {
+						var valfieldkey = $(this).data("valfieldkey"),
+							Dispfieldkey = $(this).data("dispfieldkey"),
+							listname = $(this).data("listname"),
+							$this = $(this),
+							customquery =
+								'<View><Query><Where><Eq><FieldRef Name="' +
+								$(this).data("valfieldkey") +
+								'" /><Value Type="Text">' +
+								oListItem.get_item($(this).attr("id")) +
+								"</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+						sphttp.get(
+							_spPageContextInfo.siteServerRelativeUrl,
+							listname,
+							customquery,
+							[valfieldkey, Dispfieldkey],
+							function (records, record, listItem, isDone) {
+								if (isDone) {
+									records.forEach(function (el, index) {
+										$this.html(el[Dispfieldkey]);
+									});
+								}
+							}
+						);
+					} else {
+						var value =
+							oListItem.get_item("" + $(this).attr("id") + "") == null
+								? No_Data
+								: oListItem.get_item("" + $(this).attr("id") + "");
+						$(this).text(value);
+					}
+				});
+			}
+			else if (true) {
+				
+				$(
+					'[data-target_list="' +
+					CurrList +
+					'"] [data-ID="' +
+					oListItem.get_id() +
+					'"] > .CFIELD:not(.dont-submit):not(.dont-request)> input,' +
+					'[data-target_list="' +
+					CurrList +
+					'"] [data-ID="' +
+					oListItem.get_id() +
+					'"] > .CFIELD:not(.dont-submit):not(.dont-request)> div[type=picker],' +
+					'[data-target_list="' +
+					CurrList +
+					'"] [data-ID="' +
+					oListItem.get_id() +
+					'"] > .CFIELD:not(.dont-submit):not(.dont-request)> select[type=dropdown],' +
+					'[data-target_list="' +
+					CurrList +
+					'"] [data-ID="' +
+					oListItem.get_id() +
+					'"] > .CFIELD:not(.dont-submit):not(.dont-request)>  textarea,' +
+					///////////////////////
+					//////////////////////
+					'[data-target_list="' +
+					CurrList +
+					'"] [data-ID="' +
+					oListItem.get_id() +
+					'"] > .CFIELD:not(.dont-submit):not(.dont-request) > .multiselect-container'
+				).each(function () {
+					debugger
+					switch ($(this).attr("type")) {
+						case "date":
+							var d =
+								oListItem.get_item("" + $(this).attr("id") + "") == null
+									? "empty"
+									: oListItem.get_item("" + $(this).attr("id") + "");
+							if ($(this).hasClass("withTime")) {
+								console.log("asd", d);
+							} else {
+								if (d != "empty") {
+									var local = d.getTime();
+									var offset = d.getTimezoneOffset() * (60 * 1000);
+									var utc = new Date(local + offset);
+									var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+									var datetouse = riyadh
+										.toLocaleString("en-US")
+										.split(",")[0]
+										.split("/");
+									datetouse[0] =
+										datetouse[0].length == 1
+											? "0" + datetouse[0]
+											: datetouse[0];
+									datetouse[1] =
+										datetouse[1].length == 1
+											? "0" + datetouse[1]
+											: datetouse[1];
+									var datetouse2 =
+										datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
+
+									if ($(this).hasClass("withTime")) {
+										var hour = d.getHours();
+										var minutes = d.getMinutes();
+										var meridian;
+										if (hour > 12) {
+											meridian = "PM";
+											hour -= 12;
+										} else if (hour < 12) {
+											meridian = "AM";
+											if (hour == 0) {
+												hour = 12;
+											}
+										} else {
+											meridian = "PM";
+										}
+										var timehour = hour + ":" + minutes + ":" + meridian;
+										$("#Time").text(timehour);
+									}
+								}
+							}
+
+							$(this).val(datetouse2);
+							break;
+						case "datetime-local":
+							var d =
+								oListItem.get_item("" + $(this).attr("id") + "") == null
+									? "empty"
+									: oListItem.get_item("" + $(this).attr("id") + "");
+
+							if (d != "empty") {
+								var local = d.getTime();
+								var offset = d.getTimezoneOffset() * (60 * 1000);
+								var utc = new Date(local + offset);
+								var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+								var datetouse = riyadh
+									.toLocaleString("en-US")
+									.split(",")[0]
+									.split("/");
+								datetouse[0] =
+									datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
+								datetouse[1] =
+									datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
+								var datetouse2 =
+									datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
+							}
+
+							$(this).val(datetouse2);
+							break;
+
+						case "picker":
+							var pemail =
+								oListItem.get_item("" + $(this).attr("id") + "") == null
+									? enternameemail
+									: oListItem
+										.get_item("" + $(this).attr("id") + "")
+										.get_lookupValue();
+							$(this).attr("data-email", pemail);
+
+							if (pemail != enternameemail)
+								$(this).attr(
+									"user-email",
+									oListItem.get_item($(this).attr("id")).get_email()
+								);
+
+							var idinternal = $(this).attr("id");
+							var mp = new MyPeoplePicker();
+							mp.init($(this).attr("id"), { AllowMultipleValues: false });
+							break;
+						case "dropdown":
+							$(this).val(oListItem.get_item("" + $(this).attr("id") + ""));
+							break;
+
+						case "radio":
+							$('input[id="' + $(this).attr("id") + '"]')
+								.filter(
+									'[value="' + oListItem.get_item($(this).attr("id")) + '"]'
+								)
+								.attr("checked", true);
+							break;
+
+						case "checkbox":
+							if (oListItem.get_item($(this).attr("id")))
+								$(this).prop("checked", true);
+							break;
+
+						case "multiselect":
+							if (oListItem.get_item($(this).attr("myfield"))) {
+								var myselections = oListItem
+									.get_item($(this).attr("myfield"))
+									.split(":::");
+								for (var i = 0; i < myselections.length; i++) {
+									$(this)
+										.find("input:checkbox[value='" + myselections[i] + "']")
+										.prop("checked", true);
+								}
+							}
+							break;
+
+						case "number":
+
+							if ($(this).hasClass("percentagefield")) {
+								var num = oListItem.get_item($(this).attr("id")) * 100;
+								if (num % 1 != 0)
+									$(this).val(
+										parseFloat(Math.round(num * 100) / 100).toFixed(2)
+									);
+								else $(this).val(num);
+							} else {
+								$(this).val(oListItem.get_item("" + $(this).attr("id") + ""));
+							}
+
+							if ((listkey == 'initiatives' || listkey == 'projects')) { // to handle amount in master details based on weight in project and initiative
+
+								if (MasterDetailsArrayRequest.length == 0) {
+									if ($("[data-targetelem]").length > 0) {
+										$("[data-targetelem]").each(function () {
+											var targetElem = $(this).data('targetelem')
+
+											if (targetElem == 'Weight') {
+												var parentValue = $(this).data('parentval')
+												var weight = $(this).parent().parent().find(`#${targetElem}`).val()
+												var maxAttr = $(this).parent().parent().find(`#${targetElem}`).attr('max')
+
+												console.log(maxAttr, "$(this).parent().parent()")
+
+												weight = Number(weight)
+												var newMax = Number(maxAttr) + weight
+												$(this).parent().parent().find(`#${targetElem}`).attr('max', newMax)
+
+												var Amount = (weight * parentValue) / 100
+												Amount = Amount.toFixed(2)
+												$(this).val(Amount)
+											}
+										})
+									}
+								}
+							}
+							break;
+
+						default:
+							$(this).val(oListItem.get_item("" + $(this).attr("id") + ""));
+							break;
+					}
+				});
+			}
+		}
+
+
+		  if (crMasterDetailsArrayRequest.length > 0) {
+			CR_Master_Details_Request.init(crMasterDetailsArrayRequest[0]);
+			crMasterDetailsArrayRequest.shift(); //remove 0 index
+		  }
+
+
+	},
+	onError: function (sender, args) {
+		console.log(
+			"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+		);
+	},
+
+	// Global variables
 	g: {},
 };

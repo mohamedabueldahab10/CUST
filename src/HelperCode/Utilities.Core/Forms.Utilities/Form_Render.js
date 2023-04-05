@@ -228,7 +228,7 @@ window.ListInfo = {
           }
           else {
             basedOnParentSetValuesListiner = basedOnParentSetValues
-    
+
             var listinerField = basedOnParentSetValuesListiner[0].listinerField
 
             $("body").on("change", `#${listinerField}`, function (event) { // change it to body to can invoke the listiner in master details
@@ -972,7 +972,7 @@ window.ListInfo = {
           $("input.getTotalSelectedValues").change(function () {
 
 
-            
+
             var fieldValue = $(this).data("getothervalue")
             var targettotalelement = $(this).data("targettotalelement")
 
@@ -5289,7 +5289,7 @@ window.ListInfo = {
                     Object.entries(resultMulti).forEach((el) => {
                       htmlBody += '<label class="grp-select">' + el[0] + "</label>";
                       el[1].forEach((dl) => {
-                        
+
                         htmlBody +=
                           "<li>" +
                           '<div class="checkbox">' +
@@ -7426,7 +7426,7 @@ window.ListInfo = {
   },
 };
 // for view
-var View_ListInfo = {
+window.View_ListInfo = {
   // Pre-initialization functions ensure scripts, SharePoint dependencies are loaded
   preinit: function () {
     if ($(".container-body").length) {
@@ -12230,7 +12230,7 @@ var get_parent_data = {
     get_parent_data.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     get_parent_data.g.fieldName = fieldName
     get_parent_data.g.getGrandParent = getGrandParent
-    
+
     clientContext.load(get_parent_data.g.collListItem);
     clientContext.executeQueryAsync(
       Function.createDelegate(this, get_parent_data.onSuccess),
@@ -12250,9 +12250,9 @@ var get_parent_data = {
 
       dynamicVal = oListItem.get_item(dynamicFieldName) || '';
 
-      if(getGrandParent && getGrandParent.length){
-        get_grandparent_data.init(getGrandParent[0].grandParentList,dynamicVal,getGrandParent[0].grandParentFieldName,getGrandParent[0].grandParentTargetFieldName)
-      }else{
+      if (getGrandParent && getGrandParent.length) {
+        get_grandparent_data.init(getGrandParent[0].grandParentList, dynamicVal, getGrandParent[0].grandParentFieldName, getGrandParent[0].grandParentTargetFieldName)
+      } else {
         valueBasedOnParent.push(dynamicVal)
       }
 
@@ -12278,7 +12278,7 @@ var get_grandparent_data = {
 
 
     valueBasedOnParent = []
-    
+
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef  Name=\"" + grandParentFieldName + "\" /><Value Type=\"Text\">" +
       code +
@@ -12288,7 +12288,7 @@ var get_grandparent_data = {
     get_grandparent_data.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     get_grandparent_data.g.grandParentTargetFieldName = grandParentTargetFieldName
 
-    
+
     clientContext.load(get_grandparent_data.g.collListItem);
     clientContext.executeQueryAsync(
       Function.createDelegate(this, get_grandparent_data.onSuccess),
@@ -12299,16 +12299,16 @@ var get_grandparent_data = {
     var collListItem = get_grandparent_data.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
 
-   var grandParentTargetFieldName = get_grandparent_data.g.grandParentTargetFieldName
+    var grandParentTargetFieldName = get_grandparent_data.g.grandParentTargetFieldName
     var dynamicGrandParentVal = ""
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       itemID = oListItem.get_id();
 
       dynamicGrandParentVal = oListItem.get_item(grandParentTargetFieldName) || '';
-      
-        valueBasedOnParent.push(dynamicGrandParentVal)
-      console.log(valueBasedOnParent,"valueBasedOnParent in grand parent")
+
+      valueBasedOnParent.push(dynamicGrandParentVal)
+      console.log(valueBasedOnParent, "valueBasedOnParent in grand parent")
     }
 
   },
