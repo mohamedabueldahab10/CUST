@@ -49,7 +49,7 @@ window.CrModeFunctionality = {
 		var renderFunction = USERisNew || USERisEdit ? "ListInfo" : "View_ListInfo";
 		var Label, Description;
 		var printHtml = "";
-	
+
 
 		newJSON.forEach(function (o, i, a) {
 			if (o.labelEn == "Attachments") {
@@ -161,7 +161,7 @@ window.CrModeFunctionality = {
 				htmlBuilder += "</div></div></div>";
 				if (isDone) {
 					actionTaskHeader = "";
-		
+
 					$('div[class*="cr-related-item-"]').remove();
 					$(".btnactionrow").before(htmlBuilder);
 
@@ -207,8 +207,11 @@ window.CrModeFunctionality = {
 						crMasterDetailsArrayEdit = crMasterDetailsArrayRequest;
 
 
-
-						CR_Master_Details_Request.init(crMasterDetailsArrayRequest[0])
+						if (crMasterDetailsArrayRequest.length) {
+							CR_Master_Details_Request.init(crMasterDetailsArrayRequest[0])
+						}else{
+							$(".cr-related-item-section .CFIELD").addClass("dont-submit"); // remove it to not apply dont-submit on all fields
+						}
 					}
 					//handle people picker inputs
 					$(".cr-related-item-section div[type=picker]").each(function () {
@@ -332,7 +335,7 @@ window.CrModeFunctionality = {
 							ListInfo.g.toggleFields($(this));
 						}
 					);
-					//$(".cr-related-item-section .CFIELD").addClass("dont-submit"); // remove it to not apply dont-submit on all fields
+					// $(".cr-related-item-section .CFIELD").addClass("dont-submit"); // remove it to not apply dont-submit on all fields
 					// afterRenderEditAndNewForms.init();
 					if (USERisNew && isRListKey) CrItemDataRequest.init();
 					else if (USERisEdit) CrItemDataRenderFromJSON_Edit.init();
@@ -1904,6 +1907,7 @@ window.CrSetChangeBody = {
 window.executeCR = {
 	init: function (crBody) {
 		if (crBody.length) {
+			debugger
 			var clientContext = new SP.ClientContext.get_current();
 			var oList = clientContext
 				.get_web()
@@ -1979,7 +1983,7 @@ var CR_Master_Details_Request = {
 	// The main Initialization function
 	init: function (DetailsList) {
 
-		
+
 		var clientContext = new SP.ClientContext.get_current();
 		var oList = clientContext.get_web().get_lists().getByTitle(DetailsList);
 		CR_Master_Details_Request.g.DetailsList = DetailsList;
@@ -2001,7 +2005,7 @@ var CR_Master_Details_Request = {
 	onSuccess: function (sender, args) {
 
 		var collListItem = CR_Master_Details_Request.g.collListItem;
-		
+
 		var listItemEnum = collListItem.getEnumerator();
 		var CurrList = CR_Master_Details_Request.g.DetailsList,
 			FieldsToRender = $(
@@ -2247,7 +2251,7 @@ var CR_Master_Details_Request = {
 				});
 			}
 			else if (true) {
-				
+
 				$(
 					'[data-target_list="' +
 					CurrList +
@@ -2455,10 +2459,12 @@ var CR_Master_Details_Request = {
 		}
 
 
-		  if (crMasterDetailsArrayRequest.length > 0) {
+		if (crMasterDetailsArrayRequest.length > 0) {
 			CR_Master_Details_Request.init(crMasterDetailsArrayRequest[0]);
 			crMasterDetailsArrayRequest.shift(); //remove 0 index
-		  }
+		}else{
+			$(".cr-related-item-section .CFIELD").addClass("dont-submit"); // remove it to not apply dont-submit on all fields
+		}
 
 
 	},

@@ -2933,6 +2933,8 @@ var SubmitField_BulkEdit = {
 							} else if ((isMSCRObjective || isVROCRObjective || isLMSCRObjective || isVROCRProject || isEPMOCRProject || isLMSCRProject || isEPMOCRInitiative || isVROCRInitiative || isLMSCRInitiative || isMSCRKPI || isVROCRKPI || isLMSCRKPI) && state && nxtstageid == "approved" && crUpdateType.includes("delete")) { // invoke delete item from cr on these workflows
 
 								Delete_Item_FromCR.init(relatedItemInCr)
+							} else if ((isMSCRObjective || isVROCRObjective || isLMSCRObjective || isVROCRProject || isEPMOCRProject || isLMSCRProject || isEPMOCRInitiative || isVROCRInitiative || isLMSCRInitiative || isMSCRKPI || isVROCRKPI || isLMSCRKPI) && state && nxtstageid == "approved" && crUpdateType.includes("automatic")) {
+								executeCR.init(crBody);
 							} else {
 								Task_Edit_Data.init();
 							}
