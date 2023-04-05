@@ -2867,7 +2867,7 @@ window.userCalls = {
         if (USERisHome)
           window.location =
             _spPageContextInfo.webAbsoluteUrl +
-            "/sitepages/Listing.aspx?ListKey=strategicpartnerships";
+            "/sitepages/Listing.aspx?ListKey=achievements";
 
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
@@ -2883,10 +2883,11 @@ window.userCalls = {
 
         Create_Access = []
         Read_Access = [
-          "strategicpartnerships",
-          "StrategicPartnershipHome.aspx",
+          // "strategicpartnerships",
+          // "StrategicPartnershipHome.aspx",
           "documents",
-          "strategicpartnershipsachievements",
+          "achievements",
+          // "strategicpartnershipsachievements",
           "tasks"
         ];
         Edit_Access = [];
