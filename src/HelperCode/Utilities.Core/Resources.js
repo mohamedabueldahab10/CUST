@@ -952,6 +952,7 @@
     budgetmanager: "مدير الميزانية",
     portfoliomanager: "مدير المحفظة",
     objectiveowner:"مالك الهدف",
+    spmohead:"مدير مكتب إدارة المشاريع القطاعي",
 
     excelexport: "تصدير إلى Excel",
     planneddisbursement: "المخطط من الصرف",
@@ -2030,6 +2031,8 @@
     budgetmanager: "Budget Manager",
     portfoliomanager: "Portfolio Manager",
     objectiveowner:"Objective Owner",
+    spmohead:"Sectoral Project Management Office Head",
+    
     excelexport: "Export to excel",
     planneddisbursement: "Planned Disbursement",
     planneddisbursementpercent: "Planned Disbursement Percent",

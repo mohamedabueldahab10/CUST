@@ -1063,7 +1063,10 @@ window.userCalls = {
         ar_UserRole = "إدارة الأداء الإستراتيجي";
         en_UserRole = "Strategy Performance Management";
         //CRUD
-        Create_Access = ["benefitmetrics", "BenefitMetrics.aspx"];
+        Create_Access = ["benefitmetrics", "BenefitMetrics.aspx",
+        "changerequest",
+        "benefits",
+      ];
 
         Read_Access = [
           "goalstrategy",
@@ -1077,9 +1080,12 @@ window.userCalls = {
           "BenefitMetrics.aspx",
           "MainIndicators.aspx",
           "initiativesmain.aspx",
+          "changerequest"
         ];
 
-        Edit_Access = ["benefitmetrics", "BenefitMetrics.aspx"];
+        Edit_Access = ["benefitmetrics", "BenefitMetrics.aspx","changerequest",
+      "benefits"
+    ];
         Delete_Access = [];
         break;
       case "SPMAdmin":
@@ -1117,7 +1123,7 @@ window.userCalls = {
           "mainkpi",
           "sos",
           "initiatives",
-          // "InitiativeHome.aspx",
+          "InitiativeHome.aspx",
           "InitiativesMain.aspx",
           "benefits",
           "Targets.aspx",
@@ -2101,8 +2107,6 @@ window.userCalls = {
 
         //CRUD
         Create_Access = [
-          "initiatives",
-          "benefitmatrix",
           // for initiative
           "initiatives",
           "initiativedeliverables",
@@ -2113,6 +2117,7 @@ window.userCalls = {
           "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
+          "benefitmatrix",
           "closureinitiative",
           // for projects
           "projects",
@@ -2129,53 +2134,9 @@ window.userCalls = {
           "contracts",
           "changerequest",
         ];
-        Read_Access = [
-          "initiatives",
-          "initiativesmain.aspx",
-          "projects",
-          "projecthome.aspx",
-          "mom",
-          "mainkpi",
-          "lessonslearned",
-          "deliverables",
-          "projectcharter",
-          "risks",
-          "issues",
-          "milestones",
-          "invoices",
-          "contracts",
-          "changerequest",
-          // "MOM",
-          "communicationplans",
-          "lessonslearned",
-          "stakeholders",
-          "documents",
-          "tasks",
-          "closureform",
-          "TaskHistory.aspx",
-          "home.aspx",
-          "deliverablemetrics",
-          //for initiative
-          "initiativedeliverables",
-          "initiativemilestones",
-          "initiativerisks",
-          "initiativeissues",
-          "initiativemom",
-          "benefits",
-          "benefitmetrics",
-          "BenefitMetrics.aspx",
-          "closureinitiative",
-          /////////////////////
-          "MainIndicators.aspx",
-          "Targets.aspx",
-          "sos",
-          "goalstrategy",
-          "budgetitems",
-          "coc",
-        ];
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
-          "initiatives",
-          "benefitmatrix",
           // for initiative
           "initiatives",
           "initiativedeliverables",
@@ -2186,6 +2147,7 @@ window.userCalls = {
           "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
+          "benefitmatrix",
           "closureinitiative",
           // for projects
           "projects",
@@ -2203,8 +2165,6 @@ window.userCalls = {
           "changerequest",
         ];
         Delete_Access = [
-          "initiatives",
-          "benefitmatrix",
           // for initiative
           "initiatives",
           "initiativedeliverables",
@@ -2215,6 +2175,7 @@ window.userCalls = {
           "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
+          "benefitmatrix",
           "closureinitiative",
           // for projects
           "projects",
@@ -2229,6 +2190,7 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           "contracts",
+          // "changerequest",
         ];
 
         break;
@@ -2244,7 +2206,7 @@ window.userCalls = {
         en_UserRole = "Sectoral Project Management Office Head";
 
         Create_Access = [
-          "benefitmatrix",
+          // for initiative
           "initiatives",
           "initiativedeliverables",
           "initiativemilestones",
@@ -2254,7 +2216,10 @@ window.userCalls = {
           "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
+          "benefitmatrix",
           "closureinitiative",
+          // for projects
+          // "projects",
           "deliverables",
           "risks",
           "issues",
@@ -2266,23 +2231,30 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           "contracts",
-          "changerequest"
+          "changerequest",
         ];
-
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
-
+        
         Edit_Access = [
-          "benefitmatrix",
+          // for initiative
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
           "initiativerisks",
           "initiativeissues",
           "initiativemom",
           "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
+          "benefitmatrix",
           "closureinitiative",
+          // for projects
+          // "projects",
+          // "deliverables",
           "risks",
           "issues",
+          // "milestones",
           "mom",
           "closureform",
           "lessonslearned",
@@ -2290,28 +2262,36 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           "contracts",
-          "changerequest"
-        ]
-
+          "changerequest",
+        ];
         Delete_Access = [
-          "benefitmatrix",
+          // for initiative
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
           "initiativerisks",
           "initiativeissues",
           "initiativemom",
           "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
+          "benefitmatrix",
           "closureinitiative",
+          // for projects
+          // "projects",
+          // "deliverables",
           "risks",
           "issues",
+          // "milestones",
           "mom",
           "closureform",
           "lessonslearned",
           "coc",
           "stakeholders",
           "communicationplans",
-          "contracts"
-        ]
+          "contracts",
+          // "changerequest",
+        ];
 
         break;
       case "MinisterAssistant":
