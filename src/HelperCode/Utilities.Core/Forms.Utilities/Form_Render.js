@@ -5264,7 +5264,7 @@ window.ListInfo = {
                 '<a href="#" data-toggle="dropdown" class="dropdown-toggle">' +
                 displayName +
                 '<b class="caret"></b></a>' +
-                '<ul class="dropdown-menu multiselect_scroll">';
+                '<ul class="dropdown-menu multiselect_scroll ' + element.validation + '" >';
 
               sphttp.get(
                 _spPageContextInfo.siteServerRelativeUrl,
@@ -5310,6 +5310,9 @@ window.ListInfo = {
                       "</ul>" +
                       "</li>" +
                       "</ul>" +
+                      "<span data-trans-" +
+                      Errmsgkey +
+                      ' class="errMsgField Resources"></span>' +
                       '<div class="inputInfo ' +
                       isexist +
                       '">' +

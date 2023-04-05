@@ -2328,8 +2328,6 @@ window.userCalls = {
 
         //CRUD
         Create_Access = [
-          "initiatives",
-          "benefitmatrix",
           // for initiative
           "initiatives",
           "initiativedeliverables",
@@ -2340,6 +2338,7 @@ window.userCalls = {
           "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
+          "benefitmatrix",
           "closureinitiative",
           // for projects
           "projects",
@@ -2355,59 +2354,11 @@ window.userCalls = {
           "communicationplans",
           "contracts",
           "changerequest",
-          "documents",
-
         ];
-
-        Read_Access = [
-          "initiatives",
-          "initiativesmain.aspx",
-          "projects",
-          "projecthome.aspx",
-          "mom",
-          "mainkpi",
-          "lessonslearned",
-          "deliverables",
-          "projectcharter",
-          "risks",
-          "issues",
-          "milestones",
-          "invoices",
-          "contracts",
-          "changerequest",
-          // "MOM",
-          "communicationplans",
-          "lessonslearned",
-          "stakeholders",
-          "documents",
-          "tasks",
-          "closureform",
-          "TaskHistory.aspx",
-          "home.aspx",
-          "deliverablemetrics",
-          //for initiative
-          "initiativedeliverables",
-          "initiativemilestones",
-          "initiativerisks",
-          "initiativeissues",
-          "initiativemom",
-          "benefits",
-          "benefitmetrics",
-          "BenefitMetrics.aspx",
-          "closureinitiative",
-          /////////////////////
-          "MainIndicators.aspx",
-          // "Targets.aspx",
-          "sos",
-          "goalstrategy",
-          "budgetitems",
-          "coc",
-
-        ];
-
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
+        
         Edit_Access = [
-          "initiatives",
-          "benefitmatrix",
           // for initiative
           "initiatives",
           "initiativedeliverables",
@@ -2418,6 +2369,7 @@ window.userCalls = {
           "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
+          "benefitmatrix",
           "closureinitiative",
           // for projects
           "projects",
@@ -2434,11 +2386,9 @@ window.userCalls = {
           "contracts",
           "changerequest",
         ];
-
         Delete_Access = [
-          "initiatives",
-          "benefitmatrix",
           // for initiative
+          // "initiatives",
           "initiativedeliverables",
           "initiativemilestones",
           "initiativerisks",
@@ -2447,8 +2397,10 @@ window.userCalls = {
           "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
+          "benefitmatrix",
           "closureinitiative",
           // for projects
+          // "projects",
           "deliverables",
           "risks",
           "issues",
@@ -2460,6 +2412,7 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           "contracts",
+          // "changerequest",
         ];
 
         break;
