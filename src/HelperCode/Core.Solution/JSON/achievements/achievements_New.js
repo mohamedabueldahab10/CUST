@@ -4,12 +4,12 @@ var Information_Form = [
     labelEn: 'Basic Info',
     description: 'التفاصيل',
     descriptionEn: 'Details',
-        formDefaultValues: [
-      //VRO
-      { fieldName: 'WFModuleCode', value: 'Achievements', roles: ['Administrator','SPMO'], },
-      { fieldName: 'WFStage', value: 'A01', roles: ['Administrator','SPMO'], },
+    //     formDefaultValues: [
+    //   //VRO
+    //   { fieldName: 'WFModuleCode', value: 'Achievements', roles: ['Administrator','SPMO'], },
+    //   { fieldName: 'WFStage', value: 'A01', roles: ['Administrator','SPMO'], },
     
-    ],
+    // ],
     subFields: [
       {
         InternalName: 'AchievementName',
@@ -240,12 +240,17 @@ var Information_Form = [
         DisplayNameEn: 'Submit For Approval',
         InternalName: 'SubmitForApproval',
         validation: 'required',
-        type: 'yesnoradio',
+        type: 'dropdownValues',
         options: {
           choices: [
             {
               display: 'yes',
               value: 'yes',
+              otherFields: [
+                { fieldName: 'WFModuleCode', value: 'Achievements' },
+                { fieldName: 'WFStage', value: 'A01' },
+                // { fieldName: 'DraftStatus', value: '' },
+              ],
             },
 
             {
