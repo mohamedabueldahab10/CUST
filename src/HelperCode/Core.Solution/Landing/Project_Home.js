@@ -3728,10 +3728,14 @@ var EPM_Project_Summery_Task = {
 };
 
 var Update_ProjectStatus_Service = {
+  //APIURL
+  
   init: function () {
     $.ajax({
       type: "GET",
-      url: `https://hrsd-api.netways1.com/api/job/updateallprojectstatus/${Project_Home_Info_Request.g.PCODE}`,
+      url: `${APIURL}/job/updateallprojectstatus/${Project_Home_Info_Request.g.PCODE}`,
+
+      // url: `https://hrsd-api.netways1.com/api/job/updateallprojectstatus/${Project_Home_Info_Request.g.PCODE}`,
       success: function (data) {
         console.log("INSIDE SUCCESS Update_ProjectStatus_Service");
         Get_ProjectStatus_Info.init();

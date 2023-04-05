@@ -2211,7 +2211,7 @@ var Update_InitiativeStatus_Service = {
 
     $.ajax({
       type: 'GET',
-      url: `https://hrsd-api.netways1.com/api/job/updateinitiativestatusbymilestones/${initiativeHomeInfo_Request.g.ICODE}`,
+      url: `${APIURL}/job/updateinitiativestatusbymilestones/${initiativeHomeInfo_Request.g.ICODE}`,
       success: function (data) {
         Get_InitiativeStatus_Info.init()
       },

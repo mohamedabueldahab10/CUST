@@ -1266,7 +1266,7 @@ var Update_StrategicPartnershipStatus_Service = {
 
     $.ajax({
       type: 'GET',
-      url: `https://hrsd-api.netways1.com/api/job/updatestrategicpartnershipstatusbydeliverables/${StrategicPS_Home_Info_Request.g.STCODE}`,
+      url: `${APIURL}/job/updatestrategicpartnershipstatusbydeliverables/${StrategicPS_Home_Info_Request.g.STCODE}`,
       success: function (data) {
         Get_StrategicPartnershipStatus_Info.init()
       },
