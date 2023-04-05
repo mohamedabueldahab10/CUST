@@ -10,6 +10,7 @@ window.projectActualBudget = 0;
 window.projectAssignedBudget = 0;
 window.initiativeActualBudget = 0;
 window.CurrentUserTasksCount = 0;
+window.APIURL = "";
 //window.finishRenderAccessRole = false
 window.USERisProjectHome =
   window.location.href.toLowerCase().indexOf("/projecthome.aspx") > -1;
@@ -1064,9 +1065,9 @@ window.userCalls = {
         en_UserRole = "Strategy Performance Management";
         //CRUD
         Create_Access = ["benefitmetrics", "BenefitMetrics.aspx",
-        "changerequest",
-        "benefits",
-      ];
+          "changerequest",
+          "benefits",
+        ];
 
         Read_Access = [
           "goalstrategy",
@@ -1083,9 +1084,9 @@ window.userCalls = {
           "changerequest"
         ];
 
-        Edit_Access = ["benefitmetrics", "BenefitMetrics.aspx","changerequest",
-      "benefits"
-    ];
+        Edit_Access = ["benefitmetrics", "BenefitMetrics.aspx", "changerequest",
+          "benefits"
+        ];
         Delete_Access = [];
         break;
       case "SPMAdmin":
@@ -2235,7 +2236,7 @@ window.userCalls = {
         ];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
-        
+
         Edit_Access = [
           // for initiative
           // "initiatives",
@@ -2357,7 +2358,7 @@ window.userCalls = {
         ];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
-        
+
         Edit_Access = [
           // for initiative
           "initiatives",
@@ -6307,6 +6308,7 @@ window.userCalls = {
   },
 };
 $(document).ready(function () {
+  Get_Configure_Api.init()
   userCalls.get_CurrentUser();
 });
 
@@ -9917,4 +9919,44 @@ async function dateRange(startDate, endDate) {
     }
   }
   return dates;
+}
+
+
+
+var Get_Configure_Api = {
+  // The main Initialization function
+  init: function () {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("Configurations");
+    var camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Title\" /><Value Type=\"Text\">" +
+      "API_URL"
+      +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+    );
+    Get_Configure_Api.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(Get_Configure_Api.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Get_Configure_Api.onSuccess),
+      Function.createDelegate(this, Get_Configure_Api.onError)
+    );
+  },
+  onSuccess: function (sender, args) {
+    var collListItem = Get_Configure_Api.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      APIURL = oListItem.get_item("Value")
+    }
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  // Global variables
+  g: {},
+
 }

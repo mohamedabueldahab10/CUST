@@ -158,7 +158,7 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         validation: 'required',
-        dontSubmit: true,
+        // dontSubmit: true,
         ToggleName: "RelatedInitiative",
       },
       {
