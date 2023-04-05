@@ -4463,16 +4463,15 @@ function changeOnKpiResultDraft(state) {
 
 var Delete_Item_FromCR = {
 	init: function (relatedItemInCr) {
-
-
+	
 		if (isMSCRObjective || isVROCRObjective || isLMSCRObjective) {
-			urlHandler = `https://hrsd-api.netways1.com/api/general/deletestratgeicobjectiveitembysocode?soCode=${relatedItemInCr}`
+			urlHandler = `${APIURL}/general/deletestratgeicobjectiveitembysocode?soCode=${relatedItemInCr}`
 		} else if (isVROCRProject || isEPMOCRProject || isLMSCRProject) {
-			urlHandler = `https://hrsd-api.netways1.com/api/general/deleteprojectbyprojectcode?projectCode=${relatedItemInCr}`
+			urlHandler = `${APIURL}/general/deleteprojectbyprojectcode?projectCode=${relatedItemInCr}`
 		} else if (isEPMOCRInitiative || isVROCRInitiative || isLMSCRInitiative) {
-			urlHandler = `https://hrsd-api.netways1.com/api/general/deleteinitiativeitembyinitiativecode?initiativeCode=${relatedItemInCr}`
+			urlHandler = `${APIURL}/general/deleteinitiativeitembyinitiativecode?initiativeCode=${relatedItemInCr}`
 		} else if (isMSCRKPI || isVROCRKPI || isLMSCRKPI) {
-			urlHandler = `https://hrsd-api.netways1.com/api/general/deletemainkpiitembykpicode?kpiCode=${relatedItemInCr}`
+			urlHandler = `${APIURL}/general/deletemainkpiitembykpicode?kpiCode=${relatedItemInCr}`
 		}
 		$.ajax({
 			url: urlHandler,
