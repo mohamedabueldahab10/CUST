@@ -217,6 +217,7 @@ var UserRole,
   Read_Access = [],
   Edit_Access = [],
   Delete_Access = [];
+
 var RequestorTeam = "Requestor Team";
 var NIssues = 0,
   NTasks = 0,
@@ -704,6 +705,7 @@ window.userCalls = {
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
         ar_UserRole = "مدير المشروع";
         en_UserRole = "Project Manager";
+        
         //CRUD
         Create_Access = [
           /////////

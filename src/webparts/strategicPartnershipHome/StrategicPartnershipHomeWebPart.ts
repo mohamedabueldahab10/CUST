@@ -785,14 +785,7 @@ export default class StrategicPartnershipHomeWebPart extends BaseClientSideWebPa
                           data-trans-strategicpartnershippioneer
                           class="dark-gray mb-3 Resources"
                         ></h4>
-                        <div class="emp-name d-flex flex-row align-items-center">
-                          <span
-                            class="icon-user d-inline-flex bg-warning align-items-center text-center"
-                          >
-                            <span class="user-name w-100"></span>
-                          </span>
-                          <p class="fnt-14 reg mx-3"></p>
-                        </div>
+              
                       </div>
                    
                     </div>

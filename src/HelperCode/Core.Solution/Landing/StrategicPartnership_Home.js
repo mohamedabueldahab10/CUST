@@ -142,18 +142,44 @@ var StrategicPS_Home_Info_Request = {
       var strategicSubsectorarr = [];
 
       if (localStorage.getItem("Dynamo_Internal Entities") != null && strategicSubSector != No_Data) {
+
+        var value = strategicSubSector == null ? '' : strategicSubSector.split(":::")
+        var multiLookUpValuesArr = []
+        var items = ""
+
         strategicSubsectorarr = JSON.parse(
           localStorage.getItem("Dynamo_Internal Entities")
         );
-        strategicSubsectorarr = strategicSubsectorarr.filter(function (a) {
-          return a.code === strategicSubSector;
-        });
-        if (
-          localStorage.getItem("lng") == null ||
-          localStorage.getItem("lng") == "ar"
-        ) {
-          strategicSubSector = strategicSubsectorarr.length ? strategicSubsectorarr[0].name : No_Data;
-        } else strategicSubSector = strategicSubsectorarr.length ? strategicSubsectorarr[0].nameEn : No_Data;
+        value.forEach(el => {
+          strategicSubsectorarr.filter(function (a) {
+            if (a.code == el) {
+              multiLookUpValuesArr.push(a)
+            }
+          });
+        })
+        if (multiLookUpValuesArr.length) {
+          multiLookUpValuesArr.forEach(el => {
+            if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+              items += '<span class="multiselectspan">' + el.name + '</span>'
+            } else {
+              items += '<span>' + el.nameEn + '</span>'
+            }
+          })
+          strategicSubSector = items
+        } else {
+          strategicSubSector = No_Data
+        }
+
+        // debugger
+        // strategicSubsectorarr = strategicSubsectorarr.filter(function (a) {
+        //   return a.code === strategicSubSector;
+        // });
+        // if (
+        //   localStorage.getItem("lng") == null ||
+        //   localStorage.getItem("lng") == "ar"
+        // ) {
+        //   strategicSubSector = strategicSubsectorarr.length ? strategicSubsectorarr[0].name : No_Data;
+        // } else strategicSubSector = strategicSubsectorarr.length ? strategicSubsectorarr[0].nameEn : No_Data;
       }
 
       if (strategicPartnershipDuration) {
@@ -203,7 +229,7 @@ var StrategicPS_Home_Info_Request = {
         strategicSector +
         "</span></span>" +
         "</div>" +
-        '<div class="d-inline-flex flex-column mx-2">' +
+        '<div class="d-inline-flex flex-column mx-2 overflow_span">' +
         '<h3 data-trans-subsector class="Resources black initiativeProjHomeInfoTitleStyle"></h3>' +
         '<span class="des-13"><span class="state-val initiativeProjHomeInfoValueStyle">' +
         strategicSubSector +
@@ -504,9 +530,35 @@ var Get_PartnerShip_Representative = {
     var oList = clientContext.get_web().get_lists().getByTitle("Internal Entities");
     var camlQuery = new SP.CamlQuery();
 
+
+    var subsectors = strategicSubSector.split(":::")
+
+
+    console.log(strategicSubSector.split(":::"), "strategicSubSector strategicSubSector")
+    debugger
+
+
+    // if (allRelatedStrategObjArr.length) {
+    //   SoQuery = '<View><Query><Where><And><In><FieldRef Name="Title" /><Values>';
+    //   allRelatedStrategObjArr.forEach(function (item) {
+    //     SoQuery += '<Value Type="Text">' + item + '</Value>';
+    //   });
+    //   SoQuery += '</Values></In><Neq><FieldRef Name=\'DeletionStatus\'/><Value Type=\'Text\'>Deleted</Value></Neq></And></Where></Query></View>';
+    // }
+    var partnershipQuery = '<View><Query><Where><And><In><FieldRef Name="Title" /><Values>'
+    subsectors.forEach(function (item) {
+      partnershipQuery += '<Value Type="Text">' + item + '</Value>';
+    });
+    partnershipQuery += '</Values></In><Neq><FieldRef Name=\'DeletionStatus\'/><Value Type=\'Text\'>Deleted</Value></Neq></And></Where></Query></View>';
+
+
     camlQuery.set_viewXml(
-      "<View><Query><Where><Eq><FieldRef Name=\"Title\" /><Value Type=\"Text\">" + strategicSubSector + "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+      partnershipQuery
     );
+
+    // camlQuery.set_viewXml(
+    //   "<View><Query><Where><Eq><FieldRef Name=\"Title\" /><Value Type=\"Text\">" + strategicSubSector + "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+    // );
 
     Get_PartnerShip_Representative.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Get_PartnerShip_Representative.g.collListItem);
@@ -520,18 +572,30 @@ var Get_PartnerShip_Representative = {
     var listItemEnum = collListItem.getEnumerator();
     var partnershipRepresentative = "";
     while (listItemEnum.moveNext()) {
+      debugger
       var oListItem = listItemEnum.get_current();
       partnershipRepresentative = oListItem.get_item("PartnershipRepresentative") ? oListItem.get_item("PartnershipRepresentative").get_lookupValue() : No_Data;
+
+
+      var represintitveName = `<div class="emp-name d-flex flex-row align-items-center">
+      <span class="icon-user d-inline-flex bg-warning align-items-center text-center">
+        <span class="user-name w-100">${partnershipRepresentative.split(" ").map((word) => word[0]).join(".")}</span>
+      </span>
+      <p class="fnt-14 reg mx-3">${partnershipRepresentative}</p>
+    </div>`
+
+      $('.media-body').append(represintitveName)
+
     }
 
-    $(".project-info-ctx .media-body:nth-of-type(1) .icon-user > .user-name").text(
-      partnershipRepresentative.split(" ")
-        .map((word) => word[0])
-        .join(".")
-    );
-    $(".project-info-ctx .media-body:nth-of-type(1) p.fnt-14.reg.mx-3").text(
-      partnershipRepresentative
-    );
+    // $(".project-info-ctx .media-body:nth-of-type(1) .icon-user > .user-name").text(
+    //   partnershipRepresentative.split(" ")
+    //     .map((word) => word[0])
+    //     .join(".")
+    // );
+    // $(".project-info-ctx .media-body:nth-of-type(1) p.fnt-14.reg.mx-3").text(
+    //   partnershipRepresentative
+    // );
 
 
   },

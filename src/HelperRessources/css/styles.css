@@ -7024,3 +7024,16 @@ span.statuscolorstat28 {
     max-height:60rem;
     overflow-y:scroll
 }
+
+.multiselectspan{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+    max-width:95%
+}
+
+.overflow_span{
+    max-height: 8rem;
+    overflow: auto;
+}
