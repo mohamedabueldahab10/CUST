@@ -719,11 +719,20 @@ window.Edit_Data_Request = {
       })
     }
 
-    $("select[dynamic=parent]").trigger("change")
+    // $("select[dynamic=parent]").trigger("change")
 
-    // $("select[dynamic=parent]").each(function()
-    //   el.trigger("change")
-    // )
+    // to handle dynamic parent trigger in edit form
+    var dynamicArrId = []
+    $("select[dynamic=parent]").each(function () {
+      dynamicArrId.push($(this).attr("id"))
+
+    })
+    if (dynamicArrId.length) {
+      get_DynamicValues.init(dynamicArrId)
+    }
+    //
+
+
 
     //getting related files
     // var host = _spPageContextInfo.webAbsoluteUrl;
@@ -1054,12 +1063,12 @@ window.View_Data_Request = {
   onSuccess: function (sender, args) {
     var strategyType = ''
     var pillersRadio = ''
-    
+
     $(
       ".section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request) > .viewmode-value"
     ).each(async function () {
 
-      
+
 
       if ($(this).attr("type") == "date") {
         var d =
@@ -1343,8 +1352,8 @@ window.View_Data_Request = {
         }
         customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
 
-        
-        
+
+
 
         sphttp.get(
           _spPageContextInfo.siteServerRelativeUrl,
@@ -1356,7 +1365,7 @@ window.View_Data_Request = {
               var items = ''
               console.log("ASddsadasdsadas")
               records.forEach(function (el, index) {
-                
+
                 // $this.parent().find('a').attr('href', '/SitePages/View.aspx?ListKey=' + linkedto + '&IID=' + el["ID"] + '')
                 var htmlLink = ""
                 var handleHref = "javascript:"
@@ -1474,7 +1483,7 @@ window.View_Data_Request = {
           // listFields = ["ID",valfieldkey, Dispfieldkey, parentrelatedfilterkeylvl1];
         }
 
-  
+
 
         if (oListItem.get_item($(this).attr("id")) == null) {
 
@@ -1617,7 +1626,7 @@ window.View_Data_Request = {
       $(".container-body .d-flex.btnactionrow").hide();
     }
 
-    
+
     //handle top menu navigation
     if (SP_ListName == ListArray[0].projects) {
       PCODE = oListItem.get_item("Title");
@@ -6387,7 +6396,7 @@ var DontSubmit_DataRequest = {
       "[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
     ).each(function (e) {
 
-      
+
 
       var elementId = ""
       var elementValue = ""
@@ -6490,6 +6499,28 @@ var DontSubmit_DataRequest = {
     if ($(".getsiblingdata").length > 0) {
       $(".getsiblingdata").trigger("change")//to invoke the sibling data
     }
+
+  }
+}
+
+
+// to get the dynamic value trigger in edit when we have more than one dynamic in form
+var get_DynamicValues = {
+  init: function (dynamicArrId) {
+    if (dynamicArrId.length) {
+      var id = dynamicArrId[0]
+      $(`select[id=${id}][dynamic=parent]`).trigger("change")
+      dynamicArrId.shift()
+      console.log(dynamicArrId, "dynamicArrId")
+    }
+
+    if (dynamicArrId.length) {
+      window.setTimeout(function () {
+        get_DynamicValues.init(dynamicArrId)
+
+      }, 2000)
+    }
+
 
   }
 }
