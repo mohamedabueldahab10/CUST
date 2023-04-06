@@ -2134,6 +2134,7 @@ window.userCalls = {
           "communicationplans",
           "contracts",
           "changerequest",
+          "achievements"
         ];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
@@ -2164,6 +2165,8 @@ window.userCalls = {
           "communicationplans",
           "contracts",
           "changerequest",
+          "achievements"
+
         ];
         Delete_Access = [
           // for initiative
@@ -2355,6 +2358,8 @@ window.userCalls = {
           "communicationplans",
           "contracts",
           "changerequest",
+          "achievements"
+
         ];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
@@ -2386,6 +2391,8 @@ window.userCalls = {
           "communicationplans",
           "contracts",
           "changerequest",
+          "achievements"
+
         ];
         Delete_Access = [
           // for initiative
@@ -2511,10 +2518,10 @@ window.userCalls = {
         Read_Access = Read_Access.concat(SP_Page_Name);
 
         Edit_Access = [
-          "goalstrategy",
-          "spillars",
-          "sos",
-          "mainkpi",
+          // "goalstrategy",
+          // "spillars",
+          // "sos",
+          // "mainkpi",
           "changerequest"
         ];
         Delete_Access = [];
