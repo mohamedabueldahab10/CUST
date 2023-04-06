@@ -7020,3 +7020,7 @@ span.statuscolorstat28 {
     padding-inline: 15px;
     padding-bottom: 15px;
 }
+.popupComment .wrapcomments div:not(.btn-cont){
+    max-height:60rem;
+    overflow-y:scroll
+}
