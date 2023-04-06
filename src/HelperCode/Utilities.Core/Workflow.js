@@ -3550,6 +3550,8 @@ var Task_Edit_Data = {
 				// 		_spPageContextInfo.siteAbsoluteUrl +
 				// 		"/SitePages/Listing.aspx?ListKey=deliverables";
 				// }
+				debugger
+				//relatedproj initiative links
 				if (isRiskPage) {
 					window.location =
 						_spPageContextInfo.siteAbsoluteUrl +
