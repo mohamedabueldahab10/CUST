@@ -1061,11 +1061,13 @@ window.ListInfo = {
               elementVal = Number(elementVal)
               maxValue = Number(maxValue)
               if (elementVal <= maxValue) {
+                // $(this).focusout(function() {
                 $(this).val(function (index, value) {
                   return value
                     .replace(/\D/g, "")
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 });
+              // });
               } else {
                 $(this).val(null)
               }
@@ -1074,11 +1076,13 @@ window.ListInfo = {
               $(`#${resetElement}`).val(null)
             } else {
               // format number
-              $(this).val(function (index, value) {
-                return value
-                  .replace(/\D/g, "")
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-              });
+              // $(this).focusout(function() {
+                $(this).val(function (index, value) {
+                  return value
+                    .replace(/\D/g, "")
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                });
+              // });
             }
 
             /// 
