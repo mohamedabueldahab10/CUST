@@ -271,12 +271,13 @@ window.sphttp = {
                       record[internalFieldNames[i]] = (oListItem.get_item(internalFieldNames[i]) == null) ? No_Data : oListItem.get_item(internalFieldNames[i]).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     }
                     else if (Listing_Info[i].type == "lookupmultiselect") {
+                      debugger
                       var items = ''
                       var value = oListItem.get_item(internalFieldNames[i]) == null ? '' : oListItem.get_item(internalFieldNames[i]).split(":::")
-
+                      var multiLookUpItemsArr = []
+                      var multiLookUpValuesArr = []
                       if (value && value.length) {
-                        var multiLookUpItemsArr = []
-                        var multiLookUpValuesArr = []
+                   
 
                         value.forEach(el => {
                           if ((localStorage.getItem('' + Listing_Info[i].localStorageVariable) != null) && (oListItem.get_item(internalFieldNames[i]) !== null)) {
@@ -290,7 +291,7 @@ window.sphttp = {
                           }
                         })
                       }
-                      if (multiLookUpValuesArr.length) {
+                      if (multiLookUpItemsArr && multiLookUpValuesArr.length) {
                         multiLookUpValuesArr.forEach(el => {
                           if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
                             items += el.name + '<br>'

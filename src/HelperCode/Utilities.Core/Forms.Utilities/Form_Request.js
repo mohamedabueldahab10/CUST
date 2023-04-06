@@ -721,6 +721,9 @@ window.Edit_Data_Request = {
 
     $("select[dynamic=parent]").trigger("change")
 
+    // $("select[dynamic=parent]").each(function()
+    //   el.trigger("change")
+    // )
 
     //getting related files
     // var host = _spPageContextInfo.webAbsoluteUrl;
