@@ -7022,7 +7022,7 @@ span.statuscolorstat28 {
 }
 .project-home-page .popupComment .wrapcomments div:not(.btn-cont){
     max-height:60rem;
-    overflow-y:scroll
+    overflow-y:auto
 }
 
 .multiselectspan{

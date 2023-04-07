@@ -590,14 +590,17 @@ window.New_Data_Submit = {
 
       //save value based on parent type
 
-      //
-
-
-      // New_Data_Submit.g.oListItem.set_item("MasterKey", PCODE);
-      // New_Data_Submit.g.oListItem.set_item("MasterID", PCODE);
+      if (listkey == 'deliverables' || listkey == 'milestones'){
+        New_Data_Submit.g.oListItem.set_item("MasterKey", "projects");
+        New_Data_Submit.g.oListItem.set_item("MasterID", relatedProjectId);
+      }
     }
     else if (ICODE && listkey != "initiatives") {
       New_Data_Submit.g.oListItem.set_item("InitiativeCode", ICODE);
+      if (listkey == 'initiativedeliverables' || listkey == 'initiativemilestones' || listkey == 'benefits'){
+        New_Data_Submit.g.oListItem.set_item("MasterKey", "initiatives");
+        New_Data_Submit.g.oListItem.set_item("MasterID", relatedInitiativeId);
+      }
     }
     else if (UserSTCode && listkey != "strategicpartnerships") {
       New_Data_Submit.g.oListItem.set_item("StrategicPartnershipCode", UserSTCode);
@@ -638,11 +641,6 @@ window.New_Data_Submit = {
     if (listkey == 'initiatives') { //  to handle the initiative status when create a new one
       New_Data_Submit.g.oListItem.set_item("InitiativeProgressStatus", "stat6");
     }
-
-
-
-
-
 
     New_Data_Submit.g.oListItem.update();
     clientContext.load(New_Data_Submit.g.oListItem);

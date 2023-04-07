@@ -11,6 +11,8 @@ window.projectAssignedBudget = 0;
 window.initiativeActualBudget = 0;
 window.CurrentUserTasksCount = 0;
 window.APIURL = "";
+window.relatedProjectId = "";
+window.relatedInitiativeId ="";
 //window.finishRenderAccessRole = false
 window.USERisProjectHome =
   window.location.href.toLowerCase().indexOf("/projecthome.aspx") > -1;
@@ -214,6 +216,7 @@ var UserRole,
   User_ProjUID,
   //CRUD ACCESS
   Create_Access = [],
+  CreateChangeRequest_Access = [],
   Read_Access = [],
   Edit_Access = [],
   Delete_Access = [];
@@ -624,6 +627,7 @@ window.userCalls = {
         document.title = USERPageTitle;
     }
     (Create_Access = Create_Access.map((name) => name.toLowerCase())), //making sure everything is lower case
+    (CreateChangeRequest_Access = CreateChangeRequest_Access.map((name) => name.toLowerCase())), //making sure everything is lower case
       (Read_Access = Read_Access.map((name) => name.toLowerCase())),
       (Edit_Access = Edit_Access.map((name) => name.toLowerCase())),
       (Delete_Access = Delete_Access.map((name) => name.toLowerCase()));
@@ -709,7 +713,7 @@ window.userCalls = {
         //CRUD
         Create_Access = [
           /////////
-          "projects",
+          // "projects",
           // "deliverables",
           // "milestones",
           "issues",
@@ -723,6 +727,10 @@ window.userCalls = {
           "contracts",
           "documents",
           "changerequest"
+        ];
+        CreateChangeRequest_Access = [
+          /////////
+          "projects",
         ];
         Read_Access = [
           "projects",
@@ -746,9 +754,9 @@ window.userCalls = {
           "projecthome.aspx",
         ];
         Edit_Access = [
-          "projects",
-          "deliverables",
-          "milestones",
+          // "projects",
+          // "deliverables",
+          // "milestones",
           "issues",
           "risks",
           "mom",
@@ -763,9 +771,9 @@ window.userCalls = {
           //////////////////////////
         ];
         Delete_Access = [
-          "projects",
-          "deliverables",
-          "milestones",
+          // "projects",
+          // "deliverables",
+          // "milestones",
           "issues",
           "risks",
           "mom",
@@ -828,7 +836,7 @@ window.userCalls = {
         en_UserRole = "Initiative Manager";
         //CRUD
         Create_Access = [
-          "initiatives",
+          // "initiatives",
           // "initiativedeliverables",
           // "initiativemilestones",
           "initiativeissues",
@@ -839,7 +847,7 @@ window.userCalls = {
           "benefitmatrix",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "projects",
+          // "projects",
           // "deliverables",
           // "milestones",
           "issues",
@@ -853,6 +861,7 @@ window.userCalls = {
           "contracts",
           "changerequest",
         ];
+        CreateChangeRequest_Access=["initiatives","projects"]
         Read_Access = [
           "initiatives",
           "initiativedeliverables",
@@ -888,20 +897,20 @@ window.userCalls = {
           "projecthome.aspx",
         ];
         Edit_Access = [
-          "initiatives",
-          "initiativedeliverables",
-          "initiativemilestones",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
           "initiativeissues",
           "initiativerisks",
           "initiativemom",
           "closureinitiative",
-          "benefits",
+          // "benefits",
           "benefitmatrix",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "projects",
-          "deliverables",
-          "milestones",
+          // "projects",
+          // "deliverables",
+          // "milestones",
           "issues",
           "risks",
           "mom",
@@ -914,20 +923,20 @@ window.userCalls = {
           "changerequest",
         ];
         Delete_Access = [
-          "initiatives",
-          "initiativedeliverables",
-          "initiativemilestones",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
           "initiativeissues",
           "initiativerisks",
           "initiativemom",
           "closureinitiative",
-          "benefits",
+          // "benefits",
           "benefitmatrix",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "projects",
-          "deliverables",
-          "milestones",
+          // "projects",
+          // "deliverables",
+          // "milestones",
         ];
         break;
 
@@ -948,7 +957,7 @@ window.userCalls = {
         en_UserRole = "Initiative Owner";
         //CRUD
         Create_Access = [
-          "initiatives",
+          // "initiatives",
           // "initiativedeliverables",
           // "initiativemilestones",
           "initiativeissues",
@@ -959,7 +968,7 @@ window.userCalls = {
           "benefitmatrix",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "projects",
+          // "projects",
           // "deliverables",
           // "milestones",
           "issues",
@@ -973,7 +982,7 @@ window.userCalls = {
           "contracts",
           "changerequest",
         ];
-
+        CreateChangeRequest_Access = ["initiatives", "projects"]
         Read_Access = [
           "initiatives",
           "initiativedeliverables",
@@ -1010,20 +1019,20 @@ window.userCalls = {
         ];
 
         Edit_Access = [
-          "initiatives",
-          "initiativedeliverables",
-          "initiativemilestones",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
           "initiativeissues",
           "initiativerisks",
           "initiativemom",
           "closureinitiative",
-          "benefits",
+          // "benefits",
           "benefitmatrix",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "projects",
-          "deliverables",
-          "milestones",
+          // "projects",
+          // "deliverables",
+          // "milestones",
           "issues",
           "risks",
           "mom",
@@ -1036,20 +1045,20 @@ window.userCalls = {
           "changerequest",
         ];
         Delete_Access = [
-          "initiatives",
-          "initiativedeliverables",
-          "initiativemilestones",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
           "initiativeissues",
           "initiativerisks",
           "initiativemom",
           "closureinitiative",
-          "benefits",
+          // "benefits",
           "benefitmatrix",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "projects",
-          "deliverables",
-          "milestones",
+          // "projects",
+          // "deliverables",
+          // "milestones",
 
         ];
 
@@ -1076,9 +1085,8 @@ window.userCalls = {
         //CRUD
         Create_Access = ["benefitmetrics", "BenefitMetrics.aspx",
           "changerequest",
-          "benefits",
+          // "benefits",
         ];
-
         Read_Access = [
           "goalstrategy",
           "sos",
@@ -1096,7 +1104,7 @@ window.userCalls = {
         ];
 
         Edit_Access = ["benefitmetrics", "BenefitMetrics.aspx", "changerequest",
-          "benefits"
+          // "benefits"
         ];
         Delete_Access = [];
         break;
@@ -1118,10 +1126,10 @@ window.userCalls = {
         en_UserRole = "Strategy Performance Administrator";
         //CRUD
         Create_Access = [
-          "sos",
+          // "sos",
           "benefitmatrix",
-          "mainkpi",
-          "benefits",
+          // "mainkpi",
+          // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
           "deliverablemetrics",
@@ -1129,7 +1137,10 @@ window.userCalls = {
           "Targets.aspx",
           "kpiequations",
         ];
-
+        CreateChangeRequest_Access = [
+          "sos",
+          "mainkpi",
+        ]
         Read_Access = [
           "goalstrategy",
           "mainkpi",
@@ -1150,25 +1161,25 @@ window.userCalls = {
         ];
 
         Edit_Access = [
-          "mainkpi",
-          "sos",
+          // "mainkpi",
+          // "sos",
           "deliverablemetrics",
           "benefitmatrix",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "benefits",
+          // "benefits",
           "Targets.aspx",
           "kpiequations",
           "changerequest",
 
         ];
         Delete_Access = [
-          "mainkpi",
-          "sos",
+          // "mainkpi",
+          // "sos",
           "benefitmatrix",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "benefits",
+          // "benefits",
           // "mainkpi", "sos",  "benefits", "Targets.aspx", "kpiequations", "deliverablemetrics", "benefitmatrix", "benefitmetrics",
           "BenefitMetrics.aspx", //check
         ];
@@ -1187,22 +1198,26 @@ window.userCalls = {
         //CRUD
         Create_Access = [
           "goalstrategy",
-          "sos",
-          "mainkpi",
+          // "sos",
+          // "mainkpi",
           "changerequest"
         ];
+        CreateChangeRequest_Access = [
+          "sos",
+          "mainkpi",
+        ]
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
           "goalstrategy",
-          "sos",
-          "mainkpi",
+          // "sos",
+          // "mainkpi",
           "changerequest"
         ];
         Delete_Access = [
           "goalstrategy",
-          "sos",
-          "mainkpi"
+          // "sos",
+          // "mainkpi"
         ];
         break;
 
@@ -1219,22 +1234,26 @@ window.userCalls = {
 
         Create_Access = [
           "goalstrategy",
-          "sos",
-          "mainkpi",
+          // "sos",
+          // "mainkpi",
           "changerequest"
         ];
+        CreateChangeRequest_Access = [
+          "sos",
+          "mainkpi",
+        ]
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
           "goalstrategy",
-          "sos",
-          "mainkpi",
+          // "sos",
+          // "mainkpi",
           "changerequest"
         ];
         Delete_Access = [
           "goalstrategy",
-          "sos",
-          "mainkpi"
+          // "sos",
+          // "mainkpi"
         ];
         break;
 
@@ -1251,22 +1270,27 @@ window.userCalls = {
 
         Create_Access = [
           "goalstrategy",
-          "sos",
-          "mainkpi",
+          // "sos",
+          // "mainkpi",
           "changerequest"
         ];
+        CreateChangeRequest_Access = [
+          "sos",
+          "mainkpi",
+          "projects"
+        ]
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
           "goalstrategy",
-          "sos",
-          "mainkpi",
+          // "sos",
+          // "mainkpi",
           "changerequest"
         ];
         Delete_Access = [
           "goalstrategy",
-          "sos",
-          "mainkpi"
+          // "sos",
+          // "mainkpi"
         ];
         break;
 
@@ -1283,22 +1307,26 @@ window.userCalls = {
 
         Create_Access = [
           "goalstrategy",
-          "sos",
-          "mainkpi",
+          // "sos",
+          // "mainkpi",
           "changerequest"
         ];
+        CreateChangeRequest_Access = [
+          "sos",
+          "mainkpi",
+        ]
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
           "goalstrategy",
-          "sos",
-          "mainkpi",
+          // "sos",
+          // "mainkpi",
           "changerequest"
         ];
         Delete_Access = [
           "goalstrategy",
-          "sos",
-          "mainkpi"
+          // "sos",
+          // "mainkpi"
         ];
         break;
 
@@ -1315,22 +1343,27 @@ window.userCalls = {
 
         Create_Access = [
           "goalstrategy",
-          "sos",
-          "mainkpi",
+          // "sos",
+          // "mainkpi",
           "changerequest"
         ];
+        CreateChangeRequest_Access = [
+          "sos",
+          "mainkpi",
+          "projects"
+        ]
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
           "goalstrategy",
-          "sos",
-          "mainkpi",
+          // "sos",
+          // "mainkpi",
           "changerequest"
         ];
         Delete_Access = [
           "goalstrategy",
-          "sos",
-          "mainkpi"
+          // "sos",
+          // "mainkpi"
         ];
         break;
 
@@ -1348,7 +1381,7 @@ window.userCalls = {
         //CRUD
         Create_Access = [
           "benefitmatrix",
-          "initiatives",
+          // "initiatives",
           // "initiativedeliverables",
           // "initiativemilestones",
           "initiativeissues",
@@ -1358,7 +1391,7 @@ window.userCalls = {
           // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "projects",
+          // "projects",
           // "deliverables",
           "mom",
           "risks",
@@ -1374,26 +1407,29 @@ window.userCalls = {
           "documents",
 
         ];
+        CreateChangeRequest_Access = [
+          "initiatives","projects"
+        ]
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
           "benefitmatrix",
-          "initiatives",
-          "initiativedeliverables",
-          "initiativemilestones",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
           "initiativeissues",
           "initiativerisks",
           "initiativemom",
           "closureinitiative",
-          "benefits",
+          // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "projects",
-          "deliverables",
+          // "projects",
+          // "deliverables",
           "mom",
           "risks",
           "issues",
-          "milestones",
+          // "milestones",
           "lessonslearned",
           "closureform",
           "coc",
@@ -1405,22 +1441,22 @@ window.userCalls = {
         ];
         Delete_Access = [
           "benefitmatrix",
-          "initiatives",
-          "initiativedeliverables",
-          "initiativemilestones",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
           "initiativeissues",
           "initiativerisks",
           "initiativemom",
           "closureinitiative",
-          "benefits",
+          // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "projects",
-          "deliverables",
+          // "projects",
+          // "deliverables",
           "mom",
           "risks",
           "issues",
-          "milestones",
+          // "milestones",
           "lessonslearned",
           "closureform",
           "coc",
@@ -1444,7 +1480,7 @@ window.userCalls = {
         //CRUD
         Create_Access = [
           "benefitmatrix",
-          "initiatives",
+          // "initiatives",
           // "initiativedeliverables",
           // "initiativemilestones",
           "initiativeissues",
@@ -1454,7 +1490,7 @@ window.userCalls = {
           // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "projects",
+          // "projects",
           // "deliverables",
           "mom",
           "risks",
@@ -1470,26 +1506,30 @@ window.userCalls = {
           "documents",
 
         ];
+        CreateChangeRequest_Access = [
+          "initiatives",
+          "projects",
+        ]
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
           "benefitmatrix",
-          "initiatives",
-          "initiativedeliverables",
-          "initiativemilestones",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
           "initiativeissues",
           "initiativerisks",
           "initiativemom",
           "closureinitiative",
-          "benefits",
+          // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "projects",
-          "deliverables",
+          // "projects",
+          // "deliverables",
           "mom",
           "risks",
           "issues",
-          "milestones",
+          // "milestones",
           "lessonslearned",
           "closureform",
           "coc",
@@ -1501,22 +1541,22 @@ window.userCalls = {
         ];
         Delete_Access = [
           "benefitmatrix",
-          "initiatives",
-          "initiativedeliverables",
-          "initiativemilestones",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
           "initiativeissues",
           "initiativerisks",
           "initiativemom",
           "closureinitiative",
-          "benefits",
+          // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "projects",
-          "deliverables",
+          // "projects",
+          // "deliverables",
           "mom",
           "risks",
           "issues",
-          "milestones",
+          // "milestones",
           "lessonslearned",
           "closureform",
           "coc",
@@ -1540,7 +1580,7 @@ window.userCalls = {
         //CRUD
         Create_Access = [
           "benefitmatrix",
-          "initiatives",
+          // "initiatives",
           // "initiativedeliverables",
           // "initiativemilestones",
           "initiativeissues",
@@ -1550,7 +1590,7 @@ window.userCalls = {
           // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "projects",
+          // "projects",
           // "deliverables",
           "mom",
           "risks",
@@ -1565,26 +1605,29 @@ window.userCalls = {
           "changerequest",
           "documents",
         ];
+        CreateChangeRequest_Access = [
+          "initiatives","projects"
+        ]
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
           "benefitmatrix",
-          "initiatives",
-          "initiativedeliverables",
-          "initiativemilestones",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
           "initiativeissues",
           "initiativerisks",
           "initiativemom",
           "closureinitiative",
-          "benefits",
+          // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "projects",
-          "deliverables",
+          // "projects",
+          // "deliverables",
           "mom",
           "risks",
           "issues",
-          "milestones",
+          // "milestones",
           "lessonslearned",
           "closureform",
           "coc",
@@ -1596,22 +1639,22 @@ window.userCalls = {
         ];
         Delete_Access = [
           "benefitmatrix",
-          "initiatives",
-          "initiativedeliverables",
-          "initiativemilestones",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
           "initiativeissues",
           "initiativerisks",
           "initiativemom",
           "closureinitiative",
-          "benefits",
+          // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "projects",
-          "deliverables",
+          // "projects",
+          // "deliverables",
           "mom",
           "risks",
           "issues",
-          "milestones",
+          // "milestones",
           "lessonslearned",
           "closureform",
           "coc",
@@ -1636,10 +1679,10 @@ window.userCalls = {
 
         Create_Access = [
           "goalstrategy",
-          "sos",
-          "mainkpi",
+          // "sos",
+          // "mainkpi",
           "benefitmatrix",
-          "initiatives",
+          // "initiatives",
           // "initiativedeliverables",
           // "initiativemilestones",
           "initiativeissues",
@@ -1649,7 +1692,7 @@ window.userCalls = {
           // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "projects",
+          // "projects",
           // "deliverables",
           "mom",
           "risks",
@@ -1663,30 +1706,36 @@ window.userCalls = {
           "changerequest",
           "contracts"
         ]
+        CreateChangeRequest_Access = [
+          "initiatives",
+          "projects",
+          "sos",
+          "mainkpi"
+        ]
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
 
         Edit_Access = [
           "goalstrategy",
-          "sos",
-          "mainkpi",
+          // "sos",
+          // "mainkpi",
           "benefitmatrix",
-          "initiatives",
-          "initiativedeliverables",
-          "initiativemilestones",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
           "initiativeissues",
           "initiativerisks",
           "initiativemom",
           "closureinitiative",
-          "benefits",
+          // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "projects",
-          "deliverables",
+          // "projects",
+          // "deliverables",
           "mom",
           "risks",
           "issues",
-          "milestones",
+          // "milestones",
           "lessonslearned",
           "closureform",
           "coc",
@@ -1697,25 +1746,25 @@ window.userCalls = {
         ]
         Delete_Access = [
           "goalstrategy",
-          "sos",
-          "mainkpi",
+          // "sos",
+          // "mainkpi",
           "benefitmatrix",
-          "initiatives",
-          "initiativedeliverables",
-          "initiativemilestones",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
           "initiativeissues",
           "initiativerisks",
           "initiativemom",
           "closureinitiative",
-          "benefits",
+          // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "projects",
-          "deliverables",
+          // "projects",
+          // "deliverables",
           "mom",
           "risks",
           "issues",
-          "milestones",
+          // "milestones",
           "lessonslearned",
           "closureform",
           "coc",
@@ -1740,10 +1789,10 @@ window.userCalls = {
 
         Create_Access = [
           "goalstrategy",
-          "sos",
-          "mainkpi",
+          // "sos",
+          // "mainkpi",
           "benefitmatrix",
-          "initiatives",
+          // "initiatives",
           // "initiativedeliverables",
           // "initiativemilestones",
           "initiativeissues",
@@ -1753,7 +1802,7 @@ window.userCalls = {
           // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "projects",
+          // "projects",
           // "deliverables",
           "mom",
           "risks",
@@ -1767,30 +1816,36 @@ window.userCalls = {
           "changerequest",
           "contracts"
         ]
+        CreateChangeRequest_Access = [
+          "initiatives",
+          "projects",
+          "sos",
+          "mainkpi"
+        ]
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
 
         Edit_Access = [
           "goalstrategy",
-          "sos",
-          "mainkpi",
+          // "sos",
+          // "mainkpi",
           "benefitmatrix",
-          "initiatives",
-          "initiativedeliverables",
-          "initiativemilestones",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
           "initiativeissues",
           "initiativerisks",
           "initiativemom",
           "closureinitiative",
-          "benefits",
+          // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "projects",
-          "deliverables",
+          // "projects",
+          // "deliverables",
           "mom",
           "risks",
           "issues",
-          "milestones",
+          // "milestones",
           "lessonslearned",
           "closureform",
           "coc",
@@ -1801,25 +1856,25 @@ window.userCalls = {
         ]
         Delete_Access = [
           "goalstrategy",
-          "sos",
-          "mainkpi",
+          // "sos",
+          // "mainkpi",
           "benefitmatrix",
-          "initiatives",
-          "initiativedeliverables",
-          "initiativemilestones",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
           "initiativeissues",
           "initiativerisks",
           "initiativemom",
           "closureinitiative",
-          "benefits",
+          // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "projects",
-          "deliverables",
+          // "projects",
+          // "deliverables",
           "mom",
           "risks",
           "issues",
-          "milestones",
+          // "milestones",
           "lessonslearned",
           "closureform",
           "coc",
@@ -1844,10 +1899,10 @@ window.userCalls = {
 
         Create_Access = [
           "goalstrategy",
-          "sos",
-          "mainkpi",
+          // "sos",
+          // "mainkpi",
           "benefitmatrix",
-          "initiatives",
+          // "initiatives",
           // "initiativedeliverables",
           // "initiativemilestones",
           "initiativeissues",
@@ -1857,7 +1912,7 @@ window.userCalls = {
           // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "projects",
+          // "projects",
           // "deliverables",
           "mom",
           "risks",
@@ -1871,30 +1926,36 @@ window.userCalls = {
           "changerequest",
           "contracts"
         ]
+        CreateChangeRequest_Access = [
+          "initiatives",
+          "projects",
+          "sos",
+          "mainkpi"
+        ]
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
 
         Edit_Access = [
           "goalstrategy",
-          "sos",
-          "mainkpi",
+          // "sos",
+          // "mainkpi",
           "benefitmatrix",
-          "initiatives",
-          "initiativedeliverables",
-          "initiativemilestones",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
           "initiativeissues",
           "initiativerisks",
           "initiativemom",
           "closureinitiative",
-          "benefits",
+          // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "projects",
-          "deliverables",
+          // "projects",
+          // "deliverables",
           "mom",
           "risks",
           "issues",
-          "milestones",
+          // "milestones",
           "lessonslearned",
           "closureform",
           "coc",
@@ -1905,25 +1966,25 @@ window.userCalls = {
         ]
         Delete_Access = [
           "goalstrategy",
-          "sos",
-          "mainkpi",
+          // "sos",
+          // "mainkpi",
           "benefitmatrix",
-          "initiatives",
-          "initiativedeliverables",
-          "initiativemilestones",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
           "initiativeissues",
           "initiativerisks",
           "initiativemom",
           "closureinitiative",
-          "benefits",
+          // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          "projects",
-          "deliverables",
+          // "projects",
+          // "deliverables",
           "mom",
           "risks",
           "issues",
-          "milestones",
+          // "milestones",
           "lessonslearned",
           "closureform",
           "coc",
@@ -1996,23 +2057,27 @@ window.userCalls = {
         en_UserRole = "Strategic Planning Office";
         //CRUD
         Create_Access = [
-          "mainkpi",
-          "sos",
+          // "mainkpi",
+          // "sos",
           "goalstrategy",
           "Targets.aspx",
         ];
+        CreateChangeRequest_Access = [
+          "sos",
+          "mainkpi",
+        ]
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
-          "mainkpi",
-          "sos",
+          // "mainkpi",
+          // "sos",
           "Targets.aspx",
           "kpiequations",
           "goalstrategy",
         ];
         Delete_Access = [
-          "mainkpi",
-          "sos",
+          // "mainkpi",
+          // "sos",
           "goalstrategy",
         ];
         break;
@@ -2120,7 +2185,7 @@ window.userCalls = {
         //CRUD
         Create_Access = [
           // for initiative
-          "initiatives",
+          // "initiatives",
           // "initiativedeliverables",
           // "initiativemilestones",
           "initiativerisks",
@@ -2132,7 +2197,7 @@ window.userCalls = {
           "benefitmatrix",
           "closureinitiative",
           // for projects
-          "projects",
+          // "projects",
           // "deliverables",
           "risks",
           "issues",
@@ -2147,27 +2212,30 @@ window.userCalls = {
           "changerequest",
           "achievements"
         ];
+        CreateChangeRequest_Access = [
+          "initiatives","projects"
+        ]
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
           // for initiative
-          "initiatives",
-          "initiativedeliverables",
-          "initiativemilestones",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
           "initiativerisks",
           "initiativeissues",
           "initiativemom",
-          "benefits",
+          // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
           "benefitmatrix",
           "closureinitiative",
           // for projects
-          "projects",
-          "deliverables",
+          // "projects",
+          // "deliverables",
           "risks",
           "issues",
-          "milestones",
+          // "milestones",
           "mom",
           "closureform",
           "lessonslearned",
@@ -2181,23 +2249,23 @@ window.userCalls = {
         ];
         Delete_Access = [
           // for initiative
-          "initiatives",
-          "initiativedeliverables",
-          "initiativemilestones",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
           "initiativerisks",
           "initiativeissues",
           "initiativemom",
-          "benefits",
+          // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
           "benefitmatrix",
           "closureinitiative",
           // for projects
-          "projects",
-          "deliverables",
+          // "projects",
+          // "deliverables",
           "risks",
           "issues",
-          "milestones",
+          // "milestones",
           "mom",
           "closureform",
           "lessonslearned",
@@ -2222,7 +2290,7 @@ window.userCalls = {
 
         Create_Access = [
           // for initiative
-          "initiatives",
+          // "initiatives",
           // "initiativedeliverables",
           // "initiativemilestones",
           "initiativerisks",
@@ -2248,6 +2316,7 @@ window.userCalls = {
           "contracts",
           "changerequest",
         ];
+        CreateChangeRequest_Access = ["initiatives","projects"]
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
 
@@ -2259,7 +2328,7 @@ window.userCalls = {
           "initiativerisks",
           "initiativeissues",
           "initiativemom",
-          "benefits",
+          // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
           "benefitmatrix",
@@ -2287,7 +2356,7 @@ window.userCalls = {
           "initiativerisks",
           "initiativeissues",
           "initiativemom",
-          "benefits",
+          // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
           "benefitmatrix",
@@ -2344,7 +2413,7 @@ window.userCalls = {
         //CRUD
         Create_Access = [
           // for initiative
-          "initiatives",
+          // "initiatives",
           // "initiativedeliverables",
           // "initiativemilestones",
           "initiativerisks",
@@ -2356,7 +2425,7 @@ window.userCalls = {
           "benefitmatrix",
           "closureinitiative",
           // for projects
-          "projects",
+          // "projects",
           // "deliverables",
           "risks",
           "issues",
@@ -2372,28 +2441,32 @@ window.userCalls = {
           "achievements"
 
         ];
+        CreateChangeRequest_Access = [
+          "initiatives",          
+          "projects",
+        ]
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
 
         Edit_Access = [
           // for initiative
-          "initiatives",
-          "initiativedeliverables",
-          "initiativemilestones",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
           "initiativerisks",
           "initiativeissues",
           "initiativemom",
-          "benefits",
+          // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
           "benefitmatrix",
           "closureinitiative",
           // for projects
-          "projects",
-          "deliverables",
+          // "projects",
+          // "deliverables",
           "risks",
           "issues",
-          "milestones",
+          // "milestones",
           "mom",
           "closureform",
           "lessonslearned",
@@ -2408,22 +2481,22 @@ window.userCalls = {
         Delete_Access = [
           // for initiative
           // "initiatives",
-          "initiativedeliverables",
-          "initiativemilestones",
+          // "initiativedeliverables",
+          // "initiativemilestones",
           "initiativerisks",
           "initiativeissues",
           "initiativemom",
-          "benefits",
+          // "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
           "benefitmatrix",
           "closureinitiative",
           // for projects
           // "projects",
-          "deliverables",
+          // "deliverables",
           "risks",
           "issues",
-          "milestones",
+          // "milestones",
           "mom",
           "closureform",
           "lessonslearned",
@@ -2521,10 +2594,14 @@ window.userCalls = {
         Create_Access = [
           "goalstrategy",
           "spillars",
-          "sos",
-          "mainkpi",
+          // "sos",
+          // "mainkpi",
           "changerequest"
         ];
+        CreateChangeRequest_Access = [
+          "sos",
+          "mainkpi",
+        ]
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
 
@@ -2566,7 +2643,7 @@ window.userCalls = {
           "tasks"
         ];
         Edit_Access = [
-          "mainkpi"
+          // "mainkpi"
         ];
         Delete_Access = [];
         break;
@@ -2646,8 +2723,8 @@ window.userCalls = {
         ];
         Edit_Access = [
           "Targets.aspx",
-          "mainkpi",
-          "sos",
+          // "mainkpi",
+          // "sos",
           "benefitmetrics",
           "BenefitMetrics.aspx",
           "kpiequations",
@@ -2933,6 +3010,7 @@ window.userCalls = {
 
     //New CRUD Access Solution [will not affect below behavior]
     (Create_Access = Create_Access.map((name) => name.toLowerCase())), //making sure everything is lower case
+    (CreateChangeRequest_Access = CreateChangeRequest_Access.map((name) => name.toLowerCase())),
       (Read_Access = Read_Access.map((name) => name.toLowerCase())),
       (Edit_Access = Edit_Access.map((name) => name.toLowerCase())),
       (Delete_Access = Delete_Access.map((name) => name.toLowerCase()));
@@ -2945,9 +3023,12 @@ window.userCalls = {
         Create_Access.indexOf(Page_UrlName) == -1 &&
         !USERisWF:
         if (USERisNew) {
+          if(CreateChangeRequest_Access.indexOf(USERlistkey) == -1 &&
+          CreateChangeRequest_Access.indexOf(Page_UrlName) == -1){
           // on edit/new forms
           userCalls.g.Security_Msg();
           console.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        }
         } else if (isSP_Page) {
           // on restricted  page
           userCalls.g.Security_Msg();
@@ -6411,6 +6492,7 @@ var Access_Project_Info_Request = {
 
         projectActualBudget = oListItem.get_item('ActualBudget') || 0;
         projectAssignedBudget = oListItem.get_item('AssignedBudget') || 0;
+        relatedProjectId = oListItem.get_id();
 
         // if (User_ScheduleSource == 'عبر النظام') {
         //     $('body').append('<style>.navbar.page-nav.px-5 li.nav-item[data-href*="schedule.aspx"]{display:none}</style>');
@@ -7584,7 +7666,7 @@ window.Get_Initiative_Info_Request = {
 
 
       }
-
+      relatedInitiativeId = oListItem.get_id();
     }
 
 
