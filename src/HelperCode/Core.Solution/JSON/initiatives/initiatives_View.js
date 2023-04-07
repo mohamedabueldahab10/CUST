@@ -497,37 +497,114 @@ var Information_Form = [
     // className: "disable_section", // to make the section disabled on form render
     targetlist: 'InitiativeDeliverables',
     subFields: [
-
+      
+      {
+        InternalName: 'Title',
+        DisplayNameEn: 'Title',
+        DisplayName: 'رمز المخرج',
+        type: 'string',
+        maxchar: '250',
+      },
       {
         InternalName: 'Name',
         DisplayNameEn: 'Name',
         DisplayName: 'اسم المخرج',
         type: 'string',
-        maxchar: '255',
-        withletters: true,
-        Errmsgkey: "withletterpattern",
-        validation: 'required',
+        maxchar: '250',
       },
+      // {
+      //     "InternalName": "PlannedCompletedDate",
+      //     "DisplayNameEn": "Planned Completed Date",
+      //     "DisplayName":"تاريخ الاكتمال المخطط",
+      //     "type":"datetime"
+      // },
       {
         InternalName: 'PlannedFinishDate',
-        DisplayName: 'تاريخ الانتهاء المخطط',
         DisplayNameEn: 'Planned Finish Date',
-        // "type": "datetime",
-        type: 'datetimetoparent',
-        listname: 'Initiatives',
-        startinternalname: 'StartDate',
-        endinternalname: 'FinishDate',
-        // "min": "PlannedStartDate",
-        validation: 'required',
+        DisplayName: 'تاريخ الاكتمال المخطط',
+        type: 'datetime',
+      },
+      {
+        InternalName: 'DeliverableSuccessKPI',
+        DisplayNameEn: 'Deliverable Success KPI',
+        DisplayName: 'مقياس نجاح المخرج  (إن وجد)',
+        type: 'string',
+      },
+      {
+        InternalName: 'Target',
+        DisplayNameEn: 'Target',
+        DisplayName: 'المستهدف (إن وجد)',
+        type: 'string',
       },
       {
         InternalName: 'Weight',
-        DisplayName: 'الوزن(%)',
         DisplayNameEn: 'Weight (%)',
-        type: 'string',
-
+        DisplayName: 'الوزن(%)',
+        type: 'floatpercentage',
       },
-
+      // {
+      //   InternalName: 'Amount',
+      //   DisplayName: 'القيمة',
+      //   DisplayNameEn: 'Amount',
+      //   dontSubmit: true,
+      //   type: 'percentbyrelatedparent',
+      //   listname: 'Initiatives',
+      //   parentinternalname: 'InitiativeBudget',
+      //   targetelement: 'Weight',
+      //   // validation: 'required',
+      // },
+      {
+        InternalName: 'ActualCompletedDate',
+        DisplayNameEn: 'Actual Completed Date',
+        DisplayName: 'تاريخ الاكتمال الفعلي',
+        type: 'datetime',
+        max: 'today',
+      },
+      // {
+      //     "InternalName": "CommittedDate",
+      //     "DisplayName": "تاريخ الالتزام",
+      //     "DisplayNameEn": "Committed Date",
+      //     "type": "datetime",
+      // },
+      // {
+      //     "InternalName": "Completed",
+      //     "DisplayNameEn": "Completed",
+      //     "DisplayName":"حالة الاكتمال",
+      //     "type": "yesnoradio",
+      //     options: {
+      //         choices: [{
+      //                 display: 'yes',
+      //                 value: 'yes'
+      //             },
+      //             {
+      //                 display: 'no',
+      //                 value: 'no'
+      //             }
+      //         ]
+      //     }
+      // },
+      {
+        InternalName: 'Delivered',
+        DisplayName: 'تم التسليم',
+        DisplayNameEn: 'Delivered',
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            { display: 'yes', value: 'yes' },
+            { display: 'no', value: 'no' },
+          ],
+        },
+      },
+      // {
+      //     "InternalName": "RelatedBenefits",
+      //     "DisplayNameEn": "Related Benefits",
+      //     "DisplayName":"المنفعة المرتبطة",
+      //     "type": "lookup",
+      //     "source": "Benefits",
+      //     "Dispfieldkey": "Name",
+      //     "valfieldkey": "Title",
+      // }
+    
     ]
   },
   {
@@ -539,16 +616,27 @@ var Information_Form = [
     // className: "disable_section", // to make the section disabled on form render
     targetlist: 'InitiativeMilestones',
     subFields: [
+      
+      {
+        InternalName: 'Title',
+        DisplayNameEn: 'Title',
+        DisplayName: 'رمز المعلم',
+        type: 'string',
+        // "maxchar": "250"
+      },
       {
         InternalName: 'Name',
         DisplayNameEn: 'Name',
         DisplayName: 'اسم المعلم',
         type: 'string',
-        maxchar: '255',
-        withletters: true,
-        Errmsgkey: "withletterpattern",
-        validation: 'required',
+        maxchar: '250',
       },
+      // {
+      //     "InternalName": "PlannedCompletedDate",
+      //     "DisplayNameEn": "Planned Completed Date",
+      //     "DisplayName": "تاريخ الاكتمال المخطط",
+      //     "type": "datetime"
+      // },
       {
         InternalName: 'PlannedDate',
         DisplayName: 'تاريخ الاكتمال المخطط',
@@ -558,21 +646,74 @@ var Information_Form = [
       },
       {
         InternalName: 'Weight',
-        DisplayName: 'الوزن',
-        DisplayNameEn: 'Weight (%)',
-        type: 'string',
+        DisplayNameEn: 'Weight',
+        DisplayName: 'الوزن المكافئ للإنجاز %',
+        type: 'floatpercentage',
       },
       // {
       //   InternalName: 'Amount',
       //   DisplayName: 'القيمة',
       //   DisplayNameEn: 'Amount',
-      //   dontSubmit: true,
+      //   // dontSubmit: true,
       //   type: 'percentbyrelatedparent',
       //   listname: 'Initiatives',
       //   parentinternalname: 'InitiativeBudget',
       //   targetelement: 'Weight',
-      //   validation: 'required',
       // },
+
+      // {
+      //     "InternalName": "Completed",
+      //     "DisplayNameEn": "Completed",
+      //     "DisplayName": "حالة الاكتمال",
+      //     "type": "yesnoradio",
+      //     options: {
+      //         choices: [{
+      //             display: 'yes',
+      //             value: 'yes'
+      //         },
+      //         {
+      //             display: 'no',
+      //             value: 'no'
+      //         }
+      //         ]
+      //     }
+      // },
+      {
+        InternalName: 'Delivered',
+        DisplayName: 'تم التسليم',
+        DisplayNameEn: 'Delivered',
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            { display: 'yes', value: 'yes' },
+            { display: 'no', value: 'no' },
+          ],
+        },
+      },
+      {
+        InternalName: 'ActualCompletedDate',
+        DisplayNameEn: 'Actual Completed Date',
+        DisplayName: 'تاريخ الاكتمال الفعلي',
+        type: 'datetime',
+        max: 'today',
+      },
+      {
+        InternalName: 'RelatedInitiativeDeliverable',
+        DisplayNameEn: 'Related Initiative Deliverable',
+        DisplayName: 'مخرج المبادرة المرتبط',
+        type: 'lookup',
+        source: 'InitiativeDeliverables',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+      },
+      {
+        InternalName: 'SupportDocumentsDescription',
+        DisplayNameEn: 'Support Documents Description',
+        DisplayName: 'وصف الوثائق الداعمة',
+        type: 'multiline',
+        maxchar: '500',
+      },
+    
     ]
   },
   {

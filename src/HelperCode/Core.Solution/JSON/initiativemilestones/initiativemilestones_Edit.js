@@ -44,8 +44,10 @@ var Information_Form = [
         Errmsgkey:"withletterpattern",
         validation: 'required',
         security: {
-          groups: ['VRO_E', 'LMS_E', 'System Admin Group', 'EPMO'],
-        },
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
       // {
       //     "InternalName": "PlannedCompletedDate",
@@ -66,8 +68,10 @@ var Information_Form = [
         type: 'datetime',
         validation: 'required',
         security: {
-          groups: ['VRO_E', 'LMS_E', 'System Admin Group', 'EPMO'],
-        },
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },    
       {
         InternalName: 'Weight',
@@ -80,8 +84,10 @@ var Information_Form = [
         seconedtarget: 'Amount',
         validation: 'required',
         security: {
-            groups: ['VRO_E', 'LMS_E', 'System Admin Group', 'EPMO'],
-          },
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
       {
         InternalName: 'Amount',
@@ -93,6 +99,11 @@ var Information_Form = [
         parentinternalname: 'InitiativeBudget',
         targetelement: 'Weight',
         validation: 'required',
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
     //   {
     //     InternalName: 'Weight',
@@ -138,9 +149,7 @@ var Information_Form = [
             { display: 'no', value: 'no' },
           ],
         },
-        security: {
-          groups: ['VRO_E', 'LMS_E', 'System Admin Group', 'EPMO'],
-        },
+       
       },
       {
         InternalName: 'ActualCompletedDate',
@@ -157,6 +166,11 @@ var Information_Form = [
         source: 'InitiativeDeliverables',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
       {
         InternalName: 'SupportDocumentsDescription',
@@ -164,6 +178,11 @@ var Information_Form = [
         DisplayName: 'وصف الوثائق الداعمة',
         type: 'multiline',
         maxchar: '5000',
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
     ],
   },
@@ -180,6 +199,11 @@ var Information_Form = [
         type: 'file',
         docPurpose:"Spporting_Documents",
         withAddBtn: 'true',
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
     ],
   },
@@ -196,6 +220,11 @@ var Information_Form = [
         type: 'file',
         docPurpose:"Attachments",
         withAddBtn: 'true',
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
     ],
   },

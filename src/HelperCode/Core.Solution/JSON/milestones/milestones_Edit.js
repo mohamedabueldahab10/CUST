@@ -44,6 +44,11 @@ var Information_Form = [
         withletters:true,
         Errmsgkey:"withletterpatteWrn",
         validation: 'required',
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
       // {
       //   InternalName: 'Weight',
@@ -70,6 +75,11 @@ var Information_Form = [
         seconedtarget: 'Amount',
         // "state":"disabled",
         validation: 'required',
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
       {
         InternalName: 'Amount',
@@ -81,12 +91,22 @@ var Information_Form = [
         parentinternalname: 'ActualBudget',
         targetelement: 'Weight',
         validation: 'required',
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
       {
         InternalName: 'PlannedDate',
         DisplayName: 'تاريخ الاكتمال المخطط',
         DisplayNameEn: 'Planned Finish Date',
         type: 'datetime',
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
 
     //   {
@@ -118,6 +138,11 @@ var Information_Form = [
         DisplayNameEn: 'Deliverables',
         type: 'multiline',
         maxchar: 5000,
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
       {
         InternalName: 'Description',
@@ -125,6 +150,11 @@ var Information_Form = [
         DisplayNameEn: 'Description',
         type: 'multiline',
         maxchar: 5000,
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
       // {
       //   InternalName: 'Status',
@@ -151,7 +181,12 @@ var Information_Form = [
         "source":"Milestones", // target list
         "sourceinternalname":"InitiativeCode", // column in target list
         "Dispfieldkey": 'Name', //display in dropdown
-        "valfieldkey": "Title"// value in dropdown
+        "valfieldkey": "Title",// value in dropdown
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
       {
         InternalName: 'Delivered',
@@ -215,6 +250,11 @@ var Information_Form = [
         DisplayName: 'وصف الوثائق الداعمة',
         type: 'multiline',
         maxchar: '5000',
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
       {
         InternalName: 'getfile',
@@ -223,6 +263,11 @@ var Information_Form = [
         type: 'file',
         docPurpose:"Spporting_Documents",
         withAddBtn: 'true',
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
     ],
   },
@@ -239,6 +284,11 @@ var Information_Form = [
         type: 'file',
         docPurpose:"Attachments",
         withAddBtn: 'true',
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
     ],
   },

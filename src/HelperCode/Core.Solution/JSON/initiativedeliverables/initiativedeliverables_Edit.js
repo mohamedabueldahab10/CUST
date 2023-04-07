@@ -44,8 +44,10 @@ var Information_Form = [
         Errmsgkey:"withletterpattern",
         validation: 'required',
         security: {
-          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
-        },
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
       //   {
       //     InternalName: 'PlannedCompletedDate',
@@ -69,8 +71,10 @@ var Information_Form = [
         // "min": "PlannedStartDate",
         validation: 'required',
         security: {
-          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
-        },
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
       {
         InternalName: 'DeliverableSuccessKPI',
@@ -79,8 +83,10 @@ var Information_Form = [
         type: 'string',
         maxchar: 255,
         security: {
-          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
-        },
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
       {
         InternalName: 'Target',
@@ -89,8 +95,10 @@ var Information_Form = [
         type: 'float',
         numberOfDigits:"12",
         security: {
-          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
-        },
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
       // {
       //     "InternalName": "CommittedDate",
@@ -115,8 +123,10 @@ var Information_Form = [
         // "state":"disabled",
         validation: 'required',
         security: {
-          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
-        },
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
       {
         InternalName: 'Amount',
@@ -128,6 +138,11 @@ var Information_Form = [
         parentinternalname: 'InitiativeBudget',
         targetelement: 'Weight',
         validation: 'required',
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
       // {
       //   InternalName: 'Weight',
@@ -150,9 +165,6 @@ var Information_Form = [
             { display: 'yes', value: 'yes' },
             { display: 'no', value: 'no' },
           ],
-        },
-        security: {
-          groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
         },
       },
       {
@@ -213,6 +225,11 @@ var Information_Form = [
         type: 'file',
         docPurpose:"Spporting_Documents",
         withAddBtn: 'true',
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
     ],
   },
@@ -229,6 +246,11 @@ var Information_Form = [
         type: 'file',
         docPurpose:"Attachments",
         withAddBtn: 'true',
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
     ],
   },

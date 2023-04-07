@@ -1372,12 +1372,21 @@ var Information_Form = [
     className: "disable_section", // to make the section disabled on form render
     targetlist: 'Deliverables',
     subFields: [
+      // {
+      //     "InternalName": "Title",
+      //     "DisplayName":"رمز المخرج",
+      //     "type":"string",
+      //     "validation": "required"
+      // },
       {
         InternalName: 'Name',
         DisplayName: 'اسم المخرج',
         DisplayNameEn: 'Deliverable Name',
         type: 'string',
         validation: 'required',
+        maxchar: '255',
+        withletters: true,
+        Errmsgkey: "withletterpattern",
       },
       {
         InternalName: 'Description',
@@ -1386,17 +1395,11 @@ var Information_Form = [
         type: 'multiline',
         maxchar: 5000,
       },
-      {
-        InternalName: 'Amount',
-        DisplayName: 'القيمة',
-        DisplayNameEn: 'Amount',
-        dontSubmit: true,
-        type: 'percentbyrelatedparent',
-        listname: 'Projects',
-        parentinternalname: 'ActualBudget',
-        targetelement: 'Weight',
-        validation: 'required',
-      },
+      // {
+      //     "InternalName": "Quantity",
+      //     "DisplayName":"الكمية",
+      //     "type":"float"
+      // },
       {
         InternalName: 'Weight',
         DisplayName: 'الوزن(%)',
@@ -1407,6 +1410,17 @@ var Information_Form = [
         targetelement: 'Weight',
         seconedtarget: 'Amount',
         // "state":"disabled",
+        validation: 'required',
+      },
+      {
+        InternalName: 'Amount',
+        DisplayName: 'القيمة',
+        DisplayNameEn: 'Amount',
+        dontSubmit: true,
+        type: 'percentbyrelatedparent',
+        listname: 'Projects',
+        parentinternalname: 'ActualBudget',
+        targetelement: 'Weight',
         validation: 'required',
       },
       // {
@@ -1438,18 +1452,18 @@ var Information_Form = [
       //   max: 'today',
       //   validation: 'required',
       // },
-      // {
-      //   InternalName: 'PlannedFinishDate',
-      //   DisplayName: 'تاريخ الانتهاء المخطط',
-      //   DisplayNameEn: 'Planned Finish Date',
-      //   // type: 'datetime',
-      //   type: 'datetimetoparent',
-      //   listname: 'Projects',
-      //   startinternalname: 'BaselineStartDate',
-      //   endinternalname: 'BaselineFinishDate',
-      //   // min: 'PlannedStartDate',
-      //   validation: 'required',
-      // },
+      {
+        InternalName: 'PlannedFinishDate',
+        DisplayName: 'تاريخ الانتهاء المخطط',
+        DisplayNameEn: 'Planned Finish Date',
+        // type: 'datetime',
+        type: 'datetimetoparent',
+        listname: 'Projects',
+        startinternalname: 'BaselineStartDate',
+        endinternalname: 'BaselineFinishDate',
+        // min: 'PlannedStartDate',
+        validation: 'required',
+      },
       // {
       //   InternalName: 'Delivered',
       //   DisplayName: 'تم التسليم',
@@ -1464,13 +1478,13 @@ var Information_Form = [
       //     ],
       //   },
       // },
-      // {
-      //   InternalName: 'AcceptanceCriteria',
-      //   DisplayName: 'معايير قبول المخرج',
-      //   DisplayNameEn: 'Acceptance Criteria',
-      //   // type: 'string',
-      //   type: 'multiline',
-      // },
+      {
+        InternalName: 'AcceptanceCriteria',
+        DisplayName: 'معايير قبول المخرج',
+        DisplayNameEn: 'Acceptance Criteria',
+        type: 'multiline',
+        maxchar: 5000,
+      },
       // {
       //     "InternalName": "PlannedStartDate",
       //     "DisplayName": "تاريخ البدء المخطط",
@@ -1526,26 +1540,26 @@ var Information_Form = [
       //     }
 
       // },
-      // {
-      //   InternalName: 'Comments',
-      //   DisplayName: 'الملاحظات',
-      //   DisplayNameEn: 'Comments',
-      //   type: 'multiline',
-      //   maxchar: 5000,
-      // },
-      // {
-      //   //tried
-      //   InternalName: 'RelatedInitiativeDeliverable',
-      //   DisplayName: 'مخرج المبادرة المرتبط',
-      //   DisplayNameEn: 'Related Initiative Deliverable',
-      //   type: 'lookuptoparentchild',
-      //   parentlist: 'Projects', //parent list name
-      //   parentinternalname: 'RelatedInitiative', // internal name in parent list
-      //   source: 'InitiativeDeliverables', // target list
-      //   sourceinternalname: 'InitiativeCode', // column in target list
-      //   Dispfieldkey: 'Name', //display in dropdown
-      //   valfieldkey: 'Title', // value in dropdown
-      // },
+      {
+        InternalName: 'Comments',
+        DisplayName: 'الملاحظات',
+        DisplayNameEn: 'Comments',
+        type: 'multiline',
+        maxchar: 5000,
+      },
+      {
+        //tried
+        InternalName: 'RelatedInitiativeDeliverable',
+        DisplayName: 'مخرج المبادرة المرتبط',
+        DisplayNameEn: 'Related Initiative Deliverable',
+        type: 'lookuptoparentchild',
+        parentlist: 'Projects', //parent list name
+        parentinternalname: 'RelatedInitiative', // internal name in parent list
+        source: 'InitiativeDeliverables', // target list
+        sourceinternalname: 'InitiativeCode', // column in target list
+        Dispfieldkey: 'Name', //display in dropdown
+        valfieldkey: 'Title', // value in dropdown
+      },
       // {
       //   InternalName: 'RelatedInitiativeDeliverable',
       //   DisplayNameEn: 'Related Initiative Deliverable',
@@ -1556,24 +1570,24 @@ var Information_Form = [
       //   valfieldkey: 'Title',
       // },
 
-      // {
-      //   InternalName: 'ShowInProgramReport',
-      //   DisplayName: 'اظهار في التقرير',
-      //   DisplayNameEn: 'Show In Program Report',
-      //   type: 'yesnoradio',
-      //   options: {
-      //     choices: [
-      //       {
-      //         display: 'yes',
-      //         value: 'yes',
-      //       },
-      //       {
-      //         display: 'no',
-      //         value: 'no',
-      //       },
-      //     ],
-      //   },
-      // },
+      {
+        InternalName: 'ShowInProgramReport',
+        DisplayName: 'اظهار في التقرير',
+        DisplayNameEn: 'Show In Program Report',
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            {
+              display: 'yes',
+              value: 'yes',
+            },
+            {
+              display: 'no',
+              value: 'no',
+            },
+          ],
+        },
+      },
     ],
   },
   {
@@ -1585,14 +1599,38 @@ var Information_Form = [
     className: "disable_section", // to make the section disabled on form render
     targetlist: 'Milestones',
     subFields: [
-
+      
+      // {
+      //     "InternalName": "Title",
+      //     "DisplayName":"رمز المعلم",
+      //"DisplayNameEn": "Milestone Title",
+      //     "type":"string",
+      //     "validation": "required"
+      // },
       {
         InternalName: 'Name',
         DisplayName: 'اسم المعلم',
         DisplayNameEn: 'Name',
         type: 'string',
+        maxchar: '255',
+        withletters:true,
+        Errmsgkey:"withletterpattern",
         validation: 'required',
       },
+      // {
+      //   InternalName: 'Weight',
+      //   DisplayNameEn: 'Weight',
+      //   DisplayName: 'الوزن المكافئ للإنجاز %',
+      //   type: 'floatpercentage',
+      //   // type: 'weightfloatpercentage',
+      //   listname: 'Milestones',
+      //   targetcode: 'ProjectCode',
+      //   targetelement: 'Weight',
+      //   seconedtarget: 'Amount',
+      //   validation: 'required',
+      //   // "state": "disabled",
+      //   // dynamic: "Initiative"
+      // },
       {
         InternalName: 'Weight',
         DisplayName: 'الوزن(%)',
@@ -1602,6 +1640,7 @@ var Information_Form = [
         targetcode: 'ProjectCode',
         targetelement: 'Weight',
         seconedtarget: 'Amount',
+        // "state":"disabled",
         validation: 'required',
       },
       {
@@ -1629,15 +1668,37 @@ var Information_Form = [
         type: 'datetime',
         max: 'today',
       },
-
       // {
-      //   InternalName: 'Deliverables',
-      //   DisplayName: 'المخرجات',
-      //   DisplayNameEn: 'Deliverables Completed',
-      //   type: 'multiline',
-      //   maxchar: 5000,
+      //   InternalName: 'CommittedDate',
+      //   DisplayName: 'تاريخ الالتزام',
+      //   DisplayNameEn: 'Committed Date',
+      //   type: 'datetime',
       // },
-
+      {
+        InternalName: 'Deliverables',
+        DisplayName: 'المخرجات',
+        DisplayNameEn: 'Deliverables Completed',
+        type: 'multiline',
+        maxchar: 5000,
+      },
+      //   {
+      //     InternalName: 'Status',
+      //     DisplayName: 'الحالة',
+      //     DisplayNameEn: 'Status',
+      //     type: 'dropdownValues',
+      //     options: {
+      //       choices: [
+      //         {
+      //           display: 'workisunderway',
+      //           value: 'workisunderway',
+      //         },
+      //         {
+      //           display: 'complete',
+      //           value: 'complete',
+      //         },
+      //       ],
+      //     },
+      //   },
       {
         InternalName: 'Description',
         DisplayName: 'الوصف',
@@ -1645,46 +1706,67 @@ var Information_Form = [
         type: 'multiline',
         maxchar: 5000,
       },
-
+      // {
+      //   InternalName: 'Status',
+      //   DisplayName: 'الحالة',
+      //   DisplayNameEn: 'Status',
+      //   type: 'dropdownValues',
+      //   options: {
+      //     choices: [
+      //       { display: 'onschedule', value: 'onschedule' },
+      //       { display: 'completed', value: 'completed' },
+      //       { display: 'late', value: 'late' },
+      //     ],
+      //   },
+      // },
       // {
       //   InternalName: 'RelatedInitiativeMilestone',
       //   DisplayName: 'معلم المبادرة المرتبط',
       //   DisplayNameEn: 'Related Initiative Milestone',
-      //   type: 'lookuptoparentchild',
-      //   parentlist: 'Projects', //parent list name
-      //   parentinternalname: 'RelatedInitiative', // internal name in parent list
-      //   // source: 'InitiativeMilestones', // target list
-      //   source: 'Milestones',
-      //   sourceinternalname: 'InitiativeCode', // column in target list
-      //   Dispfieldkey: 'Name', //display in dropdown
-      //   valfieldkey: 'Title', // value in dropdown
-      // },
-
-      // {
-      //   InternalName: 'ShowInProgramReport',
-      //   DisplayName: 'اظهار في التقرير',
-      //   DisplayNameEn: 'Show In Program Report',
-      //   type: 'yesnoradio',
-      //   options: {
-      //     choices: [
-      //       {
-      //         display: 'yes',
-      //         value: 'yes',
-      //       },
-      //       {
-      //         display: 'no',
-      //         value: 'no',
-      //       },
-      //     ],
-      //   },
+      //   type: 'lookup',
+      //   source: 'InitiativeMilestones',
+      //   Dispfieldkey: 'Name',
+      //   valfieldkey: 'Title',
       // },
       {
-        InternalName: 'SupportDocumentsDescription',
-        DisplayNameEn: 'Support Documents Description',
-        DisplayName: 'وصف الوثائق الداعمة',
-        type: 'multiline',
-        maxchar: '500',
+        InternalName: 'RelatedInitiativeMilestone',
+        DisplayName: 'معلم المبادرة المرتبط',
+        DisplayNameEn: 'Related Initiative Milestone',
+        type: 'lookuptoparentchild',
+        parentlist: 'Projects', //parent list name
+        parentinternalname: 'RelatedInitiative', // internal name in parent list
+        // source: 'InitiativeMilestones', // target list
+        source: 'Milestones',
+        sourceinternalname: 'InitiativeCode', // column in target list
+        Dispfieldkey: 'Name', //display in dropdown
+        valfieldkey: 'Title', // value in dropdown
       },
+      //   {
+      //     InternalName: 'SupportDocumentsDescription',
+      //     DisplayNameEn: 'Support Documents Description',
+      //     DisplayName: 'وصف الوثائق الداعمة',
+      //     type: 'multiline',
+      //     maxchar: '500',
+      //   },
+      {
+        InternalName: 'ShowInProgramReport',
+        DisplayName: 'اظهار في التقرير',
+        DisplayNameEn: 'Show In Program Report',
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            {
+              display: 'yes',
+              value: 'yes',
+            },
+            {
+              display: 'no',
+              value: 'no',
+            },
+          ],
+        },
+      }
+    
     ],
   },
   // {

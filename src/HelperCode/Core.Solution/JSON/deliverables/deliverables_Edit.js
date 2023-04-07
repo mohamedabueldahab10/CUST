@@ -45,6 +45,11 @@ var Information_Form = [
         maxchar: '255',
         withletters: true,
         Errmsgkey: "withletterpattern",
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
       {
         InternalName: 'Description',
@@ -52,6 +57,11 @@ var Information_Form = [
         DisplayNameEn: 'Description',
         type: 'multiline',
         maxchar: 5000,
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
       // {
       //     "InternalName": "Weight",
@@ -72,6 +82,11 @@ var Information_Form = [
         seconedtarget: 'Amount',
         // "state":"disabled",
         validation: 'required',
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
       {
         InternalName: 'Amount',
@@ -83,6 +98,11 @@ var Information_Form = [
         parentinternalname: 'ActualBudget',
         targetelement: 'Weight',
         validation: 'required',
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
       // {
       //   "InternalName": "Status",
@@ -122,6 +142,11 @@ var Information_Form = [
         endinternalname: 'BaselineFinishDate',
         // "min": "PlannedStartDate",
         validation: 'required',
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
       // {
       //     "InternalName": "SupplyDate",
@@ -196,6 +221,11 @@ var Information_Form = [
         DisplayNameEn: 'Acceptance Criteria',
         type: 'multiline',
         maxchar: 5000,
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
 
       },
       {
@@ -204,6 +234,11 @@ var Information_Form = [
         DisplayNameEn: 'Comments',
         type: 'multiline',
         maxchar: 5000,
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
       // {
       //   "InternalName": "RelatedInitiativeDeliverable",
@@ -226,6 +261,11 @@ var Information_Form = [
         sourceinternalname: 'InitiativeCode', // column in target list
         Dispfieldkey: 'Name', //display in dropdown
         valfieldkey: 'Title', // value in dropdown
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
       {
         InternalName: 'ShowInProgramReport',
@@ -244,6 +284,11 @@ var Information_Form = [
             },
           ],
         },
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
     ],
   },
@@ -260,6 +305,11 @@ var Information_Form = [
         type: 'file',
         docPurpose: "Spporting_Documents",
         withAddBtn: 'true',
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
     ],
   },
@@ -276,6 +326,11 @@ var Information_Form = [
         type: 'file',
         docPurpose: "Attachments",
         withAddBtn: 'true',
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
     ],
   },

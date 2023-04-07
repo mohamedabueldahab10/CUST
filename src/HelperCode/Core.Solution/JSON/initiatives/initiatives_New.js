@@ -862,17 +862,31 @@ var Information_Form = [
     className: "disable_section", // to make the section disabled on form render
     targetlist: 'InitiativeDeliverables',
     subFields: [
-
+      
+      // {
+      //     "InternalName": "Title",
+      //     "DisplayNameEn": "Title",
+      //     "DisplayName":"رمز المنفعة",
+      //     "type":"string",
+      //     "maxchar": "250"
+      // },
       {
         InternalName: 'Name',
         DisplayNameEn: 'Name',
         DisplayName: 'اسم المخرج',
         type: 'string',
         maxchar: '255',
-        withletters: true,
-        Errmsgkey: "withletterpattern",
+        withletters:true,
+        Errmsgkey:"withletterpattern",
         validation: 'required',
       },
+      //   {
+      //     InternalName: 'PlannedCompletedDate',
+      //     DisplayNameEn: 'Planned Completed Date',
+      //     DisplayName: 'تاريخ الاكتمال المخطط',
+      //     type: 'datetime',
+      //     validation: 'required',
+      //   },
       {
         InternalName: 'PlannedFinishDate',
         DisplayName: 'تاريخ الانتهاء المخطط',
@@ -884,6 +898,26 @@ var Information_Form = [
         endinternalname: 'FinishDate',
         // "min": "PlannedStartDate",
         validation: 'required',
+      },
+      {
+        InternalName: 'DeliverableSuccessKPI',
+        DisplayNameEn: 'Deliverable Success KPI',
+        DisplayName: 'مقياس نجاح المخرج  (إن وجد)',
+        type: 'multiline',
+        maxchar: 5000,        
+      },
+      // {
+      //     "InternalName": "CommittedDate",
+      //     "DisplayName": "تاريخ الالتزام",
+      //     "DisplayNameEn": "Committed Date",
+      //     "type": "datetime",
+      // },
+      {
+        InternalName: 'Target',
+        DisplayNameEn: 'Target',
+        DisplayName: 'المستهدف (إن وجد)',
+        type: 'float',
+        numberOfDigits:"12"
       },
       {
         InternalName: 'Weight',
@@ -908,6 +942,59 @@ var Information_Form = [
         targetelement: 'Weight',
         validation: 'required',
       },
+      // {
+      //   InternalName: 'Weight',
+      //   DisplayNameEn: 'Weight',
+      //   DisplayName: 'القيمة',
+      //   type: 'floatpercentage',
+      //   validation: 'required',
+      // },
+      {
+        InternalName: 'ActualCompletedDate',
+        DisplayNameEn: 'Actual Completed Date',
+        DisplayName: 'تاريخ الاكتمال الفعلي',
+        type: 'datetime',
+        max: 'today',
+      },
+      // {
+      //     "InternalName": "Completed",
+      //     "DisplayNameEn": "Completed",
+      //     "DisplayName":"حالة الاكتمال",
+      //     "type": "yesnoradio",
+      //     options: {
+      //         choices: [{
+      //                 display: 'yes',
+      //                 value: 'yes'
+      //             },
+      //             {
+      //                 display: 'no',
+      //                 value: 'no'
+      //             }
+      //         ]
+      //     }
+      // },
+      // {
+      //   InternalName: 'Delivered',
+      //   DisplayName: 'تم التسليم',
+      //   DisplayNameEn: 'Delivered',
+      //   type: 'yesnoradio',
+      //   options: {
+      //     choices: [
+      //       { display: 'yes', value: 'true' },
+      //       { display: 'no', value: 'false' },
+      //     ],
+      //   },
+      // },
+      // {
+      //     "InternalName": "RelatedBenefits",
+      //     "DisplayNameEn": "Related Benefits",
+      //     "DisplayName":"المنفعة المرتبطة",
+      //     "type": "lookup",
+      //     "source": "Benefits",
+      //     "Dispfieldkey": "Name",
+      //     "valfieldkey": "Title",
+      // }
+    
     ]
   },
   {
@@ -919,16 +1006,31 @@ var Information_Form = [
     className: "disable_section", // to make the section disabled on form render
     targetlist: 'InitiativeMilestones',
     subFields: [
+      
+      // {
+      //     "InternalName": "Title",
+      //     "DisplayNameEn": "Title",
+      //     "DisplayName":"رمز المعلم",
+      //     "type":"string",
+      //     "maxchar": "250"
+      // },
       {
         InternalName: 'Name',
         DisplayNameEn: 'Name',
         DisplayName: 'اسم المعلم',
         type: 'string',
         maxchar: '255',
-        withletters: true,
-        Errmsgkey: "withletterpattern",
+        withletters:true,
+        Errmsgkey:"withletterpattern",
         validation: 'required',
       },
+      //   {
+      //     InternalName: 'PlannedCompletedDate',
+      //     DisplayNameEn: 'Planned Completed Date',
+      //     DisplayName: 'تاريخ الاكتمال المخطط',
+      //     type: 'datetime',
+      //     validation: 'required',
+      //   },
       {
         InternalName: 'PlannedDate',
         DisplayName: 'تاريخ الاكتمال المخطط',
@@ -938,7 +1040,7 @@ var Information_Form = [
       },
       {
         InternalName: 'Weight',
-        DisplayName: 'الوزن',
+        DisplayName: 'الوزن المكافئ للإنجاز %',
         DisplayNameEn: 'Weight (%)',
         type: 'weightfloatpercentage',
         listname: 'InitiativeMilestones',
@@ -959,6 +1061,74 @@ var Information_Form = [
         targetelement: 'Weight',
         validation: 'required',
       },
+      //  {
+      //     "InternalName": "Weight",
+      //     "DisplayNameEn": "Weight",
+      //     "DisplayName":"الوزن المكافئ للإنجاز %",
+      //     "type":"floatpercentage",
+      //     "validation": "required",
+      //   },
+      //   {
+      //     InternalName: 'Weight',
+      //     DisplayNameEn: 'Weight',
+      //     DisplayName: 'الوزن المكافئ للإنجاز %',
+      //     type: 'decimalpercentage',
+      //     validation: 'required',
+      //   },
+      // {
+      //     "InternalName": "Completed",
+      //     "DisplayNameEn": "Completed",
+      //     "DisplayName":"حالة الاكتمال",
+      //     "type": "yesnoradio",
+      //     options: {
+      //         choices: [{
+      //                 display: 'yes',
+      //                 value: 'yes'
+      //             },
+      //             {
+      //                 display: 'no',
+      //                 value: 'no'
+      //             }
+      //         ]
+      //     }
+      // },
+      // {
+      //   InternalName: 'Delivered',
+      //   DisplayName: 'تم التسليم',
+      //   DisplayNameEn: 'Delivered',
+      //   targetfieldrequired:"ActualCompletedDate",
+      //   type: 'yesnoradio',
+      //   options: {
+      //     choices: [
+      //       { display: 'yes', value: 'true' },
+      //       { display: 'no', value: 'false' },
+      //     ],
+      //   },
+      // },
+      {
+        InternalName: 'ActualCompletedDate',
+        DisplayNameEn: 'Actual Completed Date',
+        DisplayName: 'تاريخ الاكتمال الفعلي',
+        type: 'datetime',
+        max: 'today',
+      },
+      {
+        InternalName: 'RelatedInitiativeDeliverable',
+        DisplayNameEn: 'Related Initiative Deliverable',
+        DisplayName: 'مخرج المبادرة المرتبط',
+        type: 'lookup',
+        source: 'InitiativeDeliverables',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+      },
+      {
+        InternalName: 'SupportDocumentsDescription',
+        DisplayNameEn: 'Support Documents Description',
+        DisplayName: 'وصف الوثائق الداعمة',
+        type: 'multiline',
+        maxchar: '5000',
+      },
+    
     ]
   },
   {
