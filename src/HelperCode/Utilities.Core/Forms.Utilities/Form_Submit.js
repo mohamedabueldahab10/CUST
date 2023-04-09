@@ -17,6 +17,8 @@ var kpiName = '', kpiType = '', kpiSector = '', kpiSubSector = '', kpiMainGoalRe
 
 var allEnterpriseResources = [], projectBuildTeamArr = [], projectManagerPickerToEpm;
 
+var fieldTargetListInMaster = []// save the field value in other list as a master section
+
 if (
   localStorage.getItem("lng") == null ||
   localStorage.getItem("lng") == "ar"
@@ -541,11 +543,11 @@ window.New_Data_Submit = {
 
     // to handle set data based on parent values and current list condition
     $(`[data-basedonparentsetvalues]`).each(function (index) {
-      
+
       var parsingData = eval($(this).data('basedonparentsetvalues'))
       var basedOnFieldName = "", basedOnFieldValue = "", basedOnFieldCurrentValue = "", basedOnFieldType = "", basedOnCondition = false;
       parsingData.forEach(el => {
-        
+
         basedOnFieldName = el.basedOnFieldName
         basedOnFieldValue = el.basedOnFieldValue
         basedOnCondition = el.basedOnCondition ? el.basedOnCondition : false
@@ -566,7 +568,7 @@ window.New_Data_Submit = {
               }
             })
           }
-        }else{
+        } else {
           el.valueToSet.forEach(item => {
             if (valueBasedOnParent.includes(item.condition)) {
               item.values.forEach(field => {
@@ -590,14 +592,14 @@ window.New_Data_Submit = {
 
       //save value based on parent type
 
-      if (listkey == 'deliverables' || listkey == 'milestones'){
+      if (listkey == 'deliverables' || listkey == 'milestones') {
         New_Data_Submit.g.oListItem.set_item("MasterKey", "projects");
         New_Data_Submit.g.oListItem.set_item("MasterID", relatedProjectId);
       }
     }
     else if (ICODE && listkey != "initiatives") {
       New_Data_Submit.g.oListItem.set_item("InitiativeCode", ICODE);
-      if (listkey == 'initiativedeliverables' || listkey == 'initiativemilestones' || listkey == 'benefits'){
+      if (listkey == 'initiativedeliverables' || listkey == 'initiativemilestones' || listkey == 'benefits') {
         New_Data_Submit.g.oListItem.set_item("MasterKey", "initiatives");
         New_Data_Submit.g.oListItem.set_item("MasterID", relatedInitiativeId);
       }
@@ -966,7 +968,7 @@ window.Edit_Data_Submit = {
       listkey == "portfolio" &&
       $("#Manager").find("span.sp-peoplepicker-userSpan").attr("sid")
     ) {
-      
+
       pickerValidationDone = true;
       isCheckMember = true;
       var portfoliomanager =
@@ -1485,11 +1487,11 @@ window.Edit_Data_Submit = {
     //
     // to handle set data based on parent values and current list condition
     $(`[data-basedonparentsetvalues]`).each(function (index) {
-      
+
       var parsingData = eval($(this).data('basedonparentsetvalues'))
       var basedOnFieldName = "", basedOnFieldValue = "", basedOnFieldCurrentValue = "", basedOnFieldType = "", basedOnCondition = false;
       parsingData.forEach(el => {
-        
+
         basedOnFieldName = el.basedOnFieldName
         basedOnFieldValue = el.basedOnFieldValue
         basedOnCondition = el.basedOnCondition ? el.basedOnCondition : false
@@ -1499,7 +1501,7 @@ window.Edit_Data_Submit = {
         } else {
           basedOnFieldCurrentValue = $(`#${basedOnFieldName}`).val()
         }
-        
+
         if (basedOnCondition) {
           if (basedOnFieldValue == basedOnFieldCurrentValue) {
             el.valueToSet.forEach(item => {
@@ -1510,7 +1512,7 @@ window.Edit_Data_Submit = {
               }
             })
           }
-        }else{
+        } else {
           el.valueToSet.forEach(item => {
             if (valueBasedOnParent.includes(item.condition)) {
               item.values.forEach(field => {
@@ -2416,11 +2418,19 @@ var New_Master_Details_Submit = {
   g: {},
 };
 
+var numberOfMaster = 0
+
+
 var Edit_Master_Details_Submit = {
   init: function (DetailsList, IDs) {
     var clientContext = new SP.ClientContext.get_current();
     var CurrList, oList, itemID;
+
+    var masterLength = $("[data-target_list] .Details-Item.EditItem").length
+
     $("[data-target_list] .Details-Item.EditItem").each(function () {
+
+
       CurrList = $(this).closest("[data-target_list]").attr("data-target_list");
       oList = clientContext.get_web().get_lists().getByTitle(CurrList);
       itemID = $(this).attr("data-id");
@@ -2531,6 +2541,20 @@ var Edit_Master_Details_Submit = {
             $(this).val() / 100
           );
         } else if ($(this).attr("type") == "multiselect") {
+          debugger
+          // handle fieldTargetList to save the field in other list not master details list
+          var masterFieldTargetList = $(this).data("fieldtargetlist")
+
+          // if (masterFieldTargetList && masterFieldTargetList != "undefined") {
+          //   var valuesSelection = []
+          //   var fieldId = $(this).attr("id")
+          //   $(this).find("input:checkbox:checked").not(":disabled").each(function () {
+          //     fieldTargetListInMaster.push({ targetList:masterFieldTargetList,fieldId: fieldId, fieldValue: $(this).val() })
+          //   });
+          //   // fieldTargetListInMaster.push({ targetList: masterFieldTargetList, valuesSelection: valuesSelection })
+          // } else {
+
+
           var myselections = [];
           $(this)
             .find("input:checkbox:checked")
@@ -2542,6 +2566,7 @@ var Edit_Master_Details_Submit = {
             $(this).attr("myfield"),
             myselections
           );
+          //}
         } else
           Edit_Master_Details_Submit.g.oListItem.set_item(
             $(this).attr("id"),
@@ -2564,6 +2589,9 @@ var Edit_Master_Details_Submit = {
 
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
+
+        numberOfMaster++
+
         // determinig folder directory
         if (USERisWF && workflowname == "Project") {
           BulkEdit(true);
@@ -2574,10 +2602,18 @@ var Edit_Master_Details_Submit = {
           $(".errormsg").hide();
           $(".successmsg").show();
           $(".btn-save").addClass("success");
-
+          debugger
           if (listkey == 'mainkpi') { // to update the kpi result list
             Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis, kpiRecurrenceChanged)
           } else {
+            // if (fieldTargetListInMaster.length) {
+            //   console.log(masterLength,"masterLength")
+            //   console.log(numberOfMaster,"NumberOfMaster")
+            //   if(masterLength == numberOfMaster){
+            //     Field_Master_Details.init(fieldTargetListInMaster)
+            //   }
+            //   // 
+            // } else {
             window.location =
               _spPageContextInfo.webAbsoluteUrl +
               "/SitePages/View.aspx?ListKey=" +
@@ -2585,6 +2621,7 @@ var Edit_Master_Details_Submit = {
               "&IID=" +
               IID +
               PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+            // }
           }
         }
       }),
@@ -2597,6 +2634,41 @@ var Edit_Master_Details_Submit = {
   },
   g: {},
 };
+
+// var Field_Master_Details = {
+//   init: function (fieldTargetData) {
+//     debugger
+//     if (fieldTargetData.length) {
+//       var clientContext = new SP.ClientContext.get_current();
+//       var CurrList, oList, valuesSelection;
+//       debugger
+//       CurrList = fieldTargetData[0].targetList
+//       valuesSelection = fieldTargetData[0].valuesSelection
+
+//       var oList = clientContext.get_web().get_lists().getByTitle(CurrList);
+
+//       var itemCreateInfo = new SP.ListItemCreationInformation();
+//       Field_Master_Details.g.oListItem = oList.addItem(itemCreateInfo);
+
+//       valuesSelection.forEach(el => {
+//         Field_Master_Details.g.oListItem.set_item(el.fieldId, el.fieldValue);
+//       })
+
+//       Field_Master_Details.g.oListItem.update();
+//       clientContext.load(Field_Master_Details.g.oListItem);
+
+
+//       clientContext.executeQueryAsync(
+//         Function.createDelegate(this, function () {
+//           console.log("INSIDE SUUUUUUUUUUUUUUUUC")
+//         })
+//       )
+
+//     }
+
+//   },
+//   g: {},
+// }
 
 //upload multiple files to specific folder with column assigning
 function readFiles() {
@@ -2789,7 +2861,7 @@ function _uploadFile() {
         console.log(filesPurpose, "filesPurpose")
         console.log(index, "index")
 
-        
+
 
         var purpose = filesPurpose[index].purpose
 

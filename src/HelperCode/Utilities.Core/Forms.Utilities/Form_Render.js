@@ -1,5 +1,5 @@
-var logo = require('../../../HelperRessources/img/print-logo.png');
-// var logo = "";
+// var logo = require('../../../HelperRessources/img/print-logo.png');
+var logo = "";
 //= isArabic ? require('../../../HelperRessources/img/main-logo.svg') : require('../../../HelperRessources/img/main-logo-en.svg');
 (window.isNew = window.location.href.toLowerCase().indexOf("new.aspx") > -1),
   (window.isEdit =
@@ -1020,9 +1020,10 @@ window.ListInfo = {
             var childFieldIdSource = $(this).data("childfieldidsource")
 
             var elementValue = event.target.value
-            var customFilterValue = $(this).find("option[value=" + elementValue + "]").data("customfiltervalue"); // will add the value on parent to can handle the query in dynamic func
 
             if (grandId && elementValue && childId && childFieldIdSource) {
+              var customFilterValue = $(this).find("option[value=" + elementValue + "]").data("customfiltervalue"); // will add the value on parent to can handle the query in dynamic func
+
               $(`#${grandId}`).data("notinvokelistiner", false)
               $(`#${grandId}`).attr("data-seconedvaluelistiner", elementValue)
               $(`#${grandId}`).attr("data-parentcustomfiltervalue", customFilterValue)
@@ -1067,7 +1068,7 @@ window.ListInfo = {
                     .replace(/\D/g, "")
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 });
-              // });
+                // });
               } else {
                 $(this).val(null)
               }
@@ -1077,11 +1078,11 @@ window.ListInfo = {
             } else {
               // format number
               // $(this).focusout(function() {
-                $(this).val(function (index, value) {
-                  return value
-                    .replace(/\D/g, "")
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                });
+              $(this).val(function (index, value) {
+                return value
+                  .replace(/\D/g, "")
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              });
               // });
             }
 
@@ -4787,7 +4788,7 @@ window.ListInfo = {
           })
         break;
 
-      case "lookupchildtoparentmultiselect": // need more test
+      case "lookupchildtoparentmultiselect":
         var code = activeCode
         var customQuery =
           '<View><Query><Where><And><Eq><FieldRef Name=' + element.childinternalparentname + ' /><Value Type=' + element.childinternalparenttype + '>' +
@@ -4795,7 +4796,14 @@ window.ListInfo = {
           "</Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
 
         var itemsID = [];
+          debugger
+        var fieldTargetList = "", otherMasterList = "";
+        if (element.fieldtargetlist && element.fieldtargetlist != "undefined") {
+          otherMasterList = "other_masterlist"
 
+          fieldTargetList = `data-fieldTargetList=${element.fieldtargetlist}`
+
+        }
 
 
         sphttp.get(
@@ -4811,6 +4819,7 @@ window.ListInfo = {
               htmlBody =
                 '<div class="col-md-6 CFIELD ' +
                 dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+                otherMasterList +
                 " " +
                 element.className +
                 " " +
@@ -4866,6 +4875,8 @@ window.ListInfo = {
                 dynamic +
                 " " +
                 seconeddynamic +
+                " " +
+                fieldTargetList +
                 " " +
                 'data-listname="' +
                 element.source +
@@ -9785,69 +9796,69 @@ dynamicAffectSelect = {
 
     // if (affectedSelectsInfo.length) {
 
-      var queryFieldValue = affectedSelectsInfo[0].queryFieldValue
-        ? affectedSelectsInfo[0].queryFieldValue
-        : "";
-      var queryFieldName = affectedSelectsInfo[0].queryFieldName
-        ? affectedSelectsInfo[0].queryFieldName
-        : "";
-      var queryFieldType = affectedSelectsInfo[0].queryFieldType
-        ? affectedSelectsInfo[0].queryFieldType
-        : "";
+    var queryFieldValue = affectedSelectsInfo[0].queryFieldValue
+      ? affectedSelectsInfo[0].queryFieldValue
+      : "";
+    var queryFieldName = affectedSelectsInfo[0].queryFieldName
+      ? affectedSelectsInfo[0].queryFieldName
+      : "";
+    var queryFieldType = affectedSelectsInfo[0].queryFieldType
+      ? affectedSelectsInfo[0].queryFieldType
+      : "";
 
 
-      console.log(affectedSelectsInfo, "affectedSelectsInfo")
+    console.log(affectedSelectsInfo, "affectedSelectsInfo")
 
-      // var dataSeblingValue = affectedSelectsInfo[0].dataSiblingvalue
-      // ? affectedSelectsInfo[0].dataSiblingvalue
-      // : "";
+    // var dataSeblingValue = affectedSelectsInfo[0].dataSiblingvalue
+    // ? affectedSelectsInfo[0].dataSiblingvalue
+    // : "";
 
-      // console.log(dataSeblingValue,"dataSeblingValue dataSeblingValue")
+    // console.log(dataSeblingValue,"dataSeblingValue dataSeblingValue")
 
-      // queryFieldValue="sublevel3"
-      // queryFieldName="Types"
-      // queryFieldType="Text"
+    // queryFieldValue="sublevel3"
+    // queryFieldName="Types"
+    // queryFieldType="Text"
 
-      dynamicAffectSelect.g.affectedSelectsInfo = affectedSelectsInfo;
-      var clientContext = new SP.ClientContext.get_current();
-      var oList = clientContext
-        .get_web()
-        .get_lists()
-        .getByTitle(affectedSelectsInfo[0].listName);
-      var camlQuery = new SP.CamlQuery();
+    dynamicAffectSelect.g.affectedSelectsInfo = affectedSelectsInfo;
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext
+      .get_web()
+      .get_lists()
+      .getByTitle(affectedSelectsInfo[0].listName);
+    var camlQuery = new SP.CamlQuery();
 
-      var Query = "";
-      var valueToFilter = affectedSelectsInfo[0].customFilterValue
-        ? affectedSelectsInfo[0].customFilterValue
-        : affectedSelectsInfo[0].parentFieldValue;
+    var Query = "";
+    var valueToFilter = affectedSelectsInfo[0].customFilterValue
+      ? affectedSelectsInfo[0].customFilterValue
+      : affectedSelectsInfo[0].parentFieldValue;
 
-      if (affectedSelectsInfo[0].parentCustomFilterValueFromSibling && affectedSelectsInfo[0].parentCustomFilterValueFromSibling != undefined) {
-        queryFieldValue = affectedSelectsInfo[0].parentCustomFilterValueFromSibling
-      }
+    if (affectedSelectsInfo[0].parentCustomFilterValueFromSibling && affectedSelectsInfo[0].parentCustomFilterValueFromSibling != undefined) {
+      queryFieldValue = affectedSelectsInfo[0].parentCustomFilterValueFromSibling
+    }
 
 
-      if (listkey == 'initiatives' && valueToFilter && valueToFilter == 'strategically') { // specially for trategically value
-        valueToFilter = 'ministry' // becuse there is a value we use it in GoalStrategy list
-      }
+    if (listkey == 'initiatives' && valueToFilter && valueToFilter == 'strategically') { // specially for trategically value
+      valueToFilter = 'ministry' // becuse there is a value we use it in GoalStrategy list
+    }
 
-      if (
-        affectedSelectsInfo[0].isCustomFilterValue === "true" &&
-        !affectedSelectsInfo[0].customFilterValue
-      ) {
-        Query = `<View><Query>
+    if (
+      affectedSelectsInfo[0].isCustomFilterValue === "true" &&
+      !affectedSelectsInfo[0].customFilterValue
+    ) {
+      Query = `<View><Query>
         <Where>
           <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
           </Where>
         <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`;
-      } else if (
-        queryFieldValue &&
-        queryFieldValue != "undefined" &&
-        queryFieldName &&
-        queryFieldName != "undefined" &&
-        queryFieldType &&
-        queryFieldType != "undefined"
-      ) {
-        Query = `<View><Query>
+    } else if (
+      queryFieldValue &&
+      queryFieldValue != "undefined" &&
+      queryFieldName &&
+      queryFieldName != "undefined" &&
+      queryFieldType &&
+      queryFieldType != "undefined"
+    ) {
+      Query = `<View><Query>
         <Where><And>
         <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
         <And>
@@ -9855,25 +9866,25 @@ dynamicAffectSelect = {
         <Eq><FieldRef Name="${queryFieldName}" /><Value Type="${queryFieldType}">${queryFieldValue}</Value></Eq></Eq>
         </And></And></Where>
         <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`;
-      } else {
-        Query = `<View><Query>
+    } else {
+      Query = `<View><Query>
         <Where><And>
           <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
           <Eq><FieldRef Name="${affectedSelectsInfo[0].filterField}"/><Value Type="${affectedSelectsInfo[0].filterFieldType}">${valueToFilter}</Value></Eq>
         </And></Where>
         <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`;
-      }
+    }
 
 
 
-      camlQuery.set_viewXml(Query);
+    camlQuery.set_viewXml(Query);
 
-      dynamicAffectSelect.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
-      clientContext.load(dynamicAffectSelect.g.collListItem);
-      clientContext.executeQueryAsync(
-        Function.createDelegate(this, dynamicAffectSelect.onSuccess),
-        Function.createDelegate(this, dynamicAffectSelect.onError)
-      );
+    dynamicAffectSelect.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(dynamicAffectSelect.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, dynamicAffectSelect.onSuccess),
+      Function.createDelegate(this, dynamicAffectSelect.onError)
+    );
     // }
   },
   onSuccess: function (sender, args) {
