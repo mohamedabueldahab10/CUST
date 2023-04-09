@@ -34,7 +34,7 @@ var Information_Form = [
       {
         InternalName: 'Weight',
         DisplayNameEn: 'Weight',
-        DisplayName: 'الوزن المكافئ للإنجاز %',
+        DisplayName: 'الوزن(%)',
         type: 'floatpercentage',
         // type: 'weightfloatpercentage',
         // listname: 'Milestones',

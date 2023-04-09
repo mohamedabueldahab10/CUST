@@ -2787,7 +2787,7 @@ window.ListInfo = {
 
       case "weightfloatpercentage":
         var code = activeCode;
-debugger
+
         var customQuery =
           "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='" +
           element.targetcode +
@@ -2811,7 +2811,7 @@ debugger
                   ? el[element.targetelement]
                   : 0;
               });
-
+              
               var RemainingBudget = 100 - totalWeight;
               RemainingBudget = Number(RemainingBudget.toFixed(1));
 
@@ -2825,7 +2825,7 @@ debugger
 
               console.log(newVal, "newVal newVal");
               // console.log()
-
+              
               htmlBody =
                 '<div class="col-md-6 CFIELD ' +
                 dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +

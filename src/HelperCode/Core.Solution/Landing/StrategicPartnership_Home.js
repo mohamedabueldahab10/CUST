@@ -839,7 +839,7 @@ var Partnership_Deliverables_Info_Request = {
       itemStrategicCode = oListItem.get_item("StrategicPartnershipCode") || No_Data;
       itemStrategicName = oListItem.get_item("Name") || No_Data;
       itemStrategicTitle = oListItem.get_item("Title") || No_Data;
-      itemDeliveredDate = StrategicPS_Home_Info_Request.g.dateConvert(oListItem.get_item("DeliveredDate"));
+      itemDeliveredDate = StrategicPS_Home_Info_Request.g.dateConvert(oListItem.get_item("PlannedFinishDate"));
       itemPlannedFinishDate = StrategicPS_Home_Info_Request.g.dateConvert(oListItem.get_item("PlannedFinishDate"));
 
       strategicDeliverablesArr.push({

@@ -708,11 +708,12 @@ window.Edit_Data_Request = {
 
     if (MasterDetailsArrayRequest.length == 0) { // to avoid the error if there is master details like project ana initiative
       $("[data-weightvalue]").each(function () {
+        debugger
         var elementId = $(this).attr('id')
         var inputVal = oListItem.get_item(elementId) ? oListItem.get_item(elementId) : 0
         var remainingBudget = $(this).attr('max')
         remainingBudget = Number(remainingBudget)
-        var newVal = remainingBudget + inputVal >= 100 ? inputVal : remainingBudget + inputVal;
+        var newVal = remainingBudget + inputVal > 100 ? inputVal : remainingBudget + inputVal;
         newVal = Number(newVal.toFixed("2"));
 
         remainingBudget == 100 ? $(this).attr("max", remainingBudget) : $(this).attr("max", newVal);
