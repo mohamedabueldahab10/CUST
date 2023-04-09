@@ -2892,7 +2892,7 @@ window.ListInfo = {
                 '"' +
                 " " +
                 element.validation +
-                ' oninput="this.value = (this.value && Math.abs(this.value) >= 0) && (this.value && Math.abs(this.value) <= 100) ? Math.abs(this.value) : null">' +
+                ' oninput="this.value = (this.value && Math.abs(this.value) >= 1) && (this.value && Math.abs(this.value) <= 100) ? Math.abs(this.value) : null">' +
                 "<span data-trans-" +
                 Errmsgkey +
                 ' class="errMsgField Resources"></span>' +
