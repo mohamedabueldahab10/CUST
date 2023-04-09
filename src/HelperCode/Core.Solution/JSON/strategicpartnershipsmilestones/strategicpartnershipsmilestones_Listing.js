@@ -46,7 +46,7 @@ var Listing_Info = [
     InternalName: 'Status',
     DisplayName: 'الحالة',
     DisplayNameEn: 'Status',
-    type: 'text',
+    type: 'dropdownValues',
     inlisting: true,
     infilter: true,
     needTrans: true,

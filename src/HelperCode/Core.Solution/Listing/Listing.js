@@ -1834,7 +1834,7 @@ window.ListingData = {
         localStorage.getItem("lng") == null ||
         localStorage.getItem("lng") == "ar"
       ) {
-        Listing_Info.map((a) => a.DisplayName);
+        DN = Listing_Info.map((a) => a.DisplayName);
       } else {
         DN = Listing_Info.map((a) => a.DisplayNameEn);
       }
@@ -1847,6 +1847,7 @@ window.ListingData = {
       var table =
         '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head> <!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets> <x:ExcelWorksheet><x:Name>{worksheet}</x:Name> <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions> </x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook> </xml><![endif]--><meta charset="UTF-8"></head><body><table><thead><tr>'; //assigning charset for ar words
       // var head = Object.keys(mydata[0]);//Using internal names
+      debugger
       var head = DN;
       for (var i = 0; i < head.length; i++) {
         console.log(head, "HEAAAAAAAAAAD")
