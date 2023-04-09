@@ -26,39 +26,12 @@ var Information_Form = [{
       "type": "multiline",
       "maxchar": 5000,
     },
-    // {
-    //     "InternalName": "Weight",
-    //     "DisplayName": "الوزن / القيمة (%)",
-    //     "DisplayNameEn": "Weight/Value (%)",
-    //     "type": "floatpercentage",
-    //     "validation": "required",
 
-    // },
-    // {
-    //   "InternalName": "Amount",
-    //   "DisplayName": "القيمة",
-    //   "DisplayNameEn": "Amount",
-    //   dontSubmit: true,
-    //   "type": "float",
-    //   // "type": "percentbyrelatedparent",
-    //   // "listname": "Projects",
-    //   // "parentinternalname": "ActualBudget",
-    //   // "targetelement": "Weight",
-    //   // "validation": "required"
-
-    // },
     {
       "InternalName": "Weight",
       "DisplayName": "الوزن(%)",
       "DisplayNameEn": "Weight (%)",
       "type": "float",
-      // "type": "weightfloatpercentage",
-      // "listname": "Deliverables",
-      // "targetcode": "ProjectCode",
-      // "targetelement": "Weight",
-      // "seconedtarget": "Amount",
-      // // "state":"disabled",
-      // "validation": "required"
     },
     // {
     //   "InternalName": "Status",

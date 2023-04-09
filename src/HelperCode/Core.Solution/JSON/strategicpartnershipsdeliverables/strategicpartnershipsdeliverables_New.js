@@ -50,20 +50,33 @@ var Information_Form = [{
     //   // "validation": "required"
 
     // },
+
     {
-      "InternalName": "Weight",
-      "DisplayName": "الوزن(%)",
-      "DisplayNameEn": "Weight (%)",
-      "type": "float",
-      "validation": "required"
-      // "type": "weightfloatpercentage",
-      // "listname": "Deliverables",
-      // "targetcode": "ProjectCode",
-      // "targetelement": "Weight",
-      // "seconedtarget": "Amount",
-      // // "state":"disabled",
-      // "validation": "required"
+      InternalName: 'Weight',
+      DisplayName: 'الوزن(%)',
+      DisplayNameEn: 'Weight (%)',
+      type: 'weightfloatpercentage',
+      listname: 'Deliverables',
+      targetcode: 'StrategicPartnershipCode',
+      targetelement: 'Weight',
+      // seconedtarget: 'Amount',
+      // "state":"disabled",
+      validation: 'required',
     },
+    // {
+    //   "InternalName": "Weight",
+    //   "DisplayName": "الوزن(%)",
+    //   "DisplayNameEn": "Weight (%)",
+    //   "type": "float",
+    //   "validation": "required"
+    //   // "type": "weightfloatpercentage",
+    //   // "listname": "Deliverables",
+    //   // "targetcode": "ProjectCode",
+    //   // "targetelement": "Weight",
+    //   // "seconedtarget": "Amount",
+    //   // // "state":"disabled",
+    //   // "validation": "required"
+    // },
     // {
     //   "InternalName": "Status",
     //   "DisplayName": "الحالة",
@@ -91,14 +104,14 @@ var Information_Form = [{
     //   max: 'today',
     //   validation: 'required',
     // },
-    {
-      "InternalName": "DeliveredDate",
-      "DisplayName": "تاريخ التسليم",
-      "DisplayNameEn": "Delivered Date",
-      "type": "datetime",
-      "max": "today",
-      // "validation": "required",
-    },
+    // {
+    //   "InternalName": "DeliveredDate",
+    //   "DisplayName": "تاريخ التسليم",
+    //   "DisplayNameEn": "Delivered Date",
+    //   "type": "datetime",
+    //   "max": "today",
+    //   // "validation": "required",
+    // },
     {
       "InternalName": "PlannedFinishDate",
       "DisplayName": "تاريخ الانتهاء المخطط",
@@ -139,22 +152,22 @@ var Information_Form = [{
     //     "min": "StartDate",
     //     "max":"today"
     // },
-    {
-      "InternalName": "Delivered",
-      "DisplayName": "تم التسليم",
-      "DisplayNameEn": "Delivered",
-      "targetfieldrequired":"getFile", // to make the attache required on yes
-      "targetfield":"Status",
-      "targetfieldvalue": "completed",
-      "type": "yesnoradio",
-      options: {
-        choices: [
-          { display: 'yes', value: 'yes' },
-          { display: 'no', value: 'no' }
-        ]
-      }
+    // {
+    //   "InternalName": "Delivered",
+    //   "DisplayName": "تم التسليم",
+    //   "DisplayNameEn": "Delivered",
+    //   "targetfieldrequired":"getFile", // to make the attache required on yes
+    //   "targetfield":"Status",
+    //   "targetfieldvalue": "completed",
+    //   "type": "yesnoradio",
+    //   options: {
+    //     choices: [
+    //       { display: 'yes', value: 'yes' },
+    //       { display: 'no', value: 'no' }
+    //     ]
+    //   }
 
-    },
+    // },
     {
       "InternalName": "AcceptanceCriteria",
       "DisplayName": "معايير قبول المخرج",

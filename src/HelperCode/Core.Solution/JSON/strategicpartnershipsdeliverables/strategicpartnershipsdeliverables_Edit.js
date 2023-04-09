@@ -51,20 +51,33 @@ var Information_Form = [{
     //   // "validation": "required"
 
     // },
+
     {
-      "InternalName": "Weight",
-      "DisplayName": "الوزن(%)",
-      "DisplayNameEn": "Weight (%)",
-      "type": "float",
-      "validation": "required"
-      // "type": "weightfloatpercentage",
-      // "listname": "Deliverables",
-      // "targetcode": "ProjectCode",
-      // "targetelement": "Weight",
-      // "seconedtarget": "Amount",
-      // // "state":"disabled",
-      // "validation": "required"
+      InternalName: 'Weight',
+      DisplayName: 'الوزن(%)',
+      DisplayNameEn: 'Weight (%)',
+      type: 'weightfloatpercentage',
+      listname: 'Deliverables',
+      targetcode: 'StrategicPartnershipCode',
+      targetelement: 'Weight',
+      // seconedtarget: 'Amount',
+      // "state":"disabled",
+      validation: 'required',
     },
+    // {
+    //   "InternalName": "Weight",
+    //   "DisplayName": "الوزن(%)",
+    //   "DisplayNameEn": "Weight (%)",
+    //   "type": "float",
+    //   "validation": "required"
+    //   // "type": "weightfloatpercentage",
+    //   // "listname": "Deliverables",
+    //   // "targetcode": "ProjectCode",
+    //   // "targetelement": "Weight",
+    //   // "seconedtarget": "Amount",
+    //   // // "state":"disabled",
+    //   // "validation": "required"
+    // },
     // {
     //   "InternalName": "Status",
     //   "DisplayName": "الحالة",

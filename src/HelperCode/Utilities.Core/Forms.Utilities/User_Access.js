@@ -235,7 +235,8 @@ window.userProjects = [];
 //
 window.USERINID; // to get the initiative id
 
-window.activeCode = istherePCODE ? USERPCODE : isthereICODE ? UserICode : "";
+// window.activeCode = istherePCODE ? USERPCODE : isthereICODE ? UserICode : "";
+window.activeCode =""
 //
 window.tempRoleHierarchies = [];
 window.accessCallisDone = false;
@@ -254,6 +255,15 @@ window.accessCallisDone = false;
 
 
 var projectStartToValidation = "", initiativeStartToValidation = "";
+
+
+if(istherePCODE){
+  activeCode = USERPCODE
+}else if(isthereICODE){
+  activeCode = UserICode
+}else if(isthereSTCODE){
+  activeCode = UserSTCode
+}
 
 
 if (window.location.href.indexOf("ListKey") > -1) {

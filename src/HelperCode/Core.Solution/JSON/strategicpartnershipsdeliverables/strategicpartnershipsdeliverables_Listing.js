@@ -51,14 +51,6 @@ var Listing_Info = [
   //   infilter: true,
   // },
   {
-    InternalName: 'DeliveredDate',
-    DisplayName: 'تاريخ التسليم',
-    DisplayNameEn: 'Delivered Date',
-    type: 'date',
-    inlisting: true,
-    infilter: false,
-  },
-  {
     InternalName: 'PlannedFinishDate',
     DisplayName: 'تاريخ الإنتهاء المخطط',
     DisplayNameEn: 'Planned Finish Date',
@@ -66,6 +58,15 @@ var Listing_Info = [
     inlisting: true,
     infilter: true,
   },
+  {
+    InternalName: 'DeliveredDate',
+    DisplayName: 'تاريخ التسليم',
+    DisplayNameEn: 'Delivered Date',
+    type: 'date',
+    inlisting: true,
+    infilter: false,
+  },
+
   // {
   //     "InternalName": "CommittedDate",
   //     "DisplayName": "تاريخ الالتزام",

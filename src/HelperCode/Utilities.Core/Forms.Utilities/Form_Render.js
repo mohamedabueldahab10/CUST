@@ -22,6 +22,7 @@ var pluseAttachCount = 0;
 var RevenuesAmount = 0;
 var RevenuesAmountInit = 0;
 var revenuesAmountInitMiles = 0;
+var parentBudgetValue = 0;
 if (
   localStorage.getItem("lng") == null ||
   localStorage.getItem("lng") == "ar"
@@ -2786,7 +2787,7 @@ window.ListInfo = {
 
       case "weightfloatpercentage":
         var code = activeCode;
-
+debugger
         var customQuery =
           "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='" +
           element.targetcode +
