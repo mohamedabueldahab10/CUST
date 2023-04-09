@@ -4,20 +4,20 @@ var Information_Form = [
     labelEn: "Project Data",
     description: "",
     descriptionEn: "",
-    formDefaultValues: [
-      //VRO
-      { fieldName: 'WFModuleCode', value: 'VROCreateProject', roles: ['VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'], },
-      { fieldName: 'WFStage', value: 'VROCreateProject01', roles: ['VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'], },
+    // formDefaultValues: [
+    //   //VRO
+    //   { fieldName: 'WFModuleCode', value: 'VROCreateProject', roles: ['VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'], },
+    //   { fieldName: 'WFStage', value: 'VROCreateProject01', roles: ['VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'VROE'], },
 
-      //EPMO
-      { fieldName: 'WFModuleCode', value: 'EPMOCreateProject',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
-      { fieldName: 'WFStage', value: 'EPMOCreateProject01',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+    //   //EPMO
+    //   { fieldName: 'WFModuleCode', value: 'EPMOCreateProject',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+    //   { fieldName: 'WFStage', value: 'EPMOCreateProject01',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
 
-      //LMS
-      { fieldName: 'WFModuleCode', value: 'LMSCreateProject',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
-      { fieldName: 'WFStage', value: 'LMSCreateProject01',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+    //   //LMS
+    //   { fieldName: 'WFModuleCode', value: 'LMSCreateProject',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+    //   { fieldName: 'WFStage', value: 'LMSCreateProject01',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
 
-    ],
+    // ],
     subFields: [
       {
         InternalName: "Name",
@@ -177,7 +177,12 @@ var Information_Form = [
         options: {
           choices: [
             { display: "yes", value: "yes" },
-            { display: "no", value: "no" },
+            { display: "no", value: "no", otherFields: [
+              { fieldName: 'WFModuleCode', value: 'EPMOCreateProject' },
+              { fieldName: 'WFStage', value: 'EPMOCreateProject01' },
+              { fieldName: 'DraftStatus', value: 'draft' },
+            ], },
+            
           ],
         },
         toggleValues: [
@@ -241,8 +246,8 @@ var Information_Form = [
 
               roles: ['Administrator', 'EPMO'],
               otherFields: [
-                { fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
-                { fieldName: 'WFStage', value: 'EPMOCRProject01' },
+                { fieldName: 'WFModuleCode', value: 'EPMOCreateProject' },
+                { fieldName: 'WFStage', value: 'EPMOCreateProject01' },
                 { fieldName: 'DraftStatus', value: 'draft' },
               ],
             },
@@ -253,8 +258,8 @@ var Information_Form = [
 
               roles: ['Administrator', 'LMSE', 'LMSP'],
               otherFields: [
-                { fieldName: 'WFModuleCode', value: 'LMSCRProject' },
-                { fieldName: 'WFStage', value: 'LMSCRProject01' },
+                { fieldName: 'WFModuleCode', value: 'LMSCreateProject' },
+                { fieldName: 'WFStage', value: 'LMSCreateProject01' },
                 { fieldName: 'DraftStatus', value: 'draft' },
               ],
             },

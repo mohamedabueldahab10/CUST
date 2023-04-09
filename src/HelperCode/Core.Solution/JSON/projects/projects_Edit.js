@@ -217,8 +217,8 @@ var Information_Form = [
               customFilterValue:  "vision",
               roles: ['Administrator', 'VROE', 'VROP'],
               otherFields: [
-                { fieldName: 'WFModuleCode', value: 'VROCRProject' },
-                { fieldName: 'WFStage', value: 'VROCRProject01' },
+                { fieldName: 'WFModuleCode', value: 'VROCreateProject' },
+                { fieldName: 'WFStage', value: 'VROCreateProject01' },
                 { fieldName: 'DraftStatus', value: 'draft' },
               ],
             },
@@ -229,8 +229,8 @@ var Information_Form = [
 
                 roles: ['Administrator', 'EPMO'],
               otherFields: [
-                { fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
-                { fieldName: 'WFStage', value: 'EPMOCRProject01' },
+                { fieldName: 'WFModuleCode', value: 'EPMOCreateProject' },
+                { fieldName: 'WFStage', value: 'EPMOCreateProject01' },
                 { fieldName: 'DraftStatus', value: 'draft' },
               ],
             },
@@ -241,8 +241,8 @@ var Information_Form = [
 
               roles: ['Administrator', 'LMSE', 'LMSP'],
               otherFields: [
-                { fieldName: 'WFModuleCode', value: 'LMSCRProject' },
-                { fieldName: 'WFStage', value: 'LMSCRProject01' },
+                { fieldName: 'WFModuleCode', value: 'LMSCreateProject' },
+                { fieldName: 'WFStage', value: 'LMSCreateProject01' },
                 { fieldName: 'DraftStatus', value: 'draft' },
               ],
             },
