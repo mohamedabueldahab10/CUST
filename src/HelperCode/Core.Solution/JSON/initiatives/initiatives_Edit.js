@@ -1207,8 +1207,9 @@ var Information_Form = [
         Dispfieldkey: 'Name', //display in dropdown
         valfieldkey: 'Title', // value in dropdown
         grpfieldkey: 'Title',
-        // valsiblingkey:'AcceptanceCriteria', // internal name on sorce list
-        // targetsiblingkey:'AcceptanceCriteria' // internal name on current list
+        //////////////
+        // fieldtargetlist:'BenefitDeliverables' // save this field in this
+       
       },
     ]
   },
