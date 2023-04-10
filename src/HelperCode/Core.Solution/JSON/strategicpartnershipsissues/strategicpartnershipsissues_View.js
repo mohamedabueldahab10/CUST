@@ -86,7 +86,7 @@ var Information_Form = [{
             "type": "multiline"
         },
         {
-            "InternalName": "Owner",
+            "InternalName": "AssignedTo",
             "DisplayName": "مالك التحدي",
             "DisplayNameEn": "Owner",
             "type": "picker"

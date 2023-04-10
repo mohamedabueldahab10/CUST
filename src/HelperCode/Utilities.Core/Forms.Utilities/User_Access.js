@@ -7171,17 +7171,30 @@ var Access_Project_Info_Request = {
               StrategicPartnershipTitle +
               "</a>"
             );
-            $(".title-item:first-child").html(
-              '<a href="' +
-              _spPageContextInfo.webAbsoluteUrl +
-              "/sitepages/Listing.aspx?ListKey=" +
-              USERlistkey +
-              "&STCODE=" +
-              UserSTCode +
-              '">' +
-              USERPageTitle +
-              ""
-            );
+            if(USERlistkey == "strategicpartnerships"){
+              $(".title-item:first-child").html(
+                '<a href="' +
+                _spPageContextInfo.webAbsoluteUrl +
+                "/sitepages/Listing.aspx?ListKey=" +
+                USERlistkey +
+                '">' +
+                USERPageTitle +
+                ""
+              );
+            }else{
+              $(".title-item:first-child").html(
+                '<a href="' +
+                _spPageContextInfo.webAbsoluteUrl +
+                "/sitepages/Listing.aspx?ListKey=" +
+                USERlistkey +
+                "&STCODE=" +
+                UserSTCode +
+                '">' +
+                USERPageTitle +
+                ""
+              );
+            }
+   
           }
           else {
             //

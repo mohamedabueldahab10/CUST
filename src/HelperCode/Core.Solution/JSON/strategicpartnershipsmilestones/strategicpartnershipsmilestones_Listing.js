@@ -43,6 +43,15 @@ var Listing_Info = [
     infilter: false,
   },
   {
+    "InternalName": "Delivered",
+    "DisplayName": "مكتمل",
+    "DisplayNameEn": "Completed",
+    "type": "text",
+    needTrans: true,
+    inlisting: true,
+    infilter: true
+},
+  {
     InternalName: 'Status',
     DisplayName: 'الحالة',
     DisplayNameEn: 'Status',

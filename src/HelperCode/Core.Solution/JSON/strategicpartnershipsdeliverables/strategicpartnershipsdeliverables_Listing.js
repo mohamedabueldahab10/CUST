@@ -59,6 +59,15 @@ var Listing_Info = [
     infilter: true,
   },
   {
+    "InternalName": "Delivered",
+    "DisplayName": "مكتمل",
+    "DisplayNameEn": "Completed",
+    "type": "text",
+    needTrans: true,
+    inlisting: true,
+    infilter: true
+},
+  {
     InternalName: 'DeliveredDate',
     DisplayName: 'تاريخ التسليم',
     DisplayNameEn: 'Delivered Date',

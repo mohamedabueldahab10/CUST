@@ -85,7 +85,7 @@ var Information_Form = [
         maxchar: 5000,
       },
       {
-        InternalName: 'Owner',
+        InternalName: 'AssignedTo',
         DisplayName: 'مالك التحدي',
         DisplayNameEn: 'Owner',
         type: 'picker',
@@ -138,6 +138,7 @@ var Information_Form = [
         InternalName: 'Status',
         DisplayName: 'الحالة',
         type: 'dropdownValues',
+        "validation": "required",
         options: {
           choices: [
             {
