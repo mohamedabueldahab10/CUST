@@ -343,6 +343,7 @@ window.userCalls = {
         Accept: "application/json; odata=verbose",
       },
       success: function (data) {
+        console.log(data,"data for current user")
         UserN = data.d;
         userCalls.get_CurrentUserGroupColl(data.d.Id);
       },
