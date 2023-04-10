@@ -77,7 +77,7 @@ var MainKPIs_Info_Request = {
     var camlQuery = new SP.CamlQuery();
     let myQuery = `<View><Query>\
     <Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>`;
-    debugger
+    
     if (isRoleDataLevelAccess) {
       if (dataLevelAccessQuery) {
         myQuery = dataLevelAccessQuery;
@@ -269,8 +269,7 @@ var MainKPIs_Info_Request = {
       // /sitepages/Targets.aspx ? KpiCode =
     }
 
-    console.log(allRelatedStrategObjArr, "allRelatedStrategObjArr")
-    debugger
+    
 
     if (!KPIsHTML.length) {
       KPIsHTML.push(UserNo_Data);
@@ -311,7 +310,7 @@ var stratigicObjectivesRequest = {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("SOs");
     var camlQuery = new SP.CamlQuery();
-    debugger
+    
     if (isRoleDataLevelAccess && dataLevelAccessQuery) {
 
       if (allRelatedStrategObjArr.length) {
@@ -651,7 +650,7 @@ var GoalsKPIs_Info_Request = {
     var camlQuery = new SP.CamlQuery();
 
     //////
-    debugger
+    
     if (allRelatedStrategyArr.length) {
       goalKpiQuery = '<View><Query><Where><And><In><FieldRef Name="Title" /><Values>';
       allRelatedStrategyArr.forEach(function (item) {

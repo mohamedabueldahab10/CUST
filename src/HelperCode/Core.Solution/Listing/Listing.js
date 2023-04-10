@@ -271,7 +271,7 @@ window.sphttp = {
                       record[internalFieldNames[i]] = (oListItem.get_item(internalFieldNames[i]) == null) ? No_Data : oListItem.get_item(internalFieldNames[i]).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     }
                     else if (Listing_Info[i].type == "lookupmultiselect") {
-                      debugger
+                      
                       var items = ''
                       var value = oListItem.get_item(internalFieldNames[i]) == null ? '' : oListItem.get_item(internalFieldNames[i]).split(":::")
                       var multiLookUpItemsArr = []
@@ -1847,11 +1847,10 @@ window.ListingData = {
       var table =
         '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head> <!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets> <x:ExcelWorksheet><x:Name>{worksheet}</x:Name> <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions> </x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook> </xml><![endif]--><meta charset="UTF-8"></head><body><table><thead><tr>'; //assigning charset for ar words
       // var head = Object.keys(mydata[0]);//Using internal names
-      debugger
+      
       var head = DN;
       for (var i = 0; i < head.length; i++) {
-        console.log(head, "HEAAAAAAAAAAD")
-        debugger
+        
         table += "<th>" + head[i].replaceAll(" ", "%20") + "</th>";
       }
       table += "</tr></thead><tbody>";

@@ -291,7 +291,7 @@ var Custom_Nav_Request = {
             }
         }
 
-        debugger
+        
         // $('body').append('<style>#menuToggleBurgMenu{background-color:red}</style>')
         $(".navbar.page-nav.px-5 ul.navbar-nav.bd-navbar-nav.flex-row").html(LinkItem);
         $(".navbar.page-nav.px-5 .menuBurg").html(extraLinkItem)

@@ -1907,7 +1907,7 @@ window.CrSetChangeBody = {
 window.executeCR = {
 	init: function (crBody) {
 		if (crBody.length) {
-			debugger
+			
 			var clientContext = new SP.ClientContext.get_current();
 			var oList = clientContext
 				.get_web()
@@ -2023,7 +2023,7 @@ var CR_Master_Details_Request = {
 		while (listItemEnum.moveNext()) {
 
 			console.log("in while");
-			debugger
+			
 			var oListItem = listItemEnum.get_current();
 			HTMLtoAppend = "";
 			HTMLtoAppend +=
@@ -2281,7 +2281,7 @@ var CR_Master_Details_Request = {
 					oListItem.get_id() +
 					'"] > .CFIELD:not(.dont-submit):not(.dont-request) > .multiselect-container'
 				).each(function () {
-					debugger
+					
 					switch ($(this).attr("type")) {
 						case "date":
 							var d =

@@ -9137,7 +9137,7 @@ var GetStrategicPartnershipTitle_Request = {
 async function initiateDataLevelAccess(lookupList) {
 
   try {
-    debugger
+    
     if (myRoleConfig[0].hasOwnProperty("dataFilter")) {
       isRoleDataLevelAccess = true;
       myRoleConfig[0].dataFilter.hierarchies.forEach((el, i, a) => {

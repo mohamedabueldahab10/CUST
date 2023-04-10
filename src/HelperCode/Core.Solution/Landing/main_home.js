@@ -171,7 +171,7 @@ window.Project_Info_Request = {
   },
   // The main Initialization function
   init: function () {
-    debugger
+    
     if (originalstate) {
       //*****call charts filteration */
       if (isRoleDataLevelAccess && !UserICode && !USERPCODE) {
@@ -2513,7 +2513,7 @@ var PortfoliosInfoRequest = {
 function handleBudgetBarChart() {
 
   var remainingCost = AssignedBudget - TheCost;
-  debugger
+  
   console.log(AssignedBudget, "AssignedBudget");
   if (
     localStorage.getItem("lng") == null ||

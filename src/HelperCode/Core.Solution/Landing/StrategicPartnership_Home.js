@@ -70,7 +70,7 @@ var StrategicPS_Home_Info_Request = {
   onSuccess: function (sender, args) {
     var collListItem = StrategicPS_Home_Info_Request.g.collListItem;
     StrategicPS_Home_Info_Request.g.listItemEnum = collListItem.getEnumerator();
-    debugger
+    
     var card1 = [];
 
     while (StrategicPS_Home_Info_Request.g.listItemEnum.moveNext()) {
@@ -85,7 +85,7 @@ var StrategicPS_Home_Info_Request = {
         StrategicPS_Home_Info_Request.g.STCODE
       );
 
-      debugger
+      
       strategicName = oListItem.get_item("Name") || No_Data;
       strategicCode = oListItem.get_item("Title") || No_Data;
       strategicSector = oListItem.get_item("Sector") || No_Data;
@@ -535,7 +535,7 @@ var Get_PartnerShip_Representative = {
 
 
     console.log(strategicSubSector.split(":::"), "strategicSubSector strategicSubSector")
-    debugger
+    
 
 
     // if (allRelatedStrategObjArr.length) {
@@ -572,7 +572,7 @@ var Get_PartnerShip_Representative = {
     var listItemEnum = collListItem.getEnumerator();
     var partnershipRepresentative = "";
     while (listItemEnum.moveNext()) {
-      debugger
+      
       var oListItem = listItemEnum.get_current();
       partnershipRepresentative = oListItem.get_item("PartnershipRepresentative") ? oListItem.get_item("PartnershipRepresentative").get_lookupValue() : No_Data;
 
@@ -1343,7 +1343,7 @@ var Update_StrategicPartnershipStatus_Service = {
 
 var Get_StrategicPartnershipStatus_Info = {
   init: function () {
-    debugger
+    
     $("button.updateprogress").removeClass("loader-action-success");
     $("button.updateprogress").removeClass("loader-action-error");
     $("button.updateprogress").addClass("loader-action");

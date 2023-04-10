@@ -3409,7 +3409,7 @@ if (
 } else ImpactLabel = ImpactLabelsEn;
 
 function handleCircleRiskChart() {
-  debugger;
+
   $("#riskChart").remove(); // this is my <canvas> element
   $("#carditem4 .chartjs-size-monitor").remove();
   $("#carditem4 .card-body .card-body").append(

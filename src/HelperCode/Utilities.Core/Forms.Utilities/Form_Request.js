@@ -708,7 +708,7 @@ window.Edit_Data_Request = {
 
     if (MasterDetailsArrayRequest.length == 0) { // to avoid the error if there is master details like project ana initiative
       $("[data-weightvalue]").each(function () {
-        debugger
+        
         var elementId = $(this).attr('id')
         var inputVal = oListItem.get_item(elementId) ? oListItem.get_item(elementId) : 0
         var remainingBudget = $(this).attr('max')
@@ -6432,7 +6432,7 @@ var DontSubmit_DataRequest = {
           oListItem.get_item(elementId) &&
           oListItem.get_item(elementId) == elementValue
         ) {
-          debugger
+          
           // matching between value on list
           var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
           var parenetValue = $(this).data("parentrelatedvaluelvl1"); // parent value

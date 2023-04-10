@@ -276,8 +276,7 @@ export default class AllTasks extends React.Component<IAllTasksProps, {
   delegatedTaskHandler = async () => {
 
 
-    console.log(this.state.targetElem,"this.state.targetElem")
-    debugger
+    
 
     var ppp = [this.state.userDelegateId]
     var delegatedFrom = this.state.targetElem.AssignedToId[0]

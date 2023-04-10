@@ -2541,7 +2541,7 @@ var Edit_Master_Details_Submit = {
             $(this).val() / 100
           );
         } else if ($(this).attr("type") == "multiselect") {
-          debugger
+          
           // handle fieldTargetList to save the field in other list not master details list
           var masterFieldTargetList = $(this).data("fieldtargetlist")
 
@@ -2602,7 +2602,7 @@ var Edit_Master_Details_Submit = {
           $(".errormsg").hide();
           $(".successmsg").show();
           $(".btn-save").addClass("success");
-          debugger
+          
           if (listkey == 'mainkpi') { // to update the kpi result list
             Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis, kpiRecurrenceChanged)
           } else {

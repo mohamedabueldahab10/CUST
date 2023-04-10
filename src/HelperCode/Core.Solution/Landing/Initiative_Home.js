@@ -1635,7 +1635,7 @@ var Milestones_Info_Request = {
       //   });
       // }
 
-      debugger
+      
       MilestoneArr.push({
         name: itemname,
         delivered: Status,
@@ -2226,7 +2226,7 @@ var Update_InitiativeStatus_Service = {
 var Get_InitiativeStatus_Info = {
 
   init: function () {
-    debugger
+    
     $("button.updateprogress").removeClass("loader-action-success");
     $("button.updateprogress").removeClass("loader-action-error");
     $("button.updateprogress").addClass("loader-action");

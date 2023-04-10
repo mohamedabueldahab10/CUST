@@ -4797,7 +4797,7 @@ window.ListInfo = {
           "</Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
 
         var itemsID = [];
-          debugger
+          
         var fieldTargetList = "", otherMasterList = "";
         if (element.fieldtargetlist && element.fieldtargetlist != "undefined") {
           otherMasterList = "other_masterlist"

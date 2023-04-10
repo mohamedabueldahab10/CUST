@@ -59,7 +59,7 @@ Get_All_BenefitMetrics = {
     Get_Benefit_Results.init();
     var hideSendBtn = true
 
-    debugger
+    
 
     Create_Access.forEach(el => {
       if (el == 'benefitmetrics.aspx') {
@@ -82,7 +82,7 @@ Get_All_BenefitMetrics = {
     );
   },
   preinit: function () {
-    debugger
+    
     if ($(".d-flex").length) {
       clearInterval(checkTargetStatusHtml);
       //username
@@ -159,7 +159,7 @@ var Get_All_Dynamic_Filter = {
     );
   },
   init: function () {
-    debugger
+    
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("BenefitMetrics");
     var camlQuery = new SP.CamlQuery();
@@ -569,7 +569,7 @@ var Get_Benefit_Results = {
   onSuccess: function (sender, args) {
 
     console.log("inside Get_Benefit_Results")
-    debugger
+    
 
     var collListItem = Get_Benefit_Results.g.collListItem;
     var listItemEnum = collListItem.getEnumerator()

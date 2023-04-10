@@ -377,7 +377,7 @@ var isIE = /*@cc_on!@*/ false || !!document.documentMode;
 var isChrome =!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime); // add to avoid the err isChrome is not defined
 var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0; // add to avoid the err isOpera is not defined
 // Opera 8.0+
-debugger
+
 if (
 	(!!window.opr && !!opr.addons) ||
 	!!window.opera ||
