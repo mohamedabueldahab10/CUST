@@ -12,7 +12,7 @@ window.initiativeActualBudget = 0;
 window.CurrentUserTasksCount = 0;
 window.APIURL = "";
 window.relatedProjectId = "";
-window.relatedInitiativeId ="";
+window.relatedInitiativeId = "";
 //window.finishRenderAccessRole = false
 window.USERisProjectHome =
   window.location.href.toLowerCase().indexOf("/projecthome.aspx") > -1;
@@ -236,7 +236,7 @@ window.userProjects = [];
 window.USERINID; // to get the initiative id
 
 // window.activeCode = istherePCODE ? USERPCODE : isthereICODE ? UserICode : "";
-window.activeCode =""
+window.activeCode = ""
 //
 window.tempRoleHierarchies = [];
 window.accessCallisDone = false;
@@ -257,11 +257,11 @@ window.accessCallisDone = false;
 var projectStartToValidation = "", initiativeStartToValidation = "";
 
 
-if(istherePCODE){
+if (istherePCODE) {
   activeCode = USERPCODE
-}else if(isthereICODE){
+} else if (isthereICODE) {
   activeCode = UserICode
-}else if(isthereSTCODE){
+} else if (isthereSTCODE) {
   activeCode = UserSTCode
 }
 
@@ -637,7 +637,7 @@ window.userCalls = {
         document.title = USERPageTitle;
     }
     (Create_Access = Create_Access.map((name) => name.toLowerCase())), //making sure everything is lower case
-    (CreateChangeRequest_Access = CreateChangeRequest_Access.map((name) => name.toLowerCase())), //making sure everything is lower case
+      (CreateChangeRequest_Access = CreateChangeRequest_Access.map((name) => name.toLowerCase())), //making sure everything is lower case
       (Read_Access = Read_Access.map((name) => name.toLowerCase())),
       (Edit_Access = Edit_Access.map((name) => name.toLowerCase())),
       (Delete_Access = Delete_Access.map((name) => name.toLowerCase()));
@@ -719,7 +719,7 @@ window.userCalls = {
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
         ar_UserRole = "مدير المشروع";
         en_UserRole = "Project Manager";
-        
+
         //CRUD
         Create_Access = [
           /////////
@@ -871,7 +871,7 @@ window.userCalls = {
           "contracts",
           "changerequest",
         ];
-        CreateChangeRequest_Access=["initiatives","projects"]
+        CreateChangeRequest_Access = ["initiatives", "projects"]
         Read_Access = [
           "initiatives",
           "initiativedeliverables",
@@ -1418,7 +1418,7 @@ window.userCalls = {
 
         ];
         CreateChangeRequest_Access = [
-          "initiatives","projects"
+          "initiatives", "projects"
         ]
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
@@ -1616,7 +1616,7 @@ window.userCalls = {
           "documents",
         ];
         CreateChangeRequest_Access = [
-          "initiatives","projects"
+          "initiatives", "projects"
         ]
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
@@ -2223,7 +2223,7 @@ window.userCalls = {
           "achievements"
         ];
         CreateChangeRequest_Access = [
-          "initiatives","projects"
+          "initiatives", "projects"
         ]
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
@@ -2326,7 +2326,7 @@ window.userCalls = {
           "contracts",
           "changerequest",
         ];
-        CreateChangeRequest_Access = ["initiatives","projects"]
+        CreateChangeRequest_Access = ["initiatives", "projects"]
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
 
@@ -2452,7 +2452,7 @@ window.userCalls = {
 
         ];
         CreateChangeRequest_Access = [
-          "initiatives",          
+          "initiatives",
           "projects",
         ]
         Read_Access = AllListKeys;
@@ -2921,7 +2921,7 @@ window.userCalls = {
         en_UserRole = "Startegic Achievement Team";
 
         Create_Access = ["documents",
-        "achievements"]
+          "achievements"]
         Read_Access = [
           // "strategicpartnerships",
           // "StrategicPartnershipHome.aspx",
@@ -2930,15 +2930,15 @@ window.userCalls = {
           // "strategicpartnershipsachievements",
           "tasks"
         ];
-        Edit_Access = [ 
-        // "strategicpartnerships",
-        // "StrategicPartnershipHome.aspx",
-        "documents",
-        "achievements",
-        // "strategicpartnershipsachievements",
-        "tasks"];
+        Edit_Access = [
+          // "strategicpartnerships",
+          // "StrategicPartnershipHome.aspx",
+          "documents",
+          "achievements",
+          // "strategicpartnershipsachievements",
+          "tasks"];
         Delete_Access = [
-           // "strategicpartnerships",
+          // "strategicpartnerships",
           // "StrategicPartnershipHome.aspx",
           "documents",
           "achievements",
@@ -3020,7 +3020,7 @@ window.userCalls = {
 
     //New CRUD Access Solution [will not affect below behavior]
     (Create_Access = Create_Access.map((name) => name.toLowerCase())), //making sure everything is lower case
-    (CreateChangeRequest_Access = CreateChangeRequest_Access.map((name) => name.toLowerCase())),
+      (CreateChangeRequest_Access = CreateChangeRequest_Access.map((name) => name.toLowerCase())),
       (Read_Access = Read_Access.map((name) => name.toLowerCase())),
       (Edit_Access = Edit_Access.map((name) => name.toLowerCase())),
       (Delete_Access = Delete_Access.map((name) => name.toLowerCase()));
@@ -3033,12 +3033,12 @@ window.userCalls = {
         Create_Access.indexOf(Page_UrlName) == -1 &&
         !USERisWF:
         if (USERisNew) {
-          if(CreateChangeRequest_Access.indexOf(USERlistkey) == -1 &&
-          CreateChangeRequest_Access.indexOf(Page_UrlName) == -1){
-          // on edit/new forms
-          userCalls.g.Security_Msg();
-          console.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        }
+          if (CreateChangeRequest_Access.indexOf(USERlistkey) == -1 &&
+            CreateChangeRequest_Access.indexOf(Page_UrlName) == -1) {
+            // on edit/new forms
+            userCalls.g.Security_Msg();
+            console.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+          }
         } else if (isSP_Page) {
           // on restricted  page
           userCalls.g.Security_Msg();
@@ -7176,6 +7176,8 @@ var Access_Project_Info_Request = {
               _spPageContextInfo.webAbsoluteUrl +
               "/sitepages/Listing.aspx?ListKey=" +
               USERlistkey +
+              "&STCODE=" +
+              UserSTCode +
               '">' +
               USERPageTitle +
               ""
