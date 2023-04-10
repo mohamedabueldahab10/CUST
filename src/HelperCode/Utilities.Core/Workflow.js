@@ -257,7 +257,7 @@ if (
 	No_Data = "No Data";
 }
 
-debugger
+
 // if (isChangeRequestPage) {
 // 	workflowname = "CR";
 // 	fieldtoedit = "SubmitForApproval";
@@ -2702,7 +2702,7 @@ var SubmitField_BulkEdit = {
 						}
 
 						// get the related item in cr to use it in delete api
-						debugger
+						
 						if (isMSCRObjective || isVROCRObjective || isLMSCRObjective) {
 							relatedItemInCr = currentItem.get_item("CRRelatedStrategyObjective");
 							crUpdateType = currentItem.get_item("UpdateType");
@@ -3307,9 +3307,9 @@ function program_BulkEdit(state) {
 						if (state) {
 							if (taskActionType == "Conditional") {
 								try {
-									debugger
+									
 									taskCondition.forEach((el) => {
-										debugger
+										
 										let conditionalValue = currentItem.get_item(el.field);
 										let conditionalExpression = el.condition;
 										conditionalExpression = conditionalExpression.replaceAll(
@@ -3550,8 +3550,6 @@ var Task_Edit_Data = {
 				// 		_spPageContextInfo.siteAbsoluteUrl +
 				// 		"/SitePages/Listing.aspx?ListKey=deliverables";
 				// }
-				debugger
-				//relatedproj initiative links
 				if (isRiskPage) {
 					window.location =
 						_spPageContextInfo.siteAbsoluteUrl +

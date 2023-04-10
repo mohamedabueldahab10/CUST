@@ -335,6 +335,9 @@ window.userAddedToGroup = true;
 //Get User Groups
 window.userCalls = {
   get_CurrentUser: function () {
+    console.log("Inside Current User func")
+    console.time();
+
     //getUserWebPermissionREST();
     $.ajax({
       url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/CurrentUser",
@@ -344,6 +347,7 @@ window.userCalls = {
       },
       success: function (data) {
         console.log(data,"data for current user")
+        console.timeEnd();
         UserN = data.d;
         userCalls.get_CurrentUserGroupColl(data.d.Id);
       },
