@@ -1208,7 +1208,8 @@ var Information_Form = [
         valfieldkey: 'Title', // value in dropdown
         grpfieldkey: 'Title',
         //////////////
-        // fieldtargetlist:'BenefitDeliverables' // save this field in this
+        // fieldtargetlist:'BenefitDeliverables', // save this field in this list,
+        // fieldmasterkey:'benefits'
        
       },
     ]

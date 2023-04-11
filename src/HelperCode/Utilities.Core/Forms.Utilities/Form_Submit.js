@@ -2225,7 +2225,6 @@ var New_Master_Details_Submit = {
                 $(this).val() / 100
               );
             } else if ($(this).attr("type") == "multiselect") {
-
               var myselections = [];
               $(this).find("input:checkbox:checked").each(function () {
                 myselections.push($(this).val());
@@ -2426,7 +2425,7 @@ var Edit_Master_Details_Submit = {
     var clientContext = new SP.ClientContext.get_current();
     var CurrList, oList, itemID;
 
-    var masterLength = $("[data-target_list] .Details-Item.EditItem").length
+    var masterLength = $("[data-target_list][data-section_type=master]").length
 
     $("[data-target_list] .Details-Item.EditItem").each(function () {
 
@@ -2462,6 +2461,7 @@ var Edit_Master_Details_Submit = {
         itemID +
         '"] > .CFIELD:not(.dont-submit):not(.dont-request) > .multiselect-container'
       ).each(function () {
+
         if ($(this).attr("type") == "picker") {
           if ($(this).find("span.sp-peoplepicker-userSpan").length) {
             var id =
@@ -2541,32 +2541,53 @@ var Edit_Master_Details_Submit = {
             $(this).val() / 100
           );
         } else if ($(this).attr("type") == "multiselect") {
-          
-          // handle fieldTargetList to save the field in other list not master details list
+
+          // handle fieldTargetList to save the field in other list not master details list like delivrable in benifit in edit initiative
           var masterFieldTargetList = $(this).data("fieldtargetlist")
 
-          // if (masterFieldTargetList && masterFieldTargetList != "undefined") {
-          //   var valuesSelection = []
-          //   var fieldId = $(this).attr("id")
-          //   $(this).find("input:checkbox:checked").not(":disabled").each(function () {
-          //     fieldTargetListInMaster.push({ targetList:masterFieldTargetList,fieldId: fieldId, fieldValue: $(this).val() })
-          //   });
-          //   // fieldTargetListInMaster.push({ targetList: masterFieldTargetList, valuesSelection: valuesSelection })
-          // } else {
+          if (masterFieldTargetList && masterFieldTargetList != "undefined") {
+            var fieldmasterkey = $(this).data("fieldmasterkey")
+            //var checkLength = $(this).find("input:checkbox:checked").not(":disabled").length
+            // if (checkLength > 0) { // should fix it
+            //   fieldTargetListInMaster = []
+            // }
+
+            var valuesSelection = []
+            var fieldId = $(this).attr("id")
+
+            var parentCode = ""
+            if (PCODE) {
+              parentCode = PCODE
+            } else if (ICODE) {
+              parentCode = ICODE
+            } else if (STCODE) {
+              parentCode = STCODE
+            }
+
+            $(this).find("input:checkbox:checked").not(":disabled").each(function (index) {
 
 
-          var myselections = [];
-          $(this)
-            .find("input:checkbox:checked")
-            .each(function () {
-              myselections.push($(this).val());
+              var fieldMasterId = $(this).closest(".Details-Item.EditItem").data('id')
+              debugger
+              if (fieldTargetListInMaster.filter(e => ((e.masterId == fieldMasterId) && (e.fieldValue == $(this).val()))).length == 0) {
+                debugger
+                fieldTargetListInMaster.push({ targetList: masterFieldTargetList, fieldId: fieldId, fieldValue: $(this).val(), masterId: fieldMasterId, parentCode: parentCode, fieldmasterkey: fieldmasterkey })
+              }
             });
-          myselections = myselections.join(":::");
-          Edit_Master_Details_Submit.g.oListItem.set_item(
-            $(this).attr("myfield"),
-            myselections
-          );
-          //}
+            // fieldTargetListInMaster.push({ targetList: masterFieldTargetList, valuesSelection: valuesSelection })
+          } else {
+            var myselections = [];
+            $(this)
+              .find("input:checkbox:checked")
+              .each(function () {
+                myselections.push($(this).val());
+              });
+            myselections = myselections.join(":::");
+            Edit_Master_Details_Submit.g.oListItem.set_item(
+              $(this).attr("myfield"),
+              myselections
+            );
+          }
         } else
           Edit_Master_Details_Submit.g.oListItem.set_item(
             $(this).attr("id"),
@@ -2602,26 +2623,28 @@ var Edit_Master_Details_Submit = {
           $(".errormsg").hide();
           $(".successmsg").show();
           $(".btn-save").addClass("success");
-          
+
           if (listkey == 'mainkpi') { // to update the kpi result list
             Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis, kpiRecurrenceChanged)
           } else {
-            // if (fieldTargetListInMaster.length) {
-            //   console.log(masterLength,"masterLength")
-            //   console.log(numberOfMaster,"NumberOfMaster")
-            //   if(masterLength == numberOfMaster){
-            //     Field_Master_Details.init(fieldTargetListInMaster)
-            //   }
-            //   // 
-            // } else {
-            window.location =
-              _spPageContextInfo.webAbsoluteUrl +
-              "/SitePages/View.aspx?ListKey=" +
-              listkey +
-              "&IID=" +
-              IID +
-              PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
-            // }
+
+            if (fieldTargetListInMaster.length) {
+
+              console.log(masterLength, "masterLength")
+              console.log(numberOfMaster, "NumberOfMaster")
+              if (masterLength == numberOfMaster) {
+                Field_Master_Details.init(fieldTargetListInMaster)
+              }
+              // 
+            } else {
+              window.location =
+                _spPageContextInfo.webAbsoluteUrl +
+                "/SitePages/View.aspx?ListKey=" +
+                listkey +
+                "&IID=" +
+                IID +
+                PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+            }
           }
         }
       }),
@@ -2635,40 +2658,81 @@ var Edit_Master_Details_Submit = {
   g: {},
 };
 
-// var Field_Master_Details = {
-//   init: function (fieldTargetData) {
-//     debugger
-//     if (fieldTargetData.length) {
-//       var clientContext = new SP.ClientContext.get_current();
-//       var CurrList, oList, valuesSelection;
-//       debugger
-//       CurrList = fieldTargetData[0].targetList
-//       valuesSelection = fieldTargetData[0].valuesSelection
+var Field_Master_Details = {
+  init: function (fieldTargetData) {
+    debugger
+    if (fieldTargetData.length) {
+      var clientContext = new SP.ClientContext.get_current();
+      var CurrList, oList, valuesSelection, code;
 
-//       var oList = clientContext.get_web().get_lists().getByTitle(CurrList);
+      CurrList = fieldTargetData[0].targetList
+      valuesSelection = fieldTargetData[0].fieldValue
 
-//       var itemCreateInfo = new SP.ListItemCreationInformation();
-//       Field_Master_Details.g.oListItem = oList.addItem(itemCreateInfo);
+      var oList = clientContext.get_web().get_lists().getByTitle(CurrList);
 
-//       valuesSelection.forEach(el => {
-//         Field_Master_Details.g.oListItem.set_item(el.fieldId, el.fieldValue);
-//       })
-
-//       Field_Master_Details.g.oListItem.update();
-//       clientContext.load(Field_Master_Details.g.oListItem);
+      var itemCreateInfo = new SP.ListItemCreationInformation();
+      Field_Master_Details.g.oListItem = oList.addItem(itemCreateInfo);
 
 
-//       clientContext.executeQueryAsync(
-//         Function.createDelegate(this, function () {
-//           console.log("INSIDE SUUUUUUUUUUUUUUUUC")
-//         })
-//       )
 
-//     }
+      var prt1 = fieldTargetData[0].fieldmasterkey.substring(0, 2).toUpperCase(),
+        prt2 = String(new Date().getFullYear()).slice(4 - 2),
+        prt3 = fieldTargetData[0].masterId.toString().padStart(4, "0");
 
-//   },
-//   g: {},
-// }
+      code = prt1 + "-" + prt2 + "-" + prt3 + "-" + fieldTargetData.length.toString().padStart(4, "0");;
+
+      Field_Master_Details.g.oListItem.set_item("Title", code);
+
+
+      // valuesSelection.forEach(el => {
+      Field_Master_Details.g.oListItem.set_item(fieldTargetData[0].fieldId, fieldTargetData[0].fieldValue);
+
+      Field_Master_Details.g.oListItem.set_item("MasterKey", fieldTargetData[0].fieldmasterkey);
+      Field_Master_Details.g.oListItem.set_item('MasterID', fieldTargetData[0].masterId);
+
+      if (PCODE) {
+        Field_Master_Details.g.oListItem.set_item('ProjectCode', fieldTargetData[0].parentCode);
+      } else if (ICODE) {
+        Field_Master_Details.g.oListItem.set_item('InitiativeCode', fieldTargetData[0].parentCode);
+      } else if (STCODE) {
+        Field_Master_Details.g.oListItem.set_item('StrategicPartnershipCode', fieldTargetData[0].parentCode);
+      }
+
+      // New_Data_Submit.g.oListItem.set_item("MasterKey", "projects");
+      // New_Data_Submit.g.oListItem.set_item("MasterID", relatedProjectId);
+
+      // })
+
+
+
+      Field_Master_Details.g.oListItem.update();
+      clientContext.load(Field_Master_Details.g.oListItem);
+
+
+      clientContext.executeQueryAsync(
+        Function.createDelegate(this, function () {
+          console.log(fieldTargetData, "fieldTargetData")
+
+          fieldTargetData.shift()
+          Field_Master_Details.init(fieldTargetData)
+        })
+      )
+
+    }else{
+      window.location =
+      _spPageContextInfo.webAbsoluteUrl +
+      "/SitePages/View.aspx?ListKey=" +
+      listkey +
+      "&IID=" +
+      IID +
+      PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+    }
+
+    
+
+  },
+  g: {},
+}
 
 //upload multiple files to specific folder with column assigning
 function readFiles() {

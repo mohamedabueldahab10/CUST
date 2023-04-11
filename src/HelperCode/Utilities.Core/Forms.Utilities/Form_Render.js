@@ -1,5 +1,5 @@
-var logo = require('../../../HelperRessources/img/print-logo.png');
-// var logo = "";
+// var logo = require('../../../HelperRessources/img/print-logo.png');
+var logo = "";
 //= isArabic ? require('../../../HelperRessources/img/main-logo.svg') : require('../../../HelperRessources/img/main-logo-en.svg');
 (window.isNew = window.location.href.toLowerCase().indexOf("new.aspx") > -1),
   (window.isEdit =
@@ -2811,7 +2811,7 @@ window.ListInfo = {
                   ? el[element.targetelement]
                   : 0;
               });
-              
+
               var RemainingBudget = 100 - totalWeight;
               RemainingBudget = Number(RemainingBudget.toFixed(1));
 
@@ -2825,7 +2825,7 @@ window.ListInfo = {
 
               console.log(newVal, "newVal newVal");
               // console.log()
-              
+
               htmlBody =
                 '<div class="col-md-6 CFIELD ' +
                 dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -4797,13 +4797,14 @@ window.ListInfo = {
           "</Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
 
         var itemsID = [];
-          
+
         var fieldTargetList = "", otherMasterList = "";
+        var fieldmasterkey = ""
         if (element.fieldtargetlist && element.fieldtargetlist != "undefined") {
           otherMasterList = "other_masterlist"
 
           fieldTargetList = `data-fieldTargetList=${element.fieldtargetlist}`
-
+          fieldmasterkey = `data-fieldmasterkey=${element.fieldmasterkey}`
         }
 
 
@@ -4878,6 +4879,8 @@ window.ListInfo = {
                 seconeddynamic +
                 " " +
                 fieldTargetList +
+                " " +
+                fieldmasterkey +
                 " " +
                 'data-listname="' +
                 element.source +
@@ -7171,7 +7174,7 @@ window.ListInfo = {
                 myFieldParent.find(">*").attr("required", false);
               }
             }
-            if(listkey == "achievements"){
+            if (listkey == "achievements") {
               if (item == "RelatedKPI") {
                 myFieldParent.find(">*").attr("required", false);
               }

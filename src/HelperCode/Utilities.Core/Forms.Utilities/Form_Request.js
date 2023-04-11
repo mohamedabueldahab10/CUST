@@ -708,7 +708,7 @@ window.Edit_Data_Request = {
 
     if (MasterDetailsArrayRequest.length == 0) { // to avoid the error if there is master details like project ana initiative
       $("[data-weightvalue]").each(function () {
-        
+
         var elementId = $(this).attr('id')
         var inputVal = oListItem.get_item(elementId) ? oListItem.get_item(elementId) : 0
         var remainingBudget = $(this).attr('max')
@@ -2516,7 +2516,7 @@ var Master_Details_Request = {
             if (listkey == 'goalstrategy') {
               pillersRadio = radioval
             }
-    
+
             if (radioval == "Yes" || radioval == "yes" || radioval == true) {
               if (
                 localStorage.getItem("lng") == null ||
@@ -2580,6 +2580,8 @@ var Master_Details_Request = {
             //       .join("; <br>");
 
             // $(this).html(value);
+
+
 
             // to get the name of multi select in master details
             var valfieldkey = $(this).data("valfieldkey"),
@@ -2802,14 +2804,62 @@ var Master_Details_Request = {
               break;
 
             case "multiselect":
-              if (oListItem.get_item($(this).attr("myfield"))) {
-                var myselections = oListItem
-                  .get_item($(this).attr("myfield"))
-                  .split(":::");
-                for (var i = 0; i < myselections.length; i++) {
-                  $(this)
-                    .find("input:checkbox[value='" + myselections[i] + "']")
-                    .prop("checked", true);
+
+              var masterFieldTargetList = $(this).data("fieldtargetlist")
+
+              if (masterFieldTargetList && masterFieldTargetList != 'undefined') { // to handle master detials field inside master details in form request
+
+                var valfieldkey = "MasterID",
+                  Dispfieldkey = $(this).data("dispfieldkey"),
+                  listname = masterFieldTargetList,
+                  fieldId = $(this).attr("id"),
+                  dataId = $(this).parent().parent().data('id'),
+                  $this = $(this);
+
+
+                var listFields = ["ID", fieldId];
+
+                var value = [dataId]
+                var customquerymulti =
+                  '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="' + valfieldkey + '" /><Values>';
+                for (var i = 0; i <= value.length; i++) {
+                  customquerymulti += '<Value Type="Text">' + value[i] + '</Value>';
+                }
+                customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
+
+                sphttp.get(
+                  _spPageContextInfo.siteServerRelativeUrl,
+                  listname,
+                  customquerymulti,
+                  listFields,
+                  function (records, record, listItem, isDone) {
+                    if (isDone) {
+                      var items = ''
+                      records.forEach(function (el, index) {
+
+                        $this.find(`input[type=checkbox]`).each(function () {
+                          if ($(this).val() == el['DeliverableID']) {
+                            $(this).prop("checked", true)
+                            $(this).prop("disabled", true)
+                          }
+
+                        })
+                      });
+                    }
+                  }
+                );
+
+              } else {
+
+                if (oListItem.get_item($(this).attr("myfield"))) {
+                  var myselections = oListItem
+                    .get_item($(this).attr("myfield"))
+                    .split(":::");
+                  for (var i = 0; i < myselections.length; i++) {
+                    $(this)
+                      .find("input:checkbox[value='" + myselections[i] + "']")
+                      .prop("checked", true);
+                  }
                 }
               }
               break;
@@ -6451,7 +6501,7 @@ var DontSubmit_DataRequest = {
           oListItem.get_item(elementId) &&
           oListItem.get_item(elementId) == elementValue
         ) {
-          
+
           // matching between value on list
           var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
           var parenetValue = $(this).data("parentrelatedvaluelvl1"); // parent value
