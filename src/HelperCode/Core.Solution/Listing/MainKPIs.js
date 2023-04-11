@@ -347,7 +347,7 @@ var stratigicObjectivesRequest = {
         relatedGoal = oListItem.get_item("RelatedStrategy") || UserNo_Data,
         sectorcode = oListItem.get_item("Sector") || UserNo_Data, // Sector
         departmentcode = "";
-      console.log(name, "name")
+   
 
       if (isRoleDataLevelAccess && dataLevelAccessQuery && allRelatedStrategObjArr.length) {
         var relatedStrategy = oListItem.get_item("RelatedStrategy")

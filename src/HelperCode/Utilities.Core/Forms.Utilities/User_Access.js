@@ -376,6 +376,9 @@ window.userCalls = {
           $("#ms-designer-ribbon").remove();
         }
         userCalls.get_userAccess();
+
+        Get_Configure_Api.preinit();
+        
       },
     });
   },
@@ -472,6 +475,7 @@ window.userCalls = {
 
       if (i == userCalls.g.SPGroups.length - 1 && Groups.length > 0) {
         userCalls.get_AccessAction();
+        
       }
     }
     //*****
@@ -6436,7 +6440,7 @@ window.userCalls = {
   },
 };
 $(document).ready(function () {
-  Get_Configure_Api.init()
+  //Get_Configure_Api.preinit()
   userCalls.get_CurrentUser();
 });
 
@@ -10069,6 +10073,11 @@ async function dateRange(startDate, endDate) {
 
 var Get_Configure_Api = {
   // The main Initialization function
+  preinit: function () {
+    SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
+      Get_Configure_Api.init();
+    });
+  },
   init: function () {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("Configurations");
