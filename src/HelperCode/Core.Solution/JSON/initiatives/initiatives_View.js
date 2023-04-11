@@ -558,7 +558,7 @@ var Information_Form = [
         DisplayNameEn: 'Actual Completed Date',
         DisplayName: 'تاريخ الاكتمال الفعلي',
         type: 'datetime',
-        max: 'today',
+        
       },
       // {
       //     "InternalName": "CommittedDate",
@@ -587,7 +587,7 @@ var Information_Form = [
         InternalName: 'Delivered',
         DisplayName: 'تم التسليم',
         DisplayNameEn: 'Delivered',
-        type: 'yesnoradio',
+        type: 'radio',
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
@@ -682,7 +682,7 @@ var Information_Form = [
         InternalName: 'Delivered',
         DisplayName: 'تم التسليم',
         DisplayNameEn: 'Delivered',
-        type: 'yesnoradio',
+        type: 'radio',
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
@@ -695,7 +695,7 @@ var Information_Form = [
         DisplayNameEn: 'Actual Completed Date',
         DisplayName: 'تاريخ الاكتمال الفعلي',
         type: 'datetime',
-        max: 'today',
+        
       },
       {
         InternalName: 'RelatedInitiativeDeliverable',

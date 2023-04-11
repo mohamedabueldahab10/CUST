@@ -2508,11 +2508,30 @@ var Master_Details_Request = {
               $(this).text(Resources.ar[value]);
             } else $(this).text(Resources.en[value]);
           } else if ($(this).attr("type") == "radio") {
-            var value =
+            var radioval =
               oListItem.get_item("" + $(this).attr("id") + "") == null
                 ? "no"
                 : oListItem.get_item("" + $(this).attr("id") + "");
-            $(this).text(value);
+            // to handle the master details section show and hide
+            if (listkey == 'goalstrategy') {
+              pillersRadio = radioval
+            }
+    
+            if (radioval == "Yes" || radioval == "yes" || radioval == true) {
+              if (
+                localStorage.getItem("lng") == null ||
+                localStorage.getItem("lng") == "ar"
+              ) {
+                $(this).text(Resources.ar["yes"]);
+              } else $(this).text(Resources.en["yes"]);
+            } else if (radioval == "No" || radioval == "no" || radioval == false) {
+              if (
+                localStorage.getItem("lng") == null ||
+                localStorage.getItem("lng") == "ar"
+              ) {
+                $(this).text(Resources.ar["no"]);
+              } else $(this).text(Resources.en["no"]);
+            } else $(this).text(radioval);
           } else if ($(this).attr("type") == "checkbox") {
             var value =
               oListItem.get_item("" + $(this).attr("id") + "") == null

@@ -1342,7 +1342,7 @@ var Information_Form = [
         InternalName: 'Delivered',
         DisplayName: 'تم التسليم',
         DisplayNameEn: 'Delivered',
-        type: 'yesnoradio',
+        type: 'radio',
         options: {
           choices: [
             {
@@ -1387,7 +1387,7 @@ var Information_Form = [
         InternalName: 'ShowInProgramReport',
         DisplayName: 'اظهار في التقرير',
         DisplayNameEn: 'Show In Program Report',
-        type: 'yesnoradio',
+        type: 'radio',
         options: {
           choices: [
             {
@@ -1507,10 +1507,10 @@ var Information_Form = [
         InternalName: 'Delivered',
         DisplayName: 'تم التسليم',
         DisplayNameEn: 'Delivered',
-        targetfieldrequired: 'getFile', // to make the attache required on yes
-        targetfield: 'Status',
-        targetfieldvalue: 'completed',
-        type: 'yesnoradio',
+        // targetfieldrequired: 'getFile', // to make the attache required on yes
+        // targetfield: 'Status',
+        // targetfieldvalue: 'completed',
+        type: 'radio',
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
@@ -1523,6 +1523,12 @@ var Information_Form = [
         DisplayName: 'اظهار في التقرير',
         DisplayNameEn: 'Show In Report',
         type: 'radio',
+        options: {
+          choices: [
+            { display: 'yes', value: 'yes' },
+            { display: 'no', value: 'no' },
+          ],
+        },
       },
       // {
       //     "InternalName": "SupportDocumentsDescription",
