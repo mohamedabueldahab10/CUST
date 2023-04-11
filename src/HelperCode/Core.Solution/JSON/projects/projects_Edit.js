@@ -1679,7 +1679,7 @@ var Information_Form = [
         "type": 'lookuptoparentchild',
         "parentlist":"Projects", //parent list name
         "parentinternalname":"RelatedInitiative", // internal name in parent list
-        "source":"Milestones", // target list
+        "source":"InitiativeMilestones", // target list
         "sourceinternalname":"InitiativeCode", // column in target list
         "Dispfieldkey": 'Name', //display in dropdown
         "valfieldkey": "Title",// value in dropdown

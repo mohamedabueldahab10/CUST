@@ -24,6 +24,7 @@ var Information_Form  = [
                 "DisplayName":"المصدر",
                 "DisplayNameEn": "Source",
                 "type":"dropdownValues",
+                "validation": "required",
                 options:{
                     choices:
                     [
@@ -44,6 +45,7 @@ var Information_Form  = [
                 "DisplayNameEn": "Description",
                 "type":"multiline",
                 maxchar: 5000, 
+                "validation": "required",
             },
             {
                 "InternalName": "FutureAdvice",

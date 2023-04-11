@@ -1741,7 +1741,7 @@ var Information_Form = [
         parentlist: 'Projects', //parent list name
         parentinternalname: 'RelatedInitiative', // internal name in parent list
         // source: 'InitiativeMilestones', // target list
-        source: 'Milestones',
+        source: 'InitiativeMilestones',
         sourceinternalname: 'InitiativeCode', // column in target list
         Dispfieldkey: 'Name', //display in dropdown
         valfieldkey: 'Title', // value in dropdown
