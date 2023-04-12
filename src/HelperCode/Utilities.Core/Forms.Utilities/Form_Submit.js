@@ -15,6 +15,8 @@ var projectManagerPickedToProjectCenter = '';
 
 var kpiName = '', kpiType = '', kpiSector = '', kpiSubSector = '', kpiMainGoalRelated = '', kpiSubGoalRelated = '', kpiPortfolio = '', kpiPerformanceAnalysis = '', kpiYearPicked = '', kpiMidPicked = '', kpiQuarterPicked = '', kpiMonthPicked = '', kpiPeriodTypeUpdate = '', kpiRecurrenceChanged = '';
 
+var masterIdWhenCreate = 0
+
 var allEnterpriseResources = [], projectBuildTeamArr = [], projectManagerPickerToEpm;
 
 var fieldTargetListInMaster = []// save the field value in other list as a master section
@@ -2297,6 +2299,10 @@ var New_Master_Details_Submit = {
 
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
+
+        // get id of master when create to use it in master field of master section
+        masterIdWhenCreate = New_Master_Details_Submit.g.oListItem.get_id();
+
         if ($(".Details-Item.EditItem").length > 0) {
           //calling Edit master submit
           $("[data-target_list]").each(function () {
@@ -2600,47 +2606,21 @@ var Edit_Master_Details_Submit = {
             Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis, kpiRecurrenceChanged)
           } else {
 
-            var masterFieldTargetList = ""
-            $('[data-fieldtargetlist]').each(function () {
+            var fieldTargetListLength = $('.Details-Item.EditItem ul[data-fieldtargetlist]').length
 
-              masterFieldTargetList = $(this).data("fieldtargetlist")
-              var fieldmasterkey = $(this).data("fieldmasterkey")
-              var fieldId = $(this).attr("id")
-
-              var parentCode = ""
-              if (PCODE) {
-                parentCode = PCODE
-              } else if (ICODE) {
-                parentCode = ICODE
-              } else if (STCODE) {
-                parentCode = STCODE
-              }
-
-              $(this).find("input:checkbox:checked").not(":disabled").each(function (index) {
-
-
-                var fieldMasterId = $(this).closest(".Details-Item.EditItem").data('id')
-
-                if (fieldTargetListInMaster.filter(e => ((e.masterId == fieldMasterId) && (e.fieldValue == $(this).val()))).length == 0) {
-
-                  fieldTargetListInMaster.push({ targetList: masterFieldTargetList, fieldId: fieldId, fieldValue: $(this).val(), masterId: fieldMasterId, parentCode: parentCode, fieldmasterkey: fieldmasterkey })
-                }
-              });
-
-            })
-
-            if (masterFieldTargetList && masterFieldTargetList != "undefined" && countSuccessMaster == 1) { // countSuccessMaster put it one to invoke the Field_Master_Details only one time if we have multi sections of master details in form
-              Field_Master_Details.init(fieldTargetListInMaster)
-            }
-            else {
+            if (fieldTargetListLength > 0) {
+              Field_MasterDetails_Data.init()
+            }else{
               window.location =
-                _spPageContextInfo.webAbsoluteUrl +
-                "/SitePages/View.aspx?ListKey=" +
-                listkey +
-                "&IID=" +
-                IID +
-                PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+              _spPageContextInfo.webAbsoluteUrl +
+              "/SitePages/View.aspx?ListKey=" +
+              listkey +
+              "&IID=" +
+              IID +
+              PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
             }
+
+           
           }
         }
       }),
@@ -2654,9 +2634,89 @@ var Edit_Master_Details_Submit = {
   g: {},
 };
 
+
+var Field_MasterDetails_Data = {
+  init: function () {
+
+    var masterFieldTargetList = ""
+
+    $('.Details-Item.EditItem ul[data-fieldtargetlist]').each(function () {
+
+      masterFieldTargetList = $(this).data("fieldtargetlist")
+      var fieldmasterkey = $(this).data("fieldmasterkey")
+      var fieldId = $(this).attr("id")
+
+      var parentCode = ""
+      if (PCODE) {
+        parentCode = PCODE
+      } else if (ICODE) {
+        parentCode = ICODE
+      } else if (STCODE) {
+        parentCode = STCODE
+      }
+
+      $(this).find("input:checkbox:checked").not(":disabled").each(function (index) {
+
+        debugger
+
+        var fieldMasterId = $(this).closest(".Details-Item.EditItem").data('id')
+
+        if (countSuccessMaster == 1) {
+          if (fieldTargetListInMaster.filter(e => ((e.masterId == fieldMasterId) && (e.fieldValue == $(this).val())))) {
+
+            fieldTargetListInMaster.push({ targetList: masterFieldTargetList, fieldId: fieldId, fieldValue: $(this).val(), masterId: fieldMasterId, parentCode: parentCode, fieldmasterkey: fieldmasterkey })
+          }
+        }
+      });
+    })
+
+    var newItemMasterLength = $('.Details-Item.NewItem ul[data-fieldtargetlist]').length
+
+    $('.Details-Item.NewItem ul[data-fieldtargetlist]').each(function () {
+      masterFieldTargetList = $(this).data("fieldtargetlist")
+      var fieldmasterkey = $(this).data("fieldmasterkey")
+      var fieldId = $(this).attr("id")
+
+      var parentCode = ""
+      if (PCODE) {
+        parentCode = PCODE
+      } else if (ICODE) {
+        parentCode = ICODE
+      } else if (STCODE) {
+        parentCode = STCODE
+      }
+
+      if (newItemMasterLength) {
+        newItemMasterLength = newItemMasterLength - 1
+      }
+
+      $(this).find("input:checkbox:checked").not(":disabled").each(function (index) {
+
+        var fieldMasterId = Number(masterIdWhenCreate) - newItemMasterLength
+        if (countSuccessMaster == 1) {
+
+
+          if (fieldTargetListInMaster.filter(e => ((e.masterId == fieldMasterId) && (e.fieldValue == $(this).val())))) {
+            debugger
+            fieldTargetListInMaster.push({ targetList: masterFieldTargetList, fieldId: fieldId, fieldValue: $(this).val(), masterId: fieldMasterId, parentCode: parentCode, fieldmasterkey: fieldmasterkey })
+          }
+        }
+      })
+    })
+
+
+    if (masterFieldTargetList && masterFieldTargetList != "undefined" && countSuccessMaster == 1) { // countSuccessMaster put it one to invoke the Field_Master_Details only one time if we have multi sections of master details in form
+      Field_Master_Details.init(fieldTargetListInMaster)
+    }
+
+
+  }
+}
+
+
 var Field_Master_Details = {
   init: function (fieldTargetData) {
-    
+    debugger
     if (fieldTargetData.length) {
       var clientContext = new SP.ClientContext.get_current();
       var CurrList, oList, valueSelection, code;
@@ -2710,7 +2770,7 @@ var Field_Master_Details = {
       clientContext.executeQueryAsync(
         Function.createDelegate(this, function () {
           console.log(fieldTargetData, "fieldTargetData")
-
+          debugger
           fieldTargetData.shift()
           Field_Master_Details.init(fieldTargetData)
         })
