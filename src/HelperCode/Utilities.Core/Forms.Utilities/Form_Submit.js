@@ -2635,6 +2635,7 @@ var Edit_Master_Details_Submit = {
 };
 
 
+// to get the data of  master details field in master details section like deliv in benifit in initiative edit for (multi select)
 var Field_MasterDetails_Data = {
   init: function () {
 
@@ -2713,7 +2714,7 @@ var Field_MasterDetails_Data = {
   }
 }
 
-
+// submit master details field in master details section like deliv in benifit in initiative edit for (multi select)
 var Field_Master_Details = {
   init: function (fieldTargetData) {
     debugger
