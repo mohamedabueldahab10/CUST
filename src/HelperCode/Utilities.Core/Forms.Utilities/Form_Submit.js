@@ -2687,6 +2687,7 @@ var Field_MasterDetails_Data = {
         parentCode = STCODE
       }
 
+      // to get the correct master id if we add two section of master
       if (newItemMasterLength) {
         newItemMasterLength = newItemMasterLength - 1
       }
