@@ -3601,6 +3601,22 @@ var Task_Edit_Data = {
 						listkey +
 						"&PCODE=" +
 						RelatedProjectCODE;
+				}
+				else if(isVROCOC || isEPMOCOC || isLMSCOC || isVROProjDeliverable || isVROProjMilestone || isEPMOProjDeliverable || isEPMOProjMilestone || isLMSProjDeliverable || isLMSProjMilestone  ) {
+					window.location =
+						_spPageContextInfo.siteAbsoluteUrl +
+						"/SitePages/Listing.aspx?ListKey=" +
+						listkey +
+						"&PCODE=" +
+						peojectC;
+				}
+				else if(isVROBenefitActual || isEPMOBenefitActual || isLMSBenefitActual || isVROInitiativeDeliverable || isVROInitiativeMilestone || isEPMOInitiativeDeliverable || isEPMOInitiativeMilestone || isLMSInitiativeDeliverable || isLMSInitiativeMilestone  ) {
+					window.location =
+						_spPageContextInfo.siteAbsoluteUrl +
+						"/SitePages/Listing.aspx?ListKey=" +
+						listkey +
+						"&ICODE=" +
+						peojectC;
 				} else {
 					window.location =
 						_spPageContextInfo.siteAbsoluteUrl +
