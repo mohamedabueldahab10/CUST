@@ -261,7 +261,6 @@ window.Edit_Data_Request = {
           break;
 
         case "radio":
-          console.log('case 3')
           var radioval = oListItem.get_item($(this).attr("id"));
           // to handle the master details section show and hide
           if (listkey == 'goalstrategy') {
@@ -2748,7 +2747,6 @@ var Master_Details_Request = {
           oListItem.get_id() +
           '"] > .CFIELD:not(.dont-submit):not(.dont-request) > .multiselect-container'
         ).each(function () {
-          debugger
           switch ($(this).attr("type")) {
             case "date":
               var d =
@@ -2851,8 +2849,6 @@ var Master_Details_Request = {
               break;
 
             case "radio":
-              debugger
-              console.log('case 1')
                 var radioval = oListItem.get_item($(this).attr("id"));
                 console.log(radioval,'radiovaaaaaaaalllll')
                 if (radioval == "Yes" || radioval == "yes") {
