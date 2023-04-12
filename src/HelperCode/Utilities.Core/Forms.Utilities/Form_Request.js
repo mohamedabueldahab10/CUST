@@ -287,33 +287,6 @@ window.Edit_Data_Request = {
               )
               .attr("checked", true);
           break;
-        case "yesnoradio":
-          console.log('case 4')
-            var radioval = oListItem.get_item($(this).attr("id"));
-            // to handle the master details section show and hide
-            if (listkey == 'goalstrategy') {
-              pillersRadio = radioval
-            }
-            if (radioval == "Yes" || radioval == "yes") {
-              $('input[id="' + $(this).attr("id") + '"]')
-                .filter('[value="yes"]')
-                .attr("checked", true);
-            } else if (
-              radioval == "No" ||
-              radioval == "no" ||
-              radioval == "undefined" ||
-              radioval == null
-            ) {
-              $('input[id="' + $(this).attr("id") + '"]')
-                .filter('[value="no"]')
-                .attr("checked", true);
-            } else
-              $('input[id="' + $(this).attr("id") + '"]')
-                .filter(
-                  '[value="' + oListItem.get_item($(this).attr("id")) + '"]'
-                )
-                .attr("checked", true);
-            break;
 
         case "checkbox":
           if (oListItem.get_item($(this).attr("id")))
@@ -2902,30 +2875,7 @@ var Master_Details_Request = {
                     )
                     .attr("checked", true);
                 break;
-            case "yesnoradio":
-              console.log('case 2')
-                  var radioval = oListItem.get_item($(this).attr("id"));
-                  if (radioval == "Yes" || radioval == "yes") {
-                    $('input[id="' + $(this).attr("id") + '"]')
-                      .filter('[value="yes"]')
-                      .attr("checked", true);
-                  } else if (
-                    radioval == "No" ||
-                    radioval == "no" ||
-                    radioval == "undefined" ||
-                    radioval == null
-                  ) {
-                    $('input[id="' + $(this).attr("id") + '"]')
-                      .filter('[value="no"]')
-                      .attr("checked", true);
-                  } else
-                    $('input[id="' + $(this).attr("id") + '"]')
-                      .filter(
-                        '[value="' + oListItem.get_item($(this).attr("id")) + '"]'
-                      )
-                      .attr("checked", true);
-                  break;
-
+            
             case "checkbox":
               if (oListItem.get_item($(this).attr("id")))
                 $(this).prop("checked", true);
