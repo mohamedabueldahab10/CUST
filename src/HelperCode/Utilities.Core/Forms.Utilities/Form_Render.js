@@ -6574,6 +6574,7 @@ window.ListInfo = {
           totalWeight += Number(value)
         })
 
+        //$('.add-New-Detail').closest("[data-target_list]").find(".Details-Item:first-child")
 
         var toappend = $(this)
           .closest("[data-target_list]")
@@ -6591,6 +6592,11 @@ window.ListInfo = {
         //
 
         masterLength = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").length
+
+        // to remove the disabled on multi select when click plus in master filed of master details section like deliv in benefit in edit initiative
+        $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last().find('ul[data-fieldtargetlist]').find("input:checkbox").each(function () {
+          $(this).attr("disabled", false)
+        })
 
 
         if (isNew) {
