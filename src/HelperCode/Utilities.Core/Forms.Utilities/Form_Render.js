@@ -1,5 +1,5 @@
-var logo = require('../../../HelperRessources/img/print-logo.png');
-// var logo = "";
+// var logo = require('../../../HelperRessources/img/print-logo.png');
+var logo = "";
 //= isArabic ? require('../../../HelperRessources/img/main-logo.svg') : require('../../../HelperRessources/img/main-logo-en.svg');
 (window.isNew = window.location.href.toLowerCase().indexOf("new.aspx") > -1),
   (window.isEdit =
@@ -4798,10 +4798,9 @@ window.ListInfo = {
 
         var itemsID = [];
 
-        var fieldTargetList = "", otherMasterList = "";
+        var fieldTargetList = "";
         var fieldmasterkey = ""
         if (element.fieldtargetlist && element.fieldtargetlist != "undefined") {
-          otherMasterList = "other_masterlist"
 
           fieldTargetList = `data-fieldTargetList=${element.fieldtargetlist}`
           fieldmasterkey = `data-fieldmasterkey=${element.fieldmasterkey}`
@@ -4820,8 +4819,7 @@ window.ListInfo = {
 
               htmlBody =
                 '<div class="col-md-6 CFIELD ' +
-                dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-                otherMasterList +
+                dontSubmit + " " + dontRequest + " " + dontSubmitRequired +
                 " " +
                 element.className +
                 " " +
@@ -9417,6 +9415,65 @@ window.View_ListInfo = {
           OnSuccess(flag, htmlBody);
           break;
 
+        case "lookupchildtoparentmultiselect":
+
+          var fieldTargetList = "";
+          var fieldmasterkey = ""
+          if (element.fieldtargetlist && element.fieldtargetlist != "undefined") {
+
+            fieldTargetList = `data-fieldTargetList=${element.fieldtargetlist}`
+            fieldmasterkey = `data-fieldmasterkey=${element.fieldmasterkey}`
+          }
+
+          htmlBody =
+            '<div class="col-md-6 CFIELD ' +
+            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            " " +
+            element.className +
+            ' " ' +
+            thistip +
+            " " +
+            hidestagesIDs +
+            " " +
+            showstagesIDs +
+            "  " +
+            disablestagesIDs +
+            "  " +
+            enablestagesIDs +
+            "   " +
+            isWfhidestagesIDs +
+            " " +
+            requireOnWfTaskstagesIDs +
+            " " +
+            isWfshowstagesIDs +
+            "  " +
+            isWfdisablestagesIDs +
+            "  " +
+            isWfenablestagesIDs +
+            '        data-groups="' +
+            groups +
+            '" style="display:' +
+            element.display +
+            '">' +
+            '<label for="' +
+            element.InternalName +
+            '" ' +
+            element.validation +
+            ">" +
+            displayName +
+            // " " +
+            // `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>" : ""}` +
+            "</label>" +
+            '<p type="multiselect" class="viewmode-value" data-valfieldkey="' + element.valfieldkey + '" data-dispfieldkey="' + element.Dispfieldkey + '" data-listname="' + element.source + '" id="' +
+            element.InternalName +
+            '" ' +
+            ToggleName +
+            'data-parentrelatedkeylvl1="' + element.fieldsinformlvl1 + '" data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1="' +
+            element.sourcefieldlvl1
+            + '" data-parentrelatedkeylvl2="' + element.fieldsinformlvl2 + '" data-parentrelatedvaluelvl2="" data-parentrelatedfilterkeylvl2="' + element.sourcefieldlvl2 + '" data-linkedto="' + element.linkedto + '" ' + fieldTargetList + " " + fieldmasterkey + '></p>' +
+            "</div>";
+          OnSuccess(flag, htmlBody);
+          break;
         case "multiselect":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +

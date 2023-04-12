@@ -2571,61 +2571,119 @@ var Master_Details_Request = {
               value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             );
           } else if ($(this).attr("type") == "multiselect") {
-            // var value =
-            //   oListItem.get_item("" + $(this).attr("id") + "") == null
-            //     ? No_Data
-            //     : oListItem
-            //       .get_item("" + $(this).attr("id") + "")
-            //       .split(":::")
-            //       .join("; <br>");
-
-            // $(this).html(value);
 
 
+            var masterFieldTargetList = $(this).data("fieldtargetlist")
 
-            // to get the name of multi select in master details
-            var valfieldkey = $(this).data("valfieldkey"),
-              Dispfieldkey = $(this).data("dispfieldkey"),
-              listname = $(this).data("listname"),
-              $this = $(this);
+            if (masterFieldTargetList && masterFieldTargetList != 'undefined') { // to handle master detials field inside master details in form request
 
-            var listFields = ["ID", valfieldkey, Dispfieldkey];
-
-
-            var value =
-              oListItem.get_item("" + $(this).attr("id") + "") == null
-                ? No_Data
-                : oListItem
-                  .get_item("" + $(this).attr("id") + "")
-                  .split(":::")
-
-            var customquerymulti =
-              '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="' + valfieldkey + '" /><Values>';
-            for (var i = 0; i <= value.length; i++) {
-              customquerymulti += '<Value Type="Text">' + value[i] + '</Value>';
-            }
-            customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
+              var valfieldkey = "MasterID",
+                Dispfieldkey = $(this).data("dispfieldkey"),
+                parentValfieldkey = $(this).data("valfieldkey"),
+                parentListname = $(this).data("listname"),
+                listname = masterFieldTargetList,
+                fieldId = $(this).attr("id"),
+                dataId = $(this).parent().parent().data('id'),
+                $this = $(this);
 
 
+              var listFields = ["ID", fieldId];
 
-            sphttp.get(
-              _spPageContextInfo.siteServerRelativeUrl,
-              listname,
-              customquerymulti,
-              listFields,
-              function (records, record, listItem, isDone) {
-                if (isDone) {
-                  var items = ''
-                  records.forEach(function (el, index) {
-
-                    items += el[Dispfieldkey] + '<br>'
-
-
-                  });
-                  $this.html(items);
-                }
+              var value = [dataId]
+              var customquerymulti =
+                '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="' + valfieldkey + '" /><Values>';
+              for (var i = 0; i <= value.length; i++) {
+                customquerymulti += '<Value Type="Text">' + value[i] + '</Value>';
               }
-            );
+              customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
+
+              sphttp.get(
+                _spPageContextInfo.siteServerRelativeUrl,
+                listname,
+                customquerymulti,
+                listFields,
+                function (records, record, listItem, isDone) {
+                  if (isDone) {
+                    var masterValues = []
+                    records.forEach(function (el, index) {
+                      masterValues.push(el[fieldId])
+                    });
+
+                    var parentListFields = ["ID", parentValfieldkey, Dispfieldkey];
+                    var parentquerymulti =
+                      '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="' + parentValfieldkey + '" /><Values>';
+                    for (var i = 0; i <= masterValues.length; i++) {
+                      parentquerymulti += '<Value Type="Text">' + masterValues[i] + '</Value>';
+                    }
+                    parentquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
+
+
+                    
+                    sphttp.get(
+                      _spPageContextInfo.siteServerRelativeUrl,
+                      parentListname,
+                      parentquerymulti,
+                      parentListFields,
+                      function (records, record, listItem, isDone) {
+                        if (isDone) {
+                          var items = ''
+                          records.forEach(function (el, index) {
+
+                            items += el[Dispfieldkey] + '<br>'
+
+                          });
+                          $this.html(items);
+                        }
+
+                      })
+                  }
+                }
+              );
+            } else {
+              // to get the name of multi select in master details
+              var valfieldkey = $(this).data("valfieldkey"),
+                Dispfieldkey = $(this).data("dispfieldkey"),
+                listname = $(this).data("listname"),
+                $this = $(this);
+
+              var listFields = ["ID", valfieldkey, Dispfieldkey];
+
+
+              var value =
+                oListItem.get_item("" + $(this).attr("id") + "") == null
+                  ? No_Data
+                  : oListItem
+                    .get_item("" + $(this).attr("id") + "")
+                    .split(":::")
+
+              var customquerymulti =
+                '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="' + valfieldkey + '" /><Values>';
+              for (var i = 0; i <= value.length; i++) {
+                customquerymulti += '<Value Type="Text">' + value[i] + '</Value>';
+              }
+              customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
+
+
+
+              sphttp.get(
+                _spPageContextInfo.siteServerRelativeUrl,
+                listname,
+                customquerymulti,
+                listFields,
+                function (records, record, listItem, isDone) {
+                  if (isDone) {
+                    var items = ''
+                    records.forEach(function (el, index) {
+
+                      items += el[Dispfieldkey] + '<br>'
+
+
+                    });
+                    $this.html(items);
+                  }
+                }
+              );
+            }
           } else if ($(this).attr("type") == "lookup") {
             var valfieldkey = $(this).data("valfieldkey"),
               Dispfieldkey = $(this).data("dispfieldkey"),
