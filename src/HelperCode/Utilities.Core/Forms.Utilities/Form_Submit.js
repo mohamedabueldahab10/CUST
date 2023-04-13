@@ -2301,7 +2301,10 @@ var New_Master_Details_Submit = {
       Function.createDelegate(this, function () {
 
         // get id of master when create to use it in master field of master section
-        masterIdWhenCreate = New_Master_Details_Submit.g.oListItem.get_id();
+        var newItemMasterLength = $('.Details-Item.NewItem ul[data-fieldtargetlist]').length
+        if (newItemMasterLength) {
+          masterIdWhenCreate = New_Master_Details_Submit.g.oListItem.get_id();
+        }
 
         if ($(".Details-Item.EditItem").length > 0) {
           //calling Edit master submit
@@ -2610,17 +2613,17 @@ var Edit_Master_Details_Submit = {
 
             if (fieldTargetListLength > 0) {
               Field_MasterDetails_Data.init()
-            }else{
+            } else {
               window.location =
-              _spPageContextInfo.webAbsoluteUrl +
-              "/SitePages/View.aspx?ListKey=" +
-              listkey +
-              "&IID=" +
-              IID +
-              PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+                _spPageContextInfo.webAbsoluteUrl +
+                "/SitePages/View.aspx?ListKey=" +
+                listkey +
+                "&IID=" +
+                IID +
+                PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
             }
 
-           
+
           }
         }
       }),
