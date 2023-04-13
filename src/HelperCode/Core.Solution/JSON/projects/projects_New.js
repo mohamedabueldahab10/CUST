@@ -1579,7 +1579,7 @@ var Information_Form = [
         InternalName: 'ShowInProgramReport',
         DisplayName: 'اظهار في التقرير',
         DisplayNameEn: 'Show In Program Report',
-        type: 'yesnoradio',
+        type: 'dropdownValues',
         options: {
           choices: [
             {
@@ -1757,7 +1757,7 @@ var Information_Form = [
         InternalName: 'ShowInProgramReport',
         DisplayName: 'اظهار في التقرير',
         DisplayNameEn: 'Show In Program Report',
-        type: 'yesnoradio',
+        type: 'dropdownValues',
         options: {
           choices: [
             {
