@@ -1465,7 +1465,7 @@ var Information_Form = [
         targetfieldrequired: 'getFile', // to make the attache required on yes
         targetfield: 'Status',
         targetfieldvalue: 'completed',
-        type: 'yesnoradio',
+        type: 'dropdownValues',
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
@@ -1527,7 +1527,7 @@ var Information_Form = [
         InternalName: 'ShowInProgramReport',
         DisplayName: 'اظهار في التقرير',
         DisplayNameEn: 'Show In Program Report',
-        type: 'yesnoradio',
+        type: 'dropdownValues',
         options: {
           choices: [
             {
@@ -1693,7 +1693,7 @@ var Information_Form = [
         targetfield: 'Status',
         targetfieldvalue: 'completed',
         // validation: 'required',
-        type: 'yesnoradio',
+        type: 'dropdownValues',
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
@@ -1712,7 +1712,7 @@ var Information_Form = [
         InternalName: 'ShowInProgramReport',
         DisplayName: 'اظهار في التقرير',
         DisplayNameEn: 'Show In Program Report',
-        type: 'yesnoradio',
+        type: 'dropdownValues',
         options: {
           choices: [
             {

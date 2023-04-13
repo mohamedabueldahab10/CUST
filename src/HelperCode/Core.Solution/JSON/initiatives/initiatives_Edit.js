@@ -935,7 +935,7 @@ var Information_Form = [
         InternalName: 'Delivered',
         DisplayName: 'تم التسليم',
         DisplayNameEn: 'Delivered',
-        type: 'yesnoradio',
+        type: 'dropdownValues',
         targetfieldrequired:"ActualCompletedDate",
         options: {
           choices: [
@@ -1098,7 +1098,7 @@ var Information_Form = [
         InternalName: 'Delivered',
         DisplayName: 'تم التسليم',
         DisplayNameEn: 'Delivered',
-        type: 'yesnoradio',
+        type: 'dropdownValues',
         targetfieldrequired:"ActualCompletedDate",
         options: {
           choices: [
