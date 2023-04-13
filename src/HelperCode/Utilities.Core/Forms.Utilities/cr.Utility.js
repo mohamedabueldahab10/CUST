@@ -209,7 +209,7 @@ window.CrModeFunctionality = {
 
 						if (crMasterDetailsArrayRequest.length) {
 							CR_Master_Details_Request.init(crMasterDetailsArrayRequest[0])
-						}else{
+						} else {
 							$(".cr-related-item-section .CFIELD").addClass("dont-submit"); // remove it to not apply dont-submit on all fields
 						}
 					}
@@ -739,6 +739,12 @@ window.CrItemDataRequest = {
 			}
 		});
 		$(".CFIELD>label").removeClass("loader-action");
+
+		///////////////////////////// check master details
+
+
+
+
 	},
 	onError: function (sender, args) {
 		console.log(
@@ -1899,21 +1905,139 @@ window.CrSetChangeBody = {
 			})
 			if (i == a.length - 1) {
 				Data_Submit.set_item("ChangeBody", JSON.stringify(changeRequestBody));
+
+				// Data_Submit.set_item("ChangeBodyMaster", JSON.stringify(changeRequestBodyMaster));
+
+
 			}
 		});
+
+		// handle new value in master details
+		changeRequestBodyMaster.forEach(function (o, i, a) {
+
+			//> input#${o.InternalName}
+			debugger
+			$(`.cr-related-item-section[data-target_list=${o.listName}] .Details-Item.EditItem input#${o.InternalName}`).each(function () {
+				debugger
+				console.log($(this).attr('id'), "iiiiiiiiiii")
+				var masterId = $(this).parent().parent().data("id")
+				var arrayMasterId = Number(o.masterSectionId)
+				// masterId = Number(masterId)
+
+				if(masterId == arrayMasterId){
+
+				if ($(this).attr("type") == "picker") {
+					if ($(this).find("span.sp-peoplepicker-userSpan").length) {
+						var id =
+							$(this).attr("INppicker").indexOf("+++") == -1
+								? $(this).attr("INppicker")
+								: $(this).attr("INppicker").split("+++")[0];
+						var ppp =
+							$(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
+								undefined
+								? ""
+								: SP.FieldUserValue.fromUser(
+									$(this).find("span.sp-peoplepicker-userSpan").attr("sid")
+								); //.split('|').slice(-1)[0]
+						o.value = ppp
+					}
+				} else if ($(this).attr("type") == "multipicker") {
+					if ($(this).find("span.sp-peoplepicker-userSpan").length) {
+						var id = $(this).attr("INppicker");
+						var users = [];
+						$("span.sp-peoplepicker-userSpan").each(function () {
+							var ppp =
+								$(this).attr("sid") ==
+									undefined
+									? ""
+									: SP.FieldUserValue.fromUser(
+										$(this).attr("sid").split("|").slice(-1)[0]
+									);
+
+							console.log('aaaa', ppp);
+							users.push(ppp)
+						})
+						o.value = users
+					}
+				} else if ($(this).attr("type") == "date") {
+					if ($(this).val()) {
+						var dateval = $(this).val().replace("-", "/");
+						var ydate = !dateval
+							? ""
+							: [dateval.slice(5, 10), dateval.slice(0, 4)]
+								.join("/")
+								.replace("-", "/");
+						if (dateval)
+							o.value = ydate
+					} else {
+						o.value = null
+					}
+				} else if ($(this).attr("type") == "radio") {
+					var checkedvalue = $(
+						'input[id="' + $(this).attr("id") + '"]:checked'
+					).val();
+					o.value = checkedvalue
+				} else if ($(this).attr("type") == "checkbox") {
+					var checkedvalue = $(
+						'input[id="' + $(this).attr("id") + '"]:checked'
+					).val();
+					o.value = true
+				} else if ($(this).attr("type") == "dropdown") {
+					o.value = $(this).val()
+
+				} else if ($(this).hasClass("percentagefield")) {
+
+					o.value = $(this).val() / 100
+				} else if ($(this).attr("type") == "multiselect") {
+
+					// handle fieldTargetList to save the field in other list not master details list like delivrable in benifit in edit initiative
+					var masterFieldTargetList = $(this).data("fieldtargetlist")
+
+					if (masterFieldTargetList && masterFieldTargetList != "undefined") {
+						// will loop on value on when update the values
+					} else {
+						var myselections = [];
+						$(this)
+							.find("input:checkbox:checked")
+							.each(function () {
+								myselections.push($(this).val());
+							});
+						myselections = myselections.join(":::");
+
+						o.value = myselections
+
+					}
+				} else {
+					o.value = $(this).val()
+				}
+			}
+			})
+
+			if (i == a.length - 1) {
+				Data_Submit.set_item("ChangeBodyMaster", JSON.stringify(changeRequestBodyMaster));
+			}
+
+		})
+		//
+
+
+
 	},
 };
 // cr execution
 window.executeCR = {
-	init: function (crBody) {
+	init: function (crBody,crBodyMaster) {
 		if (crBody.length) {
-			
+
 			var clientContext = new SP.ClientContext.get_current();
 			var oList = clientContext
 				.get_web()
 				.get_lists()
 				.getByTitle(crBody[0].listName);
 			executeCR.g.oListItem = oList.getItemById(crBody[0].itemId);
+
+			executeCR.g.crBodyMaster = crBodyMaster
+
 			var value = "";
 			var isOriginalValue = false;
 			crBody.forEach((o, i, a) => {
@@ -1960,8 +2084,17 @@ window.executeCR = {
 			clientContext.load(executeCR.g.oListItem);
 			clientContext.executeQueryAsync(
 				Function.createDelegate(this, function () {
+
+					var masterLength = executeCR.g.crBodyMaster.length
+					var masterData = executeCR.g.crBodyMaster
+					debugger
+					// if(masterLength > 0){
+					// 	arrangeCRMasterDetails.init(masterData)
+					// }else{
+						Task_Edit_Data.init();
+					//}
 					// alert("cr execution done");
-					Task_Edit_Data.init();
+					
 				}),
 				Function.createDelegate(this, function (sender, args) {
 					console.log(
@@ -1977,7 +2110,7 @@ window.executeCR = {
 	g: {},
 };
 
-
+//changeRequestBodyMaster
 //master Data
 var CR_Master_Details_Request = {
 	// The main Initialization function
@@ -2023,7 +2156,7 @@ var CR_Master_Details_Request = {
 		while (listItemEnum.moveNext()) {
 
 			console.log("in while");
-			
+
 			var oListItem = listItemEnum.get_current();
 			HTMLtoAppend = "";
 			HTMLtoAppend +=
@@ -2042,215 +2175,8 @@ var CR_Master_Details_Request = {
 				);
 			//show data
 			//isView
-			if (false) {
-				$(
-					'[data-target_list="' +
-					CurrList +
-					'"] [data-ID="' +
-					oListItem.get_id() +
-					'"] > .CFIELD > .viewmode-value'
-				).each(function () {
 
-					if ($(this).attr("type") == "date") {
-						var d =
-							oListItem.get_item("" + $(this).attr("id") + "") == null
-								? "empty"
-								: oListItem.get_item("" + $(this).attr("id") + "");
-						if (d != "empty") {
-							var local = d.getTime();
-							var offset = d.getTimezoneOffset() * (60 * 1000);
-							var utc = new Date(local + offset);
-							var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
-							var datetouse = riyadh
-								.toLocaleString("en-US")
-								.split(",")[0]
-								.split("/");
-							datetouse[0] =
-								datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
-							datetouse[1] =
-								datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
-							if (
-								localStorage.getItem("lng") == null ||
-								localStorage.getItem("lng") == "ar"
-							) {
-								var datetouse2 =
-									datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
-							} else {
-								var datetouse2 =
-									datetouse[1] + "-" + datetouse[0] + "-" + datetouse[2];
-							}
-
-							if ($(this).hasClass("withTime")) {
-								var hour = d.getHours();
-								var minutes = d.getMinutes();
-								var meridian;
-								if (hour > 12) {
-									meridian = "PM";
-									hour -= 12;
-								} else if (hour < 12) {
-									meridian = "AM";
-									if (hour == 0) {
-										hour = 12;
-									}
-								} else {
-									meridian = "PM";
-								}
-								var timehour = hour + ":" + minutes + ":" + meridian;
-								$("#Time").text(timehour);
-							}
-						}
-						$(this).text(datetouse2);
-					} else if ($(this).attr("type") == "picker") {
-						var pp =
-							oListItem.get_item("" + $(this).attr("id") + "") == null
-								? No_Data
-								: oListItem
-									.get_item("" + $(this).attr("id") + "")
-									.get_lookupValue();
-						$(this).text(pp);
-					} else if ($(this).attr("type") == "dropdown") {
-						var value =
-							oListItem.get_item("" + $(this).attr("id") + "") == null
-								? No_Data
-								: oListItem.get_item("" + $(this).attr("id") + "");
-						if (
-							localStorage.getItem("lng") == null ||
-							localStorage.getItem("lng") == "ar"
-						) {
-							$(this).text(Resources.ar[value]);
-						} else $(this).text(Resources.en[value]);
-					} else if ($(this).attr("type") == "radio") {
-						var value =
-							oListItem.get_item("" + $(this).attr("id") + "") == null
-								? "no"
-								: oListItem.get_item("" + $(this).attr("id") + "");
-						$(this).text(value);
-					} else if ($(this).attr("type") == "checkbox") {
-						var value =
-							oListItem.get_item("" + $(this).attr("id") + "") == null
-								? No_Data
-								: oListItem.get_item("" + $(this).attr("id") + "");
-						if (value)
-							if (
-								localStorage.getItem("lng") == null ||
-								localStorage.getItem("lng") == "ar"
-							) {
-								$(this).text(Resources.ar["yes"]);
-							} else $(this).text(Resources.en["yes"]);
-						else if (
-							localStorage.getItem("lng") == null ||
-							localStorage.getItem("lng") == "ar"
-						) {
-							$(this).text(Resources.ar["no"]);
-						} else $(this).text(Resources.en["no"]);
-					} else if ($(this).attr("type") == "percentage") {
-						var num =
-							oListItem.get_item("" + $(this).attr("id") + "") == null
-								? No_Data
-								: oListItem.get_item($(this).attr("id")) * 100;
-						if (num % 1 != 0)
-							$(this).text(parseFloat(Math.round(num * 100) / 100).toFixed(2));
-						else $(this).text(num);
-					} else if (
-						$(this).attr("type") == "number" ||
-						$(this).attr("type") == "float"
-					) {
-						var value =
-							oListItem.get_item("" + $(this).attr("id") + "") == null
-								? No_Data
-								: oListItem.get_item("" + $(this).attr("id") + "");
-
-						$(this).text(
-							value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-						);
-					} else if ($(this).attr("type") == "multiselect") {
-						// var value =
-						//   oListItem.get_item("" + $(this).attr("id") + "") == null
-						//     ? No_Data
-						//     : oListItem
-						//       .get_item("" + $(this).attr("id") + "")
-						//       .split(":::")
-						//       .join("; <br>");
-
-						// $(this).html(value);
-
-						// to get the name of multi select in master details
-						var valfieldkey = $(this).data("valfieldkey"),
-							Dispfieldkey = $(this).data("dispfieldkey"),
-							listname = $(this).data("listname"),
-							$this = $(this);
-
-						var listFields = ["ID", valfieldkey, Dispfieldkey];
-
-
-						var value =
-							oListItem.get_item("" + $(this).attr("id") + "") == null
-								? No_Data
-								: oListItem
-									.get_item("" + $(this).attr("id") + "")
-									.split(":::")
-
-						var customquerymulti =
-							'<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="' + valfieldkey + '" /><Values>';
-						for (var i = 0; i <= value.length; i++) {
-							customquerymulti += '<Value Type="Text">' + value[i] + '</Value>';
-						}
-						customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
-
-
-
-						sphttp.get(
-							_spPageContextInfo.siteServerRelativeUrl,
-							listname,
-							customquerymulti,
-							listFields,
-							function (records, record, listItem, isDone) {
-								if (isDone) {
-									var items = ''
-									records.forEach(function (el, index) {
-
-										items += el[Dispfieldkey] + '<br>'
-
-
-									});
-									$this.html(items);
-								}
-							}
-						);
-					} else if ($(this).attr("type") == "lookup") {
-						var valfieldkey = $(this).data("valfieldkey"),
-							Dispfieldkey = $(this).data("dispfieldkey"),
-							listname = $(this).data("listname"),
-							$this = $(this),
-							customquery =
-								'<View><Query><Where><Eq><FieldRef Name="' +
-								$(this).data("valfieldkey") +
-								'" /><Value Type="Text">' +
-								oListItem.get_item($(this).attr("id")) +
-								"</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
-						sphttp.get(
-							_spPageContextInfo.siteServerRelativeUrl,
-							listname,
-							customquery,
-							[valfieldkey, Dispfieldkey],
-							function (records, record, listItem, isDone) {
-								if (isDone) {
-									records.forEach(function (el, index) {
-										$this.html(el[Dispfieldkey]);
-									});
-								}
-							}
-						);
-					} else {
-						var value =
-							oListItem.get_item("" + $(this).attr("id") + "") == null
-								? No_Data
-								: oListItem.get_item("" + $(this).attr("id") + "");
-						$(this).text(value);
-					}
-				});
-			}
-			else if (true) {
+			if (true) {
 
 				$(
 					'[data-target_list="' +
@@ -2281,7 +2207,7 @@ var CR_Master_Details_Request = {
 					oListItem.get_id() +
 					'"] > .CFIELD:not(.dont-submit):not(.dont-request) > .multiselect-container'
 				).each(function () {
-					
+
 					switch ($(this).attr("type")) {
 						case "date":
 							var d =
@@ -2462,8 +2388,9 @@ var CR_Master_Details_Request = {
 		if (crMasterDetailsArrayRequest.length > 0) {
 			CR_Master_Details_Request.init(crMasterDetailsArrayRequest[0]);
 			crMasterDetailsArrayRequest.shift(); //remove 0 index
-		}else{
+		} else {
 			$(".cr-related-item-section .CFIELD").addClass("dont-submit"); // remove it to not apply dont-submit on all fields
+			Fill_BodyMaster.init()
 		}
 
 
@@ -2477,3 +2404,167 @@ var CR_Master_Details_Request = {
 	// Global variables
 	g: {},
 };
+
+
+var Fill_BodyMaster = {
+	init: function () {
+
+		$(".cr-related-item-section[data-target_list] .Details-Item.EditItem").each(function () {
+
+			var CurrList = $(this).closest("[data-target_list]").attr("data-target_list");
+			itemID = $(this).attr("data-id");
+
+			console.log(CurrList, "CurrList")
+			debugger
+			$(
+				'[data-target_list="' +
+				CurrList +
+				'"] [data-ID="' +
+				itemID +
+				'"] > .CFIELD:not(.dont-request)> input,' +
+				'[data-target_list="' +
+				CurrList +
+				'"] [data-ID="' +
+				itemID +
+				'"] > .CFIELD:not(.dont-request)> div[type=picker],' +
+				'[data-target_list="' +
+				CurrList +
+				'"] [data-ID="' +
+				itemID +
+				'"] > .CFIELD:not(.dont-request)> select[type=dropdown],' +
+				'[data-target_list="' +
+				CurrList +
+				'"] [data-ID="' +
+				itemID +
+				'"] > .CFIELD:not(.dont-request)>  textarea,' +
+				'[data-target_list="' +
+				CurrList +
+				'"] [data-ID="' +
+				itemID +
+				'"] > .CFIELD:not(.dont-request) > .multiselect-container'
+			).each(function () {
+				debugger
+				var fieldValue
+
+				if ($(this).attr("type") == "picker") {
+					if ($(this).find("span.sp-peoplepicker-userSpan").length) {
+						var id =
+							$(this).attr("INppicker").indexOf("+++") == -1
+								? $(this).attr("INppicker")
+								: $(this).attr("INppicker").split("+++")[0];
+						var ppp =
+							$(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
+								undefined
+								? ""
+								: SP.FieldUserValue.fromUser(
+									$(this).find("span.sp-peoplepicker-userSpan").attr("sid")
+								); //.split('|').slice(-1)[0]
+						fieldValue = ppp
+					}
+				} else if ($(this).attr("type") == "multipicker") {
+					if ($(this).find("span.sp-peoplepicker-userSpan").length) {
+						var id = $(this).attr("INppicker");
+						var users = [];
+						$("span.sp-peoplepicker-userSpan").each(function () {
+							var ppp =
+								$(this).attr("sid") ==
+									undefined
+									? ""
+									: SP.FieldUserValue.fromUser(
+										$(this).attr("sid").split("|").slice(-1)[0]
+									);
+
+							console.log('aaaa', ppp);
+							users.push(ppp)
+						})
+						fieldValue = users
+					}
+				} else if ($(this).attr("type") == "date") {
+					if ($(this).val()) {
+						var dateval = $(this).val().replace("-", "/");
+						var ydate = !dateval
+							? ""
+							: [dateval.slice(5, 10), dateval.slice(0, 4)]
+								.join("/")
+								.replace("-", "/");
+						if (dateval)
+							fieldValue = ydate
+					} else {
+						fieldValue = null
+					}
+				} else if ($(this).attr("type") == "radio") {
+					var checkedvalue = $(
+						'input[id="' + $(this).attr("id") + '"]:checked'
+					).val();
+					fieldValue = checkedvalue
+				} else if ($(this).attr("type") == "checkbox") {
+					var checkedvalue = $(
+						'input[id="' + $(this).attr("id") + '"]:checked'
+					).val();
+					fieldValue = true
+				} else if ($(this).attr("type") == "dropdown") {
+					fieldValue = $(this).val()
+
+				} else if ($(this).hasClass("percentagefield")) {
+
+					fieldValue = $(this).val() / 100
+				} else if ($(this).attr("type") == "multiselect") {
+
+					// handle fieldTargetList to save the field in other list not master details list like delivrable in benifit in edit initiative
+					var masterFieldTargetList = $(this).data("fieldtargetlist")
+
+					if (masterFieldTargetList && masterFieldTargetList != "undefined") {
+						// will loop on value on when update the values
+					} else {
+						var myselections = [];
+						$(this)
+							.find("input:checkbox:checked")
+							.each(function () {
+								myselections.push($(this).val());
+							});
+						myselections = myselections.join(":::");
+
+						fieldValue = myselections
+
+					}
+				} else {
+					fieldValue = $(this).val()
+				}
+
+
+				changeRequestBodyMaster.push({
+
+					// label: crlabel,
+					// labelEn: crlabelEn,
+					// description: crdescription,
+					// descriptionEn: crdescriptionEn,
+					// //
+					listName: CurrList,
+					listKey: RListKey,
+					// //
+					itemId: RID,
+					masterSectionId:itemID,
+					InternalName: $(this).attr("id"),
+					type: $(this).attr("type"),
+					originalValue: fieldValue,
+					value: '',
+					// DisplayName: currentJsonValues[0].DisplayName,
+					// DisplayNameEn: currentJsonValues[0].DisplayName,
+
+
+				})
+			})
+
+		})
+
+
+	}
+}
+
+
+var arrangeCRMasterDetails = {
+	init: function (masterData) {
+	
+
+	}
+}

@@ -168,7 +168,13 @@ window.New_Data_Submit = {
     var pickervalid = true; //check required people picker
     var multiSelectValid = true
     $("[type=picker][required]").each(function () {
-      if ($(this).find("span.sp-peoplepicker-userSpan").length == 0) {
+      if (listkey == 'changerequest' && $(this).find("span.sp-peoplepicker-userSpan").length == 0) {
+        if ($(this).attr("data-email") == enternameemail) {
+          pickervalid = false;
+          $(this).addClass("picker-error");
+          $(this).removeClass("picker-valid");
+        }
+      } else if ($(this).find("span.sp-peoplepicker-userSpan").length == 0) {
         pickervalid = false;
         $(this).addClass("picker-error");
         $(this).removeClass("picker-valid");

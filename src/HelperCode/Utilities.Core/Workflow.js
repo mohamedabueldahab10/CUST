@@ -66,7 +66,7 @@ var WFuserCalls = {
 var wfHistoryLink;
 var thiredActionName = "";
 var relatedItemInCr = "";
-var crBody, crUpdateType;
+var crBody, crUpdateType, crBodyMaster;
 window.projectstagename;
 var workflowname,
 	stageid,
@@ -2702,23 +2702,27 @@ var SubmitField_BulkEdit = {
 						}
 
 						// get the related item in cr to use it in delete api
-						
+
 						if (isMSCRObjective || isVROCRObjective || isLMSCRObjective) {
 							relatedItemInCr = currentItem.get_item("CRRelatedStrategyObjective");
 							crUpdateType = currentItem.get_item("UpdateType");
 							crBody = eval(currentItem.get_item("ChangeBody"));
+							// crBodyMaster =  eval(currentItem.get_item("ChangeBodyMaster"));
 						} else if (isVROCRProject || isEPMOCRProject || isLMSCRProject) {
 							relatedItemInCr = currentItem.get_item("ProjectCode");
 							crUpdateType = currentItem.get_item("UpdateType");
 							crBody = eval(currentItem.get_item("ChangeBody"));
+							// crBodyMaster =  eval(currentItem.get_item("ChangeBodyMaster"));
 						} else if (isEPMOCRInitiative || isVROCRInitiative || isLMSCRInitiative) {
 							relatedItemInCr = currentItem.get_item("InitiativeCode");
 							crUpdateType = currentItem.get_item("UpdateType");
 							crBody = eval(currentItem.get_item("ChangeBody"));
+							crBodyMaster =  eval(currentItem.get_item("ChangeBodyMaster"));
 						} else if (isMSCRKPI || isVROCRKPI || isLMSCRKPI) {
 							relatedItemInCr = currentItem.get_item("CRRelatedMainKpis");
 							crUpdateType = currentItem.get_item("UpdateType");
 							crBody = eval(currentItem.get_item("ChangeBody"));
+							// crBodyMaster =  eval(currentItem.get_item("ChangeBodyMaster"));
 						}
 						//
 
@@ -2934,7 +2938,7 @@ var SubmitField_BulkEdit = {
 
 								Delete_Item_FromCR.init(relatedItemInCr)
 							} else if ((isMSCRObjective || isVROCRObjective || isLMSCRObjective || isVROCRProject || isEPMOCRProject || isLMSCRProject || isEPMOCRInitiative || isVROCRInitiative || isLMSCRInitiative || isMSCRKPI || isVROCRKPI || isLMSCRKPI) && state && nxtstageid == "approved" && crUpdateType.includes("automatic")) {
-								executeCR.init(crBody);
+								executeCR.init(crBody,crBodyMaster);
 							} else {
 								Task_Edit_Data.init();
 							}
@@ -3307,9 +3311,9 @@ function program_BulkEdit(state) {
 						if (state) {
 							if (taskActionType == "Conditional") {
 								try {
-									
+
 									taskCondition.forEach((el) => {
-										
+
 										let conditionalValue = currentItem.get_item(el.field);
 										let conditionalExpression = el.condition;
 										conditionalExpression = conditionalExpression.replaceAll(
@@ -3602,7 +3606,7 @@ var Task_Edit_Data = {
 						"&PCODE=" +
 						RelatedProjectCODE;
 				}
-				else if(isVROCOC || isEPMOCOC || isLMSCOC || isVROProjDeliverable || isVROProjMilestone || isEPMOProjDeliverable || isEPMOProjMilestone || isLMSProjDeliverable || isLMSProjMilestone  ) {
+				else if (isVROCOC || isEPMOCOC || isLMSCOC || isVROProjDeliverable || isVROProjMilestone || isEPMOProjDeliverable || isEPMOProjMilestone || isLMSProjDeliverable || isLMSProjMilestone) {
 					window.location =
 						_spPageContextInfo.siteAbsoluteUrl +
 						"/SitePages/Listing.aspx?ListKey=" +
@@ -3610,7 +3614,7 @@ var Task_Edit_Data = {
 						"&PCODE=" +
 						peojectC;
 				}
-				else if(isVROBenefitActual || isEPMOBenefitActual || isLMSBenefitActual || isVROInitiativeDeliverable || isVROInitiativeMilestone || isEPMOInitiativeDeliverable || isEPMOInitiativeMilestone || isLMSInitiativeDeliverable || isLMSInitiativeMilestone  ) {
+				else if (isVROBenefitActual || isEPMOBenefitActual || isLMSBenefitActual || isVROInitiativeDeliverable || isVROInitiativeMilestone || isEPMOInitiativeDeliverable || isEPMOInitiativeMilestone || isLMSInitiativeDeliverable || isLMSInitiativeMilestone) {
 					window.location =
 						_spPageContextInfo.siteAbsoluteUrl +
 						"/SitePages/Listing.aspx?ListKey=" +
@@ -4479,7 +4483,7 @@ function changeOnKpiResultDraft(state) {
 
 var Delete_Item_FromCR = {
 	init: function (relatedItemInCr) {
-	
+
 		if (isMSCRObjective || isVROCRObjective || isLMSCRObjective) {
 			urlHandler = `${APIURL}/general/deletestratgeicobjectiveitembysocode?soCode=${relatedItemInCr}`
 		} else if (isVROCRProject || isEPMOCRProject || isLMSCRProject) {

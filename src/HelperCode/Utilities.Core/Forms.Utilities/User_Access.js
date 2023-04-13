@@ -249,7 +249,8 @@ window.accessCallisDone = false;
   (window.isRListKey = window.location.href.indexOf("RKey=") > -1),
   (window.RListKey = isCrMode ? window.location.href.split("RKey=")[1].split("&")[0] : ""),
   (window.CrRelatedList = ""),
-  (window.changeRequestBody = []);
+  (window.changeRequestBody = []),
+  (window.changeRequestBodyMaster = []);
 // ended
 
 
