@@ -1924,93 +1924,93 @@ window.CrSetChangeBody = {
 				var arrayMasterId = Number(o.masterSectionId)
 				// masterId = Number(masterId)
 
-				if(masterId == arrayMasterId){
+				if (masterId == arrayMasterId) {
 
-				if ($(this).attr("type") == "picker") {
-					if ($(this).find("span.sp-peoplepicker-userSpan").length) {
-						var id =
-							$(this).attr("INppicker").indexOf("+++") == -1
-								? $(this).attr("INppicker")
-								: $(this).attr("INppicker").split("+++")[0];
-						var ppp =
-							$(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
-								undefined
-								? ""
-								: SP.FieldUserValue.fromUser(
-									$(this).find("span.sp-peoplepicker-userSpan").attr("sid")
-								); //.split('|').slice(-1)[0]
-						o.value = ppp
-					}
-				} else if ($(this).attr("type") == "multipicker") {
-					if ($(this).find("span.sp-peoplepicker-userSpan").length) {
-						var id = $(this).attr("INppicker");
-						var users = [];
-						$("span.sp-peoplepicker-userSpan").each(function () {
+					if ($(this).attr("type") == "picker") {
+						if ($(this).find("span.sp-peoplepicker-userSpan").length) {
+							var id =
+								$(this).attr("INppicker").indexOf("+++") == -1
+									? $(this).attr("INppicker")
+									: $(this).attr("INppicker").split("+++")[0];
 							var ppp =
-								$(this).attr("sid") ==
+								$(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
 									undefined
 									? ""
 									: SP.FieldUserValue.fromUser(
-										$(this).attr("sid").split("|").slice(-1)[0]
-									);
+										$(this).find("span.sp-peoplepicker-userSpan").attr("sid")
+									); //.split('|').slice(-1)[0]
+							o.value = ppp
+						}
+					} else if ($(this).attr("type") == "multipicker") {
+						if ($(this).find("span.sp-peoplepicker-userSpan").length) {
+							var id = $(this).attr("INppicker");
+							var users = [];
+							$("span.sp-peoplepicker-userSpan").each(function () {
+								var ppp =
+									$(this).attr("sid") ==
+										undefined
+										? ""
+										: SP.FieldUserValue.fromUser(
+											$(this).attr("sid").split("|").slice(-1)[0]
+										);
 
-							console.log('aaaa', ppp);
-							users.push(ppp)
-						})
-						o.value = users
-					}
-				} else if ($(this).attr("type") == "date") {
-					if ($(this).val()) {
-						var dateval = $(this).val().replace("-", "/");
-						var ydate = !dateval
-							? ""
-							: [dateval.slice(5, 10), dateval.slice(0, 4)]
-								.join("/")
-								.replace("-", "/");
-						if (dateval)
-							o.value = ydate
+								console.log('aaaa', ppp);
+								users.push(ppp)
+							})
+							o.value = users
+						}
+					} else if ($(this).attr("type") == "date") {
+						if ($(this).val()) {
+							var dateval = $(this).val().replace("-", "/");
+							var ydate = !dateval
+								? ""
+								: [dateval.slice(5, 10), dateval.slice(0, 4)]
+									.join("/")
+									.replace("-", "/");
+							if (dateval)
+								o.value = ydate
+						} else {
+							o.value = null
+						}
+					} else if ($(this).attr("type") == "radio") {
+						var checkedvalue = $(
+							'input[id="' + $(this).attr("id") + '"]:checked'
+						).val();
+						o.value = checkedvalue
+					} else if ($(this).attr("type") == "checkbox") {
+						var checkedvalue = $(
+							'input[id="' + $(this).attr("id") + '"]:checked'
+						).val();
+						o.value = true
+					} else if ($(this).attr("type") == "dropdown") {
+						o.value = $(this).val()
+
+					} else if ($(this).hasClass("percentagefield")) {
+
+						o.value = $(this).val() / 100
+					} else if ($(this).attr("type") == "multiselect") {
+
+						// handle fieldTargetList to save the field in other list not master details list like delivrable in benifit in edit initiative
+						var masterFieldTargetList = $(this).data("fieldtargetlist")
+
+						if (masterFieldTargetList && masterFieldTargetList != "undefined") {
+							// will loop on value on when update the values
+						} else {
+							var myselections = [];
+							$(this)
+								.find("input:checkbox:checked")
+								.each(function () {
+									myselections.push($(this).val());
+								});
+							myselections = myselections.join(":::");
+
+							o.value = myselections
+
+						}
 					} else {
-						o.value = null
+						o.value = $(this).val()
 					}
-				} else if ($(this).attr("type") == "radio") {
-					var checkedvalue = $(
-						'input[id="' + $(this).attr("id") + '"]:checked'
-					).val();
-					o.value = checkedvalue
-				} else if ($(this).attr("type") == "checkbox") {
-					var checkedvalue = $(
-						'input[id="' + $(this).attr("id") + '"]:checked'
-					).val();
-					o.value = true
-				} else if ($(this).attr("type") == "dropdown") {
-					o.value = $(this).val()
-
-				} else if ($(this).hasClass("percentagefield")) {
-
-					o.value = $(this).val() / 100
-				} else if ($(this).attr("type") == "multiselect") {
-
-					// handle fieldTargetList to save the field in other list not master details list like delivrable in benifit in edit initiative
-					var masterFieldTargetList = $(this).data("fieldtargetlist")
-
-					if (masterFieldTargetList && masterFieldTargetList != "undefined") {
-						// will loop on value on when update the values
-					} else {
-						var myselections = [];
-						$(this)
-							.find("input:checkbox:checked")
-							.each(function () {
-								myselections.push($(this).val());
-							});
-						myselections = myselections.join(":::");
-
-						o.value = myselections
-
-					}
-				} else {
-					o.value = $(this).val()
 				}
-			}
 			})
 
 			if (i == a.length - 1) {
@@ -2026,7 +2026,7 @@ window.CrSetChangeBody = {
 };
 // cr execution
 window.executeCR = {
-	init: function (crBody,crBodyMaster) {
+	init: function (crBody, crBodyMaster) {
 		if (crBody.length) {
 
 			var clientContext = new SP.ClientContext.get_current();
@@ -2088,13 +2088,13 @@ window.executeCR = {
 					var masterLength = executeCR.g.crBodyMaster.length
 					var masterData = executeCR.g.crBodyMaster
 					debugger
-					// if(masterLength > 0){
-					// 	arrangeCRMasterDetails.init(masterData)
-					// }else{
+					if (masterLength > 0) {
+						arrangeCRMasterDetails.init(masterData)
+					} else {
 						Task_Edit_Data.init();
-					//}
+					}
 					// alert("cr execution done");
-					
+
 				}),
 				Function.createDelegate(this, function (sender, args) {
 					console.log(
@@ -2543,7 +2543,7 @@ var Fill_BodyMaster = {
 					listKey: RListKey,
 					// //
 					itemId: RID,
-					masterSectionId:itemID,
+					masterSectionId: itemID,
 					InternalName: $(this).attr("id"),
 					type: $(this).attr("type"),
 					originalValue: fieldValue,
@@ -2564,7 +2564,124 @@ var Fill_BodyMaster = {
 
 var arrangeCRMasterDetails = {
 	init: function (masterData) {
-	
+		console.log(masterData, "master daaaaaaata")
+		debugger
+		var masterDataFormated = []
+
+		masterData.forEach(el => {
+			if (masterDataFormated.length) {
+
+				var checkIfExist = false
+				masterDataFormated.forEach(item => {
+					if ((item.listName == el.listName) && (item.masterSectionId == el.masterSectionId)) {
+						checkIfExist = true
+					}
+				})
+
+				masterDataFormated.forEach(e => {
+					if (checkIfExist) {
+						if ((e.listName == el.listName) && (e.masterSectionId == el.masterSectionId)) {
+							e.values.push({ InternalName: el.InternalName, type: el.type, originalValue: el.originalValue, value: el.value, masterSectionId: el.masterSectionId })
+						}
+					} else {
+						checkIfExist = true
+						masterDataFormated.push({ listName: el.listName, listKey: el.listKey, itemId: el.itemId, masterSectionId: el.masterSectionId, values: [{ InternalName: el.InternalName, type: el.type, originalValue: el.originalValue, value: el.value, masterSectionId: el.masterSectionId }] })
+					}
+				})
+			} else {
+				masterDataFormated.push({ listName: el.listName, listKey: el.listKey, itemId: el.itemId, masterSectionId: el.masterSectionId, values: [{ InternalName: el.InternalName, type: el.type, originalValue: el.originalValue, value: el.value, masterSectionId: el.masterSectionId }] })
+			}
+		})
+
+
+		console.log(masterDataFormated, "masterDataFormated masterDataFormated masterDataFormated after")
+
+		if (masterDataFormated.length) {
+			set_Cr_MastreDetais.init(masterDataFormated)
+
+		}
+
 
 	}
+}
+
+
+window.set_Cr_MastreDetais = {
+	init: function (masterDataFormated) {
+		debugger
+
+		var clientContext = new SP.ClientContext.get_current();
+		var oList = clientContext
+			.get_web()
+			.get_lists()
+			.getByTitle(masterDataFormated[0].listName);
+		set_Cr_MastreDetais.g.oListItem = oList.getItemById(masterDataFormated[0].masterSectionId);
+		set_Cr_MastreDetais.g.masterDataFormated = masterDataFormated
+		var value = "";
+		var isOriginalValue = false;
+		masterDataFormated[0].values.forEach((o, i, a) => {
+			value = o.value ? o.value : o.originalValue;
+			if (o.type == "picker") {
+				set_Cr_MastreDetais.g.oListItem.set_item(
+					o.InternalName,
+					SP.FieldUserValue.fromUser(value.$5c_1)
+				);
+			} else if (o.type == "multipicker") {
+				set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, value);
+			} else if (o.type == "datetime") {
+				set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, new Date(value));
+			} else if (o.type == "datetime-local") {
+				set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, new Date(value));
+			} else if (o.type == "radio") {
+				set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, value);
+			} else if (o.type == "checkbox") {
+				set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, eval(value));
+			} else if (o.type == "dropdown") {
+				set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, value);
+			}
+			else if (o.type == "multiselect") {
+				set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, value);
+			}
+			else {
+				set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, value);
+			}
+
+
+		});
+
+		set_Cr_MastreDetais.g.oListItem.update();
+		clientContext.load(set_Cr_MastreDetais.g.oListItem);
+
+		clientContext.executeQueryAsync(
+			Function.createDelegate(this, function () {
+				var masterDataFormatedArr = set_Cr_MastreDetais.g.masterDataFormated
+
+				masterDataFormatedArr.shift();
+
+				if(masterDataFormatedArr.length){
+
+				set_Cr_MastreDetais.init(masterDataFormatedArr)
+				}else{
+					console.log("SHould continue wf here")
+				}
+				// if (masterLength > 0) {
+				// 	arrangeCRMasterDetails.init(masterData)
+				// } else {
+				// 	Task_Edit_Data.init();
+				// }
+				// alert("cr execution done");
+
+			}),
+			Function.createDelegate(this, function (sender, args) {
+				console.log(
+					"Request failed. " +
+					args.get_message() +
+					"\n" +
+					args.get_stackTrace()
+				);
+			})
+		);
+
+	},
+	g: {},
 }
