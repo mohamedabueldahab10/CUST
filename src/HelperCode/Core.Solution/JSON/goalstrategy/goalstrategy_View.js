@@ -67,7 +67,7 @@ var Information_Form = [
         // DisplayNameEn: 'Ministry',
         DisplayNameEn: 'Related Ministey Startegy',
         DisplayName: 'الاستراتيجية المرتبطة',
-        ToggleName: 'Ministry',
+        // ToggleName: 'Ministry',
         RequiredName: 'Ministry',
         type: 'lookupWithQuery',
         queryField: 'Types',

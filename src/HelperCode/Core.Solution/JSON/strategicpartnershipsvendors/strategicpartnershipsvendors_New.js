@@ -32,7 +32,10 @@ var Information_Form = [
                      "display":"external"
                   }
                ]
-            }
+            },
+            toggleValues: [
+              { value: 'external', fields: ['Types'] }
+            ],
          },
          {
             "InternalName":"Types",
@@ -40,6 +43,7 @@ var Information_Form = [
             "DisplayNameEn":"Type",
             "type":"dropdownValues",
             "validation":"required",
+            "ToggleName": "Types",
             "options":{
                "choices":[
                   {
@@ -108,8 +112,8 @@ var Information_Form = [
    {
       label: 'التفاصيل',
       labelEn: 'Details',
-      description: "التفاصيل",
-      descriptionEn: "Details",
+      description: "",
+      descriptionEn: "",
       subFields: [
          {
             "InternalName":"Comments",

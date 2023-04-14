@@ -52,7 +52,7 @@ var Information_Form = [
 
       {
         "InternalName": "SubSector",
-        "DisplayName": "الوكالات",
+        "DisplayName": "الوكالة",
         "DisplayNameEn": "DeputyShip",
         type: "lookupmultiselect",
         //from other list:
@@ -149,8 +149,8 @@ var Information_Form = [
   {
     label: 'التفاصيل',
     labelEn: 'Details',
-    description: 'التفاصيل',
-    descriptionEn: 'Details',
+    description: '',
+    descriptionEn: '',
     subFields: [
       {
         InternalName: 'Description',

@@ -85,7 +85,7 @@ var Information_Form = [
             // { display: 'transformationally', value: 'transformationally' },
           ],
         },
-        validation: 'required',
+        // validation: 'required',
         // dynamic: 'parent', //main field that affect on other chiled field
         requiredValues: [
           { value: 'sublevel2', fields: ['RelatedObjective', 'SubSector'] }, //we can put more than 1  field

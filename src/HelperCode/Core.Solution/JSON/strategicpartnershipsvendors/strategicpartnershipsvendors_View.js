@@ -40,12 +40,16 @@ var Information_Form = [
             },
           ],
         },
+        toggleValues: [
+          { value: 'external', fields: ['Types'] }
+        ],
       },
       {
         InternalName: 'Types',
         DisplayName: 'نوع الشريك الخارجي',
         DisplayNameEn: 'Type',
         type: 'dropdownValues',
+        ToggleName: 'Types',
         // validation: 'required',
         options: {
           choices: [
