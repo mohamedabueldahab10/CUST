@@ -770,7 +770,18 @@ var Information_Form = [
         type: 'float',
         numberOfDigits: "12"
       },
-
+      {
+        InternalName: 'InitiativeBudget',
+        DisplayName: 'ميزانية المبادرة ',
+        DisplayNameEn: 'InitiativeBudget',
+        // className: "disable_enable_section", // disable and enable section master  details specific for project and initiative cr
+        // "state": "disabled",
+        type: 'float',
+        numberOfDigits: "20",
+        state: "disabled",
+        descPhraseAr:"مجموع التكاليف الكلية حسب سقف البرنامج و التكاليف الكلية المعتمدة",
+        descPhraseEn:"total of ProgramTotalCost and ActualCost"
+      },
       {
         InternalName: 'ProgramTotalCost',
         DisplayName: 'التكاليف الكلية حسب سقف البرنامج ',
@@ -801,18 +812,6 @@ var Information_Form = [
         sum1Element: "ProgramTotalCost", // get the value for this elem
         sum2Element: "ActualCost",// get the value for this elem
         totalElement: "InitiativeBudget"// set sum value in this elem
-      },
-      {
-        InternalName: 'InitiativeBudget',
-        DisplayName: 'ميزانية المبادرة ',
-        DisplayNameEn: 'InitiativeBudget',
-        // className: "disable_enable_section", // disable and enable section master  details specific for project and initiative cr
-        // "state": "disabled",
-        type: 'float',
-        numberOfDigits: "20",
-        state: "disabled",
-        descPhraseAr:"مجموع التكاليف الكلية حسب سقف البرنامج و التكاليف الكلية المعتمدة",
-        descPhraseEn:"total of ProgramTotalCost and ActualCost"
       },
       {
         InternalName: 'CurrentBuget',

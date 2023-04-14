@@ -568,7 +568,7 @@ var Information_Form = [
         DisplayNameEn: 'Start Date',
         type: 'datetime',
         max: 'FinishDate',
-        // validation: 'required',
+        validation: 'required',
       },
       {
         InternalName: 'FinishDate',
@@ -576,7 +576,7 @@ var Information_Form = [
         DisplayNameEn: 'Finish Date',
         type: 'datetime',
         min: 'StartDate',
-        // validation: 'required',
+        validation: 'required',
       },
       // {
       //   InternalName: 'StartDate',
@@ -740,7 +740,23 @@ var Information_Form = [
         enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
       },
+      {
+        InternalName: 'InitiativeBudget',
+        DisplayName: 'ميزانية المبادرة ',
+        DisplayNameEn: 'InitiativeBudget',
+        // "state": "disabled",
+        type: 'float',
+        numberOfDigits: "20",
+        security: {
+          groups: ['EPMO', 'System Admin Group'],
+        },
+        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        state: "disabled",
+        descPhraseAr:"مجموع التكاليف الكلية حسب سقف البرنامج و التكاليف الكلية المعتمدة",
+        descPhraseEn:"total of ProgramTotalCost and ActualCost"
 
+      },
       {
         InternalName: 'ProgramTotalCost',
         DisplayName: 'التكاليف الكلية حسب سقف البرنامج ',
@@ -771,23 +787,6 @@ var Information_Form = [
         sum1Element: "ProgramTotalCost",
         sum2Element: "ActualCost",
         totalElement: "InitiativeBudget"
-      },
-      {
-        InternalName: 'InitiativeBudget',
-        DisplayName: 'ميزانية المبادرة ',
-        DisplayNameEn: 'InitiativeBudget',
-        // "state": "disabled",
-        type: 'float',
-        numberOfDigits: "20",
-        security: {
-          groups: ['EPMO', 'System Admin Group'],
-        },
-        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
-        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
-        state: "disabled",
-        descPhraseAr:"مجموع التكاليف الكلية حسب سقف البرنامج و التكاليف الكلية المعتمدة",
-        descPhraseEn:"total of ProgramTotalCost and ActualCost"
-
       },
       {
         InternalName: 'CurrentBuget',

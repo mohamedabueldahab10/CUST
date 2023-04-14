@@ -97,8 +97,8 @@ var Information_Form = [
       },
       {
         InternalName: 'Delivered',
-        DisplayName: 'تم التسليم',
-        DisplayNameEn: 'Delivered',
+        DisplayName: 'مكتمل',
+        DisplayNameEn: 'Completed',
         targetfieldrequired: 'getFile', // to make the attache required on yes
         targetfield: 'Status',
         targetfieldvalue: 'completed',

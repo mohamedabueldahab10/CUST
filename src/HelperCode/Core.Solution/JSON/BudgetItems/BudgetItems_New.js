@@ -39,7 +39,7 @@ var Information_Form  = [
             {
                 "InternalName": "Stakeholders",
                 "DisplayNameEn": "Stakeholders",
-                "DisplayName":"الجهة المعنية",
+                "DisplayName":"الجهات المعنية",
                 // "type": "lookup",
                 "type": "string",
                 maxchar: 255,        

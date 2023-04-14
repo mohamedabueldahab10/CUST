@@ -197,19 +197,19 @@ var Information_Form = [
     descriptionEn: '',
     subFields: [
       {
-        InternalName: 'SupportDocumentsDescription',
-        DisplayNameEn: 'Support Documents Description',
-        DisplayName: 'وصف الوثائق الداعمة',
-        type: 'multiline',
-        maxchar: '5000',
-      },
-      {
         InternalName: 'getfile',
         DisplayName: 'الوثائق داعمة',
         DisplayNameEn: 'Supporting Documents',
         type: 'file',
         docPurpose:"Spporting_Documents",
         withAddBtn: 'true',
+      },
+      {
+        InternalName: 'SupportDocumentsDescription',
+        DisplayNameEn: 'Support Documents Description',
+        DisplayName: 'وصف الوثائق الداعمة',
+        type: 'multiline',
+        maxchar: '5000',
       },
     ],
   },

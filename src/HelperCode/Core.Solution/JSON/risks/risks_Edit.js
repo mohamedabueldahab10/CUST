@@ -52,6 +52,7 @@ var Information_Form = [
         DisplayName: 'حالة الخطر',
         DisplayNameEn: 'Status',
         type: 'dropdownValues',
+        validation: 'required',
         options: {
           choices: [
             {

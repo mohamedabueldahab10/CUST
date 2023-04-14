@@ -116,8 +116,8 @@ var Information_Form = [
       // },
       {
         InternalName: 'Delivered',
-        DisplayName: 'تم التسليم',
-        DisplayNameEn: 'Delivered',
+        DisplayName: 'مكتمل',
+        DisplayNameEn: 'Completed',
         type: 'yesnoradio',
         options: {
           choices: [
