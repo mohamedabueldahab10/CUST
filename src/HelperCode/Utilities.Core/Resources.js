@@ -838,7 +838,7 @@
     indirect: " غير مباشر",
     economical: "اقتصادى",
     social: "إجتماعى",
-    impactonervices: "اثر على الخدمات والبنية الحتية",
+    impactonervices: "اثر على الخدمات والبنية التحتية",
     memorandumofunderstanding: "مذكرة تفاهم",
     memorandumofcooperation: "مذكرة تعاون",
     acooperationagreement: "اتفاقية تعاون",
