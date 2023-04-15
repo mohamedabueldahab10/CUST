@@ -84,20 +84,20 @@ var Information_Form = [
         InternalName: 'Ministry',
         DisplayNameEn: 'Related Ministey Startegy',
         DisplayName: 'الاستراتيجية المرتبطة',
-        ToggleName: 'Ministry',
+        // ToggleName: 'Ministry',
         RequiredName: 'Ministry',
         // "type": "lookup",
         type: 'lookupWithQuery',
         queryField: 'Types',
         queryFieldType: 'dropdownValues', //ex: "Choice"
         queryFieldValue: 'ministry',
-        validation: 'required',
+        // validation: 'required',
         //from other list:
 
         source: 'GoalStrategy',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        display: 'none',
+        // display: 'none',
       },
       {
         InternalName: 'Vision',

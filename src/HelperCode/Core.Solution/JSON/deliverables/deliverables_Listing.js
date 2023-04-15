@@ -59,6 +59,15 @@ var Listing_Info = [
     infilter: true,
   },
   {
+    InternalName: 'Delivered',
+    DisplayName: 'مكتمل',
+    DisplayNameEn: 'Completed',
+    type: 'text',
+    needTrans: true,
+    inlisting: true,
+    infilter: false,
+  },
+  {
     InternalName: 'DeliveredDate',
     DisplayName: 'تاريخ التسليم',
     DisplayNameEn: 'Delivered Date',
@@ -71,15 +80,6 @@ var Listing_Info = [
   //     "DisplayName": "تاريخ الالتزام",
   //     "DisplayNameEn": "Committed Date",
   //     "type": "date",
-  //     inlisting: true,
-  //     infilter: true
-  // },
-  // {
-  //     "InternalName": "Delivered",
-  //     "DisplayName": "تم التسليم",
-  //     "DisplayNameEn": "Delivered",
-  //     "type": "text",
-  //     needTrans: true,
   //     inlisting: true,
   //     infilter: true
   // },

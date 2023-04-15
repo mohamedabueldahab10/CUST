@@ -6,17 +6,17 @@ var Information_Form = [
     descriptionEn: 'Details',
     workflowSetValues: [
       //VRO
-      { fieldName: 'DraftStatus', value: '', stages:["VROCreateInitiative04"] },
-      { fieldName: 'WFModuleCode', value: 'VisionInitiative',stages:["VROCreateInitiative04"]} ,
-      { fieldName: 'WFStage', value: 'VInStage01',stages:["VROCreateInitiative04"]} ,
-    //EPMO
-      { fieldName: 'DraftStatus', value: '', stages:["EPMOCreateInitiative03"] },
-      { fieldName: 'WFModuleCode', value: 'StrategicallyInitiative',stages:["EPMOCreateInitiative03"]} ,
-      { fieldName: 'WFStage', value: 'SInStage01',stages:["EPMOCreateInitiative03"]} ,
+      { fieldName: 'DraftStatus', value: '', stages: ["VROCreateInitiative04"] },
+      { fieldName: 'WFModuleCode', value: 'VisionInitiative', stages: ["VROCreateInitiative04"] },
+      { fieldName: 'WFStage', value: 'VInStage01', stages: ["VROCreateInitiative04"] },
+      //EPMO
+      { fieldName: 'DraftStatus', value: '', stages: ["EPMOCreateInitiative03"] },
+      { fieldName: 'WFModuleCode', value: 'StrategicallyInitiative', stages: ["EPMOCreateInitiative03"] },
+      { fieldName: 'WFStage', value: 'SInStage01', stages: ["EPMOCreateInitiative03"] },
       //LMS
-      { fieldName: 'DraftStatus', value: '', stages:["LMSCreateInitiative03"] },
-      { fieldName: 'WFModuleCode', value: 'LMSInitiative',stages:["LMSCreateInitiative03"]} ,
-      { fieldName: 'WFStage', value: 'LInStage01',stages:["LMSCreateInitiative03"]} 
+      { fieldName: 'DraftStatus', value: '', stages: ["LMSCreateInitiative03"] },
+      { fieldName: 'WFModuleCode', value: 'LMSInitiative', stages: ["LMSCreateInitiative03"] },
+      { fieldName: 'WFStage', value: 'LInStage01', stages: ["LMSCreateInitiative03"] }
     ],
     subFields: [
       {
@@ -441,7 +441,7 @@ var Information_Form = [
         Dispfieldkey: "Name",
         valfieldkey: "Title",
         grpfieldkey: 'Title',
- 
+
       },
       {
         InternalName: 'EstimatedCost',
@@ -497,7 +497,7 @@ var Information_Form = [
     // className: "disable_section", // to make the section disabled on form render
     targetlist: 'InitiativeDeliverables',
     subFields: [
-      
+
       {
         InternalName: 'Title',
         DisplayNameEn: 'Title',
@@ -558,7 +558,7 @@ var Information_Form = [
         DisplayNameEn: 'Actual Completed Date',
         DisplayName: 'تاريخ الاكتمال الفعلي',
         type: 'datetime',
-        max: 'today',
+
       },
       // {
       //     "InternalName": "CommittedDate",
@@ -587,7 +587,7 @@ var Information_Form = [
         InternalName: 'Delivered',
         DisplayName: 'تم التسليم',
         DisplayNameEn: 'Delivered',
-        type: 'yesnoradio',
+        type: 'radio',
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
@@ -604,7 +604,7 @@ var Information_Form = [
       //     "Dispfieldkey": "Name",
       //     "valfieldkey": "Title",
       // }
-    
+
     ]
   },
   {
@@ -616,7 +616,7 @@ var Information_Form = [
     // className: "disable_section", // to make the section disabled on form render
     targetlist: 'InitiativeMilestones',
     subFields: [
-      
+
       {
         InternalName: 'Title',
         DisplayNameEn: 'Title',
@@ -682,7 +682,7 @@ var Information_Form = [
         InternalName: 'Delivered',
         DisplayName: 'تم التسليم',
         DisplayNameEn: 'Delivered',
-        type: 'yesnoradio',
+        type: 'radio',
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
@@ -695,7 +695,7 @@ var Information_Form = [
         DisplayNameEn: 'Actual Completed Date',
         DisplayName: 'تاريخ الاكتمال الفعلي',
         type: 'datetime',
-        max: 'today',
+
       },
       {
         InternalName: 'RelatedInitiativeDeliverable',
@@ -713,7 +713,7 @@ var Information_Form = [
         type: 'multiline',
         maxchar: '500',
       },
-    
+
     ]
   },
   {
@@ -732,10 +732,10 @@ var Information_Form = [
         type: 'string',
         validation: 'required',
         maxchar: '255',
-        withletters:true,
-        Errmsgkey:"withletterpattern",
+        withletters: true,
+        Errmsgkey: "withletterpattern",
       },
-    
+
       {
         InternalName: 'Owner',
         DisplayNameEn: 'Benefit Owner',
@@ -747,7 +747,7 @@ var Information_Form = [
         InternalName: 'Description',
         DisplayNameEn: 'Description',
         DisplayName: 'وصف المنفعة',
-        maxchar: 5000,        
+        maxchar: 5000,
         type: 'multiline',
         validation: 'required',
       },
@@ -768,22 +768,23 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         grpfieldkey: 'Title',
-        
+
       },
       {
         InternalName: 'DeliverableID',
         DisplayNameEn: 'Name',
         DisplayName: 'المخرج',
-        type: 'lookupmultiselect',
+        type: 'lookupchildtoparentmultiselect',
         source: 'Deliverables', // target list
 
         Dispfieldkey: 'Name', //display in dropdown
         valfieldkey: 'Title', // value in dropdown
         grpfieldkey: 'Title',
-        // valsiblingkey:'AcceptanceCriteria', // internal name on sorce list
-        // targetsiblingkey:'AcceptanceCriteria' // internal name on current list
+        //
+        fieldtargetlist: 'BenefitDeliverables', // save this field in this list,
+        fieldmasterkey: 'benefits'
       },
     ]
   },
-  
+
 ]

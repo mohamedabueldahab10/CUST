@@ -170,6 +170,29 @@ var Information_Form = [
         },
       },
       {
+        InternalName: "Committees",
+        DisplayName: "اللجان",
+        DisplayNameEn: "Committees",
+        source: "Committees",
+        type: "lookup",
+        Dispfieldkey: "Name",
+        valfieldkey: "Title",
+        // grpfieldkey: 'Title',
+        security: {
+          groups: [
+            "VRO_E",
+            "LMS_E",
+            "EPMO",
+            "System Admin Group",
+            "Project Managers for Project Web App",
+            "SPMO",
+            "Development Unit",
+          ],
+        },
+        // "maxchar": 5000,
+        // hideonstage: "1"
+      },
+      {
         InternalName: "IsStrategicProject",
         DisplayName: "هل هو مشروع استراتيجي؟",
         DisplayNameEn: "Is Strategic Project?",
@@ -192,29 +215,6 @@ var Information_Form = [
           { value: 'yes', fields: ['Sector','SubSector'] }, 
         ],
         validation: "required",
-      },
-      {
-        InternalName: "Committees",
-        DisplayName: "اللجان",
-        DisplayNameEn: "Committees",
-        source: "Committees",
-        type: "lookup",
-        Dispfieldkey: "Name",
-        valfieldkey: "Title",
-        // grpfieldkey: 'Title',
-        security: {
-          groups: [
-            "VRO_E",
-            "LMS_E",
-            "EPMO",
-            "System Admin Group",
-            "Project Managers for Project Web App",
-            "SPMO",
-            "Development Unit",
-          ],
-        },
-        // "maxchar": 5000,
-        // hideonstage: "1"
       },
       {
         InternalName: 'InitiativeType',
@@ -535,7 +535,7 @@ var Information_Form = [
         DisplayName: "الوكالة",
         DisplayNameEn: "DeputyShip",
         type: "lookup",
-        // validation: 'required',
+        validation: 'required',
         //from other list:
         source: "Internal Entities",
         isSector: "True",
@@ -872,30 +872,6 @@ var Information_Form = [
     ],
   },
   {
-    label: "حالة المشروع",
-    labelEn: "Project Status",
-    description: "",
-    descriptionEn: "",
-    subFields: [
-      {
-        InternalName: "WorkingStatus",
-        DisplayName: "حالة العمل",
-        DisplayNameEn: "Working Status",
-        type: "dropdownValues",
-        options: {
-          choices: [
-            { display: "active", value: "active", selected: 'selected' },
-            // { display: "stat14", value: "stat14" },
-            // { display: "stat13", value: "stat13" },
-          ],
-        },
-        security: {
-          groups: ["EPMO", "System Admin Group"]
-        },
-      }
-    ],
-  },
-  {
     label: "التمويل",
     labelEn: "Funding",
     description: "",
@@ -938,21 +914,21 @@ var Information_Form = [
     // layout: 'table',
     // targetlist: 'BudgetItem',
     subFields: [
-      {
-        InternalName: "PRCode",
-        DisplayName: "رمز المشتريات",
-        DisplayNameEn: "Purchase code",
-        type: "string",
-        maxchar: 255,
-      },
-      {
-        InternalName: "ERPCode",
-        DisplayNameEn: "ERP Code",
-        DisplayName: "ترميز موارد",
-        type: "string",
-        maxchar: "255",
-        // "validation": "required"
-      },
+      // {
+      //   InternalName: "PRCode",
+      //   DisplayName: "رمز المشتريات",
+      //   DisplayNameEn: "Purchase code",
+      //   type: "string",
+      //   maxchar: 255,
+      // },
+      // {
+      //   InternalName: "ERPCode",
+      //   DisplayNameEn: "ERP Code",
+      //   DisplayName: "ترميز موارد",
+      //   type: "string",
+      //   maxchar: "255",
+      //   // "validation": "required"
+      // },
       {
         InternalName: "BudgetItem",
         DisplayName: "البند المرتبط",
@@ -973,51 +949,51 @@ var Information_Form = [
         type: "float",
         // "state": "disabled",
         dynamic: "BudgetItem", //being controlled by main field
-        numberOfDigits:"12",
+        numberOfDigits:"15",
       },
 
-      {
-        InternalName: "Cost1",
-        DisplayName: "التكلفة المخصصة لعام",
-        DisplayNameEn: "Cost 1",
-        type: "float",
-        state: "disabled",
-        dynamic: "BudgetItem",
-      },
-      {
-        InternalName: "Cost2",
-        DisplayName: "التكلفة المخصصة لعام",
-        DisplayNameEn: "Cost 2",
-        type: "float",
-        state: "disabled",
-        // dynamic: 'BudgetItem',
-      },
-      {
-        InternalName: "Cost3",
-        DisplayName: "التكلفة المخصصة لعام",
-        DisplayNameEn: "Cost 3",
-        type: "float",
-        state: "disabled",
-        // dynamic: 'BudgetItem',
-      },
-      {
-        InternalName: "AssignedBudget",
-        DisplayName: "الميزانية المعتمدة",
-        DisplayNameEn: "Assigned Budget",
-        className: "disable_enable_section",
-        type: "float",
-        numberOfDigits:"12",
-        // className:"toggle_Section"
-        //"state": "disabled"
-        // "showonstage":"1"
-      },
+      // {
+      //   InternalName: "Cost1",
+      //   DisplayName: "التكلفة المخصصة لعام",
+      //   DisplayNameEn: "Cost 1",
+      //   type: "float",
+      //   state: "disabled",
+      //   dynamic: "BudgetItem",
+      // },
+      // {
+      //   InternalName: "Cost2",
+      //   DisplayName: "التكلفة المخصصة لعام",
+      //   DisplayNameEn: "Cost 2",
+      //   type: "float",
+      //   state: "disabled",
+      //   // dynamic: 'BudgetItem',
+      // },
+      // {
+      //   InternalName: "Cost3",
+      //   DisplayName: "التكلفة المخصصة لعام",
+      //   DisplayNameEn: "Cost 3",
+      //   type: "float",
+      //   state: "disabled",
+      //   // dynamic: 'BudgetItem',
+      // },
+      // {
+      //   InternalName: "AssignedBudget",
+      //   DisplayName: "الميزانية المعتمدة",
+      //   DisplayNameEn: "Assigned Budget",
+      //   className: "disable_enable_section",
+      //   type: "float",
+      //   numberOfDigits:"15",
+      //   // className:"toggle_Section"
+      //   //"state": "disabled"
+      //   // "showonstage":"1"
+      // },
       {
         InternalName: "ExpectedBudget",
         DisplayName: "الموازنة المتوقعة",
         DisplayNameEn: "Expected Budget",
         type: "float",
         state: "disabled",
-        numberOfDigits:"12",
+        numberOfDigits:"15",
       },
       {
         InternalName: "ActualBudget",
@@ -1026,7 +1002,7 @@ var Information_Form = [
         type: "float",
         // "state": "disabled",
         RequiredName: "ActualBudget",
-        numberOfDigits:"12",
+        numberOfDigits:"15",
 
       },
       // {
@@ -1072,7 +1048,7 @@ var Information_Form = [
         DisplayNameEn: "ContractualEngagements",
         type: "float",
         // "state": "disabled"
-        numberOfDigits:"12",
+        numberOfDigits:"15",
 
       },
       {
@@ -1087,7 +1063,7 @@ var Information_Form = [
         DisplayName: "المنصرف حتى تاريخه",
         DisplayNameEn: "Expenses",
         type: "float",
-        numberOfDigits:"12",
+        numberOfDigits:"15",
 
         // "state": "disabled"
       },
@@ -1096,7 +1072,7 @@ var Information_Form = [
         DisplayName: "التكلفة المتبقية",
         DisplayNameEn: "Remaining Cost",
         type: "float",
-        numberOfDigits:"12",
+        numberOfDigits:"15",
 
         // "state": "disabled"
       },
@@ -1105,7 +1081,7 @@ var Information_Form = [
         DisplayName: "نسبة المنصرف من السيولة ",
         DisplayNameEn: "Out Of Cash",
         type: "floatpercentage",
-        numberOfDigits:"12",
+        numberOfDigits:"15",
         // "state": "disabled"
       },
       // {
@@ -1369,6 +1345,30 @@ var Information_Form = [
     ],
   },
   {
+    label: "حالة المشروع",
+    labelEn: "Project Status",
+    description: "",
+    descriptionEn: "",
+    subFields: [
+      {
+        InternalName: "WorkingStatus",
+        DisplayName: "حالة العمل",
+        DisplayNameEn: "Working Status",
+        type: "dropdownValues",
+        options: {
+          choices: [
+            { display: "active", value: "active", selected: 'selected' },
+            // { display: "stat14", value: "stat14" },
+            // { display: "stat13", value: "stat13" },
+          ],
+        },
+        security: {
+          groups: ["EPMO", "System Admin Group"]
+        },
+      }
+    ],
+  },
+  {
     label: 'بيانات المخرج',
     labelEn: 'Delivrable Data',
     description: 'التفاصيل (يمكن ادخال القيم عند ادخال الميزانية المعتمدة)',
@@ -1579,7 +1579,7 @@ var Information_Form = [
         InternalName: 'ShowInProgramReport',
         DisplayName: 'اظهار في التقرير',
         DisplayNameEn: 'Show In Program Report',
-        type: 'yesnoradio',
+        type: 'dropdownValues',
         options: {
           choices: [
             {
@@ -1741,7 +1741,7 @@ var Information_Form = [
         parentlist: 'Projects', //parent list name
         parentinternalname: 'RelatedInitiative', // internal name in parent list
         // source: 'InitiativeMilestones', // target list
-        source: 'Milestones',
+        source: 'InitiativeMilestones',
         sourceinternalname: 'InitiativeCode', // column in target list
         Dispfieldkey: 'Name', //display in dropdown
         valfieldkey: 'Title', // value in dropdown
@@ -1757,7 +1757,7 @@ var Information_Form = [
         InternalName: 'ShowInProgramReport',
         DisplayName: 'اظهار في التقرير',
         DisplayNameEn: 'Show In Program Report',
-        type: 'yesnoradio',
+        type: 'dropdownValues',
         options: {
           choices: [
             {

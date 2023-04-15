@@ -84,7 +84,7 @@ var Information_Form = [
         DisplayName: 'قيمة العقد الإجمالية',
         DisplayNameEn: 'Contractual Value',
         type: 'float',
-        numberOfDigits:"12",
+        numberOfDigits:"15",
       },
       {
         InternalName: 'Beneficiary',

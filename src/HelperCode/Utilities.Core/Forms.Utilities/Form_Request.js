@@ -708,7 +708,7 @@ window.Edit_Data_Request = {
 
     if (MasterDetailsArrayRequest.length == 0) { // to avoid the error if there is master details like project ana initiative
       $("[data-weightvalue]").each(function () {
-        
+
         var elementId = $(this).attr('id')
         var inputVal = oListItem.get_item(elementId) ? oListItem.get_item(elementId) : 0
         var remainingBudget = $(this).attr('max')
@@ -2508,11 +2508,30 @@ var Master_Details_Request = {
               $(this).text(Resources.ar[value]);
             } else $(this).text(Resources.en[value]);
           } else if ($(this).attr("type") == "radio") {
-            var value =
+            var radioval =
               oListItem.get_item("" + $(this).attr("id") + "") == null
                 ? "no"
                 : oListItem.get_item("" + $(this).attr("id") + "");
-            $(this).text(value);
+            // to handle the master details section show and hide
+            if (listkey == 'goalstrategy') {
+              pillersRadio = radioval
+            }
+
+            if (radioval == "Yes" || radioval == "yes" || radioval == true) {
+              if (
+                localStorage.getItem("lng") == null ||
+                localStorage.getItem("lng") == "ar"
+              ) {
+                $(this).text(Resources.ar["yes"]);
+              } else $(this).text(Resources.en["yes"]);
+            } else if (radioval == "No" || radioval == "no" || radioval == false) {
+              if (
+                localStorage.getItem("lng") == null ||
+                localStorage.getItem("lng") == "ar"
+              ) {
+                $(this).text(Resources.ar["no"]);
+              } else $(this).text(Resources.en["no"]);
+            } else $(this).text(radioval);
           } else if ($(this).attr("type") == "checkbox") {
             var value =
               oListItem.get_item("" + $(this).attr("id") + "") == null
@@ -2552,59 +2571,119 @@ var Master_Details_Request = {
               value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             );
           } else if ($(this).attr("type") == "multiselect") {
-            // var value =
-            //   oListItem.get_item("" + $(this).attr("id") + "") == null
-            //     ? No_Data
-            //     : oListItem
-            //       .get_item("" + $(this).attr("id") + "")
-            //       .split(":::")
-            //       .join("; <br>");
-
-            // $(this).html(value);
-
-            // to get the name of multi select in master details
-            var valfieldkey = $(this).data("valfieldkey"),
-              Dispfieldkey = $(this).data("dispfieldkey"),
-              listname = $(this).data("listname"),
-              $this = $(this);
-
-            var listFields = ["ID", valfieldkey, Dispfieldkey];
 
 
-            var value =
-              oListItem.get_item("" + $(this).attr("id") + "") == null
-                ? No_Data
-                : oListItem
-                  .get_item("" + $(this).attr("id") + "")
-                  .split(":::")
+            var masterFieldTargetList = $(this).data("fieldtargetlist")
 
-            var customquerymulti =
-              '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="' + valfieldkey + '" /><Values>';
-            for (var i = 0; i <= value.length; i++) {
-              customquerymulti += '<Value Type="Text">' + value[i] + '</Value>';
-            }
-            customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
+            if (masterFieldTargetList && masterFieldTargetList != 'undefined') { // to handle master detials field inside master details in form request
 
+              var valfieldkey = "MasterID",
+                Dispfieldkey = $(this).data("dispfieldkey"),
+                parentValfieldkey = $(this).data("valfieldkey"),
+                parentListname = $(this).data("listname"),
+                listname = masterFieldTargetList,
+                fieldId = $(this).attr("id"),
+                dataId = $(this).parent().parent().data('id'),
+                $this = $(this);
 
 
-            sphttp.get(
-              _spPageContextInfo.siteServerRelativeUrl,
-              listname,
-              customquerymulti,
-              listFields,
-              function (records, record, listItem, isDone) {
-                if (isDone) {
-                  var items = ''
-                  records.forEach(function (el, index) {
+              var listFields = ["ID", fieldId];
 
-                    items += el[Dispfieldkey] + '<br>'
-
-
-                  });
-                  $this.html(items);
-                }
+              var value = [dataId]
+              var customquerymulti =
+                '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="' + valfieldkey + '" /><Values>';
+              for (var i = 0; i <= value.length; i++) {
+                customquerymulti += '<Value Type="Text">' + value[i] + '</Value>';
               }
-            );
+              customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
+
+              sphttp.get(
+                _spPageContextInfo.siteServerRelativeUrl,
+                listname,
+                customquerymulti,
+                listFields,
+                function (records, record, listItem, isDone) {
+                  if (isDone) {
+                    var masterValues = []
+                    records.forEach(function (el, index) {
+                      masterValues.push(el[fieldId])
+                    });
+
+                    var parentListFields = ["ID", parentValfieldkey, Dispfieldkey];
+                    var parentquerymulti =
+                      '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="' + parentValfieldkey + '" /><Values>';
+                    for (var i = 0; i <= masterValues.length; i++) {
+                      parentquerymulti += '<Value Type="Text">' + masterValues[i] + '</Value>';
+                    }
+                    parentquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
+
+
+                    
+                    sphttp.get(
+                      _spPageContextInfo.siteServerRelativeUrl,
+                      parentListname,
+                      parentquerymulti,
+                      parentListFields,
+                      function (records, record, listItem, isDone) {
+                        if (isDone) {
+                          var items = ''
+                          records.forEach(function (el, index) {
+
+                            items += el[Dispfieldkey] + '<br>'
+
+                          });
+                          $this.html(items);
+                        }
+
+                      })
+                  }
+                }
+              );
+            } else {
+              // to get the name of multi select in master details
+              var valfieldkey = $(this).data("valfieldkey"),
+                Dispfieldkey = $(this).data("dispfieldkey"),
+                listname = $(this).data("listname"),
+                $this = $(this);
+
+              var listFields = ["ID", valfieldkey, Dispfieldkey];
+
+
+              var value =
+                oListItem.get_item("" + $(this).attr("id") + "") == null
+                  ? No_Data
+                  : oListItem
+                    .get_item("" + $(this).attr("id") + "")
+                    .split(":::")
+
+              var customquerymulti =
+                '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="' + valfieldkey + '" /><Values>';
+              for (var i = 0; i <= value.length; i++) {
+                customquerymulti += '<Value Type="Text">' + value[i] + '</Value>';
+              }
+              customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
+
+
+
+              sphttp.get(
+                _spPageContextInfo.siteServerRelativeUrl,
+                listname,
+                customquerymulti,
+                listFields,
+                function (records, record, listItem, isDone) {
+                  if (isDone) {
+                    var items = ''
+                    records.forEach(function (el, index) {
+
+                      items += el[Dispfieldkey] + '<br>'
+
+
+                    });
+                    $this.html(items);
+                  }
+                }
+              );
+            }
           } else if ($(this).attr("type") == "lookup") {
             var valfieldkey = $(this).data("valfieldkey"),
               Dispfieldkey = $(this).data("dispfieldkey"),
@@ -2770,27 +2849,91 @@ var Master_Details_Request = {
               break;
 
             case "radio":
-              $('input[id="' + $(this).attr("id") + '"]')
-                .filter(
-                  '[value="' + oListItem.get_item($(this).attr("id")) + '"]'
-                )
-                .attr("checked", true);
-              break;
-
+                var radioval = oListItem.get_item($(this).attr("id"));
+                console.log(radioval,'radiovaaaaaaaalllll')
+                if (radioval == "Yes" || radioval == "yes") {
+                  $('input[id="' + $(this).attr("id") + '"]')
+                    .filter('[value="yes"]')
+                    .attr("checked", true);
+                } else if (
+                  radioval == "No" ||
+                  radioval == "no" ||
+                  radioval == "undefined" ||
+                  radioval == null
+                ) {
+                  $('input[id="' + $(this).attr("id") + '"]')
+                    .filter('[value="no"]')
+                    .attr("checked", true);
+                } else
+                  $('input[id="' + $(this).attr("id") + '"]')
+                    .filter(
+                      '[value="' + oListItem.get_item($(this).attr("id")) + '"]'
+                    )
+                    .attr("checked", true);
+                break;
+            
             case "checkbox":
               if (oListItem.get_item($(this).attr("id")))
                 $(this).prop("checked", true);
               break;
 
             case "multiselect":
-              if (oListItem.get_item($(this).attr("myfield"))) {
-                var myselections = oListItem
-                  .get_item($(this).attr("myfield"))
-                  .split(":::");
-                for (var i = 0; i < myselections.length; i++) {
-                  $(this)
-                    .find("input:checkbox[value='" + myselections[i] + "']")
-                    .prop("checked", true);
+
+              var masterFieldTargetList = $(this).data("fieldtargetlist")
+
+              if (masterFieldTargetList && masterFieldTargetList != 'undefined') { // to handle master detials field inside master details in form request
+
+                var valfieldkey = "MasterID",
+                  Dispfieldkey = $(this).data("dispfieldkey"),
+                  listname = masterFieldTargetList,
+                  fieldId = $(this).attr("id"),
+                  dataId = $(this).parent().parent().data('id'),
+                  $this = $(this);
+
+
+                var listFields = ["ID", fieldId];
+
+                var value = [dataId]
+                var customquerymulti =
+                  '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="' + valfieldkey + '" /><Values>';
+                for (var i = 0; i <= value.length; i++) {
+                  customquerymulti += '<Value Type="Text">' + value[i] + '</Value>';
+                }
+                customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
+
+                sphttp.get(
+                  _spPageContextInfo.siteServerRelativeUrl,
+                  listname,
+                  customquerymulti,
+                  listFields,
+                  function (records, record, listItem, isDone) {
+                    if (isDone) {
+                      var items = ''
+                      records.forEach(function (el, index) {
+
+                        $this.find(`input[type=checkbox]`).each(function () {
+                          if ($(this).val() == el['DeliverableID']) {
+                            $(this).prop("checked", true)
+                            $(this).prop("disabled", true)
+                          }
+
+                        })
+                      });
+                    }
+                  }
+                );
+
+              } else {
+
+                if (oListItem.get_item($(this).attr("myfield"))) {
+                  var myselections = oListItem
+                    .get_item($(this).attr("myfield"))
+                    .split(":::");
+                  for (var i = 0; i < myselections.length; i++) {
+                    $(this)
+                      .find("input:checkbox[value='" + myselections[i] + "']")
+                      .prop("checked", true);
+                  }
                 }
               }
               break;
@@ -6432,7 +6575,7 @@ var DontSubmit_DataRequest = {
           oListItem.get_item(elementId) &&
           oListItem.get_item(elementId) == elementValue
         ) {
-          
+
           // matching between value on list
           var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
           var parenetValue = $(this).data("parentrelatedvaluelvl1"); // parent value

@@ -768,9 +768,20 @@ var Information_Form = [
         DisplayName: 'التكلفة التقديرية ',
         DisplayNameEn: 'Estimated Cost',
         type: 'float',
-        numberOfDigits: "12"
+        numberOfDigits: "15"
       },
-
+      {
+        InternalName: 'InitiativeBudget',
+        DisplayName: 'ميزانية المبادرة ',
+        DisplayNameEn: 'InitiativeBudget',
+        // className: "disable_enable_section", // disable and enable section master  details specific for project and initiative cr
+        // "state": "disabled",
+        type: 'float',
+        numberOfDigits: "15",
+        state: "disabled",
+        descPhraseAr:"مجموع التكاليف الكلية حسب سقف البرنامج و التكاليف الكلية المعتمدة",
+        descPhraseEn:"total of ProgramTotalCost and ActualCost"
+      },
       {
         InternalName: 'ProgramTotalCost',
         DisplayName: 'التكاليف الكلية حسب سقف البرنامج ',
@@ -803,37 +814,25 @@ var Information_Form = [
         totalElement: "InitiativeBudget"// set sum value in this elem
       },
       {
-        InternalName: 'InitiativeBudget',
-        DisplayName: 'ميزانية المبادرة ',
-        DisplayNameEn: 'InitiativeBudget',
-        // className: "disable_enable_section", // disable and enable section master  details specific for project and initiative cr
-        // "state": "disabled",
-        type: 'float',
-        numberOfDigits: "20",
-        state: "disabled",
-        descPhraseAr:"مجموع التكاليف الكلية حسب سقف البرنامج و التكاليف الكلية المعتمدة",
-        descPhraseEn:"total of ProgramTotalCost and ActualCost"
-      },
-      {
         InternalName: 'CurrentBuget',
         DisplayName: 'السيولة المخصصة للعام المالي الحالي ',
         DisplayNameEn: 'Current Budget',
         type: 'float',
-        numberOfDigits: "12"
+        numberOfDigits: "15"
       },
       {
         InternalName: 'Expenditures',
         DisplayName: 'المنصرف الأجمالي ',
         DisplayNameEn: 'Expenditures',
         type: 'float',
-        numberOfDigits: "12"
+        numberOfDigits: "15"
       },
       {
         InternalName: 'CurrentExpenditures',
         DisplayName: 'المنصرف من العالم المالي الحالي ',
         DisplayNameEn: 'Current Expenditures',
         type: 'float',
-        numberOfDigits: "12"
+        numberOfDigits: "15"
       },
     ],
   },
@@ -916,8 +915,8 @@ var Information_Form = [
         InternalName: 'Target',
         DisplayNameEn: 'Target',
         DisplayName: 'المستهدف (إن وجد)',
-        type: 'float',
-        numberOfDigits:"12"
+        type: 'number',
+        numberOfDigits:"15"
       },
       {
         InternalName: 'Weight',

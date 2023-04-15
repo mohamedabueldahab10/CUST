@@ -36,6 +36,9 @@ var Information_Form = [
             },
           ],
         },
+        toggleValues: [
+          { value: 'external', fields: ['Types'] }
+        ],
       },
       {
         InternalName: 'Types',
@@ -43,6 +46,7 @@ var Information_Form = [
         DisplayNameEn: 'Type',
         type: 'dropdownValues',
         validation: 'required',
+        ToggleName: 'Types',
         options: {
           choices: [
             {

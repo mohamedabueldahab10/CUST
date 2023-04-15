@@ -108,6 +108,13 @@ var Information_Form = [
           ]
       },
       },
+      {
+        InternalName: 'ActualDate',
+        DisplayName: 'تاريخ الاكتمال الفعلي',
+        DisplayNameEn: 'Actual Date',
+        type: 'datetime',
+        max: 'today',
+      },
 
     //   {
     //     InternalName: 'CommittedDate',
@@ -190,8 +197,8 @@ var Information_Form = [
       },
       {
         InternalName: 'Delivered',
-        DisplayName: 'تم التسليم',
-        DisplayNameEn: 'Delivered',
+        DisplayName: 'مكتمل',
+        DisplayNameEn: 'Completed',
         targetfieldrequired: 'getFile,ActualDate', // to make the attache required on yes
         targetfield: 'Status',
         targetfieldvalue: 'completed',
@@ -203,13 +210,6 @@ var Information_Form = [
             { display: 'no', value: 'no' },
           ],
         },
-      },
-      {
-        InternalName: 'ActualDate',
-        DisplayName: 'تاريخ الاكتمال الفعلي',
-        DisplayNameEn: 'Actual Date',
-        type: 'datetime',
-        max: 'today',
       },
       {
         InternalName: 'ShowInProgramReport',
@@ -245,11 +245,12 @@ var Information_Form = [
     descriptionEn: '',
     subFields: [
       {
-        InternalName: 'SupportDocumentsDescription',
-        DisplayNameEn: 'Support Documents Description',
-        DisplayName: 'وصف الوثائق الداعمة',
-        type: 'multiline',
-        maxchar: '5000',
+        InternalName: 'getfile',
+        DisplayName: 'الوثائق داعمة',
+        DisplayNameEn: 'Supporting Documents',
+        type: 'file',
+        docPurpose:"Spporting_Documents",
+        withAddBtn: 'true',
         security: {
           groups: [
             'EPMO', 'System Admin Group'
@@ -257,12 +258,11 @@ var Information_Form = [
       },
       },
       {
-        InternalName: 'getfile',
-        DisplayName: 'الوثائق داعمة',
-        DisplayNameEn: 'Supporting Documents',
-        type: 'file',
-        docPurpose:"Spporting_Documents",
-        withAddBtn: 'true',
+        InternalName: 'SupportDocumentsDescription',
+        DisplayNameEn: 'Support Documents Description',
+        DisplayName: 'وصف الوثائق الداعمة',
+        type: 'multiline',
+        maxchar: '5000',
         security: {
           groups: [
             'EPMO', 'System Admin Group'

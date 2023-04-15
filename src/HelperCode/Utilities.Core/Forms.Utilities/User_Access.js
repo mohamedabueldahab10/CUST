@@ -249,7 +249,8 @@ window.accessCallisDone = false;
   (window.isRListKey = window.location.href.indexOf("RKey=") > -1),
   (window.RListKey = isCrMode ? window.location.href.split("RKey=")[1].split("&")[0] : ""),
   (window.CrRelatedList = ""),
-  (window.changeRequestBody = []);
+  (window.changeRequestBody = []),
+  (window.changeRequestBodyMaster = []);
 // ended
 
 
@@ -335,6 +336,9 @@ window.userAddedToGroup = true;
 //Get User Groups
 window.userCalls = {
   get_CurrentUser: function () {
+    console.log("Inside Current User func")
+    console.time();
+
     //getUserWebPermissionREST();
     $.ajax({
       url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/CurrentUser",
@@ -344,6 +348,7 @@ window.userCalls = {
       },
       success: function (data) {
         console.log(data,"data for current user")
+        console.timeEnd();
         UserN = data.d;
         userCalls.get_CurrentUserGroupColl(data.d.Id);
       },
@@ -372,6 +377,9 @@ window.userCalls = {
           $("#ms-designer-ribbon").remove();
         }
         userCalls.get_userAccess();
+
+        Get_Configure_Api.preinit();
+        
       },
     });
   },
@@ -468,6 +476,7 @@ window.userCalls = {
 
       if (i == userCalls.g.SPGroups.length - 1 && Groups.length > 0) {
         userCalls.get_AccessAction();
+        
       }
     }
     //*****
@@ -1181,6 +1190,7 @@ window.userCalls = {
           // "benefits",
           "Targets.aspx",
           "kpiequations",
+          "benefitsequations",
           "changerequest",
 
         ];
@@ -1534,6 +1544,7 @@ window.userCalls = {
           "closureinitiative",
           // "benefits",
           "benefitmetrics",
+          "benefitsequations",
           "BenefitMetrics.aspx",
           // "projects",
           "deliverables",
@@ -1632,6 +1643,7 @@ window.userCalls = {
           "closureinitiative",
           // "benefits",
           "benefitmetrics",
+          "benefitsequations",
           "BenefitMetrics.aspx",
           // "projects",
           "deliverables",
@@ -1740,6 +1752,7 @@ window.userCalls = {
           "closureinitiative",
           // "benefits",
           "benefitmetrics",
+          "benefitsequations",
           "BenefitMetrics.aspx",
           // "projects",
           "deliverables",
@@ -1850,6 +1863,7 @@ window.userCalls = {
           "closureinitiative",
           // "benefits",
           "benefitmetrics",
+          "benefitsequations",
           "BenefitMetrics.aspx",
           // "projects",
           "deliverables",
@@ -1960,6 +1974,7 @@ window.userCalls = {
           "closureinitiative",
           // "benefits",
           "benefitmetrics",
+          "benefitsequations",
           "BenefitMetrics.aspx",
           // "projects",
           "deliverables",
@@ -6432,7 +6447,7 @@ window.userCalls = {
   },
 };
 $(document).ready(function () {
-  Get_Configure_Api.init()
+  //Get_Configure_Api.preinit()
   userCalls.get_CurrentUser();
 });
 
@@ -10065,6 +10080,11 @@ async function dateRange(startDate, endDate) {
 
 var Get_Configure_Api = {
   // The main Initialization function
+  preinit: function () {
+    SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
+      Get_Configure_Api.init();
+    });
+  },
   init: function () {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("Configurations");

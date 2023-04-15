@@ -69,7 +69,7 @@ var Listing_Info = [
   },
   {
     InternalName: 'StartDate',
-    DisplayName: 'تاريخ بدء العقد',
+    DisplayName: 'تاريخ بداية المبادرة ',
     DisplayNameEn: 'Start Date',
     type: 'date',
     inlisting: true,

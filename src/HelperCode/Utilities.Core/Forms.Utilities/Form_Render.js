@@ -799,6 +799,7 @@ window.ListInfo = {
           var previuosTargetVal = "";
           $("input.yesnolistener").on("change", function (event) {
 
+            
             var value = event.target.value;
 
             var targetElementRequired = $(this).data("targetfieldrequired");
@@ -2811,7 +2812,7 @@ window.ListInfo = {
                   ? el[element.targetelement]
                   : 0;
               });
-              
+
               var RemainingBudget = 100 - totalWeight;
               RemainingBudget = Number(RemainingBudget.toFixed(1));
 
@@ -2825,7 +2826,7 @@ window.ListInfo = {
 
               console.log(newVal, "newVal newVal");
               // console.log()
-              
+
               htmlBody =
                 '<div class="col-md-6 CFIELD ' +
                 dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -4797,13 +4798,13 @@ window.ListInfo = {
           "</Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
 
         var itemsID = [];
-          
-        var fieldTargetList = "", otherMasterList = "";
+
+        var fieldTargetList = "";
+        var fieldmasterkey = ""
         if (element.fieldtargetlist && element.fieldtargetlist != "undefined") {
-          otherMasterList = "other_masterlist"
 
           fieldTargetList = `data-fieldTargetList=${element.fieldtargetlist}`
-
+          fieldmasterkey = `data-fieldmasterkey=${element.fieldmasterkey}`
         }
 
 
@@ -4819,8 +4820,7 @@ window.ListInfo = {
 
               htmlBody =
                 '<div class="col-md-6 CFIELD ' +
-                dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-                otherMasterList +
+                dontSubmit + " " + dontRequest + " " + dontSubmitRequired +
                 " " +
                 element.className +
                 " " +
@@ -4878,6 +4878,8 @@ window.ListInfo = {
                 seconeddynamic +
                 " " +
                 fieldTargetList +
+                " " +
+                fieldmasterkey +
                 " " +
                 'data-listname="' +
                 element.source +
@@ -6573,6 +6575,7 @@ window.ListInfo = {
           totalWeight += Number(value)
         })
 
+        //$('.add-New-Detail').closest("[data-target_list]").find(".Details-Item:first-child")
 
         var toappend = $(this)
           .closest("[data-target_list]")
@@ -6590,6 +6593,11 @@ window.ListInfo = {
         //
 
         masterLength = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").length
+
+        // to remove the disabled on multi select when click plus in master filed of master details section like deliv in benefit in edit initiative
+        $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last().find('ul[data-fieldtargetlist]').find("input:checkbox").each(function () {
+          $(this).attr("disabled", false)
+        })
 
 
         if (isNew) {
@@ -7171,7 +7179,7 @@ window.ListInfo = {
                 myFieldParent.find(">*").attr("required", false);
               }
             }
-            if(listkey == "achievements"){
+            if (listkey == "achievements") {
               if (item == "RelatedKPI") {
                 myFieldParent.find(">*").attr("required", false);
               }
@@ -9414,6 +9422,65 @@ window.View_ListInfo = {
           OnSuccess(flag, htmlBody);
           break;
 
+        case "lookupchildtoparentmultiselect":
+
+          var fieldTargetList = "";
+          var fieldmasterkey = ""
+          if (element.fieldtargetlist && element.fieldtargetlist != "undefined") {
+
+            fieldTargetList = `data-fieldTargetList=${element.fieldtargetlist}`
+            fieldmasterkey = `data-fieldmasterkey=${element.fieldmasterkey}`
+          }
+
+          htmlBody =
+            '<div class="col-md-6 CFIELD ' +
+            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            " " +
+            element.className +
+            ' " ' +
+            thistip +
+            " " +
+            hidestagesIDs +
+            " " +
+            showstagesIDs +
+            "  " +
+            disablestagesIDs +
+            "  " +
+            enablestagesIDs +
+            "   " +
+            isWfhidestagesIDs +
+            " " +
+            requireOnWfTaskstagesIDs +
+            " " +
+            isWfshowstagesIDs +
+            "  " +
+            isWfdisablestagesIDs +
+            "  " +
+            isWfenablestagesIDs +
+            '        data-groups="' +
+            groups +
+            '" style="display:' +
+            element.display +
+            '">' +
+            '<label for="' +
+            element.InternalName +
+            '" ' +
+            element.validation +
+            ">" +
+            displayName +
+            // " " +
+            // `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>" : ""}` +
+            "</label>" +
+            '<p type="multiselect" class="viewmode-value" data-valfieldkey="' + element.valfieldkey + '" data-dispfieldkey="' + element.Dispfieldkey + '" data-listname="' + element.source + '" id="' +
+            element.InternalName +
+            '" ' +
+            ToggleName +
+            'data-parentrelatedkeylvl1="' + element.fieldsinformlvl1 + '" data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1="' +
+            element.sourcefieldlvl1
+            + '" data-parentrelatedkeylvl2="' + element.fieldsinformlvl2 + '" data-parentrelatedvaluelvl2="" data-parentrelatedfilterkeylvl2="' + element.sourcefieldlvl2 + '" data-linkedto="' + element.linkedto + '" ' + fieldTargetList + " " + fieldmasterkey + '></p>' +
+            "</div>";
+          OnSuccess(flag, htmlBody);
+          break;
         case "multiselect":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +

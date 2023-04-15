@@ -50,6 +50,15 @@ var Listing_Info = [
     inlisting: true,
     infilter: false,
   },
+  {
+    InternalName: 'Delivered',
+    DisplayName: 'مكتمل',
+    DisplayNameEn: 'Completed',
+    type: 'text',
+    inlisting: true,
+    infilter: false,
+    needTrans: true,
+  },
   // {
   //   InternalName: 'Status',
   //   DisplayName: 'الحالة',

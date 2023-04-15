@@ -130,6 +130,14 @@ var Information_Form = [
         },
       },
       {
+        InternalName: "Committees",
+        DisplayName: "اللجان",
+        DisplayNameEn: "Committees",
+        type: "string",
+        // "maxchar": 5000,
+        // hideonstage: "1"
+      },
+      {
         InternalName: "IsStrategicProject",
         DisplayName: "هل هو مشروع استراتيجي؟",
         DisplayNameEn: "Is Strategic Project?",
@@ -144,14 +152,6 @@ var Information_Form = [
           { value: 'yes', fields: ['InitiativeType','RelatedInitiative','RelatedInitiativeDeliverable'] }, //we can put more than 1  field
           { value: 'no', fields: [''] }, //we can put more than 1  field
         ],
-      },
-      {
-        InternalName: "Committees",
-        DisplayName: "اللجان",
-        DisplayNameEn: "Committees",
-        type: "string",
-        // "maxchar": 5000,
-        // hideonstage: "1"
       },
       {
         InternalName: 'InitiativeType',
@@ -244,6 +244,13 @@ var Information_Form = [
         // hideonstage: "1"
       },
       {
+        InternalName: "Status",
+        DisplayName: "مرحلة المشروع",
+        DisplayNameEn: "Status",
+        type: "string",
+        // maxchar: 255,
+      },
+      {
         InternalName: "ProjectType",
         DisplayName: "نوع المشروع",
         DisplayNameEn: "Project Type",
@@ -314,7 +321,7 @@ var Information_Form = [
 
       {
         InternalName: "SubSector",
-        DisplayName: "الوكالات",
+        DisplayName: "الوكالة",
         DisplayNameEn: "DeputyShip",
         type: "lookup",
         //from other list:
@@ -370,7 +377,7 @@ var Information_Form = [
       },
       {
         InternalName: "BaselineDuration",
-        DisplayName: "مدة الأساس",
+        DisplayName: "مدة الأساس بالأيام",
         DisplayNameEn: "Baseline Duration",
         type: "float",
         // "maxchar": 5000,
@@ -429,7 +436,13 @@ var Information_Form = [
         DisplayName: 'حالة الصرف',
         type: 'float'
       },
-
+      {
+        InternalName: "CompanyName",
+        DisplayName: "اسم الشركة المنفذة",
+        DisplayNameEn: "Company Name",
+        type: "string",
+        maxchar: 255,
+      },
       {
         InternalName: "IsZeroBudgetProject",
         DisplayName: "هل هو مشروع صفرى؟",
@@ -773,108 +786,6 @@ var Information_Form = [
     ],
   },
   {
-    label: "حالة المشروع",
-    labelEn: "Project Status",
-    description: "",
-    descriptionEn: "",
-    subFields: [
-      {
-        InternalName: "WorkingStatus",
-        DisplayName: "حالة العمل",
-        DisplayNameEn: "Working Status",
-        type: "dropdownValues",
-        options: {
-          choices: [
-            { display: "active", value: "active" },
-            { display: "stat14", value: "stat14" },
-            { display: "stat13", value: "stat13" },
-          ],
-        },
-      },
-      {
-        InternalName: "PlannedImplementationDeliverable",
-        DisplayName: "نسبة التنفيذ المخططة (المخرجات)",
-        DisplayNameEn: "Percentage of planned implementation ((Deliverables)",
-        type: "float",
-      },
-      {
-        InternalName: "ActualImplementationDeliverable",
-        DisplayName: "نسبة التنفيذ الفعلية (المخرجات)",
-        DisplayNameEn: "% of actual implementation (Deliverables)",
-        type: "float",
-      },
-      {
-        InternalName: "ProgressStatusDeliverable",
-        DisplayName: "حالة الإنجاز ( المخرجات)",
-        DisplayNameEn: "Completation Status (Deliverables)",
-        type: "dropdownValues",
-        options: {
-          choices: [
-            { display: "stat1", value: "stat1" },
-            { display: "stat2", value: "stat2" },
-            { display: "stat3", value: "stat3" },
-            { display: "stat6", value: "stat6" },
-            { display: "stat7", value: "stat7" },
-          ],
-        },
-      },
-      {
-        InternalName: "PlannedImplementationMilestone",
-        DisplayName: "نسبة التنفيذ المخططة (المعالم)",
-        DisplayNameEn: "Percentage of planned implementation (Milestones)",
-        type: "float",
-      },
-      {
-        InternalName: "ActualImplementationMilestone",
-        DisplayName: "نسبة التنفيذ الفعلية (المعالم)",
-        DisplayNameEn: "% of actual implementation (Milestones)",
-        type: "float",
-      },
-      {
-        InternalName: "ProgressStatusMilestone",
-        DisplayName: "حالة الإنجاز (المعالم)",
-        DisplayNameEn: "Progress Status (Milestones)",
-        type: "dropdownValues",
-        options: {
-          choices: [
-            { display: "stat1", value: "stat1" },
-            { display: "stat2", value: "stat2" },
-            { display: "stat3", value: "stat3" },
-            { display: "stat6", value: "stat6" },
-            { display: "stat7", value: "stat7" },
-          ],
-        },
-      },
-      {
-        InternalName: "PlannedImplementationSchedule",
-        DisplayName: "نسبة التنفيذ المخططة (الجدول الزمني)",
-        DisplayNameEn: "Percentage of planned implementation (Schedule)",
-        type: "float",
-      },
-      {
-        InternalName: "ActualImplementationSchedule",
-        DisplayName: "نسبة التنفيذ الفعلية (الجدول الزمني)",
-        DisplayNameEn: "% of actual implementation (Schedule)",
-        type: "float",
-      },
-      {
-        InternalName: "ProgressStatusSchedule",
-        DisplayName: "حالة الإنجاز (الجدول الزمني)",
-        DisplayNameEn: "Completation Status (Schedule)",
-        type: "dropdownValues",
-        options: {
-          choices: [
-            { display: "stat1", value: "stat1" },
-            { display: "stat2", value: "stat2" },
-            { display: "stat3", value: "stat3" },
-            { display: "stat6", value: "stat6" },
-            { display: "stat7", value: "stat7" },
-          ],
-        },
-      },
-    ],
-  },
-  {
     label: "التمويل",
     labelEn: "Funding",
     description: "",
@@ -909,22 +820,22 @@ var Information_Form = [
     description: "",
     descriptionEn: "",
     subFields: [
-      {
-        InternalName: "PRCode",
-        DisplayName: "رمز المشتريات",
-        DisplayNameEn: "Purchase code",
-        // type: 'float',
-        type: "string",
-      },
+      // {
+      //   InternalName: "PRCode",
+      //   DisplayName: "رمز المشتريات",
+      //   DisplayNameEn: "Purchase code",
+      //   // type: 'float',
+      //   type: "string",
+      // },
 
-      {
-        InternalName: "ERPCode",
-        DisplayNameEn: "ERP Code",
-        DisplayName: "ترميز موارد",
-        type: "string",
-        maxchar: "250",
-        // "validation": "required"
-      },
+      // {
+      //   InternalName: "ERPCode",
+      //   DisplayNameEn: "ERP Code",
+      //   DisplayName: "ترميز موارد",
+      //   type: "string",
+      //   maxchar: "250",
+      //   // "validation": "required"
+      // },
       {
         InternalName: "BudgetItem",
         DisplayName: "البند المرتبط",
@@ -947,30 +858,30 @@ var Information_Form = [
         dynamic: "BudgetItem", //being controlled by main field
       },
 
-      {
-        InternalName: "Cost1",
-        DisplayName: "التكلفة المخصصة لعام",
-        DisplayNameEn: "Cost 1",
-        type: "float",
-        state: "disabled",
-        dynamic: "BudgetItem",
-      },
-      {
-        InternalName: "Cost2",
-        DisplayName: "التكلفة المخصصة لعام",
-        DisplayNameEn: "Cost 2",
-        type: "float",
-        state: "disabled",
-        dynamic: "BudgetItem",
-      },
-      {
-        InternalName: "Cost3",
-        DisplayName: "التكلفة المخصصة لعام",
-        DisplayNameEn: "Cost 3",
-        type: "float",
-        state: "disabled",
-        dynamic: "BudgetItem",
-      },
+      // {
+      //   InternalName: "Cost1",
+      //   DisplayName: "التكلفة المخصصة لعام",
+      //   DisplayNameEn: "Cost 1",
+      //   type: "float",
+      //   state: "disabled",
+      //   dynamic: "BudgetItem",
+      // },
+      // {
+      //   InternalName: "Cost2",
+      //   DisplayName: "التكلفة المخصصة لعام",
+      //   DisplayNameEn: "Cost 2",
+      //   type: "float",
+      //   state: "disabled",
+      //   dynamic: "BudgetItem",
+      // },
+      // {
+      //   InternalName: "Cost3",
+      //   DisplayName: "التكلفة المخصصة لعام",
+      //   DisplayNameEn: "Cost 3",
+      //   type: "float",
+      //   state: "disabled",
+      //   dynamic: "BudgetItem",
+      // },
       // {
       //     "InternalName": "Cost4",
       //     "DisplayName": "التكلفة المخصصة لعام",
@@ -987,14 +898,14 @@ var Information_Form = [
       //     "state": "disabled",
       //     dynamic: "BudgetItem"
       // },
-      {
-        InternalName: "AssignedBudget",
-        DisplayName: "الموازنة المعتمدة",
-        DisplayNameEn: "Assigned Budget",
-        type: "float",
-        //"state": "disabled"
-        // "showonstage":"1"
-      },
+      // {
+      //   InternalName: "AssignedBudget",
+      //   DisplayName: "الموازنة المعتمدة",
+      //   DisplayNameEn: "Assigned Budget",
+      //   type: "float",
+      //   //"state": "disabled"
+      //   // "showonstage":"1"
+      // },
       {
         InternalName: "ExpectedBudget",
         DisplayName: "الموازنة المتوقعة",
@@ -1220,6 +1131,108 @@ var Information_Form = [
     ],
   },
   {
+    label: "حالة المشروع",
+    labelEn: "Project Status",
+    description: "",
+    descriptionEn: "",
+    subFields: [
+      {
+        InternalName: "WorkingStatus",
+        DisplayName: "حالة العمل",
+        DisplayNameEn: "Working Status",
+        type: "dropdownValues",
+        options: {
+          choices: [
+            { display: "active", value: "active" },
+            { display: "stat14", value: "stat14" },
+            { display: "stat13", value: "stat13" },
+          ],
+        },
+      },
+      {
+        InternalName: "PlannedImplementationDeliverable",
+        DisplayName: "نسبة التنفيذ المخططة (المخرجات)",
+        DisplayNameEn: "Percentage of planned implementation ((Deliverables)",
+        type: "float",
+      },
+      {
+        InternalName: "ActualImplementationDeliverable",
+        DisplayName: "نسبة التنفيذ الفعلية (المخرجات)",
+        DisplayNameEn: "% of actual implementation (Deliverables)",
+        type: "float",
+      },
+      {
+        InternalName: "ProgressStatusDeliverable",
+        DisplayName: "حالة الإنجاز ( المخرجات)",
+        DisplayNameEn: "Completation Status (Deliverables)",
+        type: "dropdownValues",
+        options: {
+          choices: [
+            { display: "stat1", value: "stat1" },
+            { display: "stat2", value: "stat2" },
+            { display: "stat3", value: "stat3" },
+            { display: "stat6", value: "stat6" },
+            { display: "stat7", value: "stat7" },
+          ],
+        },
+      },
+      {
+        InternalName: "PlannedImplementationMilestone",
+        DisplayName: "نسبة التنفيذ المخططة (المعالم)",
+        DisplayNameEn: "Percentage of planned implementation (Milestones)",
+        type: "float",
+      },
+      {
+        InternalName: "ActualImplementationMilestone",
+        DisplayName: "نسبة التنفيذ الفعلية (المعالم)",
+        DisplayNameEn: "% of actual implementation (Milestones)",
+        type: "float",
+      },
+      {
+        InternalName: "ProgressStatusMilestone",
+        DisplayName: "حالة الإنجاز (المعالم)",
+        DisplayNameEn: "Progress Status (Milestones)",
+        type: "dropdownValues",
+        options: {
+          choices: [
+            { display: "stat1", value: "stat1" },
+            { display: "stat2", value: "stat2" },
+            { display: "stat3", value: "stat3" },
+            { display: "stat6", value: "stat6" },
+            { display: "stat7", value: "stat7" },
+          ],
+        },
+      },
+      {
+        InternalName: "PlannedImplementationSchedule",
+        DisplayName: "نسبة التنفيذ المخططة (الجدول الزمني)",
+        DisplayNameEn: "Percentage of planned implementation (Schedule)",
+        type: "float",
+      },
+      {
+        InternalName: "ActualImplementationSchedule",
+        DisplayName: "نسبة التنفيذ الفعلية (الجدول الزمني)",
+        DisplayNameEn: "% of actual implementation (Schedule)",
+        type: "float",
+      },
+      {
+        InternalName: "ProgressStatusSchedule",
+        DisplayName: "حالة الإنجاز (الجدول الزمني)",
+        DisplayNameEn: "Completation Status (Schedule)",
+        type: "dropdownValues",
+        options: {
+          choices: [
+            { display: "stat1", value: "stat1" },
+            { display: "stat2", value: "stat2" },
+            { display: "stat3", value: "stat3" },
+            { display: "stat6", value: "stat6" },
+            { display: "stat7", value: "stat7" },
+          ],
+        },
+      },
+    ],
+  },
+  {
     label: 'بيانات المخرج',
     labelEn: 'Delivrable Data',
     description: 'التفاصيل',
@@ -1342,7 +1355,7 @@ var Information_Form = [
         InternalName: 'Delivered',
         DisplayName: 'تم التسليم',
         DisplayNameEn: 'Delivered',
-        type: 'yesnoradio',
+        type: 'radio',
         options: {
           choices: [
             {
@@ -1387,7 +1400,7 @@ var Information_Form = [
         InternalName: 'ShowInProgramReport',
         DisplayName: 'اظهار في التقرير',
         DisplayNameEn: 'Show In Program Report',
-        type: 'yesnoradio',
+        type: 'radio',
         options: {
           choices: [
             {
@@ -1498,8 +1511,8 @@ var Information_Form = [
         DisplayName: 'معلم المبادرة المرتبط',
         DisplayNameEn: 'Related Initiative Milestone',
         type: 'lookup',
-        // source: 'InitiativeMilestones',
-        source: 'Milestones',
+        source: 'InitiativeMilestones',
+        // source: 'Milestones',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
       },
@@ -1507,10 +1520,10 @@ var Information_Form = [
         InternalName: 'Delivered',
         DisplayName: 'تم التسليم',
         DisplayNameEn: 'Delivered',
-        targetfieldrequired: 'getFile', // to make the attache required on yes
-        targetfield: 'Status',
-        targetfieldvalue: 'completed',
-        type: 'yesnoradio',
+        // targetfieldrequired: 'getFile', // to make the attache required on yes
+        // targetfield: 'Status',
+        // targetfieldvalue: 'completed',
+        type: 'radio',
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
@@ -1523,6 +1536,12 @@ var Information_Form = [
         DisplayName: 'اظهار في التقرير',
         DisplayNameEn: 'Show In Report',
         type: 'radio',
+        options: {
+          choices: [
+            { display: 'yes', value: 'yes' },
+            { display: 'no', value: 'no' },
+          ],
+        },
       },
       // {
       //     "InternalName": "SupportDocumentsDescription",

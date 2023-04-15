@@ -157,8 +157,8 @@ var Information_Form = [
         type: 'lookuptoparentchild',
         parentlist: 'Projects', //parent list name
         parentinternalname: 'RelatedInitiative', // internal name in parent list
-        // source: 'InitiativeMilestones', // target list
-        source: 'Milestones',
+        source: 'InitiativeMilestones', // target list
+        // source: 'Milestones',
         sourceinternalname: 'InitiativeCode', // column in target list
         Dispfieldkey: 'Name', //display in dropdown
         valfieldkey: 'Title', // value in dropdown
@@ -197,19 +197,19 @@ var Information_Form = [
     descriptionEn: '',
     subFields: [
       {
-        InternalName: 'SupportDocumentsDescription',
-        DisplayNameEn: 'Support Documents Description',
-        DisplayName: 'وصف الوثائق الداعمة',
-        type: 'multiline',
-        maxchar: '5000',
-      },
-      {
         InternalName: 'getfile',
         DisplayName: 'الوثائق داعمة',
         DisplayNameEn: 'Supporting Documents',
         type: 'file',
         docPurpose:"Spporting_Documents",
         withAddBtn: 'true',
+      },
+      {
+        InternalName: 'SupportDocumentsDescription',
+        DisplayNameEn: 'Support Documents Description',
+        DisplayName: 'وصف الوثائق الداعمة',
+        type: 'multiline',
+        maxchar: '5000',
       },
     ],
   },

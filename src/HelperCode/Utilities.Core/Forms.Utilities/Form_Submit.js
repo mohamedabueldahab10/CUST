@@ -15,6 +15,8 @@ var projectManagerPickedToProjectCenter = '';
 
 var kpiName = '', kpiType = '', kpiSector = '', kpiSubSector = '', kpiMainGoalRelated = '', kpiSubGoalRelated = '', kpiPortfolio = '', kpiPerformanceAnalysis = '', kpiYearPicked = '', kpiMidPicked = '', kpiQuarterPicked = '', kpiMonthPicked = '', kpiPeriodTypeUpdate = '', kpiRecurrenceChanged = '';
 
+var masterIdWhenCreate = 0
+
 var allEnterpriseResources = [], projectBuildTeamArr = [], projectManagerPickerToEpm;
 
 var fieldTargetListInMaster = []// save the field value in other list as a master section
@@ -166,7 +168,13 @@ window.New_Data_Submit = {
     var pickervalid = true; //check required people picker
     var multiSelectValid = true
     $("[type=picker][required]").each(function () {
-      if ($(this).find("span.sp-peoplepicker-userSpan").length == 0) {
+      if (listkey == 'changerequest' && $(this).find("span.sp-peoplepicker-userSpan").length == 0) {
+        if ($(this).attr("data-email") == enternameemail) {
+          pickervalid = false;
+          $(this).addClass("picker-error");
+          $(this).removeClass("picker-valid");
+        }
+      } else if ($(this).find("span.sp-peoplepicker-userSpan").length == 0) {
         pickervalid = false;
         $(this).addClass("picker-error");
         $(this).removeClass("picker-valid");
@@ -2225,7 +2233,6 @@ var New_Master_Details_Submit = {
                 $(this).val() / 100
               );
             } else if ($(this).attr("type") == "multiselect") {
-
               var myselections = [];
               $(this).find("input:checkbox:checked").each(function () {
                 myselections.push($(this).val());
@@ -2298,6 +2305,13 @@ var New_Master_Details_Submit = {
 
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
+
+        // get id of master when create to use it in master field of master section
+        var newItemMasterLength = $('.Details-Item.NewItem ul[data-fieldtargetlist]').length
+        if (newItemMasterLength) {
+          masterIdWhenCreate = New_Master_Details_Submit.g.oListItem.get_id();
+        }
+
         if ($(".Details-Item.EditItem").length > 0) {
           //calling Edit master submit
           $("[data-target_list]").each(function () {
@@ -2418,7 +2432,7 @@ var New_Master_Details_Submit = {
   g: {},
 };
 
-var numberOfMaster = 0
+var countSuccessMaster = 0
 
 
 var Edit_Master_Details_Submit = {
@@ -2426,7 +2440,7 @@ var Edit_Master_Details_Submit = {
     var clientContext = new SP.ClientContext.get_current();
     var CurrList, oList, itemID;
 
-    var masterLength = $("[data-target_list] .Details-Item.EditItem").length
+    // var masterLength = $("[data-target_list][data-section_type=master]").length
 
     $("[data-target_list] .Details-Item.EditItem").each(function () {
 
@@ -2462,6 +2476,7 @@ var Edit_Master_Details_Submit = {
         itemID +
         '"] > .CFIELD:not(.dont-submit):not(.dont-request) > .multiselect-container'
       ).each(function () {
+
         if ($(this).attr("type") == "picker") {
           if ($(this).find("span.sp-peoplepicker-userSpan").length) {
             var id =
@@ -2541,32 +2556,25 @@ var Edit_Master_Details_Submit = {
             $(this).val() / 100
           );
         } else if ($(this).attr("type") == "multiselect") {
-          
-          // handle fieldTargetList to save the field in other list not master details list
+
+          // handle fieldTargetList to save the field in other list not master details list like delivrable in benifit in edit initiative
           var masterFieldTargetList = $(this).data("fieldtargetlist")
 
-          // if (masterFieldTargetList && masterFieldTargetList != "undefined") {
-          //   var valuesSelection = []
-          //   var fieldId = $(this).attr("id")
-          //   $(this).find("input:checkbox:checked").not(":disabled").each(function () {
-          //     fieldTargetListInMaster.push({ targetList:masterFieldTargetList,fieldId: fieldId, fieldValue: $(this).val() })
-          //   });
-          //   // fieldTargetListInMaster.push({ targetList: masterFieldTargetList, valuesSelection: valuesSelection })
-          // } else {
-
-
-          var myselections = [];
-          $(this)
-            .find("input:checkbox:checked")
-            .each(function () {
-              myselections.push($(this).val());
-            });
-          myselections = myselections.join(":::");
-          Edit_Master_Details_Submit.g.oListItem.set_item(
-            $(this).attr("myfield"),
-            myselections
-          );
-          //}
+          if (masterFieldTargetList && masterFieldTargetList != "undefined") {
+            // will loop on value on when update the values
+          } else {
+            var myselections = [];
+            $(this)
+              .find("input:checkbox:checked")
+              .each(function () {
+                myselections.push($(this).val());
+              });
+            myselections = myselections.join(":::");
+            Edit_Master_Details_Submit.g.oListItem.set_item(
+              $(this).attr("myfield"),
+              myselections
+            );
+          }
         } else
           Edit_Master_Details_Submit.g.oListItem.set_item(
             $(this).attr("id"),
@@ -2590,7 +2598,7 @@ var Edit_Master_Details_Submit = {
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
 
-        numberOfMaster++
+        countSuccessMaster++
 
         // determinig folder directory
         if (USERisWF && workflowname == "Project") {
@@ -2602,26 +2610,26 @@ var Edit_Master_Details_Submit = {
           $(".errormsg").hide();
           $(".successmsg").show();
           $(".btn-save").addClass("success");
-          
+
           if (listkey == 'mainkpi') { // to update the kpi result list
             Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis, kpiRecurrenceChanged)
           } else {
-            // if (fieldTargetListInMaster.length) {
-            //   console.log(masterLength,"masterLength")
-            //   console.log(numberOfMaster,"NumberOfMaster")
-            //   if(masterLength == numberOfMaster){
-            //     Field_Master_Details.init(fieldTargetListInMaster)
-            //   }
-            //   // 
-            // } else {
-            window.location =
-              _spPageContextInfo.webAbsoluteUrl +
-              "/SitePages/View.aspx?ListKey=" +
-              listkey +
-              "&IID=" +
-              IID +
-              PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
-            // }
+
+            var fieldTargetListLength = $('.Details-Item.EditItem ul[data-fieldtargetlist]').length
+
+            if (fieldTargetListLength > 0) {
+              Field_MasterDetails_Data.init()
+            } else {
+              window.location =
+                _spPageContextInfo.webAbsoluteUrl +
+                "/SitePages/View.aspx?ListKey=" +
+                listkey +
+                "&IID=" +
+                IID +
+                PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+            }
+
+
           }
         }
       }),
@@ -2635,40 +2643,165 @@ var Edit_Master_Details_Submit = {
   g: {},
 };
 
-// var Field_Master_Details = {
-//   init: function (fieldTargetData) {
-//     debugger
-//     if (fieldTargetData.length) {
-//       var clientContext = new SP.ClientContext.get_current();
-//       var CurrList, oList, valuesSelection;
-//       debugger
-//       CurrList = fieldTargetData[0].targetList
-//       valuesSelection = fieldTargetData[0].valuesSelection
 
-//       var oList = clientContext.get_web().get_lists().getByTitle(CurrList);
+// to get the data of  master details field in master details section like deliv in benifit in initiative edit for (multi select)
+var Field_MasterDetails_Data = {
+  init: function () {
 
-//       var itemCreateInfo = new SP.ListItemCreationInformation();
-//       Field_Master_Details.g.oListItem = oList.addItem(itemCreateInfo);
+    var masterFieldTargetList = ""
 
-//       valuesSelection.forEach(el => {
-//         Field_Master_Details.g.oListItem.set_item(el.fieldId, el.fieldValue);
-//       })
+    $('.Details-Item.EditItem ul[data-fieldtargetlist]').each(function () {
 
-//       Field_Master_Details.g.oListItem.update();
-//       clientContext.load(Field_Master_Details.g.oListItem);
+      masterFieldTargetList = $(this).data("fieldtargetlist")
+      var fieldmasterkey = $(this).data("fieldmasterkey")
+      var fieldId = $(this).attr("id")
+
+      var parentCode = ""
+      if (PCODE) {
+        parentCode = PCODE
+      } else if (ICODE) {
+        parentCode = ICODE
+      } else if (STCODE) {
+        parentCode = STCODE
+      }
+
+      $(this).find("input:checkbox:checked").not(":disabled").each(function (index) {
+
+        debugger
+
+        var fieldMasterId = $(this).closest(".Details-Item.EditItem").data('id')
+
+        if (countSuccessMaster == 1) {
+          if (fieldTargetListInMaster.filter(e => ((e.masterId == fieldMasterId) && (e.fieldValue == $(this).val())))) {
+
+            fieldTargetListInMaster.push({ targetList: masterFieldTargetList, fieldId: fieldId, fieldValue: $(this).val(), masterId: fieldMasterId, parentCode: parentCode, fieldmasterkey: fieldmasterkey })
+          }
+        }
+      });
+    })
+
+    var newItemMasterLength = $('.Details-Item.NewItem ul[data-fieldtargetlist]').length
+
+    $('.Details-Item.NewItem ul[data-fieldtargetlist]').each(function () {
+      masterFieldTargetList = $(this).data("fieldtargetlist")
+      var fieldmasterkey = $(this).data("fieldmasterkey")
+      var fieldId = $(this).attr("id")
+
+      var parentCode = ""
+      if (PCODE) {
+        parentCode = PCODE
+      } else if (ICODE) {
+        parentCode = ICODE
+      } else if (STCODE) {
+        parentCode = STCODE
+      }
+
+      // to get the correct master id if we add two section of master
+      if (newItemMasterLength) {
+        newItemMasterLength = newItemMasterLength - 1
+      }
+
+      $(this).find("input:checkbox:checked").not(":disabled").each(function (index) {
+
+        var fieldMasterId = Number(masterIdWhenCreate) - newItemMasterLength
+        if (countSuccessMaster == 1) {
 
 
-//       clientContext.executeQueryAsync(
-//         Function.createDelegate(this, function () {
-//           console.log("INSIDE SUUUUUUUUUUUUUUUUC")
-//         })
-//       )
+          if (fieldTargetListInMaster.filter(e => ((e.masterId == fieldMasterId) && (e.fieldValue == $(this).val())))) {
+            debugger
+            fieldTargetListInMaster.push({ targetList: masterFieldTargetList, fieldId: fieldId, fieldValue: $(this).val(), masterId: fieldMasterId, parentCode: parentCode, fieldmasterkey: fieldmasterkey })
+          }
+        }
+      })
+    })
 
-//     }
 
-//   },
-//   g: {},
-// }
+    if (masterFieldTargetList && masterFieldTargetList != "undefined" && countSuccessMaster == 1) { // countSuccessMaster put it one to invoke the Field_Master_Details only one time if we have multi sections of master details in form
+      Field_Master_Details.init(fieldTargetListInMaster)
+    }
+
+
+  }
+}
+
+// submit master details field in master details section like deliv in benifit in initiative edit for (multi select)
+var Field_Master_Details = {
+  init: function (fieldTargetData) {
+    debugger
+    if (fieldTargetData.length) {
+      var clientContext = new SP.ClientContext.get_current();
+      var CurrList, oList, valueSelection, code;
+
+      CurrList = fieldTargetData[0].targetList
+      valueSelection = fieldTargetData[0].fieldValue
+
+
+      var oList = clientContext.get_web().get_lists().getByTitle(CurrList);
+
+      var itemCreateInfo = new SP.ListItemCreationInformation();
+      Field_Master_Details.g.oListItem = oList.addItem(itemCreateInfo);
+
+      valueSelection = valueSelection.split("-")
+      valueSelection = valueSelection[valueSelection.length - 1]
+
+      var prt1 = fieldTargetData[0].fieldmasterkey.substring(0, 2).toUpperCase(),
+        prt2 = String(new Date().getFullYear()).slice(4 - 2),
+        prt3 = fieldTargetData[0].masterId.toString().padStart(4, "0");
+
+      code = prt1 + "-" + prt2 + "-" + prt3 + "-" + valueSelection
+
+      Field_Master_Details.g.oListItem.set_item("Title", code);
+
+
+      // valueSelection.forEach(el => {
+      Field_Master_Details.g.oListItem.set_item(fieldTargetData[0].fieldId, fieldTargetData[0].fieldValue);
+
+      Field_Master_Details.g.oListItem.set_item("MasterKey", fieldTargetData[0].fieldmasterkey);
+      Field_Master_Details.g.oListItem.set_item('MasterID', fieldTargetData[0].masterId);
+
+      if (PCODE) {
+        Field_Master_Details.g.oListItem.set_item('ProjectCode', fieldTargetData[0].parentCode);
+      } else if (ICODE) {
+        Field_Master_Details.g.oListItem.set_item('InitiativeCode', fieldTargetData[0].parentCode);
+      } else if (STCODE) {
+        Field_Master_Details.g.oListItem.set_item('StrategicPartnershipCode', fieldTargetData[0].parentCode);
+      }
+
+      // New_Data_Submit.g.oListItem.set_item("MasterKey", "projects");
+      // New_Data_Submit.g.oListItem.set_item("MasterID", relatedProjectId);
+
+      // })
+
+
+
+      Field_Master_Details.g.oListItem.update();
+      clientContext.load(Field_Master_Details.g.oListItem);
+
+
+      clientContext.executeQueryAsync(
+        Function.createDelegate(this, function () {
+          console.log(fieldTargetData, "fieldTargetData")
+          debugger
+          fieldTargetData.shift()
+          Field_Master_Details.init(fieldTargetData)
+        })
+      )
+
+    } else {
+      window.location =
+        _spPageContextInfo.webAbsoluteUrl +
+        "/SitePages/View.aspx?ListKey=" +
+        listkey +
+        "&IID=" +
+        IID +
+        PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+    }
+
+
+
+  },
+  g: {},
+}
 
 //upload multiple files to specific folder with column assigning
 function readFiles() {
