@@ -173,7 +173,7 @@ window.CrModeFunctionality = {
 					// ListInfo.g.attachmentsExtensions();
 
 					changeResources();
-					if (isNew || isEdit) ListInfo.g.newDetail();
+					// if (isNew || isEdit) ListInfo.g.newDetail();
 					// handle master details
 					if ($(".cr-related-item-section[data-section_type]").length > 0) {
 						$(".cr-related-item-section[data-section_type]").each(function () {
@@ -209,7 +209,7 @@ window.CrModeFunctionality = {
 
 						if (crMasterDetailsArrayRequest.length) {
 							$(".cr-related-item-section .CFIELD.dont-submit").remove() // to remove the master details field don't submit like amount
-							
+
 							CR_Master_Details_Request.init(crMasterDetailsArrayRequest[0])
 						} else {
 							$(".cr-related-item-section .CFIELD").addClass("dont-submit"); // remove it to not apply dont-submit on all fields
@@ -1918,105 +1918,203 @@ window.CrSetChangeBody = {
 		changeRequestBodyMaster.forEach(function (o, i, a) {
 
 			//> input#${o.InternalName}
-			
-			$(`.cr-related-item-section[data-target_list=${o.listName}] .Details-Item.EditItem input#${o.InternalName}`).each(function () {
-				
-				console.log($(this).attr('id'), "iiiiiiiiiii")
-				var masterId = $(this).parent().parent().data("id")
-				var arrayMasterId = Number(o.masterSectionId)
-				// masterId = Number(masterId)
+			if (o.masterType == "edit") {
+				$(`.cr-related-item-section[data-target_list=${o.listName}] .Details-Item.EditItem input#${o.InternalName}`).each(function () {
 
-				if (masterId == arrayMasterId) {
+					console.log($(this).attr('id'), "iiiiiiiiiii")
+					var masterId = $(this).parent().parent().data("id")
+					var arrayMasterId = Number(o.masterSectionId)
+					// masterId = Number(masterId)
 
-					if ($(this).attr("type") == "picker") {
-						if ($(this).find("span.sp-peoplepicker-userSpan").length) {
-							var id =
-								$(this).attr("INppicker").indexOf("+++") == -1
-									? $(this).attr("INppicker")
-									: $(this).attr("INppicker").split("+++")[0];
-							var ppp =
-								$(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
-									undefined
-									? ""
-									: SP.FieldUserValue.fromUser(
-										$(this).find("span.sp-peoplepicker-userSpan").attr("sid")
-									); //.split('|').slice(-1)[0]
-							o.value = ppp
-						}
-					} else if ($(this).attr("type") == "multipicker") {
-						if ($(this).find("span.sp-peoplepicker-userSpan").length) {
-							var id = $(this).attr("INppicker");
-							var users = [];
-							$("span.sp-peoplepicker-userSpan").each(function () {
+					if (masterId == arrayMasterId) {
+
+						if ($(this).attr("type") == "picker") {
+							if ($(this).find("span.sp-peoplepicker-userSpan").length) {
+								var id =
+									$(this).attr("INppicker").indexOf("+++") == -1
+										? $(this).attr("INppicker")
+										: $(this).attr("INppicker").split("+++")[0];
 								var ppp =
-									$(this).attr("sid") ==
+									$(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
 										undefined
 										? ""
 										: SP.FieldUserValue.fromUser(
-											$(this).attr("sid").split("|").slice(-1)[0]
-										);
+											$(this).find("span.sp-peoplepicker-userSpan").attr("sid")
+										); //.split('|').slice(-1)[0]
+								o.value = ppp
+							}
+						} else if ($(this).attr("type") == "multipicker") {
+							if ($(this).find("span.sp-peoplepicker-userSpan").length) {
+								var id = $(this).attr("INppicker");
+								var users = [];
+								$("span.sp-peoplepicker-userSpan").each(function () {
+									var ppp =
+										$(this).attr("sid") ==
+											undefined
+											? ""
+											: SP.FieldUserValue.fromUser(
+												$(this).attr("sid").split("|").slice(-1)[0]
+											);
 
-								console.log('aaaa', ppp);
-								users.push(ppp)
-							})
-							o.value = users
-						}
-					} else if ($(this).attr("type") == "date") {
-						if ($(this).val()) {
-							var dateval = $(this).val().replace("-", "/");
-							var ydate = !dateval
-								? ""
-								: [dateval.slice(5, 10), dateval.slice(0, 4)]
-									.join("/")
-									.replace("-", "/");
-							if (dateval)
-								o.value = ydate
+									console.log('aaaa', ppp);
+									users.push(ppp)
+								})
+								o.value = users
+							}
+						} else if ($(this).attr("type") == "date") {
+							if ($(this).val()) {
+								var dateval = $(this).val().replace("-", "/");
+								var ydate = !dateval
+									? ""
+									: [dateval.slice(5, 10), dateval.slice(0, 4)]
+										.join("/")
+										.replace("-", "/");
+								if (dateval)
+									o.value = ydate
+							} else {
+								o.value = null
+							}
+						} else if ($(this).attr("type") == "radio") {
+							var checkedvalue = $(
+								'input[id="' + $(this).attr("id") + '"]:checked'
+							).val();
+							o.value = checkedvalue
+						} else if ($(this).attr("type") == "checkbox") {
+							var checkedvalue = $(
+								'input[id="' + $(this).attr("id") + '"]:checked'
+							).val();
+							o.value = true
+						} else if ($(this).attr("type") == "dropdown") {
+							o.value = $(this).val()
+
+						} else if ($(this).hasClass("percentagefield")) {
+
+							o.value = $(this).val() / 100
+						} else if ($(this).attr("type") == "multiselect") {
+
+							// handle fieldTargetList to save the field in other list not master details list like delivrable in benifit in edit initiative
+							var masterFieldTargetList = $(this).data("fieldtargetlist")
+
+							if (masterFieldTargetList && masterFieldTargetList != "undefined") {
+								// will loop on value on when update the values
+							} else {
+								var myselections = [];
+								$(this)
+									.find("input:checkbox:checked")
+									.each(function () {
+										myselections.push($(this).val());
+									});
+								myselections = myselections.join(":::");
+
+								o.value = myselections
+
+							}
 						} else {
-							o.value = null
+							o.value = $(this).val()
 						}
-					} else if ($(this).attr("type") == "radio") {
-						var checkedvalue = $(
-							'input[id="' + $(this).attr("id") + '"]:checked'
-						).val();
-						o.value = checkedvalue
-					} else if ($(this).attr("type") == "checkbox") {
-						var checkedvalue = $(
-							'input[id="' + $(this).attr("id") + '"]:checked'
-						).val();
-						o.value = true
-					} else if ($(this).attr("type") == "dropdown") {
-						o.value = $(this).val()
-
-					} else if ($(this).hasClass("percentagefield")) {
-
-						o.value = $(this).val() / 100
-					} else if ($(this).attr("type") == "multiselect") {
-
-						// handle fieldTargetList to save the field in other list not master details list like delivrable in benifit in edit initiative
-						var masterFieldTargetList = $(this).data("fieldtargetlist")
-
-						if (masterFieldTargetList && masterFieldTargetList != "undefined") {
-							// will loop on value on when update the values
-						} else {
-							var myselections = [];
-							$(this)
-								.find("input:checkbox:checked")
-								.each(function () {
-									myselections.push($(this).val());
-								});
-							myselections = myselections.join(":::");
-
-							o.value = myselections
-
-						}
-					} else {
-						o.value = $(this).val()
 					}
-				}
-			})
+				})
+			} else if (o.masterType == "new") {
+
+				$(`.cr-related-item-section[data-target_list=${o.listName}] .Details-Item.NewItem input#${o.InternalName}`).each(function () {
+
+					var masterId = $(this).parent().parent().data("index")
+					var arrayMasterId = Number(o.masterSectionId)
+
+					if (masterId == arrayMasterId) {
+						if ($(this).attr("type") == "picker") {
+							if ($(this).find("span.sp-peoplepicker-userSpan").length) {
+								var id =
+									$(this).attr("INppicker").indexOf("+++") == -1
+										? $(this).attr("INppicker")
+										: $(this).attr("INppicker").split("+++")[0];
+								var ppp =
+									$(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
+										undefined
+										? ""
+										: SP.FieldUserValue.fromUser(
+											$(this).find("span.sp-peoplepicker-userSpan").attr("sid")
+										); //.split('|').slice(-1)[0]
+								o.value = ppp
+							}
+						} else if ($(this).attr("type") == "multipicker") {
+							if ($(this).find("span.sp-peoplepicker-userSpan").length) {
+								var id = $(this).attr("INppicker");
+								var users = [];
+								$("span.sp-peoplepicker-userSpan").each(function () {
+									var ppp =
+										$(this).attr("sid") ==
+											undefined
+											? ""
+											: SP.FieldUserValue.fromUser(
+												$(this).attr("sid").split("|").slice(-1)[0]
+											);
+
+									console.log('aaaa', ppp);
+									users.push(ppp)
+								})
+								o.value = users
+							}
+						} else if ($(this).attr("type") == "date") {
+							if ($(this).val()) {
+								var dateval = $(this).val().replace("-", "/");
+								var ydate = !dateval
+									? ""
+									: [dateval.slice(5, 10), dateval.slice(0, 4)]
+										.join("/")
+										.replace("-", "/");
+								if (dateval)
+									o.value = ydate
+							} else {
+								o.value = null
+							}
+						} else if ($(this).attr("type") == "radio") {
+							var checkedvalue = $(
+								'input[id="' + $(this).attr("id") + '"]:checked'
+							).val();
+							o.value = checkedvalue
+						} else if ($(this).attr("type") == "checkbox") {
+							var checkedvalue = $(
+								'input[id="' + $(this).attr("id") + '"]:checked'
+							).val();
+							o.value = true
+						} else if ($(this).attr("type") == "dropdown") {
+							o.value = $(this).val()
+
+						} else if ($(this).hasClass("percentagefield")) {
+
+							o.value = $(this).val() / 100
+						} else if ($(this).attr("type") == "multiselect") {
+
+							// handle fieldTargetList to save the field in other list not master details list like delivrable in benifit in edit initiative
+							var masterFieldTargetList = $(this).data("fieldtargetlist")
+
+							if (masterFieldTargetList && masterFieldTargetList != "undefined") {
+								// will loop on value on when update the values
+							} else {
+								var myselections = [];
+								$(this)
+									.find("input:checkbox:checked")
+									.each(function () {
+										myselections.push($(this).val());
+									});
+								myselections = myselections.join(":::");
+
+								o.value = myselections
+
+							}
+						} else {
+							o.value = $(this).val()
+						}
+					}
+
+
+				})
+			}
+
 
 			if (i == a.length - 1) {
-				debugger
+
 				Data_Submit.set_item("ChangeBodyMaster", JSON.stringify(changeRequestBodyMaster));
 			}
 
@@ -2090,7 +2188,7 @@ window.executeCR = {
 
 					var masterLength = executeCR.g.crBodyMaster.length
 					var masterData = executeCR.g.crBodyMaster
-					debugger
+
 					if (masterLength > 0) {
 						arrangeCRMasterDetails.init(masterData)
 					} else {
@@ -2392,6 +2490,8 @@ var CR_Master_Details_Request = {
 			CR_Master_Details_Request.init(crMasterDetailsArrayRequest[0]);
 			crMasterDetailsArrayRequest.shift(); //remove 0 index
 		} else {
+			if (isNew || isEdit) ListInfo.g.newDetail();
+
 			$(".cr-related-item-section .CFIELD").addClass("dont-submit"); // remove it to not apply dont-submit on all fields
 			Fill_BodyMaster.init()
 		}
@@ -2412,13 +2512,14 @@ var CR_Master_Details_Request = {
 var Fill_BodyMaster = {
 	init: function () {
 
+
+
 		$(".cr-related-item-section[data-target_list] .Details-Item.EditItem").each(function () {
 
 			var CurrList = $(this).closest("[data-target_list]").attr("data-target_list");
 			itemID = $(this).attr("data-id");
 
-			console.log(CurrList, "CurrList")
-			debugger
+
 			$(
 				'[data-target_list="' +
 				CurrList +
@@ -2446,7 +2547,7 @@ var Fill_BodyMaster = {
 				itemID +
 				'"] > .CFIELD:not(.dont-request) > .multiselect-container'
 			).each(function () {
-				debugger
+
 				var fieldValue
 
 				if ($(this).attr("type") == "picker") {
@@ -2551,6 +2652,8 @@ var Fill_BodyMaster = {
 					type: $(this).attr("type"),
 					originalValue: fieldValue,
 					value: '',
+					masterType: "edit",
+					relatedItemCode: crRelatedItemCode
 					// DisplayName: currentJsonValues[0].DisplayName,
 					// DisplayNameEn: currentJsonValues[0].DisplayName,
 
@@ -2564,10 +2667,64 @@ var Fill_BodyMaster = {
 	}
 }
 
+window.Add_New_CRMaster = {
+	init: function () {
+
+		console.log(crRelatedItemCode, "crRelatedItemCode new")
+
+		$(".cr-related-item-section[data-target_list] .Details-Item.NewItem").each(function () {
+			console.log("Inside New Master Section")
+			var CurrList = $(this).closest("[data-target_list]").attr("data-target_list");
+			itemIndex = $(this).attr("data-index");
+
+			// debugger
+			$(this)
+				.find(
+					".CFIELD>input," +
+					".CFIELD>div[type=picker]," +
+					".CFIELD>div[type=multipicker]," +
+					".CFIELD>select[type=dropdown]," +
+					".CFIELD>textarea," +
+					".CFIELD>.multiselect-container"
+				)
+				.each(function () {
+
+					var fieldValue = ""
+
+					changeRequestBodyMaster.push({
+
+						// label: crlabel,
+						// labelEn: crlabelEn,
+						// description: crdescription,
+						// descriptionEn: crdescriptionEn,
+						// //
+						listName: CurrList,
+						listKey: RListKey,
+						// //
+						itemId: RID,
+						masterSectionId: itemIndex,
+						InternalName: $(this).attr("id"),
+						type: $(this).attr("type"),
+						originalValue: fieldValue,
+						value: '',
+						masterType: "new",
+						relatedItemCode: crRelatedItemCode
+						// DisplayName: currentJsonValues[0].DisplayName,
+						// DisplayNameEn: currentJsonValues[0].DisplayName,
+
+
+					})
+				})
+
+		})
+	}
+}
+
 
 var arrangeCRMasterDetails = {
 	init: function (masterData) {
 		console.log(masterData, "master daaaaaaata")
+
 		debugger
 		var masterDataFormated = []
 
@@ -2584,15 +2741,15 @@ var arrangeCRMasterDetails = {
 				masterDataFormated.forEach(e => {
 					if (checkIfExist) {
 						if ((e.listName == el.listName) && (e.masterSectionId == el.masterSectionId)) {
-							e.values.push({ InternalName: el.InternalName, type: el.type, originalValue: el.originalValue, value: el.value, masterSectionId: el.masterSectionId })
+							e.values.push({ InternalName: el.InternalName, type: el.type, originalValue: el.originalValue, value: el.value, masterSectionId: el.masterSectionId, masterType: el.masterType })
 						}
 					} else {
 						checkIfExist = true
-						masterDataFormated.push({ listName: el.listName, listKey: el.listKey, itemId: el.itemId, masterSectionId: el.masterSectionId, values: [{ InternalName: el.InternalName, type: el.type, originalValue: el.originalValue, value: el.value, masterSectionId: el.masterSectionId }] })
+						masterDataFormated.push({ listName: el.listName, listKey: el.listKey, relatedItemCode: el.relatedItemCode, itemId: el.itemId, masterSectionId: el.masterSectionId, masterType: el.masterType, values: [{ InternalName: el.InternalName, type: el.type, originalValue: el.originalValue, value: el.value, masterSectionId: el.masterSectionId, masterType: el.masterType }] })
 					}
 				})
 			} else {
-				masterDataFormated.push({ listName: el.listName, listKey: el.listKey, itemId: el.itemId, masterSectionId: el.masterSectionId, values: [{ InternalName: el.InternalName, type: el.type, originalValue: el.originalValue, value: el.value, masterSectionId: el.masterSectionId }] })
+				masterDataFormated.push({ listName: el.listName, listKey: el.listKey, relatedItemCode: el.relatedItemCode, itemId: el.itemId, masterType: el.masterType, masterSectionId: el.masterSectionId, values: [{ InternalName: el.InternalName, type: el.type, originalValue: el.originalValue, value: el.value, masterSectionId: el.masterSectionId, masterType: el.masterType }] })
 			}
 		})
 
@@ -2609,82 +2766,96 @@ var arrangeCRMasterDetails = {
 }
 
 
+
 window.set_Cr_MastreDetais = {
 	init: function (masterDataFormated) {
-		debugger
+
+		var typeOfSubmit = masterDataFormated[0].masterType
+
+		if (typeOfSubmit == "new") {
+			new_Cr_MasterDetails.init(masterDataFormated)
+		} else if (typeOfSubmit == "edit") {
+			edit_Cr_MastreDetails.init(masterDataFormated)
+		}
+	}
+
+}
+
+
+
+window.edit_Cr_MastreDetails = {
+	init: function (masterDataFormated) {
+
+
 
 		var clientContext = new SP.ClientContext.get_current();
 		var oList = clientContext
 			.get_web()
 			.get_lists()
 			.getByTitle(masterDataFormated[0].listName);
-		set_Cr_MastreDetais.g.oListItem = oList.getItemById(masterDataFormated[0].masterSectionId);
-		set_Cr_MastreDetais.g.masterDataFormated = masterDataFormated
+
+		edit_Cr_MastreDetails.g.oListItem = oList.getItemById(masterDataFormated[0].masterSectionId);
+		edit_Cr_MastreDetails.g.masterDataFormated = masterDataFormated
 		var value = "";
 		var isOriginalValue = false;
 		masterDataFormated[0].values.forEach((o, i, a) => {
 			// if (o.InternalName != "Amount") { // will remove it jsut added to test if submit successfully
-				value = o.value ? o.value : o.originalValue;
-		
+			value = o.value ? o.value : o.originalValue;
 
-				if (o.type == "picker") {
-					if (o.value) {
-						value = o.value
-						set_Cr_MastreDetais.g.oListItem.set_item(
-							o.InternalName,
-							SP.FieldUserValue.fromUser(value.$5c_1)
-						);
-					} else if (o.originalValue) {
-						value = o.originalValue
-						set_Cr_MastreDetais.g.oListItem.set_item(
-							o.InternalName,
-							SP.FieldUserValue.fromUser(value.$5c_1)
-						);
-					}
-					console.log(value, "vaaaaaaaaaa")
-					debugger
 
-			
-				} else if (o.type == "multipicker") {
-					set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, value);
-				} else if (o.type == "datetime") {
-					set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, new Date(value));
-				} else if (o.type == "datetime-local") {
-					set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, new Date(value));
-				} else if (o.type == "radio") {
-					set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, value);
-				} else if (o.type == "checkbox") {
-					set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, eval(value));
-				} else if (o.type == "dropdown") {
-					set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, value);
+			if (o.type == "picker") {
+				if (o.value) {
+					value = o.value
+					edit_Cr_MastreDetails.g.oListItem.set_item(
+						o.InternalName,
+						SP.FieldUserValue.fromUser(value.$5c_1)
+					);
+				} else if (o.originalValue) {
+					value = o.originalValue
+					edit_Cr_MastreDetails.g.oListItem.set_item(
+						o.InternalName,
+						SP.FieldUserValue.fromUser(value.$5c_1)
+					);
 				}
-				else if (o.type == "multiselect") {
-					set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, value);
-				}
-				else {
-					set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, value);
-				}
+
+
+
+			} else if (o.type == "multipicker") {
+				edit_Cr_MastreDetails.g.oListItem.set_item(o.InternalName, value);
+			} else if (o.type == "datetime") {
+				edit_Cr_MastreDetails.g.oListItem.set_item(o.InternalName, new Date(value));
+			} else if (o.type == "datetime-local") {
+				edit_Cr_MastreDetails.g.oListItem.set_item(o.InternalName, new Date(value));
+			} else if (o.type == "radio") {
+				edit_Cr_MastreDetails.g.oListItem.set_item(o.InternalName, value);
+			} else if (o.type == "checkbox") {
+				edit_Cr_MastreDetails.g.oListItem.set_item(o.InternalName, eval(value));
+			} else if (o.type == "dropdown") {
+				edit_Cr_MastreDetails.g.oListItem.set_item(o.InternalName, value);
+			}
+			else if (o.type == "multiselect") {
+				edit_Cr_MastreDetails.g.oListItem.set_item(o.InternalName, value);
+			}
+			else {
+				edit_Cr_MastreDetails.g.oListItem.set_item(o.InternalName, value);
+			}
 
 			// }
 		});
 
-		set_Cr_MastreDetais.g.oListItem.update();
-		clientContext.load(set_Cr_MastreDetais.g.oListItem);
+		edit_Cr_MastreDetails.g.oListItem.update();
+		clientContext.load(edit_Cr_MastreDetails.g.oListItem);
 
 		clientContext.executeQueryAsync(
 			Function.createDelegate(this, function () {
-				var masterDataFormatedArr = set_Cr_MastreDetais.g.masterDataFormated
+				var masterDataFormatedArr = edit_Cr_MastreDetails.g.masterDataFormated
 
 				masterDataFormatedArr.shift();
 
 				if (masterDataFormatedArr.length) {
-
 					set_Cr_MastreDetais.init(masterDataFormatedArr)
 				} else {
-
 					Task_Edit_Data.init();
-
-					
 				}
 
 			}),
@@ -2697,6 +2868,114 @@ window.set_Cr_MastreDetais = {
 				);
 			})
 		);
+
+	},
+	g: {},
+}
+
+
+window.new_Cr_MasterDetails = {
+	init: function (masterDataFormated) {
+		var clientContext = new SP.ClientContext.get_current();
+
+		var oList = clientContext.get_web().get_lists().getByTitle(masterDataFormated[0].listName);
+
+		var itemCreateInfo = new SP.ListItemCreationInformation();
+		new_Cr_MasterDetails.g.oListItem = oList.addItem(itemCreateInfo);
+		new_Cr_MasterDetails.g.masterDataFormated = masterDataFormated
+
+
+		masterDataFormated[0].values.forEach((o, i, a) => {
+			// if (o.InternalName != "Amount") { // will remove it jsut added to test if submit successfully
+			value = o.value ? o.value : o.originalValue;
+
+
+			if (o.type == "picker") {
+				if (o.value) {
+					value = o.value
+					new_Cr_MasterDetails.g.oListItem.set_item(
+						o.InternalName,
+						SP.FieldUserValue.fromUser(value.$5c_1)
+					);
+				} else if (o.originalValue) {
+					value = o.originalValue
+					new_Cr_MasterDetails.g.oListItem.set_item(
+						o.InternalName,
+						SP.FieldUserValue.fromUser(value.$5c_1)
+					);
+				}
+
+			} else if (o.type == "multipicker") {
+				new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, value);
+			} else if (o.type == "datetime") {
+				new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, new Date(value));
+			} else if (o.type == "datetime-local") {
+				new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, new Date(value));
+			} else if (o.type == "radio") {
+				new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, value);
+			} else if (o.type == "checkbox") {
+				new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, eval(value));
+			} else if (o.type == "dropdown") {
+				new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, value);
+			}
+			else if (o.type == "multiselect") {
+				new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, value);
+			}
+			else {
+				new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, value);
+			}
+
+			new_Cr_MasterDetails.g.oListItem.set_item("MasterID", masterDataFormated[0].itemId);
+			new_Cr_MasterDetails.g.oListItem.set_item("MasterKey", masterDataFormated[0].listKey);
+
+			var prt1 = masterDataFormated[0].listName.substring(0, 2).toUpperCase(),
+				prt2 = String(new Date().getFullYear()).slice(4 - 2),
+				prt3 = masterDataFormated[0].itemId.toString().padStart(4, "0"),
+				prt4 = masterDataFormated[0].masterSectionId.toString().padStart(4, "0");
+			;
+
+			var Code = prt1 + "-" + prt2 + "-" + prt3 + "-" + prt4;
+
+			new_Cr_MasterDetails.g.oListItem.set_item("Title", Code);
+
+
+			// check the master list to save dependes on it in initiave code or project code
+
+			if (masterDataFormated[0].listKey == "initiatives") {
+				new_Cr_MasterDetails.g.oListItem.set_item("InitiativeCode", masterDataFormated[0].relatedItemCode);
+			} else if (masterDataFormated[0].listKey == "projects") {
+				new_Cr_MasterDetails.g.oListItem.set_item("ProjectCode",masterDataFormated[0].relatedItemCode );
+			}
+
+
+			new_Cr_MasterDetails.g.oListItem.update();
+			clientContext.load(new_Cr_MasterDetails.g.oListItem);
+
+		})
+
+
+		clientContext.executeQueryAsync(
+			Function.createDelegate(this, function () {
+
+
+				var masterDataFormatedArr = new_Cr_MasterDetails.g.masterDataFormated
+
+				masterDataFormatedArr.shift();
+
+				if (masterDataFormatedArr.length) {
+					set_Cr_MastreDetais.init(masterDataFormatedArr)
+				} else {
+					Task_Edit_Data.init();
+				}
+
+
+			}),
+			Function.createDelegate(this, function (sender, args) {
+				console.log(
+					"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+				);
+			})
+		)
 
 	},
 	g: {},

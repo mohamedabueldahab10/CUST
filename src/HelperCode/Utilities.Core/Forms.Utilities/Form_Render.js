@@ -799,7 +799,7 @@ window.ListInfo = {
           var previuosTargetVal = "";
           $("input.yesnolistener").on("change", function (event) {
 
-            
+
             var value = event.target.value;
 
             var targetElementRequired = $(this).data("targetfieldrequired");
@@ -6525,10 +6525,10 @@ window.ListInfo = {
 
         // to handle the index on master details
         var getMasterIndex = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last().attr('data-index')
-        if (isNew) {
+        if (isNew && listkey != "changerequest") {
           getMasterIndex = getMasterIndex ? Number(getMasterIndex) : ""
           getMasterIndex = getMasterIndex + 1
-        } else if (isEdit) {
+        } else if (isEdit || listkey == "changerequest") {
           var checkEditMasterCount = $(this).closest("[data-target_list]").find(".Details-Item.EditItem")
           var checkNewMasterCount = $(this).closest("[data-target_list]").find(".Details-Item.NewItem")
           checkEditMasterCount = checkEditMasterCount ? checkEditMasterCount.length : 0
@@ -6537,9 +6537,6 @@ window.ListInfo = {
           checkNewMasterCount = Number(checkNewMasterCount)
           getMasterIndex = checkEditMasterCount + checkNewMasterCount + 1
         }
-
-
-        // console.log($(this).closest("[data-target_list]").find(".Details-Item.NewItem").attr('data-index'), "INDEEEEEEEEEEEEEX")
 
 
 
@@ -6651,6 +6648,13 @@ window.ListInfo = {
               .find(".sp-peoplepicker-initialHelpText")
               .text("ادخل الإسم أو البريد الإلكتروني ...");
           });
+
+
+        if (listkey == "changerequest" && (isNew || isEdit)) {
+          Add_New_CRMaster.init()
+        }
+
+
       });
 
       // remove new section
