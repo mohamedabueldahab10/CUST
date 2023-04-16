@@ -208,6 +208,8 @@ window.CrModeFunctionality = {
 
 
 						if (crMasterDetailsArrayRequest.length) {
+							$(".cr-related-item-section .CFIELD.dont-submit").remove() // to remove the master details field don't submit like amount
+							
 							CR_Master_Details_Request.init(crMasterDetailsArrayRequest[0])
 						} else {
 							$(".cr-related-item-section .CFIELD").addClass("dont-submit"); // remove it to not apply dont-submit on all fields
@@ -1916,9 +1918,9 @@ window.CrSetChangeBody = {
 		changeRequestBodyMaster.forEach(function (o, i, a) {
 
 			//> input#${o.InternalName}
-			debugger
+			
 			$(`.cr-related-item-section[data-target_list=${o.listName}] .Details-Item.EditItem input#${o.InternalName}`).each(function () {
-				debugger
+				
 				console.log($(this).attr('id'), "iiiiiiiiiii")
 				var masterId = $(this).parent().parent().data("id")
 				var arrayMasterId = Number(o.masterSectionId)
@@ -2014,6 +2016,7 @@ window.CrSetChangeBody = {
 			})
 
 			if (i == a.length - 1) {
+				debugger
 				Data_Submit.set_item("ChangeBodyMaster", JSON.stringify(changeRequestBodyMaster));
 			}
 
@@ -2088,11 +2091,11 @@ window.executeCR = {
 					var masterLength = executeCR.g.crBodyMaster.length
 					var masterData = executeCR.g.crBodyMaster
 					debugger
-					// if (masterLength > 0) {
-					// 	arrangeCRMasterDetails.init(masterData)
-					// } else {
+					if (masterLength > 0) {
+						arrangeCRMasterDetails.init(masterData)
+					} else {
 						Task_Edit_Data.init();
-					// }
+					}
 					// alert("cr execution done");
 
 				}),
@@ -2562,121 +2565,139 @@ var Fill_BodyMaster = {
 }
 
 
-// var arrangeCRMasterDetails = {
-// 	init: function (masterData) {
-// 		console.log(masterData, "master daaaaaaata")
-// 		debugger
-// 		var masterDataFormated = []
+var arrangeCRMasterDetails = {
+	init: function (masterData) {
+		console.log(masterData, "master daaaaaaata")
+		debugger
+		var masterDataFormated = []
 
-// 		masterData.forEach(el => {
-// 			if (masterDataFormated.length) {
+		masterData.forEach(el => {
+			if (masterDataFormated.length) {
 
-// 				var checkIfExist = false
-// 				masterDataFormated.forEach(item => {
-// 					if ((item.listName == el.listName) && (item.masterSectionId == el.masterSectionId)) {
-// 						checkIfExist = true
-// 					}
-// 				})
+				var checkIfExist = false
+				masterDataFormated.forEach(item => {
+					if ((item.listName == el.listName) && (item.masterSectionId == el.masterSectionId)) {
+						checkIfExist = true
+					}
+				})
 
-// 				masterDataFormated.forEach(e => {
-// 					if (checkIfExist) {
-// 						if ((e.listName == el.listName) && (e.masterSectionId == el.masterSectionId)) {
-// 							e.values.push({ InternalName: el.InternalName, type: el.type, originalValue: el.originalValue, value: el.value, masterSectionId: el.masterSectionId })
-// 						}
-// 					} else {
-// 						checkIfExist = true
-// 						masterDataFormated.push({ listName: el.listName, listKey: el.listKey, itemId: el.itemId, masterSectionId: el.masterSectionId, values: [{ InternalName: el.InternalName, type: el.type, originalValue: el.originalValue, value: el.value, masterSectionId: el.masterSectionId }] })
-// 					}
-// 				})
-// 			} else {
-// 				masterDataFormated.push({ listName: el.listName, listKey: el.listKey, itemId: el.itemId, masterSectionId: el.masterSectionId, values: [{ InternalName: el.InternalName, type: el.type, originalValue: el.originalValue, value: el.value, masterSectionId: el.masterSectionId }] })
-// 			}
-// 		})
-
-
-// 		console.log(masterDataFormated, "masterDataFormated masterDataFormated masterDataFormated after")
-
-// 		if (masterDataFormated.length) {
-// 			set_Cr_MastreDetais.init(masterDataFormated)
-
-// 		}
+				masterDataFormated.forEach(e => {
+					if (checkIfExist) {
+						if ((e.listName == el.listName) && (e.masterSectionId == el.masterSectionId)) {
+							e.values.push({ InternalName: el.InternalName, type: el.type, originalValue: el.originalValue, value: el.value, masterSectionId: el.masterSectionId })
+						}
+					} else {
+						checkIfExist = true
+						masterDataFormated.push({ listName: el.listName, listKey: el.listKey, itemId: el.itemId, masterSectionId: el.masterSectionId, values: [{ InternalName: el.InternalName, type: el.type, originalValue: el.originalValue, value: el.value, masterSectionId: el.masterSectionId }] })
+					}
+				})
+			} else {
+				masterDataFormated.push({ listName: el.listName, listKey: el.listKey, itemId: el.itemId, masterSectionId: el.masterSectionId, values: [{ InternalName: el.InternalName, type: el.type, originalValue: el.originalValue, value: el.value, masterSectionId: el.masterSectionId }] })
+			}
+		})
 
 
-// 	}
-// }
+		console.log(masterDataFormated, "masterDataFormated masterDataFormated masterDataFormated after")
+		debugger
+		if (masterDataFormated.length) {
+			set_Cr_MastreDetais.init(masterDataFormated)
+
+		}
 
 
-// window.set_Cr_MastreDetais = {
-// 	init: function (masterDataFormated) {
-// 		debugger
+	}
+}
 
-// 		var clientContext = new SP.ClientContext.get_current();
-// 		var oList = clientContext
-// 			.get_web()
-// 			.get_lists()
-// 			.getByTitle(masterDataFormated[0].listName);
-// 		set_Cr_MastreDetais.g.oListItem = oList.getItemById(masterDataFormated[0].masterSectionId);
-// 		set_Cr_MastreDetais.g.masterDataFormated = masterDataFormated
-// 		var value = "";
-// 		var isOriginalValue = false;
-// 		masterDataFormated[0].values.forEach((o, i, a) => {
-// 			// if (o.InternalName != "Amount") { // will remove it jsut added to test if submit successfully
-// 				value = o.value ? o.value : o.originalValue;
-// 				if (o.type == "picker") {
-// 					set_Cr_MastreDetais.g.oListItem.set_item(
-// 						o.InternalName,
-// 						SP.FieldUserValue.fromUser(value.$5c_1)
-// 					);
-// 				} else if (o.type == "multipicker") {
-// 					set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, value);
-// 				} else if (o.type == "datetime") {
-// 					set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, new Date(value));
-// 				} else if (o.type == "datetime-local") {
-// 					set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, new Date(value));
-// 				} else if (o.type == "radio") {
-// 					set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, value);
-// 				} else if (o.type == "checkbox") {
-// 					set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, eval(value));
-// 				} else if (o.type == "dropdown") {
-// 					set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, value);
-// 				}
-// 				else if (o.type == "multiselect") {
-// 					set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, value);
-// 				}
-// 				else {
-// 					set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, value);
-// 				}
 
-// 			// }
-// 		});
+window.set_Cr_MastreDetais = {
+	init: function (masterDataFormated) {
+		debugger
 
-// 		set_Cr_MastreDetais.g.oListItem.update();
-// 		clientContext.load(set_Cr_MastreDetais.g.oListItem);
+		var clientContext = new SP.ClientContext.get_current();
+		var oList = clientContext
+			.get_web()
+			.get_lists()
+			.getByTitle(masterDataFormated[0].listName);
+		set_Cr_MastreDetais.g.oListItem = oList.getItemById(masterDataFormated[0].masterSectionId);
+		set_Cr_MastreDetais.g.masterDataFormated = masterDataFormated
+		var value = "";
+		var isOriginalValue = false;
+		masterDataFormated[0].values.forEach((o, i, a) => {
+			// if (o.InternalName != "Amount") { // will remove it jsut added to test if submit successfully
+				value = o.value ? o.value : o.originalValue;
+		
 
-// 		clientContext.executeQueryAsync(
-// 			Function.createDelegate(this, function () {
-// 				var masterDataFormatedArr = set_Cr_MastreDetais.g.masterDataFormated
+				if (o.type == "picker") {
+					if (o.value) {
+						value = o.value
+						set_Cr_MastreDetais.g.oListItem.set_item(
+							o.InternalName,
+							SP.FieldUserValue.fromUser(value.$5c_1)
+						);
+					} else if (o.originalValue) {
+						value = o.originalValue
+						set_Cr_MastreDetais.g.oListItem.set_item(
+							o.InternalName,
+							SP.FieldUserValue.fromUser(value.$5c_1)
+						);
+					}
+					console.log(value, "vaaaaaaaaaa")
+					debugger
 
-// 				masterDataFormatedArr.shift();
+			
+				} else if (o.type == "multipicker") {
+					set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, value);
+				} else if (o.type == "datetime") {
+					set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, new Date(value));
+				} else if (o.type == "datetime-local") {
+					set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, new Date(value));
+				} else if (o.type == "radio") {
+					set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, value);
+				} else if (o.type == "checkbox") {
+					set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, eval(value));
+				} else if (o.type == "dropdown") {
+					set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, value);
+				}
+				else if (o.type == "multiselect") {
+					set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, value);
+				}
+				else {
+					set_Cr_MastreDetais.g.oListItem.set_item(o.InternalName, value);
+				}
 
-// 				if (masterDataFormatedArr.length) {
+			// }
+		});
 
-// 					set_Cr_MastreDetais.init(masterDataFormatedArr)
-// 				} else {
-// 					console.log("SHould continue wf here")
-// 				}
+		set_Cr_MastreDetais.g.oListItem.update();
+		clientContext.load(set_Cr_MastreDetais.g.oListItem);
 
-// 			}),
-// 			Function.createDelegate(this, function (sender, args) {
-// 				console.log(
-// 					"Request failed. " +
-// 					args.get_message() +
-// 					"\n" +
-// 					args.get_stackTrace()
-// 				);
-// 			})
-// 		);
+		clientContext.executeQueryAsync(
+			Function.createDelegate(this, function () {
+				var masterDataFormatedArr = set_Cr_MastreDetais.g.masterDataFormated
 
-// 	},
-// 	g: {},
-// }
+				masterDataFormatedArr.shift();
+
+				if (masterDataFormatedArr.length) {
+
+					set_Cr_MastreDetais.init(masterDataFormatedArr)
+				} else {
+
+					Task_Edit_Data.init();
+
+					
+				}
+
+			}),
+			Function.createDelegate(this, function (sender, args) {
+				console.log(
+					"Request failed. " +
+					args.get_message() +
+					"\n" +
+					args.get_stackTrace()
+				);
+			})
+		);
+
+	},
+	g: {},
+}
