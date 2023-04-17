@@ -3074,51 +3074,51 @@ var Master_Edit_DataRequest = {
 									o.value == null
 										? "empty"
 										: o.value;
-								if ($(this).hasClass("withTime")) {
-									console.log("asd", d);
-								} else {
-									if (d != "empty") {
-										var local = d.getTime();
-										var offset = d.getTimezoneOffset() * (60 * 1000);
-										var utc = new Date(local + offset);
-										var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
-										var datetouse = riyadh
-											.toLocaleString("en-US")
-											.split(",")[0]
-											.split("/");
-										datetouse[0] =
-											datetouse[0].length == 1
-												? "0" + datetouse[0]
-												: datetouse[0];
-										datetouse[1] =
-											datetouse[1].length == 1
-												? "0" + datetouse[1]
-												: datetouse[1];
-										var datetouse2 =
-											datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
+								// if ($(this).hasClass("withTime")) {
+								// 	console.log("asd", d);
+								// } else {
+								// 	if (d != "empty") {
+								// 		var local = d.getTime();
+								// 		var offset = d.getTimezoneOffset() * (60 * 1000);
+								// 		var utc = new Date(local + offset);
+								// 		var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+								// 		var datetouse = riyadh
+								// 			.toLocaleString("en-US")
+								// 			.split(",")[0]
+								// 			.split("/");
+								// 		datetouse[0] =
+								// 			datetouse[0].length == 1
+								// 				? "0" + datetouse[0]
+								// 				: datetouse[0];
+								// 		datetouse[1] =
+								// 			datetouse[1].length == 1
+								// 				? "0" + datetouse[1]
+								// 				: datetouse[1];
+								// 		var datetouse2 =
+								// 			datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
 
-										if ($(this).hasClass("withTime")) {
-											var hour = d.getHours();
-											var minutes = d.getMinutes();
-											var meridian;
-											if (hour > 12) {
-												meridian = "PM";
-												hour -= 12;
-											} else if (hour < 12) {
-												meridian = "AM";
-												if (hour == 0) {
-													hour = 12;
-												}
-											} else {
-												meridian = "PM";
-											}
-											var timehour = hour + ":" + minutes + ":" + meridian;
-											$("#Time").text(timehour);
-										}
-									}
-								}
+								// 		if ($(this).hasClass("withTime")) {
+								// 			var hour = d.getHours();
+								// 			var minutes = d.getMinutes();
+								// 			var meridian;
+								// 			if (hour > 12) {
+								// 				meridian = "PM";
+								// 				hour -= 12;
+								// 			} else if (hour < 12) {
+								// 				meridian = "AM";
+								// 				if (hour == 0) {
+								// 					hour = 12;
+								// 				}
+								// 			} else {
+								// 				meridian = "PM";
+								// 			}
+								// 			var timehour = hour + ":" + minutes + ":" + meridian;
+								// 			$("#Time").text(timehour);
+								// 		}
+								// 	}
+								// }
 
-								$(this).val(datetouse2);
+								$(this).val(d);
 								break;
 							case "datetime-local":
 								var d =
