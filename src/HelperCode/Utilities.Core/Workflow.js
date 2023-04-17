@@ -2712,7 +2712,7 @@ var SubmitField_BulkEdit = {
 							relatedItemInCr = currentItem.get_item("ProjectCode");
 							crUpdateType = currentItem.get_item("UpdateType");
 							crBody = eval(currentItem.get_item("ChangeBody"));
-							// crBodyMaster =  eval(currentItem.get_item("ChangeBodyMaster"));
+							crBodyMaster =  eval(currentItem.get_item("ChangeBodyMaster"));
 						} else if (isEPMOCRInitiative || isVROCRInitiative || isLMSCRInitiative) {
 							relatedItemInCr = currentItem.get_item("InitiativeCode");
 							crUpdateType = currentItem.get_item("UpdateType");

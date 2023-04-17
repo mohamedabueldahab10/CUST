@@ -1919,7 +1919,7 @@ window.CrSetChangeBody = {
 
 			//> input#${o.InternalName}
 			if (o.masterType == "edit") {
-				$(`.cr-related-item-section[data-target_list=${o.listName}] .Details-Item.EditItem input#${o.InternalName}`).each(function () {
+				$(`.cr-related-item-section[data-target_list="${o.listName}"] .Details-Item.EditItem #${o.InternalName}`).each(function () {
 
 					console.log($(this).attr('id'), "iiiiiiiiiii")
 					var masterId = $(this).parent().parent().data("id")
@@ -2186,8 +2186,13 @@ window.executeCR = {
 			clientContext.executeQueryAsync(
 				Function.createDelegate(this, function () {
 
-					var masterLength = executeCR.g.crBodyMaster.length
+					// var masterLength = executeCR.g.crBodyMaster.length
+					var masterLength = 0
 					var masterData = executeCR.g.crBodyMaster
+
+					if (masterData) {
+						masterLength = executeCR.g.crBodyMaster.length
+					}
 
 					if (masterLength > 0) {
 						arrangeCRMasterDetails.init(masterData)
@@ -2802,6 +2807,7 @@ window.edit_Cr_MastreDetails = {
 			// if (o.InternalName != "Amount") { // will remove it jsut added to test if submit successfully
 			value = o.value ? o.value : o.originalValue;
 
+			
 
 			if (o.type == "picker") {
 				if (o.value) {
@@ -2888,8 +2894,6 @@ window.new_Cr_MasterDetails = {
 		masterDataFormated[0].values.forEach((o, i, a) => {
 			// if (o.InternalName != "Amount") { // will remove it jsut added to test if submit successfully
 			value = o.value ? o.value : o.originalValue;
-
-
 			if (o.type == "picker") {
 				if (o.value) {
 					value = o.value
@@ -2944,7 +2948,7 @@ window.new_Cr_MasterDetails = {
 			if (masterDataFormated[0].listKey == "initiatives") {
 				new_Cr_MasterDetails.g.oListItem.set_item("InitiativeCode", masterDataFormated[0].relatedItemCode);
 			} else if (masterDataFormated[0].listKey == "projects") {
-				new_Cr_MasterDetails.g.oListItem.set_item("ProjectCode",masterDataFormated[0].relatedItemCode );
+				new_Cr_MasterDetails.g.oListItem.set_item("ProjectCode", masterDataFormated[0].relatedItemCode);
 			}
 
 
@@ -2959,7 +2963,7 @@ window.new_Cr_MasterDetails = {
 
 
 				var masterDataFormatedArr = new_Cr_MasterDetails.g.masterDataFormated
-
+				debugger
 				masterDataFormatedArr.shift();
 
 				if (masterDataFormatedArr.length) {
