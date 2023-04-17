@@ -44,6 +44,8 @@ window.CrModeFunctionality = {
 		});
 	},
 	init: function (newJSON) {
+		$('[data-togglename*="UpdateType"]').parent().find(">label").addClass("loader-action");
+
 		var htmlBuilder =
 			'<div class="py-5 cr-related-item-start d-flex justify-content-center align-items-end"><i class="fas fa-arrow-down"></i><span class="cr-related-item-title Resources mx-3" data-trans-crrelateditem></span><i class="fas fa-arrow-down"></i></div>';
 		var renderFunction = USERisNew || USERisEdit ? "ListInfo" : "View_ListInfo";
@@ -214,7 +216,7 @@ window.CrModeFunctionality = {
 						} else {
 							$(".cr-related-item-section .CFIELD").addClass("dont-submit"); // remove it to not apply dont-submit on all fields
 						}
-					}else{
+					} else {
 						$(".cr-related-item-section .CFIELD").addClass("dont-submit");
 					}
 					//handle people picker inputs
@@ -382,8 +384,11 @@ window.handleCustomeCr = {
 				isRListKey = RListKey ? true : false;
 				CrRelatedList = relevantDropdown.data("listname");
 				RID = relevantDropdown.find(">option:selected").attr("option-id");
-				$(this).parent().find(">label").addClass("loader-action");
+				// $(this).parent().find(">label").addClass("loader-action");
+				debugger
 				if (!isGeneral) {
+					// $(this).parent().find(">label").addClass("loader-action");
+
 					let fieldsJSON = eval(
 						$(this).find("option:checked").data("fieldsvalue")
 					);
@@ -744,7 +749,6 @@ window.CrItemDataRequest = {
 		});
 		$(".CFIELD>label").removeClass("loader-action");
 
-		///////////////////////////// check master details
 
 
 
@@ -972,6 +976,8 @@ window.CrItemDataRenderFromJSON_Edit = {
 		var originalValue = "";
 		var newValue = "";
 		var value = "";
+
+	
 		changeRequestBody.forEach(function (o, i, a) {
 			$this = $(".cr-related-item-section #" + o.InternalName);
 			fieldType = $this.attr("type");
@@ -1199,6 +1205,13 @@ window.CrItemDataRenderFromJSON_Edit = {
 				$(this).addClass("autofill");
 			}
 		});
+
+		// $('[data-togglename*="UpdateType"]').trigger("change")
+
+
+		CrTitleDataRequest.init()
+
+
 		$(
 			"div#particles-foreground, div#particles-background, .vertical-centered-box"
 		).animate(
@@ -1919,6 +1932,9 @@ window.CrSetChangeBody = {
 		// handle new value in master details
 		changeRequestBodyMaster.forEach(function (o, i, a) {
 
+			console.log(changeRequestBodyMaster,"changeRequestBodyMaster")
+			debugger
+
 			//> input#${o.InternalName}
 			if (o.masterType == "edit") {
 				$(`.cr-related-item-section[data-target_list="${o.listName}"] .Details-Item.EditItem #${o.InternalName}`).each(function () {
@@ -2456,32 +2472,32 @@ var CR_Master_Details_Request = {
 								$(this).val(oListItem.get_item("" + $(this).attr("id") + ""));
 							}
 
-							if ((listkey == 'initiatives' || listkey == 'projects')) { // to handle amount in master details based on weight in project and initiative
+							// if ((listkey == 'initiatives' || listkey == 'projects')) { // to handle amount in master details based on weight in project and initiative
 
-								if (MasterDetailsArrayRequest.length == 0) {
-									if ($("[data-targetelem]").length > 0) {
-										$("[data-targetelem]").each(function () {
-											var targetElem = $(this).data('targetelem')
+							// 	if (MasterDetailsArrayRequest.length == 0) {
+							// 		if ($("[data-targetelem]").length > 0) {
+							// 			$("[data-targetelem]").each(function () {
+							// 				var targetElem = $(this).data('targetelem')
 
-											if (targetElem == 'Weight') {
-												var parentValue = $(this).data('parentval')
-												var weight = $(this).parent().parent().find(`#${targetElem}`).val()
-												var maxAttr = $(this).parent().parent().find(`#${targetElem}`).attr('max')
+							// 				if (targetElem == 'Weight') {
+							// 					var parentValue = $(this).data('parentval')
+							// 					var weight = $(this).parent().parent().find(`#${targetElem}`).val()
+							// 					var maxAttr = $(this).parent().parent().find(`#${targetElem}`).attr('max')
 
-												console.log(maxAttr, "$(this).parent().parent()")
+							// 					console.log(maxAttr, "$(this).parent().parent()")
 
-												weight = Number(weight)
-												var newMax = Number(maxAttr) + weight
-												$(this).parent().parent().find(`#${targetElem}`).attr('max', newMax)
+							// 					weight = Number(weight)
+							// 					var newMax = Number(maxAttr) + weight
+							// 					$(this).parent().parent().find(`#${targetElem}`).attr('max', newMax)
 
-												var Amount = (weight * parentValue) / 100
-												Amount = Amount.toFixed(2)
-												$(this).val(Amount)
-											}
-										})
-									}
-								}
-							}
+							// 					var Amount = (weight * parentValue) / 100
+							// 					Amount = Amount.toFixed(2)
+							// 					$(this).val(Amount)
+							// 				}
+							// 			})
+							// 		}
+							// 	}
+							// }
 							break;
 
 						default:
@@ -2643,6 +2659,7 @@ var Fill_BodyMaster = {
 				}
 
 
+
 				changeRequestBodyMaster.push({
 
 					// label: crlabel,
@@ -2666,9 +2683,27 @@ var Fill_BodyMaster = {
 
 
 				})
+
 			})
 
+
 		})
+
+
+		if (isEdit) {
+
+			changeRequestBodyMasterEdit.forEach(el => {
+				changeRequestBodyMaster.forEach(item => {
+					if ((el.InternalName == item.InternalName) && (el.masterSectionId == item.masterSectionId)) {
+						item.value = el.value
+					}
+				})
+			})
+
+			Master_Edit_DataRequest.init(changeRequestBodyMaster)
+			console.log(changeRequestBodyMaster, "changeRequestBodyMaster")
+		}
+
 
 
 	}
@@ -2684,7 +2719,6 @@ window.Add_New_CRMaster = {
 			var CurrList = $(this).closest("[data-target_list]").attr("data-target_list");
 			itemIndex = $(this).attr("data-index");
 
-			// debugger
 			$(this)
 				.find(
 					".CFIELD>input," +
@@ -2730,9 +2764,7 @@ window.Add_New_CRMaster = {
 
 var arrangeCRMasterDetails = {
 	init: function (masterData) {
-		console.log(masterData, "master daaaaaaata")
 
-		debugger
 		var masterDataFormated = []
 
 		masterData.forEach(el => {
@@ -2809,7 +2841,7 @@ window.edit_Cr_MastreDetails = {
 			// if (o.InternalName != "Amount") { // will remove it jsut added to test if submit successfully
 			value = o.value ? o.value : o.originalValue;
 
-			
+
 
 			if (o.type == "picker") {
 				if (o.value) {
@@ -2965,7 +2997,7 @@ window.new_Cr_MasterDetails = {
 
 
 				var masterDataFormatedArr = new_Cr_MasterDetails.g.masterDataFormated
-				debugger
+
 				masterDataFormatedArr.shift();
 
 				if (masterDataFormatedArr.length) {
@@ -2985,4 +3017,236 @@ window.new_Cr_MasterDetails = {
 
 	},
 	g: {},
+}
+
+//
+
+window.CrTitleDataRequest = {
+	onSuccess: function (sender, args) {
+		crRelatedItemCode = oListItem.get_item("Title");
+
+	},
+	onError: function (sender, args) {
+		console.log(
+			"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+		);
+	},
+	// The main Initialization function
+	init: function () {
+		var clientContext = new SP.ClientContext.get_current();
+		var oList = clientContext.get_web().get_lists().getByTitle(CrRelatedList);
+		CrTitleDataRequest.g.oListItem = oList.getItemById(RID);
+		oListItem = CrTitleDataRequest.g.oListItem;
+		clientContext.load(CrTitleDataRequest.g.oListItem);
+		clientContext.executeQueryAsync(
+			Function.createDelegate(this, CrTitleDataRequest.onSuccess),
+			Function.createDelegate(this, CrTitleDataRequest.onError)
+		);
+	},
+	// Global variables
+	g: {
+
+
+	},
+};
+
+
+// get data in edit form for master details
+var Master_Edit_DataRequest = {
+	init: function (changeRequestBodyMaster) {
+
+		if (changeRequestBodyMaster.length) {
+
+			changeRequestBodyMaster.forEach(o => {
+
+				
+				$(`.cr-related-item-section[data-target_list="${o.listName}"] .Details-Item.EditItem #${o.InternalName}`).each(function () {
+
+					var masterId = $(this).parent().parent().data("id")
+					var arrayMasterId = Number(o.masterSectionId)
+					// masterId = Number(masterId)
+					
+					if (masterId == arrayMasterId) {
+						
+						switch ($(this).attr("type")) {
+							case "date":
+								var d =
+									o.value == null
+										? "empty"
+										: o.value;
+								if ($(this).hasClass("withTime")) {
+									console.log("asd", d);
+								} else {
+									if (d != "empty") {
+										var local = d.getTime();
+										var offset = d.getTimezoneOffset() * (60 * 1000);
+										var utc = new Date(local + offset);
+										var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+										var datetouse = riyadh
+											.toLocaleString("en-US")
+											.split(",")[0]
+											.split("/");
+										datetouse[0] =
+											datetouse[0].length == 1
+												? "0" + datetouse[0]
+												: datetouse[0];
+										datetouse[1] =
+											datetouse[1].length == 1
+												? "0" + datetouse[1]
+												: datetouse[1];
+										var datetouse2 =
+											datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
+
+										if ($(this).hasClass("withTime")) {
+											var hour = d.getHours();
+											var minutes = d.getMinutes();
+											var meridian;
+											if (hour > 12) {
+												meridian = "PM";
+												hour -= 12;
+											} else if (hour < 12) {
+												meridian = "AM";
+												if (hour == 0) {
+													hour = 12;
+												}
+											} else {
+												meridian = "PM";
+											}
+											var timehour = hour + ":" + minutes + ":" + meridian;
+											$("#Time").text(timehour);
+										}
+									}
+								}
+
+								$(this).val(datetouse2);
+								break;
+							case "datetime-local":
+								var d =
+									o.value == null
+										? "empty"
+										: o.value;
+
+								if (d != "empty") {
+									var local = d.getTime();
+									var offset = d.getTimezoneOffset() * (60 * 1000);
+									var utc = new Date(local + offset);
+									var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+									var datetouse = riyadh
+										.toLocaleString("en-US")
+										.split(",")[0]
+										.split("/");
+									datetouse[0] =
+										datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
+									datetouse[1] =
+										datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
+									var datetouse2 =
+										datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
+								}
+
+								$(this).val(datetouse2);
+								break;
+
+							case "picker":
+								var pemail =
+									o.value == null
+										? enternameemail
+										: oListItem
+											.get_item("" + $(this).attr("id") + "")
+											.get_lookupValue();
+								$(this).attr("data-email", pemail);
+
+								if (pemail != enternameemail)
+									$(this).attr(
+										"user-email",
+										o.value.get_email()
+									);
+								// $(this).attr(
+								// 	"user-email",
+								// 	oListItem.get_item($(this).attr("id")).get_email()
+								// );
+
+								var idinternal = $(this).attr("id");
+								var mp = new MyPeoplePicker();
+								mp.init($(this).attr("id"), { AllowMultipleValues: false });
+								break;
+							case "dropdown":
+								$(this).val(o.value);
+								break;
+
+							case "radio":
+								$('input[id="' + $(this).attr("id") + '"]')
+									.filter(
+										'[value="' + o.value + '"]'
+									)
+									.attr("checked", true);
+								break;
+
+							case "checkbox":
+								if (o.value)
+									$(this).prop("checked", true);
+								break;
+
+							case "multiselect":
+								if (o.value) {
+									var myselections = o.value
+										.split(":::");
+									for (var i = 0; i < myselections.length; i++) {
+										$(this)
+											.find("input:checkbox[value='" + myselections[i] + "']")
+											.prop("checked", true);
+									}
+								}
+								break;
+
+							case "number":
+
+								if ($(this).hasClass("percentagefield")) {
+									var num = o.value * 100;
+									if (num % 1 != 0)
+										$(this).val(
+											parseFloat(Math.round(num * 100) / 100).toFixed(2)
+										);
+									else $(this).val(num);
+								} else {
+									$(this).val(o.value);
+								}
+
+								// if ((listkey == 'initiatives' || listkey == 'projects')) { // to handle amount in master details based on weight in project and initiative
+
+								// 	if (MasterDetailsArrayRequest.length == 0) {
+								// 		if ($("[data-targetelem]").length > 0) {
+								// 			$("[data-targetelem]").each(function () {
+								// 				var targetElem = $(this).data('targetelem')
+
+								// 				if (targetElem == 'Weight') {
+								// 					var parentValue = $(this).data('parentval')
+								// 					var weight = $(this).parent().parent().find(`#${targetElem}`).val()
+								// 					var maxAttr = $(this).parent().parent().find(`#${targetElem}`).attr('max')
+
+								// 					console.log(maxAttr, "$(this).parent().parent()")
+
+								// 					weight = Number(weight)
+								// 					var newMax = Number(maxAttr) + weight
+								// 					$(this).parent().parent().find(`#${targetElem}`).attr('max', newMax)
+
+								// 					var Amount = (weight * parentValue) / 100
+								// 					Amount = Amount.toFixed(2)
+								// 					$(this).val(Amount)
+								// 				}
+								// 			})
+								// 		}
+								// 	}
+								// }
+								break;
+
+							default:
+								$(this).val(o.value);
+								break;
+						}
+					}
+				})
+			})
+		}
+
+	}
 }

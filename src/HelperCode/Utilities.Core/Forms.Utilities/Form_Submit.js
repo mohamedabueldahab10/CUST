@@ -1243,8 +1243,11 @@ window.Edit_Data_Submit = {
     var oList = clientContext.get_web().get_lists().getByTitle(SP_ListName);
     Edit_Data_Submit.g.oListItem = oList.getItemById(IID); //declared inside object scope only
 
-    if (isRListKey) CrSetChangeBody.init(Edit_Data_Submit.g.oListItem); // for cr set body
-
+    // if (isRListKey){
+    if (listkey == "changerequest") {
+      CrSetChangeBody.init(Edit_Data_Submit.g.oListItem); // for cr set body
+    }
+    debugger
     $(`.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=text],
      .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=number],
      .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=email],

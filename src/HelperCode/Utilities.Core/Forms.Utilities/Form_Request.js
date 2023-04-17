@@ -358,7 +358,7 @@ window.Edit_Data_Request = {
       });
     });
     //handle top menu navigation
-
+    debugger
     if (SP_ListName == ListArray[0].projects) {
       PCODE = oListItem.get_item("Title");
       $(".headtwo").append(
@@ -375,11 +375,22 @@ window.Edit_Data_Request = {
     else if (crListKey) {
 
       let UpdateType = oListItem.get_item("UpdateType") || "";
-      let crIsGeneral = UpdateType.includes("general");
+      // let crIsGeneral = UpdateType.includes("general");
+      let crIsGeneral = UpdateType.includes("automatic"); // to get the related section on load in edit
+
+
       changeRequestBody = oListItem.get_item("ChangeBody");
       changeRequestBody = changeRequestBody
         ? JSON.parse(changeRequestBody)
         : [];
+      //for master details edit
+      var changeRequestMasterBody = oListItem.get_item("ChangeBodyMaster");
+      changeRequestMasterBody = changeRequestMasterBody
+      ? JSON.parse(changeRequestMasterBody)
+      : [];
+      //
+
+
       let sectionJSON;
       if (changeRequestBody.length) {
         isCrMode = true;
@@ -397,8 +408,16 @@ window.Edit_Data_Request = {
         ];
       }
 
+      debugger
+      if(changeRequestMasterBody.length){
+        changeRequestBodyMasterEdit = changeRequestMasterBody
+      }
+
       if (isCrMode) {
-        if (crIsGeneral) CrModeFunctionality.preinit();
+        if (crIsGeneral){
+          CrModeFunctionality.preinit();
+        //  $('[data-togglename*="UpdateType"]').trigger("change")
+        }
         else CrModeFunctionality.init(sectionJSON);
       }
     }
@@ -2618,7 +2637,7 @@ var Master_Details_Request = {
                     parentquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
 
 
-                    
+
                     sphttp.get(
                       _spPageContextInfo.siteServerRelativeUrl,
                       parentListname,
@@ -2849,29 +2868,29 @@ var Master_Details_Request = {
               break;
 
             case "radio":
-                var radioval = oListItem.get_item($(this).attr("id"));
-                console.log(radioval,'radiovaaaaaaaalllll')
-                if (radioval == "Yes" || radioval == "yes") {
-                  $('input[id="' + $(this).attr("id") + '"]')
-                    .filter('[value="yes"]')
-                    .attr("checked", true);
-                } else if (
-                  radioval == "No" ||
-                  radioval == "no" ||
-                  radioval == "undefined" ||
-                  radioval == null
-                ) {
-                  $('input[id="' + $(this).attr("id") + '"]')
-                    .filter('[value="no"]')
-                    .attr("checked", true);
-                } else
-                  $('input[id="' + $(this).attr("id") + '"]')
-                    .filter(
-                      '[value="' + oListItem.get_item($(this).attr("id")) + '"]'
-                    )
-                    .attr("checked", true);
-                break;
-            
+              var radioval = oListItem.get_item($(this).attr("id"));
+              console.log(radioval, 'radiovaaaaaaaalllll')
+              if (radioval == "Yes" || radioval == "yes") {
+                $('input[id="' + $(this).attr("id") + '"]')
+                  .filter('[value="yes"]')
+                  .attr("checked", true);
+              } else if (
+                radioval == "No" ||
+                radioval == "no" ||
+                radioval == "undefined" ||
+                radioval == null
+              ) {
+                $('input[id="' + $(this).attr("id") + '"]')
+                  .filter('[value="no"]')
+                  .attr("checked", true);
+              } else
+                $('input[id="' + $(this).attr("id") + '"]')
+                  .filter(
+                    '[value="' + oListItem.get_item($(this).attr("id")) + '"]'
+                  )
+                  .attr("checked", true);
+              break;
+
             case "checkbox":
               if (oListItem.get_item($(this).attr("id")))
                 $(this).prop("checked", true);

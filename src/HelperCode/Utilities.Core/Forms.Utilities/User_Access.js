@@ -250,7 +250,8 @@ window.accessCallisDone = false;
   (window.RListKey = isCrMode ? window.location.href.split("RKey=")[1].split("&")[0] : ""),
   (window.CrRelatedList = ""),
   (window.changeRequestBody = []),
-  (window.changeRequestBodyMaster = []);
+  (window.changeRequestBodyMaster = []),
+  (window.changeRequestBodyMasterEdit = []);
 // ended
 
 
