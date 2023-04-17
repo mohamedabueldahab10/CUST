@@ -214,6 +214,8 @@ window.CrModeFunctionality = {
 						} else {
 							$(".cr-related-item-section .CFIELD").addClass("dont-submit"); // remove it to not apply dont-submit on all fields
 						}
+					}else{
+						$(".cr-related-item-section .CFIELD").addClass("dont-submit");
 					}
 					//handle people picker inputs
 					$(".cr-related-item-section div[type=picker]").each(function () {

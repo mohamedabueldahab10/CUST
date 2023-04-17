@@ -2707,7 +2707,7 @@ var SubmitField_BulkEdit = {
 							relatedItemInCr = currentItem.get_item("CRRelatedStrategyObjective");
 							crUpdateType = currentItem.get_item("UpdateType");
 							crBody = eval(currentItem.get_item("ChangeBody"));
-							// crBodyMaster =  eval(currentItem.get_item("ChangeBodyMaster"));
+							crBodyMaster =  eval(currentItem.get_item("ChangeBodyMaster"));
 						} else if (isVROCRProject || isEPMOCRProject || isLMSCRProject) {
 							relatedItemInCr = currentItem.get_item("ProjectCode");
 							crUpdateType = currentItem.get_item("UpdateType");
@@ -2722,7 +2722,7 @@ var SubmitField_BulkEdit = {
 							relatedItemInCr = currentItem.get_item("CRRelatedMainKpis");
 							crUpdateType = currentItem.get_item("UpdateType");
 							crBody = eval(currentItem.get_item("ChangeBody"));
-							// crBodyMaster =  eval(currentItem.get_item("ChangeBodyMaster"));
+							crBodyMaster =  eval(currentItem.get_item("ChangeBodyMaster"));
 						}
 						//
 
