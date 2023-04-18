@@ -3747,6 +3747,7 @@ window.ListInfo = {
           : false;
 
         //////////////////
+        //to not invoke dynamic in edit cause الاستراتيجية المرتبطة don't submit so the value will disappear 
         var stopinvokeparent = ""
 
 
