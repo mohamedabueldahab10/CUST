@@ -690,7 +690,7 @@ window.ListInfo = {
             if (isMasterDetails) { // for new validation in master details
               if (listkey == "projects") {
                 var actualBudget = $('#ActualBudget').val()
-                var assignedBudget = $('#AssignedBudget').val()
+                var assignedBudget = $('#Amount').val()
                 parentValue = (actualBudget && actualBudget != 0) ? actualBudget : assignedBudget
               } else if (listkey == "initiatives") {
                 var initiativeBudget = $('#InitiativeBudget').val()
@@ -732,7 +732,7 @@ window.ListInfo = {
 
               if (listkey == "projects") {
                 var actualBudget = $('#ActualBudget').val()
-                var assignedBudget = $('#AssignedBudget').val()
+                var assignedBudget = $('#Amount').val() // change AssignedBudget to Amount
                 parentValue = (actualBudget && actualBudget != 0) ? actualBudget : assignedBudget
               } else if (listkey == "initiatives") {
                 var initiativeBudget = $('#InitiativeBudget').val()

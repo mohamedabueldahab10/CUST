@@ -4954,7 +4954,7 @@ var GetProject_Info = {
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       PID = oListItem.get_id();
-      AssignedBudget = oListItem.get_item("AssignedBudget") || 0;
+      AssignedBudget = oListItem.get_item("Amount") || 0; // change Assigned Budget to Amount in project
     }
     if (listkey == "revenues" && isNew) {
       Revenue_Info_Request.init();

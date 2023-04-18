@@ -181,7 +181,7 @@ window.Project_Info_Request = {
       }
       PQuery = PQuery.replace(
         "</View>",
-        '<ViewFields> <FieldRef Name="Status"/> <FieldRef Name="ActualBudget"/> <FieldRef Name="AssignedBudget"/> <FieldRef Name="EstimatedCost"/> <FieldRef Name="ActualImplementationSchedule"/> <FieldRef Name="Name"/> <FieldRef Name="Title"/> <FieldRef Name="Phase"/> <FieldRef Name="Priority"/> <FieldRef Name="SubSector"/> <FieldRef Name="ProgressStatusDeliverable"/> <FieldRef Name="Portfolio"/> <FieldRef Name="Sector"/> <FieldRef Name="ProjectType"/> <FieldRef Name="IsStrategicProject"/> </ViewFields></View>'
+        '<ViewFields> <FieldRef Name="Status"/> <FieldRef Name="ActualBudget"/> <FieldRef Name="Amount"/> <FieldRef Name="EstimatedCost"/> <FieldRef Name="ActualImplementationSchedule"/> <FieldRef Name="Name"/> <FieldRef Name="Title"/> <FieldRef Name="Phase"/> <FieldRef Name="Priority"/> <FieldRef Name="SubSector"/> <FieldRef Name="ProgressStatusDeliverable"/> <FieldRef Name="Portfolio"/> <FieldRef Name="Sector"/> <FieldRef Name="ProjectType"/> <FieldRef Name="IsStrategicProject"/> </ViewFields></View>'
       );
 
       // console.log('Acces Queryyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy',AccessQuery);

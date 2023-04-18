@@ -6520,7 +6520,7 @@ var Access_Project_Info_Request = {
         projectStartToValidation = oListItem.get_item("BaselineStartDate") || '';
 
         projectActualBudget = oListItem.get_item('ActualBudget') || 0;
-        projectAssignedBudget = oListItem.get_item('AssignedBudget') || 0;
+        projectAssignedBudget = oListItem.get_item('Amount') || 0;
         relatedProjectId = oListItem.get_id();
 
         // if (User_ScheduleSource == 'عبر النظام') {
