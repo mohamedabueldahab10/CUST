@@ -9647,6 +9647,8 @@ window.View_ListInfo = {
 var Dynamic_Data_Request = {
   onSuccess: function (sender, args) {
     $("[dynamic=" + Dynamic_Data_Request.g.dyfieldname + "]").each(function () {
+      console.log($(this).attr("id"),"IIIIIIIIIIIIIIIID")
+      debugger
       switch ($(this).attr("type")) {
         case "date":
           var d =
@@ -9761,6 +9763,20 @@ var Dynamic_Data_Request = {
             else $(this).val(num);
           } else {
             $(this).val(oListItem.get_item("" + $(this).attr("id") + ""));
+            var valFromList = oListItem.get_item("" + $(this).attr("id") + "") || ""
+             
+            // disable enable master details section on projects depends on Amount
+            if(valFromList){
+              if (listkey == 'projects') {
+                $("[data-target_list=Deliverables] .fieldset-container").removeClass("disable_section")
+                $("[data-target_list=Milestones] .fieldset-container").removeClass("disable_section")
+              }
+            }else{
+              if (listkey == 'projects') {
+                $("[data-target_list=Deliverables] .fieldset-container").addClass("disable_section")
+                $("[data-target_list=Milestones] .fieldset-container").addClass("disable_section")
+              }
+            }
           }
           break;
 
