@@ -209,6 +209,7 @@ window.CrModeFunctionality = {
 						crMasterDetailsArrayEdit = crMasterDetailsArrayRequest;
 
 
+
 						if (crMasterDetailsArrayRequest.length) {
 							$(".cr-related-item-section .CFIELD.dont-submit").remove() // to remove the master details field don't submit like amount
 
@@ -385,7 +386,7 @@ window.handleCustomeCr = {
 				CrRelatedList = relevantDropdown.data("listname");
 				RID = relevantDropdown.find(">option:selected").attr("option-id");
 				// $(this).parent().find(">label").addClass("loader-action");
-				debugger
+
 				if (!isGeneral) {
 					// $(this).parent().find(">label").addClass("loader-action");
 
@@ -977,7 +978,7 @@ window.CrItemDataRenderFromJSON_Edit = {
 		var newValue = "";
 		var value = "";
 
-	
+
 		changeRequestBody.forEach(function (o, i, a) {
 			$this = $(".cr-related-item-section #" + o.InternalName);
 			fieldType = $this.attr("type");
@@ -1932,8 +1933,8 @@ window.CrSetChangeBody = {
 		// handle new value in master details
 		changeRequestBodyMaster.forEach(function (o, i, a) {
 
-			console.log(changeRequestBodyMaster,"changeRequestBodyMaster")
-			debugger
+			console.log(changeRequestBodyMaster, "changeRequestBodyMaster")
+
 
 			//> input#${o.InternalName}
 			if (o.masterType == "edit") {
@@ -2241,6 +2242,7 @@ var CR_Master_Details_Request = {
 	init: function (DetailsList) {
 
 
+
 		var clientContext = new SP.ClientContext.get_current();
 		var oList = clientContext.get_web().get_lists().getByTitle(DetailsList);
 		CR_Master_Details_Request.g.DetailsList = DetailsList;
@@ -2261,6 +2263,7 @@ var CR_Master_Details_Request = {
 	},
 	onSuccess: function (sender, args) {
 
+
 		var collListItem = CR_Master_Details_Request.g.collListItem;
 
 		var listItemEnum = collListItem.getEnumerator();
@@ -2278,6 +2281,7 @@ var CR_Master_Details_Request = {
 			$('[data-target_list="' + CurrList + '"] .fieldset-container').html(""); //remove html
 		}
 		while (listItemEnum.moveNext()) {
+
 
 			console.log("in while");
 
@@ -2916,6 +2920,7 @@ window.edit_Cr_MastreDetails = {
 
 window.new_Cr_MasterDetails = {
 	init: function (masterDataFormated) {
+
 		var clientContext = new SP.ClientContext.get_current();
 
 		var oList = clientContext.get_web().get_lists().getByTitle(masterDataFormated[0].listName);
@@ -3059,21 +3064,42 @@ var Master_Edit_DataRequest = {
 
 			changeRequestBodyMaster.forEach(o => {
 
-				
+
 				$(`.cr-related-item-section[data-target_list="${o.listName}"] .Details-Item.EditItem #${o.InternalName}`).each(function () {
 
 					var masterId = $(this).parent().parent().data("id")
 					var arrayMasterId = Number(o.masterSectionId)
 					// masterId = Number(masterId)
-					
+
 					if (masterId == arrayMasterId) {
-						
+						console.log(o, "ooooooooooooooooooooooo")
+						debugger
 						switch ($(this).attr("type")) {
 							case "date":
-								var d =
-									o.value == null
-										? "empty"
-										: o.value;
+								// var d = (o.value == null || o.value == "") ? "empty" : o.value;
+
+								var d = ""
+								var datetouse = ""
+								if (o.value) {
+									datetouse = o.value.split("/")
+									datetouse[0].length == 1
+										? "0" + datetouse[0]
+										: datetouse[0];
+									datetouse[1] =
+										datetouse[1].length == 1
+											? "0" + datetouse[1]
+											: datetouse[1];
+
+									var datetouse2 =
+										datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
+
+										$(this).val(datetouse2);
+									console.log(datetouse2, "datetouse2")
+
+								}else{
+									$(this).val(d)
+								}
+
 								// if ($(this).hasClass("withTime")) {
 								// 	console.log("asd", d);
 								// } else {
@@ -3118,7 +3144,7 @@ var Master_Edit_DataRequest = {
 								// 	}
 								// }
 
-								$(this).val(d);
+								// $(this).val(d);
 								break;
 							case "datetime-local":
 								var d =

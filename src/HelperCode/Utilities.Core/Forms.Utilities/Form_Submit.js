@@ -871,7 +871,7 @@ var Set_Code_Submit = {
             // readFiles();
             _uploadFile();
           } else {
-            if ($(".Details-Item.NewItem").length > 0) {
+            if ($(".Details-Item.NewItem").length > 0  && !crListKey) {
               //calling new master submit
               New_Data_Submit.g.checkNewMasterDetails();
             } else {
@@ -1658,11 +1658,11 @@ window.Edit_Data_Submit = {
         // readFiles();
         else {
 
-          if ($(".Details-Item.NewItem").length > 0) {
+          if ($(".Details-Item.NewItem").length > 0 && !crListKey) {
             console.log("in master detaiiiiiiiiiiiiiils")
             //calling new master submit
             New_Data_Submit.g.checkNewMasterDetails();
-          } else if ($(".Details-Item.EditItem").length > 0) {
+          } else if ($(".Details-Item.EditItem").length > 0 && !crListKey) {
             Edit_Data_Submit.g.checkEditMasterDetails();
           } else {
             if (USERisWF && workflowname == "Project") {
