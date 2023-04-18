@@ -2664,7 +2664,8 @@ window.userCalls = {
         Read_Access = [
           "mainkpi",
           "sos",
-          "goalstrategy",
+          "goalstrategy",          
+          "changerequest",
           "Targets.aspx",
           "kpiequations",
           "MainIndicators.aspx",
