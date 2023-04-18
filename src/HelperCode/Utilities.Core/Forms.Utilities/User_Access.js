@@ -2757,6 +2757,7 @@ window.userCalls = {
           "BenefitMetrics.aspx",
           "kpiequations",
           "MainIndicators.aspx",
+          "changerequest"
         ];
         Delete_Access = [];
         break;
