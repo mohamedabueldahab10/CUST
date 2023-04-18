@@ -947,6 +947,7 @@ var Information_Form = [
         DisplayName: "التكلفة",
         DisplayNameEn: "Amount",
         type: "float",
+        className: "disable_enable_section",
         // "state": "disabled",
         dynamic: "BudgetItem", //being controlled by main field
         numberOfDigits:"15",
@@ -1371,8 +1372,8 @@ var Information_Form = [
   {
     label: 'بيانات المخرج',
     labelEn: 'Delivrable Data',
-    description: 'التفاصيل (يمكن ادخال القيم عند ادخال الميزانية المعتمدة)',
-    descriptionEn: 'Details (you can enter the values when enter the Assigned Budget)',
+    description: 'التفاصيل (يمكن ادخال القيم عند ادخال التكلفة)',
+    descriptionEn: 'Details (you can enter the values when enter the Amount)',
     sectiontype: 'master',
     className: "disable_section", // to make the section disabled on form render
     targetlist: 'Deliverables',
@@ -1598,8 +1599,8 @@ var Information_Form = [
   {
     label: 'بيانات المعلم',
     labelEn: 'Milestone Data',
-    description: 'التفاصيل (يمكن ادخال القيم عند ادخال الميزانية المعتمدة)',
-    descriptionEn: 'Details (you can enter the values when enter the Assigned Budget)',
+    description: 'التفاصيل (يمكن ادخال القيم عند ادخال التكلفة)',
+    descriptionEn: 'Details (you can enter the values when enter the Amount)',
     sectiontype: 'master',
     className: "disable_section", // to make the section disabled on form render
     targetlist: 'Milestones',

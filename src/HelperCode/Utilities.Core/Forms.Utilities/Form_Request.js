@@ -1638,6 +1638,10 @@ window.View_Data_Request = {
       }
     }
 
+    if(listkey == "changerequest"){
+      $(".btn-save").remove(); // to remove the edit btn from view cr
+    }
+
 
     if (isView && listkey == "ideas") {
       RelatedIdeaProject.preinit();

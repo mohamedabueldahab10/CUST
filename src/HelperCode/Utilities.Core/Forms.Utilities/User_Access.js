@@ -348,7 +348,7 @@ window.userCalls = {
         Accept: "application/json; odata=verbose",
       },
       success: function (data) {
-        console.log(data,"data for current user")
+        console.log(data, "data for current user")
         console.timeEnd();
         UserN = data.d;
         userCalls.get_CurrentUserGroupColl(data.d.Id);
@@ -380,7 +380,7 @@ window.userCalls = {
         userCalls.get_userAccess();
 
         Get_Configure_Api.preinit();
-        
+
       },
     });
   },
@@ -477,7 +477,7 @@ window.userCalls = {
 
       if (i == userCalls.g.SPGroups.length - 1 && Groups.length > 0) {
         userCalls.get_AccessAction();
-        
+
       }
     }
     //*****
@@ -941,7 +941,7 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           "contracts",
-          "changerequest",
+          //"changerequest",
         ];
         Delete_Access = [
           // "initiatives",
@@ -1063,7 +1063,7 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           "contracts",
-          "changerequest",
+          //"changerequest",
         ];
         Delete_Access = [
           // "initiatives",
@@ -1124,7 +1124,8 @@ window.userCalls = {
           "changerequest"
         ];
 
-        Edit_Access = ["benefitmetrics", "BenefitMetrics.aspx", "changerequest",
+        Edit_Access = ["benefitmetrics", "BenefitMetrics.aspx",
+          // "changerequest",
           // "benefits"
         ];
         Delete_Access = [];
@@ -1192,7 +1193,7 @@ window.userCalls = {
           "Targets.aspx",
           "kpiequations",
           "benefitsequations",
-          "changerequest",
+          //"changerequest",
 
         ];
         Delete_Access = [
@@ -1234,7 +1235,7 @@ window.userCalls = {
           "goalstrategy",
           // "sos",
           // "mainkpi",
-          "changerequest"
+          //"changerequest"
         ];
         Delete_Access = [
           "goalstrategy",
@@ -1270,7 +1271,7 @@ window.userCalls = {
           "goalstrategy",
           // "sos",
           // "mainkpi",
-          "changerequest"
+          //"changerequest"
         ];
         Delete_Access = [
           "goalstrategy",
@@ -1307,7 +1308,7 @@ window.userCalls = {
           "goalstrategy",
           // "sos",
           // "mainkpi",
-          "changerequest"
+          //"changerequest"
         ];
         Delete_Access = [
           "goalstrategy",
@@ -1343,7 +1344,7 @@ window.userCalls = {
           "goalstrategy",
           // "sos",
           // "mainkpi",
-          "changerequest"
+          //"changerequest"
         ];
         Delete_Access = [
           "goalstrategy",
@@ -1380,7 +1381,7 @@ window.userCalls = {
           "goalstrategy",
           // "sos",
           // "mainkpi",
-          "changerequest"
+          //"changerequest"
         ];
         Delete_Access = [
           "goalstrategy",
@@ -1458,7 +1459,7 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           "contracts",
-          "changerequest",
+          //"changerequest",
           "documents",
         ];
         Delete_Access = [
@@ -1559,7 +1560,7 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           "contracts",
-          "changerequest",
+          //"changerequest",
           "documents",
         ];
         Delete_Access = [
@@ -1658,7 +1659,7 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           "contracts",
-          "changerequest",
+          //"changerequest",
           "documents",
         ];
         Delete_Access = [
@@ -1766,7 +1767,7 @@ window.userCalls = {
           "coc",
           "stakeholders",
           "communicationplans",
-          "changerequest",
+          // "changerequest",
           "contracts"
         ]
         Delete_Access = [
@@ -1877,7 +1878,7 @@ window.userCalls = {
           "coc",
           "stakeholders",
           "communicationplans",
-          "changerequest",
+          //"changerequest",
           "contracts"
         ]
         Delete_Access = [
@@ -1988,7 +1989,7 @@ window.userCalls = {
           "coc",
           "stakeholders",
           "communicationplans",
-          "changerequest",
+          //"changerequest",
           "contracts"
         ]
         Delete_Access = [
@@ -2172,7 +2173,7 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           "contracts",
-          "changerequest",
+          //"changerequest",
         ];
         Delete_Access = [
           "benefitmatrix",
@@ -2270,7 +2271,7 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           "contracts",
-          "changerequest",
+          //"changerequest",
           "achievements"
 
         ];
@@ -2373,7 +2374,7 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           "contracts",
-          "changerequest",
+          //"changerequest",
         ];
         Delete_Access = [
           // for initiative
@@ -2501,7 +2502,7 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           "contracts",
-          "changerequest",
+          //"changerequest",
           "achievements"
 
         ];
@@ -2637,7 +2638,7 @@ window.userCalls = {
           // "spillars",
           // "sos",
           // "mainkpi",
-          "changerequest"
+          //"changerequest"
         ];
         Delete_Access = [];
         break;
@@ -2709,7 +2710,7 @@ window.userCalls = {
         ];
         Edit_Access = [
           "mainkpi",
-          "changerequest"
+          //"changerequest"
         ];
         Delete_Access = [];
 
@@ -2757,7 +2758,7 @@ window.userCalls = {
           "BenefitMetrics.aspx",
           "kpiequations",
           "MainIndicators.aspx",
-          "changerequest"
+          //"changerequest"
         ];
         Delete_Access = [];
         break;
@@ -3253,6 +3254,7 @@ window.userCalls = {
       }
     }
 
+  
     // handle the initiative manager and owner Groups
     // if (isInitiativesHomePage) {
     // if (isInManager || isInOwner) {
@@ -7190,7 +7192,7 @@ var Access_Project_Info_Request = {
               StrategicPartnershipTitle +
               "</a>"
             );
-            if(USERlistkey == "strategicpartnerships"){
+            if (USERlistkey == "strategicpartnerships") {
               $(".title-item:first-child").html(
                 '<a href="' +
                 _spPageContextInfo.webAbsoluteUrl +
@@ -7200,7 +7202,7 @@ var Access_Project_Info_Request = {
                 USERPageTitle +
                 ""
               );
-            }else{
+            } else {
               $(".title-item:first-child").html(
                 '<a href="' +
                 _spPageContextInfo.webAbsoluteUrl +
@@ -7213,7 +7215,7 @@ var Access_Project_Info_Request = {
                 ""
               );
             }
-   
+
           }
           else {
             //
@@ -9169,7 +9171,7 @@ var GetStrategicPartnershipTitle_Request = {
 async function initiateDataLevelAccess(lookupList) {
 
   try {
-    
+
     if (myRoleConfig[0].hasOwnProperty("dataFilter")) {
       isRoleDataLevelAccess = true;
       myRoleConfig[0].dataFilter.hierarchies.forEach((el, i, a) => {
