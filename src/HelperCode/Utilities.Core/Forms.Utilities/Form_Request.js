@@ -358,7 +358,7 @@ window.Edit_Data_Request = {
       });
     });
     //handle top menu navigation
-    debugger
+    
     if (SP_ListName == ListArray[0].projects) {
       PCODE = oListItem.get_item("Title");
       $(".headtwo").append(
@@ -386,8 +386,8 @@ window.Edit_Data_Request = {
       //for master details edit
       var changeRequestMasterBody = oListItem.get_item("ChangeBodyMaster");
       changeRequestMasterBody = changeRequestMasterBody
-      ? JSON.parse(changeRequestMasterBody)
-      : [];
+        ? JSON.parse(changeRequestMasterBody)
+        : [];
       //
 
 
@@ -409,14 +409,14 @@ window.Edit_Data_Request = {
       }
 
       debugger
-      if(changeRequestMasterBody.length){
+      if (changeRequestMasterBody.length) {
         changeRequestBodyMasterEdit = changeRequestMasterBody
       }
 
       if (isCrMode) {
-        if (crIsGeneral){
+        if (crIsGeneral) {
           CrModeFunctionality.preinit();
-        //  $('[data-togglename*="UpdateType"]').trigger("change")
+          //  $('[data-togglename*="UpdateType"]').trigger("change")
         }
         else CrModeFunctionality.init(sectionJSON);
       }
@@ -1383,10 +1383,9 @@ window.View_Data_Request = {
           function (records, record, listItem, isDone) {
             if (isDone) {
               var items = ''
-              console.log("ASddsadasdsadas")
               records.forEach(function (el, index) {
 
-                // $this.parent().find('a').attr('href', '/SitePages/View.aspx?ListKey=' + linkedto + '&IID=' + el["ID"] + '')
+
                 var htmlLink = ""
                 var handleHref = "javascript:"
 
@@ -1397,7 +1396,7 @@ window.View_Data_Request = {
 
 
 
-                // var htmlLink = `<span><a class='elementLink' href=${handleHref} target='_blank'><i class='fas fa-external-link-alt'></i></a></span>`
+
 
                 items += el[Dispfieldkey] + htmlLink + '<br>'
 
@@ -1406,6 +1405,7 @@ window.View_Data_Request = {
                   parentrelatedfilterkeylvl1 != "undefined"
                 ) {
 
+
                   $this.attr(
                     "data-parentrelatedvaluelvl1",
                     el[parentrelatedfilterkeylvl1]
@@ -1413,22 +1413,31 @@ window.View_Data_Request = {
                   $(
                     "[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
                   ).each(function () {
-                    var elementId = $(this).attr("id"); // get element Id
-                    var elementValue = oListItem.get_item(elementId); // get element value
-                    if (
-                      oListItem.get_item(elementId) &&
-                      oListItem.get_item(elementId) == elementValue
-                    ) {
-                      // matching between value on list
-                      var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
-                      var parenetValue = $(this).attr(
-                        "data-parentrelatedvaluelvl1"
-                      ); // parent value
-                      console.log(parentElement, "parentElement");
-                      console.log(parenetValue, "parenetValue");
 
-                      if (parentElement && parenetValue) {
-                        $(`#${parentElement}`).html(parenetValue);
+                    var isMasterSection = $(this).parent().parent().hasClass("Details-Item")
+
+                    if (!isMasterSection) {
+
+                      var elementId = $(this).attr("id"); // get element Id
+                      var elementValue = oListItem.get_item(elementId); // get element value 
+
+
+                      if (
+                        oListItem.get_item(elementId) &&
+                        oListItem.get_item(elementId) == elementValue
+                      ) {
+                        // matching between value on list
+                        var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
+                        var parenetValue = $(this).attr(
+                          "data-parentrelatedvaluelvl1"
+                        ); // parent value
+
+                        
+
+                        if (parentElement && parenetValue) {
+                          $(`#${parentElement}`).html(parenetValue);
+                        }
+          
                       }
                     }
                   })
@@ -1447,22 +1456,26 @@ window.View_Data_Request = {
                   $(
                     "[data-parentrelatedvaluelvl2]:not([data-parentrelatedvaluelvl2=undefined])"
                   ).each(function () {
+                    var isMasterSection = $(this).parent().parent().hasClass("Details-Item")
 
-                    var elementId = $(this).attr("id"); // get element Id
-                    var elementValue = oListItem.get_item(elementId); // get element value
-                    if (
-                      oListItem.get_item(elementId) &&
-                      oListItem.get_item(elementId) == elementValue
-                    ) {
-                      // matching between value on list
-                      var parentElement = $(this).data("parentrelatedkeylvl2"); // parent internal name
-                      var parenetValue = $(this).attr(
-                        "data-parentrelatedvaluelvl2"
-                      ); // parent value
+                    if (!isMasterSection) {
+
+                      var elementId = $(this).attr("id"); // get element Id
+                      var elementValue = oListItem.get_item(elementId); // get element value
+                      if (
+                        oListItem.get_item(elementId) &&
+                        oListItem.get_item(elementId) == elementValue
+                      ) {
+                        // matching between value on list
+                        var parentElement = $(this).data("parentrelatedkeylvl2"); // parent internal name
+                        var parenetValue = $(this).attr(
+                          "data-parentrelatedvaluelvl2"
+                        ); // parent value
 
 
-                      if (parentElement && parenetValue) {
-                        $(`#${parentElement}`).html(parenetValue);
+                        if (parentElement && parenetValue) {
+                          $(`#${parentElement}`).html(parenetValue);
+                        }
                       }
                     }
                   })
@@ -1543,22 +1556,28 @@ window.View_Data_Request = {
                     $(
                       "[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
                     ).each(function () {
-                      var elementId = $(this).attr("id"); // get element Id
-                      var elementValue = oListItem.get_item(elementId); // get element value
-                      if (
-                        oListItem.get_item(elementId) &&
-                        oListItem.get_item(elementId) == elementValue
-                      ) {
-                        // matching between value on list
-                        var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
-                        var parenetValue = $(this).attr(
-                          "data-parentrelatedvaluelvl1"
-                        ); // parent value
-                        console.log(parentElement, "parentElement");
-                        console.log(parenetValue, "parenetValue");
 
-                        if (parentElement && parenetValue) {
-                          $(`#${parentElement}`).html(parenetValue);
+                      var isMasterSection = $(this).parent().parent().hasClass("Details-Item")
+
+                      if (!isMasterSection) {
+
+                        var elementId = $(this).attr("id"); // get element Id
+                        var elementValue = oListItem.get_item(elementId); // get element value
+                        if (
+                          oListItem.get_item(elementId) &&
+                          oListItem.get_item(elementId) == elementValue
+                        ) {
+                          // matching between value on list
+                          var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
+                          var parenetValue = $(this).attr(
+                            "data-parentrelatedvaluelvl1"
+                          ); // parent value
+                          console.log(parentElement, "parentElement");
+                          console.log(parenetValue, "parenetValue");
+
+                          if (parentElement && parenetValue) {
+                            $(`#${parentElement}`).html(parenetValue);
+                          }
                         }
                       }
                     })
@@ -1579,21 +1598,25 @@ window.View_Data_Request = {
                     $(
                       "[data-parentrelatedvaluelvl2]:not([data-parentrelatedvaluelvl2=undefined])"
                     ).each(function () {
-                      var elementId = $(this).attr("id"); // get element Id
-                      var elementValue = oListItem.get_item(elementId); // get element value
-                      if (
-                        oListItem.get_item(elementId) &&
-                        oListItem.get_item(elementId) == elementValue
-                      ) {
-                        // matching between value on list
-                        var parentElement = $(this).data("parentrelatedkeylvl2"); // parent internal name
-                        var parenetValue = $(this).attr(
-                          "data-parentrelatedvaluelvl2"
-                        ); // parent value
+                      var isMasterSection = $(this).parent().parent().hasClass("Details-Item")
+
+                      if (!isMasterSection) {
+                        var elementId = $(this).attr("id"); // get element Id
+                        var elementValue = oListItem.get_item(elementId); // get element value
+                        if (
+                          oListItem.get_item(elementId) &&
+                          oListItem.get_item(elementId) == elementValue
+                        ) {
+                          // matching between value on list
+                          var parentElement = $(this).data("parentrelatedkeylvl2"); // parent internal name
+                          var parenetValue = $(this).attr(
+                            "data-parentrelatedvaluelvl2"
+                          ); // parent value
 
 
-                        if (parentElement && parenetValue) {
-                          $(`#${parentElement}`).html(parenetValue);
+                          if (parentElement && parenetValue) {
+                            $(`#${parentElement}`).html(parenetValue);
+                          }
                         }
                       }
                     })
@@ -1638,7 +1661,7 @@ window.View_Data_Request = {
       }
     }
 
-    if(listkey == "changerequest"){
+    if (listkey == "changerequest") {
       $(".btn-save").remove(); // to remove the edit btn from view cr
     }
 
@@ -6563,7 +6586,10 @@ var DontSubmit_DataRequest = {
       "[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
     ).each(function (e) {
 
+      debugger
+      var isMasterSection = $(this).parent().parent().hasClass("Details-Item")
 
+      if (!isMasterSection) {
 
       var elementId = ""
       var elementValue = ""
@@ -6607,6 +6633,7 @@ var DontSubmit_DataRequest = {
           }
         }
       }
+    }
     });
 
 
