@@ -2747,6 +2747,7 @@ window.userCalls = {
           "initiatives",
           "InitiativeHome.aspx",
           "initiativesmain.aspx",
+          "changerequest"
         ];
         Edit_Access = [
           "Targets.aspx",
