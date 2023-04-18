@@ -358,7 +358,7 @@ window.Edit_Data_Request = {
       });
     });
     //handle top menu navigation
-    
+
     if (SP_ListName == ListArray[0].projects) {
       PCODE = oListItem.get_item("Title");
       $(".headtwo").append(
@@ -642,7 +642,7 @@ window.Edit_Data_Request = {
 
     DontSubmit_DataRequest.init()
 
-
+    debugger
     // to handle the title change and the master details section show and hide
     if (isEdit && listkey == 'goalstrategy') {
       if ($('#Types').val() == 'vision') {
@@ -744,7 +744,18 @@ window.Edit_Data_Request = {
     // to handle dynamic parent trigger in edit form
     var dynamicArrId = []
     $("select[dynamic=parent]").each(function () {
-      dynamicArrId.push($(this).attr("id"))
+
+      // if(listkey == "initiatives" &&($(this).attr("id") == "Types")){
+
+      // }else{
+      var checkStopInvoke = $(this).data("stopinvokeparent")
+
+      if (checkStopInvoke == "yes") {
+        console.log("continue without call dynamic parent")
+      } else {
+
+        dynamicArrId.push($(this).attr("id"))
+      }
 
     })
     if (dynamicArrId.length) {
@@ -1432,12 +1443,12 @@ window.View_Data_Request = {
                           "data-parentrelatedvaluelvl1"
                         ); // parent value
 
-                        
+
 
                         if (parentElement && parenetValue) {
                           $(`#${parentElement}`).html(parenetValue);
                         }
-          
+
                       }
                     }
                   })
@@ -6586,54 +6597,54 @@ var DontSubmit_DataRequest = {
       "[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
     ).each(function (e) {
 
-      debugger
+
       var isMasterSection = $(this).parent().parent().hasClass("Details-Item")
 
       if (!isMasterSection) {
 
-      var elementId = ""
-      var elementValue = ""
-      var isMultiSelect = false
+        var elementId = ""
+        var elementValue = ""
+        var isMultiSelect = false
 
 
 
-      if ($(this).hasClass("limulti")) {
-        isMultiSelect = true
-        elementId = $(this).parent().parent().parent().attr("id"); // get element Id
-        elementValue = $(this).find("input:checked").val()
-      } else {
-        elementId = $(this).parent().attr("id"); // get element Id
-        elementValue = $(this).val(); // get element value
-      }
+        if ($(this).hasClass("limulti")) {
+          isMultiSelect = true
+          elementId = $(this).parent().parent().parent().attr("id"); // get element Id
+          elementValue = $(this).find("input:checked").val()
+        } else {
+          elementId = $(this).parent().attr("id"); // get element Id
+          elementValue = $(this).val(); // get element value
+        }
 
 
 
-      if (isMultiSelect) {
+        if (isMultiSelect) {
 
-        if (oListItem.get_item(elementId) && oListItem.get_item(elementId).includes(elementValue)) {
-          var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
-          var parenetValue = $(this).data("parentrelatedvaluelvl1"); // parent value
+          if (oListItem.get_item(elementId) && oListItem.get_item(elementId).includes(elementValue)) {
+            var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
+            var parenetValue = $(this).data("parentrelatedvaluelvl1"); // parent value
 
-          if (parentElement && parenetValue) {
-            $(`#${parentElement}`).val(parenetValue);
+            if (parentElement && parenetValue) {
+              $(`#${parentElement}`).val(parenetValue);
+            }
+          }
+        } else {
+
+          if (
+            oListItem.get_item(elementId) &&
+            oListItem.get_item(elementId) == elementValue
+          ) {
+
+            // matching between value on list
+            var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
+            var parenetValue = $(this).data("parentrelatedvaluelvl1"); // parent value
+            if (parentElement && parenetValue) {
+              $(`#${parentElement}`).val(parenetValue);
+            }
           }
         }
-      } else {
-
-        if (
-          oListItem.get_item(elementId) &&
-          oListItem.get_item(elementId) == elementValue
-        ) {
-
-          // matching between value on list
-          var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
-          var parenetValue = $(this).data("parentrelatedvaluelvl1"); // parent value
-          if (parentElement && parenetValue) {
-            $(`#${parentElement}`).val(parenetValue);
-          }
-        }
       }
-    }
     });
 
 
@@ -6702,6 +6713,7 @@ var DontSubmit_DataRequest = {
 var get_DynamicValues = {
   init: function (dynamicArrId) {
     if (dynamicArrId.length) {
+      debugger
       var id = dynamicArrId[0]
       $(`select[id=${id}][dynamic=parent]`).trigger("change")
       dynamicArrId.shift()

@@ -37,6 +37,8 @@ var Information_Form = [
         DisplayNameEn: 'Types',
         DisplayName: 'النوع',
         validation: 'required',
+        stopinvokeparent:"yes", // to not invoke dynamic in edit cause الاستراتيجية المرتبطة don't submit so the value will disaber
+
         dynamic: 'parent', // parent to get the child depends on this field value
         toggleValues: [
           { value: 'vision', fields: ['RelatedStrategyObjective'] }, //we can put more than 1  field

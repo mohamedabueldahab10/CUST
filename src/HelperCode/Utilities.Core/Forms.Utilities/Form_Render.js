@@ -3746,6 +3746,17 @@ window.ListInfo = {
           ? element.customCr
           : false;
 
+        //////////////////
+        var stopinvokeparent = ""
+
+
+        if (element.stopinvokeparent) {
+          stopinvokeparent = `data-stopinvokeparent=${element.stopinvokeparent}`
+        } else {
+          stopinvokeparent = ""
+        }
+        //////////////////
+
         var grandFieldId = ""
         if (element.grandFieldId) {
           grandFieldId = `data-grandFieldId=${element.grandFieldId}`
@@ -3838,6 +3849,8 @@ window.ListInfo = {
             childFieldId +
             " " +
             childFieldIdSource +
+            " " +
+            stopinvokeparent +
 
             ' type="dropdown" value="" placeholder="' +
             displayName +
