@@ -60,13 +60,13 @@ window.Information_Form = [
 						{ display: "visionobjectives", value: "vision_SOs", roles: ['Administrator','ObjectiveOwner', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead',,'PerformanceLeader' ], },
 						{ display: "lmsobjectives", value: "lms_SOs", roles: ['Administrator','ObjectiveOwner',  'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl','PerformanceLeader'], },
 						//projects
-						{ display: "vroprojects", value: "vro_Projects",customFilterValue: "vision", roles: ['Administrator','ProjectManager','InitiativeManager','InitiativeOwner',  'VROEHead',  'EPMO', 'VROE','SPMO',] },
+						{ display: "vroprojects", value: "vro_Projects",customFilterValue: "vision", roles: ['Administrator','DU','ProjectManager','InitiativeManager','InitiativeOwner',  'VROEHead',  'EPMO', 'VROE','SPMO', 'SPMOHead',] },
 						{ display: "epmoprojects", value: "epmo_Projects",customFilterValue: "strategically", roles: ['Administrator', 'ProjectManager','InitiativeManager','InitiativeOwner', 'EPMO', 'SPMOHead', 'SPMO', 'DU',] },
-						{ display: "lmsprojects", value: "lms_Projects",customFilterValue: "lms", roles: ['Administrator', 'ProjectManager','InitiativeManager','InitiativeOwner', 'LMSE', 'EPMO',  'LMSP', 'LMSUExecution', 'LMSUPerformance','SPMO', 'LMSUControl'], },
+						{ display: "lmsprojects", value: "lms_Projects",customFilterValue: "lms", roles: ['Administrator', 'ProjectManager','InitiativeManager','InitiativeOwner', 'LMSE', 'EPMO',  'LMSP', 'LMSUExecution','DU', 'LMSUPerformance', 'SPMOHead','SPMO', 'LMSUControl'], },
 						//Initiatives
 						{ display: "strategicinitiatives", value: "strategic_Initiatives",customFilterValue: "strategically", roles: ['Administrator','InitiativeManager', 'InitiativeOwner', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMTeam'] },
-						{ display: "vroinitiatives", value: "vro_Initiatives",customFilterValue: "vision", roles: ['Administrator','SPMO', 'InitiativeManager','InitiativeOwner', 'VROEHead',  'EPMO', 'VROE'] },
-						{ display: "lmsinitiatives", value: "lms_Initiatives",customFilterValue: "lms", roles: ['Administrator', 'LMSE', 'InitiativeManager','InitiativeOwner', 'LMSP', 'EPMO',  'LMSUExecution', 'LMSUPerformance','SPMO', 'LMSUControl'], },
+						{ display: "vroinitiatives", value: "vro_Initiatives",customFilterValue: "vision", roles: ['Administrator','DU', 'SPMOHead','SPMO', 'InitiativeManager','InitiativeOwner', 'VROEHead',  'EPMO', 'VROE'] },
+						{ display: "lmsinitiatives", value: "lms_Initiatives",customFilterValue: "lms", roles: ['Administrator', 'LMSE', 'InitiativeManager','InitiativeOwner', 'LMSP','DU', 'EPMO',  'LMSUExecution', 'LMSUPerformance','SPMO', 'SPMOHead', 'LMSUControl'], },
 						//KPI
 						{ display: "strategickpi", value: "strategic_MainKPI", roles: ['Administrator','ObjectiveOwner','KPIOwner','SPMAdmin',  'StrategyTeam','PerformanceLeader'] },
 						{ display: "vrokpi", value: "vro_MainKPI", roles: ['Administrator', 'VROHead','ObjectiveOwner','KPIOwner', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead',,'PerformanceLeader'] },
