@@ -17,6 +17,9 @@ var Information_Form = [
         DisplayName: 'اسم المنجز',
         type: 'string',
         validation: 'required',
+        maxchar: '255',
+        withletters:true,
+        Errmsgkey:"withletterpattern",
       },
 
       {
@@ -228,6 +231,8 @@ var Information_Form = [
         DisplayName: 'المدة الزمنية للأثر',
         type: 'string',
         validation: 'required',
+        maxchar: '255',
+
       },
     ],
   },
