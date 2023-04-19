@@ -26,8 +26,8 @@ var Information_Form = [
       //     "type":"datetime"
       // },
       {
-        InternalName: 'PlannedFinishDate',
-        DisplayNameEn: 'Planned Finish Date',
+        InternalName: 'PlannedCompletedDate',
+        DisplayNameEn: 'Planned Completed Date',
         DisplayName: 'تاريخ الاكتمال المخطط',
         type: 'datetime',
       },

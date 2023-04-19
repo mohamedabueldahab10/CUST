@@ -512,14 +512,14 @@ var Information_Form = [
       //     "display":"none"
 
       // },
-      {
-        InternalName: 'ERPCode',
-        DisplayNameEn: 'ERP Code',
-        DisplayName: 'ترميز موارد',
-        type: 'string',
-        maxchar: '255',
-        // "validation": "required"
-      },
+      // {
+      //   InternalName: 'ERPCode',
+      //   DisplayNameEn: 'ERP Code',
+      //   DisplayName: 'ترميز موارد',
+      //   type: 'string',
+      //   maxchar: '255',
+      //   // "validation": "required"
+      // },
       {
         InternalName: 'DependencyCost',
         DisplayName: 'حجم الارتباط (منصة اعتماد) ',

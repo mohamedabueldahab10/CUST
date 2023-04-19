@@ -109,23 +109,6 @@ var Information_Form = [{
             //     }
             // },
             {
-                "InternalName": "Status",
-                "DisplayName":"الحالة",
-                // "DisplayName":"الحالة الكلية للتحدي",
-                "DisplayNameEn": "Status",
-                "type":"dropdownValues",
-                options:{
-                    choices:[
-                        // 'مغلق',' مفتوح'
-                        { display: 'open', value: 'open', selected: 'selected' },
-                        { display: 'closed', value: 'closed' }
-                    ]
-                },
-                requiredValues: [
-                { value: "closed", fields: ["IssueClosureDate"] }, //we can put more than 1  field
-              ],
-            },
-            {
                 "InternalName": "Owner",
                 "DisplayName": "مالك التحدي",
                 "DisplayNameEn": "Owner",
@@ -157,13 +140,13 @@ var Information_Form = [{
                 "type": "datetime",
                 "max":"today"
             },
-            // {
-            //     "InternalName": "Resolution",
-            //     "DisplayName": "وصف الحل",
-            //     "DisplayNameEn": "Resolution",
-            //     "type": "multiline",
-            //     "maxchar": 5000,
-            // },
+            {
+                "InternalName": "Resolution",
+                "DisplayName": "وصف الحل",
+                "DisplayNameEn": "Resolution",
+                "type": "multiline",
+                "maxchar": 5000,
+            },
             // {
             //     "InternalName": "DueDate",
             //     "DisplayName": "تاريخ الإستحقاق",
@@ -177,6 +160,23 @@ var Information_Form = [{
                 "type": "datetime",
                 "min": "DateRaised",
                 "RequiredName": "IssueClosureDate"
+            },
+            {
+                "InternalName": "Status",
+                "DisplayName":"الحالة",
+                // "DisplayName":"الحالة الكلية للتحدي",
+                "DisplayNameEn": "Status",
+                "type":"dropdownValues",
+                options:{
+                    choices:[
+                        // 'مغلق',' مفتوح'
+                        { display: 'open', value: 'open', selected: 'selected' },
+                        { display: 'closed', value: 'closed' }
+                    ]
+                },
+                requiredValues: [
+                { value: "closed", fields: ["IssueClosureDate"] }, //we can put more than 1  field
+              ],
             },
             // {
             //     "InternalName": "ResolutionOwner",

@@ -17,7 +17,7 @@ var Listing_Info = [{
 },
 {
 	"InternalName": "ClosureReasonsDesc",
-	"DisplayName": "أسباب إلغاء المبادرة (في حالة الإلغاء)",
+	"DisplayName": "أسباب إلغاء المبادرة",
 	"DisplayNameEn": "Closure Reason Desc",
 	"type": "multiline",
 	"maxchar": 5000,

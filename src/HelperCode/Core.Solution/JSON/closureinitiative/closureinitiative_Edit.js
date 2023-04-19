@@ -90,7 +90,7 @@ var Information_Form = [
             {
                 "InternalName": "ClosureReasonsDesc",
                 "DisplayNameEn": " Reasons Behind Canceling ",
-                "DisplayName": "أسباب إلغاء المشروع (في حالة الإلغاء)",
+                "DisplayName": "أسباب إلغاء المبادرة (في حالة الإلغاء)",
                 // "type": "string",
                 "type": "multiline",
                 maxchar: 5000,        
@@ -226,10 +226,10 @@ var Information_Form = [
                 "maxchar": 5000
             },
             {
-                "DisplayName": "اعتماد كافة وثائق إغلاق المشاريع",
-                "DisplayNameEn": "Approval of all project closing documents",
-                "InternalName": "InitiativeDecision5",
-                "type": "dropdownValues",
+                DisplayName: 'اعتماد كافة وثائق إغلاق المبادرة',
+                DisplayNameEn: 'Approval of all initiative closing documents',
+                InternalName: 'InitiativeDecision5',
+                type: 'dropdownValues',
                 options: {
                     choices: [{
                         display: 'yes',

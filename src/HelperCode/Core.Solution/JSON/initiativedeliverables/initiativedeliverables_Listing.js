@@ -24,8 +24,8 @@ var Listing_Info = [
 	// 	infilter: false
 	// },	
 	{
-		"InternalName": "PlannedFinishDate",
-		"DisplayNameEn": "Planned Finish Date",
+		"InternalName": "PlannedCompletedDate",
+		"DisplayNameEn": "Planned Completed Date",
 		"DisplayName":"تاريخ الاكتمال المخطط",
 		"type":"date",
 		inlisting: true,

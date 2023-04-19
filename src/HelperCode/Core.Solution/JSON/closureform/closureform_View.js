@@ -326,38 +326,38 @@ var Information_Form = [
       },
     ],
   },
-  {
-    label: "",
-    labelEn: "",
-    description: "",
-    descriptionEn: "",
-    subFields: [
-      {
-        DisplayName: "لجنة استلام المشاريع",
-        DisplayNameEn: "Projects Receiving Committeet",
-        InternalName: "Decision11",
-        type: "yesnoradio",
-        options: {
-          choices: [
-            {
-              display: "yes",
-              value: "yes",
-            },
-            {
-              display: "no",
-              value: "no",
-            },
-          ],
-        },
-      },
-      {
-        InternalName: "Comments11",
-        DisplayName: "وصف لجنة استلام المشاريع",
-        DisplayNameEn: "Description of the project receiving committee",
-        type: "multiline",
-      },
-    ],
-  },
+  // {
+  //   label: "",
+  //   labelEn: "",
+  //   description: "",
+  //   descriptionEn: "",
+  //   subFields: [
+  //     {
+  //       DisplayName: "لجنة استلام المشاريع",
+  //       DisplayNameEn: "Projects Receiving Committeet",
+  //       InternalName: "Decision11",
+  //       type: "yesnoradio",
+  //       options: {
+  //         choices: [
+  //           {
+  //             display: "yes",
+  //             value: "yes",
+  //           },
+  //           {
+  //             display: "no",
+  //             value: "no",
+  //           },
+  //         ],
+  //       },
+  //     },
+  //     {
+  //       InternalName: "Comments11",
+  //       DisplayName: "وصف لجنة استلام المشاريع",
+  //       DisplayNameEn: "Description of the project receiving committee",
+  //       type: "multiline",
+  //     },
+  //   ],
+  // },
   // {
   //   label: '',
   //   labelEn: '',

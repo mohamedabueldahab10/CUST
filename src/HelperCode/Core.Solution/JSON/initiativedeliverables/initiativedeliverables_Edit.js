@@ -60,9 +60,9 @@ var Information_Form = [
       //     },
       //   },
       {
-        InternalName: 'PlannedFinishDate',
-        DisplayName: 'تاريخ الانتهاء المخطط',
-        DisplayNameEn: 'Planned Finish Date',
+        InternalName: 'PlannedCompletedDate',
+        DisplayName: 'تاريخ الاكتمال المخطط',
+        DisplayNameEn: 'Planned Completed Date',
         // "type": "datetime",
         type: 'datetimetoparent',
         listname: 'Initiatives',

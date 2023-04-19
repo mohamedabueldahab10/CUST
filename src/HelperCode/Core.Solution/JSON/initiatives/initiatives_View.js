@@ -355,14 +355,14 @@ var Information_Form = [
         DisplayNameEn: 'Expense Start Date',
         type: 'datetime',
       },
-      {
-        InternalName: 'ERPCode',
-        DisplayNameEn: 'ERP Code',
-        DisplayName: 'ترميز موارد',
-        type: 'string',
-        maxchar: '250',
-        // "validation": "required"
-      },
+      // {
+      //   InternalName: 'ERPCode',
+      //   DisplayNameEn: 'ERP Code',
+      //   DisplayName: 'ترميز موارد',
+      //   type: 'string',
+      //   maxchar: '250',
+      //   // "validation": "required"
+      // },
       {
         InternalName: 'InitiativeProgressStatus',
         DisplayName: 'حالة الإنجاز',
