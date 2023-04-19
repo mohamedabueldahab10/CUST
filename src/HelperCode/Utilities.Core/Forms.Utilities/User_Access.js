@@ -6143,7 +6143,7 @@ window.userCalls = {
               listName: "Internal Entities",
               accessConditions: [
                 {
-                  field: "SPMO",
+                  field: "HeadUser",
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
@@ -6172,7 +6172,7 @@ window.userCalls = {
               listName: "Internal Entities",
               accessConditions: [
                 {
-                  field: "SPMO",
+                  field: "HeadUser",
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
@@ -6201,7 +6201,7 @@ window.userCalls = {
               listName: "Internal Entities",
               accessConditions: [
                 {
-                  field: "SPMO",
+                  field: "HeadUser",
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
@@ -6233,7 +6233,7 @@ window.userCalls = {
               listName: "Internal Entities",
               accessConditions: [
                 {
-                  field: "SPMO",
+                  field: "HeadUser",
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
