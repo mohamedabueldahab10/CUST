@@ -56,40 +56,40 @@ window.Information_Form = [
 				options: {
 					choices: [
 						//SOS
-						{ display: "strategicobjectives", value: "strategic_SOs", roles: ['Administrator','ObjectiveOwner', 'SPMAdmin', 'StrategyTeam','PerformanceLeader'] },
-						{ display: "visionobjectives", value: "vision_SOs", roles: ['Administrator','ObjectiveOwner', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead',,'PerformanceLeader' ], },
-						{ display: "lmsobjectives", value: "lms_SOs", roles: ['Administrator','ObjectiveOwner',  'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl','PerformanceLeader'], },
+						{ display: "strategicobjectives", value: "strategiccrmsSOs", roles: ['Administrator','ObjectiveOwner', 'SPMAdmin', 'StrategyTeam','PerformanceLeader'] },
+						{ display: "visionobjectives", value: "visioncrmsSOs", roles: ['Administrator','ObjectiveOwner', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead',,'PerformanceLeader' ], },
+						{ display: "lmsobjectives", value: "lmscrmsSOs", roles: ['Administrator','ObjectiveOwner',  'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl','PerformanceLeader'], },
 						//projects
-						{ display: "vroprojects", value: "vro_Projects",customFilterValue: "vision", roles: ['Administrator','DU','ProjectManager','InitiativeManager','InitiativeOwner',  'VROEHead',  'EPMO', 'VROE','SPMO', 'SPMOHead',] },
-						{ display: "epmoprojects", value: "epmo_Projects",customFilterValue: "strategically", roles: ['Administrator', 'ProjectManager','InitiativeManager','InitiativeOwner', 'EPMO', 'SPMOHead', 'SPMO', 'DU',] },
-						{ display: "lmsprojects", value: "lms_Projects",customFilterValue: "lms", roles: ['Administrator', 'ProjectManager','InitiativeManager','InitiativeOwner', 'LMSE', 'EPMO',  'LMSP', 'LMSUExecution','DU', 'LMSUPerformance', 'SPMOHead','SPMO', 'LMSUControl'], },
+						{ display: "vroprojects", value: "vrocrmsProjects",customFilterValue: "vision", roles: ['Administrator','DU','ProjectManager','InitiativeManager','InitiativeOwner',  'VROEHead',  'EPMO', 'VROE','SPMO', 'SPMOHead',] },
+						{ display: "epmoprojects", value: "epmocrmsProjects",customFilterValue: "strategically", roles: ['Administrator', 'ProjectManager','InitiativeManager','InitiativeOwner', 'EPMO', 'SPMOHead', 'SPMO', 'DU',] },
+						{ display: "lmsprojects", value: "lmscrmsProjects",customFilterValue: "lms", roles: ['Administrator', 'ProjectManager','InitiativeManager','InitiativeOwner', 'LMSE', 'EPMO',  'LMSP', 'LMSUExecution','DU', 'LMSUPerformance', 'SPMOHead','SPMO', 'LMSUControl'], },
 						//Initiatives
-						{ display: "strategicinitiatives", value: "strategic_Initiatives",customFilterValue: "strategically", roles: ['Administrator','InitiativeManager', 'InitiativeOwner', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMTeam'] },
-						{ display: "vroinitiatives", value: "vro_Initiatives",customFilterValue: "vision", roles: ['Administrator','DU', 'SPMOHead','SPMO', 'InitiativeManager','InitiativeOwner', 'VROEHead',  'EPMO', 'VROE'] },
-						{ display: "lmsinitiatives", value: "lms_Initiatives",customFilterValue: "lms", roles: ['Administrator', 'LMSE', 'InitiativeManager','InitiativeOwner', 'LMSP','DU', 'EPMO',  'LMSUExecution', 'LMSUPerformance','SPMO', 'SPMOHead', 'LMSUControl'], },
+						{ display: "strategicinitiatives", value: "strategiccrmsInitiatives",customFilterValue: "strategically", roles: ['Administrator','InitiativeManager', 'InitiativeOwner', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMTeam'] },
+						{ display: "vroinitiatives", value: "vrocrmsInitiatives",customFilterValue: "vision", roles: ['Administrator','DU', 'SPMOHead','SPMO', 'InitiativeManager','InitiativeOwner', 'VROEHead',  'EPMO', 'VROE'] },
+						{ display: "lmsinitiatives", value: "lmscrmsInitiatives",customFilterValue: "lms", roles: ['Administrator', 'LMSE', 'InitiativeManager','InitiativeOwner', 'LMSP','DU', 'EPMO',  'LMSUExecution', 'LMSUPerformance','SPMO', 'SPMOHead', 'LMSUControl'], },
 						//KPI
-						{ display: "strategickpi", value: "strategic_MainKPI", roles: ['Administrator','ObjectiveOwner','KPIOwner','SPMAdmin',  'StrategyTeam','PerformanceLeader'] },
-						{ display: "vrokpi", value: "vro_MainKPI", roles: ['Administrator', 'VROHead','ObjectiveOwner','KPIOwner', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead',,'PerformanceLeader'] },
-						{ display: "lmskpi", value: "lms_MainKPI", roles: ['Administrator','LMSP','ObjectiveOwner','KPIOwner', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl','PerformanceLeader'], },
+						{ display: "strategickpi", value: "strategiccrmsMainKPI", roles: ['Administrator','ObjectiveOwner','KPIOwner','SPMAdmin',  'StrategyTeam','PerformanceLeader'] },
+						{ display: "vrokpi", value: "vrocrmsMainKPI", roles: ['Administrator', 'VROHead','ObjectiveOwner','KPIOwner', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead',,'PerformanceLeader'] },
+						{ display: "lmskpi", value: "lmscrmsMainKPI", roles: ['Administrator','LMSP','ObjectiveOwner','KPIOwner', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl','PerformanceLeader'], },
 					],
 				},
 				toggleValues: [
-					{ value: "vro_Projects", fields: ["ProjectCode", "vroprojectsUpdateType"]}, //we can put more than 1  field
-					{ value: "epmo_Projects", fields: ["ProjectCode", "epmoprojectsUpdateType"] }, //we can put more than 1  field
-					{ value: "lms_Projects", fields: ["ProjectCode", "lmsprojectsUpdateType"] }, //we can put more than 1  field
+					{ value: "vrocrmsProjects", fields: ["ProjectCode", "vroprojectsUpdateType"]}, //we can put more than 1  field
+					{ value: "epmocrmsProjects", fields: ["ProjectCode", "epmoprojectsUpdateType"] }, //we can put more than 1  field
+					{ value: "lmscrmsProjects", fields: ["ProjectCode", "lmsprojectsUpdateType"] }, //we can put more than 1  field
 					//Initiatives
-					{ value: "strategic_Initiatives", fields: ["InitiativeCode", "strategicinitiativesUpdateType"] }, //we can put more than 1  field
-					{ value: "vro_Initiatives", fields: ["InitiativeCode", "vroinitiativesUpdateType"] }, //we can put more than 1  field
-					{ value: "lms_Initiatives", fields: ["InitiativeCode", "lmsinitiativesUpdateType"] }, //we can put more than 1  field
+					{ value: "strategiccrmsInitiatives", fields: ["InitiativeCode", "strategicinitiativesUpdateType"] }, //we can put more than 1  field
+					{ value: "vrocrmsInitiatives", fields: ["InitiativeCode", "vroinitiativesUpdateType"] }, //we can put more than 1  field
+					{ value: "lmscrmsInitiatives", fields: ["InitiativeCode", "lmsinitiativesUpdateType"] }, //we can put more than 1  field
 					//SOS
-					{ value: "strategic_SOs", fields: ["CRRelatedStrategyObjective", "strategicbjectivesUpdateType"], },
-					{ value: "vision_SOs", fields: ["CRRelatedStrategyObjective", "visionobjectivesUpdateType"], },
-					{ value: "lms_SOs", fields: ["CRRelatedStrategyObjective", "lmsobjectivesUpdateType"],},
+					{ value: "strategiccrmsSOs", fields: ["CRRelatedStrategyObjective", "strategicbjectivesUpdateType"], },
+					{ value: "visioncrmsSOs", fields: ["CRRelatedStrategyObjective", "visionobjectivesUpdateType"], },
+					{ value: "lmscrmsSOs", fields: ["CRRelatedStrategyObjective", "lmsobjectivesUpdateType"],},
 					//	-----SOS----
 					//---KPI------
-					{ value: "strategic_MainKPI", fields: ["CRRelatedMainKpis", "strategickpiUpdateType"] }, //we can put more than 1  field
-					{ value: "vro_MainKPI", fields: ["CRRelatedMainKpis", "vrokpiUpdateType"] }, //we can put more than 1  field
-					{ value: "lms_MainKPI", fields: ["CRRelatedMainKpis", "lmskpiUpdateType"] }, //we can put more than 1  field
+					{ value: "strategiccrmsMainKPI", fields: ["CRRelatedMainKpis", "strategickpiUpdateType"] }, //we can put more than 1  field
+					{ value: "vrocrmsMainKPI", fields: ["CRRelatedMainKpis", "vrokpiUpdateType"] }, //we can put more than 1  field
+					{ value: "lmscrmsMainKPI", fields: ["CRRelatedMainKpis", "lmskpiUpdateType"] }, //we can put more than 1  field
 				],
 			},
 			{
