@@ -44,10 +44,10 @@ window.Information_Form = [
 					{ value: "vrocrmsInitiatives", fields: ["InitiativeCode", "vroinitiativesUpdateType"] }, //we can put more than 1  field
 					{ value: "lmscrmsInitiatives", fields: ["InitiativeCode", "lmsinitiativesUpdateType"] }, //we can put more than 1  field
 					//SOS
-					//SOS
-					{ value: "strategiccrmsSOs", fields: ["CRRelatedStrategyObjective", "strategicbjectivesUpdateType"], },
-					{ value: "visioncrmsSOs", fields: ["CRRelatedStrategyObjective", "visionobjectivesUpdateType"], },
-					{ value: "lmscrmsSOs", fields: ["CRRelatedStrategyObjective", "lmsobjectivesUpdateType"],},
+					{ value: "strategiccrmsSOs",fields: ["CRRelatedStrategyObjective", "strategicsbjectives"], },
+					{ value: "visioncrmsSOs",fields: ["CRRelatedStrategyObjective", "visionobjectives"], },
+					{ value: "lmscrmsSOs",	fields: ["CRRelatedStrategyObjective", "lmsobjectives"],
+					},
 					//	-----SOS----
 					//---KPI------
 					{ value: "strategiccrmsMainKPI", fields: ["CRRelatedMainKpis", "strategickpi"] }, //we can put more than 1  field
@@ -385,7 +385,6 @@ window.Information_Form = [
 				// filterField: 'Types',
 				// filterFieldType: 'Text',
 			},
-
 			{
 				//StrategicObjectives
 				InternalName: "UpdateType",
@@ -393,7 +392,7 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
-				ToggleName: "strategicbjectivesUpdateType",
+				ToggleName: "strategicsbjectives",
 				type: "dropdownValues",
 				options: {
 					choices: [
@@ -404,21 +403,20 @@ window.Information_Form = [
 							fields: [
 								{
 									InternalName: "getall",
-
+									
 								},
 
 							],
 							otherFields: [
 								{ fieldName: 'WFModuleCode', value: 'MSCRObjective' },
-								{ fieldName: 'WFStage', value: 'MSCRSOS01' },
+								{ fieldName: 'WFStage', value: 'MSCRObjective01' },
 								// { fieldName: 'DraftStatus', value: 'draft' },
 							],
 						},
-						{
-							display: "deletion", value: "delete",
+						{ display: "deletion", value: "delete",
 							otherFields: [
 								{ fieldName: 'WFModuleCode', value: 'MSCRObjective' },
-								{ fieldName: 'WFStage', value: 'MSCRSOS01' },
+								{ fieldName: 'WFStage', value: 'MSCRObjective01' },
 								// { fieldName: 'DraftStatus', value: 'draft' },
 							],
 						}
@@ -432,7 +430,7 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
-				ToggleName: "visionobjectivesUpdateType",
+				ToggleName: "visionobjectives",
 				type: "dropdownValues",
 				options: {
 					choices: [
@@ -445,14 +443,13 @@ window.Information_Form = [
 									InternalName: "getall",
 								},
 
-							], otherFields: [
+							],otherFields: [
 								{ fieldName: 'WFModuleCode', value: 'VROCRObjective' },
 								{ fieldName: 'WFStage', value: 'VROCRSOS01' },
 								// { fieldName: 'DraftStatus', value: 'draft' },
-							],
+							  ],
 						},
-						{
-							display: "deletion", value: "delete",
+						{ display: "deletion", value: "delete",
 							otherFields: [
 								{ fieldName: 'WFModuleCode', value: 'VROCRObjective' },
 								{ fieldName: 'WFStage', value: 'VROCRSOS01' },
@@ -469,7 +466,7 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
-				ToggleName: "lmsobjectivesUpdateType",
+				ToggleName: "lmsobjectives",
 				type: "dropdownValues",
 				options: {
 					choices: [
@@ -482,17 +479,16 @@ window.Information_Form = [
 									InternalName: "getall",
 								},
 
-							], otherFields: [
+							],otherFields: [
 								{ fieldName: 'WFModuleCode', value: 'LMSCRObjective' },
-								{ fieldName: 'WFStage', value: 'LMSCRSOS01' },
+								{ fieldName: 'WFStage', value: 'LMSCRObjective01' },
 								// { fieldName: 'DraftStatus', value: 'draft' },
-							],
+							  ],
 						},
-						{
-							display: "deletion", value: "delete",
+						{ display: "deletion", value: "delete",
 							otherFields: [
 								{ fieldName: 'WFModuleCode', value: 'LMSCRObjective' },
-								{ fieldName: 'WFStage', value: 'LMSCRSOS01' },
+								{ fieldName: 'WFStage', value: 'LMSCRObjective01' },
 								// { fieldName: 'DraftStatus', value: 'draft' },
 							],
 						}
