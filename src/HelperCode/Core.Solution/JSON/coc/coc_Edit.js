@@ -37,6 +37,20 @@ var Information_Form = [
       //   projectCodeInList: true
       // },
       {
+        InternalName: 'Amount',
+        DisplayNameEn: 'Amount',
+        DisplayName: 'المبلغ الإجمالى للمخرجات',
+        type: 'float',
+        state: 'disabled',
+      },
+      {
+        InternalName: 'TAX',
+        DisplayNameEn: 'TAX',
+        DisplayName: 'نسبة الضريبة',
+        type: 'floatpercentage',
+        validation: 'required',
+        state: 'disabled',
+      },{
         InternalName: 'TotalAmount',
         DisplayNameEn: 'Total Amount',
         DisplayName: 'المبلغ الإجمالى',
@@ -46,21 +60,6 @@ var Information_Form = [
         targetelementamount: 'Amount', // amount after tax field
         numberOfDigits:"15",
 
-      },
-      {
-        InternalName: 'TAX',
-        DisplayNameEn: 'TAX',
-        DisplayName: 'نسبة الضريبة',
-        type: 'floatpercentage',
-        validation: 'required',
-        state: 'disabled',
-      },
-      {
-        InternalName: 'Amount',
-        DisplayNameEn: 'Amount',
-        DisplayName: 'المبلغ الإجمالى للمخرجات',
-        type: 'float',
-        state: 'disabled',
       },
       {
         InternalName: 'DisbursementStatus',

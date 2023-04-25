@@ -16,6 +16,14 @@ var Listing_Info = [
         infilter: false,
         
     },
+    {
+        "InternalName": "TotalAmount",
+        "DisplayNameEn":"Total Amount",
+        "DisplayName": "المبلغ الإجمالى",
+        "type":"number",
+        inlisting: true,
+        infilter: false
+    },
     // {
     //     "InternalName": "TAX",
     //     "DisplayNameEn": "TAX",
@@ -33,12 +41,4 @@ var Listing_Info = [
         infilter: false,
         needTrans: true,
     },
-    {
-        "InternalName": "TotalAmount",
-        "DisplayNameEn":"Total Amount",
-        "DisplayName": "المبلغ الإجمالى",
-        "type":"number",
-        inlisting: true,
-        infilter: false
-    }
 ]

@@ -75,15 +75,12 @@ var Information_Form = [
       //   grpfieldkey: 'Title',
       //   projectCodeInList: true
       // },
+      
       {
-        InternalName: 'TotalAmount',
-        DisplayNameEn: 'Total Amount',
-        DisplayName: 'المبلغ الإجمالى',
-        // type: 'float',
-        type: 'floattax', // to discount the tax in ksa 15%
-        targetelementtax: 'TAX', // tax amount field
-        targetelementamount: 'Amount', // amount after tax field
-        numberOfDigits:"15",
+        InternalName: 'Amount',
+        DisplayNameEn: 'Amount',
+        DisplayName: 'المبلغ الإجمالى للمخرجات',
+        type: 'float',
         state: 'disabled',
       },
       {
@@ -95,10 +92,14 @@ var Information_Form = [
         state: 'disabled',
       },
       {
-        InternalName: 'Amount',
-        DisplayNameEn: 'Amount',
-        DisplayName: 'المبلغ الإجمالى للمخرجات',
-        type: 'float',
+        InternalName: 'TotalAmount',
+        DisplayNameEn: 'Total Amount',
+        DisplayName: 'المبلغ الإجمالى',
+        // type: 'float',
+        type: 'floattax', // to discount the tax in ksa 15%
+        targetelementtax: 'TAX', // tax amount field
+        targetelementamount: 'Amount', // amount after tax field
+        numberOfDigits:"15",
         state: 'disabled',
       },
       {
