@@ -460,6 +460,21 @@ window.CrItemDataRequest = {
 				return el.InternalName == $(this).attr("id");
 			});
 
+			// var pickerFormat = ""
+			// console.log(fieldType, "fieldType oday")
+			// if (fieldType == 'picker') {
+			// 	console.log(pickerFormat,"Asdddd")
+			// 	debugger
+			// 	pickerFormat = oListItem.get_item($(this).attr("id"))
+			// 	if (pickerFormat && pickerFormat.$6_2) {
+					
+			// 		console.log(pickerFormat.$6_2,"pickerFormat pppppppppppp")
+			// 		pickerFormat[$6_2] = 'pickerFormat.$6_2'
+			// 	}
+
+			// 	console.log(pickerFormat,"pickerFormat")
+
+			// }
 
 
 			changeRequestBody.push({
@@ -480,7 +495,7 @@ window.CrItemDataRequest = {
 				DisplayNameEn: currentJsonValues[0].DisplayName,
 			});
 			console.log(fieldType, "fieldType")
-			debugger
+			// debugger
 			switch ($(this).attr("type")) {
 				case "date":
 					var d =
@@ -560,6 +575,9 @@ window.CrItemDataRequest = {
 
 				case "picker":
 					//
+
+					debugger
+
 
 					var pemail =
 						oListItem.get_item("" + $(this).attr("id") + "") == null
@@ -1695,6 +1713,9 @@ window.CrSetChangeBody = {
 													.slice(-1)[0]
 											);
 
+
+									console.log(ppp, "ppppppppppppp;")
+									debugger
 									o.value = ppp;
 									// o.value = "";
 
@@ -1828,6 +1849,9 @@ window.CrSetChangeBody = {
 														.slice(-1)[0]
 												);
 
+										console.log(ppp, "p seccccccccc")
+										debugger
+
 										o.value = ppp;
 										// o.value = "";
 
@@ -1940,9 +1964,20 @@ window.CrSetChangeBody = {
 				}
 			})
 			if (i == a.length - 1) {
-				debugger
-				Data_Submit.set_item("ChangeBody", JSON.stringify(changeRequestBody));
 
+
+				changeRequestBody.forEach(el => {
+					if (el.type == "picker" && el.originalValue) {
+						if (el.originalValue.$6_2) {
+							// debugger
+							// console.log(el.originalValue.$6_2.find('a'),"aaaaaaaaaaaaaaaaaa")
+							el.originalValue.$6_2 = ''
+						}
+					}
+				})
+
+				Data_Submit.set_item("ChangeBody", JSON.stringify(changeRequestBody));
+				debugger
 				// Data_Submit.set_item("ChangeBodyMaster", JSON.stringify(changeRequestBodyMaster));
 
 
