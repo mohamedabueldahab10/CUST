@@ -1702,6 +1702,12 @@ window.View_Data_Request = {
       let UpdateType = oListItem.get_item("UpdateType") || "";
       let crIsGeneral = UpdateType.includes("general");
       changeRequestBody = oListItem.get_item("ChangeBody");
+      // changeRequestBody =  changeRequestBody.replaceAll(
+      //   `"`,
+      //   `'`
+      //   ) 
+      console.log(changeRequestBody,"changeRequestBody")
+      debugger
       changeRequestBody = changeRequestBody
         ? JSON.parse(changeRequestBody)
         : [];

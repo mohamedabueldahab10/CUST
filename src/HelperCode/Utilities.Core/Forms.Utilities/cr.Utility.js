@@ -561,6 +561,8 @@ window.CrItemDataRequest = {
 				case "picker":
 					//
 
+		
+
 					var pemail =
 						oListItem.get_item("" + $(this).attr("id") + "") == null
 							? enternameemail
@@ -1695,6 +1697,9 @@ window.CrSetChangeBody = {
 													.slice(-1)[0]
 											);
 
+
+									console.log(ppp, "ppppppppppppp;")
+									debugger
 									o.value = ppp;
 									// o.value = "";
 
@@ -1827,6 +1832,9 @@ window.CrSetChangeBody = {
 														.split("|")
 														.slice(-1)[0]
 												);
+												
+												console.log(ppp,"p seccccccccc")
+												debugger
 
 										o.value = ppp;
 										// o.value = "";
@@ -1941,6 +1949,18 @@ window.CrSetChangeBody = {
 			})
 			if (i == a.length - 1) {
 				debugger
+
+				changeRequestBody.forEach(el =>{
+					if(el.type == "picker" && el.originalValue){
+						if(el.originalValue.$6_2){
+							el.originalValue = el.originalValue.$6_2.replaceAll(
+								`"`,
+								`'`
+							  )
+						}
+					}
+				})
+
 				Data_Submit.set_item("ChangeBody", JSON.stringify(changeRequestBody));
 
 				// Data_Submit.set_item("ChangeBodyMaster", JSON.stringify(changeRequestBodyMaster));
