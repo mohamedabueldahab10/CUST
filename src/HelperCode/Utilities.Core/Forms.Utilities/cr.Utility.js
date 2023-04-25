@@ -764,6 +764,30 @@ window.CrItemDataRequest = {
 				$(this).addClass("autofill");
 			}
 		});
+
+
+		// to handle trigger 
+
+
+		// handle getsibling data (sos RelatedStrategyPillars)
+		if ($(".getsiblingdata").length > 0) {
+			$(".getsiblingdata").trigger("change")//to invoke the sibling data
+		}
+		//
+		// handle show hide section (sos pillerName and piller desc)
+		var pillerNameLength = $('#PillarName').length
+		debugger
+		if (pillerNameLength) {
+			$("#RelatedStrategy").on("change", function () {
+				var relatedStrategy = $(this).val();
+				Goal_Strategy_Info.init(relatedStrategy);
+			});
+
+			var relatedStrategy = $('#RelatedStrategy').val()
+			Goal_Strategy_Info.init(relatedStrategy)
+		}
+		//
+
 		$(".CFIELD>label").removeClass("loader-action");
 
 
@@ -1964,7 +1988,7 @@ window.CrSetChangeBody = {
 				})
 
 				Data_Submit.set_item("ChangeBody", JSON.stringify(changeRequestBody));
-				
+
 				// Data_Submit.set_item("ChangeBodyMaster", JSON.stringify(changeRequestBodyMaster));
 
 

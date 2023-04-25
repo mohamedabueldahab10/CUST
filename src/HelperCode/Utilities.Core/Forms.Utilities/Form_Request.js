@@ -3366,7 +3366,8 @@ window.Goal_Strategy_Info = {
       $('#PillarName').parent().parent().parent().parent().css('display', 'block')
       Get_Pillers_Info.init(strategyId)
     } else {
-      if (listkey == 'sos') {
+      debugger
+      if (listkey == 'sos' ||(listkey == 'changerequest')) {
         $('#PillarName').parent().parent().parent().parent().css('display', 'none')
         $('#PillarName').val("")
         $('#StrategicDescription').val("")
