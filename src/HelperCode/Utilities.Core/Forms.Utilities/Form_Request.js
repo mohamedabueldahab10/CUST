@@ -391,6 +391,8 @@ window.Edit_Data_Request = {
       //
 
 
+
+
       let sectionJSON;
       if (changeRequestBody.length) {
         isCrMode = true;
@@ -408,7 +410,7 @@ window.Edit_Data_Request = {
         ];
       }
 
-      debugger
+
       if (changeRequestMasterBody.length) {
         changeRequestBodyMasterEdit = changeRequestMasterBody
       }
@@ -642,7 +644,7 @@ window.Edit_Data_Request = {
 
     DontSubmit_DataRequest.init()
 
-    debugger
+
     // to handle the title change and the master details section show and hide
     if (isEdit && listkey == 'goalstrategy') {
       if ($('#Types').val() == 'vision') {
@@ -1702,12 +1704,7 @@ window.View_Data_Request = {
       let UpdateType = oListItem.get_item("UpdateType") || "";
       let crIsGeneral = UpdateType.includes("general");
       changeRequestBody = oListItem.get_item("ChangeBody");
-      // changeRequestBody =  changeRequestBody.replaceAll(
-      //   `"`,
-      //   `'`
-      //   ) 
-      console.log(changeRequestBody,"changeRequestBody")
-      debugger
+
       changeRequestBody = changeRequestBody
         ? JSON.parse(changeRequestBody)
         : [];
@@ -1718,14 +1715,19 @@ window.View_Data_Request = {
         CrRelatedList = changeRequestBody[0].listName;
         RListKey = changeRequestBody[0].listKey;
 
-        changeRequestBody.forEach(el =>{
-          if(el.type == "picker"){
-            el.originalValue = el.originalValue ? el.originalValue.$5c_1 :""
+        changeRequestBody.forEach(el => {
+          if (el.type == "picker") {
+            el.originalValue = el.originalValue ? el.originalValue.$5c_1 : ""
+          } else if (el.type == "email") {
+            el.type = "string"
           }
+
+          //
+
         })
 
-        console.log(changeRequestBody,"changeRequestBody")
-        
+        console.log(changeRequestBody, "changeRequestBody")
+
         sectionJSON = [
           {
             label: changeRequestBody[0].label,
@@ -1737,11 +1739,11 @@ window.View_Data_Request = {
         ];
       }
 
-      
+
       if (isCrMode) {
         // if (crIsGeneral) CrModeFunctionality.preinit();
         // else
-         CrModeFunctionality.init(sectionJSON);
+        CrModeFunctionality.init(sectionJSON);
       }
     }
     // ended 
@@ -6730,7 +6732,7 @@ var DontSubmit_DataRequest = {
 var get_DynamicValues = {
   init: function (dynamicArrId) {
     if (dynamicArrId.length) {
-      debugger
+
       var id = dynamicArrId[0]
       $(`select[id=${id}][dynamic=parent]`).trigger("change")
       dynamicArrId.shift()

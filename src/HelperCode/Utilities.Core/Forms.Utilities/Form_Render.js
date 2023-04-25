@@ -9650,8 +9650,7 @@ window.View_ListInfo = {
 var Dynamic_Data_Request = {
   onSuccess: function (sender, args) {
     $("[dynamic=" + Dynamic_Data_Request.g.dyfieldname + "]").each(function () {
-      console.log($(this).attr("id"),"IIIIIIIIIIIIIIIID")
-      debugger
+
       switch ($(this).attr("type")) {
         case "date":
           var d =

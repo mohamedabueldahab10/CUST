@@ -155,6 +155,7 @@ window.CrModeFunctionality = {
 			},
 			function (item, index, data, isDone) {
 
+				debugger
 				if (
 					localStorage.getItem("lng") == null ||
 					localStorage.getItem("lng") == "ar"
@@ -166,6 +167,7 @@ window.CrModeFunctionality = {
 				// console.log('Finishing label ' + Label + ' - IsDone: ' + isDone);
 				htmlBuilder += "</div></div></div>";
 				if (isDone) {
+					debugger
 					actionTaskHeader = "";
 
 					$('div[class*="cr-related-item-"]').remove();
@@ -460,21 +462,7 @@ window.CrItemDataRequest = {
 				return el.InternalName == $(this).attr("id");
 			});
 
-			// var pickerFormat = ""
-			// console.log(fieldType, "fieldType oday")
-			// if (fieldType == 'picker') {
-			// 	console.log(pickerFormat,"Asdddd")
-			// 	debugger
-			// 	pickerFormat = oListItem.get_item($(this).attr("id"))
-			// 	if (pickerFormat && pickerFormat.$6_2) {
-					
-			// 		console.log(pickerFormat.$6_2,"pickerFormat pppppppppppp")
-			// 		pickerFormat[$6_2] = 'pickerFormat.$6_2'
-			// 	}
 
-			// 	console.log(pickerFormat,"pickerFormat")
-
-			// }
 
 
 			changeRequestBody.push({
@@ -1465,6 +1453,7 @@ window.CrItemDataRenderFromJSON_View = {
 		var originalValue = "";
 		var newValue = "";
 		var value = "";
+		debugger
 
 
 		changeRequestBody.forEach(function (o, i, a) {
@@ -1969,15 +1958,13 @@ window.CrSetChangeBody = {
 				changeRequestBody.forEach(el => {
 					if (el.type == "picker" && el.originalValue) {
 						if (el.originalValue.$6_2) {
-							// debugger
-							// console.log(el.originalValue.$6_2.find('a'),"aaaaaaaaaaaaaaaaaa")
 							el.originalValue.$6_2 = ''
 						}
 					}
 				})
 
 				Data_Submit.set_item("ChangeBody", JSON.stringify(changeRequestBody));
-				debugger
+				
 				// Data_Submit.set_item("ChangeBodyMaster", JSON.stringify(changeRequestBodyMaster));
 
 
