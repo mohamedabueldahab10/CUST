@@ -838,6 +838,9 @@
     indirect: " غير مباشر",
     economical: "اقتصادى",
     social: "إجتماعى",
+    subsectorhead: "وكيل",
+    sectorhead: "مدير",
+    crcommittee: "لجنة طلبات التغيير",
     impactonervices: "اثر على الخدمات والبنية التحتية",
     memorandumofunderstanding: "مذكرة تفاهم",
     memorandumofcooperation: "مذكرة تعاون",
@@ -1766,6 +1769,9 @@
     actual12monthly: "Quarter 4",
     ////////////////////////////////////
 
+    crcommittee: "CR Committee",
+    subsectorhead: "SubSector Head",
+    sectorhead: "Sector Head",
     dataprovider: "Data Provider",
     datasource: "Data Source",
     businesssector: "Business sector",
