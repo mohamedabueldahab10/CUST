@@ -38,7 +38,11 @@ window.Information_Form = [
 					],
 				},
 				toggleValues: [
-					{ value: "Projects", fields: ["ProjectCode", "projectsUpdateType"] }, //we can put more than 1  field
+					// { value: "Projects", fields: ["ProjectCode", "projectsUpdateType"] }, //we can put more than 1  field
+					{ value: "vrocrmsProjects", fields: ["ProjectCode", "projectsUpdateType"] }, //we can put more than 1  field
+					{ value: "epmocrmsProjects", fields: ["ProjectCode", "projectsUpdateType"] }, //we can put more than 1  field
+					{ value: "lmscrmsProjects", fields: ["ProjectCode", "projectsUpdateType"] }, //we can put more than 1  field
+
 					//Initiatives
 					{ value: "strategiccrmsInitiatives", fields: ["InitiativeCode", "strategicinitiativesUpdateType"] }, //we can put more than 1  field
 					{ value: "vrocrmsInitiatives", fields: ["InitiativeCode", "vroinitiativesUpdateType"] }, //we can put more than 1  field
@@ -67,6 +71,8 @@ window.Information_Form = [
 				source: "Projects",
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
+				showlink: true,
+				linkedto: "projects",
 			},
 			{
 				InternalName: "UpdateType",
@@ -74,7 +80,7 @@ window.Information_Form = [
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
-				ToggleName: "projectsUpdateType",
+				// ToggleName: "projectsUpdateType",
 				type: "dropdownValues",
 				options: {
 					choices: [
@@ -251,6 +257,8 @@ window.Information_Form = [
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
 				validation: "required",
+				showlink: true,
+				linkedto: "initiatives",
 			},
 			{
 				InternalName: "UpdateType",
@@ -380,7 +388,9 @@ window.Information_Form = [
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
 				// dontSubmit: true,
-				useAccessPolicy: true
+				useAccessPolicy: true,
+				showlink: true,
+				linkedto: "sos",
 				// dynamic: 'moduleSelect',
 				// filterField: 'Types',
 				// filterFieldType: 'Text',
@@ -508,6 +518,8 @@ window.Information_Form = [
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
 				useAccessPolicy: true,
+				showlink: true,
+				linkedto: "mainkpi",
 				// dontSubmit: true,
 			},
 			{

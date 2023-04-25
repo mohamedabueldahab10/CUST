@@ -8511,8 +8511,10 @@ window.View_ListInfo = {
           break;
 
         case "percentbyrelatedparent":
+          
           var code = activeCode;
 
+          if(code){
           var customQuery =
             '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
             code +
@@ -8583,6 +8585,7 @@ window.View_ListInfo = {
               }
             }
           );
+          }
           break;
 
         case "decimalpercentage":

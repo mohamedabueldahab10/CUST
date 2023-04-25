@@ -1711,6 +1711,15 @@ window.View_Data_Request = {
         RID = changeRequestBody[0].itemId;
         CrRelatedList = changeRequestBody[0].listName;
         RListKey = changeRequestBody[0].listKey;
+
+        changeRequestBody.forEach(el =>{
+          if(el.type == "picker"){
+            el.originalValue = el.originalValue ? el.originalValue.$5c_1 :""
+          }
+        })
+
+        console.log(changeRequestBody,"changeRequestBody")
+        
         sectionJSON = [
           {
             label: changeRequestBody[0].label,
@@ -1722,9 +1731,11 @@ window.View_Data_Request = {
         ];
       }
 
+      
       if (isCrMode) {
-        if (crIsGeneral) CrModeFunctionality.preinit();
-        else CrModeFunctionality.init(sectionJSON);
+        // if (crIsGeneral) CrModeFunctionality.preinit();
+        // else
+         CrModeFunctionality.init(sectionJSON);
       }
     }
     // ended 

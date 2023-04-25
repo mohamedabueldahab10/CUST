@@ -44,6 +44,7 @@ window.CrModeFunctionality = {
 		});
 	},
 	init: function (newJSON) {
+
 		$('[data-togglename*="UpdateType"]').parent().find(">label").addClass("loader-action");
 
 		var htmlBuilder =
@@ -58,6 +59,9 @@ window.CrModeFunctionality = {
 				a.splice(i, 1);
 			}
 		});
+
+		console.log(newJSON, "NEW JSSSSSS")
+
 		asyncFor.seqProcess(
 			newJSON,
 			function (item, index, resolve) {
@@ -449,11 +453,15 @@ window.CrItemDataRequest = {
 
 
 
+
 			fieldType = $(this).attr("type");
 			let newJsonValues = jsonValues ? jsonValues : Information_Form;
 			var currentJsonValues = newJsonValues.map(function (el) {
 				return el.InternalName == $(this).attr("id");
 			});
+
+
+
 			changeRequestBody.push({
 				label: crlabel,
 				labelEn: crlabelEn,
@@ -471,6 +479,8 @@ window.CrItemDataRequest = {
 				DisplayName: currentJsonValues[0].DisplayName,
 				DisplayNameEn: currentJsonValues[0].DisplayName,
 			});
+			console.log(fieldType, "fieldType")
+			debugger
 			switch ($(this).attr("type")) {
 				case "date":
 					var d =
@@ -1438,9 +1448,11 @@ window.CrItemDataRenderFromJSON_View = {
 		var newValue = "";
 		var value = "";
 
+
 		changeRequestBody.forEach(function (o, i, a) {
 
 			if (o.InternalName) {
+
 
 				$this = $(".cr-related-item-section #" + o.InternalName);
 				fieldType = $this.attr("type");
@@ -1525,18 +1537,20 @@ window.CrItemDataRenderFromJSON_View = {
 
 					case "picker":
 						//
-						var pemail;
-						if (isOriginalValue) {
-							pemail = value == "null" ? enternameemail : value.get_lookupValue();
-						} else {
-							pemail = !value ? enternameemail : value.$5c_1;
-						}
+						// debugger
+						// var pemail;
+						// if (isOriginalValue) {
+						// 	pemail = value == "null" ? enternameemail : value.get_lookupValue();
+						// } else {
+						// 	pemail = !value ? enternameemail : value.$5c_1;
+						// }
 
-						$this.attr("data-email", pemail);
+						// $this.attr("data-email", pemail);
 
-						var idinternal = $this.attr("id");
-						var mp = new MyPeoplePicker();
-						mp.init($this.attr("id"), { AllowMultipleValues: false });
+						// var idinternal = $this.attr("id");
+						// var mp = new MyPeoplePicker();
+						// mp.init($this.attr("id"), { AllowMultipleValues: false });
+						$this.text(value); // cause we change on changeRequestBody in form request 
 						break;
 
 					case "dropdown":
@@ -1636,7 +1650,7 @@ window.CrSetChangeBody = {
 		var jsonValues;
 
 		if (USERisNew) {
-
+			debugger
 			Data_Submit.set_item("RelatedItemCode", crRelatedItemCode);
 			if (!isGeneral) {
 				jsonValues = eval(
@@ -1646,16 +1660,18 @@ window.CrSetChangeBody = {
 				);
 			}
 		}
+
 		changeRequestBody.forEach(function (o, i, a) {
 
 
 			var $this = $(".cr-related-item-section #" + o.InternalName);
 			let newJsonValues = jsonValues ? jsonValues : Information_Form;
 
+
 			// change on it to be validation on multi json values not only for one value
 			newJsonValues.forEach(element => {
 
-				if (element.hasOwnProperty("subFields")) { // if there is subfields
+				if (element.hasOwnProperty("subFields") && !element.hasOwnProperty("sectiontype")) { // if there is subfields
 					element.subFields.forEach(item => {
 						if (item.InternalName == o.InternalName) {
 							o.DisplayName = item.DisplayName || ""
@@ -1788,140 +1804,143 @@ window.CrSetChangeBody = {
 						}
 					})
 				} else {
-					element.forEach(item => {
-						if (item.InternalName == o.InternalName) {
-							o.DisplayName = item.DisplayName || ""
-							o.DisplayNameEn = item.DisplayNameEn || ""
-							o.label = item.label || ""
-							o.labelEn = item.labelEn || ""
-							o.type = item.type || ""
-							o.InternalName = item.InternalName || "";
+					if (!element.hasOwnProperty("sectiontype")) {
+						element.forEach(item => {
+							if (item.InternalName == o.InternalName) {
+								o.DisplayName = item.DisplayName || ""
+								o.DisplayNameEn = item.DisplayNameEn || ""
+								o.label = item.label || ""
+								o.labelEn = item.labelEn || ""
+								o.type = item.type || ""
+								o.InternalName = item.InternalName || "";
 
-							if (o.type == "picker") {
-								if ($this.find("span.sp-peoplepicker-userSpan").length) {
-									var id = $this.attr("INppicker");
-									var ppp =
-										$this.find("span.sp-peoplepicker-userSpan").attr("sid") == undefined
+								if (o.type == "picker") {
+									if ($this.find("span.sp-peoplepicker-userSpan").length) {
+										var id = $this.attr("INppicker");
+										var ppp =
+											$this.find("span.sp-peoplepicker-userSpan").attr("sid") == undefined
+												? ""
+												: SP.FieldUserValue.fromUser(
+													$this
+														.find("span.sp-peoplepicker-userSpan")
+														.attr("sid")
+														.split("|")
+														.slice(-1)[0]
+												);
+
+										o.value = ppp;
+										// o.value = "";
+
+									}
+								} else if (o.type == "datetime") {
+									if ($this.hasClass("withTime")) {
+										var dateval = $this.val();
+										var timeval = $this.closest(".CFIELD").find("#Time").val();
+										var datetime = new Date(dateval);
+										// format the output
+										var month = datetime.getMonth() + 1;
+										var day = datetime.getDate();
+										var year = datetime.getFullYear();
+										var timezoneOffset = datetime.getTimezoneOffset() / 60;
+										var hour = datetime.getHours() + timezoneOffset;
+										if (hour < 10) {
+											hour = "0" + hour;
+										}
+										var min = datetime.getMinutes();
+										if (min < 10) {
+											min = "0" + min;
+										}
+										var sec = datetime.getSeconds();
+										if (sec < 10) {
+											sec = "0" + sec;
+										}
+
+										var ydate =
+											month + "/" + day + "/" + year + " " + hour + ":" + min + ":" + sec;
+
+										if (dateval && timeval)
+											New_Data_Submit.g.oListItem.set_item($this.attr("id"), ydate);
+									} else {
+										var dateval = $this.val().replace("-", "/");
+										var ydate = !dateval
 											? ""
-											: SP.FieldUserValue.fromUser(
-												$this
-													.find("span.sp-peoplepicker-userSpan")
-													.attr("sid")
-													.split("|")
-													.slice(-1)[0]
-											);
-
-									o.value = ppp;
-									// o.value = "";
-
-								}
-							} else if (o.type == "datetime") {
-								if ($this.hasClass("withTime")) {
-									var dateval = $this.val();
-									var timeval = $this.closest(".CFIELD").find("#Time").val();
-									var datetime = new Date(dateval);
-									// format the output
-									var month = datetime.getMonth() + 1;
-									var day = datetime.getDate();
-									var year = datetime.getFullYear();
-									var timezoneOffset = datetime.getTimezoneOffset() / 60;
-									var hour = datetime.getHours() + timezoneOffset;
-									if (hour < 10) {
-										hour = "0" + hour;
+											: [dateval.slice(5, 10), dateval.slice(0, 4)]
+												.join("/")
+												.replace("-", "/");
+										if (dateval) o.value = ydate;
 									}
-									var min = datetime.getMinutes();
-									if (min < 10) {
-										min = "0" + min;
+								} else if (o.type == "datetime-local") {
+									if ($this.hasClass("withTime")) {
+										var dateval = $this.val();
+										var datetime = new Date(dateval);
+										console.log("datetime", datetime);
+										// format the output
+										var month = datetime.getMonth() + 1;
+										var day = datetime.getDate();
+										var year = datetime.getFullYear();
+										var timezoneOffset = datetime.getTimezoneOffset() / 60;
+										var hour = datetime.getHours() + timezoneOffset;
+										if (hour < 10) {
+											hour = "0" + hour;
+										}
+										var min = datetime.getMinutes();
+										if (min < 10) {
+											min = "0" + min;
+										}
+										var sec = datetime.getSeconds();
+										if (sec < 10) {
+											sec = "0" + sec;
+										}
+
+										var ydate =
+											month + "/" + day + "/" + year + " " + hour + ":" + min + ":" + sec;
+
+										if (dateval) o.value = ydate;
 									}
-									var sec = datetime.getSeconds();
-									if (sec < 10) {
-										sec = "0" + sec;
+								} else if (o.type == "radio") {
+									var checkedvalue = $(
+										'input[id="' + $this.attr("id") + '"]:checked'
+									).val();
+									if (checkedvalue == "yes") {
+										o.value = "yes";
+									} else if (checkedvalue == "no") {
+										o.value = "no";
+									} else o.value = checkedvalue;
+
+									if (SP_ListName == "Deliverables" && checkedvalue == "yes") {
+										o.value = DVfirstStage;
 									}
-
-									var ydate =
-										month + "/" + day + "/" + year + " " + hour + ":" + min + ":" + sec;
-
-									if (dateval && timeval)
-										New_Data_Submit.g.oListItem.set_item($this.attr("id"), ydate);
-								} else {
-									var dateval = $this.val().replace("-", "/");
-									var ydate = !dateval
-										? ""
-										: [dateval.slice(5, 10), dateval.slice(0, 4)]
-											.join("/")
-											.replace("-", "/");
-									if (dateval) o.value = ydate;
-								}
-							} else if (o.type == "datetime-local") {
-								if ($this.hasClass("withTime")) {
-									var dateval = $this.val();
-									var datetime = new Date(dateval);
-									console.log("datetime", datetime);
-									// format the output
-									var month = datetime.getMonth() + 1;
-									var day = datetime.getDate();
-									var year = datetime.getFullYear();
-									var timezoneOffset = datetime.getTimezoneOffset() / 60;
-									var hour = datetime.getHours() + timezoneOffset;
-									if (hour < 10) {
-										hour = "0" + hour;
-									}
-									var min = datetime.getMinutes();
-									if (min < 10) {
-										min = "0" + min;
-									}
-									var sec = datetime.getSeconds();
-									if (sec < 10) {
-										sec = "0" + sec;
-									}
-
-									var ydate =
-										month + "/" + day + "/" + year + " " + hour + ":" + min + ":" + sec;
-
-									if (dateval) o.value = ydate;
-								}
-							} else if (o.type == "radio") {
-								var checkedvalue = $(
-									'input[id="' + $this.attr("id") + '"]:checked'
-								).val();
-								if (checkedvalue == "yes") {
-									o.value = "yes";
-								} else if (checkedvalue == "no") {
-									o.value = "no";
-								} else o.value = checkedvalue;
-
-								if (SP_ListName == "Deliverables" && checkedvalue == "yes") {
-									o.value = DVfirstStage;
-								}
-							} else if (o.type == "checkbox") {
-								var checkedvalue = $(
-									'input[id="' + $this.attr("id") + '"]:checked'
-								).length;
-								if (checkedvalue) o.value = true;
-								else o.value = false;
-							} else if (o.type == "dropdown") {
-								o.value = $this.val();
-							} else if ($this.hasClass("percentagefield")) {
-								o.value = $this.val() / 100;
-							} else if (o.type == "multiselect") {
-								var myselections = [];
-								$this.find("input#Revenue:checked").each(function () {
-									myselections.push($this.val());
-								});
-								myselections = myselections.join(":::");
-								o.value = myselections;
-							} else if (o.type == "richtext") {
-								var HTMLContent = $this.html();
-								HTMLContent ? (o.value = HTMLContent) : "";
-							} else o.value = $this.val();
+								} else if (o.type == "checkbox") {
+									var checkedvalue = $(
+										'input[id="' + $this.attr("id") + '"]:checked'
+									).length;
+									if (checkedvalue) o.value = true;
+									else o.value = false;
+								} else if (o.type == "dropdown") {
+									o.value = $this.val();
+								} else if ($this.hasClass("percentagefield")) {
+									o.value = $this.val() / 100;
+								} else if (o.type == "multiselect") {
+									var myselections = [];
+									$this.find("input#Revenue:checked").each(function () {
+										myselections.push($this.val());
+									});
+									myselections = myselections.join(":::");
+									o.value = myselections;
+								} else if (o.type == "richtext") {
+									var HTMLContent = $this.html();
+									HTMLContent ? (o.value = HTMLContent) : "";
+								} else o.value = $this.val();
 
 
-							o.isChanged = o.value != o.originalValue;
-						}
-					})
+								o.isChanged = o.value != o.originalValue;
+							}
+						})
+					}
 				}
 			})
 			if (i == a.length - 1) {
+				debugger
 				Data_Submit.set_item("ChangeBody", JSON.stringify(changeRequestBody));
 
 				// Data_Submit.set_item("ChangeBodyMaster", JSON.stringify(changeRequestBodyMaster));
@@ -3073,7 +3092,7 @@ var Master_Edit_DataRequest = {
 
 					if (masterId == arrayMasterId) {
 						console.log(o, "ooooooooooooooooooooooo")
-						debugger
+
 						switch ($(this).attr("type")) {
 							case "date":
 								// var d = (o.value == null || o.value == "") ? "empty" : o.value;
@@ -3093,10 +3112,10 @@ var Master_Edit_DataRequest = {
 									var datetouse2 =
 										datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
 
-										$(this).val(datetouse2);
+									$(this).val(datetouse2);
 									console.log(datetouse2, "datetouse2")
 
-								}else{
+								} else {
 									$(this).val(d)
 								}
 
