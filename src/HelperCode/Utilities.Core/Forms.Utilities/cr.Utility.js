@@ -897,6 +897,9 @@ window.CrItemDataRequest = {
 				var sosStrategy = $(this).val();
 				Get_Related_Sos_Sector.init(sosStrategy);
 			});
+
+			//to get the sector and subsector based on sos
+			$(".cr-related-item-section select#RelatedStrategyObjective").trigger('change')
 		}
 		// to handle trigger 
 		debugger
