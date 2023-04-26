@@ -155,7 +155,7 @@ window.CrModeFunctionality = {
 			},
 			function (item, index, data, isDone) {
 
-				debugger
+				
 				if (
 					localStorage.getItem("lng") == null ||
 					localStorage.getItem("lng") == "ar"
@@ -167,7 +167,7 @@ window.CrModeFunctionality = {
 				// console.log('Finishing label ' + Label + ' - IsDone: ' + isDone);
 				htmlBuilder += "</div></div></div>";
 				if (isDone) {
-					debugger
+					
 					actionTaskHeader = "";
 
 					$('div[class*="cr-related-item-"]').remove();
@@ -253,45 +253,173 @@ window.CrModeFunctionality = {
 					$(".cr-related-item-section select[dynamic=parent]").on(
 						"change",
 						function () {
+							console.log("inside dynamic parenttttt crrrrr")
+							debugger
 							let parentFieldName = $(this).attr("id");
 							let parentFieldValue = $(this).val();
 							let customFilterValue = $(this)
-								.find("option[value=" + parentFieldValue + "]")
-								.data("customfiltervalue");
+							  .find("option[value=" + parentFieldValue + "]")
+							  .data("customfiltervalue");
+				
+				
 							let isCustomFilterValue = $(this).attr("iscustomfiltervalue");
-
+				
 							let affectedSelectsInfo = [];
+				
+							let parentCustomFilterValueFromSibling = $(this).attr("data-parentcustomfiltervalue")
+							let notInvokeListiner = $(this).data("notinvokelistiner")
+				
 							$("[dynamic=" + parentFieldName + "]").each(function () {
-								let affectedFieldName = $(this).attr("id");
-								let listName = $(this).data("listname");
-								let filterField = $(this).data("filterfield");
-								let filterFieldType = $(this).data("filterfieldtype");
-								let valFieldKey = $(this).data("valfieldkey");
-								let dispFieldKey = $(this).data("dispfieldkey");
-								// let specificVal = $(this).data("queryfieldvalue");
-								let queryFieldValue = $(this).data("queryfieldvalue");
-								let queryFieldName = $(this).data("queryfield");
-								let queryFieldType = $(this).data("queryfieldtype");
-								// console.log($(this).data("queryFieldValue"), "sssssssa")
-								affectedSelectsInfo.push({
-									affectedFieldName: affectedFieldName,
-									listName: listName,
-									isCustomFilterValue: isCustomFilterValue,
-									filterField: filterField,
-									filterFieldType: filterField,
-									parentFieldValue: parentFieldValue,
-									customFilterValue: customFilterValue,
-									filterFieldType: filterFieldType,
-									valFieldKey: valFieldKey,
-									dispFieldKey: dispFieldKey,
-									queryFieldValue: queryFieldValue,
-									queryFieldName: queryFieldName,
-									queryFieldType: queryFieldType,
-								});
+							  console.log(parentFieldName, "parentFieldName")
+				
+							  let affectedFieldName = $(this).attr("id");
+							  let listName = $(this).data("listname");
+							  let filterField = $(this).data("filterfield");
+							  let filterFieldType = $(this).data("filterfieldtype");
+							  let valFieldKey = $(this).data("valfieldkey");
+							  let dispFieldKey = $(this).data("dispfieldkey");
+							  // let specificVal = $(this).data("queryfieldvalue");
+							  let queryFieldValue = $(this).data("queryfieldvalue");
+							  let queryFieldName = $(this).data("queryfield");
+							  let queryFieldType = $(this).data("queryfieldtype");
+				
+				
+				
+				
+							  // console.log($(this).data("queryFieldValue"), "sssssssa")
+							  affectedSelectsInfo.push({
+								affectedFieldName: affectedFieldName,
+								listName: listName,
+								isCustomFilterValue: isCustomFilterValue,
+								filterField: filterField,
+								filterFieldType: filterField,
+								parentFieldValue: parentFieldValue,
+								customFilterValue: customFilterValue,
+								filterFieldType: filterFieldType,
+								valFieldKey: valFieldKey,
+								dispFieldKey: dispFieldKey,
+								queryFieldValue: queryFieldValue,
+								queryFieldName: queryFieldName,
+								queryFieldType: queryFieldType,
+								parentCustomFilterValueFromSibling: parentCustomFilterValueFromSibling
+								// dataSiblingvalue:dataSiblingvalue
+							  });
 							});
-							dynamicAffectSelect.init(affectedSelectsInfo);
+				
+							// added to handel the field to be dynamicparemnt and other (the filed can be parent and child on the same time)
+							$("[seconeddynamic*=" + parentFieldName + "]").each(function () {
+							  let affectedFieldName = $(this).attr("id");
+							  let listName = $(this).data("listname");
+							  let filterField = $(this).data("filterfield");
+							  let filterFieldType = $(this).data("filterfieldtype");
+							  let valFieldKey = $(this).data("valfieldkey");
+							  let dispFieldKey = $(this).data("dispfieldkey");
+							  // let specificVal = $(this).data("queryfieldvalue");
+							  let queryFieldValue = $(this).data("queryfieldvalue");
+							  let queryFieldName = $(this).data("queryfield");
+							  let queryFieldType = $(this).data("queryfieldtype");
+				
+							  // let dataSiblingvalue = $(this).data("siblingvalue")
+				
+							  // console.log($(this).data("queryFieldValue"), "sssssssa")
+							  affectedSelectsInfo.push({
+								affectedFieldName: affectedFieldName,
+								listName: listName,
+								isCustomFilterValue: isCustomFilterValue,
+								filterField: filterField,
+								filterFieldType: filterField,
+								parentFieldValue: parentFieldValue,
+								customFilterValue: customFilterValue,
+								filterFieldType: filterFieldType,
+								valFieldKey: valFieldKey,
+								dispFieldKey: dispFieldKey,
+								queryFieldValue: queryFieldValue,
+								queryFieldName: queryFieldName,
+								queryFieldType: queryFieldType,
+								parentCustomFilterValueFromSibling: parentCustomFilterValueFromSibling
+								// dataSiblingvalue:dataSiblingvalue
+							  });
+							});
+							//
+							//
+				
+							if (notInvokeListiner) { // will not invoke the function if this attr true (we use it on hrsd initiative to filter on sos when chose startegy and level)
+							  console.log("Inside not invoke listiner")
+				
+							} else {
+				
+							  // if(affectedSelectsInfo && affectedSelectsInfo !="undefined"){
+							  dynamicAffectSelect.init(affectedSelectsInfo);
+							  // }
+							}
+							// let parentFieldName = $(this).attr("id");
+							// let parentFieldValue = $(this).val();
+							// let customFilterValue = $(this)
+							// 	.find("option[value=" + parentFieldValue + "]")
+							// 	.data("customfiltervalue");
+							// let isCustomFilterValue = $(this).attr("iscustomfiltervalue");
+
+							// let affectedSelectsInfo = [];
+							// $("[dynamic=" + parentFieldName + "]").each(function () {
+							// 	let affectedFieldName = $(this).attr("id");
+							// 	let listName = $(this).data("listname");
+							// 	let filterField = $(this).data("filterfield");
+							// 	let filterFieldType = $(this).data("filterfieldtype");
+							// 	let valFieldKey = $(this).data("valfieldkey");
+							// 	let dispFieldKey = $(this).data("dispfieldkey");
+							// 	// let specificVal = $(this).data("queryfieldvalue");
+							// 	let queryFieldValue = $(this).data("queryfieldvalue");
+							// 	let queryFieldName = $(this).data("queryfield");
+							// 	let queryFieldType = $(this).data("queryfieldtype");
+							// 	// console.log($(this).data("queryFieldValue"), "sssssssa")
+							// 	affectedSelectsInfo.push({
+							// 		affectedFieldName: affectedFieldName,
+							// 		listName: listName,
+							// 		isCustomFilterValue: isCustomFilterValue,
+							// 		filterField: filterField,
+							// 		filterFieldType: filterField,
+							// 		parentFieldValue: parentFieldValue,
+							// 		customFilterValue: customFilterValue,
+							// 		filterFieldType: filterFieldType,
+							// 		valFieldKey: valFieldKey,
+							// 		dispFieldKey: dispFieldKey,
+							// 		queryFieldValue: queryFieldValue,
+							// 		queryFieldName: queryFieldName,
+							// 		queryFieldType: queryFieldType,
+							// 	});
+							// });
+							// dynamicAffectSelect.init(affectedSelectsInfo);
 						}
 					);
+
+					$(".cr-related-item-section .grandFieldInvoke").on("change", function (event) {
+
+
+						debugger
+			
+						var grandId = $(this).data("grandfieldid")
+						var childId = $(this).data("childfieldid")
+						var childFieldIdSource = $(this).data("childfieldidsource")
+			
+						var elementValue = event.target.value
+			
+						if (grandId && elementValue && childId && childFieldIdSource) {
+						  var customFilterValue = $(this).find("option[value=" + elementValue + "]").data("customfiltervalue"); // will add the value on parent to can handle the query in dynamic func
+			
+						  $(`#${grandId}`).data("notinvokelistiner", false)
+						  $(`#${grandId}`).attr("data-seconedvaluelistiner", elementValue)
+						  $(`#${grandId}`).attr("data-parentcustomfiltervalue", customFilterValue)
+						  $(`#${childId}`).data("queryfield", childFieldIdSource)
+						  $(`#${childId}`).data("queryfieldvalue", elementValue)
+						  $(`#${childId}`).data("queryfieldtype", "Text")
+			
+						  // window.setTimeout(function(){
+						  $(`select[dynamic=parent][id=${grandId}]`).trigger('change') // to trigger only one field (correct field)
+						  // },1500)
+						}
+			
+					  })
+			
 					//max min dates
 					$(
 						".cr-related-item-section input[type=date]:not([minimumdate=undefined])"
@@ -482,8 +610,7 @@ window.CrItemDataRequest = {
 				DisplayName: currentJsonValues[0].DisplayName,
 				DisplayNameEn: currentJsonValues[0].DisplayName,
 			});
-			console.log(fieldType, "fieldType")
-			// debugger
+	
 			switch ($(this).attr("type")) {
 				case "date":
 					var d =
@@ -564,7 +691,7 @@ window.CrItemDataRequest = {
 				case "picker":
 					//
 
-					debugger
+					
 
 
 					var pemail =
@@ -767,8 +894,11 @@ window.CrItemDataRequest = {
 
 
 		// to handle trigger 
+		debugger
 
-
+		if ($(".grandFieldInvoke").length > 0) { // to use it in sos change request
+			$(".grandFieldInvoke").trigger("change")
+		  }
 		// handle getsibling data (sos RelatedStrategyPillars)
 		if ($(".getsiblingdata").length > 0) {
 			$(".getsiblingdata").trigger("change")//to invoke the sibling data
@@ -776,15 +906,33 @@ window.CrItemDataRequest = {
 		//
 		// handle show hide section (sos pillerName and piller desc)
 		var pillerNameLength = $('#PillarName').length
-		debugger
+		
 		if (pillerNameLength) {
+
 			$("#RelatedStrategy").on("change", function () {
 				var relatedStrategy = $(this).val();
 				Goal_Strategy_Info.init(relatedStrategy);
 			});
 
-			var relatedStrategy = $('#RelatedStrategy').val()
-			Goal_Strategy_Info.init(relatedStrategy)
+		}
+		//
+		// handle dynamic dropdown trigger
+		
+		var dynamicArrId = []
+		$("select[dynamic=parent]").each(function () {
+
+			var checkStopInvoke = $(this).data("stopinvokeparent") // use it on type in initiative to not remove the related strategy in edit
+
+			if (checkStopInvoke == "yes") {
+				console.log("continue without call dynamic parent")
+			} else {
+
+				dynamicArrId.push($(this).attr("id"))
+			}
+
+		})
+		if (dynamicArrId.length) {
+			get_DynamicValues.init(dynamicArrId)
 		}
 		//
 
@@ -1477,7 +1625,7 @@ window.CrItemDataRenderFromJSON_View = {
 		var originalValue = "";
 		var newValue = "";
 		var value = "";
-		debugger
+		
 
 
 		changeRequestBody.forEach(function (o, i, a) {
@@ -1568,7 +1716,7 @@ window.CrItemDataRenderFromJSON_View = {
 
 					case "picker":
 						//
-						// debugger
+						
 						// var pemail;
 						// if (isOriginalValue) {
 						// 	pemail = value == "null" ? enternameemail : value.get_lookupValue();
@@ -1595,67 +1743,67 @@ window.CrItemDataRenderFromJSON_View = {
 
 						break;
 
-					case "dropdownValues": 
+					case "dropdownValues":
 						// $this.text(value);
-							if ($this.attr("id") == "SubSector") {
-								departmenetValue = value;
-							}
-							if ($this.attr("id") == "BudgetItem") {
-								budgetitemValue = value;
-							} 
-							if (value == No_Data) {
-								$this.text(No_Data);
-							  } else if (value == true) {
-								if (
-								  localStorage.getItem("lng") == null ||
-								  localStorage.getItem("lng") == "ar"
-								) {
-								  $this.text(Resources.ar["yes"]);
-								} else $this.text(Resources.en["yes"]);
-							  } else if (value == false) {
-								if (
-								  localStorage.getItem("lng") == null ||
-								  localStorage.getItem("lng") == "ar"
-								) {
-								  $this.text(Resources.ar["no"]);
-								} else $this.text(Resources.en["no"]);
-							  } else {
-								if (
-								  localStorage.getItem("lng") == null ||
-								  localStorage.getItem("lng") == "ar"
-								) {
-								  $this.text(Resources.ar[value.toLowerCase()]);
-								} else $this.text(Resources.en[value.toLowerCase()]);
-							  }
-							  $this.attr("data-viewtogglevalue", value);
-	
-	
-							break;
-						
-					case "yesnoradio": 
-							// $this.text(value);
-								if (value == No_Data) {
-									$this.text(No_Data);
-								  } else if (value == true || value == "yes" || value == "Yes") {
-									if (
-									  localStorage.getItem("lng") == null ||
-									  localStorage.getItem("lng") == "ar"
-									) {
-									  $this.text(Resources.ar["yes"]);
-									} else $this.text(Resources.en["yes"]);
-								  } else if (value == false || value == "no" || value == "No") {
-									if (
-									  localStorage.getItem("lng") == null ||
-									  localStorage.getItem("lng") == "ar"
-									) {
-									  $this.text(Resources.ar["no"]);
-									} else $this.text(Resources.en["no"]);
-								  } 
-								  $this.attr("data-viewtogglevalue", value);
-		
-		
-								break;
-					
+						if ($this.attr("id") == "SubSector") {
+							departmenetValue = value;
+						}
+						if ($this.attr("id") == "BudgetItem") {
+							budgetitemValue = value;
+						}
+						if (value == No_Data) {
+							$this.text(No_Data);
+						} else if (value == true) {
+							if (
+								localStorage.getItem("lng") == null ||
+								localStorage.getItem("lng") == "ar"
+							) {
+								$this.text(Resources.ar["yes"]);
+							} else $this.text(Resources.en["yes"]);
+						} else if (value == false) {
+							if (
+								localStorage.getItem("lng") == null ||
+								localStorage.getItem("lng") == "ar"
+							) {
+								$this.text(Resources.ar["no"]);
+							} else $this.text(Resources.en["no"]);
+						} else {
+							if (
+								localStorage.getItem("lng") == null ||
+								localStorage.getItem("lng") == "ar"
+							) {
+								$this.text(Resources.ar[value.toLowerCase()]);
+							} else $this.text(Resources.en[value.toLowerCase()]);
+						}
+						$this.attr("data-viewtogglevalue", value);
+
+
+						break;
+
+					case "yesnoradio":
+						// $this.text(value);
+						if (value == No_Data) {
+							$this.text(No_Data);
+						} else if (value == true || value == "yes" || value == "Yes") {
+							if (
+								localStorage.getItem("lng") == null ||
+								localStorage.getItem("lng") == "ar"
+							) {
+								$this.text(Resources.ar["yes"]);
+							} else $this.text(Resources.en["yes"]);
+						} else if (value == false || value == "no" || value == "No") {
+							if (
+								localStorage.getItem("lng") == null ||
+								localStorage.getItem("lng") == "ar"
+							) {
+								$this.text(Resources.ar["no"]);
+							} else $this.text(Resources.en["no"]);
+						}
+						$this.attr("data-viewtogglevalue", value);
+
+
+						break;
+
 					case "radio":
 						var radioval = value;
 						if (radioval == "Yes" || radioval == "yes") {
@@ -1708,7 +1856,7 @@ window.CrItemDataRenderFromJSON_View = {
 							? $this.html(HTMLContent.replaceAll('href="/TOREMOVE', "href="))
 							: "";
 						break;
-					
+
 					// case "lookup":
 					// 	var valfieldkey = $this.data("valfieldkey"),
 					// 	Dispfieldkey = $this.data("dispfieldkey"),
@@ -1717,21 +1865,21 @@ window.CrItemDataRenderFromJSON_View = {
 					// 	parentrelatedfilterkeylvl1 = $this.data("parentrelatedfilterkeylvl1"),
 					// 	parentrelatedfilterkeylvl2 = $this.data("parentrelatedfilterkeylvl2"),
 					// 	$this = $this;
-				  
+
 					//   var listFields = ["ID", valfieldkey, Dispfieldkey];
 					//   if (parentrelatedfilterkeylvl1 && parentrelatedfilterkeylvl1 != "undefined") {
-				  
+
 					// 	listFields.push(parentrelatedfilterkeylvl1)
 					// 	if (parentrelatedfilterkeylvl2 && parentrelatedfilterkeylvl2 != "undefined") {
 					// 	  listFields.push(parentrelatedfilterkeylvl2)
 					// 	}
 					// 	// listFields = ["ID",valfieldkey, Dispfieldkey, parentrelatedfilterkeylvl1];
 					//   }
-				  
-				  
-				  
+
+
+
 					//   if (oListItem.get_item($this.attr("id")) == null) {
-				  
+
 					// 	$this.html(No_Data);
 					//   } else {
 					// 	customquery =
@@ -1740,7 +1888,7 @@ window.CrItemDataRenderFromJSON_View = {
 					// 	  '" /><Value Type="Text">' +
 					// 	  oListItem.get_item($this.attr("id")) +
 					// 	  "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
-				  
+
 					// 	sphttp.get(
 					// 	  _spPageContextInfo.siteServerRelativeUrl,
 					// 	  listname,
@@ -1748,19 +1896,19 @@ window.CrItemDataRenderFromJSON_View = {
 					// 	  listFields,
 					// 	  function (records, record, listItem, isDone) {
 					// 		if (isDone) {
-				  
+
 					// 		  records.forEach(function (el, index) {
 					// 			$this.html(el[Dispfieldkey]);
 					// 			$this.parent().find('a').attr('href', '/SitePages/View.aspx?ListKey=' + linkedto + '&IID=' + el["ID"] + '')
-				  
-				  
+
+
 					// 			// dont submit part
-				  
+
 					// 			if (
 					// 			  parentrelatedfilterkeylvl1 &&
 					// 			  parentrelatedfilterkeylvl1 != "undefined"
 					// 			) {
-				  
+
 					// 			  $this.attr(
 					// 				"data-parentrelatedvaluelvl1",
 					// 				el[parentrelatedfilterkeylvl1]
@@ -1768,11 +1916,11 @@ window.CrItemDataRenderFromJSON_View = {
 					// 			  $(
 					// 				"[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
 					// 			  ).each(function () {
-				  
+
 					// 				var isMasterSection = $this.parent().parent().hasClass("Details-Item")
-				  
+
 					// 				if (!isMasterSection) {
-				  
+
 					// 				  var elementId = $this.attr("id"); // get element Id
 					// 				  var elementValue = oListItem.get_item(elementId); // get element value
 					// 				  if (
@@ -1786,23 +1934,23 @@ window.CrItemDataRenderFromJSON_View = {
 					// 					); // parent value
 					// 					console.log(parentElement, "parentElement");
 					// 					console.log(parenetValue, "parenetValue");
-				  
+
 					// 					if (parentElement && parenetValue) {
 					// 					  $(`#${parentElement}`).html(parenetValue);
 					// 					}
 					// 				  }
 					// 				}
 					// 			  })
-				  
+
 					// 			}
-				  
+
 					// 			////////////////////////////////////////////////////////////////
-				  
+
 					// 			if (
 					// 			  parentrelatedfilterkeylvl2 &&
 					// 			  parentrelatedfilterkeylvl2 != "undefined"
 					// 			) {
-				  
+
 					// 			  $this.attr(
 					// 				"data-parentrelatedvaluelvl2",
 					// 				el[parentrelatedfilterkeylvl2]
@@ -1811,7 +1959,7 @@ window.CrItemDataRenderFromJSON_View = {
 					// 				"[data-parentrelatedvaluelvl2]:not([data-parentrelatedvaluelvl2=undefined])"
 					// 			  ).each(function () {
 					// 				var isMasterSection = $this.parent().parent().hasClass("Details-Item")
-				  
+
 					// 				if (!isMasterSection) {
 					// 				  var elementId = $this.attr("id"); // get element Id
 					// 				  var elementValue = oListItem.get_item(elementId); // get element value
@@ -1824,15 +1972,15 @@ window.CrItemDataRenderFromJSON_View = {
 					// 					var parenetValue = $this.attr(
 					// 					  "data-parentrelatedvaluelvl2"
 					// 					); // parent value
-				  
-				  
+
+
 					// 					if (parentElement && parenetValue) {
 					// 					  $(`#${parentElement}`).html(parenetValue);
 					// 					}
 					// 				  }
 					// 				}
 					// 			  })
-				  
+
 					// 			}
 					// 		  });
 					// 		}
@@ -1840,7 +1988,7 @@ window.CrItemDataRenderFromJSON_View = {
 					// 	);
 					//   }
 					//     break;
-				
+
 					default:
 						$this.text(value);
 						break;
@@ -1875,7 +2023,7 @@ window.CrSetChangeBody = {
 		var jsonValues;
 
 		if (USERisNew) {
-			debugger
+			
 			Data_Submit.set_item("RelatedItemCode", crRelatedItemCode);
 			if (!isGeneral) {
 				jsonValues = eval(
@@ -1921,8 +2069,7 @@ window.CrSetChangeBody = {
 											);
 
 
-									console.log(ppp, "ppppppppppppp;")
-									debugger
+									
 									o.value = ppp;
 									// o.value = "";
 
@@ -2056,8 +2203,7 @@ window.CrSetChangeBody = {
 														.slice(-1)[0]
 												);
 
-										console.log(ppp, "p seccccccccc")
-										debugger
+									
 
 										o.value = ppp;
 										// o.value = "";

@@ -747,10 +747,7 @@ window.Edit_Data_Request = {
     var dynamicArrId = []
     $("select[dynamic=parent]").each(function () {
 
-      // if(listkey == "initiatives" &&($(this).attr("id") == "Types")){
-
-      // }else{
-      var checkStopInvoke = $(this).data("stopinvokeparent")
+      var checkStopInvoke = $(this).data("stopinvokeparent") // use it on type in initiative to not remove the related strategy in edit
 
       if (checkStopInvoke == "yes") {
         console.log("continue without call dynamic parent")
@@ -3347,6 +3344,7 @@ window.Get_Related_Sos_Sector = {
 
 window.Goal_Strategy_Info = {
   onSuccess: function (sender, args) {
+    debugger
     var collListItem = Goal_Strategy_Info.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var pillersExist = ''
@@ -3542,6 +3540,13 @@ window.Get_Pillers_Info = {
       });
     }
 
+    if(listkey == "changerequest"){
+      var pillerNameVal = $('#PillarName').val()
+      relatedPiller = $('#PillarName').val()
+
+      console.log(relatedPiller,"relatedPiller in cr")
+    }
+
     $("#PillarName").html(
       '<option data-trans-pillersname class="Resources" value="" selected="" disabled=""></option>'
     );
@@ -3562,6 +3567,8 @@ window.Get_Pillers_Info = {
       if (listkey == 'sos' && relatedPiller) {
         $('#PillarName').val(relatedPiller)
       }
+    }else if(listkey == "changerequest"){
+      $('#PillarName').val(relatedPiller)
     }
 
   },
@@ -6730,8 +6737,9 @@ var DontSubmit_DataRequest = {
 
 
 // to get the dynamic value trigger in edit when we have more than one dynamic in form
-var get_DynamicValues = {
+window.get_DynamicValues = {
   init: function (dynamicArrId) {
+    debugger
     if (dynamicArrId.length) {
 
       var id = dynamicArrId[0]
