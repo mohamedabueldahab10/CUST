@@ -155,7 +155,7 @@ window.CrModeFunctionality = {
 			},
 			function (item, index, data, isDone) {
 
-				
+
 				if (
 					localStorage.getItem("lng") == null ||
 					localStorage.getItem("lng") == "ar"
@@ -167,7 +167,7 @@ window.CrModeFunctionality = {
 				// console.log('Finishing label ' + Label + ' - IsDone: ' + isDone);
 				htmlBuilder += "</div></div></div>";
 				if (isDone) {
-					
+
 					actionTaskHeader = "";
 
 					$('div[class*="cr-related-item-"]').remove();
@@ -258,99 +258,99 @@ window.CrModeFunctionality = {
 							let parentFieldName = $(this).attr("id");
 							let parentFieldValue = $(this).val();
 							let customFilterValue = $(this)
-							  .find("option[value=" + parentFieldValue + "]")
-							  .data("customfiltervalue");
-				
-				
+								.find("option[value=" + parentFieldValue + "]")
+								.data("customfiltervalue");
+
+
 							let isCustomFilterValue = $(this).attr("iscustomfiltervalue");
-				
+
 							let affectedSelectsInfo = [];
-				
+
 							let parentCustomFilterValueFromSibling = $(this).attr("data-parentcustomfiltervalue")
 							let notInvokeListiner = $(this).data("notinvokelistiner")
-				
+
 							$("[dynamic=" + parentFieldName + "]").each(function () {
-							  console.log(parentFieldName, "parentFieldName")
-				
-							  let affectedFieldName = $(this).attr("id");
-							  let listName = $(this).data("listname");
-							  let filterField = $(this).data("filterfield");
-							  let filterFieldType = $(this).data("filterfieldtype");
-							  let valFieldKey = $(this).data("valfieldkey");
-							  let dispFieldKey = $(this).data("dispfieldkey");
-							  // let specificVal = $(this).data("queryfieldvalue");
-							  let queryFieldValue = $(this).data("queryfieldvalue");
-							  let queryFieldName = $(this).data("queryfield");
-							  let queryFieldType = $(this).data("queryfieldtype");
-				
-				
-				
-				
-							  // console.log($(this).data("queryFieldValue"), "sssssssa")
-							  affectedSelectsInfo.push({
-								affectedFieldName: affectedFieldName,
-								listName: listName,
-								isCustomFilterValue: isCustomFilterValue,
-								filterField: filterField,
-								filterFieldType: filterField,
-								parentFieldValue: parentFieldValue,
-								customFilterValue: customFilterValue,
-								filterFieldType: filterFieldType,
-								valFieldKey: valFieldKey,
-								dispFieldKey: dispFieldKey,
-								queryFieldValue: queryFieldValue,
-								queryFieldName: queryFieldName,
-								queryFieldType: queryFieldType,
-								parentCustomFilterValueFromSibling: parentCustomFilterValueFromSibling
-								// dataSiblingvalue:dataSiblingvalue
-							  });
+								console.log(parentFieldName, "parentFieldName")
+
+								let affectedFieldName = $(this).attr("id");
+								let listName = $(this).data("listname");
+								let filterField = $(this).data("filterfield");
+								let filterFieldType = $(this).data("filterfieldtype");
+								let valFieldKey = $(this).data("valfieldkey");
+								let dispFieldKey = $(this).data("dispfieldkey");
+								// let specificVal = $(this).data("queryfieldvalue");
+								let queryFieldValue = $(this).data("queryfieldvalue");
+								let queryFieldName = $(this).data("queryfield");
+								let queryFieldType = $(this).data("queryfieldtype");
+
+
+
+
+								// console.log($(this).data("queryFieldValue"), "sssssssa")
+								affectedSelectsInfo.push({
+									affectedFieldName: affectedFieldName,
+									listName: listName,
+									isCustomFilterValue: isCustomFilterValue,
+									filterField: filterField,
+									filterFieldType: filterField,
+									parentFieldValue: parentFieldValue,
+									customFilterValue: customFilterValue,
+									filterFieldType: filterFieldType,
+									valFieldKey: valFieldKey,
+									dispFieldKey: dispFieldKey,
+									queryFieldValue: queryFieldValue,
+									queryFieldName: queryFieldName,
+									queryFieldType: queryFieldType,
+									parentCustomFilterValueFromSibling: parentCustomFilterValueFromSibling
+									// dataSiblingvalue:dataSiblingvalue
+								});
 							});
-				
+
 							// added to handel the field to be dynamicparemnt and other (the filed can be parent and child on the same time)
 							$("[seconeddynamic*=" + parentFieldName + "]").each(function () {
-							  let affectedFieldName = $(this).attr("id");
-							  let listName = $(this).data("listname");
-							  let filterField = $(this).data("filterfield");
-							  let filterFieldType = $(this).data("filterfieldtype");
-							  let valFieldKey = $(this).data("valfieldkey");
-							  let dispFieldKey = $(this).data("dispfieldkey");
-							  // let specificVal = $(this).data("queryfieldvalue");
-							  let queryFieldValue = $(this).data("queryfieldvalue");
-							  let queryFieldName = $(this).data("queryfield");
-							  let queryFieldType = $(this).data("queryfieldtype");
-				
-							  // let dataSiblingvalue = $(this).data("siblingvalue")
-				
-							  // console.log($(this).data("queryFieldValue"), "sssssssa")
-							  affectedSelectsInfo.push({
-								affectedFieldName: affectedFieldName,
-								listName: listName,
-								isCustomFilterValue: isCustomFilterValue,
-								filterField: filterField,
-								filterFieldType: filterField,
-								parentFieldValue: parentFieldValue,
-								customFilterValue: customFilterValue,
-								filterFieldType: filterFieldType,
-								valFieldKey: valFieldKey,
-								dispFieldKey: dispFieldKey,
-								queryFieldValue: queryFieldValue,
-								queryFieldName: queryFieldName,
-								queryFieldType: queryFieldType,
-								parentCustomFilterValueFromSibling: parentCustomFilterValueFromSibling
-								// dataSiblingvalue:dataSiblingvalue
-							  });
+								let affectedFieldName = $(this).attr("id");
+								let listName = $(this).data("listname");
+								let filterField = $(this).data("filterfield");
+								let filterFieldType = $(this).data("filterfieldtype");
+								let valFieldKey = $(this).data("valfieldkey");
+								let dispFieldKey = $(this).data("dispfieldkey");
+								// let specificVal = $(this).data("queryfieldvalue");
+								let queryFieldValue = $(this).data("queryfieldvalue");
+								let queryFieldName = $(this).data("queryfield");
+								let queryFieldType = $(this).data("queryfieldtype");
+
+								// let dataSiblingvalue = $(this).data("siblingvalue")
+
+								// console.log($(this).data("queryFieldValue"), "sssssssa")
+								affectedSelectsInfo.push({
+									affectedFieldName: affectedFieldName,
+									listName: listName,
+									isCustomFilterValue: isCustomFilterValue,
+									filterField: filterField,
+									filterFieldType: filterField,
+									parentFieldValue: parentFieldValue,
+									customFilterValue: customFilterValue,
+									filterFieldType: filterFieldType,
+									valFieldKey: valFieldKey,
+									dispFieldKey: dispFieldKey,
+									queryFieldValue: queryFieldValue,
+									queryFieldName: queryFieldName,
+									queryFieldType: queryFieldType,
+									parentCustomFilterValueFromSibling: parentCustomFilterValueFromSibling
+									// dataSiblingvalue:dataSiblingvalue
+								});
 							});
 							//
 							//
-				
+
 							if (notInvokeListiner) { // will not invoke the function if this attr true (we use it on hrsd initiative to filter on sos when chose startegy and level)
-							  console.log("Inside not invoke listiner")
-				
+								console.log("Inside not invoke listiner")
+
 							} else {
-				
-							  // if(affectedSelectsInfo && affectedSelectsInfo !="undefined"){
-							  dynamicAffectSelect.init(affectedSelectsInfo);
-							  // }
+
+								// if(affectedSelectsInfo && affectedSelectsInfo !="undefined"){
+								dynamicAffectSelect.init(affectedSelectsInfo);
+								// }
 							}
 							// let parentFieldName = $(this).attr("id");
 							// let parentFieldValue = $(this).val();
@@ -396,30 +396,30 @@ window.CrModeFunctionality = {
 
 
 						debugger
-			
+
 						var grandId = $(this).data("grandfieldid")
 						var childId = $(this).data("childfieldid")
 						var childFieldIdSource = $(this).data("childfieldidsource")
-			
+
 						var elementValue = event.target.value
-			
+
 						if (grandId && elementValue && childId && childFieldIdSource) {
-						  var customFilterValue = $(this).find("option[value=" + elementValue + "]").data("customfiltervalue"); // will add the value on parent to can handle the query in dynamic func
-			
-						  $(`#${grandId}`).data("notinvokelistiner", false)
-						  $(`#${grandId}`).attr("data-seconedvaluelistiner", elementValue)
-						  $(`#${grandId}`).attr("data-parentcustomfiltervalue", customFilterValue)
-						  $(`#${childId}`).data("queryfield", childFieldIdSource)
-						  $(`#${childId}`).data("queryfieldvalue", elementValue)
-						  $(`#${childId}`).data("queryfieldtype", "Text")
-			
-						  // window.setTimeout(function(){
-						  $(`select[dynamic=parent][id=${grandId}]`).trigger('change') // to trigger only one field (correct field)
-						  // },1500)
+							var customFilterValue = $(this).find("option[value=" + elementValue + "]").data("customfiltervalue"); // will add the value on parent to can handle the query in dynamic func
+
+							$(`#${grandId}`).data("notinvokelistiner", false)
+							$(`#${grandId}`).attr("data-seconedvaluelistiner", elementValue)
+							$(`#${grandId}`).attr("data-parentcustomfiltervalue", customFilterValue)
+							$(`#${childId}`).data("queryfield", childFieldIdSource)
+							$(`#${childId}`).data("queryfieldvalue", elementValue)
+							$(`#${childId}`).data("queryfieldtype", "Text")
+
+							// window.setTimeout(function(){
+							$(`select[dynamic=parent][id=${grandId}]`).trigger('change') // to trigger only one field (correct field)
+							// },1500)
 						}
-			
-					  })
-			
+
+					})
+
 					//max min dates
 					$(
 						".cr-related-item-section input[type=date]:not([minimumdate=undefined])"
@@ -610,7 +610,7 @@ window.CrItemDataRequest = {
 				DisplayName: currentJsonValues[0].DisplayName,
 				DisplayNameEn: currentJsonValues[0].DisplayName,
 			});
-	
+
 			switch ($(this).attr("type")) {
 				case "date":
 					var d =
@@ -691,7 +691,7 @@ window.CrItemDataRequest = {
 				case "picker":
 					//
 
-					
+
 
 
 					var pemail =
@@ -892,13 +892,18 @@ window.CrItemDataRequest = {
 			}
 		});
 
-
+		if (RListKey == "mainkpi") {
+			$(".cr-related-item-section select#RelatedStrategyObjective").change(function () {
+				var sosStrategy = $(this).val();
+				Get_Related_Sos_Sector.init(sosStrategy);
+			});
+		}
 		// to handle trigger 
 		debugger
 
 		if ($(".grandFieldInvoke").length > 0) { // to use it in sos change request
 			$(".grandFieldInvoke").trigger("change")
-		  }
+		}
 		// handle getsibling data (sos RelatedStrategyPillars)
 		if ($(".getsiblingdata").length > 0) {
 			$(".getsiblingdata").trigger("change")//to invoke the sibling data
@@ -906,7 +911,7 @@ window.CrItemDataRequest = {
 		//
 		// handle show hide section (sos pillerName and piller desc)
 		var pillerNameLength = $('#PillarName').length
-		
+
 		if (pillerNameLength) {
 
 			$("#RelatedStrategy").on("change", function () {
@@ -917,7 +922,7 @@ window.CrItemDataRequest = {
 		}
 		//
 		// handle dynamic dropdown trigger
-		
+
 		var dynamicArrId = []
 		$("select[dynamic=parent]").each(function () {
 
@@ -1625,7 +1630,7 @@ window.CrItemDataRenderFromJSON_View = {
 		var originalValue = "";
 		var newValue = "";
 		var value = "";
-		
+
 
 
 		changeRequestBody.forEach(function (o, i, a) {
@@ -1716,7 +1721,7 @@ window.CrItemDataRenderFromJSON_View = {
 
 					case "picker":
 						//
-						
+
 						// var pemail;
 						// if (isOriginalValue) {
 						// 	pemail = value == "null" ? enternameemail : value.get_lookupValue();
@@ -2023,7 +2028,7 @@ window.CrSetChangeBody = {
 		var jsonValues;
 
 		if (USERisNew) {
-			
+
 			Data_Submit.set_item("RelatedItemCode", crRelatedItemCode);
 			if (!isGeneral) {
 				jsonValues = eval(
@@ -2069,7 +2074,7 @@ window.CrSetChangeBody = {
 											);
 
 
-									
+
 									o.value = ppp;
 									// o.value = "";
 
@@ -2203,7 +2208,7 @@ window.CrSetChangeBody = {
 														.slice(-1)[0]
 												);
 
-									
+
 
 										o.value = ppp;
 										// o.value = "";
