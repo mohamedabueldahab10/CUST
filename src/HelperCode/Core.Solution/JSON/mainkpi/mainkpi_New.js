@@ -170,15 +170,15 @@ var Information_Form = [
           ],
         },
         validation: 'required',
-        security: {
-          groups: [
-            'LMS_P',
-            'SPM Admin',
-            'SPM Team',
-            'VRO_P',
-            'System Admin Group',
-          ],
-        },
+        // security: {
+        //   groups: [
+        //     'LMS_P',
+        //     'SPM Admin',
+        //     'SPM Team',
+        //     'VRO_P',
+        //     'System Admin Group',
+        //   ],
+        // },
       },
       {
         InternalName: 'FromDate',
