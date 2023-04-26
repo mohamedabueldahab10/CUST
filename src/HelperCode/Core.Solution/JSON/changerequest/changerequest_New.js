@@ -52,6 +52,7 @@ window.Information_Form = [
 				// display: "none",
 				customCr: true,
 				dynamic: "parent", //main field that affect on other chiled field  
+				stopinvokeparent:"yes",
 				type: "dropdownValues",
 				options: {
 					choices: [

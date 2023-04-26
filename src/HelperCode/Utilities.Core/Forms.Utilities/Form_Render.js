@@ -460,6 +460,8 @@ window.ListInfo = {
           });
           // this affectes on lookup selects
           $("select[dynamic=parent]").on("change", function () {
+            console.log("inside dynamic parenttttt")
+            debugger
             let parentFieldName = $(this).attr("id");
             let parentFieldValue = $(this).val();
             let customFilterValue = $(this)
@@ -8511,80 +8513,80 @@ window.View_ListInfo = {
           break;
 
         case "percentbyrelatedparent":
-          
+
           var code = activeCode;
 
-          if(code){
-          var customQuery =
-            '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
-            code +
-            "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+          if (code) {
+            var customQuery =
+              '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
+              code +
+              "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
 
-          sphttp.get(
-            _spPageContextInfo.siteServerRelativeUrl,
-            element.listname,
-            customQuery,
-            [element.parentinternalname],
-            function (records, record, listItem, isDone) {
-              if (isDone) {
+            sphttp.get(
+              _spPageContextInfo.siteServerRelativeUrl,
+              element.listname,
+              customQuery,
+              [element.parentinternalname],
+              function (records, record, listItem, isDone) {
+                if (isDone) {
 
-                var parentValue = "";
-                records.forEach(function (el, index) {
-                  parentValue = el[element.parentinternalname];
-                });
+                  var parentValue = "";
+                  records.forEach(function (el, index) {
+                    parentValue = el[element.parentinternalname];
+                  });
 
-                console.log(parentValue, "PARENT VALUE");
-                htmlBody =
-                  '<div class="col-md-6 CFIELD ' +
-                  dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-                  " " +
-                  element.className +
-                  ' " ' +
-                  thistip +
-                  " " +
-                  hidestagesIDs +
-                  " " +
-                  showstagesIDs +
-                  "  " +
-                  disablestagesIDs +
-                  "  " +
-                  enablestagesIDs +
-                  "   " +
-                  isWfhidestagesIDs +
-                  " " +
-                  requireOnWfTaskstagesIDs +
-                  " " +
-                  isWfshowstagesIDs +
-                  "  " +
-                  isWfdisablestagesIDs +
-                  "  " +
-                  isWfenablestagesIDs +
-                  '        data-groups="' +
-                  groups +
-                  '" style="display:' +
-                  element.display +
-                  '">' +
-                  '<label for="' +
-                  element.InternalName +
-                  '" ' +
-                  element.validation +
-                  ">" +
-                  displayName +
-                  "</label>" +
-                  '<p type="number" class="viewmode-value"   data-parentval="' +
-                  parentValue +
-                  '"  id="' +
-                  element.InternalName +
-                  '" ' +
-                  ToggleName +
-                  " " +
-                  toggleDisabledName +
-                  "></p>" +
-                  "</div>";
-                OnSuccess(flag, htmlBody);
+                  console.log(parentValue, "PARENT VALUE");
+                  htmlBody =
+                    '<div class="col-md-6 CFIELD ' +
+                    dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+                    " " +
+                    element.className +
+                    ' " ' +
+                    thistip +
+                    " " +
+                    hidestagesIDs +
+                    " " +
+                    showstagesIDs +
+                    "  " +
+                    disablestagesIDs +
+                    "  " +
+                    enablestagesIDs +
+                    "   " +
+                    isWfhidestagesIDs +
+                    " " +
+                    requireOnWfTaskstagesIDs +
+                    " " +
+                    isWfshowstagesIDs +
+                    "  " +
+                    isWfdisablestagesIDs +
+                    "  " +
+                    isWfenablestagesIDs +
+                    '        data-groups="' +
+                    groups +
+                    '" style="display:' +
+                    element.display +
+                    '">' +
+                    '<label for="' +
+                    element.InternalName +
+                    '" ' +
+                    element.validation +
+                    ">" +
+                    displayName +
+                    "</label>" +
+                    '<p type="number" class="viewmode-value"   data-parentval="' +
+                    parentValue +
+                    '"  id="' +
+                    element.InternalName +
+                    '" ' +
+                    ToggleName +
+                    " " +
+                    toggleDisabledName +
+                    "></p>" +
+                    "</div>";
+                  OnSuccess(flag, htmlBody);
+                }
               }
-            }
-          );
+            );
           }
           break;
 
@@ -9650,7 +9652,7 @@ window.View_ListInfo = {
 var Dynamic_Data_Request = {
   onSuccess: function (sender, args) {
     $("[dynamic=" + Dynamic_Data_Request.g.dyfieldname + "]").each(function () {
- 
+
       switch ($(this).attr("type")) {
         case "date":
           var d =
@@ -9766,14 +9768,14 @@ var Dynamic_Data_Request = {
           } else {
             $(this).val(oListItem.get_item("" + $(this).attr("id") + ""));
             var valFromList = oListItem.get_item("" + $(this).attr("id") + "") || ""
-             
+
             // disable enable master details section on projects depends on Amount
-            if(valFromList){
+            if (valFromList) {
               if (listkey == 'projects') {
                 $("[data-target_list=Deliverables] .fieldset-container").removeClass("disable_section")
                 $("[data-target_list=Milestones] .fieldset-container").removeClass("disable_section")
               }
-            }else{
+            } else {
               if (listkey == 'projects') {
                 $("[data-target_list=Deliverables] .fieldset-container").addClass("disable_section")
                 $("[data-target_list=Milestones] .fieldset-container").addClass("disable_section")
@@ -10007,7 +10009,7 @@ dynamicAffectSelect = {
       targetFieldType = $(`#${affectedSelectsInfo.affectedFieldName}`).attr("type");
     }
 
-
+    debugger
 
     let selectedVal = ""
     let optionsBody = ""
@@ -10042,7 +10044,14 @@ dynamicAffectSelect = {
 
 
     } else {
-      selectedVal = $(`select#${affectedSelectsInfo.affectedFieldName}`).attr("value"); // get selected val to use it in edit
+      // selectedVal = $(`select#${affectedSelectsInfo.affectedFieldName}`).attr("value"); // get selected val to use it in edit
+
+      // to filter the value in cr
+      if(listkey == "changerequest"){
+        selectedVal = $(`select#${affectedSelectsInfo.affectedFieldName}`).val(); // get selected val to use it in edit
+      }else{
+        selectedVal = $(`select#${affectedSelectsInfo.affectedFieldName}`).attr("value"); // get selected val to use it in edit
+      }
 
       $(`select#${affectedSelectsInfo.affectedFieldName}`).html("");
 
