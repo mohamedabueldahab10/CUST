@@ -17,19 +17,24 @@ var Information_Form = [
               { fieldNameInList: "WFModuleCode", fieldValueInList: "VROCreateKPI" },
               { fieldNameInList: "WFStage", fieldValueInList: "VROCreateKPI01" },
               { fieldNameInList: "DraftStatus", fieldValueInList: "draft" },
+              // { fieldNameInList: "RecurrenceChanged", fieldValueInList: "no" },
             ]
           },
           {
             condition: "lms",
             values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "LMSCreateKPI" },
             { fieldNameInList: "WFStage", fieldValueInList: "LMSCreateKPI01" },
-            { fieldNameInList: "DraftStatus", fieldValueInList: "draft" },]
+            { fieldNameInList: "DraftStatus", fieldValueInList: "draft" },
+            // { fieldNameInList: "RecurrenceChanged", fieldValueInList: "no" },
+          ]
           },
           {
             condition: "ministry",
             values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "EPMOCreateKPI" },
             { fieldNameInList: "WFStage", fieldValueInList: "EPMOCreateKPI01" },
-            { fieldNameInList: "DraftStatus", fieldValueInList: "draft" },]
+            { fieldNameInList: "DraftStatus", fieldValueInList: "draft" },
+            // { fieldNameInList: "RecurrenceChanged", fieldValueInList: "no" },
+          ]
           },
 
         ]
