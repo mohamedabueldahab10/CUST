@@ -140,7 +140,7 @@ var Information_Form = [
       },
       {
         InternalName: 'SubSector',
-        DisplayName: 'الوكالات',
+        DisplayName: 'الوكالة',
         DisplayNameEn: 'DeputyShip',
         ToggleName: "SubSector",
         type: 'lookup',

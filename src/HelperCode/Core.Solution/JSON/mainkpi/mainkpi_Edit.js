@@ -132,7 +132,7 @@ var Information_Form = [
       },
       {
         "InternalName": "SubSector",
-        "DisplayName": "الوكالات",
+        "DisplayName": "الوكالة",
         "DisplayNameEn": "DeputyShip",
         "type": "lookup",
         //from other list:
