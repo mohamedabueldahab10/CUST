@@ -640,12 +640,12 @@ var Information_Form = [
           ],
         },
       },
-      {
-        InternalName: "DisbursementStatus",
-        DisplayName: "حالة الصرف",
-        DisplayNameEn: "DisbursementStatus",
-        type: "float",
-      },
+      // {
+      //   InternalName: "DisbursementStatus",
+      //   DisplayName: "حالة الصرف",
+      //   DisplayNameEn: "DisbursementStatus",
+      //   type: "float",
+      // },
 
       {
         InternalName: "CompanyName",
