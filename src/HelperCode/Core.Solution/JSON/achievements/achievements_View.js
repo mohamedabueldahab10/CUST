@@ -53,20 +53,6 @@ var Information_Form = [
         // validation: 'required',
       },
       {
-        InternalName: 'AchievementCategory',
-        DisplayNameEn: 'Achievement Category',
-        DisplayName: 'تصنيف المنجز',
-        // validation: 'required',
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            { display: 'strategic', value: 'strategic' },
-            { display: 'vision', value: 'vision' },
-            { display: 'jobmarket', value: 'jobmarket' },
-          ],
-        },
-      },
-      {
         InternalName: 'Sector',
         DisplayName: 'القطاع',
         DisplayNameEn: 'Sector',
@@ -98,13 +84,13 @@ var Information_Form = [
         DisplayNameEn: 'Description',
         DisplayName: 'وصف المنجز',
         type: 'multiline',
-        // validation: 'required',
+        validation: 'required',
       },
       {
         InternalName: 'LinkType',
         DisplayNameEn: 'Link Type',
         DisplayName: 'نوع ارتباط المنجز',
-        // validation: 'required',
+        validation: 'required',
         type: 'dropdownValues',
         options: {
           choices: [
@@ -113,9 +99,67 @@ var Information_Form = [
           ],
         },
         toggleValues: [
-          { value: 'objective', fields: ['RelatedObjective', 'RelatedKPI'] },
-          { value: 'initiative', fields: ['RelatedInitiative', 'RelatedMilestone'] },
+          { value: 'objective', fields: ['AchievementCategory','RelatedAchievementStrategy','RelatedObjective', 'RelatedKPI'] },
+          { value: 'initiative', fields: ['AchievementCategoryInitiative','RelatedInitiative', 'RelatedMilestone'] },
         ],
+
+
+      },
+      {
+        InternalName: 'AchievementCategory',
+        DisplayNameEn: 'Achievement Category',
+        DisplayName: 'تصنيف المنجز',
+        validation: 'required',
+        type: 'dropdownValues',
+        dynamic: 'parent',
+        options: {
+          choices: [
+            {display: 'strategically',
+            value: 'strategically',
+            customFilterValue: "ministry", },
+            { display: 'vision', value: 'vision',
+            customFilterValue:  "vision", },
+            { display: 'lms', value: 'lms',
+            customFilterValue:  "lms", },
+          ],
+        },
+        ToggleName:'AchievementCategory',
+        display:'none'
+
+      },
+      {
+        InternalName: 'AchievementCategoryInitiative',
+        DisplayNameEn: 'Achievement Category',
+        DisplayName: 'تصنيف المنجز',
+        validation: 'required',
+        type: 'dropdownValues',
+        dynamic: 'parent',
+        options: {
+          choices: [
+            {display: 'strategically',
+            value: 'strategically',
+            customFilterValue: "strategically", },
+            { display: 'vision', value: 'vision',
+            customFilterValue:  "vision", },
+            { display: 'lms', value: 'lms',
+            customFilterValue:  "lms", },
+          ],
+        },
+        ToggleName:'AchievementCategoryInitiative',
+        display:'none'
+
+      },
+      {
+        InternalName: 'RelatedAchievementStrategy',
+        DisplayNameEn: 'Related Strategy',
+        DisplayName: 'الاستراتيجية المرتبطة',
+        type: 'lookup',
+        ToggleName:'RelatedAchievementStrategy',
+        validation: 'required',
+        source: "GoalStrategy",
+        Dispfieldkey: "Name",
+        valfieldkey: "Title",
+        display: "none",
       },
       {
         InternalName: 'RelatedObjective',
@@ -125,9 +169,9 @@ var Information_Form = [
         source: 'SOs',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        ToggleName:"RelatedObjective",
-        // validation: 'required',
-        // "state": "disabled"
+        ToggleName: "RelatedObjective",
+        display:"none"
+        
       },
       {
         InternalName: 'RelatedKPI',
@@ -135,9 +179,10 @@ var Information_Form = [
         DisplayName: 'المؤشر المرتبط',
         type: 'lookup',
         source: 'MainKPI',
+        display: "none",
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        ToggleName:"RelatedKPI",
+        ToggleName: "RelatedKPI",
       },
       {
         InternalName: 'RelatedInitiative',
@@ -145,10 +190,10 @@ var Information_Form = [
         DisplayName: 'المبادرة المرتبطة',
         type: 'lookup',
         source: 'Initiatives',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
-        // validation: 'required',
-        ToggleName:"RelatedInitiative",
+        Dispfieldkey: "Name",
+        valfieldkey: "Title",
+        display: "none",
+        ToggleName: "RelatedInitiative",
       },
       {
         InternalName: 'RelatedMilestone',
@@ -156,13 +201,11 @@ var Information_Form = [
         DisplayName: 'معلم المبادرة المرتبط',
         type: 'lookup',
         source: 'InitiativeMilestones',
+        display: "none",
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        ToggleName:"RelatedMilestone",
-        // validation: 'required',
-        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
-        fieldsinformlvl1: "RelatedInitiative", // fields in form list
-        sourcefieldlvl1: "InitiativeCode", // field in look up list
+        validation: 'required',
+        ToggleName: "RelatedMilestone",
       },
     ],
   },

@@ -5290,7 +5290,7 @@ var Issues_Info_Request = {
   },
 };
 //KPI equations
-var equationKPI = {
+window.equationKPI = {
   onSuccess: function (sender, args) {
 
     equationKPI.g.array = [];
@@ -5414,6 +5414,11 @@ var equationKPI = {
     );
   },
   init: function () {
+
+    debugger
+    if(listkey == "changerequest"){
+      KPICode= $('#CRRelatedMainKpis').val()
+    }
 
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("KPIEquations");

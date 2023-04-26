@@ -643,6 +643,27 @@ window.New_Data_Submit = {
         New_Data_Submit.g.oListItem.set_item("BaselineDuration", diffDays);
       }
       //
+
+            //لحساب حالة الصرف as List Structure Formula: Percentage [ Actual / Planned ] *100
+            debugger;
+            var ActualBudget = $("#ActualBudget").val().replaceAll(',','');
+            ActualBudget = parseFloat(ActualBudget);
+            var ExpectedBudget = $("#ExpectedBudget").val().replaceAll(',','');
+            ExpectedBudget = parseFloat(ExpectedBudget);
+            console.log("actual expected budget", ActualBudget, ExpectedBudget);
+            var Disbstatus = 0;
+            if (
+              ActualBudget != 0 &&
+              ActualBudget != null &&
+              ActualBudget != "" &&
+              ExpectedBudget != 0 &&
+              ExpectedBudget != null &&
+              ExpectedBudget != ""
+            ) {
+              Disbstatus = ((ActualBudget / ExpectedBudget) * 100).toFixed(2);
+            }
+            New_Data_Submit.g.oListItem.set_item("DisbursementStatus", Disbstatus);
+      
       if (isWF) {
         IdeaId = window.location.href.split("IdeaId=")[1].split("&")[0];
         New_Data_Submit.g.oListItem.set_item("RelatedIdeaCode", IdeaId);
@@ -1586,6 +1607,25 @@ window.Edit_Data_Submit = {
       }
 
       Edit_Data_Submit.g.oListItem.set_item("BaselineDuration", months);
+      //لحساب حالة الصرف as List Structure Formula: Percentage [ Actual / Planned ] *100
+      debugger;
+var ActualBudget = $("#ActualBudget").val().replaceAll(',','');
+ActualBudget = parseFloat(ActualBudget);
+var ExpectedBudget = $("#ExpectedBudget").val().replaceAll(',','');
+ExpectedBudget = parseFloat(ExpectedBudget);
+console.log("actual expected budget", ActualBudget, ExpectedBudget);
+var Disbstatus = 0;
+if (
+  ActualBudget != 0 &&
+  ActualBudget != null &&
+  ActualBudget != "" &&
+  ExpectedBudget != 0 &&
+  ExpectedBudget != null &&
+  ExpectedBudget != ""
+) {
+  Disbstatus = ((ActualBudget / ExpectedBudget) * 100).toFixed(2);
+}
+Edit_Data_Submit.g.oListItem.set_item("DisbursementStatus", Disbstatus);
     }
     else if (listkey == 'mainkpi') { // get the data to update the kpi result list
       kpiName = $('#Name').val()

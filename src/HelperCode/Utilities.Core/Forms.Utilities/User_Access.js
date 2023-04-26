@@ -2089,6 +2089,7 @@ window.userCalls = {
           // "sos",
           "goalstrategy",
           "Targets.aspx",
+          "changerequest"
         ];
         CreateChangeRequest_Access = [
           "sos",
