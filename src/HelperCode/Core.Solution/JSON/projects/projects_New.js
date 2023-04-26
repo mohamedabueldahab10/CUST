@@ -993,7 +993,7 @@ var Information_Form = [
         DisplayName: "الموازنة المتوقعة",
         DisplayNameEn: "Expected Budget",
         type: "float",
-        state: "disabled",
+        // state: "disabled",
         numberOfDigits:"15",
       },
       {
