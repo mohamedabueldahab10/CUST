@@ -83,8 +83,8 @@ var Information_Form = [
         InternalName: 'Ministry',
         DisplayNameEn: 'Related Ministey Startegy',
         DisplayName: 'الاستراتيجية المرتبطة',
-        // ToggleName: 'Ministry',
-        RequiredName: 'Ministry',
+        ToggleName: 'Ministry',
+        // RequiredName: 'Ministry',
         type: 'lookupWithQuery',
         queryField: 'Types',
         queryFieldType: 'dropdownValues', //ex: "Choice"
@@ -95,7 +95,7 @@ var Information_Form = [
         source: 'GoalStrategy',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        // display: 'none',
+        display: 'none',
       },
       {
         InternalName: 'Vision',
