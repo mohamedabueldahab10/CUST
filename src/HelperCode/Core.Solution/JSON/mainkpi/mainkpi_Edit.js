@@ -102,7 +102,7 @@ var Information_Form = [
         dynamic: "KPIType", //InternalName Of Parent field
         filterField: "Types",//InternalName Of Parent field
         filterFieldType: "Choice",
-        display: 'none',
+        // display: 'none',
         // ToggleName:'RelatedStrategyObjective',
         fieldsinformlvl1: "Sector", // fields in look up list
         sourcefieldlvl1: "Sector",
