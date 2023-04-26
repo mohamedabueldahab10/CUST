@@ -1595,6 +1595,67 @@ window.CrItemDataRenderFromJSON_View = {
 
 						break;
 
+					case "dropdownValues": 
+						// $this.text(value);
+							if ($this.attr("id") == "SubSector") {
+								departmenetValue = value;
+							}
+							if ($this.attr("id") == "BudgetItem") {
+								budgetitemValue = value;
+							} 
+							if (value == No_Data) {
+								$this.text(No_Data);
+							  } else if (value == true) {
+								if (
+								  localStorage.getItem("lng") == null ||
+								  localStorage.getItem("lng") == "ar"
+								) {
+								  $this.text(Resources.ar["yes"]);
+								} else $this.text(Resources.en["yes"]);
+							  } else if (value == false) {
+								if (
+								  localStorage.getItem("lng") == null ||
+								  localStorage.getItem("lng") == "ar"
+								) {
+								  $this.text(Resources.ar["no"]);
+								} else $this.text(Resources.en["no"]);
+							  } else {
+								if (
+								  localStorage.getItem("lng") == null ||
+								  localStorage.getItem("lng") == "ar"
+								) {
+								  $this.text(Resources.ar[value.toLowerCase()]);
+								} else $this.text(Resources.en[value.toLowerCase()]);
+							  }
+							  $this.attr("data-viewtogglevalue", value);
+	
+	
+							break;
+						
+					case "yesnoradio": 
+							// $this.text(value);
+								if (value == No_Data) {
+									$this.text(No_Data);
+								  } else if (value == true || value == "yes" || value == "Yes") {
+									if (
+									  localStorage.getItem("lng") == null ||
+									  localStorage.getItem("lng") == "ar"
+									) {
+									  $this.text(Resources.ar["yes"]);
+									} else $this.text(Resources.en["yes"]);
+								  } else if (value == false || value == "no" || value == "No") {
+									if (
+									  localStorage.getItem("lng") == null ||
+									  localStorage.getItem("lng") == "ar"
+									) {
+									  $this.text(Resources.ar["no"]);
+									} else $this.text(Resources.en["no"]);
+								  } 
+								  $this.attr("data-viewtogglevalue", value);
+		
+		
+								break;
+					
 					case "radio":
 						var radioval = value;
 						if (radioval == "Yes" || radioval == "yes") {
@@ -1647,6 +1708,139 @@ window.CrItemDataRenderFromJSON_View = {
 							? $this.html(HTMLContent.replaceAll('href="/TOREMOVE', "href="))
 							: "";
 						break;
+					
+					// case "lookup":
+					// 	var valfieldkey = $this.data("valfieldkey"),
+					// 	Dispfieldkey = $this.data("dispfieldkey"),
+					// 	listname = $this.data("listname"),
+					// 	linkedto = $this.data("linkedto"),
+					// 	parentrelatedfilterkeylvl1 = $this.data("parentrelatedfilterkeylvl1"),
+					// 	parentrelatedfilterkeylvl2 = $this.data("parentrelatedfilterkeylvl2"),
+					// 	$this = $this;
+				  
+					//   var listFields = ["ID", valfieldkey, Dispfieldkey];
+					//   if (parentrelatedfilterkeylvl1 && parentrelatedfilterkeylvl1 != "undefined") {
+				  
+					// 	listFields.push(parentrelatedfilterkeylvl1)
+					// 	if (parentrelatedfilterkeylvl2 && parentrelatedfilterkeylvl2 != "undefined") {
+					// 	  listFields.push(parentrelatedfilterkeylvl2)
+					// 	}
+					// 	// listFields = ["ID",valfieldkey, Dispfieldkey, parentrelatedfilterkeylvl1];
+					//   }
+				  
+				  
+				  
+					//   if (oListItem.get_item($this.attr("id")) == null) {
+				  
+					// 	$this.html(No_Data);
+					//   } else {
+					// 	customquery =
+					// 	  '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="' +
+					// 	  $this.data("valfieldkey") +
+					// 	  '" /><Value Type="Text">' +
+					// 	  oListItem.get_item($this.attr("id")) +
+					// 	  "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+				  
+					// 	sphttp.get(
+					// 	  _spPageContextInfo.siteServerRelativeUrl,
+					// 	  listname,
+					// 	  customquery,
+					// 	  listFields,
+					// 	  function (records, record, listItem, isDone) {
+					// 		if (isDone) {
+				  
+					// 		  records.forEach(function (el, index) {
+					// 			$this.html(el[Dispfieldkey]);
+					// 			$this.parent().find('a').attr('href', '/SitePages/View.aspx?ListKey=' + linkedto + '&IID=' + el["ID"] + '')
+				  
+				  
+					// 			// dont submit part
+				  
+					// 			if (
+					// 			  parentrelatedfilterkeylvl1 &&
+					// 			  parentrelatedfilterkeylvl1 != "undefined"
+					// 			) {
+				  
+					// 			  $this.attr(
+					// 				"data-parentrelatedvaluelvl1",
+					// 				el[parentrelatedfilterkeylvl1]
+					// 			  );
+					// 			  $(
+					// 				"[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
+					// 			  ).each(function () {
+				  
+					// 				var isMasterSection = $this.parent().parent().hasClass("Details-Item")
+				  
+					// 				if (!isMasterSection) {
+				  
+					// 				  var elementId = $this.attr("id"); // get element Id
+					// 				  var elementValue = oListItem.get_item(elementId); // get element value
+					// 				  if (
+					// 					oListItem.get_item(elementId) &&
+					// 					oListItem.get_item(elementId) == elementValue
+					// 				  ) {
+					// 					// matching between value on list
+					// 					var parentElement = $this.data("parentrelatedkeylvl1"); // parent internal name
+					// 					var parenetValue = $this.attr(
+					// 					  "data-parentrelatedvaluelvl1"
+					// 					); // parent value
+					// 					console.log(parentElement, "parentElement");
+					// 					console.log(parenetValue, "parenetValue");
+				  
+					// 					if (parentElement && parenetValue) {
+					// 					  $(`#${parentElement}`).html(parenetValue);
+					// 					}
+					// 				  }
+					// 				}
+					// 			  })
+				  
+					// 			}
+				  
+					// 			////////////////////////////////////////////////////////////////
+				  
+					// 			if (
+					// 			  parentrelatedfilterkeylvl2 &&
+					// 			  parentrelatedfilterkeylvl2 != "undefined"
+					// 			) {
+				  
+					// 			  $this.attr(
+					// 				"data-parentrelatedvaluelvl2",
+					// 				el[parentrelatedfilterkeylvl2]
+					// 			  );
+					// 			  $(
+					// 				"[data-parentrelatedvaluelvl2]:not([data-parentrelatedvaluelvl2=undefined])"
+					// 			  ).each(function () {
+					// 				var isMasterSection = $this.parent().parent().hasClass("Details-Item")
+				  
+					// 				if (!isMasterSection) {
+					// 				  var elementId = $this.attr("id"); // get element Id
+					// 				  var elementValue = oListItem.get_item(elementId); // get element value
+					// 				  if (
+					// 					oListItem.get_item(elementId) &&
+					// 					oListItem.get_item(elementId) == elementValue
+					// 				  ) {
+					// 					// matching between value on list
+					// 					var parentElement = $this.data("parentrelatedkeylvl2"); // parent internal name
+					// 					var parenetValue = $this.attr(
+					// 					  "data-parentrelatedvaluelvl2"
+					// 					); // parent value
+				  
+				  
+					// 					if (parentElement && parenetValue) {
+					// 					  $(`#${parentElement}`).html(parenetValue);
+					// 					}
+					// 				  }
+					// 				}
+					// 			  })
+				  
+					// 			}
+					// 		  });
+					// 		}
+					// 	  }
+					// 	);
+					//   }
+					//     break;
+				
 					default:
 						$this.text(value);
 						break;
