@@ -391,6 +391,35 @@ window.CrModeFunctionality = {
 							// dynamicAffectSelect.init(affectedSelectsInfo);
 						}
 					);
+
+					$(".cr-related-item-section .grandFieldInvoke").on("change", function (event) {
+
+
+						debugger
+			
+						var grandId = $(this).data("grandfieldid")
+						var childId = $(this).data("childfieldid")
+						var childFieldIdSource = $(this).data("childfieldidsource")
+			
+						var elementValue = event.target.value
+			
+						if (grandId && elementValue && childId && childFieldIdSource) {
+						  var customFilterValue = $(this).find("option[value=" + elementValue + "]").data("customfiltervalue"); // will add the value on parent to can handle the query in dynamic func
+			
+						  $(`#${grandId}`).data("notinvokelistiner", false)
+						  $(`#${grandId}`).attr("data-seconedvaluelistiner", elementValue)
+						  $(`#${grandId}`).attr("data-parentcustomfiltervalue", customFilterValue)
+						  $(`#${childId}`).data("queryfield", childFieldIdSource)
+						  $(`#${childId}`).data("queryfieldvalue", elementValue)
+						  $(`#${childId}`).data("queryfieldtype", "Text")
+			
+						  // window.setTimeout(function(){
+						  $(`select[dynamic=parent][id=${grandId}]`).trigger('change') // to trigger only one field (correct field)
+						  // },1500)
+						}
+			
+					  })
+			
 					//max min dates
 					$(
 						".cr-related-item-section input[type=date]:not([minimumdate=undefined])"
@@ -581,8 +610,7 @@ window.CrItemDataRequest = {
 				DisplayName: currentJsonValues[0].DisplayName,
 				DisplayNameEn: currentJsonValues[0].DisplayName,
 			});
-			console.log(changeRequestBody, "changeRequestBody request")
-			// debugger
+	
 			switch ($(this).attr("type")) {
 				case "date":
 					var d =
@@ -866,8 +894,11 @@ window.CrItemDataRequest = {
 
 
 		// to handle trigger 
+		debugger
 
-
+		if ($(".grandFieldInvoke").length > 0) { // to use it in sos change request
+			$(".grandFieldInvoke").trigger("change")
+		  }
 		// handle getsibling data (sos RelatedStrategyPillars)
 		if ($(".getsiblingdata").length > 0) {
 			$(".getsiblingdata").trigger("change")//to invoke the sibling data
@@ -1685,7 +1716,7 @@ window.CrItemDataRenderFromJSON_View = {
 
 					case "picker":
 						//
-						// debugger
+						
 						// var pemail;
 						// if (isOriginalValue) {
 						// 	pemail = value == "null" ? enternameemail : value.get_lookupValue();

@@ -1017,7 +1017,7 @@ window.ListInfo = {
           $(".grandFieldInvoke").on("change", function (event) {
 
 
-
+            
 
             var grandId = $(this).data("grandfieldid")
             var childId = $(this).data("childfieldid")
@@ -10009,7 +10009,7 @@ dynamicAffectSelect = {
       targetFieldType = $(`#${affectedSelectsInfo.affectedFieldName}`).attr("type");
     }
 
-    debugger
+    
 
     let selectedVal = ""
     let optionsBody = ""
