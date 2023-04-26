@@ -900,9 +900,12 @@ window.CrItemDataRequest = {
 
 			//to get the sector and subsector based on sos
 			$(".cr-related-item-section select#RelatedStrategyObjective").trigger('change')
+
+			// to get the equation values
+			equationKPI.init()
 		}
 		// to handle trigger 
-		debugger
+		
 
 		if ($(".grandFieldInvoke").length > 0) { // to use it in sos change request
 			$(".grandFieldInvoke").trigger("change")
