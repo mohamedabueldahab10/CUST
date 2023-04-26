@@ -100,7 +100,7 @@ window.New_Data_Submit = {
       userCalls.isMember("PMO Team", portfoliomanagername, 'Manager');
     }
     if (
-      listkey == "mainkpi" &&
+      ((listkey == "mainkpi" )||(listkey == "changerequest" && RListKey =="mainkpi" ) )&&
       $("#Owner").find("span.sp-peoplepicker-userSpan").attr("sid")
     ) {
       isCheckMember = true;
@@ -121,7 +121,7 @@ window.New_Data_Submit = {
       })
     }
     if (
-      listkey == "mainkpi" &&
+      ((listkey == "mainkpi" )||(listkey == "changerequest" && RListKey =="mainkpi" ) )&&
       $("#PerformanceLeader").find("span.sp-peoplepicker-userSpan").attr("sid")
     ) {
       pickerValidationDone = true;
@@ -143,7 +143,7 @@ window.New_Data_Submit = {
       })
     }
     if (
-      listkey == "mainkpi" &&
+      ((listkey == "mainkpi" )||(listkey == "changerequest" && RListKey =="mainkpi" ) )&&
       $("#PerformanceLeader2").find("span.sp-peoplepicker-userSpan").attr("sid")
     ) {
       pickerValidationDone = true;
