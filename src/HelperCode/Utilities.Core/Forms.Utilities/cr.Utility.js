@@ -1658,7 +1658,7 @@ window.CrItemDataRenderFromJSON_View = {
 
 
 		changeRequestBody.forEach(function (o, i, a) {
-
+          debugger
 			if (o.InternalName) {
 
 
@@ -1770,7 +1770,7 @@ window.CrItemDataRenderFromJSON_View = {
 							$this.text(No_Data);
 						}
 						else{
-						$this.text(value);
+						$this.text(value.$5c_1);
 					    } // cause we change on changeRequestBody in form request 
 						break;
 
