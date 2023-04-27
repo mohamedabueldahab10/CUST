@@ -6559,7 +6559,7 @@ window.ListInfo = {
         if ((listkey == 'projects' || listkey == 'initiatives') && isNew) {
           var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item").last()
           lastDetailsItemBeforeAdd.addClass('disable_section')
-        }else if(listkey == "changerequest" && (RListKey == 'projects' ||RListKey == 'initiatives')){
+        } else if (listkey == "changerequest" && (RListKey == 'projects' || RListKey == 'initiatives')) {
           var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last()
           if (lastDetailsItemBeforeAdd.length == 0) {
             var onLoadMaster = $(this).closest("[data-target_list]").find(".Details-Item.EditItem")
@@ -6683,7 +6683,8 @@ window.ListInfo = {
 
 
         if (listkey == "changerequest" && (isNew || isEdit)) {
-          Add_New_CRMaster.init()
+          // add in master arry when click on plus
+          Add_New_CRMaster.init(getMasterIndex)
         }
 
 
@@ -6691,6 +6692,14 @@ window.ListInfo = {
 
       // remove new section
       $(".remove-New-Detail").on("click", function () {
+
+
+
+        if (listkey == "changerequest" && (isNew || isEdit)) {
+          // remove from master array when click on minus
+          var lastIndex = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last().data('index')
+          Remove_New_CRMaster.init(lastIndex)
+        }
 
 
         masterLength = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").length
@@ -6701,7 +6710,7 @@ window.ListInfo = {
             masterLength = masterLength - 1
             $(this).closest("[data-target_list]").find(".Details-Item.NewItem")[masterLength].remove()
           }
-        }else if (isNew) {
+        } else if (isNew) {
           // in new > 1 because on render the form there is a new Item so it will be  before click on +
           if (masterLength > 1) {
             masterLength = masterLength - 1
@@ -6720,7 +6729,7 @@ window.ListInfo = {
             // to return the form as rendered
             $(this).closest("[data-target_list]").find(".remove-New-Detail").hide()
           }
-        }else if (isNew) {
+        } else if (isNew) {
           if (masterLength == 1) {
             // to return the form as rendered
             $(this).closest("[data-target_list]").find(".remove-New-Detail").hide()
@@ -6738,7 +6747,7 @@ window.ListInfo = {
 
           var lastDetailsItemAfterRemove = $(this).closest("[data-target_list]").find(".Details-Item").last()
           lastDetailsItemAfterRemove.removeClass('disable_section')
-        }else if(listkey == "changerequest" && (RListKey == 'projects' ||RListKey == 'initiatives')){
+        } else if (listkey == "changerequest" && (RListKey == 'projects' || RListKey == 'initiatives')) {
           var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last()
           if (lastDetailsItemBeforeAdd.length == 0) {
             var onLoadMaster = $(this).closest("[data-target_list]").find(".Details-Item.EditItem")
@@ -6766,6 +6775,10 @@ window.ListInfo = {
 
         }
         //
+
+
+
+
 
 
       })

@@ -610,7 +610,7 @@ window.CrItemDataRequest = {
 				value: "",
 				DisplayName: currentJsonValues[0].DisplayName,
 				DisplayNameEn: currentJsonValues[0].DisplayName,
-				changeRequestRCode:changeRequestRCode
+				changeRequestRCode: changeRequestRCode
 			});
 
 			switch ($(this).attr("type")) {
@@ -1658,7 +1658,7 @@ window.CrItemDataRenderFromJSON_View = {
 
 
 		changeRequestBody.forEach(function (o, i, a) {
-          debugger
+			debugger
 			if (o.InternalName) {
 
 
@@ -1678,7 +1678,7 @@ window.CrItemDataRenderFromJSON_View = {
 						if (value == '' || value == null) {
 							$this.text(No_Data);
 						}
-						else{
+						else {
 							var d = value == "null" ? "empty" : new Date(value);
 							if (d != "empty") {
 								var local = d.getTime();
@@ -1702,10 +1702,10 @@ window.CrItemDataRenderFromJSON_View = {
 									$("#Time").val("" + timehour);
 								}
 							}
-	
+
 							$this.text(datetouse2);
-					    }
-						
+						}
+
 						break;
 
 					case "datetime-local":
@@ -1765,13 +1765,13 @@ window.CrItemDataRenderFromJSON_View = {
 						// var idinternal = $this.attr("id");
 						// var mp = new MyPeoplePicker();
 						// mp.init($this.attr("id"), { AllowMultipleValues: false });
-						
+
 						if (value == '' || value == null) {
 							$this.text(No_Data);
 						}
-						else{
-						$this.text(value.$5c_1);
-					    } // cause we change on changeRequestBody in form request 
+						else {
+							$this.text(value.$5c_1);
+						} // cause we change on changeRequestBody in form request 
 						break;
 
 					case "dropdown":
@@ -1876,42 +1876,44 @@ window.CrItemDataRenderFromJSON_View = {
 							$this.text(No_Data);
 						}
 						else
-						if (value) {
-							var myselections = value.split(":::");
-							for (var i = 0; i < myselections.length; i++) {
-								$this
-									.find("input:checkbox[value='" + myselections[i] + "']")
-									.prop("checked", true);
+							if (value) {
+								var myselections = value.split(":::");
+								for (var i = 0; i < myselections.length; i++) {
+									$this
+										.find("input:checkbox[value='" + myselections[i] + "']")
+										.prop("checked", true);
+								}
 							}
-						}
 						break;
 
 					case "number":
 						if (value == '' || value == null) {
 							$this.text(No_Data);
-						}else
-						if ($this.hasClass("percentagefield")) {
-							var num = eval(value) * 100;
-							if (num % 1 != 0){
-								$this.text(parseFloat(Math.round(num * 100) / 100).toFixed(2));}
-							else {$this.text(num);}
-						} else {
-							$this.text(value);
-						}
+						} else
+							if ($this.hasClass("percentagefield")) {
+								var num = eval(value) * 100;
+								if (num % 1 != 0) {
+									$this.text(parseFloat(Math.round(num * 100) / 100).toFixed(2));
+								}
+								else { $this.text(num); }
+							} else {
+								$this.text(value);
+							}
 						break;
 					case "float":
 						if (value == '' || value == null) {
 							$this.text(No_Data);
 						}
 						else
-						if ($this.hasClass("percentagefield")) {
-							var num = eval(value) * 100;
-							if (num % 1 != 0){
-								$this.text(parseFloat(Math.round(num * 100) / 100).toFixed(2));}
-							else {$this.text(num);}
-						} else {
-							$this.text(value);
-						}
+							if ($this.hasClass("percentagefield")) {
+								var num = eval(value) * 100;
+								if (num % 1 != 0) {
+									$this.text(parseFloat(Math.round(num * 100) / 100).toFixed(2));
+								}
+								else { $this.text(num); }
+							} else {
+								$this.text(value);
+							}
 						break;
 					case "richtext":
 						var HTMLContent = value;
@@ -2056,9 +2058,9 @@ window.CrItemDataRenderFromJSON_View = {
 						if (value == '' || value == null) {
 							$this.text(No_Data);
 						}
-						else{
-						$this.text(value);
-					    }
+						else {
+							$this.text(value);
+						}
 						break;
 				}
 			}
@@ -2688,7 +2690,7 @@ window.executeCR = {
 					debugger
 					if (masterLength > 0) {
 						arrangeCRMasterDetails.init(masterData)
-					}else if(RListKey == "mainkpi"){
+					} else if (RListKey == "mainkpi") {
 						equationKPI.init();
 					} else {
 						Task_Edit_Data.init();
@@ -3189,11 +3191,11 @@ var Fill_BodyMaster = {
 }
 
 window.Add_New_CRMaster = {
-	init: function () {
+	init: function (getMasterIndex) {
 
-		console.log(crRelatedItemCode, "crRelatedItemCode new")
-
-		$(".cr-related-item-section[data-target_list] .Details-Item.NewItem").each(function () {
+		console.log(getMasterIndex, "getMasterIndex new")
+// var x =  $(".cr-related-item-section[data-target_list]").find(".Details-Item.NewItem").last()
+		$(`.cr-related-item-section[data-target_list] .Details-Item.NewItem[data-index=${getMasterIndex}]`).each(function () {
 			console.log("Inside New Master Section")
 			var CurrList = $(this).closest("[data-target_list]").attr("data-target_list");
 			itemIndex = $(this).attr("data-index");
@@ -3240,6 +3242,33 @@ window.Add_New_CRMaster = {
 	}
 }
 
+window.Remove_New_CRMaster = {
+	// changeRequestBodyMaster
+	init: function (lastIndex) {
+		var reAssigneBodyMaster = []
+		changeRequestBodyMaster.forEach((el, index) => {
+			// console.log(lastIndex, "lastIndex")
+			console.log(el.masterSectionId, "masterSectionId")
+			if (lastIndex == el.masterSectionId) {
+				console.log(index, "index")
+				// var indexOfMaster = changeRequestBodyMaster.indexOf(el)
+				// debugger
+				// changeRequestBodyMaster.splice(index,1)
+				// console.log(changeRequestBodyMaster.length,"llllllllllll")
+			}else{
+				reAssigneBodyMaster.push(el)
+			}
+		})
+
+		changeRequestBodyMaster = reAssigneBodyMaster
+
+		// $(".cr-related-item-section[data-target_list] .Details-Item.NewItem").each(function () {
+		// 	console.log("Inside New Master Section")
+		// 	var CurrList = $(this).closest("[data-target_list]").attr("data-target_list");
+		// 	itemIndex = $(this).attr("data-index");
+		// })
+	}
+}
 
 var arrangeCRMasterDetails = {
 	init: function (masterData) {
@@ -3342,9 +3371,13 @@ window.edit_Cr_MastreDetails = {
 			} else if (o.type == "multipicker") {
 				edit_Cr_MastreDetails.g.oListItem.set_item(o.InternalName, value);
 			} else if (o.type == "datetime") {
-				edit_Cr_MastreDetails.g.oListItem.set_item(o.InternalName, new Date(value));
+				if (value) {
+					edit_Cr_MastreDetails.g.oListItem.set_item(o.InternalName, new Date(value));
+				}
 			} else if (o.type == "datetime-local") {
-				edit_Cr_MastreDetails.g.oListItem.set_item(o.InternalName, new Date(value));
+				if (value) {
+					edit_Cr_MastreDetails.g.oListItem.set_item(o.InternalName, new Date(value));
+				}
 			} else if (o.type == "radio") {
 				edit_Cr_MastreDetails.g.oListItem.set_item(o.InternalName, value);
 			} else if (o.type == "checkbox") {
@@ -3426,9 +3459,19 @@ window.new_Cr_MasterDetails = {
 			} else if (o.type == "multipicker") {
 				new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, value);
 			} else if (o.type == "datetime") {
-				new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, new Date(value));
+				if (value) {
+					new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, new Date(value));
+				}
+			}else if(o.type == "date"){
+				if(value){
+					new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, new Date(value));
+				}
 			} else if (o.type == "datetime-local") {
-				new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, new Date(value));
+				console.log(value,"vvvvvvvvvvvq")
+				debugger
+				if (value) {
+					new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, new Date(value));
+				}
 			} else if (o.type == "radio") {
 				new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, value);
 			} else if (o.type == "checkbox") {
