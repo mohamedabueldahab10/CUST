@@ -1,6 +1,6 @@
 var currentYear = new Date().getFullYear();
-// var emptyData = require('../../../HelperRessources/img/empty-data.png');
-var emptyData = ''
+var emptyData = require('../../../HelperRessources/img/empty-data.png');
+// var emptyData = ''
 var Operational_Array = [],
   Instrument_Array = [],
   PQueryFilteration = "",

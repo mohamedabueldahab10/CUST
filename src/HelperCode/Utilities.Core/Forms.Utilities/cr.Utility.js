@@ -893,19 +893,35 @@ window.CrItemDataRequest = {
 		});
 
 		if (RListKey == "mainkpi") {
+			//get from to year for kpi
+			var kpiFromYear = oListItem.get_item("FromDate") ? oListItem.get_item("FromDate") : '';
+			var kpiToYear = oListItem.get_item("ToDate") ? oListItem.get_item("ToDate") : ''
+			$("#Year").html(
+				'<option data-trans-yeartype class="Resources" value="" selected="" disabled=""></option>'
+			);
+			for (var i = kpiFromYear; i <= kpiToYear; i++) {
+				$("#Year").append(
+					'<option value="' + i + '">' +
+					i +
+					"</option>"
+				);
+			}
+			$('#Year').val(oListItem.get_item("Year") ? oListItem.get_item("Year") : '')
+			//
+
+			//to get the sector and subsector based on sos
 			$(".cr-related-item-section select#RelatedStrategyObjective").change(function () {
 				var sosStrategy = $(this).val();
 				Get_Related_Sos_Sector.init(sosStrategy);
 			});
 
-			//to get the sector and subsector based on sos
 			$(".cr-related-item-section select#RelatedStrategyObjective").trigger('change')
 
 			// to get the equation values
 			equationKPI.init()
 		}
 		// to handle trigger 
-		
+
 
 		if ($(".grandFieldInvoke").length > 0) { // to use it in sos change request
 			$(".grandFieldInvoke").trigger("change")
