@@ -503,7 +503,7 @@ window.Edit_Data_Request = {
 
     if (listkey == 'goalstrategy') {
       var PillarsExist = $('#PillarsExist:checked').val();
-      // console.log(Delivered, "ddddddddddddd")
+      
 
       if (PillarsExist == 'yes') {
         $('[data-target_list="SPillars"] #Name').attr('required', 'required');
@@ -1204,7 +1204,7 @@ window.View_Data_Request = {
           // to handle the title change
           if ($(this).attr("id") == 'Types') {
             sosType = value;
-            // console.log(sosType, 'sosTypeeeeeeeeee')
+           
           }
         }
 
@@ -1248,7 +1248,7 @@ window.View_Data_Request = {
               if (currentId == 'Months' || currentId == 'Quarter' || currentId == 'Midterms') {
                 // if (periodType == 'monthly') {
                 var period = value.toLowerCase() + periodType
-                console.log(period, "period")
+              
                 if (
                   localStorage.getItem("lng") == null ||
                   localStorage.getItem("lng") == "ar"
@@ -1423,7 +1423,7 @@ window.View_Data_Request = {
                   $(
                     "[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
                   ).each(function () {
-                    debugger
+                    
                     var isMasterSection = $(this).parent().parent().hasClass("Details-Item")
 
                     if (!isMasterSection) {
@@ -1582,8 +1582,7 @@ window.View_Data_Request = {
                           var parenetValue = $(this).attr(
                             "data-parentrelatedvaluelvl1"
                           ); // parent value
-                          console.log(parentElement, "parentElement");
-                          console.log(parenetValue, "parenetValue");
+               
 
                           if (parentElement && parenetValue) {
                             $(`#${parentElement}`).html(parenetValue);
@@ -1723,7 +1722,7 @@ window.View_Data_Request = {
 
         })
 
-        console.log(changeRequestBody, "changeRequestBody")
+      
 
         sectionJSON = [
           {
@@ -1984,33 +1983,33 @@ window.View_Data_Request = {
     if (isView && listkey == 'sos') {
       if (sosType == 'main') {
         $('#RelatedPortfolio , #RelatedObjective , #RelatedJobStrategy').parent().hide();
-        console.log('sostype', sosType);
+     
       }
       else
         if (sosType == 'sub') {
           $('#RelatedPillar , #RelatedJobStrategy').parent().hide();
-          console.log('sostype', sosType);
+         
 
         }
         else
           if (sosType == 'vision') {
             $('#RelatedPillar , #RelatedPortfolio , #RelatedObjective , #RelatedJobStrategy').parent().hide();
-            console.log('sostype', sosType);
+           
           } else
             if (sosType == 'jobmarket') {
               $('#RelatedPillar , #RelatedPortfolio , #RelatedObjective').parent().hide();
-              console.log('sostype', sosType);
+            
 
             } else
               if (sosType == 'strategically') {
                 $('#RelatedPillar , #RelatedPortfolio , #RelatedObjective , #RelatedJobStrategy').parent().hide();
-                console.log('sostype', sosType);
+              
               }
     }
     if (isView && listkey == 'goalstrategy') {
       if ((strategyType == 'sub') || (strategyType == 'sectorial')) {
         $('#PillarsExist').parent().hide();
-        console.log('strategyType', strategyType);
+      
       }
     }
     ////////////////////////////////////////////////
@@ -2286,7 +2285,7 @@ window.Risk_To_Issue_Submit = {
           Risk_Update_Data.init();
           showpopup = false;
         } else {
-          console.log("cancled");
+        
           showpopup = false;
         }
       },
@@ -2348,7 +2347,7 @@ window.Risk_To_Issue_Submit = {
     clientContext.load(Risk_To_Issue_Submit.g.oListItem);
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
-        console.log(PCODE);
+       
         Risk_To_Issue_Code.g.IIID = Risk_To_Issue_Submit.g.oListItem.get_id();
         Risk_To_Issue_Code.init();
       }),
@@ -2444,7 +2443,7 @@ var Risk_To_Issue_Code = {
 var Master_Details_Request = {
   // The main Initialization function
   init: function (DetailsList) {
-    console.log("INSide Master DEtails")
+   
 
 
     var clientContext = new SP.ClientContext.get_current();
@@ -2485,7 +2484,7 @@ var Master_Details_Request = {
     }
     while (listItemEnum.moveNext()) {
 
-      console.log("in while");
+      
       var oListItem = listItemEnum.get_current();
       HTMLtoAppend = "";
       HTMLtoAppend +=
@@ -2923,7 +2922,7 @@ var Master_Details_Request = {
 
             case "radio":
               var radioval = oListItem.get_item($(this).attr("id"));
-              console.log(radioval, 'radiovaaaaaaaalllll')
+           
               if (radioval == "Yes" || radioval == "yes") {
                 $('input[id="' + $(this).attr("id") + '"]')
                   .filter('[value="yes"]')
@@ -3036,7 +3035,7 @@ var Master_Details_Request = {
                         var weight = $(this).parent().parent().find(`#${targetElem}`).val()
                         var maxAttr = $(this).parent().parent().find(`#${targetElem}`).attr('max')
 
-                        console.log(maxAttr, "$(this).parent().parent()")
+                    
 
                         weight = Number(weight)
                         var newMax = Number(maxAttr) + weight
@@ -3153,7 +3152,7 @@ window.Department_Sector_Info = {
   },
   // The main Initialization function
   init: function (SectorCode) {
-    console.log(SectorCode);
+
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext
       .get_web()
@@ -3233,9 +3232,7 @@ window.Kpi_Related_Goal = {
       );
     });
 
-    console.log(Kpi_Related_Goal.g.array, "Kpi_Related_Goal.g.array")
-    console.log(objectiveId, "objectiveId")
-    console.log(relatedSubGoal, "relatedSubGoal relatedSubGoal")
+
 
     if (isEdit) {
       if (indexTypekpi == 'main') {
@@ -3261,8 +3258,7 @@ window.Kpi_Related_Goal = {
     var camlQuery = new SP.CamlQuery();
     typeOfIndex = indexType
 
-    console.log(indexType, "INDEX TYPE")
-    console.log(SosCode, "SOS CODE")
+
 
     // var query = '<View><Query><Where><And><Eq><FieldRef Name="RelatedStrategy" /><Value Type="Text">' + SosCode + '</Value></Eq><Eq><FieldRef Name="Types" /><Value Type="Choice">' + indexType + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
 
@@ -3344,7 +3340,7 @@ window.Get_Related_Sos_Sector = {
 
 window.Goal_Strategy_Info = {
   onSuccess: function (sender, args) {
-    debugger
+    
     var collListItem = Goal_Strategy_Info.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var pillersExist = ''
@@ -3364,7 +3360,7 @@ window.Goal_Strategy_Info = {
       $('#PillarName').parent().parent().parent().parent().css('display', 'block')
       Get_Pillers_Info.init(strategyId)
     } else {
-      debugger
+      
       if (listkey == 'sos' || (listkey == 'changerequest')) {
         $('#PillarName').parent().parent().parent().parent().css('display', 'none')
         $('#PillarName').val("")
@@ -3405,7 +3401,7 @@ window.RelatedInitiative_Data_Request = {
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
 
-      console.log(oListItem.get_item("Name"));
+     
       $("[data-target_list=Initiatives] .Details-Item.NewItem").each(function () {
         $(this)
           .find(
@@ -3544,7 +3540,7 @@ window.Get_Pillers_Info = {
       var pillerNameVal = $('#PillarName').val()
       relatedPiller = $('#PillarName').val()
 
-      console.log(relatedPiller, "relatedPiller in cr")
+     
     }
 
     $("#PillarName").html(
@@ -3966,10 +3962,7 @@ window.BudgetItem_Sector_Info = {
     $("select#BudgetItem").html(
       '<option data-trans-budgetitem class="Resources" value="" selected="" disabled=""></option>'
     );
-    console.log(
-      "BudgetItems_Sector_Info.g.array",
-      BudgetItem_Sector_Info.g.array
-    );
+
 
     $("#BudgetItem").prop("disabled", false);
 
@@ -5415,7 +5408,7 @@ window.equationKPI = {
   },
   init: function () {
 
-    debugger
+    
     if (listkey == "changerequest" && !USERisWF) {
       KPICode = $('#CRRelatedMainKpis').val()
     } else if (listkey == "changerequest" && USERisWF) {
@@ -5615,7 +5608,7 @@ var getAttachements = {
       success: function (data) {
         console.log(
           data.d,
-          "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+          "ddd"
         );
 
         //console.log(UserN);
@@ -5788,7 +5781,7 @@ window.Update_Kpi_Results = {
     // if (listkey == "changerequest") {
     //   KPICode = $('#CRRelatedMainKpis').val()
     // }
-    debugger
+
 
     // camlQuery.set_viewXml(
     //   '<View><Query><Where><Eq><FieldRef Name="KPI" /> <Value Type="Text">' + value + "</Value></Eq></Where></Query></View>"
@@ -5806,19 +5799,41 @@ window.Update_Kpi_Results = {
         if (progColl.get_count() > 0) {
           var progEnum = progColl.getEnumerator();
           while (progEnum.moveNext()) {
-
+            
             var currentItem = progEnum.get_current();
             var currentId = currentItem.get_item("ID");
             var yearItem = currentItem.get_item("Year");
             //Get Item by current ID
             var items = programList.getItemById(currentId);
-            var yearPicked = KPIYear
-            var monthHandler = KPIMonth
-            var quarterHandler = KPIQuarter
-            var midHandler = KPIMid
-            var yearHandler = KPIYearHandler
+            var yearPicked = "", monthHandler = "", quarterHandler = "", midHandler = "", yearHandler = "";
+
+            if (listkey == "changerequest" && USERisWF) { // to update the kpi result via wf cr
+              if (changeRequestBody.length) {
+                changeRequestBody.forEach(el => {
+                  if (el.InternalName == "Year") {
+                    yearPicked = el.value
+                  } else if (el.InternalName == "Months") {
+                    monthHandler = el.value
+                  } else if (el.InternalName == "Quarter") {
+                    quarterHandler = el.value
+                  } else if (el.InternalName == "Midterms") {
+                    midHandler = el.value
+                  } else if (el.InternalName == "Years") {
+                    yearHandler = el.value
+                  }
+                })
+              }
+            } else {
+
+               yearPicked = KPIYear
+               monthHandler = KPIMonth
+               quarterHandler = KPIQuarter
+               midHandler = KPIMid
+               yearHandler = KPIYearHandler
+            }
 
             if (yearItem == yearPicked) {
+              
               if (!kpiEquation) {
                 kpiEquation = 0
               }
@@ -5845,7 +5860,7 @@ window.Update_Kpi_Results = {
           context.executeQueryAsync(
             function () {
               if (listkey == "changerequest" && USERisWF) {
-                debugger
+                
                 Task_Edit_Data.init();
               }
               //Item Updated sucess
@@ -5890,7 +5905,7 @@ var deleteAllFileFromDoc = {
     }, deleteAllFileFromDoc.error);
   },
   success: function () {
-    console.log("INSIDE OMN CSSSCADAS")
+    
 
     if (allFileIndex == filesUrls.length - 1) {
       if (
@@ -5959,7 +5974,7 @@ window.Get_ProjectData_ByCode = {
       var oListItem = listItemEnum.get_current();
       relatedInitCode = oListItem.get_item("RelatedInitiative") ? oListItem.get_item("RelatedInitiative") : ''
     }
-    console.log("INSIDE INIT getPRoj")
+   
 
     ProjectInitiativeMilestone.init('InitiativeMilestones', relatedInitCode)
   },
@@ -6328,7 +6343,7 @@ var Check_Item_Deleted = {
           Goal_Strategy_Info.init(relatedStrategyKpi)
 
           if (indexTypekpi == 'main') {
-            console.log(relatedMainGoal, "relatedMainGoalrelatedMainGoalrelatedMainGoal")
+            
             var sosVal = relatedMainGoal
             if (!sosVal) {
               $('#Sector').val(No_Data)
@@ -6427,7 +6442,7 @@ window.Get_TaskHistory = {
       Get_TaskHistory.g.camlQuery.set_viewXml(camelQuery);
     }
 
-    console.log(camelQuery, "camelQuery")
+  
 
 
     SPHTTPitemsEnumerable = oList.getItems(Get_TaskHistory.g.camlQuery);
@@ -6444,9 +6459,7 @@ window.Get_TaskHistory = {
     let wfHistoryLink = "";
 
     let isThereHistory = false
-    console.log(workflowname, "workflowname")
-    console.log(peojectC, "peojectC")
-    console.log(relateditemid, "relateditemid")
+
 
 
 
@@ -6758,13 +6771,13 @@ var DontSubmit_DataRequest = {
 // to get the dynamic value trigger in edit when we have more than one dynamic in form
 window.get_DynamicValues = {
   init: function (dynamicArrId) {
-    debugger
+    
     if (dynamicArrId.length) {
 
       var id = dynamicArrId[0]
       $(`select[id=${id}][dynamic=parent]`).trigger("change")
       dynamicArrId.shift()
-      console.log(dynamicArrId, "dynamicArrId")
+     
     }
 
     if (dynamicArrId.length) {
