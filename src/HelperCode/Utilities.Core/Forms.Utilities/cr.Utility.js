@@ -1674,31 +1674,37 @@ window.CrItemDataRenderFromJSON_View = {
 				}
 				switch (o.type) {
 					case "datetime":
-						var d = value == "null" ? "empty" : new Date(value);
-						if (d != "empty") {
-							var local = d.getTime();
-							var offset = d.getTimezoneOffset() * (60 * 1000);
-							var utc = new Date(local + offset);
-							var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
-							var datetouse = riyadh
-								.toLocaleString("en-US")
-								.split(",")[0]
-								.split("/");
-							datetouse[0] =
-								datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
-							datetouse[1] =
-								datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
-							var datetouse2 =
-								datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
-							if ($this.hasClass("withTime")) {
-								var hour = d.getHours();
-								var minutes = d.getMinutes();
-								var timehour = hour + ":" + minutes + ":00";
-								$("#Time").val("" + timehour);
-							}
+						if (value == '' || value == null) {
+							$this.text(No_Data);
 						}
-
-						$this.text(datetouse2);
+						else{
+							var d = value == "null" ? "empty" : new Date(value);
+							if (d != "empty") {
+								var local = d.getTime();
+								var offset = d.getTimezoneOffset() * (60 * 1000);
+								var utc = new Date(local + offset);
+								var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+								var datetouse = riyadh
+									.toLocaleString("en-US")
+									.split(",")[0]
+									.split("/");
+								datetouse[0] =
+									datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
+								datetouse[1] =
+									datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
+								var datetouse2 =
+									datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
+								if ($this.hasClass("withTime")) {
+									var hour = d.getHours();
+									var minutes = d.getMinutes();
+									var timehour = hour + ":" + minutes + ":00";
+									$("#Time").val("" + timehour);
+								}
+							}
+	
+							$this.text(datetouse2);
+					    }
+						
 						break;
 
 					case "datetime-local":
@@ -1758,7 +1764,13 @@ window.CrItemDataRenderFromJSON_View = {
 						// var idinternal = $this.attr("id");
 						// var mp = new MyPeoplePicker();
 						// mp.init($this.attr("id"), { AllowMultipleValues: false });
-						$this.text(value); // cause we change on changeRequestBody in form request 
+						
+						if (value == '' || value == null) {
+							$this.text(No_Data);
+						}
+						else{
+						$this.text(value);
+					    } // cause we change on changeRequestBody in form request 
 						break;
 
 					case "dropdown":
@@ -1780,7 +1792,7 @@ window.CrItemDataRenderFromJSON_View = {
 						if ($this.attr("id") == "BudgetItem") {
 							budgetitemValue = value;
 						}
-						if (value == No_Data) {
+						if (value == '' || value == null) {
 							$this.text(No_Data);
 						} else if (value == true) {
 							if (
@@ -1811,7 +1823,7 @@ window.CrItemDataRenderFromJSON_View = {
 
 					case "yesnoradio":
 						// $this.text(value);
-						if (value == No_Data) {
+						if (value == '' || value == null) {
 							$this.text(No_Data);
 						} else if (value == true || value == "yes" || value == "Yes") {
 							if (
@@ -1859,6 +1871,10 @@ window.CrItemDataRenderFromJSON_View = {
 						break;
 
 					case "multiselect":
+						if (value == '' || value == null) {
+							$this.text(No_Data);
+						}
+						else
 						if (value) {
 							var myselections = value.split(":::");
 							for (var i = 0; i < myselections.length; i++) {
@@ -1870,11 +1886,28 @@ window.CrItemDataRenderFromJSON_View = {
 						break;
 
 					case "number":
+						if (value == '' || value == null) {
+							$this.text(No_Data);
+						}else
 						if ($this.hasClass("percentagefield")) {
 							var num = eval(value) * 100;
-							if (num % 1 != 0)
-								$this.text(parseFloat(Math.round(num * 100) / 100).toFixed(2));
-							else $this.text(num);
+							if (num % 1 != 0){
+								$this.text(parseFloat(Math.round(num * 100) / 100).toFixed(2));}
+							else {$this.text(num);}
+						} else {
+							$this.text(value);
+						}
+						break;
+					case "float":
+						if (value == '' || value == null) {
+							$this.text(No_Data);
+						}
+						else
+						if ($this.hasClass("percentagefield")) {
+							var num = eval(value) * 100;
+							if (num % 1 != 0){
+								$this.text(parseFloat(Math.round(num * 100) / 100).toFixed(2));}
+							else {$this.text(num);}
 						} else {
 							$this.text(value);
 						}
@@ -2019,7 +2052,12 @@ window.CrItemDataRenderFromJSON_View = {
 					//     break;
 
 					default:
+						if (value == '' || value == null) {
+							$this.text(No_Data);
+						}
+						else{
 						$this.text(value);
+					    }
 						break;
 				}
 			}
