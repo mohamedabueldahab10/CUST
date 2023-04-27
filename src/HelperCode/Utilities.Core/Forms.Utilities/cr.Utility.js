@@ -5,6 +5,10 @@ var crMasterDetailsArrayNew = [];
 var crMasterDetailsArrayEdit = [];
 var crRelatedItemCode = "";
 var isGeneral;
+var projectGUIDCr = "", projectOwnerCr = "", projectManagerCr = "", projectSponsorCr = "", projectBuildTeamArrCr = [], allEnterpriseResourcesCR = [];
+var editProjectContextCR = '', epmProjectsCR, deleteProjectContextCR = '';
+var ResourcesEnterpriseCR = '', resourcesArrDeleteCR = [], globresArrCR = [];
+
 if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
 	var search = "بحث ...";
 	var No_Data = 'لا يوجد'
@@ -253,8 +257,7 @@ window.CrModeFunctionality = {
 					$(".cr-related-item-section select[dynamic=parent]").on(
 						"change",
 						function () {
-							console.log("inside dynamic parenttttt crrrrr")
-							debugger
+
 							let parentFieldName = $(this).attr("id");
 							let parentFieldValue = $(this).val();
 							let customFilterValue = $(this)
@@ -395,7 +398,7 @@ window.CrModeFunctionality = {
 					$(".cr-related-item-section .grandFieldInvoke").on("change", function (event) {
 
 
-						debugger
+
 
 						var grandId = $(this).data("grandfieldid")
 						var childId = $(this).data("childfieldid")
@@ -1658,7 +1661,7 @@ window.CrItemDataRenderFromJSON_View = {
 
 
 		changeRequestBody.forEach(function (o, i, a) {
-			debugger
+
 			if (o.InternalName) {
 
 
@@ -1672,7 +1675,7 @@ window.CrItemDataRenderFromJSON_View = {
 					$this.parent().attr("data-placement", isArabic ? "right" : "left");
 					$this.parent().attr("title", o.originalValue);
 				}
-				debugger
+
 				switch (o.type) {
 					case "datetime":
 						if (value == '' || value == null) {
@@ -2679,6 +2682,21 @@ window.executeCR = {
 			clientContext.load(executeCR.g.oListItem);
 			clientContext.executeQueryAsync(
 				Function.createDelegate(this, function () {
+					debugger
+					if (crBody[0].listName == "Projects") {
+						projectGUIDCr = executeCR.g.oListItem.get_item("ProjectGUID");
+						projectManagerCr = executeCR.g.oListItem.get_item("ProjectManager") ? executeCR.g.oListItem.get_item("ProjectManager") : ""
+						projectOwnerCr = executeCR.g.oListItem.get_item("ProjectOwner") ? executeCR.g.oListItem.get_item("ProjectOwner") : ""
+						projectSponsorCr = executeCR.g.oListItem.get_item("ProjectSponsor") ? executeCR.g.oListItem.get_item("ProjectSponsor") : ""
+						console.log(projectGUIDCr, "projectGUIDCssr")
+
+						if (projectOwnerCr && !projectBuildTeamArrCr.includes(projectOwnerCr.get_lookupValue())) {
+							projectBuildTeamArrCr.push(projectOwnerCr.get_lookupValue())
+						}
+						if (projectSponsorCr && !projectBuildTeamArrCr.includes(projectSponsorCr.get_lookupValue())) {
+							projectBuildTeamArrCr.push(projectSponsorCr.get_lookupValue())
+						}
+					}
 
 					// var masterLength = executeCR.g.crBodyMaster.length
 					var masterLength = 0
@@ -2687,7 +2705,7 @@ window.executeCR = {
 					if (masterData) {
 						masterLength = executeCR.g.crBodyMaster.length
 					}
-					debugger
+
 					if (masterLength > 0) {
 						arrangeCRMasterDetails.init(masterData)
 					} else if (RListKey == "mainkpi") {
@@ -3194,7 +3212,7 @@ window.Add_New_CRMaster = {
 	init: function (getMasterIndex) {
 
 		console.log(getMasterIndex, "getMasterIndex new")
-// var x =  $(".cr-related-item-section[data-target_list]").find(".Details-Item.NewItem").last()
+		// var x =  $(".cr-related-item-section[data-target_list]").find(".Details-Item.NewItem").last()
 		$(`.cr-related-item-section[data-target_list] .Details-Item.NewItem[data-index=${getMasterIndex}]`).each(function () {
 			console.log("Inside New Master Section")
 			var CurrList = $(this).closest("[data-target_list]").attr("data-target_list");
@@ -3255,7 +3273,7 @@ window.Remove_New_CRMaster = {
 				// debugger
 				// changeRequestBodyMaster.splice(index,1)
 				// console.log(changeRequestBodyMaster.length,"llllllllllll")
-			}else{
+			} else {
 				reAssigneBodyMaster.push(el)
 			}
 		})
@@ -3302,7 +3320,7 @@ var arrangeCRMasterDetails = {
 
 
 		console.log(masterDataFormated, "masterDataFormated masterDataFormated masterDataFormated after")
-		debugger
+
 		if (masterDataFormated.length) {
 			set_Cr_MastreDetais.init(masterDataFormated)
 
@@ -3407,7 +3425,11 @@ window.edit_Cr_MastreDetails = {
 				if (masterDataFormatedArr.length) {
 					set_Cr_MastreDetais.init(masterDataFormatedArr)
 				} else {
-					Task_Edit_Data.init();
+					if (RListKey == "projects") {
+						checkinProjectInEpm.checkin(projectGUIDCr);
+					} else {
+						Task_Edit_Data.init();
+					}
 				}
 
 			}),
@@ -3462,13 +3484,12 @@ window.new_Cr_MasterDetails = {
 				if (value) {
 					new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, new Date(value));
 				}
-			}else if(o.type == "date"){
-				if(value){
+			} else if (o.type == "date") {
+				if (value) {
 					new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, new Date(value));
 				}
 			} else if (o.type == "datetime-local") {
-				console.log(value,"vvvvvvvvvvvq")
-				debugger
+
 				if (value) {
 					new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, new Date(value));
 				}
@@ -3526,7 +3547,11 @@ window.new_Cr_MasterDetails = {
 				if (masterDataFormatedArr.length) {
 					set_Cr_MastreDetais.init(masterDataFormatedArr)
 				} else {
-					Task_Edit_Data.init();
+					if (RListKey == "projects") {
+						checkinProjectInEpm.checkin(projectGUIDCr);
+					} else {
+						Task_Edit_Data.init();
+					}
 				}
 
 
@@ -3794,3 +3819,205 @@ var Master_Edit_DataRequest = {
 
 	}
 }
+
+// working on project schedula
+
+var checkinProjectInEpm = { // create this function to check in the project on project center before edit on project
+	checkin: function (ProjGuid) {
+		$.ajax({
+			url:
+				_spPageContextInfo.siteAbsoluteUrl +
+				"/_api/ProjectServer/Projects('" +
+				ProjGuid +
+				"')/draft/checkIn(true)",
+			method: "POST",
+			contentType: "application/json;odata=verbose",
+			headers: {
+				Accept: "application/json; odata=verbose",
+				"X-requestDigest": $("#__REQUESTDIGEST").val(),
+				"X-HTTP-Method": "POST",
+				"if-Match": "*",
+			},
+			success: function (data) {
+				console.log("Project checked in successfully from cr")
+
+				Update_Project_Center_CR.getAllResources()
+				// window.location =
+				//   _spPageContextInfo.siteAbsoluteUrl +
+				//   "/SitePages/ProjectHome.aspx?PCODE=" +
+				//   PNAME;
+			},
+			error: function (data) {
+				console.log("call failed", data);
+			},
+		});
+	},
+	g: {},
+};
+
+
+var Update_Project_Center_CR = {
+	getAllResources: function () {
+		$.ajax({
+			url: _spPageContextInfo.webAbsoluteUrl + "/_api/ProjectServer/EnterpriseResources",
+			method: "GET",
+			headers: { "Accept": "application/json; odata=verbose" },
+			success: function (data) {
+				allEnterpriseResourcesCR = data.d.results
+				console.log(allEnterpriseResourcesCR, "allEnterpriseResourcesCR allEnterpriseResourcesCR allEnterpriseResourcesCR")
+				SP.SOD.registerSod('PS.ProjectContext', SP.Utilities.Utility.getLayoutsPageUrl('ps.js'));
+				SP.SOD.loadMultiple(['PS.ProjectContext'], EPMProjectToUpdateCR);
+			}
+		});
+	}
+}
+
+function EPMProjectToUpdateCR() {
+
+	editProjectContextCR = PS.ProjectContext.get_current();
+	epmProjectsCR = editProjectContextCR.get_projects();
+	editProjectContextCR.load(epmProjectsCR, 'Include(Name, Id)');
+	editProjectContextCR.executeQueryAsync(delete_resources_cr.preinit, QueryFailedCenterCR);
+
+}
+
+
+function QueryFailedCenterCR(sender, args) {
+	console.log('Request failed: ' + args.get_message());
+}
+
+
+var delete_resources_cr = {
+	preinit: function () {
+		SP.SOD.registerSod('PS.ProjectContext', SP.Utilities.Utility.getLayoutsPageUrl('ps.js'));
+		SP.SOD.loadMultiple(['PS.ProjectContext'], delete_resources_cr.init);
+	},
+	init: function () {
+
+		deleteProjectContextCR = PS.ProjectContext.get_current();
+		var oProjects = deleteProjectContextCR.get_projects();
+		delete_resources_cr.g.oProjectsItem = oProjects.getById(projectGUIDCr); //declared inside object scope only
+
+
+		ResourcesEnterpriseCR = delete_resources_cr.g.oProjectsItem.checkOut();
+
+		delete_resources_cr.g.testDuration = ResourcesEnterpriseCR.get_projectResources()
+
+		deleteProjectContextCR.load(delete_resources_cr.g.testDuration);
+
+		deleteProjectContextCR.executeQueryAsync(
+			Function.createDelegate(this, delete_resources_cr.onSuccess),
+			Function.createDelegate(this, delete_resources_cr.onError)
+		);
+	},
+	onError: function (sender, args) {
+		console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+	},
+	onSuccess: function (sender, args) {
+
+
+		resourcesArrDeleteCR = delete_resources_cr.g.testDuration.get_data()
+
+
+
+		Promise.all(
+			resourcesArrDeleteCR.map(function (item) {
+				globresArrCR.push(item)
+			})
+		).then(function (files) {
+
+			delete_resourcesForupdate_cr.init()
+		}).catch(function (err) {
+
+		})
+
+
+	},
+	// Global variables
+	g: {}
+}
+
+
+var delete_resourcesForupdate_cr = {
+
+	init: function () {
+
+		deleteProjectContextCR.executeQueryAsync(
+			Function.createDelegate(this, delete_resourcesForupdate_cr.onSuccess),
+			Function.createDelegate(this, delete_resourcesForupdate_cr.onError)
+		);
+
+	},
+	onError: function (sender, args) {
+		console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+	},
+	onSuccess: async function (sender, args) {
+
+
+		for (var i = 0; i < globresArrCR.length; i++) {
+			globresArrCR[i].deleteObject()
+		}
+
+
+		var checkinJob = ResourcesEnterpriseCR.update();
+
+
+		deleteProjectContextCR.waitForQueueAsync(checkinJob, 100, EPMProjectEditCR);
+	}
+}
+
+function EPMProjectEditCR() {
+	//
+	var draftProject;
+	var project = epmProjectsCR.getById(projectGUIDCr); //User_ProjUID it's the GUID for Project
+	draftProject = project.checkOut();
+
+
+	for (var i = 0; i < projectBuildTeamArrCr.length; i++) {
+		allEnterpriseResourcesCR.forEach((el) => {
+			if (projectBuildTeamArrCr[i] == el.Name) {
+
+				var new_resource_id = el.Id;
+				var new_resource = new PS.ProjectResourceCreationInformation();
+				new_resource.set_name(projectBuildTeamArrCr[i]);
+				new_resource.set_id(new_resource_id);
+				var project_resources_list = draftProject.get_projectResources();
+
+				var project_resource = project_resources_list.add(new_resource);
+				draftProject.get_projectResources().add(new_resource);
+			}
+
+		});
+
+	}
+	var publishJob = draftProject.update();
+	editProjectContextCR.waitForQueueAsync(publishJob, 100, ChangeProjectOwnerEpmCR);
+}
+
+function ChangeProjectOwnerEpmCR() {
+	var project = epmProjectsCR.getById(projectGUIDCr);
+	var draftProject = project.checkOut();
+	var web = editProjectContextCR.get_web()
+	var projectManagerId = projectManagerCr.get_lookupId()
+	var userPicked = web.getUserById(projectManagerId) //76
+
+
+	draftProject.set_owner(userPicked)
+	var publishJob = draftProject.publish(true);
+	// $('.wfLoader').hide();
+
+	editProjectContextCR.waitForQueueAsync(publishJob, 100, QueueJobSentOwnerEpmCR);
+}
+
+function QueueJobSentOwnerEpmCR(response) {
+
+	Task_Edit_Data.init();
+	// window.location =
+	//   _spPageContextInfo.webAbsoluteUrl +
+	//   "/SitePages/View.aspx?ListKey=" +
+	//   listkey +
+	//   "&IID=" +
+	//   IID +
+	//   PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+  
+  }
