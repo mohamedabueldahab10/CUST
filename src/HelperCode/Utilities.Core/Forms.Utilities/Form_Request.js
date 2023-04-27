@@ -3365,7 +3365,7 @@ window.Goal_Strategy_Info = {
       Get_Pillers_Info.init(strategyId)
     } else {
       debugger
-      if (listkey == 'sos' ||(listkey == 'changerequest')) {
+      if (listkey == 'sos' || (listkey == 'changerequest')) {
         $('#PillarName').parent().parent().parent().parent().css('display', 'none')
         $('#PillarName').val("")
         $('#StrategicDescription').val("")
@@ -3540,11 +3540,11 @@ window.Get_Pillers_Info = {
       });
     }
 
-    if(listkey == "changerequest"){
+    if (listkey == "changerequest") {
       var pillerNameVal = $('#PillarName').val()
       relatedPiller = $('#PillarName').val()
 
-      console.log(relatedPiller,"relatedPiller in cr")
+      console.log(relatedPiller, "relatedPiller in cr")
     }
 
     $("#PillarName").html(
@@ -3567,7 +3567,7 @@ window.Get_Pillers_Info = {
       if (listkey == 'sos' && relatedPiller) {
         $('#PillarName').val(relatedPiller)
       }
-    }else if(listkey == "changerequest"){
+    } else if (listkey == "changerequest") {
       $('#PillarName').val(relatedPiller)
     }
 
@@ -5416,8 +5416,13 @@ window.equationKPI = {
   init: function () {
 
     debugger
-    if(listkey == "changerequest"){
-      KPICode= $('#CRRelatedMainKpis').val()
+    if (listkey == "changerequest" && !USERisWF) {
+      KPICode = $('#CRRelatedMainKpis').val()
+    } else if (listkey == "changerequest" && USERisWF) {
+      if (changeRequestBody.length) {
+
+        KPICode = changeRequestBody[0].changeRequestRCode
+      }
     }
 
     var clientContext = new SP.ClientContext.get_current();
@@ -5780,6 +5785,11 @@ window.Update_Kpi_Results = {
     var programList = context.get_web().get_lists().getByTitle('KPIResults');
     var camlQuery = new SP.CamlQuery();
 
+    // if (listkey == "changerequest") {
+    //   KPICode = $('#CRRelatedMainKpis').val()
+    // }
+    debugger
+
     // camlQuery.set_viewXml(
     //   '<View><Query><Where><Eq><FieldRef Name="KPI" /> <Value Type="Text">' + value + "</Value></Eq></Where></Query></View>"
     // );
@@ -5834,6 +5844,10 @@ window.Update_Kpi_Results = {
           }
           context.executeQueryAsync(
             function () {
+              if (listkey == "changerequest" && USERisWF) {
+                debugger
+                Task_Edit_Data.init();
+              }
               //Item Updated sucess
               // Edit_Item_Field.init('Ideas', 'Stage', 'IdeaStage04', 'Title', IdeaId);
               dfd.resolve();

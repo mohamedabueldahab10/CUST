@@ -519,6 +519,7 @@ window.handleCustomeCr = {
 				isRListKey = RListKey ? true : false;
 				CrRelatedList = relevantDropdown.data("listname");
 				RID = relevantDropdown.find(">option:selected").attr("option-id");
+				changeRequestRCode = relevantDropdown.find(">option:selected").attr("value");
 				// $(this).parent().find(">label").addClass("loader-action");
 
 				if (!isGeneral) {
@@ -609,6 +610,7 @@ window.CrItemDataRequest = {
 				value: "",
 				DisplayName: currentJsonValues[0].DisplayName,
 				DisplayNameEn: currentJsonValues[0].DisplayName,
+				changeRequestRCode:changeRequestRCode
 			});
 
 			switch ($(this).attr("type")) {
@@ -2644,9 +2646,11 @@ window.executeCR = {
 					if (masterData) {
 						masterLength = executeCR.g.crBodyMaster.length
 					}
-
+					debugger
 					if (masterLength > 0) {
 						arrangeCRMasterDetails.init(masterData)
+					}else if(RListKey == "mainkpi"){
+						equationKPI.init();
 					} else {
 						Task_Edit_Data.init();
 					}

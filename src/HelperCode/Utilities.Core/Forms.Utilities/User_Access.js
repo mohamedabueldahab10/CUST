@@ -251,7 +251,8 @@ window.accessCallisDone = false;
   (window.CrRelatedList = ""),
   (window.changeRequestBody = []),
   (window.changeRequestBodyMaster = []),
-  (window.changeRequestBodyMasterEdit = []);
+  (window.changeRequestBodyMasterEdit = []),
+  (window.changeRequestRCode = []);
 // ended
 
 
