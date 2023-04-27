@@ -1017,7 +1017,7 @@ window.ListInfo = {
           $(".grandFieldInvoke").on("change", function (event) {
 
 
-            
+
 
             var grandId = $(this).data("grandfieldid")
             var childId = $(this).data("childfieldid")
@@ -6559,6 +6559,18 @@ window.ListInfo = {
         if ((listkey == 'projects' || listkey == 'initiatives') && isNew) {
           var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item").last()
           lastDetailsItemBeforeAdd.addClass('disable_section')
+        }else if(listkey == "changerequest" && (RListKey == 'projects' ||RListKey == 'initiatives')){
+          var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last()
+          if (lastDetailsItemBeforeAdd.length == 0) {
+            var onLoadMaster = $(this).closest("[data-target_list]").find(".Details-Item.EditItem")
+            if (onLoadMaster.length) {
+              onLoadMaster.each(function () {
+                $(this).addClass("disable_section")
+              })
+            }
+          } else {
+            lastDetailsItemBeforeAdd.addClass('disable_section')
+          }
         }
         else if ((listkey == 'projects' || listkey == 'initiatives') && isEdit) {
 
@@ -6604,7 +6616,7 @@ window.ListInfo = {
         lastDetailsItem.find('.remainpercstyle.remainPercentageVal').html(`${100 - totalWeight}]`) // add new title weight
         lastDetailsItem.find('.weightfloatpercentage').attr("max", 100 - totalWeight) // add new max weight
         //
-
+        debugger
         masterLength = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").length
 
         // to remove the disabled on multi select when click plus in master filed of master details section like deliv in benefit in edit initiative
@@ -6613,7 +6625,11 @@ window.ListInfo = {
         })
 
 
-        if (isNew) {
+        if (isNew && listkey == "changerequest") {
+          if (masterLength > 0) {
+            $(this).closest("[data-target_list]").find(".remove-New-Detail").show()
+          }
+        } else if (isNew) {
           // in new > 1 because on render the form there is a new Item so it will be  before click on +
           if (masterLength > 1) {
             $(this).closest("[data-target_list]").find(".remove-New-Detail").show()
@@ -6680,8 +6696,12 @@ window.ListInfo = {
         masterLength = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").length
 
 
-
-        if (isNew) {
+        if (isNew && listkey == "changerequest") {
+          if (masterLength > 0) {
+            masterLength = masterLength - 1
+            $(this).closest("[data-target_list]").find(".Details-Item.NewItem")[masterLength].remove()
+          }
+        }else if (isNew) {
           // in new > 1 because on render the form there is a new Item so it will be  before click on +
           if (masterLength > 1) {
             masterLength = masterLength - 1
@@ -6695,8 +6715,12 @@ window.ListInfo = {
           }
         }
 
-
-        if (isNew) {
+        if (isNew && listkey == "changerequest") {
+          if (masterLength == 0) {
+            // to return the form as rendered
+            $(this).closest("[data-target_list]").find(".remove-New-Detail").hide()
+          }
+        }else if (isNew) {
           if (masterLength == 1) {
             // to return the form as rendered
             $(this).closest("[data-target_list]").find(".remove-New-Detail").hide()
@@ -6714,6 +6738,18 @@ window.ListInfo = {
 
           var lastDetailsItemAfterRemove = $(this).closest("[data-target_list]").find(".Details-Item").last()
           lastDetailsItemAfterRemove.removeClass('disable_section')
+        }else if(listkey == "changerequest" && (RListKey == 'projects' ||RListKey == 'initiatives')){
+          var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last()
+          if (lastDetailsItemBeforeAdd.length == 0) {
+            var onLoadMaster = $(this).closest("[data-target_list]").find(".Details-Item.EditItem")
+            if (onLoadMaster.length) {
+              onLoadMaster.each(function () {
+                $(this).removeClass("disable_section")
+              })
+            }
+          } else {
+            lastDetailsItemBeforeAdd.removeClass('disable_section')
+          }
         } else if ((listkey == 'projects' || listkey == 'initiatives') && isEdit) {
 
           var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last()
@@ -10009,7 +10045,7 @@ dynamicAffectSelect = {
       targetFieldType = $(`#${affectedSelectsInfo.affectedFieldName}`).attr("type");
     }
 
-    
+
 
     let selectedVal = ""
     let optionsBody = ""
@@ -10047,9 +10083,9 @@ dynamicAffectSelect = {
       // selectedVal = $(`select#${affectedSelectsInfo.affectedFieldName}`).attr("value"); // get selected val to use it in edit
 
       // to filter the value in cr
-      if(listkey == "changerequest"){
+      if (listkey == "changerequest") {
         selectedVal = $(`select#${affectedSelectsInfo.affectedFieldName}`).val(); // get selected val to use it in edit
-      }else{
+      } else {
         selectedVal = $(`select#${affectedSelectsInfo.affectedFieldName}`).attr("value"); // get selected val to use it in edit
       }
 
