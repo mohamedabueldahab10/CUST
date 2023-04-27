@@ -1672,6 +1672,7 @@ window.CrItemDataRenderFromJSON_View = {
 					$this.parent().attr("data-placement", isArabic ? "right" : "left");
 					$this.parent().attr("title", o.originalValue);
 				}
+				debugger
 				switch (o.type) {
 					case "datetime":
 						if (value == '' || value == null) {
