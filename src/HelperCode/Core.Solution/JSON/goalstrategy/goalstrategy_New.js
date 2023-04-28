@@ -45,32 +45,56 @@ var Information_Form = [
             {
               display: 'ministry',
               value: 'ministry',
-              roles: ['Administrator', 'EPMO', 'SPM'],
+              roles: [
+                'Administrator',
+                // 'EPMO',
+                'SPM'
+              ],
             },
             {
               display: 'vision',
               value: 'vision',
-              roles: ['Administrator', 'VROE', 'VROP'],
+              roles: [
+                'Administrator',
+                // 'VROE',
+                'VROP'
+              ],
             },
             {
               display: 'lms',
               value: 'lms',
-              roles: ['Administrator', 'LMSE', 'LMSP'],
+              roles: [
+                'Administrator', 
+                // 'LMSE', // hasen't access
+                'LMSP',
+                'StrategyTeam'
+              ],
             },
             {
               display: 'sectorial',
               value: 'sectorial',
               roles: [
                 'Administrator',
-                'VROE',
+                // 'VROE', // hasen't access
                 'VROP',
-                'EPMO',
+                // 'EPMO', // has access to read
                 'SPM',
-                'LMSE',
+                // 'LMSE',
                 'LMSP',
+                'StrategyTeam'
               ],
             },
-            { display: 'sub', value: 'sub' },
+            { display: 'sub', value: 'sub',
+              roles: [
+                'Administrator',
+                // 'VROE', // hasen't access
+                'VROP',
+                // 'EPMO',
+                'SPM',
+                'LMSP',
+                'StrategyTeam'
+              ],
+            },
 
             // { display: 'jobmarket', value: 'jobmarket' },
             // { display: 'transformationally', value: 'transformationally' },
