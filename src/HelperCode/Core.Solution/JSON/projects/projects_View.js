@@ -158,7 +158,7 @@ var Information_Form = [
         DisplayNameEn: 'Initiative Type',
         DisplayName: 'نوع المبادرة',
         ToggleName: "InitiativeType",
-        validation: 'required',
+        // validation: 'required',
         dynamic: 'parent', // parent to get the child depends on this field value
         type: 'dropdownValues',
         // dontSubmit: true,

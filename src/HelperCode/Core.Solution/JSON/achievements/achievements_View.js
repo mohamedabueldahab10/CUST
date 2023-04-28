@@ -84,13 +84,13 @@ var Information_Form = [
         DisplayNameEn: 'Description',
         DisplayName: 'وصف المنجز',
         type: 'multiline',
-        validation: 'required',
+        // validation: 'required',
       },
       {
         InternalName: 'LinkType',
         DisplayNameEn: 'Link Type',
         DisplayName: 'نوع ارتباط المنجز',
-        validation: 'required',
+        // validation: 'required',
         type: 'dropdownValues',
         options: {
           choices: [
@@ -109,7 +109,7 @@ var Information_Form = [
         InternalName: 'AchievementCategory',
         DisplayNameEn: 'Achievement Category',
         DisplayName: 'تصنيف المنجز',
-        validation: 'required',
+        // validation: 'required',
         type: 'dropdownValues',
         dynamic: 'parent',
         options: {
@@ -131,7 +131,7 @@ var Information_Form = [
         InternalName: 'AchievementCategoryInitiative',
         DisplayNameEn: 'Achievement Category',
         DisplayName: 'تصنيف المنجز',
-        validation: 'required',
+        // validation: 'required',
         type: 'dropdownValues',
         dynamic: 'parent',
         options: {
@@ -155,7 +155,7 @@ var Information_Form = [
         DisplayName: 'الاستراتيجية المرتبطة',
         type: 'lookup',
         ToggleName:'RelatedAchievementStrategy',
-        validation: 'required',
+        // validation: 'required',
         source: "GoalStrategy",
         Dispfieldkey: "Name",
         valfieldkey: "Title",
@@ -204,7 +204,7 @@ var Information_Form = [
         display: "none",
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        validation: 'required',
+        // validation: 'required',
         ToggleName: "RelatedMilestone",
       },
     ],

@@ -59,7 +59,6 @@ var Information_Form = [
         validation: 'required',
         getValuesfor:'Weight', // add this internal name to get ther values
         targetTotalElement:"TotalAmount", // targetTotalElement to set the values inside it
-        validation: 'required',
         Errmsgkey:"multiselecterr"
       },
       // {
