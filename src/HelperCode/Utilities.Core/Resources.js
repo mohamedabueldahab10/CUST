@@ -2314,6 +2314,12 @@ window.Dynamo_Data = [
     NameEn: "Name",
     Code: "Title",
   },
+  { // add it on local storage to can get the name in listing
+    ListName: "GoalStrategy",
+    Name: "Name",
+    NameEn: "Name",
+    Code: "Title",
+  },
   {// add it on local storage to can get the name in listing
     ListName: "Vendors",
     Name: "Name",

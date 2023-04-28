@@ -46,6 +46,7 @@ var Listing_Info = [
         "DisplayNameEn": "Related Vision Strategy",
         "DisplayName": "الاستراتيجية المرتبطة",
         "type": "lookup",
+        "localStorageVariable":"Dynamo_GoalStrategy",
         inlisting: false,
         infilter: true
     },
