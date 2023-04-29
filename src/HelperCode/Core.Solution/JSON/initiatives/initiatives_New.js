@@ -90,7 +90,7 @@ var Information_Form = [
             {
               display: 'lms',
               value: 'lms',
-              roles: ['Administrator','EPMO','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','InitiativeManager','InitiativeOwner'],
+              roles: ['Administrator','EPMO'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'LMSInitiative' },
                 { fieldName: 'WFStage', value: 'LInStage01' },
