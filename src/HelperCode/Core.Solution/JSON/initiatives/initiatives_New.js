@@ -1115,10 +1115,14 @@ var Information_Form = [
         InternalName: 'RelatedInitiativeDeliverable',
         DisplayNameEn: 'Related Initiative Deliverable',
         DisplayName: 'مخرج المبادرة المرتبط',
-        type: 'lookup',
+        // type: 'lookup',
         source: 'InitiativeDeliverables',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+        type: 'lookupWithQuery',
+        queryField: 'Title',
+        queryFieldType: 'Text', //ex: "Choice"
+        queryFieldValue: ' ',//the purpose of this syntax is to get the field empty only
       },
       {
         InternalName: 'SupportDocumentsDescription',
