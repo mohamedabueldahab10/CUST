@@ -60,18 +60,19 @@ window.Information_Form = [
 						{ display: "strategicobjectives", value: "strategiccrmsSOs", roles: ['Administrator','ObjectiveOwner', 'SPMAdmin', 'StrategyTeam','PerformanceLeader'] },
 						{ display: "visionobjectives", value: "visioncrmsSOs", roles: ['Administrator','ObjectiveOwner', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead',,'PerformanceLeader' ], },
 						{ display: "lmsobjectives", value: "lmscrmsSOs", roles: ['Administrator','ObjectiveOwner',  'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl','PerformanceLeader'], },
-						//projects
-						{ display: "vroprojects", value: "vrocrmsProjects",customFilterValue: "vision", roles: ['Administrator','DU','ProjectManager','InitiativeManager','InitiativeOwner',  'VROEHead',  'EPMO', 'VROE','SPMO', 'SPMOHead',] },
-						{ display: "epmoprojects", value: "epmocrmsProjects",customFilterValue: "strategically", roles: ['Administrator', 'ProjectManager','InitiativeManager','InitiativeOwner', 'EPMO', 'SPMOHead', 'SPMO', 'DU',] },
-						{ display: "lmsprojects", value: "lmscrmsProjects",customFilterValue: "lms", roles: ['Administrator', 'ProjectManager','InitiativeManager','InitiativeOwner', 'LMSE', 'EPMO',  'LMSP', 'LMSUExecution','DU', 'LMSUPerformance', 'SPMOHead','SPMO', 'LMSUControl'], },
-						//Initiatives
-						{ display: "strategicinitiatives", value: "strategiccrmsInitiatives",customFilterValue: "strategically", roles: ['Administrator','InitiativeManager', 'InitiativeOwner', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMTeam'] },
-						{ display: "vroinitiatives", value: "vrocrmsInitiatives",customFilterValue: "vision", roles: ['Administrator','DU', 'SPMOHead','SPMO', 'InitiativeManager','InitiativeOwner', 'VROEHead',  'EPMO', 'VROE'] },
-						{ display: "lmsinitiatives", value: "lmscrmsInitiatives",customFilterValue: "lms", roles: ['Administrator', 'LMSE', 'InitiativeManager','InitiativeOwner', 'LMSP','DU', 'EPMO',  'LMSUExecution', 'LMSUPerformance','SPMO', 'SPMOHead', 'LMSUControl'], },
 						//KPI
 						{ display: "strategickpi", value: "strategiccrmsMainKPI", roles: ['Administrator','ObjectiveOwner','KPIOwner','SPMAdmin',  'StrategyTeam','PerformanceLeader'] },
 						{ display: "vrokpi", value: "vrocrmsMainKPI", roles: ['Administrator', 'VROHead','ObjectiveOwner','KPIOwner', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead',,'PerformanceLeader'] },
 						{ display: "lmskpi", value: "lmscrmsMainKPI", roles: ['Administrator','LMSP','ObjectiveOwner','KPIOwner', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl','PerformanceLeader'], },
+						//Initiatives
+						{ display: "strategicinitiatives", value: "strategiccrmsInitiatives",customFilterValue: "strategically", roles: ['Administrator','InitiativeManager', 'InitiativeOwner', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMTeam'] },
+						{ display: "vroinitiatives", value: "vrocrmsInitiatives",customFilterValue: "vision", roles: ['Administrator','DU', 'SPMOHead','SPMO', 'InitiativeManager','InitiativeOwner', 'VROEHead',  'EPMO', 'VROE'] },
+						{ display: "lmsinitiatives", value: "lmscrmsInitiatives",customFilterValue: "lms", roles: ['Administrator', 'LMSE', 'InitiativeManager','InitiativeOwner', 'LMSP','DU', 'EPMO',  'LMSUExecution', 'LMSUPerformance','SPMO', 'SPMOHead', 'LMSUControl'], },
+					
+						//projects
+						{ display: "epmoprojects", value: "epmocrmsProjects",customFilterValue: "strategically", roles: ['Administrator', 'ProjectManager','InitiativeManager','InitiativeOwner', 'EPMO', 'SPMOHead', 'SPMO', 'DU',] },
+						{ display: "vroprojects", value: "vrocrmsProjects",customFilterValue: "vision", roles: ['Administrator','DU','ProjectManager','InitiativeManager','InitiativeOwner',  'VROEHead',  'EPMO', 'VROE','SPMO', 'SPMOHead',] },
+						{ display: "lmsprojects", value: "lmscrmsProjects",customFilterValue: "lms", roles: ['Administrator', 'ProjectManager','InitiativeManager','InitiativeOwner', 'LMSE', 'EPMO',  'LMSP', 'LMSUExecution','DU', 'LMSUPerformance', 'SPMOHead','SPMO', 'LMSUControl'], },
 					],
 				},
 				toggleValues: [
