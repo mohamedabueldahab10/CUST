@@ -23,8 +23,8 @@ window.Information_Form = [
 			},
 			{
 				// InternalName: 'Title',
-				DisplayNameEn: 'Create Strategic objective',
-				DisplayName: 'اضافة هدف استراتيجي',
+				DisplayNameEn: 'Create objective',
+				DisplayName: 'اضافة هدف',
 				type: 'anchor',
 				href: "/SitePages/new.aspx?ListKey=sos"
 			},
