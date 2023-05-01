@@ -1423,7 +1423,7 @@ window.View_Data_Request = {
                   $(
                     "[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
                   ).each(function () {
-
+                    
                     var isMasterSection = $(this).parent().parent().hasClass("Details-Item")
 
                     if (!isMasterSection) {

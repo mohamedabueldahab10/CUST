@@ -221,7 +221,8 @@ window.CrModeFunctionality = {
 
 
 						if (crMasterDetailsArrayRequest.length) {
-							$(".cr-related-item-section .CFIELD.dont-submit").remove() // to remove the master details field don't submit like amount
+							// add [data-target_list] to remove the field dont submit from master details only
+							$(".cr-related-item-section[data-target_list] .CFIELD.dont-submit").remove() // to remove the master details field don't submit like amount
 
 							CR_Master_Details_Request.init(crMasterDetailsArrayRequest[0])
 						} else {
@@ -582,7 +583,7 @@ window.CrItemDataRequest = {
 		var fieldType = "";
 
 		$(
-			".cr-related-item-section:not([data-target_list]) .CFIELD> input:not([type=file]), .cr-related-item-section:not([data-target_list]) .CFIELD> input[type=checkbox], .cr-related-item-section:not([data-target_list]) .CFIELD> div[type=picker], .cr-related-item-section:not([data-target_list]) .CFIELD> select[type=dropdown], .cr-related-item-section:not([data-target_list]) .CFIELD>  textarea,.cr-related-item-section:not([data-target_list]) .CFIELD> .datetimeinputs input[type=date], .cr-related-item-section:not([data-target_list]) .CFIELD> .datetimeinputs input[type=datetime-local], .cr-related-item-section:not([data-target_list]) .CFIELD > .multiselect-container, .cr-related-item-section:not([data-target_list]) .CFIELD > div.richTextEdits , .cr-related-item-section:not([data-target_list]) .CFIELD> div[type=multipicker]"
+			".cr-related-item-section:not([data-target_list]) .CFIELD:not(.dont-submit)> input:not([type=file]), .cr-related-item-section:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=checkbox], .cr-related-item-section:not([data-target_list]) .CFIELD:not(.dont-submit)> div[type=picker], .cr-related-item-section:not([data-target_list]) .CFIELD:not(.dont-submit)> select[type=dropdown], .cr-related-item-section:not([data-target_list]) .CFIELD:not(.dont-submit)>  textarea,.cr-related-item-section:not([data-target_list]) .CFIELD:not(.dont-submit)> .datetimeinputs input[type=date], .cr-related-item-section:not([data-target_list]) .CFIELD:not(.dont-submit)> .datetimeinputs input[type=datetime-local], .cr-related-item-section:not([data-target_list]) .CFIELD:not(.dont-submit) > .multiselect-container, .cr-related-item-section:not([data-target_list]) .CFIELD:not(.dont-submit) > div.richTextEdits , .cr-related-item-section:not([data-target_list]) .CFIELD:not(.dont-submit)> div[type=multipicker]"
 		).each(function () {
 
 
@@ -818,6 +819,11 @@ window.CrItemDataRequest = {
 					break;
 			}
 		});
+
+		// to get dont submit value like initiative in cr
+		if (RListKey == 'initiatives') {
+			DontSubmit_DataRequestCR.init()
+		}
 		//checking field ownership
 		$(
 			".cr-related-item-section:not([data-section_type]) [data-editableby]"
@@ -2778,7 +2784,7 @@ var CR_Master_Details_Request = {
 		while (listItemEnum.moveNext()) {
 
 
-			
+
 
 			var oListItem = listItemEnum.get_current();
 			HTMLtoAppend = "";
@@ -2990,8 +2996,8 @@ var CR_Master_Details_Request = {
 		} else {
 			if (isNew || isEdit) ListInfo.g.newDetail();
 
-			console.log(RListKey,"RListKey RListKey")
-		
+			console.log(RListKey, "RListKey RListKey")
+
 
 			if ((RListKey == 'initiatives' || RListKey == 'projects')) { // to handle amount in master details based on weight in project and initiative
 				// need to test more
@@ -3002,19 +3008,19 @@ var CR_Master_Details_Request = {
 					$("[data-target_list]").each(function () {
 
 						var targetList = $(this).data('target_list')
-				
+
 						var maxAttr = 100
 						var weight = 0
-						
+
 						if ($("[data-targetelem]").length > 0) {
 							$(`[data-target_list="${targetList}"] .Details-Item.EditItem  input[type=number]`).each(function () {
-	
-								
-					
+
+
+
 								var checkTargetElem = $(this).data('targetelem')
 
 								if (checkTargetElem) {
-						
+
 									weight = Number(weight)
 									var newMax = Number(maxAttr) - weight
 									$(this).attr('max', newMax)
@@ -3022,7 +3028,7 @@ var CR_Master_Details_Request = {
 									maxAttr = Number(maxAttr) - weight
 									weight = $(this).val()
 
-				
+
 								}
 							})
 						}
@@ -4036,4 +4042,125 @@ function QueueJobSentOwnerEpmCR(response) {
 	//   IID +
 	//   PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
 
+}
+
+////
+
+var DontSubmit_DataRequestCR = {
+	init: function () {
+		// to handle dont submit in edit lvl1
+
+		$(
+			"[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
+		).each(function (e) {
+			debugger
+
+			var isMasterSection = $(this).parent().parent().hasClass("Details-Item")
+
+			if (!isMasterSection) {
+
+				var elementId = ""
+				var elementValue = ""
+				var isMultiSelect = false
+
+
+
+				if ($(this).hasClass("limulti")) {
+					isMultiSelect = true
+					elementId = $(this).parent().parent().parent().attr("id"); // get element Id
+					elementValue = $(this).find("input:checked").val()
+				} else {
+					elementId = $(this).parent().attr("id"); // get element Id
+					elementValue = $(this).val(); // get element value
+				}
+
+
+
+				if (isMultiSelect) {
+
+					if (oListItem.get_item(elementId) && oListItem.get_item(elementId).includes(elementValue)) {
+						var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
+						var parenetValue = $(this).data("parentrelatedvaluelvl1"); // parent value
+
+						if (parentElement && parenetValue) {
+							$(`#${parentElement}`).val(parenetValue);
+						}
+					}
+				} else {
+
+					if (
+						oListItem.get_item(elementId) &&
+						oListItem.get_item(elementId) == elementValue
+					) {
+
+						// matching between value on list
+						var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
+						var parenetValue = $(this).data("parentrelatedvaluelvl1"); // parent value
+						if (parentElement && parenetValue) {
+							$(`#${parentElement}`).val(parenetValue);
+						}
+					}
+				}
+			}
+		});
+
+
+		// to handle dont submit in edit lvl2
+		$(
+			"[data-parentrelatedvaluelvl2]:not([data-parentrelatedvaluelvl2=undefined])"
+		).each(function () {
+
+			var elementId = ""; // get element Id
+			var elementValue = ""; // get element value
+			var isMultiSelect = false
+
+
+			if ($(this).hasClass("limulti")) {
+				isMultiSelect = true
+				elementId = $(this).parent().parent().parent().attr("id"); // get element Id
+				elementValue = $(this).find("input:checked").val()
+			} else {
+				elementId = $(this).parent().attr("id"); // get element Id
+				elementValue = $(this).val(); // get element value
+			}
+
+
+
+			if (isMultiSelect) {
+
+				if (oListItem.get_item(elementId) && oListItem.get_item(elementId).includes(elementValue)) {
+					var parentElement = $(this).data("parentrelatedkeylvl2"); // parent internal name
+					var parenetValue = $(this).data("parentrelatedvaluelvl2"); // parent value
+
+					if (parentElement && parenetValue) {
+						$(`#${parentElement}`).val(parenetValue);
+					}
+				}
+			} else {
+				if (
+					oListItem.get_item(elementId) &&
+					oListItem.get_item(elementId) == elementValue
+				) {
+					// matching between value on list
+					var parentElement = $(this).data("parentrelatedkeylvl2"); // parent internal name
+					var parenetValue = $(this).data("parentrelatedvaluelvl2"); // parent value
+					if (parentElement && parenetValue) {
+						$(`#${parentElement}`).val(parenetValue);
+					}
+				}
+			}
+
+
+
+
+		});
+
+		if ($(".grandFieldInvoke").length > 0) { // to use it in initiative
+			$(".grandFieldInvoke").trigger("change")
+		}
+		if ($(".getsiblingdata").length > 0) {
+			$(".getsiblingdata").trigger("change")//to invoke the sibling data
+		}
+
+	}
 }
