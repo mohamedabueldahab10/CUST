@@ -364,7 +364,16 @@ var Project_Home_Info_Request = {
       var projDuration = "",
         numOfMonths = 0;
 
-      if (Math.trunc(projectlengthBaseLine) > 0) {
+
+
+      var projectPeriodInDays =
+        getBaseLineFinish.getTime() - getBaseLineStart.getTime();
+
+      projectPeriodInDays = projectPeriodInDays / (1000 * 3600 * 24)
+
+
+      // >30 to appear days not months if start in the end of month and finish in the start of next month
+      if (Math.trunc(projectlengthBaseLine) > 0 && projectPeriodInDays >= 30) {
         numOfMonths = Math.trunc(projectlengthBaseLine);
 
         projDuration += " ";
@@ -382,7 +391,7 @@ var Project_Home_Info_Request = {
         $(
           ".project-delivery-info .d-flex:nth-child(1) > span:nth-child(2)"
         ).text(projDuration);
-      } else if (Math.trunc(projectlengthBaseLine) == 0) {
+      } else if (Math.trunc(projectlengthBaseLine) == 0 || projectlengthBaseLine < 30) {
         var Difference_In_Time =
           getBaseLineFinish.getTime() - getBaseLineStart.getTime();
         var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
@@ -3729,7 +3738,7 @@ var EPM_Project_Summery_Task = {
 
 var Update_ProjectStatus_Service = {
   //APIURL
-  
+
   init: function () {
     $.ajax({
       type: "GET",
@@ -3862,7 +3871,7 @@ var Get_ProjectStatus_Info = {
     ).removeAttr(
       "data-trans-stat8 data-trans-stat9 data-trans-stat10 data-trans-stat11 data-trans-stat12 data-trans-stat13 data-trans-stat14 data-trans-stat28 data-trans-stat30"
     );
-    
+
 
     if (ProgressStatusSchedule != No_Data) {
       $(".myCompletionStatusSchedual").attr(

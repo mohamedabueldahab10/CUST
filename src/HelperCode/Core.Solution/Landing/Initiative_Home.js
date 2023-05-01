@@ -189,13 +189,15 @@ var initiativeHomeInfo_Request = {
           formatteStartDate.getMonth() +
           12 * (formatteEndDate.getFullYear() - formatteStartDate.getFullYear())
 
-        // var diff = (initfinishdate.getTime() - initstartdate.getTime()) / 1000;
-        // diff /= 60 * 60 * 24 * 7 * 4;
-        // var months = Math.abs(Math.round(diff));
 
         var months = Math.trunc(diff);
-
-        if (months > 0) {
+        ////
+        var initiativePeriodInDays =
+          initfinishdate.getTime() - initstartdate.getTime();
+        ///
+        initiativePeriodInDays = initiativePeriodInDays / (1000 * 3600 * 24)
+   
+        if (months > 0 && initiativePeriodInDays >= 30) {
           if (
             localStorage.getItem("lng") == null ||
             localStorage.getItem("lng") == "ar"
@@ -212,7 +214,7 @@ var initiativeHomeInfo_Request = {
               ".card-body.project-delivery-info.border-bottom.pb-4 .mx-3.pt-3 .d-flex.justify-content-between.pb-3.mb-0.lh-125.border-gray span.fnt-14.bold"
             ).text(months + " " + monthFormat);
           }
-        } else if (months == 0) {
+        } else if (months == 0 || initiativePeriodInDays < 30) {
           var Difference_In_Time =
             initfinishdate.getTime() - initstartdate.getTime();
           var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
@@ -1635,7 +1637,7 @@ var Milestones_Info_Request = {
       //   });
       // }
 
-      
+
       MilestoneArr.push({
         name: itemname,
         delivered: Status,
@@ -2226,7 +2228,7 @@ var Update_InitiativeStatus_Service = {
 var Get_InitiativeStatus_Info = {
 
   init: function () {
-    
+
     $("button.updateprogress").removeClass("loader-action-success");
     $("button.updateprogress").removeClass("loader-action-error");
     $("button.updateprogress").addClass("loader-action");
