@@ -503,7 +503,7 @@ window.Edit_Data_Request = {
 
     if (listkey == 'goalstrategy') {
       var PillarsExist = $('#PillarsExist:checked').val();
-      
+
 
       if (PillarsExist == 'yes') {
         $('[data-target_list="SPillars"] #Name').attr('required', 'required');
@@ -1204,7 +1204,7 @@ window.View_Data_Request = {
           // to handle the title change
           if ($(this).attr("id") == 'Types') {
             sosType = value;
-           
+
           }
         }
 
@@ -1248,7 +1248,7 @@ window.View_Data_Request = {
               if (currentId == 'Months' || currentId == 'Quarter' || currentId == 'Midterms') {
                 // if (periodType == 'monthly') {
                 var period = value.toLowerCase() + periodType
-              
+
                 if (
                   localStorage.getItem("lng") == null ||
                   localStorage.getItem("lng") == "ar"
@@ -1423,7 +1423,7 @@ window.View_Data_Request = {
                   $(
                     "[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
                   ).each(function () {
-                    
+
                     var isMasterSection = $(this).parent().parent().hasClass("Details-Item")
 
                     if (!isMasterSection) {
@@ -1508,6 +1508,7 @@ window.View_Data_Request = {
         //   $(this).html(value);
 
       } else if ($(this).attr("type") == "lookup") {
+
         var valfieldkey = $(this).data("valfieldkey"),
           Dispfieldkey = $(this).data("dispfieldkey"),
           listname = $(this).data("listname"),
@@ -1532,6 +1533,7 @@ window.View_Data_Request = {
 
           $(this).html(No_Data);
         } else {
+
           customquery =
             '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="' +
             $(this).data("valfieldkey") +
@@ -1548,6 +1550,8 @@ window.View_Data_Request = {
               if (isDone) {
 
                 records.forEach(function (el, index) {
+                  console.log(records, "errrrrrrrrrrrrrrrrrrrr")
+
                   $this.html(el[Dispfieldkey]);
                   $this.parent().find('a').attr('href', '/SitePages/View.aspx?ListKey=' + linkedto + '&IID=' + el["ID"] + '')
 
@@ -1579,13 +1583,68 @@ window.View_Data_Request = {
                         ) {
                           // matching between value on list
                           var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
+                          var dataListName = $(this).data("listname")
                           var parenetValue = $(this).attr(
                             "data-parentrelatedvaluelvl1"
                           ); // parent value
-               
+
 
                           if (parentElement && parenetValue) {
-                            $(`#${parentElement}`).html(parenetValue);
+                            //to get the sector name and subsector name in don't submit view
+                            if (parentElement == "Sector") {
+                              var sectorArr = [];
+                              if (localStorage.getItem("Dynamo_Internal Entities") != null) {
+                                sectorArr = JSON.parse(
+                                  localStorage.getItem("Dynamo_Internal Entities")
+                                );
+                                sectorArr = sectorArr.filter(function (a) {
+                                  return a.code === parenetValue;
+                                });
+                                if (
+                                  localStorage.getItem("lng") == null ||
+                                  localStorage.getItem("lng") == "ar"
+                                ) {
+                                  parenetValue = sectorArr.length
+                                    ? sectorArr[0].name
+                                    : No_Data;
+                                } else
+                                  parenetValue = sectorArr.length
+                                    ? sectorArr[0].nameEn
+                                    : No_Data;
+                              }
+
+                              $(`#${parentElement}`).html(parenetValue);
+
+
+                            } else if (parentElement == "SubSector") {
+                              debugger
+                              var subSectorArr = [];
+                              if (localStorage.getItem("Dynamo_Internal Entities") != null) {
+                                subSectorArr = JSON.parse(
+                                  localStorage.getItem("Dynamo_Internal Entities")
+                                );
+                                subSectorArr = subSectorArr.filter(function (a) {
+                                  return a.code === parenetValue;
+                                });
+                                if (
+                                  localStorage.getItem("lng") == null ||
+                                  localStorage.getItem("lng") == "ar"
+                                ) {
+                                  parenetValue = subSectorArr.length
+                                    ? subSectorArr[0].name
+                                    : No_Data;
+                                } else
+                                  parenetValue = subSectorArr.length
+                                    ? subSectorArr[0].nameEn
+                                    : No_Data;
+                              }
+
+                              $(`#${parentElement}`).html(parenetValue);
+
+
+                            } else {
+                              $(`#${parentElement}`).html(parenetValue);
+                            }
                           }
                         }
                       }
@@ -1623,7 +1682,58 @@ window.View_Data_Request = {
                           ); // parent value
 
 
-                          if (parentElement && parenetValue) {
+                          //to get the sector name and subsector name in don't submit view
+                          if (parentElement == "Sector") {
+                            var sectorArr = [];
+                            if (localStorage.getItem("Dynamo_Internal Entities") != null) {
+                              sectorArr = JSON.parse(
+                                localStorage.getItem("Dynamo_Internal Entities")
+                              );
+                              sectorArr = sectorArr.filter(function (a) {
+                                return a.code === parenetValue;
+                              });
+                              if (
+                                localStorage.getItem("lng") == null ||
+                                localStorage.getItem("lng") == "ar"
+                              ) {
+                                parenetValue = sectorArr.length
+                                  ? sectorArr[0].name
+                                  : No_Data;
+                              } else
+                                parenetValue = sectorArr.length
+                                  ? sectorArr[0].nameEn
+                                  : No_Data;
+                            }
+
+                            $(`#${parentElement}`).html(parenetValue);
+
+                          } else if (parentElement == "SubSector") {
+                            //to get the sector name and subsector name in don't submit view
+                            var subSectorArr = [];
+                            if (localStorage.getItem("Dynamo_Internal Entities") != null) {
+                              subSectorArr = JSON.parse(
+                                localStorage.getItem("Dynamo_Internal Entities")
+                              );
+                              subSectorArr = subSectorArr.filter(function (a) {
+                                return a.code === parenetValue;
+                              });
+                              if (
+                                localStorage.getItem("lng") == null ||
+                                localStorage.getItem("lng") == "ar"
+                              ) {
+                                parenetValue = subSectorArr.length
+                                  ? subSectorArr[0].name
+                                  : No_Data;
+                              } else
+                                parenetValue = subSectorArr.length
+                                  ? subSectorArr[0].nameEn
+                                  : No_Data;
+                            }
+
+                            $(`#${parentElement}`).html(parenetValue);
+
+
+                          } else if (parentElement && parenetValue) {
                             $(`#${parentElement}`).html(parenetValue);
                           }
                         }
@@ -1722,7 +1832,7 @@ window.View_Data_Request = {
 
         })
 
-      
+
 
         sectionJSON = [
           {
@@ -1983,33 +2093,33 @@ window.View_Data_Request = {
     if (isView && listkey == 'sos') {
       if (sosType == 'main') {
         $('#RelatedPortfolio , #RelatedObjective , #RelatedJobStrategy').parent().hide();
-     
+
       }
       else
         if (sosType == 'sub') {
           $('#RelatedPillar , #RelatedJobStrategy').parent().hide();
-         
+
 
         }
         else
           if (sosType == 'vision') {
             $('#RelatedPillar , #RelatedPortfolio , #RelatedObjective , #RelatedJobStrategy').parent().hide();
-           
+
           } else
             if (sosType == 'jobmarket') {
               $('#RelatedPillar , #RelatedPortfolio , #RelatedObjective').parent().hide();
-            
+
 
             } else
               if (sosType == 'strategically') {
                 $('#RelatedPillar , #RelatedPortfolio , #RelatedObjective , #RelatedJobStrategy').parent().hide();
-              
+
               }
     }
     if (isView && listkey == 'goalstrategy') {
       if ((strategyType == 'sub') || (strategyType == 'sectorial')) {
         $('#PillarsExist').parent().hide();
-      
+
       }
     }
     ////////////////////////////////////////////////
@@ -2285,7 +2395,7 @@ window.Risk_To_Issue_Submit = {
           Risk_Update_Data.init();
           showpopup = false;
         } else {
-        
+
           showpopup = false;
         }
       },
@@ -2347,7 +2457,7 @@ window.Risk_To_Issue_Submit = {
     clientContext.load(Risk_To_Issue_Submit.g.oListItem);
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
-       
+
         Risk_To_Issue_Code.g.IIID = Risk_To_Issue_Submit.g.oListItem.get_id();
         Risk_To_Issue_Code.init();
       }),
@@ -2443,7 +2553,7 @@ var Risk_To_Issue_Code = {
 var Master_Details_Request = {
   // The main Initialization function
   init: function (DetailsList) {
-   
+
 
 
     var clientContext = new SP.ClientContext.get_current();
@@ -2484,7 +2594,7 @@ var Master_Details_Request = {
     }
     while (listItemEnum.moveNext()) {
 
-      
+
       var oListItem = listItemEnum.get_current();
       HTMLtoAppend = "";
       HTMLtoAppend +=
@@ -2922,7 +3032,7 @@ var Master_Details_Request = {
 
             case "radio":
               var radioval = oListItem.get_item($(this).attr("id"));
-           
+
               if (radioval == "Yes" || radioval == "yes") {
                 $('input[id="' + $(this).attr("id") + '"]')
                   .filter('[value="yes"]')
@@ -3035,7 +3145,7 @@ var Master_Details_Request = {
                         var weight = $(this).parent().parent().find(`#${targetElem}`).val()
                         var maxAttr = $(this).parent().parent().find(`#${targetElem}`).attr('max')
 
-                    
+
 
                         weight = Number(weight)
                         var newMax = Number(maxAttr) + weight
@@ -3340,7 +3450,7 @@ window.Get_Related_Sos_Sector = {
 
 window.Goal_Strategy_Info = {
   onSuccess: function (sender, args) {
-    
+
     var collListItem = Goal_Strategy_Info.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var pillersExist = ''
@@ -3360,7 +3470,7 @@ window.Goal_Strategy_Info = {
       $('#PillarName').parent().parent().parent().parent().css('display', 'block')
       Get_Pillers_Info.init(strategyId)
     } else {
-      
+
       if (listkey == 'sos' || (listkey == 'changerequest')) {
         $('#PillarName').parent().parent().parent().parent().css('display', 'none')
         $('#PillarName').val("")
@@ -3401,7 +3511,7 @@ window.RelatedInitiative_Data_Request = {
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
 
-     
+
       $("[data-target_list=Initiatives] .Details-Item.NewItem").each(function () {
         $(this)
           .find(
@@ -3540,7 +3650,7 @@ window.Get_Pillers_Info = {
       var pillerNameVal = $('#PillarName').val()
       relatedPiller = $('#PillarName').val()
 
-     
+
     }
 
     $("#PillarName").html(
@@ -4479,8 +4589,13 @@ window.ViewAllFiles = {
       }
       FilesLink += "</div></div ></div ></div > ";
       // $('.section-container:not([data-target_list]) .fieldset-container').eq($('.section-container:not([data-target_list]) .fieldset-container').length-1).append(FilesLink);
-      $(FilesLink).insertBefore(
-        $("button.btn.btn-action.btn-cancel").parent().parent()
+      // $(FilesLink).insertBefore(
+      //   $("button.btn.btn-action.btn-cancel").parent().parent()
+      // );
+
+      // $('.section-container.View_Form')
+      $(FilesLink).insertAfter(
+        $('.section-container.View_Form').last()
       );
     }
     changeResources();
@@ -4802,10 +4917,18 @@ window.ViewAllFiles_Main_Strategy = {
       }
       FilesLink += "</div></div></div></div>";
       // $('.section-container:not([data-target_list]) .fieldset-container').eq($('.section-container:not([data-target_list]) .fieldset-container').length-1).append(FilesLink);
-      $(FilesLink).insertBefore(
-        $("button.btn.btn-action.btn-cancel").parent().parent()
-      );
 
+
+
+      if (isView) {
+        $(FilesLink).insertAfter(
+          $('.section-container.View_Form').last()
+        );
+      } else {
+        $(FilesLink).insertBefore(
+          $("button.btn.btn-action.btn-cancel").parent().parent()
+        );
+      }
 
 
       if (listkey == 'mainkpi') {
@@ -5408,7 +5531,7 @@ window.equationKPI = {
   },
   init: function () {
 
-    
+
     if (listkey == "changerequest" && !USERisWF) {
       KPICode = $('#CRRelatedMainKpis').val()
     } else if (listkey == "changerequest" && USERisWF) {
@@ -5799,7 +5922,7 @@ window.Update_Kpi_Results = {
         if (progColl.get_count() > 0) {
           var progEnum = progColl.getEnumerator();
           while (progEnum.moveNext()) {
-            
+
             var currentItem = progEnum.get_current();
             var currentId = currentItem.get_item("ID");
             var yearItem = currentItem.get_item("Year");
@@ -5825,15 +5948,15 @@ window.Update_Kpi_Results = {
               }
             } else {
 
-               yearPicked = KPIYear
-               monthHandler = KPIMonth
-               quarterHandler = KPIQuarter
-               midHandler = KPIMid
-               yearHandler = KPIYearHandler
+              yearPicked = KPIYear
+              monthHandler = KPIMonth
+              quarterHandler = KPIQuarter
+              midHandler = KPIMid
+              yearHandler = KPIYearHandler
             }
 
             if (yearItem == yearPicked) {
-              
+
               if (!kpiEquation) {
                 kpiEquation = 0
               }
@@ -5860,7 +5983,7 @@ window.Update_Kpi_Results = {
           context.executeQueryAsync(
             function () {
               if (listkey == "changerequest" && USERisWF) {
-                
+
                 Task_Edit_Data.init();
               }
               //Item Updated sucess
@@ -5905,7 +6028,7 @@ var deleteAllFileFromDoc = {
     }, deleteAllFileFromDoc.error);
   },
   success: function () {
-    
+
 
     if (allFileIndex == filesUrls.length - 1) {
       if (
@@ -5974,7 +6097,7 @@ window.Get_ProjectData_ByCode = {
       var oListItem = listItemEnum.get_current();
       relatedInitCode = oListItem.get_item("RelatedInitiative") ? oListItem.get_item("RelatedInitiative") : ''
     }
-   
+
 
     ProjectInitiativeMilestone.init('InitiativeMilestones', relatedInitCode)
   },
@@ -6155,12 +6278,20 @@ var View_Current_Kpi = {
       '</div>'
 
     if (filesUrls.length > 0) { // add view before attachement
-      $(currentKpiView).insertBefore(
-        $("#file_container")
+
+      // $(currentKpiView).insertBefore(
+      //   $("#file_container")
+      // );
+      $(currentKpiView).insertAfter(
+        $('.mainkpi').last()
       );
     } else { // add view before cancel btn
-      $(currentKpiView).insertBefore(
-        $("button.btn.btn-action.btn-cancel").parent().parent()
+      // $(currentKpiView).insertBefore(
+      //   $("button.btn.btn-action.btn-cancel").parent().parent()
+      // );
+      debugger
+      $(currentKpiView).insertAfter(
+        $('.mainkpi').last()
       );
     }
 
@@ -6343,7 +6474,7 @@ var Check_Item_Deleted = {
           Goal_Strategy_Info.init(relatedStrategyKpi)
 
           if (indexTypekpi == 'main') {
-            
+
             var sosVal = relatedMainGoal
             if (!sosVal) {
               $('#Sector').val(No_Data)
@@ -6442,7 +6573,7 @@ window.Get_TaskHistory = {
       Get_TaskHistory.g.camlQuery.set_viewXml(camelQuery);
     }
 
-  
+
 
 
     SPHTTPitemsEnumerable = oList.getItems(Get_TaskHistory.g.camlQuery);
@@ -6771,13 +6902,13 @@ var DontSubmit_DataRequest = {
 // to get the dynamic value trigger in edit when we have more than one dynamic in form
 window.get_DynamicValues = {
   init: function (dynamicArrId) {
-    
+
     if (dynamicArrId.length) {
 
       var id = dynamicArrId[0]
       $(`select[id=${id}][dynamic=parent]`).trigger("change")
       dynamicArrId.shift()
-     
+
     }
 
     if (dynamicArrId.length) {

@@ -2971,33 +2971,6 @@ var CR_Master_Details_Request = {
 								$(this).val(oListItem.get_item("" + $(this).attr("id") + ""));
 							}
 
-							// if ((listkey == 'initiatives' || RListKey == 'projects')) { // to handle amount in master details based on weight in project and initiative
-								
-							// 	if (crMasterDetailsArrayRequest.length == 0) {
-							// 		if ($("[data-targetelem]").length > 0) {
-							// 			$("[data-targetelem]").each(function () {
-							// 				var targetElem = $(this).data('targetelem')
-
-							// 				if (targetElem == 'Amount') {
-							// 						debugger
-							// 					var parentValue = $(this).data('parentval')
-							// 					var weight = $(this).val()
-							// 					var maxAttr = $(this).attr('max')
-
-							// 					console.log(maxAttr, "$(this).parent().parent()")
-
-							// 					weight = Number(weight)
-							// 					var newMax = Number(maxAttr) - weight
-							// 					$(this).attr('max', newMax)
-
-							// 					// var Amount = (weight * parentValue) / 100
-							// 					// Amount = Amount.toFixed(2)
-							// 					// $(this).val(Amount)
-							// 				}
-							// 			})
-							// 		}
-							// 	}
-							// }
 							break;
 
 						default:
@@ -3005,6 +2978,8 @@ var CR_Master_Details_Request = {
 							break;
 					}
 				});
+
+
 			}
 		}
 
@@ -3014,6 +2989,55 @@ var CR_Master_Details_Request = {
 			crMasterDetailsArrayRequest.shift(); //remove 0 index
 		} else {
 			if (isNew || isEdit) ListInfo.g.newDetail();
+
+			// if ((listkey == 'initiatives' || RListKey == 'projects')) { // to handle amount in master details based on weight in project and initiative
+			// 	// need to test more
+			// 	if (crMasterDetailsArrayRequest.length == 0) {
+
+			// 		// var maxAttr = $(this).attr('max')
+
+			// 		$("[data-target_list]").each(function () {
+
+			// 			var targetList = $(this).data('target_list')
+			// 			// console.log($(this).data('target_list'),"oooooooooooooooooooo")
+			// 			// debugger
+			// 			var maxAttr = 100
+			// 			var weight = 0
+			// 			// $(`[data-target_list==${targetList}] > [data-targetelem]`).each(function () {
+			// 			debugger
+			// 			if ($("[data-targetelem]").length > 0) {
+			// 				$(`[data-target_list="${targetList}"] .Details-Item.EditItem  input[type=number]`).each(function () {
+			// 					// $("[data-targetelem]").each(function () {
+			// 					// console.log($(this).find(`[data-targetelem=Amount]`), "AMOOOOOOOOOOOO")
+			// 					var checkTargetElem = $(this).find(`[data-targetelem=Amount]`) ? $(this).find(`[data-targetelem=Amount]`) : ""
+			// 					// debugger
+			// 					// var targetElem = $(this).data('targetelem')
+
+			// 					if (checkTargetElem) {
+			// 						debugger
+			// 						var parentValue = $(this).data('parentval')
+			// 						// var weight = $(this).val()
+			// 						// var maxAttr = $(this).attr('max')
+
+			// 						console.log(maxAttr, "$(this).parent().parent()")
+
+			// 						weight = Number(weight)
+			// 						var newMax = Number(maxAttr) - weight
+			// 						console.log($(this), "TTTTTTTTTTTTTTTTTTTTT")
+			// 						$(this).attr('max', newMax)
+
+			// 						maxAttr = Number(maxAttr) - weight
+			// 						weight = $(this).val()
+
+			// 						// var Amount = (weight * parentValue) / 100
+			// 						// Amount = Amount.toFixed(2)
+			// 						// $(this).val(Amount)
+			// 					}
+			// 				})
+			// 			}
+			// 		})
+			// 	}
+			// }
 
 			$(".cr-related-item-section .CFIELD").addClass("dont-submit"); // remove it to not apply dont-submit on all fields
 			Fill_BodyMaster.init()
@@ -4020,5 +4044,5 @@ function QueueJobSentOwnerEpmCR(response) {
 	//   "&IID=" +
 	//   IID +
 	//   PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
-  
-  }
+
+}
