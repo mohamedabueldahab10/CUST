@@ -839,7 +839,7 @@
     economical: "اقتصادى",
     social: "إجتماعى",
     subsectorhead: "وكيل",
-    sectorhead: " مديرالقطاع",
+    sectorhead: " مدير القطاع",
     crcommittee: "لجنة طلبات التغيير",
     impactonervices: "اثر على الخدمات والبنية التحتية",
     memorandumofunderstanding: "مذكرة تفاهم",
