@@ -2666,7 +2666,7 @@ window.userCalls = {
         Read_Access = [
           "mainkpi",
           "sos",
-          "goalstrategy",          
+          "goalstrategy",
           "changerequest",
           "Targets.aspx",
           "kpiequations",
@@ -3257,7 +3257,7 @@ window.userCalls = {
       }
     }
 
-  
+
     // handle the initiative manager and owner Groups
     // if (isInitiativesHomePage) {
     // if (isInManager || isInOwner) {
@@ -9866,6 +9866,19 @@ var Get_Milestones = {
     }
 
     if (USERPCODE) {
+
+      var noMsg = "", noPopupMsg = ""
+      if (
+        localStorage.getItem("lng") == null ||
+        localStorage.getItem("lng") == "ar"
+      ) {
+        noMsg = "يجب انشاء معلم جديد على الشهر الحالي"
+        noPopupMsg = "لا يوجد معالم على هذه الشهور ,الرجاء انشاء معالم "
+      } else {
+        noMsg = "you should create a Milestone on Current Month"
+        noPopupMsg = "There is no milestones on this Months, please create a milestones"
+      }
+
       if (allMilestonesArr.length > 0) {
         var projectStartDate = Get_Milestones.g.dateConvert2(projectStartToValidation);
         var now = new Date();
@@ -9900,7 +9913,9 @@ var Get_Milestones = {
 
           if (datesWithoutMilesArr.length == 1 && isMatchCurrentMonth) {
 
-            $('.page-nav').after(`<p style="padding:0 5%;color:#f00">يجب انشاء معلم جديد على الشهر الحالي</p>`)
+
+
+            $('.page-nav').after(`<p style="padding:0 5%;color:#f00">${noMsg}</p>`)
 
           } else {
 
@@ -9912,9 +9927,9 @@ var Get_Milestones = {
 
 
             $('.page-nav').after('<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;margin-top:10%">' +
-              '<label><span  style="font-size:13px">لا يوجد معالم على هذه الشهور ,الرجاء انشاء معالم </span></label>' + datesHtml + '<div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' + _spPageContextInfo.webAbsoluteUrl
+              '<label><span  style="font-size:13px">' + noMsg + '</span></label>' + datesHtml + '<div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' + _spPageContextInfo.webAbsoluteUrl
               + '/SitePages/new.aspx?ListKey=milestones&PCODE=' + USERPCODE +
-              '\'"><span>معالم</span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>')
+              '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>')
           }
         }
 
@@ -9922,12 +9937,24 @@ var Get_Milestones = {
 
       } else {
         $('.page-nav').after('<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;justify-content:flex-start;margin-top:10%">' +
-          '<label><span  style="font-size:13px">لا يوجد معالم على هذه الشهور ,الرجاء انشاء معالم </span></label><div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' + _spPageContextInfo.webAbsoluteUrl
+          '<label><span  style="font-size:13px">' + noMsg + '</span></label><div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' + _spPageContextInfo.webAbsoluteUrl
           + '/SitePages/new.aspx?ListKey=milestones&PCODE=' + USERPCODE +
-          '\'"><span>معالم</span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>')
+          '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>')
       }
     } else if (UserICode) {
 
+
+      var noMsg = "", noPopupMsg = ""
+      if (
+        localStorage.getItem("lng") == null ||
+        localStorage.getItem("lng") == "ar"
+      ) {
+        noMsg = "يجب انشاء معلم جديد على الفترة الحالية"
+        noPopupMsg = "لا يوجد معالم على هذه الفترة ,الرجاء انشاء معالم "
+      } else {
+        noMsg = "you should create a Milestone on Current Period"
+        noPopupMsg = "There is no milestones on this period, please create a milestones"
+      }
 
       if (allMilestonesArr.length > 0) {
 
@@ -9985,7 +10012,9 @@ var Get_Milestones = {
             var internalArr = datesWithoutMilesArrFiltered[0]
             var isMatchCurrentMonth = internalArr.some((e) => e.match(today.slice(0, -2)))
             if (isMatchCurrentMonth) {
-              $('.page-nav').after(`<p style="padding:0 5%;color:#f00">يجب انشاء معلم جديد على الفترة الحالية</p>`)
+
+
+              $('.page-nav').after(`<p data-trans-nomilestoneonperiod style="padding:0 5%;color:#f00" class="Resources">${noMsg}</p>`)
             } else {
 
               var datesHtml = '<div style="width:100%;padding:20px 0">'
@@ -10000,9 +10029,9 @@ var Get_Milestones = {
 
 
               $('.page-nav').after('<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;margin-top:10%">' +
-                '<label><span  style="font-size:13px">لا يوجد معالم على هذه الفترة ,الرجاء انشاء معالم </span></label>' + datesHtml + '<div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' + _spPageContextInfo.webAbsoluteUrl
+                '<label><span  style="font-size:13px">' + noPopupMsg + '</span></label>' + datesHtml + '<div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' + _spPageContextInfo.webAbsoluteUrl
                 + '/SitePages/new.aspx?ListKey=initiativemilestones&ICODE=' + UserICode +
-                '\'"><span>معالم</span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>')
+                '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>')
             }
           } else {
 
@@ -10018,17 +10047,17 @@ var Get_Milestones = {
             datesHtml += '</div>'
 
             $('.page-nav').after('<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;margin-top:10%">' +
-              '<label><span  style="font-size:13px">لا يوجد معالم على هذه الفترة ,الرجاء انشاء معالم </span></label>' + datesHtml + '<div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' + _spPageContextInfo.webAbsoluteUrl
+              '<label><span  style="font-size:13px">' + noPopupMsg + '</span></label>' + datesHtml + '<div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' + _spPageContextInfo.webAbsoluteUrl
               + '/SitePages/new.aspx?ListKey=initiativemilestones&ICODE=' + UserICode +
-              '\'"><span>معالم</span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>')
+              '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>')
           }
         }
 
       } else {
         $('.page-nav').after('<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;margin-top:10%">' +
-          '<label><span  style="font-size:13px">لا يوجد معالم على هذه المبادرة ,الرجاء انشاء معالم </span></label><div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' + _spPageContextInfo.webAbsoluteUrl
+          '<label><span  style="font-size:13px">' + noPopupMsg + '</span></label><div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' + _spPageContextInfo.webAbsoluteUrl
           + '/SitePages/new.aspx?ListKey=initiativemilestones&ICODE=' + UserICode +
-          '\'"><span>معالم</span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>')
+          '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>')
       }
     }
 
