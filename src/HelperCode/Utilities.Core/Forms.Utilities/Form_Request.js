@@ -560,18 +560,17 @@ window.Edit_Data_Request = {
 
       equationKPI.init();
 
+      // to get the parent related like strategy from mainkpi to can save and start the wf of main kpi
+      var parsingDataBasedOnParentSetValues = ""
+      $(`[data-basedonparentsetvalues]`).each(function (index) {
+        parsingDataBasedOnParentSetValues = eval($(this).data('basedonparentsetvalues'))
+      })
 
-      // if (isSPMAdmin) {
-      //   $('#Year').prop('disabled', true);
-      // }
-
-
-      // to handle the relates strategy
-      // var relatedStrategyCode = $('#RelatedStrategy').val()
-      // var indexType = $('#Types').val();
-      // Goal_Strategy_Info.init(relatedStrategyCode)
-      // Kpi_Related_Goal.init(relatedStrategyCode, indexType)
-      //
+      parsingDataBasedOnParentSetValues.forEach(el => {
+        var listinerField  = parsingDataBasedOnParentSetValues[0].listinerField
+        var code = $(`#${listinerField}`).val()
+        get_parent_data.init(el.parentList, code, el.parentFieldName, el.fieldName, el.getGrandParent) // to get value from parent list to use it when submit
+      })
     }
 
     if (listkey == "benefitmetrics") {
@@ -1423,7 +1422,7 @@ window.View_Data_Request = {
                   $(
                     "[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
                   ).each(function () {
-                    
+
                     var isMasterSection = $(this).parent().parent().hasClass("Details-Item")
 
                     if (!isMasterSection) {

@@ -4,19 +4,55 @@ var Information_Form = [
     labelEn: 'KPIs Management',
     description: 'التفاصيل',
     descriptionEn: 'Details',
-    formDefaultValues: [
-      { fieldName: 'WFModuleCode', value: 'VROActualKPI',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
-      { fieldName: 'WFStage', value: 'VROActualKPI01',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
-      // { fieldName: 'DraftStatus', value: 'draft' ,roles: ['Administrator','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+    // formDefaultValues: [
+    //   { fieldName: 'WFModuleCode', value: 'VROActualKPI',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+    //   { fieldName: 'WFStage', value: 'VROActualKPI01',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+    //   // { fieldName: 'DraftStatus', value: 'draft' ,roles: ['Administrator','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
 
-      { fieldName: 'WFModuleCode', value: 'MSActualKPI',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
-      { fieldName: 'WFStage', value: 'MSActualKPI01',roles:  ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
-      // { fieldName: 'DraftStatus', value: 'draft',roles:  ['Administrator','EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+    //   { fieldName: 'WFModuleCode', value: 'MSActualKPI',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+    //   { fieldName: 'WFStage', value: 'MSActualKPI01',roles:  ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+    //   // { fieldName: 'DraftStatus', value: 'draft',roles:  ['Administrator','EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
 
-      { fieldName: 'WFModuleCode', value: 'LMSActualKPI',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
-      { fieldName: 'WFStage', value: 'LMSActualKPI01',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
-      // { fieldName: 'DraftStatus', value: 'draft',roles: ['Administrator','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+    //   { fieldName: 'WFModuleCode', value: 'LMSActualKPI',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+    //   { fieldName: 'WFStage', value: 'LMSActualKPI01',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+    //   // { fieldName: 'DraftStatus', value: 'draft',roles: ['Administrator','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
 
+    // ],
+    formValuesBasedOnParent: [
+      // add getGrandParent if the value based on grandParent and basedOnCondition to check if based on condition or not
+      {
+        parentList: 'SOs', listinerField: "RelatedStrategyObjective", parentFieldName: 'Title', fieldName: 'RelatedStrategy', basedOnCondition: true,basedOnFieldName: "A",basedOnFieldValue: "notempty",
+        getGrandParent: [
+          { grandParentList: "GoalStrategy", grandParentFieldName: "Title", grandParentTargetFieldName: "Types" }
+        ],
+        valueToSet: [
+          {
+            condition: "vision", values: [
+              { fieldNameInList: "WFModuleCode", fieldValueInList: "VROActualKPI" },
+              { fieldNameInList: "WFStage", fieldValueInList: "VROActualKPI01" },
+              // { fieldNameInList: "DraftStatus", fieldValueInList: "draft" },
+              // { fieldNameInList: "RecurrenceChanged", fieldValueInList: "no" },
+            ]
+          },
+          {
+            condition: "lms",
+            values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "LMSActualKPI" },
+            { fieldNameInList: "WFStage", fieldValueInList: "LMSActualKPI01" },
+              // { fieldNameInList: "DraftStatus", fieldValueInList: "draft" },
+              // { fieldNameInList: "RecurrenceChanged", fieldValueInList: "no" },
+            ]
+          },
+          {
+            condition: "ministry",
+            values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "MSActualKPI" },
+            { fieldNameInList: "WFStage", fieldValueInList: "MSActualKPI01" },
+              // { fieldNameInList: "DraftStatus", fieldValueInList: "draft" },
+              // { fieldNameInList: "RecurrenceChanged", fieldValueInList: "no" },
+            ]
+          },
+
+        ]
+      }
     ],
     subFields: [
       // {
@@ -900,7 +936,7 @@ var Information_Form = [
             { display: 'no', value: 'no' },
           ],
         },
-      }, 
+      },
       {
         InternalName: 'Performance',
         DisplayNameEn: 'Performance',

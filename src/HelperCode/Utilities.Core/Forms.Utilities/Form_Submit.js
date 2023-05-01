@@ -100,7 +100,7 @@ window.New_Data_Submit = {
       userCalls.isMember("PMO Team", portfoliomanagername, 'Manager');
     }
     if (
-      ((listkey == "mainkpi" )||(listkey == "changerequest" && RListKey =="mainkpi" ) )&&
+      ((listkey == "mainkpi") || (listkey == "changerequest" && RListKey == "mainkpi")) &&
       $("#Owner").find("span.sp-peoplepicker-userSpan").attr("sid")
     ) {
       isCheckMember = true;
@@ -121,7 +121,7 @@ window.New_Data_Submit = {
       })
     }
     if (
-      ((listkey == "mainkpi" )||(listkey == "changerequest" && RListKey =="mainkpi" ) )&&
+      ((listkey == "mainkpi") || (listkey == "changerequest" && RListKey == "mainkpi")) &&
       $("#PerformanceLeader").find("span.sp-peoplepicker-userSpan").attr("sid")
     ) {
       pickerValidationDone = true;
@@ -143,7 +143,7 @@ window.New_Data_Submit = {
       })
     }
     if (
-      ((listkey == "mainkpi" )||(listkey == "changerequest" && RListKey =="mainkpi" ) )&&
+      ((listkey == "mainkpi") || (listkey == "changerequest" && RListKey == "mainkpi")) &&
       $("#PerformanceLeader2").find("span.sp-peoplepicker-userSpan").attr("sid")
     ) {
       pickerValidationDone = true;
@@ -575,6 +575,16 @@ window.New_Data_Submit = {
                 })
               }
             })
+          }else if(basedOnFieldValue == "notempty"){
+            if(basedOnFieldCurrentValue){
+              el.valueToSet.forEach(item => {
+                if (valueBasedOnParent.includes(item.condition)) {
+                  item.values.forEach(field => {
+                    New_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
+                  })
+                }
+              })
+            }
           }
         } else {
           el.valueToSet.forEach(item => {
@@ -644,26 +654,26 @@ window.New_Data_Submit = {
       }
       //
 
-            //لحساب حالة الصرف as List Structure Formula: Percentage [ Actual / Planned ] *100
-            debugger;
-            var ActualBudget = $("#ActualBudget").val().replaceAll(',','');
-            ActualBudget = parseFloat(ActualBudget);
-            var ExpectedBudget = $("#ExpectedBudget").val().replaceAll(',','');
-            ExpectedBudget = parseFloat(ExpectedBudget);
-            console.log("actual expected budget", ActualBudget, ExpectedBudget);
-            var Disbstatus = 0;
-            if (
-              ActualBudget != 0 &&
-              ActualBudget != null &&
-              ActualBudget != "" &&
-              ExpectedBudget != 0 &&
-              ExpectedBudget != null &&
-              ExpectedBudget != ""
-            ) {
-              Disbstatus = ((ActualBudget / ExpectedBudget) * 100).toFixed(2);
-            }
-            New_Data_Submit.g.oListItem.set_item("DisbursementStatus", Disbstatus);
-      
+      //لحساب حالة الصرف as List Structure Formula: Percentage [ Actual / Planned ] *100
+     
+      var ActualBudget = $("#ActualBudget").val().replaceAll(',', '');
+      ActualBudget = parseFloat(ActualBudget);
+      var ExpectedBudget = $("#ExpectedBudget").val().replaceAll(',', '');
+      ExpectedBudget = parseFloat(ExpectedBudget);
+      console.log("actual expected budget", ActualBudget, ExpectedBudget);
+      var Disbstatus = 0;
+      if (
+        ActualBudget != 0 &&
+        ActualBudget != null &&
+        ActualBudget != "" &&
+        ExpectedBudget != 0 &&
+        ExpectedBudget != null &&
+        ExpectedBudget != ""
+      ) {
+        Disbstatus = ((ActualBudget / ExpectedBudget) * 100).toFixed(2);
+      }
+      New_Data_Submit.g.oListItem.set_item("DisbursementStatus", Disbstatus);
+
       if (isWF) {
         IdeaId = window.location.href.split("IdeaId=")[1].split("&")[0];
         New_Data_Submit.g.oListItem.set_item("RelatedIdeaCode", IdeaId);
@@ -892,7 +902,7 @@ var Set_Code_Submit = {
             // readFiles();
             _uploadFile();
           } else {
-            if ($(".Details-Item.NewItem").length > 0  && !crListKey) {
+            if ($(".Details-Item.NewItem").length > 0 && !crListKey) {
               //calling new master submit
               New_Data_Submit.g.checkNewMasterDetails();
             } else {
@@ -1268,7 +1278,7 @@ window.Edit_Data_Submit = {
     if (listkey == "changerequest") {
       CrSetChangeBody.init(Edit_Data_Submit.g.oListItem); // for cr set body
     }
-    debugger
+    
     $(`.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=text],
      .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=number],
      .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=email],
@@ -1534,6 +1544,8 @@ window.Edit_Data_Submit = {
           basedOnFieldCurrentValue = $(`#${basedOnFieldName}`).val()
         }
 
+        
+
         if (basedOnCondition) {
           if (basedOnFieldValue == basedOnFieldCurrentValue) {
             el.valueToSet.forEach(item => {
@@ -1543,6 +1555,19 @@ window.Edit_Data_Submit = {
                 })
               }
             })
+          }else if(basedOnFieldValue == "notempty"){
+            if(basedOnFieldCurrentValue){
+              el.valueToSet.forEach(item => {
+                debugger
+                if (valueBasedOnParent.includes(item.condition)) {
+                  item.values.forEach(field => {
+                    console.log(field.fieldNameInList,"field.fieldNameInList")
+                    console.log(field.fieldValueInList,"field.fieldValueInList")
+                    Edit_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
+                  })
+                }
+              })
+            }
           }
         } else {
           el.valueToSet.forEach(item => {
@@ -1558,7 +1583,7 @@ window.Edit_Data_Submit = {
     })
     //
 
-
+    debugger
 
     if (listkey == "issues") {
       if ($("#ResolutionStatus").val() == "Closed") {
@@ -1608,24 +1633,24 @@ window.Edit_Data_Submit = {
 
       Edit_Data_Submit.g.oListItem.set_item("BaselineDuration", months);
       //لحساب حالة الصرف as List Structure Formula: Percentage [ Actual / Planned ] *100
-      debugger;
-var ActualBudget = $("#ActualBudget").val().replaceAll(',','');
-ActualBudget = parseFloat(ActualBudget);
-var ExpectedBudget = $("#ExpectedBudget").val().replaceAll(',','');
-ExpectedBudget = parseFloat(ExpectedBudget);
-console.log("actual expected budget", ActualBudget, ExpectedBudget);
-var Disbstatus = 0;
-if (
-  ActualBudget != 0 &&
-  ActualBudget != null &&
-  ActualBudget != "" &&
-  ExpectedBudget != 0 &&
-  ExpectedBudget != null &&
-  ExpectedBudget != ""
-) {
-  Disbstatus = ((ActualBudget / ExpectedBudget) * 100).toFixed(2);
-}
-Edit_Data_Submit.g.oListItem.set_item("DisbursementStatus", Disbstatus);
+
+      var ActualBudget = $("#ActualBudget").val().replaceAll(',', '');
+      ActualBudget = parseFloat(ActualBudget);
+      var ExpectedBudget = $("#ExpectedBudget").val().replaceAll(',', '');
+      ExpectedBudget = parseFloat(ExpectedBudget);
+      console.log("actual expected budget", ActualBudget, ExpectedBudget);
+      var Disbstatus = 0;
+      if (
+        ActualBudget != 0 &&
+        ActualBudget != null &&
+        ActualBudget != "" &&
+        ExpectedBudget != 0 &&
+        ExpectedBudget != null &&
+        ExpectedBudget != ""
+      ) {
+        Disbstatus = ((ActualBudget / ExpectedBudget) * 100).toFixed(2);
+      }
+      Edit_Data_Submit.g.oListItem.set_item("DisbursementStatus", Disbstatus);
     }
     else if (listkey == 'mainkpi') { // get the data to update the kpi result list
       kpiName = $('#Name').val()
@@ -2710,7 +2735,7 @@ var Field_MasterDetails_Data = {
 
       $(this).find("input:checkbox:checked").not(":disabled").each(function (index) {
 
-        debugger
+        
 
         var fieldMasterId = $(this).closest(".Details-Item.EditItem").data('id')
 
@@ -2751,7 +2776,7 @@ var Field_MasterDetails_Data = {
 
 
           if (fieldTargetListInMaster.filter(e => ((e.masterId == fieldMasterId) && (e.fieldValue == $(this).val())))) {
-            debugger
+            
             fieldTargetListInMaster.push({ targetList: masterFieldTargetList, fieldId: fieldId, fieldValue: $(this).val(), masterId: fieldMasterId, parentCode: parentCode, fieldmasterkey: fieldmasterkey })
           }
         }
@@ -2770,7 +2795,7 @@ var Field_MasterDetails_Data = {
 // submit master details field in master details section like deliv in benifit in initiative edit for (multi select)
 var Field_Master_Details = {
   init: function (fieldTargetData) {
-    debugger
+    
     if (fieldTargetData.length) {
       var clientContext = new SP.ClientContext.get_current();
       var CurrList, oList, valueSelection, code;
@@ -2824,7 +2849,7 @@ var Field_Master_Details = {
       clientContext.executeQueryAsync(
         Function.createDelegate(this, function () {
           console.log(fieldTargetData, "fieldTargetData")
-          debugger
+          
           fieldTargetData.shift()
           Field_Master_Details.init(fieldTargetData)
         })

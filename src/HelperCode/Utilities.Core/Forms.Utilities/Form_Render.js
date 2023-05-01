@@ -221,8 +221,16 @@ window.ListInfo = {
             code = PCODE
           } else if (ICODE) {
             code = ICODE
-          }
-          if (PCODE || ICODE) {
+          } 
+          // else if (listkey == "mainkpi") {
+          //   basedOnParentSetValuesListiner = basedOnParentSetValues
+
+          //   var listinerField = basedOnParentSetValuesListiner[0].listinerField
+
+          //   code = $(`#${listinerField}`).val()
+          // }
+          if (PCODE || ICODE ) {
+            
             basedOnParentSetValues.forEach(el => {
               get_parent_data.init(el.parentList, code, el.parentFieldName, el.fieldName, el.getGrandParent) // to get value from parent list to use it when submit
             })
@@ -461,7 +469,7 @@ window.ListInfo = {
           // this affectes on lookup selects
           $("select[dynamic=parent]").on("change", function () {
             console.log("inside dynamic parenttttt")
-            debugger
+            
             let parentFieldName = $(this).attr("id");
             let parentFieldValue = $(this).val();
             let customFilterValue = $(this)
@@ -6616,7 +6624,7 @@ window.ListInfo = {
         lastDetailsItem.find('.remainpercstyle.remainPercentageVal').html(`${100 - totalWeight}]`) // add new title weight
         lastDetailsItem.find('.weightfloatpercentage').attr("max", 100 - totalWeight) // add new max weight
         //
-        debugger
+        
         masterLength = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").length
 
         // to remove the disabled on multi select when click plus in master filed of master details section like deliv in benefit in edit initiative
@@ -12399,7 +12407,7 @@ async function waitUntil(condition, time = 500) {
 //working on parent type
 
 
-var get_parent_data = {
+window.get_parent_data = {
   init: function (listName, code, parentFieldName, fieldName, getGrandParent) {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(listName);
@@ -12407,7 +12415,7 @@ var get_parent_data = {
 
 
     valueBasedOnParent = []
-
+    
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef  Name=\"" + parentFieldName + "\" /><Value Type=\"Text\">" +
       code +
@@ -12436,7 +12444,7 @@ var get_parent_data = {
       itemID = oListItem.get_id();
 
       dynamicVal = oListItem.get_item(dynamicFieldName) || '';
-
+      
       if (getGrandParent && getGrandParent.length) {
         get_grandparent_data.init(getGrandParent[0].grandParentList, dynamicVal, getGrandParent[0].grandParentFieldName, getGrandParent[0].grandParentTargetFieldName)
       } else {
@@ -12465,7 +12473,7 @@ var get_grandparent_data = {
 
 
     valueBasedOnParent = []
-
+    debugger
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef  Name=\"" + grandParentFieldName + "\" /><Value Type=\"Text\">" +
       code +
@@ -12491,7 +12499,7 @@ var get_grandparent_data = {
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       itemID = oListItem.get_id();
-
+      debugger
       dynamicGrandParentVal = oListItem.get_item(grandParentTargetFieldName) || '';
 
       valueBasedOnParent.push(dynamicGrandParentVal)
