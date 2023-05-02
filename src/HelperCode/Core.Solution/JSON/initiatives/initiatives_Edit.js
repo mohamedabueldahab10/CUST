@@ -23,16 +23,6 @@ var Information_Form = [
         validation: 'required',
       },
       {
-        InternalName: 'Portfolio',
-        DisplayName: 'المحفظة',
-        DisplayNameEn: 'Portfolio',
-        type: 'lookup',
-        //from other list:
-        source: 'Portfolio',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
-      },
-      {
         InternalName: 'Types',
         DisplayNameEn: 'Types',
         DisplayName: 'النوع',
@@ -81,6 +71,18 @@ var Information_Form = [
         security: {
           groups: ['System Admin Group'],
         },
+        requiredValues: [{ value: 'vision', fields: ['Portfolio'] }],
+      },
+      {
+        InternalName: 'Portfolio',
+        DisplayName: 'المحفظة',
+        DisplayNameEn: 'Portfolio',
+        type: 'lookup',
+        //from other list:
+        source: 'Portfolio',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        RequiredName: 'Portfolio',
       },
       // {
       //   InternalName: 'RelatedKPI',
