@@ -469,7 +469,7 @@ window.ListInfo = {
           // this affectes on lookup selects
           $("select[dynamic=parent]").on("change", function () {
             console.log("inside dynamic parenttttt")
-            
+            debugger
             let parentFieldName = $(this).attr("id");
             let parentFieldValue = $(this).val();
             let customFilterValue = $(this)
@@ -486,7 +486,7 @@ window.ListInfo = {
 
             $("[dynamic=" + parentFieldName + "]").each(function () {
               console.log(parentFieldName, "parentFieldName")
-
+              debugger
               let affectedFieldName = $(this).attr("id");
               let listName = $(this).data("listname");
               let filterField = $(this).data("filterfield");
@@ -499,8 +499,46 @@ window.ListInfo = {
               let queryFieldType = $(this).data("queryfieldtype");
 
 
-
-
+              // we add special case for change request because we use the internal name moduleSelect in two cases for project and initiative 
+              if(listkey == "changerequest"){
+                if((parentFieldValue == "strategiccrmsInitiatives" || parentFieldValue == "vrocrmsInitiatives" || parentFieldValue == "lmscrmsInitiatives") && listName =="Initiatives"){
+                  affectedSelectsInfo.push({
+                    affectedFieldName: affectedFieldName,
+                    listName: listName,
+                    isCustomFilterValue: isCustomFilterValue,
+                    filterField: filterField,
+                    filterFieldType: filterField,
+                    parentFieldValue: parentFieldValue,
+                    customFilterValue: customFilterValue,
+                    filterFieldType: filterFieldType,
+                    valFieldKey: valFieldKey,
+                    dispFieldKey: dispFieldKey,
+                    queryFieldValue: queryFieldValue,
+                    queryFieldName: queryFieldName,
+                    queryFieldType: queryFieldType,
+                    parentCustomFilterValueFromSibling: parentCustomFilterValueFromSibling
+                    // dataSiblingvalue:dataSiblingvalue
+                  });
+                }else if((parentFieldValue == "epmocrmsProjects" || parentFieldValue == "vrocrmsProjects" || parentFieldValue == "lmscrmsProjects") && listName =="Projects"){
+                  affectedSelectsInfo.push({
+                    affectedFieldName: affectedFieldName,
+                    listName: listName,
+                    isCustomFilterValue: isCustomFilterValue,
+                    filterField: filterField,
+                    filterFieldType: filterField,
+                    parentFieldValue: parentFieldValue,
+                    customFilterValue: customFilterValue,
+                    filterFieldType: filterFieldType,
+                    valFieldKey: valFieldKey,
+                    dispFieldKey: dispFieldKey,
+                    queryFieldValue: queryFieldValue,
+                    queryFieldName: queryFieldName,
+                    queryFieldType: queryFieldType,
+                    parentCustomFilterValueFromSibling: parentCustomFilterValueFromSibling
+                    // dataSiblingvalue:dataSiblingvalue
+                  });
+                }
+              }else{
               // console.log($(this).data("queryFieldValue"), "sssssssa")
               affectedSelectsInfo.push({
                 affectedFieldName: affectedFieldName,
@@ -519,6 +557,7 @@ window.ListInfo = {
                 parentCustomFilterValueFromSibling: parentCustomFilterValueFromSibling
                 // dataSiblingvalue:dataSiblingvalue
               });
+            }
             });
 
             // added to handel the field to be dynamicparemnt and other (the filed can be parent and child on the same time)
@@ -9961,7 +10000,7 @@ dynamicAffectSelect = {
   // The main Initialization function
   init: function (affectedSelectsInfo) {
 
-
+debugger
     // if (affectedSelectsInfo.length) {
 
     var queryFieldValue = affectedSelectsInfo[0].queryFieldValue
@@ -12473,7 +12512,7 @@ var get_grandparent_data = {
 
 
     valueBasedOnParent = []
-    debugger
+    
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef  Name=\"" + grandParentFieldName + "\" /><Value Type=\"Text\">" +
       code +
