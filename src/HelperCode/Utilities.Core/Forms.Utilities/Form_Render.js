@@ -221,7 +221,7 @@ window.ListInfo = {
             code = PCODE
           } else if (ICODE) {
             code = ICODE
-          } 
+          }
           // else if (listkey == "mainkpi") {
           //   basedOnParentSetValuesListiner = basedOnParentSetValues
 
@@ -229,8 +229,8 @@ window.ListInfo = {
 
           //   code = $(`#${listinerField}`).val()
           // }
-          if (PCODE || ICODE ) {
-            
+          if (PCODE || ICODE) {
+
             basedOnParentSetValues.forEach(el => {
               get_parent_data.init(el.parentList, code, el.parentFieldName, el.fieldName, el.getGrandParent) // to get value from parent list to use it when submit
             })
@@ -469,7 +469,7 @@ window.ListInfo = {
           // this affectes on lookup selects
           $("select[dynamic=parent]").on("change", function () {
             console.log("inside dynamic parenttttt")
-            
+            debugger
             let parentFieldName = $(this).attr("id");
             let parentFieldValue = $(this).val();
             let customFilterValue = $(this)
@@ -486,7 +486,7 @@ window.ListInfo = {
 
             $("[dynamic=" + parentFieldName + "]").each(function () {
               console.log(parentFieldName, "parentFieldName")
-
+              debugger
               let affectedFieldName = $(this).attr("id");
               let listName = $(this).data("listname");
               let filterField = $(this).data("filterfield");
@@ -498,10 +498,6 @@ window.ListInfo = {
               let queryFieldName = $(this).data("queryfield");
               let queryFieldType = $(this).data("queryfieldtype");
 
-
-
-
-              // console.log($(this).data("queryFieldValue"), "sssssssa")
               affectedSelectsInfo.push({
                 affectedFieldName: affectedFieldName,
                 listName: listName,
@@ -519,6 +515,7 @@ window.ListInfo = {
                 parentCustomFilterValueFromSibling: parentCustomFilterValueFromSibling
                 // dataSiblingvalue:dataSiblingvalue
               });
+            
             });
 
             // added to handel the field to be dynamicparemnt and other (the filed can be parent and child on the same time)
@@ -562,10 +559,7 @@ window.ListInfo = {
               console.log("Inside not invoke listiner")
 
             } else {
-
-              // if(affectedSelectsInfo && affectedSelectsInfo !="undefined"){
               dynamicAffectSelect.init(affectedSelectsInfo);
-              // }
             }
           });
           //max min dates
@@ -6624,7 +6618,7 @@ window.ListInfo = {
         lastDetailsItem.find('.remainpercstyle.remainPercentageVal').html(`${100 - totalWeight}]`) // add new title weight
         lastDetailsItem.find('.weightfloatpercentage').attr("max", 100 - totalWeight) // add new max weight
         //
-        
+
         masterLength = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").length
 
         // to remove the disabled on multi select when click plus in master filed of master details section like deliv in benefit in edit initiative
@@ -9958,11 +9952,9 @@ var Dynamic_Data_Request = {
 };
 dynamicAffectSelect = {
   // The main Initialization function
-  // The main Initialization function
   init: function (affectedSelectsInfo) {
 
 
-    // if (affectedSelectsInfo.length) {
 
     var queryFieldValue = affectedSelectsInfo[0].queryFieldValue
       ? affectedSelectsInfo[0].queryFieldValue
@@ -9977,15 +9969,6 @@ dynamicAffectSelect = {
 
     console.log(affectedSelectsInfo, "affectedSelectsInfo")
 
-    // var dataSeblingValue = affectedSelectsInfo[0].dataSiblingvalue
-    // ? affectedSelectsInfo[0].dataSiblingvalue
-    // : "";
-
-    // console.log(dataSeblingValue,"dataSeblingValue dataSeblingValue")
-
-    // queryFieldValue="sublevel3"
-    // queryFieldName="Types"
-    // queryFieldType="Text"
 
     dynamicAffectSelect.g.affectedSelectsInfo = affectedSelectsInfo;
     var clientContext = new SP.ClientContext.get_current();
@@ -10200,12 +10183,14 @@ dynamicAffectSelect = {
 
     }
 
+    // to can filter if there is more one item in array like cr
+    dynamicAffectSelect.g.affectedSelectsInfo.shift();
 
-
-    dynamicAffectSelect.g.affectedSelectsInfo =
-      dynamicAffectSelect.g.affectedSelectsInfo.shift();
-    dynamicAffectSelect.g.affectedSelectsInfo.length &&
+    if (dynamicAffectSelect.g.affectedSelectsInfo.length) {
       dynamicAffectSelect.init(dynamicAffectSelect.g.affectedSelectsInfo);
+    }
+    // dynamicAffectSelect.g.affectedSelectsInfo.length &&
+    //   dynamicAffectSelect.init(dynamicAffectSelect.g.affectedSelectsInfo);
   },
   onError: function (sender, args) {
     console.log(
@@ -12415,7 +12400,7 @@ window.get_parent_data = {
 
 
     valueBasedOnParent = []
-    
+
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef  Name=\"" + parentFieldName + "\" /><Value Type=\"Text\">" +
       code +
@@ -12444,7 +12429,7 @@ window.get_parent_data = {
       itemID = oListItem.get_id();
 
       dynamicVal = oListItem.get_item(dynamicFieldName) || '';
-      
+
       if (getGrandParent && getGrandParent.length) {
         get_grandparent_data.init(getGrandParent[0].grandParentList, dynamicVal, getGrandParent[0].grandParentFieldName, getGrandParent[0].grandParentTargetFieldName)
       } else {
@@ -12473,7 +12458,7 @@ var get_grandparent_data = {
 
 
     valueBasedOnParent = []
-    debugger
+
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef  Name=\"" + grandParentFieldName + "\" /><Value Type=\"Text\">" +
       code +
