@@ -57,13 +57,13 @@ window.Information_Form = [
 				options: {
 					choices: [
 						//SOS
-						{ display: "strategicobjectives", value: "strategiccrmsSOs", roles: ['Administrator','ObjectiveOwner', 'SPMAdmin', 'StrategyTeam','PerformanceLeader'] },
-						{ display: "visionobjectives", value: "visioncrmsSOs", roles: ['Administrator','ObjectiveOwner', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead',,'PerformanceLeader' ], },
-						{ display: "lmsobjectives", value: "lmscrmsSOs", roles: ['Administrator','ObjectiveOwner',  'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl','PerformanceLeader'], },
+						{ display: "strategicobjectives", value: "strategiccrmsSOs",customFilterValue: "ministry", roles: ['Administrator','ObjectiveOwner', 'SPMAdmin', 'StrategyTeam','PerformanceLeader'] },
+						{ display: "visionobjectives", value: "visioncrmsSOs",customFilterValue: "vision", roles: ['Administrator','ObjectiveOwner', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead',,'PerformanceLeader' ], },
+						{ display: "lmsobjectives", value: "lmscrmsSOs",customFilterValue: "lms", roles: ['Administrator','ObjectiveOwner',  'LMSP', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl','PerformanceLeader'], },
 						//KPI
-						{ display: "strategickpi", value: "strategiccrmsMainKPI", roles: ['Administrator','ObjectiveOwner','KPIOwner','SPMAdmin',  'StrategyTeam','PerformanceLeader'] },
-						{ display: "vrokpi", value: "vrocrmsMainKPI", roles: ['Administrator', 'VROHead','ObjectiveOwner','KPIOwner', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead',,'PerformanceLeader'] },
-						{ display: "lmskpi", value: "lmscrmsMainKPI", roles: ['Administrator','LMSP','ObjectiveOwner','KPIOwner', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl','PerformanceLeader'], },
+						{ display: "strategickpi", value: "strategiccrmsMainKPI",customFilterValue: "ministry", roles: ['Administrator','ObjectiveOwner','KPIOwner','SPMAdmin',  'StrategyTeam','PerformanceLeader'] },
+						{ display: "vrokpi", value: "vrocrmsMainKPI",customFilterValue: "vision", roles: ['Administrator', 'VROHead','ObjectiveOwner','KPIOwner', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead',,'PerformanceLeader'] },
+						{ display: "lmskpi", value: "lmscrmsMainKPI",customFilterValue: "lms", roles: ['Administrator','LMSP','ObjectiveOwner','KPIOwner', 'LMSUExecution', 'LMSUPerformance', 'LMSUControl','PerformanceLeader'], },
 						//Initiatives
 						{ display: "strategicinitiatives", value: "strategiccrmsInitiatives",customFilterValue: "strategically", roles: ['Administrator','InitiativeManager', 'InitiativeOwner', 'EPMO', 'SPMOHead', 'SPMO', 'DU', 'SPMTeam'] },
 						{ display: "vroinitiatives", value: "vrocrmsInitiatives",customFilterValue: "vision", roles: ['Administrator','DU', 'SPMOHead','SPMO', 'InitiativeManager','InitiativeOwner', 'VROEHead',  'EPMO', 'VROE'] },
@@ -950,10 +950,10 @@ window.Information_Form = [
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
 				// dontSubmit: true,
-				useAccessPolicy: true
-				// dynamic: 'moduleSelect',
-				// filterField: 'Types',
-				// filterFieldType: 'Text',
+				useAccessPolicy: true,
+				dynamic: 'moduleSelect',
+				filterField: 'Class',
+				filterFieldType: 'Text',
 			},
 
 			{
@@ -1082,6 +1082,9 @@ window.Information_Form = [
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
 				useAccessPolicy: true,
+				dynamic: 'moduleSelect',
+				filterField: 'Class',
+				filterFieldType: 'Text',
 				// dontSubmit: true,
 			},
 			{
