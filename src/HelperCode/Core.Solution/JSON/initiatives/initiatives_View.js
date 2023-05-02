@@ -41,16 +41,6 @@ var Information_Form = [
         type: 'string',
       },
       {
-        InternalName: 'Portfolio',
-        DisplayName: 'المحفظة',
-        DisplayNameEn: 'Portfolio',
-        type: 'lookup',
-        //from other list:
-        source: 'Portfolio',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
-      },
-      {
         InternalName: 'Types',
         DisplayNameEn: 'Types',
         DisplayName: 'النوع',
@@ -65,6 +55,16 @@ var Information_Form = [
             { display: 'others', value: 'others' },
           ],
         },
+      },
+      {
+        InternalName: 'Portfolio',
+        DisplayName: 'المحفظة',
+        DisplayNameEn: 'Portfolio',
+        type: 'lookup',
+        //from other list:
+        source: 'Portfolio',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
       },
       // {
       //   InternalName: 'RelatedKPI',

@@ -44,16 +44,6 @@ var Information_Form = [
         maxchar: 255,
       },
       {
-        InternalName: 'Portfolio',
-        DisplayName: 'المحفظة',
-        DisplayNameEn: 'Portfolio',
-        type: 'lookup',
-        //from other list:
-        source: 'Portfolio',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
-      },
-      {
         InternalName: 'Types',
         DisplayNameEn: 'Types',
         DisplayName: 'النوع',
@@ -133,6 +123,18 @@ var Information_Form = [
 
           ],
         },
+        requiredValues: [{ value: 'vision', fields: ['Portfolio'] }],
+      },
+      {
+        InternalName: 'Portfolio',
+        DisplayName: 'المحفظة',
+        DisplayNameEn: 'Portfolio',
+        type: 'lookup',
+        //from other list:
+        source: 'Portfolio',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        RequiredName: 'Portfolio',
       },
       {
         InternalName: 'RelatedStrategy',

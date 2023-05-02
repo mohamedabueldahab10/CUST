@@ -89,6 +89,8 @@ var Information_Form = [
         sourcefieldlvl2: "SubSector", // field in look up list
         // display: "none",
         // validation: 'required',
+				showlink: true,
+				linkedto: "sos",
       },
       // {
       //   InternalName: 'Sector',
