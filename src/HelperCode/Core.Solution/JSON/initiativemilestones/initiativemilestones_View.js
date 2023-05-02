@@ -30,7 +30,7 @@ var Information_Form = [
         DisplayName: 'تاريخ الاكتمال المخطط',
         DisplayNameEn: 'Planned Finish Date',
         type: 'datetime',
-        validation: 'required',
+        // validation: 'required',
       },
       {
         InternalName: 'Weight',
