@@ -515,7 +515,7 @@ window.ListInfo = {
                 parentCustomFilterValueFromSibling: parentCustomFilterValueFromSibling
                 // dataSiblingvalue:dataSiblingvalue
               });
-            
+
             });
 
             // added to handel the field to be dynamicparemnt and other (the filed can be parent and child on the same time)
@@ -3298,7 +3298,10 @@ window.ListInfo = {
 
 
       case "datetimetoparent": // handle date from parent
+
+
         var code = activeCode;
+
         //activecode
         var customQuery =
           '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
@@ -4809,6 +4812,11 @@ window.ListInfo = {
         break;
 
       case "lookupchildtoparentmultiselect":
+        if (listkey == "changerequest") { // to get the initiative selected in cr
+          activeCode = $('#InitiativeCode').val()
+        }
+
+        debugger
         var code = activeCode
         var customQuery =
           '<View><Query><Where><And><Eq><FieldRef Name=' + element.childinternalparentname + ' /><Value Type=' + element.childinternalparenttype + '>' +
