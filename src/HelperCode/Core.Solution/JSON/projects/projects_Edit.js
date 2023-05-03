@@ -215,7 +215,7 @@ var Information_Form = [
               display: 'vision',
               value: 'vision',
               customFilterValue:  "vision",
-              roles: ['Administrator', 'VROE', 'VROP'],
+              // roles: ['Administrator', 'VROE', 'VROP'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'VROCreateProject' },
                 { fieldName: 'WFStage', value: 'VROCreateProject01' },
@@ -227,7 +227,7 @@ var Information_Form = [
               value: 'strategically',
               customFilterValue:  "strategically",
 
-                roles: ['Administrator', 'EPMO'],
+                // roles: ['Administrator', 'EPMO'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'EPMOCreateProject' },
                 { fieldName: 'WFStage', value: 'EPMOCreateProject01' },
@@ -239,7 +239,7 @@ var Information_Form = [
               value: 'lms',
               customFilterValue:  "lms",
 
-              roles: ['Administrator', 'LMSE', 'LMSP'],
+              // roles: ['Administrator', 'LMSE', 'LMSP'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'LMSCreateProject' },
                 { fieldName: 'WFStage', value: 'LMSCreateProject01' },

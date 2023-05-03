@@ -94,6 +94,13 @@ window.Information_Form = [
 				],
 			},
 			{
+				InternalName: "Requester",
+				DisplayName: "مقدم الطلب",
+				DisplayNameEn: "Requester",
+				type: "picker",
+				// validation: "required",
+			},
+			{
 				InternalName: "ProjectCode",
 				DisplayNameEn: "Related Project",
 				DisplayName: "المشروع المرتبط",
@@ -1179,13 +1186,7 @@ window.Information_Form = [
 					],
 				},
 			},
-			{
-				InternalName: "Requester",
-				DisplayName: "مقدم الطلب",
-				DisplayNameEn: "Requester",
-				type: "picker",
-				validation: "required",
-			},
+		
 			{
 				InternalName: "Level",
 				DisplayName: "مستوى الاعتماد",
