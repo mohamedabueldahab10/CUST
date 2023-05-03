@@ -229,7 +229,7 @@ window.CrModeFunctionality = {
 							$(".cr-related-item-section .CFIELD").addClass("dont-submit"); // remove it to not apply dont-submit on all fields
 						}
 					} else {
-						$(".cr-related-item-section .CFIELD").addClass("dont-submit");
+						// $(".cr-related-item-section .CFIELD").addClass("dont-submit");
 					}
 					//handle people picker inputs
 					$(".cr-related-item-section div[type=picker]").each(function () {
@@ -976,8 +976,10 @@ window.CrItemDataRequest = {
 
 		$(".CFIELD>label").removeClass("loader-action");
 
+		if (RListKey == "sos" || RListKey == "mainkpi") {
+			$(".cr-related-item-section .CFIELD").addClass("dont-submit");
 
-
+		}
 
 
 	},
@@ -3317,10 +3319,10 @@ window.Add_New_CRMaster = {
 					if ($(this).attr("type") == "picker") {
 						debugger
 						// if ($(this).find("span.sp-peoplepicker-userSpan").length) {
-							itemInternalName =
-								$(this).attr("INppicker").indexOf("+++") == -1
-									? $(this).attr("INppicker")
-									: $(this).attr("INppicker").split("+++")[0];
+						itemInternalName =
+							$(this).attr("INppicker").indexOf("+++") == -1
+								? $(this).attr("INppicker")
+								: $(this).attr("INppicker").split("+++")[0];
 						// 	var ppp =
 						// 		$(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
 						// 			undefined

@@ -1549,7 +1549,6 @@ window.View_Data_Request = {
               if (isDone) {
 
                 records.forEach(function (el, index) {
-                  console.log(records, "errrrrrrrrrrrrrrrrrrrr")
 
                   $this.html(el[Dispfieldkey]);
                   $this.parent().find('a').attr('href', '/SitePages/View.aspx?ListKey=' + linkedto + '&IID=' + el["ID"] + '')

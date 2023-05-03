@@ -503,7 +503,7 @@ else if (isEPMOCRInitiative) {
 else if (isEPMOCreateInitiative) {
 
 	workflowname = "EPMOCreateInitiative";
-	bulkeditlist = "Change Request";
+	bulkeditlist = "Initiatives";
 	IID2 = window.location.href.split("IID=")[1].split("&")[0];
 	bulkeditquery =
 		'<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -515,6 +515,7 @@ else if (isEPMOCreateInitiative) {
 		'</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
 		workflowname +
 		"</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+
 }
 else if (isLMSCRInitiative) {
 
@@ -2210,6 +2211,7 @@ var Task_PCODE_Data_Request_WFs = {
 			}
 		},
 		addcomments: function (state, version, withNote = false) {
+			debugger
 			stageState = state; // added to handle WF Notes
 			if (workflowname == "Project") {
 				if (version == "Approval" || version == "Submit") {
@@ -2572,6 +2574,7 @@ var SubmitField_BulkEdit = {
 	preinit: function (state, withNote = false) {
 
 
+		debugger
 
 		globalStateSubmitField = state;
 		if (stageid == "S01" && isWfFirst_Upload) {
@@ -2666,7 +2669,7 @@ var SubmitField_BulkEdit = {
 		var context = SP.ClientContext.get_current();
 		var dfd = $.Deferred();
 		//Get list from host web
-
+		debugger
 		var programList = context.get_web().get_lists().getByTitle(bulkeditlist);
 		var camlQuery = new SP.CamlQuery();
 		camlQuery.set_viewXml(bulkeditquery);
