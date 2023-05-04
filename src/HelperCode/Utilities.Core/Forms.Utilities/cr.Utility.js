@@ -2520,8 +2520,9 @@ window.CrSetChangeBody = {
 					}
 				})
 			} else if (o.masterType == "new") {
-
-				$(`.cr-related-item-section[data-target_list=${o.listName}] .Details-Item.NewItem #${o.InternalName}`).each(function () {
+				// iterate on type picker to get the value of picker when click on + cause the id will be with ++++ except edit
+				$(`.cr-related-item-section[data-target_list=${o.listName}] .Details-Item.NewItem #${o.InternalName}
+				,.cr-related-item-section[data-target_list=${o.listName}] .Details-Item.NewItem div[type=picker]`).each(function () {
 
 					// var masterId = ""
 					if (o.type == "multiselect") {
@@ -2535,19 +2536,21 @@ window.CrSetChangeBody = {
 
 					if (masterId == arrayMasterId) {
 						if ($(this).attr("type") == "picker") {
-							if ($(this).find("span.sp-peoplepicker-userSpan").length) {
-								var id =
-									$(this).attr("INppicker").indexOf("+++") == -1
-										? $(this).attr("INppicker")
-										: $(this).attr("INppicker").split("+++")[0];
-								var ppp =
-									$(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
-										undefined
-										? ""
-										: SP.FieldUserValue.fromUser(
-											$(this).find("span.sp-peoplepicker-userSpan").attr("sid")
-										); //.split('|').slice(-1)[0]
-								o.value = ppp
+							if (o.InternalName == "Owner" && o.listName == "Benefits") { // just to make sure to avoid err we set it inside condition
+								if ($(this).find("span.sp-peoplepicker-userSpan").length) {
+									var id =
+										$(this).attr("INppicker").indexOf("+++") == -1
+											? $(this).attr("INppicker")
+											: $(this).attr("INppicker").split("+++")[0];
+									var ppp =
+										$(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
+											undefined
+											? ""
+											: SP.FieldUserValue.fromUser(
+												$(this).find("span.sp-peoplepicker-userSpan").attr("sid")
+											); //.split('|').slice(-1)[0]
+									o.value = ppp
+								}
 							}
 						} else if ($(this).attr("type") == "multipicker") {
 							if ($(this).find("span.sp-peoplepicker-userSpan").length) {
@@ -2621,6 +2624,8 @@ window.CrSetChangeBody = {
 
 
 				})
+
+			
 			}
 
 
@@ -3592,8 +3597,10 @@ window.new_Cr_MasterDetails = {
 			// if (o.InternalName != "Amount") { // will remove it jsut added to test if submit successfully
 			value = o.value ? o.value : o.originalValue;
 			if (o.type == "picker") {
+				debugger
 				if (o.value) {
 					value = o.value
+		
 					new_Cr_MasterDetails.g.oListItem.set_item(
 						o.InternalName,
 						SP.FieldUserValue.fromUser(value.$5c_1)
@@ -3769,7 +3776,6 @@ var Master_Edit_DataRequest = {
 					// masterId = Number(masterId)
 
 					if (masterId == arrayMasterId) {
-						console.log(o, "ooooooooooooooooooooooo")
 
 						switch ($(this).attr("type")) {
 							case "date":
@@ -4499,3 +4505,5 @@ var Field_Master_Details_CR = {
 	},
 	g: {},
 }
+
+

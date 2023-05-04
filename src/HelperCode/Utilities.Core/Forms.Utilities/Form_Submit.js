@@ -1640,9 +1640,13 @@ window.Edit_Data_Submit = {
       //لحساب حالة الصرف as List Structure Formula: Percentage [ Actual / Planned ] *100
 
       var ActualBudget = $("#ActualBudget").val().replaceAll(',', '');
+      if(ActualBudget){
       ActualBudget = parseFloat(ActualBudget);
+      }
       var ExpectedBudget = $("#ExpectedBudget").val().replaceAll(',', '');
+      if(ExpectedBudget){
       ExpectedBudget = parseFloat(ExpectedBudget);
+      }
       console.log("actual expected budget", ActualBudget, ExpectedBudget);
       var Disbstatus = 0;
       if (

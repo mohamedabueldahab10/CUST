@@ -5656,7 +5656,7 @@ var equationBenefit = {
       }
     }
 
-    if (isAdmin) { // remove attr disabled for this roles in equation
+    if (isAdmin || isSPMAdmin) { // remove attr disabled for this roles in equation
       $(".savecancelBtns > div, .btnactionrow > .rightBtns").append(
         '<button data-trans-editequation class="btn btn-action Resources btn-edit-equation bg-warning" type="button"></button>'
       );
