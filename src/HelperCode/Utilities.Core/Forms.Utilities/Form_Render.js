@@ -468,8 +468,7 @@ window.ListInfo = {
           });
           // this affectes on lookup selects
           $("select[dynamic=parent]").on("change", function () {
-            console.log("inside dynamic parenttttt")
-            debugger
+  
             let parentFieldName = $(this).attr("id");
             let parentFieldValue = $(this).val();
             let customFilterValue = $(this)
@@ -485,8 +484,7 @@ window.ListInfo = {
             let notInvokeListiner = $(this).data("notinvokelistiner")
 
             $("[dynamic=" + parentFieldName + "]").each(function () {
-              console.log(parentFieldName, "parentFieldName")
-              debugger
+       
               let affectedFieldName = $(this).attr("id");
               let listName = $(this).data("listname");
               let filterField = $(this).data("filterfield");
@@ -4816,7 +4814,7 @@ window.ListInfo = {
           activeCode = $('#InitiativeCode').val()
         }
 
-        debugger
+        
         var code = activeCode
         var customQuery =
           '<View><Query><Where><And><Eq><FieldRef Name=' + element.childinternalparentname + ' /><Value Type=' + element.childinternalparenttype + '>' +
@@ -10344,8 +10342,10 @@ window.Stages_Data_Request = {
 //end initiative stages request
 
 //get sectors for PCODE
-var Sectors_Info = {
+//change var to window
+window.Sectors_Info = {
   onSuccess: function (sender, args) {
+    
     Sectors_Info.g.SectorArray = [];
     var collListItem = Sectors_Info.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
@@ -10451,6 +10451,7 @@ var GetSector_Info = {
 
 var Projects_Info = {
   onSuccess: function (sender, args) {
+    
     var collListItem = Projects_Info.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     while (listItemEnum.moveNext()) {
@@ -12492,7 +12493,7 @@ var get_grandparent_data = {
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       itemID = oListItem.get_id();
-      debugger
+      
       dynamicGrandParentVal = oListItem.get_item(grandParentTargetFieldName) || '';
 
       valueBasedOnParent.push(dynamicGrandParentVal)
