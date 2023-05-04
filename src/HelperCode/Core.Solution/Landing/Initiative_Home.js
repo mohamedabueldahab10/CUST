@@ -192,11 +192,15 @@ var initiativeHomeInfo_Request = {
 
         var months = Math.trunc(diff);
         ////
-        var initiativePeriodInDays =
-          initfinishdate.getTime() - initstartdate.getTime();
+
+        var initiativePeriodInDays = 0
+        if (initstartdate && initfinishdate) {
+          initiativePeriodInDays =
+            initfinishdate.getTime() - initstartdate.getTime();
+        }
         ///
         initiativePeriodInDays = initiativePeriodInDays / (1000 * 3600 * 24)
-   
+
         if (months > 0 && initiativePeriodInDays >= 30) {
           if (
             localStorage.getItem("lng") == null ||

@@ -575,8 +575,8 @@ window.New_Data_Submit = {
                 })
               }
             })
-          }else if(basedOnFieldValue == "notempty"){
-            if(basedOnFieldCurrentValue){
+          } else if (basedOnFieldValue == "notempty") {
+            if (basedOnFieldCurrentValue) {
               el.valueToSet.forEach(item => {
                 if (valueBasedOnParent.includes(item.condition)) {
                   item.values.forEach(field => {
@@ -655,13 +655,18 @@ window.New_Data_Submit = {
       //
 
       //لحساب حالة الصرف as List Structure Formula: Percentage [ Actual / Planned ] *100
-     
+      debugger
       var ActualBudget = $("#ActualBudget").val().replaceAll(',', '');
-      ActualBudget = parseFloat(ActualBudget);
+      if (ActualBudget) {
+        ActualBudget = parseFloat(ActualBudget);
+      }
       var ExpectedBudget = $("#ExpectedBudget").val().replaceAll(',', '');
-      ExpectedBudget = parseFloat(ExpectedBudget);
+      if (ExpectedBudget) {
+        ExpectedBudget = parseFloat(ExpectedBudget);
+      }
       console.log("actual expected budget", ActualBudget, ExpectedBudget);
       var Disbstatus = 0;
+
       if (
         ActualBudget != 0 &&
         ActualBudget != null &&
@@ -1278,7 +1283,7 @@ window.Edit_Data_Submit = {
     if (listkey == "changerequest") {
       CrSetChangeBody.init(Edit_Data_Submit.g.oListItem); // for cr set body
     }
-    
+
     $(`.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=text],
      .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=number],
      .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=email],
@@ -1544,7 +1549,7 @@ window.Edit_Data_Submit = {
           basedOnFieldCurrentValue = $(`#${basedOnFieldName}`).val()
         }
 
-        
+
 
         if (basedOnCondition) {
           if (basedOnFieldValue == basedOnFieldCurrentValue) {
@@ -1555,14 +1560,14 @@ window.Edit_Data_Submit = {
                 })
               }
             })
-          }else if(basedOnFieldValue == "notempty"){
-            if(basedOnFieldCurrentValue){
+          } else if (basedOnFieldValue == "notempty") {
+            if (basedOnFieldCurrentValue) {
               el.valueToSet.forEach(item => {
                 debugger
                 if (valueBasedOnParent.includes(item.condition)) {
                   item.values.forEach(field => {
-                    console.log(field.fieldNameInList,"field.fieldNameInList")
-                    console.log(field.fieldValueInList,"field.fieldValueInList")
+                    console.log(field.fieldNameInList, "field.fieldNameInList")
+                    console.log(field.fieldValueInList, "field.fieldValueInList")
                     Edit_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
                   })
                 }
@@ -2233,6 +2238,7 @@ var New_Master_Details_Submit = {
             ".CFIELD:not(.dont-submit)>.multiselect-container"
           )
           .each(function () {
+            console.log($(this).attr("id"), "ID OF FIELD")
             if ($(this).attr("type") == "picker") {
               if ($(this).find("span.sp-peoplepicker-userSpan").length > 0) {
                 var id =
@@ -2735,7 +2741,7 @@ var Field_MasterDetails_Data = {
 
       $(this).find("input:checkbox:checked").not(":disabled").each(function (index) {
 
-        
+
 
         var fieldMasterId = $(this).closest(".Details-Item.EditItem").data('id')
 
@@ -2776,7 +2782,7 @@ var Field_MasterDetails_Data = {
 
 
           if (fieldTargetListInMaster.filter(e => ((e.masterId == fieldMasterId) && (e.fieldValue == $(this).val())))) {
-            
+
             fieldTargetListInMaster.push({ targetList: masterFieldTargetList, fieldId: fieldId, fieldValue: $(this).val(), masterId: fieldMasterId, parentCode: parentCode, fieldmasterkey: fieldmasterkey })
           }
         }
@@ -2795,7 +2801,7 @@ var Field_MasterDetails_Data = {
 // submit master details field in master details section like deliv in benifit in initiative edit for (multi select)
 var Field_Master_Details = {
   init: function (fieldTargetData) {
-    
+
     if (fieldTargetData.length) {
       var clientContext = new SP.ClientContext.get_current();
       var CurrList, oList, valueSelection, code;
@@ -2849,7 +2855,7 @@ var Field_Master_Details = {
       clientContext.executeQueryAsync(
         Function.createDelegate(this, function () {
           console.log(fieldTargetData, "fieldTargetData")
-          
+
           fieldTargetData.shift()
           Field_Master_Details.init(fieldTargetData)
         })
