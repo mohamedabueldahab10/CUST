@@ -16,7 +16,6 @@ var Information_Form = [
         DisplayName: 'إسم اللجنة',
         DisplayNameEn: 'Committee Name (Arabic)',
         type: 'string',
-        validation: 'required',
         Errmsgkey: 'arnamepattern',
       },
       {
@@ -24,7 +23,6 @@ var Information_Form = [
         DisplayName: 'إسم اللجنة باللغة الانجليزية',
         DisplayNameEn: 'Committee Name (English)',
         type: 'string',
-        validation: 'required',
         Errmsgkey: 'ennamepattern',
       },
       {
