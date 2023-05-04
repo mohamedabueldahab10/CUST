@@ -981,6 +981,25 @@ window.CrItemDataRequest = {
 
 		}
 
+		if (RListKey == "projects") {
+			// to get the related delivrable for the initiative that related to project
+			$("#RelatedInitiative").on("change", function () {
+
+				var initiativeCode = $(this).val();
+				ProjectInitiativeDelevrable.init(
+					"InitiativeDeliverables",
+					initiativeCode
+				);
+			});
+			//to get the subsector that related to sector for project
+			var sector = $("#Sector").val()
+			if (sector) {
+				Department_Sector_Info.init(sector);// 
+			}
+			Sectors_Info.init()
+			$('#RelatedInitiative').trigger("change")
+		}
+
 
 	},
 	onError: function (sender, args) {
@@ -2520,8 +2539,9 @@ window.CrSetChangeBody = {
 					}
 				})
 			} else if (o.masterType == "new") {
-
-				$(`.cr-related-item-section[data-target_list=${o.listName}] .Details-Item.NewItem #${o.InternalName}`).each(function () {
+				// iterate on type picker to get the value of picker when click on + cause the id will be with ++++ except edit
+				$(`.cr-related-item-section[data-target_list=${o.listName}] .Details-Item.NewItem #${o.InternalName}
+				,.cr-related-item-section[data-target_list=${o.listName}] .Details-Item.NewItem div[type=picker]`).each(function () {
 
 					// var masterId = ""
 					if (o.type == "multiselect") {
@@ -2535,19 +2555,21 @@ window.CrSetChangeBody = {
 
 					if (masterId == arrayMasterId) {
 						if ($(this).attr("type") == "picker") {
-							if ($(this).find("span.sp-peoplepicker-userSpan").length) {
-								var id =
-									$(this).attr("INppicker").indexOf("+++") == -1
-										? $(this).attr("INppicker")
-										: $(this).attr("INppicker").split("+++")[0];
-								var ppp =
-									$(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
-										undefined
-										? ""
-										: SP.FieldUserValue.fromUser(
-											$(this).find("span.sp-peoplepicker-userSpan").attr("sid")
-										); //.split('|').slice(-1)[0]
-								o.value = ppp
+							if (o.InternalName == "Owner" && o.listName == "Benefits") { // just to make sure to avoid err we set it inside condition
+								if ($(this).find("span.sp-peoplepicker-userSpan").length) {
+									var id =
+										$(this).attr("INppicker").indexOf("+++") == -1
+											? $(this).attr("INppicker")
+											: $(this).attr("INppicker").split("+++")[0];
+									var ppp =
+										$(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
+											undefined
+											? ""
+											: SP.FieldUserValue.fromUser(
+												$(this).find("span.sp-peoplepicker-userSpan").attr("sid")
+											); //.split('|').slice(-1)[0]
+									o.value = ppp
+								}
 							}
 						} else if ($(this).attr("type") == "multipicker") {
 							if ($(this).find("span.sp-peoplepicker-userSpan").length) {
@@ -2621,6 +2643,8 @@ window.CrSetChangeBody = {
 
 
 				})
+
+
 			}
 
 
@@ -3296,7 +3320,7 @@ var Fill_BodyMaster = {
 window.Add_New_CRMaster = {
 	init: function (getMasterIndex) {
 
-		console.log(getMasterIndex, "getMasterIndex new")
+
 		// var x =  $(".cr-related-item-section[data-target_list]").find(".Details-Item.NewItem").last()
 		$(`.cr-related-item-section[data-target_list] .Details-Item.NewItem[data-index=${getMasterIndex}]`).each(function () {
 			console.log("Inside New Master Section")
@@ -3314,10 +3338,10 @@ window.Add_New_CRMaster = {
 				)
 				.each(function () {
 
-					console.log($(this).attr("type"), "TTTTTTTTTTTTTTTTT")
+
 					var itemInternalName = ""
 					if ($(this).attr("type") == "picker") {
-						debugger
+
 						// if ($(this).find("span.sp-peoplepicker-userSpan").length) {
 						itemInternalName =
 							$(this).attr("INppicker").indexOf("+++") == -1
@@ -3592,8 +3616,10 @@ window.new_Cr_MasterDetails = {
 			// if (o.InternalName != "Amount") { // will remove it jsut added to test if submit successfully
 			value = o.value ? o.value : o.originalValue;
 			if (o.type == "picker") {
+
 				if (o.value) {
 					value = o.value
+
 					new_Cr_MasterDetails.g.oListItem.set_item(
 						o.InternalName,
 						SP.FieldUserValue.fromUser(value.$5c_1)
@@ -3689,8 +3715,8 @@ window.new_Cr_MasterDetails = {
 							})
 						}
 					})
-					debugger
-					console.log(masterDataFormatedForMasterField, "masterDataFormatedForMasterField Afteeeeeeeer")
+
+
 				}
 				masterDataFormatedArr.shift();
 
@@ -3769,7 +3795,6 @@ var Master_Edit_DataRequest = {
 					// masterId = Number(masterId)
 
 					if (masterId == arrayMasterId) {
-						console.log(o, "ooooooooooooooooooooooo")
 
 						switch ($(this).attr("type")) {
 							case "date":
@@ -4311,8 +4336,7 @@ var Field_MasterDetails_Data_CR = {
 				if (el.listName == "Benefits") {
 					el.values.forEach(item => {
 						if (item.InternalName == "DeliverableID") {
-							console.log(el, "eeeeeeeeeeeeeeeeeeellllllllllllllllllllllllllll")
-							debugger
+
 							var masterFieldTargetList = item.masterFieldTargetList
 							var fieldmasterkey = item.fieldmasterkey
 							var fieldId = item.InternalName
@@ -4334,7 +4358,7 @@ var Field_MasterDetails_Data_CR = {
 				}
 			})
 
-			debugger
+
 			if (fieldTargetListInMasterCR.length) {
 				Field_Master_Details_CR.init(fieldTargetListInMasterCR)
 
@@ -4422,13 +4446,13 @@ var Field_Master_Details_CR = {
 	init: function (fieldTargetData) {
 
 		if (fieldTargetData.length) {
-			debugger
+
 			var clientContext = new SP.ClientContext.get_current();
 			var CurrList, oList, valueSelection, code;
 
 			CurrList = fieldTargetData[0].targetList
 			valueSelection = fieldTargetData[0].fieldValue
-			debugger
+
 			if (valueSelection) {
 
 				var oList = clientContext.get_web().get_lists().getByTitle(CurrList);
@@ -4499,3 +4523,5 @@ var Field_Master_Details_CR = {
 	},
 	g: {},
 }
+
+

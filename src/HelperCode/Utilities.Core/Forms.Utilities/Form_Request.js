@@ -567,7 +567,7 @@ window.Edit_Data_Request = {
       })
 
       parsingDataBasedOnParentSetValues.forEach(el => {
-        var listinerField  = parsingDataBasedOnParentSetValues[0].listinerField
+        var listinerField = parsingDataBasedOnParentSetValues[0].listinerField
         var code = $(`#${listinerField}`).val()
         get_parent_data.init(el.parentList, code, el.parentFieldName, el.fieldName, el.getGrandParent) // to get value from parent list to use it when submit
       })
@@ -1615,7 +1615,7 @@ window.View_Data_Request = {
 
 
                             } else if (parentElement == "SubSector") {
-                              debugger
+
                               var subSectorArr = [];
                               if (localStorage.getItem("Dynamo_Internal Entities") != null) {
                                 subSectorArr = JSON.parse(
@@ -3212,6 +3212,9 @@ var Master_Details_Request = {
 //department based on sector
 window.Department_Sector_Info = {
   onSuccess: function (sender, args) {
+    
+
+
     Department_Sector_Info.g.array = [];
     var collListItem = Department_Sector_Info.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
@@ -3230,6 +3233,20 @@ window.Department_Sector_Info = {
         id: oListItem.get_id(),
       });
     }
+
+    if (listkey == "changerequest" && RListKey == "projects") {
+      //to get the subsector value in change request project
+      if (changeRequestBody.length) {
+        changeRequestBody.forEach(el => {
+          if (el.InternalName == "SubSector") {
+            departmenetValue = el.originalValue
+          }
+        })
+      }
+    }
+
+
+
     $("#SubSector").prop("disabled", false);
     $("#SubSector").html(
       '<option data-trans-department class="Resources" value="" selected="" disabled=""></option>'
@@ -3245,7 +3262,7 @@ window.Department_Sector_Info = {
         "</option>"
       );
     });
-    if (isEdit) {
+    if (isEdit || (listkey == "changerequest" && RListKey == "projects")) {
       $("#SubSector").val(departmenetValue);
     }
     $("#SubSector").change(function () {
@@ -3912,7 +3929,19 @@ window.ProjectInitiativeDelevrable = {
         id: oListItem.get_id(),
       });
     }
+    if (listkey == "changerequest") {
+      if (changeRequestBody.length) {
+        changeRequestBody.forEach(el => {
+          if (el.InternalName == "RelatedInitiativeDeliverable") {
 
+            var myselections = el.originalValue.split(':::');
+
+            initiativeDelevrableArr = myselections // to use it in edit page to get the data checked
+
+          }
+        })
+      }
+    }
     // $("#RelatedInitiativeDeliverable").prop("disabled", false);
 
     // if (isDU || isPManager || isInManager) { // to disabled the checkbox for this role
@@ -3941,6 +3970,8 @@ window.ProjectInitiativeDelevrable = {
       $("#RelatedInitiativeDeliverable").html(multiSelectHtml)
     }
 
+
+
     if (isView) { // to get the name of delivrable over the code
 
       // var relatedDelevrableName = ''
@@ -3951,10 +3982,11 @@ window.ProjectInitiativeDelevrable = {
       // })
       // $('#RelatedInitiativeDeliverable').html(relatedDelevrableName)
 
-    } else if (isEdit) // checked the value from list on multi select
+    } else if (isEdit || listkey == "changerequest") { // checked the value from list on multi select
       for (var i = 0; i < initiativeDelevrableArr.length; i++) {
         $('#RelatedInitiativeDeliverable').find("input:checkbox[value='" + initiativeDelevrableArr[i] + "']").prop("checked", true);
       }
+    }
 
     changeResources();
   },
@@ -3964,6 +3996,7 @@ window.ProjectInitiativeDelevrable = {
     );
   },
   init: function (listName, code) {
+
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(listName);
     var camlQuery = new SP.CamlQuery();
@@ -5656,7 +5689,7 @@ var equationBenefit = {
       }
     }
 
-    if (isAdmin) { // remove attr disabled for this roles in equation
+    if (isAdmin || isSPMAdmin) { // remove attr disabled for this roles in equation
       $(".savecancelBtns > div, .btnactionrow > .rightBtns").append(
         '<button data-trans-editequation class="btn btn-action Resources btn-edit-equation bg-warning" type="button"></button>'
       );
@@ -6287,7 +6320,7 @@ var View_Current_Kpi = {
       // $(currentKpiView).insertBefore(
       //   $("button.btn.btn-action.btn-cancel").parent().parent()
       // );
-      debugger
+
       $(currentKpiView).insertAfter(
         $('.mainkpi').last()
       );
