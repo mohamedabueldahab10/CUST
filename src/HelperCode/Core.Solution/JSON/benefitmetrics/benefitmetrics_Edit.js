@@ -4,20 +4,52 @@ var Information_Form = [
     labelEn: ' Benefit Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
-    formDefaultValues: [
-      //VRO
-      { fieldName: 'WFModuleCode', value: 'VROBenefitActual',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
-      { fieldName: 'WFStage', value: 'VROBenefitActual01',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
-      
-      //EPMOCRInitiative
-      { fieldName: 'WFModuleCode', value: 'EPMOBenefitActual',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
-      { fieldName: 'WFStage', value: 'EPMOBenefitActual01',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+    formValuesBasedOnParent: [
+      // add getGrandParent if the value based on grandParent and basedOnCondition to check if based on condition or not
+      {
+        parentList: 'Initiatives',  parentFieldName: 'Title', fieldName: 'Types', basedOnCondition: true,basedOnFieldName: "A",basedOnFieldValue: "notempty",
+        // getGrandParent: [
+        //   { grandParentList: "GoalStrategy", grandParentFieldName: "Title", grandParentTargetFieldName: "Types" }
+        // ],
+        valueToSet: [
+          {
+            condition: "vision", values: [
+              { fieldNameInList: "WFModuleCode", fieldValueInList: "VROBenefitActual" },
+              { fieldNameInList: "WFStage", fieldValueInList: "VROBenefitActual01" },
+            ]
+          },
+          {
+            condition: "lms",
+            values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "LMSBenefitActual" },
+            { fieldNameInList: "WFStage", fieldValueInList: "LMSBenefitActual01" },
+       
+            ]
+          },
+          {
+            condition: "ministry",
+            values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "EPMOBenefitActual" },
+            { fieldNameInList: "WFStage", fieldValueInList: "EPMOBenefitActual01" },
+            
+            ]
+          },
 
-      //LMS
-      { fieldName: 'WFModuleCode', value: 'LMSBenefitActual',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
-      { fieldName: 'WFStage', value: 'LMSBenefitActual01',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
-
+        ]
+      }
     ],
+    // formDefaultValues: [
+    //   //VRO
+    //   { fieldName: 'WFModuleCode', value: 'VROBenefitActual',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+    //   { fieldName: 'WFStage', value: '',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+      
+    //   //EPMOCRInitiative
+    //   { fieldName: 'WFModuleCode', value: '',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+    //   { fieldName: 'WFStage', value: '',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+
+    //   //LMS
+    //   { fieldName: 'WFModuleCode', value: '',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+    //   { fieldName: 'WFStage', value: '',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+
+    // ],
     subFields: [
       // {
       //     "InternalName": "Title",
