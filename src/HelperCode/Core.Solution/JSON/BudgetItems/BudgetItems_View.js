@@ -23,15 +23,28 @@ var Information_Form  = [
                 "maxchar": "250",
             
             },
+            // {
+            //     "InternalName": "Stakeholders",
+            //     "DisplayNameEn": "Stakeholders",
+            //     "DisplayName":"الجهات المعنية",
+            //     "type": "lookup",
+            //     //from other list:
+            //     "source": "Internal Entities",
+            //     "Dispfieldkey": "Name",
+            //     "valfieldkey": "Title"
+            
+            // },
             {
                 "InternalName": "Stakeholders",
                 "DisplayNameEn": "Stakeholders",
                 "DisplayName":"الجهات المعنية",
-                "type": "lookup",
+                // "type": "lookup",
+                "type": "string",
+                "maxchar": "255",        
                 //from other list:
-                "source": "Internal Entities",
-                "Dispfieldkey": "Name",
-                "valfieldkey": "Title"
+                // "source": "Internal Entities",
+                // "Dispfieldkey": "Name",
+                // "valfieldkey": "Title",
             
             },
             {

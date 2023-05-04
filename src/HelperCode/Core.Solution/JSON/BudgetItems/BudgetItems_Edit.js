@@ -20,20 +20,35 @@ var Information_Form  = [
                 "type":"string",
                 maxchar: '255',
                 withletters:true,
-                Errmsgkey:"withletterpattern",
+                Errmsgkey:"withletterpatternunrequired",
             
             },
+            // {
+            //     "InternalName": "Stakeholders",
+            //     "DisplayNameEn": "Stakeholders",
+            //     "DisplayName":"الجهات المعنية",
+            //     "type": "lookup",
+            //     //from other list:
+            //     "source": "Internal Entities",
+            //     "Dispfieldkey": "Name",
+            //     "valfieldkey": "Title",
+            //     "validation": "required"
+            
+            // },
             {
                 "InternalName": "Stakeholders",
                 "DisplayNameEn": "Stakeholders",
                 "DisplayName":"الجهات المعنية",
-                "type": "lookup",
+                // "type": "lookup",
+                "type": "string",
+                "maxchar": "255",        
                 //from other list:
-                "source": "Internal Entities",
-                "Dispfieldkey": "Name",
-                "valfieldkey": "Title",
-                "validation": "required"
-            
+                // "source": "Internal Entities",
+                // "Dispfieldkey": "Name",
+                // "valfieldkey": "Title",
+                "validation": "required",
+                withletters:true,
+                Errmsgkey:"withletterpattern",
             },
             {
                 "InternalName": "From",

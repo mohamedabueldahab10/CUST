@@ -83,6 +83,15 @@ var ListArray = [
 		// projectrelated: true,
 	},
 	{
+		committees: "Committees",
+		ListingTitle: "اللجان",
+		FormTitle: "المحافظ",
+		TitleEn: "Committees",
+		projnav: "Project Navigation",
+		subfolder: false,
+		// projectrelated: true,
+	},
+	{
 		changerequest: "Change Request",
 		ListingTitle: "طلبات التغيير",
 		FormTitle: "طلبات التغيير",
