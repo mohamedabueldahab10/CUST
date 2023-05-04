@@ -12,8 +12,8 @@ var Information_Form = [
         type: "string",
         // validation: 'required',
         maxchar: '255',
-        withletters:true,
-        Errmsgkey:"withletterpattern",
+        // withletters:true,
+        // Errmsgkey:"withletterpatternunrequired",
         state: "disabled",
         // security: {
         //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],

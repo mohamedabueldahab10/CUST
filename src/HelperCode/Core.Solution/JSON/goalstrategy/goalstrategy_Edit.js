@@ -194,7 +194,7 @@ var Information_Form = [
         type: 'string',
         maxchar: '255',
         withletters:true,
-        Errmsgkey:"withletterpattern",
+        Errmsgkey:"withletterpatternunrequired",
         // validation: 'required',
       },
       // {

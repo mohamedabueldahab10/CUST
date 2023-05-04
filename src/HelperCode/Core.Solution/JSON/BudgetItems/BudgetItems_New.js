@@ -33,7 +33,7 @@ var Information_Form  = [
                 "type":"string",
                 maxchar: '255',
                 withletters:true,
-                Errmsgkey:"withletterpattern",
+                Errmsgkey:"withletterpatternunrequired",
             
             },
             {
@@ -47,8 +47,9 @@ var Information_Form  = [
                 // "source": "Internal Entities",
                 // "Dispfieldkey": "Name",
                 // "valfieldkey": "Title",
-                "validation": "required"
-            
+                "validation": "required",
+                withletters:true,
+                Errmsgkey:"withletterpattern",
             },
             {
                 "InternalName": "From",
