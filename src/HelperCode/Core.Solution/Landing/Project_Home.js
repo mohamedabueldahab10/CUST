@@ -366,9 +366,11 @@ var Project_Home_Info_Request = {
 
 
 
-      var projectPeriodInDays =
-        getBaseLineFinish.getTime() - getBaseLineStart.getTime();
-
+      var projectPeriodInDays = 0
+      if (getBaseLineFinish && getBaseLineStart) {
+        projectPeriodInDays =
+          getBaseLineFinish.getTime() - getBaseLineStart.getTime();
+      }
       projectPeriodInDays = projectPeriodInDays / (1000 * 3600 * 24)
 
 
