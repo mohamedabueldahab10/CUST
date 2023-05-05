@@ -203,7 +203,7 @@ var Information_Form = [
         // validation: 'required',
         maxchar: '255',
         withletters:true,
-        Errmsgkey:"withletterpatternunrequired",
+        Errmsgkey:"withletterpattern",
         // RequiredName: 'Name',
       },
       // {
