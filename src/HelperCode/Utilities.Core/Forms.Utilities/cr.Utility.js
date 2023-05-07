@@ -64,6 +64,15 @@ window.CrModeFunctionality = {
 			}
 		});
 
+		// to remove the attachments from cr request
+		newJSON.forEach(function (o, i, a) {
+			o.subFields.forEach(el =>{
+				if(el.type == "file"){
+					a.splice(i, 1);
+				}
+			})
+		});
+
 		console.log(newJSON, "NEW JSSSSSS")
 
 		asyncFor.seqProcess(

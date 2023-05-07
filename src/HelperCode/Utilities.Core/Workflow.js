@@ -1297,7 +1297,16 @@ else if (isAchievements) {
 //*****1 */
 if (
 	window.location.href.indexOf("PCODE") > -1 &&
-	window.location.href.toLowerCase().indexOf("&wfs") > -1
+	window.location.href.toLowerCase().indexOf("&wfs") > -1 && // to avoid lunch project workflow name
+	!isVROCOC &&
+	!isEPMOCOC &&
+	!isLMSCOC &&
+	!isVROProjDeliverable &&
+	!isVROProjMilestone &&
+	!isEPMOProjDeliverable &&
+	!isEPMOProjMilestone &&
+	!isLMSProjDeliverable &&
+	!isLMSProjMilestone
 ) {
 	// console.log('123');
 	peojectC = window.location.href.split("PCODE=")[1].split("&")[0];
@@ -1621,7 +1630,7 @@ var Task_PCODE_Data_Request_WFs = {
 	// The main Initialization function
 	init: function () {
 
-
+		debugger
 
 		// console.log(taskquery, "THIS IS TASLK QUERy")
 		var clientContext = new SP.ClientContext.get_current();
@@ -1641,7 +1650,6 @@ var Task_PCODE_Data_Request_WFs = {
 		var listItemEnum = collListItem.getEnumerator();
 
 		while (listItemEnum.moveNext()) {
-
 
 			accessCurrentTask = true
 
@@ -2106,6 +2114,7 @@ var Task_PCODE_Data_Request_WFs = {
 			changeResources();
 		},
 		handleids: function () {
+
 			if (workflowname == "Project") {
 				curstage_org = Stages_ORG_Data_Request_WFs.g.StagesArray.filter(
 					function (obj) {
@@ -2195,7 +2204,11 @@ var Task_PCODE_Data_Request_WFs = {
 			}
 		},
 		makesureishtml: function () {
+			console.log("IN makesureishtml")
+			debugger
 			if ($(".fieldset-container").length) {
+				console.log("IN containercontainercontainer")
+
 				//|| $('#filterColumn').length || $('h2.PNameTitle').length || $('span.ms-pagetitle').length
 				clearInterval(formakesureishtmlStatus);
 				Task_PCODE_Data_Request_WFs.g.Handle_Take_Action();
@@ -2710,22 +2723,22 @@ var SubmitField_BulkEdit = {
 							relatedItemInCr = currentItem.get_item("CRRelatedStrategyObjective");
 							crUpdateType = currentItem.get_item("UpdateType");
 							crBody = eval(currentItem.get_item("ChangeBody"));
-							crBodyMaster =  eval(currentItem.get_item("ChangeBodyMaster"));
+							crBodyMaster = eval(currentItem.get_item("ChangeBodyMaster"));
 						} else if (isVROCRProject || isEPMOCRProject || isLMSCRProject) {
 							relatedItemInCr = currentItem.get_item("ProjectCode");
 							crUpdateType = currentItem.get_item("UpdateType");
 							crBody = eval(currentItem.get_item("ChangeBody"));
-							crBodyMaster =  eval(currentItem.get_item("ChangeBodyMaster"));
+							crBodyMaster = eval(currentItem.get_item("ChangeBodyMaster"));
 						} else if (isEPMOCRInitiative || isVROCRInitiative || isLMSCRInitiative) {
 							relatedItemInCr = currentItem.get_item("InitiativeCode");
 							crUpdateType = currentItem.get_item("UpdateType");
 							crBody = eval(currentItem.get_item("ChangeBody"));
-							crBodyMaster =  eval(currentItem.get_item("ChangeBodyMaster"));
+							crBodyMaster = eval(currentItem.get_item("ChangeBodyMaster"));
 						} else if (isMSCRKPI || isVROCRKPI || isLMSCRKPI) {
 							relatedItemInCr = currentItem.get_item("CRRelatedMainKpis");
 							crUpdateType = currentItem.get_item("UpdateType");
 							crBody = eval(currentItem.get_item("ChangeBody"));
-							crBodyMaster =  eval(currentItem.get_item("ChangeBodyMaster"));
+							crBodyMaster = eval(currentItem.get_item("ChangeBodyMaster"));
 						}
 						//
 
@@ -2941,7 +2954,7 @@ var SubmitField_BulkEdit = {
 
 								Delete_Item_FromCR.init(relatedItemInCr)
 							} else if ((isMSCRObjective || isVROCRObjective || isLMSCRObjective || isVROCRProject || isEPMOCRProject || isLMSCRProject || isEPMOCRInitiative || isVROCRInitiative || isLMSCRInitiative || isMSCRKPI || isVROCRKPI || isLMSCRKPI) && state && nxtstageid == "approved" && crUpdateType.includes("automatic")) {
-								executeCR.init(crBody,crBodyMaster);
+								executeCR.init(crBody, crBodyMaster);
 							} else {
 								Task_Edit_Data.init();
 							}

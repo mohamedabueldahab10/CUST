@@ -2440,6 +2440,11 @@ window.userCalls = {
       case "DU":
         isDU = true;
 
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+
+        ar_UserRole = "مدير وحدة التنفيذ";
+        en_UserRole = "Development Unit";
         //CRUD
         Create_Access = [
           // for initiative
@@ -8252,6 +8257,7 @@ var Tasks_Info_Request_User = {
       }
 
       if (tasktype == "Approval") {
+        debugger
         mycount++;
         // if (mycount <= 10) {
         HPtaskshtml.push(
@@ -8625,10 +8631,12 @@ var Tasks_Info_Request_User = {
       wfname,
       puid
     ) {
+
       switch (wfname) {
         case "Project":
           if (
-            rurl.toLowerCase().indexOf("pcode") > -1 &&
+            rurl.toLowerCase().indexOf("pcode") > -1 
+            &&
             window.location.href.toLowerCase().indexOf("&wfs") > -1
           ) {
             if (rurl.toLowerCase().indexOf("view.aspx") > -1) {
@@ -8820,16 +8828,55 @@ var Tasks_Info_Request_User = {
               );
               break;
             default:
-              window.open(
-                _spPageContextInfo.webAbsoluteUrl +
-                rurl +
-                "&TID=" +
-                taskid +
-                "&IID=" +
-                ritemid +
-                "&WFs",
-                "_self"
-              );
+              if (
+                rurl.toLowerCase().indexOf("icode") > -1 
+              ) {
+
+       
+                  //view page with pcode
+                  rurl = rurl.replace("&ICODE=", "");
+
+                  window.open(
+                    _spPageContextInfo.webAbsoluteUrl +
+                    rurl +
+                    "&TID=" +
+                    taskid +
+                    "&IID=" +
+                    ritemid +
+                    "&ICODE=" +
+                    pcode +
+                    "&WFs",
+                    "_self"
+                  );
+        
+             
+              }else if( rurl.toLowerCase().indexOf("pcode") > -1){
+                rurl = rurl.replace("&PCODE=", "");
+
+                window.open(
+                  _spPageContextInfo.webAbsoluteUrl +
+                  rurl +
+                  "&TID=" +
+                  taskid +
+                  "&IID=" +
+                  ritemid +
+                  "&PCODE=" +
+                  pcode +
+                  "&WFs",
+                  "_self"
+                );
+              } else {
+                window.open(
+                  _spPageContextInfo.webAbsoluteUrl +
+                  rurl +
+                  "&TID=" +
+                  taskid +
+                  "&IID=" +
+                  ritemid +
+                  "&WFs",
+                  "_self"
+                );
+              }
               break;
           }
       }
