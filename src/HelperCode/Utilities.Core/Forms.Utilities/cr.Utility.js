@@ -66,8 +66,8 @@ window.CrModeFunctionality = {
 
 		// to remove the attachments from cr request
 		newJSON.forEach(function (o, i, a) {
-			o.subFields.forEach(el =>{
-				if(el.type == "file"){
+			o.subFields.forEach(el => {
+				if (el.type == "file") {
 					a.splice(i, 1);
 				}
 			})
@@ -623,7 +623,13 @@ window.CrItemDataRequest = {
 				value: "",
 				DisplayName: currentJsonValues[0].DisplayName,
 				DisplayNameEn: currentJsonValues[0].DisplayName,
-				changeRequestRCode: changeRequestRCode
+				changeRequestRCode: changeRequestRCode,
+				dataListName: $(this).data("listname") ? $(this).data("listname") : "",
+				dataValfieldkey: $(this).data("valfieldkey") ? $(this).data("valfieldkey") : "",
+				dataDispfieldkey: $(this).data("dispfieldkey") ? $(this).data("dispfieldkey") : "",
+				dataParentrelatedfilterkeylvl1: $(this).data("parentrelatedfilterkeylvl1"),
+				dataParentrelatedfilterkeylvl2: $(this).data("parentrelatedfilterkeylvl2")
+
 			});
 
 			switch ($(this).attr("type")) {
@@ -1805,8 +1811,12 @@ window.CrItemDataRenderFromJSON_View = {
 						// var mp = new MyPeoplePicker();
 						// mp.init($this.attr("id"), { AllowMultipleValues: false });
 
-						if (value == '' || value == null) {
-							$this.text(No_Data);
+						if (o.value == '' || o.value == null) {
+							if (o.originalValue == '' || o.originalValue == null) {
+								$this.text(No_Data);
+							} else {
+								$this.text(o.originalValue)
+							}
 						}
 						else {
 							$this.text(value.$5c_1);
@@ -1961,137 +1971,103 @@ window.CrItemDataRenderFromJSON_View = {
 							: "";
 						break;
 
-					// case "lookup":
-					// 	var valfieldkey = $this.data("valfieldkey"),
-					// 	Dispfieldkey = $this.data("dispfieldkey"),
-					// 	listname = $this.data("listname"),
-					// 	linkedto = $this.data("linkedto"),
-					// 	parentrelatedfilterkeylvl1 = $this.data("parentrelatedfilterkeylvl1"),
-					// 	parentrelatedfilterkeylvl2 = $this.data("parentrelatedfilterkeylvl2"),
-					// 	$this = $this;
-
-					//   var listFields = ["ID", valfieldkey, Dispfieldkey];
-					//   if (parentrelatedfilterkeylvl1 && parentrelatedfilterkeylvl1 != "undefined") {
-
-					// 	listFields.push(parentrelatedfilterkeylvl1)
-					// 	if (parentrelatedfilterkeylvl2 && parentrelatedfilterkeylvl2 != "undefined") {
-					// 	  listFields.push(parentrelatedfilterkeylvl2)
-					// 	}
-					// 	// listFields = ["ID",valfieldkey, Dispfieldkey, parentrelatedfilterkeylvl1];
-					//   }
+					case "lookup":
 
 
 
-					//   if (oListItem.get_item($this.attr("id")) == null) {
+						var valfieldkey = o.dataValfieldkey,
+							Dispfieldkey = o.dataDispfieldkey,
+							listname = o.dataListName,
+							parentrelatedfilterkeylvl1 = o.dataParentrelatedfilterkeylvl1,
+							parentrelatedfilterkeylvl2 = o.dataParentrelatedfilterkeylvl2,
+							$that = $this;
 
-					// 	$this.html(No_Data);
-					//   } else {
-					// 	customquery =
-					// 	  '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="' +
-					// 	  $this.data("valfieldkey") +
-					// 	  '" /><Value Type="Text">' +
-					// 	  oListItem.get_item($this.attr("id")) +
-					// 	  "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+						if (valfieldkey && Dispfieldkey && listname) {
+							var listFields = ["ID", valfieldkey, Dispfieldkey];
+							if (parentrelatedfilterkeylvl1 && parentrelatedfilterkeylvl1 != "undefined") {
 
-					// 	sphttp.get(
-					// 	  _spPageContextInfo.siteServerRelativeUrl,
-					// 	  listname,
-					// 	  customquery,
-					// 	  listFields,
-					// 	  function (records, record, listItem, isDone) {
-					// 		if (isDone) {
+								listFields.push(parentrelatedfilterkeylvl1)
+								if (parentrelatedfilterkeylvl2 && parentrelatedfilterkeylvl2 != "undefined") {
+									listFields.push(parentrelatedfilterkeylvl2)
+								}
+							}
 
-					// 		  records.forEach(function (el, index) {
-					// 			$this.html(el[Dispfieldkey]);
-					// 			$this.parent().find('a').attr('href', '/SitePages/View.aspx?ListKey=' + linkedto + '&IID=' + el["ID"] + '')
+							if (!o.value && !o.originalValue) {
+								$that.html(No_Data);
+							} else {
+								customquery =
+									'<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="' +
+									valfieldkey +
+									'" /><Value Type="Text">' +
+									o.value
+									+
+									"</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
 
+								sphttp.get(
+									_spPageContextInfo.siteServerRelativeUrl,
+									listname,
+									customquery,
+									listFields,
+									function (records, record, listItem, isDone) {
+										if (isDone) {
+											records.forEach(function (el, index) {
+												$that.text(el[Dispfieldkey]);
+											});
+										}
+									}
+								);
+							}
+						}
+						// }
+						break;
 
-					// 			// dont submit part
-
-					// 			if (
-					// 			  parentrelatedfilterkeylvl1 &&
-					// 			  parentrelatedfilterkeylvl1 != "undefined"
-					// 			) {
-
-					// 			  $this.attr(
-					// 				"data-parentrelatedvaluelvl1",
-					// 				el[parentrelatedfilterkeylvl1]
-					// 			  );
-					// 			  $(
-					// 				"[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
-					// 			  ).each(function () {
-
-					// 				var isMasterSection = $this.parent().parent().hasClass("Details-Item")
-
-					// 				if (!isMasterSection) {
-
-					// 				  var elementId = $this.attr("id"); // get element Id
-					// 				  var elementValue = oListItem.get_item(elementId); // get element value
-					// 				  if (
-					// 					oListItem.get_item(elementId) &&
-					// 					oListItem.get_item(elementId) == elementValue
-					// 				  ) {
-					// 					// matching between value on list
-					// 					var parentElement = $this.data("parentrelatedkeylvl1"); // parent internal name
-					// 					var parenetValue = $this.attr(
-					// 					  "data-parentrelatedvaluelvl1"
-					// 					); // parent value
-					// 					console.log(parentElement, "parentElement");
-					// 					console.log(parenetValue, "parenetValue");
-
-					// 					if (parentElement && parenetValue) {
-					// 					  $(`#${parentElement}`).html(parenetValue);
-					// 					}
-					// 				  }
-					// 				}
-					// 			  })
-
-					// 			}
-
-					// 			////////////////////////////////////////////////////////////////
-
-					// 			if (
-					// 			  parentrelatedfilterkeylvl2 &&
-					// 			  parentrelatedfilterkeylvl2 != "undefined"
-					// 			) {
-
-					// 			  $this.attr(
-					// 				"data-parentrelatedvaluelvl2",
-					// 				el[parentrelatedfilterkeylvl2]
-					// 			  );
-					// 			  $(
-					// 				"[data-parentrelatedvaluelvl2]:not([data-parentrelatedvaluelvl2=undefined])"
-					// 			  ).each(function () {
-					// 				var isMasterSection = $this.parent().parent().hasClass("Details-Item")
-
-					// 				if (!isMasterSection) {
-					// 				  var elementId = $this.attr("id"); // get element Id
-					// 				  var elementValue = oListItem.get_item(elementId); // get element value
-					// 				  if (
-					// 					oListItem.get_item(elementId) &&
-					// 					oListItem.get_item(elementId) == elementValue
-					// 				  ) {
-					// 					// matching between value on list
-					// 					var parentElement = $this.data("parentrelatedkeylvl2"); // parent internal name
-					// 					var parenetValue = $this.attr(
-					// 					  "data-parentrelatedvaluelvl2"
-					// 					); // parent value
+					case "lookupWithQuery":
 
 
-					// 					if (parentElement && parenetValue) {
-					// 					  $(`#${parentElement}`).html(parenetValue);
-					// 					}
-					// 				  }
-					// 				}
-					// 			  })
+						var valfieldkey = o.dataValfieldkey,
+							Dispfieldkey = o.dataDispfieldkey,
+							listname = o.dataListName,
+							parentrelatedfilterkeylvl1 = o.dataParentrelatedfilterkeylvl1,
+							parentrelatedfilterkeylvl2 = o.dataParentrelatedfilterkeylvl2,
+							$that = $this;
 
-					// 			}
-					// 		  });
-					// 		}
-					// 	  }
-					// 	);
-					//   }
-					//     break;
+						if (valfieldkey && Dispfieldkey && listname) {
+							var listFields = ["ID", valfieldkey, Dispfieldkey];
+							if (parentrelatedfilterkeylvl1 && parentrelatedfilterkeylvl1 != "undefined") {
+
+								listFields.push(parentrelatedfilterkeylvl1)
+								if (parentrelatedfilterkeylvl2 && parentrelatedfilterkeylvl2 != "undefined") {
+									listFields.push(parentrelatedfilterkeylvl2)
+								}
+							}
+
+							if (!o.value && !o.originalValue) {
+								$that.html(No_Data);
+							} else {
+								customquery =
+									'<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="' +
+									valfieldkey +
+									'" /><Value Type="Text">' +
+									o.value
+									+
+									"</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+
+								sphttp.get(
+									_spPageContextInfo.siteServerRelativeUrl,
+									listname,
+									customquery,
+									listFields,
+									function (records, record, listItem, isDone) {
+										if (isDone) {
+											records.forEach(function (el, index) {
+												$that.text(el[Dispfieldkey]);
+											});
+										}
+									}
+								);
+							}
+						}
+						break;
 
 					default:
 						if (value == '' || value == null) {
@@ -2105,6 +2081,8 @@ window.CrItemDataRenderFromJSON_View = {
 			}
 		});
 		$('[data-toggle="tooltip"]').tooltip();
+
+
 		$(
 			"div#particles-foreground, div#particles-background, .vertical-centered-box"
 		).animate(

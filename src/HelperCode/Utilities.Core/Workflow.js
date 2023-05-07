@@ -1630,7 +1630,7 @@ var Task_PCODE_Data_Request_WFs = {
 	// The main Initialization function
 	init: function () {
 
-		debugger
+		
 
 		// console.log(taskquery, "THIS IS TASLK QUERy")
 		var clientContext = new SP.ClientContext.get_current();
@@ -2204,8 +2204,7 @@ var Task_PCODE_Data_Request_WFs = {
 			}
 		},
 		makesureishtml: function () {
-			console.log("IN makesureishtml")
-			debugger
+		
 			if ($(".fieldset-container").length) {
 				console.log("IN containercontainercontainer")
 
@@ -2224,7 +2223,7 @@ var Task_PCODE_Data_Request_WFs = {
 			}
 		},
 		addcomments: function (state, version, withNote = false) {
-			debugger
+			
 			stageState = state; // added to handle WF Notes
 			if (workflowname == "Project") {
 				if (version == "Approval" || version == "Submit") {
@@ -2587,7 +2586,7 @@ var SubmitField_BulkEdit = {
 	preinit: function (state, withNote = false) {
 
 
-		debugger
+		
 
 		globalStateSubmitField = state;
 		if (stageid == "S01" && isWfFirst_Upload) {
@@ -2682,7 +2681,7 @@ var SubmitField_BulkEdit = {
 		var context = SP.ClientContext.get_current();
 		var dfd = $.Deferred();
 		//Get list from host web
-		debugger
+		
 		var programList = context.get_web().get_lists().getByTitle(bulkeditlist);
 		var camlQuery = new SP.CamlQuery();
 		camlQuery.set_viewXml(bulkeditquery);

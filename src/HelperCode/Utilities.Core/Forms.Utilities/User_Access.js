@@ -8257,7 +8257,7 @@ var Tasks_Info_Request_User = {
       }
 
       if (tasktype == "Approval") {
-        debugger
+        
         mycount++;
         // if (mycount <= 10) {
         HPtaskshtml.push(
