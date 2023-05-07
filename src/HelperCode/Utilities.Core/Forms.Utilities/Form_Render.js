@@ -468,7 +468,7 @@ window.ListInfo = {
           });
           // this affectes on lookup selects
           $("select[dynamic=parent]").on("change", function () {
-  
+
             let parentFieldName = $(this).attr("id");
             let parentFieldValue = $(this).val();
             let customFilterValue = $(this)
@@ -484,7 +484,7 @@ window.ListInfo = {
             let notInvokeListiner = $(this).data("notinvokelistiner")
 
             $("[dynamic=" + parentFieldName + "]").each(function () {
-       
+
               let affectedFieldName = $(this).attr("id");
               let listName = $(this).data("listname");
               let filterField = $(this).data("filterfield");
@@ -4814,7 +4814,7 @@ window.ListInfo = {
           activeCode = $('#InitiativeCode').val()
         }
 
-        
+
         var code = activeCode
         var customQuery =
           '<View><Query><Where><And><Eq><FieldRef Name=' + element.childinternalparentname + ' /><Value Type=' + element.childinternalparenttype + '>' +
@@ -6619,6 +6619,10 @@ window.ListInfo = {
 
         $('<div class="Details-Item NewItem" data-index="' + getMasterIndex + '">' + toappend + "</div>").insertBefore($(this).parent());
 
+        // to hide the err msg when click  on plus
+
+        $(this).closest("[data-target_list]").find(".Details-Item .errMsgField").last().hide()
+
         // insert new max for weight deliv
         var lastDetailsItem = $(this).closest("[data-target_list]").find(".Details-Item").last()
         lastDetailsItem.find('.remainpercstyle.remainPercentageVal').html(`${100 - totalWeight}]`) // add new title weight
@@ -7234,8 +7238,9 @@ window.ListInfo = {
             myFieldParent.show();
             myFieldParent.removeClass("hide-field")
             myFieldParentofParent.show();
-            myFieldParent.find(">*").attr("required", true);
-
+            if (!isView) {
+              myFieldParent.find(">*").attr("required", true);
+            }
             //make toggle fields not required
             if (listkey == "mainkpi") {
               if (
@@ -10345,7 +10350,7 @@ window.Stages_Data_Request = {
 //change var to window
 window.Sectors_Info = {
   onSuccess: function (sender, args) {
-    
+
     Sectors_Info.g.SectorArray = [];
     var collListItem = Sectors_Info.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
@@ -10451,7 +10456,7 @@ var GetSector_Info = {
 
 var Projects_Info = {
   onSuccess: function (sender, args) {
-    
+
     var collListItem = Projects_Info.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     while (listItemEnum.moveNext()) {
@@ -12493,7 +12498,7 @@ var get_grandparent_data = {
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       itemID = oListItem.get_id();
-      
+
       dynamicGrandParentVal = oListItem.get_item(grandParentTargetFieldName) || '';
 
       valueBasedOnParent.push(dynamicGrandParentVal)

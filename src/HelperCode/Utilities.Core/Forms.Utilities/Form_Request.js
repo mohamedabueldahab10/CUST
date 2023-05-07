@@ -1586,7 +1586,7 @@ window.View_Data_Request = {
                             "data-parentrelatedvaluelvl1"
                           ); // parent value
 
-
+                          debugger
                           if (parentElement && parenetValue) {
                             //to get the sector name and subsector name in don't submit view
                             if (parentElement == "Sector") {
@@ -1639,7 +1639,16 @@ window.View_Data_Request = {
 
                               $(`#${parentElement}`).html(parenetValue);
 
-
+                            } else if (parenetValue == "yes" || parenetValue == "no") {
+                              if (
+                                localStorage.getItem("lng") == null ||
+                                localStorage.getItem("lng") == "ar"
+                              ) {
+                                parenetValue = Resources.ar[parenetValue];
+                              } else {
+                                parenetValue = Resources.en[parenetValue];
+                              }
+                              $(`#${parentElement}`).html(parenetValue);
                             } else {
                               $(`#${parentElement}`).html(parenetValue);
                             }
@@ -1731,6 +1740,16 @@ window.View_Data_Request = {
                             $(`#${parentElement}`).html(parenetValue);
 
 
+                          } else if (parenetValue == "yes" || parenetValue == "no") {
+                            if (
+                              localStorage.getItem("lng") == null ||
+                              localStorage.getItem("lng") == "ar"
+                            ) {
+                              parenetValue = Resources.ar[parenetValue];
+                            } else {
+                              parenetValue = Resources.en[parenetValue];
+                            }
+                            $(`#${parentElement}`).html(parenetValue);
                           } else if (parentElement && parenetValue) {
                             $(`#${parentElement}`).html(parenetValue);
                           }
@@ -3212,7 +3231,7 @@ var Master_Details_Request = {
 //department based on sector
 window.Department_Sector_Info = {
   onSuccess: function (sender, args) {
-    
+
 
 
     Department_Sector_Info.g.array = [];
