@@ -340,12 +340,12 @@ var Information_Form = [
         // 	],
         // },
       },
-      {
-        InternalName: 'ProgressStatus',
-        DisplayName: 'حالة الإنجاز',
-        DisplayNameEn: 'Progress Status',
-        type: 'string',
-      },
+      // {
+      //   InternalName: 'ProgressStatus',
+      //   DisplayName: 'حالة الإنجاز',
+      //   DisplayNameEn: 'Progress Status',
+      //   type: 'string',
+      // },
       {
         InternalName: 'NotMeasurableNow',
         DisplayNameEn: 'Not Measurable Now',
@@ -630,21 +630,13 @@ var Information_Form = [
       //     ]
       //   }
       // },
-      // {
-      //   "InternalName": "Status",
-      //   "DisplayNameEn": "Status",
-      //   "DisplayName": "الحالة",
-      //   "type": "dropdownValues",
-      //   options: {
-      //     choices: [
-      //       { display: 'new', value: 'new' },
-      //       { display: 'actual', value: 'actual' },
-      //       { display: 'target', value: 'target' },
-      //       { display: 'actualcompleted', value: 'actualcompleted' },
-      //       { display: 'targetcompleted', value: 'targetcompleted' },
-      //     ]
-      //   }
-      // },
+      {
+        "InternalName": "Status",
+        "DisplayNameEn": "Status",
+        "DisplayName": "الحالة",
+        "type": 'dropdownValues',
+
+      },
 
       // {
       //   "InternalName": "Target",
