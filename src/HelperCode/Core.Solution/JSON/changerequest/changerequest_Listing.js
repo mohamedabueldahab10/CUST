@@ -42,6 +42,15 @@ var Listing_Info = [
         inlisting: true,
         infilter: true
     },
+    {
+        "InternalName": "RequestStatus",
+        "DisplayName": "حالة الطلب",
+        "DisplayNameEn": "Request Status",
+        "type": "text",
+        needTrans: true,
+        inlisting: true,
+        infilter: false
+    }
     // {
     //     "InternalName": "Priority",
     //     "DisplayName": "الأولوية",
