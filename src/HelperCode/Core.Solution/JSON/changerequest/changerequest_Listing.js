@@ -49,7 +49,7 @@ var Listing_Info = [
         "type": "text",
         needTrans: true,
         inlisting: true,
-        infilter: false
+        infilter: true
     }
     // {
     //     "InternalName": "Priority",
