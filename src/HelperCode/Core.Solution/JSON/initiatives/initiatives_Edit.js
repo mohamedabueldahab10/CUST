@@ -27,7 +27,7 @@ var Information_Form = [
         DisplayNameEn: 'Types',
         DisplayName: 'النوع',
         validation: 'required',
-        stopinvokeparent:"yes", // to not invoke dynamic in edit cause الاستراتيجية المرتبطة don't submit so the value will disaber
+        stopinvokeparent: "yes", // to not invoke dynamic in edit cause الاستراتيجية المرتبطة don't submit so the value will disaber
 
         dynamic: 'parent', // parent to get the child depends on this field value
         toggleValues: [
@@ -56,7 +56,7 @@ var Information_Form = [
             {
               display: 'strategically',
               value: 'strategically',
-              roles: ['Administrator', 'EPMO', 'SPMO','ViceMinister','SPMOHead','InitiativeManager',  'InitiativeOwner','DU'],
+              roles: ['Administrator', 'EPMO', 'SPMO', 'ViceMinister', 'SPMOHead', 'InitiativeManager', 'InitiativeOwner', 'DU'],
             },
             {
               display: 'lms',
@@ -585,6 +585,10 @@ var Information_Form = [
         type: 'datetime',
         max: 'FinishDate',
         validation: 'required',
+        //
+        maxOnChild: true,
+        childsId: ["PlannedFinishDate", "ActualCompletedDate", "PlannedDate", "ActualCompletedDate"],
+        targetOn: "min"
       },
       {
         InternalName: 'FinishDate',
@@ -593,6 +597,10 @@ var Information_Form = [
         type: 'datetime',
         min: 'StartDate',
         validation: 'required',
+        //
+        maxOnChild: true,
+        childsId: ["PlannedFinishDate", "ActualCompletedDate", "PlannedDate", "ActualCompletedDate"],
+        targetOn: "max"
       },
       // {
       //   InternalName: 'StartDate',
@@ -752,7 +760,7 @@ var Information_Form = [
         DisplayName: 'التكلفة التقديرية ',
         DisplayNameEn: 'Estimated Cost',
         type: 'float',
-        numberOfDigits:"15",
+        numberOfDigits: "15",
         enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
       },
@@ -769,8 +777,8 @@ var Information_Form = [
         enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         state: "disabled",
-        descPhraseAr:"مجموع التكاليف الكلية حسب سقف البرنامج و التكاليف الكلية المعتمدة",
-        descPhraseEn:"total of ProgramTotalCost and ActualCost"
+        descPhraseAr: "مجموع التكاليف الكلية حسب سقف البرنامج و التكاليف الكلية المعتمدة",
+        descPhraseEn: "total of ProgramTotalCost and ActualCost"
 
       },
       {
@@ -778,11 +786,11 @@ var Information_Form = [
         DisplayName: 'التكاليف الكلية حسب سقف البرنامج ',
         DisplayNameEn: 'Program Total Cost',
         type: 'float',
-        numberOfDigits:"15",
+        numberOfDigits: "15",
         targetelement: 'ActualCost',
         enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
-        sum1Element: "ProgramTotalCost", 
+        sum1Element: "ProgramTotalCost",
         sum2Element: "ActualCost",
         totalElement: "InitiativeBudget",
         resetElement: "ActualCost", // reset value of this element when there is no val in current element
@@ -792,7 +800,7 @@ var Information_Form = [
         DisplayName: 'التكاليف الكلية المعتمدة ',
         DisplayNameEn: 'Actual Cost',
         type: 'float',
-        numberOfDigits:"15",
+        numberOfDigits: "15",
         targetelement: 'ActualCost',
         seconedtarget: 'ProgramTotalCost',
         enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
@@ -809,7 +817,7 @@ var Information_Form = [
         DisplayName: 'السيولة المخصصة للعام المالي الحالي ',
         DisplayNameEn: 'Current Budget',
         type: 'float',
-        numberOfDigits:"15",
+        numberOfDigits: "15",
         enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
       },
@@ -818,7 +826,7 @@ var Information_Form = [
         DisplayName: 'المنصرف الأجمالي ',
         DisplayNameEn: 'Expenditures',
         type: 'float',
-        numberOfDigits:"15",
+        numberOfDigits: "15",
         enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
       },
@@ -827,7 +835,7 @@ var Information_Form = [
         DisplayName: 'المنصرف من العالم المالي الحالي ',
         DisplayNameEn: 'Current Expenditures',
         type: 'float',
-        numberOfDigits:"15",
+        numberOfDigits: "15",
         enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
       },
@@ -842,7 +850,7 @@ var Information_Form = [
     // className: "disable_section", // to make the section disabled on form render
     targetlist: 'InitiativeDeliverables',
     subFields: [
-      
+
       // {
       //     "InternalName": "Title",
       //     "DisplayNameEn": "Title",
@@ -856,10 +864,10 @@ var Information_Form = [
         DisplayName: 'اسم المخرج',
         type: 'string',
         maxchar: '255',
-        withletters:true,
-        Errmsgkey:"withletterpattern",
+        withletters: true,
+        Errmsgkey: "withletterpattern",
         validation: 'required',
-        
+
       },
       //   {
       //     InternalName: 'PlannedCompletedDate',
@@ -882,7 +890,7 @@ var Information_Form = [
         endinternalname: 'FinishDate',
         // "min": "PlannedStartDate",
         validation: 'required',
-        
+
       },
       {
         InternalName: 'DeliverableSuccessKPI',
@@ -890,15 +898,15 @@ var Information_Form = [
         DisplayName: 'مقياس نجاح المخرج  (إن وجد)',
         type: 'string',
         maxchar: 255,
-        
+
       },
       {
         InternalName: 'Target',
         DisplayNameEn: 'Target',
         DisplayName: 'المستهدف (إن وجد)',
         type: 'number',
-        numberOfDigits:"15",
-        
+        numberOfDigits: "15",
+
       },
       // {
       //     "InternalName": "CommittedDate",
@@ -922,7 +930,7 @@ var Information_Form = [
         seconedtarget: 'Amount',
         // "state":"disabled",
         validation: 'required',
-        
+
       },
       {
         InternalName: 'Amount',
@@ -934,7 +942,7 @@ var Information_Form = [
         parentinternalname: 'InitiativeBudget',
         targetelement: 'Weight',
         validation: 'required',
-        
+
       },
       // {
       //   InternalName: 'Weight',
@@ -951,7 +959,7 @@ var Information_Form = [
         DisplayName: 'تم التسليم',
         DisplayNameEn: 'Delivered',
         type: 'dropdownValues',
-        targetfieldrequired:"ActualCompletedDate",
+        targetfieldrequired: "ActualCompletedDate",
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
@@ -987,7 +995,7 @@ var Information_Form = [
       //       groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
       //     },
       //   },
-  
+
       // {
       //     "InternalName": "RelatedBenefits",
       //     "DisplayNameEn": "Related Benefits",
@@ -1002,7 +1010,7 @@ var Information_Form = [
       //         ]
       //     },
       // }
-    
+
     ]
   },
   {
@@ -1014,7 +1022,7 @@ var Information_Form = [
     // className: "disable_section", // to make the section disabled on form render
     targetlist: 'InitiativeMilestones',
     subFields: [
-      
+
       // {
       //     "InternalName": "Title",
       //     "DisplayNameEn": "Title",
@@ -1028,10 +1036,10 @@ var Information_Form = [
         DisplayName: 'اسم المعلم',
         type: 'string',
         maxchar: '255',
-        withletters:true,
-        Errmsgkey:"withletterpattern",
+        withletters: true,
+        Errmsgkey: "withletterpattern",
         validation: 'required',
-        
+
       },
       // {
       //     "InternalName": "PlannedCompletedDate",
@@ -1051,8 +1059,8 @@ var Information_Form = [
         DisplayNameEn: 'Planned Finish Date',
         type: 'datetime',
         validation: 'required',
-        
-      },    
+
+      },
       {
         InternalName: 'Weight',
         DisplayName: 'الوزن(%)',
@@ -1063,7 +1071,7 @@ var Information_Form = [
         targetelement: 'Weight',
         seconedtarget: 'Amount',
         validation: 'required',
-        
+
       },
       {
         InternalName: 'Amount',
@@ -1075,18 +1083,18 @@ var Information_Form = [
         parentinternalname: 'InitiativeBudget',
         targetelement: 'Weight',
         validation: 'required',
-        
+
       },
-    //   {
-    //     InternalName: 'Weight',
-    //     DisplayNameEn: 'Weight',
-    //     DisplayName: 'الوزن المكافئ للإنجاز %',
-    //     type: 'decimalpercentage',
-    //     validation: 'required',
-    //     security: {
-    //       groups: ['VRO_E', 'LMS_E', 'System Admin Group', 'EPMO'],
-    //     },
-    //   },
+      //   {
+      //     InternalName: 'Weight',
+      //     DisplayNameEn: 'Weight',
+      //     DisplayName: 'الوزن المكافئ للإنجاز %',
+      //     type: 'decimalpercentage',
+      //     validation: 'required',
+      //     security: {
+      //       groups: ['VRO_E', 'LMS_E', 'System Admin Group', 'EPMO'],
+      //     },
+      //   },
       // {
       //     "InternalName": "Completed",
       //     "DisplayNameEn": "Completed",
@@ -1114,14 +1122,14 @@ var Information_Form = [
         DisplayName: 'تم التسليم',
         DisplayNameEn: 'Delivered',
         type: 'dropdownValues',
-        targetfieldrequired:"ActualCompletedDate",
+        targetfieldrequired: "ActualCompletedDate",
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
             { display: 'no', value: 'no' },
           ],
         },
-       
+
       },
       {
         InternalName: 'ActualCompletedDate',
@@ -1139,7 +1147,7 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         initiativeCodeInList: true //value in look up drop down should be related to current project
-        
+
       },
       {
         InternalName: 'SupportDocumentsDescription',
@@ -1147,9 +1155,9 @@ var Information_Form = [
         DisplayName: 'وصف الوثائق الداعمة',
         type: 'multiline',
         maxchar: '5000',
-        
+
       },
-    
+
     ]
   },
   {
@@ -1168,10 +1176,10 @@ var Information_Form = [
         type: 'string',
         validation: 'required',
         maxchar: '255',
-        withletters:true,
-        Errmsgkey:"withletterpattern",
+        withletters: true,
+        Errmsgkey: "withletterpattern",
       },
-    
+
       {
         InternalName: 'Owner',
         DisplayNameEn: 'Benefit Owner',
@@ -1183,7 +1191,7 @@ var Information_Form = [
         InternalName: 'Description',
         DisplayNameEn: 'Description',
         DisplayName: 'وصف المنفعة',
-        maxchar: 5000,        
+        maxchar: 5000,
         type: 'multiline',
         validation: 'required',
       },
@@ -1206,27 +1214,27 @@ var Information_Form = [
         valfieldkey: 'Title',
         grpfieldkey: 'Title',
         initiativeCodeInList: true //value in look up drop down should be related to current project
-        
+
       },
       {
         InternalName: 'DeliverableID',
         DisplayNameEn: 'Name',
         DisplayName: 'المخرج',
-  
+
         type: 'lookupchildtoparentmultiselect',
         childlist: 'Projects', //child list name
         childinternalparentname: 'RelatedInitiative', // child internal name related to parent
-        childinternalparenttype:'Text',
-        childinternalname:"Title", // child internal name need to use to parent
+        childinternalparenttype: 'Text',
+        childinternalname: "Title", // child internal name need to use to parent
         source: 'Deliverables', // target list
         sourceinternalname: 'ProjectCode', // column in target list
         Dispfieldkey: 'Name', //display in dropdown
         valfieldkey: 'Title', // value in dropdown
         grpfieldkey: 'Title',
         //////////////
-        fieldtargetlist:'BenefitDeliverables', // save this field in this list(field master in master section),
-        fieldmasterkey:'benefits'// save this field in this list(field master in master section) to know the master key,
-       
+        fieldtargetlist: 'BenefitDeliverables', // save this field in this list(field master in master section),
+        fieldmasterkey: 'benefits'// save this field in this list(field master in master section) to know the master key,
+
       },
     ]
   },

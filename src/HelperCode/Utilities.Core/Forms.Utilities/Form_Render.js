@@ -1104,7 +1104,22 @@ window.ListInfo = {
             }
           });
 
+          //maxOnChild
+          $("body").on("change", ".maxOnChild", function (event) {
+            var value = event.target.value
+            var targetOn = $(this).data('targeton')
+            var childsId = $(this).data('childsid')
+            childsId = eval(childsId)
+            console.log(targetOn, "ssssssssssssssss")
 
+            childsId.forEach(el => {
+              $('[data-target_list] .Details-Item').each(function () {
+                $(this).find(`#${el}`).attr(targetOn, value);
+              })
+
+            })
+          })
+          //
 
           $("body").on("change", ".decimalnumber", function (event) {
             // add this to handle the num with dots in weight in initiative milestone
@@ -3219,6 +3234,30 @@ window.ListInfo = {
         break;
 
       case "datetime":
+        var maxOnChild = ""
+        var targetOn = ""
+        if (element.maxOnChild) {
+          maxOnChild = "maxOnChild"
+
+        }
+
+        if (element.targetOn && element.targetOn != "undefined") {
+          targetOn = `data-targetOn=${element.targetOn}`
+        } else {
+          targetOn = ""
+        }
+
+
+        let childsId = element.childsId
+          ? 'data-childsId="' +
+          JSON.stringify(element.childsId).replaceAll(
+            `"`,
+            `'`
+          ) +
+          '"'
+          : "";
+
+
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -3266,11 +3305,15 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
+          " " +
+          childsId +
+          " " +
+          targetOn +
           ' type="date" placeholder="' +
           displayName +
           '" ' +
           dynamic +
-          ' class="form-control SPIField" id="' +
+          ' class="form-control SPIField ' + maxOnChild + '" id="' +
           element.InternalName +
           '" ' +
           element.state +

@@ -191,7 +191,7 @@ var Information_Form = [
           ],
         },
         toggleValues: [
-          { value: 'yes', fields: ['InitiativeType','RelatedInitiative','RelatedInitiativeDeliverable'] }, //we can put more than 1  field
+          { value: 'yes', fields: ['InitiativeType', 'RelatedInitiative', 'RelatedInitiativeDeliverable'] }, //we can put more than 1  field
           { value: 'no', fields: [''] }, //we can put more than 1  field
         ],
         // toggleDisabledValues: [
@@ -205,7 +205,7 @@ var Information_Form = [
         DisplayName: 'نوع المبادرة',
         ToggleName: "InitiativeType",
         validation: 'required',
-        display:'none',
+        display: 'none',
         dynamic: 'parent', // parent to get the child depends on this field value
         type: 'dropdownValues',
         // dontSubmit: true,
@@ -214,7 +214,7 @@ var Information_Form = [
             {
               display: 'vision',
               value: 'vision',
-              customFilterValue:  "vision",
+              customFilterValue: "vision",
               // roles: ['Administrator', 'VROE', 'VROP'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'VROCreateProject' },
@@ -225,9 +225,9 @@ var Information_Form = [
             {
               display: 'strategically',
               value: 'strategically',
-              customFilterValue:  "strategically",
+              customFilterValue: "strategically",
 
-                // roles: ['Administrator', 'EPMO'],
+              // roles: ['Administrator', 'EPMO'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'EPMOCreateProject' },
                 { fieldName: 'WFStage', value: 'EPMOCreateProject01' },
@@ -237,7 +237,7 @@ var Information_Form = [
             {
               display: 'lms',
               value: 'lms',
-              customFilterValue:  "lms",
+              customFilterValue: "lms",
 
               // roles: ['Administrator', 'LMSE', 'LMSP'],
               otherFields: [
@@ -247,7 +247,7 @@ var Information_Form = [
               ],
             },
             // { display: 'others', value: 'others' },
-            
+
           ],
         },
       },
@@ -262,8 +262,8 @@ var Information_Form = [
         Dispfieldkey: "Name",
         valfieldkey: "Title",
         dynamic: "InitiativeType", //InternalName Of Parent field
-				filterField: "Types",//InternalName Of Parent field
-				filterFieldType: "Text",//Type In Sharepoint List for Parent field
+        filterField: "Types",//InternalName Of Parent field
+        filterFieldType: "Text",//Type In Sharepoint List for Parent field
 
         security: {
           groups: [
@@ -319,7 +319,7 @@ var Information_Form = [
         ],
         // "state": "disabled",
         // "className":"autofill"
-        display:'none',
+        display: 'none',
       },
       {
         InternalName: "RelatedInitiativeDeliverable",
@@ -332,7 +332,7 @@ var Information_Form = [
         Dispfieldkey: "Name",
         valfieldkey: "Title",
         grpfieldkey: "Title",
-        display:'none',
+        display: 'none',
         state: "disabled",
       },
       // {
@@ -407,7 +407,7 @@ var Information_Form = [
         DisplayName: "الخطة التصحيحية",
         DisplayNameEn: "Corrective Plan",
         type: "multiline",
-        maxchar: 5000,        
+        maxchar: 5000,
         security: {
           groups: [
             "VRO_E",
@@ -480,6 +480,10 @@ var Information_Form = [
         DisplayNameEn: "Baseline Start Date",
         type: "datetime",
         max: "BaselineFinishDate",
+        //
+        maxOnChild: true,
+        childsId: ["PlannedFinishDate", "PlannedDate", "ActualDate"],
+        targetOn: "min"
         // "state": "disabled"
       },
       {
@@ -488,7 +492,11 @@ var Information_Form = [
         DisplayNameEn: "Baseline Finish Date",
         type: "datetime",
         min: "BaselineStartDate",
-        // "state": "disabled"
+        //
+        // 
+        maxOnChild: true,
+        childsId: ["PlannedFinishDate", "PlannedDate", "ActualDate"],
+        targetOn: "max"
       },
 
       {
@@ -562,7 +570,7 @@ var Information_Form = [
         DisplayName: "الجهة المنفذة",
         DisplayNameEn: "Execution Channels",
         type: "multiline",
-        maxchar: 5000,        
+        maxchar: 5000,
       },
       {
         InternalName: "ProjectOverview",
@@ -895,7 +903,7 @@ var Information_Form = [
         type: "float",
         // "state": "disabled",
         dynamic: "BudgetItem", //being controlled by main field
-        numberOfDigits:"15",
+        numberOfDigits: "15",
       },
 
       // {
@@ -937,7 +945,7 @@ var Information_Form = [
         DisplayNameEn: "Expected Budget",
         type: "float",
         // state: "disabled",
-        numberOfDigits:"15",
+        numberOfDigits: "15",
       },
       {
         InternalName: "ActualBudget",
@@ -946,7 +954,7 @@ var Information_Form = [
         type: "float",
         // "state": "disabled"
         RequiredName: "ActualBudget",
-        numberOfDigits:"15",
+        numberOfDigits: "15",
       },
       // {
       //     "InternalName": "Cost4",
@@ -990,7 +998,7 @@ var Information_Form = [
         DisplayName: "الارتباطات التعاقدية",
         DisplayNameEn: "ContractualEngagements",
         type: "float",
-        numberOfDigits:"15",
+        numberOfDigits: "15",
         // "state": "disabled"
       },
       {
@@ -1005,7 +1013,7 @@ var Information_Form = [
         DisplayName: "المنصرف حتى تاريخه",
         DisplayNameEn: "Expenses",
         type: "float",
-        numberOfDigits:"15",
+        numberOfDigits: "15",
         // "state": "disabled"
       },
       {
@@ -1013,7 +1021,7 @@ var Information_Form = [
         DisplayName: "التكلفة المتبقية",
         DisplayNameEn: "Remaining Cost",
         type: "float",
-        numberOfDigits:"15",
+        numberOfDigits: "15",
 
         // "state": "disabled"
       },
@@ -1022,7 +1030,7 @@ var Information_Form = [
         DisplayName: "نسبة المنصرف من السيولة ",
         DisplayNameEn: "Out Of Cash",
         type: "floatpercentage",
-        numberOfDigits:"15",
+        numberOfDigits: "15",
 
         // "state": "disabled"
       },
@@ -1098,7 +1106,7 @@ var Information_Form = [
         type: 'file',
         withAddBtn: 'true',
         // InternalName: 'getfile',
-        docPurpose:"Approved_RFP",
+        docPurpose: "Approved_RFP",
       },
       {
         InternalName: "RFPStatus",
@@ -1276,7 +1284,7 @@ var Information_Form = [
         DisplayName: "وصف الإعتمادية",
         DisplayNameEn: "Description",
         type: "multiline",
-        maxchar: 5000,        
+        maxchar: 5000,
         // type: 'string',
         //"state": "disabled"
       },
@@ -1295,7 +1303,7 @@ var Information_Form = [
         type: "dropdownValues",
         options: {
           choices: [
-            { display: "active", value: "active"},
+            { display: "active", value: "active" },
             { display: "stat14", value: "stat14" },
             { display: "stat13", value: "stat13" },
           ],
@@ -1303,7 +1311,7 @@ var Information_Form = [
         security: {
           groups: ["EPMO", "System Admin Group"]
         },
-       
+
       }
     ],
   },
@@ -1333,7 +1341,7 @@ var Information_Form = [
         maxchar: '255',
         withletters: true,
         Errmsgkey: "withletterpattern",
-        
+
       },
       {
         InternalName: 'Description',
@@ -1341,7 +1349,7 @@ var Information_Form = [
         DisplayNameEn: 'Description',
         type: 'multiline',
         maxchar: 5000,
-        
+
       },
       // {
       //     "InternalName": "Weight",
@@ -1362,7 +1370,7 @@ var Information_Form = [
         seconedtarget: 'Amount',
         // "state":"disabled",
         validation: 'required',
-        
+
       },
       {
         InternalName: 'Amount',
@@ -1374,7 +1382,7 @@ var Information_Form = [
         parentinternalname: 'ActualBudget',
         targetelement: 'Weight',
         validation: 'required',
-        
+
       },
       // {
       //   "InternalName": "Status",
@@ -1414,7 +1422,7 @@ var Information_Form = [
         endinternalname: 'BaselineFinishDate',
         // "min": "PlannedStartDate",
         validation: 'required',
-        
+
       },
       // {
       //     "InternalName": "SupplyDate",
@@ -1489,7 +1497,7 @@ var Information_Form = [
         DisplayNameEn: 'Acceptance Criteria',
         type: 'multiline',
         maxchar: 5000,
-        
+
 
       },
       {
@@ -1498,7 +1506,7 @@ var Information_Form = [
         DisplayNameEn: 'Comments',
         type: 'multiline',
         maxchar: 5000,
-        
+
       },
       // {
       //   "InternalName": "RelatedInitiativeDeliverable",
@@ -1521,7 +1529,7 @@ var Information_Form = [
         sourceinternalname: 'InitiativeCode', // column in target list
         Dispfieldkey: 'Name', //display in dropdown
         valfieldkey: 'Title', // value in dropdown
-        
+
       },
       {
         InternalName: 'ShowInProgramReport',
@@ -1540,7 +1548,7 @@ var Information_Form = [
             },
           ],
         },
-        
+
       },
     ],
   },
@@ -1566,10 +1574,10 @@ var Information_Form = [
         DisplayNameEn: 'Name',
         type: 'string',
         maxchar: '255',
-        withletters:true,
-        Errmsgkey:"withletterpatteWrn",
+        withletters: true,
+        Errmsgkey: "withletterpatteWrn",
         validation: 'required',
-        
+
       },
       // {
       //   InternalName: 'Weight',
@@ -1596,7 +1604,7 @@ var Information_Form = [
         seconedtarget: 'Amount',
         // "state":"disabled",
         validation: 'required',
-        
+
       },
       {
         InternalName: 'Amount',
@@ -1608,23 +1616,23 @@ var Information_Form = [
         parentinternalname: 'ActualBudget',
         targetelement: 'Weight',
         validation: 'required',
-        
+
       },
       {
         InternalName: 'PlannedDate',
         DisplayName: 'تاريخ الاكتمال المخطط',
         DisplayNameEn: 'Planned Finish Date',
         type: 'datetime',
-        
+
       },
 
-    //   {
-    //     InternalName: 'CommittedDate',
-    //     DisplayName: 'تاريخ الالتزام',
-    //     DisplayNameEn: 'Committed Date',
-    //     type: 'datetime',
-    //     validation: 'required',
-    //   },
+      //   {
+      //     InternalName: 'CommittedDate',
+      //     DisplayName: 'تاريخ الالتزام',
+      //     DisplayNameEn: 'Committed Date',
+      //     type: 'datetime',
+      //     validation: 'required',
+      //   },
       // {
       //     "InternalName": "ShowInProgramReport",
       //     "DisplayName": "اظهار في التقرير",
@@ -1647,7 +1655,7 @@ var Information_Form = [
         DisplayNameEn: 'Deliverables',
         type: 'multiline',
         maxchar: 5000,
-        
+
       },
       {
         InternalName: 'Description',
@@ -1655,7 +1663,7 @@ var Information_Form = [
         DisplayNameEn: 'Description',
         type: 'multiline',
         maxchar: 5000,
-        
+
       },
       // {
       //   InternalName: 'Status',
@@ -1677,13 +1685,13 @@ var Information_Form = [
         // type: 'lookup',
         // source: 'InitiativeMilestones',
         "type": 'lookuptoparentchild',
-        "parentlist":"Projects", //parent list name
-        "parentinternalname":"RelatedInitiative", // internal name in parent list
-        "source":"InitiativeMilestones", // target list
-        "sourceinternalname":"InitiativeCode", // column in target list
+        "parentlist": "Projects", //parent list name
+        "parentinternalname": "RelatedInitiative", // internal name in parent list
+        "source": "InitiativeMilestones", // target list
+        "sourceinternalname": "InitiativeCode", // column in target list
         "Dispfieldkey": 'Name', //display in dropdown
         "valfieldkey": "Title",// value in dropdown
-        
+
       },
       {
         InternalName: 'Delivered',

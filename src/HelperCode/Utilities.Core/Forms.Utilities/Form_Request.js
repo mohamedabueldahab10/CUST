@@ -644,6 +644,8 @@ window.Edit_Data_Request = {
     DontSubmit_DataRequest.init()
 
 
+
+
     // to handle the title change and the master details section show and hide
     if (isEdit && listkey == 'goalstrategy') {
       if ($('#Types').val() == 'vision') {
@@ -3206,6 +3208,15 @@ var Master_Details_Request = {
         });
       });
       ListInfo.g.newDetail();
+
+      var isMaxOnChild = $('.container-body').find('.maxOnChild').length
+      // set max attr of date for child depends on parent in same form like deliv and miles in initiative form
+      if (isMaxOnChild > 0) {
+
+        $('.maxOnChild').trigger('change')
+      }
+
+
     } else {
       //handle people picker inputs
       $("div[type=picker]").each(function () {

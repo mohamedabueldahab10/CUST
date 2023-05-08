@@ -426,6 +426,10 @@ var Information_Form = [
         DisplayNameEn: 'Start Date',
         type: 'datetime',
         max: 'FinishDate',
+        //
+        maxOnChild:true,
+        childsId:["PlannedFinishDate","ActualCompletedDate","PlannedDate","ActualCompletedDate"],
+        targetOn:"min"
         // validation: 'required',
       },
       {
@@ -434,7 +438,12 @@ var Information_Form = [
         DisplayNameEn: 'Finish Date',
         type: 'datetime',
         min: 'StartDate',
-        // validation: 'required',
+        //
+        maxOnChild:true,
+        childsId:["PlannedFinishDate","ActualCompletedDate","PlannedDate","ActualCompletedDate"],
+        targetOn:"max"
+
+        
       },
       // {
       //   InternalName: 'StartDate',

@@ -3067,7 +3067,13 @@ var CR_Master_Details_Request = {
 		} else {
 			if (isNew || isEdit) ListInfo.g.newDetail();
 
-			console.log(RListKey, "RListKey RListKey")
+
+			var isMaxOnChild = $('.container-body').find('.maxOnChild').length
+			// set max attr of date for child depends on parent in same form like deliv and miles in initiative form
+			if (isMaxOnChild > 0) {
+	  
+			  $('.maxOnChild').trigger('change')
+			}
 
 
 			if ((RListKey == 'initiatives' || RListKey == 'projects')) { // to handle amount in master details based on weight in project and initiative
