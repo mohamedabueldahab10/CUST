@@ -12,6 +12,8 @@ var ActualBudget = 0,
   ScheduleProjectPercentageComplete,
   projectRelatedInitiative,
   projectTypes,
+  InitiativeType,
+  IsStrategicProject,
   numberofyesExp,
   //project vars
   projectname,
@@ -185,7 +187,8 @@ var Project_Home_Info_Request = {
       projectsector = oListItem.get_item("Sector") || No_Data;
       projectSubsector = oListItem.get_item("SubSector") || No_Data;
       projectTypes = oListItem.get_item("ProjectType") || No_Data;
-
+      InitiativeType = oListItem.get_item("InitiativeType") || "";
+      IsStrategicProject = oListItem.get_item("IsStrategicProject") || "";
       var projectsectorarr = [];
 
       if (localStorage.getItem("Dynamo_Internal Entities") != null) {
@@ -2142,11 +2145,23 @@ var StagesConfiguration_Info_Request = {
       stages = oListItem.get_item("StageCode");
       projectType = oListItem.get_item("ProjectType");
 
-      // console.log('projectTypes', projectTypes);
-
-      if (projectType == projectTypes || projectType == null) {
-        stageArr.push(stages);
+ 
+      // render the stage depends on initiative type
+      projectType = Array.from(projectType)
+      if (InitiativeType) {
+        if (projectType.includes(InitiativeType)) {
+          stageArr.push(stages);
+        }
+      }else{
+        if(IsStrategicProject == "no"){
+          if (projectType.includes("strategically")) {
+            stageArr.push(stages);
+          }
+        }
       }
+      // if (projectType == projectTypes || projectType == null) {
+      //   stageArr.push(stages);
+      // }
     }
     // console.log('stageArr', stageArr);
     Stages_Data_Request.init();
@@ -2175,6 +2190,7 @@ var Stages_Data_Request = {
     var count = 0;
 
     while (listItemEnum.moveNext()) {
+
       var oListItem = listItemEnum.get_current();
       phase = oListItem.get_item("PhaseCode");
       encodedphaename = encodeURI(phase.replace(/\s/g, "")).replace(
@@ -2355,6 +2371,7 @@ var Stages_Data_Request = {
       .getByTitle("Project Stages");
     var camlQuery = new SP.CamlQuery();
 
+    debugger
     Query =
       "<View><Query><Where><And><Eq><FieldRef Name='ProjectCode'/><Value Type='Text'>" +
       Project_Home_Info_Request.g.PCODE +
