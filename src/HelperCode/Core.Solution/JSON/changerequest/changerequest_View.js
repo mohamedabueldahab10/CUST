@@ -11,7 +11,7 @@ window.Information_Form = [
 				InternalName: "moduleSelect",
 				DisplayNameEn: "Select Type",
 				DisplayName: "اختر النوع",
-				validation: "required",
+				// validation: "required",
 				// dontSubmit: true,
 				// display: "none",
 				customCr: true,
@@ -123,7 +123,7 @@ window.Information_Form = [
 									source: "MainKPI",
 									Dispfieldkey: "Name",
 									valfieldkey: "Title",
-									validation: "required",
+									// validation: "required",
 								},
 							],
 						},
@@ -156,7 +156,7 @@ window.Information_Form = [
 									DisplayName: "حالة المشروع",
 									DisplayNameEn: "Project Status",
 									type: "dropdownValues",
-									validation: "required",
+									// validation: "required",
 									options: {
 										choices: [{ value: "cancelled", display: "cancelled" }],
 									},
@@ -207,7 +207,7 @@ window.Information_Form = [
 									DisplayName: "نطاق العمل",
 									DisplayNameEn: "ScopeOfWork",
 									type: "multiline",
-									validation: "required",
+									// validation: "required",
 									maxchar: 5000,
 								},
 							],
@@ -257,7 +257,7 @@ window.Information_Form = [
 				source: "Initiatives",
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
-				validation: "required",
+				// validation: "required",
 				showlink: true,
 				linkedto: "initiatives",
 			},
@@ -630,14 +630,14 @@ window.Information_Form = [
 				DisplayName: "مقدم الطلب",
 				DisplayNameEn: "Requester",
 				type: "picker",
-				validation: "required",
+				// validation: "required",
 			},
 			{
 				InternalName: "Level",
 				DisplayName: "مستوى الاعتماد",
 				DisplayNameEn: "Level",
 				type: "string",
-				validation: "required",
+				// validation: "required",
 			},
 			{
 				InternalName: "Description",
@@ -645,7 +645,7 @@ window.Information_Form = [
 				DisplayNameEn: "Description",
 				type: "multiline",
 				maxchar: 5000,
-				validation: "required",
+				// validation: "required",
 			},
 			{
 				InternalName: "ChangeJustifications0",
@@ -653,7 +653,7 @@ window.Information_Form = [
 				DisplayNameEn: "Change Justifications",
 				type: "multiline",
 				maxchar: 5000,
-				validation: "required",
+				// validation: "required",
 			},
 			//
 
@@ -681,7 +681,7 @@ window.Information_Form = [
 			// // 	InternalName: "Types",
 			// // 	DisplayName: "نوع التغيير",
 			// // 	DisplayNameEn: "Types",
-			// // 	validation: "required",
+			// // 	// validation: "required",
 			// // 	type: "dropdownValues",
 			// // 	options: {
 			// // 		choices: [
@@ -1226,7 +1226,7 @@ window.Information_Form = [
 	// 			DisplayNameEn: "Is Unique Output",
 	// 			DisplayName: "هل المخرج له مثيل",
 	// 			type: "dropdownValues",
-	// 			// validation: "required",
+	// 			// // validation: "required",
 	// 			options: {
 	// 			  choices: [
 	// 				{ display: "yes", value: "yes" },
@@ -1276,7 +1276,7 @@ window.Information_Form = [
 	// 			DisplayName: "اسم الخطر",
 	// 			DisplayNameEn: "Risk Name",
 	// 			type: "string",
-	// 			validation: "required",
+	// 			// validation: "required",
 	// 		},
 	// 		{
 	// 			InternalName: "ResolutionPlan",
