@@ -201,13 +201,13 @@ var Build_My_Filter = {
       '<a data-trans-repeatmeas href="#" class="Resources dropdown-toggle fnt-14 w-1 black" data-toggle="dropdown" role="button"  aria-expanded="false"></a>' +
       '<div class="dropdown-menu Filter-2">' +
       ' <label class="dropdown-item main-action-filter">' +
-      '<button data-trans-canselselections class="Resources clear-filter" type="button"></button>' +
+      '<button data-trans-canselselections class="filterOverflow Resources clear-filter" type="button"></button>' +
       "</label>" +
       '<div class="control">' +
-      '<label class="dropdown-item radio" ><span class="Resources" data-trans-year>سنوي</span><input data-type="text" type="checkbox"   data-internal="PeriodType" name="PeriodType" value="year" id="yearlyCheck"></label>' +
-      '<label class="dropdown-item radio" ><span class="Resources" data-trans-quarter>ربع سنوي</span><input data-type="text" type="checkbox"   data-internal="PeriodType"  name="PeriodType" value="quarter" id="quarterlyCheck"></label>' +
-      '<label class="dropdown-item radio" ><span class="Resources" data-trans-midterm>نصف سنوي</span><input data-type="text" type="checkbox"   data-internal="PeriodType"  name="PeriodType" value="midterm" id="midtermCheck"></label>' +
-      '<label class="dropdown-item radio" ><span class="Resources" data-trans-monthly>شهري</span><input data-type="text" type="checkbox"   data-internal="PeriodType"  name="PeriodType" value="monthly" id="monthlyCheck"></label>' +
+      '<label class="dropdown-item radio" ><span class="filterOverflow Resources" data-trans-year>سنوي</span><input data-type="text" type="checkbox"   data-internal="PeriodType" name="PeriodType" value="year" id="yearlyCheck"></label>' +
+      '<label class="dropdown-item radio" ><span class="filterOverflow Resources" data-trans-quarter>ربع سنوي</span><input data-type="text" type="checkbox"   data-internal="PeriodType"  name="PeriodType" value="quarter" id="quarterlyCheck"></label>' +
+      '<label class="dropdown-item radio" ><span class="filterOverflow Resources" data-trans-midterm>نصف سنوي</span><input data-type="text" type="checkbox"   data-internal="PeriodType"  name="PeriodType" value="midterm" id="midtermCheck"></label>' +
+      '<label class="dropdown-item radio" ><span class="filterOverflow Resources" data-trans-monthly>شهري</span><input data-type="text" type="checkbox"   data-internal="PeriodType"  name="PeriodType" value="monthly" id="monthlyCheck"></label>' +
       "</div>" +
       "</div>" +
       "</div>"
@@ -229,7 +229,7 @@ var Build_My_Filter = {
     var benefitnamehtml = ' <label class="dropdown-item main-action-filter">' + '<button data-trans-canselselections class="Resources clear-filter" type="button"></button></label>'
 
     for (var i = 0; i < benefitNameFilterArr.length; i++) {
-      benefitnamehtml += '<label class="dropdown-item"><span class="Resources">' + benefitNameFilterArr[i] + '</span> <input data-type="text" data-internal="Name" type="checkbox" name="Name" value="' + benefitNameFilterArr[i] + '"></label>'
+      benefitnamehtml += '<label class="dropdown-item"><span class="filterOverflow Resources">' + benefitNameFilterArr[i] + '</span> <input data-type="text" data-internal="Name" type="checkbox" name="Name" value="' + benefitNameFilterArr[i] + '"></label>'
     }
 
     $('.dropdown-menu.Filter-3').html(benefitnamehtml);

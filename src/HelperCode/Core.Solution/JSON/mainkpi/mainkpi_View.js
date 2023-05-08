@@ -1096,14 +1096,14 @@ var Information_Form = [
         type: 'float',
         //editableBy: "PerformanceLeader",
       },
-      // {
-      //   InternalName: 'Equation',
-      //   DisplayNameEn: 'Actual value',
-      //   DisplayName: 'القيمة الفعلية',
-      //   type: 'float',
-      //   state: 'disabled',
-      //   //editableBy: "PerformanceLeader",
-      // },
+      {
+        InternalName: 'Equation',
+        DisplayNameEn: 'Actual value',
+        DisplayName: 'القيمة الفعلية',
+        type: 'float',
+        // state: 'disabled',
+        //editableBy: "PerformanceLeader",
+      },
       // {
       //   InternalName: 'PerformanceAnalysis',
       //   DisplayNameEn: 'Performance Analysis',

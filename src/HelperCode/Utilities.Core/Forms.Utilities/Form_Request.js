@@ -41,6 +41,7 @@ var benefitsEquationID,
   benefitQuarter = '',
   benefitMid = '',
   benefitYearHandler = '';
+  // benefitMetricsYear="";
 
 window.benefitsEquationsComponents = []
 ////////
@@ -574,13 +575,13 @@ window.Edit_Data_Request = {
     }
 
     if (listkey == "benefitmetrics") {
-
+      
       benefitCode = oListItem.get_item("Title");
       benefitFromYear = oListItem.get_item("FromDate") ? oListItem.get_item("FromDate") : '';
       benefitToYear = oListItem.get_item("ToDate") ? oListItem.get_item("ToDate") : '';
 
       benefitYear = oListItem.get_item("Year")
-
+      // benefitMetricsYear = oListItem.get_item("Year")
       benefitMonth = oListItem.get_item("Months") ? oListItem.get_item("Months") : '';
       benefitQuarter = oListItem.get_item("Quarter") ? oListItem.get_item("Quarter") : '';
       benefitMid = oListItem.get_item("Midterms") ? oListItem.get_item("Midterms") : '';
@@ -1242,6 +1243,7 @@ window.View_Data_Request = {
           }
           else if (listkey == 'benefitmetrics') {
             if ($(this).attr("id") == 'Year') {
+              
               $(this).text(value)
             } else {
               var periodType = oListItem.get_item("PeriodType")
@@ -1588,7 +1590,7 @@ window.View_Data_Request = {
                             "data-parentrelatedvaluelvl1"
                           ); // parent value
 
-                          debugger
+                          
                           if (parentElement && parenetValue) {
                             //to get the sector name and subsector name in don't submit view
                             if (parentElement == "Sector") {
@@ -1984,6 +1986,14 @@ window.View_Data_Request = {
     if (listkey == 'benefitmetrics') {
 
       benefitCode = oListItem.get_item("Title");
+      benefitYear = oListItem.get_item("Year")
+      benefitMonth = oListItem.get_item("Months") ? oListItem.get_item("Months") : '';
+      benefitQuarter = oListItem.get_item("Quarter") ? oListItem.get_item("Quarter") : '';
+      benefitMid = oListItem.get_item("Midterms") ? oListItem.get_item("Midterms") : '';
+      benefitYearHandler = oListItem.get_item("Years") ? oListItem.get_item("Years") : '';
+      // benefitYearHandler = oListItem.get_item("Years") ? oListItem.get_item("Years") : '';
+
+      // benefitMetricsYear =oListItem.get_item("Year")
 
       if (!USERisWF) {
         $('#printableArea').prepend('<a class="linkmsg alert" href="' + _spPageContextInfo.siteAbsoluteUrl + '/sitepages/BenefitMetrics.aspx?BenefitMetricsCode=' + benefitCode + '"><i class="fas fa-info-circle iconfontawesome"></i><span data-trans-benefitmetricstext class="Resources">' +
@@ -5719,7 +5729,7 @@ var equationBenefit = {
       }
     }
 
-    if (isAdmin || isSPMAdmin) { // remove attr disabled for this roles in equation
+    if ((isAdmin || isSPMAdmin) && !USERisWF) { // remove attr disabled for this roles in equation
       $(".savecancelBtns > div, .btnactionrow > .rightBtns").append(
         '<button data-trans-editequation class="btn btn-action Resources btn-edit-equation bg-warning" type="button"></button>'
       );
@@ -5748,7 +5758,7 @@ var equationBenefit = {
     );
   },
   init: function () {
-
+    
     var clientContext = new SP.ClientContext.get_current();
 
     var oList = clientContext.get_web().get_lists().getByTitle("BenefitsEquations");
@@ -5885,6 +5895,13 @@ window.Update_Benefits_Results = {
     var programList = context.get_web().get_lists().getByTitle("BenefitsResults");
     var camlQuery = new SP.CamlQuery();
 
+    // console.log(benefitMetricsYear,"benefitMetricsYear")
+    // var onYear = benefitMetricsYear
+
+    // var code = benefitCode+"-"+onYear
+    console.log(benefitCode,"benefitCode benefitCodebenefitCode")
+   
+    // console.log(code,"codecodecode")
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='RelatedBenefitMetrics'/><Value Type='Text'>" +
       benefitCode +
@@ -5896,6 +5913,7 @@ window.Update_Benefits_Results = {
     context.load(progColl);
     context.executeQueryAsync(function () {
       var currentItemArray = [];
+      console.log(progColl.get_count(),"ccccccccccccccccccccccccccc")
       if (progColl.get_count() > 0) {
         var progEnum = progColl.getEnumerator();
         while (progEnum.moveNext()) {
@@ -5910,8 +5928,9 @@ window.Update_Benefits_Results = {
           var monthHandler = benefitMonth;
           var quarterHandler = benefitQuarter;
           var midHandler = benefitMid;
-          var yearHandler = benefitYearHandler;
-
+          var yearHandler = "Actual1";
+          // var yearHandler = benefitYearHandler;
+          
           if (yearItem == yearPicked) {
             if (!benefitsEquation) {
               benefitsEquation = 0;
@@ -5922,7 +5941,7 @@ window.Update_Benefits_Results = {
               items.set_item(quarterHandler, benefitsEquation);
             } else if (midHandler) {
               items.set_item(midHandler, benefitsEquation);
-            } else if (yearHandler) {
+            } else  {
               items.set_item(yearHandler, benefitsEquation);
             }
           }
@@ -6016,6 +6035,7 @@ window.Update_Kpi_Results = {
               yearHandler = KPIYearHandler
             }
 
+            
             if (yearItem == yearPicked) {
 
               if (!kpiEquation) {
@@ -6027,7 +6047,8 @@ window.Update_Kpi_Results = {
                 items.set_item(quarterHandler, kpiEquation);
               } else if (midHandler) {
                 items.set_item(midHandler, kpiEquation);
-              } else if (yearHandler) {
+              } else { 
+                yearHandler = "ActualY"
                 items.set_item(yearHandler, kpiEquation);
               }
             }
@@ -6332,10 +6353,10 @@ var View_Current_Kpi = {
       '<label data-trans-actualkpivalue class="Resources"></label>' +
       '<p class="viewmode-value" id="Equation">' + relatedActualValue + '</p>' +
       '</div>' +
-      '<div class="col-md-12 multiline">' +
-      '<label data-trans-performanceanalysis class="Resources"></label>' +
-      '<p class="viewmode-value" id="PerformanceAnalysis">' + relatedPerformanceAnalysis + '</p>' +
-      '</div>' +
+      // '<div class="col-md-12 multiline">' +
+      // '<label data-trans-performanceanalysis class="Resources"></label>' +
+      // '<p class="viewmode-value" id="PerformanceAnalysis">' + relatedPerformanceAnalysis + '</p>' +
+      // '</div>' +
       '</div>'
 
     if (filesUrls.length > 0) { // add view before attachement
@@ -6412,10 +6433,10 @@ var View_Previous_kpi = {
       '<label data-trans-actualkpivalue class="Resources"></label>' +
       '<p class="viewmode-value" id="Equation_Previous">' + targetValue + '</p>' +
       '</div>' +
-      '<div class="col-md-12 multiline">' +
-      '<label data-trans-performanceanalysis class="Resources"></label>' +
-      '<p class="viewmode-value" id="PerformanceAnalysis_Previous">' + targetAnalysis + '</p>' +
-      '</div>' +
+      // '<div class="col-md-12 multiline">' +
+      // '<label data-trans-performanceanalysis class="Resources"></label>' +
+      // '<p class="viewmode-value" id="PerformanceAnalysis_Previous">' + targetAnalysis + '</p>' +
+      // '</div>' +
       '</div>' +
       '</div>'
 

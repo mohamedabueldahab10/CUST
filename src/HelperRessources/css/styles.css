@@ -7037,3 +7037,10 @@ span.statuscolorstat28 {
     max-height: 8rem;
     overflow: auto;
 }
+
+.filterOverflow{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 300px;
+}

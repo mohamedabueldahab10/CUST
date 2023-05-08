@@ -1575,23 +1575,23 @@ var Information_Form = [
           ],
         },
       },
-      // {
-      //   InternalName: 'Equation',
-      //   DisplayNameEn: 'Actual value',
-      //   DisplayName: 'القيمة الفعلية',
-      //   // type: 'number',
-      //   type: 'float',
-      //   state: 'disabled',
-      //   //editableBy: "PerformanceLeader",
-      //   security: {
-      //     groups: [
-      //       'LMS_P',
-      //       'VRO_P',
-      //       'Performance Leaders',
-      //       'System Admin Group',
-      //     ],
-      //   },
-      // },
+      {
+        InternalName: 'Equation',
+        DisplayNameEn: 'Actual value',
+        DisplayName: 'القيمة الفعلية',
+        // type: 'number',
+        type: 'float',
+        state: 'disabled',
+        //editableBy: "PerformanceLeader",
+        // security: {
+        //   groups: [
+        //     'LMS_P',
+        //     'VRO_P',
+        //     'Performance Leaders',
+        //     'System Admin Group',
+        //   ],
+        // },
+      },
       //   {
       //     InternalName: 'PerformanceAnalysis',
       //     DisplayNameEn: 'Performance Analysis',
