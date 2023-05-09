@@ -5602,20 +5602,10 @@ window.ListInfo = {
 
           if (myRoleConfig[0].hasOwnProperty("dataFilter")) {
             isRoleDataLevelAccess = true;
-            // console.log("inside form render")
-
-            // var x = ["Projects"]
-
-            //  initiateDataLevelAccess("Projects")
-            //  var queryTest = ""
-            //  queryTest = await get_hierarchies.init()
+ 
             await get_hierarchies.init(element.source)
 
-            // console.log(queryTest, "query queryquery")
-            // console.log(query, "After hirercies")
 
-            // customQuery = query
-            // if (queryTest) {
             myRoleConfig[0].dataFilter.hierarchies.forEach((el, i, a) => {
 
               let accessConditions = el.accessConditions;
@@ -10054,7 +10044,7 @@ dynamicAffectSelect = {
         <Where>
           <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
           </Where>
-        <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`;
+        <OrderBy><FieldRef Name="Name" Ascending="True"/></OrderBy></Query></View>`;
     } else if (
       queryFieldValue &&
       queryFieldValue != "undefined" &&
@@ -10070,16 +10060,18 @@ dynamicAffectSelect = {
         <Eq><FieldRef Name="${affectedSelectsInfo[0].filterField}"/><Value Type="${affectedSelectsInfo[0].filterFieldType}">${valueToFilter}</Value></Eq>
         <Eq><FieldRef Name="${queryFieldName}" /><Value Type="${queryFieldType}">${queryFieldValue}</Value></Eq></Eq>
         </And></And></Where>
-        <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`;
+        <OrderBy><FieldRef Name="Name" Ascending="True"/></OrderBy></Query></View>`;
     } else {
       Query = `<View><Query>
         <Where><And>
           <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
           <Eq><FieldRef Name="${affectedSelectsInfo[0].filterField}"/><Value Type="${affectedSelectsInfo[0].filterFieldType}">${valueToFilter}</Value></Eq>
         </And></Where>
-        <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`;
-    }
+        <OrderBy><FieldRef Name="Name" Ascending="True"/></OrderBy></Query></View>`;
 
+        //change FieldRef to Name and Acending True to can sort alphapetics arabic and english
+        //FieldRef Name="Created" Ascending="True"(if we want to sort to alphapetics you need to Name='Name' and  Ascending='True')
+    }
 
 
     camlQuery.set_viewXml(Query);
