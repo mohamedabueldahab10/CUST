@@ -4,10 +4,10 @@ var Information_Form = [
     labelEn: 'Principal data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
-     formDefaultValues: [
+    formDefaultValues: [
       //VRO
-      { fieldName: 'DraftStatus', value: 'draft' ,roles: ['allRoles'], },
-    
+      { fieldName: 'DraftStatus', value: 'draft', roles: ['allRoles'], },
+
     ],
     subFields: [
       {
@@ -16,8 +16,8 @@ var Information_Form = [
         DisplayNameEn: 'Partnership Name',
         type: 'string',
         validation: 'required',
-        withletters:true,
-        Errmsgkey:'withletterpattern',
+        withletters: true,
+        Errmsgkey: 'withletterpattern',
         maxchar: '255',
       },
       {
@@ -52,7 +52,7 @@ var Information_Form = [
 
       {
         "InternalName": "SubSector",
-        "DisplayName": "الوكالة",
+        "DisplayName": "الوكالات",
         "DisplayNameEn": "DeputyShip",
         type: "lookupmultiselect",
         //from other list:
@@ -62,7 +62,7 @@ var Information_Form = [
         grpfieldkey: 'Title',
         // "isRelatedToParent": true, // to show parent value depends on child like sector and subsector
         dynamic: "Sector", //InternalName Of Parent field
-        filterField: "ParentEntity", 
+        filterField: "ParentEntity",
         filterFieldType: "Text",//Type In Sharepoint List for Parent field
         // "validation": "required"
       },
@@ -136,7 +136,7 @@ var Information_Form = [
       },
       {
         InternalName: 'PartnerName',
-        DisplayName: 'اسم الشريك', 
+        DisplayName: 'اسم الشريك',
         DisplayNameEn: 'Partner Name',
         type: 'lookup',
         validation: 'required',
@@ -149,8 +149,8 @@ var Information_Form = [
   {
     label: 'التفاصيل',
     labelEn: 'Details',
-    description: '',
-    descriptionEn: '',
+    description: 'التفاصيل',
+    descriptionEn: 'Details',
     subFields: [
       {
         InternalName: 'Description',
@@ -196,7 +196,7 @@ var Information_Form = [
         DisplayNameEn: 'Related Initiative',
         DisplayName: 'المبادرة المرتبطة',
         type: 'lookup',
-        dynamic:'parent',
+        dynamic: 'parent',
         source: 'Initiatives',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
@@ -219,6 +219,10 @@ var Information_Form = [
         DisplayNameEn: 'Start Date',
         type: 'datetime',
         validation: 'required',
+        //
+        autoSetDate: true,
+        sourceelement: "Duration",
+        targetelement: "FinishDate",
       },
       {
         InternalName: 'Duration',
@@ -228,7 +232,7 @@ var Information_Form = [
         sourceelementdate: "StartDate",
         targetelementdate: "FinishDate",
         validation: 'required',
-        numberOfDigits:"3"
+        numberOfDigits: "3"
       },
       {
         InternalName: 'FinishDate',
@@ -262,7 +266,7 @@ var Information_Form = [
         type: 'datetime',
         RequiredName: 'CancelationDate',
         max: 'today',
-        Errmsgkey:'cancelationdatepattern',
+        Errmsgkey: 'cancelationdatepattern',
       },
       {
         InternalName: 'Status',
@@ -290,7 +294,7 @@ var Information_Form = [
         requiredValues: [
           { value: 'standard', fields: [''] },
           { value: 'notstandard', fields: ['CancelationDate'] },
-        
+
         ],
       },
       {

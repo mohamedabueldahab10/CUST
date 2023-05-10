@@ -640,6 +640,36 @@ window.ListInfo = {
           });
           ////////////////////////////// calculate the end date based on start date and duration
 
+          $("input.autoSetDate").change(function (event) {
+            
+            var datePicked = event.target.value
+
+            var sourceElement = $(this).data('sourceelement');
+            var sourceElementValue = $(`#${sourceElement}`).val();
+            var targetElement = $(this).data('targetelement');
+
+            if (sourceElementValue && datePicked) {
+              debugger
+              sourceElementValue = Number(sourceElementValue)
+
+              let start = new Date(datePicked);
+              let end = new Date(start);
+              end.setMonth(end.getMonth() + sourceElementValue)
+
+              start = Dynamic_Data_Request.g.convertdate(start);
+              end = Dynamic_Data_Request.g.convertdate(end);
+
+              $(`#${targetElement}`).val(end)
+
+              console.log(start, "start")
+              console.log(end, "end")
+
+
+            }
+          })
+
+          //
+
           $("input.autoEndDate").keyup(function (event) {
             // 
             if (event.which >= 37 && event.which <= 40) return;
@@ -1060,9 +1090,9 @@ window.ListInfo = {
               debugger
               var maxValue = 0
               if (listkey == "projects") {
-                if($(`#${max}`).val()){
+                if ($(`#${max}`).val()) {
                   maxValue = $(`#${max}`).val() ? $(`#${max}`).val() : 0
-                }else if($(`#Amount`).val()){
+                } else if ($(`#Amount`).val()) {
                   maxValue = $(`#Amount`).val() ? $(`#Amount`).val() : 0
                 }
               } else {
@@ -3272,9 +3302,19 @@ window.ListInfo = {
       case "datetime":
         var maxOnChild = ""
         var targetOn = ""
+
+        var autoSetDate = "", sourceelement = "", targetelement = "";
+
+
         if (element.maxOnChild) {
           maxOnChild = "maxOnChild"
 
+        }
+
+        if (element.autoSetDate) {
+          autoSetDate = "autoSetDate"
+          sourceelement = `data-sourceelement=${element.sourceelement}`
+          targetelement = `data-targetelement=${element.targetelement}`
         }
 
         if (element.targetOn && element.targetOn != "undefined") {
@@ -3345,11 +3385,15 @@ window.ListInfo = {
           childsId +
           " " +
           targetOn +
+          " " +
+          sourceelement +
+          " " +
+          targetelement +
           ' type="date" placeholder="' +
           displayName +
           '" ' +
           dynamic +
-          ' class="form-control SPIField ' + maxOnChild + '" id="' +
+          ' class="form-control SPIField ' + maxOnChild + ' ' + autoSetDate + '" id="' +
           element.InternalName +
           '" ' +
           element.state +
