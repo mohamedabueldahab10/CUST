@@ -646,6 +646,10 @@ var Information_Form = [
             { display: "no", value: "no" },
           ],
         },
+        toggleValues: [
+          { value: 'yes', fields: [] },
+          { value: 'no', fields: ['FundingSection','TenderSection'] },
+        ],
       },
 
       // {
@@ -839,6 +843,7 @@ var Information_Form = [
     labelEn: "Funding",
     description: "",
     descriptionEn: "",
+    toggleName: 'FundingSection',
     subFields: [
       {
         InternalName: "FundingSources",
@@ -1085,6 +1090,7 @@ var Information_Form = [
     labelEn: "Tendering and Contracting",
     description: "",
     descriptionEn: "",
+    toggleName: 'TenderSection',
     subFields: [
       {
         InternalName: "PlannedOfferingDate",

@@ -671,6 +671,10 @@ var Information_Form = [
             { display: "no", value: "no" },
           ],
         },
+        toggleValues: [
+          { value: 'yes', fields: [] },
+          { value: 'no', fields: ['FundingSection','TenderSection'] },
+        ],
       },
       // { //TESTING
       //   InternalName: 'IsZeroBudgetProj',
@@ -881,7 +885,7 @@ var Information_Form = [
     labelEn: "Funding",
     description: "",
     descriptionEn: "",
-    // toggleName: 'FundingSection',
+    toggleName: 'FundingSection',
     // sectiontype: 'master',
     // layout: 'table',
     // targetlist: 'Funding',
@@ -1102,6 +1106,8 @@ var Information_Form = [
     labelEn: "Tendering and Contracting",
     description: "",
     descriptionEn: "",
+    toggleName: 'TenderSection',
+
     // toggleName: 'TenderSection',
     // sectiontype: 'master',
     // layout: 'table',
@@ -1350,6 +1356,7 @@ var Information_Form = [
   {
     label: 'بيانات المخرج',
     labelEn: 'Delivrable Data',
+    toggleName:"Delivrables",
     description: 'التفاصيل (يمكن ادخال القيم عند ادخال التكلفة)',
     descriptionEn: 'Details (you can enter the values when enter the Amount)',
     sectiontype: 'master',
@@ -1582,6 +1589,7 @@ var Information_Form = [
     sectiontype: 'master',
     className: "disable_section", // to make the section disabled on form render
     targetlist: 'Milestones',
+    toggleName:'Milestones',
     subFields: [
 
       // {

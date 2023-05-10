@@ -254,7 +254,7 @@ window.ListInfo = {
 
 
 
-        toggleSectionName = item.togglename
+        toggleSectionName = item.toggleName
 
         //Handle security
         var groups = [],
@@ -7754,7 +7754,7 @@ window.View_ListInfo = {
         //
 
 
-        toggleSectionName = item.togglename
+        toggleSectionName = item.toggleName
 
         var printFooter = "";
         var printBody = "";
