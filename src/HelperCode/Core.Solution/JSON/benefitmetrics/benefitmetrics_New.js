@@ -150,6 +150,7 @@ var Information_Form = [
         max: 'ToDate',
         // type: 'datetime',
         validation: 'required',
+        Errmsgkey: 'fromyearpattern',
       },
       {
        InternalName: 'ToDate',
@@ -163,6 +164,7 @@ var Information_Form = [
       min: 'FromDate',
       // type: 'datetime',
       validation: 'required',
+      Errmsgkey: 'toyearpattern',
       },
       {
         InternalName: 'DataSource',

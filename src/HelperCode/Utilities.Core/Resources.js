@@ -1022,6 +1022,8 @@
     withletterpatternunrequired: "يجب إدخال أحرف",
     withletterpattern: " الحقل إلزامي و يجب إدخال أحرف",
     cancelationdatepattern: "يجب إدخال تاريخ قبل تاريخ اليوم",
+    fromyearpattern: "يجب إدخال سنة  تساوي الأخيرة أو أصغر منها",
+    toyearpattern: "يجب إدخال سنة تساوي الأولى أو أكبر منها",
     taskformtitle: "النموذج المعتمد",
     taskhistory: "العمليات السابقة",
     taskdecision: "القرار",

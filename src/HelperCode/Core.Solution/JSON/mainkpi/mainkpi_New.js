@@ -192,6 +192,8 @@ var Information_Form = [
         max: 'ToDate',
         // type: "datetime",
         type: 'yearInput',
+        validation: 'required',
+        Errmsgkey: 'fromyearpattern',
         //   "state": "disabled",
         //   dynamic: "Initiative",
         // options: {
@@ -209,7 +211,6 @@ var Information_Form = [
         //     '2030',
         //   ],
         // },
-        validation: 'required',
       },
       {
         InternalName: 'ToDate',
@@ -218,6 +219,8 @@ var Information_Form = [
         type: 'yearInput',
         // type: "datetime",
         min: 'FromDate',
+        validation: 'required',
+        Errmsgkey: 'toyearpattern',
         //   "state": "disabled",
         //   dynamic: "Initiative",
         // options: {
@@ -235,7 +238,6 @@ var Information_Form = [
         //     '2030',
         //   ],
         // },
-        validation: 'required',
       },
       {
         InternalName: 'CategoryKPI',
