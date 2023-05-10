@@ -2120,7 +2120,7 @@ window.userCalls = {
         //***** */
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-        ar_UserRole = "مكتب ادارة المشروع المؤسسي";
+        ar_UserRole = "مكتب ادارة المشاريع المؤسسي";
         en_UserRole = "Institutional Project Management Office";
         //CRUD
         Create_Access = [
