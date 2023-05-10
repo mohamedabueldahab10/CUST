@@ -1258,8 +1258,8 @@ var Information_Form = [
   {
     label: 'مكونات المعادلة',
     labelEn: 'Equation Component',
-    description: '',
-    descriptionEn: '',
+    description: 'يمكن ادخال القيم عند ادخال معادلة للمؤشر', 
+    descriptionEn: 'you can enter the values when enter the kpi Equation',
     subFields: [
       {
         InternalName: 'KPIEquation',

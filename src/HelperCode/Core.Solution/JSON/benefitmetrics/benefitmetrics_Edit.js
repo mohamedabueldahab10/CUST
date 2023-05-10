@@ -273,8 +273,8 @@ var Information_Form = [
   {
     label: 'مكونات المعادلة',
     labelEn: 'Equation components',
-    description: '',
-    descriptionEn: '',
+    description: 'يمكن ادخال القيم عند ادخال معادلة',
+    descriptionEn: 'you can enter the values when enter the Equation',
     subFields: [
       {
         InternalName: 'BenefitEquation',

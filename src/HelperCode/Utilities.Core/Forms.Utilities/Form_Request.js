@@ -41,7 +41,7 @@ var benefitsEquationID,
   benefitQuarter = '',
   benefitMid = '',
   benefitYearHandler = '';
-  // benefitMetricsYear="";
+// benefitMetricsYear="";
 
 window.benefitsEquationsComponents = []
 ////////
@@ -575,7 +575,7 @@ window.Edit_Data_Request = {
     }
 
     if (listkey == "benefitmetrics") {
-      
+
       benefitCode = oListItem.get_item("Title");
       benefitFromYear = oListItem.get_item("FromDate") ? oListItem.get_item("FromDate") : '';
       benefitToYear = oListItem.get_item("ToDate") ? oListItem.get_item("ToDate") : '';
@@ -1243,7 +1243,7 @@ window.View_Data_Request = {
           }
           else if (listkey == 'benefitmetrics') {
             if ($(this).attr("id") == 'Year') {
-              
+
               $(this).text(value)
             } else {
               var periodType = oListItem.get_item("PeriodType")
@@ -1590,7 +1590,7 @@ window.View_Data_Request = {
                             "data-parentrelatedvaluelvl1"
                           ); // parent value
 
-                          
+
                           if (parentElement && parenetValue) {
                             //to get the sector name and subsector name in don't submit view
                             if (parentElement == "Sector") {
@@ -5516,6 +5516,10 @@ window.equationKPI = {
       $('#Year,#Months,#Quarter,#Midterms,#Years').removeAttr('required');
       $('#Year,#Months,#Quarter,#Midterms,#Years').parent().removeAttr('required');
       $('#Year,#Months,#Quarter,#Midterms,#Years').prev('label').removeAttr('required');
+
+      // to make the section disable if there is no equation yet
+      var disableSection = $('#KPIEquation').closest(".section-container")
+      disableSection.addClass("disable_section")
     }
 
     if (kpiEquation) {
@@ -5679,11 +5683,16 @@ var equationBenefit = {
 
 
     // remove required field when there is no equation
-    // if (!kpiEquation && isEdit) {
-    //   $('#Year,#Months,#Quarter,#Midterms,#Years').removeAttr('required');
-    //   $('#Year,#Months,#Quarter,#Midterms,#Years').parent().removeAttr('required');
-    //   $('#Year,#Months,#Quarter,#Midterms,#Years').prev('label').removeAttr('required');
-    // }
+    if (!benefitsEquation && isEdit) {
+      // $('#Year,#Months,#Quarter,#Midterms,#Years').removeAttr('required');
+      // $('#Year,#Months,#Quarter,#Midterms,#Years').parent().removeAttr('required');
+      // $('#Year,#Months,#Quarter,#Midterms,#Years').prev('label').removeAttr('required');
+
+      // to make the section disable if there is no equation yet
+      var disableSection = $('#BenefitEquation').closest(".section-container")
+      disableSection.addClass("disable_section")
+
+    }
 
     if (benefitsEquation) {
       benefitsEquation = benefitsEquation.toUpperCase() // kpi eq should be upper case to avoid the  editequation btn not appear in view
@@ -5758,7 +5767,7 @@ var equationBenefit = {
     );
   },
   init: function () {
-    
+
     var clientContext = new SP.ClientContext.get_current();
 
     var oList = clientContext.get_web().get_lists().getByTitle("BenefitsEquations");
@@ -5899,8 +5908,8 @@ window.Update_Benefits_Results = {
     // var onYear = benefitMetricsYear
 
     // var code = benefitCode+"-"+onYear
-    console.log(benefitCode,"benefitCode benefitCodebenefitCode")
-   
+    console.log(benefitCode, "benefitCode benefitCodebenefitCode")
+
     // console.log(code,"codecodecode")
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='RelatedBenefitMetrics'/><Value Type='Text'>" +
@@ -5913,7 +5922,7 @@ window.Update_Benefits_Results = {
     context.load(progColl);
     context.executeQueryAsync(function () {
       var currentItemArray = [];
-      console.log(progColl.get_count(),"ccccccccccccccccccccccccccc")
+      console.log(progColl.get_count(), "ccccccccccccccccccccccccccc")
       if (progColl.get_count() > 0) {
         var progEnum = progColl.getEnumerator();
         while (progEnum.moveNext()) {
@@ -5930,7 +5939,7 @@ window.Update_Benefits_Results = {
           var midHandler = benefitMid;
           var yearHandler = "Actual1";
           // var yearHandler = benefitYearHandler;
-          
+
           if (yearItem == yearPicked) {
             if (!benefitsEquation) {
               benefitsEquation = 0;
@@ -5941,7 +5950,7 @@ window.Update_Benefits_Results = {
               items.set_item(quarterHandler, benefitsEquation);
             } else if (midHandler) {
               items.set_item(midHandler, benefitsEquation);
-            } else  {
+            } else {
               items.set_item(yearHandler, benefitsEquation);
             }
           }
@@ -6035,7 +6044,7 @@ window.Update_Kpi_Results = {
               yearHandler = KPIYearHandler
             }
 
-            
+
             if (yearItem == yearPicked) {
 
               if (!kpiEquation) {
@@ -6047,7 +6056,7 @@ window.Update_Kpi_Results = {
                 items.set_item(quarterHandler, kpiEquation);
               } else if (midHandler) {
                 items.set_item(midHandler, kpiEquation);
-              } else { 
+              } else {
                 yearHandler = "ActualY"
                 items.set_item(yearHandler, kpiEquation);
               }
