@@ -1630,7 +1630,7 @@ var Task_PCODE_Data_Request_WFs = {
 	// The main Initialization function
 	init: function () {
 
-		
+
 
 		// console.log(taskquery, "THIS IS TASLK QUERy")
 		var clientContext = new SP.ClientContext.get_current();
@@ -2204,7 +2204,7 @@ var Task_PCODE_Data_Request_WFs = {
 			}
 		},
 		makesureishtml: function () {
-		
+
 			if ($(".fieldset-container").length) {
 				console.log("IN containercontainercontainer")
 
@@ -2223,7 +2223,7 @@ var Task_PCODE_Data_Request_WFs = {
 			}
 		},
 		addcomments: function (state, version, withNote = false) {
-			
+
 			stageState = state; // added to handle WF Notes
 			if (workflowname == "Project") {
 				if (version == "Approval" || version == "Submit") {
@@ -2586,7 +2586,7 @@ var SubmitField_BulkEdit = {
 	preinit: function (state, withNote = false) {
 
 
-		
+
 
 		globalStateSubmitField = state;
 		if (stageid == "S01" && isWfFirst_Upload) {
@@ -2620,11 +2620,21 @@ var SubmitField_BulkEdit = {
 			localStorage.getItem("lng") == "ar"
 		) {
 			if (withNote && noteBoxVal == "") {
-				return $(".wrapcomments").append("<p>يرجى تعبئة الملاحظات</p>");
+				var fillNote = $(".wrapcomments").find('.fillnote').length
+				if (fillNote == 0){
+					return $(".wrapcomments").append("<p class='fillnote'>يرجى تعبئة الملاحظات</p>");
+				}else{
+					return false
+				}
 			}
 		} else {
 			if (withNote && noteBoxVal == "") {
-				return $(".wrapcomments").append("<p>Please Fill The Note</p>");
+				var fillNote = $(".wrapcomments").find('.fillnote').length
+				if (fillNote == 0){
+				return $(".wrapcomments").append("<p class='fillnote'>Please Fill The Note</p>");
+				}else{
+					return false
+				}
 			}
 		}
 		if (
@@ -2681,7 +2691,7 @@ var SubmitField_BulkEdit = {
 		var context = SP.ClientContext.get_current();
 		var dfd = $.Deferred();
 		//Get list from host web
-		
+
 		var programList = context.get_web().get_lists().getByTitle(bulkeditlist);
 		var camlQuery = new SP.CamlQuery();
 		camlQuery.set_viewXml(bulkeditquery);
