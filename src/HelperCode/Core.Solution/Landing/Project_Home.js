@@ -2371,7 +2371,7 @@ var Stages_Data_Request = {
       .getByTitle("Project Stages");
     var camlQuery = new SP.CamlQuery();
 
-    debugger
+    
     Query =
       "<View><Query><Where><And><Eq><FieldRef Name='ProjectCode'/><Value Type='Text'>" +
       Project_Home_Info_Request.g.PCODE +

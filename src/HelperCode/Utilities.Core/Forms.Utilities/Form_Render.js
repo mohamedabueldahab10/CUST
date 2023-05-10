@@ -263,7 +263,7 @@ window.ListInfo = {
           rendersection = true;
         if (item.hasOwnProperty("security")) {
           if (item.security.groups.length > 0) {
-            console.log("SECURITY1");
+
 
             for (var z = 0; z < item.security.groups.length; z++) {
               groups.push(item.security.groups[z]);
@@ -639,6 +639,36 @@ window.ListInfo = {
             $(`#${taxElement}`).val(tax);
           });
           ////////////////////////////// calculate the end date based on start date and duration
+
+          $("input.autoSetDate").change(function (event) {
+            
+            var datePicked = event.target.value
+
+            var sourceElement = $(this).data('sourceelement');
+            var sourceElementValue = $(`#${sourceElement}`).val();
+            var targetElement = $(this).data('targetelement');
+
+            if (sourceElementValue && datePicked) {
+              debugger
+              sourceElementValue = Number(sourceElementValue)
+
+              let start = new Date(datePicked);
+              let end = new Date(start);
+              end.setMonth(end.getMonth() + sourceElementValue)
+
+              start = Dynamic_Data_Request.g.convertdate(start);
+              end = Dynamic_Data_Request.g.convertdate(end);
+
+              $(`#${targetElement}`).val(end)
+
+              console.log(start, "start")
+              console.log(end, "end")
+
+
+            }
+          })
+
+          //
 
           $("input.autoEndDate").keyup(function (event) {
             // 
@@ -1042,8 +1072,6 @@ window.ListInfo = {
 
           })
 
-
-
           ///
           $("input.number").keyup(function (event) {
             // skip for arrow keys
@@ -1059,37 +1087,51 @@ window.ListInfo = {
             var elementVal = event.target.value
             // set max value
             if (max && max != 'undefined') {
+              debugger
+              var maxValue = 0
+              if (listkey == "projects") {
+                if ($(`#${max}`).val()) {
+                  maxValue = $(`#${max}`).val() ? $(`#${max}`).val() : 0
+                } else if ($(`#Amount`).val()) {
+                  maxValue = $(`#Amount`).val() ? $(`#Amount`).val() : 0
+                }
+              } else {
+                maxValue = $(`#${max}`).val() ? $(`#${max}`).val() : 0
+              }
+              if (maxValue.includes(",")) {
+                maxValue = maxValue.replaceAll(",", "")
+              }
+              if (elementVal.includes(",")) {
+                elementVal = elementVal.replaceAll(",", "")
 
-              var maxValue = $(`#${max}`).val() ? $(`#${max}`).val() : 0
-              maxValue = maxValue.replaceAll(",", "")
-              elementVal = elementVal.replaceAll(",", "")
+              }
               elementVal = Number(elementVal)
               maxValue = Number(maxValue)
+
               if (elementVal <= maxValue) {
-                // $(this).focusout(function() {
                 $(this).val(function (index, value) {
                   return value
                     .replace(/\D/g, "")
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 });
-                // });
               } else {
                 $(this).val(null)
               }
-
-            } else if (resetElement && resetElement != 'undefined' && !elementVal) {
-              $(`#${resetElement}`).val(null)
-            } else {
+            }
+            else if (resetElement && resetElement != 'undefined') {
+              resetElement = eval(resetElement)
+              resetElement.forEach(el => {
+                $(`#${el}`).val(null)
+              })
+            }
+            else {
               // format number
-              // $(this).focusout(function() {
               $(this).val(function (index, value) {
                 return value
                   .replace(/\D/g, "")
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
               });
-              // });
             }
-
             /// 
 
             if (totalElement && totalElement != 'undefined' && sum1 && sum1 != 'undefined' && sum2 && sum2 != 'undefined') {
@@ -1101,6 +1143,23 @@ window.ListInfo = {
               value2 = Number(value2)
               var total = value1 + value2
               $(`#${totalElement}`).val(total)
+
+              fieldsDependsOnTotal = $(`#${totalElement}`).data('resetelement')
+
+              if (fieldsDependsOnTotal) {
+                fieldsDependsOnTotal = eval(fieldsDependsOnTotal)
+
+                fieldsDependsOnTotal.forEach(el => {
+                  var resVal = $(`#${el}`).val()
+                  if (resVal.includes(',')) {
+                    resVal = resVal.replaceAll(",", "")
+                    resVal = Number(resVal)
+                  }
+                  if (resVal > total) {
+                    $(`#${el}`).val(null)
+                  }
+                })
+              }
             }
           });
 
@@ -1110,7 +1169,6 @@ window.ListInfo = {
             var targetOn = $(this).data('targeton')
             var childsId = $(this).data('childsid')
             childsId = eval(childsId)
-            console.log(targetOn, "ssssssssssssssss")
 
             childsId.forEach(el => {
               $('[data-target_list] .Details-Item').each(function () {
@@ -1299,7 +1357,7 @@ window.ListInfo = {
               // });
             }
             if (listkey == "deliverables") {
-              console.log("IN NEEEEEEEEEEEEEEW");
+
               ListInfo.g.DeliverablesDelivered();
             }
             if (listkey == "goalstrategy") {
@@ -1511,7 +1569,7 @@ window.ListInfo = {
                   (imp_major && prob_verylikely) ||
                   (imp_extreme && prob_verylikely)
                 ) {
-                  // console.log("High");
+
                   $("input#RiskGrade").val("High");
                   $("input#RiskGrade").css(
                     "background",
@@ -1741,7 +1799,7 @@ window.ListInfo = {
     //   await FunctionAsync(element.useAccessPolicyList)
     // //  initiateDataLevelAccess(element.useAccessPolicyList)
     // }
-    // console.log('render', element.InternalName);
+
     var htmlBody = "";
     var groups = [],
       hidestagesIDs = "",
@@ -1888,7 +1946,7 @@ window.ListInfo = {
     }
 
 
-    // console.log(showstagesIDs);
+
     var thistip;
     if (element.tooltip == undefined) {
       thistip = "";
@@ -1936,7 +1994,7 @@ window.ListInfo = {
     } else isexist = true;
 
     if (localStorage.getItem("lng") == "en" && element.DispfieldkeyEn) {
-      console.log("Dispfieldkey", element.Dispfieldkey);
+
       dispfieldkey = element.DispfieldkeyEn;
     } else dispfieldkey = element.Dispfieldkey;
 
@@ -2564,7 +2622,7 @@ window.ListInfo = {
         // to handle that the value should be smaller than other value
         var max = "", resetElement = "";
 
-        var totalElement = "", sum1Element = "", sum2Element = "";
+        var totalElement = "", sum1Element = "", sum2Element = "", reset = "";
 
         if (element.max) {
           max = `data-maxField=${element.max}`
@@ -2572,7 +2630,16 @@ window.ListInfo = {
 
 
         if (element.resetElement) {
-          resetElement = `data-resetElement=${element.resetElement}`
+
+          reset = 'resetElements'
+
+          resetElement = 'data-resetElement="' +
+            JSON.stringify(element.resetElement).replaceAll(
+              `"`,
+              `'`
+            ) +
+            '"'
+          // resetElement = `data-resetElement=${element.resetElement}`
         }
 
         if (element.totalElement && element.sum1Element && element.sum2Element) {
@@ -2642,7 +2709,7 @@ window.ListInfo = {
           displayName +
           '" ' +
           dynamic +
-          ' class="form-control SPIField number" id="' +
+          ' class="form-control SPIField number ' + reset + '" id="' +
           element.InternalName +
           '" ' +
           element.state +
@@ -2821,10 +2888,10 @@ window.ListInfo = {
           [element.targetelement],
           function (records, record, listItem, isDone) {
             if (isDone) {
-              console.log(records, "records in perc");
+
               var totalWeight = 0;
               records.forEach(function (el, index) {
-                console.log(el, "el this is el");
+
                 totalWeight += el[element.targetelement]
                   ? el[element.targetelement]
                   : 0;
@@ -2841,8 +2908,7 @@ window.ListInfo = {
                   : RemainingBudget + inpVal;
               newVal = Number(newVal.toFixed("2"));
 
-              console.log(newVal, "newVal newVal");
-              // console.log()
+
 
               htmlBody =
                 '<div class="col-md-6 CFIELD ' +
@@ -3236,9 +3302,19 @@ window.ListInfo = {
       case "datetime":
         var maxOnChild = ""
         var targetOn = ""
+
+        var autoSetDate = "", sourceelement = "", targetelement = "";
+
+
         if (element.maxOnChild) {
           maxOnChild = "maxOnChild"
 
+        }
+
+        if (element.autoSetDate) {
+          autoSetDate = "autoSetDate"
+          sourceelement = `data-sourceelement=${element.sourceelement}`
+          targetelement = `data-targetelement=${element.targetelement}`
         }
 
         if (element.targetOn && element.targetOn != "undefined") {
@@ -3309,11 +3385,15 @@ window.ListInfo = {
           childsId +
           " " +
           targetOn +
+          " " +
+          sourceelement +
+          " " +
+          targetelement +
           ' type="date" placeholder="' +
           displayName +
           '" ' +
           dynamic +
-          ' class="form-control SPIField ' + maxOnChild + '" id="' +
+          ' class="form-control SPIField ' + maxOnChild + ' ' + autoSetDate + '" id="' +
           element.InternalName +
           '" ' +
           element.state +
@@ -3444,7 +3524,6 @@ window.ListInfo = {
                 "</div>";
               OnSuccess(flag, htmlBody);
 
-              //console.log(`htmlBody from lookup success`, htmlBody);
               // OnSuccess(flag, htmlBody);
             }
           }
@@ -4450,8 +4529,7 @@ window.ListInfo = {
                 strategicallyarr = strategicallyarr.filter(function (item) {
                   return item.name == "strategically";
                 });
-                console.log("visionarr", visionarr);
-                console.log("strategic", strategicallyarr);
+
               }
               customQuery =
                 "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"InitiativeCode\" /><Values>";
@@ -5602,20 +5680,10 @@ window.ListInfo = {
 
           if (myRoleConfig[0].hasOwnProperty("dataFilter")) {
             isRoleDataLevelAccess = true;
-            // console.log("inside form render")
 
-            // var x = ["Projects"]
-
-            //  initiateDataLevelAccess("Projects")
-            //  var queryTest = ""
-            //  queryTest = await get_hierarchies.init()
             await get_hierarchies.init(element.source)
 
-            // console.log(queryTest, "query queryquery")
-            // console.log(query, "After hirercies")
 
-            // customQuery = query
-            // if (queryTest) {
             myRoleConfig[0].dataFilter.hierarchies.forEach((el, i, a) => {
 
               let accessConditions = el.accessConditions;
@@ -5637,7 +5705,7 @@ window.ListInfo = {
             })
 
 
-            console.log(customQuery, "customQuery in lookup")
+
             // }
           }
         }
@@ -5649,7 +5717,7 @@ window.ListInfo = {
           if (roleAccess.length > 0) {
             customQuery = await ListInfo.roleQuery(roleAccess[0].conditions);
           }
-          console.log(roleAccess, "roleAccessss roleAccessss")
+
         }
         if (roleAccess.length == 0 && !element.hasOwnProperty("useAccessPolicy")) { // can't put else cause when the roleAccess will be empty arrray will nor render a query so all data(deleted and not deleted will appear)
           if (element.isSector == "True") {
@@ -6645,7 +6713,7 @@ window.ListInfo = {
 
 
         $(this).parent().parent().children('.Details-Item').each(function () {
-          console.log($(this).find('.weightfloatpercentage').val())
+
           var value = $(this).find('.weightfloatpercentage').val()
           value = value ? value : 0
           totalWeight += Number(value)
@@ -6889,10 +6957,7 @@ window.ListInfo = {
           const file = files[i];
           const fileExtension = "" + file.name.split(".").pop();
           // get attribut
-          console.log(
-            acceptedExtensions,
-            "acceptedExtensions acceptedExtensions"
-          );
+
 
           if (acceptedExtensions.indexOf(fileExtension.toLowerCase()) > -1) {
             validattachments.push(file);
@@ -7190,7 +7255,7 @@ window.ListInfo = {
     },
     requiredSpillarsName: function () {
       var PillarsExist = $("#PillarsExist:checked").val();
-      // console.log(Delivered, "ddddddddddddd")
+
 
       if (PillarsExist == "yes") {
         $('[data-target_list="SPillars"] #Name').attr("required", "required");
@@ -7221,7 +7286,7 @@ window.ListInfo = {
 
     toggleFields: function ($this) {
       if (isView) {
-        console.log('enter in view');
+
         var myValue = $this.data("viewtogglevalue");
       } else {
         var myValue = $this.val();
@@ -7392,10 +7457,7 @@ window.ListInfo = {
         });
       }
 
-      console.log(
-        allToggleRequiredFields,
-        "allToggleRequiredFields allToggleRequiredFields"
-      );
+
     },
     toggleDisabledFields: function ($this) {
       var myValue = $this.val();
@@ -7575,7 +7637,7 @@ window.ListInfo = {
             <OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
             </Query>
           </View>`;
-          console.log(`query for dropdown menu`, queryBody);
+
         }
       })
     );
@@ -7744,7 +7806,7 @@ window.View_ListInfo = {
         }
 
         if (item.sectiontype == "master") {
-          console.log(Label, "Label Label");
+
           printHtml += `<div class="py-5 border-bottom section-container ViewPrint_Form printFooterContainer page-avoid" ${targetList} ' ' ${sectionType} ' data-groups="${groups}" style="display:none">
                               <p class="printDescription">${Description
               ? Label + " | " + Description
@@ -8640,7 +8702,7 @@ window.View_ListInfo = {
                     parentValue = el[element.parentinternalname];
                   });
 
-                  console.log(parentValue, "PARENT VALUE");
+
                   htmlBody =
                     '<div class="col-md-6 CFIELD ' +
                     dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -10054,7 +10116,7 @@ dynamicAffectSelect = {
         <Where>
           <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
           </Where>
-        <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`;
+        <OrderBy><FieldRef Name="Name" Ascending="True"/></OrderBy></Query></View>`;
     } else if (
       queryFieldValue &&
       queryFieldValue != "undefined" &&
@@ -10070,16 +10132,18 @@ dynamicAffectSelect = {
         <Eq><FieldRef Name="${affectedSelectsInfo[0].filterField}"/><Value Type="${affectedSelectsInfo[0].filterFieldType}">${valueToFilter}</Value></Eq>
         <Eq><FieldRef Name="${queryFieldName}" /><Value Type="${queryFieldType}">${queryFieldValue}</Value></Eq></Eq>
         </And></And></Where>
-        <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`;
+        <OrderBy><FieldRef Name="Name" Ascending="True"/></OrderBy></Query></View>`;
     } else {
       Query = `<View><Query>
         <Where><And>
           <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
           <Eq><FieldRef Name="${affectedSelectsInfo[0].filterField}"/><Value Type="${affectedSelectsInfo[0].filterFieldType}">${valueToFilter}</Value></Eq>
         </And></Where>
-        <OrderBy><FieldRef Name="Created" Ascending="True"/></OrderBy></Query></View>`;
-    }
+        <OrderBy><FieldRef Name="Name" Ascending="True"/></OrderBy></Query></View>`;
 
+      //change FieldRef to Name and Acending True to can sort alphapetics arabic and english
+      //FieldRef Name="Created" Ascending="True"(if we want to sort to alphapetics you need to Name='Name' and  Ascending='True')
+    }
 
 
     camlQuery.set_viewXml(Query);
@@ -12191,7 +12255,7 @@ var Integration_Handler = {
       },
       data: reqData,
       success: function (data) {
-        console.log(data, "INSIDE SUCCESS POST REQUEEEEEEEEESt");
+
         // $(".integration-save").addClass("success");
         var responseId = data.DocMngRs.MsgRsHdr.ResponseStatus.StatusCode;
         window.Archive_Data_Submit.init(RqUID, responseId, IID); // in form submit
@@ -12545,7 +12609,7 @@ var get_grandparent_data = {
       dynamicGrandParentVal = oListItem.get_item(grandParentTargetFieldName) || '';
 
       valueBasedOnParent.push(dynamicGrandParentVal)
-      console.log(valueBasedOnParent, "valueBasedOnParent in grand parent")
+
     }
 
   },

@@ -2120,7 +2120,7 @@ window.userCalls = {
         //***** */
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-        ar_UserRole = "مكتب ادارة المشروع المؤسسي";
+        ar_UserRole = "مكتب ادارة المشاريع المؤسسي";
         en_UserRole = "Institutional Project Management Office";
         //CRUD
         Create_Access = [
@@ -10170,6 +10170,7 @@ var Get_Configure_Api = {
     });
   },
   init: function () {
+    
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("Configurations");
     var camlQuery = new SP.CamlQuery();
@@ -10191,6 +10192,7 @@ var Get_Configure_Api = {
     var listItemEnum = collListItem.getEnumerator();
 
     while (listItemEnum.moveNext()) {
+      
       var oListItem = listItemEnum.get_current();
       APIURL = oListItem.get_item("Value")
     }

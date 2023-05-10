@@ -168,8 +168,9 @@ window.New_Data_Submit = {
     var pickervalid = true; //check required people picker
     var multiSelectValid = true
     $("[type=picker][required]").each(function () {
+      
       if (listkey == 'changerequest' && $(this).find("span.sp-peoplepicker-userSpan").length == 0) {
-        if ($(this).attr("data-email") == enternameemail) {
+        if (($(this).attr("data-email") == enternameemail)) {
           pickervalid = false;
           $(this).addClass("picker-error");
           $(this).removeClass("picker-valid");
@@ -186,6 +187,7 @@ window.New_Data_Submit = {
     });
 
     $("[type=picker]").each(function () {
+      
       if ($(this).find("span.sp-peoplepicker-userSpan").attr('aria-invalid') == 'true') {
         pickervalid = false;
         $(this).addClass("picker-error");

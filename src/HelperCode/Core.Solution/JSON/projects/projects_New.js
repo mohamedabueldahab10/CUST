@@ -955,6 +955,8 @@ var Information_Form = [
         // "state": "disabled",
         dynamic: "BudgetItem", //being controlled by main field
         numberOfDigits: "15",
+        resetElement:["ContractualEngagements","ExpensesDate","RemainingCost"]
+
       },
 
       // {
@@ -1005,48 +1007,12 @@ var Information_Form = [
         DisplayName: "التكلفة الفعلية",
         DisplayNameEn: "Actual Budget",
         type: "float",
+        className: "disable_enable_section",
         // "state": "disabled",
         RequiredName: "ActualBudget",
         numberOfDigits: "15",
-
+        resetElement:["ContractualEngagements","ExpensesDate","RemainingCost"]
       },
-      // {
-      //     "InternalName": "Cost4",
-      //     "DisplayName": "التكلفة المخصصة لعام",
-      //     "DisplayNameEn": "Cost 4",
-      //     "type": "float",
-      //     "state": "disabled",
-      //     dynamic: "BudgetItem"
-      // },
-      // {
-      //     "InternalName": "Cost5",
-      //     "DisplayName": "التكلفة المخصصة لعام",
-      //     "DisplayNameEn": "Cost 5",
-      //     "type": "float",
-      //     "state": "disabled",
-      //     dynamic: "BudgetItem"
-      // },
-      // {
-      //     "InternalName": "ContractualValue",
-      //     "DisplayName":"قيمة العقد (قيمة المشروع)",
-      //     "DisplayNameEn":"Contractual Value",
-      //     "type":"float"
-      // },
-      // {
-      //   InternalName: 'ActualCostWorkCompleted',
-      //   DisplayName: 'التكلفة الفعلية للعمل المنجز',
-      //   DisplayNameEn: 'Actual Cost Work Completed',
-      //   type: 'float',
-      //   // "state": "disabled"
-      // },
-
-      // {
-      //   InternalName: 'ProjectBudgetCost',
-      //   DisplayName: 'تكلفة ميزانية المشروع',
-      //   DisplayNameEn: 'Project Budget Cost',
-      //   type: 'float',
-      //   // "state": "disabled"
-      // },
       {
         InternalName: "ContractualEngagements",
         DisplayName: "الارتباطات التعاقدية",
@@ -1054,6 +1020,9 @@ var Information_Form = [
         type: "float",
         // "state": "disabled"
         numberOfDigits: "15",
+        max:"ActualBudget",
+        descPhraseAr: "يجب ان تكون اقل من او يساوي التكلفة الفعلية او التكلفة",
+        descPhraseEn: "should be less than or equal Actual Budget or Amount",
 
       },
       {
@@ -1069,7 +1038,9 @@ var Information_Form = [
         DisplayNameEn: "Expenses",
         type: "float",
         numberOfDigits: "15",
-
+        max:"ActualBudget",
+        descPhraseAr: "يجب ان تكون اقل من او يساوي التكلفة الفعلية او التكلفة",
+        descPhraseEn: "should be less than or equal Actual Budget or Amount",
         // "state": "disabled"
       },
       {
@@ -1078,7 +1049,9 @@ var Information_Form = [
         DisplayNameEn: "Remaining Cost",
         type: "float",
         numberOfDigits: "15",
-
+        max:"ActualBudget",
+        descPhraseAr: "يجب ان تكون اقل من او يساوي التكلفة الفعلية او التكلفة",
+        descPhraseEn: "should be less than or equal Actual Budget or Amount",
         // "state": "disabled"
       },
       {

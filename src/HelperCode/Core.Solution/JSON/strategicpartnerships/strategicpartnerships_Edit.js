@@ -36,7 +36,7 @@ var Information_Form = [
     },
     {
       "InternalName": "SubSector",
-      "DisplayName": "الوكالة",
+      "DisplayName": "الوكالات",
       "DisplayNameEn": "DeputyShip",
       type: "lookupmultiselect",
       //from other list:
@@ -280,8 +280,8 @@ var Information_Form = [
   {
     label: 'التفاصيل',
     labelEn: 'Details',
-    description: '',
-    descriptionEn: '',
+    description: 'التفاصيل',
+    descriptionEn: 'Details',
     subFields: [
       {
         InternalName: 'Description',
@@ -348,7 +348,11 @@ var Information_Form = [
          "DisplayName":"تاريخ بداية الشراكة",
          "DisplayNameEn":"Start Date",
          "type":"datetime",
-         "validation":"required"
+         "validation":"required",
+         // to set the finis date depends on picked date and duration
+         autoSetDate: true,
+         sourceelement: "Duration",
+         targetelement: "FinishDate",
       },
       {
         InternalName: 'Duration',
