@@ -1143,6 +1143,7 @@ var Information_Form = [
         type: "datetime",
         enableOnWfTaskStage: "S05",
         requireOnWfTaskStage: "S05",
+        // disableOnWfTaskStage : "S01;S02;S03;S04;S06;S07;S08;S9;S10;S11;S12;S13;S14;S15;S16",
       },
       {
         InternalName: "ActualOfferingDate",
