@@ -765,23 +765,6 @@ var Information_Form = [
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
       },
       {
-        InternalName: 'InitiativeBudget',
-        DisplayName: 'ميزانية المبادرة ',
-        DisplayNameEn: 'InitiativeBudget',
-        // "state": "disabled",
-        type: 'float',
-        numberOfDigits: "15",
-        security: {
-          groups: ['EPMO', 'System Admin Group'],
-        },
-        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
-        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
-        state: "disabled",
-        descPhraseAr: "مجموع التكاليف الكلية حسب سقف البرنامج و التكاليف الكلية المعتمدة",
-        descPhraseEn: "total of ProgramTotalCost and ActualCost"
-
-      },
-      {
         InternalName: 'ProgramTotalCost',
         DisplayName: 'التكاليف الكلية حسب سقف البرنامج ',
         DisplayNameEn: 'Program Total Cost',
@@ -793,7 +776,7 @@ var Information_Form = [
         sum1Element: "ProgramTotalCost",
         sum2Element: "ActualCost",
         totalElement: "InitiativeBudget",
-        resetElement: "ActualCost", // reset value of this element when there is no val in current element
+        resetElement: ["ActualCost"], // reset value of this element when there is no val in current element
       },
       {
         InternalName: 'ActualCost',
@@ -813,6 +796,24 @@ var Information_Form = [
         totalElement: "InitiativeBudget"
       },
       {
+        InternalName: 'InitiativeBudget',
+        DisplayName: 'ميزانية المبادرة ',
+        DisplayNameEn: 'InitiativeBudget',
+        // "state": "disabled",
+        type: 'float',
+        numberOfDigits: "15",
+        security: {
+          groups: ['EPMO', 'System Admin Group'],
+        },
+        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        state: "disabled",
+        descPhraseAr: "مجموع التكاليف الكلية حسب سقف البرنامج و التكاليف الكلية المعتمدة",
+        descPhraseEn: "total of ProgramTotalCost and ActualCost",
+        resetElement:["CurrentBuget","Expenditures","CurrentExpenditures"]
+
+      },
+      {
         InternalName: 'CurrentBuget',
         DisplayName: 'السيولة المخصصة للعام المالي الحالي ',
         DisplayNameEn: 'Current Budget',
@@ -820,6 +821,9 @@ var Information_Form = [
         numberOfDigits: "15",
         enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        max: "InitiativeBudget",
+        descPhraseAr: "يجب ان تكون اقل من او يساوي ميزانية المبادرة",
+        descPhraseEn: "should be less than or equat the initiative budget",
       },
       {
         InternalName: 'Expenditures',
@@ -829,6 +833,9 @@ var Information_Form = [
         numberOfDigits: "15",
         enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        max:"InitiativeBudget",
+        descPhraseAr: "يجب ان تكون اقل من او يساوي ميزانية المبادرة",
+        descPhraseEn: "should be less than or equat the initiative budget",
       },
       {
         InternalName: 'CurrentExpenditures',
@@ -838,6 +845,9 @@ var Information_Form = [
         numberOfDigits: "15",
         enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        max:"InitiativeBudget",
+        descPhraseAr: "يجب ان تكون اقل من او يساوي ميزانية المبادرة",
+        descPhraseEn: "should be less than or equat the initiative budget",
       },
     ],
   },

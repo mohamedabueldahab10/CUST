@@ -10170,6 +10170,7 @@ var Get_Configure_Api = {
     });
   },
   init: function () {
+    
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("Configurations");
     var camlQuery = new SP.CamlQuery();
@@ -10191,6 +10192,7 @@ var Get_Configure_Api = {
     var listItemEnum = collListItem.getEnumerator();
 
     while (listItemEnum.moveNext()) {
+      
       var oListItem = listItemEnum.get_current();
       APIURL = oListItem.get_item("Value")
     }
