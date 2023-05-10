@@ -790,7 +790,7 @@ var Information_Form = [
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         max: 'ProgramTotalCost', // max value will be smaller than or equal ProgramTotalCost
         descPhraseAr: "القيمة يجب ان تكون اقل او يساوي التكاليف الكلية حسب سقف البرنامج",
-        descPhraseEn: "Should be less than or equal Program Total Cost",
+        descPhraseEn: "should be less than or equal the initiative budget",
         sum1Element: "ProgramTotalCost",
         sum2Element: "ActualCost",
         totalElement: "InitiativeBudget"
@@ -823,7 +823,7 @@ var Information_Form = [
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         max: "InitiativeBudget",
         descPhraseAr: "يجب ان تكون اقل من او يساوي ميزانية المبادرة",
-        descPhraseEn: "should be less than or equat the initiative budget",
+        descPhraseEn: "should be less than or equal the initiative budget",
       },
       {
         InternalName: 'Expenditures',
@@ -835,7 +835,7 @@ var Information_Form = [
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         max:"InitiativeBudget",
         descPhraseAr: "يجب ان تكون اقل من او يساوي ميزانية المبادرة",
-        descPhraseEn: "should be less than or equat the initiative budget",
+        descPhraseEn: "should be less than or equal the initiative budget",
       },
       {
         InternalName: 'CurrentExpenditures',
@@ -847,7 +847,7 @@ var Information_Form = [
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         max:"InitiativeBudget",
         descPhraseAr: "يجب ان تكون اقل من او يساوي ميزانية المبادرة",
-        descPhraseEn: "should be less than or equat the initiative budget",
+        descPhraseEn: "should be less than or equal the initiative budget",
       },
     ],
   },

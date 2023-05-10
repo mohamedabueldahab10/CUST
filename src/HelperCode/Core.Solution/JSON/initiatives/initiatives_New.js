@@ -808,7 +808,7 @@ var Information_Form = [
         // seconedtarget: 'ProgramTotalCost',
         max: 'ProgramTotalCost', // max value will be smaller than or equal ProgramTotalCost
         descPhraseAr: "القيمة يجب ان تكون اقل او يساوي التكاليف الكلية حسب سقف البرنامج",
-        descPhraseEn: "Should be less than or equal Program Total Cost",
+        descPhraseEn: "should be less than or equal the initiative budget",
         sum1Element: "ProgramTotalCost", // get the value for this elem
         sum2Element: "ActualCost",// get the value for this elem
         totalElement: "InitiativeBudget"// set sum value in this elem
@@ -834,7 +834,7 @@ var Information_Form = [
         numberOfDigits: "15",
         max:"InitiativeBudget",
         descPhraseAr: "يجب ان تكون اقل من او يساوي ميزانية المبادرة",
-        descPhraseEn: "should be less than or equat the initiative budget",
+        descPhraseEn: "should be less than or equal the initiative budget",
       },
       {
         InternalName: 'Expenditures',
@@ -844,7 +844,7 @@ var Information_Form = [
         numberOfDigits: "15",
         max:"InitiativeBudget",
         descPhraseAr: "يجب ان تكون اقل من او يساوي ميزانية المبادرة",
-        descPhraseEn: "should be less than or equat the initiative budget",
+        descPhraseEn: "should be less than or equal the initiative budget",
       },
       {
         InternalName: 'CurrentExpenditures',
@@ -854,7 +854,7 @@ var Information_Form = [
         numberOfDigits: "15",
         max:"InitiativeBudget",
         descPhraseAr: "يجب ان تكون اقل من او يساوي ميزانية المبادرة",
-        descPhraseEn: "should be less than or equat the initiative budget",
+        descPhraseEn: "should be less than or equal the initiative budget",
       },
     ],
   },

@@ -263,7 +263,7 @@ window.ListInfo = {
           rendersection = true;
         if (item.hasOwnProperty("security")) {
           if (item.security.groups.length > 0) {
-          
+
 
             for (var z = 0; z < item.security.groups.length; z++) {
               groups.push(item.security.groups[z]);
@@ -1057,17 +1057,27 @@ window.ListInfo = {
             var elementVal = event.target.value
             // set max value
             if (max && max != 'undefined') {
-              
-              var maxValue = $(`#${max}`).val() ? $(`#${max}`).val() : 0
+              debugger
+              var maxValue = 0
+              if (listkey == "projects") {
+                if($(`#${max}`).val()){
+                  maxValue = $(`#${max}`).val() ? $(`#${max}`).val() : 0
+                }else if($(`#Amount`).val()){
+                  maxValue = $(`#Amount`).val() ? $(`#Amount`).val() : 0
+                }
+              } else {
+                maxValue = $(`#${max}`).val() ? $(`#${max}`).val() : 0
+              }
               if (maxValue.includes(",")) {
                 maxValue = maxValue.replaceAll(",", "")
               }
-              if(elementVal.includes(",")){
+              if (elementVal.includes(",")) {
                 elementVal = elementVal.replaceAll(",", "")
 
               }
               elementVal = Number(elementVal)
               maxValue = Number(maxValue)
+
               if (elementVal <= maxValue) {
                 $(this).val(function (index, value) {
                   return value
@@ -1078,7 +1088,7 @@ window.ListInfo = {
                 $(this).val(null)
               }
             }
-            else if (resetElement && resetElement != 'undefined' ) {
+            else if (resetElement && resetElement != 'undefined') {
               resetElement = eval(resetElement)
               resetElement.forEach(el => {
                 $(`#${el}`).val(null)
@@ -1317,7 +1327,7 @@ window.ListInfo = {
               // });
             }
             if (listkey == "deliverables") {
-            
+
               ListInfo.g.DeliverablesDelivered();
             }
             if (listkey == "goalstrategy") {
@@ -1529,7 +1539,7 @@ window.ListInfo = {
                   (imp_major && prob_verylikely) ||
                   (imp_extreme && prob_verylikely)
                 ) {
-                
+
                   $("input#RiskGrade").val("High");
                   $("input#RiskGrade").css(
                     "background",
@@ -1759,7 +1769,7 @@ window.ListInfo = {
     //   await FunctionAsync(element.useAccessPolicyList)
     // //  initiateDataLevelAccess(element.useAccessPolicyList)
     // }
-    
+
     var htmlBody = "";
     var groups = [],
       hidestagesIDs = "",
@@ -1954,7 +1964,7 @@ window.ListInfo = {
     } else isexist = true;
 
     if (localStorage.getItem("lng") == "en" && element.DispfieldkeyEn) {
-    
+
       dispfieldkey = element.DispfieldkeyEn;
     } else dispfieldkey = element.Dispfieldkey;
 
@@ -2848,10 +2858,10 @@ window.ListInfo = {
           [element.targetelement],
           function (records, record, listItem, isDone) {
             if (isDone) {
-            
+
               var totalWeight = 0;
               records.forEach(function (el, index) {
-               
+
                 totalWeight += el[element.targetelement]
                   ? el[element.targetelement]
                   : 0;
@@ -4475,7 +4485,7 @@ window.ListInfo = {
                 strategicallyarr = strategicallyarr.filter(function (item) {
                   return item.name == "strategically";
                 });
-             
+
               }
               customQuery =
                 "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"InitiativeCode\" /><Values>";
@@ -5651,7 +5661,7 @@ window.ListInfo = {
             })
 
 
-           
+
             // }
           }
         }
@@ -5663,7 +5673,7 @@ window.ListInfo = {
           if (roleAccess.length > 0) {
             customQuery = await ListInfo.roleQuery(roleAccess[0].conditions);
           }
-       
+
         }
         if (roleAccess.length == 0 && !element.hasOwnProperty("useAccessPolicy")) { // can't put else cause when the roleAccess will be empty arrray will nor render a query so all data(deleted and not deleted will appear)
           if (element.isSector == "True") {
@@ -6659,7 +6669,7 @@ window.ListInfo = {
 
 
         $(this).parent().parent().children('.Details-Item').each(function () {
-        
+
           var value = $(this).find('.weightfloatpercentage').val()
           value = value ? value : 0
           totalWeight += Number(value)
@@ -7201,7 +7211,7 @@ window.ListInfo = {
     },
     requiredSpillarsName: function () {
       var PillarsExist = $("#PillarsExist:checked").val();
-     
+
 
       if (PillarsExist == "yes") {
         $('[data-target_list="SPillars"] #Name').attr("required", "required");
@@ -7232,7 +7242,7 @@ window.ListInfo = {
 
     toggleFields: function ($this) {
       if (isView) {
-   
+
         var myValue = $this.data("viewtogglevalue");
       } else {
         var myValue = $this.val();
@@ -7583,7 +7593,7 @@ window.ListInfo = {
             <OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
             </Query>
           </View>`;
-       
+
         }
       })
     );
@@ -7752,7 +7762,7 @@ window.View_ListInfo = {
         }
 
         if (item.sectiontype == "master") {
-   
+
           printHtml += `<div class="py-5 border-bottom section-container ViewPrint_Form printFooterContainer page-avoid" ${targetList} ' ' ${sectionType} ' data-groups="${groups}" style="display:none">
                               <p class="printDescription">${Description
               ? Label + " | " + Description
@@ -8648,7 +8658,7 @@ window.View_ListInfo = {
                     parentValue = el[element.parentinternalname];
                   });
 
-             
+
                   htmlBody =
                     '<div class="col-md-6 CFIELD ' +
                     dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -12201,7 +12211,7 @@ var Integration_Handler = {
       },
       data: reqData,
       success: function (data) {
-      
+
         // $(".integration-save").addClass("success");
         var responseId = data.DocMngRs.MsgRsHdr.ResponseStatus.StatusCode;
         window.Archive_Data_Submit.init(RqUID, responseId, IID); // in form submit
@@ -12555,7 +12565,7 @@ var get_grandparent_data = {
       dynamicGrandParentVal = oListItem.get_item(grandParentTargetFieldName) || '';
 
       valueBasedOnParent.push(dynamicGrandParentVal)
-    
+
     }
 
   },
