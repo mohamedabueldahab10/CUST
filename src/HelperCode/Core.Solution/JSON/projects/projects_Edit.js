@@ -4,6 +4,7 @@ var Information_Form = [
     labelEn: "Project Data",
     description: "",
     descriptionEn: "",
+    disableOnWfTaskStage : "S05",
     subFields: [
       {
         InternalName: "Name",
@@ -15,6 +16,7 @@ var Information_Form = [
         // withletters:true,
         // Errmsgkey:"withletterpatternunrequired",
         state: "disabled",
+        // disableOnWfTaskStage : "S05",
         // security: {
         //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
         // },
@@ -24,6 +26,7 @@ var Information_Form = [
         DisplayName: "المحفظة",
         DisplayNameEn: "Portfolio",
         type: "lookup",
+        disableOnWfTaskStage : "S05",
         // "validation": "required",
         //from other list:
         source: "Portfolio",
@@ -41,6 +44,7 @@ var Information_Form = [
         type: "multiline",
         validation: "required",
         maxchar: 5000,
+        disableOnWfTaskStage : "S05",
         security: {
           groups: [
             "VRO_E",
@@ -60,6 +64,7 @@ var Information_Form = [
         type: "multiline",
         validation: "required",
         maxchar: 5000,
+        disableOnWfTaskStage : "S05",
         security: {
           groups: [
             "VRO_E",
@@ -78,6 +83,7 @@ var Information_Form = [
         DisplayNameEn: "Out Of Scope",
         type: "multiline",
         maxchar: 5000,
+        disableOnWfTaskStage : "S05",
         //"state": "disabled"
       },
       {
@@ -86,6 +92,7 @@ var Information_Form = [
         DisplayNameEn: "Project Assumptions",
         type: "multiline",
         maxchar: 5000,
+        disableOnWfTaskStage : "S05",
         //"state": "disabled"
       },
       {
@@ -94,6 +101,7 @@ var Information_Form = [
         DisplayNameEn: "PM Notes",
         type: "multiline",
         maxchar: 5000,
+        disableOnWfTaskStage : "S05",
         // hideonstage: "1"
       },
 
@@ -103,6 +111,7 @@ var Information_Form = [
         DisplayNameEn: "Is Flagged Project?",
         validation: "required",
         type: "yesnoradio",
+        disableOnWfTaskStage : "S05",
         options: {
           choices: [
             {
@@ -133,6 +142,7 @@ var Information_Form = [
         DisplayNameEn: "NTP",
         validation: "required",
         type: "yesnoradio",
+        disableOnWfTaskStage : "S05",
         options: {
           choices: [
             {
@@ -164,6 +174,7 @@ var Information_Form = [
         type: "lookup",
         Dispfieldkey: "Name",
         valfieldkey: "Title",
+        disableOnWfTaskStage : "S05",
         // grpfieldkey: 'Title',
         security: {
           groups: [
@@ -184,6 +195,7 @@ var Information_Form = [
         DisplayName: "هل هو مشروع استراتيجي؟",
         DisplayNameEn: "Is Strategic Project?",
         type: "dropdownValues",
+        disableOnWfTaskStage : "S05",
         options: {
           choices: [
             { display: "yes", value: "yes" },
@@ -208,6 +220,7 @@ var Information_Form = [
         display: 'none',
         dynamic: 'parent', // parent to get the child depends on this field value
         type: 'dropdownValues',
+        disableOnWfTaskStage : "S05",
         // dontSubmit: true,
         options: {
           choices: [
@@ -264,7 +277,7 @@ var Information_Form = [
         dynamic: "InitiativeType", //InternalName Of Parent field
         filterField: "Types",//InternalName Of Parent field
         filterFieldType: "Text",//Type In Sharepoint List for Parent field
-
+        disableOnWfTaskStage : "S05",
         security: {
           groups: [
             "VRO_E",
@@ -408,6 +421,7 @@ var Information_Form = [
         DisplayNameEn: "Corrective Plan",
         type: "multiline",
         maxchar: 5000,
+        disableOnWfTaskStage : "S05",
         security: {
           groups: [
             "VRO_E",
@@ -428,6 +442,7 @@ var Information_Form = [
         DisplayNameEn: "Project Type",
         validation: "required",
         type: "dropdownValues",
+        disableOnWfTaskStage : "S05",
         options: {
           choices: [
             { display: "internal", value: "Internal" },
@@ -462,6 +477,7 @@ var Information_Form = [
         DisplayNameEn: "Category",
         validation: "required",
         type: "dropdownValues",
+        disableOnWfTaskStage : "S05",
         options: {
           choices: [
             // شغيلي- تحولي - استراتيجي
@@ -479,6 +495,7 @@ var Information_Form = [
         DisplayName: "تاريخ بدء الأساس",
         DisplayNameEn: "Baseline Start Date",
         type: "datetime",
+        disableOnWfTaskStage : "S05",
         max: "BaselineFinishDate",
         //
         maxOnChild: true,
@@ -491,6 +508,7 @@ var Information_Form = [
         DisplayName: "تاريخ إنهاء الأساس",
         DisplayNameEn: "Baseline Finish Date",
         type: "datetime",
+        disableOnWfTaskStage : "S05",
         min: "BaselineStartDate",
         //
         // 
@@ -512,6 +530,7 @@ var Information_Form = [
         Dispfieldkey: "Name",
         DispfieldkeyEn: "NameEn",
         valfieldkey: "Title",
+        disableOnWfTaskStage : "S05",
         // ToggleDisabledName:"Sector"
         // security: {
         //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
@@ -530,6 +549,7 @@ var Information_Form = [
         Dispfieldkey: "Name",
         DispfieldkeyEn: "NameEn",
         valfieldkey: "Title",
+        disableOnWfTaskStage : "S05",
         // ToggleDisabledName:"SubSector"
         // security: {
         //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
@@ -541,6 +561,7 @@ var Information_Form = [
         DisplayName: "أهمية المشروع",
         DisplayNameEn: "Priority",
         type: "dropdownValues",
+        disableOnWfTaskStage : "S05",
         options: {
           choices: [
             // { display: 'pr04low', value: 'pr04low' },
@@ -571,6 +592,7 @@ var Information_Form = [
         DisplayNameEn: "Execution Channels",
         type: "multiline",
         maxchar: 5000,
+        disableOnWfTaskStage : "S05",
       },
       {
         InternalName: "ProjectOverview",
@@ -578,6 +600,7 @@ var Information_Form = [
         DisplayNameEn: "Project Overview",
         type: "multiline",
         maxchar: 5000,
+        disableOnWfTaskStage : "S05",
         //"state": "disabled"
       },
       {
@@ -586,6 +609,7 @@ var Information_Form = [
         DisplayNameEn: "Comments",
         type: "multiline",
         maxchar: 5000,
+        disableOnWfTaskStage : "S05",
         security: {
           groups: [
             "VRO_E",
@@ -605,6 +629,7 @@ var Information_Form = [
         DisplayName: "حجم المشروع",
         DisplayNameEn: "Project Size",
         type: "dropdownValues",
+        disableOnWfTaskStage : "S05",
         options: {
           choices: [
             { display: "small", value: "small" },
@@ -618,6 +643,7 @@ var Information_Form = [
         DisplayName: "أولوية المشروع",
         DisplayNameEn: "Project Priority",
         type: "dropdownValues",
+        disableOnWfTaskStage : "S05",
         options: {
           choices: [
             { display: "low", value: "low" },
@@ -632,6 +658,7 @@ var Information_Form = [
         DisplayNameEn: "Company Name",
         type: "string",
         maxchar: 255,
+        disableOnWfTaskStage : "S05",
       },
       {
         InternalName: "IsZeroBudgetProject",
@@ -640,6 +667,7 @@ var Information_Form = [
         // type: "yesnoradio",
         type: 'dropdownValues',
         validation: "required",
+        disableOnWfTaskStage : "S05",
         options: {
           choices: [
             { display: "yes", value: "yes" },
@@ -844,6 +872,7 @@ var Information_Form = [
     description: "",
     descriptionEn: "",
     toggleName: 'FundingSection',
+    disableOnWfTaskStage : "S05",
     subFields: [
       {
         InternalName: "FundingSources",
@@ -851,12 +880,14 @@ var Information_Form = [
         DisplayNameEn: "Funding Sources",
         type: "string",
         maxchar: 255,
+        disableOnWfTaskStage : "S05",
       },
       {
         InternalName: "FundingStatus",
         DisplayName: "حالة التمويل",
         DisplayNameEn: "Funding Status",
         type: "dropdownValues",
+        disableOnWfTaskStage : "S05",
         options: {
           choices: [
             { display: "funded", value: "funded" },
@@ -873,6 +904,7 @@ var Information_Form = [
     labelEn: "Budget Item",
     description: "",
     descriptionEn: "",
+    disableOnWfTaskStage : "S05",
     subFields: [
       // {
       //   InternalName: "PRCode",
@@ -899,6 +931,7 @@ var Information_Form = [
         source: "Budget Items",
         Dispfieldkey: "Name",
         valfieldkey: "Title",
+        disableOnWfTaskStage : "S05",
         // "validation": "required",
         // "state": "disabled"
       },
@@ -907,6 +940,7 @@ var Information_Form = [
         DisplayName: "التكلفة",
         DisplayNameEn: "Amount",
         type: "float",
+        disableOnWfTaskStage : "S05",
         // "state": "disabled",
         dynamic: "BudgetItem", //being controlled by main field
         numberOfDigits: "15",
@@ -953,12 +987,14 @@ var Information_Form = [
         type: "float",
         // state: "disabled",
         numberOfDigits: "15",
+        disableOnWfTaskStage : "S05",
       },
       {
         InternalName: "ActualBudget",
         DisplayName: "التكلفة الفعلية",
         DisplayNameEn: "Actual Budget",
         type: "float",
+        disableOnWfTaskStage : "S05",
         // "state": "disabled"
         RequiredName: "ActualBudget",
         numberOfDigits: "15",
@@ -1008,6 +1044,7 @@ var Information_Form = [
         type: "float",
         numberOfDigits: "15",
         max:"ActualBudget",
+        disableOnWfTaskStage : "S05",
         descPhraseAr: "يجب ان تكون اقل من او يساوي التكلفة الفعلية او التكلفة",
         descPhraseEn: "should be less than or equal Actual Budget or Amount",
         // "state": "disabled"
@@ -1017,6 +1054,7 @@ var Information_Form = [
         DisplayName: "نسبة الارتباط من التكاليف ",
         DisplayNameEn: "Engagement Percentage",
         type: "floatpercentage",
+        disableOnWfTaskStage : "S05",
         // "state": "disabled"
       },
       {
@@ -1024,6 +1062,7 @@ var Information_Form = [
         DisplayName: "المنصرف حتى تاريخه",
         DisplayNameEn: "Expenses",
         type: "float",
+        disableOnWfTaskStage : "S05",
         numberOfDigits: "15",
         max:"ActualBudget",
         descPhraseAr: "يجب ان تكون اقل من او يساوي التكلفة الفعلية او التكلفة",
@@ -1035,6 +1074,7 @@ var Information_Form = [
         DisplayName: "التكلفة المتبقية",
         DisplayNameEn: "Remaining Cost",
         type: "float",
+        disableOnWfTaskStage : "S05",
         numberOfDigits: "15",
         max:"ActualBudget",
         descPhraseAr: "يجب ان تكون اقل من او يساوي التكلفة الفعلية او التكلفة",
@@ -1048,6 +1088,7 @@ var Information_Form = [
         DisplayNameEn: "Out Of Cash",
         type: "floatpercentage",
         numberOfDigits: "15",
+        disableOnWfTaskStage : "S05",
 
         // "state": "disabled"
       },
@@ -1062,6 +1103,7 @@ var Information_Form = [
         DisplayName: "حالة تمويل المشروع (حسب الحوكمة)",
         DisplayNameEn: "Budget Status",
         type: "dropdownValues",
+        disableOnWfTaskStage : "S05",
         options: {
           choices: [
             { display: "finance", value: "finance" },
@@ -1091,31 +1133,41 @@ var Information_Form = [
     description: "",
     descriptionEn: "",
     toggleName: 'TenderSection',
+    enableOnWfTaskStage: "S05",
+    requireOnWfTaskStage: "S05",
     subFields: [
       {
         InternalName: "PlannedOfferingDate",
         DisplayName: "التاريخ المخطط للطرح",
         DisplayNameEn: "Planned Date of Offering",
         type: "datetime",
+        enableOnWfTaskStage: "S05",
+        requireOnWfTaskStage: "S05",
       },
       {
         InternalName: "ActualOfferingDate",
         DisplayName: "تاريخ  الطرح الفعلى",
         DisplayNameEn: "Actual Offering Date",
         type: "datetime",
-        max: "today"
+        max: "today",
+        enableOnWfTaskStage: "S05",
+        requireOnWfTaskStage: "S05",
       },
       {
         InternalName: "AwardDate",
         DisplayName: "تاريخ  الترسية",
         DisplayNameEn: "Award Date",
         type: "datetime",
+        enableOnWfTaskStage: "S05",
+        requireOnWfTaskStage: "S05",
       },
       {
         InternalName: "ContractualDate",
         DisplayName: "تاريخ التعاقد",
         DisplayNameEn: "Contractual Date",
         type: "datetime",
+        enableOnWfTaskStage: "S05",
+        requireOnWfTaskStage: "S05",
       },
       {
         InternalName: 'ApprovedBrochure',
@@ -1125,12 +1177,16 @@ var Information_Form = [
         withAddBtn: 'true',
         // InternalName: 'getfile',
         docPurpose: "Approved_RFP",
+        enableOnWfTaskStage: "S05",
+        requireOnWfTaskStage: "S05",
       },
       {
         InternalName: "RFPStatus",
         DisplayName: "حالة الكراسة",
         DisplayNameEn: "RFP Status",
         type: "dropdownValues",
+        enableOnWfTaskStage: "S05",
+        requireOnWfTaskStage: "S05",
         options: {
           choices: [
             { display: "brochureapproved", value: "brochureapproved" },
@@ -1162,6 +1218,7 @@ var Information_Form = [
     labelEn: "Project Staff",
     description: "",
     descriptionEn: "",
+    disableOnWfTaskStage : "S05",
     subFields: [
       // {
       //     "InternalName": "Owner",
@@ -1181,6 +1238,7 @@ var Information_Form = [
         DisplayNameEn: "Project Owner",
         type: "picker",
         validation: "required",
+        disableOnWfTaskStage : "S05",
         // security: {
         //   groups: [
         //     "VRO_E",
@@ -1199,6 +1257,7 @@ var Information_Form = [
         DisplayNameEn: "Project Manager",
         type: "picker",
         validation: "required",
+        disableOnWfTaskStage : "S05",
       },
       // {
 
@@ -1215,6 +1274,7 @@ var Information_Form = [
         DisplayNameEn: "Project Sponsor",
         type: "picker",
         validation: "required",
+        disableOnWfTaskStage : "S05",
         // security: {
         //   groups: [
         //     "VRO_E",
@@ -1285,6 +1345,7 @@ var Information_Form = [
     descriptionEn: "",
     sectiontype: "master",
     targetlist: "Dependency Projects",
+    disableOnWfTaskStage : "S05",
     subFields: [
       {
         InternalName: "DependencyProject",
@@ -1295,6 +1356,7 @@ var Information_Form = [
         source: "Projects",
         Dispfieldkey: "Name",
         valfieldkey: "Title",
+        disableOnWfTaskStage : "S05",
         //"state": "disabled"
       },
       {
@@ -1303,6 +1365,7 @@ var Information_Form = [
         DisplayNameEn: "Description",
         type: "multiline",
         maxchar: 5000,
+        disableOnWfTaskStage : "S05",
         // type: 'string',
         //"state": "disabled"
       },
@@ -1313,12 +1376,14 @@ var Information_Form = [
     labelEn: "Project Status",
     description: "",
     descriptionEn: "",
+    disableOnWfTaskStage : "S05",
     subFields: [
       {
         InternalName: "WorkingStatus",
         DisplayName: "حالة العمل",
         DisplayNameEn: "Working Status",
         type: "dropdownValues",
+        disableOnWfTaskStage : "S05",
         options: {
           choices: [
             { display: "active", value: "active" },
@@ -1341,6 +1406,7 @@ var Information_Form = [
     sectiontype: 'master',
     // className: "disable_section", // to make the section disabled on form render
     targetlist: 'Deliverables',
+    disableOnWfTaskStage : "S05",
     subFields: [
       // {
       //     "InternalName": "Title",
@@ -1359,7 +1425,7 @@ var Information_Form = [
         maxchar: '255',
         withletters: true,
         Errmsgkey: "withletterpattern",
-
+        disableOnWfTaskStage : "S05",
       },
       {
         InternalName: 'Description',
@@ -1367,7 +1433,7 @@ var Information_Form = [
         DisplayNameEn: 'Description',
         type: 'multiline',
         maxchar: 5000,
-
+        disableOnWfTaskStage : "S05",
       },
       // {
       //     "InternalName": "Weight",
@@ -1388,7 +1454,7 @@ var Information_Form = [
         seconedtarget: 'Amount',
         // "state":"disabled",
         validation: 'required',
-
+        disableOnWfTaskStage : "S05",
       },
       {
         InternalName: 'Amount',
@@ -1400,7 +1466,7 @@ var Information_Form = [
         parentinternalname: 'ActualBudget',
         targetelement: 'Weight',
         validation: 'required',
-
+        disableOnWfTaskStage : "S05",
       },
       // {
       //   "InternalName": "Status",
@@ -1440,7 +1506,7 @@ var Information_Form = [
         endinternalname: 'BaselineFinishDate',
         // "min": "PlannedStartDate",
         validation: 'required',
-
+        disableOnWfTaskStage : "S05",
       },
       // {
       //     "InternalName": "SupplyDate",
@@ -1492,6 +1558,7 @@ var Information_Form = [
         targetfield: 'Status',
         targetfieldvalue: 'completed',
         type: 'dropdownValues',
+        disableOnWfTaskStage : "S05",
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
@@ -1507,6 +1574,7 @@ var Information_Form = [
         DisplayNameEn: 'Delivered Date',
         type: 'datetime',
         max: 'today',
+        disableOnWfTaskStage : "S05",
         // "validation": "required",
       },
       {
@@ -1515,8 +1583,7 @@ var Information_Form = [
         DisplayNameEn: 'Acceptance Criteria',
         type: 'multiline',
         maxchar: 5000,
-
-
+        disableOnWfTaskStage : "S05",
       },
       {
         InternalName: 'Comments',
@@ -1524,7 +1591,7 @@ var Information_Form = [
         DisplayNameEn: 'Comments',
         type: 'multiline',
         maxchar: 5000,
-
+        disableOnWfTaskStage : "S05",
       },
       // {
       //   "InternalName": "RelatedInitiativeDeliverable",
@@ -1547,13 +1614,14 @@ var Information_Form = [
         sourceinternalname: 'InitiativeCode', // column in target list
         Dispfieldkey: 'Name', //display in dropdown
         valfieldkey: 'Title', // value in dropdown
-
+        disableOnWfTaskStage : "S05",
       },
       {
         InternalName: 'ShowInProgramReport',
         DisplayName: 'اظهار في التقرير',
         DisplayNameEn: 'Show In Program Report',
         type: 'dropdownValues',
+        disableOnWfTaskStage : "S05",
         options: {
           choices: [
             {
@@ -1578,6 +1646,7 @@ var Information_Form = [
     sectiontype: 'master',
     // className: "disable_section", // to make the section disabled on form render
     targetlist: 'Milestones',
+    disableOnWfTaskStage : "S05",
     subFields: [
       // {
       //     "InternalName": "Title",
@@ -1595,7 +1664,7 @@ var Information_Form = [
         withletters: true,
         Errmsgkey: "withletterpatteWrn",
         validation: 'required',
-
+        disableOnWfTaskStage : "S05",
       },
       // {
       //   InternalName: 'Weight',
@@ -1622,7 +1691,7 @@ var Information_Form = [
         seconedtarget: 'Amount',
         // "state":"disabled",
         validation: 'required',
-
+        disableOnWfTaskStage : "S05",
       },
       {
         InternalName: 'Amount',
@@ -1634,14 +1703,14 @@ var Information_Form = [
         parentinternalname: 'ActualBudget',
         targetelement: 'Weight',
         validation: 'required',
-
+        disableOnWfTaskStage : "S05",
       },
       {
         InternalName: 'PlannedDate',
         DisplayName: 'تاريخ الاكتمال المخطط',
         DisplayNameEn: 'Planned Finish Date',
         type: 'datetime',
-
+        disableOnWfTaskStage : "S05",
       },
 
       //   {
@@ -1673,7 +1742,7 @@ var Information_Form = [
         DisplayNameEn: 'Deliverables',
         type: 'multiline',
         maxchar: 5000,
-
+        disableOnWfTaskStage : "S05",
       },
       {
         InternalName: 'Description',
@@ -1681,7 +1750,7 @@ var Information_Form = [
         DisplayNameEn: 'Description',
         type: 'multiline',
         maxchar: 5000,
-
+        disableOnWfTaskStage : "S05",
       },
       // {
       //   InternalName: 'Status',
@@ -1709,7 +1778,7 @@ var Information_Form = [
         "sourceinternalname": "InitiativeCode", // column in target list
         "Dispfieldkey": 'Name', //display in dropdown
         "valfieldkey": "Title",// value in dropdown
-
+        disableOnWfTaskStage : "S05",
       },
       {
         InternalName: 'Delivered',
@@ -1720,6 +1789,7 @@ var Information_Form = [
         targetfieldvalue: 'completed',
         // validation: 'required',
         type: 'dropdownValues',
+        disableOnWfTaskStage : "S05",
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
@@ -1733,12 +1803,14 @@ var Information_Form = [
         DisplayNameEn: 'Actual Date',
         type: 'datetime',
         max: 'today',
+        disableOnWfTaskStage : "S05",
       },
       {
         InternalName: 'ShowInProgramReport',
         DisplayName: 'اظهار في التقرير',
         DisplayNameEn: 'Show In Program Report',
         type: 'dropdownValues',
+        disableOnWfTaskStage : "S05",
         options: {
           choices: [
             {
@@ -1766,6 +1838,7 @@ var Information_Form = [
     labelEn: "Supporting Documents",
     description: "التفاصيل",
     descriptionEn: "Details",
+    disableOnWfTaskStage : "S05",
     subFields: [
       {
         InternalName: "getfile",
@@ -1773,6 +1846,7 @@ var Information_Form = [
         DisplayNameEn: "Attachments",
         type: "file",
         withAddBtn: "true",
+        disableOnWfTaskStage : "S05",
       },
     ],
   },

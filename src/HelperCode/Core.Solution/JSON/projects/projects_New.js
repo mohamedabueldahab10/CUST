@@ -1107,9 +1107,6 @@ var Information_Form = [
     description: "",
     descriptionEn: "",
     toggleName: 'TenderSection',
-    enableOnWfTaskStage: "S05",
-    requireOnWfTaskStage: "S05",
-
     // toggleName: 'TenderSection',
     // sectiontype: 'master',
     // layout: 'table',
@@ -1120,8 +1117,6 @@ var Information_Form = [
         DisplayName: "التاريخ المخطط للطرح",
         DisplayNameEn: "Planned Date of Offering",
         type: "datetime",
-        enableOnWfTaskStage: "S05",
-        requireOnWfTaskStage: "S05",
       },
       {
         InternalName: "ActualOfferingDate",
@@ -1129,24 +1124,18 @@ var Information_Form = [
         DisplayNameEn: "Actual Offering Date",
         type: "datetime",
         max: "today",
-        enableOnWfTaskStage: "S05",
-        requireOnWfTaskStage: "S05",
       },
       {
         InternalName: "AwardDate",
         DisplayName: "تاريخ  الترسية",
         DisplayNameEn: "Award Date",
         type: "datetime",
-        enableOnWfTaskStage: "S05",
-        requireOnWfTaskStage: "S05",
       },
       {
         InternalName: "ContractualDate",
         DisplayName: "تاريخ التعاقد",
         DisplayNameEn: "Contractual Date",
         type: "datetime",
-        enableOnWfTaskStage: "S05",
-        requireOnWfTaskStage: "S05",
       },
       {
         InternalName: 'ApprovedBrochure',
@@ -1156,15 +1145,11 @@ var Information_Form = [
         withAddBtn: 'true',
         // InternalName: 'getfile',
         docPurpose: "Approved_RFP",
-        enableOnWfTaskStage: "S05",
-        requireOnWfTaskStage: "S05",
       },
       {
         InternalName: "RFPStatus",
         DisplayName: "حالة الكراسة",
         DisplayNameEn: "RFP Status",
-        enableOnWfTaskStage: "S05",
-        requireOnWfTaskStage: "S05",
         type: "dropdownValues",
         options: {
           choices: [
