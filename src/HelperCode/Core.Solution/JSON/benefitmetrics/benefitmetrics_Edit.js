@@ -224,6 +224,7 @@ var Information_Form = [
         // type: 'datetime',
         validation: 'required',
         state: 'disabled',
+        Errmsgkey: 'fromyearpattern',
       },
       {
         InternalName: 'ToDate',
@@ -238,6 +239,7 @@ var Information_Form = [
         // type: 'datetime',
         validation: 'required',
         state: 'disabled',
+        Errmsgkey: 'toyearpattern',
       },
       {
         InternalName: 'DataSource',
