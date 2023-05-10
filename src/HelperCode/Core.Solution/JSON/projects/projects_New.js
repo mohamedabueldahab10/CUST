@@ -662,12 +662,13 @@ var Information_Form = [
         InternalName: "IsZeroBudgetProject",
         DisplayName: "هل هو مشروع صفرى؟",
         DisplayNameEn: "Is Zero Budget Project ?",
-        type: "yesnoradio",
+        // type: "yesnoradio",
+        type: 'dropdownValues',
         validation: "required",
         options: {
           choices: [
-            { display: "yes", value: "true" },
-            { display: "no", value: "false" },
+            { display: "yes", value: "yes" },
+            { display: "no", value: "no" },
           ],
         },
       },
