@@ -45,16 +45,16 @@ var Information_Form = [
         validation: "required",
         maxchar: 5000,
         disableOnWfTaskStage : "S05",
-        security: {
-          groups: [
-            "VRO_E",
-            "LMS_E",
-            "EPMO",
-            "Development Unit",
-            "System Admin Group",
-            "Project Managers for Project Web App",
-          ],
-        },
+        // security: {
+        //   groups: [
+        //     "VRO_E",
+        //     "LMS_E",
+        //     "EPMO",
+        //     "Development Unit",
+        //     "System Admin Group",
+        //     "Project Managers for Project Web App",
+        //   ],
+        // },
         // hideonstage: "1"
       },
       {
@@ -65,16 +65,16 @@ var Information_Form = [
         validation: "required",
         maxchar: 5000,
         disableOnWfTaskStage : "S05",
-        security: {
-          groups: [
-            "VRO_E",
-            "LMS_E",
-            "EPMO",
-            "Development Unit",
-            "System Admin Group",
-            "Project Managers for Project Web App",
-          ],
-        },
+        // security: {
+        //   groups: [
+        //     "VRO_E",
+        //     "LMS_E",
+        //     "EPMO",
+        //     "Development Unit",
+        //     "System Admin Group",
+        //     "Project Managers for Project Web App",
+        //   ],
+        // },
         // hideonstage: "1"
       },
       {
@@ -124,17 +124,17 @@ var Information_Form = [
             },
           ],
         },
-        security: {
-          groups: [
-            "VRO_E",
-            "LMS_E",
-            "EPMO",
-            "System Admin Group",
-            "Project Managers for Project Web App",
-            "SPMO",
-            "Development Unit",
-          ],
-        },
+        // security: {
+        //   groups: [
+        //     "VRO_E",
+        //     "LMS_E",
+        //     "EPMO",
+        //     "System Admin Group",
+        //     "Project Managers for Project Web App",
+        //     "SPMO",
+        //     "Development Unit",
+        //   ],
+        // },
       },
       {
         InternalName: "NTP",
@@ -155,16 +155,16 @@ var Information_Form = [
             },
           ],
         },
-        security: {
-          groups: [
-            "VRO_E",
-            "LMS_E",
-            "EPMO",
-            "System Admin Group",
-            "SPMO",
-            "Development Unit",
-          ],
-        },
+        // security: {
+        //   groups: [
+        //     "VRO_E",
+        //     "LMS_E",
+        //     "EPMO",
+        //     "System Admin Group",
+        //     "SPMO",
+        //     "Development Unit",
+        //   ],
+        // },
       },
       {
         InternalName: "Committees",
@@ -176,17 +176,17 @@ var Information_Form = [
         valfieldkey: "Title",
         disableOnWfTaskStage : "S05",
         // grpfieldkey: 'Title',
-        security: {
-          groups: [
-            "VRO_E",
-            "LMS_E",
-            "EPMO",
-            "System Admin Group",
-            "Project Managers for Project Web App",
-            "SPMO",
-            "Development Unit",
-          ],
-        },
+        // security: {
+        //   groups: [
+        //     "VRO_E",
+        //     "LMS_E",
+        //     "EPMO",
+        //     "System Admin Group",
+        //     "Project Managers for Project Web App",
+        //     "SPMO",
+        //     "Development Unit",
+        //   ],
+        // },
         // "maxchar": 5000,
         // hideonstage: "1"
       },
@@ -278,16 +278,16 @@ var Information_Form = [
         filterField: "Types",//InternalName Of Parent field
         filterFieldType: "Text",//Type In Sharepoint List for Parent field
         disableOnWfTaskStage : "S05",
-        security: {
-          groups: [
-            "VRO_E",
-            "LMS_E",
-            "EPMO",
-            "System Admin Group",
-            "SPMO",
-            "Development Unit",
-          ],
-        },
+        // security: {
+        //   groups: [
+        //     "VRO_E",
+        //     "LMS_E",
+        //     "EPMO",
+        //     "System Admin Group",
+        //     "SPMO",
+        //     "Development Unit",
+        //   ],
+        // },
         accessFilter: [
           {
             role: "VROE",
@@ -422,17 +422,17 @@ var Information_Form = [
         type: "multiline",
         maxchar: 5000,
         disableOnWfTaskStage : "S05",
-        security: {
-          groups: [
-            "VRO_E",
-            "LMS_E",
-            "EPMO",
-            "System Admin Group",
-            "SPMO",
-            "Development Unit",
-            "Project Managers for Project Web App",
-          ],
-        },
+        // security: {
+        //   groups: [
+        //     "VRO_E",
+        //     "LMS_E",
+        //     "EPMO",
+        //     "System Admin Group",
+        //     "SPMO",
+        //     "Development Unit",
+        //     "Project Managers for Project Web App",
+        //   ],
+        // },
         // "maxchar": 5000,
         // hideonstage: "1"
       },
@@ -572,17 +572,17 @@ var Information_Form = [
           ],
         },
         validation: "required",
-        security: {
-          groups: [
-            "VRO_E",
-            "LMS_E",
-            "EPMO",
-            "System Admin Group",
-            "SPMO",
-            "Development Unit",
-            "Project Managers for Project Web App",
-          ],
-        },
+        // security: {
+        //   groups: [
+        //     "VRO_E",
+        //     "LMS_E",
+        //     "EPMO",
+        //     "System Admin Group",
+        //     "SPMO",
+        //     "Development Unit",
+        //     "Project Managers for Project Web App",
+        //   ],
+        // },
         // "state": "disabled",
         // "className":"autofill"
       },
@@ -610,17 +610,17 @@ var Information_Form = [
         type: "multiline",
         maxchar: 5000,
         disableOnWfTaskStage : "S05",
-        security: {
-          groups: [
-            "VRO_E",
-            "LMS_E",
-            "EPMO",
-            "System Admin Group",
-            "Project Managers for Project Web App",
-            "SPMO",
-            "Development Unit",
-          ],
-        },
+        // security: {
+        //   groups: [
+        //     "VRO_E",
+        //     "LMS_E",
+        //     "EPMO",
+        //     "System Admin Group",
+        //     "Project Managers for Project Web App",
+        //     "SPMO",
+        //     "Development Unit",
+        //   ],
+        // },
         // hideonstage: "1"
       },
 
@@ -1113,17 +1113,17 @@ var Information_Form = [
             { display: "externalfinance", value: "externalfinance" },
           ],
         },
-        security: {
-          groups: [
-            "VRO_E",
-            "LMS_E",
-            "EPMO",
-            "System Admin Group",
-            "SPMO",
-            "Development Unit",
-            "Project Managers for Project Web App",
-          ],
-        },
+        // security: {
+        //   groups: [
+        //     "VRO_E",
+        //     "LMS_E",
+        //     "EPMO",
+        //     "System Admin Group",
+        //     "SPMO",
+        //     "Development Unit",
+        //     "Project Managers for Project Web App",
+        //   ],
+        // },
         //"state": "disabled"
       },
     ],
