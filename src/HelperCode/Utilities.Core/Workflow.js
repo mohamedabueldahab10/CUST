@@ -2240,7 +2240,7 @@ var Task_PCODE_Data_Request_WFs = {
 							state +
 							"," +
 							withNote +
-							')}else{$(\'.wrapcomments\').append(\'<p >يرجى تعبئة الملاحظات</p>\')}">إرسال</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">إلغاء</button><span style="display:none" class="successmsg">تم الإرسال</span></div></div></div>'
+							')}else{$(\'.wrapcomments > .fillcomment\').html(\'<p>يرجى تعبئة الملاحظات</p>\')}">إرسال</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">إلغاء</button><span style="display:none" class="successmsg">تم الإرسال</span></div><p class="fillcomment"></p></div></div>'
 						);
 					} else {
 						$("body").append(
@@ -2252,7 +2252,7 @@ var Task_PCODE_Data_Request_WFs = {
 							state +
 							"," +
 							withNote +
-							')}else{$(\'.wrapcomments\').append(\'<p>Please Fill Notes</p>\')}">Send</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">Cancel</button><span style="display:none" class="successmsg">Submitted Successfully</span></div></div></div>'
+							')}else{$(\'.wrapcomments > .fillcomment\').html(\'<p>Please Fill Notes</p>\')}">Send</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">Cancel</button><span style="display:none" class="successmsg">Submitted Successfully</span></div><p class="fillcomment"></p></div></div>'
 						);
 					}
 				} else if (version == "SubmitField") {
@@ -2621,18 +2621,18 @@ var SubmitField_BulkEdit = {
 		) {
 			if (withNote && noteBoxVal == "") {
 				var fillNote = $(".wrapcomments").find('.fillnote').length
-				if (fillNote == 0){
+				if (fillNote == 0) {
 					return $(".wrapcomments").append("<p class='fillnote'>يرجى تعبئة الملاحظات</p>");
-				}else{
+				} else {
 					return false
 				}
 			}
 		} else {
 			if (withNote && noteBoxVal == "") {
 				var fillNote = $(".wrapcomments").find('.fillnote').length
-				if (fillNote == 0){
-				return $(".wrapcomments").append("<p class='fillnote'>Please Fill The Note</p>");
-				}else{
+				if (fillNote == 0) {
+					return $(".wrapcomments").append("<p class='fillnote'>Please Fill The Note</p>");
+				} else {
 					return false
 				}
 			}
