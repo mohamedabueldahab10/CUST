@@ -381,7 +381,7 @@ window.New_Data_Submit = {
                   $(this).attr("sid").split("|").slice(-1)[0]
                 );
 
-            console.log('aaaa', ppp);
+            
             users.push(ppp)
           })
           New_Data_Submit.g.oListItem.set_item(id, users);
@@ -429,7 +429,7 @@ window.New_Data_Submit = {
         if ($(this).hasClass("withTime")) {
           var dateval = $(this).val();
           var datetime = new Date(dateval);
-          console.log("datetime", datetime);
+        
           // format the output
           var month = datetime.getMonth() + 1;
           var day = datetime.getDate();
@@ -537,7 +537,7 @@ window.New_Data_Submit = {
     $(`[data-formdefaultvalue]`).each(function (index) {
 
       var parsingData = eval($(this).data('formdefaultvalue'))
-      console.log(parsingData, "parsingData")
+     
       // var listColumnName = parsingData[index].fieldName;
       // var listColumnValue = parsingData[index].value;
       // var allowToRole = parsingData[index].roles;
@@ -657,7 +657,7 @@ window.New_Data_Submit = {
       //
 
       //لحساب حالة الصرف as List Structure Formula: Percentage [ Actual / Planned ] *100
-      debugger
+      
       var ActualBudget = $("#ActualBudget").val().replaceAll(',', '');
       if (ActualBudget) {
         ActualBudget = parseFloat(ActualBudget);
@@ -666,7 +666,7 @@ window.New_Data_Submit = {
       if (ExpectedBudget) {
         ExpectedBudget = parseFloat(ExpectedBudget);
       }
-      console.log("actual expected budget", ActualBudget, ExpectedBudget);
+     
       var Disbstatus = 0;
 
       if (
@@ -939,10 +939,13 @@ var Set_Code_Submit = {
             }
           }
         } else if (listkey == 'initiatives') {
+
           if ($(".Details-Item.NewItem").length > 0) {
+       
             //calling new master submit
             New_Data_Submit.g.checkNewMasterDetails();
           } else {
+     
             createFolder(
               "Initiative Documents",
               ICODE + "/",
@@ -972,9 +975,11 @@ var Set_Code_Submit = {
           }
         } else {
           if ($(".Details-Item.NewItem").length > 0) {
+    
             //calling new master submit
             New_Data_Submit.g.checkNewMasterDetails();
           } else {
+     
             createFolder(
               ListArray[2].documents,
               PCODE + "/",
@@ -1269,7 +1274,7 @@ window.Edit_Data_Submit = {
   },
   init: function () {
     if (listkey == 'projects') {
-      console.log(User_ProjUID, "User_ProjUID")
+      
       checkinProjectEditSubmit.checkin(User_ProjUID);
 
     }
@@ -1301,7 +1306,7 @@ window.Edit_Data_Submit = {
           .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)>  textarea,
            .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field) > .multiselect-container`
     ).each(function () {
-      console.log($(this).attr("id"), "while id")
+     
 
       if ($(this).attr("type") == "picker") {
         if ($(this).find("span.sp-peoplepicker-userSpan").length) {
@@ -1328,7 +1333,7 @@ window.Edit_Data_Submit = {
                   $(this).attr("sid").split("|").slice(-1)[0]
                 );
 
-            console.log('aaaa', ppp);
+           
             users.push(ppp)
           })
           Edit_Data_Submit.g.oListItem.set_item(id, users);
@@ -1524,7 +1529,7 @@ window.Edit_Data_Submit = {
     $(`[data-formdefaultvalue]`).each(function (index) {
 
       var parsingData = eval($(this).data('formdefaultvalue'))
-      console.log(parsingData, "parsingData ediiiiiit")
+     
       parsingData.forEach(el => {
         if (el.roles.includes("allRoles")) {
           Edit_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
@@ -1565,11 +1570,10 @@ window.Edit_Data_Submit = {
           } else if (basedOnFieldValue == "notempty") {
             if (basedOnFieldCurrentValue) {
               el.valueToSet.forEach(item => {
-                debugger
+                
                 if (valueBasedOnParent.includes(item.condition)) {
                   item.values.forEach(field => {
-                    console.log(field.fieldNameInList, "field.fieldNameInList")
-                    console.log(field.fieldValueInList, "field.fieldValueInList")
+                
                     Edit_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
                   })
                 }
@@ -1590,7 +1594,7 @@ window.Edit_Data_Submit = {
     })
     //
 
-    debugger
+    
 
     if (listkey == "issues") {
       if ($("#ResolutionStatus").val() == "Closed") {
@@ -1649,7 +1653,7 @@ window.Edit_Data_Submit = {
       if (ExpectedBudget) {
         ExpectedBudget = parseFloat(ExpectedBudget);
       }
-      console.log("actual expected budget", ActualBudget, ExpectedBudget);
+    
       var Disbstatus = 0;
       if (
         ActualBudget != 0 &&
@@ -1735,7 +1739,7 @@ window.Edit_Data_Submit = {
         else {
 
           if ($(".Details-Item.NewItem").length > 0 && !crListKey) {
-            console.log("in master detaiiiiiiiiiiiiiils")
+           
             //calling new master submit
             New_Data_Submit.g.checkNewMasterDetails();
           } else if ($(".Details-Item.EditItem").length > 0 && !crListKey) {
@@ -1953,8 +1957,7 @@ var kpiResults = {
 
       kpiResults.g.oListItem.set_item(id, ppp);
 
-      console.log(ppp, "ppppppppppppppppppppppppppppp")
-      console.log(id, "iiiiiiiiiiiiiiiiiiiiiid")
+
     }
     if ($('#PerformanceLeader2').find("span.sp-peoplepicker-userSpan").length) {
       var id = $('#PerformanceLeader2').attr("INppicker");
@@ -2216,7 +2219,7 @@ var newBenefitEquation = {
 //master Data
 var New_Master_Details_Submit = {
   init: function () {
-
+    
     var clientContext = new SP.ClientContext.get_current();
     // $('[data-target_list]').each(function(){
     var pillerCount = 0
@@ -2244,7 +2247,7 @@ var New_Master_Details_Submit = {
             ".CFIELD:not(.dont-submit)>.multiselect-container"
           )
           .each(function () {
-            console.log($(this).attr("id"), "ID OF FIELD")
+           
             if ($(this).attr("type") == "picker") {
               if ($(this).find("span.sp-peoplepicker-userSpan").length > 0) {
                 var id =
@@ -2277,7 +2280,7 @@ var New_Master_Details_Submit = {
                         $(this).attr("sid").split("|").slice(-1)[0]
                       );
 
-                  console.log('aaaa', ppp);
+               
                   users.push(ppp)
                 })
                 New_Master_Details_Submit.g.oListItem.set_item(id, users);
@@ -2425,6 +2428,7 @@ var New_Master_Details_Submit = {
             );
             // window.location = _spPageContextInfo.webAbsoluteUrl + '/SitePages/Listing.aspx?ListKey=' + listkey + PCODE_STRING;
           } else if (listkey == 'initiatives') {
+    
             createFolder(
               "Initiative Documents",
               ICODE + "/",
@@ -2585,7 +2589,7 @@ var Edit_Master_Details_Submit = {
                     $(this).attr("sid").split("|").slice(-1)[0]
                   );
 
-              console.log('aaaa', ppp);
+            
               users.push(ppp)
             })
             Edit_Master_Details_Submit.g.oListItem.set_item(id, users);
@@ -2860,7 +2864,7 @@ var Field_Master_Details = {
 
       clientContext.executeQueryAsync(
         Function.createDelegate(this, function () {
-          console.log(fieldTargetData, "fieldTargetData")
+        
 
           fieldTargetData.shift()
           Field_Master_Details.init(fieldTargetData)
@@ -2958,6 +2962,7 @@ function UploadQuerySuccess() {
     } // if on new page other than project
     else {
       if ($(".Details-Item.NewItem").length > 0) {
+  
         //calling new master submit
         New_Data_Submit.g.checkNewMasterDetails();
       } else {
@@ -3009,6 +3014,8 @@ function _uploadFile() {
 
   $("input[type=file]").each(function (e) {
 
+    
+
     var docPurpose = $(this).data("docpurpose") ? $(this).data("docpurpose") : ""
     // var filesArr = document.querySelectorAll("#" + $(this).attr("id"))
 
@@ -3017,8 +3024,7 @@ function _uploadFile() {
     //
     // var myfiles = el.files
     var myfiles = document.querySelector("#" + $(this).attr("id")).files;
-    console.log(validattachments, "validattachments")
-    console.log(myfiles, "myfileeeeeeeeeeees")
+
     for (var i = 0; i < myfiles.length; i++) {
       const file = myfiles[i];
       const fileExtension = "" + file.name.split(".").pop();
@@ -3031,7 +3037,6 @@ function _uploadFile() {
     }
     // })
   });
-  console.log(attachments, 'attachments')
 
   // retrive file from INPUT
   files = attachments;
@@ -3070,9 +3075,7 @@ function _uploadFile() {
       files.map(function (file, index) {
         //
         var Doc_Title = "";
-        console.log(file.name, "file name")
-        console.log(filesPurpose, "filesPurpose")
-        console.log(index, "index")
+
 
 
 
@@ -3211,6 +3214,24 @@ function _uploadFile() {
                 } else if (listkey == "projects") {
                   // if on new project page
                   New_ProjectStages_Submit.init();
+                } else if (listkey == "initiatives") {
+                  $(".errormsg").hide();
+                  $(".successmsg").show();
+                  $(".btn-save").addClass("success");
+                  window.location =
+                    _spPageContextInfo.webAbsoluteUrl +
+                    "/SitePages/initiativeHome.aspx?ICODE=" + ICODE;
+
+                } else if (listkey == "strategicpartnerships") {
+                  $(".errormsg").hide();
+                  $(".successmsg").show();
+                  $(".btn-save").addClass("success");
+                  window.location =
+                    _spPageContextInfo.webAbsoluteUrl +
+                    "/SitePages/Listing.aspx?ListKey=" +
+                    listkey +
+                    PCODE_STRING;
+                    
                 } // if on new page other than project
                 else {
                   if ($(".Details-Item.NewItem").length > 0) {
@@ -3246,7 +3267,7 @@ function _uploadFile() {
 //file delete
 window.deleteFile = {
   init: function (fileurl) {
-    console.log("HERE TO DELETE FILE")
+   
     var clientContext;
     var oWebsite;
     window.hreftodelete = fileurl;
@@ -3276,7 +3297,7 @@ window.deleteFile = {
 
 //create folder on project creation
 var createFolder = function (listTitle, folderUrl, success, error) {
-
+  
   var ctx = SP.ClientContext.get_current();
   var list = ctx.get_web().get_lists().getByTitle(listTitle);
   var createFolderInternal = function (
@@ -3301,9 +3322,11 @@ var createFolder = function (listTitle, folderUrl, success, error) {
               fileCount += document.querySelector("#" + $(this).attr("id"))
                 .files.length;
             });
-            if (fileCount)
+            if (fileCount) {
               // readFiles();
+              
               _uploadFile();
+            }
             else {
               $(".errormsg").hide();
               $(".successmsg").show();
@@ -3728,8 +3751,7 @@ function ChangeProjectOwnerEpmCreateProj() { // change the owner on project cent
   var draftProject = project.checkOut();
   var web = projContext.get_web()
 
-  console.log(projectManagerPickedToProjectCenter, "projectManagerPickedToProjectCenter")
-  console.log(projectManagerId, "projectManagerId")
+
   var projectManagerId = projectManagerPickedToProjectCenter.get_lookupId()
   var userPicked = web.getUserById(projectManagerId) //147
 
@@ -3985,7 +4007,7 @@ window.Archive_Data_Submit = {
     clientContext.load(Archive_Data_Submit.g.oListItem);
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
-        console.log("SAVEEEEEEEEEEEED SUCCESSFULLY")
+        console.log("SAVEED SUCCESSFULLY")
         $(".integration-save").addClass("success");
       }),
       Function.createDelegate(this, function (sender, args) {
@@ -4077,7 +4099,7 @@ var Update_Project_Center = {
       headers: { "Accept": "application/json; odata=verbose" },
       success: function (data) {
         allEnterpriseResources = data.d.results
-        console.log(allEnterpriseResources, "allEnterpriseResources allEnterpriseResources allEnterpriseResources")
+       
         SP.SOD.registerSod('PS.ProjectContext', SP.Utilities.Utility.getLayoutsPageUrl('ps.js'));
         SP.SOD.loadMultiple(['PS.ProjectContext'], EPMProjectToUpdate);
       }
@@ -4131,7 +4153,7 @@ var delete_resources = {
   onSuccess: function (sender, args) {
 
 
-    console.log(delete_resources.g.testDuration, "oProjectsItem")
+   
     resourcesArrDelete = delete_resources.g.testDuration.get_data()
 
 
@@ -4172,7 +4194,7 @@ var delete_resourcesForupdate = {
 
   init: function () {
 
-    console.log(globresArr, "globresArr globresArr globresArr")
+
     deleteProjectContext.executeQueryAsync(
       Function.createDelegate(this, delete_resourcesForupdate.onSuccess),
       Function.createDelegate(this, delete_resourcesForupdate.onError)
@@ -4218,8 +4240,7 @@ function EPMProjectEdit() {
         new_resource.set_name(projectBuildTeamArr[i]);
         new_resource.set_id(new_resource_id);
         var project_resources_list = draftProject.get_projectResources();
-        console.log(new_resource, "new_resource new_resource")
-        console.log(project_resources_list, "project_resources_list project_resources_list")
+    
 
         var project_resource = project_resources_list.add(new_resource);
         draftProject.get_projectResources().add(new_resource);
@@ -4239,8 +4260,7 @@ function ChangeProjectOwnerEpm() {
   var projectManagerId = projectManagerPickerToEpm.get_lookupId()
   var userPicked = web.getUserById(projectManagerId) //76
 
-  console.log(projectManagerPickerToEpm, "projectManagerPickerToEpm")
-  console.log(projectManagerId, "projectManagerId")
+
 
   draftProject.set_owner(userPicked)
   var publishJob = draftProject.publish(true);
