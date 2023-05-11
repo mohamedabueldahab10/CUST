@@ -676,7 +676,7 @@ var Information_Form = [
         },
         toggleValues: [
           { value: 'yes', fields: [] },
-          { value: 'no', fields: ['FundingSection','TenderSection'] },
+          { value: 'no', fields: ['FundingSection','TenderSection','BudgetSection','Delivrables','Milestones'] },
         ],
       },
 
@@ -904,6 +904,7 @@ var Information_Form = [
     labelEn: "Budget Item",
     description: "",
     descriptionEn: "",
+    toggleName: 'BudgetSection',
     disableOnWfTaskStage : "S05",
     subFields: [
       // {
@@ -1405,6 +1406,7 @@ var Information_Form = [
     description: 'التفاصيل',
     descriptionEn: 'Details',
     sectiontype: 'master',
+    toggleName:"Delivrables",
     // className: "disable_section", // to make the section disabled on form render
     targetlist: 'Deliverables',
     disableOnWfTaskStage : "S05",
@@ -1647,6 +1649,7 @@ var Information_Form = [
     sectiontype: 'master',
     // className: "disable_section", // to make the section disabled on form render
     targetlist: 'Milestones',
+    toggleName:'Milestones',
     disableOnWfTaskStage : "S05",
     subFields: [
       // {

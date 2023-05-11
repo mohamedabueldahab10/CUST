@@ -168,7 +168,7 @@ window.New_Data_Submit = {
     var pickervalid = true; //check required people picker
     var multiSelectValid = true
     $("[type=picker][required]").each(function () {
-      
+
       if (listkey == 'changerequest' && $(this).find("span.sp-peoplepicker-userSpan").length == 0) {
         if (($(this).attr("data-email") == enternameemail)) {
           pickervalid = false;
@@ -187,7 +187,7 @@ window.New_Data_Submit = {
     });
 
     $("[type=picker]").each(function () {
-      
+
       if ($(this).find("span.sp-peoplepicker-userSpan").attr('aria-invalid') == 'true') {
         pickervalid = false;
         $(this).addClass("picker-error");
@@ -1642,12 +1642,12 @@ window.Edit_Data_Submit = {
       //لحساب حالة الصرف as List Structure Formula: Percentage [ Actual / Planned ] *100
 
       var ActualBudget = $("#ActualBudget").val().replaceAll(',', '');
-      if(ActualBudget){
-      ActualBudget = parseFloat(ActualBudget);
+      if (ActualBudget) {
+        ActualBudget = parseFloat(ActualBudget);
       }
       var ExpectedBudget = $("#ExpectedBudget").val().replaceAll(',', '');
-      if(ExpectedBudget){
-      ExpectedBudget = parseFloat(ExpectedBudget);
+      if (ExpectedBudget) {
+        ExpectedBudget = parseFloat(ExpectedBudget);
       }
       console.log("actual expected budget", ActualBudget, ExpectedBudget);
       var Disbstatus = 0;

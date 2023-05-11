@@ -457,7 +457,7 @@ var Information_Form = [
         },
         toggleValues: [
           { value: 'yes', fields: [] },
-          { value: 'no', fields: ['FundingSection','TenderSection'] },
+          { value: 'no', fields: ['FundingSection','TenderSection','BudgetSection','Delivrables','Milestones'] },
         ],
       },
       {
@@ -823,6 +823,7 @@ var Information_Form = [
   {
     label: "الموازنة",
     labelEn: "Budget",
+    toggleName: 'BudgetSection',
     description: "",
     descriptionEn: "",
     subFields: [
@@ -1242,6 +1243,7 @@ var Information_Form = [
   {
     label: 'بيانات المخرج',
     labelEn: 'Delivrable Data',
+    toggleName:"Delivrables",
     description: 'التفاصيل',
     descriptionEn: 'Details',
     sectiontype: 'master',
@@ -1430,6 +1432,7 @@ var Information_Form = [
     descriptionEn: 'Details',
     sectiontype: 'master',
     targetlist: 'Milestones',
+    toggleName:'Milestones',
     subFields: [
       
       {

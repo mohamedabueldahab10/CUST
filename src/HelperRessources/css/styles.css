@@ -7044,3 +7044,9 @@ span.statuscolorstat28 {
     text-overflow: ellipsis;
     width: 300px;
 }
+
+.removeborder {
+    border-bottom: none !important;
+    padding-bottom: 1px !important;
+    padding-top: 1px !important;
+}

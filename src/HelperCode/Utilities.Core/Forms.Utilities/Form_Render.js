@@ -23,6 +23,10 @@ var RevenuesAmount = 0;
 var RevenuesAmountInit = 0;
 var revenuesAmountInitMiles = 0;
 var parentBudgetValue = 0;
+
+var requiredFieldsSections = []; // return required field when show hide toggle for master like deliv and miles in proj when change on zero proj
+
+
 if (
   localStorage.getItem("lng") == null ||
   localStorage.getItem("lng") == "ar"
@@ -641,7 +645,7 @@ window.ListInfo = {
           ////////////////////////////// calculate the end date based on start date and duration
 
           $("input.autoSetDate").change(function (event) {
-            
+
             var datePicked = event.target.value
 
             var sourceElement = $(this).data('sourceelement');
@@ -1074,7 +1078,18 @@ window.ListInfo = {
 
           ///
           $("input.number").keyup(function (event) {
-            // skip for arrow keys
+
+            // to avoid insert text
+            // const isNumber = /^[0-9]$/i.test(event.key)
+
+            // if(!isNumber){
+            //   $(this).val(function (index, value) {
+            //     return value
+            //       .replace(/\D/g, "")
+            //       .replace(/\B(?=(\d{3})+(?!\d))/g, "");
+            //   });
+            // }
+
             if (event.which >= 37 && event.which <= 40) return;
 
 
@@ -1087,7 +1102,7 @@ window.ListInfo = {
             var elementVal = event.target.value
             // set max value
             if (max && max != 'undefined') {
-              debugger
+
               var maxValue = 0
               if (listkey == "projects") {
                 if ($(`#${max}`).val()) {
@@ -7285,12 +7300,14 @@ window.ListInfo = {
     },
 
     toggleFields: function ($this) {
+
       if (isView) {
 
         var myValue = $this.data("viewtogglevalue");
       } else {
         var myValue = $this.val();
       }
+
 
       var mytype = $this,
         toggleValues =
@@ -7310,7 +7327,7 @@ window.ListInfo = {
             ? $this.data("togglevalues").split(":::")
             : [$this.data("togglevalues")],
         myToggleFields = "";
-
+      debugger
       allToggleFields.forEach((item, i, arr) => {
         myToggleFields +=
           i == arr.length - 1
@@ -7334,6 +7351,39 @@ window.ListInfo = {
             .parent()
             .find(">*")
             .attr("required", false);
+
+
+          // remove required for section hide
+          $('[data-togglename="' + item + '"] .Details-Item .CFIELD').each(function () {
+
+            // var fieldId =$(this).find()
+            var isRequired = false, fieldId = "";
+
+            isRequired = $(this).find(">*").attr("required") ? true : false
+
+            if (isRequired) {
+              fieldId = $(this).find('input,textarea,select').attr('id')
+              console.log(fieldId,"fieldId")
+              requiredFieldsSections.push(fieldId)
+            }
+            
+            // requiredFieldsSections.push()
+
+            $(this).find(">*")
+              .attr("required", false);
+          })
+
+          $('[data-togglename="' + item + '"]').each(function () {
+            var isSection = $(this).hasClass('fieldset-container')
+
+            if (isSection) {
+              $(this).closest('.section-container').addClass('removeborder')
+              $(this).find('.CFIELD').addClass('hide-field')
+
+            }
+          })
+
+
         });
         toggleFields.forEach(function (item, i, arr) {
           var isHidden = $('[data-togglename="' + item + '"]')
@@ -7347,7 +7397,38 @@ window.ListInfo = {
             myFieldParent.removeClass("hide-field")
             myFieldParentofParent.show();
             if (!isView) {
+
               myFieldParent.find(">*").attr("required", true);
+
+              $('[data-togglename="' + item + '"] .Details-Item .CFIELD').each(function () {
+                debugger
+                requiredFieldsSections.forEach(el=>{
+                  debugger
+                  var $this = $(this)
+                  var fieldId = $(this).find('input,textarea,select').attr('id')
+                  if(el == fieldId){
+                    $this.find(">*")
+                    .attr("required", true);
+  
+                  }
+                })
+                // $(this).find(">*")
+                //   .attr("required", true);
+
+                $(this).removeClass("hide-field")
+
+
+              })
+
+              $('[data-togglename="' + item + '"]').each(function () {
+                var isSection = $(this).hasClass('fieldset-container')
+                if (isSection) {
+                  $(this).closest('.section-container').removeClass('removeborder')
+                  $(this).find('.CFIELD').removeClass('hide-field')
+
+                }
+              })
+
             }
             //make toggle fields not required
             if (listkey == "mainkpi") {
