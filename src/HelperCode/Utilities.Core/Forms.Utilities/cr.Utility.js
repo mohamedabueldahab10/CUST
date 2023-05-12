@@ -1700,8 +1700,6 @@ window.CrItemDataRenderFromJSON_View = {
 		var newValue = "";
 		var value = "";
 
-
-
 		changeRequestBody.forEach(function (o, i, a) {
 
 			if (o.InternalName) {
@@ -2100,6 +2098,9 @@ window.CrItemDataRenderFromJSON_View = {
 				},
 			}
 		);
+
+		// MasterDetails_Request_View.init()
+
 	},
 	// Global variables
 	g: {},
@@ -3071,8 +3072,8 @@ var CR_Master_Details_Request = {
 			var isMaxOnChild = $('.container-body').find('.maxOnChild').length
 			// set max attr of date for child depends on parent in same form like deliv and miles in initiative form
 			if (isMaxOnChild > 0) {
-	  
-			  $('.maxOnChild').trigger('change')
+
+				$('.maxOnChild').trigger('change')
 			}
 
 
@@ -4518,3 +4519,32 @@ var Field_Master_Details_CR = {
 }
 
 
+// var MasterDetails_Request_View = {
+// 	onSuccess: function (sender, args) {
+
+
+// 		var changeMasterData = oListItem.get_item("ChangeBodyMaster")
+
+// 		changeMasterData = eval(changeMasterData)
+
+// 		console.log(changeMasterData, "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+
+// 	},
+// 	onError: function (sender, args) {
+// 		console.log(
+// 			"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+// 		);
+// 	},
+// 	init: function () {
+// 		var clientContext = new SP.ClientContext.get_current();
+// 		var oList = clientContext.get_web().get_lists().getByTitle(SP_ListName);
+// 		MasterDetails_Request_View.g.oListItem = oList.getItemById(IID); //declared inside object scope only
+// 		oListItem = MasterDetails_Request_View.g.oListItem;
+// 		clientContext.load(MasterDetails_Request_View.g.oListItem);
+// 		clientContext.executeQueryAsync(
+// 			Function.createDelegate(this, MasterDetails_Request_View.onSuccess),
+// 			Function.createDelegate(this, MasterDetails_Request_View.onError)
+// 		);
+// 	},
+// 	g: {},
+// }

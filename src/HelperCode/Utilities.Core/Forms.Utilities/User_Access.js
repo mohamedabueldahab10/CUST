@@ -10108,6 +10108,9 @@ var Get_Milestones = {
       }
     }
 
+
+    changeResources()
+
   },
   onError: function (sender, args) {
     console.log(

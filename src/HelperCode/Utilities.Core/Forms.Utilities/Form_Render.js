@@ -1090,8 +1090,14 @@ window.ListInfo = {
             //   });
             // }
 
+            // skip for arrow keys
             if (event.which >= 37 && event.which <= 40) return;
-
+            // format number
+            $(this).val(function (index, value) {
+              return value
+                .replace(/\D/g, "")
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            });
 
             var totalElement = $(this).data("totalelement")
             var sum1 = $(this).data("sum1element")
@@ -7327,7 +7333,7 @@ window.ListInfo = {
             ? $this.data("togglevalues").split(":::")
             : [$this.data("togglevalues")],
         myToggleFields = "";
-      debugger
+      
       allToggleFields.forEach((item, i, arr) => {
         myToggleFields +=
           i == arr.length - 1
@@ -7335,7 +7341,7 @@ window.ListInfo = {
             : item.match(/\[(.*?)\]/)[1] + ",";
       });
       allToggleFields = myToggleFields.split(",");
-
+      
       if (isShowVal) {
         allToggleFields.forEach((item, i, arr) => {
 
@@ -7363,10 +7369,10 @@ window.ListInfo = {
 
             if (isRequired) {
               fieldId = $(this).find('input,textarea,select').attr('id')
-              console.log(fieldId,"fieldId")
+              console.log(fieldId, "fieldId")
               requiredFieldsSections.push(fieldId)
             }
-            
+
             // requiredFieldsSections.push()
 
             $(this).find(">*")
@@ -7401,20 +7407,17 @@ window.ListInfo = {
               myFieldParent.find(">*").attr("required", true);
 
               $('[data-togglename="' + item + '"] .Details-Item .CFIELD').each(function () {
-                debugger
-                requiredFieldsSections.forEach(el=>{
-                  debugger
+                
+                requiredFieldsSections.forEach(el => {
                   var $this = $(this)
                   var fieldId = $(this).find('input,textarea,select').attr('id')
-                  if(el == fieldId){
+                  if (el == fieldId) {
                     $this.find(">*")
-                    .attr("required", true);
-  
+                      .attr("required", true);
                   }
                 })
                 // $(this).find(">*")
                 //   .attr("required", true);
-
                 $(this).removeClass("hide-field")
 
 
@@ -7422,13 +7425,26 @@ window.ListInfo = {
 
               $('[data-togglename="' + item + '"]').each(function () {
                 var isSection = $(this).hasClass('fieldset-container')
+                // to remove the border and hide field from section when toggle
                 if (isSection) {
                   $(this).closest('.section-container').removeClass('removeborder')
                   $(this).find('.CFIELD').removeClass('hide-field')
-
+    
                 }
               })
 
+    
+    
+
+            }else if(isView){
+              // to remove the class removeborder in view
+              $('[data-togglename="' + item + '"]').each(function () {
+                var isSection = $(this).hasClass('fieldset-container')
+                if (isSection) {
+                  $(this).closest('.section-container').removeClass('removeborder')
+                  $(this).find('.CFIELD').removeClass('hide-field')
+                }
+              })
             }
             //make toggle fields not required
             if (listkey == "mainkpi") {
