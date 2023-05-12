@@ -507,6 +507,11 @@ var Information_Form = [
         DisplayName: 'تاريخ بداية الصرف',
         DisplayNameEn: 'Expense Start Date',
         type: 'datetime',
+        min: 'StartDate',
+        max: 'FinishDate',
+        Errmsgkey: 'btwndatepattern',
+        // startinternalname: 'StartDate',
+        // endinternalname: 'FinishDate',
       },
       // {
       //     "InternalName": "RelatedKPI",
