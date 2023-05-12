@@ -229,11 +229,11 @@ var Information_Form = [
               value: 'vision',
               customFilterValue: "vision",
               // roles: ['Administrator', 'VROE', 'VROP'],
-              otherFields: [
-                { fieldName: 'WFModuleCode', value: 'VROCreateProject' },
-                { fieldName: 'WFStage', value: 'VROCreateProject01' },
-                { fieldName: 'DraftStatus', value: 'draft' },
-              ],
+              // otherFields: [
+              //   { fieldName: 'WFModuleCode', value: 'VROCreateProject' },
+              //   { fieldName: 'WFStage', value: 'VROCreateProject01' },
+              //   { fieldName: 'DraftStatus', value: 'draft' },
+              // ],
             },
             {
               display: 'strategically',
@@ -241,11 +241,11 @@ var Information_Form = [
               customFilterValue: "strategically",
 
               // roles: ['Administrator', 'EPMO'],
-              otherFields: [
-                { fieldName: 'WFModuleCode', value: 'EPMOCreateProject' },
-                { fieldName: 'WFStage', value: 'EPMOCreateProject01' },
-                { fieldName: 'DraftStatus', value: 'draft' },
-              ],
+              // otherFields: [
+              //   { fieldName: 'WFModuleCode', value: 'EPMOCreateProject' },
+              //   { fieldName: 'WFStage', value: 'EPMOCreateProject01' },
+              //   { fieldName: 'DraftStatus', value: 'draft' },
+              // ],
             },
             {
               display: 'lms',
@@ -253,11 +253,11 @@ var Information_Form = [
               customFilterValue: "lms",
 
               // roles: ['Administrator', 'LMSE', 'LMSP'],
-              otherFields: [
-                { fieldName: 'WFModuleCode', value: 'LMSCreateProject' },
-                { fieldName: 'WFStage', value: 'LMSCreateProject01' },
-                { fieldName: 'DraftStatus', value: 'draft' },
-              ],
+              // otherFields: [
+              //   { fieldName: 'WFModuleCode', value: 'LMSCreateProject' },
+              //   { fieldName: 'WFStage', value: 'LMSCreateProject01' },
+              //   { fieldName: 'DraftStatus', value: 'draft' },
+              // ],
             },
             // { display: 'others', value: 'others' },
 
