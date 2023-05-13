@@ -108,13 +108,7 @@ var Information_Form = [
           ]
       },
       },
-      {
-        InternalName: 'ActualDate',
-        DisplayName: 'تاريخ الاكتمال الفعلي',
-        DisplayNameEn: 'Actual Date',
-        type: 'datetime',
-        max: 'today',
-      },
+
 
     //   {
     //     InternalName: 'CommittedDate',
@@ -210,6 +204,13 @@ var Information_Form = [
             { display: 'no', value: 'no' },
           ],
         },
+      },
+      {
+        InternalName: 'ActualDate',
+        DisplayName: 'تاريخ الاكتمال الفعلي',
+        DisplayNameEn: 'Actual Date',
+        type: 'datetime',
+        max: 'today',
       },
       {
         InternalName: 'ShowInProgramReport',
