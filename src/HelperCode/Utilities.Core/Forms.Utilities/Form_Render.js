@@ -7333,7 +7333,7 @@ window.ListInfo = {
             ? $this.data("togglevalues").split(":::")
             : [$this.data("togglevalues")],
         myToggleFields = "";
-      
+
       allToggleFields.forEach((item, i, arr) => {
         myToggleFields +=
           i == arr.length - 1
@@ -7341,7 +7341,7 @@ window.ListInfo = {
             : item.match(/\[(.*?)\]/)[1] + ",";
       });
       allToggleFields = myToggleFields.split(",");
-      
+
       if (isShowVal) {
         allToggleFields.forEach((item, i, arr) => {
 
@@ -7407,7 +7407,7 @@ window.ListInfo = {
               myFieldParent.find(">*").attr("required", true);
 
               $('[data-togglename="' + item + '"] .Details-Item .CFIELD').each(function () {
-                
+
                 requiredFieldsSections.forEach(el => {
                   var $this = $(this)
                   var fieldId = $(this).find('input,textarea,select').attr('id')
@@ -7429,14 +7429,14 @@ window.ListInfo = {
                 if (isSection) {
                   $(this).closest('.section-container').removeClass('removeborder')
                   $(this).find('.CFIELD').removeClass('hide-field')
-    
+
                 }
               })
 
-    
-    
 
-            }else if(isView){
+
+
+            } else if (isView) {
               // to remove the class removeborder in view
               $('[data-togglename="' + item + '"]').each(function () {
                 var isSection = $(this).hasClass('fieldset-container')
@@ -10204,6 +10204,70 @@ dynamicAffectSelect = {
     if (listkey == 'initiatives' && valueToFilter && valueToFilter == 'strategically') { // specially for trategically value
       valueToFilter = 'ministry' // becuse there is a value we use it in GoalStrategy list
     }
+
+    // depends on role
+
+    // var Where_Body = ""
+    // var FilterChoices = [];
+    // var PQueryFilteration = ""
+    // var Where_Body_Final = ""
+
+    // if (isRoleDataLevelAccess) {
+    //   FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
+    // }
+
+    // for (var i = 0; i < FilterChoices.length; i++) {
+    //   if (FilterChoices.length == 1) {
+
+    //     console.log(FilterChoices, "FilterChoices FilterChoices")
+
+    //     if (FilterChoices[i].targetIsMultiFilter) {
+    //       for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+    //         // debugger
+    //         if (j == FilterChoices[i].Values.length - 1) {
+    //           Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+    //         } else {
+    //           Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+    //         }
+    //       }
+    //       var countOr = (Where_Body.match(/<Or>/g) || []).length;
+    //       var ORC = "</Or>".repeat(countOr);
+    //       Where_Body += ORC;
+
+    //     } else if (FilterChoices[i].Type == "LoggedInUser") {
+    //       Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
+    //     } else {
+    //       Where_Body += '<In><FieldRef Name="' + FilterChoices[i].internalName + '" /><Values>';
+    //       for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+    //         Where_Body += '<Value Type="' + FilterChoices[i].Type + '">' + FilterChoices[i].Values[j] + '</Value>';
+    //       }
+    //       Where_Body += '</Values></In>';
+    //     }
+    //   }
+
+    //   if (i == FilterChoices.length - 1) {
+
+    //     Where_Body = Where_Body.replaceAll('Type="date"', 'IncludeTimeValue="TRUE" Type="DateTime"'); //IncludeTimeValue="false"
+
+    //     PQueryFilteration = `<Eq><FieldRef Name="${affectedSelectsInfo[0].filterField}"/><Value Type="${affectedSelectsInfo[0].filterFieldType}">${valueToFilter}</Value></Eq>`
+
+    //     console.log(Where_Body,"bbbbbbbbbbb")
+    //     console.log(PQueryFilteration,"PQueryFilteration")
+    //     debugger
+    //     Where_Body_Final =
+    //       "<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And>" +
+    //       Where_Body +
+    //       PQueryFilteration +
+    //       "</And></And></Where>";
+
+    //     // console.log(Where_Body_Final, "Where_Body_Final")
+    //     // debugger
+
+    //   }
+
+    // }
+    //
+
 
     if (
       affectedSelectsInfo[0].isCustomFilterValue === "true" &&
