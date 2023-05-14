@@ -66,6 +66,7 @@ var Information_Form = [
         InternalName: 'ClosureReasons',
         DisplayName: 'أسباب إغلاق المبادرة ',
         DisplayNameEn: 'Reasons Behind Closure ',
+				validation: "required",
         type: 'dropdownValues',
         options: {
           choices: [
@@ -93,7 +94,8 @@ var Information_Form = [
         DisplayNameEn: 'Closure Reasons Desc',
         DisplayName: 'أسباب إلغاء المبادرة (في حالة الإلغاء)',
         type: 'multiline',
-        maxchar: 5000,        
+        maxchar: 5000,    
+				validation: "required",    
 
       },
       {
@@ -103,6 +105,7 @@ var Information_Form = [
         type: 'multiline',
         maxchar: 5000,        
 
+				validation: "required",
       },
     ],
   },
