@@ -67,6 +67,7 @@ var Information_Form = [
                 "DisplayName": "أسباب إغلاق المبادرة ",
                 "DisplayNameEn": "Reasons Behind Closure ",
                 "type": "dropdownValues",
+				validation: "required",
                 options: {
                     choices: [{
                         display: 'initiativecancelled',//no
@@ -93,7 +94,8 @@ var Information_Form = [
                 "DisplayName": "أسباب إلغاء المبادرة (في حالة الإلغاء)",
                 // "type": "string",
                 "type": "multiline",
-                maxchar: 5000,        
+                maxchar: 5000,      
+				validation: "required",  
 
 
             },
@@ -102,7 +104,8 @@ var Information_Form = [
                 "DisplayNameEn": "Initiative Completion Check list",
                 "DisplayName": "قائمة تحقق اكتمال المبادرة  ",
                 "type": "string",
-                "maxchar": "255"
+                "maxchar": "255",
+				validation: "required",
 
             },
         ]
