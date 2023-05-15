@@ -73,7 +73,7 @@ window.CrModeFunctionality = {
 			})
 		});
 
-		console.log(newJSON, "NEW JSSSSSS")
+		var toggleSectionName;
 
 		asyncFor.seqProcess(
 			newJSON,
@@ -119,6 +119,10 @@ window.CrModeFunctionality = {
 					masterLayout = 'data-layout="' + item.layout + '"';
 				}
 
+				toggleSectionName = item.toggleName
+
+
+
 				htmlBuilder +=
 					'<div class="py-5 border-bottom section-container cr-related-item-section ' +
 					listkey +
@@ -140,7 +144,7 @@ window.CrModeFunctionality = {
 					Description +
 					"</span>" +
 					"</div>" +
-					'<div class="col-lg-9 col-md-8 white-box p-4 fieldset-container">';
+					'<div data-togglename=' + toggleSectionName + '  class="col-lg-9 col-md-8 white-box p-4 fieldset-container">';
 
 				asyncFor.seqProcess(
 					item.subFields,
@@ -473,98 +477,98 @@ window.CrModeFunctionality = {
 						}
 					);
 					$(".cr-related-item-section input.number").keyup(function (event) {
-				            // skip for arrow keys
-							if (event.which >= 37 && event.which <= 40) return;
-							// format number
-							$(this).val(function (index, value) {
-							  return value
+						// skip for arrow keys
+						if (event.which >= 37 && event.which <= 40) return;
+						// format number
+						$(this).val(function (index, value) {
+							return value
 								.replace(/\D/g, "")
 								.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-							});
-				
-							var totalElement = $(this).data("totalelement")
-							var sum1 = $(this).data("sum1element")
-							var sum2 = $(this).data("sum2element")
-				
-							var max = $(this).data("maxfield")
-							var resetElement = $(this).data('resetelement')
-							var elementVal = event.target.value
-							// set max value
-							if (max && max != 'undefined') {
-				
-							  var maxValue = 0
-							  if (listkey == "projects" || RListKey == "projects") {
+						});
+
+						var totalElement = $(this).data("totalelement")
+						var sum1 = $(this).data("sum1element")
+						var sum2 = $(this).data("sum2element")
+
+						var max = $(this).data("maxfield")
+						var resetElement = $(this).data('resetelement')
+						var elementVal = event.target.value
+						// set max value
+						if (max && max != 'undefined') {
+
+							var maxValue = 0
+							if (listkey == "projects" || RListKey == "projects") {
 								if ($(`#${max}`).val()) {
-								  maxValue = $(`#${max}`).val() ? $(`#${max}`).val() : 0
+									maxValue = $(`#${max}`).val() ? $(`#${max}`).val() : 0
 								} else if ($(`#Amount`).val()) {
-								  maxValue = $(`#Amount`).val() ? $(`#Amount`).val() : 0
+									maxValue = $(`#Amount`).val() ? $(`#Amount`).val() : 0
 								}
-							  } else {
+							} else {
 								maxValue = $(`#${max}`).val() ? $(`#${max}`).val() : 0
-							  }
-							  if (maxValue.includes(",")) {
+							}
+							if (maxValue.includes(",")) {
 								maxValue = maxValue.replaceAll(",", "")
-							  }
-							  if (elementVal.includes(",")) {
+							}
+							if (elementVal.includes(",")) {
 								elementVal = elementVal.replaceAll(",", "")
-				
-							  }
-							  elementVal = Number(elementVal)
-							  maxValue = Number(maxValue)
-				
-							  if (elementVal <= maxValue) {
+
+							}
+							elementVal = Number(elementVal)
+							maxValue = Number(maxValue)
+
+							if (elementVal <= maxValue) {
 								$(this).val(function (index, value) {
-								  return value
+									return value
+										.replace(/\D/g, "")
+										.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+								});
+							} else {
+								$(this).val(null)
+							}
+						}
+						else if (resetElement && resetElement != 'undefined') {
+							resetElement = eval(resetElement)
+							resetElement.forEach(el => {
+								$(`#${el}`).val(null)
+							})
+						}
+						else {
+							// format number
+							$(this).val(function (index, value) {
+								return value
 									.replace(/\D/g, "")
 									.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-								});
-							  } else {
-								$(this).val(null)
-							  }
-							}
-							else if (resetElement && resetElement != 'undefined') {
-							  resetElement = eval(resetElement)
-							  resetElement.forEach(el => {
-								$(`#${el}`).val(null)
-							  })
-							}
-							else {
-							  // format number
-							  $(this).val(function (index, value) {
-								return value
-								  .replace(/\D/g, "")
-								  .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-							  });
-							}
-							/// 
-				
-							if (totalElement && totalElement != 'undefined' && sum1 && sum1 != 'undefined' && sum2 && sum2 != 'undefined') {
-							  var value1 = $(`#${sum1}`).val()
-							  value1 = value1.replaceAll(",", "")
-							  value1 = Number(value1)
-							  var value2 = $(`#${sum2}`).val()
-							  value2 = value2.replaceAll(",", "")
-							  value2 = Number(value2)
-							  var total = value1 + value2
-							  $(`#${totalElement}`).val(total)
-				
-							  fieldsDependsOnTotal = $(`#${totalElement}`).data('resetelement')
-				
-							  if (fieldsDependsOnTotal) {
+							});
+						}
+						/// 
+
+						if (totalElement && totalElement != 'undefined' && sum1 && sum1 != 'undefined' && sum2 && sum2 != 'undefined') {
+							var value1 = $(`#${sum1}`).val()
+							value1 = value1.replaceAll(",", "")
+							value1 = Number(value1)
+							var value2 = $(`#${sum2}`).val()
+							value2 = value2.replaceAll(",", "")
+							value2 = Number(value2)
+							var total = value1 + value2
+							$(`#${totalElement}`).val(total)
+
+							fieldsDependsOnTotal = $(`#${totalElement}`).data('resetelement')
+
+							if (fieldsDependsOnTotal) {
 								fieldsDependsOnTotal = eval(fieldsDependsOnTotal)
-				
+
 								fieldsDependsOnTotal.forEach(el => {
-								  var resVal = $(`#${el}`).val()
-								  if (resVal.includes(',')) {
-									resVal = resVal.replaceAll(",", "")
-									resVal = Number(resVal)
-								  }
-								  if (resVal > total) {
-									$(`#${el}`).val(null)
-								  }
+									var resVal = $(`#${el}`).val()
+									if (resVal.includes(',')) {
+										resVal = resVal.replaceAll(",", "")
+										resVal = Number(resVal)
+									}
+									if (resVal > total) {
+										$(`#${el}`).val(null)
+									}
 								})
-							  }
 							}
+						}
 					});
 					//hide show fields based on selection & onload
 					$(".cr-related-item-section [data-togglevalues]").on(
@@ -1506,7 +1510,7 @@ window.CrItemDataRenderFromJSON_Edit = {
 
 		$(".cr-related-item-section input.number").each(function (event) {
 
-			
+
 			// skip for arrow keys
 			if (event.which >= 37 && event.which <= 40) return;
 			// format number
@@ -2788,9 +2792,28 @@ window.executeCR = {
 				// }
 				else executeCR.g.oListItem.set_item(o.InternalName, value);
 
+
+
+
+				
+
 				// if (globalStateSubmitField) items.set_item("WFStage", nxtstageid);
 				// else items.set_item("WFStage", prvstageid);
 			});
+
+
+			crBody.forEach((o, i, a) => {
+			if (RListKey == "projects" && o.InternalName == "IsZeroBudgetProject") {
+				var isZeroBudget = o.value
+				if (isZeroBudget == "yes") {
+					executeCR.g.oListItem.set_item('ActualBudget', "");
+					executeCR.g.oListItem.set_item('Amount', "");
+				}
+			}
+		})
+			
+
+
 			executeCR.g.oListItem.update();
 			clientContext.load(executeCR.g.oListItem);
 			clientContext.executeQueryAsync(
