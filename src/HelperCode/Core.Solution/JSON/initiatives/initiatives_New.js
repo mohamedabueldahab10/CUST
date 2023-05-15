@@ -428,7 +428,7 @@ var Information_Form = [
         max: 'FinishDate',
         //
         maxOnChild:true,
-        childsId:["PlannedFinishDate","ActualCompletedDate","PlannedDate","ActualCompletedDate"],
+        childsId:["PlannedFinishDate","ActualCompletedDate","PlannedDate","ActualCompletedDate","ExpenseStartDate"],
         targetOn:"min"
         // validation: 'required',
       },
@@ -440,7 +440,7 @@ var Information_Form = [
         min: 'StartDate',
         //
         maxOnChild:true,
-        childsId:["PlannedFinishDate","ActualCompletedDate","PlannedDate","ActualCompletedDate"],
+        childsId:["PlannedFinishDate","ActualCompletedDate","PlannedDate","ActualCompletedDate","ExpenseStartDate"],
         targetOn:"max"
 
         
@@ -507,8 +507,8 @@ var Information_Form = [
         DisplayName: 'تاريخ بداية الصرف',
         DisplayNameEn: 'Expense Start Date',
         type: 'datetime',
-        min: 'StartDate',
-        max: 'FinishDate',
+        // min: 'StartDate',
+        // max: 'FinishDate',
         Errmsgkey: 'btwndatepattern',
         // startinternalname: 'StartDate',
         // endinternalname: 'FinishDate',

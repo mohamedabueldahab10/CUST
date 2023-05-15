@@ -587,7 +587,7 @@ var Information_Form = [
         validation: 'required',
         //
         maxOnChild: true,
-        childsId: ["PlannedFinishDate", "ActualCompletedDate", "PlannedDate", "ActualCompletedDate"],
+        childsId: ["PlannedFinishDate", "ActualCompletedDate", "PlannedDate", "ActualCompletedDate","ExpenseStartDate"],
         targetOn: "min"
       },
       {
@@ -599,7 +599,7 @@ var Information_Form = [
         validation: 'required',
         //
         maxOnChild: true,
-        childsId: ["PlannedFinishDate", "ActualCompletedDate", "PlannedDate", "ActualCompletedDate"],
+        childsId: ["PlannedFinishDate", "ActualCompletedDate", "PlannedDate", "ActualCompletedDate","ExpenseStartDate"],
         targetOn: "max"
       },
       // {

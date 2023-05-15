@@ -1078,7 +1078,7 @@ window.ListInfo = {
 
           ///
           $("input.number").keyup(function (event) {
-            
+
             // skip for arrow keys
             if (event.which >= 37 && event.which <= 40) return;
             // format number
@@ -1180,7 +1180,28 @@ window.ListInfo = {
             var childsId = $(this).data('childsid')
             childsId = eval(childsId)
 
+
             childsId.forEach(el => {
+              var checkElem = ""
+              // to use it for current form not only master details
+              if(listkey == "changerequest"){
+                checkElem = $(`.section-container:not([data-target_list]) .CFIELD:not(.hide-field)`).find(`#${el}`).length
+              }else{
+                checkElem = $(`.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)`).find(`#${el}`).length
+              }
+
+              if (checkElem > 0) {
+                if (listkey == "changerequest") {
+                  $(`.section-container:not([data-target_list]) .CFIELD:not(.hide-field) #${el}`).each(function () {
+                    $(this).attr(targetOn, value);
+                  })
+                } else {
+                  $(`.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field) #${el}`).each(function () {
+                    $(this).attr(targetOn, value);
+                  })
+                }
+              }
+
               $('[data-target_list] .Details-Item').each(function () {
                 $(this).find(`#${el}`).attr(targetOn, value);
               })
