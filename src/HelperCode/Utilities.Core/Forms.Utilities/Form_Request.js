@@ -2229,11 +2229,30 @@ window.View_Data_Request = {
         //     window.history.back();
         // }
         // else
-        window.location =
-          _spPageContextInfo.webAbsoluteUrl +
-          "/SitePages/Listing.aspx?ListKey=" +
-          listkey +
-          PCODE_STRING;
+        console.log("when click on cancel btn")
+        debugger
+        if (listkey == "strategicpartnerships") {
+          window.location =
+            _spPageContextInfo.webAbsoluteUrl +
+            "/SitePages/StrategicPartnershipHome.aspx?STCODE=" +
+            STCODE;
+        } else if (listkey == "initiatives") {
+          window.location =
+            _spPageContextInfo.webAbsoluteUrl +
+            "/SitePages/initiativeHome.aspx?ICODE=" + ICODE;
+
+        } else if (listkey == "projects") {
+          window.location =
+            _spPageContextInfo.webAbsoluteUrl +
+            "/sitepages/ProjectHome.aspx?PCODE=" +
+            PCODE;
+        } else {
+          window.location =
+            _spPageContextInfo.webAbsoluteUrl +
+            "/SitePages/Listing.aspx?ListKey=" +
+            listkey +
+            PCODE_STRING;
+        }
       });
     },
     budgetitem: function () {
@@ -5510,7 +5529,7 @@ window.equationKPI = {
         ? Object.keys(kpiEquationsComponents[0])
         : []; // get internal names keys
 
-        debugger
+    debugger
 
     // remove required field when there is no equation
     if (!kpiEquation && (isEdit || RListKey == 'mainkpi')) {
