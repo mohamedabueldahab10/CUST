@@ -49,30 +49,30 @@ var Information_Form = [
           ]
       },
       },
-      // {
-      //     "InternalName": "PlannedCompletedDate",
-      //     "DisplayNameEn": "Planned Completed Date",
-      //     "DisplayName": "تاريخ الاكتمال المخطط",
-      //     "type": "datetime",
-      //     "validation": "required",
-      //     security: {
-      //         groups: ['VRO_E','LMS_E','System Admin Group',
-      //             'EPMO'
-      //         ]
-      //     },
-      // },
       {
-        InternalName: 'PlannedDate',
-        DisplayName: 'تاريخ الاكتمال المخطط',
-        DisplayNameEn: 'Planned Finish Date',
-        type: 'datetime',
-        validation: 'required',
-        security: {
-          groups: [
-            'EPMO', 'System Admin Group'
-          ]
+          "InternalName": "PlannedCompletedDate",
+          "DisplayNameEn": "Planned Completed Date",
+          "DisplayName": "تاريخ الاكتمال المخطط",
+          "type": "datetime",
+          "validation": "required",
+          security: {
+              groups: ['VRO_E','LMS_E','System Admin Group',
+                  'EPMO'
+              ]
+          },
       },
-      },    
+      // {
+      //   InternalName: 'PlannedDate',
+      //   DisplayName: 'تاريخ الاكتمال المخطط',
+      //   DisplayNameEn: 'Planned Finish Date',
+      //   type: 'datetime',
+      //   validation: 'required',
+      //   security: {
+      //     groups: [
+      //       'EPMO', 'System Admin Group'
+      //     ]
+      // },
+      // },    
       {
         InternalName: 'Weight',
         DisplayName: 'الوزن(%)',
@@ -170,7 +170,8 @@ var Information_Form = [
           groups: [
             'EPMO', 'System Admin Group'
           ]
-      },
+        },
+        initiativeCodeInList: true
       },
       {
         InternalName: 'SupportDocumentsDescription',

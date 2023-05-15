@@ -19,19 +19,19 @@ var Information_Form = [
         type: 'string',
         maxchar: '250',
       },
-      // {
-      //     "InternalName": "PlannedCompletedDate",
-      //     "DisplayNameEn": "Planned Completed Date",
-      //     "DisplayName": "تاريخ الاكتمال المخطط",
-      //     "type": "datetime"
-      // },
       {
-        InternalName: 'PlannedDate',
-        DisplayName: 'تاريخ الاكتمال المخطط',
-        DisplayNameEn: 'Planned Finish Date',
-        type: 'datetime',
-        // validation: 'required',
+          "InternalName": "PlannedCompletedDate",
+          "DisplayNameEn": "Planned Completed Date",
+          "DisplayName": "تاريخ الاكتمال المخطط",
+          "type": "datetime"
       },
+      // {
+      //   InternalName: 'PlannedDate',
+      //   DisplayName: 'تاريخ الاكتمال المخطط',
+      //   DisplayNameEn: 'Planned Finish Date',
+      //   type: 'datetime',
+      //   // validation: 'required',
+      // },
       {
         InternalName: 'Weight',
         DisplayNameEn: 'Weight',

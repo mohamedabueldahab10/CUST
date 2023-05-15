@@ -15,14 +15,14 @@ var Listing_Info = [
 		inlisting: true,
 		infilter: true
 	},
-	{
-        "InternalName": "PlannedDate",
-        "DisplayName": "تاريخ الاكتمال المخطط",
-        "DisplayNameEn": "Planned Finish Date",
-        "type": "date",
-        inlisting: true,
-        infilter: true
-    },
+	// {
+    //     "InternalName": "PlannedDate",
+    //     "DisplayName": "تاريخ الاكتمال المخطط",
+    //     "DisplayNameEn": "Planned Finish Date",
+    //     "type": "date",
+    //     inlisting: true,
+    //     infilter: true
+    // },
 	{
 		"InternalName": "Weight",
 		"DisplayNameEn": "Weight",
@@ -50,14 +50,14 @@ var Listing_Info = [
 		inlisting: true,
 		infilter: true
 	},
-	// {
-    //     "InternalName": "PlannedCompletedDate",
-    //     "DisplayName": "تاريخ الاكتمال المخطط",
-    //     "DisplayNameEn": "Planned Completed Date",
-    //     "type": "date",
-    //     inlisting: true,
-    //     infilter: true
-    // },
+	{
+        "InternalName": "PlannedCompletedDate",
+        "DisplayName": "تاريخ الاكتمال المخطط",
+        "DisplayNameEn": "Planned Completed Date",
+        "type": "date",
+        inlisting: true,
+        infilter: true
+    },
 	{
 		"InternalName": "ActualCompletedDate",
 		"DisplayNameEn": "Actual Completed Date",

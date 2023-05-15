@@ -36,20 +36,20 @@ var Information_Form = [
         Errmsgkey:"withletterpattern",
         validation: 'required',
       },
-      //   {
-      //     InternalName: 'PlannedCompletedDate',
-      //     DisplayNameEn: 'Planned Completed Date',
-      //     DisplayName: 'تاريخ الاكتمال المخطط',
-      //     type: 'datetime',
-      //     validation: 'required',
-      //   },
       {
-        InternalName: 'PlannedDate',
+        InternalName: 'PlannedCompletedDate',
+        DisplayNameEn: 'Planned Completed Date',
         DisplayName: 'تاريخ الاكتمال المخطط',
-        DisplayNameEn: 'Planned Finish Date',
         type: 'datetime',
         validation: 'required',
       },
+      // {
+      //   InternalName: 'PlannedDate',
+      //   DisplayName: 'تاريخ الاكتمال المخطط',
+      //   DisplayNameEn: 'Planned Finish Date',
+      //   type: 'datetime',
+      //   validation: 'required',
+      // },
       {
         InternalName: 'Weight',
         DisplayName: 'الوزن المكافئ للإنجاز %',
@@ -132,6 +132,7 @@ var Information_Form = [
         source: 'InitiativeDeliverables',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+        initiativeCodeInList: true
       },
       {
         InternalName: 'SupportDocumentsDescription',
