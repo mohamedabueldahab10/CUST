@@ -1188,9 +1188,8 @@ var Information_Form = [
         withAddBtn: 'true',
         // InternalName: 'getfile',
         docPurpose: "Approved_RFP",
-        enableOnWfTaskStage: "S05",
-        requireOnWfTaskStage: "S05",
-        disableOnWfTaskStage : "S09",
+        hideOnWfTaskStage : "S09,S05",
+          
       },
       {
         InternalName: "RFPStatus",
