@@ -5510,9 +5510,10 @@ window.equationKPI = {
         ? Object.keys(kpiEquationsComponents[0])
         : []; // get internal names keys
 
+        debugger
 
     // remove required field when there is no equation
-    if (!kpiEquation && isEdit) {
+    if (!kpiEquation && (isEdit || RListKey == 'mainkpi')) {
       $('#Year,#Months,#Quarter,#Midterms,#Years').removeAttr('required');
       $('#Year,#Months,#Quarter,#Midterms,#Years').parent().removeAttr('required');
       $('#Year,#Months,#Quarter,#Midterms,#Years').prev('label').removeAttr('required');
