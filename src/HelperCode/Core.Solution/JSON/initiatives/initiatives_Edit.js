@@ -587,7 +587,7 @@ var Information_Form = [
         validation: 'required',
         //
         maxOnChild: true,
-        childsId: ["PlannedFinishDate", "ActualCompletedDate", "PlannedDate", "ActualCompletedDate","ExpenseStartDate"],
+        childsId: ["PlannedCompletedDate", "ActualCompletedDate", "PlannedDate", "ActualCompletedDate","ExpenseStartDate"],
         targetOn: "min"
       },
       {
@@ -599,7 +599,7 @@ var Information_Form = [
         validation: 'required',
         //
         maxOnChild: true,
-        childsId: ["PlannedFinishDate", "ActualCompletedDate", "PlannedDate", "ActualCompletedDate","ExpenseStartDate"],
+        childsId: ["PlannedCompletedDate", "ActualCompletedDate", "PlannedDate", "ActualCompletedDate","ExpenseStartDate"],
         targetOn: "max"
       },
       // {
@@ -860,14 +860,6 @@ var Information_Form = [
     // className: "disable_section", // to make the section disabled on form render
     targetlist: 'InitiativeDeliverables',
     subFields: [
-
-      // {
-      //     "InternalName": "Title",
-      //     "DisplayNameEn": "Title",
-      //     "DisplayName":"رمز المنفعة",
-      //     "type":"string",
-      //     "maxchar": "250"
-      // },
       {
         InternalName: 'Name',
         DisplayNameEn: 'Name',
@@ -879,20 +871,23 @@ var Information_Form = [
         validation: 'required',
 
       },
-      //   {
-      //     InternalName: 'PlannedCompletedDate',
-      //     DisplayNameEn: 'Planned Completed Date',
-      //     DisplayName: 'تاريخ الاكتمال المخطط',
-      //     type: 'datetime',
-      //     validation: 'required',
-      //     security: {
-      //       groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
-      //     },
-      //   },
+      // {
+      //   InternalName: 'PlannedFinishDate',
+      //   DisplayName: 'تاريخ الانتهاء المخطط',
+      //   DisplayNameEn: 'Planned Finish Date',
+      //   // "type": "datetime",
+      //   type: 'datetimetoparent',
+      //   listname: 'Initiatives',
+      //   startinternalname: 'StartDate',
+      //   endinternalname: 'FinishDate',
+      //   // "min": "PlannedStartDate",
+      //   validation: 'required',
+
+      // },
       {
-        InternalName: 'PlannedFinishDate',
-        DisplayName: 'تاريخ الانتهاء المخطط',
-        DisplayNameEn: 'Planned Finish Date',
+        InternalName: 'PlannedCompletedDate',
+        DisplayName: 'تاريخ الاكتمال المخطط',
+        DisplayNameEn: 'Planned Completed Date',
         // "type": "datetime",
         type: 'datetimetoparent',
         listname: 'Initiatives',
@@ -900,7 +895,11 @@ var Information_Form = [
         endinternalname: 'FinishDate',
         // "min": "PlannedStartDate",
         validation: 'required',
-
+        security: {
+          groups: [
+            'EPMO', 'System Admin Group'
+          ]
+      },
       },
       {
         InternalName: 'DeliverableSuccessKPI',
@@ -1051,26 +1050,26 @@ var Information_Form = [
         validation: 'required',
 
       },
-      // {
-      //     "InternalName": "PlannedCompletedDate",
-      //     "DisplayNameEn": "Planned Completed Date",
-      //     "DisplayName": "تاريخ الاكتمال المخطط",
-      //     "type": "datetime",
-      //     "validation": "required",
-      //     security: {
-      //         groups: ['VRO_E','LMS_E','System Admin Group',
-      //             'EPMO'
-      //         ]
-      //     },
-      // },
       {
-        InternalName: 'PlannedDate',
-        DisplayName: 'تاريخ الاكتمال المخطط',
-        DisplayNameEn: 'Planned Finish Date',
-        type: 'datetime',
-        validation: 'required',
+        "InternalName": "PlannedCompletedDate",
+        "DisplayNameEn": "Planned Completed Date",
+        "DisplayName": "تاريخ الاكتمال المخطط",
+        "type": "datetime",
+        "validation": "required",
+        security: {
+            groups: ['VRO_E','LMS_E','System Admin Group',
+                'EPMO'
+            ]
+        },
+    },
+      // {
+      //   InternalName: 'PlannedDate',
+      //   DisplayName: 'تاريخ الاكتمال المخطط',
+      //   DisplayNameEn: 'Planned Finish Date',
+      //   type: 'datetime',
+      //   validation: 'required',
 
-      },
+      // },
       {
         InternalName: 'Weight',
         DisplayName: 'الوزن(%)',

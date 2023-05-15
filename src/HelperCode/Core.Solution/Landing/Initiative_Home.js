@@ -1205,7 +1205,7 @@ var Deliverables_Info_Request = {
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"InitiativeCode\" /><Value Type=\"Text\">" +
       initiativeHomeInfo_Request.g.ICODE +
-      "</Value></Eq></And></Where><OrderBy><FieldRef Name='PlannedFinishDate' Ascending='False' /></OrderBy></Query></View>"
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='PlannedCompletedDate' Ascending='False' /></OrderBy></Query></View>"
     ); //<Where><Geq><FieldRef Name=\'Committed_x0020_Date\' /><Value IncludeTimeValue=\'TRUE\'  Type=\'DateTime\'><Today /></Value></Geq></Where>
     Deliverables_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Deliverables_Info_Request.g.collListItem);
@@ -1221,7 +1221,7 @@ var Deliverables_Info_Request = {
     NDelivrables = 0;
     NDelevered = 0;
     POD = 0;
-
+debugger
     if (initiativeActualBudget) {
       var itemhtml = [
         '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
@@ -1253,11 +1253,11 @@ var Deliverables_Info_Request = {
         ? oListItem.get_item("Weight") + "%"
         : No_Data;
       itemdate = initiativeHomeInfo_Request.g.dateConvert(
-        oListItem.get_item("PlannedFinishDate")
+        oListItem.get_item("PlannedCompletedDate")
       );
       // PlannedFinishDate
-      CommittedDate = oListItem.get_item("PlannedFinishDate");
-
+      CommittedDate = oListItem.get_item("PlannedCompletedDate");
+        debugger
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
         '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +

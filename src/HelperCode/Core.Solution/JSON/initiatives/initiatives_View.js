@@ -512,18 +512,18 @@ var Information_Form = [
         type: 'string',
         maxchar: '250',
       },
-      // {
-      //     "InternalName": "PlannedCompletedDate",
-      //     "DisplayNameEn": "Planned Completed Date",
-      //     "DisplayName":"تاريخ الاكتمال المخطط",
-      //     "type":"datetime"
-      // },
       {
-        InternalName: 'PlannedFinishDate',
-        DisplayNameEn: 'Planned Finish Date',
-        DisplayName: 'تاريخ الاكتمال المخطط',
-        type: 'datetime',
+          "InternalName": "PlannedCompletedDate",
+          "DisplayNameEn": "Planned Completed Date",
+          "DisplayName":"تاريخ الاكتمال المخطط",
+          "type":"datetime"
       },
+      // {
+      //   InternalName: 'PlannedFinishDate',
+      //   DisplayNameEn: 'Planned Finish Date',
+      //   DisplayName: 'تاريخ الاكتمال المخطط',
+      //   type: 'datetime',
+      // },
       {
         InternalName: 'DeliverableSuccessKPI',
         DisplayNameEn: 'Deliverable Success KPI',
@@ -637,12 +637,19 @@ var Information_Form = [
       //     "DisplayName": "تاريخ الاكتمال المخطط",
       //     "type": "datetime"
       // },
+      // {
+      //   InternalName: 'PlannedDate',
+      //   DisplayName: 'تاريخ الاكتمال المخطط',
+      //   DisplayNameEn: 'Planned Finish Date',
+      //   type: 'datetime',
+      //   // validation: 'required',
+      // },
       {
-        InternalName: 'PlannedDate',
+        InternalName: 'PlannedCompletedDate',
+        DisplayNameEn: 'Planned Completed Date',
         DisplayName: 'تاريخ الاكتمال المخطط',
-        DisplayNameEn: 'Planned Finish Date',
         type: 'datetime',
-        // validation: 'required',
+        validation: 'required',
       },
       {
         InternalName: 'Weight',
@@ -733,7 +740,7 @@ var Information_Form = [
         // validation: 'required',
         maxchar: '255',
         withletters: true,
-        // Errmsgkey: "withletterpatternunrequired",
+        Errmsgkey: "withletterpattern",
       },
 
       {
