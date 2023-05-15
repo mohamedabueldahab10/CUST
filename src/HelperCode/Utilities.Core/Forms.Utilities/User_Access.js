@@ -2443,7 +2443,7 @@ window.userCalls = {
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-        ar_UserRole = "مدير وحدة التنفيذ";
+        ar_UserRole = "مدير وحدة الانجاز";
         en_UserRole = "Development Unit";
         //CRUD
         Create_Access = [
