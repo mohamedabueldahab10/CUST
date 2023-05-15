@@ -1078,18 +1078,7 @@ window.ListInfo = {
 
           ///
           $("input.number").keyup(function (event) {
-
-            // to avoid insert text
-            // const isNumber = /^[0-9]$/i.test(event.key)
-
-            // if(!isNumber){
-            //   $(this).val(function (index, value) {
-            //     return value
-            //       .replace(/\D/g, "")
-            //       .replace(/\B(?=(\d{3})+(?!\d))/g, "");
-            //   });
-            // }
-
+            
             // skip for arrow keys
             if (event.which >= 37 && event.which <= 40) return;
             // format number
