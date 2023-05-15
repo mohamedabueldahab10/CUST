@@ -256,7 +256,7 @@ var Project_Home_Info_Request = {
           );
       }
 
-      if (stageName.toString().split() == "") {
+      if (stageName.toString().split() == "end") {
         if (
           localStorage.getItem("lng") == null ||
           localStorage.getItem("lng") == "ar"
@@ -264,6 +264,15 @@ var Project_Home_Info_Request = {
           stageNamestr = "المشروع منتهي";
         } else {
           stageNamestr = "Project Completed";
+        }
+      } else if(stageName.toString().split() == ""){
+        if (
+          localStorage.getItem("lng") == null ||
+          localStorage.getItem("lng") == "ar"
+        ) {
+          stageNamestr = "قيد الموافقة";
+        } else {
+          stageNamestr = "Under Approval";
         }
       } else {
         stageNamestr = stageName.toString();
