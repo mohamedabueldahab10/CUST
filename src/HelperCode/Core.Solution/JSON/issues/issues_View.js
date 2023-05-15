@@ -107,12 +107,12 @@ var Information_Form = [{
         //         ]
         //     }
         // },
-        // {
-        //     "InternalName": "AssignedTo",
-        //     "DisplayName": "مسندة إلى الشخص المسؤول ",
-        //     "DisplayNameEn": "Assigned To",
-        //     "type": "picker"
-        // },
+        {
+            "InternalName": "AssignedTo",
+            "DisplayName": "مسندة إلى الشخص المسؤول ",
+            "DisplayNameEn": "Assigned To",
+            "type": "picker"
+        },
         {
             "InternalName": "DateRaised",
             "DisplayName": "تاريخ تحديد التحدي",
