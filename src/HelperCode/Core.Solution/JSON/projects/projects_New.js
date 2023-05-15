@@ -204,6 +204,7 @@ var Information_Form = [
               display: "no", value: "no", otherFields: [
                 { fieldName: 'WFModuleCode', value: 'EPMOCreateProject' },
                 { fieldName: 'WFStage', value: 'EPMOCreateProject01' },
+                { fieldName: 'InitiativeType', value: 'strategically' },
                 { fieldName: 'DraftStatus', value: 'draft' },
               ],
             },
