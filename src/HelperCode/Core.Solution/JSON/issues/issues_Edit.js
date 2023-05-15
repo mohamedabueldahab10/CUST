@@ -118,7 +118,8 @@ var Information_Form = [{
                 "InternalName": "AssignedTo",
                 "DisplayName": "مسندة إلى الشخص المسؤول ",
                 "DisplayNameEn": "Assigned To",
-                "type": "picker"
+                "type": "picker",
+                "validation": "required",
             },
             {
                 "InternalName": "DateRaised",
