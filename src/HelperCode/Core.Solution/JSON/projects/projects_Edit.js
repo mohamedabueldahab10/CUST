@@ -1196,9 +1196,7 @@ var Information_Form = [
         DisplayName: "حالة الكراسة",
         DisplayNameEn: "RFP Status",
         type: "dropdownValues",
-        enableOnWfTaskStage: "S05",
-        requireOnWfTaskStage: "S05",
-        disableOnWfTaskStage : "S09",
+        hideOnWfTaskStage : "S09,S05",
         options: {
           choices: [
             { display: "brochureapproved", value: "brochureapproved" },
