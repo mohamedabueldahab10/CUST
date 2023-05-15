@@ -2341,11 +2341,20 @@ window.CrSetChangeBody = {
 								o.value = $this.val();
 							} else if ($this.hasClass("percentagefield")) {
 								o.value = $this.val() / 100;
-							} else if (o.type == "multiselect") {
+							} else if (o.type == "multiselect" || o.type == "lookupmultiselect") {
+								console.log("have subfields")
+								debugger
 								var myselections = [];
 								$this.find("input#Revenue:checked").each(function () {
 									myselections.push($this.val());
 								});
+
+								if (RListKey == "initiatives") {
+									$this.find("input#RelatedBudgetItem:checked").each(function () {
+										myselections.push($(this).val());
+									});
+								}
+
 								myselections = myselections.join(":::");
 								o.value = myselections;
 							} else if (o.type == "richtext") {
@@ -2476,11 +2485,20 @@ window.CrSetChangeBody = {
 									o.value = $this.val();
 								} else if ($this.hasClass("percentagefield")) {
 									o.value = $this.val() / 100;
-								} else if (o.type == "multiselect") {
+								} else if (o.type == "multiselect" || o.type == "lookupmultiselect") {
+									console.log("dont tttt have subfields")
+									debugger
 									var myselections = [];
 									$this.find("input#Revenue:checked").each(function () {
 										myselections.push($this.val());
 									});
+
+									if (RListKey == "initiatives") {
+										$this.find("input#RelatedBudgetItem:checked").each(function () {
+											myselections.push($(this).val());
+										});
+									}
+
 									myselections = myselections.join(":::");
 									o.value = myselections;
 								} else if (o.type == "richtext") {
@@ -2795,7 +2813,7 @@ window.executeCR = {
 
 
 
-				
+
 
 				// if (globalStateSubmitField) items.set_item("WFStage", nxtstageid);
 				// else items.set_item("WFStage", prvstageid);
@@ -2803,15 +2821,15 @@ window.executeCR = {
 
 
 			crBody.forEach((o, i, a) => {
-			if (RListKey == "projects" && o.InternalName == "IsZeroBudgetProject") {
-				var isZeroBudget = o.value
-				if (isZeroBudget == "yes") {
-					executeCR.g.oListItem.set_item('ActualBudget', "");
-					executeCR.g.oListItem.set_item('Amount', "");
+				if (RListKey == "projects" && o.InternalName == "IsZeroBudgetProject") {
+					var isZeroBudget = o.value
+					if (isZeroBudget == "yes") {
+						executeCR.g.oListItem.set_item('ActualBudget', "");
+						executeCR.g.oListItem.set_item('Amount', "");
+					}
 				}
-			}
-		})
-			
+			})
+
 
 
 			executeCR.g.oListItem.update();

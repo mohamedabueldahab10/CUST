@@ -5751,12 +5751,13 @@ window.ListInfo = {
 
         }
         if (roleAccess.length == 0 && !element.hasOwnProperty("useAccessPolicy")) { // can't put else cause when the roleAccess will be empty arrray will nor render a query so all data(deleted and not deleted will appear)
+          
           if (element.isSector == "True") {
             customQuery =
               "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"EntityType\" /><Value Type=\"Choice\">" +
               element.EntityType +
               "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
-          } else if (PCODE && element.projectCodeInList) {
+          } else if ((PCODE && element.projectCodeInList)) {
             customQuery =
               "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">" +
               PCODE +
@@ -5769,7 +5770,11 @@ window.ListInfo = {
 								<Eq><FieldRef Name=\"${element.projectScopeSecondConditionFieldType}\" /><Value Type=\"${element.projectScopeSecondConditionFieldType}\">${element.projectScopeSecondConditionFieldValue}</Value></Eq></And></And>
 								</Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>`;
             }
-          } else if (ICODE && element.initiativeCodeInList) {
+          } else if ((ICODE && element.initiativeCodeInList) || (RListKey == "initiatives" && element.initiativeCodeInList)) {
+            // get the data on same parent depends on ICODE in cr
+            if(RListKey == "initiatives" && listkey == "changerequest"){
+              ICODE = $('#InitiativeCode').val()
+            }
             customQuery =
               "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"InitiativeCode\" /><Value Type=\"Text\">" +
               ICODE +
