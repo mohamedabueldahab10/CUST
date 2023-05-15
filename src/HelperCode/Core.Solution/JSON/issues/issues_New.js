@@ -91,6 +91,13 @@ var Information_Form = [{
                 "type": "picker"
             },
             {
+                "InternalName": "AssignedTo",
+                "DisplayName": "مسندة إلى الشخص المسؤول ",
+                "DisplayNameEn": "Assigned To",
+                "type": "picker",
+                "validation": "required",
+            },
+            {
                 "InternalName": "DateRaised",
                 "DisplayName": "تاريخ تحديد التحدي",
                 "DisplayNameEn": "Date Raised",
@@ -151,12 +158,6 @@ var Information_Form = [{
                 { value: "closed", fields: ["IssueClosureDate"] }, //we can put more than 1  field
               ],
             },
-            // {
-            //     "InternalName": "AssignedTo",
-            //     "DisplayName": "مسندة إلى الشخص المسؤول ",
-            //     "DisplayNameEn": "Assigned To",
-            //     "type": "picker"
-            // },
             // {
             //     "InternalName": "ResolutionActualDate",
             //     "DisplayName":"التاريخ الفعلي للحل",
