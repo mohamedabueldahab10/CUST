@@ -8257,7 +8257,7 @@ var Tasks_Info_Request_User = {
       }
 
       if (tasktype == "Approval") {
-        
+
         mycount++;
         // if (mycount <= 10) {
         HPtaskshtml.push(
@@ -8584,8 +8584,6 @@ var Tasks_Info_Request_User = {
     ) {
 
 
-
-
       if (wfname == "Project") {
         curstage_org = User_Stages_Data_Request.g.StagesArray.filter(function (
           obj
@@ -8635,7 +8633,7 @@ var Tasks_Info_Request_User = {
       switch (wfname) {
         case "Project":
           if (
-            rurl.toLowerCase().indexOf("pcode") > -1 
+            rurl.toLowerCase().indexOf("pcode") > -1
             &&
             window.location.href.toLowerCase().indexOf("&wfs") > -1
           ) {
@@ -8829,28 +8827,28 @@ var Tasks_Info_Request_User = {
               break;
             default:
               if (
-                rurl.toLowerCase().indexOf("icode") > -1 
+                rurl.toLowerCase().indexOf("icode") > -1
               ) {
 
-       
-                  //view page with pcode
-                  rurl = rurl.replace("&ICODE=", "");
 
-                  window.open(
-                    _spPageContextInfo.webAbsoluteUrl +
-                    rurl +
-                    "&TID=" +
-                    taskid +
-                    "&IID=" +
-                    ritemid +
-                    "&ICODE=" +
-                    pcode +
-                    "&WFs",
-                    "_self"
-                  );
-        
-             
-              }else if( rurl.toLowerCase().indexOf("pcode") > -1){
+                //view page with pcode
+                rurl = rurl.replace("&ICODE=", "");
+
+                window.open(
+                  _spPageContextInfo.webAbsoluteUrl +
+                  rurl +
+                  "&TID=" +
+                  taskid +
+                  "&IID=" +
+                  ritemid +
+                  "&ICODE=" +
+                  pcode +
+                  "&WFs",
+                  "_self"
+                );
+
+
+              } else if (rurl.toLowerCase().indexOf("pcode") > -1) {
                 rurl = rurl.replace("&PCODE=", "");
 
                 window.open(
@@ -8865,6 +8863,22 @@ var Tasks_Info_Request_User = {
                   "&WFs",
                   "_self"
                 );
+              } else if (rurl.toLowerCase().indexOf("stcode") > -1) {
+                rurl = rurl.replace("&STCODE=", "");
+
+                window.open(
+                  _spPageContextInfo.webAbsoluteUrl +
+                  rurl +
+                  "&TID=" +
+                  taskid +
+                  "&IID=" +
+                  ritemid +
+                  "&STCODE=" +
+                  pcode +
+                  "&WFs",
+                  "_self"
+                );
+
               } else {
                 window.open(
                   _spPageContextInfo.webAbsoluteUrl +
@@ -10053,7 +10067,7 @@ var Get_Milestones = {
 
         })
 
-        
+
 
         if (datesWithoutMilesArrFiltered.length > 0) {
           if (datesWithoutMilesArrFiltered.length == 1) {
@@ -10174,7 +10188,7 @@ var Get_Configure_Api = {
     });
   },
   init: function () {
-    
+
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("Configurations");
     var camlQuery = new SP.CamlQuery();
@@ -10196,7 +10210,7 @@ var Get_Configure_Api = {
     var listItemEnum = collListItem.getEnumerator();
 
     while (listItemEnum.moveNext()) {
-      
+
       var oListItem = listItemEnum.get_current();
       APIURL = oListItem.get_item("Value")
     }
