@@ -653,7 +653,7 @@ window.ListInfo = {
             var targetElement = $(this).data('targetelement');
 
             if (sourceElementValue && datePicked) {
-              debugger
+
               sourceElementValue = Number(sourceElementValue)
 
               let start = new Date(datePicked);
@@ -1184,9 +1184,9 @@ window.ListInfo = {
             childsId.forEach(el => {
               var checkElem = ""
               // to use it for current form not only master details
-              if(listkey == "changerequest"){
+              if (listkey == "changerequest") {
                 checkElem = $(`.section-container:not([data-target_list]) .CFIELD:not(.hide-field)`).find(`#${el}`).length
-              }else{
+              } else {
                 checkElem = $(`.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)`).find(`#${el}`).length
               }
 
@@ -5751,7 +5751,7 @@ window.ListInfo = {
 
         }
         if (roleAccess.length == 0 && !element.hasOwnProperty("useAccessPolicy")) { // can't put else cause when the roleAccess will be empty arrray will nor render a query so all data(deleted and not deleted will appear)
-          
+
           if (element.isSector == "True") {
             customQuery =
               "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"EntityType\" /><Value Type=\"Choice\">" +
@@ -5772,7 +5772,7 @@ window.ListInfo = {
             }
           } else if ((ICODE && element.initiativeCodeInList) || (RListKey == "initiatives" && element.initiativeCodeInList)) {
             // get the data on same parent depends on ICODE in cr
-            if(RListKey == "initiatives" && listkey == "changerequest"){
+            if (RListKey == "initiatives" && listkey == "changerequest") {
               ICODE = $('#InitiativeCode').val()
             }
             customQuery =
@@ -10178,10 +10178,15 @@ var Dynamic_Data_Request = {
     },
   },
 };
+var generalOriginalValue = []
+
 dynamicAffectSelect = {
   // The main Initialization function
   init: function (affectedSelectsInfo) {
 
+
+
+    debugger
 
 
     var queryFieldValue = affectedSelectsInfo[0].queryFieldValue
@@ -10226,10 +10231,12 @@ dynamicAffectSelect = {
     // var FilterChoices = [];
     // var PQueryFilteration = ""
     // var Where_Body_Final = ""
-
+    // var checkQuery =""
     // if (isRoleDataLevelAccess) {
     //   FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
+    //   checkQuery = dataLevelAccessQuery
     // }
+    // console.log(checkQuery,"checkQuery")
 
     // for (var i = 0; i < FilterChoices.length; i++) {
     //   if (FilterChoices.length == 1) {
@@ -10351,13 +10358,27 @@ dynamicAffectSelect = {
 
     var getSiblingsValues = []
 
+
+
     if (affectedSelectsInfo && affectedSelectsInfo != "undefined") {
 
       $(`#${affectedSelectsInfo.affectedFieldName} > option`).each(function () {
+        //
+        var dataSeblingValue = $(this).data("siblingvalue")
+        var optionValue = $(this).attr("value")
         var optionId = $(this).attr("option-id")
+        var textOption = $(this).text()
+        //
         var arraysiblingsVal = $(this).attr("data-arraysiblingvalues")
+
         if (arraysiblingsVal && arraysiblingsVal != 'undefined') {
           getSiblingsValues.push({ "id": optionId, 'arraySiblings': arraysiblingsVal })
+        }
+
+        if (optionId && dataSeblingValue && dataSeblingValue != "undefined" && optionValue) {
+
+          generalOriginalValue.push({ "id": optionId, "siblingvalue": dataSeblingValue, "value": optionValue, textOption: textOption, affectedFieldName: affectedSelectsInfo.affectedFieldName })
+
         }
       })
     }
@@ -10442,16 +10463,46 @@ dynamicAffectSelect = {
             }
           })
         } else {
-          optionsBody +=
-            '<option option-id="' +
-            oListItem.get_id() +
-            '" value="' +
-            valfieldkey +
-            '">' +
-            optionText +
-            "</option>";
+
+          // debugger
+          if (listkey == "changerequest" && isRoleDataLevelAccess) {
+
+          } else {
+
+            optionsBody +=
+              '<option option-id="' +
+              oListItem.get_id() +
+              '" value="' +
+              valfieldkey +
+              '">' +
+              optionText +
+              "</option>";
+          }
         }
       }
+    }
+
+    console.log(generalOriginalValue, "generalOriginalValue")
+    // to handle the change request when dynamic change in roles
+    if (listkey == "changerequest" && isRoleDataLevelAccess) {
+      generalOriginalValue.forEach(el => {
+
+        if ((el.siblingvalue == affectedSelectsInfo.customFilterValue) && (el.affectedFieldName == affectedSelectsInfo.affectedFieldName)) {
+  
+          // if ((el.siblingvalue == affectedSelectsInfo.customFilterValue)) {
+
+          optionsBody +=
+            '<option option-id="' +
+            el.id +
+            '" value="' +
+            el.value +
+            '">' +
+            el.textOption +
+            "</option>";
+          // }
+        }
+      })
+
     }
 
 

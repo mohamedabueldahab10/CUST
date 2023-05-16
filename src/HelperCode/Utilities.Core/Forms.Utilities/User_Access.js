@@ -9307,6 +9307,7 @@ let data_Level1_Access = {
     level,
     hierarchyIndex
   ) {
+    
     data_Level1_Access.g.hierarchyIndex = hierarchyIndex;
     let whereBody = ``,
       queryBody = ``,
@@ -9486,6 +9487,7 @@ let data_Level1_Access = {
       internalName: fieldToQuery,
       Type: fieldType,
       Values: valuesArray,
+
     });
     valuesArray.forEach((el, i, a) => {
 
@@ -9625,7 +9627,8 @@ let data_Level2_Access = {
       internalName: fieldToQuery,
       Type: fieldType,
       Values: valuesArray,
-      targetIsMultiFilter: targetIsMulti
+      targetIsMultiFilter: targetIsMulti,
+
     });
     valuesArray.forEach((el, i, a) => {
       //only one choice
@@ -9781,6 +9784,7 @@ let data_Level3_Access = {
       internalName: fieldToQuery,
       Type: fieldType,
       Values: valuesArray,
+
     });
     valuesArray.forEach((el, i, a) => {
       //only one choice
