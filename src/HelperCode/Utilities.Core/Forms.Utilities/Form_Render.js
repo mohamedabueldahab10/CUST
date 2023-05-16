@@ -10463,9 +10463,9 @@ dynamicAffectSelect = {
             }
           })
         } else {
-
-          // debugger
-          if (listkey == "changerequest" && isRoleDataLevelAccess) {
+          console.log(affectedSelectsInfo.fromCr, "in elllllllllll")
+          //affectedSelectsInfo.fromCr add to get the data when chosse edit in edit section cr
+          if (listkey == "changerequest" && isRoleDataLevelAccess && !affectedSelectsInfo.fromCr) {
 
           } else {
 
@@ -10484,13 +10484,12 @@ dynamicAffectSelect = {
 
     console.log(generalOriginalValue, "generalOriginalValue")
     // to handle the change request when dynamic change in roles
-    if (listkey == "changerequest" && isRoleDataLevelAccess) {
+    //affectedSelectsInfo.fromCr add to not assign new option body when data request when edit
+
+    if (listkey == "changerequest" && isRoleDataLevelAccess && !affectedSelectsInfo.fromCr) {
       generalOriginalValue.forEach(el => {
 
         if ((el.siblingvalue == affectedSelectsInfo.customFilterValue) && (el.affectedFieldName == affectedSelectsInfo.affectedFieldName)) {
-  
-          // if ((el.siblingvalue == affectedSelectsInfo.customFilterValue)) {
-
           optionsBody +=
             '<option option-id="' +
             el.id +
@@ -10499,7 +10498,6 @@ dynamicAffectSelect = {
             '">' +
             el.textOption +
             "</option>";
-          // }
         }
       })
 
