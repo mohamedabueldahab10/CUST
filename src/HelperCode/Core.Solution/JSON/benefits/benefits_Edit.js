@@ -20,8 +20,8 @@ var Information_Form = [
         type: 'string',
         validation: 'required',
         maxchar: '255',
-        withletters:true,
-        Errmsgkey:"withletterpattern",
+        withletters: true,
+        Errmsgkey: 'withletterpattern',
       },
       // {
       //   // hol dynamic 3ala l lookup
@@ -45,7 +45,7 @@ var Information_Form = [
         InternalName: 'Description',
         DisplayNameEn: 'Description',
         DisplayName: 'وصف المنفعة',
-        maxchar: 5000,        
+        maxchar: 5000,
         type: 'multiline',
         validation: 'required',
       },
@@ -94,7 +94,7 @@ var Information_Form = [
         valfieldkey: 'Title',
         grpfieldkey: 'Title',
         initiativeCodeInList: true, //value in look up drop down should be related to current project
-        Errmsgkey:"multiselecterr"
+        Errmsgkey: 'multiselecterr',
         // queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
         // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
         // queryFieldValue: 'sub', // if i need to make the field with filter should add this
@@ -115,7 +115,7 @@ var Information_Form = [
       //   type: 'datetime',
       //   validation: 'required',
       // },
-   
+
       // {
       //   InternalName: 'RelatedStrategyObjective',
       //   DisplayNameEn: 'Objective Name',
@@ -197,41 +197,41 @@ var Information_Form = [
         InternalName: 'DeliverableID',
         DisplayNameEn: 'Name',
         DisplayName: 'المخرج',
-  
+
         type: 'lookupchildtoparent',
         childlist: 'Projects', //child list name
         childinternalparentname: 'RelatedInitiative', // child internal name related to parent
-        childinternalparenttype:'Text',
-        childinternalname:"Title", // child internal name need to use to parent
+        childinternalparenttype: 'Text',
+        childinternalname: 'Title', // child internal name need to use to parent
         source: 'Deliverables', // target list
         sourceinternalname: 'ProjectCode', // column in target list
         Dispfieldkey: 'Name', //display in dropdown
         valfieldkey: 'Title', // value in dropdown
-        valsiblingkey:'AcceptanceCriteria',
-        targetsiblingkey:'AcceptanceCriteria'
-      
+        valsiblingkey: 'AcceptanceCriteria',
+        targetsiblingkey: 'AcceptanceCriteria',
       },
       {
         InternalName: 'AcceptanceCriteria',
         DisplayNameEn: 'Acceptance Criteria',
         DisplayName: 'المقياس - معايير قبول المخرج',
-        type: 'multiline',         
-        "state": "disabled",
-        maxchar: 5000,        
-
+        type: 'multiline',
+        state: 'disabled',
+        maxchar: 5000,
       },
     ],
   },
   {
-      label: 'الوثائق الداعمة',
-      description: "",
-      subFields:[
-          {
-              "InternalName": "getfile",
-              "DisplayName":"المستندات",
-              "DisplayNameEn": "Supporting Data",
-              "type":"file"
-          }
-      ]
-  }
+    label: 'الوثائق الداعمة',
+    description: '',
+    subFields: [
+      {
+        InternalName: 'getfile',
+        DisplayName: 'المستندات',
+        DisplayNameEn: 'Supporting Data',
+        type: 'file',
+        fileExtensions: 'png,jpeg,svg,msg,rar,pptx,xlsx,docx,pdf',
+        withAddBtn: 'true',
+      },
+    ],
+  },
 ]
