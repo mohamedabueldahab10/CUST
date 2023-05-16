@@ -428,7 +428,7 @@ var Information_Form = [
         max: 'FinishDate',
         //
         maxOnChild:true,
-        childsId:["PlannedFinishDate","ActualCompletedDate","PlannedDate","ActualCompletedDate"],
+        childsId:["PlannedCompletedDate","ActualCompletedDate","PlannedDate","ActualCompletedDate","ExpenseStartDate"],
         targetOn:"min"
         // validation: 'required',
       },
@@ -440,7 +440,7 @@ var Information_Form = [
         min: 'StartDate',
         //
         maxOnChild:true,
-        childsId:["PlannedFinishDate","ActualCompletedDate","PlannedDate","ActualCompletedDate"],
+        childsId:["PlannedCompletedDate","ActualCompletedDate","PlannedDate","ActualCompletedDate","ExpenseStartDate"],
         targetOn:"max"
 
         
@@ -507,8 +507,8 @@ var Information_Form = [
         DisplayName: 'تاريخ بداية الصرف',
         DisplayNameEn: 'Expense Start Date',
         type: 'datetime',
-        min: 'StartDate',
-        max: 'FinishDate',
+        // min: 'StartDate',
+        // max: 'FinishDate',
         Errmsgkey: 'btwndatepattern',
         // startinternalname: 'StartDate',
         // endinternalname: 'FinishDate',
@@ -889,13 +889,6 @@ var Information_Form = [
     targetlist: 'InitiativeDeliverables',
     subFields: [
       
-      // {
-      //     "InternalName": "Title",
-      //     "DisplayNameEn": "Title",
-      //     "DisplayName":"رمز المنفعة",
-      //     "type":"string",
-      //     "maxchar": "250"
-      // },
       {
         InternalName: 'Name',
         DisplayNameEn: 'Name',
@@ -906,23 +899,26 @@ var Information_Form = [
         Errmsgkey:"withletterpattern",
         validation: 'required',
       },
-      //   {
-      //     InternalName: 'PlannedCompletedDate',
-      //     DisplayNameEn: 'Planned Completed Date',
-      //     DisplayName: 'تاريخ الاكتمال المخطط',
-      //     type: 'datetime',
-      //     validation: 'required',
-      //   },
+      // {
+      //   InternalName: 'PlannedFinishDate',
+      //   DisplayName: 'تاريخ الانتهاء المخطط',
+      //   DisplayNameEn: 'Planned Finish Date',
+      //   // "type": "datetime",
+      //   type: 'datetimetoparent',
+      //   listname: 'Initiatives',
+      //   startinternalname: 'StartDate',
+      //   endinternalname: 'FinishDate',
+      //   // "min": "PlannedStartDate",
+      //   validation: 'required',
+      // },
       {
-        InternalName: 'PlannedFinishDate',
-        DisplayName: 'تاريخ الانتهاء المخطط',
-        DisplayNameEn: 'Planned Finish Date',
-        // "type": "datetime",
+        InternalName: 'PlannedCompletedDate',
+        DisplayName: 'تاريخ الاكتمال المخطط',
+        DisplayNameEn: 'Planned Completed Date',
         type: 'datetimetoparent',
         listname: 'Initiatives',
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
-        // "min": "PlannedStartDate",
         validation: 'required',
       },
       {
@@ -932,12 +928,6 @@ var Information_Form = [
         type: 'multiline',
         maxchar: 5000,        
       },
-      // {
-      //     "InternalName": "CommittedDate",
-      //     "DisplayName": "تاريخ الالتزام",
-      //     "DisplayNameEn": "Committed Date",
-      //     "type": "datetime",
-      // },
       {
         InternalName: 'Target',
         DisplayNameEn: 'Target',
@@ -968,13 +958,6 @@ var Information_Form = [
         targetelement: 'Weight',
         validation: 'required',
       },
-      // {
-      //   InternalName: 'Weight',
-      //   DisplayNameEn: 'Weight',
-      //   DisplayName: 'القيمة',
-      //   type: 'floatpercentage',
-      //   validation: 'required',
-      // },
       {
         InternalName: 'ActualCompletedDate',
         DisplayNameEn: 'Actual Completed Date',
@@ -982,44 +965,6 @@ var Information_Form = [
         type: 'datetime',
         max: 'today',
       },
-      // {
-      //     "InternalName": "Completed",
-      //     "DisplayNameEn": "Completed",
-      //     "DisplayName":"حالة الاكتمال",
-      //     "type": "yesnoradio",
-      //     options: {
-      //         choices: [{
-      //                 display: 'yes',
-      //                 value: 'yes'
-      //             },
-      //             {
-      //                 display: 'no',
-      //                 value: 'no'
-      //             }
-      //         ]
-      //     }
-      // },
-      // {
-      //   InternalName: 'Delivered',
-      //   DisplayName: 'تم التسليم',
-      //   DisplayNameEn: 'Delivered',
-      //   type: 'yesnoradio',
-      //   options: {
-      //     choices: [
-      //       { display: 'yes', value: 'true' },
-      //       { display: 'no', value: 'false' },
-      //     ],
-      //   },
-      // },
-      // {
-      //     "InternalName": "RelatedBenefits",
-      //     "DisplayNameEn": "Related Benefits",
-      //     "DisplayName":"المنفعة المرتبطة",
-      //     "type": "lookup",
-      //     "source": "Benefits",
-      //     "Dispfieldkey": "Name",
-      //     "valfieldkey": "Title",
-      // }
     
     ]
   },
@@ -1032,14 +977,6 @@ var Information_Form = [
     className: "disable_section", // to make the section disabled on form render
     targetlist: 'InitiativeMilestones',
     subFields: [
-      
-      // {
-      //     "InternalName": "Title",
-      //     "DisplayNameEn": "Title",
-      //     "DisplayName":"رمز المعلم",
-      //     "type":"string",
-      //     "maxchar": "250"
-      // },
       {
         InternalName: 'Name',
         DisplayNameEn: 'Name',
@@ -1050,20 +987,20 @@ var Information_Form = [
         Errmsgkey:"withletterpattern",
         validation: 'required',
       },
-      //   {
-      //     InternalName: 'PlannedCompletedDate',
-      //     DisplayNameEn: 'Planned Completed Date',
-      //     DisplayName: 'تاريخ الاكتمال المخطط',
-      //     type: 'datetime',
-      //     validation: 'required',
-      //   },
       {
-        InternalName: 'PlannedDate',
+        InternalName: 'PlannedCompletedDate',
+        DisplayNameEn: 'Planned Completed Date',
         DisplayName: 'تاريخ الاكتمال المخطط',
-        DisplayNameEn: 'Planned Finish Date',
         type: 'datetime',
         validation: 'required',
       },
+      // {
+      //   InternalName: 'PlannedDate',
+      //   DisplayName: 'تاريخ الاكتمال المخطط',
+      //   DisplayNameEn: 'Planned Finish Date',
+      //   type: 'datetime',
+      //   validation: 'required',
+      // },
       {
         InternalName: 'Weight',
         DisplayName: 'الوزن المكافئ للإنجاز %',
@@ -1087,50 +1024,6 @@ var Information_Form = [
         targetelement: 'Weight',
         validation: 'required',
       },
-      //  {
-      //     "InternalName": "Weight",
-      //     "DisplayNameEn": "Weight",
-      //     "DisplayName":"الوزن المكافئ للإنجاز %",
-      //     "type":"floatpercentage",
-      //     "validation": "required",
-      //   },
-      //   {
-      //     InternalName: 'Weight',
-      //     DisplayNameEn: 'Weight',
-      //     DisplayName: 'الوزن المكافئ للإنجاز %',
-      //     type: 'decimalpercentage',
-      //     validation: 'required',
-      //   },
-      // {
-      //     "InternalName": "Completed",
-      //     "DisplayNameEn": "Completed",
-      //     "DisplayName":"حالة الاكتمال",
-      //     "type": "yesnoradio",
-      //     options: {
-      //         choices: [{
-      //                 display: 'yes',
-      //                 value: 'yes'
-      //             },
-      //             {
-      //                 display: 'no',
-      //                 value: 'no'
-      //             }
-      //         ]
-      //     }
-      // },
-      // {
-      //   InternalName: 'Delivered',
-      //   DisplayName: 'تم التسليم',
-      //   DisplayNameEn: 'Delivered',
-      //   targetfieldrequired:"ActualCompletedDate",
-      //   type: 'yesnoradio',
-      //   options: {
-      //     choices: [
-      //       { display: 'yes', value: 'true' },
-      //       { display: 'no', value: 'false' },
-      //     ],
-      //   },
-      // },
       {
         InternalName: 'ActualCompletedDate',
         DisplayNameEn: 'Actual Completed Date',

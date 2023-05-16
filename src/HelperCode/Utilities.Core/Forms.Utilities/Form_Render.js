@@ -1078,7 +1078,7 @@ window.ListInfo = {
 
           ///
           $("input.number").keyup(function (event) {
-            
+
             // skip for arrow keys
             if (event.which >= 37 && event.which <= 40) return;
             // format number
@@ -1180,7 +1180,28 @@ window.ListInfo = {
             var childsId = $(this).data('childsid')
             childsId = eval(childsId)
 
+
             childsId.forEach(el => {
+              var checkElem = ""
+              // to use it for current form not only master details
+              if(listkey == "changerequest"){
+                checkElem = $(`.section-container:not([data-target_list]) .CFIELD:not(.hide-field)`).find(`#${el}`).length
+              }else{
+                checkElem = $(`.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)`).find(`#${el}`).length
+              }
+
+              if (checkElem > 0) {
+                if (listkey == "changerequest") {
+                  $(`.section-container:not([data-target_list]) .CFIELD:not(.hide-field) #${el}`).each(function () {
+                    $(this).attr(targetOn, value);
+                  })
+                } else {
+                  $(`.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field) #${el}`).each(function () {
+                    $(this).attr(targetOn, value);
+                  })
+                }
+              }
+
               $('[data-target_list] .Details-Item').each(function () {
                 $(this).find(`#${el}`).attr(targetOn, value);
               })
@@ -5730,12 +5751,13 @@ window.ListInfo = {
 
         }
         if (roleAccess.length == 0 && !element.hasOwnProperty("useAccessPolicy")) { // can't put else cause when the roleAccess will be empty arrray will nor render a query so all data(deleted and not deleted will appear)
+          
           if (element.isSector == "True") {
             customQuery =
               "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"EntityType\" /><Value Type=\"Choice\">" +
               element.EntityType +
               "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
-          } else if (PCODE && element.projectCodeInList) {
+          } else if ((PCODE && element.projectCodeInList)) {
             customQuery =
               "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">" +
               PCODE +
@@ -5748,7 +5770,11 @@ window.ListInfo = {
 								<Eq><FieldRef Name=\"${element.projectScopeSecondConditionFieldType}\" /><Value Type=\"${element.projectScopeSecondConditionFieldType}\">${element.projectScopeSecondConditionFieldValue}</Value></Eq></And></And>
 								</Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>`;
             }
-          } else if (ICODE && element.initiativeCodeInList) {
+          } else if ((ICODE && element.initiativeCodeInList) || (RListKey == "initiatives" && element.initiativeCodeInList)) {
+            // get the data on same parent depends on ICODE in cr
+            if(RListKey == "initiatives" && listkey == "changerequest"){
+              ICODE = $('#InitiativeCode').val()
+            }
             customQuery =
               "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"InitiativeCode\" /><Value Type=\"Text\">" +
               ICODE +

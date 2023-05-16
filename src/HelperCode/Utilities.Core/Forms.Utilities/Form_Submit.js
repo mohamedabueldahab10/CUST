@@ -381,7 +381,7 @@ window.New_Data_Submit = {
                   $(this).attr("sid").split("|").slice(-1)[0]
                 );
 
-            
+
             users.push(ppp)
           })
           New_Data_Submit.g.oListItem.set_item(id, users);
@@ -429,7 +429,7 @@ window.New_Data_Submit = {
         if ($(this).hasClass("withTime")) {
           var dateval = $(this).val();
           var datetime = new Date(dateval);
-        
+
           // format the output
           var month = datetime.getMonth() + 1;
           var day = datetime.getDate();
@@ -537,7 +537,7 @@ window.New_Data_Submit = {
     $(`[data-formdefaultvalue]`).each(function (index) {
 
       var parsingData = eval($(this).data('formdefaultvalue'))
-     
+
       // var listColumnName = parsingData[index].fieldName;
       // var listColumnValue = parsingData[index].value;
       // var allowToRole = parsingData[index].roles;
@@ -657,7 +657,7 @@ window.New_Data_Submit = {
       //
 
       //لحساب حالة الصرف as List Structure Formula: Percentage [ Actual / Planned ] *100
-      
+
       var ActualBudget = $("#ActualBudget").val().replaceAll(',', '');
       if (ActualBudget) {
         ActualBudget = parseFloat(ActualBudget);
@@ -666,7 +666,7 @@ window.New_Data_Submit = {
       if (ExpectedBudget) {
         ExpectedBudget = parseFloat(ExpectedBudget);
       }
-     
+
       var Disbstatus = 0;
 
       if (
@@ -941,11 +941,11 @@ var Set_Code_Submit = {
         } else if (listkey == 'initiatives') {
 
           if ($(".Details-Item.NewItem").length > 0) {
-       
+
             //calling new master submit
             New_Data_Submit.g.checkNewMasterDetails();
           } else {
-     
+
             createFolder(
               "Initiative Documents",
               ICODE + "/",
@@ -975,11 +975,11 @@ var Set_Code_Submit = {
           }
         } else {
           if ($(".Details-Item.NewItem").length > 0) {
-    
+
             //calling new master submit
             New_Data_Submit.g.checkNewMasterDetails();
           } else {
-     
+
             createFolder(
               ListArray[2].documents,
               PCODE + "/",
@@ -1274,7 +1274,7 @@ window.Edit_Data_Submit = {
   },
   init: function () {
     if (listkey == 'projects') {
-      
+
       checkinProjectEditSubmit.checkin(User_ProjUID);
 
     }
@@ -1306,7 +1306,7 @@ window.Edit_Data_Submit = {
           .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)>  textarea,
            .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field) > .multiselect-container`
     ).each(function () {
-     
+
 
       if ($(this).attr("type") == "picker") {
         if ($(this).find("span.sp-peoplepicker-userSpan").length) {
@@ -1333,7 +1333,7 @@ window.Edit_Data_Submit = {
                   $(this).attr("sid").split("|").slice(-1)[0]
                 );
 
-           
+
             users.push(ppp)
           })
           Edit_Data_Submit.g.oListItem.set_item(id, users);
@@ -1529,7 +1529,7 @@ window.Edit_Data_Submit = {
     $(`[data-formdefaultvalue]`).each(function (index) {
 
       var parsingData = eval($(this).data('formdefaultvalue'))
-     
+
       parsingData.forEach(el => {
         if (el.roles.includes("allRoles")) {
           Edit_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
@@ -1570,10 +1570,10 @@ window.Edit_Data_Submit = {
           } else if (basedOnFieldValue == "notempty") {
             if (basedOnFieldCurrentValue) {
               el.valueToSet.forEach(item => {
-                
+
                 if (valueBasedOnParent.includes(item.condition)) {
                   item.values.forEach(field => {
-                
+
                     Edit_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
                   })
                 }
@@ -1594,7 +1594,7 @@ window.Edit_Data_Submit = {
     })
     //
 
-    
+
 
     if (listkey == "issues") {
       if ($("#ResolutionStatus").val() == "Closed") {
@@ -1653,7 +1653,7 @@ window.Edit_Data_Submit = {
       if (ExpectedBudget) {
         ExpectedBudget = parseFloat(ExpectedBudget);
       }
-    
+
       var Disbstatus = 0;
       if (
         ActualBudget != 0 &&
@@ -1666,6 +1666,15 @@ window.Edit_Data_Submit = {
         Disbstatus = ((ActualBudget / ExpectedBudget) * 100).toFixed(2);
       }
       Edit_Data_Submit.g.oListItem.set_item("DisbursementStatus", Disbstatus);
+
+
+      var isZeroBudget = $('#IsZeroBudgetProject').val()
+      if (isZeroBudget == "yes") {
+        Edit_Data_Submit.g.oListItem.set_item('ActualBudget', "");
+        Edit_Data_Submit.g.oListItem.set_item('Amount', "");
+
+      }
+
     }
     else if (listkey == 'mainkpi') { // get the data to update the kpi result list
       kpiName = $('#Name').val()
@@ -1739,7 +1748,7 @@ window.Edit_Data_Submit = {
         else {
 
           if ($(".Details-Item.NewItem").length > 0 && !crListKey) {
-           
+
             //calling new master submit
             New_Data_Submit.g.checkNewMasterDetails();
           } else if ($(".Details-Item.EditItem").length > 0 && !crListKey) {
@@ -2219,7 +2228,7 @@ var newBenefitEquation = {
 //master Data
 var New_Master_Details_Submit = {
   init: function () {
-    
+
     var clientContext = new SP.ClientContext.get_current();
     // $('[data-target_list]').each(function(){
     var pillerCount = 0
@@ -2247,7 +2256,7 @@ var New_Master_Details_Submit = {
             ".CFIELD:not(.dont-submit)>.multiselect-container"
           )
           .each(function () {
-           
+
             if ($(this).attr("type") == "picker") {
               if ($(this).find("span.sp-peoplepicker-userSpan").length > 0) {
                 var id =
@@ -2280,7 +2289,7 @@ var New_Master_Details_Submit = {
                         $(this).attr("sid").split("|").slice(-1)[0]
                       );
 
-               
+
                   users.push(ppp)
                 })
                 New_Master_Details_Submit.g.oListItem.set_item(id, users);
@@ -2428,7 +2437,7 @@ var New_Master_Details_Submit = {
             );
             // window.location = _spPageContextInfo.webAbsoluteUrl + '/SitePages/Listing.aspx?ListKey=' + listkey + PCODE_STRING;
           } else if (listkey == 'initiatives') {
-    
+
             createFolder(
               "Initiative Documents",
               ICODE + "/",
@@ -2589,7 +2598,7 @@ var Edit_Master_Details_Submit = {
                     $(this).attr("sid").split("|").slice(-1)[0]
                   );
 
-            
+
               users.push(ppp)
             })
             Edit_Master_Details_Submit.g.oListItem.set_item(id, users);
@@ -2864,7 +2873,7 @@ var Field_Master_Details = {
 
       clientContext.executeQueryAsync(
         Function.createDelegate(this, function () {
-        
+
 
           fieldTargetData.shift()
           Field_Master_Details.init(fieldTargetData)
@@ -2962,7 +2971,7 @@ function UploadQuerySuccess() {
     } // if on new page other than project
     else {
       if ($(".Details-Item.NewItem").length > 0) {
-  
+
         //calling new master submit
         New_Data_Submit.g.checkNewMasterDetails();
       } else {
@@ -3014,7 +3023,7 @@ function _uploadFile() {
 
   $("input[type=file]").each(function (e) {
 
-    
+
 
     var docPurpose = $(this).data("docpurpose") ? $(this).data("docpurpose") : ""
     // var filesArr = document.querySelectorAll("#" + $(this).attr("id"))
@@ -3231,7 +3240,7 @@ function _uploadFile() {
                     "/SitePages/Listing.aspx?ListKey=" +
                     listkey +
                     PCODE_STRING;
-                    
+
                 } // if on new page other than project
                 else {
                   if ($(".Details-Item.NewItem").length > 0) {
@@ -3267,7 +3276,7 @@ function _uploadFile() {
 //file delete
 window.deleteFile = {
   init: function (fileurl) {
-   
+
     var clientContext;
     var oWebsite;
     window.hreftodelete = fileurl;
@@ -3297,7 +3306,7 @@ window.deleteFile = {
 
 //create folder on project creation
 var createFolder = function (listTitle, folderUrl, success, error) {
-  
+
   var ctx = SP.ClientContext.get_current();
   var list = ctx.get_web().get_lists().getByTitle(listTitle);
   var createFolderInternal = function (
@@ -3324,7 +3333,7 @@ var createFolder = function (listTitle, folderUrl, success, error) {
             });
             if (fileCount) {
               // readFiles();
-              
+
               _uploadFile();
             }
             else {
@@ -4099,7 +4108,7 @@ var Update_Project_Center = {
       headers: { "Accept": "application/json; odata=verbose" },
       success: function (data) {
         allEnterpriseResources = data.d.results
-       
+
         SP.SOD.registerSod('PS.ProjectContext', SP.Utilities.Utility.getLayoutsPageUrl('ps.js'));
         SP.SOD.loadMultiple(['PS.ProjectContext'], EPMProjectToUpdate);
       }
@@ -4153,7 +4162,7 @@ var delete_resources = {
   onSuccess: function (sender, args) {
 
 
-   
+
     resourcesArrDelete = delete_resources.g.testDuration.get_data()
 
 
@@ -4240,7 +4249,7 @@ function EPMProjectEdit() {
         new_resource.set_name(projectBuildTeamArr[i]);
         new_resource.set_id(new_resource_id);
         var project_resources_list = draftProject.get_projectResources();
-    
+
 
         var project_resource = project_resources_list.add(new_resource);
         draftProject.get_projectResources().add(new_resource);

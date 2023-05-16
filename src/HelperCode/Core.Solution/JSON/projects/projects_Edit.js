@@ -1188,18 +1188,15 @@ var Information_Form = [
         withAddBtn: 'true',
         // InternalName: 'getfile',
         docPurpose: "Approved_RFP",
-        enableOnWfTaskStage: "S05",
-        requireOnWfTaskStage: "S05",
-        disableOnWfTaskStage : "S09",
+        hideOnWfTaskStage : "S09,S05",
+          
       },
       {
         InternalName: "RFPStatus",
         DisplayName: "حالة الكراسة",
         DisplayNameEn: "RFP Status",
         type: "dropdownValues",
-        enableOnWfTaskStage: "S05",
-        requireOnWfTaskStage: "S05",
-        disableOnWfTaskStage : "S09",
+        hideOnWfTaskStage : "S09,S05",
         options: {
           choices: [
             { display: "brochureapproved", value: "brochureapproved" },
