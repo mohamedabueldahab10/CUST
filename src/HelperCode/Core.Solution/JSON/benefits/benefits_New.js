@@ -283,6 +283,8 @@ var Information_Form = [
         DisplayNameEn: 'Attachments',
         type: 'file',
         withAddBtn: 'true',
+        fileExtensions: 'png,jpeg,svg,msg,rar,pptx,xlsx,docx,pdf',
+        // fileExtensions: 'png,jpeg,svg,xlsx,docx,jpg,txt,pdf',
         // validation: 'required',
       },
     ],
