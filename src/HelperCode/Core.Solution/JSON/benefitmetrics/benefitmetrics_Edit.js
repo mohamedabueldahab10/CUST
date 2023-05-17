@@ -26,7 +26,7 @@ var Information_Form = [
             ]
           },
           {
-            condition: "ministry",
+            condition: "strategically",
             values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "EPMOBenefitActual" },
             { fieldNameInList: "WFStage", fieldValueInList: "EPMOBenefitActual01" },
             
@@ -338,7 +338,8 @@ var Information_Form = [
         DisplayName: 'السنة',
         type: 'dropdown',
         //   "state": "disabled",
-        //   dynamic: "Initiative",
+        //   dynamic: "Initiative"        
+        validation: 'required',
         options: {
           choices: [
             '2020',
