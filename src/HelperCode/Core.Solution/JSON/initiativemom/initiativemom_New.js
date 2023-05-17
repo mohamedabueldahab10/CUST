@@ -32,6 +32,8 @@ var Information_Form = [
         type: 'string',
         validation: 'required',
         maxchar: 255,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",  
       },
       {
         InternalName: 'Date',
@@ -47,6 +49,8 @@ var Information_Form = [
         type: 'string', //from other list:
         // "source": "Regions", //"Dispfieldkey": "Title", //"valfieldkey": "Title"
         maxchar: 255,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",  
       },
       {
         InternalName: 'Attendees',
@@ -54,6 +58,8 @@ var Information_Form = [
         DisplayNameEn: 'Attendees',
         type: 'multiline',
         maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
       {
         InternalName: 'MeetingObjectives',
@@ -61,6 +67,8 @@ var Information_Form = [
         DisplayNameEn: 'Meeting Objectives',
         type: 'multiline',
         maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
       {
         InternalName: 'FormalAgenda',
@@ -68,6 +76,8 @@ var Information_Form = [
         DisplayNameEn: 'Formal Agenda',
         type: 'multiline',
         maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
       {
         InternalName: 'Decisions',
@@ -75,6 +85,8 @@ var Information_Form = [
         DisplayNameEn: 'Decisions',
         type: 'multiline',
         maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
       {
         InternalName: 'Comments',
@@ -82,6 +94,8 @@ var Information_Form = [
         DisplayNameEn: 'Comments',
         type: 'multiline',
         maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
     ],
   },

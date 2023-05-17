@@ -72,6 +72,8 @@ var Information_Form = [
         withletters: true,
         Errmsgkey: 'withletterpattern',
         validation: 'required',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",  
         security: {
           groups: ['EPMO', 'System Admin Group'],
         },
@@ -204,6 +206,8 @@ var Information_Form = [
         DisplayNameEn: 'Support Documents Description',
         DisplayName: 'وصف الوثائق الداعمة',
         type: 'multiline',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
         maxchar: '5000',
         security: {
           groups: ['EPMO', 'System Admin Group'],

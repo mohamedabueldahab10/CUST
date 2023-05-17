@@ -35,6 +35,8 @@ var Information_Form = [
         withletters:true,
         Errmsgkey:"withletterpattern",
         validation: 'required',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
       },
       {
         InternalName: 'PlannedCompletedDate',
@@ -148,6 +150,8 @@ var Information_Form = [
         DisplayName: 'وصف الوثائق الداعمة',
         type: 'multiline',
         maxchar: '5000',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
     ],
   },

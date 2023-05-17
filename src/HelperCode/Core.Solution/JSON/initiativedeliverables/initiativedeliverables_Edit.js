@@ -43,6 +43,8 @@ var Information_Form = [
         withletters:true,
         Errmsgkey:"withletterpattern",
         validation: 'required',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",  
         security: {
           groups: [
             'EPMO', 'System Admin Group'
@@ -82,6 +84,8 @@ var Information_Form = [
         DisplayName: 'مقياس نجاح المخرج  (إن وجد)',
         type: 'string',
         maxchar: 255,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",  
         security: {
           groups: [
             'EPMO', 'System Admin Group'
