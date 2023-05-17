@@ -67,6 +67,8 @@ var Information_Form = [
         withletters: true,
         Errmsgkey: "withletterpattern",
         validation: 'required',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
       },
       {
         InternalName: 'KPIType',
@@ -271,6 +273,8 @@ var Information_Form = [
         maxchar: '5000',
         type: 'multiline',
         validation: 'required',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
       {
         InternalName: 'Issues',
@@ -278,6 +282,8 @@ var Information_Form = [
         DisplayName: 'التحديات',
         maxchar: '5000',
         type: 'multiline',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
       {
         InternalName: 'Risks',
@@ -285,6 +291,8 @@ var Information_Form = [
         DisplayName: 'المخاطر',
         maxchar: '5000',
         type: 'multiline',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
       {
         InternalName: 'ExternalFactors',
@@ -292,6 +300,8 @@ var Information_Form = [
         DisplayName: 'العوامل الخارجية',
         maxchar: '5000',
         type: 'multiline',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
       {
         InternalName: 'Assumptions',
@@ -299,6 +309,8 @@ var Information_Form = [
         DisplayName: 'الافتراضات',
         maxchar: '5000',
         type: 'multiline',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
       {
         InternalName: 'RelatedMainKpis',
@@ -448,6 +460,8 @@ var Information_Form = [
         DisplayName: 'مصدر البيانات',
         type: 'string',
         maxchar: '255',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
       },
       {
         InternalName: 'DataSourceResponsible',
@@ -455,6 +469,8 @@ var Information_Form = [
         DisplayName: 'مسؤول مصدر البيانات',
         type: 'string',
         maxchar: '255',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
       },
       {
         InternalName: 'Email',

@@ -14,13 +14,17 @@ var Information_Form = [
         maxchar: '255',
         withletters:true,
         Errmsgkey:"withletterpattern",
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
       },
       {
         InternalName: 'Description',
         DisplayNameEn: 'Description',
         DisplayName: 'الوصف',
         type: 'multiline',
-        maxchar: 5000,        
+        maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",        
         // "validation": "required"
       },
       {
@@ -128,7 +132,9 @@ var Information_Form = [
         DisplayNameEn: 'Vision',
         DisplayName: 'الرؤية',
         type: 'multiline',
-        maxchar: 5000,        
+        maxchar: 5000,     
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",   
 
       },
       {
@@ -137,7 +143,8 @@ var Information_Form = [
         DisplayName: 'القيم',
         type: 'multiline',
         maxchar: 5000,        
-
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",   
       },
       {
         InternalName: 'Mission',
@@ -145,7 +152,8 @@ var Information_Form = [
         DisplayName: 'الرسالة',
         type: 'multiline',
         maxchar: 5000,        
-
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",   
       },
       {
         InternalName: 'ApprovalDate',
@@ -204,6 +212,8 @@ var Information_Form = [
         maxchar: '255',
         withletters:true,
         Errmsgkey:"withletterpattern",
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",   
         // RequiredName: 'Name',
       },
       // {
@@ -239,7 +249,9 @@ var Information_Form = [
         DisplayNameEn: 'Description',
         DisplayName: 'الوصف',
         type: 'multiline',
-        maxchar: 5000,        
+        maxchar: 5000,       
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",    
         // validation: 'required',
         // RequiredName: 'Description',
       },

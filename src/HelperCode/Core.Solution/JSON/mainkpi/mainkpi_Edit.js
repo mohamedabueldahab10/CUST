@@ -83,6 +83,8 @@ var Information_Form = [
         Errmsgkey: "withletterpattern",
         validation: 'required',
         ToggleDisabledName: 'Name',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
         security: {
           groups: [
             'LMS_P',
@@ -273,6 +275,8 @@ var Information_Form = [
         DisplayName: 'وصف المؤشر',
         ToggleDisabledName: 'Description',
         maxchar: '5000',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
         type: 'multiline',
         validation: 'required',
         security: {
@@ -292,6 +296,8 @@ var Information_Form = [
         ToggleDisabledName: 'Issues',
         maxchar: '5000',
         type: 'multiline',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
       {
         InternalName: 'Risks',
@@ -300,6 +306,8 @@ var Information_Form = [
         ToggleDisabledName: 'Risks',
         maxchar: '5000',
         type: 'multiline',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
       {
         InternalName: 'ExternalFactors',
@@ -308,6 +316,8 @@ var Information_Form = [
         ToggleDisabledName: 'ExternalFactors',
         maxchar: '5000',
         type: 'multiline',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
       {
         InternalName: 'Assumptions',
@@ -315,6 +325,8 @@ var Information_Form = [
         DisplayName: 'الافتراضات',
         ToggleDisabledName: 'Assumptions',
         maxchar: '5000',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
         type: 'multiline',
         security: {
           groups: [
@@ -1042,6 +1054,8 @@ var Information_Form = [
         ToggleDisabledName: 'DataSource',
         type: 'string',
         maxchar: '255',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
         security: {
           groups: [
             'LMS_P',
@@ -1059,6 +1073,8 @@ var Information_Form = [
         ToggleDisabledName: 'DataSourceResponsible',
         type: 'string',
         maxchar: '255',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
         security: {
           groups: [
             'LMS_P',
@@ -1267,6 +1283,8 @@ var Information_Form = [
         DisplayName: 'معادلة المؤشر',
         type: 'string',
         maxchar: 255,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
         state: 'disabled',
         security: {
           groups: [
