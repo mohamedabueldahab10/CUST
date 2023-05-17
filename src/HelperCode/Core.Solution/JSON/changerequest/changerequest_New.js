@@ -111,6 +111,7 @@ window.Information_Form = [
 				ToggleName: "ProjectCode",
 				customCr: true,
 				source: "Projects",
+				valsiblingkey: 'InitiativeType', // to use it on roles filter on data
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
 				useAccessPolicy: true,
@@ -811,6 +812,7 @@ window.Information_Form = [
 				type: "lookup",
 				ToggleName: "InitiativeCode",
 				customCr: true,
+				valsiblingkey: 'Types', // to use it on roles filter on data
 				//from other list:ma
 				source: "Initiatives",
 				Dispfieldkey: "Name",
@@ -956,6 +958,8 @@ window.Information_Form = [
 				source: "SOs",
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
+				valsiblingkey: 'Class', // to use it on roles filter on data
+				// sourcefieldlvl1: "RelatedStrategy", 
 				// dontSubmit: true,
 				useAccessPolicy: true,
 				dynamic: 'moduleSelect',
@@ -1088,6 +1092,7 @@ window.Information_Form = [
 				source: "MainKPI",
 				Dispfieldkey: "Name",
 				valfieldkey: "Title",
+				valsiblingkey: 'Class', // to use it on roles filter on data
 				useAccessPolicy: true,
 				dynamic: 'moduleSelect',
 				filterField: 'Class',

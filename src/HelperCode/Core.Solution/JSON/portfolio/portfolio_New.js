@@ -32,6 +32,7 @@ var Information_Form = [{
             "DisplayName": "مدير المحفظة",
             "DisplayNameEn": "Portfolio Manager",
             "type": "picker",
+            "validation": "required"
         },
         {
             "InternalName": "Owner",

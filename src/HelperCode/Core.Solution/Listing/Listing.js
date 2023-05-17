@@ -1452,12 +1452,10 @@ window.ListingData = {
         //dynamic query building
         // debugger
         for (var i = 0; i < FilterChoices.length; i++) {
-          console.log(FilterChoices, "FilterChoices FilterChoices")
+         
 
           //only one choice
           if (FilterChoices.length == 1) {
-
-            console.log(FilterChoices, "FilterChoices FilterChoices")
 
             if (FilterChoices[i].targetIsMultiFilter) {
               for (var j = 0; j < FilterChoices[i].Values.length; j++) {
