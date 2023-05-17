@@ -93,7 +93,11 @@ var Information_Form = [
         InternalName: 'DateIdentified',
         DisplayName: 'تاريخ التحديد',
         DisplayNameEn: 'Date Identified',
-        type: 'datetime',
+        // type: 'datetime',
+        type: 'datetimetoparent',
+        listname: 'Projects', // list name
+        startinternalname: 'BaselineStartDate', // internalname of parent start
+        endinternalname: 'BaselineFinishDate',
       },
       {
         InternalName: 'Description',
@@ -188,13 +192,21 @@ var Information_Form = [
         InternalName: 'MitigationTargetDate',
         DisplayName: 'التاريخ المخطط للاستجابة',
         DisplayNameEn: 'Mitigation Target Date',
-        type: 'datetime',
+        // type: 'datetime',
+        type: 'datetimetoparent',
+        listname: 'Projects', // list name
+        startinternalname: 'BaselineStartDate', // internalname of parent start
+        endinternalname: 'BaselineFinishDate',
       },
       {
         InternalName: 'MitigationActualCompletionDate',
         DisplayName: 'تاريخ الانتهاء من الاستجابة',
         DisplayNameEn: 'Mitigation Actual Completion Date',
-        type: 'datetime',
+        // type: 'datetime',
+        type: 'datetimetoparent',
+        listname: 'Projects', // list name
+        startinternalname: 'BaselineStartDate', // internalname of parent start
+        endinternalname: 'BaselineFinishDate',
       },
       {
         InternalName: 'MitigationPlan',

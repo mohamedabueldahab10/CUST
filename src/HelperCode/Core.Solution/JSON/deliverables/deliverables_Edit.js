@@ -211,7 +211,11 @@ var Information_Form = [
         InternalName: 'DeliveredDate',
         DisplayName: 'تاريخ التسليم',
         DisplayNameEn: 'Delivered Date',
-        type: 'datetime',
+        // type: 'datetime',
+        type: 'datetimetoparent',
+        listname: 'Projects', // list name
+        startinternalname: 'BaselineStartDate', // internalname of parent start
+        endinternalname: 'BaselineFinishDate',
         max: 'today',
         // "validation": "required",
       },

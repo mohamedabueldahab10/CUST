@@ -6,26 +6,54 @@ var Information_Form = [
     descriptionEn: 'Details',
     formValuesBasedOnParent: [
       {
-        parentList: 'Projects', parentFieldName: 'Title', fieldName: 'InitiativeType',basedOnCondition: true, basedOnFieldName: "Delivered", basedOnFieldValue: "yes",
+        parentList: 'Projects',
+        parentFieldName: 'Title',
+        fieldName: 'InitiativeType',
+        basedOnCondition: true,
+        basedOnFieldName: 'Delivered',
+        basedOnFieldValue: 'yes',
         valueToSet: [
           {
-            condition: "vision", values: [
-              { fieldNameInList: "WFModuleCode", fieldValueInList: "VROProjMilestone" },
-              { fieldNameInList: "WFStage", fieldValueInList: "VROProjMilestone01" },]
+            condition: 'vision',
+            values: [
+              {
+                fieldNameInList: 'WFModuleCode',
+                fieldValueInList: 'VROProjMilestone',
+              },
+              {
+                fieldNameInList: 'WFStage',
+                fieldValueInList: 'VROProjMilestone01',
+              },
+            ],
           },
           {
-            condition: "lms",
-            values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "LMSProjMilestone" },
-            { fieldNameInList: "WFStage", fieldValueInList: "LMSProjMilestone01" }]
+            condition: 'lms',
+            values: [
+              {
+                fieldNameInList: 'WFModuleCode',
+                fieldValueInList: 'LMSProjMilestone',
+              },
+              {
+                fieldNameInList: 'WFStage',
+                fieldValueInList: 'LMSProjMilestone01',
+              },
+            ],
           },
           {
-            condition: "strategically",
-            values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "EPMOProjMilestone" },
-            { fieldNameInList: "WFStage", fieldValueInList: "EPMOProjMilestone01" }]
+            condition: 'strategically',
+            values: [
+              {
+                fieldNameInList: 'WFModuleCode',
+                fieldValueInList: 'EPMOProjMilestone',
+              },
+              {
+                fieldNameInList: 'WFStage',
+                fieldValueInList: 'EPMOProjMilestone01',
+              },
+            ],
           },
-
-        ]
-      }
+        ],
+      },
     ],
     subFields: [
       // {
@@ -41,14 +69,12 @@ var Information_Form = [
         DisplayNameEn: 'Name',
         type: 'string',
         maxchar: '255',
-        withletters:true,
-        Errmsgkey:"withletterpatteWrn",
+        withletters: true,
+        Errmsgkey: 'withletterpatteWrn',
         validation: 'required',
         security: {
-          groups: [
-            'EPMO', 'System Admin Group'
-          ]
-      },
+          groups: ['EPMO', 'System Admin Group'],
+        },
       },
       // {
       //   InternalName: 'Weight',
@@ -76,10 +102,8 @@ var Information_Form = [
         // "state":"disabled",
         validation: 'required',
         security: {
-          groups: [
-            'EPMO', 'System Admin Group'
-          ]
-      },
+          groups: ['EPMO', 'System Admin Group'],
+        },
       },
       {
         InternalName: 'Amount',
@@ -92,31 +116,32 @@ var Information_Form = [
         targetelement: 'Weight',
         validation: 'required',
         security: {
-          groups: [
-            'EPMO', 'System Admin Group'
-          ]
-      },
+          groups: ['EPMO', 'System Admin Group'],
+        },
       },
       {
         InternalName: 'PlannedDate',
         DisplayName: 'تاريخ الاكتمال المخطط',
         DisplayNameEn: 'Planned Finish Date',
-        type: 'datetime',
+        // type: 'datetime',
+        type: 'datetimetoparent',
+        validation: 'required',
+        listname: 'Projects', // list name
+        startinternalname: 'BaselineStartDate', // internalname of parent start
+        endinternalname: 'BaselineFinishDate',
+        Errmsgkey: 'btwndatepattern',
         security: {
-          groups: [
-            'EPMO', 'System Admin Group'
-          ]
-      },
+          groups: ['EPMO', 'System Admin Group'],
+        },
       },
 
-
-    //   {
-    //     InternalName: 'CommittedDate',
-    //     DisplayName: 'تاريخ الالتزام',
-    //     DisplayNameEn: 'Committed Date',
-    //     type: 'datetime',
-    //     validation: 'required',
-    //   },
+      //   {
+      //     InternalName: 'CommittedDate',
+      //     DisplayName: 'تاريخ الالتزام',
+      //     DisplayNameEn: 'Committed Date',
+      //     type: 'datetime',
+      //     validation: 'required',
+      //   },
       // {
       //     "InternalName": "ShowInProgramReport",
       //     "DisplayName": "اظهار في التقرير",
@@ -140,10 +165,8 @@ var Information_Form = [
         type: 'multiline',
         maxchar: 5000,
         security: {
-          groups: [
-            'EPMO', 'System Admin Group'
-          ]
-      },
+          groups: ['EPMO', 'System Admin Group'],
+        },
       },
       {
         InternalName: 'Description',
@@ -152,10 +175,8 @@ var Information_Form = [
         type: 'multiline',
         maxchar: 5000,
         security: {
-          groups: [
-            'EPMO', 'System Admin Group'
-          ]
-      },
+          groups: ['EPMO', 'System Admin Group'],
+        },
       },
       // {
       //   InternalName: 'Status',
@@ -176,18 +197,16 @@ var Information_Form = [
         DisplayNameEn: 'Related Initiative Milestone',
         // type: 'lookup',
         // source: 'InitiativeMilestones',
-        "type": 'lookuptoparentchild',
-        "parentlist":"Projects", //parent list name
-        "parentinternalname":"RelatedInitiative", // internal name in parent list
-        "source":"Milestones", // target list
-        "sourceinternalname":"InitiativeCode", // column in target list
-        "Dispfieldkey": 'Name', //display in dropdown
-        "valfieldkey": "Title",// value in dropdown
+        type: 'lookuptoparentchild',
+        parentlist: 'Projects', //parent list name
+        parentinternalname: 'RelatedInitiative', // internal name in parent list
+        source: 'Milestones', // target list
+        sourceinternalname: 'InitiativeCode', // column in target list
+        Dispfieldkey: 'Name', //display in dropdown
+        valfieldkey: 'Title', // value in dropdown
         security: {
-          groups: [
-            'EPMO', 'System Admin Group'
-          ]
-      },
+          groups: ['EPMO', 'System Admin Group'],
+        },
       },
       {
         InternalName: 'Delivered',
@@ -209,8 +228,13 @@ var Information_Form = [
         InternalName: 'ActualDate',
         DisplayName: 'تاريخ الاكتمال الفعلي',
         DisplayNameEn: 'Actual Date',
-        type: 'datetime',
+        // type: 'datetime',
+        type: 'datetimetoparent',
         max: 'today',
+        listname: 'Projects', // list name
+        startinternalname: 'BaselineStartDate', // internalname of parent start
+        endinternalname: 'BaselineFinishDate',
+        Errmsgkey: 'btwndatepattern',
       },
       {
         InternalName: 'ShowInProgramReport',
@@ -250,13 +274,11 @@ var Information_Form = [
         DisplayName: 'الوثائق داعمة',
         DisplayNameEn: 'Supporting Documents',
         type: 'file',
-        docPurpose:"Spporting_Documents",
+        docPurpose: 'Spporting_Documents',
         withAddBtn: 'true',
         security: {
-          groups: [
-            'EPMO', 'System Admin Group'
-          ]
-      },
+          groups: ['EPMO', 'System Admin Group'],
+        },
       },
       {
         InternalName: 'SupportDocumentsDescription',
@@ -265,10 +287,8 @@ var Information_Form = [
         type: 'multiline',
         maxchar: '5000',
         security: {
-          groups: [
-            'EPMO', 'System Admin Group'
-          ]
-      },
+          groups: ['EPMO', 'System Admin Group'],
+        },
       },
     ],
   },
@@ -283,13 +303,11 @@ var Information_Form = [
         DisplayName: 'المرفقات',
         DisplayNameEn: 'Attachments',
         type: 'file',
-        docPurpose:"Attachments",
+        docPurpose: 'Attachments',
         withAddBtn: 'true',
         security: {
-          groups: [
-            'EPMO', 'System Admin Group'
-          ]
-      },
+          groups: ['EPMO', 'System Admin Group'],
+        },
       },
     ],
   },

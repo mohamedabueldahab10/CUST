@@ -633,7 +633,7 @@ var Information_Form = [
       {
         "InternalName": "Status",
         "DisplayNameEn": "Status",
-        "DisplayName": "الحالة",
+        "DisplayName": "حالة الإنجاز",
         "type": 'dropdownValues',
 
       },

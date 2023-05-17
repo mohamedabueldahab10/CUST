@@ -28,6 +28,7 @@ var Listing_Info = [{
         "DisplayName": "الأثر",
         "DisplayNameEn": "Impact",
         "type": "text",
+        needTrans: true,
         inlisting: true,
         infilter: false
     },

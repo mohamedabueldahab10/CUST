@@ -9,17 +9,17 @@ var Information_Form = [
     //   { fieldName: 'WFModuleCode', value: 'VROProjMilestone',roles: ['Administrator','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
     //   { fieldName: 'WFStage', value: 'VROProjMilestone01',roles: ['Administrator','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
     //   { fieldName: 'DraftStatus', value: 'draft' ,roles: ['Administrator','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
-      
+
     //   //EPMOCOC
     //   { fieldName: 'WFModuleCode', value: 'EPMOProjMilestone',roles: ['Administrator','EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
     //   { fieldName: 'WFStage', value: 'EPMOProjMilestone01',roles:  ['Administrator','EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
     //   { fieldName: 'DraftStatus', value: 'draft',roles:  ['Administrator','EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
-  
+
     //   //LMS
     //   { fieldName: 'WFModuleCode', value: 'LMSProjMilestone',roles: ['Administrator','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
     //   { fieldName: 'WFStage', value: 'LMSProjMilestone01',roles: ['Administrator','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
     //   { fieldName: 'DraftStatus', value: 'draft',roles: ['Administrator','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
-  
+
     // ],
     subFields: [
       // {
@@ -35,8 +35,8 @@ var Information_Form = [
         DisplayNameEn: 'Name',
         type: 'string',
         maxchar: '255',
-        withletters:true,
-        Errmsgkey:"withletterpattern",
+        withletters: true,
+        Errmsgkey: 'withletterpattern',
         validation: 'required',
       },
       // {
@@ -80,15 +80,25 @@ var Information_Form = [
         InternalName: 'PlannedDate',
         DisplayName: 'تاريخ الاكتمال المخطط',
         DisplayNameEn: 'Planned Finish Date',
-        type: 'datetime',
+        // type: 'datetime',
+        type: 'datetimetoparent',
         validation: 'required',
+        listname: 'Projects', // list name
+        startinternalname: 'BaselineStartDate', // internalname of parent start
+        endinternalname: 'BaselineFinishDate',
+        Errmsgkey: 'btwndatepattern',
       },
       {
         InternalName: 'ActualDate',
         DisplayName: 'تاريخ الاكتمال الفعلي',
         DisplayNameEn: 'Actual Date',
-        type: 'datetime',
+        // type: 'datetime',
+        type: 'datetimetoparent',
         max: 'today',
+        listname: 'Projects', // list name
+        startinternalname: 'BaselineStartDate', // internalname of parent start
+        endinternalname: 'BaselineFinishDate',
+        Errmsgkey: 'btwndatepattern',
       },
       // {
       //   InternalName: 'CommittedDate',
@@ -187,7 +197,7 @@ var Information_Form = [
             },
           ],
         },
-      }
+      },
     ],
   },
   {
@@ -201,7 +211,7 @@ var Information_Form = [
         DisplayName: 'الوثائق داعمة',
         DisplayNameEn: 'Supporting Documents',
         type: 'file',
-        docPurpose:"Spporting_Documents",
+        docPurpose: 'Spporting_Documents',
         withAddBtn: 'true',
       },
       {
@@ -224,7 +234,7 @@ var Information_Form = [
         DisplayName: 'المرفقات',
         DisplayNameEn: 'Attachments',
         type: 'file',
-        docPurpose:"Attachments",
+        docPurpose: 'Attachments',
         withAddBtn: 'true',
       },
     ],
