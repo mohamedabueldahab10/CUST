@@ -79,7 +79,7 @@ var BudgetLabelsEn = [
 // HRSD-R2 new branch
 
 // var statusOccuresData = ["stat3", "stat1", "stat7", "stat2", "stat6"];
-var statusOccuresData = ["stat30","stat28", "stat14", "stat13", "stat12", "stat11", "stat10", "stat9", "stat8"];
+var statusOccuresData = ["stat30", "stat28", "stat14", "stat13", "stat12", "stat11", "stat10", "stat9", "stat8"];
 
 if (
   localStorage.getItem("lng") == null ||
@@ -171,7 +171,7 @@ window.Project_Info_Request = {
   },
   // The main Initialization function
   init: function () {
-    
+
     if (originalstate) {
       //*****call charts filteration */
       if (isRoleDataLevelAccess && !UserICode && !USERPCODE) {
@@ -958,6 +958,8 @@ window.Project_Info_Request = {
               var ORC = "</Or>".repeat(countOr);
               Where_Body += ORC;
 
+            } else if (FilterChoices[i].Type == "LoggedInUser") {
+              Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
             } else {
               Where_Body +=
                 '<In><FieldRef Name="' +
@@ -991,6 +993,8 @@ window.Project_Info_Request = {
                 var countOr = (Where_Body.match(/<Or>/g) || []).length;
                 var ORC = "</Or>".repeat(countOr);
                 Where_Body += ORC;
+              } else if (FilterChoices[i].Type == "LoggedInUser") {
+                Where_Body += `<And><Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
               } else {
                 Where_Body +=
                   '<And><In><FieldRef Name="' +
@@ -1023,6 +1027,8 @@ window.Project_Info_Request = {
                 Where_Body += '</And>'
 
 
+              } else if (FilterChoices[i].Type == "LoggedInUser") {
+                Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq></And>`;
               } else {
                 Where_Body +=
                   '<In><FieldRef Name="' +
@@ -1057,6 +1063,8 @@ window.Project_Info_Request = {
                 var countOr = (Where_Body.match(/<Or>/g) || []).length;
                 var ORC = "</Or>".repeat(countOr);
                 Where_Body += ORC;
+              }else if (FilterChoices[i].Type == "LoggedInUser") {
+                Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
               } else {
                 Where_Body +=
                   '<In><FieldRef Name="' +
@@ -1092,6 +1100,8 @@ window.Project_Info_Request = {
                 var countOr = (Where_Body.match(/<Or>/g) || []).length;
                 var ORC = "</Or>".repeat(countOr);
                 Where_Body += ORC;
+              } else if (FilterChoices[i].Type == "LoggedInUser") {
+                Where_Body += `<And><Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
               } else {
                 Where_Body +=
                   '<And><In><FieldRef Name="' +
@@ -2513,7 +2523,7 @@ var PortfoliosInfoRequest = {
 function handleBudgetBarChart() {
 
   var remainingCost = AssignedBudget - TheCost;
-  
+
   console.log(AssignedBudget, "AssignedBudget");
   if (
     localStorage.getItem("lng") == null ||

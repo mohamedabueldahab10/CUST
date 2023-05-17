@@ -10435,10 +10435,10 @@ dynamicAffectSelect = {
       }
 
 
-
-      if (targetFieldType == "multiselect") {
-        optionsBody +=
-          `<label class="grp-select">${valfieldkey}</label>
+      
+        if (targetFieldType == "multiselect") {
+          optionsBody +=
+            `<label class="grp-select">${valfieldkey}</label>
         <li>
         <div class="checkbox">
         <label>
@@ -10448,12 +10448,28 @@ dynamicAffectSelect = {
         </div>
         </li>
         `
-      } else {
-        if (getSiblingsValues.length) {
-          getSiblingsValues.forEach(el => {
-            if (el.id == oListItem.get_id()) {
+        } else {
+          if (getSiblingsValues.length) {
+            getSiblingsValues.forEach(el => {
+              if (el.id == oListItem.get_id()) {
+                optionsBody +=
+                  '<option data-arraysiblingvalues=' + el.arraySiblings + ' option-id="' +
+                  oListItem.get_id() +
+                  '" value="' +
+                  valfieldkey +
+                  '">' +
+                  optionText +
+                  "</option>";
+              }
+            })
+          } else {
+            //affectedSelectsInfo.fromCr add to get the data when chosse edit in edit section cr
+            if (listkey == "changerequest" && isRoleDataLevelAccess && !affectedSelectsInfo.fromCr) {
+
+            } else {
+
               optionsBody +=
-                '<option data-arraysiblingvalues=' + el.arraySiblings + ' option-id="' +
+                '<option option-id="' +
                 oListItem.get_id() +
                 '" value="' +
                 valfieldkey +
@@ -10461,28 +10477,10 @@ dynamicAffectSelect = {
                 optionText +
                 "</option>";
             }
-          })
-        } else {
-          console.log(affectedSelectsInfo.fromCr, "in elllllllllll")
-          //affectedSelectsInfo.fromCr add to get the data when chosse edit in edit section cr
-          if (listkey == "changerequest" && isRoleDataLevelAccess && !affectedSelectsInfo.fromCr) {
-
-          } else {
-
-            optionsBody +=
-              '<option option-id="' +
-              oListItem.get_id() +
-              '" value="' +
-              valfieldkey +
-              '">' +
-              optionText +
-              "</option>";
           }
         }
-      }
     }
 
-    console.log(generalOriginalValue, "generalOriginalValue")
     // to handle the change request when dynamic change in roles
     //affectedSelectsInfo.fromCr add to not assign new option body when data request when edit
 

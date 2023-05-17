@@ -256,7 +256,7 @@ var Project_Home_Info_Request = {
           );
       }
 
-      if (stageName.toString().split() == "end") {
+      if (stageName.toString().split() == "end" || stagename == "end") {
         if (
           localStorage.getItem("lng") == null ||
           localStorage.getItem("lng") == "ar"

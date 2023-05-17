@@ -961,6 +961,8 @@ window.initiativeRequest = {
               var ORC = "</Or>".repeat(countOr);
               Where_Body += ORC;
 
+            } else if (FilterChoices[i].Type == "LoggedInUser") {
+              Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
             } else {
               Where_Body +=
                 '<In><FieldRef Name="' +
@@ -995,6 +997,8 @@ window.initiativeRequest = {
                 var countOr = (Where_Body.match(/<Or>/g) || []).length;
                 var ORC = "</Or>".repeat(countOr);
                 Where_Body += ORC;
+              } else if (FilterChoices[i].Type == "LoggedInUser") {
+                Where_Body += `<And><Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
               } else {
                 Where_Body +=
                   '<And><In><FieldRef Name="' +
@@ -1027,6 +1031,8 @@ window.initiativeRequest = {
                 Where_Body += '</And>'
 
 
+              } else if (FilterChoices[i].Type == "LoggedInUser") {
+                Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq></And>`;
               } else {
                 Where_Body +=
                   '<In><FieldRef Name="' +
@@ -1061,6 +1067,8 @@ window.initiativeRequest = {
                 var countOr = (Where_Body.match(/<Or>/g) || []).length;
                 var ORC = "</Or>".repeat(countOr);
                 Where_Body += ORC;
+              } else if (FilterChoices[i].Type == "LoggedInUser") {
+                Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
               } else {
                 Where_Body +=
                   '<In><FieldRef Name="' +
@@ -1095,7 +1103,9 @@ window.initiativeRequest = {
                 var countOr = (Where_Body.match(/<Or>/g) || []).length;
                 var ORC = "</Or>".repeat(countOr);
                 Where_Body += ORC;
-              } else {
+              } else if (FilterChoices[i].Type == "LoggedInUser") {
+                Where_Body += `<And><Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
+              }  else {
                 Where_Body +=
                   '<And><In><FieldRef Name="' +
                   FilterChoices[i].internalName +
