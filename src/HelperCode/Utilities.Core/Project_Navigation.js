@@ -17,6 +17,7 @@ var NAVPID,
     isPortfolioPage = window.location.href.indexOf('portfolio') > -1,
     isRoot = false;
 var customNavHtml = setInterval(function () {
+
     if (isProjectCodehere) {
         Nav_Project_Info_Request.preinit();
     } else if (isInitiativeCodehere) {
@@ -78,6 +79,8 @@ var Nav_Initiative_Info_Request = {
     onSuccess: function (sender, args) {
         var collListItem = Nav_Initiative_Info_Request.g.collListItem;
         var listItemEnum = collListItem.getEnumerator();
+
+        
         while (listItemEnum.moveNext()) {
             var oListItem = listItemEnum.get_current();
             NAVPID = oListItem.get_id();
@@ -192,8 +195,8 @@ var Custom_Nav_Request = {
         while (listItemEnum.moveNext()) { //loop through list items
             var oListItem = listItemEnum.get_current();
             module = oListItem.get_item('Module');
-            
-
+            // var AllowTo = oListItem.get_item('AllowOnlyTo');
+            // debugger
             if (isInitiativeCodehere && module.indexOf('Initiative') > -1) {
                 //to get value of column for an item use internal name of field
                 if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
