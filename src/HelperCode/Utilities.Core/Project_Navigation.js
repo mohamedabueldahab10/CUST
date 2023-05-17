@@ -80,7 +80,7 @@ var Nav_Initiative_Info_Request = {
         var collListItem = Nav_Initiative_Info_Request.g.collListItem;
         var listItemEnum = collListItem.getEnumerator();
 
-        
+
         while (listItemEnum.moveNext()) {
             var oListItem = listItemEnum.get_current();
             NAVPID = oListItem.get_id();
@@ -192,10 +192,36 @@ var Custom_Nav_Request = {
         var extraLinkItem = '';
         var count = 0;
         var module;
+
+
+        var currentUserRole
+        if (localStorage.getItem("userRole") == null)
+            currentUserRole = GroupItem[0].Role;
+        else currentUserRole = localStorage.getItem("userRole");
+
+
+
+        var ActiveRole = GroupItem.filter(group => {
+            return group.Role == currentUserRole
+        })
+
+        console.log(ActiveRole, "Active ROOOOOOOOOOOLE")
+
+
+
+
         while (listItemEnum.moveNext()) { //loop through list items
             var oListItem = listItemEnum.get_current();
             module = oListItem.get_item('Module');
-            // var AllowTo = oListItem.get_item('AllowOnlyTo');
+            var AllowTo = oListItem.get_item('AllowOnlyTo');
+
+
+            console.log(AllowTo, "aaaaaaaaaaaaaaaaaa")
+            // if (AllowTo) {
+            //     if (ActiveRole[0].groupsName.some(group => AllowTo.includes(group))) {
+            //     }
+            // }
+            debugger
             // debugger
             if (isInitiativeCodehere && module.indexOf('Initiative') > -1) {
                 //to get value of column for an item use internal name of field
@@ -224,10 +250,22 @@ var Custom_Nav_Request = {
                 var isactive = (window.location.href.toLowerCase().split('/').pop() == Link.toLowerCase().split('/').pop()) ? 'active' : '';
                 if (count < 7) {
                     $('.menuToggleBurgMenu').css('display', 'none');
-                    LinkItem += (isListKeyhere && !isProjectCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '<span class="lineres" style="display:none;"></span></a></li>';
+                    if (AllowTo) {
+                        if (AllowTo.includes("AllGroups")) {
+                            LinkItem += (isListKeyhere && !isProjectCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '<span class="lineres" style="display:none;"></span></a></li>';
+                        } else if (ActiveRole[0].groupsName.some(group => AllowTo.includes(group))) {
+                            LinkItem += (isListKeyhere && !isProjectCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '<span class="lineres" style="display:none;"></span></a></li>';
+                        }
+                    }
                 } else {
                     $('.menuToggleBurgMenu').css('display', 'block');
-                    extraLinkItem += (isListKeyhere && !isProjectCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '</a></li>';
+                    if (AllowTo) {
+                        if (AllowTo.includes("AllGroups")) {
+                            extraLinkItem += (isListKeyhere && !isProjectCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '</a></li>';
+                        } else if (ActiveRole[0].groupsName.some(group => AllowTo.includes(group))) {
+                            extraLinkItem += (isListKeyhere && !isProjectCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '</a></li>';
+                        }
+                    }
                 }
                 count++
             } else if (isStrategicPartnerShipCodehere && module.indexOf('StrategicPartnership') > -1) {
@@ -254,10 +292,22 @@ var Custom_Nav_Request = {
                 var isactive = (window.location.href.toLowerCase().split('/').pop() == Link.toLowerCase().split('/').pop()) ? 'active' : '';
                 if (count < 7) {
                     $('.menuToggleBurgMenu').css('display', 'none');
-                    LinkItem += (isListKeyhere && !isProjectCodehere && !isInitiativeCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '<span class="lineres" style="display:none;"></span></a></li>';
+                    if (AllowTo) {
+                        if (AllowTo.includes("AllGroups")) {
+                            LinkItem += (isListKeyhere && !isProjectCodehere && !isInitiativeCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '<span class="lineres" style="display:none;"></span></a></li>';
+                        } else if (ActiveRole[0].groupsName.some(group => AllowTo.includes(group))) {
+                            LinkItem += (isListKeyhere && !isProjectCodehere && !isInitiativeCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '<span class="lineres" style="display:none;"></span></a></li>';
+                        }
+                    }
                 } else {
                     $('.menuToggleBurgMenu').css('display', 'block');
-                    extraLinkItem += (isListKeyhere && !isProjectCodehere && !isInitiativeCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '</a></li>';
+                    if (AllowTo) {
+                        if (AllowTo.includes("AllGroups")) {
+                            extraLinkItem += (isListKeyhere && !isProjectCodehere && !isInitiativeCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '</a></li>';
+                        } else if (ActiveRole[0].groupsName.some(group => AllowTo.includes(group))) {
+                            extraLinkItem += (isListKeyhere && !isProjectCodehere && !isInitiativeCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '</a></li>';
+                        }
+                    }
                 }
                 count++
             } else if (isProjectCodehere && module.indexOf('Project') > -1 && !isInitiativeCodehere && !isStrategicPartnerShipCodehere) { //p context
@@ -285,16 +335,28 @@ var Custom_Nav_Request = {
                 var isactive = (window.location.href.toLowerCase().split('/').pop() == Link.toLowerCase().split('/').pop()) ? 'active' : '';
                 if (count < 7) {
                     $('.menuToggleBurgMenu').css('display', 'none');
-                    LinkItem += (isListKeyhere && !isProjectCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '<span class="lineres" style="display:none;"></span></a></li>';
+                    if (AllowTo) {
+                        if (AllowTo.includes("AllGroups")) {
+                            LinkItem += (isListKeyhere && !isProjectCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '<span class="lineres" style="display:none;"></span></a></li>';
+                        } else if (ActiveRole[0].groupsName.some(group => AllowTo.includes(group))) {
+                            LinkItem += (isListKeyhere && !isProjectCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '<span class="lineres" style="display:none;"></span></a></li>';
+                        }
+                    }
                 } else {
                     $('.menuToggleBurgMenu').css('display', 'block');
-                    extraLinkItem += (isListKeyhere && !isProjectCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '</a></li>';
+                    if (AllowTo) {
+                        if (AllowTo.includes("AllGroups")) {
+                            extraLinkItem += (isListKeyhere && !isProjectCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '</a></li>';
+                        } else if (ActiveRole[0].groupsName.some(group => AllowTo.includes(group))) {
+                            extraLinkItem += (isListKeyhere && !isProjectCodehere) && (Link == '' || isOnlyInProjectView) ? '' : '<li class="nav-item ' + isactive + '"><a href="' + Link + '" target="' + tab + '">' + title + '</a></li>';
+                        }
+                    }
                 }
                 count++
             }
         }
 
-        
+
         // $('body').append('<style>#menuToggleBurgMenu{background-color:red}</style>')
         $(".navbar.page-nav.px-5 ul.navbar-nav.bd-navbar-nav.flex-row").html(LinkItem);
         $(".navbar.page-nav.px-5 .menuBurg").html(extraLinkItem)
