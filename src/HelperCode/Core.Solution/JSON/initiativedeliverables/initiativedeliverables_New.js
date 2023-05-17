@@ -109,7 +109,11 @@ var Information_Form = [
         InternalName: 'ActualCompletedDate',
         DisplayNameEn: 'Actual Completed Date',
         DisplayName: 'تاريخ الاكتمال الفعلي',
-        type: 'datetime',
+        // type: 'datetime',
+        type: 'datetimetoparent',
+        listname: 'Initiatives',
+        startinternalname: 'StartDate',
+        endinternalname: 'FinishDate',
         max: 'today',
       },
       // {

@@ -6,25 +6,54 @@ var Information_Form = [
     descriptionEn: 'Details',
     formValuesBasedOnParent: [
       {
-        parentList: 'Initiatives', parentFieldName: 'Title', fieldName: 'Types', basedOnCondition: true,basedOnFieldName: "Delivered", basedOnFieldValue: "yes",
+        parentList: 'Initiatives',
+        parentFieldName: 'Title',
+        fieldName: 'Types',
+        basedOnCondition: true,
+        basedOnFieldName: 'Delivered',
+        basedOnFieldValue: 'yes',
         valueToSet: [
           {
-            condition: "vision", values: [
-              { fieldNameInList: "WFModuleCode", fieldValueInList: "VROInitiativeMilestone" },
-              { fieldNameInList: "WFStage", fieldValueInList: "VROInitiativeMilestone01" },]
+            condition: 'vision',
+            values: [
+              {
+                fieldNameInList: 'WFModuleCode',
+                fieldValueInList: 'VROInitiativeMilestone',
+              },
+              {
+                fieldNameInList: 'WFStage',
+                fieldValueInList: 'VROInitiativeMilestone01',
+              },
+            ],
           },
           {
-            condition: "lms",
-            values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "LMSInitiativeMilestone" },
-            { fieldNameInList: "WFStage", fieldValueInList: "LMSInitiativeMilestone01" }]
+            condition: 'lms',
+            values: [
+              {
+                fieldNameInList: 'WFModuleCode',
+                fieldValueInList: 'LMSInitiativeMilestone',
+              },
+              {
+                fieldNameInList: 'WFStage',
+                fieldValueInList: 'LMSInitiativeMilestone01',
+              },
+            ],
           },
           {
-            condition: "strategically",
-            values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "EPMOInitiativeMilestone" },
-            { fieldNameInList: "WFStage", fieldValueInList: "EPMOInitiativeMilestone01" }]
+            condition: 'strategically',
+            values: [
+              {
+                fieldNameInList: 'WFModuleCode',
+                fieldValueInList: 'EPMOInitiativeMilestone',
+              },
+              {
+                fieldNameInList: 'WFStage',
+                fieldValueInList: 'EPMOInitiativeMilestone01',
+              },
+            ],
           },
-        ]
-      }
+        ],
+      },
     ],
     subFields: [
       // {
@@ -40,26 +69,26 @@ var Information_Form = [
         DisplayName: 'اسم المعلم',
         type: 'string',
         maxchar: '255',
-        withletters:true,
-        Errmsgkey:"withletterpattern",
+        withletters: true,
+        Errmsgkey: 'withletterpattern',
         validation: 'required',
         security: {
-          groups: [
-            'EPMO', 'System Admin Group'
-          ]
-      },
+          groups: ['EPMO', 'System Admin Group'],
+        },
       },
       {
-          "InternalName": "PlannedCompletedDate",
-          "DisplayNameEn": "Planned Completed Date",
-          "DisplayName": "تاريخ الاكتمال المخطط",
-          "type": "datetime",
-          "validation": "required",
-          security: {
-              groups: ['VRO_E','LMS_E','System Admin Group',
-                  'EPMO'
-              ]
-          },
+        InternalName: 'PlannedCompletedDate',
+        DisplayNameEn: 'Planned Completed Date',
+        DisplayName: 'تاريخ الاكتمال المخطط',
+        // "type": "datetime",
+        type: 'datetimetoparent',
+        listname: 'Initiatives',
+        startinternalname: 'StartDate',
+        endinternalname: 'FinishDate',
+        validation: 'required',
+        security: {
+          groups: ['VRO_E', 'LMS_E', 'System Admin Group', 'EPMO'],
+        },
       },
       // {
       //   InternalName: 'PlannedDate',
@@ -72,7 +101,7 @@ var Information_Form = [
       //       'EPMO', 'System Admin Group'
       //     ]
       // },
-      // },    
+      // },
       {
         InternalName: 'Weight',
         DisplayName: 'الوزن(%)',
@@ -84,10 +113,8 @@ var Information_Form = [
         seconedtarget: 'Amount',
         validation: 'required',
         security: {
-          groups: [
-            'EPMO', 'System Admin Group'
-          ]
-      },
+          groups: ['EPMO', 'System Admin Group'],
+        },
       },
       {
         InternalName: 'Amount',
@@ -100,21 +127,19 @@ var Information_Form = [
         targetelement: 'Weight',
         validation: 'required',
         security: {
-          groups: [
-            'EPMO', 'System Admin Group'
-          ]
+          groups: ['EPMO', 'System Admin Group'],
+        },
       },
-      },
-    //   {
-    //     InternalName: 'Weight',
-    //     DisplayNameEn: 'Weight',
-    //     DisplayName: 'الوزن المكافئ للإنجاز %',
-    //     type: 'decimalpercentage',
-    //     validation: 'required',
-    //     security: {
-    //       groups: ['VRO_E', 'LMS_E', 'System Admin Group', 'EPMO'],
-    //     },
-    //   },
+      //   {
+      //     InternalName: 'Weight',
+      //     DisplayNameEn: 'Weight',
+      //     DisplayName: 'الوزن المكافئ للإنجاز %',
+      //     type: 'decimalpercentage',
+      //     validation: 'required',
+      //     security: {
+      //       groups: ['VRO_E', 'LMS_E', 'System Admin Group', 'EPMO'],
+      //     },
+      //   },
       // {
       //     "InternalName": "Completed",
       //     "DisplayNameEn": "Completed",
@@ -142,20 +167,23 @@ var Information_Form = [
         DisplayName: 'تم التسليم',
         DisplayNameEn: 'Delivered',
         type: 'yesnoradio',
-        targetfieldrequired:"ActualCompletedDate",
+        targetfieldrequired: 'ActualCompletedDate',
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
             { display: 'no', value: 'no' },
           ],
         },
-       
       },
       {
         InternalName: 'ActualCompletedDate',
         DisplayNameEn: 'Actual Completed Date',
         DisplayName: 'تاريخ الاكتمال الفعلي',
-        type: 'datetime',
+        // type: 'datetime',
+        type: 'datetimetoparent',
+        listname: 'Initiatives',
+        startinternalname: 'StartDate',
+        endinternalname: 'FinishDate',
         max: 'today',
       },
       {
@@ -167,11 +195,9 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         security: {
-          groups: [
-            'EPMO', 'System Admin Group'
-          ]
+          groups: ['EPMO', 'System Admin Group'],
         },
-        initiativeCodeInList: true
+        initiativeCodeInList: true,
       },
       {
         InternalName: 'SupportDocumentsDescription',
@@ -180,10 +206,8 @@ var Information_Form = [
         type: 'multiline',
         maxchar: '5000',
         security: {
-          groups: [
-            'EPMO', 'System Admin Group'
-          ]
-      },
+          groups: ['EPMO', 'System Admin Group'],
+        },
       },
     ],
   },
@@ -198,13 +222,11 @@ var Information_Form = [
         DisplayName: 'الوثائق داعمة',
         DisplayNameEn: 'Supporting Documents',
         type: 'file',
-        docPurpose:"Spporting_Documents",
+        docPurpose: 'Spporting_Documents',
         withAddBtn: 'true',
         security: {
-          groups: [
-            'EPMO', 'System Admin Group'
-          ]
-      },
+          groups: ['EPMO', 'System Admin Group'],
+        },
       },
     ],
   },
@@ -219,13 +241,11 @@ var Information_Form = [
         DisplayName: 'المرفقات',
         DisplayNameEn: 'Attachments',
         type: 'file',
-        docPurpose:"Attachments",
+        docPurpose: 'Attachments',
         withAddBtn: 'true',
         security: {
-          groups: [
-            'EPMO', 'System Admin Group'
-          ]
-      },
+          groups: ['EPMO', 'System Admin Group'],
+        },
       },
     ],
   },
