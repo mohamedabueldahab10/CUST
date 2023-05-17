@@ -6,6 +6,15 @@ window.Information_Form = [
 		labelEn: "Change Request Data",
 		description: "التفاصيل",
 		descriptionEn: "Details",
+		workflowSetValues: [
+			{ fieldName: 'RequestStatus', value: 'approved',
+			 stages: [
+			"EPMOCRInitiative03","LMSCRInitiative03","VROCRInitiative04", // Initiative
+			"VROCRSOS02","MSCRSOS03","LMSCRSOS02", // SOS
+			"VROCRKPI02","LMSCRKPI02","MSCRKPI03", // KPI
+			"VROCRProject02","EPMOCRProject02","LMSCRProject02",  // Project			
+			] },
+		  ],
 		subFields: [
 			{
 				InternalName: "moduleSelect",

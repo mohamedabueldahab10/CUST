@@ -9,23 +9,23 @@ var Information_Form = [
     //   { fieldName: 'WFModuleCode', value: 'VROCreateObjective',roles: ['Administrator','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
     //   { fieldName: 'WFStage', value: 'VROCreateObjective01',roles: ['Administrator','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
     //   { fieldName: 'DraftStatus', value: 'draft' ,roles: ['Administrator','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
-      
+
     //   //EPMOCOC
     //   { fieldName: 'WFModuleCode', value: 'MSCreateObjective',roles: ['Administrator','EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
     //   { fieldName: 'WFStage', value: 'MSCreateObjective01',roles:  ['Administrator','EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
     //   { fieldName: 'DraftStatus', value: 'draft',roles:  ['Administrator','EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
-  
+
     //   //LMS
     //   { fieldName: 'WFModuleCode', value: 'LMSCreateObjective',roles: ['Administrator','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
     //   { fieldName: 'WFStage', value: 'LMSCreateObjective01',roles: ['Administrator','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
     //   { fieldName: 'DraftStatus', value: 'draft',roles: ['Administrator','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
-  
+
     // ],
     formValuesBasedOnParent: [
       // add getGrandParent if the value based on grandParent and basedOnCondition to check if based on condition or not
       {
-        parentList: 'GoalStrategy', listinerField: "RelatedStrategy", parentFieldName: 'Title', fieldName: 'Types', basedOnCondition: false, 
-       //listinerField : current field for this form , Field NAme : the field in Parent List that contains the conditions
+        parentList: 'GoalStrategy', listinerField: "RelatedStrategy", parentFieldName: 'Title', fieldName: 'Types', basedOnCondition: false,
+        //listinerField : current field for this form , Field NAme : the field in Parent List that contains the conditions
         valueToSet: [
           {
             condition: "vision", values: [
@@ -63,6 +63,8 @@ var Information_Form = [
         withletters: true,
         Errmsgkey: "withletterpattern",
         validation: 'required',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
       },
       {
         InternalName: 'ObjectiveOwner',
@@ -77,6 +79,8 @@ var Information_Form = [
         DisplayName: 'وصف الهدف',
         type: 'multiline',
         maxchar: '5000',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
       {
         InternalName: 'RelatedStrategy',
@@ -191,7 +195,7 @@ var Information_Form = [
         childFieldId: "RelatedObjective",// we add this field to handle the two field filtration (child Id in current form)
         childFieldIdSource: "Types",// we add this field to handle the two field filtration (child internal name in destination list)
       },
-  
+
       {
         InternalName: 'RelatedObjective',
         DisplayNameEn: 'Related Objective',
@@ -230,7 +234,7 @@ var Information_Form = [
         DisplayNameEn: 'Sector',
         type: 'lookupWithQuery',
         queryField: 'EntityType',
-        queryFieldType: 'dropdownValues', 
+        queryFieldType: 'dropdownValues',
         queryFieldValue: 'Sector',
         dynamic: 'parent',
         source: 'Internal Entities',
@@ -497,6 +501,8 @@ var Information_Form = [
         // dontSubmit: true,
         dontSubmit: true,
         state: 'disabled',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
     ],
   },

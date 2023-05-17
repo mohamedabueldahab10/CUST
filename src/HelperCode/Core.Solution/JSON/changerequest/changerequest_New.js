@@ -6,6 +6,10 @@ window.Information_Form = [
 		labelEn: "Add Request Data",
 		description: "التفاصيل",
 		descriptionEn: "Details",
+		formDefaultValues: [
+			{ fieldName: 'RequestStatus', value: 'pending', roles: ['allRoles'], },
+	  
+		  ],
 		subFields: [
 			{
 				// InternalName: 'Title',

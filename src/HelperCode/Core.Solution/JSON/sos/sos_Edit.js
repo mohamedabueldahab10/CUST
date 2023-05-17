@@ -14,6 +14,8 @@ var Information_Form = [
         maxchar: '255',
         withletters:true,
         Errmsgkey:"withletterpattern",
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
       },
 
       {
@@ -37,6 +39,8 @@ var Information_Form = [
         DisplayName: 'وصف الهدف',
         type: 'multiline',
         maxchar: '5000',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
       {
         InternalName: 'Types',
@@ -370,6 +374,8 @@ var Information_Form = [
         maxchar: '5000',
         state: 'disabled',
         dontSubmit: true,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
 
         // dontSubmit: true,
         // grandFieldId: "StrategicDescription", // we add this field to handle the two field filtration(parent Id in current form)
