@@ -68,6 +68,8 @@ var Information_Form = [
         maxchar: '255',
         withletters:true,
         Errmsgkey:"withletterpattern",
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",  
       },
       {
         InternalName: 'Description',
@@ -75,6 +77,8 @@ var Information_Form = [
         DisplayNameEn: 'Description',
         type: 'multiline',
         maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
       // {
       //   // hol dynamic 3ala l lookup
@@ -247,6 +251,8 @@ var Information_Form = [
         DisplayName: 'مصدر البيانات',
         type: 'string',
         maxchar: '255',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",  
         // "state": "disabled",
         // dynamic: "Initiative"
       },
@@ -284,7 +290,9 @@ var Information_Form = [
         DisplayName: 'معادلة مقياس المنفعة',
         type: 'string',
         state: 'disabled',
-        maxchar: 255,        
+        maxchar: 255,       
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",   
         //editableBy: "PerformanceLeader",
       },
       {

@@ -96,6 +96,8 @@ var Information_Form = [
         type: 'multiline',
         maxchar: 5000,    
 				validation: "required",    
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
 
       },
       {
@@ -104,7 +106,8 @@ var Information_Form = [
         DisplayName: 'قائمة تحقق اكتمال المبادرة  ',
         type: 'multiline',
         maxchar: 5000,        
-
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
 				validation: "required",
       },
     ],
@@ -144,6 +147,8 @@ var Information_Form = [
         DisplayNameEn: 'Comments',
         type: 'multiline',
         maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
       {
         DisplayName: ' اكتمال كافة المشاريع',
@@ -174,6 +179,8 @@ var Information_Form = [
         DisplayNameEn: 'Comments',
         type: 'multiline',
         maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
       {
         DisplayName: ' اكتمال كافة المخرجات',
@@ -204,6 +211,8 @@ var Information_Form = [
         DisplayNameEn: 'Comments',
         type: 'multiline',
         maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
       {
         DisplayName: ' اكتمال كافة المعالم',
@@ -234,6 +243,8 @@ var Information_Form = [
         DisplayNameEn: 'Comments',
         type: 'multiline',
         maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
       {
         DisplayName: 'اعتماد كافة وثائق إغلاق المبادرة',
@@ -264,6 +275,8 @@ var Information_Form = [
         DisplayNameEn: 'Comments',
         type: 'multiline',
         maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
       {
         DisplayName: 'أرشفة كافة الوثائق الداعمة لمنافع المبادرة المتحققة',
@@ -295,6 +308,8 @@ var Information_Form = [
         DisplayNameEn: 'Comments',
         type: 'multiline',
         maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
       {
         DisplayName: 'أرشفة كافة الوثائق الداعمة لمخرجات المبادرة المتحققة',
@@ -326,6 +341,8 @@ var Information_Form = [
         DisplayNameEn: 'Comments',
         type: 'multiline',
         maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
       {
         DisplayName: 'أرشفة كافة الوثائق الداعمة لمعالم المبادرة المتحققة',
@@ -357,6 +374,8 @@ var Information_Form = [
         DisplayNameEn: 'Comments',
         type: 'multiline',
         maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
       {
         InternalName: 'Analyze',
@@ -364,6 +383,8 @@ var Information_Form = [
         DisplayNameEn: 'Objectives and Benefits Realization Analysis',
         type: 'multiline',
         maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
       },
     ],
   },
