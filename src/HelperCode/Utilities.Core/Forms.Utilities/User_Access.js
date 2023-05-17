@@ -338,7 +338,6 @@ window.userAddedToGroup = true;
 //Get User Groups
 window.userCalls = {
   get_CurrentUser: function () {
-    console.log("Inside Current User func")
     console.time();
 
     //getUserWebPermissionREST();
@@ -349,7 +348,7 @@ window.userCalls = {
         Accept: "application/json; odata=verbose",
       },
       success: function (data) {
-        console.log(data, "data for current user")
+       
         console.timeEnd();
         UserN = data.d;
         userCalls.get_CurrentUserGroupColl(data.d.Id);
@@ -9401,7 +9400,7 @@ let data_Level1_Access = {
           tempRoleHierarchies = []
           accessCallisDone = true;
         }
-        console.log("Data 1st level access query", queryBody);
+        // console.log("Data 1st level access query", queryBody);
       }
     });
   },
@@ -9547,7 +9546,7 @@ let data_Level1_Access = {
 
 
         }
-        console.log("Data 2nd level access query", queryBody);
+        // console.log("Data 2nd level access query", queryBody);
         // finishRenderAccessRole = true
 
       }
@@ -9688,7 +9687,7 @@ let data_Level2_Access = {
           tempRoleHierarchies = []
           accessCallisDone = true;
         }
-        console.log("Data3nd level access query", queryBody);
+        // console.log("Data3nd level access query", queryBody);
 
       } else {
         containBody += `<Or><Contains><FieldRef Name="${fieldToQuery}" /><Value Type="${fieldType}">${el}</Value></Contains>`
@@ -9833,7 +9832,7 @@ let data_Level3_Access = {
         tempRoleHierarchies = []
         accessCallisDone = true;
 
-        console.log("Data 4rd level access query", queryBody);
+        // console.log("Data 4rd level access query", queryBody);
 
       }
     });
@@ -10065,7 +10064,7 @@ var Get_Milestones = {
               let index = splitThreeMontshArr.indexOf(item);
               datesWithoutMilesArrFiltered.splice(index, 1)
             } else {
-              console.log(el.date, "Date")
+              console.log("Date")
             }
           })
 
