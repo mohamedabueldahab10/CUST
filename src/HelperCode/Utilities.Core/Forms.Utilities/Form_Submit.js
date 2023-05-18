@@ -1007,8 +1007,9 @@ var Set_Code_Submit = {
 };
 
 window.Edit_Data_Submit = {
-  preinit: function () {
+  preinit: function (state) {
 
+    window.wfHotFixState = state;
 
     $(".errormsg").remove();
     $(".container-body").addClass("was-validated");
@@ -1206,7 +1207,14 @@ window.Edit_Data_Submit = {
           Edit_Data_Submit.init();
         }
       } else {
-        Edit_Data_Submit.init();
+
+        if (isWF && workflowname == "Project") {
+          console.log("program_BulkEdit(wfHotFixState);");
+          updateProjectStageGet.init(wfHotFixState);
+          // program_BulkEdit(wfHotFixState);
+        }else Edit_Data_Submit.init();
+
+        // Edit_Data_Submit.init();
       }
       $("[data-target_list] .Details-Item.NewItem").each(function () {
         $(this)
@@ -1705,7 +1713,81 @@ window.Edit_Data_Submit = {
     clientContext.load(Edit_Data_Submit.g.oListItem);
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
+        Edit_Data_Submit.g.afterSuccess();
 
+      }),
+      Function.createDelegate(this, function (sender, args) {
+        console.log(
+          "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+        );
+
+        // to save the error in event logging list while submit
+        var msg = args.get_message();
+        var stack = args.get_stackTrace();
+        var url = window.location.href;
+
+        writeToEventViewer.preinit(
+          msg,
+          "JS Api Error",
+          "High",
+          url,
+          '580',
+          '14',
+          stack
+        );
+
+      })
+    );
+  },
+  g: {
+    clickbait: function () {
+      $("button.btn-save").on("click", function () {
+        Edit_Data_Submit.preinit();
+      });
+    },
+    Cancel: function () {
+      $("button.btn-cancel").on("click", function () {
+        window.location =
+          _spPageContextInfo.webAbsoluteUrl +
+          "/SitePages/View.aspx?ListKey=" +
+          listkey +
+          "&IID=" +
+          IID +
+          PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+        // console.log(PCODE_STRING);
+      });
+    },
+    checkEditMasterDetails: function () {
+      if ($(".Details-Item.NewItem").length > 0) {
+        //calling new master submit
+        $("[data-target_list]").each(function () {
+          if ($(this).find(".Details-Item.NewItem").length > 0) {
+            //if there are new items call function
+            New_Master_Details_Submit.init($(this).attr("data-target_list"));
+          }
+        });
+      } else if ($(".Details-Item.EditItem").length > 0) {
+        //calling Edit master submit
+        $("[data-target_list]").each(function () {
+          if ($(this).find(".Details-Item.EditItem").length > 0) {
+            //if there are edit items call function
+            var masterIDs = [];
+            $(this)
+              .find(".Details-Item.EditItem")
+              .each(function () {
+                masterIDs.push($(this).attr("data-ID"));
+              });
+            // masterQuery += '</Values></In>';
+            Edit_Master_Details_Submit.init(
+              $(this).attr("data-target_list"),
+              masterIDs
+            );
+          }
+        });
+      }
+    },
+    afterSuccess: function () {
+    
         // determinig folder directory
         if (PCODE || listkey == "projects") {
           Documents_Library = ListArray[2].documents;
@@ -1795,77 +1877,7 @@ window.Edit_Data_Submit = {
           }
         }
         // }
-      }),
-      Function.createDelegate(this, function (sender, args) {
-        console.log(
-          "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
-        );
-
-        // to save the error in event logging list while submit
-        var msg = args.get_message();
-        var stack = args.get_stackTrace();
-        var url = window.location.href;
-
-        writeToEventViewer.preinit(
-          msg,
-          "JS Api Error",
-          "High",
-          url,
-          '580',
-          '14',
-          stack
-        );
-
-      })
-    );
-  },
-  g: {
-    clickbait: function () {
-      $("button.btn-save").on("click", function () {
-        Edit_Data_Submit.preinit();
-      });
-    },
-    Cancel: function () {
-      $("button.btn-cancel").on("click", function () {
-        window.location =
-          _spPageContextInfo.webAbsoluteUrl +
-          "/SitePages/View.aspx?ListKey=" +
-          listkey +
-          "&IID=" +
-          IID +
-          PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
-        // console.log(PCODE_STRING);
-      });
-    },
-    checkEditMasterDetails: function () {
-      if ($(".Details-Item.NewItem").length > 0) {
-        //calling new master submit
-        $("[data-target_list]").each(function () {
-          if ($(this).find(".Details-Item.NewItem").length > 0) {
-            //if there are new items call function
-            New_Master_Details_Submit.init($(this).attr("data-target_list"));
-          }
-        });
-      } else if ($(".Details-Item.EditItem").length > 0) {
-        //calling Edit master submit
-        $("[data-target_list]").each(function () {
-          if ($(this).find(".Details-Item.EditItem").length > 0) {
-            //if there are edit items call function
-            var masterIDs = [];
-            $(this)
-              .find(".Details-Item.EditItem")
-              .each(function () {
-                masterIDs.push($(this).attr("data-ID"));
-              });
-            // masterQuery += '</Values></In>';
-            Edit_Master_Details_Submit.init(
-              $(this).attr("data-target_list"),
-              masterIDs
-            );
-          }
-        });
-      }
-    },
+    }
   },
 };
 

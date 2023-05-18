@@ -10186,7 +10186,7 @@ dynamicAffectSelect = {
 
 
 
-    debugger
+    
 
 
     var queryFieldValue = affectedSelectsInfo[0].queryFieldValue
@@ -10821,7 +10821,7 @@ var Projects_Info = {
         // console.log(PCODE);
       }
       Department_Sector_Info.init(sectorcode); //in form_request.js
-      BudgetItem_Sector_Info.init(sectorcode); //in form_request.js
+      // BudgetItem_Sector_Info.init(sectorcode); //in form_request.js
     });
   },
   onError: function (sender, args) {

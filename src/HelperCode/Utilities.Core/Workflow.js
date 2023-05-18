@@ -2646,14 +2646,14 @@ var SubmitField_BulkEdit = {
 			if (stageid == "S01" && $(".was-validated .form-control:invalid").length == 0) {
 				SubmitField_BulkEdit.init(state);
 			} else {
-				Edit_Data_Submit.preinit();
+				Edit_Data_Submit.preinit(state);
 			}
 		} else if (
 			workflowname != "Project" &&
 			tasktype == "SubmitField"
 			// && $(".was-validated .form-control:invalid").length == 0
 		) {
-			Edit_Data_Submit.preinit(); // edit from main function for all gwf that have submitfield type
+			Edit_Data_Submit.preinit(state); // edit from main function for all gwf that have submitfield type
 
 			// SubmitField_BulkEdit.init(state);
 		} else if (
@@ -3267,7 +3267,11 @@ window.BulkEdit = function (state, withNote = false) {
 						console.log("Project Stages are updated Successfully");
 						dfd.resolve();
 
-						program_BulkEdit(state);
+						// program_BulkEdit(state);
+						if (tasktype == "SubmitField") {
+							console.log("Task_Edit_Data.init();")
+							Task_Edit_Data.init();
+						} else updateProjectStageGet.init(state)//program_BulkEdit(state);
 					},
 					function (sender, args) {
 						//Item updated fail
@@ -3338,7 +3342,7 @@ function program_BulkEdit(state) {
 								try {
 
 									taskCondition.forEach((el) => {
-
+										
 										let conditionalValue = currentItem.get_item(el.field);
 										let conditionalExpression = el.condition;
 										conditionalExpression = conditionalExpression.replaceAll(
@@ -3347,6 +3351,7 @@ function program_BulkEdit(state) {
 										);
 										//check expression if true
 										if (evalExpr(conditionalExpression)) {
+											
 											items.set_item("Stage", el.targetStage);
 											items.set_item("Phase", el.phaseName);
 											throw BreakException;
@@ -3441,6 +3446,11 @@ function program_BulkEdit(state) {
 							// } else {
 							Task_Edit_Data.init();
 							// }
+							console.log("BulkEdit(state);")
+							if (tasktype == "SubmitField") {
+								BulkEdit(state);
+							}
+							else Task_Edit_Data.init();
 						}
 					},
 					function (sender, args) {
@@ -3461,6 +3471,400 @@ function program_BulkEdit(state) {
 	);
 	return dfd.promise();
 }
+//new functions to solve conflict issue
+window.updateProjectStageGet = {
+	onSuccess: function () {
+		console.log("updateProjectStageGet success");
+		var prjstage = oListItem.get_item("Stage");
+		window.ismultistage = prjstage.indexOf(";") > -1;
+		ProjectOwnerPicker = oListItem.get_item("ProjectOwner")
+			? oListItem.get_item("ProjectOwner")
+			: "";
+		ProjectSponsorPicker = oListItem.get_item("ProjectSponsor")
+			? oListItem.get_item("ProjectSponsor")
+			: "";
+		
+		updateProjectStageSet.init(updateProjectStageGet.g.state, oListItem);
+	},
+	onError: function (sender, args) {
+		console.log(
+			"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+		);
+	},
+	// The main Initialization function
+	init: function (state) {
+		console.log("updateProjectStageGet init");
+		
+		var clientContext = new SP.ClientContext.get_current();
+		var oList = clientContext.get_web().get_lists().getByTitle("Projects");
+		// let wfProjID = USERPID || IID;
+		let wfProjID = IID;
+		updateProjectStageGet.g.oListItem = oList.getItemById(wfProjID);
+		oListItem = updateProjectStageGet.g.oListItem;
+		updateProjectStageGet.g.state = state;
+		clientContext.load(updateProjectStageGet.g.oListItem);
+		clientContext.executeQueryAsync(
+			Function.createDelegate(this, updateProjectStageGet.onSuccess),
+			Function.createDelegate(this, updateProjectStageGet.onError)
+		);
+	},
+	// Global variables
+	g: {
+
+	},
+};
+
+window.updateProjectStageSet = {
+	init: function (state, projItem) {
+		console.log("updateProjectStageSet init");
+		
+		var clientContext = new SP.ClientContext.get_current();
+		var oList = clientContext.get_web().get_lists().getByTitle("Projects");
+		// let wfProjID = USERPID || IID;
+		let wfProjID = IID;
+		updateProjectStageSet.g.oListItem = oList.getItemById(wfProjID);
+		$(`.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=text],
+		.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=number],
+		.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=email],
+		.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=float],
+		 .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)>  input[type=date],
+		 .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> .datetimeinputs input[type=date],
+		 .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> .datetimeinputs input[type=datetime-local],
+		 .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=radio],
+		  .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=checkbox],
+		   .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> div[type=multipicker],
+		   .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> div[type=picker],
+			.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field):not(.hide-field)> select[type=dropdown],
+			 .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)>  textarea,
+			  .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field) > .multiselect-container`
+		).each(function () {
+
+
+			if ($(this).attr("type") == "picker") {
+				if ($(this).find("span.sp-peoplepicker-userSpan").length) {
+					var id = $(this).attr("INppicker");
+					var ppp =
+						$(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
+							undefined
+							? ""
+							: SP.FieldUserValue.fromUser(
+								$(this).find("span.sp-peoplepicker-userSpan").attr("sid")
+							); //.split('|').slice(-1)[0]
+					updateProjectStageSet.g.oListItem.set_item(id, ppp);
+				}
+			} else if ($(this).attr("type") == "multipicker") {
+				if ($(this).find("span.sp-peoplepicker-userSpan").length) {
+					var id = $(this).attr("INppicker");
+					var users = [];
+					$("span.sp-peoplepicker-userSpan").each(function () {
+						var ppp =
+							$(this).attr("sid") ==
+								undefined
+								? ""
+								: SP.FieldUserValue.fromUser(
+									$(this).attr("sid").split("|").slice(-1)[0]
+								);
+
+
+						users.push(ppp)
+					})
+					updateProjectStageSet.g.oListItem.set_item(id, users);
+				}
+			} else if ($(this).attr("type") == "date") {
+				if ($(this).hasClass("withTime")) {
+					if ($(this).val()) {
+						var dateval = $(this).val();
+						var timeval = $(this).closest(".CFIELD").find("#Time").val();
+						var datetime = new Date(dateval + " " + timeval);
+
+						// format the output
+						var month = datetime.getMonth() + 1;
+						var day = datetime.getDate();
+						var year = datetime.getFullYear();
+						var timezoneOffset = datetime.getTimezoneOffset() / 60;
+						var hour = datetime.getHours() + timezoneOffset;
+						if (hour < 10) {
+							hour = "0" + hour;
+						}
+						var min = datetime.getMinutes();
+						if (min < 10) {
+							min = "0" + min;
+						}
+						var sec = datetime.getSeconds();
+						if (sec < 10) {
+							sec = "0" + sec;
+						}
+
+						var ydate =
+							month +
+							"/" +
+							day +
+							"/" +
+							year +
+							" " +
+							hour +
+							":" +
+							min +
+							":" +
+							sec;
+
+						if (dateval && timeval)
+							updateProjectStageSet.g.oListItem.set_item($(this).attr("id"), ydate);
+					} else {
+						updateProjectStageSet.g.oListItem.set_item($(this).attr("id"), null);
+					}
+				} else {
+					if ($(this).val()) {
+						var dateval = $(this).val().replace("-", "/");
+						var ydate = !dateval
+							? ""
+							: [dateval.slice(5, 10), dateval.slice(0, 4)]
+								.join("/")
+								.replace("-", "/");
+						if (dateval)
+							updateProjectStageSet.g.oListItem.set_item($(this).attr("id"), ydate);
+					} else {
+						updateProjectStageSet.g.oListItem.set_item($(this).attr("id"), null);
+					}
+				}
+			} else if ($(this).attr("type") == "datetime-local") {
+				if ($(this).hasClass("withTime")) {
+					var dateval = $(this).val();
+					var datetime = new Date(dateval);
+					// format the output
+					var month = datetime.getMonth() + 1;
+					var day = datetime.getDate();
+					var year = datetime.getFullYear();
+					var timezoneOffset = datetime.getTimezoneOffset() / 60;
+					var hour = datetime.getHours() + timezoneOffset;
+					if (hour < 10) {
+						hour = "0" + hour;
+					}
+					var min = datetime.getMinutes();
+					if (min < 10) {
+						min = "0" + min;
+					}
+					var sec = datetime.getSeconds();
+					if (sec < 10) {
+						sec = "0" + sec;
+					}
+
+					var ydate =
+						month + "/" + day + "/" + year + " " + hour + ":" + min + ":" + sec;
+
+					if (dateval)
+						updateProjectStageSet.g.oListItem.set_item($(this).attr("id"), ydate);
+				}
+			} else if ($(this).attr("type") == "radio") {
+				// var checkedvalue = $('input[id="' + $(this).attr('id') + '"]:checked').val();
+				// updateProjectStageSet.g.oListItem.set_item($(this).attr('id'), checkedvalue);
+				var checkedvalue = $(
+					'input[id="' + $(this).attr("id") + '"]:checked'
+				).val();
+				if (checkedvalue == "yes") {
+					updateProjectStageSet.g.oListItem.set_item($(this).attr("id"), "yes");
+				} else if (checkedvalue == "no" || checkedvalue == "undefined") {
+					updateProjectStageSet.g.oListItem.set_item($(this).attr("id"), "no");
+				} else
+					updateProjectStageSet.g.oListItem.set_item(
+						$(this).attr("id"),
+						checkedvalue
+					);
+
+				if (SP_ListName == "Deliverables" && checkedvalue == "yes") {
+					if (
+						!oListItem.get_item("" + "Stage" + "") ||
+						oListItem.get_item("" + "Stage" + "") == "rejected"
+					) {
+						updateProjectStageSet.g.oListItem.set_item("Stage", DVfirstStage);
+					}
+				} else if (SP_ListName == "ChangeRequest" && checkedvalue == "yes") {
+					if (
+						!oListItem.get_item("" + "Stage" + "") ||
+						oListItem.get_item("" + "Stage" + "") == "rejected"
+					) {
+						updateProjectStageSet.g.oListItem.set_item("Stage", CRfirstStage);
+					}
+				}
+			} else if ($(this).attr("type") == "checkbox") {
+				var checkedvalue = $(
+					'input[id="' + $(this).attr("id") + '"]:checked'
+				).length;
+				if (checkedvalue)
+					updateProjectStageSet.g.oListItem.set_item($(this).attr("id"), true);
+				else updateProjectStageSet.g.oListItem.set_item($(this).attr("id"), false);
+			} else if ($(this).attr("type") == "dropdown") {
+
+				$(this).find(':disabled').removeAttr('disabled'); // avoid remove the data when the dropdown field is disabled
+
+				updateProjectStageSet.g.oListItem.set_item(
+					$(this).attr("id"),
+					$(this).val()
+				);
+				var SubmitForApprovalValue;
+				if ($(this).attr("id") == "SubmitForApproval") {
+					SubmitForApprovalValue = $(this).val();
+				}
+				if (
+					SP_ListName == "Change Request" &&
+					SubmitForApprovalValue == "yes"
+				) {
+					updateProjectStageSet.g.oListItem.set_item("Stage", CRfirstStage);
+				}
+
+
+				let otherFieldsJSON = eval($(this).find("option:checked").data("otherfields"));
+
+				if (otherFieldsJSON && otherFieldsJSON != 'undefined' && otherFieldsJSON.length) {
+					otherFieldsJSON.forEach(el => {
+						updateProjectStageSet.g.oListItem.set_item(el.fieldName, el.value);
+					})
+				}
+
+
+			} else if ($(this).hasClass("percentagefield")) {
+				updateProjectStageSet.g.oListItem.set_item(
+					$(this).attr("id"),
+					$(this).val() / 100
+				);
+			} else if ($(this).attr("type") == "multiselect") {
+				var myselections = [];
+				$(this)
+					.find("input:checkbox:checked")
+					.each(function () {
+						myselections.push($(this).val());
+					});
+				myselections = myselections.join(":::");
+				updateProjectStageSet.g.oListItem.set_item(
+					$(this).attr("myfield"),
+					myselections
+				);
+			} else {
+				updateProjectStageSet.g.oListItem.set_item(
+					$(this).attr("id"),
+					$(this).val()
+				);
+			}
+		});
+
+		//wf stuff
+		updateProjectStageSet.g.oListItem.set_item("Phase", curphaseName);
+		if (!ismultistage) {
+			// 1 active stage
+			if (state) {
+				if (taskActionType == "Conditional") {
+					try {
+						taskCondition.forEach((el) => {
+							
+							// let conditionalValue = currentItem.get_item(el.field);
+
+							// let conditionalValue = $(`#${el.field}`).length
+							// 	? $(`#${el.field}`).val()
+							// 	: projItem.get_item(el.field);
+
+							if ($(`#${el.field}`).length && WFisEdit) {
+								conditionalValue = $(`#${el.field}`).val()
+							} else {
+								conditionalValue = projItem.get_item(el.field)
+							}
+
+
+							let conditionalExpression = el.condition;
+							conditionalExpression = conditionalExpression.replaceAll(
+								"fieldValue",
+								conditionalValue
+							);
+							//check expression if true
+							if (evalExpr(conditionalExpression)) {
+								
+								updateProjectStageSet.g.oListItem.set_item("Stage", el.targetStage);
+								updateProjectStageSet.g.oListItem.set_item("Phase", el.targetPhase);
+								throw BreakException;
+							}
+						});
+					} catch (e) {
+						if (e !== BreakException) throw e;
+					}
+				} else {
+					updateProjectStageSet.g.oListItem.set_item("Stage", nxtstageid);
+				}
+				// if (prjstage == "S42") {
+				// 	updateProjectStageSet.set_item("Status", "completed1");
+				// }
+			} else if (!state) {
+				updateProjectStageSet.g.oListItem.set_item("Stage", prvstageid);
+			}
+		} // multiple active stages
+		else {
+			
+			prjstage = prjstage.split(";");
+			prjstage.forEach(function (x, i, a) {
+				// (value, index, array)
+				if (state) {
+					if (x == stageid) {
+						// == stage from active task
+						a[i] = nxtstageid;
+					}
+				} else if (!state) {
+					if (x == stageid) {
+						// == stage from active task
+						a[i] = prvstageid;
+					}
+				}
+			});
+			var sameVals = prjstage.every((val, i, arr) => val === arr[0]); //check if same stage values
+			if (sameVals) {
+				updateProjectStageSet.g.oListItem.set_item(
+					"Stage",
+					prjstage[0].replaceAll("__", "")
+				); // remove __ if same values
+			} else {
+				updateProjectStageSet.g.oListItem.set_item("Stage", prjstage.join(";")); // set multiple stages value
+			}
+		}
+		updateProjectStageSet.g.oListItem.set_item(
+			"Comments",
+			$("textarea#commenttext").val()
+		);
+		updateProjectStageSet.g.oListItem.update();
+		clientContext.load(updateProjectStageSet.g.oListItem);
+		clientContext.executeQueryAsync(
+			Function.createDelegate(this, function (state) {
+				console.log("updateProjectStageSet succes");
+				//Item Updated sucess
+				ProjectOwnerPicker = ProjectOwnerPicker
+					? ProjectOwnerPicker.get_lookupValue()
+					: "";
+				ProjectSponsorPicker = ProjectSponsorPicker
+					? ProjectSponsorPicker.get_lookupValue()
+					: "";
+				if (state) {
+					// if (stageid == "S01") {
+
+					// 	WFuserCalls.get_AllResources();
+					// 	PNAME = peojectC;
+					// } else {
+					console.log("BulkEdit(state);");
+					if (tasktype == "SubmitField") {
+						BulkEdit(state);
+					} else Task_Edit_Data.init();
+					// }
+				}
+			}),
+			Function.createDelegate(this, function (sender, args) {
+
+				console.log(
+					"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+				);
+			})
+		);
+
+	},
+	g: {},
+}
+
+
+
 /******************Edit decision in project stages when we reject  */
 function UpdateProjectStages(prvstageid) {
 	var disableDecision = false;
