@@ -12,6 +12,8 @@ var Information_Form = [
         type: 'string',
         maxchar: '255',
         validation: 'required',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255", 
       },
       {
         InternalName: 'ImpactType',
@@ -67,7 +69,9 @@ var Information_Form = [
       //   maxchar: '250',
         type: 'multiline',
         validation: 'required',
-        maxchar: 5000,        
+        maxchar: 5000,  
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",       
 
       },
       {
@@ -154,6 +158,8 @@ var Information_Form = [
          type:'string',
          maxchar:'255',
         validation: 'required',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255", 
       },
       {
          InternalName:'FundingSource',
@@ -162,6 +168,8 @@ var Information_Form = [
          type:'string',
          maxchar:'255',
         validation: 'required',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255", 
       },
     ],
   },
@@ -177,6 +185,8 @@ var Information_Form = [
         DisplayName: 'ملاحظات',
         type: 'multiline',
         maxchar: '5000',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000", 
       },
       {
         InternalName: 'getfile',

@@ -10,10 +10,12 @@ var Information_Form = [
             "DisplayName":"اسم الشريك",
             "DisplayNameEn":"Partner Name",
             "type":"string",
-            "maxchar":"250",
+            "maxchar":"255",
             "validation":"required",
             withletters:true,
             Errmsgkey:"withletterpattern",
+            descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+            descPhraseEn: "max length of letters equal 255", 
          },
          {
             "InternalName":"Classification",
@@ -78,8 +80,10 @@ var Information_Form = [
             "DisplayName":"اسم الممثل للشريك",
             "DisplayNameEn":"Representative Name",
             "type":"string",
-            "maxchar":"250",
-            "validation":"required"
+            "maxchar":"255",
+            "validation":"required",
+            descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+            descPhraseEn: "max length of letters equal 255", 
          },
          {
             "InternalName":"RepresentativeEmail",
@@ -97,15 +101,17 @@ var Information_Form = [
             "type":"phonenumber",
             "Errmsgkey":"phonenumberpattern",
             "maxchar":"250",
-            "validation":"required"
+            "validation":"required",
          },
          {
             "InternalName":"JobTitle",
             "DisplayName":"المسمى الوظيفى",
             "DisplayNameEn":"Job Title",
             "type":"string",
-            "maxchar":"250",
-            "validation":"required"
+            "maxchar":"255",
+            "validation":"required",
+            descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+            descPhraseEn: "max length of letters equal 255", 
          },
       ]
    },
@@ -120,7 +126,9 @@ var Information_Form = [
             "DisplayNameEn":"Comments",
             "DisplayName":"ملاحظات",
             "type":"multiline",
-            "maxchar":"500"
+            "maxchar":"5000",
+            descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+            descPhraseEn: "max length of letters equal 5000", 
          },
          {
             "InternalName": "getfile",

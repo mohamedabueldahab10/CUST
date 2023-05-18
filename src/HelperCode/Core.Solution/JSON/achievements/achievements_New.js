@@ -20,6 +20,8 @@ var Information_Form = [
         maxchar: '255',
         withletters:true,
         Errmsgkey:"withletterpattern",
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255", 
       },
 
       {
@@ -87,6 +89,9 @@ var Information_Form = [
         DisplayName: 'وصف المنجز',
         type: 'multiline',
         validation: 'required',
+        maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000", 
       },
       {
         InternalName: 'LinkType',
@@ -274,6 +279,9 @@ var Information_Form = [
         DisplayName: 'وصف الأثر',
         type: 'multiline',
         RequiredName: 'ImpactDescription',
+        maxchar: '5000',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000", 
         // validation: 'required',
       },
       {
@@ -283,7 +291,8 @@ var Information_Form = [
         type: 'string',
         validation: 'required',
         maxchar: '255',
-
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255", 
       },
     ],
   },
@@ -298,6 +307,9 @@ var Information_Form = [
         DisplayName: 'ملاحظات',
         DisplayNameEn: 'Comments',
         type: 'multiline',
+        maxchar: '5000',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000", 
       },
       {
         InternalName: 'Attachments',
