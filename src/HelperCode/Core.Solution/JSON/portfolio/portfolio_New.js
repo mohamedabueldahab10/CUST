@@ -10,6 +10,9 @@ var Information_Form = [{
             "type": "string",
             "validation": "required",
             "Errmsgkey":"arnamepattern",
+            maxchar: '255',
+            descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+            descPhraseEn: "max length of letters equal 255", 
         },
         {
             "InternalName": "NameEn",
@@ -18,6 +21,9 @@ var Information_Form = [{
             "type": "string",
             "validation": "required",
             "Errmsgkey":"ennamepattern",
+            maxchar: '255',
+            descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+            descPhraseEn: "max length of letters equal 255", 
         },
         {
             "InternalName": "Description",
@@ -25,7 +31,8 @@ var Information_Form = [{
             "DisplayNameEn": "Description",
             "type": "multiline",
             "maxchar": 5000,
-
+            descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+            descPhraseEn: "max length of letters equal 5000", 
         },
         {
             "InternalName": "Manager",
