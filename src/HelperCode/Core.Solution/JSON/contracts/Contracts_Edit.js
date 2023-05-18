@@ -19,6 +19,8 @@ var Information_Form = [{
                 "type": "string",
                 "validation": "required",
                 maxchar: 255,
+                descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+                descPhraseEn: "max length of letters equal 255", 
 
             },
             // {
@@ -78,6 +80,8 @@ var Information_Form = [{
                 "DisplayNameEn": "Beneficiary",
                 "type": "string",
                 maxchar: 255,
+                descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+                descPhraseEn: "max length of letters equal 255", 
             },
             {
                 "InternalName": "Description",
@@ -85,6 +89,8 @@ var Information_Form = [{
                 "DisplayNameEn": "Description",
                 "type": "multiline",
                 "maxchar": 5000,
+                descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+                descPhraseEn: "max length of letters equal 5000", 
             },
             {
                 "InternalName": "Purpose",
@@ -92,6 +98,8 @@ var Information_Form = [{
                 "DisplayNameEn": "Purpose",
                 "type": "multiline",
                 "maxchar": 5000,
+                descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+                descPhraseEn: "max length of letters equal 5000", 
             },
             {
                 "InternalName": "FirstParty",
@@ -99,6 +107,8 @@ var Information_Form = [{
                 "DisplayNameEn": "First Party",
                 "type": "string",
                 maxchar: 255,
+                descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+                descPhraseEn: "max length of letters equal 255", 
             },
             {
                 "InternalName": "Second",
@@ -106,6 +116,8 @@ var Information_Form = [{
                 "DisplayNameEn": "Second Party",
                 "type": "string",
                 maxchar: 255,
+                descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+                descPhraseEn: "max length of letters equal 255", 
             }
         ]
     },

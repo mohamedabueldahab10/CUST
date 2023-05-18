@@ -87,7 +87,11 @@ var Information_Form = [
         InternalName: 'ExpectedPaymentDate',
         DisplayNameEn: 'ExpectedPayment Date',
         DisplayName: 'التاريخ المخطط للصرف',
-        type: 'datetime',
+        // type: 'datetime',
+        type: 'datetimetoparent',
+        listname: 'Projects',
+        startinternalname: 'BaselineStartDate',
+        endinternalname: 'BaselineFinishDate',
       },
     ],
   },
@@ -102,7 +106,9 @@ var Information_Form = [
         DisplayName: 'ملاحظات',
         DisplayNameEn: 'Comments',
         type: 'multiline',
-        maxchar: 5000,        
+        maxchar: 5000,    
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",     
 
       },
       {

@@ -56,6 +56,8 @@ var Information_Form = [
         DisplayName: 'المسمى الوظيفي',
         DisplayNameEn: 'Job Title',
         type: 'string',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
         maxchar: 255,
         validation: 'required',
         ToggleDisabledName:"JobTitle"
@@ -86,6 +88,8 @@ var Information_Form = [
         DisplayNameEn: 'Role',
         type: 'string',
         maxchar: 255,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
       },
 
       {
@@ -94,6 +98,8 @@ var Information_Form = [
         DisplayNameEn: 'Department',
         type: 'string',
         maxchar: 255,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
       },
       {
         InternalName: 'Interest',
@@ -113,6 +119,8 @@ var Information_Form = [
         DisplayName: 'الوصف',
         DisplayNameEn: 'Description',
         type: 'multiline',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
         maxchar: 5000,        
 
       },
@@ -121,6 +129,8 @@ var Information_Form = [
         DisplayName: 'المتطلبات',
         DisplayNameEn: 'Requirements',
         type: 'multiline',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
         maxchar: 5000,        
 
       },
@@ -129,6 +139,8 @@ var Information_Form = [
         DisplayName: 'التوقعات',
         DisplayNameEn: 'Expectations',
         type: 'multiline',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
         maxchar: 5000,        
 
       },
