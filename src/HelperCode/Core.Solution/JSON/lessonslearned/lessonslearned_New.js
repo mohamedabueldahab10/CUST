@@ -49,12 +49,16 @@ var Information_Form = [
         DisplayNameEn: 'Description',
         type: 'multiline',
         maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000", 
       },
       {
         InternalName: 'FutureAdvice',
         DisplayName: 'نصيحة للمشاريع القادمة',
         DisplayNameEn: 'Future Advice',
         type: 'multiline',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000", 
         maxchar: 5000,
       },
       {
@@ -62,6 +66,8 @@ var Information_Form = [
         DisplayName: 'مناطق التحسن في المشروع',
         DisplayNameEn: 'Development Areas',
         type: 'multiline',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000", 
         maxchar: 5000,
       },
       {
@@ -69,6 +75,8 @@ var Information_Form = [
         DisplayName: 'مناطق القوة في المشروع',
         DisplayNameEn: 'Strength Areas',
         type: 'multiline',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000", 
         maxchar: 5000,
       },
       {
@@ -76,6 +84,8 @@ var Information_Form = [
         DisplayName: 'خطة الإنجازات',
         DisplayNameEn: 'Achievements Plan',
         type: 'multiline',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000", 
         maxchar: 5000,
       },
       {
@@ -83,6 +93,8 @@ var Information_Form = [
         DisplayName: 'إنجازات المشروع',
         DisplayNameEn: 'Project Achievements',
         type: 'multiline',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000", 
         maxchar: 5000,
       },
       {
@@ -90,6 +102,8 @@ var Information_Form = [
         DisplayName: 'الأسباب الرئيسية',
         DisplayNameEn: 'Major Causes',
         type: 'multiline',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000", 
         maxchar: 5000,
       },
       {
@@ -97,6 +111,8 @@ var Information_Form = [
         DisplayName: 'التوصية',
         DisplayNameEn: 'Recommendation',
         type: 'multiline',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000", 
         maxchar: 5000,
       },
       {
@@ -104,6 +120,8 @@ var Information_Form = [
         DisplayName: 'الخطوة القادمة',
         DisplayNameEn: 'Next Steps',
         type: 'multiline',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000", 
         maxchar: 5000,
       },
     ],

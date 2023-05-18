@@ -20,6 +20,8 @@ var Information_Form = [
         type: 'string',
         validation: 'required',
         maxchar: 255,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255", 
       },
       // {
       //     "InternalName": "Vendor",
@@ -92,12 +94,16 @@ var Information_Form = [
         DisplayNameEn: 'Beneficiary',
         type: 'string',
         maxchar: 255,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255", 
       },
       {
         InternalName: 'Description',
         DisplayName: 'وصف العقد',
         DisplayNameEn: 'Description',
         type: 'multiline',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000", 
         maxchar: 5000,
       },
       {
@@ -105,6 +111,8 @@ var Information_Form = [
         DisplayName: 'الغرض من العقد',
         DisplayNameEn: 'Purpose',
         type: 'multiline',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000", 
         maxchar: 5000,
       },
       {
@@ -113,6 +121,8 @@ var Information_Form = [
         DisplayNameEn: 'First Party',
         type: 'string',
         maxchar: 255,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255", 
       },
       {
         InternalName: 'Second',
@@ -120,6 +130,8 @@ var Information_Form = [
         DisplayNameEn: 'Second Party',
         type: 'string',
         maxchar: 255,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255", 
       },
       // {
       //     "InternalName": "First",

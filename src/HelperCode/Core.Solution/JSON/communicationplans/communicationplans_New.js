@@ -17,6 +17,8 @@ var Information_Form = [
         type: 'string',
         validation: 'required',
         maxchar: 255,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255", 
       },
       {
         InternalName: 'Periodic',
@@ -24,13 +26,17 @@ var Information_Form = [
         DisplayNameEn: 'Periodic',
         type: 'string',
         maxchar: 255,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255", 
       },
       {
         InternalName: 'Impact',
         DisplayName: 'الأثر',
         DisplayNameEn: 'Impact',
         type: 'multiline',
-        maxchar: 5000,        
+        maxchar: 5000,   
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",      
 
       },
       {
@@ -38,7 +44,9 @@ var Information_Form = [
         DisplayName: 'الهدف',
         DisplayNameEn: 'Objective',
         type: 'multiline',
-        maxchar: 5000,        
+        maxchar: 5000,   
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",      
 
       },
       {
@@ -46,7 +54,9 @@ var Information_Form = [
         DisplayName: 'أدوات التواصل',
         DisplayNameEn: 'Communication Tools',
         type: 'multiline',
-        maxchar: 5000,        
+        maxchar: 5000, 
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",        
       },
       // ,
       // {
