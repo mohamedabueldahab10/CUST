@@ -1396,6 +1396,7 @@ var Information_Form = [
             'System Admin Group',
           ],
         },
+        validation: 'required',
       },
       {
         InternalName: 'Months',
