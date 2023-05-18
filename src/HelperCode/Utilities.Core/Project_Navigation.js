@@ -216,13 +216,7 @@ var Custom_Nav_Request = {
             var AllowTo = oListItem.get_item('AllowOnlyTo');
 
 
-            console.log(AllowTo, "aaaaaaaaaaaaaaaaaa")
-            // if (AllowTo) {
-            //     if (ActiveRole[0].groupsName.some(group => AllowTo.includes(group))) {
-            //     }
-            // }
-            debugger
-            // debugger
+       
             if (isInitiativeCodehere && module.indexOf('Initiative') > -1) {
                 //to get value of column for an item use internal name of field
                 if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
