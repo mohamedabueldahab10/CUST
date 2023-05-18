@@ -155,7 +155,6 @@ window.Edit_Data_Request = {
     $(
       ".section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> input:not([type=file]), .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> input[type=checkbox],.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> div[type=multipicker], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> div[type=picker], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> select[type=dropdown], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)>  textarea,.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> .datetimeinputs input[type=date], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> .datetimeinputs input[type=datetime-local], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request) > .multiselect-container"
     ).each(function () {
-
       switch ($(this).attr("type")) {
         case "date":
           var d =
@@ -358,6 +357,7 @@ window.Edit_Data_Request = {
         return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       });
     });
+    
     //handle top menu navigation
 
     if (SP_ListName == ListArray[0].projects) {
@@ -369,7 +369,7 @@ window.Edit_Data_Request = {
         PCODE +
         '"><span class="litem">Project Home</span></a>'
       );
-      $("select#BudgetItem").change();
+      // $("select#BudgetItem").change();
     }
     // added for CR module
     //! CR
@@ -612,7 +612,7 @@ window.Edit_Data_Request = {
     //   }
     // }
     if (listkey == "projects" && PCODE) {
-
+      
       projRelatedInit = oListItem.get_item("RelatedInitiative");
 
       globalInitiativeCode = projRelatedInit
@@ -2230,7 +2230,7 @@ window.View_Data_Request = {
         // }
         // else
         console.log("when click on cancel btn")
-        debugger
+        
         if (listkey == "strategicpartnerships") {
           window.location =
             _spPageContextInfo.webAbsoluteUrl +
@@ -5529,7 +5529,7 @@ window.equationKPI = {
         ? Object.keys(kpiEquationsComponents[0])
         : []; // get internal names keys
 
-    debugger
+    
 
     // remove required field when there is no equation
     if (!kpiEquation && (isEdit || RListKey == 'mainkpi')) {
