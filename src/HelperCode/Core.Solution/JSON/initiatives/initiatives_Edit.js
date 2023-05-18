@@ -785,6 +785,7 @@ var Information_Form = [
         grpfieldkey: 'Title',
         enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        Errmsgkey: 'multiselecterr',
       },
       {
         InternalName: 'EstimatedCost',
@@ -1261,6 +1262,7 @@ var Information_Form = [
         valfieldkey: 'Title',
         grpfieldkey: 'Title',
         initiativeCodeInList: true, //value in look up drop down should be related to current project
+        Errmsgkey: 'multiselecterr',
       },
       {
         InternalName: 'DeliverableID',
