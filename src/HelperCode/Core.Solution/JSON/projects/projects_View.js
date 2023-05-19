@@ -235,6 +235,33 @@ var Information_Form = [
         source: "InitiativeDeliverables",
       },
       {
+        InternalName: "Sector",
+        DisplayName: "القطاع",
+        DisplayNameEn: "Sector",
+        type: "lookup",
+        // validation: 'required',
+        //from other list:
+        source: "Internal Entities",
+        isSector: "True",
+        EntityType: "Sector",
+        Dispfieldkey: "Name",
+        DispfieldkeyEn: "NameEn",
+        valfieldkey: "Title",
+      },
+
+      {
+        InternalName: "SubSector",
+        DisplayName: "الوكالة",
+        DisplayNameEn: "DeputyShip",
+        type: "lookup",
+        //from other list:
+        source: "Internal Entities",
+        isSector: "True",
+        Dispfieldkey: "Name",
+        DispfieldkeyEn: "NameEn",
+        valfieldkey: "Title",
+      },
+      {
         InternalName: "CorrectivePlan",
         DisplayName: "الخطة التصحيحية",
         DisplayNameEn: "Corrective Plan",
@@ -304,33 +331,7 @@ var Information_Form = [
         // "state": "disabled"
       },
 
-      {
-        InternalName: "Sector",
-        DisplayName: "القطاع",
-        DisplayNameEn: "Sector",
-        type: "lookup",
-        // validation: 'required',
-        //from other list:
-        source: "Internal Entities",
-        isSector: "True",
-        EntityType: "Sector",
-        Dispfieldkey: "Name",
-        DispfieldkeyEn: "NameEn",
-        valfieldkey: "Title",
-      },
-
-      {
-        InternalName: "SubSector",
-        DisplayName: "الوكالة",
-        DisplayNameEn: "DeputyShip",
-        type: "lookup",
-        //from other list:
-        source: "Internal Entities",
-        isSector: "True",
-        Dispfieldkey: "Name",
-        DispfieldkeyEn: "NameEn",
-        valfieldkey: "Title",
-      },
+      
 
       {
         InternalName: "Priority",

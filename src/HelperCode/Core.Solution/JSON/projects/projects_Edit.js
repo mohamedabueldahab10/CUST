@@ -227,6 +227,7 @@ var Information_Form = [
         // ],
         validation: "required",
       },
+      
       {
         InternalName: 'InitiativeType',
         DisplayNameEn: 'Initiative Type',
@@ -364,6 +365,44 @@ var Information_Form = [
         display: 'none',
         disableOnWfTaskStage : "S05,S09",
         state: "disabled",
+      },
+      {
+        InternalName: "Sector",
+        DisplayName: "القطاع",
+        DisplayNameEn: "Sector",
+        type: "lookup",
+        validation: "required",
+        //from other list:
+        source: "Internal Entities",
+        isSector: "True",
+        EntityType: "Sector",
+        Dispfieldkey: "Name",
+        DispfieldkeyEn: "NameEn",
+        valfieldkey: "Title",
+        disableOnWfTaskStage : "S05,S09",
+        // ToggleDisabledName:"Sector"
+        // security: {
+        //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
+        // },
+      },
+      {
+        InternalName: "SubSector",
+        DisplayName: "الوكالة",
+        DisplayNameEn: "DeputyShip",
+        type: "lookup",
+        validation: 'required',
+        //from other list:
+        source: "Internal Entities",
+        isSector: "True",
+        EntityType: "Department",
+        Dispfieldkey: "Name",
+        DispfieldkeyEn: "NameEn",
+        valfieldkey: "Title",
+        disableOnWfTaskStage : "S05,S09",
+        // ToggleDisabledName:"SubSector"
+        // security: {
+        //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
+        // },
       },
       // {
       //     "InternalName": "RelatedInitiativeDeliverable",
@@ -536,44 +575,7 @@ var Information_Form = [
         targetOn: "max"
       },
 
-      {
-        InternalName: "Sector",
-        DisplayName: "القطاع",
-        DisplayNameEn: "Sector",
-        type: "lookup",
-        validation: "required",
-        //from other list:
-        source: "Internal Entities",
-        isSector: "True",
-        EntityType: "Sector",
-        Dispfieldkey: "Name",
-        DispfieldkeyEn: "NameEn",
-        valfieldkey: "Title",
-        disableOnWfTaskStage : "S05,S09",
-        // ToggleDisabledName:"Sector"
-        // security: {
-        //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
-        // },
-      },
-      {
-        InternalName: "SubSector",
-        DisplayName: "الوكالة",
-        DisplayNameEn: "DeputyShip",
-        type: "lookup",
-        validation: 'required',
-        //from other list:
-        source: "Internal Entities",
-        isSector: "True",
-        EntityType: "Department",
-        Dispfieldkey: "Name",
-        DispfieldkeyEn: "NameEn",
-        valfieldkey: "Title",
-        disableOnWfTaskStage : "S05,S09",
-        // ToggleDisabledName:"SubSector"
-        // security: {
-        //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
-        // },
-      },
+      
 
       {
         InternalName: "Priority",
@@ -1228,7 +1230,7 @@ var Information_Form = [
         withAddBtn: 'true',
         // InternalName: 'getfile',
         docPurpose: "Approved_RFP",
-        hideOnWfTaskStage : "S09,S05",
+        // hideOnWfTaskStage : "S09,S05",
           
       },
       {
@@ -1236,7 +1238,7 @@ var Information_Form = [
         DisplayName: "حالة الكراسة",
         DisplayNameEn: "RFP Status",
         type: "dropdownValues",
-        hideOnWfTaskStage : "S09,S05",
+        // hideOnWfTaskStage : "S09,S05",
         options: {
           choices: [
             { display: "brochureapproved", value: "brochureapproved" },

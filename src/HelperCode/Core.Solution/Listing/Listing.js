@@ -650,7 +650,7 @@ window.ListingData = {
 
           if (isDone) {
 
-            console.log(records, "records afteeeeeeeeer")
+            // console.log(records, "records afteeeeeeeeer")
 
             var html = '';
 

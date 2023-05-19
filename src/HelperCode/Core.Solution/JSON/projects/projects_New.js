@@ -367,6 +367,42 @@ var Information_Form = [
         grpfieldkey: "Title",
         state: "disabled",
       },
+      {
+        InternalName: "Sector",
+        DisplayName: "القطاع",
+        DisplayNameEn: "Sector",
+        type: "lookup",
+        validation: "required",
+        //from other list:
+        source: "Internal Entities",
+        isSector: "True",
+        EntityType: "Sector",
+        Dispfieldkey: "Name",
+        DispfieldkeyEn: "NameEn",
+        valfieldkey: "Title",
+        ToggleDisabledName: "Sector"
+        // security: {
+        //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
+        // },
+      },
+      {
+        InternalName: "SubSector",
+        DisplayName: "الوكالة",
+        DisplayNameEn: "DeputyShip",
+        type: "lookup",
+        validation: 'required',
+        //from other list:
+        source: "Internal Entities",
+        isSector: "True",
+        EntityType: "Department",
+        Dispfieldkey: "Name",
+        DispfieldkeyEn: "NameEn",
+        valfieldkey: "Title",
+        ToggleDisabledName: "SubSector"
+        // security: {
+        //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
+        // },
+      },
       // {
       //     "InternalName": "RelatedInitiativeDeliverable",
       //     "DisplayName": " مخرج المبادرة المرتبط",
@@ -531,42 +567,7 @@ var Information_Form = [
         targetOn: "max"
       },
 
-      {
-        InternalName: "Sector",
-        DisplayName: "القطاع",
-        DisplayNameEn: "Sector",
-        type: "lookup",
-        validation: "required",
-        //from other list:
-        source: "Internal Entities",
-        isSector: "True",
-        EntityType: "Sector",
-        Dispfieldkey: "Name",
-        DispfieldkeyEn: "NameEn",
-        valfieldkey: "Title",
-        ToggleDisabledName: "Sector"
-        // security: {
-        //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
-        // },
-      },
-      {
-        InternalName: "SubSector",
-        DisplayName: "الوكالة",
-        DisplayNameEn: "DeputyShip",
-        type: "lookup",
-        validation: 'required',
-        //from other list:
-        source: "Internal Entities",
-        isSector: "True",
-        EntityType: "Department",
-        Dispfieldkey: "Name",
-        DispfieldkeyEn: "NameEn",
-        valfieldkey: "Title",
-        ToggleDisabledName: "SubSector"
-        // security: {
-        //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
-        // },
-      },
+
 
       {
         InternalName: "Priority",
