@@ -10,28 +10,28 @@ window.Information_Form = [
 			{
 				// InternalName: 'Title',
 				DisplayNameEn: 'Create Project',
-				DisplayName: 'اضافة مشروع',
+				DisplayName: 'انشاء مشروع',
 				type: 'anchor',
 				href: "/SitePages/new.aspx?ListKey=projects"
 			},
 			{
 				// InternalName: 'Title',
 				DisplayNameEn: 'Create Initiative',
-				DisplayName: 'اضافة مبادرة',
+				DisplayName: 'انشاء مبادرة',
 				type: 'anchor',
 				href: "/SitePages/new.aspx?ListKey=initiatives"
 			},
 			{
 				// InternalName: 'Title',
 				DisplayNameEn: 'Create objective',
-				DisplayName: 'اضافة استراتيجي',
+				DisplayName: 'انشاء استراتيجي',
 				type: 'anchor',
 				href: "/SitePages/new.aspx?ListKey=sos"
 			},
 			{
 				// InternalName: 'Title',
 				DisplayNameEn: 'Create KPI',
-				DisplayName: 'اضافة مؤشر',
+				DisplayName: 'انشاء مؤشر',
 				type: 'anchor',
 				href: "/SitePages/new.aspx?ListKey=mainkpi"
 			},
