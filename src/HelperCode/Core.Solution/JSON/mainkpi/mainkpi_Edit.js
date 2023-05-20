@@ -1387,7 +1387,7 @@ var Information_Form = [
             '2030',
           ],
         },
-        // validation: 'required',
+        validation: 'required',
         security: {
           groups: [
             'LMS_P',
