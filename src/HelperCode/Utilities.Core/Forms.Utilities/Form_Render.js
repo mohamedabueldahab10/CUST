@@ -4436,6 +4436,17 @@ window.ListInfo = {
             "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">" +
             PCODE +
             "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+        } else if (ICODE && element.queryFieldValue && element.queryFieldValue != "undefined" && element.queryFieldValue.length == 2) {
+          //show sublevel2 and sublevel3 kpi only in form benefit in field RelatedSubKpis         
+          customQuery = `<View><Query><Where>
+          <And>
+          <Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>
+          <Or>
+          <Eq><FieldRef Name="${element.queryField}"/><Value Type="${element.queryFieldType}">${element.queryFieldValue[0]}</Value></Eq>
+          <Eq><FieldRef Name="${element.queryField}"/><Value Type="${element.queryFieldType}">${element.queryFieldValue[1]}</Value></Eq>
+          </Or>
+          </And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>`
+
         } else {
           customQuery =
             "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
@@ -4735,6 +4746,7 @@ window.ListInfo = {
           displayName +
           '<b class="caret"></b></a>' +
           '<ul class="dropdown-menu multiselect_scroll ' + element.validation + '">';
+
 
         sphttp.get(
           _spPageContextInfo.siteServerRelativeUrl,
@@ -10186,7 +10198,7 @@ dynamicAffectSelect = {
 
 
 
-    
+
 
 
     var queryFieldValue = affectedSelectsInfo[0].queryFieldValue
@@ -10435,10 +10447,10 @@ dynamicAffectSelect = {
       }
 
 
-      
-        if (targetFieldType == "multiselect") {
-          optionsBody +=
-            `<label class="grp-select">${valfieldkey}</label>
+
+      if (targetFieldType == "multiselect") {
+        optionsBody +=
+          `<label class="grp-select">${valfieldkey}</label>
         <li>
         <div class="checkbox">
         <label>
@@ -10448,28 +10460,12 @@ dynamicAffectSelect = {
         </div>
         </li>
         `
-        } else {
-          if (getSiblingsValues.length) {
-            getSiblingsValues.forEach(el => {
-              if (el.id == oListItem.get_id()) {
-                optionsBody +=
-                  '<option data-arraysiblingvalues=' + el.arraySiblings + ' option-id="' +
-                  oListItem.get_id() +
-                  '" value="' +
-                  valfieldkey +
-                  '">' +
-                  optionText +
-                  "</option>";
-              }
-            })
-          } else {
-            //affectedSelectsInfo.fromCr add to get the data when chosse edit in edit section cr
-            if (listkey == "changerequest" && isRoleDataLevelAccess && !affectedSelectsInfo.fromCr) {
-
-            } else {
-
+      } else {
+        if (getSiblingsValues.length) {
+          getSiblingsValues.forEach(el => {
+            if (el.id == oListItem.get_id()) {
               optionsBody +=
-                '<option option-id="' +
+                '<option data-arraysiblingvalues=' + el.arraySiblings + ' option-id="' +
                 oListItem.get_id() +
                 '" value="' +
                 valfieldkey +
@@ -10477,8 +10473,24 @@ dynamicAffectSelect = {
                 optionText +
                 "</option>";
             }
+          })
+        } else {
+          //affectedSelectsInfo.fromCr add to get the data when chosse edit in edit section cr
+          if (listkey == "changerequest" && isRoleDataLevelAccess && !affectedSelectsInfo.fromCr) {
+
+          } else {
+
+            optionsBody +=
+              '<option option-id="' +
+              oListItem.get_id() +
+              '" value="' +
+              valfieldkey +
+              '">' +
+              optionText +
+              "</option>";
           }
         }
+      }
     }
 
     // to handle the change request when dynamic change in roles

@@ -65,26 +65,6 @@ var Information_Form = [
         // "state": "disabled",
         // dynamic: "Initiative"
       },
-      // {
-      //   InternalName: 'Equation',
-      //   DisplayNameEn: 'Equation',
-      //   DisplayName: 'معادلة المقياس',
-      //   type: 'string'
-      // },
-      // {
-      //   InternalName: 'RelatedSubKpis',
-      //   DisplayNameEn: 'Related Sub Kpis',
-      //   DisplayName: 'المؤشرات الفرعية المرتبطة',
-      //   type: 'lookupWithQuery',
-      //   queryField: 'Types',
-      //   queryFieldType: 'dropdownValues', //ex: "Choice"
-      //   queryFieldValue: 'sub',
-      //   source: 'MainKPI',
-      //   // "state": "disabled",
-      //   Dispfieldkey: 'Name',
-      //   valfieldkey: 'Title',
-      //   validation: 'required',
-      // },
       {
         InternalName: 'RelatedSubKpis',
         DisplayNameEn: 'Related Sub Kpis',
@@ -96,10 +76,11 @@ var Information_Form = [
         valfieldkey: 'Title',
         grpfieldkey: 'Title',
         initiativeCodeInList: true, //value in look up drop down should be related to current project
-        Errmsgkey:"multiselecterr"
-        // queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
-        // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
-        // queryFieldValue: 'sublevel2,sublevel3', // if i need to make the field with filter should add this
+        Errmsgkey:"multiselecterr",
+        //////
+        queryField: 'KPIType', // 
+        queryFieldType: 'Choice', 
+        queryFieldValue: ['sublevel2','sublevel3'], // to get the data fot these two values
       },
       // {
       //   InternalName: 'RelatedSubKpis',
