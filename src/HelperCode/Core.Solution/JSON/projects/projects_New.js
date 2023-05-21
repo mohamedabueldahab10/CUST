@@ -1392,6 +1392,13 @@ var Information_Form = [
           ],
         },
       },
+      {
+        InternalName: 'getfile',
+        DisplayName: 'المرفقات',
+        DisplayNameEn: 'Attachments',
+        type: 'file',
+        // withAddBtn: 'true',
+      },
     ],
   },
   {
@@ -1584,7 +1591,14 @@ var Information_Form = [
             },
           ],
         },
-      }
+      },
+      {
+        InternalName: 'getfile',
+        DisplayName: 'المرفقات',
+        DisplayNameEn: 'Attachments',
+        type: 'file',
+        // withAddBtn: 'true',
+      },
 
     ],
   },

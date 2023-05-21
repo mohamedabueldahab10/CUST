@@ -985,6 +985,13 @@ var Information_Form = [
         endinternalname: 'FinishDate',
         max: 'today',
       },
+      {
+        InternalName: 'getfile',
+        DisplayName: 'المرفقات',
+        DisplayNameEn: 'Attachments',
+        type: 'file',
+        // withAddBtn: 'true',
+      },
     
     ]
   },
@@ -1082,6 +1089,13 @@ var Information_Form = [
         maxchar: '5000',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",  
+      },
+      {
+        InternalName: 'getfile',
+        DisplayName: 'المرفقات',
+        DisplayNameEn: 'Attachments',
+        type: 'file',
+        // withAddBtn: 'true',
       },
     
     ]

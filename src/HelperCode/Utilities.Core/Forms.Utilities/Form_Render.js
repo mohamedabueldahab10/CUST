@@ -6776,7 +6776,21 @@ window.ListInfo = {
           .toString(); //.replaceAll('value', 'value=""');
 
 
+
         $('<div class="Details-Item NewItem" data-index="' + getMasterIndex + '">' + toappend + "</div>").insertBefore($(this).parent());
+
+        if ((listkey == 'initiatives' || listkey == "projects") && isNew) {
+          // to handle attachement in master details for proj and initiative like deliv and milst
+
+          var lastListDetails =  $(this).closest("[data-target_list]").data('target_list')
+          debugger
+          // to add many attach in master details
+          $(this).closest("[data-target_list]").find(".Details-Item .CFIELD >input[type=file]").last().attr('id', `getFile${lastListDetails}-${getMasterIndex}`)
+
+          $(this).closest("[data-target_list]").find(".Details-Item .CFIELD >input[type=file]").last().parent().find('#chooseFile').attr('for', `getFile${lastListDetails}-${getMasterIndex}`)
+          
+        }
+        // var fileId = "getFile" + attachCount;
 
         // to hide the err msg when click  on plus
 

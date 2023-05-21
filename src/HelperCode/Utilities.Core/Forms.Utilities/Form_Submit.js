@@ -21,6 +21,10 @@ var allEnterpriseResources = [], projectBuildTeamArr = [], projectManagerPickerT
 
 var fieldTargetListInMaster = []// save the field value in other list as a master section
 
+// get all id of master when create
+allNewMasterIdRelatedCodeArr = []
+//
+
 if (
   localStorage.getItem("lng") == null ||
   localStorage.getItem("lng") == "ar"
@@ -1212,7 +1216,7 @@ window.Edit_Data_Submit = {
           console.log("program_BulkEdit(wfHotFixState);");
           updateProjectStageGet.init(wfHotFixState);
           // program_BulkEdit(wfHotFixState);
-        }else Edit_Data_Submit.init();
+        } else Edit_Data_Submit.init();
 
         // Edit_Data_Submit.init();
       }
@@ -1787,96 +1791,96 @@ window.Edit_Data_Submit = {
       }
     },
     afterSuccess: function () {
-    
-        // determinig folder directory
-        if (PCODE || listkey == "projects") {
-          Documents_Library = ListArray[2].documents;
-          folderdirectory = PCODE + "/" + listkey; //_spPageContextInfo.webServerRelativeUrl+
-          // folderdirectory = '/'+ListArray[2].documents+'/'+PCODE+'/'+listkey;//_spPageContextInfo.webServerRelativeUrl+
-        } else if (ICODE || listkey == "initiatives") {
-          Documents_Library = "Initiative Documents";
-          folderdirectory = ICODE + "/" + listkey;
 
-        } else if (STCODE || listkey == "strategicpartnerships") {
-          Documents_Library = "StrategicPartnerships Documents";
-          folderdirectory = STCODE + "/" + listkey;
-        } else if (listkey == 'mainkpi') {
-          Documents_Library = listkey + " Documents";
-          folderdirectory = ""; //_spPageContextInfo.webServerRelativeUrl+
-        }
-        else {
-          // Documents_Library = listkey + " Documents";
-          // folderdirectory = "";
-          Documents_Library = "SPM General Services"
-          folderdirectory = listkey
-        }
-        // else {
-        //   Documents_Library = listkey + " Documents";
-        //   folderdirectory = ""; //_spPageContextInfo.webServerRelativeUrl+
-        //   // folderdirectory = '/'+listkey+' Documents/';//_spPageContextInfo.webServerRelativeUrl+
-        // }
+      // determinig folder directory
+      if (PCODE || listkey == "projects") {
+        Documents_Library = ListArray[2].documents;
+        folderdirectory = PCODE + "/" + listkey; //_spPageContextInfo.webServerRelativeUrl+
+        // folderdirectory = '/'+ListArray[2].documents+'/'+PCODE+'/'+listkey;//_spPageContextInfo.webServerRelativeUrl+
+      } else if (ICODE || listkey == "initiatives") {
+        Documents_Library = "Initiative Documents";
+        folderdirectory = ICODE + "/" + listkey;
 
-        if (!PCODE && listkey == "projects") {
-          PCODE = Edit_Data_Submit.g.oListItem.get_item("Title");
-        }
-        //Get File Input Control and read the file name
-        $("input[type=file]").each(function (e) {
-          fileCount += document.querySelector("#" + $(this).attr("id")).files
-            .length;
-        });
+      } else if (STCODE || listkey == "strategicpartnerships") {
+        Documents_Library = "StrategicPartnerships Documents";
+        folderdirectory = STCODE + "/" + listkey;
+      } else if (listkey == 'mainkpi') {
+        Documents_Library = listkey + " Documents";
+        folderdirectory = ""; //_spPageContextInfo.webServerRelativeUrl+
+      }
+      else {
+        // Documents_Library = listkey + " Documents";
+        // folderdirectory = "";
+        Documents_Library = "SPM General Services"
+        folderdirectory = listkey
+      }
+      // else {
+      //   Documents_Library = listkey + " Documents";
+      //   folderdirectory = ""; //_spPageContextInfo.webServerRelativeUrl+
+      //   // folderdirectory = '/'+listkey+' Documents/';//_spPageContextInfo.webServerRelativeUrl+
+      // }
 
-        if (fileCount) _uploadFile();
-        // readFiles();
-        else {
+      if (!PCODE && listkey == "projects") {
+        PCODE = Edit_Data_Submit.g.oListItem.get_item("Title");
+      }
+      //Get File Input Control and read the file name
+      $("input[type=file]").each(function (e) {
+        fileCount += document.querySelector("#" + $(this).attr("id")).files
+          .length;
+      });
 
-          if ($(".Details-Item.NewItem").length > 0 && !crListKey) {
+      if (fileCount) _uploadFile();
+      // readFiles();
+      else {
 
-            //calling new master submit
-            New_Data_Submit.g.checkNewMasterDetails();
-          } else if ($(".Details-Item.EditItem").length > 0 && !crListKey) {
-            Edit_Data_Submit.g.checkEditMasterDetails();
+        if ($(".Details-Item.NewItem").length > 0 && !crListKey) {
+
+          //calling new master submit
+          New_Data_Submit.g.checkNewMasterDetails();
+        } else if ($(".Details-Item.EditItem").length > 0 && !crListKey) {
+          Edit_Data_Submit.g.checkEditMasterDetails();
+        } else {
+          if (USERisWF && workflowname == "Project") {
+            BulkEdit(true);
+          } else if (USERisWF && workflowname != "Project") {
+            Continue_Submit_Field.init();
           } else {
-            if (USERisWF && workflowname == "Project") {
-              BulkEdit(true);
-            } else if (USERisWF && workflowname != "Project") {
-              Continue_Submit_Field.init();
+            $(".btn-save").addClass("success");
+            if (listkey == 'kpiequations') {
+              window.location =
+                _spPageContextInfo.webAbsoluteUrl +
+                "/SitePages/View.aspx?ListKey=mainkpi" +
+                "&IID=" +
+                $('#KPI option[value="' + $('#KPI').val() + '"]').attr('option-id') +
+                PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+            } else if (listkey == "benefitsequations") {
+              window.location =
+                _spPageContextInfo.webAbsoluteUrl +
+                "/SitePages/View.aspx?ListKey=benefitmetrics" +
+                "&IID=" +
+                $('#RelatedBenefit option[value="' + $('#RelatedBenefit').val() + '"]').attr('option-id') +
+                PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+            } else if (listkey == 'mainkpi') {
+              Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis, kpiRecurrenceChanged)
+            } else if (listkey == 'projects' && PCODE) {
+
+              getProjectInfoToUpdateEPM()
             } else {
-              $(".btn-save").addClass("success");
-              if (listkey == 'kpiequations') {
-                window.location =
-                  _spPageContextInfo.webAbsoluteUrl +
-                  "/SitePages/View.aspx?ListKey=mainkpi" +
-                  "&IID=" +
-                  $('#KPI option[value="' + $('#KPI').val() + '"]').attr('option-id') +
-                  PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
-              } else if (listkey == "benefitsequations") {
-                window.location =
-                  _spPageContextInfo.webAbsoluteUrl +
-                  "/SitePages/View.aspx?ListKey=benefitmetrics" +
-                  "&IID=" +
-                  $('#RelatedBenefit option[value="' + $('#RelatedBenefit').val() + '"]').attr('option-id') +
-                  PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
-              } else if (listkey == 'mainkpi') {
-                Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis, kpiRecurrenceChanged)
-              } else if (listkey == 'projects' && PCODE) {
-
-                getProjectInfoToUpdateEPM()
-              } else {
-                window.location =
-                  _spPageContextInfo.webAbsoluteUrl +
-                  "/SitePages/View.aspx?ListKey=" +
-                  listkey +
-                  "&IID=" +
-                  IID +
-                  PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
-              }
-
-
-
+              window.location =
+                _spPageContextInfo.webAbsoluteUrl +
+                "/SitePages/View.aspx?ListKey=" +
+                listkey +
+                "&IID=" +
+                IID +
+                PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
             }
+
+
+
           }
         }
-        // }
+      }
+      // }
     }
   },
 };
@@ -2260,7 +2264,7 @@ var New_Master_Details_Submit = {
 
         $(this)
           .find(
-            ".CFIELD:not(.dont-submit)>input," +
+            ".CFIELD:not(.dont-submit)>input:not([type=file])," +
             ".CFIELD:not(.dont-submit)>div[type=picker]," +
             ".CFIELD:not(.dont-submit)>div[type=multipicker]," +
             ".CFIELD:not(.dont-submit)>select[type=dropdown]," +
@@ -2372,7 +2376,12 @@ var New_Master_Details_Submit = {
 
         Code = prt1 + "-" + prt2 + "-" + prt3 + "-" + prt4;
 
-
+        //
+        isThereAttachement = $(this).find(".CFIELD:not(.dont-submit)>input[type=file]").length
+        if (isThereAttachement > 0) {
+          allNewMasterIdRelatedCodeArr.push({ code: Code, CurrList: CurrList })
+        }
+        //
 
         New_Master_Details_Submit.g.oListItem.set_item("Title", Code);
 
@@ -2401,6 +2410,7 @@ var New_Master_Details_Submit = {
 
         New_Master_Details_Submit.g.oListItem.update();
         clientContext.load(New_Master_Details_Submit.g.oListItem);
+
       }
     );
     // });
@@ -2415,6 +2425,13 @@ var New_Master_Details_Submit = {
         if (newItemMasterLength) {
           masterIdWhenCreate = New_Master_Details_Submit.g.oListItem.get_id();
         }
+
+        // allNewMasterIdStr +=  New_Master_Details_Submit.g.oListItem.get_id();
+
+        // allNewMasterIdArr.push(
+        //   New_Master_Details_Submit.g.oListItem.get_id()
+        // )
+
 
         if ($(".Details-Item.EditItem").length > 0) {
           //calling Edit master submit
@@ -3033,11 +3050,29 @@ window.filesPurpose = []
 function _uploadFile() {
   //
 
+
+  // .section-container:not([data-target_list])
+
   $("input[type=file]").each(function (e) {
 
 
 
+
+
+
     var docPurpose = $(this).data("docpurpose") ? $(this).data("docpurpose") : ""
+
+    var checkParent = $(this).closest("[data-target_list]")
+
+    var dataTargetList = "", isMaster = false
+
+    if (checkParent.length > 0) {
+      dataTargetList = $(this).closest("[data-target_list]").data('target_list')
+      isMaster = true
+    }
+
+    console.log(dataTargetList, "dataTargetList")
+
     // var filesArr = document.querySelectorAll("#" + $(this).attr("id"))
 
     // filesArr.forEach(el => {
@@ -3047,13 +3082,15 @@ function _uploadFile() {
     var myfiles = document.querySelector("#" + $(this).attr("id")).files;
 
     for (var i = 0; i < myfiles.length; i++) {
+
+
       const file = myfiles[i];
       const fileExtension = "" + file.name.split(".").pop();
       // get attribut
       if (acceptedExtensions.indexOf(fileExtension.toLowerCase()) > -1) {
         attachments.push(file);
 
-        filesPurpose.push({ name: file.name, purpose: docPurpose })
+        filesPurpose.push({ name: file.name, purpose: docPurpose, dataTargetList: dataTargetList, isMaster: isMaster })
       }
     }
     // })
@@ -3102,165 +3139,277 @@ function _uploadFile() {
 
         var purpose = filesPurpose[index].purpose
 
-        if (PCODE || ICODE) {
-          var code = PCODE ? PCODE : ICODE;
+        var checkMaster = filesPurpose[index].isMaster
+        var dataTargetList = filesPurpose[index].dataTargetList
 
-          Doc_Title = listkey + "-" + code;
-        } else if (STCODE) {
-          var code = STCODE
-          Doc_Title = listkey + "-" + code;
+        
 
-        } else {
-          Doc_Title = listkey;
-        }
-        if (isFirst_Upload) {
-          $("input#getFile")
-            .eq(0)
-            .closest(".fieldset-container")
-            .append(
-              '<div class="col-md-6 CFIELD upload-status" data-groups="">\
+        if (checkMaster && allNewMasterIdRelatedCodeArr.length && isNew && (listkey == "initiatives" || listkey == "projects")) {
+
+          var customquery =
+            '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Title" /><Value Type="Text">' +
+            allNewMasterIdRelatedCodeArr[0].code
+            +
+            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+
+          var getMasterList = allNewMasterIdRelatedCodeArr[0].CurrList
+
+          allNewMasterIdRelatedCodeArr.shift()
+
+
+          sphttp.get(
+            _spPageContextInfo.siteServerRelativeUrl,
+            getMasterList,
+            customquery,
+            ["ID", "Title"],
+            function (records, record, listItem, isDone) {
+              if (isDone) {
+
+                
+                records.forEach(function (el, index) {
+
+                  var itemId = el.ID
+
+                  if (PCODE || ICODE) {
+                    var code = PCODE ? PCODE : ICODE;
+
+                    if (checkMaster && dataTargetList) {
+                      dataTargetList = dataTargetList.toLowerCase()
+                      Doc_Title = dataTargetList + "-" + code
+                      folderdirectory = code + "/" + dataTargetList
+                    } else {
+                      Doc_Title = listkey + "-" + code;
+                      folderdirectory = code + "/" + listkey;
+                    }
+                  }
+                  if (isFirst_Upload) {
+                    $("input#getFile")
+                      .eq(0)
+                      .closest(".fieldset-container")
+                      .append(
+                        '<div class="col-md-6 CFIELD upload-status" data-groups="">\
                 <div class="upload-progress-parent">\
                     <div class="upload-progress bg-success"" style="width:0px"></div>\
                 </div>\
                 <p data-trans-fileuploading class="upload-name Resources"><span class="progress-file-name">"' +
-              file.name.replaceAll('�', '') +
-              '" </span><span class="upload-percent"></span></p>\
+                        file.name.replaceAll('�', '') +
+                        '" </span><span class="upload-percent"></span></p>\
             </div>'
-            );
-        }
-        isFirst_Upload = false;
-        var fieldsObj = {}
-        if (isEdit && listkey == 'mainkpi') {
-          var kpiPeriodType = $('#PeriodType').val()
-          if (kpiPeriodType == 'monthly') {
-            fieldsObj = {
-              Title: Doc_Title,
-              ItemID: IID,
-              RelatedMonth: $('#Months').val(),
-              RelatedYear: $('#Year').val(),
-              docPurpose: purpose
-            }
-          } else if (kpiPeriodType == 'quarter') {
-            fieldsObj = {
-              Title: Doc_Title,
-              ItemID: IID,
-              RelatedQuarter: $('#Quarter').val(),
-              RelatedYear: $('#Year').val(),
-              docPurpose: purpose
-            }
-          } else if (kpiPeriodType == 'midterm') {
-            fieldsObj = {
-              Title: Doc_Title,
-              ItemID: IID,
-              RelatedMid: $('#Midterms').val(),
-              RelatedYear: $('#Year').val(),
-              docPurpose: purpose
-            }
-          } else if (kpiPeriodType == 'year') {
-            fieldsObj = {
-              Title: Doc_Title,
-              ItemID: IID,
-              RelatedActualY: $('#Years').val(),
-              RelatedYear: $('#Year').val(),
-              docPurpose: purpose
+                      );
+                  }
 
+
+
+
+                  isFirst_Upload = false;
+                  var fieldsObj = {}
+
+                  fieldsObj = {
+                    Title: Doc_Title,
+                    ItemID: itemId,
+                    docPurpose: purpose
+                  }
+
+
+                  return $SP()
+                    .list(Documents_Library)
+                    .createFile({
+                      content: file.content,
+                      filename: folderdirectory + "/" + new Date().toLocaleString().replaceAll("/", "-") + '_-_SystemUploadTime_-_' + file.name.replaceAll('�', ''),
+                      fields: fieldsObj,
+                      progress: function (perc) {
+                        // console.log("Progress => ", perc + "%");
+                        $(".upload-progress").css("width", perc + "%");
+                        $(".upload-percent").text(" " + perc + "%");
+                      },
+                    })
+                    .then(
+                      function (file) {
+
+                        isuploaddone++;
+                        if (fileCount == isuploaddone) {
+                          if (listkey == "projects") {
+                            // if on new project page
+                            New_ProjectStages_Submit.init();
+                          } else if (listkey == "initiatives") {
+                            $(".errormsg").hide();
+                            $(".successmsg").show();
+                            $(".btn-save").addClass("success");
+                            window.location =
+                              _spPageContextInfo.webAbsoluteUrl +
+                              "/SitePages/initiativeHome.aspx?ICODE=" + ICODE;
+
+                          }
+                        }
+                        console.log("uplad maste attach")
+                      },
+                      function (error) {
+                        $(".form-btns-wrapper").prepend(
+                          '<p style="color:red"> Faild saving the Attachements</p>'
+                        );
+                        console.log("Error Uploading: ", error);
+                      }
+                    );
+
+                });
+              }
+            }
+          );
+        }
+
+        //continue as it is
+        if (!checkMaster) {
+          if (PCODE || ICODE) {
+            var code = PCODE ? PCODE : ICODE;
+            if (checkMaster && dataTargetList) {
+              dataTargetList = dataTargetList.toLowerCase()
+              Doc_Title = dataTargetList + "-" + code
+              folderdirectory = code + "/" + dataTargetList
+            } else {
+              Doc_Title = listkey + "-" + code;
+              folderdirectory = code + "/" + listkey;
+            }
+          } else if (STCODE) {
+            var code = STCODE
+            Doc_Title = listkey + "-" + code;
+
+          } else {
+            Doc_Title = listkey;
+          }
+          if (isFirst_Upload) {
+            $("input#getFile")
+              .eq(0)
+              .closest(".fieldset-container")
+              .append(
+                '<div class="col-md-6 CFIELD upload-status" data-groups="">\
+                <div class="upload-progress-parent">\
+                    <div class="upload-progress bg-success"" style="width:0px"></div>\
+                </div>\
+                <p data-trans-fileuploading class="upload-name Resources"><span class="progress-file-name">"' +
+                file.name.replaceAll('�', '') +
+                '" </span><span class="upload-percent"></span></p>\
+            </div>'
+              );
+          }
+
+
+
+          isFirst_Upload = false;
+          var fieldsObj = {}
+          if (isEdit && listkey == 'mainkpi') {
+            var kpiPeriodType = $('#PeriodType').val()
+            if (kpiPeriodType == 'monthly') {
+              fieldsObj = {
+                Title: Doc_Title,
+                ItemID: IID,
+                RelatedMonth: $('#Months').val(),
+                RelatedYear: $('#Year').val(),
+                docPurpose: purpose
+              }
+            } else if (kpiPeriodType == 'quarter') {
+              fieldsObj = {
+                Title: Doc_Title,
+                ItemID: IID,
+                RelatedQuarter: $('#Quarter').val(),
+                RelatedYear: $('#Year').val(),
+                docPurpose: purpose
+              }
+            } else if (kpiPeriodType == 'midterm') {
+              fieldsObj = {
+                Title: Doc_Title,
+                ItemID: IID,
+                RelatedMid: $('#Midterms').val(),
+                RelatedYear: $('#Year').val(),
+                docPurpose: purpose
+              }
+            } else if (kpiPeriodType == 'year') {
+              fieldsObj = {
+                Title: Doc_Title,
+                ItemID: IID,
+                RelatedActualY: $('#Years').val(),
+                RelatedYear: $('#Year').val(),
+                docPurpose: purpose
+
+              }
+            }
+          } else {
+            fieldsObj = {
+              Title: Doc_Title,
+              ItemID: IID,
+              docPurpose: purpose
             }
           }
-        } else {
-          fieldsObj = {
-            Title: Doc_Title,
-            ItemID: IID,
-            docPurpose: purpose
-          }
-        }
 
-        return $SP()
-          .list(Documents_Library)
-          .createFile({
-            content: file.content,
-            filename: folderdirectory + "/" + new Date().toLocaleString().replaceAll("/", "-") + '_-_SystemUploadTime_-_' + file.name.replaceAll('�', ''),
-            fields: fieldsObj,
-            progress: function (perc) {
-              // console.log("Progress => ", perc + "%");
-              $(".upload-progress").css("width", perc + "%");
-              $(".upload-percent").text(" " + perc + "%");
-            },
-          })
-          .then(
-            function (file) {
+          return $SP()
+            .list(Documents_Library)
+            .createFile({
+              content: file.content,
+              filename: folderdirectory + "/" + new Date().toLocaleString().replaceAll("/", "-") + '_-_SystemUploadTime_-_' + file.name.replaceAll('�', ''),
+              fields: fieldsObj,
+              progress: function (perc) {
+                // console.log("Progress => ", perc + "%");
+                $(".upload-progress").css("width", perc + "%");
+                $(".upload-percent").text(" " + perc + "%");
+              },
+            })
+            .then(
+              function (file) {
 
-              isuploaddone++;
-              if (fileCount == isuploaddone) {
-                if (isEdit) {
-                  // if on edit page
-                  $(".errormsg").hide();
-                  $(".successmsg").show();
-                  $(".btn-save").addClass("success");
-                  // window.location = _spPageContextInfo.webAbsoluteUrl + '/SitePages/View.aspx?ListKey=' + listkey + '&IID=' + IID + PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
-                  if ($(".Details-Item.NewItem").length > 0) {
-                    //calling new master submit
-                    New_Data_Submit.g.checkNewMasterDetails();
-                  } else if (
-                    $(".Details-Item.EditItem").length > 0 ||
-                    (USERisWF && listkey == "projects" && USERisEdit)
-                  ) {
-                    Edit_Data_Submit.g.checkEditMasterDetails();
-                  } else {
+                isuploaddone++;
+                if (fileCount == isuploaddone) {
+                  if (isEdit) {
+                    // if on edit page
+                    $(".errormsg").hide();
+                    $(".successmsg").show();
                     $(".btn-save").addClass("success");
-                    if (listkey == "projects") {
-                      getProjectInfoToUpdateEPM()
-                      // window.location =
-                      //   _spPageContextInfo.webAbsoluteUrl +
-                      //   "/SitePages/View.aspx?ListKey=" +
-                      //   listkey +
-                      //   "&IID=" +
-                      //   IID +
-                      //   PCODE_STRING;
-                    }
-                    else {
-                      if (listkey == 'mainkpi') { // to update the kpi result list
-                        Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis.kpiRecurrenceChanged)
-                      } else {
+                    // window.location = _spPageContextInfo.webAbsoluteUrl + '/SitePages/View.aspx?ListKey=' + listkey + '&IID=' + IID + PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+                    if ($(".Details-Item.NewItem").length > 0) {
+                      //calling new master submit
+                      New_Data_Submit.g.checkNewMasterDetails();
+                    } else if (
+                      $(".Details-Item.EditItem").length > 0 ||
+                      (USERisWF && listkey == "projects" && USERisEdit)
+                    ) {
+                      Edit_Data_Submit.g.checkEditMasterDetails();
+                    } else {
+                      $(".btn-save").addClass("success");
+                      if (listkey == "projects") {
+                        getProjectInfoToUpdateEPM()
+                        // window.location =
+                        //   _spPageContextInfo.webAbsoluteUrl +
+                        //   "/SitePages/View.aspx?ListKey=" +
+                        //   listkey +
+                        //   "&IID=" +
+                        //   IID +
+                        //   PCODE_STRING;
+                      }
+                      else {
+                        if (listkey == 'mainkpi') { // to update the kpi result list
+                          Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis.kpiRecurrenceChanged)
+                        } else {
 
-                        window.location =
-                          _spPageContextInfo.webAbsoluteUrl +
-                          "/SitePages/View.aspx?ListKey=" +
-                          listkey +
-                          "&IID=" +
-                          IID +
-                          PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+                          window.location =
+                            _spPageContextInfo.webAbsoluteUrl +
+                            "/SitePages/View.aspx?ListKey=" +
+                            listkey +
+                            "&IID=" +
+                            IID +
+                            PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+                        }
                       }
                     }
-                  }
-                } else if (listkey == "projects") {
-                  // if on new project page
-                  New_ProjectStages_Submit.init();
-                } else if (listkey == "initiatives") {
-                  $(".errormsg").hide();
-                  $(".successmsg").show();
-                  $(".btn-save").addClass("success");
-                  window.location =
-                    _spPageContextInfo.webAbsoluteUrl +
-                    "/SitePages/initiativeHome.aspx?ICODE=" + ICODE;
+                  } else if (listkey == "projects") {
+                    // if on new project page
+                    New_ProjectStages_Submit.init();
+                  } else if (listkey == "initiatives") {
+                    $(".errormsg").hide();
+                    $(".successmsg").show();
+                    $(".btn-save").addClass("success");
+                    window.location =
+                      _spPageContextInfo.webAbsoluteUrl +
+                      "/SitePages/initiativeHome.aspx?ICODE=" + ICODE;
 
-                } else if (listkey == "strategicpartnerships") {
-                  $(".errormsg").hide();
-                  $(".successmsg").show();
-                  $(".btn-save").addClass("success");
-                  window.location =
-                    _spPageContextInfo.webAbsoluteUrl +
-                    "/SitePages/Listing.aspx?ListKey=" +
-                    listkey +
-                    PCODE_STRING;
-
-                } // if on new page other than project
-                else {
-                  if ($(".Details-Item.NewItem").length > 0) {
-                    //calling new master submit
-                    New_Data_Submit.g.checkNewMasterDetails();
-                  } else {
-
-                    // console.log('successful');
+                  } else if (listkey == "strategicpartnerships") {
                     $(".errormsg").hide();
                     $(".successmsg").show();
                     $(".btn-save").addClass("success");
@@ -3269,17 +3418,35 @@ function _uploadFile() {
                       "/SitePages/Listing.aspx?ListKey=" +
                       listkey +
                       PCODE_STRING;
+
+                  } // if on new page other than project
+                  else {
+                    if ($(".Details-Item.NewItem").length > 0) {
+                      //calling new master submit
+                      New_Data_Submit.g.checkNewMasterDetails();
+                    } else {
+
+                      // console.log('successful');
+                      $(".errormsg").hide();
+                      $(".successmsg").show();
+                      $(".btn-save").addClass("success");
+                      window.location =
+                        _spPageContextInfo.webAbsoluteUrl +
+                        "/SitePages/Listing.aspx?ListKey=" +
+                        listkey +
+                        PCODE_STRING;
+                    }
                   }
                 }
+              },
+              function (error) {
+                $(".form-btns-wrapper").prepend(
+                  '<p style="color:red"> Faild saving the Attachements</p>'
+                );
+                console.log("Error Uploading: ", error);
               }
-            },
-            function (error) {
-              $(".form-btns-wrapper").prepend(
-                '<p style="color:red"> Faild saving the Attachements</p>'
-              );
-              console.log("Error Uploading: ", error);
-            }
-          );
+            );
+        }
       })
     );
   });
@@ -3343,6 +3510,7 @@ var createFolder = function (listTitle, folderUrl, success, error) {
               fileCount += document.querySelector("#" + $(this).attr("id"))
                 .files.length;
             });
+            debugger
             if (fileCount) {
               // readFiles();
 
