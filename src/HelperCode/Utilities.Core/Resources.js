@@ -105,8 +105,8 @@
     capex: "رأسمالي",
     operationally: "تشغيلي",
     transformationally: "تحولي",
-    strategically: "استراتيجي",
-    lms: "سوق العمل",
+    strategically: "استراتيجية الوزارة",
+    lms: " استراتيجية سوق العمل",
 
     ministry: "وزارة",
 
@@ -570,7 +570,7 @@
     pleasefill: "يرجى تعبئة حالت الإغلاق",
     closeproject: "إغلاق المشروع",
     deleteconfirmation: "هل أنت متأكد أنك تريد حذف البيانات؟",
-    vision: "الرؤية",
+    vision: "استراتيجية الرؤية",
     sectorial: "قطاعية",
     visiondata: "موارد بشرية وطنية مبادرة ومنتجة",
     goals: "الأهداف الاستراتيجية",
@@ -1232,8 +1232,8 @@
     //program type
     operationally: "Operational",
     transformationally: "Transformative",
-    strategically: "Strategic",
-    lms: "LMS",
+    strategically: "Ministry Strategy",
+    lms: "LMS Strategy",
 
     //Priority Values
     hight: "High",
@@ -1665,7 +1665,7 @@
     pleasefill: "Please fill in the closure status",
     closeproject: "Close Project",
     deleteconfirmation: "Are you sure you want to delete this Item ?",
-    vision: "Vision",
+    vision: "Vision Strategy",
     sectorial: "Sectorial",
     visiondata: "National Human Resources Initiative and Product",
     goals: "Strategic Objectives",
