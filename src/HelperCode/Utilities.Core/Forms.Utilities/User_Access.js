@@ -348,7 +348,7 @@ window.userCalls = {
         Accept: "application/json; odata=verbose",
       },
       success: function (data) {
-       
+
         console.timeEnd();
         UserN = data.d;
         userCalls.get_CurrentUserGroupColl(data.d.Id);
@@ -5212,7 +5212,15 @@ window.userCalls = {
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
+                  // conditionType: "Or"
                 },
+                // {
+                //   field: "PerformanceLeader2",
+                //   type: "LoggedInUser",
+                //   values: [""],
+                //   targetPages: [],
+                //   conditionType: "Or"
+                // },
               ],
               subRelation: {
                 level: 2,
@@ -9306,7 +9314,7 @@ let data_Level1_Access = {
     level,
     hierarchyIndex
   ) {
-    
+
     data_Level1_Access.g.hierarchyIndex = hierarchyIndex;
     let whereBody = ``,
       queryBody = ``,
@@ -9345,7 +9353,14 @@ let data_Level1_Access = {
         //two Eqs in last And
         if (i == fieldsConditionConfig.length - 1) {
           if (el.type == "LoggedInUser") {
-            whereBody += `<And><Eq><FieldRef Name="${el.field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>`;
+            if (el.conditionType == "Or") {
+              whereBody += `<Or><Eq><FieldRef Name="${el.field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Eq><FieldRef Name="${fieldsConditionConfig[i - 1].field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
+
+            } else {
+              whereBody += `<And><Eq><FieldRef Name="${el.field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>`;
+
+            }
+            // whereBody += `<And><Eq><FieldRef Name="${el.field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>`;
           } else {
             whereBody += `<And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>`;
             whereBody += `<In><FieldRef Name="${el.field}"/><Values>`;
@@ -9355,15 +9370,35 @@ let data_Level1_Access = {
             whereBody += `</Values></In>`;
           }
 
-          //appending And closure
-          var count = (whereBody.match(/<And>/g) || []).length;
-          var ANDC = `</And>`.repeat(count);
-          whereBody += ANDC;
+          if (el.conditionType == "Or") {
+
+            // append Or closure
+            var countOr = (whereBody.match(/<Or>/g) || []).length;
+            var ORC = `</Or>`.repeat(countOr);
+            whereBody += ORC;
+            //appending And closure
+            var count = (whereBody.match(/<And>/g) || []).length;
+            var ANDC = `</And>`.repeat(count);
+            whereBody += ANDC;
+
+          } else {
+            // append Or closure
+            var countOr = (whereBody.match(/<Or>/g) || []).length;
+            var ORC = `</Or>`.repeat(countOr);
+            whereBody += ORC;
+          }
+
         }
         //normal And
         else {
           if (el.type == "LoggedInUser") {
-            whereBody += `<And><Eq><FieldRef Name="${el.field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
+            if (el.conditionType == "Or") {
+              whereBody += `<And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>`;
+              // <Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>
+            } else {
+              whereBody += `<And><Eq><FieldRef Name="${el.field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
+            }
+            // whereBody += `<And><Eq><FieldRef Name="${el.field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
           } else {
             whereBody += `<And><In><FieldRef Name="${el.field}"/><Values>`;
             for (var j = 0; j < el.values.length; j++) {
@@ -9383,11 +9418,26 @@ let data_Level1_Access = {
         whereBodyFinal = `<Where>${whereBody}
 						</Where>`;
         queryBody = `<View>
-							<Query>
-							${whereBodyFinal}
-							<OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
-							</Query>
-						</View>`;
+        			<Query>
+        			${whereBodyFinal}
+        			<OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
+        			</Query>
+        		</View>`;
+
+        //     queryBody = `<View>
+        //     <Query>
+        //         <Where>
+        //             <And>
+        //                 <Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>
+        //                 <Or>
+        //                     <Eq><FieldRef Name="PerformanceLeader2" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>
+        //                     <Eq><FieldRef Name="PerformanceLeader" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>
+        //                 </Or>
+        //             </And>
+        //         </Where>
+        //         <OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
+        //     </Query>
+        // </View>`
         data_Level1_Access.g.dataLevelQuery = queryBody;
         dataLevelAccessQuery = queryBody;
         data_Level1_Access.g.fieldsConditionConfig = fieldsConditionConfig;
@@ -9400,7 +9450,7 @@ let data_Level1_Access = {
           tempRoleHierarchies = []
           accessCallisDone = true;
         }
-        // console.log("Data 1st level access query", queryBody);
+        console.log("Data 1st level access query", queryBody);
       }
     });
   },
@@ -9546,7 +9596,7 @@ let data_Level1_Access = {
 
 
         }
-        // console.log("Data 2nd level access query", queryBody);
+        console.log("Data 2nd level access query", queryBody);
         // finishRenderAccessRole = true
 
       }
