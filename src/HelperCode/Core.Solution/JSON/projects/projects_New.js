@@ -213,13 +213,20 @@ var Information_Form = [
           choices: [
             { display: "yes", value: "yes" },
             {
-              display: "no", value: "no", otherFields: [
+              display: "no", value: "no",
+              roles: ['Administrator', 'EPMO'],
+            },
+            {//allroles
+              display: "no", value: "no", roles: ['allRoles'],
+              // display: "no", value: "no", roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee''LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'],
+              otherFields: [
                 { fieldName: 'WFModuleCode', value: 'EPMOCreateProject' },
                 { fieldName: 'WFStage', value: 'EPMOCreateProject01' },
                 { fieldName: 'InitiativeType', value: 'strategically' },
                 { fieldName: 'DraftStatus', value: 'draft' },
               ],
             },
+
 
           ],
         },
@@ -243,11 +250,45 @@ var Information_Form = [
         // dontSubmit: true,
         options: {
           choices: [
+            ///for Admin and EPMO
             {
               display: 'vision',
               value: 'vision',
               customFilterValue: "vision",
-              // roles: ['Administrator', 'VROE', 'VROP'],
+              roles: ['Administrator', 'EPMO'],
+              otherFields: [
+                { fieldName: 'Stage', value: 'S01' },
+                { fieldName: 'Phase', value: 'P1' },
+              ],
+            },
+            {
+              display: 'strategically',
+              value: 'strategically',
+              customFilterValue: "strategically",
+              roles: ['Administrator', 'EPMO'],
+              otherFields: [
+                { fieldName: 'Stage', value: 'S01' },
+                { fieldName: 'Phase', value: 'P1' },
+              ],
+            },
+            {
+              display: 'lms',
+              value: 'lms',
+              customFilterValue: "lms",
+              roles: ['Administrator', 'EPMO'],
+              otherFields: [
+                { fieldName: 'Stage', value: 'S01' },
+                { fieldName: 'Phase', value: 'P1' },
+              ],
+              // roles: ['Administrator', 'LMSE', 'LMSP'],
+
+            },
+
+            {
+              display: 'vision',
+              value: 'vision',
+              customFilterValue: "vision",
+              roles: ['allRoles'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'VROCreateProject' },
                 { fieldName: 'WFStage', value: 'VROCreateProject01' },
@@ -258,8 +299,7 @@ var Information_Form = [
               display: 'strategically',
               value: 'strategically',
               customFilterValue: "strategically",
-
-              // roles: ['Administrator', 'EPMO'],
+              roles: ['allRoles'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'EPMOCreateProject' },
                 { fieldName: 'WFStage', value: 'EPMOCreateProject01' },
@@ -270,8 +310,7 @@ var Information_Form = [
               display: 'lms',
               value: 'lms',
               customFilterValue: "lms",
-
-              // roles: ['Administrator', 'LMSE', 'LMSP'],
+              roles: ['allRoles'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'LMSCreateProject' },
                 { fieldName: 'WFStage', value: 'LMSCreateProject01' },
@@ -697,7 +736,7 @@ var Information_Form = [
         },
         toggleValues: [
           { value: 'yes', fields: [] },
-          { value: 'no', fields: ['FundingSection','TenderSection','BudgetSection','Delivrables','Milestones'] },
+          { value: 'no', fields: ['FundingSection', 'TenderSection', 'BudgetSection', 'Delivrables', 'Milestones'] },
         ],
       },
     ],
@@ -784,7 +823,7 @@ var Information_Form = [
         // "state": "disabled",
         dynamic: "BudgetItem", //being controlled by main field
         numberOfDigits: "15",
-        resetElement:["ContractualEngagements","ExpensesDate","RemainingCost"]
+        resetElement: ["ContractualEngagements", "ExpensesDate", "RemainingCost"]
 
       },
       {
@@ -804,7 +843,7 @@ var Information_Form = [
         // "state": "disabled",
         RequiredName: "ActualBudget",
         numberOfDigits: "15",
-        resetElement:["ContractualEngagements","ExpensesDate","RemainingCost"]
+        resetElement: ["ContractualEngagements", "ExpensesDate", "RemainingCost"]
       },
       {
         InternalName: "ContractualEngagements",
@@ -813,7 +852,7 @@ var Information_Form = [
         type: "float",
         // "state": "disabled"
         numberOfDigits: "15",
-        max:"ActualBudget",
+        max: "ActualBudget",
         descPhraseAr: "يجب ان تكون اقل من او يساوي التكلفة الفعلية او التكلفة",
         descPhraseEn: "should be less than or equal Actual Budget or Amount",
 
@@ -831,7 +870,7 @@ var Information_Form = [
         DisplayNameEn: "Expenses",
         type: "float",
         numberOfDigits: "15",
-        max:"ActualBudget",
+        max: "ActualBudget",
         descPhraseAr: "يجب ان تكون اقل من او يساوي التكلفة الفعلية او التكلفة",
         descPhraseEn: "should be less than or equal Actual Budget or Amount",
         // "state": "disabled"
@@ -842,7 +881,7 @@ var Information_Form = [
         DisplayNameEn: "Remaining Cost",
         type: "float",
         numberOfDigits: "15",
-        max:"ActualBudget",
+        max: "ActualBudget",
         descPhraseAr: "يجب ان تكون اقل من او يساوي التكلفة الفعلية او التكلفة",
         descPhraseEn: "should be less than or equal Actual Budget or Amount",
         // "state": "disabled"
@@ -1161,7 +1200,7 @@ var Information_Form = [
   {
     label: 'بيانات المخرج',
     labelEn: 'Delivrable Data',
-    toggleName:"Delivrables",
+    toggleName: "Delivrables",
     description: 'التفاصيل (يمكن ادخال القيم عند ادخال التكلفة)',
     descriptionEn: 'Details (you can enter the values when enter the Amount)',
     sectiontype: 'master',
@@ -1409,7 +1448,7 @@ var Information_Form = [
     sectiontype: 'master',
     className: "disable_section", // to make the section disabled on form render
     targetlist: 'Milestones',
-    toggleName:'Milestones',
+    toggleName: 'Milestones',
     subFields: [
 
       // {
