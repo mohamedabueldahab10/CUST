@@ -214,7 +214,12 @@ var Information_Form = [
             { display: "yes", value: "yes" },
             {
               display: "no", value: "no",
-              roles: ['Administrator', 'EPMO'],
+              roles: ['Administrator', 'EPMO'], 
+              otherFields: [
+                { fieldName: 'Phase', value: 'P1' },
+                { fieldName: 'Stage', value: 'S01' },
+                { fieldName: 'InitiativeType', value: 'strategically' },
+              ],
             },
             {//allroles
               // display: "no", value: "no", roles: ['allRoles'],
@@ -225,6 +230,8 @@ var Information_Form = [
                 { fieldName: 'WFStage', value: 'EPMOCreateProject01' },
                 { fieldName: 'InitiativeType', value: 'strategically' },
                 { fieldName: 'DraftStatus', value: 'draft' },
+                { fieldName: 'Phase', value: 'P0' },
+                { fieldName: 'Stage', value: 'S00' },
               ],
             },
 
@@ -281,7 +288,7 @@ var Information_Form = [
                 { fieldName: 'Stage', value: 'S01' },
                 { fieldName: 'Phase', value: 'P1' },
               ],
-              // roles: ['Administrator', 'LMSE', 'LMSP'],
+              // other roles
 
             },
 
@@ -294,6 +301,8 @@ var Information_Form = [
                 { fieldName: 'WFModuleCode', value: 'VROCreateProject' },
                 { fieldName: 'WFStage', value: 'VROCreateProject01' },
                 { fieldName: 'DraftStatus', value: 'draft' },
+                { fieldName: 'Phase', value: 'P0' },
+                { fieldName: 'Stage', value: 'S00' },
               ],
             },
             {
@@ -305,6 +314,8 @@ var Information_Form = [
                 { fieldName: 'WFModuleCode', value: 'EPMOCreateProject' },
                 { fieldName: 'WFStage', value: 'EPMOCreateProject01' },
                 { fieldName: 'DraftStatus', value: 'draft' },
+                { fieldName: 'Phase', value: 'P0' },
+                { fieldName: 'Stage', value: 'S00' },
               ],
             },
             {
@@ -316,6 +327,8 @@ var Information_Form = [
                 { fieldName: 'WFModuleCode', value: 'LMSCreateProject' },
                 { fieldName: 'WFStage', value: 'LMSCreateProject01' },
                 { fieldName: 'DraftStatus', value: 'draft' },
+                { fieldName: 'Phase', value: 'P0' },
+                { fieldName: 'Stage', value: 'S00' },
               ],
             },
             // { display: 'others', value: 'others' },
