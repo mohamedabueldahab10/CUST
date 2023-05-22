@@ -58,6 +58,9 @@ var targetYear = new Date().getFullYear(), targetActualValue = '', targetPerform
 
 window.kpiEquationsComponents = [];
 
+
+var getMasterFilesArr = []
+
 // window.portfolioCreatedBy;
 var relatedPiller = ''
 if (
@@ -2598,6 +2601,9 @@ var Risk_To_Issue_Code = {
 };
 
 //master Data
+// to call the master file when one time and after fill data in array
+var callMasterFile = false
+
 var Master_Details_Request = {
   // The main Initialization function
   init: function (DetailsList) {
@@ -2950,8 +2956,10 @@ var Master_Details_Request = {
 
         // to get the master details files
         var masterItemId = oListItem.get_id()
-        ViewAll_MasterFiles.init(masterItemId, CurrList)
-        //
+
+        getMasterFilesArr.push({ masterItemId: masterItemId, CurrList: CurrList })
+
+
 
       } else if (isEdit) {
 
@@ -3262,6 +3270,15 @@ var Master_Details_Request = {
           AllowMultipleValues: false,
         });
       });
+    }
+
+
+    if (listkey == "projects" || listkey == "initiatives") {
+      if (getMasterFilesArr.length && MasterDetailsArrayRequest.length == 0 && !callMasterFile) {
+        callMasterFile = true
+        ViewAll_MasterFiles.init(getMasterFilesArr[0].masterItemId, getMasterFilesArr[0].CurrList)
+      }
+
     }
 
 
@@ -5228,6 +5245,8 @@ window.ViewAllFiles_Main_Strategy = {
 
 window.ViewAll_MasterFiles = {
   init: function (itemId, listName) {
+
+    console.log(getMasterFilesArr, "getMasterFilesArr getMasterFilesArr")
     debugger
     var context = new SP.ClientContext.get_current();
     var web = context.get_web();
@@ -5278,6 +5297,8 @@ window.ViewAll_MasterFiles = {
 
     ViewAll_MasterFiles.g.itemId = itemId
 
+    ViewAll_MasterFiles.g.listName = listName
+
     context.load(
       ViewAll_MasterFiles.g.allItems,
       "Include(ID, Title, ContentType, File, ItemID,docPurpose)"
@@ -5294,6 +5315,7 @@ window.ViewAll_MasterFiles = {
     var ListEnumerator = ViewAll_MasterFiles.g.allItems.getEnumerator();
 
     var itemId = ViewAll_MasterFiles.g.itemId
+    var listName = ViewAll_MasterFiles.g.listName
 
     while (ListEnumerator.moveNext()) {
 
@@ -5326,7 +5348,7 @@ window.ViewAll_MasterFiles = {
     }
     if (filesUrls.length > 0) {
 
-      console.log(filesUrls, "filePurposfileUrls in masteeeeeeeer")
+
       var generalAttach = ''
 
       filesUrls.forEach(el => {
@@ -5334,29 +5356,33 @@ window.ViewAll_MasterFiles = {
         filename = filename.includes("_-_SystemUploadTime_-_") ? filename.split('_-_SystemUploadTime_-_')[1] : filename;
 
         generalAttach +=
-        '<div class="file-container"><a class="File-Link" file-id="' +
-        el.id +
-        '"  file-title="' +
-        el.title +
-        '"  href="' +
-        el.url +
-        '" download="' + filename + '" title="Download ' +
-        filename +
-        '"><i class="fas fa-file-download"></i>' +
-        '<span class="filePurpose">' + el.filePurpose + '</span>' +
-        filename +
-        "</a></div>";
+          '<div class="file-container col-md-12"><a class="File-Link" file-id="' +
+          el.id +
+          '"  file-title="' +
+          el.title +
+          '"  href="' +
+          el.url +
+          '" download="' + filename + '" title="Download ' +
+          filename +
+          '"><i class="fas fa-file-download"></i>' +
+          '<span class="filePurpose">' + el.filePurpose + '</span>' +
+          filename +
+          "</a></div>";
 
       })
 
-      // $('[data-target_list="' +
-      //   CurrList +
-      //   '"] [data-ID="' +
-      //   oListItem.get_id() +
-      //   '"] > .CFIELD > .viewmode-value'
-      // )
+      // InitiativeDeliverables
+      // 435
+      $('[data-target_list="' + listName + '"] [data-ID="' + itemId + '"]').append(generalAttach)
 
 
+    }
+
+    getMasterFilesArr.shift()
+    debugger
+    if (getMasterFilesArr.length) {
+
+      ViewAll_MasterFiles.init(getMasterFilesArr[0].masterItemId, getMasterFilesArr[0].CurrList)
     }
 
   },
