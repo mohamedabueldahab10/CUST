@@ -217,8 +217,9 @@ var Information_Form = [
               roles: ['Administrator', 'EPMO'],
             },
             {//allroles
-              display: "no", value: "no", roles: ['allRoles'],
-              // display: "no", value: "no", roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee''LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'],
+              // display: "no", value: "no", roles: ['allRoles'],
+              display: "no", value: "no", roles: ['VROHead','VROPHead','VROP','ProjectManager','InitiativeOwner','InitiativeManager','ProjectOwner','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'],
+            
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'EPMOCreateProject' },
                 { fieldName: 'WFStage', value: 'EPMOCreateProject01' },
