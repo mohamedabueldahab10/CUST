@@ -5207,20 +5207,22 @@ window.userCalls = {
               level: 1,
               listName: "MainKPI",
               accessConditions: [
+                // add condition type or for two obj in accessConditions to can get the data and related data 
+                //if the user is LoogedInUser in field one or LoggedInUser in field 2  
                 {
                   field: "PerformanceLeader",
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
-                  // conditionType: "Or"
+                  conditionType: "Or"
                 },
-                // {
-                //   field: "PerformanceLeader2",
-                //   type: "LoggedInUser",
-                //   values: [""],
-                //   targetPages: [],
-                //   conditionType: "Or"
-                // },
+                {
+                  field: "PerformanceLeader2",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                  conditionType: "Or"
+                },
               ],
               subRelation: {
                 level: 2,
@@ -5241,11 +5243,20 @@ window.userCalls = {
               level: 1,
               listName: "MainKPI",
               accessConditions: [
+                // add condition type or for two obj in accessConditions to can get the data and related data 
+                //if the user is LoogedInUser in field one or LoggedInUser in field 2  
                 {
                   field: "PerformanceLeader",
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
+                },
+                {
+                  field: "PerformanceLeader2",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                  conditionType: "Or"
                 },
               ],
               subRelation: {
@@ -5264,11 +5275,20 @@ window.userCalls = {
               level: 1,
               listName: "MainKPI",
               accessConditions: [
+                // add condition type or for two obj in accessConditions to can get the data and related data 
+                //if the user is LoogedInUser in field one or LoggedInUser in field 2  
                 {
                   field: "PerformanceLeader",
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
+                },
+                {
+                  field: "PerformanceLeader2",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                  conditionType: "Or"
                 },
               ],
               subRelation: {
@@ -9354,6 +9374,8 @@ let data_Level1_Access = {
         if (i == fieldsConditionConfig.length - 1) {
           if (el.type == "LoggedInUser") {
             if (el.conditionType == "Or") {
+              // add condition type or for two obj in accessConditions to can get the data and related data 
+              //if the user is LoogedInUser in field one or LoggedInUser in field 2  
               whereBody += `<Or><Eq><FieldRef Name="${el.field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Eq><FieldRef Name="${fieldsConditionConfig[i - 1].field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
 
             } else {
@@ -9393,6 +9415,8 @@ let data_Level1_Access = {
         else {
           if (el.type == "LoggedInUser") {
             if (el.conditionType == "Or") {
+              // add condition type or for two obj in accessConditions to can get the data and related data 
+              //if the user is LoogedInUser in field one or LoggedInUser in field 2  
               whereBody += `<And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>`;
               // <Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>
             } else {
