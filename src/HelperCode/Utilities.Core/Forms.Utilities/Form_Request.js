@@ -357,7 +357,7 @@ window.Edit_Data_Request = {
         return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       });
     });
-    
+
     //handle top menu navigation
 
     if (SP_ListName == ListArray[0].projects) {
@@ -612,7 +612,7 @@ window.Edit_Data_Request = {
     //   }
     // }
     if (listkey == "projects" && PCODE) {
-      
+
       projRelatedInit = oListItem.get_item("RelatedInitiative");
 
       globalInitiativeCode = projRelatedInit
@@ -2230,7 +2230,7 @@ window.View_Data_Request = {
         // }
         // else
         console.log("when click on cancel btn")
-        
+
         if (listkey == "strategicpartnerships") {
           window.location =
             _spPageContextInfo.webAbsoluteUrl +
@@ -2946,6 +2946,13 @@ var Master_Details_Request = {
             $(this).text(value);
           }
         });
+
+
+        // to get the master details files
+        var masterItemId = oListItem.get_id()
+        ViewAll_MasterFiles.init(masterItemId, CurrList)
+        //
+
       } else if (isEdit) {
 
         $(
@@ -5217,6 +5224,148 @@ window.ViewAllFiles_Main_Strategy = {
   g: {},
 };
 
+//
+
+window.ViewAll_MasterFiles = {
+  init: function (itemId, listName) {
+    debugger
+    var context = new SP.ClientContext.get_current();
+    var web = context.get_web();
+    var list = web.get_lists().getByTitle(DocumentLibraryName);
+    var query = SP.CamlQuery.createAllItemsQuery();
+    var mytitle;
+    mytitle = listkey;
+
+    if (PCODE || ICODE || STCODE) {
+      // var code = PCODE ? PCODE : ICODE
+      var code = ""
+      if (PCODE) {
+        code = PCODE
+      } else if (ICODE) {
+        code = ICODE
+      } else if (STCODE) {
+        code = STCODE
+      }
+      query.set_viewXml(
+        '<View Scope="RecursiveAll"> \
+                      <Query> \
+                          <Where> \
+                          <And> \
+                              <Eq> \
+                                  <FieldRef Name="ItemID" /> \
+                                  <Value Type="Text">' +
+        itemId +
+        '</Value> \
+                              </Eq> \
+                              <Eq> \
+                              <FieldRef Name="Title" /> \
+                              <Value Type="Text">' +
+        listName +
+        "-" +
+        code +
+        "</Value> \
+                          </Eq> \
+                          </And>\
+                          </Where> \
+                      </Query> \
+                      <RowLimit>5000</RowLimit> \
+                  </View>"
+      );
+    }
+
+    ViewAll_MasterFiles.g.allItems = list.getItems(query);
+
+
+    ViewAll_MasterFiles.g.itemId = itemId
+
+    context.load(
+      ViewAll_MasterFiles.g.allItems,
+      "Include(ID, Title, ContentType, File, ItemID,docPurpose)"
+    );
+
+    context.executeQueryAsync(
+      Function.createDelegate(this, ViewAll_MasterFiles.success),
+      Function.createDelegate(this, ViewAll_MasterFiles.failed)
+    );
+
+  },
+  success: function () {
+    filesUrls = [];
+    var ListEnumerator = ViewAll_MasterFiles.g.allItems.getEnumerator();
+
+    var itemId = ViewAll_MasterFiles.g.itemId
+
+    while (ListEnumerator.moveNext()) {
+
+      var currentFile = ListEnumerator.get_current();
+      var FileID = currentFile.get_item("ItemID");
+
+      var _contentType = currentFile.get_contentType();
+      if (_contentType.get_name() != "Folder") {
+        var File = currentFile.get_file();
+        debugger
+        if (File != null && FileID == itemId) {
+          var title;
+          if (currentFile.get_item("Title").indexOf("-") > -1) {
+            title = currentFile.get_item("Title").split("-")[1];
+          } else {
+            title = currentFile.get_item("Title")
+          }
+
+
+          filesUrls.push({
+            url: File.get_serverRelativeUrl(),
+            id: currentFile.get_item("ID"),
+            title: title,
+            filePurpose: currentFile.get_item("docPurpose") ? currentFile.get_item("docPurpose") : ""
+          });
+
+
+        }
+      }
+    }
+    if (filesUrls.length > 0) {
+
+      console.log(filesUrls, "filePurposfileUrls in masteeeeeeeer")
+      var generalAttach = ''
+
+      filesUrls.forEach(el => {
+        var filename = el.url.split("/").slice(-1)[0];
+        filename = filename.includes("_-_SystemUploadTime_-_") ? filename.split('_-_SystemUploadTime_-_')[1] : filename;
+
+        generalAttach +=
+        '<div class="file-container"><a class="File-Link" file-id="' +
+        el.id +
+        '"  file-title="' +
+        el.title +
+        '"  href="' +
+        el.url +
+        '" download="' + filename + '" title="Download ' +
+        filename +
+        '"><i class="fas fa-file-download"></i>' +
+        '<span class="filePurpose">' + el.filePurpose + '</span>' +
+        filename +
+        "</a></div>";
+
+      })
+
+      // $('[data-target_list="' +
+      //   CurrList +
+      //   '"] [data-ID="' +
+      //   oListItem.get_id() +
+      //   '"] > .CFIELD > .viewmode-value'
+      // )
+
+
+    }
+
+  },
+  failed: function (sender, args) {
+    console.log("failed. Message:" + args.get_message());
+  },
+  g: {},
+}
+
 var GetProject_Info = {
   onSuccess: function (sender, args) {
     var collListItem = GetProject_Info.g.collListItem;
@@ -5529,7 +5678,7 @@ window.equationKPI = {
         ? Object.keys(kpiEquationsComponents[0])
         : []; // get internal names keys
 
-    
+
 
     // remove required field when there is no equation
     if (!kpiEquation && (isEdit || RListKey == 'mainkpi')) {
