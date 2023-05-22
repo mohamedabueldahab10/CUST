@@ -3562,6 +3562,113 @@ window.ListInfo = {
         break;
 
 
+      case "datewithtimetoparent":
+
+        var code = activeCode;
+
+        //activecode
+        var customQuery =
+          '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
+          code +
+          "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+
+        var startDate = "",
+          finishDate = "";
+
+        sphttp.get(
+          _spPageContextInfo.siteServerRelativeUrl,
+          element.listname,
+          customQuery,
+          [element.startinternalname, element.endinternalname],
+          function (records, record, listItem, isDone) {
+            if (isDone) {
+              records.forEach(function (el, index) {
+                startDate = el[element.startinternalname];
+                finishDate = el[element.endinternalname];
+              });
+
+              minDate = Dynamic_Data_Request.g.convertdate(startDate);
+              maxDate = Dynamic_Data_Request.g.convertdate(finishDate);
+              htmlBody =
+                '<div class="col-md-6 CFIELD dateTime' +
+                dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+                " " +
+                element.className +
+                " " +
+                hideField +
+                ' " ' +
+                thistip +
+                " " +
+                hidestagesIDs +
+                " " +
+                editableBy +
+                " " +
+                showstagesIDs +
+                "  " +
+                disablestagesIDs +
+                "  " +
+                enablestagesIDs +
+                "   " +
+                isWfhidestagesIDs +
+                " " +
+                requireOnWfTaskstagesIDs +
+                " " +
+                isWfshowstagesIDs +
+                "  " +
+                isWfdisablestagesIDs +
+                "  " +
+                isWfenablestagesIDs +
+                '        data-groups="' +
+                groups +
+                '" style="display:' +
+                element.display +
+                '">' +
+                '<label for="' +
+                element.InternalName +
+                '" ' +
+                element.validation +
+                ">" +
+                displayName +
+                "</label>" +
+                "<div " +
+                ToggleName +
+                " " +
+                toggleDisabledName +
+                " " +
+                RequiredName +
+                ' class="datetimeinputs"><input type="datetime-local" placeholder="' +
+                displayName +
+                '" ' +
+                dynamic +
+                ' class="form-control SPIField withTime" id="' +
+                element.InternalName +
+                '" ' +
+                element.state +
+                " " +
+                element.validation +
+                ' minimumdate="' +
+                element.min +
+                '" maximumdate="' +
+                element.max +
+                '"  max="' +
+                maxDate +
+                'T00:00" min=' +
+                minDate +
+                "T00:00>" +
+                "</div>" +
+                '<div class="inputInfo ' +
+                isexist +
+                '">' +
+                descPhrase +
+                "</div>" +
+                "</div>";
+              OnSuccess(flag, htmlBody);
+            }
+          })
+
+        break;
+
+
       case "datewithtime":
         htmlBody =
           '<div class="col-md-6 CFIELD dateTime' +
@@ -6787,7 +6894,7 @@ window.ListInfo = {
           $(this).closest("[data-target_list]").find(".Details-Item .CFIELD >input[type=file]").last().parent().find('.attachfilename').html("")
           //
           var lastListDetails = $(this).closest("[data-target_list]").data('target_list')
-          
+
           // to add many attach in master details
           $(this).closest("[data-target_list]").find(".Details-Item .CFIELD >input[type=file]").last().attr('id', `getFile${lastListDetails}-${getMasterIndex}`)
 

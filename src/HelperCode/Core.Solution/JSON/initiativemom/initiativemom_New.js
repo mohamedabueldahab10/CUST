@@ -5,25 +5,6 @@ var Information_Form = [
     description: 'التفاصيل',
     descriptionEn: 'Details',
     subFields: [
-      // {
-      //     "InternalName": "Title",
-      //     "DisplayName":"رمز الاجتماع",
-      // "DisplayNameEn": "Meeting Title",
-      //     "type":"string",
-      //     "state":"disabled"
-
-      // },
-      // {
-      //     "InternalName": "ProjectCode",
-      //     "DisplayName": "اسم المشروع",
-      //     "DisplayNameEn": "Project Name",
-      //     "type":   "lookup",
-      //       //from other list:
-      //      "source":   "Projects",
-      //      "Dispfieldkey":   "Name",
-      //       "valfieldkey":   "Title",
-      //     "validation": "required"
-      // },
       {
         InternalName: 'Subject',
         // DisplayName: 'موضوع الاجتماع',
@@ -39,8 +20,12 @@ var Information_Form = [
         InternalName: 'Date',
         DisplayName: 'تاريخ الاجتماع',
         DisplayNameEn: 'Meeting Date',
-        type: 'datewithtime',
+        type: 'datewithtimetoparent',
         validation: 'required',
+        //
+        listname: 'Initiatives',
+        startinternalname: 'StartDate',
+        endinternalname: 'FinishDate',
       },
       {
         InternalName: 'Location',

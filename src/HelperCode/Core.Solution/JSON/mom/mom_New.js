@@ -38,8 +38,12 @@ var Information_Form = [{
             "InternalName": "Date",
             "DisplayName": "تاريخ الاجتماع",
             "DisplayNameEn": "Meeting Date",
-            "type": "datewithtime",
-            "validation": "required"
+            "type": "datewithtimetoparent",
+            "validation": "required",
+            // to insert the date in project period
+            listname: 'Projects',
+            startinternalname: 'BaselineStartDate',
+            endinternalname: 'BaselineFinishDate',
         },
         {
             "InternalName": "Location",

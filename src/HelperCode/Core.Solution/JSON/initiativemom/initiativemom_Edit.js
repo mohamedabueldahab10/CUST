@@ -39,8 +39,12 @@ var Information_Form = [
         InternalName: 'Date',
         DisplayName: 'تاريخ الاجتماع',
         DisplayNameEn: 'Meeting Date',
-        type: 'datewithtime',
+        type: 'datewithtimetoparent',
         validation: 'required',
+        // date will be in period time of parent
+        listname: 'Initiatives',
+        startinternalname: 'StartDate',
+        endinternalname: 'FinishDate',
       },
       {
         InternalName: 'Location',
