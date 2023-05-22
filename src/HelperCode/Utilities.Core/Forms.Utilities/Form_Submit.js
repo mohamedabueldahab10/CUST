@@ -2376,10 +2376,15 @@ var New_Master_Details_Submit = {
 
         Code = prt1 + "-" + prt2 + "-" + prt3 + "-" + prt4;
 
-        //
+        // to save the master details attach in project and init
         isThereAttachement = $(this).find(".CFIELD:not(.dont-submit)>input[type=file]").length
         if (isThereAttachement > 0) {
+          var checkAttachId =  $(this).find(".CFIELD:not(.dont-submit)>input[type=file]").attr("id")
+          var isThereFiles =document.querySelector("#" +checkAttachId).files.length
+
+          if(isThereFiles > 0){
           allNewMasterIdRelatedCodeArr.push({ code: Code, CurrList: CurrList })
+          }
         }
         //
 
@@ -3142,7 +3147,7 @@ function _uploadFile() {
         var checkMaster = filesPurpose[index].isMaster
         var dataTargetList = filesPurpose[index].dataTargetList
 
-        
+
 
         if (checkMaster && allNewMasterIdRelatedCodeArr.length && isNew && (listkey == "initiatives" || listkey == "projects")) {
 
@@ -3165,7 +3170,7 @@ function _uploadFile() {
             function (records, record, listItem, isDone) {
               if (isDone) {
 
-                
+
                 records.forEach(function (el, index) {
 
                   var itemId = el.ID
@@ -3510,7 +3515,7 @@ var createFolder = function (listTitle, folderUrl, success, error) {
               fileCount += document.querySelector("#" + $(this).attr("id"))
                 .files.length;
             });
-            debugger
+            
             if (fileCount) {
               // readFiles();
 

@@ -5246,8 +5246,6 @@ window.ViewAllFiles_Main_Strategy = {
 window.ViewAll_MasterFiles = {
   init: function (itemId, listName) {
 
-    console.log(getMasterFilesArr, "getMasterFilesArr getMasterFilesArr")
-    debugger
     var context = new SP.ClientContext.get_current();
     var web = context.get_web();
     var list = web.get_lists().getByTitle(DocumentLibraryName);
@@ -5325,7 +5323,7 @@ window.ViewAll_MasterFiles = {
       var _contentType = currentFile.get_contentType();
       if (_contentType.get_name() != "Folder") {
         var File = currentFile.get_file();
-        debugger
+        
         if (File != null && FileID == itemId) {
           var title;
           if (currentFile.get_item("Title").indexOf("-") > -1) {
@@ -5379,7 +5377,7 @@ window.ViewAll_MasterFiles = {
     }
 
     getMasterFilesArr.shift()
-    debugger
+    
     if (getMasterFilesArr.length) {
 
       ViewAll_MasterFiles.init(getMasterFilesArr[0].masterItemId, getMasterFilesArr[0].CurrList)
