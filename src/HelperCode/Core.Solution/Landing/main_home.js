@@ -103,22 +103,22 @@ if (
 window.UProjects = [];
 window.RisksCountsForRSupport = 0;
 window.issueCountsForRSupport = 0;
-var iconstagesm = require("../../../HelperRessources/img/icon-stage-sm.png");
-var iconstatustimesm = require("../../../HelperRessources/img/icon-status-time-sm.png");
-var calendar = require("../../../HelperRessources/img/calendar.svg");
-var iconimportantsm = require("../../../HelperRessources/img/icon-important-sm.png");
-var iconstrategysm = require("../../../HelperRessources/img/analysis.png");
-var risk = require("../../../HelperRessources/img/risk.svg");
-var progress = require("../../../HelperRessources/img/progress.svg");
-var mizania = require("../../../HelperRessources/img/mizania.svg");
-// var iconstagesm = '';
-// var iconstatustimesm = '';
-// var calendar = '';
-// var iconimportantsm = '';
-// var iconstrategysm = '';
-// var risk = '';
-// var progress = '';
-// var mizania = '';
+// var iconstagesm = require("../../../HelperRessources/img/icon-stage-sm.png");
+// var iconstatustimesm = require("../../../HelperRessources/img/icon-status-time-sm.png");
+// var calendar = require("../../../HelperRessources/img/calendar.svg");
+// var iconimportantsm = require("../../../HelperRessources/img/icon-important-sm.png");
+// var iconstrategysm = require("../../../HelperRessources/img/analysis.png");
+// var risk = require("../../../HelperRessources/img/risk.svg");
+// var progress = require("../../../HelperRessources/img/progress.svg");
+// var mizania = require("../../../HelperRessources/img/mizania.svg");
+var iconstagesm = '';
+var iconstatustimesm = '';
+var calendar = '';
+var iconimportantsm = '';
+var iconstrategysm = '';
+var risk = '';
+var progress = '';
+var mizania = '';
 
 // new repo
 
@@ -710,10 +710,11 @@ window.Project_Info_Request = {
       // console.log('filterstrategy', filterstrategy);
       for (var i = 0; i < filterstrategy.length; i++) {
         if (filterstrategy[i] != No_Data) {
+          //change from Integer to Choice for filter isStrategy
           strategyfilterhtml +=
             '<label class="dropdown-item"><span data-trans-' +
             filterstrategy[i] +
-            ' class="Resources"></span><input data-type="Integer" data-columntype="Boolean" data-internal="IsStrategicProject" type="checkbox" name="IsStrategicProject" value="' +
+            ' class="Resources"></span><input data-type="Choice" data-columntype="Boolean" data-internal="IsStrategicProject" type="checkbox" name="IsStrategicProject" value="' +
             filterstrategy[i] +
             '"></label>';
         }
@@ -842,18 +843,20 @@ window.Project_Info_Request = {
             .get();
           if (selectedchoices.length) {
             //checking if there are choices
-            if (BooleanfieldType == "Boolean") {
-              for (i = 0; i < selectedchoices.length; i++) {
-                // console.log('selectedchoices[i]', selectedchoices[i]);
-                if (
-                  selectedchoices[i] == "true" ||
-                  selectedchoices[i] == "Yes" ||
-                  selectedchoices[i] == "yes"
-                ) {
-                  selectedchoices[i] = 1;
-                } else selectedchoices[i] = 0;
-              }
-            }
+            // remove cause fix the value of strategy to be yes and no to use it in filter
+
+            // if (BooleanfieldType == "Boolean") {
+            //   debugger
+            //   for (i = 0; i < selectedchoices.length; i++) {
+            //     if (
+            //       selectedchoices[i] == "true" ||
+            //       selectedchoices[i] == "Yes" ||
+            //       selectedchoices[i] == "yes"
+            //     ) {
+            //       selectedchoices[i] = 1;
+            //     } else selectedchoices[i] = 0;
+            //   }
+            // }
             FilterChoices.push({
               internalName: internalName,
               Type: fieldType,
@@ -945,6 +948,7 @@ window.Project_Info_Request = {
         //dynamic query building
         for (var i = 0; i < FilterChoices.length; i++) {
           //only one choice
+          debugger
           if (FilterChoices.length == 1) {
             if (FilterChoices[i].targetIsMultiFilter) {
               for (var j = 0; j < FilterChoices[i].Values.length; j++) {
