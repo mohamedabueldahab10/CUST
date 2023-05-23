@@ -2022,8 +2022,9 @@ window.ListingData = {
               var month2 = formatedactualdatemilestone.split("/").at(1);
               var year2 = formatedactualdatemilestone.split("/").at(2);
               var finalformatedactualdate = new Date(year2 + "-" + month2 + "-" + day2);
+              
               var formatedplaneddatemilestone =
-                item.PlannedDate.split("T").at(0);
+                item.PlannedCompletedDate.split("T").at(0);
               var day = formatedplaneddatemilestone.split("/").at(0);
               var month = formatedplaneddatemilestone.split("/").at(1);
               var year = formatedplaneddatemilestone.split("/").at(2);

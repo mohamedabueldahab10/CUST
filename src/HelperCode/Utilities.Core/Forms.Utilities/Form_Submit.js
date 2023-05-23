@@ -782,6 +782,9 @@ window.New_Data_Submit = {
         var stack = args.get_stackTrace();
         var url = window.location.href;
 
+        // show pop up err msg 
+        Error_PopUp.init()
+        //
         writeToEventViewer.preinit(
           msg,
           "JS Api Error",
@@ -1640,6 +1643,7 @@ window.Edit_Data_Submit = {
       var actualperc = Edit_Data_Submit.g.oListItem.get_item('ActualPercentageCompleted');
       var diffbtwplannedactual = plannedperc - actualperc;
       Edit_Data_Submit.g.oListItem.set_item("DelayPercentage", diffbtwplannedactual);
+
     }
     else if (listkey == "projects") {
       //Ghufran Calculated duration
@@ -1729,6 +1733,10 @@ window.Edit_Data_Submit = {
         var msg = args.get_message();
         var stack = args.get_stackTrace();
         var url = window.location.href;
+
+        // show pop up err msg 
+        Error_PopUp.init()
+        //
 
         writeToEventViewer.preinit(
           msg,
@@ -2174,7 +2182,9 @@ var newKPIEquation = {
         var msg = args.get_message();
         var stack = args.get_stackTrace();
         var url = window.location.href;
-
+        // show pop up err msg 
+        Error_PopUp.init()
+        //
         writeToEventViewer.preinit(
           msg,
           "JS Api Error",
@@ -2226,7 +2236,9 @@ var newBenefitEquation = {
         var msg = args.get_message();
         var stack = args.get_stackTrace();
         var url = window.location.href;
-
+        // show pop up err msg 
+        Error_PopUp.init()
+        //
         writeToEventViewer.preinit(
           msg,
           "JS Api Error",
@@ -2379,11 +2391,11 @@ var New_Master_Details_Submit = {
         // to save the master details attach in project and init
         isThereAttachement = $(this).find(".CFIELD:not(.dont-submit)>input[type=file]").length
         if (isThereAttachement > 0) {
-          var checkAttachId =  $(this).find(".CFIELD:not(.dont-submit)>input[type=file]").attr("id")
-          var isThereFiles =document.querySelector("#" +checkAttachId).files.length
+          var checkAttachId = $(this).find(".CFIELD:not(.dont-submit)>input[type=file]").attr("id")
+          var isThereFiles = document.querySelector("#" + checkAttachId).files.length
 
-          if(isThereFiles > 0){
-          allNewMasterIdRelatedCodeArr.push({ code: Code, CurrList: CurrList })
+          if (isThereFiles > 0) {
+            allNewMasterIdRelatedCodeArr.push({ code: Code, CurrList: CurrList })
           }
         }
         //
@@ -2553,6 +2565,9 @@ var New_Master_Details_Submit = {
         console.log(
           "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
         );
+        // show pop up err msg 
+        Error_PopUp.init()
+        //
       })
     );
   },
@@ -2764,6 +2779,9 @@ var Edit_Master_Details_Submit = {
         console.log(
           "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
         );
+        // show pop up err msg 
+        Error_PopUp.init()
+        //
       })
     );
   },
@@ -3515,7 +3533,7 @@ var createFolder = function (listTitle, folderUrl, success, error) {
               fileCount += document.querySelector("#" + $(this).attr("id"))
                 .files.length;
             });
-            
+
             if (fileCount) {
               // readFiles();
 

@@ -14,6 +14,8 @@ window.APIURL = "";
 window.relatedProjectId = "";
 window.relatedInitiativeId = "";
 //window.finishRenderAccessRole = false
+
+
 window.USERisProjectHome =
   window.location.href.toLowerCase().indexOf("/projecthome.aspx") > -1;
 window.USERisInitiativeHome =
@@ -10301,3 +10303,4 @@ var Get_Configure_Api = {
   g: {},
 
 }
+
