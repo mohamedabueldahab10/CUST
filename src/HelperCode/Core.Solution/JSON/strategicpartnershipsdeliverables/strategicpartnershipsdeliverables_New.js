@@ -126,7 +126,7 @@ var Information_Form = [{
       // startinternalname: 'BaselineStartDate',
       // endinternalname: 'BaselineFinishDate',
       // // "min": "PlannedStartDate",
-      // "validation": "required",
+      "validation": "required",
     },
     // {
     //     "InternalName": "SupplyDate",

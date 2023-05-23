@@ -109,14 +109,7 @@ var Information_Form = [{
     //   max: 'today',
     //   validation: 'required',
     // },
-    {
-      "InternalName": "DeliveredDate",
-      "DisplayName": "تاريخ التسليم",
-      "DisplayNameEn": "Delivered Date",
-      "type": "datetime",
-      "max": "today",
-      // "validation": "required",
-    },
+  
     {
       "InternalName": "PlannedFinishDate",
       "DisplayName": "تاريخ الانتهاء المخطط",
@@ -127,7 +120,7 @@ var Information_Form = [{
       // startinternalname: 'BaselineStartDate',
       // endinternalname: 'BaselineFinishDate',
       // // "min": "PlannedStartDate",
-      // "validation": "required",
+      "validation": "required",
     },
     // {
     //     "InternalName": "SupplyDate",
@@ -172,6 +165,14 @@ var Information_Form = [{
         ]
       }
 
+    },
+    {
+      "InternalName": "DeliveredDate",
+      "DisplayName": "تاريخ التسليم",
+      "DisplayNameEn": "Delivered Date",
+      "type": "datetime",
+      "max": "today",
+      // "validation": "required",
     },
     {
       "InternalName": "AcceptanceCriteria",
