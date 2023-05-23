@@ -174,7 +174,9 @@ window.New_Data_Submit = {
     $("[type=picker][required]").each(function () {
 
       if (listkey == 'changerequest' && $(this).find("span.sp-peoplepicker-userSpan").length == 0) {
-        if (($(this).attr("data-email") == enternameemail)) {
+        
+        if (($(this).attr("data-email") == enternameemail) || (!$(this).attr("data-email"))) {
+          // console.log("inside")
           pickervalid = false;
           $(this).addClass("picker-error");
           $(this).removeClass("picker-valid");
