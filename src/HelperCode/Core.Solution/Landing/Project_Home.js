@@ -256,7 +256,7 @@ var Project_Home_Info_Request = {
           );
       }
 
-      if (stageName.toString().split() == "end" || stagename == "end") {
+      if (stageName.toString().split() == "") {
         if (
           localStorage.getItem("lng") == null ||
           localStorage.getItem("lng") == "ar"
@@ -265,18 +265,10 @@ var Project_Home_Info_Request = {
         } else {
           stageNamestr = "Project Completed";
         }
-      } else if(stageName.toString().split() == ""){
-        if (
-          localStorage.getItem("lng") == null ||
-          localStorage.getItem("lng") == "ar"
-        ) {
-          stageNamestr = "قيد الموافقة";
-        } else {
-          stageNamestr = "Under Approval";
-        }
       } else {
         stageNamestr = stageName.toString();
       }
+     
 
       if (localStorage.getItem("Dynamo_Phases") != null) {
         phasearr = JSON.parse(localStorage.getItem("Dynamo_Phases") || "[]");
