@@ -295,6 +295,8 @@ var Information_Form = [
         filterField: "Types",//InternalName Of Parent field
         filterFieldType: "Text",//Type In Sharepoint List for Parent field
         disableOnWfTaskStage : "S05,S09",
+        targetsiblingarr: ["Sector", "SubSector","StartDate","FinishDate"], // get siblings value
+
         // security: {
         //   groups: [
         //     "VRO_E",

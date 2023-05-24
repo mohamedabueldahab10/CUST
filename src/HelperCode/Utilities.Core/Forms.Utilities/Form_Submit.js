@@ -101,8 +101,8 @@ window.New_Data_Submit = {
       var portfoliomanagername = encodeURIComponent(
         portfoliomanager.get_lookupValue()
       );
-      userCalls.isMember("PMO Team", portfoliomanagername, 'Manager');
-    }
+      userCalls.isMember("System Portfolio Manager", portfoliomanagername, 'Manager');
+    } 
     if (
       ((listkey == "mainkpi") || (listkey == "changerequest" && RListKey == "mainkpi")) &&
       $("#Owner").find("span.sp-peoplepicker-userSpan").attr("sid")
@@ -1024,7 +1024,7 @@ window.Edit_Data_Submit = {
 
     var isCheckMember = false;
 
-    if ( // in portfolio the user should be in PMO Team group 
+    if ( // in portfolio the user should be in System Portfolio Manager group 
       listkey == "portfolio" &&
       $("#Manager").find("span.sp-peoplepicker-userSpan").attr("sid")
     ) {
@@ -1041,7 +1041,7 @@ window.Edit_Data_Submit = {
       var portfoliomanagername = encodeURIComponent(
         portfoliomanager.get_lookupValue()
       );
-      userCalls.isMember("PMO Team", portfoliomanagername, 'Manager');
+      userCalls.isMember("System Portfolio Manager", portfoliomanagername, 'Manager');
     }
 
 
@@ -2184,7 +2184,7 @@ var newKPIEquation = {
         var stack = args.get_stackTrace();
         var url = window.location.href;
         // show pop up err msg 
-        Error_PopUp.init()
+        // Error_PopUp.init()
         //
         writeToEventViewer.preinit(
           msg,
@@ -2238,7 +2238,7 @@ var newBenefitEquation = {
         var stack = args.get_stackTrace();
         var url = window.location.href;
         // show pop up err msg 
-        Error_PopUp.init()
+        // Error_PopUp.init()
         //
         writeToEventViewer.preinit(
           msg,
@@ -2567,7 +2567,7 @@ var New_Master_Details_Submit = {
           "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
         );
         // show pop up err msg 
-        Error_PopUp.init()
+        // Error_PopUp.init()
         //
       })
     );
@@ -2781,7 +2781,7 @@ var Edit_Master_Details_Submit = {
           "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
         );
         // show pop up err msg 
-        Error_PopUp.init()
+        // Error_PopUp.init()
         //
       })
     );

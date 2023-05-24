@@ -619,11 +619,66 @@ window.ListInfo = {
 
             var arraySibling = $(this).find(':selected').data('arraysiblingvalues')
 
+            debugger
             if (arraySibling && arraySibling.length) {
               arraySibling = eval(arraySibling)
 
               arraySibling.forEach(el => {
-                $(this).parent().parent().find(`#${el.name}`).val(el.value)
+
+                if (listkey == "projects") {
+                  if (el.name == "StartDate") {
+
+                    // to handle project baselinestart and finish to be with duration of initiative
+                    var finishDate = arraySibling.filter(function (a) {
+                      return a.name == "FinishDate";
+                    });
+
+                    let projectBaseLineFinishDate = ""
+                    let projectBaseLineStartDate = ""
+
+                    if (el.value) {
+                      if (finishDate.length) {
+                        projectBaseLineFinishDate = new Date(finishDate[0].value)
+                          .toISOString()
+                          .split("T")[0];
+                      }
+
+                      projectBaseLineStartDate = new Date(el.value)
+                        .toISOString()
+                        .split("T")[0];
+                    }
+
+                    $("input#BaselineStartDate").attr("min", projectBaseLineStartDate);
+                    $("input#BaselineStartDate").attr("max", projectBaseLineFinishDate);
+
+                  } else if (el.name == "FinishDate") {
+                    var startDate = arraySibling.filter(function (a) {
+                      return a.name == "StartDate";
+                    });
+
+                    let projectBaseLineStartDate = ""
+                    let projectBaseLineFinishDate = ""
+                    if (el.value) {
+
+                      if (startDate.length) {
+                        projectBaseLineStartDate = new Date(startDate[0].value)
+                          .toISOString()
+                          .split("T")[0];
+                      }
+
+                      projectBaseLineFinishDate = new Date(el.value)
+                        .toISOString()
+                        .split("T")[0];
+                    }
+
+                    $("input#BaselineFinishDate").attr("min", projectBaseLineStartDate);
+                    $("input#BaselineFinishDate").attr("max", projectBaseLineFinishDate);
+                  } else {
+                    $(this).parent().parent().find(`#${el.name}`).val(el.value)
+                  }
+                } else {
+                  $(this).parent().parent().find(`#${el.name}`).val(el.value)
+                }
               })
 
             }
