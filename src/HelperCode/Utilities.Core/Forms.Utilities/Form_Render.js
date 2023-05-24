@@ -619,7 +619,7 @@ window.ListInfo = {
 
             var arraySibling = $(this).find(':selected').data('arraysiblingvalues')
 
-            debugger
+            
             if (arraySibling && arraySibling.length) {
               arraySibling = eval(arraySibling)
 
