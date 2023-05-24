@@ -2294,6 +2294,10 @@ var Stages_Data_Request = {
     if (count > 0) {
       $(".project-stages-ctx div#v-pills-tab").html(phasehtml);
       $(".project-stages-ctx div#v-pills-tabContent").html(stagehtml);
+
+    
+
+
     } else {
       $(".project-status-info").html(nodata);
     }
@@ -2351,6 +2355,16 @@ var Stages_Data_Request = {
           ).text(100 + "%");
         }
       }
+    }
+
+    //update under approve phase and stage when project is not draft
+    if(!ProjectIsDraft){
+      $(".project-stages-ctx div#v-pills-tab > .P0 .percent-complete"
+      ).text(100 + "%");
+      if($(`[data-phase="P0"]`).length){
+        $(`[data-phase="P0"]`).find("input:checkbox").attr("checked","checked")
+      }
+
     }
 
     if (!isactive) {
