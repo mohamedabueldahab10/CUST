@@ -4,6 +4,17 @@ var Information_Form = [
     labelEn: 'Delivrable Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
+    workflowSetValues: [
+      //Project Deliverables
+      //VRO
+      { fieldName: 'Status', value: 'completed', stages:["VROProjDeliverable02"] },
+      //EPMO
+      { fieldName: 'Status', value: 'completed', stages:["EPMOProjDeliverable02"] },
+      //LMS
+      { fieldName: 'Status', value: 'completed', stages:["LMSProjDeliverable02"] },
+      //Strategicpartner ships Deliverables
+
+    ],
     subFields: [
       {
         InternalName: 'Title',

@@ -296,7 +296,7 @@ var Information_Form = [
               display: 'vision',
               value: 'vision',
               customFilterValue: "vision",
-              roles: ['allRoles'],
+              roles: ['VROHead','VROPHead','VROP','ProjectManager','InitiativeOwner','InitiativeManager','ProjectOwner','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'VROCreateProject' },
                 { fieldName: 'WFStage', value: 'VROCreateProject01' },
@@ -309,7 +309,7 @@ var Information_Form = [
               display: 'strategically',
               value: 'strategically',
               customFilterValue: "strategically",
-              roles: ['allRoles'],
+              roles: ['VROHead','VROPHead','VROP','ProjectManager','InitiativeOwner','InitiativeManager','ProjectOwner','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'EPMOCreateProject' },
                 { fieldName: 'WFStage', value: 'EPMOCreateProject01' },
@@ -322,7 +322,7 @@ var Information_Form = [
               display: 'lms',
               value: 'lms',
               customFilterValue: "lms",
-              roles: ['allRoles'],
+              roles: ['VROHead','VROPHead','VROP','ProjectManager','InitiativeOwner','InitiativeManager','ProjectOwner','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'LMSCreateProject' },
                 { fieldName: 'WFStage', value: 'LMSCreateProject01' },

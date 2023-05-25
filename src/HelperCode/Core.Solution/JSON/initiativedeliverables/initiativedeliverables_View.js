@@ -4,6 +4,17 @@ var Information_Form = [
     labelEn: 'Initiative Deliverable',
     description: 'التفاصيل',
     descriptionEn: 'Details',
+    // workflowSetValues: [
+    //   // Ii Deliverables
+    //   //VRO
+    //   { fieldName: 'Completed', value: 'yes', stages:["VROInitiativeDeliverable02"] },
+    //   //EPMO
+    //   { fieldName: 'Completed', value: 'yes', stages:["EPMOInitiativeDeliverable03"] },
+    //   //LMS
+    //   { fieldName: 'Completed', value: 'yes', stages:["LMSInitiativeDeliverable03"] },
+  
+
+    // ],
     subFields: [
       {
         InternalName: 'Title',

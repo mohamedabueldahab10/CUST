@@ -4,6 +4,17 @@ var Information_Form = [
     labelEn: 'Initiative Milestone',
     description: 'التفاصيل',
     descriptionEn: 'Details',
+    workflowSetValues: [
+      // Ii Milestones
+      //VRO
+      { fieldName: 'Completed', value: 'yes', stages:["VROInitiativeMilestone02"] },
+      //EPMO
+      { fieldName: 'Completed', value: 'yes', stages:["EPMOInitiativeMilestone03"] },
+      //LMS
+      { fieldName: 'Completed', value: 'yes', stages:["LMSInitiativeMilestone02"] },
+  
+
+    ],
     subFields: [
       {
         InternalName: 'Title',
