@@ -5,7 +5,7 @@ var Listing_Info = [
     DisplayName: 'رمز المبادرة',
     type: 'text',
     inlisting: true,
-    infilter: false,
+    infilter: true,
   },
   {
     InternalName: 'Name',
@@ -13,7 +13,7 @@ var Listing_Info = [
     DisplayName: 'اسم المبادرة',
     type: 'text',
     inlisting: true,
-    infilter: false,
+    infilter: true,
   },
   // {
   // 	"InternalName": "InitiativePM",

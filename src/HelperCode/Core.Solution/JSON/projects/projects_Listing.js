@@ -5,7 +5,7 @@ var Listing_Info = [
     DisplayNameEn: "Code",
     type: "text",
     inlisting: true,
-    infilter: false,
+    infilter: true,
   },
   {
     InternalName: "Name",
@@ -13,7 +13,7 @@ var Listing_Info = [
     DisplayNameEn: "Project Name",
     type: "text",
     inlisting: true,
-    infilter: false,
+    infilter: true,
   },
   {
     InternalName: 'RelatedInitiative',
