@@ -152,35 +152,59 @@ var Information_Form = [
         //   ],
         // },
       },
-      {
-        InternalName: "NTP",
-        DisplayName: "NTP",
-        DisplayNameEn: "NTP",
-        validation: "required",
-        type: "yesnoradio",
+      // {
+      //   InternalName: "NTP",
+      //   DisplayName: "NTP",
+      //   DisplayNameEn: "NTP",
+      //   validation: "required",
+      //   type: "yesnoradio",
+      //   disableOnWfTaskStage : "S05,S09",
+      //   options: {
+      //     choices: [
+      //       {
+      //         display: "yes",
+      //         value: "yes",
+      //       },
+      //       {
+      //         display: "no",
+      //         value: "no",
+      //       },
+      //     ],
+      //   },
+      //   // security: {
+      //   //   groups: [
+      //   //     "VRO_E",
+      //   //     "LMS_E",
+      //   //     "EPMO",
+      //   //     "System Admin Group",
+      //   //     "SPMO",
+      //   //     "Development Unit",
+      //   //   ],
+      //   // },
+      // },
+       {
+        InternalName: "Program",
+        DisplayName: "البرنامج",
+        DisplayNameEn: "Program",
+        source: "Programs",
+        type: "lookup",
+        Dispfieldkey: "Name",
+        valfieldkey: "Title",
         disableOnWfTaskStage : "S05,S09",
-        options: {
-          choices: [
-            {
-              display: "yes",
-              value: "yes",
-            },
-            {
-              display: "no",
-              value: "no",
-            },
-          ],
-        },
+        // grpfieldkey: 'Title',
         // security: {
         //   groups: [
         //     "VRO_E",
         //     "LMS_E",
         //     "EPMO",
         //     "System Admin Group",
+        //     "Project Managers for Project Web App",
         //     "SPMO",
         //     "Development Unit",
         //   ],
         // },
+        // "maxchar": 5000,
+        // hideonstage: "1"
       },
       {
         InternalName: "Committees",
