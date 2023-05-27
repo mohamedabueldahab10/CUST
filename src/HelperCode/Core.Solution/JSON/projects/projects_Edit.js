@@ -1538,6 +1538,8 @@ var Information_Form = [
         // "state":"disabled",
         validation: 'required',
         disableOnWfTaskStage : "S05,S09",
+        descPhraseAr: "من التكلفة",
+        descPhraseEn: " From Budget", 
       },
       {
         InternalName: 'Amount',
@@ -1550,6 +1552,8 @@ var Information_Form = [
         targetelement: 'Weight',
         validation: 'required',
         disableOnWfTaskStage : "S05,S09",
+        descPhraseAr: "من التكلفة",
+        descPhraseEn: " From Budget", 
       },
       // {
       //   "InternalName": "Status",
@@ -1835,6 +1839,8 @@ var Information_Form = [
         // "state":"disabled",
         validation: 'required',
         disableOnWfTaskStage : "S05,S09",
+        descPhraseAr: "من التكلفة",
+        descPhraseEn: " From Budget", 
       },
       {
         InternalName: 'Amount',
@@ -1847,6 +1853,8 @@ var Information_Form = [
         targetelement: 'Weight',
         validation: 'required',
         disableOnWfTaskStage : "S05,S09",
+        descPhraseAr: "من التكلفة",
+        descPhraseEn: " From Budget", 
       },
       {
         InternalName: 'PlannedDate',

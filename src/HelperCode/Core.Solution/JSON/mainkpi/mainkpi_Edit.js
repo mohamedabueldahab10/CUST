@@ -811,6 +811,8 @@ var Information_Form = [
         DisplayName: 'رائد الأداء',
         type: 'picker',
         validation: 'required',
+        descPhraseAr: "يجب ان يكون المستخدم لديه الصلاحية المناسبة",
+        descPhraseEn: " User Should have right access", 
         ToggleDisabledName: 'PerformanceLeader',
         security: {
           groups: [
@@ -828,6 +830,8 @@ var Information_Form = [
         DisplayName: 'رائد الأداء الثاني',
         type: 'picker',
         validation: 'required',
+        descPhraseAr: "يجب ان يكون المستخدم لديه الصلاحية المناسبة",
+        descPhraseEn: " User Should have right access", 
         ToggleDisabledName: 'PerformanceLeader2',
         security: {
           groups: [

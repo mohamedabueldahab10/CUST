@@ -385,6 +385,8 @@ var Information_Form = [
         DisplayName: 'رائد الأداء',
         type: 'picker',
         validation: 'required',
+        descPhraseAr: "يجب ان يكون المستخدم لديه الصلاحية المناسبة",
+        descPhraseEn: " User Should have right access", 
       },
       {
         InternalName: 'PerformanceLeader2',
@@ -392,6 +394,8 @@ var Information_Form = [
         DisplayName: 'رائد الأداء الثاني',
         type: 'picker',
         validation: 'required',
+        descPhraseAr: "يجب ان يكون المستخدم لديه الصلاحية المناسبة",
+        descPhraseEn: " User Should have right access", 
       },
       {
         InternalName: 'CalculationType',

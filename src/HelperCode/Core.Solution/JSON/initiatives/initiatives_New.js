@@ -370,6 +370,8 @@ var Information_Form = [
         DisplayName: 'مالك المبادرة ',
         type: 'picker',
         validation: 'required',
+        descPhraseAr: "يجب ان يكون المستخدم لديه الصلاحية المناسبة",
+        descPhraseEn: " User Should have right access", 
       },
       {
         InternalName: 'InitiativeActualOwner',
@@ -387,6 +389,8 @@ var Information_Form = [
         DisplayName: 'مدير المبادرة ',
         type: 'picker',
         validation: 'required',
+        descPhraseAr: "يجب ان يكون المستخدم لديه الصلاحية المناسبة",
+        descPhraseEn: " User Should have right access", 
       },
       {
         InternalName: 'Sector',

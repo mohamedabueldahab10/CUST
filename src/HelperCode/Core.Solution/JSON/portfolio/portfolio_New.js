@@ -39,7 +39,9 @@ var Information_Form = [{
             "DisplayName": "مدير المحفظة",
             "DisplayNameEn": "Portfolio Manager",
             "type": "picker",
-            "validation": "required"
+            "validation": "required",
+            descPhraseAr: "يجب ان يكون المستخدم مضاف الى مجموعة  PMO Team ",
+            descPhraseEn: " User Should be in PMO Team", 
         },
         {
             "InternalName": "Owner",

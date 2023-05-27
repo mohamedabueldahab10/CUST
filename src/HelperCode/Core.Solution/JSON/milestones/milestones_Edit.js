@@ -101,6 +101,8 @@ var Information_Form = [
         targetcode: 'ProjectCode',
         targetelement: 'Weight',
         seconedtarget: 'Amount',
+        descPhraseAr: "من التكلفة",
+        descPhraseEn: " From Budget", 
         // "state":"disabled",
         validation: 'required',
         security: {
@@ -115,6 +117,8 @@ var Information_Form = [
         type: 'percentbyrelatedparent',
         listname: 'Projects',
         parentinternalname: 'ActualBudget',
+        descPhraseAr: "من التكلفة",
+        descPhraseEn: " From Budget", 
         targetelement: 'Weight',
         validation: 'required',
         security: {

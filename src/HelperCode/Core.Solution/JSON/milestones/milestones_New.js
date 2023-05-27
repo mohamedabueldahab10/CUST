@@ -66,6 +66,8 @@ var Information_Form = [
         seconedtarget: 'Amount',
         // "state":"disabled",
         validation: 'required',
+        descPhraseAr: "من التكلفة",
+        descPhraseEn: " From Budget", 
       },
       {
         InternalName: 'Amount',
@@ -77,6 +79,8 @@ var Information_Form = [
         parentinternalname: 'ActualBudget',
         targetelement: 'Weight',
         validation: 'required',
+        descPhraseAr: "من التكلفة",
+        descPhraseEn: " From Budget", 
       },
       {
         InternalName: 'PlannedDate',
