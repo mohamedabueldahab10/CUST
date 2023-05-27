@@ -324,6 +324,8 @@ var Information_Form = [
         dynamic: 'RelatedStrategyObjective',
         filterField: 'RelatedStrategyObjective',
         filterFieldType: 'Text',
+        descPhraseAr: "هذا المؤشر مرتبط بالهدف الذي تم اختياره",
+        descPhraseEn: "This KPIs is related to Selected Objective", 
       },
       {
         InternalName: 'RelatedInitiative',
@@ -346,6 +348,8 @@ var Information_Form = [
         dynamic: 'RelatedInitiative',
         filterField: 'RelatedInitiative',
         filterFieldType: 'Text',
+        descPhraseAr: "هذا المشروع مرتبط المبادرة الذي تم اختيارها",
+        descPhraseEn: "This Project is related to Selected Initiative", 
       },
       {
          "InternalName":"StartDate",
@@ -374,6 +378,8 @@ var Information_Form = [
         DisplayNameEn: 'Finish Date',
         type: 'datetime',
         state: 'disabled',
+        descPhraseAr: "تساوي تاريخ بداية الشراكة + مدة الشراكة",
+        descPhraseEn: "Equal to Start date + Duration",
       },
       // {
       //    "InternalName":"Duration",
