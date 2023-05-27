@@ -971,6 +971,8 @@ var Information_Form = [
         seconedtarget: 'Amount',
         // "state":"disabled",
         validation: 'required',
+        descPhraseAr: "من ميزانية المبادرة",
+        descPhraseEn: " From Initiative Budget", 
       },
       {
         InternalName: 'Amount',
@@ -982,6 +984,8 @@ var Information_Form = [
         parentinternalname: 'InitiativeBudget',
         targetelement: 'Weight',
         validation: 'required',
+        descPhraseAr: "من ميزانية المبادرة",
+        descPhraseEn: " From Initiative Budget", 
       },
       // {
       //   InternalName: 'Weight',
@@ -1115,6 +1119,8 @@ var Information_Form = [
         targetelement: 'Weight',
         seconedtarget: 'Amount',
         validation: 'required',
+        descPhraseAr: "من ميزانية المبادرة",
+        descPhraseEn: " From Initiative Budget", 
       },
       {
         InternalName: 'Amount',
@@ -1126,6 +1132,8 @@ var Information_Form = [
         parentinternalname: 'InitiativeBudget',
         targetelement: 'Weight',
         validation: 'required',
+        descPhraseAr: "من ميزانية المبادرة",
+        descPhraseEn: " From Initiative Budget", 
       },
       //   {
       //     InternalName: 'Weight',

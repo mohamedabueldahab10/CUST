@@ -114,6 +114,8 @@ var Information_Form = [
         targetelement: 'Weight',
         seconedtarget: 'Amount',
         validation: 'required',
+        descPhraseAr: "من ميزانية المبادرة",
+        descPhraseEn: " From Initiative Budget", 
         security: {
           groups: ['EPMO', 'System Admin Group'],
         },
@@ -128,6 +130,8 @@ var Information_Form = [
         parentinternalname: 'InitiativeBudget',
         targetelement: 'Weight',
         validation: 'required',
+        descPhraseAr: "من ميزانية المبادرة",
+        descPhraseEn: " From Initiative Budget", 
         security: {
           groups: ['EPMO', 'System Admin Group'],
         },

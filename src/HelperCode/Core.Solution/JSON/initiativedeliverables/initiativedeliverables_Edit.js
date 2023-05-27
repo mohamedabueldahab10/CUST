@@ -124,6 +124,8 @@ var Information_Form = [
         targetcode: 'InitiativeCode',
         targetelement: 'Weight',
         seconedtarget: 'Amount',
+        descPhraseAr: "من ميزانية المبادرة",
+        descPhraseEn: " From Initiative Budget", 
         // "state":"disabled",
         validation: 'required',
         security: {
@@ -141,6 +143,8 @@ var Information_Form = [
         listname: 'Initiatives',
         parentinternalname: 'InitiativeBudget',
         targetelement: 'Weight',
+        descPhraseAr: "من ميزانية المبادرة",
+        descPhraseEn: " From Initiative Budget", 
         validation: 'required',
         security: {
           groups: [
