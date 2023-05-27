@@ -181,29 +181,7 @@ var Information_Form = [
       //   //   ],
       //   // },
       // },
-      {
-        InternalName: "Program",
-        DisplayName: "البرنامج",
-        DisplayNameEn: "Program",
-        source: "Programs",
-        type: "lookup",
-        Dispfieldkey: "Name",
-        valfieldkey: "Title",
-        // grpfieldkey: 'Title',
-        // security: {
-        //   groups: [
-        //     "VRO_E",
-        //     "LMS_E",
-        //     "EPMO",
-        //     "System Admin Group",
-        //     "Project Managers for Project Web App",
-        //     "SPMO",
-        //     "Development Unit",
-        //   ],
-        // },
-        // "maxchar": 5000,
-        // hideonstage: "1"
-      },
+
       {
         InternalName: "Committees",
         DisplayName: "اللجان",
@@ -278,6 +256,10 @@ var Information_Form = [
         display: 'none',
         dynamic: 'parent', // parent to get the child depends on this field value
         type: 'dropdownValues',
+        toggleValues: [
+          { value: 'vision', fields: ['Program'] },
+          // {value:'strategically', fields:['StrategyRelatedObjective']}
+        ],
         // dontSubmit: true,
         options: {
           choices: [
@@ -442,6 +424,22 @@ var Information_Form = [
         valfieldkey: "Title",
         grpfieldkey: "Title",
         state: "disabled",
+      },
+      {
+        InternalName: "Program",
+        DisplayName: "البرنامج",
+        DisplayNameEn: "Program",
+        ToggleName: 'Program',
+        // RequiredName: 'Ministry',
+        type: 'lookupWithQuery',
+        queryField: 'Types',
+        queryFieldType: 'Text', //ex: "Choice"
+        queryFieldValue: 'program',
+        //from other list:
+        source: 'SPillars',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+          "display": "none"
       },
       {
         InternalName: "Sector",
