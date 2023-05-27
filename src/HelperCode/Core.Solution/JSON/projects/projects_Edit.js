@@ -1253,7 +1253,7 @@ var Information_Form = [
         DisplayName: 'الكراسة المعتمدة',
         DisplayNameEn: 'Approved RFP',
         type: 'file',
-        withAddBtn: 'true',
+        // withAddBtn: 'true',
         // InternalName: 'getfile',
         docPurpose: "Approved_RFP",
         // hideOnWfTaskStage : "S09,S05",
@@ -1264,6 +1264,7 @@ var Information_Form = [
         DisplayName: "حالة الكراسة",
         DisplayNameEn: "RFP Status",
         type: "dropdownValues",
+        disableOnWfTaskStage : "S09",
         // hideOnWfTaskStage : "S09,S05",
         options: {
           choices: [
@@ -1740,6 +1741,57 @@ var Information_Form = [
     // className: "disable_section", // to make the section disabled on form render
     targetlist: 'Milestones',
     toggleName:'Milestones',
+    // formValuesBasedOnParent: [
+    //   {
+    //     parentList: 'Projects',
+    //     parentFieldName: 'Title',
+    //     fieldName: 'InitiativeType',
+    //     basedOnCondition: true,
+    //     basedOnFieldName: 'Delivered',
+    //     basedOnFieldValue: 'yes',
+    //     valueToSet: [
+    //       {
+    //         condition: 'vision',
+    //         values: [
+    //           {
+    //             fieldNameInList: 'WFModuleCode',
+    //             fieldValueInList: 'VROProjMilestone',
+    //           },
+    //           {
+    //             fieldNameInList: 'WFStage',
+    //             fieldValueInList: 'VROProjMilestone01',
+    //           },
+    //         ],
+    //       },
+    //       {
+    //         condition: 'lms',
+    //         values: [
+    //           {
+    //             fieldNameInList: 'WFModuleCode',
+    //             fieldValueInList: 'LMSProjMilestone',
+    //           },
+    //           {
+    //             fieldNameInList: 'WFStage',
+    //             fieldValueInList: 'LMSProjMilestone01',
+    //           },
+    //         ],
+    //       },
+    //       {
+    //         condition: 'strategically',
+    //         values: [
+    //           {
+    //             fieldNameInList: 'WFModuleCode',
+    //             fieldValueInList: 'EPMOProjMilestone',
+    //           },
+    //           {
+    //             fieldNameInList: 'WFStage',
+    //             fieldValueInList: 'EPMOProjMilestone01',
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //   },
+    // ],
     disableOnWfTaskStage : "S05,S09",
     subFields: [
       // {

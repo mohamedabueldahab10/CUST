@@ -125,6 +125,8 @@ window.Information_Form = [
 			},
 			{
 				InternalName: "UpdateType",
+				descPhraseAr: "تغيير عام: تعديل بيانات",
+				descPhraseEn: "General change: Edit data", 
 				DisplayName: "نوع طلب التغيير",
 				DisplayNameEn: "Change Request Type",
 				display: "none",
@@ -353,6 +355,8 @@ window.Information_Form = [
 			},
 			{
 				InternalName: "UpdateType",
+				descPhraseAr: "تغيير عام: تعديل بيانات",
+				descPhraseEn: "General change: Edit data", 
 				DisplayName: "نوع طلب التغيير",
 				DisplayNameEn: "Change Request Type",
 				display: "none",
@@ -580,6 +584,8 @@ window.Information_Form = [
 			},
 			{
 				InternalName: "UpdateType",
+				descPhraseAr: "تغيير عام: تعديل بيانات",
+				descPhraseEn: "General change: Edit data", 
 				DisplayName: "نوع طلب التغيير",
 				DisplayNameEn: "Change Request Type",
 				display: "none",
@@ -829,6 +835,8 @@ window.Information_Form = [
 			},
 			{
 				InternalName: "UpdateType",
+				descPhraseAr: "تغيير عام: تعديل بيانات",
+				descPhraseEn: "General change: Edit data", 
 				DisplayName: "نوع طلب التغيير",
 				DisplayNameEn: "Change Request Type",
 				display: "none",
@@ -863,6 +871,8 @@ window.Information_Form = [
 			},
 			{
 				InternalName: "UpdateType",
+				descPhraseAr: "تغيير عام: تعديل بيانات",
+				descPhraseEn: "General change: Edit data", 
 				DisplayName: "نوع طلب التغيير",
 				DisplayNameEn: "Change Request Type",
 				display: "none",
@@ -894,6 +904,8 @@ window.Information_Form = [
 			},
 			{
 				InternalName: "UpdateType",
+				descPhraseAr: "تغيير عام: تعديل بيانات",
+				descPhraseEn: "General change: Edit data", 
 				DisplayName: "نوع طلب التغيير",
 				DisplayNameEn: "Change Request Type",
 				display: "none",
@@ -925,6 +937,8 @@ window.Information_Form = [
 			},
 			{
 				InternalName: "UpdateType",
+				descPhraseAr: "تغيير عام: تعديل بيانات",
+				descPhraseEn: "General change: Edit data", 
 				DisplayName: "نوع طلب التغيير",
 				DisplayNameEn: "Change Request Type",
 				display: "none",
@@ -974,6 +988,8 @@ window.Information_Form = [
 			{
 				//StrategicObjectives
 				InternalName: "UpdateType",
+				descPhraseAr: "تغيير عام: تعديل بيانات",
+				descPhraseEn: "General change: Edit data", 
 				DisplayName: "نوع طلب التغيير",
 				DisplayNameEn: "Change Request Type",
 				display: "none",
@@ -1013,6 +1029,8 @@ window.Information_Form = [
 			{
 				//Vision Objective
 				InternalName: "UpdateType",
+				descPhraseAr: "تغيير عام: تعديل بيانات",
+				descPhraseEn: "General change: Edit data", 
 				DisplayName: "نوع طلب التغيير",
 				DisplayNameEn: "Change Request Type",
 				display: "none",
@@ -1050,6 +1068,8 @@ window.Information_Form = [
 			{
 				//Vision Objective
 				InternalName: "UpdateType",
+				descPhraseAr: "تغيير عام: تعديل بيانات",
+				descPhraseEn: "General change: Edit data", 
 				DisplayName: "نوع طلب التغيير",
 				DisplayNameEn: "Change Request Type",
 				display: "none",
@@ -1105,6 +1125,8 @@ window.Information_Form = [
 			},
 			{
 				InternalName: "UpdateType",
+				descPhraseAr: "تغيير عام: تعديل بيانات",
+				descPhraseEn: "General change: Edit data", 
 				DisplayName: "نوع طلب التغيير",
 				DisplayNameEn: "Change Request Type",
 				display: "none",
@@ -1141,6 +1163,12 @@ window.Information_Form = [
 			},
 			{
 				InternalName: "UpdateType",
+				descPhraseAr: "تغيير عام: تعديل بيانات",
+				descPhraseEn: "General change: Edit data", 
+				descPhraseAr: "تغيير عام: تعديل بيانات",
+				descPhraseEn: "General change: Edit data", 
+				descPhraseAr: "تغيير عام: تعديل بيانات",
+				descPhraseEn: "General change: Edit data", 
 				DisplayName: "نوع طلب التغيير",
 				DisplayNameEn: "Change Request Type",
 				display: "none",
@@ -1177,6 +1205,8 @@ window.Information_Form = [
 			},
 			{
 				InternalName: "UpdateType",
+				descPhraseAr: "تغيير عام: تعديل بيانات",
+				descPhraseEn: "General change: Edit data", 
 				DisplayName: "نوع طلب التغيير",
 				DisplayNameEn: "Change Request Type",
 				display: "none",

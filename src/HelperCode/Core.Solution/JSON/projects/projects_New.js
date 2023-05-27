@@ -1022,7 +1022,7 @@ var Information_Form = [
         DisplayName: 'الكراسة المعتمدة',
         DisplayNameEn: 'Approved RFP',
         type: 'file',
-        withAddBtn: 'true',
+        // withAddBtn: 'true',
         // InternalName: 'getfile',
         docPurpose: "Approved_RFP",
       },
