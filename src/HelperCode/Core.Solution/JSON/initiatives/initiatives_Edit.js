@@ -216,8 +216,9 @@ var Information_Form = [
         InternalName: 'RelatedObjectiveLevel',
         DisplayNameEn: 'Related Objective Level',
         DisplayName: 'مستوى الهدف المرتبط',
-        dontSubmit: true,
-        //
+        dontSubmit: true,        
+        descPhraseAr: "تظهر الاهداف بناء على نوع  مستوى الهدف المرتبط بالاستراتيجية المختارة",
+        descPhraseEn: "The Objectives appear based on selected Level that related to selected Strategy", 
         grandFieldId: 'RelatedStrategy', // we add this field to handle the two field filtration(parent Id in current form)
         childFieldId: 'RelatedObjective', // we add this field to handle the two field filtration (child Id in current form)
         childFieldIdSource: 'Types', // we add this field to handle the two field filtration (child internal name in destination list)
