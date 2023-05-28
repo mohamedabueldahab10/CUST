@@ -102,7 +102,7 @@ window.New_Data_Submit = {
         portfoliomanager.get_lookupValue()
       );
       userCalls.isMember("System Portfolio Manager", portfoliomanagername, 'Manager');
-    } 
+    }
     if (
       ((listkey == "mainkpi") || (listkey == "changerequest" && RListKey == "mainkpi")) &&
       $("#Owner").find("span.sp-peoplepicker-userSpan").attr("sid")
@@ -174,7 +174,7 @@ window.New_Data_Submit = {
     $("[type=picker][required]").each(function () {
 
       if (listkey == 'changerequest' && $(this).find("span.sp-peoplepicker-userSpan").length == 0) {
-        
+
         if (($(this).attr("data-email") == enternameemail) || (!$(this).attr("data-email"))) {
           pickervalid = false;
           $(this).addClass("picker-error");
@@ -866,18 +866,65 @@ var Set_Code_Submit = {
       }
     } else if (listkey == "projects") {
 
-      var sectorValue = $("#Sector").val()
+      // var sectorValue = $("#Sector").val()
 
-      if (sectorValue) { // to save the code depends on sector you chose (this is specific whe the sector be autogenerat)
-        var year = String(new Date().getFullYear()),
-          year = year.slice(year.length - 2); //get last 2 characters
-        PCODE = sectorValue + "-" + year;
+      // if (sectorValue) { // to save the code depends on sector you chose (this is specific whe the sector be autogenerat)
+      //   // var year = String(new Date().getFullYear()),
+      //   //   year = year.slice(year.length - 2); //get last 2 characters
+      //   PCODE = sectorValue + "-" + year;
+      // }
+
+
+      // Code = PCODE + "-" + IID.toString().padStart(4, "0");
+      // PCODE = Code;
+      // Set_Code_Submit.g.oListItem.set_item("Title", Code);
+
+      //set code depends on ERP
+
+      var isStrategicProject = $("#IsStrategicProject").val() == "yes" ? true : false
+
+      var year = String(new Date().getFullYear()),
+        year = year.slice(year.length - 2); //get last 2 characters
+
+ 
+      var projectrelatedinitiativesos = []
+      var relatedInitiative = $("#RelatedInitiative").val()
+      var SectorERPID = "XX", SubSectorERPID = "XX", RelatedSos = "XX";
+
+      var relatedObjectiveArr = $("#RelatedInitiative").find(":selected").data("arraysiblingvalues") ? $("#RelatedInitiative").find(":selected").data("arraysiblingvalues") : []
+
+      SectorERPID = $("#Sector").find(":selected").data("siblingvalue") ? $("#Sector").find(":selected").data("siblingvalue") : "XX"
+
+      SubSectorERPID = $("#SubSector").find(":selected").data("siblingvalue") ? $("#SubSector").find(":selected").data("siblingvalue") : "XX"
+
+      relatedObjectiveArr = eval(relatedObjectiveArr)
+
+      if (relatedObjectiveArr.length) {
+        projectrelatedinitiativesos = relatedObjectiveArr.filter(function (a) {
+          return a.name === "RelatedObjective"
+        });
       }
 
 
-      Code = PCODE + "-" + IID.toString().padStart(4, "0");
-      PCODE = Code;
+      var projItemID = IID.toString().padStart(4, "0")
+
+      if (projectrelatedinitiativesos.length) {
+        if (projectrelatedinitiativesos[0].value) {
+          RelatedSos = projectrelatedinitiativesos[0].value.split(":::").length > 1 ? "XX" : projectrelatedinitiativesos[0].value
+        }
+      }
+
+      
+      if (isStrategicProject) {
+        Code = `ST${year}-${SectorERPID}${SubSectorERPID}-${RelatedSos}${relatedInitiative}${projItemID}`
+      } else {
+        Code = `OP${year}-${SectorERPID}${SubSectorERPID}-${projItemID}`
+      }
+
       Set_Code_Submit.g.oListItem.set_item("Title", Code);
+      PCODE = Code;
+      //
+
     }
     Set_Code_Submit.g.oListItem.update();
     clientContext.load(Set_Code_Submit.g.oListItem);

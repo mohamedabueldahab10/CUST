@@ -354,7 +354,7 @@ var Information_Form = [
         dynamic: "InitiativeType", //InternalName Of Parent field
         filterField: "Types",//InternalName Of Parent field
         filterFieldType: "Text",//Type In Sharepoint List for Parent field
-        targetsiblingarr: ["Sector", "SubSector","StartDate","FinishDate"], // get siblings value
+        targetsiblingarr: ["Sector", "SubSector","StartDate","FinishDate","RelatedObjective"], // get siblings value
         // security: {
         //   groups: [
         //     "VRO_E",
@@ -447,6 +447,8 @@ var Information_Form = [
         DisplayNameEn: "Sector",
         type: "lookup",
         validation: "required",
+        valsiblingkey: 'ERPID', // to use it on roles filter on data
+
         //from other list:
         source: "Internal Entities",
         isSector: "True",
@@ -454,7 +456,7 @@ var Information_Form = [
         Dispfieldkey: "Name",
         DispfieldkeyEn: "NameEn",
         valfieldkey: "Title",
-        ToggleDisabledName: "Sector"
+        ToggleDisabledName: "Sector",
         // security: {
         //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
         // },
@@ -472,7 +474,10 @@ var Information_Form = [
         Dispfieldkey: "Name",
         DispfieldkeyEn: "NameEn",
         valfieldkey: "Title",
-        ToggleDisabledName: "SubSector"
+        ToggleDisabledName: "SubSector",
+        valsiblingkey: 'ERPID', // to use it on roles filter on data
+
+
         // security: {
         //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
         // },

@@ -3310,10 +3310,12 @@ window.Department_Sector_Info = {
       ) {
         Name = oListItem.get_item("Name");
       } else Name = oListItem.get_item("NameEn");
+
       Department_Sector_Info.g.array.push({
         name: Name,
         code: oListItem.get_item("Title"),
         id: oListItem.get_id(),
+        ERPID:oListItem.get_item("ERPID"),
       });
     }
 
@@ -3336,13 +3338,13 @@ window.Department_Sector_Info = {
     );
     Department_Sector_Info.g.array.forEach(function (item, i, arr) {
       $("#SubSector").append(
-        '<option option-id="' +
+        '<option data-siblingvalue="'+ Department_Sector_Info.g.array[i].ERPID +'" option-id="' +
         Department_Sector_Info.g.array[i].id +
         '" value="' +
         Department_Sector_Info.g.array[i].code +
         '">' +
         Department_Sector_Info.g.array[i].name +
-        "</option>"
+      "</option>"
       );
     });
     if (isEdit || (listkey == "changerequest" && RListKey == "projects")) {
@@ -5323,7 +5325,7 @@ window.ViewAll_MasterFiles = {
       var _contentType = currentFile.get_contentType();
       if (_contentType.get_name() != "Folder") {
         var File = currentFile.get_file();
-        
+
         if (File != null && FileID == itemId) {
           var title;
           if (currentFile.get_item("Title").indexOf("-") > -1) {
@@ -5377,7 +5379,7 @@ window.ViewAll_MasterFiles = {
     }
 
     getMasterFilesArr.shift()
-    
+
     if (getMasterFilesArr.length) {
 
       ViewAll_MasterFiles.init(getMasterFilesArr[0].masterItemId, getMasterFilesArr[0].CurrList)
