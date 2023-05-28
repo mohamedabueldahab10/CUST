@@ -1298,22 +1298,7 @@ var Information_Form = [
       },
     ],
   },
-  // {
-  //   label: 'وثائق عمليات BRD',
-  //   labelEn: 'BRD Documents',
-  //   description: '',
-  //   descriptionEn: '',
-  //   subFields: [
-  //     {
-  //       InternalName: 'getfile',
-  //       DisplayName: 'مرفقات BRD',
-  //       DisplayNameEn: 'BRD Attachments',
-  //       type: 'file',
-  //       docPurpose:"BRD",
-  //       withAddBtn: 'true',
-  //     },
-  //   ],
-  // },
+
   {
     label: 'الوثائق الداعمة',
     labelEn: 'Supporting Documents',

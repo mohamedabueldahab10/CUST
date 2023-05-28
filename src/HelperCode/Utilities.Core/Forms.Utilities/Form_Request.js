@@ -1832,7 +1832,10 @@ window.View_Data_Request = {
     //! CR
     else if (crListKey) {
       let UpdateType = oListItem.get_item("UpdateType") || "";
-      let crIsGeneral = UpdateType.includes("general");
+      // let crIsGeneral = UpdateType.includes("general");
+      let crIsGeneral = UpdateType.includes("automatic");
+
+      
       changeRequestBody = oListItem.get_item("ChangeBody");
 
       changeRequestBody = changeRequestBody
@@ -1870,9 +1873,10 @@ window.View_Data_Request = {
       }
 
 
+      debugger
       if (isCrMode) {
-        // if (crIsGeneral) CrModeFunctionality.preinit();
-        // else
+        if (crIsGeneral) CrModeFunctionality.preinit();
+        else
         CrModeFunctionality.init(sectionJSON);
       }
     }
@@ -3262,6 +3266,9 @@ var Master_Details_Request = {
 
 
     } else {
+
+
+
       //handle people picker inputs
       $("div[type=picker]").each(function () {
         var mp = new MyPeoplePicker();

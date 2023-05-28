@@ -8936,6 +8936,53 @@ window.View_ListInfo = {
           OnSuccess(flag, htmlBody);
           break;
 
+          case "weightfloatpercentage":
+            htmlBody =
+              '<div class="col-md-6 CFIELD ' +
+              dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+              " " +
+              element.className +
+              ' " ' +
+              thistip +
+              " " +
+              hidestagesIDs +
+              " " +
+              showstagesIDs +
+              "  " +
+              disablestagesIDs +
+              "  " +
+              enablestagesIDs +
+              "   " +
+              isWfhidestagesIDs +
+              " " +
+              requireOnWfTaskstagesIDs +
+              " " +
+              isWfshowstagesIDs +
+              "  " +
+              isWfdisablestagesIDs +
+              "  " +
+              isWfenablestagesIDs +
+              '        data-groups="' +
+              groups +
+              '" style="display:' +
+              element.display +
+              '">' +
+              '<label for="' +
+              element.InternalName +
+              '" ' +
+              element.validation +
+              ">" +
+              displayName +
+              "</label>" +
+              '<p type="number" class="viewmode-value" id="' +
+              element.InternalName +
+              '" ' +
+              ToggleName +
+              "></p>" +
+              "</div>";
+            OnSuccess(flag, htmlBody);
+            break;
+
         case "floatpercentage":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +

@@ -27,8 +27,11 @@ window.CrModeFunctionality = {
 		if (USERisNew || USERisEdit) {
 			prefix = "_Edit.js";
 		} else if (USERisView) {
+			// prefix = "_View.js";
 			prefix = "_Edit.js";
+
 		}
+
 		let CR_JSON_File_Name = RListKey + prefix;
 
 		//get form's json
@@ -59,6 +62,7 @@ window.CrModeFunctionality = {
 
 
 		newJSON.forEach(function (o, i, a) {
+
 			if (o.labelEn == "Attachments") {
 				a.splice(i, 1);
 			}
@@ -66,12 +70,22 @@ window.CrModeFunctionality = {
 
 		// to remove the attachments from cr request
 		newJSON.forEach(function (o, i, a) {
-			o.subFields.forEach(el => {
+
+			o.subFields.forEach((el, index) => {
+
 				if (el.type == "file") {
 					a.splice(i, 1);
 				}
+				if (USERisView) {
+					if (el.dontSubmit) {
+						o.subFields.splice(index, 1)
+					}
+				}
 			})
 		});
+
+		console.log(newJSON, "newJSONnewJSONnewJSON")
+
 
 		var toggleSectionName;
 
@@ -149,6 +163,8 @@ window.CrModeFunctionality = {
 				asyncFor.seqProcess(
 					item.subFields,
 					function (subitemField, indexField, resolveField) {
+						console.log(subitemField, "subitemField")
+
 						// if(subitemField.type != "picker" && subitemField.InternalName){
 						window[`${renderFunction}`].RenderForm(
 							subitemField,
@@ -319,7 +335,7 @@ window.CrModeFunctionality = {
 									queryFieldName: queryFieldName,
 									queryFieldType: queryFieldType,
 									parentCustomFilterValueFromSibling: parentCustomFilterValueFromSibling,
-									fromCr:fromCr
+									fromCr: fromCr
 									// dataSiblingvalue:dataSiblingvalue
 								});
 							});
@@ -356,7 +372,7 @@ window.CrModeFunctionality = {
 									queryFieldName: queryFieldName,
 									queryFieldType: queryFieldType,
 									parentCustomFilterValueFromSibling: parentCustomFilterValueFromSibling,
-									fromCr:fromCr
+									fromCr: fromCr
 
 									// dataSiblingvalue:dataSiblingvalue
 								});
@@ -626,6 +642,7 @@ window.handleCustomeCr = {
 				RID = relevantDropdown.find(">option:selected").attr("option-id");
 				changeRequestRCode = relevantDropdown.find(">option:selected").attr("value");
 				// $(this).parent().find(">label").addClass("loader-action");
+
 
 				if (!isGeneral) {
 					// $(this).parent().find(">label").addClass("loader-action");
@@ -2194,8 +2211,15 @@ window.CrItemDataRenderFromJSON_View = {
 			}
 		);
 
+		debugger
 		// MasterDetails_Request_View.init()
 
+		if (RListKey == "initiatives" || RListKey == "projects") {
+			window.setTimeout(function(){
+				MasterDetails_Request_View.init()
+
+			},2000)
+		}
 	},
 	// Global variables
 	g: {},
@@ -2347,7 +2371,7 @@ window.CrSetChangeBody = {
 								o.value = $this.val() / 100;
 							} else if (o.type == "multiselect" || o.type == "lookupmultiselect") {
 								console.log("have subfields")
-								debugger
+
 								var myselections = [];
 								$this.find("input#Revenue:checked").each(function () {
 									myselections.push($this.val());
@@ -2490,8 +2514,7 @@ window.CrSetChangeBody = {
 								} else if ($this.hasClass("percentagefield")) {
 									o.value = $this.val() / 100;
 								} else if (o.type == "multiselect" || o.type == "lookupmultiselect") {
-									console.log("dont tttt have subfields")
-									debugger
+
 									var myselections = [];
 									$this.find("input#Revenue:checked").each(function () {
 										myselections.push($this.val());
@@ -4651,32 +4674,61 @@ var Field_Master_Details_CR = {
 }
 
 
-// var MasterDetails_Request_View = {
-// 	onSuccess: function (sender, args) {
+window.MasterDetails_Request_View = {
+	onSuccess: function (sender, args) {
 
 
-// 		var changeMasterData = oListItem.get_item("ChangeBodyMaster")
+		var changeMasterData = oListItem.get_item("ChangeBodyMaster")
 
-// 		changeMasterData = eval(changeMasterData)
+		changeMasterData = eval(changeMasterData)
 
-// 		console.log(changeMasterData, "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+		changeMasterData.forEach(el => {
 
-// 	},
-// 	onError: function (sender, args) {
-// 		console.log(
-// 			"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
-// 		);
-// 	},
-// 	init: function () {
-// 		var clientContext = new SP.ClientContext.get_current();
-// 		var oList = clientContext.get_web().get_lists().getByTitle(SP_ListName);
-// 		MasterDetails_Request_View.g.oListItem = oList.getItemById(IID); //declared inside object scope only
-// 		oListItem = MasterDetails_Request_View.g.oListItem;
-// 		clientContext.load(MasterDetails_Request_View.g.oListItem);
-// 		clientContext.executeQueryAsync(
-// 			Function.createDelegate(this, MasterDetails_Request_View.onSuccess),
-// 			Function.createDelegate(this, MasterDetails_Request_View.onError)
-// 		);
-// 	},
-// 	g: {},
-// }
+			var value = el.value ? el.value : el.originalValue
+
+			if(value == "no"){
+				if (
+					localStorage.getItem("lng") == null ||
+					localStorage.getItem("lng") == "ar"
+				  ) {
+					value = "لا"
+				  }
+			}else if(value == "yes"){
+				if (
+					localStorage.getItem("lng") == null ||
+					localStorage.getItem("lng") == "ar"
+				  ) {
+					value = "نعم"
+				  }
+			}else if(!value){
+				value = No_Data
+			}
+
+			debugger
+			console.log(el.InternalName, "InternalName")
+			$(`.cr-related-item-section[data-target_list="${el.listName}"] .Details-Item.EditItem[data-id=${el.masterSectionId}]`).find(`#${el.InternalName}`).text(value)
+
+
+		})
+
+		console.log(changeMasterData, "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+
+	},
+	onError: function (sender, args) {
+		console.log(
+			"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+		);
+	},
+	init: function () {
+		var clientContext = new SP.ClientContext.get_current();
+		var oList = clientContext.get_web().get_lists().getByTitle(SP_ListName);
+		MasterDetails_Request_View.g.oListItem = oList.getItemById(IID); //declared inside object scope only
+		oListItem = MasterDetails_Request_View.g.oListItem;
+		clientContext.load(MasterDetails_Request_View.g.oListItem);
+		clientContext.executeQueryAsync(
+			Function.createDelegate(this, MasterDetails_Request_View.onSuccess),
+			Function.createDelegate(this, MasterDetails_Request_View.onError)
+		);
+	},
+	g: {},
+}
