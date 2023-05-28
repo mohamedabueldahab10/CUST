@@ -299,6 +299,9 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         grpfieldkey: 'Title',
+        
+        descPhraseAr: "تظهر الاهداف بناء على نوع  مستوى الهدف المرتبط بالاستراتيجية المختارة",
+        descPhraseEn: "The Objectives appear based on selected Level that related to selected Strategy", 
         //
         dynamic: 'RelatedStrategy',
         filterField: 'RelatedStrategy',
