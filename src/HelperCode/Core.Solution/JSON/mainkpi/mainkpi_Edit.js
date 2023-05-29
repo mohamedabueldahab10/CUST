@@ -484,7 +484,9 @@ var Information_Form = [
         queryFieldValue: 'main',
         source: 'MainKPI',
         // "state": "disabled",
-        Dispfieldkey: 'Name',
+        Dispfieldkey: 'Name',               
+        descPhraseAr: "المؤشر الرئيسي المرتبط ",
+        descPhraseEn: "Related Main KPIs",
         valfieldkey: 'Title',
         // display: 'none',
         security: {

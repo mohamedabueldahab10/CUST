@@ -315,7 +315,9 @@ var Information_Form = [
       {
         InternalName: 'RelatedMainKpis',
         ToggleName: 'RelatedMainKpis',
-        DisplayNameEn: 'Related Main Kpis',
+        DisplayNameEn: 'Related Main Kpis',           
+        descPhraseAr: "المؤشر الرئيسي المرتبط ",
+        descPhraseEn: "Related Main KPIs",
         DisplayName: 'المؤشر المرتبط',
         // type: 'lookup',
         type: 'lookupWithQuery',
@@ -325,7 +327,7 @@ var Information_Form = [
         // queryFieldType: 'Choice', //ex: "Choice"
         queryFieldValue: 'main',
         source: 'MainKPI',
-        // "state": "disabled",
+        // "state": "disabled",     
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         // display: 'none',
