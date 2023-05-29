@@ -163,7 +163,6 @@ window.CrModeFunctionality = {
 				asyncFor.seqProcess(
 					item.subFields,
 					function (subitemField, indexField, resolveField) {
-						console.log(subitemField, "subitemField")
 
 						// if(subitemField.type != "picker" && subitemField.InternalName){
 						window[`${renderFunction}`].RenderForm(
@@ -2211,14 +2210,14 @@ window.CrItemDataRenderFromJSON_View = {
 			}
 		);
 
-		debugger
+
 		// MasterDetails_Request_View.init()
 
 		if (RListKey == "initiatives" || RListKey == "projects") {
-			window.setTimeout(function(){
+			window.setTimeout(function () {
 				MasterDetails_Request_View.init()
 
-			},2000)
+			}, 2000)
 		}
 	},
 	// Global variables
@@ -2322,7 +2321,6 @@ window.CrSetChangeBody = {
 								if ($this.hasClass("withTime")) {
 									var dateval = $this.val();
 									var datetime = new Date(dateval);
-									console.log("datetime", datetime);
 									// format the output
 									var month = datetime.getMonth() + 1;
 									var day = datetime.getDate();
@@ -2370,7 +2368,6 @@ window.CrSetChangeBody = {
 							} else if ($this.hasClass("percentagefield")) {
 								o.value = $this.val() / 100;
 							} else if (o.type == "multiselect" || o.type == "lookupmultiselect") {
-								console.log("have subfields")
 
 								var myselections = [];
 								$this.find("input#Revenue:checked").each(function () {
@@ -2466,7 +2463,6 @@ window.CrSetChangeBody = {
 									if ($this.hasClass("withTime")) {
 										var dateval = $this.val();
 										var datetime = new Date(dateval);
-										console.log("datetime", datetime);
 										// format the output
 										var month = datetime.getMonth() + 1;
 										var day = datetime.getDate();
@@ -2562,14 +2558,12 @@ window.CrSetChangeBody = {
 		// handle new value in master details
 		changeRequestBodyMaster.forEach(function (o, i, a) {
 
-			console.log(changeRequestBodyMaster, "changeRequestBodyMaster")
 
 
 			//> input#${o.InternalName}
 			if (o.masterType == "edit") {
 				$(`.cr-related-item-section[data-target_list="${o.listName}"] .Details-Item.EditItem #${o.InternalName}`).each(function () {
 
-					console.log($(this).attr('id'), "iiiiiiiiiii")
 					var masterId = $(this).parent().parent().data("id")
 					var arrayMasterId = Number(o.masterSectionId)
 					// masterId = Number(masterId)
@@ -2604,7 +2598,6 @@ window.CrSetChangeBody = {
 												$(this).attr("sid").split("|").slice(-1)[0]
 											);
 
-									console.log('aaaa', ppp);
 									users.push(ppp)
 								})
 								o.value = users
@@ -2708,7 +2701,6 @@ window.CrSetChangeBody = {
 												$(this).attr("sid").split("|").slice(-1)[0]
 											);
 
-									console.log('aaaa', ppp);
 									users.push(ppp)
 								})
 								o.value = users
@@ -2869,7 +2861,6 @@ window.executeCR = {
 						projectManagerCr = executeCR.g.oListItem.get_item("ProjectManager") ? executeCR.g.oListItem.get_item("ProjectManager") : ""
 						projectOwnerCr = executeCR.g.oListItem.get_item("ProjectOwner") ? executeCR.g.oListItem.get_item("ProjectOwner") : ""
 						projectSponsorCr = executeCR.g.oListItem.get_item("ProjectSponsor") ? executeCR.g.oListItem.get_item("ProjectSponsor") : ""
-						console.log(projectGUIDCr, "projectGUIDCssr")
 
 						if (projectOwnerCr && !projectBuildTeamArrCr.includes(projectOwnerCr.get_lookupValue())) {
 							projectBuildTeamArrCr.push(projectOwnerCr.get_lookupValue())
@@ -3150,7 +3141,6 @@ var CR_Master_Details_Request = {
 								}
 								customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
 
-								console.log(customquerymulti, "customquerymulti")
 
 								sphttp.get(
 									_spPageContextInfo.siteServerRelativeUrl,
@@ -3327,6 +3317,8 @@ var Fill_BodyMaster = {
 
 				var fieldValue
 
+
+
 				if ($(this).attr("type") == "picker") {
 					if ($(this).find("span.sp-peoplepicker-userSpan").length) {
 						var id =
@@ -3341,6 +3333,9 @@ var Fill_BodyMaster = {
 									$(this).find("span.sp-peoplepicker-userSpan").attr("sid")
 								); //.split('|').slice(-1)[0]
 						fieldValue = ppp
+					} else {
+
+						fieldValue = $(this).data("email")
 					}
 				} else if ($(this).attr("type") == "multipicker") {
 					if ($(this).find("span.sp-peoplepicker-userSpan").length) {
@@ -3355,7 +3350,6 @@ var Fill_BodyMaster = {
 										$(this).attr("sid").split("|").slice(-1)[0]
 									);
 
-							console.log('aaaa', ppp);
 							users.push(ppp)
 						})
 						fieldValue = users
@@ -3458,7 +3452,6 @@ var Fill_BodyMaster = {
 			})
 
 			Master_Edit_DataRequest.init(changeRequestBodyMaster)
-			console.log(changeRequestBodyMaster, "changeRequestBodyMaster")
 		}
 
 
@@ -3472,7 +3465,6 @@ window.Add_New_CRMaster = {
 
 		// var x =  $(".cr-related-item-section[data-target_list]").find(".Details-Item.NewItem").last()
 		$(`.cr-related-item-section[data-target_list] .Details-Item.NewItem[data-index=${getMasterIndex}]`).each(function () {
-			console.log("Inside New Master Section")
 			var CurrList = $(this).closest("[data-target_list]").attr("data-target_list");
 			itemIndex = $(this).attr("data-index");
 
@@ -3546,12 +3538,10 @@ window.Remove_New_CRMaster = {
 	init: function (lastIndex) {
 		var reAssigneBodyMaster = []
 		changeRequestBodyMaster.forEach((el, index) => {
-			// console.log(lastIndex, "lastIndex")
-			console.log(el.masterSectionId, "masterSectionId")
 			if (lastIndex == el.masterSectionId) {
 				console.log(index, "index")
 				// var indexOfMaster = changeRequestBodyMaster.indexOf(el)
-				// debugger
+
 				// changeRequestBodyMaster.splice(index,1)
 				// console.log(changeRequestBodyMaster.length,"llllllllllll")
 			} else {
@@ -3603,7 +3593,7 @@ var arrangeCRMasterDetails = {
 		})
 
 
-		console.log(masterDataFormated, "masterDataFormated masterDataFormated masterDataFormated after")
+		console.log(masterDataFormated, " masterDataFormated masterDataFormated after")
 		debugger
 		if (masterDataFormated.length) {
 			masterDataFormatedForMasterField = Array.from(masterDataFormated)
@@ -3664,11 +3654,11 @@ window.edit_Cr_MastreDetails = {
 						SP.FieldUserValue.fromUser(value.$5c_1)
 					);
 				} else if (o.originalValue) {
-					value = o.originalValue
-					edit_Cr_MastreDetails.g.oListItem.set_item(
-						o.InternalName,
-						SP.FieldUserValue.fromUser(value.$5c_1)
-					);
+					// value = o.originalValue
+					// edit_Cr_MastreDetails.g.oListItem.set_item(
+					// 	o.InternalName,
+					// 	SP.FieldUserValue.fromUser(value.$5c_1)
+					// );
 				}
 
 
@@ -3724,7 +3714,6 @@ window.edit_Cr_MastreDetails = {
 						checkinProjectInEpm.checkin(projectGUIDCr);
 					}
 					else if (RListKey == "initiatives") {
-						console.log(masterDataFormatedForMasterField, "masterDataFormatedForMasterField ooooooooooooooooo")
 						var fieldTargetListLength = $('.Details-Item.EditItem ul[data-fieldtargetlist]').length
 						Field_MasterDetails_Data_CR.init(masterDataFormatedForMasterField)
 					}
@@ -3847,9 +3836,7 @@ window.new_Cr_MasterDetails = {
 				// to get the master id when add new benifit in master details to use it when create benefitdelivrables
 				if (RListKey == "initiatives" && masterDataFormatedArr[0].listName == "Benefits") {
 					var fieldMasterId = new_Cr_MasterDetails.g.oListItem.get_id()
-					// console.log(new_Cr_MasterDetails.g.oListItem.get_id(), "iddddddddddddd of master details")
-					// console.log(masterDataFormatedForMasterField, "masterDataFormatedForMasterField")
-					// console.log(masterDataFormatedArr, "masterDataFormatedArr masterDataFormatedArr")
+
 					masterDataFormatedForMasterField.forEach(el => {
 						if (el.masterType == "new" && el.listName == "Benefits") {
 							el.values.forEach(item => {
@@ -3875,7 +3862,6 @@ window.new_Cr_MasterDetails = {
 					if (RListKey == "projects") {
 						checkinProjectInEpm.checkin(projectGUIDCr);
 					} else if (RListKey == "initiatives") {
-						console.log(masterDataFormatedForMasterField, "masterDataFormatedForMasterField NEEEEEEEEEW")
 						Field_MasterDetails_Data_CR.init(masterDataFormatedForMasterField)
 					}
 					else {
@@ -3965,7 +3951,6 @@ var Master_Edit_DataRequest = {
 										datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
 
 									$(this).val(datetouse2);
-									console.log(datetouse2, "datetouse2")
 
 								} else {
 									$(this).val(d)
@@ -4192,7 +4177,6 @@ var Update_Project_Center_CR = {
 			headers: { "Accept": "application/json; odata=verbose" },
 			success: function (data) {
 				allEnterpriseResourcesCR = data.d.results
-				console.log(allEnterpriseResourcesCR, "allEnterpriseResourcesCR allEnterpriseResourcesCR allEnterpriseResourcesCR")
 				SP.SOD.registerSod('PS.ProjectContext', SP.Utilities.Utility.getLayoutsPageUrl('ps.js'));
 				SP.SOD.loadMultiple(['PS.ProjectContext'], EPMProjectToUpdateCR);
 			}
@@ -4476,7 +4460,6 @@ var fieldTargetListInMasterCR = []
 var Field_MasterDetails_Data_CR = {
 	init: function (masterDataFormated) {
 
-		console.log(masterDataFormated, "masterDataFormated f")
 
 		var masterFieldTargetList = ""
 
@@ -4648,7 +4631,6 @@ var Field_Master_Details_CR = {
 
 			clientContext.executeQueryAsync(
 				Function.createDelegate(this, function () {
-					console.log(fieldTargetData, "fieldTargetData")
 
 					fieldTargetData.shift()
 					Field_Master_Details_CR.init(fieldTargetData)
@@ -4657,7 +4639,6 @@ var Field_Master_Details_CR = {
 
 		} else {
 			Task_Edit_Data.init();
-			console.log("IN ELSEEEEEEEEEEEE")
 			// window.location =
 			//   _spPageContextInfo.webAbsoluteUrl +
 			//   "/SitePages/View.aspx?ListKey=" +
@@ -4685,33 +4666,72 @@ window.MasterDetails_Request_View = {
 		changeMasterData.forEach(el => {
 
 			var value = el.value ? el.value : el.originalValue
+			var items = ""
 
-			if(value == "no"){
+			if (value == "no") {
 				if (
 					localStorage.getItem("lng") == null ||
 					localStorage.getItem("lng") == "ar"
-				  ) {
+				) {
 					value = "لا"
-				  }
-			}else if(value == "yes"){
+				}
+			} else if (value == "yes") {
 				if (
 					localStorage.getItem("lng") == null ||
 					localStorage.getItem("lng") == "ar"
-				  ) {
+				) {
 					value = "نعم"
-				  }
-			}else if(!value){
+				}
+			} else if (!value) {
 				value = No_Data
+			} else if (el.type == "picker") {
+
+				if (el.value) {
+					value = el.value.$5c_1
+				} else {
+					value = el.originalValue
+				}
+			} else if (el.type == "multiselect") {
+
+				$(`.cr-related-item-section[data-target_list="${el.listName}"] .Details-Item.EditItem[data-id=${el.masterSectionId}]`).find(`#${el.InternalName}`).addClass("cr_whitespace")
+
+				if (el.InternalName == "RelatedSubKpis") {
+					var mainkpiarr = [];
+					var splitKpiValues = value.split(":::")
+					if (localStorage.getItem("Dynamo_MainKPI") != null) {
+						mainkpiarr = JSON.parse(
+							localStorage.getItem("Dynamo_MainKPI")
+						);
+
+						mainkpiarr.forEach(element => {
+							if (splitKpiValues.includes(element.code)) {
+								items += element.name + "\n"
+							}
+						})
+
+						value = items
+						//   projectsectorarr = projectsectorarr.filter(function (a) {
+						// 	return a.code === projectsector;
+						//   });
+						//   if (
+						// 	localStorage.getItem("lng") == null ||
+						// 	localStorage.getItem("lng") == "ar"
+						//   ) {
+						// 	projectsector = projectsectorarr[0].name;
+						//   } else projectsector = projectsectorarr[0].nameEn;
+					}
+				}
+
 			}
 
-			debugger
-			console.log(el.InternalName, "InternalName")
-			$(`.cr-related-item-section[data-target_list="${el.listName}"] .Details-Item.EditItem[data-id=${el.masterSectionId}]`).find(`#${el.InternalName}`).text(value)
+			console.log(items, "items items")
 
+
+			$(`.cr-related-item-section[data-target_list="${el.listName}"] .Details-Item.EditItem[data-id=${el.masterSectionId}]`).find(`#${el.InternalName}`).text(value)
 
 		})
 
-		console.log(changeMasterData, "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+		console.log(changeMasterData, "changeMasterDatachangeMasterData")
 
 	},
 	onError: function (sender, args) {

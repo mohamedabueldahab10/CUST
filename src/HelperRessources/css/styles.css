@@ -7050,3 +7050,7 @@ span.statuscolorstat28 {
     padding-bottom: 1px !important;
     padding-top: 1px !important;
 }
+
+.cr_whitespace{
+    white-space: pre-wrap;
+}
