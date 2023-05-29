@@ -268,7 +268,7 @@ var Project_Home_Info_Request = {
       } else {
         stageNamestr = stageName.toString();
       }
-     
+
 
       if (localStorage.getItem("Dynamo_Phases") != null) {
         phasearr = JSON.parse(localStorage.getItem("Dynamo_Phases") || "[]");
@@ -2146,15 +2146,15 @@ var StagesConfiguration_Info_Request = {
       stages = oListItem.get_item("StageCode");
       projectType = oListItem.get_item("ProjectType");
 
- 
+
       // render the stage depends on initiative type
       projectType = Array.from(projectType)
       if (InitiativeType) {
         if (projectType.includes(InitiativeType)) {
           stageArr.push(stages);
         }
-      }else{
-        if(IsStrategicProject == "no"){
+      } else {
+        if (IsStrategicProject == "no") {
           if (projectType.includes("strategically")) {
             stageArr.push(stages);
           }
@@ -2295,7 +2295,7 @@ var Stages_Data_Request = {
       $(".project-stages-ctx div#v-pills-tab").html(phasehtml);
       $(".project-stages-ctx div#v-pills-tabContent").html(stagehtml);
 
-    
+
 
 
     } else {
@@ -2305,6 +2305,16 @@ var Stages_Data_Request = {
     var isactive = false;
 
     var PhasesProgressArr = []
+
+    //update under approve phase and stage when project is not draft
+    if (!ProjectIsDraft) {
+      $(".project-stages-ctx div#v-pills-tab > .P0 .percent-complete"
+      ).text(100 + "%");
+      if ($(`[data-phase="P0"]`).length) {
+        $(`[data-phase="P0"]`).find("input:checkbox").attr("checked", "checked")
+      }
+
+    }
 
     $(".project-stages-ctx div#v-pills-tabContent > .tab-pane").each(
       function () {
@@ -2357,15 +2367,7 @@ var Stages_Data_Request = {
       }
     }
 
-    //update under approve phase and stage when project is not draft
-    if(!ProjectIsDraft){
-      $(".project-stages-ctx div#v-pills-tab > .P0 .percent-complete"
-      ).text(100 + "%");
-      if($(`[data-phase="P0"]`).length){
-        $(`[data-phase="P0"]`).find("input:checkbox").attr("checked","checked")
-      }
 
-    }
 
     if (!isactive) {
       $(".new-Phase:last-child").addClass("active");
@@ -2386,7 +2388,7 @@ var Stages_Data_Request = {
       .getByTitle("Project Stages");
     var camlQuery = new SP.CamlQuery();
 
-    
+
     Query =
       "<View><Query><Where><And><Eq><FieldRef Name='ProjectCode'/><Value Type='Text'>" +
       Project_Home_Info_Request.g.PCODE +

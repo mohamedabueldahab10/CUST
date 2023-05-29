@@ -737,6 +737,14 @@ var MainKPIs_Info_Request = {
     if (isPerformanceLeader) {
       $('input[data-internal*="Actual"]').prop('disabled', true);
       $('td input[data-internal*="Target"]').prop('disabled', true);
+
+
+      $("body").append(
+        "<style>" +
+        ".btn-addTarget{opacity: .6;pointer-events: none;display:none}" +
+        "</style>"
+      )
+
     }
 
     // disable field when recurrence changed

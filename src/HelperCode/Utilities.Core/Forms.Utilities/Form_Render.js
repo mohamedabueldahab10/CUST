@@ -619,7 +619,7 @@ window.ListInfo = {
 
             var arraySibling = $(this).find(':selected').data('arraysiblingvalues')
 
-            
+
             if (arraySibling && arraySibling.length) {
               arraySibling = eval(arraySibling)
 
@@ -2065,6 +2065,10 @@ window.ListInfo = {
     var dispfieldkey;
     var descPhrase, isexist;
 
+    var jsonListKey;
+
+
+
     if (
       localStorage.getItem("lng") == null ||
       localStorage.getItem("lng") == "ar"
@@ -2100,6 +2104,8 @@ window.ListInfo = {
       Errmsgkey = element.Errmsgkey;
     }
 
+    // to use it in cr new links 
+    jsonListKey = element.listkey
 
 
     switch (element.type) {
@@ -6653,57 +6659,66 @@ window.ListInfo = {
 
       case "anchor":
 
-        htmlBody =
-          '<div class="col-md-3 CFIELD ' +
-          element.className +
-          " " +
-          hideField +
-          ' " ' +
-          thistip +
-          " " +
-          hidestagesIDs +
-          " " +
-          editableBy +
-          " " +
-          showstagesIDs +
-          "  " +
-          disablestagesIDs +
-          "  " +
-          enablestagesIDs +
-          "   " +
-          isWfhidestagesIDs +
-          " " +
-          requireOnWfTaskstagesIDs +
-          " " +
-          isWfshowstagesIDs +
-          "  " +
-          isWfdisablestagesIDs +
-          "  " +
-          isWfenablestagesIDs +
-          '       data-groups="' +
-          groups +
-          '" style="display:' +
-          element.display +
-          '">' +
-          "<a " +
-          ToggleName +
-          " " +
-          toggleDisabledName +
-          " " +
-          RequiredName +
-          ' href="' + element.href + '" ' +
-          dynamic +
-          ' class="formLink" id="' +
-          element.InternalName +
-          '" ' +
-          element.state +
-          " " +
-          element.validation +
-          " target='_blank'>" +
-          displayName +
-          '<i class="icon-plus"></i>' +
-          "</a>" +
-          "</div>";
+        console.log(CreateChangeRequest_Access)
+
+        debugger
+
+        if (CreateChangeRequest_Access.includes(jsonListKey)) {
+
+          htmlBody =
+            '<div class="col-md-3 CFIELD ' +
+            element.className +
+            " " +
+            hideField +
+            ' " ' +
+            thistip +
+            " " +
+            hidestagesIDs +
+            " " +
+            editableBy +
+            " " +
+            showstagesIDs +
+            "  " +
+            disablestagesIDs +
+            "  " +
+            enablestagesIDs +
+            "   " +
+            isWfhidestagesIDs +
+            " " +
+            requireOnWfTaskstagesIDs +
+            " " +
+            isWfshowstagesIDs +
+            "  " +
+            isWfdisablestagesIDs +
+            "  " +
+            isWfenablestagesIDs +
+            '       data-groups="' +
+            groups +
+            '" style="display:' +
+            element.display +
+            '">' +
+            "<a " +
+            ToggleName +
+            " " +
+            toggleDisabledName +
+            " " +
+            RequiredName +
+            ' href="' + element.href + '" ' +
+            dynamic +
+            ' class="formLink" id="' +
+            element.InternalName +
+            '" ' +
+            element.state +
+            " " +
+            element.validation +
+            " target='_blank'>" +
+            displayName +
+            '<i class="icon-plus"></i>' +
+            "</a>" +
+            "</div>";
+        } else {
+          htmlBody = ""
+        }
         // htmlBody = '<div class="col-md-12"></div>';
         OnSuccess(flag, htmlBody);
         break;
@@ -8936,52 +8951,52 @@ window.View_ListInfo = {
           OnSuccess(flag, htmlBody);
           break;
 
-          case "weightfloatpercentage":
-            htmlBody =
-              '<div class="col-md-6 CFIELD ' +
-              dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
-              " " +
-              element.className +
-              ' " ' +
-              thistip +
-              " " +
-              hidestagesIDs +
-              " " +
-              showstagesIDs +
-              "  " +
-              disablestagesIDs +
-              "  " +
-              enablestagesIDs +
-              "   " +
-              isWfhidestagesIDs +
-              " " +
-              requireOnWfTaskstagesIDs +
-              " " +
-              isWfshowstagesIDs +
-              "  " +
-              isWfdisablestagesIDs +
-              "  " +
-              isWfenablestagesIDs +
-              '        data-groups="' +
-              groups +
-              '" style="display:' +
-              element.display +
-              '">' +
-              '<label for="' +
-              element.InternalName +
-              '" ' +
-              element.validation +
-              ">" +
-              displayName +
-              "</label>" +
-              '<p type="number" class="viewmode-value" id="' +
-              element.InternalName +
-              '" ' +
-              ToggleName +
-              "></p>" +
-              "</div>";
-            OnSuccess(flag, htmlBody);
-            break;
+        case "weightfloatpercentage":
+          htmlBody =
+            '<div class="col-md-6 CFIELD ' +
+            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            " " +
+            element.className +
+            ' " ' +
+            thistip +
+            " " +
+            hidestagesIDs +
+            " " +
+            showstagesIDs +
+            "  " +
+            disablestagesIDs +
+            "  " +
+            enablestagesIDs +
+            "   " +
+            isWfhidestagesIDs +
+            " " +
+            requireOnWfTaskstagesIDs +
+            " " +
+            isWfshowstagesIDs +
+            "  " +
+            isWfdisablestagesIDs +
+            "  " +
+            isWfenablestagesIDs +
+            '        data-groups="' +
+            groups +
+            '" style="display:' +
+            element.display +
+            '">' +
+            '<label for="' +
+            element.InternalName +
+            '" ' +
+            element.validation +
+            ">" +
+            displayName +
+            "</label>" +
+            '<p type="number" class="viewmode-value" id="' +
+            element.InternalName +
+            '" ' +
+            ToggleName +
+            "></p>" +
+            "</div>";
+          OnSuccess(flag, htmlBody);
+          break;
 
         case "floatpercentage":
           htmlBody =

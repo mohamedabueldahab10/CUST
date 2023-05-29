@@ -123,6 +123,8 @@ var UserRole,
   AllPageNames = [],
   isMainIndicator = window.location.href.indexOf("MainIndicators.aspx") > -1,
   isAdminPanel = window.location.href.indexOf("AdminPanel.aspx") > -1,
+  isKnowledgeBase = window.location.href.indexOf("KnowledgeBase.aspx"),
+  isAllTasks = window.location.href.indexOf("AllTasks.aspx"),
   istherePCODE = window.location.href.toLowerCase().indexOf("pcode=") > -1,
   isthereICODE = window.location.href.indexOf("ICODE=") > -1,
   isthereSTCODE = window.location.href.indexOf("STCODE=") > -1,
@@ -7280,12 +7282,16 @@ var Access_Project_Info_Request = {
           }
         }
         else {
+          console.log("in breadcrump")
+          debugger
           if (
             !isInitiativesHomePage &&
             !isTarget &&
             !isMainIndicator &&
             !isAdminPanel &&
-            !isBenefitsMetrics
+            !isBenefitsMetrics &&
+            !isKnowledgeBase &&
+            !isAllTasks
           ) {
             $(".page-title").html(
               '<a href="' +
@@ -7297,7 +7303,7 @@ var Access_Project_Info_Request = {
               ""
             );
             $(".firsttitle").hide();
-          } else if (isTarget || isBenefitsMetrics || isMainIndicator || isAdminPanel) {
+          } else if (isTarget || isBenefitsMetrics || isMainIndicator || isAdminPanel || isKnowledgeBase || isAllTasks) {
             $(".page-title").html(
               `<span style="color:#fff">${USERPageTitle}</span>`
             );

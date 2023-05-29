@@ -16,28 +16,32 @@ window.Information_Form = [
 				DisplayNameEn: 'Create Project',
 				DisplayName: 'انشاء مشروع',
 				type: 'anchor',
-				href: "/SitePages/new.aspx?ListKey=projects"
+				href: "/SitePages/new.aspx?ListKey=projects",
+				listkey:"projects"
 			},
 			{
 				// InternalName: 'Title',
 				DisplayNameEn: 'Create Initiative',
 				DisplayName: 'انشاء مبادرة',
 				type: 'anchor',
-				href: "/SitePages/new.aspx?ListKey=initiatives"
+				href: "/SitePages/new.aspx?ListKey=initiatives",
+				listkey:"initiatives"
 			},
 			{
 				// InternalName: 'Title',
 				DisplayNameEn: 'Create objective',
 				DisplayName: 'انشاء هدف',
 				type: 'anchor',
-				href: "/SitePages/new.aspx?ListKey=sos"
+				href: "/SitePages/new.aspx?ListKey=sos",
+				listkey:"sos"
 			},
 			{
 				// InternalName: 'Title',
 				DisplayNameEn: 'Create KPI',
 				DisplayName: 'انشاء مؤشر',
 				type: 'anchor',
-				href: "/SitePages/new.aspx?ListKey=mainkpi"
+				href: "/SitePages/new.aspx?ListKey=mainkpi",
+				listkey:"mainkpi"
 			},
 		]
 	},

@@ -2011,8 +2011,9 @@ window.ListingData = {
               countOfnostarted = 0,
               latecount = 0;
             var today = new Date();
+            
             recordsddl.forEach((item) => {
-              if (item.Delivered == true) {
+              if (item.Delivered == "yes") {
                 countcompleted += 1;
               } else {
                 notcompletedcount += 1;
@@ -2029,10 +2030,10 @@ window.ListingData = {
               var month = formatedplaneddatemilestone.split("/").at(1);
               var year = formatedplaneddatemilestone.split("/").at(2);
               var finalformatedPlanneddate = new Date(year + "-" + month + "-" + day);
-              if (today < finalformatedPlanneddate && item.Delivered !== true) {
+              if (today < finalformatedPlanneddate && item.Delivered !== 'yes') {
                 countOfnostarted += 1;
               }
-              if (today > finalformatedPlanneddate && item.Delivered !== true) {
+              if (today > finalformatedPlanneddate && item.Delivered !== 'yes') {
                 latecount += 1;
               }
             });
