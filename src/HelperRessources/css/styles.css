@@ -4420,6 +4420,12 @@ a.view-more.d-block.text-center.py-2.Resources.disabled {
     color: #f8ae3a;
 }
 
+.master_section_err{
+    font-size: 15px;
+    color: #f8ae3a;
+    padding: 0px 20px; 
+}
+
 /* ghufran end style */
 
 .CFIELD.radioLabelField .radiolabel {

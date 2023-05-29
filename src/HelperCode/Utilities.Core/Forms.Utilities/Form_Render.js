@@ -6883,174 +6883,247 @@ window.ListInfo = {
 
       $(".add-New-Detail").on("click", function () {
 
-        // to handle the index on master details
-        var getMasterIndex = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last().attr('data-index')
-        if (isNew && listkey != "changerequest") {
-          getMasterIndex = getMasterIndex ? Number(getMasterIndex) : ""
-          getMasterIndex = getMasterIndex + 1
-        } else if (isEdit || listkey == "changerequest") {
-          var checkEditMasterCount = $(this).closest("[data-target_list]").find(".Details-Item.EditItem")
-          var checkNewMasterCount = $(this).closest("[data-target_list]").find(".Details-Item.NewItem")
-          checkEditMasterCount = checkEditMasterCount ? checkEditMasterCount.length : 0
-          checkEditMasterCount = Number(checkEditMasterCount)
-          checkNewMasterCount = checkNewMasterCount ? checkNewMasterCount.length : 0
-          checkNewMasterCount = Number(checkNewMasterCount)
-          getMasterIndex = checkEditMasterCount + checkNewMasterCount + 1
-        }
-
-
-
-        if ((listkey == 'projects' || listkey == 'initiatives') && isNew) {
-          var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item").last()
-          lastDetailsItemBeforeAdd.addClass('disable_section')
-        } else if (listkey == "changerequest" && (RListKey == 'projects' || RListKey == 'initiatives')) {
-          var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last()
-          if (lastDetailsItemBeforeAdd.length == 0) {
-            var onLoadMaster = $(this).closest("[data-target_list]").find(".Details-Item.EditItem")
-            if (onLoadMaster.length) {
-              onLoadMaster.each(function () {
-                $(this).addClass("disable_section")
-              })
-            }
-          } else {
-            lastDetailsItemBeforeAdd.addClass('disable_section')
-          }
-        }
-        else if ((listkey == 'projects' || listkey == 'initiatives') && isEdit) {
-
-          var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last()
-          if (lastDetailsItemBeforeAdd.length == 0) {
-            var onLoadMaster = $(this).closest("[data-target_list]").find(".Details-Item.EditItem")
-            if (onLoadMaster.length) {
-              onLoadMaster.each(function () {
-                $(this).addClass("disable_section")
-              })
-            }
-          } else {
-            lastDetailsItemBeforeAdd.addClass('disable_section')
-          }
-
-        }
-
-
-
-        var totalWeight = 0
-
-
+        //check if there is a required field not filled (to stop add master section if there is a required field not filled)
+        var stopAdd = false
         $(this).parent().parent().children('.Details-Item').each(function () {
 
-          var value = $(this).find('.weightfloatpercentage').val()
-          value = value ? value : 0
-          totalWeight += Number(value)
+          var requiredArr = $(this).find('input[required],div[type=picker],textarea[required]')
+
+          requiredArr.each(function () {
+
+            var checkType = $(this).attr('type')
+
+            var val = ""
+            if (checkType == "picker") {
+              if (isNew && listkey !="changerequest") {
+                var checkLabelRequired = $(this).parent().find('label').attr("required")
+                if (checkLabelRequired) {
+                  var noPickerVal = $(this).find("span.sp-peoplepicker-userSpan").length == 0
+                  if (!noPickerVal) {
+                    val = "picker"
+                  }
+                }
+              } else if (isEdit || listkey == 'changerequest') {
+                var checkLabelRequired = $(this).parent().find('label').attr("required")
+                if (checkLabelRequired) {
+                  var noPickerVal = $(this).find("span.sp-peoplepicker-userSpan").length == 0 && (($(this).attr('data-email') == enternameemail) || !$(this).attr('data-email'))
+                  if (!noPickerVal) {
+                    val = "picker"
+                  }
+                }
+              }
+            } else {
+              val = $(this).val()
+            }
+            if (!val) {
+              stopAdd = true
+            }
+          })
+          // handle required multi select
+          var multiSelectRequired = $(this).find('.dropdown-menu.multiselect_scroll.required').length
+          if (multiSelectRequired > 0) {
+            if ($(this).find('.dropdown-menu.multiselect_scroll.required :checkbox:checked').length == 0) {
+              stopAdd = true
+            }
+          }
         })
 
-        //$('.add-New-Detail').closest("[data-target_list]").find(".Details-Item:first-child")
+        if (stopAdd) {
+          var stoperMsg = ""
+          if (
+            localStorage.getItem("lng") == null ||
+            localStorage.getItem("lng") == "ar"
+          ) {
+            stoperMsg = "يجب تعبئة الحقول الازامية قبل الاضافة"
+          } else {
+            stoperMsg = "You Should fill the required fields before add"
+          }
+          var masterErr = $(this).parent().find(".master_section_err").length
+          if (masterErr == 0) {
+            $(this).parent().append('<span class="master_section_err">' + stoperMsg + '</span>')
+          }
+        } else {
+          // continue function normally
+          var masterErr = $(this).parent().find(".master_section_err").length
+          if (masterErr > 0) {
+            $(this).parent().find(".master_section_err").remove()
+          }
 
-        var toappend = $(this)
-          .closest("[data-target_list]")
-          .find(".Details-Item:first-child")
-          .html()
-          .toString(); //.replaceAll('value', 'value=""');
+          // to handle the index on master details
+          var getMasterIndex = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last().attr('data-index')
+          if (isNew && listkey != "changerequest") {
+            getMasterIndex = getMasterIndex ? Number(getMasterIndex) : ""
+            getMasterIndex = getMasterIndex + 1
+          } else if (isEdit || listkey == "changerequest") {
+            var checkEditMasterCount = $(this).closest("[data-target_list]").find(".Details-Item.EditItem")
+            var checkNewMasterCount = $(this).closest("[data-target_list]").find(".Details-Item.NewItem")
+            checkEditMasterCount = checkEditMasterCount ? checkEditMasterCount.length : 0
+            checkEditMasterCount = Number(checkEditMasterCount)
+            checkNewMasterCount = checkNewMasterCount ? checkNewMasterCount.length : 0
+            checkNewMasterCount = Number(checkNewMasterCount)
+            getMasterIndex = checkEditMasterCount + checkNewMasterCount + 1
+          }
 
 
-        $('<div class="Details-Item NewItem" data-index="' + getMasterIndex + '">' + toappend + "</div>").insertBefore($(this).parent());
 
-        // to handle attachement in master details for proj and initiative like deliv and milst
+          if ((listkey == 'projects' || listkey == 'initiatives') && isNew) {
+            var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item").last()
+            lastDetailsItemBeforeAdd.addClass('disable_section')
+          } else if (listkey == "changerequest" && (RListKey == 'projects' || RListKey == 'initiatives')) {
+            var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last()
+            if (lastDetailsItemBeforeAdd.length == 0) {
+              var onLoadMaster = $(this).closest("[data-target_list]").find(".Details-Item.EditItem")
+              if (onLoadMaster.length) {
+                onLoadMaster.each(function () {
+                  $(this).addClass("disable_section")
+                })
+              }
+            } else {
+              lastDetailsItemBeforeAdd.addClass('disable_section')
+            }
+          }
+          else if ((listkey == 'projects' || listkey == 'initiatives') && isEdit) {
 
-        if ((listkey == 'initiatives' || listkey == "projects") && isNew) {
+            var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last()
+            if (lastDetailsItemBeforeAdd.length == 0) {
+              var onLoadMaster = $(this).closest("[data-target_list]").find(".Details-Item.EditItem")
+              if (onLoadMaster.length) {
+                onLoadMaster.each(function () {
+                  $(this).addClass("disable_section")
+                })
+              }
+            } else {
+              lastDetailsItemBeforeAdd.addClass('disable_section')
+            }
 
-          //to remove the attach from first section
-          $("input[type=file]").trigger('change')
-          $(this).closest("[data-target_list]").find(".Details-Item .CFIELD >input[type=file]").last().parent().find('.attachfilename').html("")
+          }
+
+
+
+          var totalWeight = 0
+
+
+          $(this).parent().parent().children('.Details-Item').each(function () {
+
+            var value = $(this).find('.weightfloatpercentage').val()
+            value = value ? value : 0
+            totalWeight += Number(value)
+
+          })
+
+          //$('.add-New-Detail').closest("[data-target_list]").find(".Details-Item:first-child")
+
+          var toappend = $(this)
+            .closest("[data-target_list]")
+            .find(".Details-Item:first-child")
+            .html()
+            .toString(); //.replaceAll('value', 'value=""');
+
+
+
           //
-          var lastListDetails = $(this).closest("[data-target_list]").data('target_list')
-
-          // to add many attach in master details
-          $(this).closest("[data-target_list]").find(".Details-Item .CFIELD >input[type=file]").last().attr('id', `getFile${lastListDetails}-${getMasterIndex}`)
-
-          $(this).closest("[data-target_list]").find(".Details-Item .CFIELD >input[type=file]").last().parent().find('#chooseFile').attr('for', `getFile${lastListDetails}-${getMasterIndex}`)
-
-        }
-        // var fileId = "getFile" + attachCount;
-
-        // to hide the err msg when click  on plus
-
-        $(this).closest("[data-target_list]").find(".Details-Item .errMsgField").last().hide()
-
-        // insert new max for weight deliv
-        var lastDetailsItem = $(this).closest("[data-target_list]").find(".Details-Item").last()
-        lastDetailsItem.find('.remainpercstyle.remainPercentageVal').html(`${100 - totalWeight}]`) // add new title weight
-        lastDetailsItem.find('.weightfloatpercentage').attr("max", 100 - totalWeight) // add new max weight
-        //
-
-        masterLength = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").length
-
-        // to remove the disabled on multi select when click plus in master filed of master details section like deliv in benefit in edit initiative
-        $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last().find('ul[data-fieldtargetlist]').find("input:checkbox").each(function () {
-          $(this).attr("disabled", false)
-        })
 
 
-        if (isNew && listkey == "changerequest") {
-          if (masterLength > 0) {
-            $(this).closest("[data-target_list]").find(".remove-New-Detail").show()
+          $('<div class="Details-Item NewItem" data-index="' + getMasterIndex + '">' + toappend + "</div>").insertBefore($(this).parent());
+
+          // to handle attachement in master details for proj and initiative like deliv and milst
+
+          if ((listkey == 'initiatives' || listkey == "projects") && isNew) {
+
+            //to remove the attach from first section
+            $("input[type=file]").trigger('change')
+            $(this).closest("[data-target_list]").find(".Details-Item .CFIELD >input[type=file]").last().parent().find('.attachfilename').html("")
+            //
+            var lastListDetails = $(this).closest("[data-target_list]").data('target_list')
+
+            // to add many attach in master details
+            $(this).closest("[data-target_list]").find(".Details-Item .CFIELD >input[type=file]").last().attr('id', `getFile${lastListDetails}-${getMasterIndex}`)
+
+            $(this).closest("[data-target_list]").find(".Details-Item .CFIELD >input[type=file]").last().parent().find('#chooseFile').attr('for', `getFile${lastListDetails}-${getMasterIndex}`)
+
           }
-        } else if (isNew) {
-          // in new > 1 because on render the form there is a new Item so it will be  before click on +
-          if (masterLength > 1) {
-            $(this).closest("[data-target_list]").find(".remove-New-Detail").show()
-          }
-        } else if (isEdit) {
-          // in edit > 0 because on render the form there is no new Item till will click on +
-          if (masterLength > 0) {
-            $(this).closest("[data-target_list]").find(".remove-New-Detail").show()
-          }
-        }
+          // var fileId = "getFile" + attachCount;
+
+          // to hide the err msg when click  on plus
+
+          $(this).closest("[data-target_list]").find(".Details-Item .errMsgField").last().hide()
+
+          // insert new max for weight deliv
+          var lastDetailsItem = $(this).closest("[data-target_list]").find(".Details-Item").last()
+          lastDetailsItem.find('.remainpercstyle.remainPercentageVal').html(`${100 - totalWeight}]`) // add new title weight
+          lastDetailsItem.find('.weightfloatpercentage').attr("max", 100 - totalWeight) // add new max weight
+          //
+
+          masterLength = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").length
+
+          // to remove the disabled on multi select when click plus in master filed of master details section like deliv in benefit in edit initiative
+          $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last().find('ul[data-fieldtargetlist]').find("input:checkbox").each(function () {
+            $(this).attr("disabled", false)
+          })
 
 
-        var myPPicker = [];
-        $(this)
-          .closest(".fieldset-container")
-          .find(".Details-Item.NewItem")
-          .last()
-          .find(".PPField")
-          .each(function () {
-            $(
-              '<div class="PPField SPIField form-control" type="picker" id="' +
-              $(this).attr("id") +
-              "+++" +
-              Math.floor(Math.random() * 1000000) +
-              '" value="" placeholder="' +
-              $(this).attr("placeholder") +
-              '" INppicker="' +
-              $(this).attr("id") +
-              "+++" +
-              Math.floor(Math.random() * 1000000) +
-              '"></div>'
-            ).insertBefore($(this));
-            $(this).remove();
-          });
-        // $(this).closest('.fieldset-container').append('<div class="Details-Item NewItem">'+toappend+'</div>');
-        $(this)
-          .closest(".fieldset-container")
-          .find(".Details-Item.NewItem")
-          .last()
-          .find("div[type=picker]")
-          .each(function () {
-            var mp = new MyPeoplePicker();
-            mp.init($(this).attr("id"), {
-              PrincipalAccountType: "User",
-              AllowMultipleValues: false,
+          if (isNew && listkey == "changerequest") {
+            if (masterLength > 0) {
+              $(this).closest("[data-target_list]").find(".remove-New-Detail").show()
+            }
+          } else if (isNew) {
+            // in new > 1 because on render the form there is a new Item so it will be  before click on +
+            if (masterLength > 1) {
+              $(this).closest("[data-target_list]").find(".remove-New-Detail").show()
+            }
+          } else if (isEdit) {
+            // in edit > 0 because on render the form there is no new Item till will click on +
+            if (masterLength > 0) {
+              $(this).closest("[data-target_list]").find(".remove-New-Detail").show()
+            }
+          }
+
+
+          var myPPicker = [];
+          $(this)
+            .closest(".fieldset-container")
+            .find(".Details-Item.NewItem")
+            .last()
+            .find(".PPField")
+            .each(function () {
+              $(
+                '<div class="PPField SPIField form-control" type="picker" id="' +
+                $(this).attr("id") +
+                "+++" +
+                Math.floor(Math.random() * 1000000) +
+                '" value="" placeholder="' +
+                $(this).attr("placeholder") +
+                '" INppicker="' +
+                $(this).attr("id") +
+                "+++" +
+                Math.floor(Math.random() * 1000000) +
+                '"></div>'
+              ).insertBefore($(this));
+              $(this).remove();
             });
-            $(this)
-              .find(".sp-peoplepicker-initialHelpText")
-              .text("ادخل الإسم أو البريد الإلكتروني ...");
-          });
+          // $(this).closest('.fieldset-container').append('<div class="Details-Item NewItem">'+toappend+'</div>');
+          $(this)
+            .closest(".fieldset-container")
+            .find(".Details-Item.NewItem")
+            .last()
+            .find("div[type=picker]")
+            .each(function () {
+              var mp = new MyPeoplePicker();
+              mp.init($(this).attr("id"), {
+                PrincipalAccountType: "User",
+                AllowMultipleValues: false,
+              });
+              $(this)
+                .find(".sp-peoplepicker-initialHelpText")
+                .text("ادخل الإسم أو البريد الإلكتروني ...");
+            });
 
 
-        if (listkey == "changerequest" && (isNew || isEdit)) {
-          // add in master arry when click on plus
-          Add_New_CRMaster.init(getMasterIndex)
+          if (listkey == "changerequest" && (isNew || isEdit)) {
+            // add in master arry when click on plus
+            Add_New_CRMaster.init(getMasterIndex)
+          }
+
         }
 
 
