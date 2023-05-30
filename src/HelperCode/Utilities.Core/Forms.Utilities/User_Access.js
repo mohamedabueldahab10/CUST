@@ -692,6 +692,12 @@ window.userCalls = {
         Edit_Access = Edit_Access.concat(SP_Page_Name);
         Delete_Access = AllListKeys;
         Delete_Access = Delete_Access.concat(SP_Page_Name);
+        CreateChangeRequest_Access = [
+          "initiatives",
+          "projects",
+          "sos",
+          "mainkpi"
+        ]
         break;
       case "Minister":
         $("body").append(
@@ -9412,10 +9418,14 @@ let data_Level1_Access = {
             whereBody += ANDC;
 
           } else {
-            // append Or closure
-            var countOr = (whereBody.match(/<Or>/g) || []).length;
-            var ORC = `</Or>`.repeat(countOr);
-            whereBody += ORC;
+            // // append Or closure
+            // var countOr = (whereBody.match(/<Or>/g) || []).length;
+            // var ORC = `</Or>`.repeat(countOr);
+            // whereBody += ORC;
+            var count = (whereBody.match(/<And>/g) || []).length;
+            var ANDC = `</And>`.repeat(count);
+            whereBody += ANDC;
+
           }
 
         }
