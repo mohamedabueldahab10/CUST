@@ -999,7 +999,9 @@ var Information_Form = [
         DisplayName: "التكلفة",
         DisplayNameEn: "Amount",
         type: "float",
-        disableOnWfTaskStage : "S05,S09",
+        disableOnWfTaskStage : "S05,S09",        
+        descPhraseAr: "الحقل مطلوب لادخال المخرجات والمعالم",
+        descPhraseEn: "Filed is required to add milestones and Deliverables",
         // "state": "disabled",
         dynamic: "BudgetItem", //being controlled by main field
         numberOfDigits: "15",
@@ -1055,7 +1057,9 @@ var Information_Form = [
         type: "float",
         disableOnWfTaskStage : "S05,S09",
         // "state": "disabled"
-        RequiredName: "ActualBudget",
+        RequiredName: "ActualBudget",        
+        descPhraseAr: "الحقل مطلوب لادخال المخرجات والمعالم",
+        descPhraseEn: "Filed is required to add milestones and Deliverables", 
         numberOfDigits: "15",
         resetElement:["ContractualEngagements","ExpensesDate","RemainingCost"]
       },
