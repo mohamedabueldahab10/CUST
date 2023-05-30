@@ -894,7 +894,7 @@
     notstartedmilestonescount: "عدد المعالم التي لم تبدأ",
     latemilestonescount: "عدد المعالم المتأخرة",
     "currentyear:": "السنة الحالية: ",
-    kpiresulttext: "المستهدفت والقيم الفعلية للمؤشر",
+    kpiresulttext: "المستهدفات والقيم الفعلية للمؤشر",
     benefitmetricstext: "بيانات مقياس المنفعة",
     sublevel2: "فرعي مستوى ثاني",
     sublevel3: "فرعي مستوى ثالث",
