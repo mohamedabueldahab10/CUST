@@ -4,7 +4,8 @@ var Information_Form = [
     labelEn: "Project Data",
     description: "",
     descriptionEn: "",
-    disableOnWfTaskStage : "S05,S09",
+    disableOnWfTaskStage : "S05;S09",
+    // hideOnWfTaskStage  : "S05;S09",
     subFields: [
       {
         InternalName: "Name",
@@ -370,7 +371,8 @@ var Information_Form = [
         valfieldkey: "Title",
         grpfieldkey: "Title",
         display: 'none',
-        disableOnWfTaskStage : "S05,S09",
+        // disableOnWfTaskStage : "S05,S09",
+        hideOnWfTaskStage  : "S05;S09",
         state: "disabled",
       },
       {
@@ -387,6 +389,7 @@ var Information_Form = [
         source: 'SPillars',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+        hideOnWfTaskStage  : "S05;S09",
           "display": "none"
       },
       {
@@ -421,7 +424,8 @@ var Information_Form = [
         Dispfieldkey: "Name",
         DispfieldkeyEn: "NameEn",
         valfieldkey: "Title",
-        disableOnWfTaskStage : "S05,S09",
+        // disableOnWfTaskStage : "S05,S09",
+        hideOnWfTaskStage  : "S05;S09",
         // ToggleDisabledName:"SubSector"
         // security: {
         //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
@@ -1997,11 +2001,13 @@ var Information_Form = [
     ],
   },
   {
+    hideOnWfTaskStage  : "S05;S09",
     label: "الوثائق الداعمة",
     labelEn: "Supporting Documents",
     description: "التفاصيل",
     descriptionEn: "Details",
-    disableOnWfTaskStage : "S05,S09",
+    // disableOnWfTaskStage : "S05,S09",
+   
     subFields: [
       {
         InternalName: "getfile",
@@ -2009,7 +2015,8 @@ var Information_Form = [
         DisplayNameEn: "Attachments",
         type: "file",
         withAddBtn: "true",
-        disableOnWfTaskStage : "S05,S09",
+        // disableOnWfTaskStage : "S05,S09",
+        hideOnWfTaskStage  : "S05;S09",
       },
     ],
   },
