@@ -2839,6 +2839,21 @@ var Coc_Info_Request = {
     var listItemEnum = collListItem.getEnumerator();
     (TheCost = 0), (Amount = 0), (Deliverables = ""), (InvoicesCoc = 0);
 
+    var expectedDisbursement = 0
+    var expectedDisbursementInfo = "";
+    var remainingBudgetInfo = "";
+    var LastCost = 0;
+    var actualExpenditurInfo = "";
+    var plannedDisbursementInfo = "";
+    var plannedDisbursementPercent = 0;
+    var plannedDisbursement = 0;
+    var plannedDisbursementPercentInfo = "";
+    var actualDisbursementPercentInfo = "";
+    var actualDisbursementPercent = 0;
+    var disbursementPerformanceInfo = "";
+    var disbursementPerformance = 0;
+
+
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
 
@@ -2880,17 +2895,17 @@ var Coc_Info_Request = {
           )
         ) || 0;
 
-      var expectedDisbursement = SF - InvoicesCoc;
+      expectedDisbursement = SF - InvoicesCoc;
 
       if (expectedDisbursement) {
         expectedDisbursement = Number(expectedDisbursement);
         expectedDisbursement = expectedDisbursement.toFixed(2);
       }
 
-      var plannedDisbursement =
+      plannedDisbursement =
         (AssignedBudget * projectPlannedImplementationDeliverable) / 100;
 
-      var plannedDisbursementPercent = 0;
+      // var plannedDisbursementPercent = 0;
 
       if (plannedDisbursement > 0 && AssignedBudget > 0) {
         plannedDisbursementPercent =
@@ -2899,7 +2914,7 @@ var Coc_Info_Request = {
         plannedDisbursementPercent = plannedDisbursementPercent.toFixed(2);
       }
 
-      var actualDisbursementPercent = 0;
+      // var actualDisbursementPercent = 0;
 
       if (TheCost > 0 && AssignedBudget > 0) {
         actualDisbursementPercent = (TheCost / AssignedBudget) * 100;
@@ -2907,7 +2922,7 @@ var Coc_Info_Request = {
         actualDisbursementPercent = actualDisbursementPercent.toFixed(2);
       }
 
-      var disbursementPerformance = 0;
+      // var disbursementPerformance = 0;
 
       if (TheCost > 0 && plannedDisbursement > 0) {
         disbursementPerformance = (TheCost / plannedDisbursement) * 100;
@@ -2915,208 +2930,202 @@ var Coc_Info_Request = {
         disbursementPerformance = disbursementPerformance.toFixed(2);
       }
 
-      // الصرف المستحق
-      var expectedDisbursementInfo = "";
-      if (
-        localStorage.getItem("lng") == null ||
-        localStorage.getItem("lng") == "ar"
-      ) {
-        expectedDisbursementInfo = Resources.ar["expecteddisbursementinfo"];
-      } else {
-        expectedDisbursementInfo = Resources.en["expecteddisbursementinfo"];
-      }
-
-      $(".project-budget-ctx .card-body > div:nth-child(2) .my-info-i").attr(
-        "title",
-        expectedDisbursementInfo
-      );
-      $(".project-budget-ctx .card-body > div:nth-child(2) .my-info-i").attr(
-        "data-original-title",
-        expectedDisbursementInfo
-      );
-      $(
-        ".project-budget-ctx .card-body > div:nth-child(2) > div:nth-child(2) > div:nth-child(2)"
-      ).text(
-        expectedDisbursement.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-        " " +
-        SAR_Currency
-      );
-
-      // الميزانية المتبقية
-      var remainingBudgetInfo = "";
-      if (
-        localStorage.getItem("lng") == null ||
-        localStorage.getItem("lng") == "ar"
-      ) {
-        remainingBudgetInfo = Resources.ar["remainingbudgetinfo"];
-      } else {
-        remainingBudgetInfo = Resources.en["remainingbudgetinfo"];
-      }
-
-      $(".project-budget-ctx .card-body > div:nth-child(3) .my-info-i").attr(
-        "title",
-        remainingBudgetInfo
-      );
-      $(".project-budget-ctx .card-body > div:nth-child(3) .my-info-i").attr(
-        "data-original-title",
-        remainingBudgetInfo
-      );
-      $(
-        ".project-budget-ctx .card-body > div:nth-child(3) > div:nth-child(2) > div:nth-child(2)"
-      ).html(
-        "<span>" +
-        LastCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-        " " +
-        SAR_Currency +
-        "</span>"
-      );
-
-      // الصرف الفعلي
-      var actualExpenditurInfo = "";
-      if (
-        localStorage.getItem("lng") == null ||
-        localStorage.getItem("lng") == "ar"
-      ) {
-        actualExpenditurInfo = Resources.ar["actualexpenditurinfo"];
-      } else {
-        actualExpenditurInfo = Resources.en["actualexpenditurinfo"];
-      }
-      $(".project-budget-ctx .card-body > div:nth-child(4) .my-info-i").attr(
-        "title",
-        actualExpenditurInfo
-      );
-      $(".project-budget-ctx .card-body > div:nth-child(4) .my-info-i").attr(
-        "data-original-title",
-        actualExpenditurInfo
-      );
-      $(
-        ".project-budget-ctx .card-body > div:nth-child(4) > div:nth-child(2) > div:nth-child(2)"
-      ).html(
-        "<span>" +
-        TheCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-        " " +
-        SAR_Currency +
-        "</span>"
-      );
-
-      // المخطط من الصرف
-      var plannedDisbursementInfo = "";
-      if (
-        localStorage.getItem("lng") == null ||
-        localStorage.getItem("lng") == "ar"
-      ) {
-        plannedDisbursementInfo = Resources.ar["planneddisbursementinfo"];
-      } else {
-        plannedDisbursementInfo = Resources.en["planneddisbursementinfo"];
-      }
-      $(".project-budget-ctx .card-body > div:nth-child(5) .my-info-i").attr(
-        "title",
-        plannedDisbursementInfo
-      );
-      $(".project-budget-ctx .card-body > div:nth-child(5) .my-info-i").attr(
-        "data-original-title",
-        plannedDisbursementInfo
-      );
-      $(
-        ".project-budget-ctx .card-body > div:nth-child(5) > div:nth-child(2) > div:nth-child(2)"
-      ).html(
-        "<span>" +
-        plannedDisbursement.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-        " " +
-        SAR_Currency +
-        "</span>"
-      );
-
-      //نسبة المخطط من الصرف
-      var plannedDisbursementPercentInfo = "";
-      if (
-        localStorage.getItem("lng") == null ||
-        localStorage.getItem("lng") == "ar"
-      ) {
-        plannedDisbursementPercentInfo =
-          Resources.ar["planneddisbursementpercentinfo"];
-      } else {
-        plannedDisbursementPercentInfo =
-          Resources.en["planneddisbursementpercentinfo"];
-      }
-      $(".project-budget-ctx .card-body > div:nth-child(6) .my-info-i").attr(
-        "title",
-        plannedDisbursementPercentInfo
-      );
-      $(".project-budget-ctx .card-body > div:nth-child(6) .my-info-i").attr(
-        "data-original-title",
-        plannedDisbursementPercentInfo
-      );
-      $(
-        ".project-budget-ctx .card-body > div:nth-child(6) > div:nth-child(2) > div:nth-child(2)"
-      ).html(
-        "<span>" +
-        plannedDisbursementPercent
-          .toString()
-          .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-        " %</span>"
-      );
-
-      //نسبة الصرف الفعلي
-      var actualDisbursementPercentInfo = "";
-      if (
-        localStorage.getItem("lng") == null ||
-        localStorage.getItem("lng") == "ar"
-      ) {
-        actualDisbursementPercentInfo =
-          Resources.ar["actualdisbursementpercentinfo"];
-      } else {
-        actualDisbursementPercentInfo =
-          Resources.en["actualdisbursementpercentinfo"];
-      }
-      $(".project-budget-ctx .card-body > div:nth-child(7) .my-info-i").attr(
-        "title",
-        actualDisbursementPercentInfo
-      );
-      $(".project-budget-ctx .card-body > div:nth-child(7) .my-info-i").attr(
-        "data-original-title",
-        actualDisbursementPercentInfo
-      );
-      $(
-        ".project-budget-ctx .card-body > div:nth-child(7) > div:nth-child(2) > div:nth-child(2)"
-      ).html(
-        "<span>" +
-        actualDisbursementPercent
-          .toString()
-          .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-        " %</span>"
-      );
-
-      //اداء الصرف
-      var disbursementPerformanceInfo = "";
-      if (
-        localStorage.getItem("lng") == null ||
-        localStorage.getItem("lng") == "ar"
-      ) {
-        disbursementPerformanceInfo =
-          Resources.ar["disbursementperformanceinfo"];
-      } else {
-        disbursementPerformanceInfo =
-          Resources.en["disbursementperformanceinfo"];
-      }
-      $(".project-budget-ctx .card-body > div:nth-child(8) .my-info-i").attr(
-        "title",
-        disbursementPerformanceInfo
-      );
-      $(".project-budget-ctx .card-body > div:nth-child(8) .my-info-i").attr(
-        "data-original-title",
-        disbursementPerformanceInfo
-      );
-      $(
-        ".project-budget-ctx .card-body > div:nth-child(8) > div:nth-child(2) > div:nth-child(2)"
-      ).html(
-        "<span>" +
-        disbursementPerformance
-          .toString()
-          .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-        " %</span>"
-      );
     }
+
+    // الصرف المستحق
+    if (
+      localStorage.getItem("lng") == null ||
+      localStorage.getItem("lng") == "ar"
+    ) {
+      expectedDisbursementInfo = Resources.ar["expecteddisbursementinfo"];
+    } else {
+      expectedDisbursementInfo = Resources.en["expecteddisbursementinfo"];
+    }
+
+    $(".project-budget-ctx .card-body > div:nth-child(2) .my-info-i").attr(
+      "title",
+      expectedDisbursementInfo
+    );
+    $(".project-budget-ctx .card-body > div:nth-child(2) .my-info-i").attr(
+      "data-original-title",
+      expectedDisbursementInfo
+    );
+    $(
+      ".project-budget-ctx .card-body > div:nth-child(2) > div:nth-child(2) > div:nth-child(2)"
+    ).text(
+      expectedDisbursement.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+      " " +
+      SAR_Currency
+    );
+    // الميزانية المتبقية
+    if (
+      localStorage.getItem("lng") == null ||
+      localStorage.getItem("lng") == "ar"
+    ) {
+      remainingBudgetInfo = Resources.ar["remainingbudgetinfo"];
+    } else {
+      remainingBudgetInfo = Resources.en["remainingbudgetinfo"];
+    }
+
+    $(".project-budget-ctx .card-body > div:nth-child(3) .my-info-i").attr(
+      "title",
+      remainingBudgetInfo
+    );
+    $(".project-budget-ctx .card-body > div:nth-child(3) .my-info-i").attr(
+      "data-original-title",
+      remainingBudgetInfo
+    );
+    $(
+      ".project-budget-ctx .card-body > div:nth-child(3) > div:nth-child(2) > div:nth-child(2)"
+    ).html(
+      "<span>" +
+      LastCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+      " " +
+      SAR_Currency +
+      "</span>"
+    );
+
+    // الصرف الفعلي
+    if (
+      localStorage.getItem("lng") == null ||
+      localStorage.getItem("lng") == "ar"
+    ) {
+      actualExpenditurInfo = Resources.ar["actualexpenditurinfo"];
+    } else {
+      actualExpenditurInfo = Resources.en["actualexpenditurinfo"];
+    }
+    $(".project-budget-ctx .card-body > div:nth-child(4) .my-info-i").attr(
+      "title",
+      actualExpenditurInfo
+    );
+    $(".project-budget-ctx .card-body > div:nth-child(4) .my-info-i").attr(
+      "data-original-title",
+      actualExpenditurInfo
+    );
+    $(
+      ".project-budget-ctx .card-body > div:nth-child(4) > div:nth-child(2) > div:nth-child(2)"
+    ).html(
+      "<span>" +
+      TheCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+      " " +
+      SAR_Currency +
+      "</span>"
+    );
+
+    // المخطط من الصرف
+    if (
+      localStorage.getItem("lng") == null ||
+      localStorage.getItem("lng") == "ar"
+    ) {
+      plannedDisbursementInfo = Resources.ar["planneddisbursementinfo"];
+    } else {
+      plannedDisbursementInfo = Resources.en["planneddisbursementinfo"];
+    }
+    $(".project-budget-ctx .card-body > div:nth-child(5) .my-info-i").attr(
+      "title",
+      plannedDisbursementInfo
+    );
+    $(".project-budget-ctx .card-body > div:nth-child(5) .my-info-i").attr(
+      "data-original-title",
+      plannedDisbursementInfo
+    );
+    $(
+      ".project-budget-ctx .card-body > div:nth-child(5) > div:nth-child(2) > div:nth-child(2)"
+    ).html(
+      "<span>" +
+      plannedDisbursement.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+      " " +
+      SAR_Currency +
+      "</span>"
+    );
+
+    //نسبة المخطط من الصرف
+    if (
+      localStorage.getItem("lng") == null ||
+      localStorage.getItem("lng") == "ar"
+    ) {
+      plannedDisbursementPercentInfo =
+        Resources.ar["planneddisbursementpercentinfo"];
+    } else {
+      plannedDisbursementPercentInfo =
+        Resources.en["planneddisbursementpercentinfo"];
+    }
+    $(".project-budget-ctx .card-body > div:nth-child(6) .my-info-i").attr(
+      "title",
+      plannedDisbursementPercentInfo
+    );
+    $(".project-budget-ctx .card-body > div:nth-child(6) .my-info-i").attr(
+      "data-original-title",
+      plannedDisbursementPercentInfo
+    );
+    $(
+      ".project-budget-ctx .card-body > div:nth-child(6) > div:nth-child(2) > div:nth-child(2)"
+    ).html(
+      "<span>" +
+      plannedDisbursementPercent
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+      " %</span>"
+    );
+
+    //نسبة الصرف الفعلي
+    if (
+      localStorage.getItem("lng") == null ||
+      localStorage.getItem("lng") == "ar"
+    ) {
+      actualDisbursementPercentInfo =
+        Resources.ar["actualdisbursementpercentinfo"];
+    } else {
+      actualDisbursementPercentInfo =
+        Resources.en["actualdisbursementpercentinfo"];
+    }
+    $(".project-budget-ctx .card-body > div:nth-child(7) .my-info-i").attr(
+      "title",
+      actualDisbursementPercentInfo
+    );
+    $(".project-budget-ctx .card-body > div:nth-child(7) .my-info-i").attr(
+      "data-original-title",
+      actualDisbursementPercentInfo
+    );
+    $(
+      ".project-budget-ctx .card-body > div:nth-child(7) > div:nth-child(2) > div:nth-child(2)"
+    ).html(
+      "<span>" +
+      actualDisbursementPercent
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+      " %</span>"
+    );
+
+    //اداء الصرف
+    if (
+      localStorage.getItem("lng") == null ||
+      localStorage.getItem("lng") == "ar"
+    ) {
+      disbursementPerformanceInfo =
+        Resources.ar["disbursementperformanceinfo"];
+    } else {
+      disbursementPerformanceInfo =
+        Resources.en["disbursementperformanceinfo"];
+    }
+    $(".project-budget-ctx .card-body > div:nth-child(8) .my-info-i").attr(
+      "title",
+      disbursementPerformanceInfo
+    );
+    $(".project-budget-ctx .card-body > div:nth-child(8) .my-info-i").attr(
+      "data-original-title",
+      disbursementPerformanceInfo
+    );
+    $(
+      ".project-budget-ctx .card-body > div:nth-child(8) > div:nth-child(2) > div:nth-child(2)"
+    ).html(
+      "<span>" +
+      disbursementPerformance
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+      " %</span>"
+    );
+
   },
   onError: function (sender, args) {
     console.log(

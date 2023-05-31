@@ -6589,7 +6589,9 @@ var Access_Project_Info_Request = {
       if (USERlistkey == 'milestones' && isNew) {
         console.log("YOU Can creat a milestone")
       } else {
-        Get_Milestones.init()
+        if (!isWF) {
+          Get_Milestones.init()
+        }
       }
 
     }
@@ -7793,7 +7795,9 @@ window.Get_Initiative_Info_Request = {
       if (USERlistkey == 'initiativemilestones' && isNew) {
         console.log("YOU Can creat an initiative milestone")
       } else {
-        Get_Milestones.init()
+        if (!isWF) {
+          Get_Milestones.init()
+        }
       }
     }
   },
