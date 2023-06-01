@@ -1201,6 +1201,12 @@ var Target_Details_Submit = {
         $(".btn-save").removeClass("loader-action-error");
         $(".btn-save").addClass("loader-action-success");
         Get_Benefit_Results.init()
+
+        setTimeout(function(){
+          $(".btn-save").removeClass("loader-action-success");
+        },2000)
+
+
       }),
       Function.createDelegate(this, function (sender, args) {
         $(".btn-save").attr("disabled", false);

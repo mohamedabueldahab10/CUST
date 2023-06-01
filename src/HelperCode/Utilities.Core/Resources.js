@@ -1087,7 +1087,8 @@
     strategiccrmsmainkpi: "مؤشرات استراتيجية",
     vrocrmsmainkpi: "مؤشرات الرؤية",
     lmscrmsmainkpi: "مؤشرات سوق عمل",
-    milestonebutton:"معالم"
+    milestonebutton:"معالم",
+    zerobudgetproject:"المشروع صفري"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -2190,7 +2191,8 @@
     vrocrmsmainkpi: "Vision KPI",
     lmscrmsmainkpi: "LMS KPI",
     nomilestoneonperiod:"you should create a Milestone on Current Period",
-    milestonebutton:"Milestones"
+    milestonebutton:"Milestones",
+    zerobudgetproject:"Zero Budget Project"
   },
 };
 

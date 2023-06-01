@@ -256,12 +256,15 @@ window.accessCallisDone = false;
   (window.changeRequestBody = []),
   (window.changeRequestBodyMaster = []),
   (window.changeRequestBodyMasterEdit = []),
-  (window.changeRequestRCode = []);
+  (window.changeRequestRCode = []),
+  (window.IsZeroBudgetProject = "");
 // ended
 
 
 
 var projectStartToValidation = "", initiativeStartToValidation = "";
+
+
 
 
 if (istherePCODE) {
@@ -6566,6 +6569,8 @@ var Access_Project_Info_Request = {
 
         projectStartToValidation = oListItem.get_item("BaselineStartDate") || '';
 
+        IsZeroBudgetProject = oListItem.get_item("IsZeroBudgetProject") == "yes" ? true : false;
+
         projectActualBudget = oListItem.get_item('ActualBudget') || 0;
         projectAssignedBudget = oListItem.get_item('Amount') || 0;
         relatedProjectId = oListItem.get_id();
@@ -6589,7 +6594,7 @@ var Access_Project_Info_Request = {
       if (USERlistkey == 'milestones' && isNew) {
         console.log("YOU Can creat a milestone")
       } else {
-        if (!isWF) {
+        if (!isWF && !IsZeroBudgetProject) {
           Get_Milestones.init()
         }
       }
@@ -7795,7 +7800,7 @@ window.Get_Initiative_Info_Request = {
       if (USERlistkey == 'initiativemilestones' && isNew) {
         console.log("YOU Can creat an initiative milestone")
       } else {
-        if (!isWF) {
+        if (!isWF && !IsZeroBudgetProject) {
           Get_Milestones.init()
         }
       }

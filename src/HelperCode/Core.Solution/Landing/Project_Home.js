@@ -148,6 +148,7 @@ var Project_Home_Info_Request = {
       card4 = [],
       card5 = [],
       card6 = [];
+ 
     while (Project_Home_Info_Request.g.listItemEnum.moveNext()) {
       var oListItem = Project_Home_Info_Request.g.listItemEnum.get_current();
       ProjectSPID = oListItem.get_id();
@@ -786,6 +787,9 @@ var Project_Home_Info_Request = {
     if (fullphasename == "P3") {
       // $('.navbar.page-nav.px-5').append('<div class="closebtn"><button style="float: left;color:White;text-align:center;background: #853232;" class="btn pop-green close-project" style="float: left;font-size: 17px;" type="button" onclick="ProjectClosure_Submit.g.closureappend()"><span data-trans-closeproject class="Resources"></span></button></div>');
     }
+
+
+
 
     //calling other data
     Issues_Info_Request.init();
@@ -3125,6 +3129,13 @@ var Coc_Info_Request = {
         .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
       " %</span>"
     );
+
+
+  
+    if (IsZeroBudgetProject) {
+      $('.project-budget-ctx .project-status-info').html(`<p style="text-align:center" data-trans-zerobudgetproject class="Resources"></p>`)
+    }
+
 
   },
   onError: function (sender, args) {

@@ -2121,6 +2121,11 @@ var Target_Details_Submit = {
         $(".btn-save").addClass("loader-action-success");
         MainKPIs_Info_Request.init();
         InstrumentKPIs_Info_Request.init(null, true);
+
+        setTimeout(function(){
+          $(".btn-save").removeClass("loader-action-success");
+        },2000)
+
       }),
       Function.createDelegate(this, function (sender, args) {
         $(".btn-save").attr("disabled", false);
