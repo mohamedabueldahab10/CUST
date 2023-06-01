@@ -954,8 +954,8 @@
     crcommitteevision: "لجنة طلبات التغيير (الرؤية)",
     budgetmanager: "مدير الميزانية",
     portfoliomanager: "مدير المحفظة",
-    objectiveowner:"مالك الهدف",
-    spmohead:"مدير مكتب إدارة المشاريع القطاعي",
+    objectiveowner: "مالك الهدف",
+    spmohead: "مدير مكتب إدارة المشاريع القطاعي",
 
     excelexport: "تصدير إلى Excel",
     planneddisbursement: "المخطط من الصرف",
@@ -1024,7 +1024,7 @@
     cancelationdatepattern: "يجب إدخال تاريخ قبل تاريخ اليوم",
     fromyearpattern: "يجب إدخال سنة  تساوي الأخيرة أو أصغر منها",
     toyearpattern: "يجب إدخال سنة تساوي الأولى أو أكبر منها",
-    btwndatepattern:"يجب أن يكون التاريخ بين تاريخ البدء وتاريخ الانتهاء",
+    btwndatepattern: "يجب أن يكون التاريخ بين تاريخ البدء وتاريخ الانتهاء",
     taskformtitle: "النموذج المعتمد",
     taskhistory: "العمليات السابقة",
     taskdecision: "القرار",
@@ -1073,11 +1073,11 @@
     vroinitiativemilestone: "معلم مبادرة مكتب تحقيق الرؤية",
     cr: "طلب تغيير",
     spachievements: "منجزات الشراكات الاستراتيجية",
-    delete:"حذف",
-    automatic:"تغيير عام",
+    delete: "حذف",
+    automatic: "تغيير عام",
     strategiccrmssos: "أهداف استراتيجية",
-    visioncrmssos:"أهداف رؤية",
-    lmscrmssos:"أهداف سوق العمل",
+    visioncrmssos: "أهداف رؤية",
+    lmscrmssos: "أهداف سوق العمل",
     vrocrmsprojects: "مشاريع  الرؤية ",
     epmocrmsprojects: "مشاريع استراتيجية",
     lmscrmsprojects: " مشاريع سوق عمل",
@@ -1087,8 +1087,8 @@
     strategiccrmsmainkpi: "مؤشرات استراتيجية",
     vrocrmsmainkpi: "مؤشرات الرؤية",
     lmscrmsmainkpi: "مؤشرات سوق عمل",
-    milestonebutton:"معالم",
-    zerobudgetproject:"المشروع صفري"
+    milestonebutton: "معالم",
+    zerobudgetproject: "المشروع صفري"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -2056,9 +2056,9 @@
     crcommitteevision: "Change Request Committee (Vision)",
     budgetmanager: "Budget Manager",
     portfoliomanager: "Portfolio Manager",
-    objectiveowner:"Objective Owner",
-    spmohead:"Sectoral Project Management Office Head",
-    
+    objectiveowner: "Objective Owner",
+    spmohead: "Sectoral Project Management Office Head",
+
     excelexport: "Export to excel",
     planneddisbursement: "Planned Disbursement",
     planneddisbursementpercent: "Planned Disbursement Percent",
@@ -2128,7 +2128,7 @@
     cancelationdatepattern: "Date must be entered before today's date",
     fromyearpattern: "Year must be equal to the last one or less than",
     toyearpattern: "Year must be equal to the first one or greater than",
-    btwndatepattern:"Date must be between start date and finish date",
+    btwndatepattern: "Date must be between start date and finish date",
     taskformtitle: "Task Form",
     taskhistory: "Task History",
     taskdecision: "Decision",
@@ -2176,11 +2176,11 @@
     vroinitiativemilestone: "VRO Initiative Milestone",
     cr: "Change Request",
     spachievements: "Strategic Partnership Achievement",
-    delete:"Delete",
-    automatic:"General Change",
+    delete: "Delete",
+    automatic: "General Change",
     strategiccrmssos: "Strategic Objectives",
-    visioncrmssos:"Vision Objectives",
-    lmscrmssos:"LMS Objectives",
+    visioncrmssos: "Vision Objectives",
+    lmscrmssos: "LMS Objectives",
     vrocrmsprojects: "VRO Projects",
     epmocrmsprojects: "EPMO Projects",
     lmscrmsprojects: "LMS Projects",
@@ -2190,9 +2190,9 @@
     strategiccrmsmainkpi: "Strategic KPI",
     vrocrmsmainkpi: "Vision KPI",
     lmscrmsmainkpi: "LMS KPI",
-    nomilestoneonperiod:"you should create a Milestone on Current Period",
-    milestonebutton:"Milestones",
-    zerobudgetproject:"Zero Budget Project"
+    nomilestoneonperiod: "you should create a Milestone on Current Period",
+    milestonebutton: "Milestones",
+    zerobudgetproject: "Zero Budget Project"
   },
 };
 
@@ -2319,6 +2319,7 @@ window.Dynamo_Data = [
     Name: "Types",
     NameEn: "Types",
     Code: "Title",
+    Name2: "Name"// add to can get the name of initiative in proj list filter
   },
   { // add it on local storage to can get the name in cr view
     ListName: "MainKPI",
@@ -2379,7 +2380,8 @@ window.Dynamo_Values = {
     ModuleIdentifier,
     ModuleURL,
     TaskActionType,
-    TaskCondition
+    TaskCondition,
+    FName2
   ) {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(LN);
@@ -2398,6 +2400,8 @@ window.Dynamo_Values = {
     //
     Dynamo_Values.g.TaskActionType = TaskActionType;
     Dynamo_Values.g.TaskCondition = TaskCondition;
+
+    Dynamo_Values.g.FName2 = FName2;
 
     camlQuery.set_viewXml(
       "<View><Query><OrderBy><FieldRef Name='Created' Ascending='True' /></OrderBy></Query></View>"
@@ -2469,6 +2473,11 @@ window.Dynamo_Values = {
         TaskCondition = oListItem.get_item(Dynamo_Values.g.TaskCondition);
       }
 
+      if (Dynamo_Values.g.FName2) {
+        var Name2;
+        Name2 = oListItem.get_item(Dynamo_Values.g.FName2);
+      }
+
       Dynamo_Array.push({
         name: oListItem.get_item(Dynamo_Values.g.FName),
         nameEn: NameEn,
@@ -2484,6 +2493,7 @@ window.Dynamo_Values = {
         //
         TaskActionType: TaskActionType,
         TaskCondition: TaskCondition,
+        Name2: Name2
       });
     }
 
@@ -2526,7 +2536,8 @@ window.Dynamo_Values = {
           Dynamo_Data[y].ModuleIdentifier,
           Dynamo_Data[y].ModuleURL,
           Dynamo_Data[y].TaskActionType,
-          Dynamo_Data[y].TaskCondition
+          Dynamo_Data[y].TaskCondition,
+          Dynamo_Data[y].Name2
         );
         // Dynamo_Data.splice(y, 1);
         break;
@@ -2592,7 +2603,9 @@ for (var y = 0; y < Dynamo_Data.length; y++) {
         Dynamo_Data[y].ModuleIdentifier,
         Dynamo_Data[y].ModuleURL,
         Dynamo_Data[y].TaskActionType,
-        Dynamo_Data[y].TaskCondition
+        Dynamo_Data[y].TaskCondition,
+        Dynamo_Data[y].Name2
+
       );
       // Dynamo_Data.splice(y, 1); //remove so that we dont call it again
     });

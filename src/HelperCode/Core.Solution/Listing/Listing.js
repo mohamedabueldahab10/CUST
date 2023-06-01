@@ -271,13 +271,13 @@ window.sphttp = {
                       record[internalFieldNames[i]] = (oListItem.get_item(internalFieldNames[i]) == null) ? No_Data : oListItem.get_item(internalFieldNames[i]).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     }
                     else if (Listing_Info[i].type == "lookupmultiselect") {
-                      
+
                       var items = ''
                       var value = oListItem.get_item(internalFieldNames[i]) == null ? '' : oListItem.get_item(internalFieldNames[i]).split(":::")
                       var multiLookUpItemsArr = []
                       var multiLookUpValuesArr = []
                       if (value && value.length) {
-                   
+
 
                         value.forEach(el => {
                           if ((localStorage.getItem('' + Listing_Info[i].localStorageVariable) != null) && (oListItem.get_item(internalFieldNames[i]) !== null)) {
@@ -1452,7 +1452,7 @@ window.ListingData = {
         //dynamic query building
         // debugger
         for (var i = 0; i < FilterChoices.length; i++) {
-         
+
 
           //only one choice
           if (FilterChoices.length == 1) {
@@ -1845,10 +1845,10 @@ window.ListingData = {
       var table =
         '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head> <!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets> <x:ExcelWorksheet><x:Name>{worksheet}</x:Name> <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions> </x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook> </xml><![endif]--><meta charset="UTF-8"></head><body><table><thead><tr>'; //assigning charset for ar words
       // var head = Object.keys(mydata[0]);//Using internal names
-      
+
       var head = DN;
       for (var i = 0; i < head.length; i++) {
-        
+
         table += "<th>" + head[i].replaceAll(" ", "%20") + "</th>";
       }
       table += "</tr></thead><tbody>";
@@ -2011,7 +2011,7 @@ window.ListingData = {
               countOfnostarted = 0,
               latecount = 0;
             var today = new Date();
-            
+
             recordsddl.forEach((item) => {
               if (item.Delivered == "yes") {
                 countcompleted += 1;
@@ -2023,7 +2023,7 @@ window.ListingData = {
               var month2 = formatedactualdatemilestone.split("/").at(1);
               var year2 = formatedactualdatemilestone.split("/").at(2);
               var finalformatedactualdate = new Date(year2 + "-" + month2 + "-" + day2);
-              
+
               var formatedplaneddatemilestone =
                 item.PlannedCompletedDate.split("T").at(0);
               var day = formatedplaneddatemilestone.split("/").at(0);
@@ -2123,9 +2123,12 @@ window.ListingData = {
               '<label class="dropdown-item"><span data-trans-' + AllData[L][z] + ' class="Resources"></span><input data-type="' + TypsFieldsAll[L] + '" data-internal="' + FilterNames[L] + '" type="checkbox" name="' + FilterNames[L] + '" value="' + AllData[L][z] + '">' +
               '</label>'
           } else {
+
             if (TypsFieldsAll[L] == "lookup") {
+
               var lookupItemarray = [];
               if (localStorage.getItem('' + localStorageVariables[L]) != null) {
+
                 lookupItemarray = JSON.parse(localStorage.getItem('' + localStorageVariables[L]));
                 lookupItemarray = lookupItemarray.filter(function (a) {
                   if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
@@ -2184,9 +2187,24 @@ window.ListingData = {
                   '</label>'
               }
               else {
-                FilterationcontractsHTML +=
-                  '<label class="dropdown-item"><span title="' + AllData[L][z] + '" class="textintofilter">' + AllData[L][z] + '</span><input data-type="' + TypsFieldsAll[L] + '" data-internal="' + FilterNames[L] + '" type="checkbox" name="' + FilterNames[L] + '" value=\'' + AllData[L][z] + '\'>' +
-                  '</label>'
+                if (localStorage.getItem('' + localStorageVariables[L]) != null && localStorageVariables[L] == "Dynamo_Initiatives") {
+                    // add to can get the name of initiative in project list filter
+                  var textItemarray = [];
+                  textItemarray = JSON.parse(localStorage.getItem('' + localStorageVariables[L]));
+                  textItemarray.filter(function (a) {
+
+                    if (a.code == AllData[L][z]) {
+                      FilterationcontractsHTML +=
+                        '<label class="dropdown-item"><span title="' + AllData[L][z] + '" class="textintofilter">' + a.Name2 + '</span><input data-type="' + TypsFieldsAll[L] + '" data-internal="' + FilterNames[L] + '" type="checkbox" name="' + FilterNames[L] + '" value=\'' + AllData[L][z] + '\'>' +
+                        '</label>'
+                    }
+
+                  });
+                } else {
+                  FilterationcontractsHTML +=
+                    '<label class="dropdown-item"><span title="' + AllData[L][z] + '" class="textintofilter">' + AllData[L][z] + '</span><input data-type="' + TypsFieldsAll[L] + '" data-internal="' + FilterNames[L] + '" type="checkbox" name="' + FilterNames[L] + '" value=\'' + AllData[L][z] + '\'>' +
+                    '</label>'
+                }
               }
 
             }

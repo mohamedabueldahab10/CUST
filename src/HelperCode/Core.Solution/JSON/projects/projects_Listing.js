@@ -20,8 +20,9 @@ var Listing_Info = [
     DisplayName: ' المبادرة المرتبطة',
     DisplayNameEn: 'Related Initiative',
     type: 'text',
+    localStorageVariable: "Dynamo_Initiatives",
     inlisting: false,
-    infilter: true
+    infilter: true,
   },
   {
     InternalName: "ProjectType",
