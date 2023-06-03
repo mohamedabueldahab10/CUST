@@ -7,7 +7,8 @@ var Information_Form = [
     workflowSetValues: [
       { fieldName: 'DraftStatus', value: '', stages:["MSCreateObjective03","VROCreateObjective02","LMSCreateObjective02"] },
       { fieldName: 'WFModuleCode', value: '',stages:["MSCreateObjective03","VROCreateObjective02","LMSCreateObjective02"]} ,
-      { fieldName: 'WFStage', value: 'approved',stages:["MSCreateObjective03","VROCreateObjective02","LMSCreateObjective02"]} 
+      { fieldName: 'WFStage', value: 'approved',stages:["MSCreateObjective03","VROCreateObjective02","LMSCreateObjective02"]},
+      { fieldName: 'Status', value: '',stages:["MSCreateObjective03","VROCreateObjective02","LMSCreateObjective02"]} 
     ],
     subFields: [
       {

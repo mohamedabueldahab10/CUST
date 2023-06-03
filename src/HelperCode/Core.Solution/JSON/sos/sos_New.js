@@ -32,6 +32,7 @@ var Information_Form = [
               { fieldNameInList: "WFModuleCode", fieldValueInList: "VROCreateObjective" },
               { fieldNameInList: "WFStage", fieldValueInList: "VROCreateObjective01" },
               { fieldNameInList: "DraftStatus", fieldValueInList: "draft" },
+              { fieldNameInList: "Status", fieldValueInList: "stat31" },
               { fieldNameInList: "Class", fieldValueInList: "vision" },
             ]
           },
@@ -40,6 +41,7 @@ var Information_Form = [
             values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "LMSCreateObjective" },
             { fieldNameInList: "WFStage", fieldValueInList: "LMSCreateObjective01" },
             { fieldNameInList: "Class", fieldValueInList: "lms" },
+            { fieldNameInList: "Status", fieldValueInList: "stat31" },
             { fieldNameInList: "DraftStatus", fieldValueInList: "draft" },]
           },
           {
@@ -47,6 +49,7 @@ var Information_Form = [
             values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "MSCreateObjective" },
             { fieldNameInList: "WFStage", fieldValueInList: "MSCreateObjective01" },
             { fieldNameInList: "Class", fieldValueInList: "ministry" },
+            { fieldNameInList: "Status", fieldValueInList: "stat31" },
             { fieldNameInList: "DraftStatus", fieldValueInList: "draft" },]
           },
 
