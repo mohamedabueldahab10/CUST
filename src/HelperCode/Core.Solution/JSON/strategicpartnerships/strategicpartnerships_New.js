@@ -7,6 +7,7 @@ var Information_Form = [
     formDefaultValues: [
       //VRO
       { fieldName: 'DraftStatus', value: 'draft', roles: ['allRoles'], },
+      { fieldName: 'WFStage', value: 'SP01', roles: ['allRoles'], },
 
     ],
     subFields: [
