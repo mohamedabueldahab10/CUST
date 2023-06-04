@@ -123,8 +123,8 @@ var UserRole,
   AllPageNames = [],
   isMainIndicator = window.location.href.indexOf("MainIndicators.aspx") > -1,
   isAdminPanel = window.location.href.indexOf("AdminPanel.aspx") > -1,
-  isKnowledgeBase = window.location.href.indexOf("KnowledgeBase.aspx"),
-  isAllTasks = window.location.href.indexOf("AllTasks.aspx"),
+  isKnowledgeBase = window.location.href.indexOf("KnowledgeBase.aspx") > -1,
+  isAllTasks = window.location.href.indexOf("AllTasks.aspx") > -1,
   istherePCODE = window.location.href.toLowerCase().indexOf("pcode=") > -1,
   isthereICODE = window.location.href.indexOf("ICODE=") > -1,
   isthereSTCODE = window.location.href.indexOf("STCODE=") > -1,
@@ -7294,6 +7294,17 @@ var Access_Project_Info_Request = {
             );
           }
         }
+        // else if(USERlistkey == "mainkpi"){
+        //   $(".page-title").html(
+        //     '<a href="' +
+        //     _spPageContextInfo.webAbsoluteUrl +
+        //     "/sitepages/Listing.aspx?ListKey=" +
+        //     USERlistkey +
+        //     '">' +
+        //     USERPageTitle +
+        //     ""
+        //   );
+        // }
         else {
           console.log("in breadcrump")
           debugger

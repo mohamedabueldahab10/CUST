@@ -18,6 +18,14 @@ export default class UserReports extends React.Component<
 		super(props);
 		this.state = { content: [] };
 	}
+
+	userReports = this.props.isArabic ? "تقرير تحليل زيارة المستخدمين" : "User Visit Analysis Report"
+	reportName = this.props.isArabic ? "اسم التقرير" : "Report Name"
+	reportType = this.props.isArabic ? "نوع التقرير" : "Report Type"
+	date =this.props.isArabic ? "التاريخ" : "Date"
+	takeAction = this.props.isArabic ? "تنزيل" : "Download"
+
+
 	public componentDidMount(): void {
 		this.getContent();
 	}
@@ -34,7 +42,7 @@ export default class UserReports extends React.Component<
 		return (
 			<div className="guideBook">
 				<h2 className="tabContentTitle border-0 Resources" data-trans-userReports>
-					تقرير تحليل زيارة المستخدمي
+					{this.userReports}
 				</h2>
 				<div className="table-responsive">
 					<table className="table userReportsTable">
@@ -42,16 +50,16 @@ export default class UserReports extends React.Component<
 							<tr className="tableHeaders">
 								<th scope="col">#</th>
 								<th className="Resources" scope="col" data-trans-reportName>
-									First
+									{this.reportName}
 								</th>
 								<th className="Resources" scope="col" data-trans-reportType>
-									Last
+									{this.reportType}
 								</th>
 								<th className="Resources" scope="col" data-trans-date>
-									Handle
+									{this.date}
 								</th>
 								<th className="Resources" scope="col" data-trans-takeAction>
-									Handle
+									{this.takeAction}
 								</th>
 							</tr>
 						</thead>

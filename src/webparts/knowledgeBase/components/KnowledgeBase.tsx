@@ -38,7 +38,7 @@ export default class KnowledgeBase extends React.Component<
   title1 = isArabic ? "محرك البحث" : "Search";
   title2 = isArabic ? "كتاب المواد التوجيهية" : "Guidance Material Book";
   title3 = isArabic ? "جميع مواد مكتب ادارة المشاريع" : "All Project Management Office Materials";
-  title4 = isArabic ? "تقرير تحليل زيارة المستخدمي" : "User Visit Analysis Report";
+  title4 = isArabic ? "تقرير تحليل زيارة المستخدمين" : "User Visit Analysis Report";
   title5 = isArabic ? "مركزية الدروس المستفادة" : "Lessons Learned";
   title6 = isArabic ? "تحديثات النظام" : "System Updates";
   public componentDidMount(): void {

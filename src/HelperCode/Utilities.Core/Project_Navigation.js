@@ -28,7 +28,9 @@ var customNavHtml = setInterval(function () {
         Custom_Nav_Request.preinit();
     } else {
         clearInterval(customNavHtml);
+        if($('.extra-nav-items').length > 0){
         $('.extra-nav-items')[0].style.display = "none";
+        }
     }
 }, 1000);
 

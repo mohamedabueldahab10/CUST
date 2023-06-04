@@ -18,6 +18,14 @@ export default class LessonsLearned extends React.Component<
 		super(props);
 		this.state = { content: [] };
 	}
+
+	noData = this.props.isArabic ? "لا يوجد" : "No Data"
+	lessonsLearned = this.props.isArabic ? "مركز الدرس المستفاد" : "Lessons Learned"
+	lessonTitle = this.props.isArabic ? "العنوان" : "Title"
+	date = this.props.isArabic ? "التاريخ" : "Date"
+	type = this.props.isArabic ? "النوع" : "Type"
+	source = this.props.isArabic ? "المصدر" : "Source"
+
 	public componentDidMount(): void {
 		this.getProjects();
 	}
@@ -68,60 +76,60 @@ export default class LessonsLearned extends React.Component<
 		return (
 			<div className="guideBook">
 				<h2 className="tabContentTitle Resources" data-trans-lessonsLearned>
-				مركزية الدرس المستفاد
+					{this.lessonsLearned}
 				</h2>
 				<div className="ctx-block Listing-wrapper">
 					<ul className="list-group w-100">
 						{this.state.content.length
 							? this.state.content.map((el, i) => {
-									return [
-										<li className="list-group-item link-arrow">
-											<a
-												id={`ID${i}`}
-												className="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor"
-												href={`/SitePages/View.aspx?ListKey=lessonslearned&IID=${el.Id}`}
-											>
-												<div className="d-inline-flex flex-column col-3">
-													<h4 className="acc-title">{el.Name}</h4>
-													<span className="des-13">
-														<span className="state-val Resources" data-trans-title>
-															المحفظة
-														</span>
+								return [
+									<li className="list-group-item link-arrow">
+										<a
+											id={`ID${i}`}
+											className="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor"
+											href={`/SitePages/View.aspx?ListKey=lessonslearned&IID=${el.Id}`}
+										>
+											<div className="d-inline-flex flex-column col-3">
+												<h4 className="acc-title">{el.Name}</h4>
+												<span className="des-13">
+													<span className="state-val Resources" data-trans-title>
+														{this.lessonTitle}
 													</span>
-												</div>
-												<div className="d-inline-flex wordBreak flex-column col-3">
-													<h4 className="acc-title ">
-														{this.props.formatDate(el.Date)}
-													</h4>
-													<span className="des-13">
-														<span className="state-val Resources" data-trans-date>
-															المحفظة
-														</span>
+												</span>
+											</div>
+											<div className="d-inline-flex wordBreak flex-column col-3">
+												<h4 className="acc-title ">
+													{this.props.formatDate(el.Date)}
+												</h4>
+												<span className="des-13">
+													<span className="state-val Resources" data-trans-date>
+														{this.date}
 													</span>
-												</div>
-												<div className="d-inline- wordBreak flex-column col-3">
-													<h4 className="acc-title  Resources">
-														{el.Classification}
-													</h4>
-													<span className="des-13">
-														<span className="state-val Resources" data-trans-type>
-															نسبة الإنجاز
-														</span>
+												</span>
+											</div>
+											<div className="d-inline- wordBreak flex-column col-3">
+												<h4 className="acc-title  Resources">
+													{el.Classification}
+												</h4>
+												<span className="des-13">
+													<span className="state-val Resources" data-trans-type>
+														 {this.type}
 													</span>
-												</div>
-												<div className="d-inline-flex wordBreak flex-column pr-03-medium col-3">
-													<h4 className="acc-title  Resources">{el.Source}</h4>
-													<span className="des-13">
-														<span className="state-val Resources" data-trans-source>
-															أهمية المشروع
-														</span>
+												</span>
+											</div>
+											<div className="d-inline-flex wordBreak flex-column pr-03-medium col-3">
+												<h4 className="acc-title  Resources">{el.Source}</h4>
+												<span className="des-13">
+													<span className="state-val Resources" data-trans-source>
+														 {this.source}
 													</span>
-												</div>
-											</a>
-										</li>,
-									];
-							  })
-							: <span className="Resources" data-trans-nodata>No Data</span>}
+												</span>
+											</div>
+										</a>
+									</li>,
+								];
+							})
+							: <span className="Resources" data-trans-nodata>{this.noData}</span>}
 					</ul>
 				</div>
 			</div>

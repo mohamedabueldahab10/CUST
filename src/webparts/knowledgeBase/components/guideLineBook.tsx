@@ -17,7 +17,14 @@ export default class GuideLineBook extends React.Component<
   constructor(props) {
     super(props);
     this.state = { content: [] };
+
+
   }
+  guideLineBook = this.props.isArabic ? "كتاب المبادئ التوجيهية" : "Guidance Material Book"
+  bookName = this.props.isArabic ? "اسم الملف" : "File Name"
+  bookType = this.props.isArabic ? "نوع الملف" : "File Type"
+  date =this.props.isArabic ? "التاريخ" : "Date"
+  takeAction = this.props.isArabic ? "تنزيل" : "Download"
   public componentDidMount(): void {
     this.getContent();
   }
@@ -33,23 +40,23 @@ export default class GuideLineBook extends React.Component<
   public render(): React.ReactElement<IGuideLineBookProps> {
     return (
       <div className="guideBook">
-        <h2 className="tabContentTitle border-0 Resources" data-trans-guideLineBook>كتاب المبادئ التوجيهية</h2>
+        <h2 className="tabContentTitle border-0 Resources" data-trans-guideLineBook>{this.guideLineBook}</h2>
         <div className="table-responsive">
           <table className="table guideBookTable">
             <thead>
               <tr className="tableHeaders">
                 <th scope="col">#</th>
                 <th className="Resources" scope="col" data-trans-bookName>
-                  First
+                  {this.bookName}
                 </th>
                 <th className="Resources" scope="col" data-trans-bookType>
-                  Last
+                {this.bookType}
                 </th>
                 <th className="Resources" scope="col" data-trans-date>
-                  Handle
+                  {this.date}
                 </th>
                 <th className="Resources" scope="col" data-trans-takeAction>
-                  Handle
+                  {this.takeAction}
                 </th>
               </tr>
             </thead>

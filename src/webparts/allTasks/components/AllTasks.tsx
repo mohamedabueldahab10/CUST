@@ -83,6 +83,11 @@ export default class AllTasks extends React.Component<IAllTasksProps, {
   nodata = isArabic ? "لا يوجد" : "No data"
   relatedUserOrGroup = isArabic ? "اسم المستخدم او المجموعة" : "User or Group Name"
   warningMsg = isArabic ? "يرجى العلم بأنه سيتم تعيين جميع المهام للشخص دون النظر الى صلاحياته" : "Please Note that will Assign all tasks to the user without check his role"
+  taskssearch = isArabic ? "الرجاء البحث عن مهام لمسخدم" : "Search tasks for user"
+  notasks = isArabic ? "لا يوجد اي مهام حاليا" : "There is No Tasks"
+  delegateall = isArabic ? "تفويض جميع المهام":"Delegate All Tasks"
+  alltasks = isArabic ? "عرض كافة المهام":"All Tasks"
+
   componentDidMount = () => {
     var tasktitlearr = ""
 
@@ -121,13 +126,13 @@ export default class AllTasks extends React.Component<IAllTasksProps, {
       // .getByTitle("Tasks").items.filter(`AssignedTo eq ${this.state.selectedUserName}`)
 
       // '<View><Query><Where><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>'
-     
+
       // '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>';
 
       var allTasksData = await this.props.sp.web.lists
         .getByTitle("Tasks").getItemsByCAMLQuery({
           ViewXml:
-          `<View>
+            `<View>
           <Query>
             <Where>
             <And>
@@ -276,7 +281,7 @@ export default class AllTasks extends React.Component<IAllTasksProps, {
   delegatedTaskHandler = async () => {
 
 
-    
+
 
     var ppp = [this.state.userDelegateId]
     var delegatedFrom = this.state.targetElem.AssignedToId[0]
@@ -305,7 +310,7 @@ export default class AllTasks extends React.Component<IAllTasksProps, {
           ProjectUID: state.targetElem.ProjectUID ? state.targetElem.ProjectUID : '',
           TaskDelegatedFromId: delegatedFrom,
           ProjectName: state.targetElem.ProjectName ? state.targetElem.ProjectName : '',
-          ListKey:state.targetElem.ListKey ? state.targetElem.ListKey : '' 
+          ListKey: state.targetElem.ListKey ? state.targetElem.ListKey : ''
         });
 
       this.deleteTaskDelegation()
@@ -380,7 +385,7 @@ export default class AllTasks extends React.Component<IAllTasksProps, {
         }
 
       } catch (e) {
-        console.log(e, "ERRRRRRRRRRRR")
+        console.log(e, "err")
       }
     })
 
@@ -469,7 +474,6 @@ export default class AllTasks extends React.Component<IAllTasksProps, {
 
                   this.reAssignedAll()
                   // this.getTaskGroup(this.state.targetElem)
-                  console.log("SEND ALL TASK DELEGATED")
                 }}>{this.send}</button>
               <button className={styles.delegateCancelBtn} onClick={() => {
                 this.setState({
@@ -577,7 +581,7 @@ export default class AllTasks extends React.Component<IAllTasksProps, {
               data-trans-alltasks
             // className={styles.replySubmit}
             >
-              عرض كافة المهام
+              {this.alltasks}
             </button>
 
             <button
@@ -594,16 +598,16 @@ export default class AllTasks extends React.Component<IAllTasksProps, {
               className={`${styles.searchbtn} Resources`}
               data-trans-delegateall
             >
-              تفويض جميع المهام
+              {this.delegateall}
             </button>
           </div>
           {this.state.allTasksDataArr.map((el, i) => {
-            console.log(el,"EL IN ALLLLLLLLLLLL TASKS")
-            var checkCode  = el.WorkflowName == "Project" ? el.ProjectCode : el.RelatedItemTitle
+            console.log(el, "EL IN ALLLLLLLLLLLL TASKS")
+            var checkCode = el.WorkflowName == "Project" ? el.ProjectCode : el.RelatedItemTitle
             return (
               <div className={styles.taskcontainer}  >
-                <div style={{ width: "30%",cursor:"pointer" }}  onClick={()=>{
-                  window.handleTaskLinks.handleids(checkCode,el.Id,el.TaskType,el.StageID,el.RelatedItemID,el.SourceItemID,el.WorkflowName,el.ProjectUID,el.ProjectCode)
+                <div style={{ width: "30%", cursor: "pointer" }} onClick={() => {
+                  window.handleTaskLinks.handleids(checkCode, el.Id, el.TaskType, el.StageID, el.RelatedItemID, el.SourceItemID, el.WorkflowName, el.ProjectUID, el.ProjectCode)
                 }}>
                   {this.getTaskName(el.Title)}
                 </div>
@@ -649,10 +653,10 @@ export default class AllTasks extends React.Component<IAllTasksProps, {
           })}
           {this.state.allTasksDataArr.length == 0 && this.state.firstRender ?
             <div className={`${styles.nodata} Resources`} data-trans-taskssearch>
-              الرجاء البحث عن مهام لمستخدم
+              {this.taskssearch}
             </div>
             : this.state.allTasksDataArr.length == 0 ?
-              <div className={`${styles.nodata} Resources`} data-trans-notasks>لا يوجد اي مهام حاليا</div>
+              <div className={`${styles.nodata} Resources`} data-trans-notasks>{this.notasks}</div>
               :
               ""
           }

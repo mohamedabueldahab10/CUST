@@ -1088,7 +1088,12 @@
     vrocrmsmainkpi: "مؤشرات الرؤية",
     lmscrmsmainkpi: "مؤشرات سوق عمل",
     milestonebutton: "معالم",
-    zerobudgetproject: "المشروع صفري"
+    zerobudgetproject: "المشروع صفري",
+    //KnowladgeBase
+    bookname: "اسم الملف",
+		booktype: "نوع الملف",
+    takeaction: "تنزيل",
+		guidelinebook: "كتاب المبادئ التوجيهية",
   },
   en: {
     clearfilter: "Clear Filter",
@@ -2192,7 +2197,12 @@
     lmscrmsmainkpi: "LMS KPI",
     nomilestoneonperiod: "you should create a Milestone on Current Period",
     milestonebutton: "Milestones",
-    zerobudgetproject: "Zero Budget Project"
+    zerobudgetproject: "Zero Budget Project",
+    //KnowladgeBase
+    bookname: "File Name",
+		booktype: "File Type",
+    takeaction: "Download",
+		guidelinebook: "Guidance Material Book",
   },
 };
 
