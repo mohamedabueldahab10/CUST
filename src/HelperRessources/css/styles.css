@@ -7060,3 +7060,10 @@ span.statuscolorstat28 {
 .cr_whitespace{
     white-space: pre-wrap;
 }
+
+.equationErrMsg{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0px 5px;
+}

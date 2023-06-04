@@ -1835,7 +1835,7 @@ window.View_Data_Request = {
       // let crIsGeneral = UpdateType.includes("general");
       let crIsGeneral = UpdateType.includes("automatic");
 
-      
+
       changeRequestBody = oListItem.get_item("ChangeBody");
 
       changeRequestBody = changeRequestBody
@@ -1877,7 +1877,7 @@ window.View_Data_Request = {
       if (isCrMode) {
         if (crIsGeneral) CrModeFunctionality.preinit();
         else
-        CrModeFunctionality.init(sectionJSON);
+          CrModeFunctionality.init(sectionJSON);
       }
     }
     // ended 
@@ -3322,7 +3322,7 @@ window.Department_Sector_Info = {
         name: Name,
         code: oListItem.get_item("Title"),
         id: oListItem.get_id(),
-        ERPID:oListItem.get_item("ERPID"),
+        ERPID: oListItem.get_item("ERPID"),
       });
     }
 
@@ -3345,13 +3345,13 @@ window.Department_Sector_Info = {
     );
     Department_Sector_Info.g.array.forEach(function (item, i, arr) {
       $("#SubSector").append(
-        '<option data-siblingvalue="'+ Department_Sector_Info.g.array[i].ERPID +'" option-id="' +
+        '<option data-siblingvalue="' + Department_Sector_Info.g.array[i].ERPID + '" option-id="' +
         Department_Sector_Info.g.array[i].id +
         '" value="' +
         Department_Sector_Info.g.array[i].code +
         '">' +
         Department_Sector_Info.g.array[i].name +
-      "</option>"
+        "</option>"
       );
     });
     if (isEdit || (listkey == "changerequest" && RListKey == "projects")) {
@@ -5686,7 +5686,7 @@ window.equationKPI = {
     var listItemEnum = collListItem.getEnumerator();
 
     while (listItemEnum.moveNext()) {
-
+      
       var oListItem = listItemEnum.get_current();
       kpiEquationID = oListItem.get_id();
       kpiEquation = oListItem.get_item("KPIInput") || "";
@@ -5729,7 +5729,6 @@ window.equationKPI = {
       // set display text
 
       myCKeys.forEach((o) => {
-        console.log(kpiEquationsComponents[0][o], 'oooooooooooooooooo')
         kpiEquationsComponents[0][o]
           ? $(`input#${o},p#${o}`)
             .parent()
@@ -5748,19 +5747,38 @@ window.equationKPI = {
             kpiEquation = kpiEquation.replaceAll(o, 0)
           }
         } else {
-          kpiEquation = kpiEquation.replaceAll(o, $(`input#${o}`).val())
+          // assign val = 0 if there is no val to avoid err and to make try cath working normally as expectid
+          var elemVal = $(`input#${o}`).val() ? $(`input#${o}`).val() : 0
+          kpiEquation = kpiEquation.replaceAll(o, elemVal)
         }
       });
 
 
       kpiEquation = kpiEquation.replaceAll(',', '') // remove , from high number
 
-
-      kpiEquation =
-        eval(kpiEquation) % 1 != 0
-          ? eval(kpiEquation).toFixed(2)
-          : eval(kpiEquation);
-
+      // add try if there is no issue with equation
+      // add catch to appear a msg and make the btn disabled if there is an issue with equation
+      
+      try {
+        kpiEquation =
+          eval(kpiEquation) % 1 != 0
+            ? eval(kpiEquation).toFixed(2)
+            : eval(kpiEquation);
+      } catch (err) {
+        if (listkey == "changerequest") {
+          $(".cr-related-item-section.changerequest").last().find(".fieldset-container").addClass("disable_section")
+          $(".cr-related-item-section.changerequest").last().find(".form-row .col-lg-3.col-md-4.mb-4").append(`<p data-trans-equationerr class="redColor Resources"></p>`)
+        } else {
+          $("body").append(
+            "<style>" +
+            ".btn.btn-action.btn-cancel{opacity: .6;pointer-events: none;}" +
+            ".btn.btn-action.btn-save{opacity: .6;pointer-events: none;}" +
+            ".btn.btn-action.btn-delete{opacity: .6;pointer-events: none;}" +
+            "</style>"
+          );
+          $(".form-row.rightBtns.justify-content-end.form-btns-wrapper").prepend(`<span data-trans-equationerr class="equationErrMsg redColor Resources"><span/>`)
+        }
+      }
 
 
 
@@ -5917,6 +5935,7 @@ var equationBenefit = {
             benefitsEquation = benefitsEquation.replaceAll(o, 0)
           }
         } else {
+          var elemVal = $(`input#${o}`).val() ? $(`input#${o}`).val() : 0
           benefitsEquation = benefitsEquation.replaceAll(o, $(`input#${o}`).val())
         }
       });
@@ -5924,11 +5943,21 @@ var equationBenefit = {
 
       benefitsEquation = benefitsEquation.replaceAll(',', '') // remove , from high number
 
-
+      try {
       benefitsEquation =
         eval(benefitsEquation) % 1 != 0
           ? eval(benefitsEquation).toFixed(2)
           : eval(benefitsEquation);
+      } catch (err) {
+        $("body").append(
+          "<style>" +
+          ".btn.btn-action.btn-cancel{opacity: .6;pointer-events: none;}" +
+          ".btn.btn-action.btn-save{opacity: .6;pointer-events: none;}" +
+          ".btn.btn-action.btn-delete{opacity: .6;pointer-events: none;}" +
+          "</style>"
+        );
+        $(".form-row.rightBtns.justify-content-end.form-btns-wrapper").prepend(`<span data-trans-equationerr class="equationErrMsg redColor Resources"><span/>`)
+      }
 
 
       if (benefitsEquation === "NaN") {

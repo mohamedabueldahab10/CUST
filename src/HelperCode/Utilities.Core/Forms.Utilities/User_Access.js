@@ -6556,7 +6556,9 @@ var Access_Project_Info_Request = {
           ? oListItem.get_item("Name")
           : UserNo_Data;
         USERPID = oListItem.get_id();
-        User_isClosureStatus = oListItem.get_item("ClosureStatus") == "Failed" || oListItem.get_item("ClosureStatus") == "Cancelled" ? true : false;
+        User_isClosureStatus = oListItem.get_item("ClosureStatus") == "Failed" ||
+          oListItem.get_item("ClosureStatus") == "Cancelled" ||
+          oListItem.get_item("ClosureStatus") == "closed" ? true : false;
         //////////
 
         User_NotActiveStatus = (oListItem.get_item("WorkingStatus") != 'active' && oListItem.get_item("WorkingStatus")) ? true : false;
@@ -6594,7 +6596,8 @@ var Access_Project_Info_Request = {
       if (USERlistkey == 'milestones' && isNew) {
         console.log("YOU Can creat a milestone")
       } else {
-        if (!isWF && !IsZeroBudgetProject) {
+        
+        if (!isWF && !IsZeroBudgetProject && !User_isClosureStatus) {
           Get_Milestones.init()
         }
       }
@@ -7305,9 +7308,7 @@ var Access_Project_Info_Request = {
         //     ""
         //   );
         // }
-        else {
-          console.log("in breadcrump")
-          debugger
+        else {          
           if (
             !isInitiativesHomePage &&
             !isTarget &&
