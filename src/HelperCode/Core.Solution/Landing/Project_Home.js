@@ -148,7 +148,7 @@ var Project_Home_Info_Request = {
       card4 = [],
       card5 = [],
       card6 = [];
- 
+
     while (Project_Home_Info_Request.g.listItemEnum.moveNext()) {
       var oListItem = Project_Home_Info_Request.g.listItemEnum.get_current();
       ProjectSPID = oListItem.get_id();
@@ -2149,26 +2149,38 @@ var StagesConfiguration_Info_Request = {
       var oListItem = listItemEnum.get_current();
       stages = oListItem.get_item("StageCode");
       projectType = oListItem.get_item("ProjectType");
+      var hideOnZeroBudgetProjectConfig = oListItem.get_item("HideOnZeroBudgetProject") ? oListItem.get_item("HideOnZeroBudgetProject") : "no"
 
-
+      // HideOnZeroBudgetProject
+      //hideOnZeroBudgetProjectConfig to hide some stages if project is zeroBudget
       // render the stage depends on initiative type
       projectType = Array.from(projectType)
       if (InitiativeType) {
         if (projectType.includes(InitiativeType)) {
-          stageArr.push(stages);
+          if (IsZeroBudgetProject) {
+            if (hideOnZeroBudgetProjectConfig != "yes") {
+              stageArr.push(stages);
+            }
+          } else {
+            stageArr.push(stages);
+          }
         }
       } else {
         if (IsStrategicProject == "no") {
           if (projectType.includes("strategically")) {
-            stageArr.push(stages);
+            if (IsZeroBudgetProject) {
+              if (hideOnZeroBudgetProjectConfig != "yes") {
+                stageArr.push(stages);
+              }
+            } else {
+              stageArr.push(stages);
+            }
           }
         }
       }
-      // if (projectType == projectTypes || projectType == null) {
-      //   stageArr.push(stages);
-      // }
+
     }
-    // console.log('stageArr', stageArr);
+
     Stages_Data_Request.init();
   },
   onError: function (sender, args) {
@@ -3131,7 +3143,7 @@ var Coc_Info_Request = {
     );
 
 
-  
+
     if (IsZeroBudgetProject) {
       $('.project-budget-ctx .project-status-info').html(`<p style="text-align:center" data-trans-zerobudgetproject class="Resources"></p>`)
     }

@@ -1094,6 +1094,7 @@
 		booktype: "نوع الملف",
     takeaction: "تنزيل",
 		guidelinebook: "كتاب المبادئ التوجيهية",
+    equationerr:"هنالك مشكلة بالمعادلة المدخلة,الرجاء التأكد منها"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -2203,6 +2204,7 @@
 		booktype: "File Type",
     takeaction: "Download",
 		guidelinebook: "Guidance Material Book",
+    equationerr:"there is a problem with equation, please check it"
   },
 };
 
