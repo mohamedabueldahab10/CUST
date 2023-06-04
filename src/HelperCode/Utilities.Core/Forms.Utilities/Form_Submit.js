@@ -245,12 +245,18 @@ window.New_Data_Submit = {
       })
     }
     //validation of multiselect
+    var multiSelectId = false
     $('.dropdown-menu.multiselect_scroll.required').each(function () {
       if ($(this).length) {
         if ($('.dropdown-menu.multiselect_scroll.required :checkbox:checked').length == 0) {
+          
           multiSelectValid = false
           $('.dropdown-menu.multiselect_scroll.required').parent().parent().siblings('.errMsgField').show()
+
+          multiSelectId = $('.dropdown-menu.multiselect_scroll.required').parent().parent().attr("id")
+
         } else {
+          multiSelectId = false
           multiSelectValid = true
         }
       }
@@ -317,13 +323,17 @@ window.New_Data_Submit = {
           $scrollTo = $("[type=picker][required]");
         }
       }
-      $container.animate({
-        scrollTop:
-          $scrollTo.offset().top -
-          $container.offset().top +
-          $container.scrollTop() -
-          120,
-      });
+      if (multiSelectId) {
+        $(`#${multiSelectId}`).get(0).scrollIntoView({ behavior: 'smooth', block: "center" });
+      } else {
+        $container.animate({
+          scrollTop:
+            $scrollTo.offset().top -
+            $container.offset().top +
+            $container.scrollTop() -
+            120,
+        });
+      }
     }
   },
   init: function () {
@@ -886,7 +896,7 @@ var Set_Code_Submit = {
       var year = String(new Date().getFullYear()),
         year = year.slice(year.length - 2); //get last 2 characters
 
- 
+
       var projectrelatedinitiativesos = []
       var relatedInitiative = $("#RelatedInitiative").val()
       var SectorERPID = "XX", SubSectorERPID = "XX", RelatedSos = "XX";
@@ -914,7 +924,7 @@ var Set_Code_Submit = {
         }
       }
 
-      
+
       if (isStrategicProject) {
         Code = `ST${year}-${SectorERPID}${SubSectorERPID}-${RelatedSos}${relatedInitiative}${projItemID}`
       } else {
@@ -1232,13 +1242,19 @@ window.Edit_Data_Submit = {
 
 
     //validation of multiselect
+    var multiSelectId = false
+
     $('.dropdown-menu.multiselect_scroll.required').each(function () {
 
       if ($(this).length) {
         if ($('.dropdown-menu.multiselect_scroll.required :checkbox:checked').length == 0) {
           multiSelectValid = false
           $('.dropdown-menu.multiselect_scroll.required').parent().parent().siblings('.errMsgField').show()
+
+          multiSelectId = $('.dropdown-menu.multiselect_scroll.required').parent().parent().attr("id")
+
         } else {
+          multiSelectId = false
           multiSelectValid = true
         }
       }
@@ -1322,14 +1338,18 @@ window.Edit_Data_Submit = {
           $scrollTo = $("[type=picker][required]");
         }
       }
+      if (multiSelectId) {
+        $(`#${multiSelectId}`).get(0).scrollIntoView({ behavior: 'smooth', block: "center" });
+      } else {
 
-      $container.animate({
-        scrollTop:
-          $scrollTo.offset().top -
-          $container.offset().top +
-          $container.scrollTop() -
-          120,
-      });
+        $container.animate({
+          scrollTop:
+            $scrollTo.offset().top -
+            $container.offset().top +
+            $container.scrollTop() -
+            120,
+        });
+      }
       if (USERisWF) {
         $(".popupComment").remove();
       }
