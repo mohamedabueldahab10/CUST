@@ -1854,7 +1854,6 @@ window.ListingData = {
       table += "</tr></thead><tbody>";
 
 
-      console.log(table, "table")
 
 
       for (var i = 0; i < mydata.length; i++) {
@@ -1862,7 +1861,7 @@ window.ListingData = {
         table += "<tr>";
         for (var j = 0; j < IN.length; j++) {
 
-
+          
           if (
             mydata[i][IN[j]] && armonths.indexOf(mydata[i][IN[j]].toString().split(" ")[1]) > -1 &&
             FT[j] == "date"
@@ -1872,7 +1871,6 @@ window.ListingData = {
             newdate[1] = enmonths[index];
             mydata[i][IN[j]] = newdate.join(" ");
           }
-
 
           switch (FT[j]) {
             case "date":
@@ -1931,6 +1929,19 @@ window.ListingData = {
               break;
 
             default:
+
+            if(listkey == 'projects' && IN[j] == "RelatedInitiative"){
+              // to can save the initiative name in excel not code
+              var data = mydata[i][IN[j]]
+              var textItemarray = [];
+              textItemarray = JSON.parse(localStorage.getItem('Dynamo_Initiatives'));
+              textItemarray.filter(function (a) {
+                if (a.code == data) {
+                  mydata[i][IN[j]] = a.Name2
+                }
+              })              
+            }
+
               console.log("no change on on value")
               break;
           }

@@ -1302,52 +1302,53 @@ var Information_Form = [
         },
         //editableBy: "PerformanceLeader",
       },
-      //   {
-      //     InternalName: 'Quarter',
-      //     DisplayNameEn: 'Quarter',
-      //     DisplayName: 'الربع',
-      //     ToggleName: 'Quarter',
-      //     type: 'dropdownValues',
-      //     options: {
-      //       choices: [
-      //         { display: 'quarter1', value: 'ActualQ1' },
-      //         { display: 'quarter2', value: 'ActualQ2' },
-      //         { display: 'quarter3', value: 'ActualQ3' },
-      //         { display: 'quarter4', value: 'ActualQ4' },
-      //       ],
-      //       display: 'none',
-      //     },
-      //     security: {
-      //       groups: [
-      //         'LMS_P',
-      //         'VRO_P',
-      //         'Performance Leaders',
-      //         'System Admin Group',
-      //       ],
-      //     },
-      //   },
-      //   {
-      //     InternalName: 'Midterms',
-      //     DisplayNameEn: 'Midterms',
-      //     DisplayName: 'النصف السنوي',
-      //     ToggleName: 'Midterms',
-      //     type: 'dropdownValues',
-      //     options: {
-      //       choices: [
-      //         { display: 'midterm1', value: 'ActualMid1' },
-      //         { display: 'midterm2', value: 'ActualMid2' },
-      //       ],
-      //       display: 'none',
-      //     },
-      //     security: {
-      //       groups: [
-      //         'LMS_P',
-      //         'VRO_P',
-      //         'Performance Leaders',
-      //         'System Admin Group',
-      //       ],
-      //     },
-      //   },
+        {
+          InternalName: 'Quarter',
+          DisplayNameEn: 'Quarter',
+          DisplayName: 'الربع',
+          ToggleName: 'Quarter',
+          type: 'dropdownValues',
+          options: {
+            choices: [
+              { display: 'quarter1', value: 'ActualQ1' },
+              { display: 'quarter2', value: 'ActualQ2' },
+              { display: 'quarter3', value: 'ActualQ3' },
+              { display: 'quarter4', value: 'ActualQ4' },
+            ],
+            display: 'none',
+          },
+          security: {
+            groups: [
+              'LMS_P',
+              'VRO_P',
+              'Performance Leaders',
+              'System Admin Group',
+            ],
+          },
+        },
+        {
+          InternalName: 'Midterms',
+          DisplayNameEn: 'Midterms',
+          DisplayName: 'النصف السنوي',
+          ToggleName: 'Midterms',
+          type: 'dropdownValues',
+          options: {
+            choices: [
+              { display: 'midterm1', value: 'ActualMid1' },
+              { display: 'midterm2', value: 'ActualMid2' },
+            ],
+            display: 'none',
+          },
+          security: {
+            groups: [
+              'LMS_P',
+              'SPM Team',
+              'VRO_P',
+              'Performance Leaders',
+              'System Admin Group',
+            ],
+          },
+        },
       //   {
       //     InternalName: 'Years',
       //     DisplayNameEn: 'Years',
