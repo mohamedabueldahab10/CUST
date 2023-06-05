@@ -2521,7 +2521,6 @@ window.Dynamo_Values = {
         var LSArray = $.parseJSON(
           getLocalStorage("Dynamo_" + Dynamo_Data[y].ListName)
         );
-        console.log("LSArray console before")
         // get how many days since ls is set
         var days_Set = Math.trunc(
           (new Date().getTime() - LSArray[0].timeset) / (1000 * 60 * 60 * 24)
