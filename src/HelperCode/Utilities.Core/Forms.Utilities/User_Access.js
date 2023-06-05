@@ -115,7 +115,7 @@ var UserRole,
   ], //aray for accessing pages which have access policy on them
   SP_Page_Name = SP_Page_Name.map((name) => name.toLowerCase()),
   isSP_Page = SP_Page_Name.indexOf(Page_UrlName) > -1, // are we in a restricted page?
-  USER_HomePage = "home.aspx",
+  // USER_HomePage = "home.aspx",
   UserPage_Name = window.location.pathname
     .substring(window.location.pathname.lastIndexOf("/") + 1)
     .toLocaleLowerCase(),
@@ -257,7 +257,8 @@ window.accessCallisDone = false;
   (window.changeRequestBodyMaster = []),
   (window.changeRequestBodyMasterEdit = []),
   (window.changeRequestRCode = []),
-  (window.IsZeroBudgetProject = "");
+  (window.IsZeroBudgetProject = ""),
+  (window.USER_HomePage = "initiativesmain.aspx");
 // ended
 
 
@@ -675,6 +676,7 @@ window.userCalls = {
     currentUserRole //we need first role for user
     ) {
       case "Administrator":
+        // USER_HomePage = "InitiativesMain.aspx"
         $("body").append(
           "<style>" +
           "div#s4-ribbonrow, div#O365_MainLink_Settings_container{display:block!important}html #s4-workspace {min-height:auto !important;}.Progress-Action {display:block!important;}" +
@@ -7297,17 +7299,6 @@ var Access_Project_Info_Request = {
             );
           }
         }
-        // else if(USERlistkey == "mainkpi"){
-        //   $(".page-title").html(
-        //     '<a href="' +
-        //     _spPageContextInfo.webAbsoluteUrl +
-        //     "/sitepages/Listing.aspx?ListKey=" +
-        //     USERlistkey +
-        //     '">' +
-        //     USERPageTitle +
-        //     ""
-        //   );
-        // }
         else {          
           if (
             !isInitiativesHomePage &&

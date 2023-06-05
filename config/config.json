@@ -225,6 +225,14 @@
           "manifest": "./src/webparts/strategicPartnershipHome/StrategicPartnershipHomeWebPart.manifest.json"
         }
       ]
+    },
+    "home-page-redirect-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/homePageRedirect/HomePageRedirectWebPart.js",
+          "manifest": "./src/webparts/homePageRedirect/HomePageRedirectWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {
@@ -446,6 +454,7 @@
     "KnowledgeBaseWebPartStrings": "lib/webparts/knowledgeBase/loc/{locale}.js",
     "AllTasksWebPartStrings": "lib/webparts/allTasks/loc/{locale}.js",
     "BenefitMetricsTargetsWebPartStrings": "lib/webparts/benefitMetricsTargets/loc/{locale}.js",
-    "StrategicPartnershipHomeWebPartStrings": "lib/webparts/strategicPartnershipHome/loc/{locale}.js"
+    "StrategicPartnershipHomeWebPartStrings": "lib/webparts/strategicPartnershipHome/loc/{locale}.js",
+    "HomePageRedirectWebPartStrings": "lib/webparts/homePageRedirect/loc/{locale}.js"
   }
 }
