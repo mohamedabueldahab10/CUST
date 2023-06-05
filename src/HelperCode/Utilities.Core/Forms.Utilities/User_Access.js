@@ -7297,17 +7297,6 @@ var Access_Project_Info_Request = {
             );
           }
         }
-        // else if(USERlistkey == "mainkpi"){
-        //   $(".page-title").html(
-        //     '<a href="' +
-        //     _spPageContextInfo.webAbsoluteUrl +
-        //     "/sitepages/Listing.aspx?ListKey=" +
-        //     USERlistkey +
-        //     '">' +
-        //     USERPageTitle +
-        //     ""
-        //   );
-        // }
         else {          
           if (
             !isInitiativesHomePage &&
