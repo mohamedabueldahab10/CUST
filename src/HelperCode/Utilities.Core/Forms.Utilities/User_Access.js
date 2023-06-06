@@ -736,6 +736,9 @@ window.userCalls = {
         break;
 
       case "ProjectManager":
+
+      USER_HomePage = "home.aspx"
+
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
