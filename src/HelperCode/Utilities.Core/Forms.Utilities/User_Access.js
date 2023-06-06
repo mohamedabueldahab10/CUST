@@ -1112,10 +1112,10 @@ window.userCalls = {
 
       case "SPMTeam":
         USER_HomePage = "InitiativesMain.aspx";
-        if (USERisHome)
-          window.location =
-            _spPageContextInfo.webAbsoluteUrl +
-            "/sitepages/MainIndicators.aspx";
+        // if (USERisHome)
+        //   window.location =
+        //     _spPageContextInfo.webAbsoluteUrl +
+        //     "/sitepages/MainIndicators.aspx";
 
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
@@ -1155,10 +1155,11 @@ window.userCalls = {
         Delete_Access = [];
         break;
       case "SPMAdmin":
-        if (USERisHome)
-          window.location =
-            _spPageContextInfo.webAbsoluteUrl +
-            "/sitepages/MainIndicators.aspx";
+        USER_HomePage = "InitiativesMain.aspx";
+        // if (USERisHome)
+        //   window.location =
+        //     _spPageContextInfo.webAbsoluteUrl +
+        //     "/sitepages/MainIndicators.aspx";
 
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
@@ -2686,10 +2687,10 @@ window.userCalls = {
         break;
       case "KPIOwner":
         USER_HomePage = "MainIndicators.aspx";
-        if (USERisHome)
-          window.location =
-            _spPageContextInfo.webAbsoluteUrl +
-            "/sitepages/MainIndicators.aspx";
+        // if (USERisHome)
+        //   window.location =
+        //     _spPageContextInfo.webAbsoluteUrl +
+        //     "/sitepages/MainIndicators.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
