@@ -676,7 +676,7 @@ window.userCalls = {
     currentUserRole //we need first role for user
     ) {
       case "Administrator":
-        // USER_HomePage = "InitiativesMain.aspx"
+        USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" +
           "div#s4-ribbonrow, div#O365_MainLink_Settings_container{display:block!important}html #s4-workspace {min-height:auto !important;}.Progress-Action {display:block!important;}" +
@@ -705,6 +705,7 @@ window.userCalls = {
         ]
         break;
       case "Minister":
+        USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -722,6 +723,7 @@ window.userCalls = {
         break;
 
       case "SectorHead":
+        USER_HomePage = "InitiativesMain.aspx";
         isSectorHead = true;
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
@@ -737,7 +739,7 @@ window.userCalls = {
 
       case "ProjectManager":
 
-      USER_HomePage = "home.aspx"
+      USER_HomePage = "home.aspx";
 
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
@@ -826,7 +828,7 @@ window.userCalls = {
         break;
 
       case "ProjectOwner":
-        USER_HomePage = "home.aspx"
+        USER_HomePage = "home.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -861,7 +863,7 @@ window.userCalls = {
 
         break;
       case "InitiativeManager":
-        USER_HomePage = "InitiativesMain.aspx"
+        USER_HomePage = "InitiativesMain.aspx";
         // if (USERisHome)
         // 	window.location =
         // 		_spPageContextInfo.webAbsoluteUrl +
@@ -982,7 +984,7 @@ window.userCalls = {
         break;
 
       case "InitiativeOwner":
-        USER_HomePage = "InitiativesMain.aspx"
+        USER_HomePage = "InitiativesMain.aspx";
         // if (USERisHome)
         // 	window.location =
         // 		_spPageContextInfo.webAbsoluteUrl +
@@ -1109,6 +1111,7 @@ window.userCalls = {
         break;
 
       case "SPMTeam":
+        USER_HomePage = "InitiativesMain.aspx";
         if (USERisHome)
           window.location =
             _spPageContextInfo.webAbsoluteUrl +
@@ -1229,7 +1232,7 @@ window.userCalls = {
         ];
         break;
       case "VROP":
-
+        USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -1266,6 +1269,8 @@ window.userCalls = {
         break;
 
       case "VROHead":
+        USER_HomePage = "InitiativesMain.aspx";
+
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -1302,6 +1307,7 @@ window.userCalls = {
         break;
 
       case "VROPHead":
+        USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -1339,6 +1345,7 @@ window.userCalls = {
         break;
 
       case "VPlanningUnitHead":
+        USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -1375,6 +1382,7 @@ window.userCalls = {
         break;
 
       case "VPlanningUnit":
+        USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -1412,7 +1420,7 @@ window.userCalls = {
         break;
 
       case "VROE":
-
+        USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -1511,7 +1519,7 @@ window.userCalls = {
         break;
 
       case "VROEHead":
-
+        USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -2045,7 +2053,7 @@ window.userCalls = {
         break;
 
       case "CRCommittee":
-
+        USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -2054,8 +2062,8 @@ window.userCalls = {
 
         ChartHide = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-        ar_UserRole = "لجنة طلبات التغيير";
-        en_UserRole = "Change Request Committee";
+        ar_UserRole = "(استراتيجي) لجنة طلبات التغيير";
+        en_UserRole = "Change Request Committee Strategy";
 
         Create_Access = [];
 
@@ -2069,7 +2077,7 @@ window.userCalls = {
         break;
 
       case "CRCommitteeVision":
-
+        USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -2133,6 +2141,7 @@ window.userCalls = {
         break;
 
       case "EPMO":
+        USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -2226,7 +2235,7 @@ window.userCalls = {
         // Delete_Access = Delete_Access.concat(SP_Page_Name); // to can delete everything
         break;
       case "SPMO":
-        USER_HomePage = "home.aspx"
+        USER_HomePage = "home.aspx";
         isSPMO = true;
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
@@ -2330,7 +2339,7 @@ window.userCalls = {
         break;
 
       case "SPMOHead":
-
+        USER_HomePage = "InitiativesMain.aspx";
         isSPMOHead = true;
 
         ChartHide =
@@ -2430,6 +2439,7 @@ window.userCalls = {
 
         break;
       case "MinisterAssistant":
+        USER_HomePage = "InitiativesMain.aspx";
         isMinisterAssistant = true;
 
         ChartHide =
@@ -2445,6 +2455,7 @@ window.userCalls = {
         break;
 
       case "ViceMinister":
+        USER_HomePage = "InitiativesMain.aspx";
         isViceMinister = true;
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(4),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
@@ -2460,7 +2471,7 @@ window.userCalls = {
 
       case "DU":
         isDU = true;
-        USER_HomePage = "home.aspx"
+        USER_HomePage = "home.aspx";
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
@@ -2566,6 +2577,8 @@ window.userCalls = {
         break;
       case "SubSectorHead":
         isSubSectorHead = true;
+        USER_HomePage = "InitiativesMain.aspx";
+
         // (SecondLevel_List = "Internal Entities"),
         //   (SecondLevel_FieldtoQuery = "Manager"),
         //   (SecondLevel_FieldtoQueryType = "Choice");
@@ -2603,7 +2616,7 @@ window.userCalls = {
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
         ar_UserRole = " مدير إدارة ";
         en_UserRole = "General Manager of ";
-
+        USER_HomePage = "InitiativesMain.aspx";
         //CRUD
         Create_Access = [];
         Read_Access = AllListKeys;
@@ -2630,6 +2643,7 @@ window.userCalls = {
         break;
 
       case "StrategyTeam":
+        USER_HomePage = "InitiativesMain.aspx";
 
         // if (USERisHome)
         //   window.location =
@@ -2671,7 +2685,7 @@ window.userCalls = {
         Delete_Access = [];
         break;
       case "KPIOwner":
-        USER_HomePage = "MainIndicators.aspx"
+        USER_HomePage = "MainIndicators.aspx";
         if (USERisHome)
           window.location =
             _spPageContextInfo.webAbsoluteUrl +
@@ -2707,6 +2721,7 @@ window.userCalls = {
         break;
 
       case "ObjectiveOwner":
+        USER_HomePage = "MainIndicators.aspx";
 
         if (USERisHome)
           window.location =
@@ -2750,6 +2765,7 @@ window.userCalls = {
           window.location =
             _spPageContextInfo.webAbsoluteUrl +
             "/sitepages/MainIndicators.aspx";
+            USER_HomePage = "MainIndicators.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -3036,7 +3052,7 @@ window.userCalls = {
         break;
 
       case "PortfolioManager":
-
+        USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
