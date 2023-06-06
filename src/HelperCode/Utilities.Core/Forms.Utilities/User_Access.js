@@ -826,6 +826,7 @@ window.userCalls = {
         break;
 
       case "ProjectOwner":
+        USER_HomePage = "home.aspx"
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -860,6 +861,7 @@ window.userCalls = {
 
         break;
       case "InitiativeManager":
+        USER_HomePage = "InitiativesMain.aspx"
         // if (USERisHome)
         // 	window.location =
         // 		_spPageContextInfo.webAbsoluteUrl +
@@ -980,6 +982,7 @@ window.userCalls = {
         break;
 
       case "InitiativeOwner":
+        USER_HomePage = "InitiativesMain.aspx"
         // if (USERisHome)
         // 	window.location =
         // 		_spPageContextInfo.webAbsoluteUrl +
@@ -2223,6 +2226,7 @@ window.userCalls = {
         // Delete_Access = Delete_Access.concat(SP_Page_Name); // to can delete everything
         break;
       case "SPMO":
+        USER_HomePage = "home.aspx"
         isSPMO = true;
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
@@ -2456,7 +2460,7 @@ window.userCalls = {
 
       case "DU":
         isDU = true;
-
+        USER_HomePage = "home.aspx"
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
@@ -2667,6 +2671,7 @@ window.userCalls = {
         Delete_Access = [];
         break;
       case "KPIOwner":
+        USER_HomePage = "MainIndicators.aspx"
         if (USERisHome)
           window.location =
             _spPageContextInfo.webAbsoluteUrl +
