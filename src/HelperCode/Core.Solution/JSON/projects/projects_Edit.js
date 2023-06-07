@@ -584,7 +584,11 @@ var Information_Form = [
         max: "BaselineFinishDate",
         //
         maxOnChild: true,
-        childsId: ["PlannedFinishDate", "PlannedDate", "ActualDate"],
+        childsId: ["PlannedFinishDate", "PlannedDate", "ActualDate",
+        'PlannedOfferingDate',
+        'ActualOfferingDate',
+        'AwardDate',
+        'ContractualDate',],
         targetOn: "min"
         // "state": "disabled"
       },
@@ -598,7 +602,11 @@ var Information_Form = [
         //
         // 
         maxOnChild: true,
-        childsId: ["PlannedFinishDate", "PlannedDate", "ActualDate"],
+        childsId: ["PlannedFinishDate", "PlannedDate", "ActualDate",
+        'PlannedOfferingDate',
+        'ActualOfferingDate',
+        'AwardDate',
+        'ContractualDate',],
         targetOn: "max"
       },
 

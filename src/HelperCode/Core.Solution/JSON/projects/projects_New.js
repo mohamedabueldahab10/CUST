@@ -631,7 +631,12 @@ var Information_Form = [
         max: "BaselineFinishDate",
         // 
         maxOnChild: true,
-        childsId: ["PlannedFinishDate", "PlannedDate", "ActualDate"],
+        childsId: ["PlannedFinishDate", "PlannedDate", "ActualDate",
+        'PlannedOfferingDate',
+        'ActualOfferingDate',
+        'AwardDate',
+        'ContractualDate',
+      ],
         targetOn: "min"
       },
       {
@@ -642,7 +647,11 @@ var Information_Form = [
         min: "BaselineStartDate",
         // 
         maxOnChild: true,
-        childsId: ["PlannedFinishDate", "PlannedDate", "ActualDate"],
+        childsId: ["PlannedFinishDate", "PlannedDate", "ActualDate",
+        'PlannedOfferingDate',
+        'ActualOfferingDate',
+        'AwardDate',
+        'ContractualDate',],
         targetOn: "max"
       },
 
@@ -987,11 +996,12 @@ var Information_Form = [
         InternalName: "PlannedOfferingDate",
         DisplayName: "التاريخ المخطط للطرح",
         DisplayNameEn: "Planned Date of Offering",
-        // type: "datetime",
-        type: 'datetimetoparent',
-        listname: 'Projects',
-        startinternalname: 'BaselineStartDate',
-        endinternalname: 'BaselineFinishDate',
+        type: "datetime",
+        // type: 'datetimetoparent',
+        // listname: 'Projects',
+        // startinternalname: 'BaselineStartDate',
+        // endinternalname: 'BaselineFinishDate',
+          "min": "PlannedStartDate",
       },
       {
         InternalName: "ActualOfferingDate",
