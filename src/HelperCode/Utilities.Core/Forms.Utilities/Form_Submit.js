@@ -249,7 +249,7 @@ window.New_Data_Submit = {
     $('.dropdown-menu.multiselect_scroll.required').each(function () {
       if ($(this).length) {
         if ($('.dropdown-menu.multiselect_scroll.required :checkbox:checked').length == 0) {
-          
+
           multiSelectValid = false
           $('.dropdown-menu.multiselect_scroll.required').parent().parent().siblings('.errMsgField').show()
 
@@ -2508,7 +2508,9 @@ var New_Master_Details_Submit = {
         // get id of master when create to use it in master field of master section
         var newItemMasterLength = $('.Details-Item.NewItem ul[data-fieldtargetlist]').length
         if (newItemMasterLength) {
+          if(New_Master_Details_Submit.g.oListItem && New_Master_Details_Submit.g.oListItem != 'undefined'){
           masterIdWhenCreate = New_Master_Details_Submit.g.oListItem.get_id();
+          }
         }
 
         // allNewMasterIdStr +=  New_Master_Details_Submit.g.oListItem.get_id();

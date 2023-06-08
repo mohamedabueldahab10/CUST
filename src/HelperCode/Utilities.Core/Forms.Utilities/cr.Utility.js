@@ -1133,6 +1133,7 @@ window.CrItemDataRequest = {
 	},
 	// The main Initialization function
 	init: function () {
+
 		var clientContext = new SP.ClientContext.get_current();
 		var oList = clientContext.get_web().get_lists().getByTitle(CrRelatedList);
 		CrItemDataRequest.g.oListItem = oList.getItemById(RID);
@@ -2948,8 +2949,8 @@ var CR_Master_Details_Request = {
 			$('[data-target_list="' + CurrList + '"] .fieldset-container').html(""); //remove html
 		}
 		while (listItemEnum.moveNext()) {
-
-
+			console.log(CurrList,"CurrListCurrListCurrListCurrListCurrList")
+			
 
 
 			var oListItem = listItemEnum.get_current();
@@ -3206,6 +3207,7 @@ var CR_Master_Details_Request = {
 			}
 		}
 
+		debugger
 
 		if (crMasterDetailsArrayRequest.length > 0) {
 			CR_Master_Details_Request.init(crMasterDetailsArrayRequest[0]);

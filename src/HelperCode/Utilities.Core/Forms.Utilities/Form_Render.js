@@ -6903,14 +6903,17 @@ window.ListInfo = {
                     val = "picker"
                   }
                 }
-              } else if (isEdit || listkey == 'changerequest') {
-                var checkLabelRequired = $(this).parent().find('label').attr("required")
-                if (checkLabelRequired) {
-                  var noPickerVal = $(this).find("span.sp-peoplepicker-userSpan").length == 0 && (($(this).attr('data-email') == enternameemail) || !$(this).attr('data-email'))
-                  if (!noPickerVal) {
-                    val = "picker"
-                  }
-                }
+              }
+               else if (isEdit || listkey == 'changerequest') {
+                val = "picker"
+                // debugger
+                // var checkLabelRequired = $(this).parent().find('label').attr("required")
+                // if (checkLabelRequired || checkLabelRequired == undefined) {
+                //   var noPickerVal = $(this).find("span.sp-peoplepicker-userSpan").length == 0 && (($(this).attr('data-email') == enternameemail) || !$(this).attr('data-email'))
+                //   if (!noPickerVal) {
+                //     val = "picker"
+                //   }
+                // }
               }
             } else {
               val = $(this).val()

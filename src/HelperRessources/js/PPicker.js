@@ -218,29 +218,16 @@ window.MyPeoplePicker = function () {
         //people picker
 
         $('[type="picker"],[type="multipicker"]').each(function () {
+
+
             var val = $(this).attr('data-email');
+
             if (val) $(this).find('.sp-peoplepicker-initialHelpText').text(val);
-            else $('.sp-peoplepicker-initialHelpText').text(enternameemail);
+            else $(this).find('.sp-peoplepicker-initialHelpText').text(enternameemail);
+
             $(this).find('.sp-peoplepicker-initialHelpText').fadeIn();
             $(this).find('.sp-peoplepicker-topLevel').attr('title', enternameemail)
         });
-
-        // if (isEdit) {
-        //     $('[type="picker"],[type="multipicker"]').each(function () {
-        //         var val = $(this).attr('data-email');
-        //         $(this).find('.sp-peoplepicker-initialHelpText').text(val);
-        //         $(this).find('.sp-peoplepicker-initialHelpText').fadeIn();
-        //     });
-        // } else if (isNew) {
-        //     window.setTimeout(function () {
-        //         $('.sp-peoplepicker-initialHelpText').text(enternameemail);
-        //         $('.sp-peoplepicker-initialHelpText').fadeIn();
-        //         // if (listkey == 'projects')
-        //         //     $('#ProjectOwner .sp-peoplepicker-initialHelpText').text(UserN.Title);
-        //         // else if (listkey == 'risks')
-        //         //     $('#MitigationOwner .sp-peoplepicker-initialHelpText').text(UserN.Title);
-        //     }, 777);
-        // }
     },
         /**
          * It will set some users into the PeoplePicker

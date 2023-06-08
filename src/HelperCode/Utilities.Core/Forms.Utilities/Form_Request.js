@@ -217,6 +217,7 @@ window.Edit_Data_Request = {
               : oListItem
                 .get_item("" + $(this).attr("id") + "")
                 .get_lookupValue();
+                
           $(this).attr("data-email", pemail);
 
           if (pemail != enternameemail)
@@ -228,6 +229,7 @@ window.Edit_Data_Request = {
           var idinternal = $(this).attr("id");
           var mp = new MyPeoplePicker();
           mp.init($(this).attr("id"), { AllowMultipleValues: false });
+          
           break;
         case "multipicker":
 
@@ -1873,7 +1875,7 @@ window.View_Data_Request = {
       }
 
 
-      debugger
+      
       if (isCrMode) {
         if (crIsGeneral) CrModeFunctionality.preinit();
         else
@@ -3075,6 +3077,7 @@ var Master_Details_Request = {
               break;
 
             case "picker":
+              
               var pemail =
                 oListItem.get_item("" + $(this).attr("id") + "") == null
                   ? enternameemail

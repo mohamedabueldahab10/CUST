@@ -152,6 +152,10 @@ window.MyPeoplePicker = function() {
             if (isEdit) {
                 $('[type="picker"],[type="multipicker"]').each(function() {
                     var val = $(this).attr('data-email');
+                    
+                    if (val) $(this).find('.sp-peoplepicker-initialHelpText').text(val);
+                    else  $(this).find('.sp-peoplepicker-initialHelpText').text(enternameemail);
+
                     $(this).find('.sp-peoplepicker-initialHelpText').text(val);
                     $(this).find('.sp-peoplepicker-initialHelpText').fadeIn();
                 });
