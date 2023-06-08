@@ -258,6 +258,7 @@ window.accessCallisDone = false;
   (window.changeRequestBodyMasterEdit = []),
   (window.changeRequestRCode = []),
   (window.IsZeroBudgetProject = ""),
+  (window.ProjectWorkingStatus = ""),
   (window.USER_HomePage = "initiativesmain.aspx");
 // ended
 
@@ -739,7 +740,7 @@ window.userCalls = {
 
       case "ProjectManager":
 
-      USER_HomePage = "home.aspx";
+        USER_HomePage = "home.aspx";
 
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
@@ -2766,7 +2767,7 @@ window.userCalls = {
           window.location =
             _spPageContextInfo.webAbsoluteUrl +
             "/sitepages/MainIndicators.aspx";
-            USER_HomePage = "MainIndicators.aspx";
+        USER_HomePage = "MainIndicators.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -6588,8 +6589,10 @@ var Access_Project_Info_Request = {
           oListItem.get_item("ClosureStatus") == "closed" ? true : false;
         //////////
 
-        User_NotActiveStatus = (oListItem.get_item("WorkingStatus") != 'active' && oListItem.get_item("WorkingStatus")) ? true : false;
+        //
 
+        User_NotActiveStatus = (oListItem.get_item("WorkingStatus") != 'active' && oListItem.get_item("WorkingStatus")) ? true : false;
+        ProjectWorkingStatus = oListItem.get_item("WorkingStatus");
         ProjectIsDraft = oListItem.get_item("DraftStatus") == 'draft' ? true : false;
 
         User_ProjUID = oListItem.get_item("ProjectGUID") || UserNo_Data;
@@ -6623,9 +6626,10 @@ var Access_Project_Info_Request = {
       if (USERlistkey == 'milestones' && isNew) {
         console.log("YOU Can creat a milestone")
       } else {
-        
-        if (!isWF && !IsZeroBudgetProject && !User_isClosureStatus) {
-          Get_Milestones.init()
+        if (!isWF && !IsZeroBudgetProject && !User_isClosureStatus && ProjectWorkingStatus != 'stat14') {
+          if (Create_Access.includes("milestones") || Edit_Access.includes("milestones")) {
+            Get_Milestones.init()
+          }
         }
       }
 
@@ -7324,7 +7328,7 @@ var Access_Project_Info_Request = {
             );
           }
         }
-        else {          
+        else {
           if (
             !isInitiativesHomePage &&
             !isTarget &&
@@ -7829,7 +7833,9 @@ window.Get_Initiative_Info_Request = {
         console.log("YOU Can creat an initiative milestone")
       } else {
         if (!isWF && !IsZeroBudgetProject) {
+          if (Create_Access.includes("initiativemilestones") || Edit_Access.includes("initiativemilestones")) {
           Get_Milestones.init()
+          }
         }
       }
     }
