@@ -118,7 +118,10 @@ var Information_Form = [{
             "InternalName": "ResolutionTargetDate",
             "DisplayName": "التاريخ المتوقع للحل",
             "DisplayNameEn": "Resolution Target Date",
-            "type": "datetime"
+            type: 'datetimetoparent',
+            listname: 'Strategic Partnerships', // Displan name of list
+            startinternalname: 'StartDate', // internalname of parent start
+            endinternalname: 'FinishDate',
         },
         {
             "InternalName": "Resolution",

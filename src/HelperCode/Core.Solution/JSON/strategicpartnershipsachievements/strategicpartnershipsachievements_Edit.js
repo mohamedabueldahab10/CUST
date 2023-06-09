@@ -22,7 +22,10 @@ var Information_Form = [
                 "InternalName": "AchievementDate",
                 "DisplayNameEn": "Achievement Date",
                 "DisplayName": "تاريخ المنجز",
-                "type": "datetime",
+                type: 'datetimetoparent',
+                listname: 'Strategic Partnerships', // Displan name of list
+                startinternalname: 'StartDate', // internalname of parent start
+                endinternalname: 'FinishDate',
                 "validation": "required"
  
             }

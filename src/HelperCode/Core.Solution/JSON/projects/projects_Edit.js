@@ -18,7 +18,7 @@ var Information_Form = [
         maxchar: '255',
         // withletters:true,
         // Errmsgkey:"withletterpatternunrequired",
-        state: "disabled",
+        // state: "disabled",
         // disableOnWfTaskStage : "S05,S09",
         // security: {
         //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
@@ -583,6 +583,8 @@ var Information_Form = [
         disableOnWfTaskStage : "S05,S09",
         max: "BaselineFinishDate",
         //
+        descPhraseAr: "التاريخ ضمن مدة المبادرة",
+        descPhraseEn: "Date within Initiative period",
         maxOnChild: true,
         childsId: ["PlannedFinishDate", "PlannedDate", "ActualDate",
         'PlannedOfferingDate',
@@ -597,6 +599,8 @@ var Information_Form = [
         DisplayName: "تاريخ إنهاء الأساس",
         DisplayNameEn: "Baseline Finish Date",
         type: "datetime",
+        descPhraseAr: "التاريخ ضمن مدة المبادرة",
+        descPhraseEn: "Date within Initiative period",
         disableOnWfTaskStage : "S05,S09",
         min: "BaselineStartDate",
         //

@@ -19,19 +19,25 @@ var Information_Form = [{
             "Dispfieldkey": "Name",
             "valfieldkey": "Title",
             "state": "disabled",
-        },
+        }, 
 
         {
             "InternalName": "Equation",
             "DisplayName": "معادلة مقياس المنفعة",
             "DisplayNameEn": "Equation",
-            "type": "string"
+            "type": "string",
+            "validation": "required",
+            descPhraseAr: "مثال: عدد العاملين + عدد العاطلين عن العمل",
+            descPhraseEn: "The number of workers + the number of unemployed",  
         },
         {
             "InternalName": "BenefitInput", 
             "DisplayName": "المعادلة المدخلة",
             "DisplayNameEn": "Benefit Input",
-            "type": "formula"
+            "type": "formula",
+            "validation": "required",
+            descPhraseAr: "مثال: (A+B)",
+            descPhraseEn: "Example: (A+B)", 
         },
         // {
         //     "InternalName": "Quarter",
@@ -106,13 +112,19 @@ var Information_Form = [{
             "InternalName": "A",
             "DisplayName": "المكون الأول (A)",
             "DisplayNameEn": "A",
-            "type": "string"
+            "type": "string",
+            "validation": "required",
+            descPhraseAr: " مثال: عدد العاملين",
+            descPhraseEn: "The number of workers", 
         },
         {
             "InternalName": "B",
             "DisplayName": "المكون الثاني (B)",
             "DisplayNameEn": "B",
-            "type": "string"
+            "type": "string",
+            "validation": "required",
+            descPhraseAr: " مثال: عدد العاطلين عن العمل",
+            descPhraseEn: "The number of unemployed", 
         },
         {
             "InternalName": "CC",
