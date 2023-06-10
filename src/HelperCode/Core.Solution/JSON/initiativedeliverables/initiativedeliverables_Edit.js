@@ -237,11 +237,11 @@ var Information_Form = [
         type: 'file',
         docPurpose:"Spporting_Documents",
         withAddBtn: 'true',
-        security: {
-          groups: [
-            'EPMO', 'System Admin Group'
-          ]
-      },
+      //   security: {
+      //     groups: [
+      //       'EPMO', 'System Admin Group'
+      //     ]
+      // },
       },
     ],
   },
@@ -258,11 +258,11 @@ var Information_Form = [
         type: 'file',
         docPurpose:"Attachments",
         withAddBtn: 'true',
-        security: {
-          groups: [
-            'EPMO', 'System Admin Group'
-          ]
-      },
+      //   security: {
+      //     groups: [
+      //       'EPMO', 'System Admin Group'
+      //     ]
+      // },
       },
     ],
   },
