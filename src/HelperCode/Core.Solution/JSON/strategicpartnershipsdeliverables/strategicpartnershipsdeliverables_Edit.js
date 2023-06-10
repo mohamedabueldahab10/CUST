@@ -153,15 +153,26 @@ var Information_Form = [{
       "DisplayName": "مكتمل",
       "DisplayNameEn": "Completed",
       "targetfieldrequired":"getFile", // to make the attache required on yes
-      "targetfield":"Status",
-      "targetfieldvalue": "completed",
-      "type": "yesnoradio",
+      // "targetfield":"Status",
+      // "targetfieldvalue": "completed",
+      type: 'dropdownValues',
       options: {
         choices: [
-          { display: 'yes', value: 'yes' },
-          { display: 'no', value: 'no' }
-        ]
-      }
+          {
+            display: 'yes',
+            value: 'yes',
+            otherFields: [
+              { fieldName: 'Status', value: 'completed' },
+              // { fieldName: 'DraftStatus', value: '' },
+            ],
+          },
+
+          {
+            display: 'no',
+            value: 'no',
+          },
+        ],
+      },
 
     },
     {
