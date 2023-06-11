@@ -6895,16 +6895,17 @@ window.ListInfo = {
 
             var val = ""
             if (checkType == "picker") {
-              if (isNew && listkey !="changerequest") {
-                var checkLabelRequired = $(this).parent().find('label').attr("required")
-                if (checkLabelRequired) {
-                  var noPickerVal = $(this).find("span.sp-peoplepicker-userSpan").length == 0
-                  if (!noPickerVal) {
+              if (isNew && listkey != "changerequest") {
+                
+                // var checkLabelRequired = $(this).parent().find('label').attr("required")
+                // if (checkLabelRequired) {
+                  // var noPickerVal = $(this).find("span.sp-peoplepicker-userSpan").length == 0
+                  // if (!noPickerVal) {
                     val = "picker"
-                  }
-                }
+                  // }
+                // }
               }
-               else if (isEdit || listkey == 'changerequest') {
+              else if (isEdit || listkey == 'changerequest') {
                 val = "picker"
                 // debugger
                 // var checkLabelRequired = $(this).parent().find('label').attr("required")
@@ -6952,8 +6953,14 @@ window.ListInfo = {
             $(this).parent().find(".master_section_err").remove()
           }
 
+
           // to handle the index on master details
           var getMasterIndex = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last().attr('data-index')
+
+          // add class to hide first master details if there is no data like benefits
+          var firstMasterClass = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last().hasClass('firstMasterEmpty')
+          
+
           if (isNew && listkey != "changerequest") {
             getMasterIndex = getMasterIndex ? Number(getMasterIndex) : ""
             getMasterIndex = getMasterIndex + 1
@@ -6965,6 +6972,11 @@ window.ListInfo = {
             checkNewMasterCount = checkNewMasterCount ? checkNewMasterCount.length : 0
             checkNewMasterCount = Number(checkNewMasterCount)
             getMasterIndex = checkEditMasterCount + checkNewMasterCount + 1
+
+            if (firstMasterClass) {
+              getMasterIndex = 1
+            }
+
           }
 
 
@@ -7136,6 +7148,7 @@ window.ListInfo = {
       $(".remove-New-Detail").on("click", function () {
 
 
+        debugger
 
         if (listkey == "changerequest" && (isNew || isEdit)) {
           // remove from master array when click on minus
@@ -7145,12 +7158,19 @@ window.ListInfo = {
 
 
         masterLength = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").length
+        // firstMasterEmpty
+        // var firstMasterClass = ''
+        // firstMasterClass = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").first().hasClass('firstMasterEmpty')
+        // debugger
 
 
         if (isNew && listkey == "changerequest") {
           if (masterLength > 0) {
             masterLength = masterLength - 1
             $(this).closest("[data-target_list]").find(".Details-Item.NewItem")[masterLength].remove()
+
+            console.log($(this).closest("[data-target_list]").find(".Details-Item.NewItem").last().hasClass("firstMasterEmpty"), "laaaaaaaaast")
+            debugger
           }
         } else if (isNew) {
           // in new > 1 because on render the form there is a new Item so it will be  before click on +
@@ -7166,8 +7186,11 @@ window.ListInfo = {
           }
         }
 
+
+
         if (isNew && listkey == "changerequest") {
-          if (masterLength == 0) {
+          // add firstMasterEmpty to remove the - in first master details if there is no data like benefits
+          if (masterLength == 0 || $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last().hasClass("firstMasterEmpty")) {
             // to return the form as rendered
             $(this).closest("[data-target_list]").find(".remove-New-Detail").hide()
           }
@@ -7189,6 +7212,9 @@ window.ListInfo = {
 
           var lastDetailsItemAfterRemove = $(this).closest("[data-target_list]").find(".Details-Item").last()
           lastDetailsItemAfterRemove.removeClass('disable_section')
+
+
+
         } else if (listkey == "changerequest" && (RListKey == 'projects' || RListKey == 'initiatives')) {
           var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last()
           if (lastDetailsItemBeforeAdd.length == 0) {
