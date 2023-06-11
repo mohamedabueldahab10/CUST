@@ -223,6 +223,8 @@ var Information_Form = [
         type: 'file',
         docPurpose: 'Spporting_Documents',
         withAddBtn: 'true',
+        descPhraseAr: "ملفات مطلوبة عند الاغلاق",
+        descPhraseEn: "File required after closing",
       },
       {
         InternalName: 'SupportDocumentsDescription',
@@ -248,6 +250,8 @@ var Information_Form = [
         type: 'file',
         docPurpose: 'Attachments',
         withAddBtn: 'true',
+        descPhraseAr: "ملفات متعلقة بالعنصر",
+        descPhraseEn: "File related to the item",
       },
     ],
   },
