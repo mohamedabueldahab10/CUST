@@ -163,7 +163,9 @@ var Information_Form = [
         "DispfieldkeyEn": "NameEn",
         "valfieldkey": "Title",
         // "validation": "required",
-        display: 'none',
+        display: 'none',        
+        descPhraseAr: "قطاع الهدف المرتبط",
+        descPhraseEn: "Related Objective Sector",
         state: 'disabled',
         ToggleName: "Sector",
         dontSubmit: true,
@@ -186,7 +188,9 @@ var Information_Form = [
         filterField: "ParentEntity",//InternalName Of Parent field
         filterFieldType: "Text",//Type In Sharepoint List for Parent field
         display: 'none',
-        state: 'disabled',
+        state: 'disabled',               
+        descPhraseAr: "وكالة الهدف المرتبط",
+        descPhraseEn: "Related Objective DeputyShip",
         ToggleName: "SubSector",
         dontSubmit: true,
       },

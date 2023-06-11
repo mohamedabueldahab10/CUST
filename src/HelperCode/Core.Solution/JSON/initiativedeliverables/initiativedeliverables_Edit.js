@@ -236,12 +236,14 @@ var Information_Form = [
         DisplayNameEn: 'Supporting Documents',
         type: 'file',
         docPurpose:"Spporting_Documents",
-        withAddBtn: 'true',
-        security: {
-          groups: [
-            'EPMO', 'System Admin Group'
-          ]
-      },
+        withAddBtn: 'true', 
+        descPhraseAr: "ملفات مطلوبة عند الاغلاق",
+        descPhraseEn: "File required after closing",
+      //   security: {
+      //     groups: [
+      //       'EPMO', 'System Admin Group'
+      //     ]
+      // },
       },
     ],
   },
@@ -258,11 +260,13 @@ var Information_Form = [
         type: 'file',
         docPurpose:"Attachments",
         withAddBtn: 'true',
-        security: {
-          groups: [
-            'EPMO', 'System Admin Group'
-          ]
-      },
+        descPhraseAr: "ملفات متعلقة بالعنصر",
+        descPhraseEn: "File related to the item",
+      //   security: {
+      //     groups: [
+      //       'EPMO', 'System Admin Group'
+      //     ]
+      // },
       },
     ],
   },

@@ -114,12 +114,10 @@ var Information_Form = [{
       "InternalName": "PlannedFinishDate",
       "DisplayName": "تاريخ الانتهاء المخطط",
       "DisplayNameEn": "Planned Finish Date",
-      "type": "datetime",
-      // type: 'datetimetoparent',
-      // listname: 'Projects',
-      // startinternalname: 'BaselineStartDate',
-      // endinternalname: 'BaselineFinishDate',
-      // // "min": "PlannedStartDate",
+      type: 'datetimetoparent',
+      listname: 'Strategic Partnerships', // Displan name of list
+      startinternalname: 'StartDate', // internalname of parent start
+      endinternalname: 'FinishDate',
       "validation": "required",
     },
     // {
@@ -155,15 +153,26 @@ var Information_Form = [{
       "DisplayName": "مكتمل",
       "DisplayNameEn": "Completed",
       "targetfieldrequired":"getFile", // to make the attache required on yes
-      "targetfield":"Status",
-      "targetfieldvalue": "completed",
-      "type": "yesnoradio",
+      // "targetfield":"Status",
+      // "targetfieldvalue": "completed",
+      type: 'dropdownValues',
       options: {
         choices: [
-          { display: 'yes', value: 'yes' },
-          { display: 'no', value: 'no' }
-        ]
-      }
+          {
+            display: 'yes',
+            value: 'yes',
+            otherFields: [
+              { fieldName: 'Status', value: 'completed' },
+              // { fieldName: 'DraftStatus', value: '' },
+            ],
+          },
+
+          {
+            display: 'no',
+            value: 'no',
+          },
+        ],
+      },
 
     },
     {

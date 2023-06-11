@@ -286,9 +286,11 @@ var Information_Form = [
         type: 'file',
         docPurpose: 'Spporting_Documents',
         withAddBtn: 'true',
-        security: {
-          groups: ['EPMO', 'System Admin Group'],
-        },
+        descPhraseAr: "ملفات مطلوبة عند الاغلاق",
+        descPhraseEn: "File required after closing",
+        // security: {
+        //   groups: ['EPMO', 'System Admin Group'],
+        // },
       },
       {
         InternalName: 'SupportDocumentsDescription',
@@ -298,9 +300,9 @@ var Information_Form = [
         maxchar: '5000',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
-        security: {
-          groups: ['EPMO', 'System Admin Group'],
-        },
+        // security: {
+        //   groups: ['EPMO', 'System Admin Group'],
+        // },
       },
     ],
   },
@@ -317,9 +319,11 @@ var Information_Form = [
         type: 'file',
         docPurpose: 'Attachments',
         withAddBtn: 'true',
-        security: {
-          groups: ['EPMO', 'System Admin Group'],
-        },
+        descPhraseAr: "ملفات متعلقة بالعنصر",
+        descPhraseEn: "File related to the item",
+        // security: {
+        //   groups: ['EPMO', 'System Admin Group'],
+        // },
       },
     ],
   },

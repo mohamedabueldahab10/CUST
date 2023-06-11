@@ -629,6 +629,8 @@ var Information_Form = [
         DisplayNameEn: "Baseline Start Date",
         type: "datetime",
         max: "BaselineFinishDate",
+        descPhraseAr: "التاريخ ضمن مدة المبادرة",
+        descPhraseEn: "Date within Initiative period",
         // 
         maxOnChild: true,
         childsId: ["PlannedFinishDate", "PlannedDate", "ActualDate",
@@ -645,6 +647,8 @@ var Information_Form = [
         DisplayNameEn: "Baseline Finish Date",
         type: "datetime",
         min: "BaselineStartDate",
+        descPhraseAr: "التاريخ ضمن مدة المبادرة",
+        descPhraseEn: "Date within Initiative period",
         // 
         maxOnChild: true,
         childsId: ["PlannedFinishDate", "PlannedDate", "ActualDate",

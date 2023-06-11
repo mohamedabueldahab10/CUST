@@ -2237,7 +2237,7 @@ window.userCalls = {
         // Delete_Access = Delete_Access.concat(SP_Page_Name); // to can delete everything
         break;
       case "SPMO":
-        USER_HomePage = "home.aspx";
+        USER_HomePage = "InitiativesMain.aspx";
         isSPMO = true;
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
@@ -2473,7 +2473,7 @@ window.userCalls = {
 
       case "DU":
         isDU = true;
-        USER_HomePage = "home.aspx";
+        USER_HomePage = "InitiativesMain.aspx";
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 

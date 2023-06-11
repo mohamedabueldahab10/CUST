@@ -96,7 +96,10 @@ var Information_Form = [{
             "InternalName": "DateIdentified",
             "DisplayName": "تاريخ تحديد الخطر",
             "DisplayNameEn": "Date Identified",
-            "type": "datetime"
+            type: 'datetimetoparent',
+        listname: 'Strategic Partnerships', // Displan name of list
+        startinternalname: 'StartDate', // internalname of parent start
+        endinternalname: 'FinishDate',
         },
         {
             "InternalName": "Description",
@@ -196,13 +199,19 @@ var Information_Form = [{
             "InternalName": "MitigationTargetDate",
             "DisplayName": "التاريخ المخطط للاستجابة",
             "DisplayNameEn": "Mitigation Target Date",
-            "type": "datetime"
+            type: 'datetimetoparent',
+            listname: 'Strategic Partnerships', // Displan name of list
+            startinternalname: 'StartDate', // internalname of parent start
+            endinternalname: 'FinishDate',
         },
         {
             "InternalName": "MitigationActualCompletionDate",
             "DisplayName": "تاريخ الانتهاء من الاستجابة",
             "DisplayNameEn": "Mitigation Actual Completion Date",
-            "type": "datetime"
+            type: 'datetimetoparent',
+            listname: 'Strategic Partnerships', // Displan name of list
+            startinternalname: 'StartDate', // internalname of parent start
+            endinternalname: 'FinishDate',
         },
         {
             "InternalName": "MitigationPlan",

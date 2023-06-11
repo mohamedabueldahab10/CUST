@@ -66,7 +66,10 @@ var Information_Form = [
         InternalName: 'PlannedDate',
         DisplayName: 'تاريخ الاكتمال المخطط',
         DisplayNameEn: 'Planned Finish Date',
-        type: 'datetime',
+        type: 'datetimetoparent',
+        listname: 'Strategic Partnerships', // Displan name of list
+        startinternalname: 'StartDate', // internalname of parent start
+        endinternalname: 'FinishDate',
       },
       // {
       //   InternalName: 'ActualDate',
