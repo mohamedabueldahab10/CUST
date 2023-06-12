@@ -70,6 +70,24 @@ window.Information_Form = [
 				],
 			},
 			{
+				InternalName: "UpdateType",
+				DisplayName: "نوع طلب التغيير",
+				DisplayNameEn: "Change Request Type",
+				type: "dropdownValues",
+				options: {
+					choices: [
+						{
+							display: "generalchange",
+							value: "automatic",
+						
+						},
+						{ display: "deletion", value: "delete",
+						
+					}
+					],
+				},
+			},
+			{
 				InternalName: "ProjectCode",
 				DisplayNameEn: "Related Project",
 				DisplayName: "المشروع المرتبط",

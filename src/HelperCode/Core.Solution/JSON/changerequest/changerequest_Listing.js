@@ -43,6 +43,15 @@ var Listing_Info = [
         infilter: true
     },
     {
+        InternalName: "UpdateType",
+        DisplayName: "نوع طلب التغيير",
+        DisplayNameEn: "Change Request Type",
+        type: "dropdownValues",
+        needTrans: true,
+        inlisting: true,
+        infilter: true
+    },
+    {
         "InternalName": "RequestStatus",
         "DisplayName": "حالة الطلب",
         "DisplayNameEn": "Request Status",
