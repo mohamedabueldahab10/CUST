@@ -6877,7 +6877,6 @@ window.ListInfo = {
       //to check the length of new master
       var masterLength = 0
 
-
       //pluss
       $("[data-target_list] .fieldset-container").append(
         '<div class="add-New-Detail-wrapper"><a class="add-New-Detail" href="javascript:"><i class="fas fa-plus"></i></a><a class="remove-New-Detail" href="javascript:"><i class="fas fa-minus"></i></a></div>'
@@ -6888,24 +6887,24 @@ window.ListInfo = {
 
         //check if there is a required field not filled (to stop add master section if there is a required field not filled)
         var stopAdd = false
+        var nameValueOfMasterItem = true
         $(this).parent().parent().children('.Details-Item').each(function () {
 
           var requiredArr = $(this).find('input[required],div[type=picker],textarea[required]')
 
           requiredArr.each(function () {
-
             var checkType = $(this).attr('type')
 
             var val = ""
             if (checkType == "picker") {
               if (isNew && listkey != "changerequest") {
-                
+
                 // var checkLabelRequired = $(this).parent().find('label').attr("required")
                 // if (checkLabelRequired) {
-                  // var noPickerVal = $(this).find("span.sp-peoplepicker-userSpan").length == 0
-                  // if (!noPickerVal) {
-                    val = "picker"
-                  // }
+                // var noPickerVal = $(this).find("span.sp-peoplepicker-userSpan").length == 0
+                // if (!noPickerVal) {
+                val = "picker"
+                // }
                 // }
               }
               else if (isEdit || listkey == 'changerequest') {
@@ -6933,6 +6932,20 @@ window.ListInfo = {
               stopAdd = true
             }
           }
+          // check if there is Name in master section Benefits
+
+          if($(this).closest("[data-target_list]").data('target_list') == "Benefits"){
+            if($(this).closest("[data-target_list]").find(".Details-Item").last().hasClass("firstMasterEmpty")){
+              console.log("first section")
+            }else{
+              nameValueOfMasterItem = $(this).closest("[data-target_list]").find(".Details-Item").last().find('input#Name').val() ? true : false
+            }
+            if (!nameValueOfMasterItem) {
+              stopAdd = true
+            }
+
+          }
+
         })
 
         if (stopAdd) {
@@ -6941,9 +6954,9 @@ window.ListInfo = {
             localStorage.getItem("lng") == null ||
             localStorage.getItem("lng") == "ar"
           ) {
-            stoperMsg = "يجب تعبئة الحقول الازامية قبل الاضافة"
+            stoperMsg = "يجب تعبئة الاسم و التأكد من الحقول الازامية قبل الاضافة"
           } else {
-            stoperMsg = "You Should fill the required fields before add"
+            stoperMsg = "You Should fill the name and check the required fields before add"
           }
           var masterErr = $(this).parent().find(".master_section_err").length
           if (masterErr == 0) {
@@ -6962,7 +6975,7 @@ window.ListInfo = {
 
           // add class to hide first master details if there is no data like benefits
           var firstMasterClass = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last().hasClass('firstMasterEmpty')
-          
+
 
           if (isNew && listkey != "changerequest") {
             getMasterIndex = getMasterIndex ? Number(getMasterIndex) : ""
