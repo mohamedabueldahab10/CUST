@@ -423,6 +423,9 @@ window.ListInfo = {
             MasterDetailsArrayRequest = Array.from(
               new Set(MasterDetailsArrayRequest)
             ); //remove duplicates
+
+
+
             MasterDetailsArrayNew = MasterDetailsArrayRequest;
             MasterDetailsArrayEdit = MasterDetailsArrayRequest;
             if (isNew) {

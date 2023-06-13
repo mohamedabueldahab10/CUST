@@ -59,7 +59,8 @@ var targetYear = new Date().getFullYear(), targetActualValue = '', targetPerform
 window.kpiEquationsComponents = [];
 
 
-var getMasterFilesArr = []
+var getMasterFilesArr = [];
+
 
 // window.portfolioCreatedBy;
 var relatedPiller = ''
@@ -217,7 +218,7 @@ window.Edit_Data_Request = {
               : oListItem
                 .get_item("" + $(this).attr("id") + "")
                 .get_lookupValue();
-                
+
           $(this).attr("data-email", pemail);
 
           if (pemail != enternameemail)
@@ -229,7 +230,7 @@ window.Edit_Data_Request = {
           var idinternal = $(this).attr("id");
           var mp = new MyPeoplePicker();
           mp.init($(this).attr("id"), { AllowMultipleValues: false });
-          
+
           break;
         case "multipicker":
 
@@ -733,7 +734,7 @@ window.Edit_Data_Request = {
 
 
     // to get the value of weight in delivrable and milestone correct in edit
-
+    
     if (MasterDetailsArrayRequest.length == 0) { // to avoid the error if there is master details like project ana initiative
       $("[data-weightvalue]").each(function () {
 
@@ -1875,7 +1876,7 @@ window.View_Data_Request = {
       }
 
 
-      
+
       if (isCrMode) {
         if (crIsGeneral) CrModeFunctionality.preinit();
         else
@@ -3077,7 +3078,7 @@ var Master_Details_Request = {
               break;
 
             case "picker":
-              
+
               var pemail =
                 oListItem.get_item("" + $(this).attr("id") + "") == null
                   ? enternameemail
@@ -3204,8 +3205,8 @@ var Master_Details_Request = {
               }
 
               if ((listkey == 'initiatives' || listkey == 'projects')) { // to handle amount in master details based on weight in project and initiative
-
-                if (MasterDetailsArrayRequest.length == 0) {
+                // to get the Amount of initiative if there is no benefit created on
+                if (MasterDetailsArrayRequest.length == 0 || (MasterDetailsArrayRequest.length == 1 && MasterDetailsArrayRequest[0] == "Benefits")) {
                   if ($("[data-targetelem]").length > 0) {
                     $("[data-targetelem]").each(function () {
                       var targetElem = $(this).data('targetelem')
@@ -3284,7 +3285,9 @@ var Master_Details_Request = {
 
 
     if (listkey == "projects" || listkey == "initiatives") {
+      
       if (getMasterFilesArr.length && MasterDetailsArrayRequest.length == 0 && !callMasterFile) {
+
         callMasterFile = true
         ViewAll_MasterFiles.init(getMasterFilesArr[0].masterItemId, getMasterFilesArr[0].CurrList)
       }
@@ -5689,7 +5692,7 @@ window.equationKPI = {
     var listItemEnum = collListItem.getEnumerator();
 
     while (listItemEnum.moveNext()) {
-      
+
       var oListItem = listItemEnum.get_current();
       kpiEquationID = oListItem.get_id();
       kpiEquation = oListItem.get_item("KPIInput") || "";
@@ -5761,7 +5764,7 @@ window.equationKPI = {
 
       // add try if there is no issue with equation
       // add catch to appear a msg and make the btn disabled if there is an issue with equation
-      
+
       try {
         kpiEquation =
           eval(kpiEquation) % 1 != 0
@@ -5947,10 +5950,10 @@ var equationBenefit = {
       benefitsEquation = benefitsEquation.replaceAll(',', '') // remove , from high number
 
       try {
-      benefitsEquation =
-        eval(benefitsEquation) % 1 != 0
-          ? eval(benefitsEquation).toFixed(2)
-          : eval(benefitsEquation);
+        benefitsEquation =
+          eval(benefitsEquation) % 1 != 0
+            ? eval(benefitsEquation).toFixed(2)
+            : eval(benefitsEquation);
       } catch (err) {
         $("body").append(
           "<style>" +
