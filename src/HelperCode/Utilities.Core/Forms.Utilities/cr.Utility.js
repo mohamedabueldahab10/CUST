@@ -79,6 +79,8 @@ window.CrModeFunctionality = {
         if (USERisView) {
           if (el.dontSubmit) {
             o.subFields.splice(index, 1)
+          }else if(el.type == "email"){ // change type email to string to can get the data in view
+            el.type = "string"
           }
         }
       })
@@ -88,7 +90,7 @@ window.CrModeFunctionality = {
 
 
     var toggleSectionName;
-
+    
     asyncFor.seqProcess(
       newJSON,
       function (item, index, resolve) {
@@ -186,8 +188,7 @@ window.CrModeFunctionality = {
         );
       },
       function (item, index, data, isDone) {
-
-
+    
         if (
           localStorage.getItem("lng") == null ||
           localStorage.getItem("lng") == "ar"
@@ -199,7 +200,7 @@ window.CrModeFunctionality = {
         // console.log('Finishing label ' + Label + ' - IsDone: ' + isDone);
         htmlBuilder += "</div></div></div>";
         if (isDone) {
-
+  
           actionTaskHeader = "";
 
           $('div[class*="cr-related-item-"]').remove();
@@ -598,6 +599,7 @@ window.CrModeFunctionality = {
           );
           // $(".cr-related-item-section .CFIELD").addClass("dont-submit"); // remove it to not apply dont-submit on all fields
           // afterRenderEditAndNewForms.init();
+          
           if (USERisNew && isRListKey) CrItemDataRequest.init();
           else if (USERisEdit) CrItemDataRenderFromJSON_Edit.init();
           else if (USERisView) CrItemDataRenderFromJSON_View.init();
@@ -1811,7 +1813,7 @@ window.CrItemDataRenderFromJSON_View = {
     var originalValue = "";
     var newValue = "";
     var value = "";
-
+    
     changeRequestBody.forEach(function (o, i, a) {
 
       if (o.InternalName) {
@@ -2190,6 +2192,7 @@ window.CrItemDataRenderFromJSON_View = {
         }
       }
     });
+    
     $('[data-toggle="tooltip"]').tooltip();
 
 
@@ -2909,7 +2912,7 @@ var CR_Master_Details_Request = {
   // The main Initialization function
   init: function (DetailsList) {
 
-    debugger
+    
 
 
     var clientContext = new SP.ClientContext.get_current();
@@ -3473,7 +3476,7 @@ var Fill_BodyMaster = {
 window.Add_New_CRMaster = {
   init: function (getMasterIndex) {
 
-    debugger
+    
     // var x =  $(".cr-related-item-section[data-target_list]").find(".Details-Item.NewItem").last()
     $(`.cr-related-item-section[data-target_list] .Details-Item.NewItem[data-index=${getMasterIndex}]`).each(function () {
       var CurrList = $(this).closest("[data-target_list]").attr("data-target_list");
