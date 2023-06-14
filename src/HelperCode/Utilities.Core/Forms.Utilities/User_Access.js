@@ -796,7 +796,7 @@ window.userCalls = {
           "projecthome.aspx",
         ];
         Edit_Access = [
-          // "projects",
+          "projects",
           // "deliverables",
           // "milestones",
           "issues",
@@ -2933,10 +2933,13 @@ window.userCalls = {
         break;
 
       case "RelationshipManager":
-        if (USERisHome)
-          window.location =
-            _spPageContextInfo.webAbsoluteUrl +
-            "/sitepages/Listing.aspx?ListKey=strategicpartnerships";
+        // if (USERisHome)
+        //   window.location =
+        //     _spPageContextInfo.webAbsoluteUrl +
+        //     "/sitepages/Listing.aspx?ListKey=strategicpartnerships";
+
+        USER_HomePage = "Listing.aspx?ListKey=strategicpartnerships"
+
 
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
@@ -2971,10 +2974,12 @@ window.userCalls = {
         break;
 
       case "StrategicAchievementTeam":
-        if (USERisHome)
-          window.location =
-            _spPageContextInfo.webAbsoluteUrl +
-            "/sitepages/Listing.aspx?ListKey=achievements";
+
+      USER_HomePage = "Listing.aspx?ListKey=achievements"
+        // if (USERisHome)
+        //   window.location =
+        //     _spPageContextInfo.webAbsoluteUrl +
+        //     "/sitepages/Listing.aspx?ListKey=achievements";
 
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
