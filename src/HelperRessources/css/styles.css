@@ -4310,6 +4310,41 @@ a.taskButton:hover {
 
 /* end of strategic partnership */
 
+/* for projects circle status */
+.circlecolorstat8 {
+    background: #C53737 !important;
+}
+
+.circlecolorstat9 {
+    background: #FCD66D !important;
+}
+
+.circlecolorstat10 {
+    background: #5AB74C !important;
+}
+
+.circlecolorstat11 {
+    background: #15425a !important;
+}
+
+.circlecolorstat12 {
+    background: #696969 !important;
+}
+
+.circlecolorstat30 {
+    background: #696969 !important;
+}
+.circlecolorstat13 {
+    background: #696969 !important;
+}
+.circlecolorstat14 {
+    background: #696969 !important;
+}
+.circlecolorstat28 {
+    background: #696969 !important;
+}
+/* end of project circle  */
+
 /* for initiative status */
 .circlecolorstat1 {
     background: #bc3434 !important;
