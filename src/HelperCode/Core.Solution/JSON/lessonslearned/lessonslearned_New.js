@@ -36,12 +36,12 @@ var Information_Form = [
         InternalName: 'Date',
         DisplayName: 'التاريخ',
         DisplayNameEn: 'Date',
-        // "type":"datetime",
-        type: 'datetimetoparent',
-        listname: 'Projects', // list name
-        startinternalname: 'BaselineStartDate', // internalname of parent start
-        endinternalname: 'BaselineFinishDate',
-        validation: 'required',
+        "type":"datetime",
+        // type: 'datetimetoparent',
+        // listname: 'Projects', // list name
+        // startinternalname: 'BaselineStartDate', // internalname of parent start
+        // endinternalname: 'BaselineFinishDate',
+        // validation: 'required',
       },
       {
         InternalName: 'Description',
