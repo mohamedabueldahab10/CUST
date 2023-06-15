@@ -17,6 +17,9 @@ var PQuery = '',
   isOnload = true,
   isEmptyFilter = true, SPHTTPitemsEnumerable,
   AllRecordsWithID = [];
+//
+
+//
 if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
   var search = "بحث ...";
   var No_Data = 'لا يوجد'
@@ -42,6 +45,10 @@ var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
 // var exportExcel = ''
 //all data filter array
 allDataFilterArr = []
+//
+
+// check excel value
+var excelListingQuery = "", excelListingName = "", excelInternalFieldsNames = "", ExcelRecordsWithID = [], invokeExcel = false;
 //
 
 //get ListKey and PCODE from URL
@@ -103,10 +110,15 @@ window.sphttp = {
   get: function (listUrl, listDisplayName, camelQuery, internalFieldNames, isGetDdl, onEach, onError) {
 
 
+    invokeExcel = isGetDdl
     sphttp.g.isGetDdl = isGetDdl;
     var clientContext = new SP.ClientContext(listUrl);
     var oListsp = clientContext.get_web().get_lists().getByTitle(listDisplayName);
     // var fields=IN.join(', ');
+    excelListingQuery = camelQuery
+    excelListingName = listDisplayName
+    excelInternalFieldsNames = internalFieldNames
+    //
     if (!isGetDdl && (isLoadMore || isEmptyFilter || filterValue || allTasksClicked)) {
       camelQuery = camelQuery.replace('</Query></View>', '</Query><RowLimit>10</RowLimit></View>');
     }
@@ -372,7 +384,9 @@ window.sphttp = {
 
           }
 
-
+          if (!invokeExcel) { // to not call func twice on load
+            Get_ExcelValues.init(excelListingName, excelListingQuery)
+          }
           if (!sphttp.g.isGetDdl) sphttp.g.position = SPHTTPitemsEnumerable.get_listItemCollectionPosition();
           onEach(records, null, null, true); //true if no more items
         }),
@@ -453,6 +467,7 @@ var Stages_Data_Request = {
     StagesArray: []
   }
 };
+
 window.ListingData = {
   // The main Initialization function
   preinit: function () {
@@ -1837,11 +1852,13 @@ window.ListingData = {
         DN = Listing_Info.map((a) => a.DisplayNameEn);
       }
 
-      AllRecordsWithID.forEach(function (a, i) {
-        //getting listing records
+      // AllRecordsWithID.forEach(function (a, i) {
+      //   //getting listing records
+      //   mydata.push(a.record);
+      // });
+      ExcelRecordsWithID.forEach(function (a, i) {
         mydata.push(a.record);
-      });
-
+      })
       var table =
         '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head> <!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets> <x:ExcelWorksheet><x:Name>{worksheet}</x:Name> <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions> </x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook> </xml><![endif]--><meta charset="UTF-8"></head><body><table><thead><tr>'; //assigning charset for ar words
       // var head = Object.keys(mydata[0]);//Using internal names
@@ -1861,7 +1878,7 @@ window.ListingData = {
         table += "<tr>";
         for (var j = 0; j < IN.length; j++) {
 
-          
+
           if (
             mydata[i][IN[j]] && armonths.indexOf(mydata[i][IN[j]].toString().split(" ")[1]) > -1 &&
             FT[j] == "date"
@@ -1930,19 +1947,18 @@ window.ListingData = {
 
             default:
 
-            if(listkey == 'projects' && IN[j] == "RelatedInitiative"){
-              // to can save the initiative name in excel not code
-              var data = mydata[i][IN[j]]
-              var textItemarray = [];
-              textItemarray = JSON.parse(localStorage.getItem('Dynamo_Initiatives'));
-              textItemarray.filter(function (a) {
-                if (a.code == data) {
-                  mydata[i][IN[j]] = a.Name2
-                }
-              })              
-            }
+              if (listkey == 'projects' && IN[j] == "RelatedInitiative") {
+                // to can save the initiative name in excel not code
+                var data = mydata[i][IN[j]]
+                var textItemarray = [];
+                textItemarray = JSON.parse(localStorage.getItem('Dynamo_Initiatives'));
+                textItemarray.filter(function (a) {
+                  if (a.code == data) {
+                    mydata[i][IN[j]] = a.Name2
+                  }
+                })
+              }
 
-              console.log("no change on on value")
               break;
           }
 
@@ -2199,7 +2215,7 @@ window.ListingData = {
               }
               else {
                 if (localStorage.getItem('' + localStorageVariables[L]) != null && localStorageVariables[L] == "Dynamo_Initiatives") {
-                    // add to can get the name of initiative in project list filter
+                  // add to can get the name of initiative in project list filter
                   var textItemarray = [];
                   textItemarray = JSON.parse(localStorage.getItem('' + localStorageVariables[L]));
                   textItemarray.filter(function (a) {
@@ -2829,5 +2845,172 @@ var StrategicObjectives_Status_Listing = {
       status: status,
       classname: color
     }
+  }
+}
+
+
+var Get_ExcelValues = {
+  init: function (listNameForExcel, queryForExcel) {
+    ExcelRecordsWithID = []
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle(listNameForExcel);
+    var camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(queryForExcel);
+    Get_ExcelValues.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(Get_ExcelValues.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Get_ExcelValues.onSuccess),
+      Function.createDelegate(this, Get_ExcelValues.onError)
+    );
+  },
+  onSuccess: function (sender, args) {
+
+    var collListItem = Get_ExcelValues.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    while (listItemEnum.moveNext()) {
+
+
+      var oListItem = listItemEnum.get_current();
+      var record = {};
+
+      // excelInternalFieldsNames
+      if (excelInternalFieldsNames && excelInternalFieldsNames.length > 0) {
+        for (var i = 0; i < excelInternalFieldsNames.length; i++) {
+          if (excelInternalFieldsNames[i] = Listing_Info[i].InternalName) {
+            if (Listing_Info[i].type == "date") {
+              // var timezone = String(oListItem.get_item(excelInternalFieldsNames[i])) || null;
+              // timezone = timezone ? timezone.split(':')[0].split(' ') : null;
+              // timezone = timezone ? timezone[timezone.length - 1] : null;
+              var d = (oListItem.get_item(excelInternalFieldsNames[i]) == null) ? 'empty' : oListItem.get_item(excelInternalFieldsNames[i]);
+              var datetouse2;
+              if (d != "empty") {
+                var local = d.getTime();
+                var offset = d.getTimezoneOffset() * (60 * 1000);
+                var utc = new Date(local + offset);
+                var riyadh = new Date(utc.getTime() + (3 * 60 * 60 * 1000));
+                var riyadhtime = riyadh.toString().split(' ')[4];
+                var dateforfilteration = riyadh.toISOString();
+                var dateforfilterationValue = dateforfilteration.substring(dateforfilteration.indexOf('T') + 1);
+                var datetouse = riyadh.toLocaleString("en-US").split(',')[0].split('/');
+                datetouse[0] = (datetouse[0].length == 1) ? '0' + datetouse[0] : datetouse[0];
+                datetouse[1] = (datetouse[1].length == 1) ? '0' + datetouse[1] : datetouse[1];
+                datetouse2 = datetouse[1] + '/' + datetouse[0] + '/' + datetouse[2] + 'T' + riyadh.toString().split(' ')[4];
+                // datetouse2 = datetouse[1] + '/' + datetouse[0] + '/' + datetouse[2] + '<span style=\'display:none\'>:::' + timezone + ':::</span>';
+              }
+              record[excelInternalFieldsNames[i]] = (oListItem.get_item(excelInternalFieldsNames[i]) == null) ? No_Data : datetouse2;
+            } else if (Listing_Info[i].type == "picker") {
+              var pemail = (oListItem.get_item(excelInternalFieldsNames[i]) == null) ? No_Data : oListItem.get_item(excelInternalFieldsNames[i]).get_lookupValue();
+              record[excelInternalFieldsNames[i]] = pemail;
+            }
+            else if (Listing_Info[i].type == "multipicker") {
+
+              var pemail = (oListItem.get_item(excelInternalFieldsNames[i]) == null) ? No_Data : oListItem.get_item(excelInternalFieldsNames[i]);
+              var userItems = [];
+              if (pemail != No_Data) {
+                pemail.forEach(function (element) {
+                  userItems.push(element.get_lookupValue());
+                })
+                record[excelInternalFieldsNames[i]] = userItems.join(", ");
+              }
+              else {
+                record[excelInternalFieldsNames[i]] = No_Data;
+              }
+            }
+            else if (Listing_Info[i].type == "checkbox") {
+              var value = oListItem.get_item(excelInternalFieldsNames[i]) ? 'نعم' : 'لا';
+              record[excelInternalFieldsNames[i]] = value;
+            } else if (Listing_Info[i].type == "floatpercentage") {
+              record[excelInternalFieldsNames[i]] = (oListItem.get_item(excelInternalFieldsNames[i]) == null) ? No_Data : oListItem.get_item(excelInternalFieldsNames[i]) + ' %';
+
+            } else if (Listing_Info[i].type == "money") {
+              record[excelInternalFieldsNames[i]] = (oListItem.get_item(excelInternalFieldsNames[i]) == null) ? No_Data : oListItem.get_item(excelInternalFieldsNames[i]).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+            else if (Listing_Info[i].type == "lookupmultiselect") {
+
+              var items = ''
+              var value = oListItem.get_item(excelInternalFieldsNames[i]) == null ? '' : oListItem.get_item(excelInternalFieldsNames[i]).split(":::")
+              var multiLookUpItemsArr = []
+              var multiLookUpValuesArr = []
+              if (value && value.length) {
+
+
+                value.forEach(el => {
+                  if ((localStorage.getItem('' + Listing_Info[i].localStorageVariable) != null) && (oListItem.get_item(excelInternalFieldsNames[i]) !== null)) {
+                    multiLookUpItemsArr = JSON.parse(localStorage.getItem('' + Listing_Info[i].localStorageVariable));
+
+                    multiLookUpItemsArr.filter(function (a) {
+                      if (a.code == el) {
+                        multiLookUpValuesArr.push(a)
+                      }
+                    });
+                  }
+                })
+              }
+              if (multiLookUpItemsArr && multiLookUpValuesArr.length) {
+                multiLookUpValuesArr.forEach(el => {
+                  if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+                    items += el.name + '<br>'
+                  } else {
+                    items += el.nameEn + '<br>'
+                  }
+                })
+
+                record[excelInternalFieldsNames[i]] = items
+              } else {
+                record[excelInternalFieldsNames[i]] = No_Data;
+              }
+
+
+            }
+            else if (Listing_Info[i].type == "lookup") {
+
+              var lookupItemarr = [], Itemdisplayname = "";
+              if ((localStorage.getItem('' + Listing_Info[i].localStorageVariable) != null) && (oListItem.get_item(excelInternalFieldsNames[i]) !== null)) {
+                lookupItemarr = JSON.parse(localStorage.getItem('' + Listing_Info[i].localStorageVariable));
+                lookupItemarr = lookupItemarr.filter(function (a) {
+
+                  return a.code === oListItem.get_item(excelInternalFieldsNames[i])
+                });
+
+                if (lookupItemarr[0]) {
+                  if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+                    record[excelInternalFieldsNames[i]] = lookupItemarr[0].name;
+                  } else record[excelInternalFieldsNames[i]] = lookupItemarr[0].nameEn;
+                } else if (oListItem.get_item(excelInternalFieldsNames[i])) {
+                  record[excelInternalFieldsNames[i]] = oListItem.get_item(excelInternalFieldsNames[i])
+                }
+                else {
+                  record[excelInternalFieldsNames[i]] = No_Data;
+                }
+              }
+
+              else {
+                record[excelInternalFieldsNames[i]] = No_Data;
+              }
+            }
+            else {
+              record[excelInternalFieldsNames[i]] = (oListItem.get_item(excelInternalFieldsNames[i]) == null) ? No_Data : oListItem.get_item(excelInternalFieldsNames[i]);
+            }
+          }
+        }
+        ExcelRecordsWithID.push({
+          record: record,
+          ID: oListItem.get_id()
+        });
+
+
+        // onEach(records, record, oListItem, false); //false if having item
+      }
+    }
+
+    console.log(ExcelRecordsWithID, "ExcelRecordsWithID")
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  g: {
+
   }
 }

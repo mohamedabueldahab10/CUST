@@ -796,7 +796,7 @@ window.userCalls = {
           "projecthome.aspx",
         ];
         Edit_Access = [
-          // "projects",
+          "projects",
           // "deliverables",
           // "milestones",
           "issues",
@@ -1622,6 +1622,9 @@ window.userCalls = {
         break;
 
       case "LMSE":
+
+        USER_HomePage = "InitiativesMain.aspx";
+
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -1721,7 +1724,7 @@ window.userCalls = {
         break;
 
       case "LMSUControl":
-
+        USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -1832,7 +1835,7 @@ window.userCalls = {
         break;
 
       case "LMSUExecution":
-
+        USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -1943,6 +1946,8 @@ window.userCalls = {
         break;
 
       case "LMSUPerformance":
+
+        USER_HomePage = "InitiativesMain.aspx";
 
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
@@ -2103,7 +2108,7 @@ window.userCalls = {
         break;
 
       case "LMSP":
-
+        USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -2628,6 +2633,7 @@ window.userCalls = {
 
       case "BITeam":
         isBITeam = true;
+        USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -2725,10 +2731,10 @@ window.userCalls = {
       case "ObjectiveOwner":
         USER_HomePage = "MainIndicators.aspx";
 
-        if (USERisHome)
-          window.location =
-            _spPageContextInfo.webAbsoluteUrl +
-            "/sitepages/MainIndicators.aspx";
+        // if (USERisHome)
+        //   window.location =
+        //     _spPageContextInfo.webAbsoluteUrl +
+        //     "/sitepages/MainIndicators.aspx";
 
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
@@ -2763,10 +2769,10 @@ window.userCalls = {
 
         break;
       case "PerformanceLeader":
-        if (USERisHome)
-          window.location =
-            _spPageContextInfo.webAbsoluteUrl +
-            "/sitepages/MainIndicators.aspx";
+        // if (USERisHome)
+        //   window.location =
+        //     _spPageContextInfo.webAbsoluteUrl +
+        //     "/sitepages/MainIndicators.aspx";
         USER_HomePage = "MainIndicators.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
@@ -2812,10 +2818,13 @@ window.userCalls = {
         break;
 
       case "StrategicPartnershipsTeam":
-        if (USERisHome)
-          window.location =
-            _spPageContextInfo.webAbsoluteUrl +
-            "/sitepages/Listing.aspx?ListKey=strategicpartnerships";
+        // if (USERisHome)
+        //   window.location =
+        //     _spPageContextInfo.webAbsoluteUrl +
+        //     "/sitepages/Listing.aspx?ListKey=strategicpartnerships";
+
+        USER_HomePage = "Listing.aspx?ListKey=strategicpartnerships"
+
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -2886,10 +2895,14 @@ window.userCalls = {
         break;
 
       case "PartnershipRepresentative":
-        if (USERisHome)
-          window.location =
-            _spPageContextInfo.webAbsoluteUrl +
-            "/sitepages/Listing.aspx?ListKey=strategicpartnerships";
+        // if (USERisHome)
+        //   window.location =
+        //     _spPageContextInfo.webAbsoluteUrl +
+        //     "/sitepages/Listing.aspx?ListKey=strategicpartnerships";
+
+
+        USER_HomePage = "Listing.aspx?ListKey=strategicpartnerships"
+
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -2933,10 +2946,13 @@ window.userCalls = {
         break;
 
       case "RelationshipManager":
-        if (USERisHome)
-          window.location =
-            _spPageContextInfo.webAbsoluteUrl +
-            "/sitepages/Listing.aspx?ListKey=strategicpartnerships";
+        // if (USERisHome)
+        //   window.location =
+        //     _spPageContextInfo.webAbsoluteUrl +
+        //     "/sitepages/Listing.aspx?ListKey=strategicpartnerships";
+
+        USER_HomePage = "Listing.aspx?ListKey=strategicpartnerships"
+
 
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
@@ -2971,10 +2987,12 @@ window.userCalls = {
         break;
 
       case "StrategicAchievementTeam":
-        if (USERisHome)
-          window.location =
-            _spPageContextInfo.webAbsoluteUrl +
-            "/sitepages/Listing.aspx?ListKey=achievements";
+
+        USER_HomePage = "Listing.aspx?ListKey=achievements"
+        // if (USERisHome)
+        //   window.location =
+        //     _spPageContextInfo.webAbsoluteUrl +
+        //     "/sitepages/Listing.aspx?ListKey=achievements";
 
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
@@ -3016,6 +3034,7 @@ window.userCalls = {
         break;
 
       case "BudgetManager":
+        USER_HomePage = "InitiativesMain.aspx";
 
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
@@ -7834,7 +7853,7 @@ window.Get_Initiative_Info_Request = {
       } else {
         if (!isWF && !IsZeroBudgetProject) {
           if (Create_Access.includes("initiativemilestones") || Edit_Access.includes("initiativemilestones")) {
-          Get_Milestones.init()
+            Get_Milestones.init()
           }
         }
       }

@@ -426,7 +426,7 @@ var Project_Home_Info_Request = {
         '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
         '<div class="d-inline-flex flex-row align-items-center">' +
         '<span class="icon-user lg d-inline-flex align-items-center text-center handlecircle circlecolor' +
-        projectProgressStatusDeliverable +
+        projectProgressStatusSchedule +
         '">' +
         "</span>" +
         '<div class="d-inline-flex flex-column mx-3">' +
@@ -3956,10 +3956,20 @@ var Get_ProjectStatus_Info = {
       ""
     );
 
+
+      
+    $(".myCompletionStatus").removeClass("statuscolor" + projectProgressStatusSchedule);
+    $(".handlecircle").removeClass("circlecolor" + projectProgressStatusSchedule);
+
+
     $(".myCompletionStatusSchedual")
       .parent()
       .removeClass("stat8 stat9 stat10 stat11 stat12 stat13 stat14 stat28 stat30");
     $(".myCompletionStatusSchedual").parent().addClass(ProgressStatusSchedule);
+
+    $(".myCompletionStatus").addClass("statuscolor" + ProgressStatusSchedule);
+    $(".handlecircle").addClass("circlecolor" + ProgressStatusSchedule);
+
 
     $(".myCompletionStatusMilestone")
       .parent()
