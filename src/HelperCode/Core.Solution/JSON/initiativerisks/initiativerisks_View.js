@@ -17,6 +17,17 @@ var Information_Form = [
         DisplayNameEn: 'Risk Name',
         type: 'string',
       },
+        {
+        // hol dynamic 3ala l lookup
+        InternalName: 'InitiativeCode',
+        DisplayNameEn: 'Initiative',
+        DisplayName: 'المبادرة المرتبطة',
+        type: 'lookup',
+        source: 'Initiatives',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        // dynamic:"mainfield",//controls others data
+      },
       {
         InternalName: 'Category',
         DisplayName: 'نوع الخطر',

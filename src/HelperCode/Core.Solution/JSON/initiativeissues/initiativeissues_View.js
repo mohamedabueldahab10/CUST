@@ -18,6 +18,17 @@ var Information_Form = [
         type: 'string',
       },
       {
+        // hol dynamic 3ala l lookup
+        InternalName: 'InitiativeCode',
+        DisplayNameEn: 'Initiative',
+        DisplayName: 'المبادرة المرتبطة',
+        type: 'lookup',
+        source: 'Initiatives',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        // dynamic:"mainfield",//controls others data
+      },
+      {
         InternalName: 'Description',
         DisplayName: 'وصف التحدي',
         DisplayNameEn: 'Description',

@@ -18,6 +18,17 @@ var Information_Form = [
         type: 'string',
       },
       {
+        "InternalName": "ProjectCode",
+        "DisplayName": " المشروع المرتبط",
+        "DisplayNameEn": "Project Name",
+        "type":  "lookup",
+         //from other list:
+        "source":  "Projects",
+        "Dispfieldkey":  "Name",
+        "valfieldkey":  "Title",
+        // "validation": "required"
+    },
+      {
         InternalName: 'Category',
         DisplayName: 'نوع الخطر',
         DisplayNameEn: 'Risk Category',
