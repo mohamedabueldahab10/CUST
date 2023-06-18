@@ -1804,7 +1804,7 @@ var Risks_Info_Request = {
           '<li class="list-group-item">' +
           '<a href="' +
           _spPageContextInfo.webAbsoluteUrl +
-          "/sitepages/View.aspx?ListKey=risks&IID=" +
+          "/sitepages/View.aspx?ListKey=initiativerisks&IID=" +
           riskID +
           '"><h3 class="des-14 w-0">' +
           riskTitle +
@@ -1900,7 +1900,7 @@ var Issues_Info_Request = {
           '<li class="list-group-item">' +
           '<a href="' +
           _spPageContextInfo.webAbsoluteUrl +
-          "/SitePages/View.aspx?ListKey=issues&IID=" +
+          "/SitePages/View.aspx?ListKey=initiativeissues&IID=" +
           issueID +
           '"><h3 class="des-14 w-0">' +
           issueTitle +

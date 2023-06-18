@@ -2238,6 +2238,12 @@ window.userCalls = {
           "communicationplans",
           "contracts"
         ];
+        CreateChangeRequest_Access = [
+          "initiatives",
+          "projects",
+          "sos",
+          "mainkpi"
+        ]
         // Delete_Access = AllListKeys;
         // Delete_Access = Delete_Access.concat(SP_Page_Name); // to can delete everything
         break;

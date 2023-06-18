@@ -54,8 +54,22 @@ window.CrModeFunctionality = {
 
     $('[data-togglename*="UpdateType"]').parent().find(">label").addClass("loader-action");
 
+    // var htmlBuilder =
+    //   '<div class="py-5 cr-related-item-start d-flex justify-content-center align-items-end"><i class="fas fa-arrow-down"></i><span class="cr-related-item-title Resources mx-3" data-trans-crrelateditem></span><i class="fas fa-arrow-down"></i></div>';
+
     var htmlBuilder =
-      '<div class="py-5 cr-related-item-start d-flex justify-content-center align-items-end"><i class="fas fa-arrow-down"></i><span class="cr-related-item-title Resources mx-3" data-trans-crrelateditem></span><i class="fas fa-arrow-down"></i></div>';
+      `<div class="pt-5 cr-related-item-start d-flex justify-content-center">
+      <div class="cr-fields-section d-flex justify-content-center align-items-center p-3">
+        <i class="fas fa-arrow-down"></i>
+        <span class="cr-related-item-title Resources mx-3" data-trans-crrelateditem></span>
+        <i class="fas fa-arrow-down"></i>
+      </div>
+      <div class="d-flex">
+        <span class="cr-info-msg d-flex justify-content-center align-items-center Resources" data-trans-crinfomsg></span>
+      </div>
+    </div>`;
+
+
     var renderFunction = USERisNew || USERisEdit ? "ListInfo" : "View_ListInfo";
     var Label, Description;
     var printHtml = "";
@@ -79,7 +93,7 @@ window.CrModeFunctionality = {
         if (USERisView) {
           if (el.dontSubmit) {
             o.subFields.splice(index, 1)
-          }else if(el.type == "email"){ // change type email to string to can get the data in view
+          } else if (el.type == "email") { // change type email to string to can get the data in view
             el.type = "string"
           }
         }
@@ -90,7 +104,7 @@ window.CrModeFunctionality = {
 
 
     var toggleSectionName;
-    
+
     asyncFor.seqProcess(
       newJSON,
       function (item, index, resolve) {
@@ -188,7 +202,7 @@ window.CrModeFunctionality = {
         );
       },
       function (item, index, data, isDone) {
-    
+
         if (
           localStorage.getItem("lng") == null ||
           localStorage.getItem("lng") == "ar"
@@ -200,7 +214,7 @@ window.CrModeFunctionality = {
         // console.log('Finishing label ' + Label + ' - IsDone: ' + isDone);
         htmlBuilder += "</div></div></div>";
         if (isDone) {
-  
+
           actionTaskHeader = "";
 
           $('div[class*="cr-related-item-"]').remove();
@@ -599,7 +613,7 @@ window.CrModeFunctionality = {
           );
           // $(".cr-related-item-section .CFIELD").addClass("dont-submit"); // remove it to not apply dont-submit on all fields
           // afterRenderEditAndNewForms.init();
-          
+
           if (USERisNew && isRListKey) CrItemDataRequest.init();
           else if (USERisEdit) CrItemDataRenderFromJSON_Edit.init();
           else if (USERisView) CrItemDataRenderFromJSON_View.init();
@@ -1813,7 +1827,7 @@ window.CrItemDataRenderFromJSON_View = {
     var originalValue = "";
     var newValue = "";
     var value = "";
-    
+
     changeRequestBody.forEach(function (o, i, a) {
 
       if (o.InternalName) {
@@ -2192,7 +2206,7 @@ window.CrItemDataRenderFromJSON_View = {
         }
       }
     });
-    
+
     $('[data-toggle="tooltip"]').tooltip();
 
 
@@ -2391,8 +2405,28 @@ window.CrSetChangeBody = {
                 HTMLContent ? (o.value = HTMLContent) : "";
               } else o.value = $this.val();
 
+              if (o.originalValue && o.value) {
 
-              o.isChanged = o.value != o.originalValue;
+                // if(o.type == "datetime"){
+                //   var dateval = $this.val()
+                //   debugger
+                //   // var ydate = !dateval
+                //   //   ? "":
+                //   // var dateval = $this.val().replace("-", "/");
+                //   // var ydate = !dateval
+                //   //   ? ""
+                //   //   : [dateval.slice(5, 10), dateval.slice(0, 4)]
+                //   //     .join("/")
+                //   //     .replace("-", "/");
+                //   // if (dateval){
+                //   //   console.log(ydate,"yyyyyyyyyyyyyyydate")
+                //   //   debugger
+                //   // }
+                // }else{
+                  o.isChanged = o.value != o.originalValue;
+                //}
+
+              }
             }
           })
         } else {
@@ -2912,7 +2946,7 @@ var CR_Master_Details_Request = {
   // The main Initialization function
   init: function (DetailsList) {
 
-    
+
 
 
     var clientContext = new SP.ClientContext.get_current();
@@ -3476,7 +3510,7 @@ var Fill_BodyMaster = {
 window.Add_New_CRMaster = {
   init: function (getMasterIndex) {
 
-    
+
     // var x =  $(".cr-related-item-section[data-target_list]").find(".Details-Item.NewItem").last()
     $(`.cr-related-item-section[data-target_list] .Details-Item.NewItem[data-index=${getMasterIndex}]`).each(function () {
       var CurrList = $(this).closest("[data-target_list]").attr("data-target_list");

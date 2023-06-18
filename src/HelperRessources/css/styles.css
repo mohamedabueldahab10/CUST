@@ -7103,3 +7103,43 @@ span.statuscolorstat28 {
     justify-content: center;
     margin: 0px 5px;
 }
+
+.cr-info-msg:before {
+    content: "◈";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    right: -15px;
+    top: 23px;
+    font-size: 30px;
+    color: #f7941d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cr-info-msg {
+    position: relative;
+}
+
+.cr-fields-section {
+    background-color: #f7941d;
+    color: #fff;
+    border-radius: 3px;
+    margin: 0 15em;
+}
+
+
+/* .crHighlight:before {
+    content: "◈";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    font-size: 21px;
+    color: #f7941d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
