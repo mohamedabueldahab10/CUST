@@ -122,7 +122,7 @@ var Information_Form = [{
             "DisplayName": "المكون الثاني (B)",
             "DisplayNameEn": "B",
             "type": "string",
-            "validation": "required",
+            // "validation": "required",
             descPhraseAr: " مثال: عدد العاطلين عن العمل",
             descPhraseEn: "The number of unemployed", 
         },

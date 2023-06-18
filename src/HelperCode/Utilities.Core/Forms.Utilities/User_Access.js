@@ -2815,7 +2815,7 @@ window.userCalls = {
         ];
         Edit_Access = [
           "Targets.aspx",
-          // "mainkpi",
+          "mainkpi",
           // "sos",
           "benefitmetrics",
           "BenefitMetrics.aspx",
