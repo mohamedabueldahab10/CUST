@@ -2045,17 +2045,29 @@ window.ListingData = {
               } else {
                 notcompletedcount += 1;
               }
-              var formatedactualdatemilestone = item.ActualCompletedDate.split("T").at(0);
-              var day2 = formatedactualdatemilestone.split("/").at(0);
-              var month2 = formatedactualdatemilestone.split("/").at(1);
-              var year2 = formatedactualdatemilestone.split("/").at(2);
+
+              //
+              var formatedactualdatemilestone = "", day2 = "", month2 = "", year2 = "", formatedplaneddatemilestone = "", day = "", month = "", year = "";
+              //
+
+              if (item.ActualCompletedDate && item.ActualCompletedDate != No_Data) {
+                formatedactualdatemilestone = item.ActualCompletedDate.split("T").at(0);
+              }
+
+              // var formatedactualdatemilestone = item.ActualCompletedDate.split("T").at(0);
+              day2 = formatedactualdatemilestone ? formatedactualdatemilestone.split("/").at(0) : "";
+              month2 = formatedactualdatemilestone ? formatedactualdatemilestone.split("/").at(1) : "";
+              year2 = formatedactualdatemilestone ? formatedactualdatemilestone.split("/").at(2) : "";
               var finalformatedactualdate = new Date(year2 + "-" + month2 + "-" + day2);
 
-              var formatedplaneddatemilestone =
-                item.PlannedCompletedDate.split("T").at(0);
-              var day = formatedplaneddatemilestone.split("/").at(0);
-              var month = formatedplaneddatemilestone.split("/").at(1);
-              var year = formatedplaneddatemilestone.split("/").at(2);
+              if (item.PlannedCompletedDate && item.PlannedCompletedDate != No_Data) {
+                formatedplaneddatemilestone = item.PlannedCompletedDate.split("T").at(0);
+              }
+              // var formatedplaneddatemilestone = item.PlannedCompletedDate.split("T").at(0);
+              day = formatedplaneddatemilestone ? formatedplaneddatemilestone.split("/").at(0) : "";
+              month = formatedplaneddatemilestone ? formatedplaneddatemilestone.split("/").at(1) : "";
+              year = formatedplaneddatemilestone ? formatedplaneddatemilestone.split("/").at(2) : "";
+              
               var finalformatedPlanneddate = new Date(year + "-" + month + "-" + day);
               if (today < finalformatedPlanneddate && item.Delivered !== 'yes') {
                 countOfnostarted += 1;
