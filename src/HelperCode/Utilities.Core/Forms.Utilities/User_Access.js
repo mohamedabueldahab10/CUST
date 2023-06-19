@@ -1136,6 +1136,7 @@ window.userCalls = {
         Read_Access = [
           "goalstrategy",
           "sos",
+          "tasks",
           "mainkpi",
           "Targets.aspx",
           "benefitmatrix",
@@ -1193,6 +1194,7 @@ window.userCalls = {
           "goalstrategy",
           "mainkpi",
           "sos",
+          "tasks",
           "initiatives",
           "InitiativeHome.aspx",
           "InitiativesMain.aspx",
@@ -2798,6 +2800,7 @@ window.userCalls = {
           "mainkpi",
           "sos",
           "goalstrategy",
+          "tasks",
           "Targets.aspx",
           "kpiequations",
           "MainIndicators.aspx",
@@ -2812,7 +2815,7 @@ window.userCalls = {
         ];
         Edit_Access = [
           "Targets.aspx",
-          // "mainkpi",
+          "mainkpi",
           // "sos",
           "benefitmetrics",
           "BenefitMetrics.aspx",
