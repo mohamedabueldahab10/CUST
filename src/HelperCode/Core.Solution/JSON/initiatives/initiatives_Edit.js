@@ -129,27 +129,28 @@ var Information_Form = [
       //   maxchar: '250',
       //   // "validation": "required"
       // },
-      // {
-      //   InternalName: 'Status',
-      //   DisplayName: 'مرحلة المبادرة',
-      //   DisplayNameEn: 'Initiative Stage',
-      //   type: 'dropdownValues',
-      //   validation: 'required',
-      //   options: {
-      //     choices: [
-      //       // { value: 'notstarted', display: 'notstarted' },
-      //       { value: 'inactive', display: 'inactive' },
-      //       {
-      //         value: 'implementationnotstarted',
-      //         display: 'implementationnotstarted',
-      //       },
-      //       { value: 'executioninitiative', display: 'executioninitiative' },
-      //       { value: 'complete', display: 'complete' },
-      //       { value: 'canceled', display: 'canceled' },
-      //       // { value: 'closureinitiative', display: 'closureinitiative' }
-      //     ],
-      //   },
-      // },
+      {
+        InternalName: 'Status',
+        DisplayName: 'حالة المبادرة',
+        DisplayNameEn: 'Initiative Stage',
+        type: 'dropdownValues',
+        // validation: 'required',
+        options: {
+          choices: [
+            // { value: 'notstarted', display: 'notstarted' },
+            // { value: 'inactive', display: 'inactive' },
+            // {
+            //   value: 'implementationnotstarted',
+            //   display: 'implementationnotstarted',
+            // },
+            { value: 'executioninitiative', display: 'executioninitiative' },
+            // { value: 'complete', display: 'complete' },
+            { value: 'canceled', display: 'canceled' },
+            { value: 'onhold', display: 'onhold' },
+            // { value: 'closureinitiative', display: 'closureinitiative' }
+          ],
+        },
+      },
       {
         InternalName: 'RelatedStrategy',
         DisplayNameEn: 'Related Strategy',

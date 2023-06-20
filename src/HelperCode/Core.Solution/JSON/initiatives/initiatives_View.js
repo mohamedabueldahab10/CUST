@@ -73,27 +73,23 @@ var Information_Form = [
       //   type: 'string',
       //   display: 'none',
       // },
-      // {
-      //   InternalName: 'Status',
-      //   DisplayName: 'حالة المبادرة',
-      //   DisplayNameEn: 'Initiative Status',
-      //   type: 'dropdownValues',
-      //   validation: 'required',
-      //   options: {
-      //     choices: [
-      //       // { value: 'notstarted', display: 'notstarted' },
-      //       { value: 'inactive', display: 'inactive' },
-      //       {
-      //         value: 'implementationnotstarted',
-      //         display: 'implementationnotstarted',
-      //       },
-      //       { value: 'executioninitiative', display: 'executioninitiative' },
-      //       { value: 'complete', display: 'complete' },
-      //       { value: 'canceled', display: 'canceled' },
-      //       // { value: 'closureinitiative', display: 'closureinitiative' }
-      //     ],
-      //   },
-      // },
+      {
+        InternalName: 'Status',
+        DisplayName: 'حالة المبادرة',
+        DisplayNameEn: 'Initiative Status',
+        type: 'dropdownValues',
+        // validation: 'required',
+        options: {
+          choices: [
+            // { value: 'notstarted', display: 'notstarted' },
+            { value: 'executioninitiative', display: 'executioninitiative' },
+            // { value: 'complete', display: 'complete' },
+            { value: 'canceled', display: 'canceled' },
+            { value: 'onhold', display: 'onhold' },
+            // { value: 'closureinitiative', display: 'closureinitiative' }
+          ],
+        },
+      },
       // {
       //     "InternalName": "RelatedObjectiveAgency",
       //     "DisplayNameEn": "Objective Name",
