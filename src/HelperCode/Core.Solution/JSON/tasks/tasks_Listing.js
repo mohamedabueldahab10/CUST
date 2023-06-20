@@ -30,7 +30,7 @@ var Listing_Info = [
     DisplayNameEn: "Created Date",
     type: "date",
     inlisting: true,
-    infilter: true,
+    infilter: false,
   },
   {
     InternalName: "Status",
