@@ -2615,8 +2615,6 @@ var Master_Details_Request = {
   // The main Initialization function
   init: function (DetailsList) {
 
-
-
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(DetailsList);
     Master_Details_Request.g.DetailsList = DetailsList;
@@ -2624,10 +2622,17 @@ var Master_Details_Request = {
     camlQuery.set_viewXml(
       '<View><Query><Where><And><Eq><FieldRef Name="MasterID" /><Value Type="Text">' +
       IID +
-      '</Value></Eq><Eq><FieldRef Name="MasterKey" /><Value Type="Text">' +
+      '</Value></Eq><And><Eq><FieldRef Name="MasterKey" /><Value Type="Text">' +
       listkey +
-      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Created' Ascending='True' /></OrderBy></Query></View>"
+      "</Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></And></Where><OrderBy><FieldRef Name='Created' Ascending='True' /></OrderBy></Query></View>"
     );
+    // camlQuery.set_viewXml(
+    //   '<View><Query><Where><And><Eq><FieldRef Name="MasterID" /><Value Type="Text">' +
+    //   IID +
+    //   '</Value></Eq><Eq><FieldRef Name="MasterKey" /><Value Type="Text">' +
+    //   listkey +
+    //   "</Value></Eq></And></Where><OrderBy><FieldRef Name='Created' Ascending='True' /></OrderBy></Query></View>"
+    // );
     Master_Details_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Master_Details_Request.g.collListItem);
     clientContext.executeQueryAsync(

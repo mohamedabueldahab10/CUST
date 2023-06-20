@@ -1149,7 +1149,7 @@ window.CrItemDataRequest = {
   },
   // The main Initialization function
   init: function () {
-
+    
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(CrRelatedList);
     CrItemDataRequest.g.oListItem = oList.getItemById(RID);
@@ -2956,9 +2956,9 @@ var CR_Master_Details_Request = {
     camlQuery.set_viewXml(
       '<View><Query><Where><And><Eq><FieldRef Name="MasterID" /><Value Type="Text">' +
       RID +
-      '</Value></Eq><Eq><FieldRef Name="MasterKey" /><Value Type="Text">' +
+      '</Value></Eq><And><Eq><FieldRef Name="MasterKey" /><Value Type="Text">' +
       RListKey +
-      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Created' Ascending='True' /></OrderBy></Query></View>"
+      "</Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></And></Where><OrderBy><FieldRef Name='Created' Ascending='True' /></OrderBy></Query></View>"
     );
     CR_Master_Details_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(CR_Master_Details_Request.g.collListItem);
