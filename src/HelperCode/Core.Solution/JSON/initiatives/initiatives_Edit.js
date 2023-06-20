@@ -144,18 +144,21 @@ var Information_Form = [
             //   display: 'implementationnotstarted',
             // },
             { value: 'executioninitiative', display: 'executioninitiative', otherFields: [
+              { fieldName: 'InitiativeProgressStatus', value: '' },
               { fieldName: 'InitiativeProgressStatus', value: 'stat3' },
               // { fieldName: 'DraftStatus', value: '' },
             ] },
             // { value: 'complete', display: 'complete' },
             { value: 'canceled', display: 'canceled', 
             otherFields: [
+              { fieldName: 'InitiativeProgressStatus', value: '' },
               { fieldName: 'InitiativeProgressStatus', value: 'stat7' },
               // { fieldName: 'DraftStatus', value: '' },
             ], },
             { value: 'onhold', display: 'onhold',
             otherFields: [
-              { fieldName: 'InitiativeProgressStatus', value: 'stat6' },
+              { fieldName: 'InitiativeProgressStatus', value: '' },
+              { fieldName: 'InitiativeProgressStatus', value: 'stat6' },              
               // { fieldName: 'DraftStatus', value: '' },
             ], },
             // { value: 'closureinitiative', display: 'closureinitiative' }
