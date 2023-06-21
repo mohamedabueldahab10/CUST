@@ -793,12 +793,12 @@ var Information_Form = [
         "InternalName": "RelatedBudgetItem",
         "DisplayName": "البند المالي المرتبط",
         "DisplayNameEn": "Related Budget Item",
-        type: "lookupmultiselect",
-        //from other list:
-        source: "Budget Items",
-        Dispfieldkey: "Name",
-        valfieldkey: "Title",
-        grpfieldkey: 'Title',
+        type: "string",
+        // //from other list:
+        // source: "Budget Items",
+        // Dispfieldkey: "Name",
+        // valfieldkey: "Title",
+        // grpfieldkey: 'Title',
 
       },
       {

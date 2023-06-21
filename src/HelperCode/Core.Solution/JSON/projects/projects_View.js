@@ -851,12 +851,12 @@ var Information_Form = [
         InternalName: "BudgetItem",
         DisplayName: "البند المرتبط",
         DisplayNameEn: "Budget Item",
-        type: "lookup",
-        dynamic: "mainfield", //controls others data
-        //from other list:
-        source: "Budget Items",
-        Dispfieldkey: "Name",
-        valfieldkey: "Title",
+        type: "string",
+        // dynamic: "mainfield", //controls others data
+        // //from other list:
+        // source: "Budget Items",
+        // Dispfieldkey: "Name",
+        // valfieldkey: "Title",
         // "validation": "required",
         // "state": "disabled"
       },

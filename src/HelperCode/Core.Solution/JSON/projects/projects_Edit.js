@@ -996,13 +996,13 @@ var Information_Form = [
         InternalName: "BudgetItem",
         DisplayName: "البند المرتبط",
         DisplayNameEn: "Budget Item",
-        type: "lookup",
-        dynamic: "mainfield", //controls others data
-        //from other list:
-        source: "Budget Items",
-        Dispfieldkey: "Name",
-        valfieldkey: "Title",
-        disableOnWfTaskStage : "S05,S09",
+        type: "string",
+        // dynamic: "mainfield", //controls others data
+        // //from other list:
+        // source: "Budget Items",
+        // Dispfieldkey: "Name",
+        // valfieldkey: "Title",
+        // disableOnWfTaskStage : "S05,S09",
         // "validation": "required",
         // "state": "disabled"
       },
