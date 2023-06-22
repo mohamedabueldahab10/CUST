@@ -3519,6 +3519,8 @@ window.Get_Related_Sos_Sector = {
       var oListItem = listItemEnum.get_current();
 
 
+      // var KPIType = $('#KPIType').val()
+      // var parentMainSos = ""
 
       var type = $('#Types').val()
       var sector = oListItem.get_item("Sector") ? oListItem.get_item("Sector") : '';
@@ -3526,6 +3528,10 @@ window.Get_Related_Sos_Sector = {
       var portfolio = oListItem.get_item("RelatedPortfolio") ? oListItem.get_item("RelatedPortfolio") : ""
       $('#Sector').val(sector)
       $('#SubSector').val(subSector)
+
+      // if(KPIType == 'sublevel3'){
+      //   parentMainSos = oListItem.get_item("RelatedStrategyObjective")
+      // }
       // if (type == 'main') {
       //   $('#Sector').val(sector)
       //   $('#SubSector').val(subSector)

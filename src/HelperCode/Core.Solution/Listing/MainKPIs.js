@@ -32,7 +32,9 @@ var SubSoQuery = '';
 
 SoQuery = "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">main</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
 
-SubSoQuery = "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Neq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">main</Value></Neq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+// SubSoQuery = "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Neq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">main</Value></Neq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+
+SubSoQuery = "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">sublevel2</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
 
 var goalKpiQuery = '';
 var goalKpiQueryG = '';
@@ -490,30 +492,31 @@ var stratigicObjectivesRequest = {
           $(".card[data-id]").hide();
           $(".subSos[data-id]").parent().hide();
           //
-          // $('.card[data-id="' + dataid + '"]').fadeIn();
-          // $('.subSos[data-id="' + dataid + '"]').parent().fadeIn();
+          $('.card[data-id="' + dataid + '"]').fadeIn();
+          $('.subSos[data-id="' + dataid + '"]').parent().fadeIn();
 
 
-          $('.SubsoCard[related-goal-id="'+relatedGoalId+'"]').each(function (i) {
-            var soID = $(this).data('id');
+          // $('.SubsoCard[related-goal-id="'+relatedGoalId+'"]').each(function (i) {
+          //   var soID = $(this).data('id');
             
-            $('.card[data-id="' + soID + '"]').fadeIn();
-            $('.subSos[data-id="' + soID + '"]').parent().fadeIn();
+          //   $('.card[data-id="' + soID + '"]').fadeIn();
+          //   $('.subSos[data-id="' + soID + '"]').parent().fadeIn();
   
-          });
+          // });
 
   
         }
       } else {
         $(".subSos[data-id]").parent().hide();
 
-        $('.SubsoCard[related-goal-id="'+relatedGoalId+'"]').each(function (i) {
-          var soID = $(this).data('id');
-          debugger
-          $('.card[data-id="' + soID + '"]').fadeIn();
-          $('.subSos[data-id="' + soID + '"]').parent().fadeIn();
+        // $('.SubsoCard[related-goal-id="'+relatedGoalId+'"]').each(function (i) {
+        //   var soID = $(this).data('id');
+        //   debugger
+        //   $('.card[data-id="' + soID + '"]').fadeIn();
+        //   $('.subSos[data-id="' + soID + '"]').parent().fadeIn();
 
-        });
+        // });
+        $('.subSos[data-id="' + dataid + '"]').parent().fadeIn();
 
         $(".quick-links-ctx .link-item").removeClass("active");
         $(this).addClass("active");
@@ -692,6 +695,17 @@ var subStrategicObjectivesRequest = {
     var oList = clientContext.get_web().get_lists().getByTitle("SOs");
     var camlQuery = new SP.CamlQuery();
 
+    // if (isRoleDataLevelAccess && dataLevelAccessQuery) {
+
+    //   if (allRelatedStrategObjArr.length) {
+    //     SubSoQuery = '<View><Query><Where><And><In><FieldRef Name="Title" /><Values>';
+    //     allRelatedStrategObjArr.forEach(function (item) {
+    //       SubSoQuery += '<Value Type="Text">' + item + '</Value>';
+    //     });
+    //     SubSoQuery += '</Values></In><And><Neq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">main</Value></Neq><Neq><FieldRef Name=\'DeletionStatus\'/><Value Type=\'Text\'>Deleted</Value></Neq></And></And></Where></Query></View>';
+    //   }
+    // }
+
     if (isRoleDataLevelAccess && dataLevelAccessQuery) {
 
       if (allRelatedStrategObjArr.length) {
@@ -699,7 +713,7 @@ var subStrategicObjectivesRequest = {
         allRelatedStrategObjArr.forEach(function (item) {
           SubSoQuery += '<Value Type="Text">' + item + '</Value>';
         });
-        SubSoQuery += '</Values></In><And><Neq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">main</Value></Neq><Neq><FieldRef Name=\'DeletionStatus\'/><Value Type=\'Text\'>Deleted</Value></Neq></And></And></Where></Query></View>';
+        SubSoQuery += '</Values></In><And><Eq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">sublevel2</Value></Eq><Neq><FieldRef Name=\'DeletionStatus\'/><Value Type=\'Text\'>Deleted</Value></Neq></And></And></Where></Query></View>';
       }
     }
 

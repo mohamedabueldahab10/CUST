@@ -574,7 +574,7 @@
     sectorial: "قطاعية",
     visiondata: "موارد بشرية وطنية مبادرة ومنتجة",
     goals: "الأهداف الاستراتيجية الرئيسية",
-    subgoals:"الأهداف الاستراتيجية الفرعية",
+    subgoals:"الأهداف الاستراتيجية الفرعية مستوى 2",
     kpimanagement: "المؤشرات",
     goalsdata: "تمكين القطاع الخاص من التوظيف لوظائف مستدامة للسعوديين",
     message: "الرسالة",
@@ -1678,7 +1678,7 @@
     sectorial: "Sectorial",
     visiondata: "National Human Resources Initiative and Product",
     goals: "Main Strategic Objectives",
-    subgoals :"Sub Strategic Objectives",
+    subgoals :"Sub Strategic Objectives level 2",
     kpimanagement: "KPIs",
     goalsdata:
       "Enabling the private sector to employ sustainable jobs for Saudis",
