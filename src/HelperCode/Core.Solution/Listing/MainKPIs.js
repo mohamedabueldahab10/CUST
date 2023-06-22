@@ -12,8 +12,10 @@ var originalstate = true,
   strategicfilterarray = [],
   sectorfilterarray = [],
   departmentfilterarray = [],
+  subsectorfilterarray = [],
   SectorsNames = [],
   DepartmentNames = [],
+  SubSectorNames = [],
   FilterChoices = [],
   Query_Body = '',
   Where_Body = '',
@@ -348,6 +350,7 @@ var stratigicObjectivesRequest = {
     var sObjectiveHtml = [];
     var departmentArr = [];
     var sectorArr = [];
+    var SubSectorArr = [];
     var depArrBiLang = [];
 
     while (listItemEnum.moveNext()) {
@@ -356,6 +359,8 @@ var stratigicObjectivesRequest = {
         code = oListItem.get_item("Title") || UserNo_Data,
         relatedGoal = oListItem.get_item("RelatedStrategy") || UserNo_Data,
         sectorcode = oListItem.get_item("Sector") || UserNo_Data, // Sector
+        subSectorCode = oListItem.get_item("SubSector") || UserNo_Data,
+
         departmentcode = "";
 
 
@@ -399,7 +404,34 @@ var stratigicObjectivesRequest = {
             sectorArr.push(sectorcode)
           }
         }
+
         sectorfilterarray = uniqueArray(SectorsNames)
+        //////////////////////////////////////////////////////////
+        if (subSectorCode && subSectorCode != UserNo_Data) {
+          if (localStorage.getItem('Dynamo_Internal Entities') != null) {
+            subsectorarr = JSON.parse(localStorage.getItem('Dynamo_Internal Entities'));
+            subsectorarr = subsectorarr.filter(function (a) {
+              return a.code === subSectorCode
+            });
+            var bilangSubSectorCode = '';
+            if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+              bilangSubSectorCode = subsectorarr.length ? subsectorarr[0].name : No_Data;
+            } else bilangSubSectorCode = subsectorarr.length ? subsectorarr[0].nameEn : No_Data;
+          }
+
+          if (!SubSectorArr.includes(subSectorCode)) {
+
+            SubSectorNames.push({
+              title: bilangSubSectorCode,
+              name: subSectorCode,
+              code: code
+            })
+            SubSectorArr.push(subSectorCode)
+          }
+
+        }
+        subsectorfilterarray = uniqueArray(SubSectorNames)
+        //
 
 
         //department Field
@@ -441,7 +473,7 @@ var stratigicObjectivesRequest = {
         '<div style="cursor:pointer" class="soCard link-item p-4 h-100" data-id="' +
         code +
         // relatedGoal +
-        '" related-goal-id ="' + relatedGoal + '" sector-id="' + sectorcode + '" department-id="' + departmentcode + '" data-row >' +
+        '" related-goal-id ="' + relatedGoal + '" sector-id="' + sectorcode + '" department-id="' + subSectorCode + '" data-row >' +
         '<div class="text-center fnt-13 bold river-bed mb-1">' +
         code +
         "</div>" +
@@ -560,6 +592,8 @@ var stratigicObjectivesRequest = {
 
       var sectorfilterhtml = '<label class="dropdown-item main-action-filter"><button data-trans-CanselSelections class="clear-filter Resources" type="button"></button></label>'
 
+      var subsectorfilterhtml = '<label class="dropdown-item main-action-filter"><button data-trans-CanselSelections class="clear-filter Resources" type="button"></button></label>';
+
       // var departmentfilterhtml = '<label class="dropdown-item main-action-filter"><button data-trans-CanselSelections class="clear-filter Resources" type="button"></button></label>'
 
 
@@ -572,7 +606,13 @@ var stratigicObjectivesRequest = {
       if (isRoleDataLevelAccess && dataLevelAccessQuery && allRelatedStrategObjArr.length == 0) { // remove label from filter if there is no data
         sectorfilterarray = []
         namefilterarray = []
+        subsectorfilterarray = []
       }
+
+      for (var i = 0; i < subsectorfilterarray.length; i++) {
+        subsectorfilterhtml += '<label class="dropdown-item"><span data-trans-' + subsectorfilterarray[i].name + ' class="Resources" >' + subsectorfilterarray[i].title + '</span><input data-type="Text" data-internal="SubSectorName" type="checkbox" name="SubSectorName" value="' + subsectorfilterarray[i].name + '"></label>';
+      }
+      /////////////////////////////////////////////////////////////////////////////////////////////
 
       for (var i = 0; i < sectorfilterarray.length; i++) {
         sectorfilterhtml += '<label class="dropdown-item"><span data-trans-' + sectorfilterarray[i].name + ' class="Resources" >' + sectorfilterarray[i].title + '</span><input data-type="Text" data-internal="SectorName" type="checkbox" name="SectorName" value="' + sectorfilterarray[i].name + '"></label>';
@@ -586,6 +626,9 @@ var stratigicObjectivesRequest = {
 
       $('.content-list-head .page-filter .dropdown-menu.Filter-2').html(namefilterhtml);
       $('.content-list-head .page-filter .dropdown-menu.Filter-3').html(sectorfilterhtml);
+      $('.content-list-head .page-filter .dropdown-menu.Filter-4').html(subsectorfilterhtml);
+
+
       // $('.content-list-head .page-filter .dropdown-menu.Filter-4').html(departmentfilterhtml);
       // end filter
       $('button.clear-filter').on("click", function (e) {
@@ -700,16 +743,6 @@ var subStrategicObjectivesRequest = {
     var oList = clientContext.get_web().get_lists().getByTitle("SOs");
     var camlQuery = new SP.CamlQuery();
 
-    // if (isRoleDataLevelAccess && dataLevelAccessQuery) {
-
-    //   if (allRelatedStrategObjArr.length) {
-    //     SubSoQuery = '<View><Query><Where><And><In><FieldRef Name="Title" /><Values>';
-    //     allRelatedStrategObjArr.forEach(function (item) {
-    //       SubSoQuery += '<Value Type="Text">' + item + '</Value>';
-    //     });
-    //     SubSoQuery += '</Values></In><And><Neq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">main</Value></Neq><Neq><FieldRef Name=\'DeletionStatus\'/><Value Type=\'Text\'>Deleted</Value></Neq></And></And></Where></Query></View>';
-    //   }
-    // }
 
     if (isRoleDataLevelAccess && dataLevelAccessQuery) {
 
@@ -907,7 +940,7 @@ var subSOLevel3Request = {
 
     var subObjectiveLvl3Html = [];
 
-debugger
+    debugger
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current(),
         name = oListItem.get_item("Name") || UserNo_Data,
@@ -1191,7 +1224,7 @@ var GoalsKPIs_Info_Request = {
             var soID = $(this).data('id');
             $('.sublvlThreeSos[data-id="' + soID + '"]').parent().fadeIn();
           });
-          
+
 
         }
       } else {
