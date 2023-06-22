@@ -524,7 +524,9 @@ var stratigicObjectivesRequest = {
           startegyIdClicked = ''
           stratigicObjectivesRequest.init()
         } else {
-          $(".quick-links-ctx .link-item").removeClass("active");
+          $(this).closest('.control-ctx.quick-links-ctx').find('.link-item').removeClass("active");
+
+          // $(".quick-links-ctx .link-item").removeClass("active");
           $(this).addClass("active");
           $(".card[data-id]").hide();
           $(".subSos[data-id]").parent().hide();
@@ -555,7 +557,9 @@ var stratigicObjectivesRequest = {
         // });
         $('.subSos[data-id="' + dataid + '"]').parent().fadeIn();
 
-        $(".quick-links-ctx .link-item").removeClass("active");
+        // $(".quick-links-ctx .link-item").removeClass("active");
+        $(this).closest('.control-ctx.quick-links-ctx').find('.link-item').removeClass("active");
+
         $(this).addClass("active");
         $(".card[data-id]").hide();
         $('.card[data-id="' + dataid + '"]').fadeIn();
@@ -855,11 +859,14 @@ var subStrategicObjectivesRequest = {
         strategyCounter++
         if (strategyCounter % 2 == 0) {
           $(".quick-links-ctx .link-item").removeClass("active");
+          // $(this).closest('.control-ctx.quick-links-ctx .link-item').removeClass("active");
           sosIdClicked = ''
           startegyIdClicked = ''
           stratigicObjectivesRequest.init()
         } else {
-          $(".quick-links-ctx .link-item").removeClass("active");
+          // $(".quick-links-ctx .link-item").removeClass("active");
+          console.log( $(this).closest('.control-ctx.quick-links-ctx'),"Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+          $(this).closest('.control-ctx.quick-links-ctx').find('.link-item').removeClass("active");
           $(this).addClass("active");
           $(".card[data-id]").hide();
           $(".subSos[data-id]").parent().hide();
@@ -871,7 +878,11 @@ var subStrategicObjectivesRequest = {
           //
         }
       } else {
-        $(".quick-links-ctx .link-item").removeClass("active");
+        debugger
+        // $(".quick-links-ctx .link-item").removeClass("active");
+        // console.log( $(this).closest('.control-ctx.quick-links-ctx'),"Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+        $(this).closest('.control-ctx.quick-links-ctx').find('.link-item').removeClass("active");
+        $(this).closest('.control-ctx.quick-links-ctx .link-item').removeClass("active");
         $(this).addClass("active");
         $(".card[data-id]").hide();
         $('.card[data-id="' + dataid + '"]').fadeIn();
@@ -1024,7 +1035,9 @@ var subSOLevel3Request = {
           startegyIdClicked = ''
           stratigicObjectivesRequest.init()
         } else {
-          $(".quick-links-ctx .link-item").removeClass("active");
+          // $(".quick-links-ctx .link-item").removeClass("active");
+          $(this).closest('.control-ctx.quick-links-ctx').find('.link-item').removeClass("active");
+
           $(this).addClass("active");
           $(".card[data-id]").hide();
           // $(".subSos[data-id]").parent().hide();
@@ -1034,7 +1047,9 @@ var subSOLevel3Request = {
           //
         }
       } else {
-        $(".quick-links-ctx .link-item").removeClass("active");
+        // $(".quick-links-ctx .link-item").removeClass("active");
+        $(this).closest('.control-ctx.quick-links-ctx').find('.link-item').removeClass("active");
+
         $(this).addClass("active");
         $(".card[data-id]").hide();
         $('.card[data-id="' + dataid + '"]').fadeIn();
@@ -1196,7 +1211,9 @@ var GoalsKPIs_Info_Request = {
           sosIdClicked = ''
           stratigicObjectivesRequest.init()
         } else {
-          $(".quick-links-ctx .link-items-goal").removeClass("active");
+          // $(".quick-links-ctx .link-items-goal").removeClass("active");
+          $(this).closest('.control-ctx.quick-links-ctx').find('.link-item').removeClass("active");
+
           $(this).addClass("active");
           $(".soCard[related-goal-id]").parent().hide();
           $('.soCard[related-goal-id="' + dataid + '"]').parent().fadeIn();
@@ -1228,7 +1245,9 @@ var GoalsKPIs_Info_Request = {
 
         }
       } else {
-        $(".quick-links-ctx .link-items-goal").removeClass("active");
+        // $(".quick-links-ctx .link-items-goal").removeClass("active");
+        $(this).closest('.control-ctx.quick-links-ctx').find('.link-item').removeClass("active");
+
         $(this).addClass("active");
         $(".soCard[related-goal-id]").parent().hide();
         $('.soCard[related-goal-id="' + dataid + '"]').parent().fadeIn();
