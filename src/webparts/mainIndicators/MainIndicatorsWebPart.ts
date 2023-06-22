@@ -9,6 +9,7 @@ require('../../HelperRessources/css/Styles.css');
 require('../../HelperRessources/css/style-dashboards.css');
 require("./mainKpi.css");
 require('../../HelperCode/Core.Solution/Listing/MainKPIs.js');
+// require('../../HelperCode/Utilities.Core/Forms.Utilities/sphttp.js');
 
 import { Version } from '@microsoft/sp-core-library';
 import {
@@ -38,7 +39,7 @@ const important: any = require('../../HelperRessources/img/icon-important-sm.png
 const projects: any = require('../../HelperRessources/img/icon-projects.png');
 const tasks: any = require('../../HelperRessources/img/icon-tasks.png');
 const clearfilter: any = require('../../HelperRessources/img/funnel_remove.png');
-const strategic:any = require('../../HelperRessources/img/strategic-icon.png');
+const strategic: any = require('../../HelperRessources/img/strategic-icon.png');
 
 export default class MainIndicatorsWebPart extends BaseClientSideWebPart<IMainIndicatorsWebPartProps> {
 
@@ -305,6 +306,27 @@ export default class MainIndicatorsWebPart extends BaseClientSideWebPart<IMainIn
                             </div>
                         </div>
                       </div>
+                      <hr />
+                      <div class="control-ctx quick-links-ctx">
+
+                      <div class="content-list-head d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4 mb-3">
+                        <div class="d-flex align-items-center">
+                            <img src="${target}"> 
+                            <h2 data-trans-subgoals class="mb-0 mx-3 py-1 Resources"></h2>
+                        </div>
+        
+                      </div>
+
+
+                      <div class="row mx-n2 mb-5 subkpi-wrapper">
+                      <div class="col px-2 my-5">
+                          <div class="link-item p-4  h-100">
+                              <div class="text-center fnt-13 bold river-bed mb-1">1.0</div>
+                              <h4 class="text-center fnt-13 river-bed">الأداء الإستراتيجي</h4>
+                          </div>
+                      </div>
+                  </div>
+                </div>
                       <hr />
                       <div class="content-list-head d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4 mb-3">
                           <div class="d-flex align-items-center">
