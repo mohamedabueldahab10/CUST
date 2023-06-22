@@ -28,6 +28,8 @@ var SoQuery = '';
 
 var SubSoQuery = '';
 
+var SubSolvl3Query = '';
+
 // SoQuery = "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Title' Ascending='True' /></OrderBy></Query></View>"
 
 SoQuery = "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">main</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
@@ -35,6 +37,9 @@ SoQuery = "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Valu
 // SubSoQuery = "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Neq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">main</Value></Neq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
 
 SubSoQuery = "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">sublevel2</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+
+
+SubSolvl3Query = "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">sublevel3</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
 
 var goalKpiQuery = '';
 var goalKpiQueryG = '';
@@ -477,9 +482,9 @@ var stratigicObjectivesRequest = {
 
       var dataid = $(this).attr("data-id");
       var relatedGoalId = $(this).attr("related-goal-id");
-      
+
       if (dataid == sosIdClicked) {
-        
+
         strategyCounter++
         if (strategyCounter % 2 == 0) {
           $(".quick-links-ctx .link-item").removeClass("active");
@@ -498,13 +503,13 @@ var stratigicObjectivesRequest = {
 
           // $('.SubsoCard[related-goal-id="'+relatedGoalId+'"]').each(function (i) {
           //   var soID = $(this).data('id');
-            
+
           //   $('.card[data-id="' + soID + '"]').fadeIn();
           //   $('.subSos[data-id="' + soID + '"]').parent().fadeIn();
-  
+
           // });
 
-  
+
         }
       } else {
         $(".subSos[data-id]").parent().hide();
@@ -737,13 +742,6 @@ var subStrategicObjectivesRequest = {
     var subObjDepArrBiLang = [];
 
 
-    // console.log(allRelatedStrategyArr,"allRelatedStrategyArr")
-
-    console.log(KPINames, "KPINames KPINames")
-    console.log(SectorsNames, "SectorsNames SectorsNames")
-    console.log(sectorfilterarray, "sectorfilterarray")
-    debugger
-
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current(),
         name = oListItem.get_item("Name") || UserNo_Data,
@@ -753,21 +751,6 @@ var subStrategicObjectivesRequest = {
         sectorcode = oListItem.get_item("Sector") || UserNo_Data, // Sector
         sosTypes = oListItem.get_item("Types"),
         departmentcode = "";
-
-      //       if (sosTypes == 'sublevel3') {
-      //         sphttp.get(
-      //           _spPageContextInfo.siteServerRelativeUrl,
-      //           'SOs',
-      //           SubSoQuery,
-      //           ['ID','Title','Name','RelatedObjective','Types'],
-      //           function (records, record, listItem, isDone) {
-      //             if (isDone) {
-      // console.log(records,"recordsrecordsrecordsrecordsrecords")
-      //             }
-      //           }
-      //         )
-      //       }
-
 
       if (isRoleDataLevelAccess && dataLevelAccessQuery && allRelatedStrategObjArr.length) {
         var relatedStrategy = oListItem.get_item("RelatedStrategy")
@@ -779,42 +762,6 @@ var subStrategicObjectivesRequest = {
       if (!strategyArray.includes(relatedGoal)) {
         strategyArray.push(relatedGoal)
       }
-
-      // if (originalstate) // in original state before any filter [before culminating data]
-      // {
-      //   KPINames.push({
-      //     name: name,
-      //     code: code
-      //   });
-      //   uniqueArray = a => [...new Set(a.map(o => JSON.stringify(o)))].map(s => JSON.parse(s));
-      //   namefilterarray = uniqueArray(KPINames);
-      //   if (sectorcode && sectorcode != UserNo_Data) {
-
-      //     if (localStorage.getItem('Dynamo_Internal Entities') != null) {
-      //       sectorarr = JSON.parse(localStorage.getItem('Dynamo_Internal Entities'));
-      //       sectorarr = sectorarr.filter(function (a) {
-      //         return a.code === sectorcode
-      //       });
-      //       var bilangSectorCode = '';
-      //       if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
-      //         bilangSectorCode = sectorarr.length ? sectorarr[0].name : No_Data;
-      //       } else bilangSectorCode = sectorarr.length ? sectorarr[0].nameEn : No_Data;
-      //     }
-      //     if (!sectorArr.includes(sectorcode)) {
-
-      //       SectorsNames.push({
-      //         title: bilangSectorCode,
-      //         name: sectorcode,
-      //         code: code
-      //       })
-      //       sectorArr.push(sectorcode)
-      //     }
-      //   }
-      //   sectorfilterarray = uniqueArray(SectorsNames)
-
-
-
-      // }
 
 
       subStratigicObjectivesArray.push({
@@ -839,7 +786,6 @@ var subStrategicObjectivesRequest = {
         "</div>"
       );
 
-
     }
 
 
@@ -863,13 +809,180 @@ var subStrategicObjectivesRequest = {
       subObjectiveHtml.join("")
     );
 
-
+    // to call lvl 3  sos
+    subSOLevel3Request.init()
+    //
     var strategyCounter = 1
 
     $(".quick-links-ctx .link-item.subSos").on('click', function () {
 
       var dataid = $(this).attr("data-currentid");
-      debugger
+
+      if (dataid == sosIdClicked) {
+        strategyCounter++
+        if (strategyCounter % 2 == 0) {
+          $(".quick-links-ctx .link-item").removeClass("active");
+          sosIdClicked = ''
+          startegyIdClicked = ''
+          stratigicObjectivesRequest.init()
+        } else {
+          $(".quick-links-ctx .link-item").removeClass("active");
+          $(this).addClass("active");
+          $(".card[data-id]").hide();
+          $(".subSos[data-id]").parent().hide();
+          $(".sublvlThreeSos[data-id]").parent().hide();
+
+          //
+          $('.card[data-id="' + dataid + '"]').fadeIn();
+          // $('.subSos[data-id="' + dataid + '"]').parent().fadeIn();
+          //
+        }
+      } else {
+        $(".quick-links-ctx .link-item").removeClass("active");
+        $(this).addClass("active");
+        $(".card[data-id]").hide();
+        $('.card[data-id="' + dataid + '"]').fadeIn();
+
+        // //
+        $(".sublvlThreeSos[data-id]").parent().hide();
+        $('.sublvlThreeSos[data-id="' + dataid + '"]').parent().fadeIn();
+        // //
+
+        sosIdClicked = dataid
+      }
+    });
+
+
+
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  g: {}
+}
+
+
+
+/////////////////////// to handle sublvl3 section
+
+var subStratigicObjectivesLvl3Array = [];
+var subSosLvl3CodeArray = []
+
+
+var subSOLevel3Request = {
+  init: function () {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("SOs");
+    var camlQuery = new SP.CamlQuery();
+
+
+
+    if (isRoleDataLevelAccess && dataLevelAccessQuery) {
+
+      if (allRelatedStrategObjArr.length) {
+        SubSolvl3Query = '<View><Query><Where><And><In><FieldRef Name="Title" /><Values>';
+        allRelatedStrategObjArr.forEach(function (item) {
+          SubSolvl3Query += '<Value Type="Text">' + item + '</Value>';
+        });
+        SubSolvl3Query += '</Values></In><And><Eq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">sublevel3</Value></Eq><Neq><FieldRef Name=\'DeletionStatus\'/><Value Type=\'Text\'>Deleted</Value></Neq></And></And></Where></Query></View>';
+      }
+    }
+
+    camlQuery.set_viewXml(SubSolvl3Query);
+    subSOLevel3Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+
+    clientContext.load(subSOLevel3Request.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, subSOLevel3Request.onSuccess),
+      Function.createDelegate(this, subSOLevel3Request.onError)
+    );
+
+
+  },
+  onSuccess: function (sender, args) {
+    var collListItem = subSOLevel3Request.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+
+    var subObjectiveLvl3Html = [];
+
+debugger
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current(),
+        name = oListItem.get_item("Name") || UserNo_Data,
+        code = oListItem.get_item("Title") || UserNo_Data,
+        mainSos = oListItem.get_item("RelatedObjective") || UserNo_Data,
+        relatedGoal = oListItem.get_item("RelatedStrategy") || UserNo_Data,
+        sectorcode = oListItem.get_item("Sector") || UserNo_Data, // Sector
+        sosTypes = oListItem.get_item("Types"),
+        departmentcode = "";
+
+
+      if (isRoleDataLevelAccess && dataLevelAccessQuery && allRelatedStrategObjArr.length) {
+        var relatedStrategy = oListItem.get_item("RelatedStrategy")
+        if (relatedStrategy && !allRelatedStrategyArr.includes(relatedStrategy)) {
+          allRelatedStrategyArr.push(relatedStrategy)
+        }
+      }
+
+      if (!strategyArray.includes(relatedGoal)) {
+        strategyArray.push(relatedGoal)
+      }
+
+
+      subStratigicObjectivesLvl3Array.push({
+        name: name,
+        code: code,
+      });
+      subSosLvl3CodeArray.push({ code })
+
+
+      subObjectiveLvl3Html.push(
+        '<div class="kpi-item col px-2 my-5">' +
+        '<div style="cursor:pointer" class="SubLvlthreeSoCard link-item p-4 h-100 sublvlThreeSos" data-currentid="' + code + '" data-id="' +
+        mainSos +
+        // relatedGoal +
+        '" related-goal-id ="' + relatedGoal + '" sector-id="' + sectorcode + '" department-id="' + departmentcode + '" data-row >' +
+        '<div class="text-center fnt-13 bold river-bed mb-1">' +
+        code +
+        "</div>" +
+        '<h4 class="text-center fnt-13 river-bed">' +
+        name +
+        "</h4>" +
+        "</div>" +
+        "</div>"
+      );
+
+    }
+
+    subStratigicObjectivesLvl3Array.forEach(function (a, i, z) {
+      $('.card[data-id="' + a.code + '"]')
+        .find("span.badge.badge-pill")
+        .text(a.name);
+    });
+    if (subObjectiveLvl3Html.length == 0) {
+      subObjectiveLvl3Html.push(UserNo_Data);
+    }
+
+    if (isRoleDataLevelAccess && dataLevelAccessQuery) {
+      if (allRelatedStrategObjArr.length == 0) {
+        subObjectiveLvl3Html = [UserNo_Data]
+      }
+    }
+
+
+    $(".control-ctx.quick-links-ctx .subkpilvlthree-wrapper").html(
+      subObjectiveLvl3Html.join("")
+    );
+
+
+    var strategyCounter = 1
+
+    $(".quick-links-ctx .link-item.sublvlThreeSos").on('click', function () {
+
+      var dataid = $(this).attr("data-currentid");
+
       if (dataid == sosIdClicked) {
         strategyCounter++
         if (strategyCounter % 2 == 0) {
@@ -903,7 +1016,6 @@ var subStrategicObjectivesRequest = {
     });
 
 
-
   },
   onError: function (sender, args) {
     console.log(
@@ -912,6 +1024,7 @@ var subStrategicObjectivesRequest = {
   },
   g: {}
 }
+
 
 
 ///////////////////////
@@ -1058,6 +1171,8 @@ var GoalsKPIs_Info_Request = {
 
           $(".subSos[data-id]").parent().hide();
 
+          $(".sublvlThreeSos[data-id]").parent().hide();
+
           $('.soCard[related-goal-id="' + dataid + '"]').each(function (i) {
             var soID = $(this).data('id');
             $('.card[data-id="' + soID + '"]').fadeIn();
@@ -1068,6 +1183,15 @@ var GoalsKPIs_Info_Request = {
             var soID = $(this).data('id');
             $('.subSos[data-id="' + soID + '"]').parent().fadeIn();
           });
+
+
+          // show only sub lvl3
+
+          $('.SubLvlthreeSoCard[related-goal-id="' + dataid + '"]').each(function (i) {
+            var soID = $(this).data('id');
+            $('.sublvlThreeSos[data-id="' + soID + '"]').parent().fadeIn();
+          });
+          
 
         }
       } else {
@@ -1081,13 +1205,18 @@ var GoalsKPIs_Info_Request = {
         $('.SubsoCard[related-goal-id="' + dataid + '"]').parent().fadeIn();
 
         //
+        $(".SubLvlthreeSoCard[related-goal-id]").parent().hide();
+        $('.SubLvlthreeSoCard[related-goal-id="' + dataid + '"]').parent().fadeIn();
+
+
+        //
         $('.card[data-id]').hide();
         $('.soCard[related-goal-id="' + dataid + '"]').each(function (i) {
           var soID = $(this).data('id');
           $('.card[data-id="' + soID + '"]').fadeIn();
         });
 
-        
+
         startegyIdClicked = dataid
       }
 

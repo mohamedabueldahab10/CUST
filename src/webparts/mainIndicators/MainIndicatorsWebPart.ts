@@ -327,6 +327,27 @@ export default class MainIndicatorsWebPart extends BaseClientSideWebPart<IMainIn
                       </div>
                   </div>
                 </div>
+                <hr />
+                <div class="control-ctx quick-links-ctx">
+
+                <div class="content-list-head d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4 mb-3">
+                  <div class="d-flex align-items-center">
+                      <img src="${target}"> 
+                      <h2 data-trans-subgoalslvlthree class="mb-0 mx-3 py-1 Resources"></h2>
+                  </div>
+  
+                </div>
+
+
+                <div class="row mx-n2 mb-5 subkpilvlthree-wrapper">
+                <div class="col px-2 my-5">
+                    <div class="link-item p-4  h-100">
+                        <div class="text-center fnt-13 bold river-bed mb-1">1.0</div>
+                        <h4 class="text-center fnt-13 river-bed">الأداء الإستراتيجي</h4>
+                    </div>
+                </div>
+            </div>
+          </div>
                       <hr />
                       <div class="content-list-head d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4 mb-3">
                           <div class="d-flex align-items-center">
