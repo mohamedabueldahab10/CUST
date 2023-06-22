@@ -26,8 +26,9 @@ var barColor = "", PDegree = 0, showMoreText = "", showLessText = "";
 var startegyIdClicked = '', sosIdClicked = '';
 var SoQuery = '';
 
-SoQuery = "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Title' Ascending='True' /></OrderBy></Query></View>"
+// SoQuery = "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Title' Ascending='True' /></OrderBy></Query></View>"
 
+SoQuery = "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">main</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
 
 var goalKpiQuery = '';
 var goalKpiQueryG = '';
@@ -77,7 +78,7 @@ var MainKPIs_Info_Request = {
     var camlQuery = new SP.CamlQuery();
     let myQuery = `<View><Query>\
     <Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>`;
-    
+
     if (isRoleDataLevelAccess) {
       if (dataLevelAccessQuery) {
         myQuery = dataLevelAccessQuery;
@@ -269,7 +270,7 @@ var MainKPIs_Info_Request = {
       // /sitepages/Targets.aspx ? KpiCode =
     }
 
-    
+
 
     if (!KPIsHTML.length) {
       KPIsHTML.push(UserNo_Data);
@@ -310,7 +311,7 @@ var stratigicObjectivesRequest = {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("SOs");
     var camlQuery = new SP.CamlQuery();
-    
+
     if (isRoleDataLevelAccess && dataLevelAccessQuery) {
 
       if (allRelatedStrategObjArr.length) {
@@ -321,7 +322,7 @@ var stratigicObjectivesRequest = {
         SoQuery += '</Values></In><Neq><FieldRef Name=\'DeletionStatus\'/><Value Type=\'Text\'>Deleted</Value></Neq></And></Where></Query></View>';
       }
     }
-
+debugger
     camlQuery.set_viewXml(SoQuery);
     stratigicObjectivesRequest.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
 
@@ -338,16 +339,15 @@ var stratigicObjectivesRequest = {
     var departmentArr = [];
     var sectorArr = [];
     var depArrBiLang = [];
-
+    
     while (listItemEnum.moveNext()) {
-
       var oListItem = listItemEnum.get_current(),
         name = oListItem.get_item("Name") || UserNo_Data,
         code = oListItem.get_item("Title") || UserNo_Data,
         relatedGoal = oListItem.get_item("RelatedStrategy") || UserNo_Data,
         sectorcode = oListItem.get_item("Sector") || UserNo_Data, // Sector
         departmentcode = "";
-   
+
 
       if (isRoleDataLevelAccess && dataLevelAccessQuery && allRelatedStrategObjArr.length) {
         var relatedStrategy = oListItem.get_item("RelatedStrategy")
@@ -650,7 +650,7 @@ var GoalsKPIs_Info_Request = {
     var camlQuery = new SP.CamlQuery();
 
     //////
-    
+
     if (allRelatedStrategyArr.length) {
       goalKpiQuery = '<View><Query><Where><And><In><FieldRef Name="Title" /><Values>';
       allRelatedStrategyArr.forEach(function (item) {
