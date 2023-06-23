@@ -85,7 +85,7 @@ var ListArray = [
 	{
 		committees: "Committees",
 		ListingTitle: "اللجان",
-		FormTitle: "المحافظ",
+		FormTitle: "اللجان",
 		TitleEn: "Committees",
 		projnav: "Project Navigation",
 		subfolder: false,
