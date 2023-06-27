@@ -394,7 +394,8 @@ var Information_Form = [
                 "DisplayNameEn": "Actual Completed Date",
                 "DisplayName":"تاريخ الاكتمال الفعلي",
                 "type":"datetime",
-                "max":"today"
+                "max":"today",
+                "Errmsgkey": "cancelationdatepattern",
             },
         ]
     },

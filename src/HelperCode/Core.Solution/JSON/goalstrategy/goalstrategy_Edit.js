@@ -158,6 +158,7 @@ var Information_Form = [
         DisplayNameEn: 'Approval Date',
         type: 'datetime',
         max: 'today',
+        Errmsgkey: 'cancelationdatepattern',
       },
       {
         InternalName: 'PillarsExist',

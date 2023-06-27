@@ -170,6 +170,7 @@ var Information_Form = [
         endinternalname: 'FinishDate',
         min: 'DateRaised',
         max: 'today',
+        Errmsgkey: 'cancelationdatepattern',
         RequiredName: 'IssueClosureDate',
       },
       // {

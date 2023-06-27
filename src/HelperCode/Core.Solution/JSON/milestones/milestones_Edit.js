@@ -241,6 +241,7 @@ var Information_Form = [
         // type: 'datetime',
         type: 'datetimetoparent',
         max: 'today',
+        Errmsgkey: 'cancelationdatepattern',
         listname: 'Projects', // list name
         startinternalname: 'BaselineStartDate', // internalname of parent start
         endinternalname: 'BaselineFinishDate',

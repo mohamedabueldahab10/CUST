@@ -225,6 +225,7 @@ var Information_Form = [
         startinternalname: 'BaselineStartDate', // internalname of parent start
         endinternalname: 'BaselineFinishDate',
         max: 'today',
+        Errmsgkey: 'cancelationdatepattern',
         // "validation": "required",
       },
       {

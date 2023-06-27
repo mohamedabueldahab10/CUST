@@ -63,6 +63,7 @@ var Information_Form = [
         DisplayNameEn: 'Actual Date',
         type: 'datetime',
         max: 'today',
+        Errmsgkey: 'cancelationdatepattern',
       },
       {
         InternalName: 'Delivered',

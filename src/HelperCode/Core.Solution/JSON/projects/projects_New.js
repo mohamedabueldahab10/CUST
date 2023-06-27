@@ -1017,6 +1017,7 @@ var Information_Form = [
         startinternalname: 'BaselineStartDate',
         endinternalname: 'BaselineFinishDate',
         max: "today",
+        Errmsgkey: 'cancelationdatepattern',
       },
       {
         InternalName: "AwardDate",
@@ -1594,6 +1595,7 @@ var Information_Form = [
         startinternalname: 'BaselineStartDate',
         endinternalname: 'BaselineFinishDate',
         max: 'today',
+        Errmsgkey: 'cancelationdatepattern',
       },
       // {
       //   InternalName: 'CommittedDate',

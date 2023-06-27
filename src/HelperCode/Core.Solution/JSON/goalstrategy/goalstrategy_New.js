@@ -160,7 +160,8 @@ var Information_Form = [
         DisplayName: 'تاريخ إعتماد الإستراتيجية',
         DisplayNameEn: 'Approval Date',
         type: 'datetime',
-        max: 'today'
+        max: 'today',
+        Errmsgkey: 'cancelationdatepattern',
       },
       {
         InternalName: 'PillarsExist',

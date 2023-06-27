@@ -182,6 +182,7 @@ var Information_Form = [{
       "type": "datetime",
       "max": "today",
       // "validation": "required",
+      "Errmsgkey": "cancelationdatepattern",
     },
     {
       "InternalName": "AcceptanceCriteria",

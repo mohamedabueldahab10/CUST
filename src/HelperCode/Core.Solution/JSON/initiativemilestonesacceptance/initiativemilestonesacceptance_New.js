@@ -338,6 +338,7 @@ var Information_Form = [
         DisplayName: 'تاريخ الاكتمال الفعلي',
         type: 'datetime',
         max: 'today',
+        Errmsgkey: 'cancelationdatepattern',
       },
     ],
   },

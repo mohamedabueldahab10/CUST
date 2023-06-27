@@ -137,6 +137,7 @@ var Information_Form = [
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
         max: 'today',
+        Errmsgkey: 'cancelationdatepattern',
       },
       {
         InternalName: 'RelatedInitiativeDeliverable',
