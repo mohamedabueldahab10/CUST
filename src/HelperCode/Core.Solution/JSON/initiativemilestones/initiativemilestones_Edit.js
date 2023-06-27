@@ -84,6 +84,7 @@ var Information_Form = [
         DisplayName: 'تاريخ الاكتمال المخطط',
         // "type": "datetime",
         type: 'datetimetoparent',
+        Errmsgkey:'btwndatepattern',
         listname: 'Initiatives',
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',

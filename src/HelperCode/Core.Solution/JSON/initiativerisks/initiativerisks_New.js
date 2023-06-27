@@ -102,6 +102,7 @@ var Information_Form = [
         listname: 'Initiatives',
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
+        Errmsgkey:'btwndatepattern',
       },
       {
         InternalName: 'Description',
@@ -209,6 +210,7 @@ var Information_Form = [
         listname: 'Initiatives',
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
+        Errmsgkey:'btwndatepattern',
       },
       {
         InternalName: 'MitigationActualCompletionDate',
@@ -219,6 +221,7 @@ var Information_Form = [
         listname: 'Initiatives',
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
+        Errmsgkey:'btwndatepattern',
       },
       {
         InternalName: 'MitigationPlan',

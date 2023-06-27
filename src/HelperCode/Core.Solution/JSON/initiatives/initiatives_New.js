@@ -944,6 +944,7 @@ var Information_Form = [
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
         validation: 'required',
+        Errmsgkey:'btwndatepattern',
       },
       {
         InternalName: 'DeliverableSuccessKPI',
@@ -1041,6 +1042,7 @@ var Information_Form = [
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
         validation: 'required',
+        Errmsgkey:'btwndatepattern',
       },
       // {
       //   InternalName: 'PlannedDate',

@@ -1028,6 +1028,7 @@ var Information_Form = [
         listname: 'Projects',
         startinternalname: 'BaselineStartDate',
         endinternalname: 'BaselineFinishDate',
+        Errmsgkey:'btwndatepattern',
       },
       {
         InternalName: "ContractualDate",
@@ -1038,6 +1039,7 @@ var Information_Form = [
         listname: 'Projects',
         startinternalname: 'BaselineStartDate',
         endinternalname: 'BaselineFinishDate',
+        Errmsgkey:'btwndatepattern',
       },
       {
         InternalName: 'ApprovedBrochure',
@@ -1365,6 +1367,7 @@ var Information_Form = [
         endinternalname: 'BaselineFinishDate',
         // min: 'PlannedStartDate',
         validation: 'required',
+        Errmsgkey:'btwndatepattern',
       },
       // {
       //   InternalName: 'Delivered',
@@ -1584,6 +1587,7 @@ var Information_Form = [
         startinternalname: 'BaselineStartDate',
         endinternalname: 'BaselineFinishDate',
         validation: 'required',
+        Errmsgkey:'btwndatepattern',
       },
       {
         InternalName: 'ActualDate',

@@ -67,6 +67,7 @@ var Information_Form = [
         DisplayNameEn: 'Planned Completed Date',
         // "type": "datetime",
         type: 'datetimetoparent',
+        Errmsgkey:'btwndatepattern',
         listname: 'Initiatives',
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',

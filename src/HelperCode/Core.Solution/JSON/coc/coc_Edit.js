@@ -92,6 +92,7 @@ var Information_Form = [
         listname: 'Projects',
         startinternalname: 'BaselineStartDate',
         endinternalname: 'BaselineFinishDate',
+        Errmsgkey:'btwndatepattern'
       },
     ],
   },

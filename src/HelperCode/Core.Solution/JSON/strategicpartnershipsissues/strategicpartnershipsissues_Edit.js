@@ -122,6 +122,7 @@ var Information_Form = [{
             listname: 'Strategic Partnerships', // Displan name of list
             startinternalname: 'StartDate', // internalname of parent start
             endinternalname: 'FinishDate',
+            Errmsgkey:'btwndatepattern',
         },
         {
             "InternalName": "Resolution",

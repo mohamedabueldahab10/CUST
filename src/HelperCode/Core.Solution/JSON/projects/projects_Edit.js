@@ -1224,6 +1224,7 @@ var Information_Form = [
         enableOnWfTaskStage: "S05",
         requireOnWfTaskStage: "S05",
         disableOnWfTaskStage : "S09",
+        Errmsgkey:"btwndatepattern",
       },
       {
         InternalName: "ActualOfferingDate",
@@ -1252,6 +1253,7 @@ var Information_Form = [
         enableOnWfTaskStage: "S05",
         requireOnWfTaskStage: "S05",
         disableOnWfTaskStage : "S09",
+        Errmsgkey:'btwndatepattern',
       },
       {
         InternalName: "ContractualDate",
@@ -1265,6 +1267,7 @@ var Information_Form = [
         enableOnWfTaskStage: "S05",
         requireOnWfTaskStage: "S05",
         disableOnWfTaskStage : "S09",
+        Errmsgkey:'btwndatepattern',
       },
       {
         InternalName: 'ApprovedBrochure',
@@ -1615,6 +1618,7 @@ var Information_Form = [
         // "min": "PlannedStartDate",
         validation: 'required',
         disableOnWfTaskStage : "S05,S09",
+        Errmsgkey:'btwndatepattern',
       },
       // {
       //     "InternalName": "SupplyDate",
@@ -1888,6 +1892,7 @@ var Information_Form = [
         startinternalname: 'BaselineStartDate',
         endinternalname: 'BaselineFinishDate',
         disableOnWfTaskStage : "S05,S09",
+        Errmsgkey:'btwndatepattern',
       },
 
       //   {
