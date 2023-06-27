@@ -582,6 +582,7 @@ var Information_Form = [
         type: "datetime",
         disableOnWfTaskStage : "S05,S09",
         max: "BaselineFinishDate",
+        Errmsgkey:'fromdatepattern',
         //
         descPhraseAr: "التاريخ ضمن مدة المبادرة",
         descPhraseEn: "Date within Initiative period",
@@ -603,6 +604,7 @@ var Information_Form = [
         descPhraseEn: "Date within Initiative period",
         disableOnWfTaskStage : "S05,S09",
         min: "BaselineStartDate",
+        Errmsgkey:'todatepattern',
         //
         // 
         maxOnChild: true,

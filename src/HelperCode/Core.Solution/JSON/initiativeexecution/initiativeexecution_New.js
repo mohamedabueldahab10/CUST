@@ -100,14 +100,16 @@ var Information_Form = [
                 "DisplayName": "تاريخ بدء المبادرة",
                 "DisplayNameEn": "Start Date",
                 "type": "datetime",
-                "max": "FinishDate"
+                "max": "FinishDate",
+                "Errmsgkey":"fromdatepattern",
             },
             {
                 "InternalName": "FinishDate",
                 "DisplayName": "تاريخ انتهاء المبادرة",
                 "DisplayNameEn": "Finish Date",
                 "type": "datetime",
-                "min": "StartDate"
+                "min": "StartDate",
+                "Errmsgkey":"todatepattern",
             },
             {
                 "InternalName": "InitiativeBudget",
@@ -344,6 +346,7 @@ var Information_Form = [
                 "DisplayNameEn": "Planned Start Date ",
                 "type": "datetime",
                 "max": "PlannedFinishDate",
+                "Errmsgkey":"fromdatepattern",
                 // "validation": "required",
                 // "state": "disabled",
                 // "className":"autofill"
@@ -354,6 +357,7 @@ var Information_Form = [
                 "DisplayNameEn": "Planned End Date ",
                 "type": "datetime",
                 "min": "PlannedStartDate",
+                "Errmsgkey":"todatepattern",
                 "validation": "required",
                 // "state": "disabled",
                 // "className":"autofill"

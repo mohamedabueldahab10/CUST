@@ -129,8 +129,8 @@ var Information_Form = [
                    "DisplayName": "تاريخ بداية المبادرة ",
                    "DisplayNameEn": "Start Date",
                    "type": "datetime",
-                   "max":"FinishDate"
-                   ,
+                   "max":"FinishDate",
+                   "Errmsgkey":"fromdatepattern",
                    "state": "disabled"
                 },
                {
@@ -159,7 +159,8 @@ var Information_Form = [
                    "DisplayName": "تاريخ نهاية المبادرة ",
                    "DisplayNameEn": "Finish Date",
                    "type": "datetime",
-                   "max":"StartDate",
+                   "min":"StartDate",
+                   "Errmsgkey":"todatepattern",
                    "state": "disabled"
                },   
 
@@ -243,6 +244,7 @@ var Information_Form = [
                 "DisplayNameEn": "Project Start Date",
                 "type": "datetime",
                 "max": "ActualFinishDate",
+                "Errmsgkey":"fromdatepattern",
                 "state": "disabled"
             },
             {
@@ -251,6 +253,7 @@ var Information_Form = [
                 "DisplayNameEn": "Project Finish Date",
                 "type": "datetime",
                 "min": "ActualStartDate",
+                "Errmsgkey":"todatepattern",
                 "state": "disabled"
             },
             {
@@ -259,6 +262,7 @@ var Information_Form = [
                 "DisplayNameEn": "Baseline Start Date",
                 "type": "datetime",
                 "max": "BaselineFinishDate",
+                // "Errmsgkey":"fromdatepattern",
                 "state": "disabled"
             },
             {

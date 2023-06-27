@@ -617,6 +617,7 @@ var Information_Form = [
         DisplayNameEn: 'Start Date',
         type: 'datetime',
         max: 'FinishDate',
+        Errmsgkey:'fromdatepattern',
         validation: 'required',
         //
         maxOnChild: true,
@@ -635,6 +636,7 @@ var Information_Form = [
         DisplayNameEn: 'Finish Date',
         type: 'datetime',
         min: 'StartDate',
+        Errmsgkey:'todatepattern',
         validation: 'required',
         //
         maxOnChild: true,

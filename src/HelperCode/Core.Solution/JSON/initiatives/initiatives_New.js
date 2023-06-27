@@ -442,6 +442,7 @@ var Information_Form = [
         DisplayNameEn: 'Start Date',
         type: 'datetime',
         max: 'FinishDate',
+        Errmsgkey:'fromdatepattern',
         //
         maxOnChild:true,
         childsId:["PlannedCompletedDate","ActualCompletedDate","PlannedDate","ActualCompletedDate","ExpenseStartDate"],
@@ -454,6 +455,7 @@ var Information_Form = [
         DisplayNameEn: 'Finish Date',
         type: 'datetime',
         min: 'StartDate',
+        Errmsgkey:'todatepattern',
         //
         maxOnChild:true,
         childsId:["PlannedCompletedDate","ActualCompletedDate","PlannedDate","ActualCompletedDate","ExpenseStartDate"],

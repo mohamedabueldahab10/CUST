@@ -102,6 +102,7 @@ var Information_Form = [
         DisplayNameEn: 'Date Raised',
         type: 'datetime',
         max: 'IssueClosureDate',
+        Errmsgkey:'fromdatepattern',
       },
       {
         InternalName: 'ResolutionTargetDate',
@@ -128,6 +129,7 @@ var Information_Form = [
         DisplayNameEn: 'Issue Closure Date',
         type: 'datetime',
         min: 'DateRaised',
+        Errmsgkey:'todatepattern',
         ToggleName: 'IssueClosureDate',
         display: 'none'
       },

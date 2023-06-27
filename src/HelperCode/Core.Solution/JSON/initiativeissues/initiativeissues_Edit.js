@@ -122,11 +122,11 @@ var Information_Form = [
         DisplayNameEn: 'Date Raised',
         // type: 'datetime',
         type: 'datetimetoparent',
-        Errmsgkey:'btwndatepattern',
         listname: 'Initiatives',
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
         max: 'IssueClosureDate',
+        Errmsgkey:'fromdatepattern',
       },
       {
         InternalName: 'ResolutionTargetDate',
@@ -172,7 +172,7 @@ var Information_Form = [
         endinternalname: 'FinishDate',
         min: 'DateRaised',
         max: 'today',
-        Errmsgkey: 'cancelationdatepattern',
+        Errmsgkey:'todatepattern',
         RequiredName: 'IssueClosureDate',
       },
       // {

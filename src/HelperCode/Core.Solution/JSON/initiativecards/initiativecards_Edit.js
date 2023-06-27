@@ -52,6 +52,7 @@ var Information_Form = [
                 "type": "datetime",
                 //"state": "disabled",
                 "max": "FinishDate",
+                "Errmsgkey":"fromdatepattern",
                 security: {
                     groups: [
                         'VRO_E' 
@@ -123,6 +124,7 @@ var Information_Form = [
                 "type": "datetime",
                 //"state": "disabled",
                 "min": "StartDate",
+                "Errmsgkey":"todatepattern",
                 security: {
                     groups: [
                         'VRO_E' 

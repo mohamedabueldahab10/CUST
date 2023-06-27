@@ -55,7 +55,8 @@ var Information_Form = [{
             "DisplayNameEn": "Planned Start Date",
             "type": "datetime",
             "max": "PlannedFinishDate",
-            "validation": "required"
+            "validation": "required",
+            "Errmsgkey":"fromdatepattern"
         },
         {
             "InternalName": "PlannedFinishDate",
@@ -63,7 +64,8 @@ var Information_Form = [{
             "DisplayNameEn": "Planned Finish Date",
             "type": "datetime",
             "min": "PlannedStartDate",
-            "validation": "required"
+            "validation": "required",
+            "Errmsgkey":"todatepattern"
         },
         {
             "InternalName": "Impact",

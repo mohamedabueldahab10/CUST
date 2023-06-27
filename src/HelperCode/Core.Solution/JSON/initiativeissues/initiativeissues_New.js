@@ -107,6 +107,7 @@ var Information_Form = [
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
         max: 'IssueClosureDate',
+        Errmsgkey:'fromdatepattern',
       },
       {
         InternalName: 'ResolutionTargetDate',
@@ -139,7 +140,7 @@ var Information_Form = [
         endinternalname: 'FinishDate',
         min: 'DateRaised',
         max: 'today',
-        Errmsgkey: 'cancelationdatepattern',
+        Errmsgkey:'todatepattern',
         RequiredName: 'IssueClosureDate',
       },
       // {

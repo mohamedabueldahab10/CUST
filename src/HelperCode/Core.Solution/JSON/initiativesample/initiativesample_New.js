@@ -41,14 +41,16 @@ var Information_Form  = [
             "DisplayName": "تاريخ بداية المبادرة ",
             "DisplayNameEn": "Start Date",
             "type": "datetime",
-            "max":"FinishDate"
+            "max":"FinishDate",
+            "Errmsgkey":"fromdatepattern",
         },
         {
             "InternalName": "FinishDate",
             "DisplayName": "تاريخ نهاية المبادرة ",
             "DisplayNameEn": "Finish Date",
             "type": "datetime",
-            "max":"StartDate"
+            "max":"StartDate",
+            "Errmsgkey":"todatepattern",
         },   
 
     ]

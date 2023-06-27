@@ -629,6 +629,7 @@ var Information_Form = [
         DisplayNameEn: "Baseline Start Date",
         type: "datetime",
         max: "BaselineFinishDate",
+        Errmsgkey:'fromdatepattern',
         descPhraseAr: "التاريخ ضمن مدة المبادرة",
         descPhraseEn: "Date within Initiative period",
         // 
@@ -647,6 +648,7 @@ var Information_Form = [
         DisplayNameEn: "Baseline Finish Date",
         type: "datetime",
         min: "BaselineStartDate",
+        Errmsgkey:'todatepattern',
         descPhraseAr: "التاريخ ضمن مدة المبادرة",
         descPhraseEn: "Date within Initiative period",
         // 
@@ -1006,6 +1008,7 @@ var Information_Form = [
         // startinternalname: 'BaselineStartDate',
         // endinternalname: 'BaselineFinishDate',
           "min": "PlannedStartDate",
+          Errmsgkey:"todatepattern",
       },
       {
         InternalName: "ActualOfferingDate",

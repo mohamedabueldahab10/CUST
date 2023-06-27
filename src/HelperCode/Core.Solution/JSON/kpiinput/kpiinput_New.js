@@ -33,14 +33,16 @@ var Information_Form  = [
                 "InternalName": "From",
                 "DisplayName":"من",
                 "type":"datetime",
-                "max": "To"
+                "max": "To",
+                "Errmsgkey":"fromdatepattern",
                 
             },
             {
                 "InternalName": "To",
                 "DisplayName":"الى",
                 "type":"datetime",
-                "min": "From"
+                "min": "From",
+                "Errmsgkey":"todatepattern",
             
             },
             {

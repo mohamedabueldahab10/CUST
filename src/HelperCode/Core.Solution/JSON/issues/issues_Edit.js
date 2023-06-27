@@ -137,6 +137,7 @@ var Information_Form = [
         startinternalname: 'BaselineStartDate', // internalname of parent start
         endinternalname: 'BaselineFinishDate',
         max: 'IssueClosureDate',
+        Errmsgkey:'fromdatepattern',
       },
       {
         InternalName: 'ResolutionTargetDate',
@@ -186,6 +187,7 @@ var Information_Form = [
         startinternalname: 'BaselineStartDate', // internalname of parent start
         endinternalname: 'BaselineFinishDate',
         min: 'DateRaised',
+        Errmsgkey:'todatepattern',
         RequiredName: 'IssueClosureDate',
       },
       {
