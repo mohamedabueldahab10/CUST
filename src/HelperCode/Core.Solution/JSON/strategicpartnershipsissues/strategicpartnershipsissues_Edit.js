@@ -112,7 +112,8 @@ var Information_Form = [{
             "DisplayName": "تاريخ تحديد التحدي",
             "DisplayNameEn": "Date Raised",
             "type": "datetime",
-            "max": "IssueClosureDate"
+            "max": "IssueClosureDate",
+            "Errmsgkey":"fromdatepattern",
         },
         {
             "InternalName": "ResolutionTargetDate",
@@ -122,6 +123,7 @@ var Information_Form = [{
             listname: 'Strategic Partnerships', // Displan name of list
             startinternalname: 'StartDate', // internalname of parent start
             endinternalname: 'FinishDate',
+            Errmsgkey:'btwndatepattern',
         },
         {
             "InternalName": "Resolution",
@@ -151,6 +153,7 @@ var Information_Form = [{
             "DisplayNameEn": "Issue Closure Date",
             "type": "datetime",
             "min": "DateRaised",
+            "Errmsgkey":"todatepattern",
             "ToggleName": "IssueClosureDate",
             "display": "none"
         },

@@ -67,6 +67,7 @@ var Information_Form = [
         DisplayNameEn: 'Planned Completed Date',
         // "type": "datetime",
         type: 'datetimetoparent',
+        Errmsgkey:'btwndatepattern',
         listname: 'Initiatives',
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
@@ -185,6 +186,7 @@ var Information_Form = [
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
         max: 'today',
+        Errmsgkey: 'cancelationdatepattern',
       },
       //   {
       //     InternalName: 'Completed',

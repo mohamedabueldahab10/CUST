@@ -17,7 +17,7 @@ var Information_Form = [
         DisplayName: 'اسم المعلم',
         DisplayNameEn: 'Name',
         type: 'string',
-        validation: 'required',
+        // validation: 'required',
       },
       // {
       //   InternalName: 'Amount',

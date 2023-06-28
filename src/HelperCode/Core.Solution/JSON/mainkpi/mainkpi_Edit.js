@@ -1237,7 +1237,8 @@ var Information_Form = [
         DisplayName: 'فترة قياس خط الأساس',
         DisplayNameEn: 'Mesure Period',
         ToggleDisabledName: 'MesurePeriod',
-        min: 'FromDate',
+        // min: 'FromDate',
+        // Errmsgkey:'todatepattern',
         type: 'datetime',
         security: {
           groups: ['LMS_P', 'VRO_P', 'System Admin Group', 'SPM Admin'],

@@ -17,7 +17,7 @@ var Information_Form = [{
       "DisplayName": "اسم المخرج",
       "DisplayNameEn": "Name",
       "type": "string",
-      "validation": "required"
+      // "validation": "required"
     },
     {
       "InternalName": "Description",

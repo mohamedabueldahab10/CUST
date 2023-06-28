@@ -582,6 +582,7 @@ var Information_Form = [
         type: "datetime",
         disableOnWfTaskStage : "S05,S09",
         max: "BaselineFinishDate",
+        Errmsgkey:'fromdatepattern',
         //
         descPhraseAr: "التاريخ ضمن مدة المبادرة",
         descPhraseEn: "Date within Initiative period",
@@ -603,6 +604,7 @@ var Information_Form = [
         descPhraseEn: "Date within Initiative period",
         disableOnWfTaskStage : "S05,S09",
         min: "BaselineStartDate",
+        Errmsgkey:'todatepattern',
         //
         // 
         maxOnChild: true,
@@ -1224,6 +1226,7 @@ var Information_Form = [
         enableOnWfTaskStage: "S05",
         requireOnWfTaskStage: "S05",
         disableOnWfTaskStage : "S09",
+        Errmsgkey:"btwndatepattern",
       },
       {
         InternalName: "ActualOfferingDate",
@@ -1234,7 +1237,8 @@ var Information_Form = [
         listname: 'Projects',
         startinternalname: 'BaselineStartDate',
         endinternalname: 'BaselineFinishDate',
-        max: "today",
+        max: 'today',
+        Errmsgkey: 'cancelationdatepattern',
         enableOnWfTaskStage: "S05",
         requireOnWfTaskStage: "S05",
         disableOnWfTaskStage : "S09",
@@ -1251,6 +1255,7 @@ var Information_Form = [
         enableOnWfTaskStage: "S05",
         requireOnWfTaskStage: "S05",
         disableOnWfTaskStage : "S09",
+        Errmsgkey:'btwndatepattern',
       },
       {
         InternalName: "ContractualDate",
@@ -1264,6 +1269,7 @@ var Information_Form = [
         enableOnWfTaskStage: "S05",
         requireOnWfTaskStage: "S05",
         disableOnWfTaskStage : "S09",
+        Errmsgkey:'btwndatepattern',
       },
       {
         InternalName: 'ApprovedBrochure',
@@ -1614,6 +1620,7 @@ var Information_Form = [
         // "min": "PlannedStartDate",
         validation: 'required',
         disableOnWfTaskStage : "S05,S09",
+        Errmsgkey:'btwndatepattern',
       },
       // {
       //     "InternalName": "SupplyDate",
@@ -1685,6 +1692,7 @@ var Information_Form = [
         startinternalname: 'BaselineStartDate',
         endinternalname: 'BaselineFinishDate',
         max: 'today',
+        Errmsgkey: 'cancelationdatepattern',
         disableOnWfTaskStage : "S05,S09",
         // "validation": "required",
       },
@@ -1886,6 +1894,7 @@ var Information_Form = [
         startinternalname: 'BaselineStartDate',
         endinternalname: 'BaselineFinishDate',
         disableOnWfTaskStage : "S05,S09",
+        Errmsgkey:'btwndatepattern',
       },
 
       //   {
@@ -1986,6 +1995,7 @@ var Information_Form = [
         startinternalname: 'BaselineStartDate',
         endinternalname: 'BaselineFinishDate',
         max: 'today',
+        Errmsgkey: 'cancelationdatepattern',
         disableOnWfTaskStage : "S05,S09",
       },
       {

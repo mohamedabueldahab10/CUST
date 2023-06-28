@@ -216,6 +216,7 @@ var Information_Form = [
         //   ],
         // },
         validation: 'required',
+        Errmsgkey:'fromyearpattern',
       },
       {
         InternalName: 'ToDate',
@@ -224,6 +225,7 @@ var Information_Form = [
         type: 'yearInput',
         // type: "datetime",
         min: 'FromDate',
+        Errmsgkey:'toyearpattern',
         //   "state": "disabled",
         //   dynamic: "Initiative",
         // options: {
@@ -573,6 +575,7 @@ var Information_Form = [
         DisplayName: 'فترة قياس خط الأساس',
         DisplayNameEn: 'Mesure Period',
         min: 'FromDate',
+        Errmsgkey:'todatepattern',
         type: 'datetime',
         // validation: "required",
       },

@@ -102,10 +102,12 @@ var Information_Form = [
         DisplayNameEn: 'Date Raised',
         // type: 'datetime',
         type: 'datetimetoparent',
+        Errmsgkey:'btwndatepattern',
         listname: 'Initiatives',
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
         max: 'IssueClosureDate',
+        Errmsgkey:'fromdatepattern',
       },
       {
         InternalName: 'ResolutionTargetDate',
@@ -113,6 +115,7 @@ var Information_Form = [
         DisplayNameEn: 'Resolution Target Date',
         // type: 'datetime',
         type: 'datetimetoparent',
+        Errmsgkey:'btwndatepattern',
         listname: 'Initiatives',
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
@@ -137,6 +140,7 @@ var Information_Form = [
         endinternalname: 'FinishDate',
         min: 'DateRaised',
         max: 'today',
+        Errmsgkey:'todatepattern',
         RequiredName: 'IssueClosureDate',
       },
       // {

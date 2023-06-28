@@ -99,6 +99,7 @@ var Information_Form = [
         listname: 'Projects', // list name
         startinternalname: 'BaselineStartDate', // internalname of parent start
         endinternalname: 'BaselineFinishDate',
+        Errmsgkey:'btwndatepattern',
       },
       {
         InternalName: 'Description',
@@ -206,6 +207,7 @@ var Information_Form = [
         listname: 'Projects', // list name
         startinternalname: 'BaselineStartDate', // internalname of parent start
         endinternalname: 'BaselineFinishDate',
+        Errmsgkey:'btwndatepattern',
       },
       {
         InternalName: 'MitigationActualCompletionDate',
@@ -216,6 +218,7 @@ var Information_Form = [
         listname: 'Projects', // list name
         startinternalname: 'BaselineStartDate', // internalname of parent start
         endinternalname: 'BaselineFinishDate',
+        Errmsgkey:'btwndatepattern',
       },
       {
         InternalName: 'MitigationPlan',

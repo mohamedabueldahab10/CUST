@@ -629,6 +629,7 @@ var Information_Form = [
         DisplayNameEn: "Baseline Start Date",
         type: "datetime",
         max: "BaselineFinishDate",
+        Errmsgkey:'fromdatepattern',
         descPhraseAr: "التاريخ ضمن مدة المبادرة",
         descPhraseEn: "Date within Initiative period",
         // 
@@ -647,6 +648,7 @@ var Information_Form = [
         DisplayNameEn: "Baseline Finish Date",
         type: "datetime",
         min: "BaselineStartDate",
+        Errmsgkey:'todatepattern',
         descPhraseAr: "التاريخ ضمن مدة المبادرة",
         descPhraseEn: "Date within Initiative period",
         // 
@@ -1006,6 +1008,7 @@ var Information_Form = [
         // startinternalname: 'BaselineStartDate',
         // endinternalname: 'BaselineFinishDate',
           "min": "PlannedStartDate",
+          Errmsgkey:"todatepattern",
       },
       {
         InternalName: "ActualOfferingDate",
@@ -1017,6 +1020,7 @@ var Information_Form = [
         startinternalname: 'BaselineStartDate',
         endinternalname: 'BaselineFinishDate',
         max: "today",
+        Errmsgkey: 'cancelationdatepattern',
       },
       {
         InternalName: "AwardDate",
@@ -1027,6 +1031,7 @@ var Information_Form = [
         listname: 'Projects',
         startinternalname: 'BaselineStartDate',
         endinternalname: 'BaselineFinishDate',
+        Errmsgkey:'btwndatepattern',
       },
       {
         InternalName: "ContractualDate",
@@ -1037,6 +1042,7 @@ var Information_Form = [
         listname: 'Projects',
         startinternalname: 'BaselineStartDate',
         endinternalname: 'BaselineFinishDate',
+        Errmsgkey:'btwndatepattern',
       },
       {
         InternalName: 'ApprovedBrochure',
@@ -1364,6 +1370,7 @@ var Information_Form = [
         endinternalname: 'BaselineFinishDate',
         // min: 'PlannedStartDate',
         validation: 'required',
+        Errmsgkey:'btwndatepattern',
       },
       // {
       //   InternalName: 'Delivered',
@@ -1583,6 +1590,7 @@ var Information_Form = [
         startinternalname: 'BaselineStartDate',
         endinternalname: 'BaselineFinishDate',
         validation: 'required',
+        Errmsgkey:'btwndatepattern',
       },
       {
         InternalName: 'ActualDate',
@@ -1594,6 +1602,7 @@ var Information_Form = [
         startinternalname: 'BaselineStartDate',
         endinternalname: 'BaselineFinishDate',
         max: 'today',
+        Errmsgkey: 'cancelationdatepattern',
       },
       // {
       //   InternalName: 'CommittedDate',

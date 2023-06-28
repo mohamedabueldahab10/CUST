@@ -38,7 +38,8 @@ var Information_Form = [
                 "DisplayNameEn": "Start Date",
                 "type": "datetime",
                 "state": "disabled",
-                "max": "FinishDate"
+                "max": "FinishDate",
+                "Errmsgkey":"fromdatepattern",
             },
             {
                 "InternalName": "InitiativeOwner",
@@ -84,7 +85,8 @@ var Information_Form = [
                 "DisplayNameEn": "Finish Date",
                 "type": "datetime",
                 "state": "disabled",
-                "min": "StartDate"
+                "min": "StartDate",
+                "Errmsgkey":"todatepattern",
             },
             {
                 "InternalName": "ProgramVision",
@@ -304,7 +306,8 @@ var Information_Form = [
                 "DisplayNameEn": "Actual Completed Date",
                 "DisplayName":"تاريخ الاكتمال الفعلي",
                 "type":"datetime",
-                "max":"today"
+                "max":"today",
+                "Errmsgkey": "cancelationdatepattern",
             },
         ]
     },

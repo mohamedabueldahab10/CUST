@@ -44,7 +44,8 @@ var Information_Form = [{
                 "listname":"Projects", // list name
                 "startinternalname":"BaselineStartDate", // internalname of parent start
                 "endinternalname":"BaselineFinishDate",
-                "max": "EndDate"
+                "max": "EndDate",
+                "Errmsgkey":"fromdatepattern"
             },
             {
                 "InternalName": "EndDate",
@@ -55,7 +56,8 @@ var Information_Form = [{
                 "listname":"Projects",
                 "startinternalname":"BaselineStartDate",
                 "endinternalname":"BaselineFinishDate",
-                "min":"StartDate"
+                "min":"StartDate",
+                "Errmsgkey":"todatepattern"
             },
             // {
             //     "InternalName": "Vendor",

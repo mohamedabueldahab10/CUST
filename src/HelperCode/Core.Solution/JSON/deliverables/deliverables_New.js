@@ -139,6 +139,7 @@ var Information_Form = [
         DisplayNameEn: 'Planned Finish Date',
         // type: 'datetime',
         type: 'datetimetoparent',
+        Errmsgkey:'btwndatepattern',
         listname: 'Projects',
         startinternalname: 'BaselineStartDate',
         endinternalname: 'BaselineFinishDate',

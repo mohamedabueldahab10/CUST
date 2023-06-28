@@ -96,6 +96,7 @@ var Information_Form = [
         DisplayNameEn: 'Date Identified',
         // "type": "datetime"
         type: 'datetimetoparent',
+        Errmsgkey:'btwndatepattern',
         listname: 'Initiatives',
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
@@ -209,6 +210,7 @@ var Information_Form = [
         DisplayNameEn: 'Mitigation Actual Completion Date',
         // type: 'datetime',
         type: 'datetimetoparent',
+        Errmsgkey:'btwndatepattern',
         listname: 'Initiatives',
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',

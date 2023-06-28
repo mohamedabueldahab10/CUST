@@ -59,7 +59,8 @@ var Information_Form  = [
                 "DisplayNameEn": "From",
                 "DisplayName":"من تاريخ",
                 "type":"datetime",
-                "max": "To"
+                "max": "To",
+                "Errmsgkey":"fromdatepattern",
                 
             },
             {
@@ -68,6 +69,7 @@ var Information_Form  = [
                 "DisplayName":"إلى تاريخ",
                 "type":"datetime",
                 "min": "From",
+                "Errmsgkey":"todatepattern",
             
             },
             // {

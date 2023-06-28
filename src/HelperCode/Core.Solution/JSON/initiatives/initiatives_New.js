@@ -442,6 +442,7 @@ var Information_Form = [
         DisplayNameEn: 'Start Date',
         type: 'datetime',
         max: 'FinishDate',
+        Errmsgkey:'fromdatepattern',
         //
         maxOnChild:true,
         childsId:["PlannedCompletedDate","ActualCompletedDate","PlannedDate","ActualCompletedDate","ExpenseStartDate"],
@@ -454,6 +455,7 @@ var Information_Form = [
         DisplayNameEn: 'Finish Date',
         type: 'datetime',
         min: 'StartDate',
+        Errmsgkey:'todatepattern',
         //
         maxOnChild:true,
         childsId:["PlannedCompletedDate","ActualCompletedDate","PlannedDate","ActualCompletedDate","ExpenseStartDate"],
@@ -944,6 +946,7 @@ var Information_Form = [
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
         validation: 'required',
+        Errmsgkey:'btwndatepattern',
       },
       {
         InternalName: 'DeliverableSuccessKPI',
@@ -998,6 +1001,7 @@ var Information_Form = [
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
         max: 'today',
+        Errmsgkey: 'cancelationdatepattern',
       },
       {
         InternalName: 'getfile',
@@ -1040,6 +1044,7 @@ var Information_Form = [
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
         validation: 'required',
+        Errmsgkey:'btwndatepattern',
       },
       // {
       //   InternalName: 'PlannedDate',
@@ -1085,6 +1090,7 @@ var Information_Form = [
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
         max: 'today',
+        Errmsgkey: 'cancelationdatepattern',
       },
       {
         InternalName: 'RelatedInitiativeDeliverable',

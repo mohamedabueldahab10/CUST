@@ -118,6 +118,7 @@ var Information_Form = [{
       listname: 'Strategic Partnerships', // Displan name of list
       startinternalname: 'StartDate', // internalname of parent start
       endinternalname: 'FinishDate',
+      Errmsgkey:'btwndatepattern',
       "validation": "required",
     },
     // {
@@ -179,9 +180,15 @@ var Information_Form = [{
       "InternalName": "DeliveredDate",
       "DisplayName": "تاريخ التسليم",
       "DisplayNameEn": "Delivered Date",
-      "type": "datetime",
+      "type": "datetimetoparent",
       "max": "today",
       // "validation": "required",
+      // "Errmsgkey": "cancelationdatepattern",
+      "listname": "Strategic Partnerships", // Displan name of list
+      "startinternalname": "StartDate", // internalname of parent start
+      "endinternalname": "FinishDate",
+      "Errmsgkey":"btwndatepattern",
+      
     },
     {
       "InternalName": "AcceptanceCriteria",

@@ -64,7 +64,8 @@ var Information_Form = [//for Initiatives List
                 "DisplayNameEn": "Actual Completed Date",
                 "DisplayName": "تاريخ الاكتمال الفعلي",
                 "type": "datetime",
-                "max":"today"
+                "max":"today",
+                "Errmsgkey": "cancelationdatepattern",
             },
         ]
     },

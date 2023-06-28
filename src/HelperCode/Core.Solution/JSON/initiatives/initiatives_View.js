@@ -645,7 +645,7 @@ var Information_Form = [
         DisplayNameEn: 'Planned Completed Date',
         DisplayName: 'تاريخ الاكتمال المخطط',
         type: 'datetime',
-        validation: 'required',
+        // validation: 'required',
       },
       {
         InternalName: 'Weight',

@@ -97,9 +97,10 @@ var Information_Form = [{
             "DisplayName": "تاريخ تحديد الخطر",
             "DisplayNameEn": "Date Identified",
             type: 'datetimetoparent',
-        listname: 'Strategic Partnerships', // Displan name of list
-        startinternalname: 'StartDate', // internalname of parent start
-        endinternalname: 'FinishDate',
+            listname: 'Strategic Partnerships', // Displan name of list
+            startinternalname: 'StartDate', // internalname of parent start
+            endinternalname: 'FinishDate',
+            Errmsgkey:'btwndatepattern',
         },
         {
             "InternalName": "Description",
@@ -203,6 +204,7 @@ var Information_Form = [{
             listname: 'Strategic Partnerships', // Displan name of list
             startinternalname: 'StartDate', // internalname of parent start
             endinternalname: 'FinishDate',
+            Errmsgkey:'btwndatepattern',
         },
         {
             "InternalName": "MitigationActualCompletionDate",
@@ -212,6 +214,7 @@ var Information_Form = [{
             listname: 'Strategic Partnerships', // Displan name of list
             startinternalname: 'StartDate', // internalname of parent start
             endinternalname: 'FinishDate',
+            Errmsgkey:'btwndatepattern',
         },
         {
             "InternalName": "MitigationPlan",
