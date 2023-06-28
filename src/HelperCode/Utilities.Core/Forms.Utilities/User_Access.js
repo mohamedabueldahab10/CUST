@@ -1134,6 +1134,10 @@ window.userCalls = {
           // "benefits",
         ];
         Read_Access = [
+          "initiativeissues",
+          "initiativerisks",   
+          "issues",
+          "risks",
           "goalstrategy",
           "sos",
           "tasks",
@@ -1191,6 +1195,10 @@ window.userCalls = {
           "mainkpi",
         ]
         Read_Access = [
+          "initiativeissues",
+          "initiativerisks",   
+          "issues",
+          "risks",
           "goalstrategy",
           "mainkpi",
           "sos",
@@ -3071,6 +3079,10 @@ window.userCalls = {
           "InitiativeHome.aspx",
           "initiativesmain.aspx",
           "projecthome.aspx",
+          "initiativeissues",
+          "initiativerisks",   
+          "issues",
+          "risks",
           "home.aspx"
 
         ];
