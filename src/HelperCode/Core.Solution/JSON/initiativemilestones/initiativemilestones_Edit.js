@@ -207,18 +207,7 @@ var Information_Form = [
         },
         initiativeCodeInList: true,
       },
-      {
-        InternalName: 'SupportDocumentsDescription',
-        DisplayNameEn: 'Support Documents Description',
-        DisplayName: 'وصف الوثائق الداعمة',
-        type: 'multiline',
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
-        maxchar: '5000',
-        // security: {
-        //   groups: ['EPMO', 'System Admin Group'],
-        // },
-      },
+      
     ],
   },
   {
@@ -229,13 +218,25 @@ var Information_Form = [
     subFields: [
       {
         InternalName: 'getfile',
-        DisplayName: 'الوثائق داعمة',
+        DisplayName: 'الوثائق الداعمة',
         DisplayNameEn: 'Supporting Documents',
         type: 'file',
         docPurpose: 'Spporting_Documents',
         withAddBtn: 'true',
         descPhraseAr: "ملفات مطلوبة عند الاغلاق",
         descPhraseEn: "File required after closing",
+        // security: {
+        //   groups: ['EPMO', 'System Admin Group'],
+        // },
+      },
+      {
+        InternalName: 'SupportDocumentsDescription',
+        DisplayNameEn: 'Support Documents Description',
+        DisplayName: 'وصف الوثائق الداعمة',
+        type: 'multiline',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
+        maxchar: '5000',
         // security: {
         //   groups: ['EPMO', 'System Admin Group'],
         // },

@@ -797,8 +797,8 @@ window.userCalls = {
         ];
         Edit_Access = [
           "projects",
-          // "deliverables",
-          // "milestones",
+          "deliverables",
+          "milestones",
           "issues",
           "risks",
           "mom",
