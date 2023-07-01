@@ -20,9 +20,9 @@ var Information_Form = [
         // Errmsgkey:"withletterpatternunrequired",
         // state: "disabled",
         // disableOnWfTaskStage : "S05,S09",
-        // security: {
-        //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
-        // },
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       {
         InternalName: "Portfolio",
@@ -39,6 +39,9 @@ var Information_Form = [
         DispfieldkeyEn: "NameEn", //added to handle portfolio bilangual
         // "state": "disabled",
         // "className":"autofill"
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       {
         InternalName: "Description",
@@ -50,6 +53,9 @@ var Information_Form = [
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         // security: {
         //   groups: [
         //     "VRO_E",
@@ -74,6 +80,9 @@ var Information_Form = [
         disableOnWfTaskStage : "S05,S09",                
         enableOnWfTaskStage: "S09",
         requireOnWfTaskStage: "S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         // security: {
         //   groups: [
         //     "VRO_E",
@@ -97,6 +106,9 @@ var Information_Form = [
         disableOnWfTaskStage : "S05,S09",        
         enableOnWfTaskStage: "S09",
         requireOnWfTaskStage: "S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         //"state": "disabled"
       },
       {
@@ -108,6 +120,9 @@ var Information_Form = [
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         //"state": "disabled"
       },
       {
@@ -119,6 +134,9 @@ var Information_Form = [
         descPhraseEn: "max length of letters equal 5000",
         maxchar: 5000,
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         // hideonstage: "1"
       },
 
@@ -129,6 +147,9 @@ var Information_Form = [
         validation: "required",
         type: "yesnoradio",
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         options: {
           choices: [
             {
@@ -193,6 +214,9 @@ var Information_Form = [
         Dispfieldkey: "Name",
         valfieldkey: "Title",
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         // grpfieldkey: 'Title',
         // security: {
         //   groups: [
@@ -214,6 +238,9 @@ var Information_Form = [
         DisplayNameEn: "Is Strategic Project?",
         type: "dropdownValues",
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         options: {
           choices: [
             { display: "yes", value: "yes" },
@@ -240,6 +267,9 @@ var Information_Form = [
         dynamic: 'parent', // parent to get the child depends on this field value
         type: 'dropdownValues',
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         toggleValues: [
           { value: 'vision', fields: ['Program'] },
           // {value:'strategically', fields:['StrategyRelatedObjective']}
@@ -301,6 +331,9 @@ var Information_Form = [
         filterField: "Types",//InternalName Of Parent field
         filterFieldType: "Text",//Type In Sharepoint List for Parent field
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         targetsiblingarr: ["Sector", "SubSector","StartDate","FinishDate"], // get siblings value
 
         // security: {
@@ -374,6 +407,9 @@ var Information_Form = [
         // disableOnWfTaskStage : "S05,S09",
         hideOnWfTaskStage  : "S05;S09",
         state: "disabled",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       {
         InternalName: "Program",
@@ -390,7 +426,10 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         hideOnWfTaskStage  : "S05;S09",
-          "display": "none"
+          "display": "none",
+          security: {
+            groups: [ "EPMO", "System Admin Group"],
+          },
       },
       {
         InternalName: "Sector",
@@ -406,6 +445,9 @@ var Information_Form = [
         DispfieldkeyEn: "NameEn",
         valfieldkey: "Title",
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         // ToggleDisabledName:"Sector"
         // security: {
         //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
@@ -425,7 +467,10 @@ var Information_Form = [
         DispfieldkeyEn: "NameEn",
         valfieldkey: "Title",
         // disableOnWfTaskStage : "S05,S09",
-        hideOnWfTaskStage  : "S05;S09",
+        // hideOnWfTaskStage  : "S05;S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         // ToggleDisabledName:"SubSector"
         // security: {
         //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
@@ -507,6 +552,9 @@ var Information_Form = [
         descPhraseEn: "max length of letters equal 5000",
         maxchar: 5000,
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         // security: {
         //   groups: [
         //     "VRO_E",
@@ -528,6 +576,9 @@ var Information_Form = [
         validation: "required",
         type: "dropdownValues",
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         options: {
           choices: [
             { display: "internal", value: "Internal" },
@@ -573,6 +624,8 @@ var Information_Form = [
             },
             { display: "operationalproject", value: "operationalproject" },
           ],
+        }, security: {
+          groups: [ "EPMO", "System Admin Group"],
         },
       },
       {
@@ -592,7 +645,10 @@ var Information_Form = [
         'ActualOfferingDate',
         'AwardDate',
         'ContractualDate',],
-        targetOn: "min"
+        targetOn: "min",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         // "state": "disabled"
       },
       {
@@ -613,7 +669,10 @@ var Information_Form = [
         'ActualOfferingDate',
         'AwardDate',
         'ContractualDate',],
-        targetOn: "max"
+        targetOn: "max",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
 
       
@@ -634,6 +693,9 @@ var Information_Form = [
           ],
         },
         validation: "required",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         // security: {
         //   groups: [
         //     "VRO_E",
@@ -657,6 +719,9 @@ var Information_Form = [
         descPhraseEn: "max length of letters equal 5000",
         maxchar: 5000,
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       {
         InternalName: "ProjectOverview",
@@ -667,6 +732,9 @@ var Information_Form = [
         descPhraseEn: "max length of letters equal 5000",
         maxchar: 5000,
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         //"state": "disabled"
       },
       {
@@ -678,6 +746,9 @@ var Information_Form = [
         descPhraseEn: "max length of letters equal 5000",
         maxchar: 5000,
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         // security: {
         //   groups: [
         //     "VRO_E",
@@ -704,6 +775,8 @@ var Information_Form = [
             { display: "medium", value: "medium" },
             { display: "large", value: "large" },
           ],
+        }, security: {
+          groups: [ "EPMO", "System Admin Group"],
         },
       },
       {
@@ -718,6 +791,8 @@ var Information_Form = [
             { display: "medium", value: "medium" },
             { display: "high", value: "high" },
           ],
+        }, security: {
+          groups: [ "EPMO", "System Admin Group"],
         },
       },
       {
@@ -729,6 +804,9 @@ var Information_Form = [
         descPhraseEn: "max length of letters equal 255",
         maxchar: 255,
         disableOnWfTaskStage : "S05,S09",
+         security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       {
         InternalName: "IsZeroBudgetProject",
@@ -747,7 +825,9 @@ var Information_Form = [
         toggleValues: [
           { value: 'yes', fields: [] },
           { value: 'no', fields: ['FundingSection','TenderSection','BudgetSection','Delivrables','Milestones'] },
-        ],
+        ], security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
 
       // {
@@ -952,7 +1032,10 @@ var Information_Form = [
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
         descPhraseEn: "max length of letters equal 255",
         maxchar: 255,
-        disableOnWfTaskStage : "S05,S09",
+        disableOnWfTaskStage : "S05,S09", 
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       {
         InternalName: "FundingStatus",
@@ -967,6 +1050,8 @@ var Information_Form = [
             { display: "partiallyfunded", value: "partiallyfunded" },
             { display: "zero", value: "zero" },
           ],
+        }, security: {
+          groups: [ "EPMO", "System Admin Group"],
         },
       },
     ],
@@ -998,7 +1083,10 @@ var Information_Form = [
         InternalName: "BudgetItem",
         DisplayName: "البند المرتبط",
         DisplayNameEn: "Budget Item",
-        type: "string",
+        type: "string", 
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         // dynamic: "mainfield", //controls others data
         // //from other list:
         // source: "Budget Items",
@@ -1019,7 +1107,10 @@ var Information_Form = [
         // "state": "disabled",
         dynamic: "BudgetItem", //being controlled by main field
         numberOfDigits: "15",
-        resetElement:["ContractualEngagements","ExpensesDate","RemainingCost"]
+        resetElement:["ContractualEngagements","ExpensesDate","RemainingCost"],
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
 
       // {
@@ -1063,6 +1154,9 @@ var Information_Form = [
         // state: "disabled",
         numberOfDigits: "15",
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       {
         InternalName: "ActualBudget",
@@ -1075,7 +1169,10 @@ var Information_Form = [
         descPhraseAr: "الحقل مطلوب لادخال المخرجات والمعالم",
         descPhraseEn: "Filed is required to add milestones and Deliverables", 
         numberOfDigits: "15",
-        resetElement:["ContractualEngagements","ExpensesDate","RemainingCost"]
+        resetElement:["ContractualEngagements","ExpensesDate","RemainingCost"],
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       // {
       //     "InternalName": "Cost4",
@@ -1124,6 +1221,9 @@ var Information_Form = [
         disableOnWfTaskStage : "S05,S09",
         descPhraseAr: "يجب ان تكون اقل من او يساوي التكلفة الفعلية او التكلفة",
         descPhraseEn: "should be less than or equal Actual Budget or Amount",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         // "state": "disabled"
       },
       {
@@ -1132,6 +1232,9 @@ var Information_Form = [
         DisplayNameEn: "Engagement Percentage",
         type: "floatpercentage",
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         // "state": "disabled"
       },
       {
@@ -1144,6 +1247,9 @@ var Information_Form = [
         max:"ActualBudget",
         descPhraseAr: "يجب ان تكون اقل من او يساوي التكلفة الفعلية او التكلفة",
         descPhraseEn: "should be less than or equal Actual Budget or Amount",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         // "state": "disabled"
       },
       {
@@ -1156,6 +1262,9 @@ var Information_Form = [
         max:"ActualBudget",
         descPhraseAr: "يجب ان تكون اقل من او يساوي التكلفة الفعلية او التكلفة",
         descPhraseEn: "should be less than or equal Actual Budget or Amount",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
 
         // "state": "disabled"
       },
@@ -1166,6 +1275,9 @@ var Information_Form = [
         type: "floatpercentage",
         numberOfDigits: "15",
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
 
         // "state": "disabled"
       },
@@ -1188,6 +1300,9 @@ var Information_Form = [
             { display: "nofinance", value: "nofinance" },
             { display: "externalfinance", value: "externalfinance" },
           ],
+        },
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
         },
         // security: {
         //   groups: [
@@ -1227,6 +1342,9 @@ var Information_Form = [
         requireOnWfTaskStage: "S05",
         disableOnWfTaskStage : "S09",
         Errmsgkey:"btwndatepattern",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       {
         InternalName: "ActualOfferingDate",
@@ -1242,6 +1360,9 @@ var Information_Form = [
         enableOnWfTaskStage: "S05",
         requireOnWfTaskStage: "S05",
         disableOnWfTaskStage : "S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       {
         InternalName: "AwardDate",
@@ -1256,6 +1377,9 @@ var Information_Form = [
         requireOnWfTaskStage: "S05",
         disableOnWfTaskStage : "S09",
         Errmsgkey:'btwndatepattern',
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       {
         InternalName: "ContractualDate",
@@ -1270,6 +1394,9 @@ var Information_Form = [
         requireOnWfTaskStage: "S05",
         disableOnWfTaskStage : "S09",
         Errmsgkey:'btwndatepattern',
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       {
         InternalName: 'ApprovedBrochure',
@@ -1279,6 +1406,9 @@ var Information_Form = [
         // withAddBtn: 'true',
         // InternalName: 'getfile',
         docPurpose: "Approved_RFP",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         // hideOnWfTaskStage : "S09,S05",
           
       },
@@ -1299,6 +1429,9 @@ var Information_Form = [
         requiredValues: [
           { value: "linked", fields: ["ActualBudget"] }, //we can put more than 1  field
         ],
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
     ],
   },
@@ -1341,6 +1474,9 @@ var Information_Form = [
         type: "picker",
         validation: "required",
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         // security: {
         //   groups: [
         //     "VRO_E",
@@ -1360,6 +1496,9 @@ var Information_Form = [
         type: "picker",
         validation: "required",
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       // {
 
@@ -1377,6 +1516,9 @@ var Information_Form = [
         type: "picker",
         validation: "required",
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         // security: {
         //   groups: [
         //     "VRO_E",
@@ -1459,6 +1601,9 @@ var Information_Form = [
         Dispfieldkey: "Name",
         valfieldkey: "Title",
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         //"state": "disabled"
       },
       {
@@ -1470,6 +1615,9 @@ var Information_Form = [
         disableOnWfTaskStage : "S05,S09",
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         // type: 'string',
         //"state": "disabled"
       },
@@ -1533,6 +1681,9 @@ var Information_Form = [
         withletters: true,
         Errmsgkey: "withletterpattern",
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       {
         InternalName: 'Description',
@@ -1543,6 +1694,9 @@ var Information_Form = [
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       // {
       //     "InternalName": "Weight",
@@ -1566,6 +1720,9 @@ var Information_Form = [
         disableOnWfTaskStage : "S05,S09",
         descPhraseAr: "من التكلفة",
         descPhraseEn: " From Budget", 
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       {
         InternalName: 'Amount',
@@ -1580,6 +1737,9 @@ var Information_Form = [
         disableOnWfTaskStage : "S05,S09",
         descPhraseAr: "من التكلفة",
         descPhraseEn: " From Budget", 
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       // {
       //   "InternalName": "Status",
@@ -1621,6 +1781,9 @@ var Information_Form = [
         validation: 'required',
         disableOnWfTaskStage : "S05,S09",
         Errmsgkey:'btwndatepattern',
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       // {
       //     "InternalName": "SupplyDate",
@@ -1681,6 +1844,9 @@ var Information_Form = [
             },
           ],
         },
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       {
         InternalName: 'DeliveredDate',
@@ -1694,6 +1860,9 @@ var Information_Form = [
         max: 'today',
         Errmsgkey: 'cancelationdatepattern',
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         // "validation": "required",
       },
       {
@@ -1705,6 +1874,9 @@ var Information_Form = [
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       {
         InternalName: 'Comments',
@@ -1715,6 +1887,9 @@ var Information_Form = [
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       // {
       //   "InternalName": "RelatedInitiativeDeliverable",
@@ -1738,6 +1913,9 @@ var Information_Form = [
         Dispfieldkey: 'Name', //display in dropdown
         valfieldkey: 'Title', // value in dropdown
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       {
         InternalName: 'ShowInProgramReport',
@@ -1756,6 +1934,8 @@ var Information_Form = [
               value: 'no',
             },
           ],
+        },        security: {
+          groups: [ "EPMO", "System Admin Group"],
         },
 
       },
@@ -1840,6 +2020,9 @@ var Information_Form = [
         Errmsgkey: "withletterpatteWrn",
         validation: 'required',
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       // {
       //   InternalName: 'Weight',
@@ -1868,7 +2051,10 @@ var Information_Form = [
         validation: 'required',
         disableOnWfTaskStage : "S05,S09",
         descPhraseAr: "من التكلفة",
-        descPhraseEn: " From Budget", 
+        descPhraseEn: " From Budget",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        }, 
       },
       {
         InternalName: 'Amount',
@@ -1883,6 +2069,9 @@ var Information_Form = [
         disableOnWfTaskStage : "S05,S09",
         descPhraseAr: "من التكلفة",
         descPhraseEn: " From Budget", 
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       {
         InternalName: 'PlannedDate',
@@ -1895,6 +2084,9 @@ var Information_Form = [
         endinternalname: 'BaselineFinishDate',
         disableOnWfTaskStage : "S05,S09",
         Errmsgkey:'btwndatepattern',
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
 
       //   {
@@ -1929,6 +2121,9 @@ var Information_Form = [
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       {
         InternalName: 'Description',
@@ -1939,6 +2134,9 @@ var Information_Form = [
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       // {
       //   InternalName: 'Status',
@@ -1967,6 +2165,9 @@ var Information_Form = [
         "Dispfieldkey": 'Name', //display in dropdown
         "valfieldkey": "Title",// value in dropdown
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       {
         InternalName: 'Delivered',
@@ -1977,6 +2178,9 @@ var Information_Form = [
         targetfieldvalue: 'completed',
         // validation: 'required',
         type: 'dropdownValues',
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
         disableOnWfTaskStage : "S05,S09",
         options: {
           choices: [
@@ -1997,6 +2201,9 @@ var Information_Form = [
         max: 'today',
         Errmsgkey: 'cancelationdatepattern',
         disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ "EPMO", "System Admin Group"],
+        },
       },
       {
         InternalName: 'ShowInProgramReport',
@@ -2015,6 +2222,8 @@ var Information_Form = [
               value: 'no',
             },
           ],
+        },        security: {
+          groups: [ "EPMO", "System Admin Group"],
         },
       },
       // {
@@ -2027,7 +2236,7 @@ var Information_Form = [
     ],
   },
   {
-    hideOnWfTaskStage  : "S05;S09",
+    // hideOnWfTaskStage  : "S05;S09",
     label: "الوثائق الداعمة",
     labelEn: "Supporting Documents",
     description: "التفاصيل",
@@ -2042,7 +2251,7 @@ var Information_Form = [
         type: "file",
         withAddBtn: "true",
         // disableOnWfTaskStage : "S05,S09",
-        hideOnWfTaskStage  : "S05;S09",
+        // hideOnWfTaskStage  : "S05;S09",
       },
     ],
   },
