@@ -22,6 +22,12 @@ var Information_Form = [
         // disableOnWfTaskStage : "S05,S09",
         security: {
           groups: [ "EPMO", "System Admin Group"],
+          // groups: [], // should be empty array if will use notAllowTo
+          // notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+          //   {group:"Project Managers for Project Web App",form:["origin"]},
+          //   {group:"EPMO",form:["origin","changerequest"]}
+
+          // ]
         },
       },
       {
@@ -41,6 +47,10 @@ var Information_Form = [
         // "className":"autofill"
         security: {
           groups: [ "EPMO", "System Admin Group"],
+          // groups: [],
+          // notAllowTo:[
+          //   {group:"Project Managers for Project Web App",form:["origin",'changerequest']}
+          // ]
         },
       },
       {
@@ -55,6 +65,10 @@ var Information_Form = [
         disableOnWfTaskStage : "S05,S09",
         security: {
           groups: [ "EPMO", "System Admin Group"],
+          // groups: [],
+          // notAllowTo:[
+          //   {group:"Project Managers for Project Web App",form:['changerequest']}
+          // ]
         },
         // security: {
         //   groups: [

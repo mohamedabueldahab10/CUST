@@ -1135,7 +1135,7 @@ window.userCalls = {
         ];
         Read_Access = [
           "initiativeissues",
-          "initiativerisks",   
+          "initiativerisks",
           "issues",
           "risks",
           "goalstrategy",
@@ -1197,7 +1197,7 @@ window.userCalls = {
         ]
         Read_Access = [
           "initiativeissues",
-          "initiativerisks",   
+          "initiativerisks",
           "issues",
           "risks",
           "goalstrategy",
@@ -3089,7 +3089,7 @@ window.userCalls = {
           "initiativesmain.aspx",
           "projecthome.aspx",
           "initiativeissues",
-          "initiativerisks",   
+          "initiativerisks",
           "issues",
           "risks",
           "home.aspx"
@@ -6568,6 +6568,35 @@ window.userCalls = {
               $(this).find("*").attr("disabled", true);
             }
           }
+
+ 
+          // not allow grp
+          var notAllowDataGroups = $(this).attr("data-notallowforgroups");
+          var notAllowDataGroupsArr = notAllowDataGroups ? eval(notAllowDataGroups) : [];
+          if (notAllowDataGroupsArr.length) {
+            notAllowDataGroupsArr.forEach(el => {
+              if (currentUserGroupArr.includes(el.group)) {
+                if (USERlistkey == 'changerequest') {
+                  if (el.form.includes('changerequest')) {
+                    if (!isAdmin) {
+
+                      $(this).find("*").attr("disabled", true);
+                    }
+                  }
+                } else {
+                  if (el.form.includes('origin')) {
+                    if (!isAdmin) {
+
+                      $(this).find("*").attr("disabled", true);
+                    }
+                  }
+                }
+              }
+            })
+          }
+          console.log(notAllowDataGroupsArr, "notAllowDataGroupsArr notAllowDataGroupsArr")
+          //
+
           // if ((GroupItem[0].groupsName != $(this).attr('data-groups')) && ($(this).attr("data-groups") != "")) {
           //     $(this).find('*').attr('disabled', true);
           // };

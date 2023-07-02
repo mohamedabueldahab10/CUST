@@ -262,6 +262,7 @@ window.ListInfo = {
 
         //Handle security
         var groups = [],
+          notAllowForGroups = [],  //notAllowForGroups  to make the field disable if  not allow for current group and on current form like groups
           targetList = "",
           sectionType = "",
           rendersection = true;
@@ -280,6 +281,23 @@ window.ListInfo = {
               }
             }
             groups = groups.join(" ");
+          }
+          ///
+          if (item.security.notAllowTo && item.security.notAllowTo.length > 0) {
+
+            for (var i = 0; i < item.security.notAllowTo.length; i++) {
+              notAllowForGroups.push(item.security.notAllowTo[i])
+            }
+
+            // notAllowForGroups = notAllowForGroups.join(" ");
+
+            notAllowForGroups = 'data-notallowforgroups="' +
+              JSON.stringify(notAllowForGroups).replaceAll(
+                `"`,
+                `'`
+              ) +
+              '"'
+
           }
         }
 
@@ -300,7 +318,7 @@ window.ListInfo = {
           sectionType +
           ' data-groups="' +
           groups +
-          '">' +
+          '" ' + notAllowForGroups + '>' +
           '<div class="form-row">' +
           '<div class="col-lg-3 col-md-4 mb-4">' +
           "<h3 class='sideTitle'>" +
@@ -1891,6 +1909,7 @@ window.ListInfo = {
 
     var htmlBody = "";
     var groups = [],
+      notAllowForGroups = [], //notAllowForGroups  to make the field disable if  not allow for current group and on current form
       hidestagesIDs = "",
       isWfhidestagesIDs = "",
       isWfshowstagesIDs = "",
@@ -1946,6 +1965,22 @@ window.ListInfo = {
         }
         groups = groups.join(",");
       }
+
+      //
+      if (element.security.notAllowTo && element.security.notAllowTo.length > 0) {
+
+        for (var i = 0; i < element.security.notAllowTo.length; i++) {
+          notAllowForGroups.push(element.security.notAllowTo[i])
+        }
+
+        notAllowForGroups = 'data-notallowforgroups="' +
+          JSON.stringify(notAllowForGroups).replaceAll(
+            `"`,
+            `'`
+          ) +
+          '"'
+      }
+
     }
 
     if (element.hasOwnProperty("requireOnWfTaskStage") && USERisWF) {
@@ -2149,7 +2184,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '       data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -2221,7 +2256,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           ' data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -2298,7 +2333,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" style="display:' +
+          '"' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -2366,7 +2401,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '       data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -2436,7 +2471,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -2505,7 +2540,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -2577,7 +2612,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -2661,7 +2696,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -2774,7 +2809,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -2852,7 +2887,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -2929,7 +2964,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -3036,7 +3071,7 @@ window.ListInfo = {
                 isWfenablestagesIDs +
                 '        data-groups="' +
                 groups +
-                '" style="display:' +
+                '" ' + notAllowForGroups + ' style="display:' +
                 element.display +
                 '">' +
                 '<label for="' +
@@ -3120,7 +3155,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -3210,7 +3245,7 @@ window.ListInfo = {
                 isWfenablestagesIDs +
                 '        data-groups="' +
                 groups +
-                '" style="display:' +
+                '" ' + notAllowForGroups + ' style="display:' +
                 element.display +
                 '">' +
                 '<label for="' +
@@ -3290,7 +3325,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -3358,7 +3393,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -3460,7 +3495,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -3573,7 +3608,7 @@ window.ListInfo = {
                 isWfenablestagesIDs +
                 '        data-groups="' +
                 groups +
-                '" style="display:' +
+                '" ' + notAllowForGroups + ' style="display:' +
                 element.display +
                 '">' +
                 '<label for="' +
@@ -3684,7 +3719,7 @@ window.ListInfo = {
                 isWfenablestagesIDs +
                 '        data-groups="' +
                 groups +
-                '" style="display:' +
+                '" ' + notAllowForGroups + ' style="display:' +
                 element.display +
                 '">' +
                 '<label for="' +
@@ -3765,7 +3800,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -3865,7 +3900,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -3935,7 +3970,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -4005,7 +4040,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -4151,7 +4186,7 @@ window.ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -4320,7 +4355,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           "<label " +
@@ -4390,7 +4425,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           "<label " +
@@ -4477,7 +4512,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -4547,7 +4582,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -4861,7 +4896,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -5063,7 +5098,7 @@ window.ListInfo = {
                       isWfenablestagesIDs +
                       '        data-groups="' +
                       groups +
-                      '" style="display:' +
+                      '" ' + notAllowForGroups + ' style="display:' +
                       element.display +
                       '">' +
                       '<label for="' +
@@ -5208,7 +5243,7 @@ window.ListInfo = {
                 isWfenablestagesIDs +
                 '        data-groups="' +
                 groups +
-                '" style="display:' +
+                '" ' + notAllowForGroups + ' style="display:' +
                 element.display +
                 '">' +
                 '<label for="' +
@@ -5422,7 +5457,7 @@ window.ListInfo = {
                       isWfenablestagesIDs +
                       '        data-groups="' +
                       groups +
-                      '" style="display:' +
+                      '" ' + notAllowForGroups + ' style="display:' +
                       element.display +
                       '">' +
                       '<label for="' +
@@ -5617,7 +5652,7 @@ window.ListInfo = {
                 isWfenablestagesIDs +
                 '        data-groups="' +
                 groups +
-                '" style="display:' +
+                '" ' + notAllowForGroups + ' style="display:' +
                 element.display +
                 '">' +
                 '<label for="' +
@@ -5794,7 +5829,7 @@ window.ListInfo = {
                 isWfenablestagesIDs +
                 '        data-groups="' +
                 groups +
-                '" style="display:' +
+                '" ' + notAllowForGroups + ' style="display:' +
                 element.display +
                 '">' +
                 '<label for="' +
@@ -6194,7 +6229,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -6362,7 +6397,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '    data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -6518,7 +6553,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '    data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -6619,7 +6654,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -6697,7 +6732,7 @@ window.ListInfo = {
             isWfenablestagesIDs +
             '       data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             "<a " +
@@ -6762,7 +6797,7 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" style="display:' +
+          '" ' + notAllowForGroups + ' style="display:' +
           element.display +
           '">' +
           '<label  class="attlabel" ' +
@@ -6934,10 +6969,10 @@ window.ListInfo = {
           }
           // check if there is Name in master section Benefits
 
-          if($(this).closest("[data-target_list]").data('target_list') == "Benefits"){
-            if($(this).closest("[data-target_list]").find(".Details-Item").last().hasClass("firstMasterEmpty")){
+          if ($(this).closest("[data-target_list]").data('target_list') == "Benefits") {
+            if ($(this).closest("[data-target_list]").find(".Details-Item").last().hasClass("firstMasterEmpty")) {
               console.log("first section")
-            }else{
+            } else {
               nameValueOfMasterItem = $(this).closest("[data-target_list]").find(".Details-Item").last().find('input#Name').val() ? true : false
             }
             if (!nameValueOfMasterItem) {
@@ -8137,6 +8172,7 @@ window.View_ListInfo = {
         // console.log('Start processing ' + Label + ' subFields...');
         //Handle security
         var groups = [],
+          notAllowForGroups = [],
           targetList = "",
           sectionType = "",
           rendersection = true;
@@ -8152,6 +8188,23 @@ window.View_ListInfo = {
               }
             }
             groups = groups.join(" ");
+          }
+
+          if (item.security.notAllowTo && item.security.notAllowTo.length > 0) {
+
+            for (var i = 0; i < item.security.notAllowTo.length; i++) {
+              notAllowForGroups.push(item.security.notAllowTo[i])
+            }
+
+            // notAllowForGroups = notAllowForGroups.join(" ");
+
+            notAllowForGroups = 'data-notallowforgroups="' +
+              JSON.stringify(notAllowForGroups).replaceAll(
+                `"`,
+                `'`
+              ) +
+              '"'
+
           }
         }
         if (item.hasOwnProperty("sectiontype")) {
@@ -8244,7 +8297,7 @@ window.View_ListInfo = {
 
         if (item.sectiontype == "master") {
 
-          printHtml += `<div class="py-5 border-bottom section-container ViewPrint_Form printFooterContainer page-avoid" ${targetList} ' ' ${sectionType} ' data-groups="${groups}" style="display:none">
+          printHtml += `<div class="py-5 border-bottom section-container ViewPrint_Form printFooterContainer page-avoid" ${targetList} ' ' ${sectionType} ' data-groups="${groups}" ${notAllowForGroups} style="display:none">
                               <p class="printDescription">${Description
               ? Label + " | " + Description
               : Label
@@ -8255,7 +8308,7 @@ window.View_ListInfo = {
                           </div>
                           `;
         } else {
-          printHtml += `<div class="py-5 border-bottom section-container ViewPrint_Form printBodyContainer page-avoid" ${targetList} ' ' ${sectionType} ' data-groups="${groups}" style="display:none">
+          printHtml += `<div class="py-5 border-bottom section-container ViewPrint_Form printBodyContainer page-avoid" ${targetList} ' ' ${sectionType} ' data-groups="${groups}" ${notAllowForGroups} style="display:none">
                               <p class="printDescription">${Description
               ? Label + " | " + Description
               : Label
@@ -8275,7 +8328,7 @@ window.View_ListInfo = {
           sectionType +
           ' data-groups="' +
           groups +
-          '">' +
+          '" ' + notAllowForGroups + '>' +
           '<div class="form-row">' +
           '<div class="col-lg-3 col-md-4 mb-4">' +
           "<h3 class='sideTitle'>" +
@@ -8468,6 +8521,7 @@ window.View_ListInfo = {
     //
     var htmlBody = "";
     var groups = [],
+      notAllowForGroups = [], //notAllowForGroups  to make the field disable if  not allow for current group and on current form
       thistip = "",
       hidestagesIDs = "",
       showstagesIDs = "",
@@ -8500,7 +8554,28 @@ window.View_ListInfo = {
         }
         groups = groups.join(" ");
       }
+
+      if (element.security.notAllowTo && element.security.notAllowTo.length > 0) {
+
+        for (var i = 0; i < element.security.notAllowTo.length; i++) {
+          notAllowForGroups.push(element.security.notAllowTo[i])
+        }
+
+        notAllowForGroups = 'data-notallowforgroups="' +
+          JSON.stringify(notAllowForGroups).replaceAll(
+            `"`,
+            `'`
+          ) +
+          '"'
+        // notAllowForGroups = notAllowForGroups.join(",");
+
+      }
+
+
+
     }
+
+
 
     if (element.hasOwnProperty("requireOnWfTaskStage") && USERisWF) {
       isWfhidestagesIDs =
@@ -8600,7 +8675,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -8648,7 +8723,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             ' data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -8713,7 +8788,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -8758,7 +8833,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '    data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -8810,7 +8885,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -8857,7 +8932,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -8904,7 +8979,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -8953,7 +9028,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9000,7 +9075,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9050,7 +9125,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9097,7 +9172,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9144,7 +9219,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9214,7 +9289,7 @@ window.View_ListInfo = {
                     isWfenablestagesIDs +
                     '        data-groups="' +
                     groups +
-                    '" style="display:' +
+                    '" ' + notAllowForGroups + ' style="display:' +
                     element.display +
                     '">' +
                     '<label for="' +
@@ -9269,7 +9344,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9315,7 +9390,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9362,7 +9437,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9410,7 +9485,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9459,7 +9534,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9509,7 +9584,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9556,7 +9631,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9603,7 +9678,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '  data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9652,7 +9727,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9701,7 +9776,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9748,7 +9823,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9795,7 +9870,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9841,7 +9916,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '"  style="display:' +
+            '" ' + notAllowForGroups + '  style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9908,7 +9983,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '"  style="display:' +
+            '" ' + notAllowForGroups + '  style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9969,7 +10044,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '    data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -10025,7 +10100,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -10073,7 +10148,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -10133,7 +10208,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -10183,7 +10258,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -10210,7 +10285,7 @@ window.View_ListInfo = {
             thistip +
             ' data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -10262,7 +10337,7 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '       data-groups="' +
             groups +
-            '" style="display:' +
+            '" ' + notAllowForGroups + ' style="display:' +
             element.display +
             '">' +
             "<a " +
