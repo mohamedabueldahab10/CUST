@@ -7130,7 +7130,7 @@ span.statuscolorstat28 {
 }
 
 
-/* .crHighlight:before {
+.crHighlight:before {
     content: "◈";
     width: 0px;
     height: 0px;
@@ -7142,4 +7142,4 @@ span.statuscolorstat28 {
     display: flex;
     justify-content: center;
     align-items: center;
-} */
+}

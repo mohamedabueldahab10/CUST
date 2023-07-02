@@ -100,7 +100,6 @@ window.CrModeFunctionality = {
       })
     });
 
-    console.log(newJSON, "newJSONnewJSONnewJSON")
 
 
     var toggleSectionName;
@@ -1149,7 +1148,7 @@ window.CrItemDataRequest = {
   },
   // The main Initialization function
   init: function () {
-    
+
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(CrRelatedList);
     CrItemDataRequest.g.oListItem = oList.getItemById(RID);
@@ -1827,6 +1826,7 @@ window.CrItemDataRenderFromJSON_View = {
     var originalValue = "";
     var newValue = "";
     var value = "";
+    var $element;
 
     changeRequestBody.forEach(function (o, i, a) {
 
@@ -1834,14 +1834,20 @@ window.CrItemDataRenderFromJSON_View = {
 
 
         $this = $(".cr-related-item-section #" + o.InternalName);
+
+        $element = $(".cr-related-item-section:not([data-target_list]) #" + o.InternalName); // to fix the tooltip to be only for form not master
         fieldType = $this.attr("type");
         value = o.value ? o.value : o.originalValue;
         isOriginalValue = value == originalValue ? true : false;
         if (o.isChanged) {
-          $this.parent().addClass("crHighlight");
-          $this.parent().attr("data-toggle", "tooltip");
-          $this.parent().attr("data-placement", isArabic ? "right" : "left");
-          $this.parent().attr("title", o.originalValue);
+          // $this.parent().addClass("crHighlight");
+          // $this.parent().attr("data-toggle", "tooltip");
+          // $this.parent().attr("data-placement", isArabic ? "right" : "left");
+          // $this.parent().attr("title", o.originalValue);
+          $element.parent().addClass("crHighlight");
+          $element.parent().attr("data-toggle", "tooltip");
+          $element.parent().attr("data-placement", isArabic ? "right" : "left");
+          $element.parent().attr("title", o.originalValue);
         }
 
         switch (o.type) {
@@ -2405,32 +2411,69 @@ window.CrSetChangeBody = {
                 HTMLContent ? (o.value = HTMLContent) : "";
               } else o.value = $this.val();
 
-              if (o.originalValue && o.value) {
+              if (o.value) {
 
-                // if(o.type == "datetime"){
-                //   var dateval = $this.val()
-                //   debugger
-                //   // var ydate = !dateval
-                //   //   ? "":
-                //   // var dateval = $this.val().replace("-", "/");
-                //   // var ydate = !dateval
-                //   //   ? ""
-                //   //   : [dateval.slice(5, 10), dateval.slice(0, 4)]
-                //   //     .join("/")
-                //   //     .replace("-", "/");
-                //   // if (dateval){
-                //   //   console.log(ydate,"yyyyyyyyyyyyyyydate")
-                //   //   debugger
-                //   // }
-                // }else{
+  
+                if (o.type == "datetime" || o.type == "date") {
+                  var dateval = $this.val()
+                  var datetouse2 = ""
+                  if (o.originalValue) {
+                    var local = o.originalValue ? o.originalValue.getTime() : "";
+                    var offset = o.originalValue ? o.originalValue.getTimezoneOffset() * (60 * 1000) : "";
+                    var utc = new Date(local + offset);
+                    var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+                    var datetouse = riyadh
+                      .toLocaleString("en-US")
+                      .split(",")[0]
+                      .split("/");
+                    datetouse[0] =
+                      datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
+                    datetouse[1] =
+                      datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
+
+                    var datetouse2 = datetouse[0] + '/' + datetouse[1] + '/' + datetouse[2]
+                  }
+ 
+                  o.isChanged = o.value != datetouse2;
+
+                } else if (o.type == "datetimetoparent") {
+                  var dateval = $this.val()
+
+                  var datetouse2 = ""
+                  if (o.originalValue) {
+                    var local = o.originalValue ? o.originalValue.getTime() : "";
+                    var offset = o.originalValue ? o.originalValue.getTimezoneOffset() * (60 * 1000) : "";
+                    var utc = new Date(local + offset);
+                    var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+                    var datetouse = riyadh
+                      .toLocaleString("en-US")
+                      .split(",")[0]
+                      .split("/");
+                    datetouse[0] =
+                      datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
+                    datetouse[1] =
+                      datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
+
+                    datetouse2 = datetouse[2] + '-' + datetouse[0] + '-' + datetouse[1]
+                  }
+                  o.isChanged = o.value != datetouse2;
+
+                } else if (o.type == "float") {
+                  var floatval = $this.val()
+                  if (floatval) {
+                    floatval = floatval.replaceAll(',', '');
+                  }
+                  o.isChanged = floatval != o.originalValue;
+                } else {
                   o.isChanged = o.value != o.originalValue;
-                //}
+                }
 
               }
             }
           })
         } else {
           if (!element.hasOwnProperty("sectiontype")) {
+            
             element.forEach(item => {
               if (item.InternalName == o.InternalName) {
                 o.DisplayName = item.DisplayName || ""
@@ -2988,7 +3031,6 @@ var CR_Master_Details_Request = {
       $('[data-target_list="' + CurrList + '"] .fieldset-container').html(""); //remove html
     }
     while (listItemEnum.moveNext()) {
-      console.log(CurrList, "CurrListCurrListCurrListCurrListCurrList")
 
       onLoadDataInMaster = true
 
@@ -4776,14 +4818,12 @@ window.MasterDetails_Request_View = {
 
       }
 
-      console.log(items, "items items")
 
 
       $(`.cr-related-item-section[data-target_list="${el.listName}"] .Details-Item.EditItem[data-id=${el.masterSectionId}]`).find(`#${el.InternalName}`).text(value)
 
     })
 
-    console.log(changeMasterData, "changeMasterDatachangeMasterData")
 
   },
   onError: function (sender, args) {
