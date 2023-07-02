@@ -42,21 +42,21 @@ var Information_Form = [
               display: 'vision',
               value: 'vision',
               roles: [
-                'LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'
+                'LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','Administrator'
               ],
             },
             {
               display: 'strategically',
               value: 'strategically',
               roles: [
-                'LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'
+                'LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','Administrator'
               ],
             },
             {
               display: 'lms',
               value: 'lms',
               roles: [
-                'LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'
+                'LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','Administrator'
               ],
             },
             // { display: 'others', value: 'others' },
@@ -588,7 +588,6 @@ var Information_Form = [
         DisplayNameEn: 'Start Date',
         type: 'datetime',
         max: 'FinishDate',
-        Errmsgkey:'fromdatepattern',
         validation: 'required',
         //
         maxOnChild: true,
@@ -607,7 +606,6 @@ var Information_Form = [
         DisplayNameEn: 'Finish Date',
         type: 'datetime',
         min: 'StartDate',
-        Errmsgkey:'todatepattern',
         validation: 'required',
         //
         maxOnChild: true,
@@ -683,7 +681,6 @@ var Information_Form = [
         endinternalname: 'FinishDate',
         enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
-        Errmsgkey:'btwndatepattern',
       },
       {
         InternalName: 'DependencyCost',
@@ -918,7 +915,6 @@ var Information_Form = [
         DisplayNameEn: 'Planned Completed Date',
         // "type": "datetime",
         type: 'datetimetoparent',
-        Errmsgkey:'btwndatepattern',
         listname: 'Initiatives',
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
@@ -1015,7 +1011,6 @@ var Information_Form = [
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
         max: 'today',
-        Errmsgkey: 'cancelationdatepattern',
       },
       //   {
       //     InternalName: 'Completed',
@@ -1089,7 +1084,6 @@ var Information_Form = [
         DisplayName: 'تاريخ الاكتمال المخطط',
         // "type": "datetime",
         type: 'datetimetoparent',
-        Errmsgkey:'btwndatepattern',
         listname: 'Initiatives',
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
@@ -1187,7 +1181,6 @@ var Information_Form = [
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
         max: 'today',
-        Errmsgkey: 'cancelationdatepattern',
       },
       {
         InternalName: 'RelatedInitiativeDeliverable',

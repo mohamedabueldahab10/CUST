@@ -2196,6 +2196,8 @@ window.userCalls = {
           "communicationplans",
           "contracts",
           "changerequest",
+          "sos",
+          "mainkpi"
         ];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
@@ -2223,6 +2225,8 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           "contracts",
+          "sos",
+          "mainkpi"
           //"changerequest",
         ];
         Delete_Access = [
@@ -2248,7 +2252,9 @@ window.userCalls = {
           "coc",
           "stakeholders",
           "communicationplans",
-          "contracts"
+          "contracts",
+          "sos",
+          "mainkpi"
         ];
         CreateChangeRequest_Access = [
           "initiatives",

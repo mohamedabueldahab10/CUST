@@ -734,7 +734,7 @@ window.Edit_Data_Request = {
 
 
     // to get the value of weight in delivrable and milestone correct in edit
-    
+
     if (MasterDetailsArrayRequest.length == 0) { // to avoid the error if there is master details like project ana initiative
       $("[data-weightvalue]").each(function () {
 
@@ -3290,7 +3290,7 @@ var Master_Details_Request = {
 
 
     if (listkey == "projects" || listkey == "initiatives") {
-      
+
       if (getMasterFilesArr.length && MasterDetailsArrayRequest.length == 0 && !callMasterFile) {
 
         callMasterFile = true
@@ -3349,6 +3349,7 @@ window.Department_Sector_Info = {
     }
 
 
+    debugger
 
     $("#SubSector").prop("disabled", false);
     $("#SubSector").html(
@@ -3372,6 +3373,13 @@ window.Department_Sector_Info = {
       $("#Section").prop("disabled", false);
     });
     changeResources();
+
+    // to apply the security of fields in subsector 
+    if (USERisForm) {
+      window.UsercheckFieldsHtml = setInterval(function () {
+        userCalls.g.checkFieldsHtml();
+      }, 333);
+    }
   },
   onError: function (sender, args) {
     console.log(
@@ -4472,6 +4480,58 @@ window.Delete_Data_Submit = {
   },
 };
 
+
+window.Delete_Item_Via_Api = {
+  init: function () {
+    debugger
+    var urlHandlerToDelete = ''
+    if (listkey == 'projects' && PCODE) {
+      urlHandlerToDelete = `${APIURL}/general/deleteprojectbyprojectcode?projectCode=${PCODE}`
+    } else if (listkey == 'initiatives' && ICODE) {
+      urlHandlerToDelete = `${APIURL}/general/deleteinitiativeitembyinitiativecode?initiativeCode=${ICODE}`
+    }
+    // else if(listkey == 'strategicpartnerships' && STCODE){
+
+    // }
+
+    $.ajax({
+      url: urlHandlerToDelete,
+      method: "POST",
+      contentType: "application/json;odata=verbose",
+      data: '',
+      headers: {
+        Accept: "application/json; odata=verbose",
+        // Authorization: `Bearer ${token}`,
+        "X-HTTP-Method": "POST",
+        "if-Match": "*"
+      },
+      success: function (data) {
+        $("button.btn-delete").removeClass("loader-action");
+        $("button.btn-delete").addClass("loader-action-success");
+        if (filesUrls.length) {
+          for (let i = 0; i < filesUrls.length; i++) {
+            deleteAllFileFromDoc.init(filesUrls[i].url)
+          }
+        } else {
+
+          window.location =
+            _spPageContextInfo.webAbsoluteUrl +
+            "/SitePages/Listing.aspx?ListKey=" +
+            listkey;
+
+        }
+      },
+      error: function (err) {
+        console.log("call failed", err);
+        $("button.btn-delete").removeClass("loader-action");
+        $("button.btn-delete").addClass("loader-action-error");
+      },
+    });
+
+
+  }
+}
+
 //main delete
 window.Delete_Item_Submit = {
   init: function () {
@@ -4572,13 +4632,19 @@ window.Delete_Item_Submit = {
         deletetitle = Resources.en["deleteconfirmation"];
       }
 
+
+
       bootbox.addLocale("custom", locale);
       bootbox.confirm({
         message: deletetitle,
         locale: "custom",
         callback: function (result) {
           if (result == true) {
-            Delete_Item_Submit.init();
+            if (listkey == 'projects' || listkey == 'initiatives') {
+              Delete_Item_Via_Api.init();
+            } else {
+              Delete_Item_Submit.init();
+            }
           } else {
             console.log("cancled");
           }

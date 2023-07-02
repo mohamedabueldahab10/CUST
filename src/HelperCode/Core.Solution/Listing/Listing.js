@@ -165,6 +165,7 @@ window.sphttp = {
                   for (var i = 0; i < internalFieldNames.length; i++) {
                     if (internalFieldNames[i] = Listing_Info[i].InternalName) {
                       if (Listing_Info[i].type == "date") {
+                        
                         // var timezone = String(oListItem.get_item(internalFieldNames[i])) || null;
                         // timezone = timezone ? timezone.split(':')[0].split(' ') : null;
                         // timezone = timezone ? timezone[timezone.length - 1] : null;
@@ -758,7 +759,10 @@ window.ListingData = {
                   return el.InternalName === key;
                 });
                 if (Field_In_Use[0].type == 'date' && obj[key] != No_Data) {
+                  
+                  if(obj[key].indexOf('T') > -1){
                   obj[key] = obj[key].slice(0, obj[key].indexOf('T'))
+                  }
                 }
                 var isLinkable = Field_In_Use[0].hasOwnProperty("isLinkable"),
                   isLinkable = isLinkable ? Field_In_Use[0].isLinkable : false;
@@ -956,6 +960,7 @@ window.ListingData = {
                             "</h4>" +
                             "</div>";
                       } else {
+                        
                         var isHTML = USERPCODE && Field_In_Use[0].InternalName == "ProjectCode" ? '' :
                           '<div class="d-inline-flex wordBreak flex-column mx-2  " style="width:20%!important" ' + PrjRelated_Behavior + '>' +
                           // '<h4 class="text-warning">' + obj[key] + '</h4>' +
@@ -3015,7 +3020,7 @@ var Get_ExcelValues = {
       }
     }
 
-    console.log(ExcelRecordsWithID, "ExcelRecordsWithID")
+    
   },
   onError: function (sender, args) {
     console.log(
