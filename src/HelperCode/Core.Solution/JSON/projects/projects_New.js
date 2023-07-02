@@ -1248,6 +1248,7 @@ var Information_Form = [
         DisplayName: "حالة العمل",
         DisplayNameEn: "Working Status",
         type: "dropdownValues",
+         "state": "disabled",
         options: {
           choices: [
             { display: "active", value: "active", selected: 'selected' },
@@ -1255,9 +1256,9 @@ var Information_Form = [
             // { display: "stat13", value: "stat13" },
           ],
         },
-        security: {
-          groups: ["EPMO", "System Admin Group"]
-        },
+        // security: {
+        //   groups: ["EPMO", "System Admin Group"]
+        // },
       }
     ],
   },
