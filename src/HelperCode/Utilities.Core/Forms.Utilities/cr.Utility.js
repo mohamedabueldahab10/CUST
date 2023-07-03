@@ -316,7 +316,7 @@ window.CrModeFunctionality = {
               let notInvokeListiner = $(this).data("notinvokelistiner")
 
               $("[dynamic=" + parentFieldName + "]").each(function () {
-                console.log(parentFieldName, "parentFieldName")
+            
 
                 let affectedFieldName = $(this).attr("id");
                 let listName = $(this).data("listname");
@@ -332,7 +332,7 @@ window.CrModeFunctionality = {
 
 
 
-                // console.log($(this).data("queryFieldValue"), "sssssssa")
+          
                 affectedSelectsInfo.push({
                   affectedFieldName: affectedFieldName,
                   listName: listName,
@@ -369,7 +369,7 @@ window.CrModeFunctionality = {
 
                 // let dataSiblingvalue = $(this).data("siblingvalue")
 
-                // console.log($(this).data("queryFieldValue"), "sssssssa")
+             
                 affectedSelectsInfo.push({
                   affectedFieldName: affectedFieldName,
                   listName: listName,
@@ -844,7 +844,7 @@ window.CrItemDataRequest = {
               : oListItem
                 .get_item("" + $(this).attr("id") + "")
                 .get_lookupValue();
-          console.log('there is a picker hereeeee', pemail);
+       
           $(this).attr("data-email", pemail);
 
           if (pemail != enternameemail)
@@ -979,7 +979,7 @@ window.CrItemDataRequest = {
     ).each(function () {
       window.start = $("#" + $(this).attr("minimumdate"));
       window.end = $(this);
-      console.log(start);
+     
       if (start.val()) end.attr("min", start.val());
       if (end.val()) start.attr("max", end.val());
     });
@@ -992,7 +992,7 @@ window.CrItemDataRequest = {
     });
 
     $(".cr-related-item-section input.number").each(function (event) {
-      console.log("here inside cr")
+   
       // skip for arrow keys
       if (event.which >= 37 && event.which <= 40) return;
       // format number
@@ -1532,7 +1532,7 @@ window.CrItemDataRenderFromJSON_Edit = {
     ).each(function () {
       window.start = $("#" + $(this).attr("minimumdate"));
       window.end = $(this);
-      console.log(start);
+     
       if (start.val()) end.attr("min", start.val());
       if (end.val()) start.attr("max", end.val());
     });
@@ -2332,7 +2332,7 @@ window.CrSetChangeBody = {
       var $this = $(".cr-related-item-section #" + o.InternalName);
       let newJsonValues = jsonValues ? jsonValues : Information_Form;
 
-      console.log(changeRequestBody,"changeRequestBody")
+   
       
 
       // change on it to be validation on multi json values not only for one value
@@ -2974,9 +2974,6 @@ window.CrSetChangeBody = {
 
       if (i == a.length - 1) {
 
-        console.log(changeRequestBodyMaster, "changeRequestBodyMaster")
-        debugger
-
         Data_Submit.set_item("ChangeBodyMaster", JSON.stringify(changeRequestBodyMaster));
       }
 
@@ -3423,7 +3420,7 @@ var CR_Master_Details_Request = {
         $('[data-target_list="' + CurrList + '"] .fieldset-container .NewItem').addClass('firstMasterEmpty')
         $('[data-target_list="' + CurrList + '"] .fieldset-container .NewItem').hide()
       }
-      // console.log($('[data-target_list="' + CurrList + '"] .fieldset-container'),"odddddddddddddddddddddddddddddddd")
+ 
     }
 
 
@@ -3767,7 +3764,7 @@ window.Remove_New_CRMaster = {
         // var indexOfMaster = changeRequestBodyMaster.indexOf(el)
 
         // changeRequestBodyMaster.splice(index,1)
-        // console.log(changeRequestBodyMaster.length,"llllllllllll")
+      
       } else {
         reAssigneBodyMaster.push(el)
       }
@@ -3776,7 +3773,7 @@ window.Remove_New_CRMaster = {
     changeRequestBodyMaster = reAssigneBodyMaster
 
     // $(".cr-related-item-section[data-target_list] .Details-Item.NewItem").each(function () {
-    // 	console.log("Inside New Master Section")
+   
     // 	var CurrList = $(this).closest("[data-target_list]").attr("data-target_list");
     // 	itemIndex = $(this).attr("data-index");
     // })
@@ -3817,8 +3814,7 @@ var arrangeCRMasterDetails = {
     })
 
 
-    console.log(masterDataFormated, " masterDataFormated masterDataFormated after")
-    debugger
+
     if (masterDataFormated.length) {
       masterDataFormatedForMasterField = Array.from(masterDataFormated)
 
@@ -4329,7 +4325,7 @@ var Master_Edit_DataRequest = {
                 // 					var weight = $(this).parent().parent().find(`#${targetElem}`).val()
                 // 					var maxAttr = $(this).parent().parent().find(`#${targetElem}`).attr('max')
 
-                // 					console.log(maxAttr, "$(this).parent().parent()")
+              
 
                 // 					weight = Number(weight)
                 // 					var newMax = Number(maxAttr) + weight

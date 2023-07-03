@@ -6697,10 +6697,6 @@ window.ListInfo = {
 
       case "anchor":
 
-        console.log(CreateChangeRequest_Access)
-
-        debugger
-
         if (CreateChangeRequest_Access.includes(jsonListKey)) {
 
           htmlBody =
@@ -7199,7 +7195,7 @@ window.ListInfo = {
       $(".remove-New-Detail").on("click", function () {
 
 
-        debugger
+   
 
         if (listkey == "changerequest" && (isNew || isEdit)) {
           // remove from master array when click on minus
@@ -7220,8 +7216,7 @@ window.ListInfo = {
             masterLength = masterLength - 1
             $(this).closest("[data-target_list]").find(".Details-Item.NewItem")[masterLength].remove()
 
-            console.log($(this).closest("[data-target_list]").find(".Details-Item.NewItem").last().hasClass("firstMasterEmpty"), "laaaaaaaaast")
-            debugger
+          
           }
         } else if (isNew) {
           // in new > 1 because on render the form there is a new Item so it will be  before click on +
