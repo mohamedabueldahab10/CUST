@@ -6074,13 +6074,18 @@ var equationBenefit = {
           }
         } else {
           var elemVal = $(`input#${o}`).val() ? $(`input#${o}`).val() : 0
-          benefitsEquation = benefitsEquation.replaceAll(o, $(`input#${o}`).val())
+          benefitsEquation = benefitsEquation.replaceAll(o, elemVal)
+
         }
       });
 
 
       benefitsEquation = benefitsEquation.replaceAll(',', '') // remove , from high number
 
+      console.log(benefitsEquation,"benefitsEquation")
+      debugger
+
+      
       try {
         benefitsEquation =
           eval(benefitsEquation) % 1 != 0

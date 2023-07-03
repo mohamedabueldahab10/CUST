@@ -117,7 +117,7 @@ window.CrModeFunctionality = {
           Label = item.labelEn;
           Description = item.descriptionEn || "";
         }
-        // console.log('Start processing ' + Label + ' subFields...');
+     
         //Handle security
         var groups = [],
           targetList = "",
@@ -1827,6 +1827,7 @@ window.CrItemDataRenderFromJSON_View = {
     var newValue = "";
     var value = "";
     var $element;
+    var elementType = "";
 
     changeRequestBody.forEach(function (o, i, a) {
 
@@ -1836,18 +1837,79 @@ window.CrItemDataRenderFromJSON_View = {
         $this = $(".cr-related-item-section #" + o.InternalName);
 
         $element = $(".cr-related-item-section:not([data-target_list]) #" + o.InternalName); // to fix the tooltip to be only for form not master
+        elementType = $element.attr("type")
+
         fieldType = $this.attr("type");
         value = o.value ? o.value : o.originalValue;
         isOriginalValue = value == originalValue ? true : false;
+        var localStorageNameVal = ""
         if (o.isChanged) {
           // $this.parent().addClass("crHighlight");
           // $this.parent().attr("data-toggle", "tooltip");
           // $this.parent().attr("data-placement", isArabic ? "right" : "left");
           // $this.parent().attr("title", o.originalValue);
-          $element.parent().addClass("crHighlight");
-          $element.parent().attr("data-toggle", "tooltip");
-          $element.parent().attr("data-placement", isArabic ? "right" : "left");
-          $element.parent().attr("title", o.originalValue);
+
+          if (elementType == 'lookup') {
+            var dataList = $element.data('listname')
+            var localstoragearr = [];
+
+            if (localStorage.getItem(`Dynamo_${dataList}`) != null) {
+              localstoragearr = JSON.parse(
+                localStorage.getItem(`Dynamo_${dataList}`)
+              );
+              localstoragearr = localstoragearr.filter(function (a) {
+                return a.code === o.originalValue;
+              });
+              if (
+                localStorage.getItem("lng") == null ||
+                localStorage.getItem("lng") == "ar"
+              ) {
+                localStorageNameVal = localstoragearr[0].name;
+              } else localStorageNameVal = localstoragearr[0].nameEn;
+            }
+
+            if (!localStorageNameVal) {
+              localStorageNameVal = o.originalValue ? o.originalValue : No_Data
+            }
+
+            $element.parent().addClass("crHighlight");
+            $element.parent().attr("data-toggle", "tooltip");
+            $element.parent().attr("data-placement", isArabic ? "right" : "left");
+            $element.parent().attr("title", localStorageNameVal);
+
+
+          } else if (elementType == "dropdown" || elementType == "radio") {
+            var dropDownNameVal = "";
+            if (
+              localStorage.getItem("lng") == null ||
+              localStorage.getItem("lng") == "ar"
+            ) {
+              dropDownNameVal = Resources.ar[o.originalValue];
+            } else {
+              dropDownNameVal = Resources.en[o.originalValue];
+            }
+
+            if (!dropDownNameVal) {
+              dropDownNameVal = No_Data
+            }
+
+            $element.parent().addClass("crHighlight");
+            $element.parent().attr("data-toggle", "tooltip");
+            $element.parent().attr("data-placement", isArabic ? "right" : "left");
+            $element.parent().attr("title", dropDownNameVal);
+
+          } else {
+            
+            var titleName = o.originalValue
+            if (!o.originalValue) {
+              titleName = No_Data
+            }
+
+            $element.parent().addClass("crHighlight");
+            $element.parent().attr("data-toggle", "tooltip");
+            $element.parent().attr("data-placement", isArabic ? "right" : "left");
+            $element.parent().attr("title", titleName);
+          }
         }
 
         switch (o.type) {
@@ -2270,6 +2332,8 @@ window.CrSetChangeBody = {
       var $this = $(".cr-related-item-section #" + o.InternalName);
       let newJsonValues = jsonValues ? jsonValues : Information_Form;
 
+      console.log(changeRequestBody,"changeRequestBody")
+      
 
       // change on it to be validation on multi json values not only for one value
       newJsonValues.forEach(element => {
@@ -2368,7 +2432,8 @@ window.CrSetChangeBody = {
 
                   if (dateval) o.value = ydate;
                 }
-              } else if (o.type == "radio") {
+              } else if (o.type == "radio" || o.type == "yesnoradio") {
+     
                 var checkedvalue = $(
                   'input[id="' + $this.attr("id") + '"]:checked'
                 ).val();
@@ -2413,7 +2478,7 @@ window.CrSetChangeBody = {
 
               if (o.value) {
 
-  
+
                 if (o.type == "datetime" || o.type == "date") {
                   var dateval = $this.val()
                   var datetouse2 = ""
@@ -2433,7 +2498,7 @@ window.CrSetChangeBody = {
 
                     var datetouse2 = datetouse[0] + '/' + datetouse[1] + '/' + datetouse[2]
                   }
- 
+
                   o.isChanged = o.value != datetouse2;
 
                 } else if (o.type == "datetimetoparent") {
@@ -2473,7 +2538,7 @@ window.CrSetChangeBody = {
           })
         } else {
           if (!element.hasOwnProperty("sectiontype")) {
-            
+
             element.forEach(item => {
               if (item.InternalName == o.InternalName) {
                 o.DisplayName = item.DisplayName || ""
@@ -2567,7 +2632,7 @@ window.CrSetChangeBody = {
 
                     if (dateval) o.value = ydate;
                   }
-                } else if (o.type == "radio") {
+                } else if (o.type == "radio" || o.type == "yesnoradio") {
                   var checkedvalue = $(
                     'input[id="' + $this.attr("id") + '"]:checked'
                   ).val();
@@ -2627,6 +2692,7 @@ window.CrSetChangeBody = {
             }
           }
         })
+
 
         Data_Submit.set_item("ChangeBody", JSON.stringify(changeRequestBody));
 
@@ -2734,6 +2800,67 @@ window.CrSetChangeBody = {
             } else {
               o.value = $(this).val()
             }
+
+            if (o.value) {
+
+
+              // if (o.type == "datetime" || o.type == "date") {
+              //   var dateval = $(this).val()
+              //   var datetouse2 = ""
+              //   if (o.originalValue) {
+              //     var local = o.originalValue ? o.originalValue.getTime() : "";
+              //     var offset = o.originalValue ? o.originalValue.getTimezoneOffset() * (60 * 1000) : "";
+              //     var utc = new Date(local + offset);
+              //     var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+              //     var datetouse = riyadh
+              //       .toLocaleString("en-US")
+              //       .split(",")[0]
+              //       .split("/");
+              //     datetouse[0] =
+              //       datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
+              //     datetouse[1] =
+              //       datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
+
+              //     var datetouse2 = datetouse[0] + '/' + datetouse[1] + '/' + datetouse[2]
+              //   }
+
+              //   o.isChanged = o.value != datetouse2;
+
+              // } else if (o.type == "datetimetoparent") {
+              //   var dateval = $(this).val()
+
+              //   var datetouse2 = ""
+              //   if (o.originalValue) {
+              //     var local = o.originalValue ? o.originalValue.getTime() : "";
+              //     var offset = o.originalValue ? o.originalValue.getTimezoneOffset() * (60 * 1000) : "";
+              //     var utc = new Date(local + offset);
+              //     var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+              //     var datetouse = riyadh
+              //       .toLocaleString("en-US")
+              //       .split(",")[0]
+              //       .split("/");
+              //     datetouse[0] =
+              //       datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
+              //     datetouse[1] =
+              //       datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
+
+              //     datetouse2 = datetouse[2] + '-' + datetouse[0] + '-' + datetouse[1]
+              //   }
+              //   o.isChanged = o.value != datetouse2;
+
+              // } else
+              if (o.type == "float") {
+                var floatval = $(this).val()
+                if (floatval) {
+                  floatval = floatval.replaceAll(',', '');
+                }
+                o.isChanged = floatval != o.originalValue;
+              } else {
+                o.isChanged = o.value != o.originalValue;
+              }
+
+            }
+
           }
         })
       } else if (o.masterType == "new") {
@@ -2846,6 +2973,9 @@ window.CrSetChangeBody = {
 
 
       if (i == a.length - 1) {
+
+        console.log(changeRequestBodyMaster, "changeRequestBodyMaster")
+        debugger
 
         Data_Submit.set_item("ChangeBodyMaster", JSON.stringify(changeRequestBodyMaster));
       }
@@ -4822,7 +4952,45 @@ window.MasterDetails_Request_View = {
 
       $(`.cr-related-item-section[data-target_list="${el.listName}"] .Details-Item.EditItem[data-id=${el.masterSectionId}]`).find(`#${el.InternalName}`).text(value)
 
+      if (el.isChanged) {
+
+        var $element = $(`.cr-related-item-section[data-target_list="${el.listName}"] .Details-Item.EditItem[data-id=${el.masterSectionId}]`).find(`#${el.InternalName}`)
+
+
+        if (el.type == "dropdown") {
+
+          var dropDownNameVal = "";
+          if (
+            localStorage.getItem("lng") == null ||
+            localStorage.getItem("lng") == "ar"
+          ) {
+            dropDownNameVal = Resources.ar[el.originalValue];
+          } else {
+            dropDownNameVal = Resources.en[el.originalValue];
+          }
+
+          if (!dropDownNameVal) {
+            dropDownNameVal = No_Data
+          }
+
+          $element.parent().addClass("crHighlight");
+          $element.parent().attr("data-toggle", "tooltip");
+          $element.parent().attr("data-placement", isArabic ? "right" : "left");
+          $element.parent().attr("title", dropDownNameVal);
+
+
+        } else {
+          var titleName = el.originalValue ? el.originalValue : No_Data
+
+          $element.parent().addClass("crHighlight");
+          $element.parent().attr("data-toggle", "tooltip");
+          $element.parent().attr("data-placement", isArabic ? "right" : "left");
+          $element.parent().attr("title", titleName);
+        }
+      }
     })
+
+    $('[data-toggle="tooltip"]').tooltip();
 
 
   },

@@ -6594,7 +6594,6 @@ window.userCalls = {
               }
             })
           }
-          console.log(notAllowDataGroupsArr, "notAllowDataGroupsArr notAllowDataGroupsArr")
           //
 
           // if ((GroupItem[0].groupsName != $(this).attr('data-groups')) && ($(this).attr("data-groups") != "")) {
