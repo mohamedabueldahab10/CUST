@@ -120,7 +120,7 @@ window.sphttp = {
     excelInternalFieldsNames = internalFieldNames
     //
     if (!isGetDdl && (isLoadMore || isEmptyFilter || filterValue || allTasksClicked)) {
-      camelQuery = camelQuery.replace('</Query></View>', '</Query><RowLimit>10</RowLimit></View>');
+      camelQuery = camelQuery.replace('</Query></View>', '</Query><RowLimit>30</RowLimit></View>');
     }
 
     // if (isLoadMore || isEmptyFilter || filterValue || allTasksClicked) {
