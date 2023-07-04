@@ -681,6 +681,7 @@ var Information_Form = [
         endinternalname: 'FinishDate',
         enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        Errmsgkey:'btwndatepattern'
       },
       {
         InternalName: 'DependencyCost',
@@ -923,6 +924,7 @@ var Information_Form = [
         security: {
           groups: ['EPMO', 'System Admin Group'],
         },
+        Errmsgkey:'btwndatepattern'
       },
       {
         InternalName: 'DeliverableSuccessKPI',
@@ -1011,6 +1013,7 @@ var Information_Form = [
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
         max: 'today',
+        Errmsgkey:'btwndatepattern'
       },
       //   {
       //     InternalName: 'Completed',
@@ -1091,6 +1094,7 @@ var Information_Form = [
         security: {
           groups: ['VRO_E', 'LMS_E', 'System Admin Group', 'EPMO'],
         },
+        Errmsgkey:'btwndatepattern'
       },
       // {
       //   InternalName: 'PlannedDate',
@@ -1181,6 +1185,7 @@ var Information_Form = [
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
         max: 'today',
+        Errmsgkey:'btwndatepattern'
       },
       {
         InternalName: 'RelatedInitiativeDeliverable',
