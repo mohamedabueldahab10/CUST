@@ -27,7 +27,7 @@ var Information_Form = [
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
         descPhraseEn: "max length of letters equal 255",
         maxchar: '255',
-        withletters: true,
+        // withletters: true,
         Errmsgkey: "withletterpattern",
         validation: "required",
         // security: {
@@ -1287,7 +1287,7 @@ var Information_Form = [
         descPhraseEn: "max length of letters equal 255",
         validation: 'required',
         maxchar: '255',
-        withletters: true,
+        // withletters: true,
         Errmsgkey: "withletterpattern",
       },
       {
@@ -1536,7 +1536,7 @@ var Information_Form = [
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
         descPhraseEn: "max length of letters equal 255",
         maxchar: '255',
-        withletters: true,
+        // withletters: true,
         Errmsgkey: "withletterpattern",
         validation: 'required',
       },

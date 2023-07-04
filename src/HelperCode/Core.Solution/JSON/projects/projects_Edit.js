@@ -1692,7 +1692,7 @@ var Information_Form = [
         descPhraseEn: "max length of letters equal 255",
         validation: 'required',
         maxchar: '255',
-        withletters: true,
+        // withletters: true,
         Errmsgkey: "withletterpattern",
         disableOnWfTaskStage : "S05,S09",
         security: {
@@ -2030,7 +2030,7 @@ var Information_Form = [
         DisplayNameEn: 'Name',
         type: 'string',
         maxchar: '255',
-        withletters: true,
+        // withletters: true,
         Errmsgkey: "withletterpatteWrn",
         validation: 'required',
         disableOnWfTaskStage : "S05,S09",
