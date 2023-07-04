@@ -919,12 +919,12 @@ var Information_Form = [
         listname: 'Initiatives',
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
+        Errmsgkey:'btwndatepattern',
         // "min": "PlannedStartDate",
         validation: 'required',
         security: {
           groups: ['EPMO', 'System Admin Group'],
         },
-        Errmsgkey:'btwndatepattern'
       },
       {
         InternalName: 'DeliverableSuccessKPI',
