@@ -6592,7 +6592,7 @@ var View_Current_Kpi = {
     var collListItem = View_Current_Kpi.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
 
-    var relatedKpiYear, relatedPerformanceAnalysis, relatedPeriodType, relatedActualValue, relatedPerformanceAnalysis;
+    var relatedKpiYear ='', relatedPerformanceAnalysis, relatedPeriodType, relatedActualValue='', relatedPerformanceAnalysis;
     var periodType = '';
 
 
@@ -6601,7 +6601,9 @@ var View_Current_Kpi = {
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
 
-      relatedKpiYear = oListItem.get_item('Year') == null ? No_Data : oListItem.get_item('Year');
+      relatedKpiYear = (oListItem.get_item('Year') == null) ? No_Data : oListItem.get_item('Year');
+      
+   
       relatedPeriodType = oListItem.get_item('PeriodType') == null ? No_Data : oListItem.get_item('PeriodType');
 
       ////////////////////////////
@@ -6727,7 +6729,7 @@ var View_Current_Kpi = {
       '<div class="col-lg-9 col-md-8 white-box p-4 fieldset-container">' +
       '<div class="col-md-6 multiline">' +
       '<label data-trans-yeartype class="Resources"></label>' +
-      '<p class="viewmode-value" id="Year">' + relatedKpiYear + '</p>' +
+      '<p class="viewmode-value" id="Year">' + relatedKpiYear  + '</p>' +
       '</div>' +
       '<div class="col-md-6 multiline">' +
       periodType +

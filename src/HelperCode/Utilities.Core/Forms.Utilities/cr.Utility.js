@@ -1864,8 +1864,8 @@ window.CrItemDataRenderFromJSON_View = {
                 localStorage.getItem("lng") == null ||
                 localStorage.getItem("lng") == "ar"
               ) {
-                localStorageNameVal = localstoragearr[0].name;
-              } else localStorageNameVal = localstoragearr[0].nameEn;
+                localStorageNameVal = localstoragearr.length ? localstoragearr[0].name :o.originalValue;
+              } else localStorageNameVal = localstoragearr.length ? localstoragearr[0].nameEn:o.originalValue;
             }
 
             if (!localStorageNameVal) {
