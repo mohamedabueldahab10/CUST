@@ -710,7 +710,7 @@
     investigator: "المحقق",
     quartinvest: "محقق الربع السنوي",
     instrumentowner: "مالك الجهاز",
-    pattrstatus: "حالة الاكتمال",
+    pattrstatus: "اكتمال الموافقة" ,
     pattrweight: "الوزن",
     //Initiative Home
     inpattr4: "رمز المبادرة",
