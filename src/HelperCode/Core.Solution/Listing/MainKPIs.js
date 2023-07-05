@@ -300,6 +300,7 @@ var MainKPIs_Info_Request = {
     } else $(".page-title").html(en_UserRole);
 
     changeResources();
+    
     stratigicObjectivesRequest.init();
   },
   onError: function (sender, args) {
@@ -325,6 +326,7 @@ var stratigicObjectivesRequest = {
     var oList = clientContext.get_web().get_lists().getByTitle("SOs");
     var camlQuery = new SP.CamlQuery();
 
+    
     if (isRoleDataLevelAccess && dataLevelAccessQuery) {
 
       if (allRelatedStrategObjArr.length) {
@@ -353,6 +355,10 @@ var stratigicObjectivesRequest = {
     var SubSectorArr = [];
     var depArrBiLang = [];
 
+    
+
+    // strategyArray=[]
+
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current(),
         name = oListItem.get_item("Name") || UserNo_Data,
@@ -370,6 +376,8 @@ var stratigicObjectivesRequest = {
           allRelatedStrategyArr.push(relatedStrategy)
         }
       }
+
+      debugger
 
       if (!strategyArray.includes(relatedGoal)) {
         strategyArray.push(relatedGoal)
@@ -522,6 +530,7 @@ var stratigicObjectivesRequest = {
           $(".quick-links-ctx .link-item").removeClass("active");
           sosIdClicked = ''
           startegyIdClicked = ''
+          
           stratigicObjectivesRequest.init()
         } else {
           $(this).closest('.control-ctx.quick-links-ctx').find('.link-item').removeClass("active");
@@ -719,7 +728,7 @@ var stratigicObjectivesRequest = {
       }
     });
     //
-    GoalsKPIs_Info_Request.init()
+    // GoalsKPIs_Info_Request.init()
   },
   onError: function (sender, args) {
     console.log(
@@ -759,7 +768,7 @@ var subStrategicObjectivesRequest = {
       }
     }
 
-    debugger
+    
     camlQuery.set_viewXml(SubSoQuery);
     subStrategicObjectivesRequest.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
 
@@ -789,12 +798,12 @@ var subStrategicObjectivesRequest = {
         sosTypes = oListItem.get_item("Types"),
         departmentcode = "";
 
-      if (isRoleDataLevelAccess && dataLevelAccessQuery && allRelatedStrategObjArr.length) {
-        var relatedStrategy = oListItem.get_item("RelatedStrategy")
-        if (relatedStrategy && !allRelatedStrategyArr.includes(relatedStrategy)) {
-          allRelatedStrategyArr.push(relatedStrategy)
-        }
-      }
+      // if (isRoleDataLevelAccess && dataLevelAccessQuery && allRelatedStrategObjArr.length) {
+      //   var relatedStrategy = oListItem.get_item("RelatedStrategy")
+      //   if (relatedStrategy && !allRelatedStrategyArr.includes(relatedStrategy)) {
+      //     allRelatedStrategyArr.push(relatedStrategy)
+      //   }
+      // }
 
       if (!strategyArray.includes(relatedGoal)) {
         strategyArray.push(relatedGoal)
@@ -878,7 +887,7 @@ var subStrategicObjectivesRequest = {
           //
         }
       } else {
-        debugger
+        
         // $(".quick-links-ctx .link-item").removeClass("active");
         // console.log( $(this).closest('.control-ctx.quick-links-ctx'),"Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
         $(this).closest('.control-ctx.quick-links-ctx').find('.link-item').removeClass("active");
@@ -951,7 +960,7 @@ var subSOLevel3Request = {
 
     var subObjectiveLvl3Html = [];
 
-    debugger
+    
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current(),
         name = oListItem.get_item("Name") || UserNo_Data,
@@ -963,12 +972,12 @@ var subSOLevel3Request = {
         departmentcode = "";
 
 
-      if (isRoleDataLevelAccess && dataLevelAccessQuery && allRelatedStrategObjArr.length) {
-        var relatedStrategy = oListItem.get_item("RelatedStrategy")
-        if (relatedStrategy && !allRelatedStrategyArr.includes(relatedStrategy)) {
-          allRelatedStrategyArr.push(relatedStrategy)
-        }
-      }
+      // if (isRoleDataLevelAccess && dataLevelAccessQuery && allRelatedStrategObjArr.length) {
+      //   var relatedStrategy = oListItem.get_item("RelatedStrategy")
+      //   if (relatedStrategy && !allRelatedStrategyArr.includes(relatedStrategy)) {
+      //     allRelatedStrategyArr.push(relatedStrategy)
+      //   }
+      // }
 
       if (!strategyArray.includes(relatedGoal)) {
         strategyArray.push(relatedGoal)
@@ -1063,7 +1072,7 @@ var subSOLevel3Request = {
       }
     });
 
-
+    GoalsKPIs_Info_Request.init()
   },
   onError: function (sender, args) {
     console.log(
@@ -1086,6 +1095,8 @@ var GoalsKPIs_Info_Request = {
 
     //////
 
+    console.log(allRelatedStrategyArr,"allRelatedStrategyArr")
+    debugger
     if (allRelatedStrategyArr.length) {
       goalKpiQuery = '<View><Query><Where><And><In><FieldRef Name="Title" /><Values>';
       allRelatedStrategyArr.forEach(function (item) {
@@ -1202,15 +1213,18 @@ var GoalsKPIs_Info_Request = {
 
 
       var dataid = $(this).attr("goal-id");
-      debugger
+      
       if (dataid == startegyIdClicked) {
         counter++
         if (counter % 2 == 0) {
           $(".quick-links-ctx .link-items-goal").removeClass("active");
           startegyIdClicked = ''
           sosIdClicked = ''
+          
           stratigicObjectivesRequest.init()
+          // MainKPIs_Info_Request.init()
         } else {
+          
           // $(".quick-links-ctx .link-items-goal").removeClass("active");
           $(this).closest('.control-ctx.quick-links-ctx').find('.link-item').removeClass("active");
 
