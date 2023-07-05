@@ -18,7 +18,7 @@ var Information_Form = [
         DisplayName: 'اسم المبادرة',
         type: 'string',
         maxchar: '255',
-        withletters: true,
+        // withletters: true,
         Errmsgkey: 'withletterpattern',
         validation: 'required',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
@@ -42,21 +42,21 @@ var Information_Form = [
               display: 'vision',
               value: 'vision',
               roles: [
-                'LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','Administrator'
+                'LMSE','EPMO','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','Administrator'
               ],
             },
             {
               display: 'strategically',
               value: 'strategically',
               roles: [
-                'LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','Administrator'
+                'LMSE','EPMO','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','Administrator'
               ],
             },
             {
               display: 'lms',
               value: 'lms',
               roles: [
-                'LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','Administrator'
+                'LMSE','EPMO','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','Administrator'
               ],
             },
             // { display: 'others', value: 'others' },
@@ -681,6 +681,7 @@ var Information_Form = [
         endinternalname: 'FinishDate',
         enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        Errmsgkey:'btwndatepattern'
       },
       {
         InternalName: 'DependencyCost',
@@ -890,7 +891,7 @@ var Information_Form = [
         DisplayName: 'اسم المخرج',
         type: 'string',
         maxchar: '255',
-        withletters: true,
+        // withletters: true,
         Errmsgkey: 'withletterpattern',
         validation: 'required',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
@@ -918,6 +919,7 @@ var Information_Form = [
         listname: 'Initiatives',
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
+        Errmsgkey:'btwndatepattern',
         // "min": "PlannedStartDate",
         validation: 'required',
         security: {
@@ -1011,6 +1013,7 @@ var Information_Form = [
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
         max: 'today',
+        Errmsgkey:'btwndatepattern'
       },
       //   {
       //     InternalName: 'Completed',
@@ -1072,7 +1075,7 @@ var Information_Form = [
         DisplayName: 'اسم المعلم',
         type: 'string',
         maxchar: '255',
-        withletters: true,
+        // withletters: true,
         Errmsgkey: 'withletterpattern',
         validation: 'required',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
@@ -1091,6 +1094,7 @@ var Information_Form = [
         security: {
           groups: ['VRO_E', 'LMS_E', 'System Admin Group', 'EPMO'],
         },
+        Errmsgkey:'btwndatepattern'
       },
       // {
       //   InternalName: 'PlannedDate',
@@ -1181,6 +1185,7 @@ var Information_Form = [
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
         max: 'today',
+        Errmsgkey:'btwndatepattern'
       },
       {
         InternalName: 'RelatedInitiativeDeliverable',
@@ -1219,7 +1224,7 @@ var Information_Form = [
         type: 'string',
         //validation: 'required',
         maxchar: '255',
-        withletters: true,
+        // withletters: true,
         Errmsgkey: 'withletterpattern',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
         descPhraseEn: "max length of letters equal 255",  

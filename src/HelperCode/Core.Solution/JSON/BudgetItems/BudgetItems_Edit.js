@@ -58,14 +58,18 @@ var Information_Form  = [
                 "InternalName": "From",
                 "DisplayNameEn": "From",
                 "DisplayName":"من تاريخ",
-                "type":"datetime"
+                "type":"datetime",
+                "max": "To",
+                "Errmsgkey":"fromdatepattern",
                 
             },
             {
                 "InternalName": "To",
                 "DisplayNameEn": "To",
                 "DisplayName":"إلى تاريخ",
-                "type":"datetime"
+                "type":"datetime",
+                "min": "From",
+                "Errmsgkey":"todatepattern",
             
             },
             // {
