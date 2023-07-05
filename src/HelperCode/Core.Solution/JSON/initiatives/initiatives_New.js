@@ -101,6 +101,7 @@ var Information_Form = [
             otherFields: [
               { fieldName: 'WFModuleCode', value: 'VROCreateInitiative' },
               { fieldName: 'WFStage', value: 'VROCreateInitiative01' },
+              { fieldName: 'Phase', value: 'P0' },
               { fieldName: 'DraftStatus', value: 'draft' },
             ],
           },
@@ -112,6 +113,7 @@ var Information_Form = [
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'EPMOCreateInitiative' },
                 { fieldName: 'WFStage', value: 'EPMOCreateInitiative01' },
+                  { fieldName: 'Phase', value: 'P0' },
                 { fieldName: 'DraftStatus', value: 'draft' },
               ],
             },
@@ -122,6 +124,7 @@ var Information_Form = [
               roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'LMSCreateInitiative' },
+                  { fieldName: 'Phase', value: 'P0' },
                 { fieldName: 'WFStage', value: 'LMSCreateInitiative01' },
                 { fieldName: 'DraftStatus', value: 'draft' },
               ],

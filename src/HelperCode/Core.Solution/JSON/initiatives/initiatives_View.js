@@ -9,14 +9,22 @@ var Information_Form = [
       { fieldName: 'DraftStatus', value: '', stages: ["VROCreateInitiative04"] },
       { fieldName: 'WFModuleCode', value: 'VisionInitiative', stages: ["VROCreateInitiative04"] },
       { fieldName: 'WFStage', value: 'VInStage01', stages: ["VROCreateInitiative04"] },
+      { fieldName: 'Phase', value: 'P3', stages: ["VROCreateInitiative04"] },
       //EPMO
       { fieldName: 'DraftStatus', value: '', stages: ["EPMOCreateInitiative03"] },
       { fieldName: 'WFModuleCode', value: 'StrategicallyInitiative', stages: ["EPMOCreateInitiative03"] },
       { fieldName: 'WFStage', value: 'SInStage01', stages: ["EPMOCreateInitiative03"] },
+      { fieldName: 'Phase', value: 'P3', stages: ["EPMOCreateInitiative03"] },
       //LMS
       { fieldName: 'DraftStatus', value: '', stages: ["LMSCreateInitiative03"] },
       { fieldName: 'WFModuleCode', value: 'LMSInitiative', stages: ["LMSCreateInitiative03"] },
-      { fieldName: 'WFStage', value: 'LInStage01', stages: ["LMSCreateInitiative03"] }
+      { fieldName: 'Phase', value: 'P3', stages: ["LMSCreateInitiative03"] },
+      { fieldName: 'WFStage', value: 'LInStage01', stages: ["LMSCreateInitiative03"] },
+
+      //for Closure Phase
+      { fieldName: 'Phase', value: 'P4', stages: ["VInStage07"] },
+      { fieldName: 'Phase', value: 'P4', stages: ["SInStage05"] },
+      { fieldName: 'Phase', value: 'P4', stages: ["LInStage05"] }
     ],
     subFields: [
       {
