@@ -62,9 +62,9 @@ var Information_Form = [
             // { display: 'others', value: 'others' },
           ],
         },
-        security: {
-          groups: ['System Admin Group'],
-        },
+        // security: {
+        //   groups: ['System Admin Group'],
+        // },
         requiredValues: [{ value: 'vision', fields: ['Portfolio'] }],
       },
       {
