@@ -401,7 +401,7 @@ export default class MasterPage extends React.Component<IMasterPageProps, {
 														</div>
 													</div>
 												</div>
-												<div className="card">
+												{/* <div className="card">
 													<div
 														className="card-header bg-white"
 														id="headingFive"
@@ -431,7 +431,7 @@ export default class MasterPage extends React.Component<IMasterPageProps, {
 															<ul className="list-group"></ul>
 														</div>
 													</div>
-												</div>
+												</div> */}
 											</div>
 										</div>
 									</div>

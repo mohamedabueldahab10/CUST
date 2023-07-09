@@ -440,17 +440,17 @@ export default class InitiativeHomeWebPart extends BaseClientSideWebPart<IInitia
                     <div class="control-ctx project-requests-ctx mt-4">
                         <div class="card">
                             <ul class="nav mb-1 custom-nav border-bottom" id="pills-tab" role="tablist">
-                                <li class="nav-item active">
+                                <li class="nav-item active projects">
                                     <a data-trans-inptitle6 class="nav-link active Resources" id="pills-first-tab"
                                         data-toggle="pill" href="#pills-first" role="tab"
                                         aria-controls="pills-first" aria-selected="true"></a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item initiativerisks">
                                     <a data-trans-PTitle7 class="nav-link Resources" id="pills-second-tab"
                                         data-toggle="pill" href="#pills-second" role="tab"
                                         aria-controls="pills-second" aria-selected="false"></a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item initiativedeliverables">
                                     <a data-trans-delinioutput class="nav-link Resources" id="pills-fourth-tab"
                                         data-toggle="pill" href="#pills-fourth" role="tab"
                                         aria-controls="pills-fourth" aria-selected="false"></a>
@@ -461,17 +461,17 @@ export default class InitiativeHomeWebPart extends BaseClientSideWebPart<IInitia
                                         aria-controls="pills-third" aria-selected="false"></a>
                                 </li>
 
-                                <li class="nav-item">
+                                <li class="nav-item initiativemilestones">
                                     <a data-trans-inptitle10 class="nav-link Resources" id="pills-fifth-tab"
                                         data-toggle="pill" href="#pills-fifth" role="tab"
                                         aria-controls="pills-fifth" aria-selected="false"></a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item benefits">
                                     <a data-trans-inptitle11 class="nav-link Resources" id="pills-sixth-tab"
                                         data-toggle="pill" href="#pills-sixth" role="tab"
                                         aria-controls="pills-sixth" aria-selected="false"></a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item initiativeissues">
                                  <a data-trans-inptitle12 class="nav-link Resources" id="pills-seventh-tab"
                                     data-toggle="pill" href="#pills-seventh" role="tab"
                                     aria-controls="pills-seventh" aria-selected="false"></a>

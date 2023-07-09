@@ -692,6 +692,11 @@ var Partnership_Issues_Info_Request = {
     $("div#pills-first > ul.list-group").html(itemhtml.join(""));
     changeResources();
 
+    var checkValidation = Read_Access.includes('strategicpartnershipsissues')
+    if(!checkValidation){
+      $(".strategicpartnershipsissues").hide()
+    }
+
   },
   onError: function (sender, args) {
     console.log(
@@ -786,6 +791,12 @@ var Partnership_Risks_Info_Request = {
       itemhtml.push("<h3>" + No_Data + "</h3>");
     }
     $("div#pills-second > ul.list-group").html(itemhtml.join(""));
+
+    var checkValidation = Read_Access.includes('strategicpartnershipsrisks')
+    if(!checkValidation){
+      $(".strategicpartnershipsrisks").hide()
+    }
+
     changeResources();
 
   },
@@ -890,6 +901,10 @@ var Partnership_Deliverables_Info_Request = {
     }
     $("div#pills-fourth > ul.list-group").html(itemhtml.join(""));
 
+    var checkValidation = Read_Access.includes('strategicpartnershipsdeliverables')
+    if(!checkValidation){
+      $(".strategicpartnershipsdeliverables").hide()
+    }
 
 
     //Time Line
@@ -1161,6 +1176,11 @@ var Partnership_Milestones_Info_Request = {
     }
 
     $("div#pills-fifth > ul.list-group").html(itemhtml.join(""));
+
+    var checkValidation = Read_Access.includes('strategicpartnershipsmilestones')
+    if(!checkValidation){
+      $(".strategicpartnershipsmilestones").hide()
+    }
 
     // milestone dropdown schedual section
     $(".fromMilestones select#inputYear").on("change", function () {
