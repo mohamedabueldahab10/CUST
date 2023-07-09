@@ -659,7 +659,7 @@ export default class ProjectHomeWebPart extends BaseClientSideWebPart<IProjectHo
                         id="pills-tab"
                         role="tablist"
                       >
-                        <li class="nav-item active">
+                        <li class="nav-item active issues">
                           <a
                             data-trans-PTitle6
                             class="nav-link active Resources"
@@ -671,7 +671,7 @@ export default class ProjectHomeWebPart extends BaseClientSideWebPart<IProjectHo
                             aria-selected="true"
                           ></a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item risks">
                           <a
                             data-trans-PTitle7
                             class="nav-link Resources"
@@ -683,7 +683,7 @@ export default class ProjectHomeWebPart extends BaseClientSideWebPart<IProjectHo
                             aria-selected="false"
                           ></a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item deliverables">
                           <a
                             data-trans-PTitle9
                             class="nav-link Resources"
@@ -708,7 +708,7 @@ export default class ProjectHomeWebPart extends BaseClientSideWebPart<IProjectHo
                           ></a>
                         </li>
       
-                        <li class="nav-item">
+                        <li class="nav-item contracts">
                           <a
                             data-trans-PTitle10
                             class="nav-link Resources"
@@ -720,7 +720,7 @@ export default class ProjectHomeWebPart extends BaseClientSideWebPart<IProjectHo
                             aria-selected="false"
                           ></a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item lessonslearned">
                           <a
                             data-trans-PTitle11
                             class="nav-link Resources"

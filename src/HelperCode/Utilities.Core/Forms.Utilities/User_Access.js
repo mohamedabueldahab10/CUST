@@ -264,7 +264,7 @@ window.accessCallisDone = false;
 
 
 
-var projectStartToValidation = "", initiativeStartToValidation = "";
+var projectStartToValidation = "",projectFinishToValidation="", initiativeStartToValidation = "", initiativeFinishToValidation = "";
 
 
 
@@ -3090,10 +3090,11 @@ window.userCalls = {
           "InitiativeHome.aspx",
           "initiativesmain.aspx",
           "projecthome.aspx",
-          "initiativeissues",
-          "initiativerisks",
-          "issues",
-          "risks",
+          // "initiativeissues",
+          // "initiativerisks",
+          // "issues",
+          // "risks",
+          //"benefits"
           "home.aspx"
 
         ];
@@ -3936,7 +3937,7 @@ window.userCalls = {
           ],
         },
       },
- 
+
       {
         Role: "VROE",
         groupsName: ["VRO_E"],
@@ -6681,6 +6682,8 @@ var Access_Project_Info_Request = {
 
         projectStartToValidation = oListItem.get_item("BaselineStartDate") || '';
 
+        projectFinishToValidation = oListItem.get_item("BaselineFinishDate") || '';
+
         IsZeroBudgetProject = oListItem.get_item("IsZeroBudgetProject") == "yes" ? true : false;
 
         projectActualBudget = oListItem.get_item('ActualBudget') || 0;
@@ -6702,7 +6705,7 @@ var Access_Project_Info_Request = {
 
     //should uncomment when need to applt the validation on milstones every month for proj and every 3 months for initiative
 
-    if (istherePCODE && projectStartToValidation) {
+    if (istherePCODE && projectStartToValidation && projectFinishToValidation) {
       if (USERlistkey == 'milestones' && isNew) {
         console.log("YOU Can creat a milestone")
       } else {
@@ -7871,6 +7874,8 @@ window.Get_Initiative_Info_Request = {
       if (UserICode == oListItem.get_item("Title")) {
         initiativeStartToValidation = oListItem.get_item("StartDate") ? oListItem.get_item("StartDate") : ""
 
+        initiativeFinishToValidation = oListItem.get_item("FinishDate") ? oListItem.get_item("FinishDate") : ""
+
         initiativeActualBudget = oListItem.get_item("InitiativeBudget")
 
         initiativeDraftStatus = oListItem.get_item("DraftStatus") == 'draft' ? true : false
@@ -7908,7 +7913,7 @@ window.Get_Initiative_Info_Request = {
     }
 
     //should uncomment when need to applt the validation on milstones every month for proj and every 3 months for initiative
-    if (isthereICODE && initiativeStartToValidation) {
+    if (isthereICODE && initiativeStartToValidation && initiativeFinishToValidation) {
       if (USERlistkey == 'initiativemilestones' && isNew) {
         console.log("YOU Can creat an initiative milestone")
       } else {
@@ -10103,7 +10108,7 @@ var Get_Milestones = {
     );
   },
   onSuccess: async function (sender, args) {
-
+    debugger
     var collListItem = Get_Milestones.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var itemhtml = [],
@@ -10160,6 +10165,7 @@ var Get_Milestones = {
 
       if (allMilestonesArr.length > 0) {
         var projectStartDate = Get_Milestones.g.dateConvert2(projectStartToValidation);
+        var projectFinishDate =  Get_Milestones.g.dateConvert2(projectFinishToValidation);
         var now = new Date();
         var day = ("0" + now.getDate()).slice(-2);
         var month = ("0" + (now.getMonth() + 1)).slice(-2);
@@ -10167,7 +10173,10 @@ var Get_Milestones = {
         var today = now.getFullYear() + "-" + month + "-" + day;
         var todayArr = [today]
 
-        var dateRangeArr = await dateRange(projectStartDate, today)
+        // var dateRangeArr = await dateRange(projectStartDate, today)
+
+        var dateRangeArr = await dateRange(projectStartDate, projectFinishDate)
+
 
         var datesWithoutMilesArr = dateRangeArr
 
@@ -10190,6 +10199,7 @@ var Get_Milestones = {
           var isMatchCurrentMonth = datesWithoutMilesArr.some((e) => e.match(today.slice(0, -2)))
 
 
+          debugger
           if (datesWithoutMilesArr.length == 1 && isMatchCurrentMonth) {
 
 
@@ -10236,8 +10246,9 @@ var Get_Milestones = {
       }
 
       if (allMilestonesArr.length > 0) {
-
+        debugger
         var initiativeStartDate = Get_Milestones.g.dateConvert2(initiativeStartToValidation) || '';
+        var initiativeFinishDate =  Get_Milestones.g.dateConvert2(initiativeFinishToValidation) || '';
         // var initiativeFinishDate = standardisedPfinishdate;
         var now = new Date();
         var day = ("0" + now.getDate()).slice(-2);
@@ -10248,7 +10259,9 @@ var Get_Milestones = {
         var splitThreeMontshArr = []
 
 
-        var dateRangeArr = await dateRange(initiativeStartDate, today)
+        // var dateRangeArr = await dateRange(initiativeStartDate, today)
+        var dateRangeArr = await dateRange(initiativeStartDate, initiativeFinishDate)
+
 
         const perChunk = 3 // items per chunk
 
@@ -10287,6 +10300,7 @@ var Get_Milestones = {
 
 
 
+        debugger
         if (datesWithoutMilesArrFiltered.length > 0) {
           if (datesWithoutMilesArrFiltered.length == 1) {
             var internalArr = datesWithoutMilesArrFiltered[0]

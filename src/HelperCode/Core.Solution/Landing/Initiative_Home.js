@@ -911,6 +911,9 @@ var Risks_Info_Request = {
       itemdate,
       itemuser,
       itemProjectCode;
+
+
+
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       itemID = oListItem.get_id();
@@ -971,6 +974,13 @@ var Risks_Info_Request = {
       itemhtml.push("<h3>" + No_Data + "</h3>");
     }
     $("div#pills-second > ul.list-group").html(itemhtml.join(""));
+
+    var checkValidation = Read_Access.includes('initiativerisks')
+    if(!checkValidation){
+      $(".initiativerisks").hide()
+    }
+
+
     changeResources();
   },
   onError: function (sender, args) {
@@ -1077,6 +1087,13 @@ var Issues_Info_Request = {
       itemhtml.push("<h3>" + No_Data + "</h3>");
     }
     $("div#pills-seventh > ul.list-group").html(itemhtml.join(""));
+
+    var checkValidation = Read_Access.includes('initiativeissues')
+    if(!checkValidation){
+      $(".initiativeissues").hide()
+    }
+
+
     changeResources();
   },
   onError: function (sender, args) {
@@ -1182,6 +1199,13 @@ var Projects_Info_Request = {
       itemhtml.push('<h3 style="padding:5px">' + No_Data + "</h3>");
     }
     $("div#pills-first > ul.list-group").html(itemhtml.join(""));
+
+    var checkValidation = Read_Access.includes('projects')
+    if(!checkValidation){
+      $(".projects").hide()
+    }
+
+
     changeResources();
   },
   onError: function (sender, args) {
@@ -1221,7 +1245,7 @@ var Deliverables_Info_Request = {
     NDelivrables = 0;
     NDelevered = 0;
     POD = 0;
-debugger
+
     if (initiativeActualBudget) {
       var itemhtml = [
         '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
@@ -1374,6 +1398,12 @@ debugger
       Deliverables_Info_Request.g.dltimeline($(this).val());
 
     });
+
+    
+    var checkValidation = Read_Access.includes('initiativedeliverables')
+    if(!checkValidation){
+      $(".initiativedeliverables").hide()
+    }
 
 
     changeResources();
@@ -1763,6 +1793,12 @@ var Milestones_Info_Request = {
     if (!isWF) {
       Update_InitiativeStatus_Service.init();// update the initiative status when open the page auto
     }
+
+    var checkValidation = Read_Access.includes('initiativemilestones')
+    if(!checkValidation){
+      $(".initiativemilestones").hide()
+    }
+
     changeResources();
   },
   onError: function (sender, args) {
@@ -1906,6 +1942,9 @@ var Benefits_Info_Request = {
       item3,
       item4,
       itemProjectCode;
+
+ 
+      
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       itemID = oListItem.get_id();
@@ -1914,7 +1953,7 @@ var Benefits_Info_Request = {
       item2 = oListItem.get_item("Name") || No_Data;
       item3 = oListItem.get_item("BenefitScale") || No_Data;
       // item3 = initiativeHomeInfo_Request.g.dateConvert(oListItem.get_item('Date'));
-      item4 = oListItem.get_item("DataSource") || "nodata";
+      // item4 = oListItem.get_item("DataSource") || "nodata";
       // item4 = lessonLearnedSource[item4.replace(/ /g, "")] || No_Data;
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
@@ -1938,13 +1977,13 @@ var Benefits_Info_Request = {
         item3 +
         "</h4>" +
         "</div>" +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        // '<h4 data-trans-' + item4 + ' class="black Resources"></h4>' +
-        '<span data-trans-pattr54 class="Resources des-13"></span>' +
-        "<h4 data-trans-" +
-        item4 +
-        ' class="black Resources"></h4>' +
-        "</div>" +
+        // '<div class="d-inline-flex flex-column mx-2">' +
+        // // '<h4 data-trans-' + item4 + ' class="black Resources"></h4>' +
+        // '<span data-trans-pattr54 class="Resources des-13"></span>' +
+        // "<h4 data-trans-" +
+        // item4 +
+        // ' class="black Resources"></h4>' +
+        // "</div>" +
         '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
         "</div>" +
         "</a>" +
@@ -1957,6 +1996,13 @@ var Benefits_Info_Request = {
       itemhtml.push("<h3>" + No_Data + "</h3>");
     }
     $("div#pills-sixth > ul.list-group").html(itemhtml.join(""));
+
+    var checkValidation = Read_Access.includes('benefits')
+    if(!checkValidation){
+      $(".benefits").hide()
+    }
+
+
     changeResources();
   },
   onError: function (sender, args) {

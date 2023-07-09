@@ -1,6 +1,11 @@
 require("Resources");
 require('ListNameConfig');
-require('UserAccess');
+// require('UserAccess');
+
+require(["UserAccess"],async function(){
+  require('../../HelperCode/Core.Solution/Listing/MainKPIs.js');
+});
+
 
 require('../../HelperCode/Core.Solution/auditing.Activity/site.Activity.js');
 
@@ -8,8 +13,8 @@ require('../../HelperCode/Utilities.Core/Side_Navigation.js');
 require('../../HelperRessources/css/Styles.css');
 require('../../HelperRessources/css/style-dashboards.css');
 require("./mainKpi.css");
-require('../../HelperCode/Core.Solution/Listing/MainKPIs.js');
-// require('../../HelperCode/Utilities.Core/Forms.Utilities/sphttp.js');
+// require('../../HelperCode/Core.Solution/Listing/MainKPIs.js');
+
 
 import { Version } from '@microsoft/sp-core-library';
 import {

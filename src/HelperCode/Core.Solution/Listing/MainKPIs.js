@@ -312,6 +312,7 @@ var MainKPIs_Info_Request = {
   g: {},
 };
 window.checkTargetStatusHtml = setInterval(function () {
+  console.log("INSIDE MAIN KPI ")
   MainKPIs_Info_Request.preinit();
 }, 1000);
 
