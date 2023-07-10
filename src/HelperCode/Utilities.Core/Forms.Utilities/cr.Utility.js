@@ -32,6 +32,7 @@ window.CrModeFunctionality = {
 
     }
 
+
     let CR_JSON_File_Name = RListKey + prefix;
 
     //get form's json
@@ -117,7 +118,7 @@ window.CrModeFunctionality = {
           Label = item.labelEn;
           Description = item.descriptionEn || "";
         }
-     
+
         //Handle security
         var groups = [],
           targetList = "",
@@ -316,7 +317,7 @@ window.CrModeFunctionality = {
               let notInvokeListiner = $(this).data("notinvokelistiner")
 
               $("[dynamic=" + parentFieldName + "]").each(function () {
-            
+
 
                 let affectedFieldName = $(this).attr("id");
                 let listName = $(this).data("listname");
@@ -332,7 +333,7 @@ window.CrModeFunctionality = {
 
 
 
-          
+
                 affectedSelectsInfo.push({
                   affectedFieldName: affectedFieldName,
                   listName: listName,
@@ -369,7 +370,7 @@ window.CrModeFunctionality = {
 
                 // let dataSiblingvalue = $(this).data("siblingvalue")
 
-             
+
                 affectedSelectsInfo.push({
                   affectedFieldName: affectedFieldName,
                   listName: listName,
@@ -624,7 +625,12 @@ window.CrModeFunctionality = {
             handleCustomeCr.init();
             isCRChangeTrigered = true;
           }
+          
+    
+    
           $(".CFIELD>label").removeClass("loader-action");
+
+
           //initiate master detail
           // if (crMasterDetailsArrayRequest.length > 0) {
           // 	crMasterDetailsArrayRequest.init(crMasterDetailsArrayRequest[0], true);
@@ -844,7 +850,7 @@ window.CrItemDataRequest = {
               : oListItem
                 .get_item("" + $(this).attr("id") + "")
                 .get_lookupValue();
-       
+
           $(this).attr("data-email", pemail);
 
           if (pemail != enternameemail)
@@ -979,7 +985,7 @@ window.CrItemDataRequest = {
     ).each(function () {
       window.start = $("#" + $(this).attr("minimumdate"));
       window.end = $(this);
-     
+
       if (start.val()) end.attr("min", start.val());
       if (end.val()) start.attr("max", end.val());
     });
@@ -992,7 +998,7 @@ window.CrItemDataRequest = {
     });
 
     $(".cr-related-item-section input.number").each(function (event) {
-   
+
       // skip for arrow keys
       if (event.which >= 37 && event.which <= 40) return;
       // format number
@@ -1113,6 +1119,7 @@ window.CrItemDataRequest = {
     }
     //
 
+
     $(".CFIELD>label").removeClass("loader-action");
 
     if (RListKey == "sos" || RListKey == "mainkpi") {
@@ -1138,6 +1145,9 @@ window.CrItemDataRequest = {
       Sectors_Info.init()
       $('#RelatedInitiative').trigger("change")
     }
+
+
+
 
 
   },
@@ -1532,7 +1542,7 @@ window.CrItemDataRenderFromJSON_Edit = {
     ).each(function () {
       window.start = $("#" + $(this).attr("minimumdate"));
       window.end = $(this);
-     
+
       if (start.val()) end.attr("min", start.val());
       if (end.val()) start.attr("max", end.val());
     });
@@ -1600,6 +1610,7 @@ window.CrItemDataRenderFromJSON_Edit = {
 
 
     CrTitleDataRequest.init()
+
 
 
     $(
@@ -1864,8 +1875,8 @@ window.CrItemDataRenderFromJSON_View = {
                 localStorage.getItem("lng") == null ||
                 localStorage.getItem("lng") == "ar"
               ) {
-                localStorageNameVal = localstoragearr.length ? localstoragearr[0].name :o.originalValue;
-              } else localStorageNameVal = localstoragearr.length ? localstoragearr[0].nameEn:o.originalValue;
+                localStorageNameVal = localstoragearr.length ? localstoragearr[0].name : o.originalValue;
+              } else localStorageNameVal = localstoragearr.length ? localstoragearr[0].nameEn : o.originalValue;
             }
 
             if (!localStorageNameVal) {
@@ -1899,7 +1910,7 @@ window.CrItemDataRenderFromJSON_View = {
             $element.parent().attr("title", dropDownNameVal);
 
           } else {
-            
+
             var titleName = o.originalValue
             if (!o.originalValue) {
               titleName = No_Data
@@ -2332,8 +2343,8 @@ window.CrSetChangeBody = {
       var $this = $(".cr-related-item-section #" + o.InternalName);
       let newJsonValues = jsonValues ? jsonValues : Information_Form;
 
-   
-      
+
+
 
       // change on it to be validation on multi json values not only for one value
       newJsonValues.forEach(element => {
@@ -2433,7 +2444,7 @@ window.CrSetChangeBody = {
                   if (dateval) o.value = ydate;
                 }
               } else if (o.type == "radio" || o.type == "yesnoradio") {
-     
+
                 var checkedvalue = $(
                   'input[id="' + $this.attr("id") + '"]:checked'
                 ).val();
@@ -3420,7 +3431,7 @@ var CR_Master_Details_Request = {
         $('[data-target_list="' + CurrList + '"] .fieldset-container .NewItem').addClass('firstMasterEmpty')
         $('[data-target_list="' + CurrList + '"] .fieldset-container .NewItem').hide()
       }
- 
+
     }
 
 
@@ -3764,7 +3775,7 @@ window.Remove_New_CRMaster = {
         // var indexOfMaster = changeRequestBodyMaster.indexOf(el)
 
         // changeRequestBodyMaster.splice(index,1)
-      
+
       } else {
         reAssigneBodyMaster.push(el)
       }
@@ -3773,7 +3784,7 @@ window.Remove_New_CRMaster = {
     changeRequestBodyMaster = reAssigneBodyMaster
 
     // $(".cr-related-item-section[data-target_list] .Details-Item.NewItem").each(function () {
-   
+
     // 	var CurrList = $(this).closest("[data-target_list]").attr("data-target_list");
     // 	itemIndex = $(this).attr("data-index");
     // })
@@ -4325,7 +4336,7 @@ var Master_Edit_DataRequest = {
                 // 					var weight = $(this).parent().parent().find(`#${targetElem}`).val()
                 // 					var maxAttr = $(this).parent().parent().find(`#${targetElem}`).attr('max')
 
-              
+
 
                 // 					weight = Number(weight)
                 // 					var newMax = Number(maxAttr) + weight

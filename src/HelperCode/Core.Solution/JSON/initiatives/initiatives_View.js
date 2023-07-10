@@ -372,6 +372,7 @@ var Information_Form = [
         DisplayName: 'حالة الإنجاز',
         DisplayNameEn: 'Initiative Progress Status',
         type: 'string', //formula
+        translate:'resources'
       },
       // {
       //   InternalName: 'InitiativeStatus',
