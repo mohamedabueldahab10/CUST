@@ -2189,8 +2189,8 @@ window.userCalls = {
 
         ChartHide = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-        ar_UserRole = "(استراتيجي) لجنة طلبات التغيير";
-        en_UserRole = "Change Request Committee Strategy";
+        ar_UserRole = "لجنة طلبات التغيير";
+        en_UserRole = "Change Request Committee";
 
         Create_Access = [];
 

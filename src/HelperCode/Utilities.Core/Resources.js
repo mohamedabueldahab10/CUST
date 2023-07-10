@@ -843,7 +843,7 @@
     social: "إجتماعى",
     subsectorhead: "وكيل",
     sectorhead: " مدير القطاع",
-    crcommittee: "(استراتيجي) لجنة طلبات التغيير",
+    crcommittee: "لجنة طلبات التغيير",
     impactonervices: "اثر على الخدمات والبنية التحتية",
     memorandumofunderstanding: "مذكرة تفاهم",
     memorandumofcooperation: "مذكرة تعاون",
@@ -1790,7 +1790,7 @@
     actual12monthly: "Quarter 4",
     ////////////////////////////////////
 
-    crcommittee: "Strategy CR Committee",
+    crcommittee: "CR Committee",
     subsectorhead: "SubSector Head",
     sectorhead: "Sector Head",
     dataprovider: "Data Provider",
