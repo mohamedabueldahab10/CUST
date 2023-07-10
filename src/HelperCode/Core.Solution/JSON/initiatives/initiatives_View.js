@@ -149,26 +149,9 @@ var Information_Form = [
         DisplayNameEn: 'Related Objective Level',
         DisplayName: 'مستوى الهدف المرتبط',
         // dontSubmit: true,
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            { display: 'main', value: 'main' },
-            { display: 'sublevel2', value: 'sublevel2' },
-            { display: 'sublevel3', value: 'sublevel3' },
-            // {
-            //   display: 'objl1',
-            //   value: 'objl1',
-            // },
-            // {
-            //   display: 'objl2',
-            //   value: 'objl2',
-            // },
-            // {
-            //   display: 'objl3',
-            //   value: 'objl3',
-            // },
-          ],
-        },
+        type: 'string',
+        translate:'resources',
+       
         // validation: 'required',
       },
       // {
@@ -352,6 +335,7 @@ var Information_Form = [
         DisplayName: 'تصنيف المبادرة',
         DisplayNameEn: 'Classification',
         type: 'string',
+        translate:'resources'
       },
       {
         InternalName: 'ExpenseStartDate',
