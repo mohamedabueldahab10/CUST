@@ -731,7 +731,7 @@
     inrelatedkpi: "المؤشر الفرعي المرتبط",
     inproAttr45: "إجمالي كلفة البرنامج",
     incurrentbudget: "الميزانية الحالية",
-    instage: "المرحلة",
+    instage: "الخطوة",
     relatedstratobj: "الهدف التابع له",
     inptitle6: "المشاريع",
     inptitle10: "المعالم",
