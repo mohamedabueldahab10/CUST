@@ -67,7 +67,7 @@ export default class GuideLineBook extends React.Component<
                   return [
                     <tr className={`guideRow ${(this.props.typeClickId == el.Id) ? 'guidebackground' : ''}`} >
                       <th scope="row">{i + 1}</th>
-                      <td>{this.props.isArabic ? el.TitleAr : el.Title}</td>
+                      <td>{this.props.isArabic ? el.TitleAR : el.Title}</td>
                       <td>{el.BookType}</td>
                       <td>{this.props.formatDate(el.Date1)}</td>
                       <td className="linkTd">
