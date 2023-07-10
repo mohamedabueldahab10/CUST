@@ -119,7 +119,7 @@ var Information_Form = [
               { fieldName: 'InitiativeProgressStatus', value: 'stat3' },
               // { fieldName: 'DraftStatus', value: '' },
             ] },
-            // { value: 'complete', display: 'complete' },
+            { value: 'complete', display: 'complete' },
             { value: 'canceled', display: 'canceled', 
             otherFields: [
               { fieldName: 'InitiativeProgressStatus', value: '' },
