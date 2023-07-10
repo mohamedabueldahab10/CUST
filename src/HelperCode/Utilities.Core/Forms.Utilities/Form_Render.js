@@ -407,6 +407,14 @@ window.ListInfo = {
           }
           // end working on integration btn
 
+
+          // hide section create in cr
+          //           // hide creation section in cr if there is no access
+          if (CreateChangeRequest_Access.length == 0 && listkey == "changerequest" && isNew) {
+            $('.container-body .section-container.changerequest:first').hide()
+          }
+          //
+
           //$('.project-Title-Name').text(PageTitle);
           $(".breakLine").before('<div class="col-md-12"></div>');
           SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
@@ -7195,7 +7203,7 @@ window.ListInfo = {
       $(".remove-New-Detail").on("click", function () {
 
 
-   
+
 
         if (listkey == "changerequest" && (isNew || isEdit)) {
           // remove from master array when click on minus
@@ -7216,7 +7224,7 @@ window.ListInfo = {
             masterLength = masterLength - 1
             $(this).closest("[data-target_list]").find(".Details-Item.NewItem")[masterLength].remove()
 
-          
+
           }
         } else if (isNew) {
           // in new > 1 because on render the form there is a new Item so it will be  before click on +
@@ -8643,6 +8651,13 @@ window.View_ListInfo = {
     if (renderfield) {
       switch (element.type) {
         case "string":
+
+          var translateFrom = ""
+
+          if (element.translate == 'resources') {
+            translateFrom = `data-translateFromResources=${true}`
+          }
+
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
@@ -8680,11 +8695,11 @@ window.View_ListInfo = {
             ">" +
             displayName +
             "</label>" +
-            '<p type="text" class="viewmode-value" id="' +
+            '<p type="text" ' + translateFrom + ' class="viewmode-value" id="' +
             element.InternalName +
             '" ' +
             ToggleName +
-            "></p>" +
+            " ></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;

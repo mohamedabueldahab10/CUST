@@ -68,6 +68,7 @@ var Information_Form = [
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'VisionInitiative' },
                 { fieldName: 'WFStage', value: 'VInStage01' },
+                { fieldName: 'Phase', value: 'P1' },
                 { fieldName: 'DraftStatus', value: '' },
               ],
             },
@@ -78,6 +79,7 @@ var Information_Form = [
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'StrategicallyInitiative' },
                 { fieldName: 'WFStage', value: 'SInStage01' },
+                { fieldName: 'Phase', value: 'P1' },
                 { fieldName: 'DraftStatus', value: '' },
               ],
             },
@@ -88,6 +90,7 @@ var Information_Form = [
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'LMSInitiative' },
                 { fieldName: 'WFStage', value: 'LInStage01' },
+                { fieldName: 'Phase', value: 'P1' },
                 { fieldName: 'DraftStatus', value: '' },
               ],
             },
@@ -101,6 +104,7 @@ var Information_Form = [
             otherFields: [
               { fieldName: 'WFModuleCode', value: 'VROCreateInitiative' },
               { fieldName: 'WFStage', value: 'VROCreateInitiative01' },
+              { fieldName: 'Phase', value: 'P0' },
               { fieldName: 'DraftStatus', value: 'draft' },
             ],
           },
@@ -112,6 +116,7 @@ var Information_Form = [
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'EPMOCreateInitiative' },
                 { fieldName: 'WFStage', value: 'EPMOCreateInitiative01' },
+                  { fieldName: 'Phase', value: 'P0' },
                 { fieldName: 'DraftStatus', value: 'draft' },
               ],
             },
@@ -122,6 +127,7 @@ var Information_Form = [
               roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'LMSCreateInitiative' },
+                  { fieldName: 'Phase', value: 'P0' },
                 { fieldName: 'WFStage', value: 'LMSCreateInitiative01' },
                 { fieldName: 'DraftStatus', value: 'draft' },
               ],

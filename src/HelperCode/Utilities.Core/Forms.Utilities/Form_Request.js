@@ -1782,6 +1782,20 @@ window.View_Data_Request = {
           var statusTitle = "", value = oListItem.get_item("" + $(this).attr("id") + "")
           statusTitle = await StrategicObjectives_Status.init(value)
           $(this).text(statusTitle);
+        } else if ($(this).data("translatefromresources") == true) {
+          
+          var value =
+            oListItem.get_item("" + $(this).attr("id") + "") == null
+              ? No_Data
+              : oListItem.get_item("" + $(this).attr("id") + "");
+
+              if (
+                localStorage.getItem("lng") == null ||
+                localStorage.getItem("lng") == "ar"
+              ) {
+                $(this).text(Resources.ar[value]);
+              } else $(this).text(Resources.en[value]);
+              
         } else {
           var value =
             oListItem.get_item("" + $(this).attr("id") + "") == null
@@ -4569,7 +4583,7 @@ window.Delete_Item_Submit = {
           } else {
             if (listkey == 'mainkpi') {
               Delete_Kpi_Results.init() // to delete the kpi from kpi results
-            }else if(listkey == 'benefitmetrics' && ICODE){
+            } else if (listkey == 'benefitmetrics' && ICODE) {
               Delete_Benefits_Results.init();
             } else {
               window.location =
@@ -6082,10 +6096,10 @@ var equationBenefit = {
 
       benefitsEquation = benefitsEquation.replaceAll(',', '') // remove , from high number
 
-      console.log(benefitsEquation,"benefitsEquation")
+      console.log(benefitsEquation, "benefitsEquation")
       debugger
 
-      
+
       try {
         benefitsEquation =
           eval(benefitsEquation) % 1 != 0
@@ -6592,7 +6606,7 @@ var View_Current_Kpi = {
     var collListItem = View_Current_Kpi.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
 
-    var relatedKpiYear, relatedPerformanceAnalysis, relatedPeriodType, relatedActualValue, relatedPerformanceAnalysis;
+    var relatedKpiYear = '', relatedPerformanceAnalysis, relatedPeriodType, relatedActualValue = '', relatedPerformanceAnalysis;
     var periodType = '';
 
 
@@ -6601,7 +6615,9 @@ var View_Current_Kpi = {
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
 
-      relatedKpiYear = oListItem.get_item('Year') == null ? No_Data : oListItem.get_item('Year');
+      relatedKpiYear = (oListItem.get_item('Year') == null) ? No_Data : oListItem.get_item('Year');
+
+
       relatedPeriodType = oListItem.get_item('PeriodType') == null ? No_Data : oListItem.get_item('PeriodType');
 
       ////////////////////////////

@@ -619,7 +619,7 @@ export default class StrategicPartnershipHomeWebPart extends BaseClientSideWebPa
                     id="pills-tab"
                     role="tablist"
                   >
-                    <li class="nav-item active">
+                    <li class="nav-item active strategicpartnershipsissues">
                       <a
                         data-trans-PTitle6
                         class="nav-link active Resources"
@@ -631,7 +631,7 @@ export default class StrategicPartnershipHomeWebPart extends BaseClientSideWebPa
                         aria-selected="true"
                       ></a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item strategicpartnershipsrisks">
                       <a
                         data-trans-PTitle7
                         class="nav-link Resources"
@@ -643,7 +643,7 @@ export default class StrategicPartnershipHomeWebPart extends BaseClientSideWebPa
                         aria-selected="false"
                       ></a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item strategicpartnershipsdeliverables">
                       <a
                         data-trans-PTitle9
                         class="nav-link Resources"
@@ -668,7 +668,7 @@ export default class StrategicPartnershipHomeWebPart extends BaseClientSideWebPa
                       ></a>
                     </li>
   
-                    <li class="nav-item">
+                    <li class="nav-item strategicpartnershipsmilestones">
                       <a
                         data-trans-inptitle10
                         class="nav-link Resources"

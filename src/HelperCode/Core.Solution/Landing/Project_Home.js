@@ -1211,6 +1211,12 @@ var Issues_Info_Request = {
       itemhtml.push("<h3>" + No_Data + "</h3>");
     }
     $("div#pills-first > ul.list-group").html(itemhtml.join(""));
+
+    var checkValidation = Read_Access.includes('issues')
+    if(!checkValidation){
+      $(".issues").hide()
+    }
+
     changeResources();
   },
   onError: function (sender, args) {
@@ -1316,6 +1322,12 @@ var Risks_Info_Request = {
       itemhtml.push("<h3>" + No_Data + "</h3>");
     }
     $("div#pills-second > ul.list-group").html(itemhtml.join(""));
+
+    var checkValidation = Read_Access.includes('risks')
+    if(!checkValidation){
+      $(".risks").hide()
+    }
+
     changeResources();
   },
   onError: function (sender, args) {
@@ -1526,7 +1538,16 @@ var Contracts_Info_Request = {
       itemhtml.push("<h3>" + No_Data + "</h3>");
     }
     $("div#pills-fifth > ul.list-group").html(itemhtml.join(""));
+    
+    
+    var checkValidation = Read_Access.includes('contracts')
+    if(!checkValidation){
+      $(".contracts").hide()
+    }
+
     changeResources();
+
+
   },
   onError: function (sender, args) {
     console.log(
@@ -1626,6 +1647,13 @@ var LessonsLearned_Info_Request = {
       itemhtml.push("<h3>" + No_Data + "</h3>");
     }
     $("div#pills-sixth > ul.list-group").html(itemhtml.join(""));
+
+    var checkValidation = Read_Access.includes('lessonslearned')
+    if(!checkValidation){
+      $(".lessonslearned").hide()
+    }
+
+
     changeResources();
   },
   onError: function (sender, args) {
@@ -1943,6 +1971,12 @@ var Deliverables_Info_Request = {
       );
     }
     // StagesConfiguration_Info_Request.init();
+
+    var checkValidation = Read_Access.includes('deliverables')
+    if(!checkValidation){
+      $(".deliverables").hide()
+    }
+
     changeResources();
     if (All_numberofyesAll.length == Deliverablesarray.length) isDelDone = "";
   },

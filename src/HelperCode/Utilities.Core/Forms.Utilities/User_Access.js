@@ -264,7 +264,7 @@ window.accessCallisDone = false;
 
 
 
-var projectStartToValidation = "", initiativeStartToValidation = "";
+var projectStartToValidation = "",projectFinishToValidation="", initiativeStartToValidation = "", initiativeFinishToValidation = "";
 
 
 
@@ -705,6 +705,112 @@ window.userCalls = {
           "mainkpi"
         ]
         break;
+      case "EPMO":
+        USER_HomePage = "InitiativesMain.aspx";
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+        isEPMO = true;
+        //***** */
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ar_UserRole = "مكتب المشاريع المؤسسي";
+        en_UserRole = "EPMO";
+        //CRUD
+        Create_Access = [
+          "benefitmatrix",
+          "initiatives",
+          "initiativedeliverables",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativemom",
+          "initiativerisks",
+          "benefits",
+          "benefitmetrics",
+          "BenefitMetrics.aspx",
+          "closureinitiative",
+          "projects",
+          "deliverables",
+          "milestones",
+          "issues",
+          "risks",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "communicationplans",
+          "contracts",
+          "changerequest",
+          "sos",
+          "mainkpi"
+        ];
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
+        Edit_Access = [
+          "benefitmatrix",
+          "initiatives",
+          "initiativedeliverables",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativemom",
+          "initiativerisks",
+          "benefits",
+          "benefitmetrics",
+          "BenefitMetrics.aspx",
+          "closureinitiative",
+          "projects",
+          "deliverables",
+          "milestones",
+          "issues",
+          "risks",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "communicationplans",
+          "contracts",
+          "sos",
+          "mainkpi"
+          //"changerequest",
+        ];
+        Delete_Access = [
+          "benefitmatrix",
+          "initiatives",
+          "initiativedeliverables",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativemom",
+          "initiativerisks",
+          "benefits",
+          "benefitmetrics",
+          "BenefitMetrics.aspx",
+          "closureinitiative",
+          "projects",
+          "deliverables",
+          "milestones",
+          "issues",
+          "risks",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "communicationplans",
+          "contracts",
+          "sos",
+          "mainkpi"
+        ];
+        CreateChangeRequest_Access = [
+          "initiatives",
+          "projects",
+          "sos",
+          "mainkpi"
+        ]
+        // Delete_Access = AllListKeys;
+        // Delete_Access = Delete_Access.concat(SP_Page_Name); // to can delete everything
+        break;
       case "Minister":
         USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
@@ -1111,56 +1217,6 @@ window.userCalls = {
         // Delete_Access = Delete_Access.concat(SP_Page_Name);
         break;
 
-      case "SPMTeam":
-        USER_HomePage = "InitiativesMain.aspx";
-        // if (USERisHome)
-        //   window.location =
-        //     _spPageContextInfo.webAbsoluteUrl +
-        //     "/sitepages/MainIndicators.aspx";
-
-        $("body").append(
-          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
-        );
-        isSPMTeam = true;
-        isAllKpis = true;
-        //***** */
-        ChartHide =
-          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-        ar_UserRole = "إدارة الأداء الإستراتيجي";
-        en_UserRole = "Strategy Performance Management";
-        //CRUD
-        Create_Access = ["benefitmetrics", "BenefitMetrics.aspx",
-          "changerequest",
-          // "benefits",
-        ];
-        Read_Access = [
-          "initiativeissues",
-          "initiativerisks",
-          "issues",
-          "risks",
-          "goalstrategy",
-          "sos",
-          "tasks",
-          "mainkpi",
-          "Targets.aspx",
-          "benefitmatrix",
-          "projects",
-          "initiatives",
-          "benefits",
-          "benefitmatrix",
-          "benefitmetrics",
-          "BenefitMetrics.aspx",
-          "MainIndicators.aspx",
-          "initiativesmain.aspx",
-          "changerequest"
-        ];
-
-        Edit_Access = ["benefitmetrics", "BenefitMetrics.aspx",
-          // "changerequest",
-          // "benefits"
-        ];
-        Delete_Access = [];
-        break;
       case "SPMAdmin":
         USER_HomePage = "InitiativesMain.aspx";
         // if (USERisHome)
@@ -1245,6 +1301,58 @@ window.userCalls = {
           "BenefitMetrics.aspx", //check
         ];
         break;
+
+      case "SPMTeam":
+        USER_HomePage = "InitiativesMain.aspx";
+        // if (USERisHome)
+        //   window.location =
+        //     _spPageContextInfo.webAbsoluteUrl +
+        //     "/sitepages/MainIndicators.aspx";
+
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+        isSPMTeam = true;
+        isAllKpis = true;
+        //***** */
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ar_UserRole = "إدارة الأداء الإستراتيجي";
+        en_UserRole = "Strategy Performance Management";
+        //CRUD
+        Create_Access = ["benefitmetrics", "BenefitMetrics.aspx",
+          "changerequest",
+          // "benefits",
+        ];
+        Read_Access = [
+          "initiativeissues",
+          "initiativerisks",
+          "issues",
+          "risks",
+          "goalstrategy",
+          "sos",
+          "tasks",
+          "mainkpi",
+          "Targets.aspx",
+          "benefitmatrix",
+          "projects",
+          "initiatives",
+          "benefits",
+          "benefitmatrix",
+          "benefitmetrics",
+          "BenefitMetrics.aspx",
+          "MainIndicators.aspx",
+          "initiativesmain.aspx",
+          "changerequest"
+        ];
+
+        Edit_Access = ["benefitmetrics", "BenefitMetrics.aspx",
+          // "changerequest",
+          // "benefits"
+        ];
+        Delete_Access = [];
+        break;
+
       case "VROP":
         USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
@@ -2159,112 +2267,6 @@ window.userCalls = {
         ];
         break;
 
-      case "EPMO":
-        USER_HomePage = "InitiativesMain.aspx";
-        $("body").append(
-          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
-        );
-        isEPMO = true;
-        //***** */
-        ChartHide =
-          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-        ar_UserRole = "مكتب المشاريع المؤسسي";
-        en_UserRole = "EPMO";
-        //CRUD
-        Create_Access = [
-          "benefitmatrix",
-          "initiatives",
-          "initiativedeliverables",
-          "initiativemilestones",
-          "initiativeissues",
-          "initiativemom",
-          "initiativerisks",
-          "benefits",
-          "benefitmetrics",
-          "BenefitMetrics.aspx",
-          "closureinitiative",
-          "projects",
-          "deliverables",
-          "milestones",
-          "issues",
-          "risks",
-          "mom",
-          "closureform",
-          "lessonslearned",
-          "coc",
-          "stakeholders",
-          "communicationplans",
-          "contracts",
-          "changerequest",
-          "sos",
-          "mainkpi"
-        ];
-        Read_Access = AllListKeys;
-        Read_Access = Read_Access.concat(SP_Page_Name);
-        Edit_Access = [
-          "benefitmatrix",
-          "initiatives",
-          "initiativedeliverables",
-          "initiativemilestones",
-          "initiativeissues",
-          "initiativemom",
-          "initiativerisks",
-          "benefits",
-          "benefitmetrics",
-          "BenefitMetrics.aspx",
-          "closureinitiative",
-          "projects",
-          "deliverables",
-          "milestones",
-          "issues",
-          "risks",
-          "mom",
-          "closureform",
-          "lessonslearned",
-          "coc",
-          "stakeholders",
-          "communicationplans",
-          "contracts",
-          "sos",
-          "mainkpi"
-          //"changerequest",
-        ];
-        Delete_Access = [
-          "benefitmatrix",
-          "initiatives",
-          "initiativedeliverables",
-          "initiativemilestones",
-          "initiativeissues",
-          "initiativemom",
-          "initiativerisks",
-          "benefits",
-          "benefitmetrics",
-          "BenefitMetrics.aspx",
-          "closureinitiative",
-          "projects",
-          "deliverables",
-          "milestones",
-          "issues",
-          "risks",
-          "mom",
-          "closureform",
-          "lessonslearned",
-          "coc",
-          "stakeholders",
-          "communicationplans",
-          "contracts",
-          "sos",
-          "mainkpi"
-        ];
-        CreateChangeRequest_Access = [
-          "initiatives",
-          "projects",
-          "sos",
-          "mainkpi"
-        ]
-        // Delete_Access = AllListKeys;
-        // Delete_Access = Delete_Access.concat(SP_Page_Name); // to can delete everything
-        break;
       case "SPMO":
         USER_HomePage = "InitiativesMain.aspx";
         isSPMO = true;
@@ -3088,10 +3090,11 @@ window.userCalls = {
           "InitiativeHome.aspx",
           "initiativesmain.aspx",
           "projecthome.aspx",
-          "initiativeissues",
-          "initiativerisks",
-          "issues",
-          "risks",
+          // "initiativeissues",
+          // "initiativerisks",
+          // "issues",
+          // "risks",
+          //"benefits"
           "home.aspx"
 
         ];
@@ -3388,6 +3391,10 @@ window.userCalls = {
       {
         Role: "Administrator",
         groupsName: ["System Admin Group"],
+      },
+      {
+        Role: "EPMO",
+        groupsName: ["EPMO"],
       },
       {
         Role: "Minister",
@@ -3742,6 +3749,83 @@ window.userCalls = {
       // 	},
       // },
       {
+        Role: "SPMAdmin",
+        groupsName: ["SPM Admin"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "GoalStrategy",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Choice",
+                  values: ["ministry"],
+                  targetPages: [
+                    "home.aspx",
+                    "new.aspx",
+                    "edit.aspx?ListKey=projects",
+                  ],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "RelatedStrategy",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "MainKPI",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedStrategyObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "KPIResults",
+                    parentRelationField: "Title",
+                    RelationField: "KPI",
+                    RelationFieldType: "Text",
+
+                  }
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "GoalStrategy",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Choice",
+                  values: ["ministry"],
+                  targetPages: [
+                    "home.aspx",
+                    "new.aspx",
+                    "edit.aspx?ListKey=projects",
+                  ],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "RelatedStrategy",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "Initiatives",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedObjective",
+                  isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
+                  RelationFieldType: "Text"
+                },
+              },
+            }
+          ],
+        },
+      },
+      {
         Role: "SPMTeam",
         groupsName: ["SPM Team"],
         dataFilter: {
@@ -3853,83 +3937,7 @@ window.userCalls = {
           ],
         },
       },
-      {
-        Role: "SPMAdmin",
-        groupsName: ["SPM Admin"],
-        dataFilter: {
-          hierarchies: [
-            {
-              level: 1,
-              listName: "GoalStrategy",
-              accessConditions: [
-                {
-                  field: "Types",
-                  type: "Choice",
-                  values: ["ministry"],
-                  targetPages: [
-                    "home.aspx",
-                    "new.aspx",
-                    "edit.aspx?ListKey=projects",
-                  ],
-                },
-              ],
-              subRelation: {
-                level: 2,
-                listName: "SOs",
-                parentRelationField: "Title",
-                RelationField: "RelatedStrategy",
-                RelationFieldType: "Text",
-                subRelation: {
-                  level: 3,
-                  listName: "MainKPI",
-                  parentRelationField: "Title",
-                  RelationField: "RelatedStrategyObjective",
-                  RelationFieldType: "Text",
-                  subRelation: {
-                    level: 4,
-                    listName: "KPIResults",
-                    parentRelationField: "Title",
-                    RelationField: "KPI",
-                    RelationFieldType: "Text",
 
-                  }
-                },
-              },
-            },
-            {
-              level: 1,
-              listName: "GoalStrategy",
-              accessConditions: [
-                {
-                  field: "Types",
-                  type: "Choice",
-                  values: ["ministry"],
-                  targetPages: [
-                    "home.aspx",
-                    "new.aspx",
-                    "edit.aspx?ListKey=projects",
-                  ],
-                },
-              ],
-              subRelation: {
-                level: 2,
-                listName: "SOs",
-                parentRelationField: "Title",
-                RelationField: "RelatedStrategy",
-                RelationFieldType: "Text",
-                subRelation: {
-                  level: 3,
-                  listName: "Initiatives",
-                  parentRelationField: "Title",
-                  RelationField: "RelatedObjective",
-                  isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
-                  RelationFieldType: "Text"
-                },
-              },
-            }
-          ],
-        },
-      },
       {
         Role: "VROE",
         groupsName: ["VRO_E"],
@@ -4936,10 +4944,6 @@ window.userCalls = {
       {
         Role: "BITeam",
         groupsName: ["BI Team"],
-      },
-      {
-        Role: "EPMO",
-        groupsName: ["EPMO"],
       },
       {
         Role: "KPIOwner",
@@ -6569,7 +6573,7 @@ window.userCalls = {
             }
           }
 
- 
+
           // not allow grp
           var notAllowDataGroups = $(this).attr("data-notallowforgroups");
           var notAllowDataGroupsArr = notAllowDataGroups ? eval(notAllowDataGroups) : [];
@@ -6678,6 +6682,8 @@ var Access_Project_Info_Request = {
 
         projectStartToValidation = oListItem.get_item("BaselineStartDate") || '';
 
+        projectFinishToValidation = oListItem.get_item("BaselineFinishDate") || '';
+
         IsZeroBudgetProject = oListItem.get_item("IsZeroBudgetProject") == "yes" ? true : false;
 
         projectActualBudget = oListItem.get_item('ActualBudget') || 0;
@@ -6699,7 +6705,7 @@ var Access_Project_Info_Request = {
 
     //should uncomment when need to applt the validation on milstones every month for proj and every 3 months for initiative
 
-    if (istherePCODE && projectStartToValidation) {
+    if (istherePCODE && projectStartToValidation && projectFinishToValidation) {
       if (USERlistkey == 'milestones' && isNew) {
         console.log("YOU Can creat a milestone")
       } else {
@@ -7868,6 +7874,8 @@ window.Get_Initiative_Info_Request = {
       if (UserICode == oListItem.get_item("Title")) {
         initiativeStartToValidation = oListItem.get_item("StartDate") ? oListItem.get_item("StartDate") : ""
 
+        initiativeFinishToValidation = oListItem.get_item("FinishDate") ? oListItem.get_item("FinishDate") : ""
+
         initiativeActualBudget = oListItem.get_item("InitiativeBudget")
 
         initiativeDraftStatus = oListItem.get_item("DraftStatus") == 'draft' ? true : false
@@ -7905,7 +7913,7 @@ window.Get_Initiative_Info_Request = {
     }
 
     //should uncomment when need to applt the validation on milstones every month for proj and every 3 months for initiative
-    if (isthereICODE && initiativeStartToValidation) {
+    if (isthereICODE && initiativeStartToValidation && initiativeFinishToValidation) {
       if (USERlistkey == 'initiativemilestones' && isNew) {
         console.log("YOU Can creat an initiative milestone")
       } else {
@@ -10100,7 +10108,7 @@ var Get_Milestones = {
     );
   },
   onSuccess: async function (sender, args) {
-
+    debugger
     var collListItem = Get_Milestones.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var itemhtml = [],
@@ -10157,6 +10165,7 @@ var Get_Milestones = {
 
       if (allMilestonesArr.length > 0) {
         var projectStartDate = Get_Milestones.g.dateConvert2(projectStartToValidation);
+        var projectFinishDate =  Get_Milestones.g.dateConvert2(projectFinishToValidation);
         var now = new Date();
         var day = ("0" + now.getDate()).slice(-2);
         var month = ("0" + (now.getMonth() + 1)).slice(-2);
@@ -10164,7 +10173,10 @@ var Get_Milestones = {
         var today = now.getFullYear() + "-" + month + "-" + day;
         var todayArr = [today]
 
-        var dateRangeArr = await dateRange(projectStartDate, today)
+        // var dateRangeArr = await dateRange(projectStartDate, today)
+
+        var dateRangeArr = await dateRange(projectStartDate, projectFinishDate)
+
 
         var datesWithoutMilesArr = dateRangeArr
 
@@ -10187,6 +10199,7 @@ var Get_Milestones = {
           var isMatchCurrentMonth = datesWithoutMilesArr.some((e) => e.match(today.slice(0, -2)))
 
 
+          debugger
           if (datesWithoutMilesArr.length == 1 && isMatchCurrentMonth) {
 
 
@@ -10233,8 +10246,9 @@ var Get_Milestones = {
       }
 
       if (allMilestonesArr.length > 0) {
-
+        debugger
         var initiativeStartDate = Get_Milestones.g.dateConvert2(initiativeStartToValidation) || '';
+        var initiativeFinishDate =  Get_Milestones.g.dateConvert2(initiativeFinishToValidation) || '';
         // var initiativeFinishDate = standardisedPfinishdate;
         var now = new Date();
         var day = ("0" + now.getDate()).slice(-2);
@@ -10245,7 +10259,9 @@ var Get_Milestones = {
         var splitThreeMontshArr = []
 
 
-        var dateRangeArr = await dateRange(initiativeStartDate, today)
+        // var dateRangeArr = await dateRange(initiativeStartDate, today)
+        var dateRangeArr = await dateRange(initiativeStartDate, initiativeFinishDate)
+
 
         const perChunk = 3 // items per chunk
 
@@ -10284,6 +10300,7 @@ var Get_Milestones = {
 
 
 
+        debugger
         if (datesWithoutMilesArrFiltered.length > 0) {
           if (datesWithoutMilesArrFiltered.length == 1) {
             var internalArr = datesWithoutMilesArrFiltered[0]

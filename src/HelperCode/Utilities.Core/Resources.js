@@ -904,7 +904,7 @@
     projectprioritytooltip:
       "هذا الحقل يبين أهمية المشروع (مرتفعة -متوسطة - منخفضة)",
     projectstatustooltip:
-      "هذا الحقل يبين حالة سير العمل للمشروع (وحالة إنجازه وفق الجدول الزمني)",
+      "هذا الحقل يبين حالة سير العمل للمشروع",
     initiativetypetooltip:
       "هذا الحقل يبين نوع المبادرة (استراتيجية -رؤية - سوق عمل)",
     initiativestatustooltip: "هذا الحقل يبين حالة المبادرة",
@@ -2018,9 +2018,9 @@
     projectprioritytooltip:
       "This Field show the Priority of this project (Important or Medium or High)",
     projectstatustooltip:
-      "هذا الحقل يبين حالة سير العمل للمشروع (وحالة إنجازه وفق الجدول الزمني)",
+      "هذا الحقل يبين حالة سير العمل للمشروع",
     projectstatustooltip:
-      "This Field show the working status of this project (and the Baseline Progress Status)",
+      "This Field show the working status of this project ",
     initiativetypetooltip:
       "This Field show the type of this initiative (Strategic or Vision or LMS )",
     initiativestatustooltip: "This Field show the type of this initiative",

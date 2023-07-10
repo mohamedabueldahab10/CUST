@@ -181,7 +181,7 @@ window.Project_Info_Request = {
       }
       PQuery = PQuery.replace(
         "</View>",
-        '<ViewFields> <FieldRef Name="Status"/> <FieldRef Name="ActualBudget"/> <FieldRef Name="Amount"/> <FieldRef Name="EstimatedCost"/> <FieldRef Name="ActualImplementationSchedule"/> <FieldRef Name="Name"/> <FieldRef Name="Title"/> <FieldRef Name="Phase"/> <FieldRef Name="Priority"/> <FieldRef Name="SubSector"/> <FieldRef Name="ProgressStatusDeliverable"/> <FieldRef Name="Portfolio"/> <FieldRef Name="Sector"/> <FieldRef Name="ProjectType"/> <FieldRef Name="IsStrategicProject"/> </ViewFields></View>'
+        '<ViewFields> <FieldRef Name="Status"/> <FieldRef Name="ActualBudget"/> <FieldRef Name="Amount"/> <FieldRef Name="EstimatedCost"/> <FieldRef Name="ActualImplementationSchedule"/> <FieldRef Name="Name"/> <FieldRef Name="Title"/> <FieldRef Name="Phase"/> <FieldRef Name="Priority"/> <FieldRef Name="SubSector"/> <FieldRef Name="ProgressStatusSchedule"/> <FieldRef Name="Portfolio"/> <FieldRef Name="Sector"/> <FieldRef Name="ProjectType"/> <FieldRef Name="IsStrategicProject"/> </ViewFields></View>'
       );
 
       // console.log('Acces Queryyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy',AccessQuery);
@@ -307,7 +307,7 @@ window.Project_Info_Request = {
         // ProgressStatus =
         //   oListItem.get_item("ProjectProgressStatus") || "nodata";
 
-        ProgressStatus = oListItem.get_item("ProgressStatusDeliverable") || "nodata";
+        ProgressStatus = oListItem.get_item("ProgressStatusSchedule") || "nodata";
 
 
         // change from ScheduleProjectPercentageComplet0 to ActualImplementationSchedule
@@ -688,7 +688,7 @@ window.Project_Info_Request = {
         progressfilterhtml +=
           '<label class="dropdown-item"><span data-trans-' +
           progressfilterarray[i] +
-          ' class="Resources" ></span><input data-type="Text" data-internal="ProgressStatusDeliverable" type="checkbox" name="ProgressStatusDeliverable" value="' +
+          ' class="Resources" ></span><input data-type="Text" data-internal="ProgressStatusSchedule" type="checkbox" name="ProgressStatusSchedule" value="' +
           progressfilterarray[i] +
           '"></label>';
       }
