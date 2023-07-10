@@ -97,7 +97,11 @@ var Information_Form = [
         InternalName: 'DateIdentified',
         DisplayName: 'تاريخ تحديد الخطر',
         DisplayNameEn: 'Date Identified',
-        type: 'datetime',
+        type: 'datetimetoparent',
+        listname: 'Strategic Partnerships', // Displan name of list
+        startinternalname: 'StartDate', // internalname of parent start
+        endinternalname: 'FinishDate',
+        Errmsgkey:'btwndatepattern',
       },
       {
         InternalName: 'Description',

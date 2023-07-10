@@ -62,7 +62,11 @@ var Information_Form = [
         InternalName: 'ActualDate',
         DisplayName: 'تاريخ الاكتمال الفعلي',
         DisplayNameEn: 'Actual Date',
-        type: 'datetime',
+        // type: 'datetime',
+        type: 'datetimetoparent',
+        listname: 'Strategic Partnerships', // Displan name of list
+        startinternalname: 'StartDate', // internalname of parent start
+        endinternalname: 'FinishDate',
         max: 'today',
         Errmsgkey: 'cancelationdatepattern',
       },
