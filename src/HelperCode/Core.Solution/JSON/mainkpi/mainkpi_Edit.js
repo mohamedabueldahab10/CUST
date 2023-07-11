@@ -11,7 +11,7 @@ var Information_Form = [
 
     //   { fieldName: 'WFModuleCode', value: 'MSActualKPI',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
     //   { fieldName: 'WFStage', value: 'MSActualKPI01',roles:  ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
-    //   // { fieldName: 'DraftStatus', value: 'draft',roles:  ['Administrator','EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
+    //   // { fieldName: 'DraftStatus', value: 'draft',r oles:  ['Administrator','EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
 
     //   { fieldName: 'WFModuleCode', value: 'LMSActualKPI',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
     //   { fieldName: 'WFStage', value: 'LMSActualKPI01',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
@@ -79,20 +79,20 @@ var Information_Form = [
         DisplayName: 'المؤشر ',
         type: 'string',
         maxchar: '255',
-        withletters: true,
+        // withletters: true,
         Errmsgkey: "withletterpattern",
         validation: 'required',
-        ToggleDisabledName: 'Name',
+        //ToggleDisabledName: 'Name',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
         descPhraseEn: "max length of letters equal 255",
         security: {
-          groups: [
-            'LMS_P',
-            'SPM Admin',
-            'SPM Team',
-            'VRO_P',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
       },
       {
@@ -126,6 +126,14 @@ var Information_Form = [
             },
           ],
 
+        },  security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            {group:"EPMO",form:["origin" ]}
+
+          ]
         },
       },
       {
@@ -137,15 +145,24 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         validation: 'required',
-        dynamic: "KPIType", //InternalName Of Parent field
-        filterField: "Types",//InternalName Of Parent field
-        filterFieldType: "Choice",
+        // dynamic: "KPIType", //InternalName Of Parent field
+        // filterField: "Types",//InternalName Of Parent field
+        // filterFieldType: "Choice",
         // display: 'none',
         // ToggleName:'RelatedStrategyObjective',
         fieldsinformlvl1: "Sector", // fields in look up list
         sourcefieldlvl1: "Sector",
         fieldsinformlvl2: "SubSector", // fields in look up list
         sourcefieldlvl2: "SubSector",
+        security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
       },
       {
         "InternalName": "Sector",
@@ -169,6 +186,15 @@ var Information_Form = [
         state: 'disabled',
         ToggleName: "Sector",
         dontSubmit: true,
+        security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
       },
       {
         "InternalName": "SubSector",
@@ -193,11 +219,20 @@ var Information_Form = [
         descPhraseEn: "Related Objective DeputyShip",
         ToggleName: "SubSector",
         dontSubmit: true,
+        security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
       },
       {
         InternalName: 'Classification',
         DisplayNameEn: 'Classification',
-        ToggleDisabledName: 'Classification',
+        // //ToggleDisabledName: 'Classification',
         DisplayName: 'تصنيف المؤشر',
         type: 'dropdownValues',
         options: {
@@ -209,6 +244,15 @@ var Information_Form = [
           ],
         },
         validation: 'required',
+        security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
         // security: {
         //   groups: [
         //     'LMS_P',
@@ -223,7 +267,7 @@ var Information_Form = [
         InternalName: 'CategoryKPI',
         DisplayNameEn: 'Category',
         DisplayName: 'فئة المؤشر',
-        ToggleDisabledName: 'CategoryKPI',
+        //ToggleDisabledName: 'CategoryKPI',
         type: 'dropdownValues',
         options: {
           choices: [
@@ -232,13 +276,13 @@ var Information_Form = [
           ],
         },
         security: {
-          groups: [
-            'LMS_P',
-            'SPM Admin',
-            'SPM Team',
-            'VRO_P',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
       },
       {
@@ -263,83 +307,109 @@ var Information_Form = [
           ],
         },
         security: {
-          groups: [
-            'LMS_P',
-            'SPM Admin',
-            'Performance Leaders',
-            'SPM Team',
-            'VRO_P',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
       },
       {
         InternalName: 'Description',
         DisplayNameEn: 'Description',
         DisplayName: 'وصف المؤشر',
-        ToggleDisabledName: 'Description',
+        //ToggleDisabledName: 'Description',
         maxchar: '5000',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
         type: 'multiline',
         validation: 'required',
         security: {
-          groups: [
-            'LMS_P',
-            'SPM Admin',
-            'SPM Team',
-            'VRO_P',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
       },
       {
         InternalName: 'Issues',
         DisplayNameEn: 'Issues',
         DisplayName: 'التحديات',
-        ToggleDisabledName: 'Issues',
+        //ToggleDisabledName: 'Issues',
         maxchar: '5000',
         type: 'multiline',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
+        security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
       },
       {
         InternalName: 'Risks',
         DisplayNameEn: 'Risks',
         DisplayName: 'المخاطر',
-        ToggleDisabledName: 'Risks',
+        //ToggleDisabledName: 'Risks',
         maxchar: '5000',
         type: 'multiline',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
+        security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
       },
       {
         InternalName: 'ExternalFactors',
         DisplayNameEn: 'External Factors',
         DisplayName: 'العوامل الخارجية',
-        ToggleDisabledName: 'ExternalFactors',
+        //ToggleDisabledName: 'ExternalFactors',
         maxchar: '5000',
         type: 'multiline',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
+        security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
       },
       {
         InternalName: 'Assumptions',
         DisplayNameEn: 'Assumptions',
         DisplayName: 'الافتراضات',
-        ToggleDisabledName: 'Assumptions',
+        //ToggleDisabledName: 'Assumptions',
         maxchar: '5000',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
         type: 'multiline',
         security: {
-          groups: [
-            'LMS_P',
-            'SPM Admin',
-            'SPM Team',
-            'VRO_P',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
       },
       //   {
@@ -477,7 +547,7 @@ var Information_Form = [
         InternalName: 'RelatedMainKpis',
         ToggleName: 'RelatedMainKpis',
         DisplayNameEn: 'Related Main Kpis',
-        ToggleDisabledName: 'RelatedMainKpis',
+        //ToggleDisabledName: 'RelatedMainKpis',
         DisplayName: 'المؤشر المرتبط',
         // type: 'lookup',
         type: 'lookupWithQuery',
@@ -494,13 +564,13 @@ var Information_Form = [
         valfieldkey: 'Title',
         // display: 'none',
         security: {
-          groups: [
-            'LMS_P',
-            'SPM Admin',
-            'SPM Team',
-            'VRO_P',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
         accessFilter: [
           {
@@ -800,15 +870,15 @@ var Information_Form = [
         DisplayName: 'مالك المؤشر',
         type: 'picker',
         validation: 'required',
-        ToggleDisabledName: 'Owner',
+        //ToggleDisabledName: 'Owner',
         security: {
-          groups: [
-            'LMS_P',
-            'SPM Admin',
-            'SPM Team',
-            'VRO_P',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
       },
       {
@@ -819,15 +889,15 @@ var Information_Form = [
         validation: 'required',
         descPhraseAr: "يجب ان يكون المستخدم لديه الصلاحية المناسبة",
         descPhraseEn: " User Should have right access", 
-        ToggleDisabledName: 'PerformanceLeader',
+        //ToggleDisabledName: 'PerformanceLeader',
         security: {
-          groups: [
-            'LMS_P',
-            'SPM Admin',
-            'SPM Team',
-            'VRO_P',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
       },
       {
@@ -838,15 +908,15 @@ var Information_Form = [
         validation: 'required',
         descPhraseAr: "يجب ان يكون المستخدم لديه الصلاحية المناسبة",
         descPhraseEn: " User Should have right access", 
-        ToggleDisabledName: 'PerformanceLeader2',
+        //ToggleDisabledName: 'PerformanceLeader2',
         security: {
-          groups: [
-            'LMS_P',
-            'SPM Admin',
-            'SPM Team',
-            'VRO_P',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
       },
       {
@@ -854,22 +924,22 @@ var Information_Form = [
         DisplayNameEn: 'Calculation Type',
         DisplayName: 'نوع الحساب',
         type: 'dropdownValues',
-        ToggleDisabledName: 'CalculationType',
+        //ToggleDisabledName: 'CalculationType',
         options: {
           choices: [
             { display: 'leadingindicator', value: 'leadingindicator' },
             { display: 'laggingindicator', value: 'laggingindicator' },
           ],
         },
-        // security: {
-        // 	groups: [
-        // 		"LMS_P",
-        // 		"SPM Admin",
-        // 		"SPM Team",
-        // 		"VRO_P",
-        // 		"System Admin Group"
-        // 	],
-        // },
+        security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
       },
 
       // {
@@ -891,12 +961,20 @@ var Information_Form = [
         DisplayNameEn: 'Recurrence Changed',
         DisplayName: 'تغيير دورية القياس',
         type: 'dropdownValues',
-        ToggleDisabledName: 'RecurrenceChanged',
+        //ToggleDisabledName: 'RecurrenceChanged',
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
             { display: 'no', value: 'no' },
           ],
+        },  security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
         toggleDisabledValues: [
           {
@@ -957,25 +1035,57 @@ var Information_Form = [
             { display: 'yes', value: 'yes' },
             { display: 'no', value: 'no' },
           ],
+        },  security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
       },
       {
         InternalName: 'Performance',
         DisplayNameEn: 'Performance',
         DisplayName: 'الأداء',
-        type: 'number',
+        type: 'number',  security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
       },
       {
         InternalName: 'TotalActual',
         DisplayNameEn: 'Total Actual',
         DisplayName: 'إجمالي الفعلي',
-        type: 'number',
+        type: 'number',  security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
       },
       {
         InternalName: 'TotalPlanned',
         DisplayNameEn: 'Total Planned',
         DisplayName: 'إجمالي المخطط',
-        type: 'number',
+        type: 'number',  security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
       },
       // {
       //   InternalName: 'Sector',
@@ -1023,7 +1133,7 @@ var Information_Form = [
       //   DisplayNameEn: 'Sector',
       //   type: 'lookup',
       //   validation: 'required',
-      //   ToggleDisabledName: 'Sector',
+      //   //ToggleDisabledName: 'Sector',
       //   //from other list:
       //   source: 'Internal Entities',
       //   isSector: 'True',
@@ -1038,7 +1148,7 @@ var Information_Form = [
       //   DisplayNameEn: 'DeputyShip',
       //   type: 'lookup',
       //   validation: 'required',
-      //   ToggleDisabledName: 'SubSector',
+      //   //ToggleDisabledName: 'SubSector',
       //   //from other list:
       //   source: 'Internal Entities',
       //   isSector: 'True',
@@ -1061,55 +1171,55 @@ var Information_Form = [
         InternalName: 'DataSource',
         DisplayNameEn: 'Data Source',
         DisplayName: 'مصدر البيانات',
-        ToggleDisabledName: 'DataSource',
+        //ToggleDisabledName: 'DataSource',
         type: 'string',
         maxchar: '255',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
         descPhraseEn: "max length of letters equal 255",
         security: {
-          groups: [
-            'LMS_P',
-            'SPM Admin',
-            'SPM Team',
-            'VRO_P',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
       },
       {
         InternalName: 'DataSourceResponsible',
         DisplayNameEn: 'Data Source Responsible',
         DisplayName: 'مسؤول مصدر البيانات',
-        ToggleDisabledName: 'DataSourceResponsible',
+        //ToggleDisabledName: 'DataSourceResponsible',
         type: 'string',
         maxchar: '255',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
         descPhraseEn: "max length of letters equal 255",
         security: {
-          groups: [
-            'LMS_P',
-            'SPM Admin',
-            'SPM Team',
-            'VRO_P',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
       },
       {
         InternalName: 'Email',
         DisplayNameEn: 'Email',
-        ToggleDisabledName: 'Email',
+        //ToggleDisabledName: 'Email',
         DisplayName: 'البريد الالكتروني لمسؤول مصدر البيانات',
         type: 'email', //in view should be string
         //   "maxchar": "500",
         security: {
-          groups: [
-            'LMS_P',
-            'SPM Admin',
-            'SPM Team',
-            'VRO_P',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
       },
     ],
@@ -1125,19 +1235,19 @@ var Information_Form = [
         DisplayNameEn: 'Polarity',
         DisplayName: 'قطبية المؤشر',
         type: 'dropdown',
-        ToggleDisabledName: 'Polarity',
+        //ToggleDisabledName: 'Polarity',
         validation: 'required',
         options: {
           choices: ['+', '-'],
         },
         security: {
-          groups: [
-            'LMS_P',
-            'SPM Admin',
-            'SPM Team',
-            'VRO_P',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
       },
       {
@@ -1145,7 +1255,7 @@ var Information_Form = [
         DisplayNameEn: 'Result Type',
         DisplayName: 'وحدة القياس',
         type: 'dropdownValues',
-        ToggleDisabledName: 'ResultType',
+        //ToggleDisabledName: 'ResultType',
         options: {
           choices: [
             { display: 'numeric', value: 'numeric' },
@@ -1166,13 +1276,13 @@ var Information_Form = [
           ],
         },
         security: {
-          groups: [
-            'LMS_P',
-            'SPM Admin',
-            'SPM Team',
-            'VRO_P',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
       },
       {
@@ -1180,7 +1290,7 @@ var Information_Form = [
         DisplayNameEn: 'Cumulative',
         DisplayName: 'تراكمية المؤشر',
         type: 'yesnoradio',
-        ToggleDisabledName: 'Cumulative',
+        //ToggleDisabledName: 'Cumulative',
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
@@ -1188,13 +1298,13 @@ var Information_Form = [
           ],
         },
         security: {
-          groups: [
-            'LMS_P',
-            'SPM Admin',
-            'SPM Team',
-            'VRO_P',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
       },
 
@@ -1202,17 +1312,17 @@ var Information_Form = [
         InternalName: 'Weight',
         DisplayNameEn: 'Weight',
         DisplayName: 'وزن المؤشر',
-        ToggleDisabledName: 'Weight',
+        //ToggleDisabledName: 'Weight',
         type: 'floatpercentage',
         // type: 'float',
         security: {
-          groups: [
-            'LMS_P',
-            'SPM Admin',
-            'SPM Team',
-            'VRO_P',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
       },
       {
@@ -1221,27 +1331,33 @@ var Information_Form = [
         DisplayName: 'خط الأساس',
         // type: 'number',
         type: 'float',
-        ToggleDisabledName: 'Baseline',
+        //ToggleDisabledName: 'Baseline',
         security: {
-          groups: [
-            'LMS_P',
-            'SPM Admin',
-            'SPM Team',
-            'VRO_P',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
       },
       {
         InternalName: 'MesurePeriod',
         DisplayName: 'فترة قياس خط الأساس',
         DisplayNameEn: 'Mesure Period',
-        ToggleDisabledName: 'MesurePeriod',
+        //ToggleDisabledName: 'MesurePeriod',
         // min: 'FromDate',
         // Errmsgkey:'todatepattern',
         type: 'datetime',
         security: {
-          groups: ['LMS_P', 'VRO_P', 'System Admin Group', 'SPM Admin'],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
         // validation: "required",
       },
@@ -1298,12 +1414,13 @@ var Information_Form = [
         descPhraseEn: "max length of letters equal 255",
         state: 'disabled',
         security: {
-          groups: [
-            'LMS_P',
-            'VRO_P',
-            'Performance Leaders',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
         //editableBy: "PerformanceLeader",
       },
@@ -1323,12 +1440,13 @@ var Information_Form = [
             display: 'none',
           },
           security: {
-            groups: [
-              'LMS_P',
-              'VRO_P',
-              'Performance Leaders',
-              'System Admin Group',
-            ],
+            groups: [ ],
+            // groups: [], // should be empty array if will use notAllowTo
+            notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+              {group:"Performance Leaders",form:["origin"]},
+              // {group:"EPMO",form:["origin" ]}
+  
+            ]
           },
         },
         {
@@ -1345,13 +1463,13 @@ var Information_Form = [
             display: 'none',
           },
           security: {
-            groups: [
-              'LMS_P',
-              'SPM Team',
-              'VRO_P',
-              'Performance Leaders',
-              'System Admin Group',
-            ],
+            groups: [ ],
+            // groups: [], // should be empty array if will use notAllowTo
+            notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+              {group:"Performance Leaders",form:["origin"]},
+              // {group:"EPMO",form:["origin" ]}
+  
+            ]
           },
         },
       //   {
@@ -1381,7 +1499,7 @@ var Information_Form = [
         DisplayNameEn: 'Year',
         DisplayName: 'السنة',
         type: 'dropdown',
-        ToggleDisabledName: 'Year',
+        //ToggleDisabledName: 'Year',
         //   "state": "disabled",
         //   dynamic: "Initiative",
         options: {
@@ -1401,12 +1519,13 @@ var Information_Form = [
         },
         validation: 'required',
         security: {
-          groups: [
-            'LMS_P',
-            'VRO_P',
-            'Performance Leaders',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          // notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+          //   {group:"Performance Leaders",form:["origin"]},
+          //   // {group:"EPMO",form:["origin" ]}
+
+          // ]
         },
         validation: 'required',
       },
@@ -1415,7 +1534,7 @@ var Information_Form = [
         DisplayNameEn: 'Month',
         DisplayName: 'الشهر',
         ToggleName: 'Months',
-        ToggleDisabledName: 'Months',
+        //ToggleDisabledName: 'Months',
         type: 'dropdownValues',
         options: {
           choices: [
@@ -1434,13 +1553,13 @@ var Information_Form = [
           ],
         },
         security: {
-          groups: [
-            'LMS_P',
-            'SPM Team',
-            'VRO_P',
-            'Performance Leaders',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
         display: 'none',
       },
@@ -1486,124 +1605,133 @@ var Information_Form = [
         DisplayName: 'المكون الأول (A)',
         DisplayNameEn: 'A',
         type: 'float',
-        ToggleDisabledName: 'A',
-        numberOfDigits: "9", // max length of digits in field
+        state: 'disabled',
+        //ToggleDisabledName: 'A',
+        // numberOfDigits: "9", // max length of digits in field
         // type: 'number',
         //editableBy: "PerformanceLeader",
-        security: {
-          groups: [
-            'LMS_P',
-            'VRO_P',
-            'Performance Leaders',
-            'System Admin Group',
-          ],
-        },
+        // security: {
+        //   groups: ['Administrators for Project Web App' ],
+        //   // groups: [], // should be empty array if will use notAllowTo
+        //   // notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+        //   //   {group:"Performance Leaders",form:["origin"]},
+        //   //   // {group:"EPMO",form:["origin" ]}
+
+        //   // ]
+        // },
       },
       {
         InternalName: 'B',
         DisplayName: 'المكون الثاني (B)',
         DisplayNameEn: 'B',
-        ToggleDisabledName: 'B',
+        state: 'disabled',
+        //ToggleDisabledName: 'B',
         type: 'float',
-        numberOfDigits: "9", // max length of digits in field
+        // numberOfDigits: "9", // max length of digits in field
         //editableBy: "PerformanceLeader",
-        security: {
-          groups: [
-            'LMS_P',
-            'VRO_P',
-            'Performance Leaders',
-            'System Admin Group',
-          ],
-        },
+        // security: {
+        //   groups: [ 'Administrators for Project Web App'],
+        //   // groups: [], // should be empty array if will use notAllowTo
+        //   // notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+        //   //   {group:"Performance Leaders",form:["origin"]},
+        //   //   // {group:"EPMO",form:["origin" ]}
+
+        //   // ]
+        // },
       },
       {
         InternalName: 'CC',
         DisplayName: 'المكون الثالث (C)',
         DisplayNameEn: 'C',
-        ToggleDisabledName: 'CC',
+        //ToggleDisabledName: 'CC',
         // type: 'number',
         type: 'float',
         numberOfDigits: "9", // max length of digits in field
         //editableBy: "PerformanceLeader",
         security: {
-          groups: [
-            'LMS_P',
-            'VRO_P',
-            'Performance Leaders',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
       },
       {
         InternalName: 'D',
         DisplayName: 'المكون الرابع (D)',
         DisplayNameEn: 'D',
-        ToggleDisabledName: 'D',
+        //ToggleDisabledName: 'D',
         // type: 'number',
         type: 'float',
         numberOfDigits: "9", // max length of digits in field
         //editableBy: "PerformanceLeader",
         security: {
-          groups: [
-            'LMS_P',
-            'VRO_P',
-            'Performance Leaders',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
       },
       {
         InternalName: 'E',
         DisplayName: 'المكون الخامس (E)',
         DisplayNameEn: 'E',
-        ToggleDisabledName: 'E',
+        //ToggleDisabledName: 'E',
         // type: 'number',
         type: 'float',
         numberOfDigits: "9", // max length of digits in field
         //editableBy: "PerformanceLeader",
         security: {
-          groups: [
-            'LMS_P',
-            'VRO_P',
-            'Performance Leaders',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
       },
       {
         InternalName: 'F',
         DisplayName: 'المكون السادس (F)',
         DisplayNameEn: 'F',
-        ToggleDisabledName: 'F',
+        //ToggleDisabledName: 'F',
         // type: 'number',
         type: 'float',
         numberOfDigits: "9", // max length of digits in field
         //editableBy: "PerformanceLeader",
         security: {
-          groups: [
-            'LMS_P',
-            'VRO_P',
-            'Performance Leaders',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
       },
       {
         InternalName: 'G',
         DisplayName: 'المكون السابع (G)',
         DisplayNameEn: 'G',
-        ToggleDisabledName: 'G',
+        //ToggleDisabledName: 'G',
         // type: 'number',
         type: 'float',
         numberOfDigits: "9", // max length of digits in field
         //editableBy: "PerformanceLeader",
         security: {
-          groups: [
-            'LMS_P',
-            'VRO_P',
-            'Performance Leaders',
-            'System Admin Group',
-          ],
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Performance Leaders",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
       },
       {
@@ -1651,7 +1779,7 @@ var Information_Form = [
         DisplayName: 'المرفقات',
         DisplayNameEn: 'Attachments',
         type: 'file',
-        ToggleDisabledName: 'getfile',
+        //ToggleDisabledName: 'getfile',
         security: {
           groups: [
             'LMS_P',

@@ -3226,6 +3226,7 @@ function _uploadFile() {
       files.map(function (file, index) {
         //
         var Doc_Title = "";
+        var ActualY = "ActualY";
 
 
 
@@ -3419,7 +3420,7 @@ function _uploadFile() {
               fieldsObj = {
                 Title: Doc_Title,
                 ItemID: IID,
-                RelatedActualY: $('#Years').val(),
+                RelatedActualY: ActualY,
                 RelatedYear: $('#Year').val(),
                 docPurpose: purpose
 
