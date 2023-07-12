@@ -1605,7 +1605,7 @@ var Information_Form = [
         DisplayName: 'المكون الأول (A)',
         DisplayNameEn: 'A',
         type: 'float',
-        state: 'disabled',
+        // state: 'disabled',
         //ToggleDisabledName: 'A',
         // numberOfDigits: "9", // max length of digits in field
         // type: 'number',
@@ -1624,7 +1624,7 @@ var Information_Form = [
         InternalName: 'B',
         DisplayName: 'المكون الثاني (B)',
         DisplayNameEn: 'B',
-        state: 'disabled',
+        // state: 'disabled',
         //ToggleDisabledName: 'B',
         type: 'float',
         // numberOfDigits: "9", // max length of digits in field
@@ -1648,15 +1648,15 @@ var Information_Form = [
         type: 'float',
         numberOfDigits: "9", // max length of digits in field
         //editableBy: "PerformanceLeader",
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Performance Leaders",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
+        // security: {
+        //   groups: [ ],
+        //   // groups: [], // should be empty array if will use notAllowTo
+        //   notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+        //     {group:"Performance Leaders",form:["origin"]},
+        //     // {group:"EPMO",form:["origin" ]}
 
-          ]
-        },
+        //   ]
+        // },
       },
       {
         InternalName: 'D',
@@ -1667,15 +1667,15 @@ var Information_Form = [
         type: 'float',
         numberOfDigits: "9", // max length of digits in field
         //editableBy: "PerformanceLeader",
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Performance Leaders",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
+        // security: {
+        //   groups: [ ],
+        //   // groups: [], // should be empty array if will use notAllowTo
+        //   notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+        //     {group:"Performance Leaders",form:["origin"]},
+        //     // {group:"EPMO",form:["origin" ]}
 
-          ]
-        },
+        //   ]
+        // },
       },
       {
         InternalName: 'E',
@@ -1686,15 +1686,15 @@ var Information_Form = [
         type: 'float',
         numberOfDigits: "9", // max length of digits in field
         //editableBy: "PerformanceLeader",
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Performance Leaders",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
+        // security: {
+        //   groups: [ ],
+        //   // groups: [], // should be empty array if will use notAllowTo
+        //   notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+        //     {group:"Performance Leaders",form:["origin"]},
+        //     // {group:"EPMO",form:["origin" ]}
 
-          ]
-        },
+        //   ]
+        // },
       },
       {
         InternalName: 'F',
