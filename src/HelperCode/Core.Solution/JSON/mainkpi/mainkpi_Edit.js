@@ -289,7 +289,7 @@ var Information_Form = [
           groups: [
             'LMS_P',
             'SPM Admin',
-            //'Performance Leaders',
+            'Performance Leaders',
             'SPM Team',
             'VRO_P',
             'System Admin Group',
@@ -1357,6 +1357,40 @@ var Information_Form = [
         },
         //editableBy: "PerformanceLeader",
       },
+      {
+        InternalName: 'Year',
+        DisplayNameEn: 'Year',
+        DisplayName: 'السنة',
+        type: 'dropdown',
+        //ToggleDisabledName: 'Year',
+        //   "state": "disabled",
+        //   dynamic: "Initiative",
+        options: {
+          choices: [
+            '2020',
+            '2021',
+            '2022',
+            '2023',
+            '2024',
+            '2025',
+            '2026',
+            '2027',
+            '2028',
+            '2029',
+            '2030',
+          ],
+        },
+        validation: 'required',
+        security: {
+          groups: [
+            'LMS_P',
+            'VRO_P',
+            'Performance Leaders',
+            'System Admin Group',
+          ],
+        },
+        validation: 'required',
+      },
         {
           InternalName: 'Quarter',
           DisplayNameEn: 'Quarter',
@@ -1370,16 +1404,16 @@ var Information_Form = [
               { display: 'quarter3', value: 'ActualQ3' },
               { display: 'quarter4', value: 'ActualQ4' },
             ],
-            display: 'none',
+            // display: 'none',
           },
-          security: {
-            groups: [
-              'LMS_P',
-              'VRO_P',
-              'Performance Leaders',
-              'System Admin Group',
-            ],
-          },
+          // security: {
+          //   groups: [
+          //     'LMS_P',
+          //     'VRO_P',
+          //     'Performance Leaders',
+          //     'System Admin Group',
+          //   ],
+          // },
         },
         {
           InternalName: 'Midterms',
@@ -1426,40 +1460,7 @@ var Information_Form = [
       //       ],
       //     },
       //   },
-      {
-        InternalName: 'Year',
-        DisplayNameEn: 'Year',
-        DisplayName: 'السنة',
-        type: 'dropdown',
-        //ToggleDisabledName: 'Year',
-        //   "state": "disabled",
-        //   dynamic: "Initiative",
-        options: {
-          choices: [
-            '2020',
-            '2021',
-            '2022',
-            '2023',
-            '2024',
-            '2025',
-            '2026',
-            '2027',
-            '2028',
-            '2029',
-            '2030',
-          ],
-        },
-        validation: 'required',
-        security: {
-          groups: [
-            'LMS_P',
-            'VRO_P',
-            'Performance Leaders',
-            'System Admin Group',
-          ],
-        },
-        validation: 'required',
-      },
+      
       {
         InternalName: 'Months',
         DisplayNameEn: 'Month',
@@ -1492,7 +1493,7 @@ var Information_Form = [
             'System Admin Group',
           ],
         },
-        display: 'none',
+        // display: 'none',
       },
       // {
       //     "InternalName": "MesureStatus",
@@ -1662,7 +1663,7 @@ var Information_Form = [
         DisplayName: 'القيمة الفعلية',
         // type: 'number',
         type: 'float',
-        // state: 'disabled',
+        state: 'disabled',
         //editableBy: "PerformanceLeader",
         // security: {
         //   groups: [
@@ -1673,21 +1674,21 @@ var Information_Form = [
         //   ],
         // },
       },
-      //   {
-      //     InternalName: 'PerformanceAnalysis',
-      //     DisplayNameEn: 'Performance Analysis',
-      //     DisplayName: 'تحليل الأداء',
-      //     maxchar: '5000',
-      //     type: 'multiline',
-      //     security: {
-      //       groups: [
-      //         'LMS_P',
-      //         'VRO_P',
-      //         //'Performance Leaders',
-      //         'System Admin Group',
-      //       ],
-      //     },
-      //   },
+        {
+          InternalName: 'PerformanceAnalysis',
+          DisplayNameEn: 'Performance Analysis',
+          DisplayName: 'تحليل الأداء',
+          maxchar: '5000',
+          type: 'multiline',
+          security: {
+            groups: [
+              'LMS_P',
+              'VRO_P',
+              'Performance Leaders',
+              'System Admin Group',
+            ],
+          },
+        },
     ],
   },
   {
