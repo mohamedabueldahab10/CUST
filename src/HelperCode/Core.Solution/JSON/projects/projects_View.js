@@ -278,6 +278,7 @@ var Information_Form = [
         DisplayName: "مرحلة المشروع",
         DisplayNameEn: "Status",
         type: "string",
+        translate:'resources',
         // maxchar: 255,
       },
       {
