@@ -32,20 +32,21 @@ var Listing_Info = [
 		inlisting: true,
 		infilter: true
 	},
-	// {
-	// 	"InternalName": "Completed",
-	// 	"DisplayNameEn": "Completed",
-	// 	"DisplayName":"حالة الاكتمال",
-	// 	"type": "text",
-	// 	needTrans: true,
-	// 	inlisting: true,
-	// 	infilter: true
-	// },
+
 	{
 		"InternalName": "Delivered",
 		"DisplayName": "تم التسليم",
 		"DisplayNameEn": "Delivered",
 		"type": "yesnoradio",
+		needTrans: true,
+		inlisting: true,
+		infilter: true
+	},
+	{
+		"InternalName": "Completed",
+		"DisplayNameEn": "Completed",
+		"DisplayName":"اكتمال الموافقة",
+		"type": "text",
 		needTrans: true,
 		inlisting: true,
 		infilter: true
