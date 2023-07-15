@@ -5,7 +5,8 @@ var Listing_Info = [
     DisplayNameEn: "Task Code",
     type: "text",
     inlisting: true,
-    infilter: true,
+    infilter: false,
+    
   },
   // {
   //   InternalName: "WorkflowName",
@@ -30,7 +31,7 @@ var Listing_Info = [
     DisplayNameEn: "Created Date",
     type: "date",
     inlisting: true,
-    infilter: false,
+    infilter: true,
   },
   {
     InternalName: "Status",
