@@ -10641,131 +10641,126 @@ dynamicAffectSelect = {
   // The main Initialization function
   init: function (affectedSelectsInfo) {
 
+    if (affectedSelectsInfo.length) {
+
+      var queryFieldValue = affectedSelectsInfo[0].queryFieldValue
+        ? affectedSelectsInfo[0].queryFieldValue
+        : "";
+
+      var queryFieldName = affectedSelectsInfo[0].queryFieldName
+        ? affectedSelectsInfo[0].queryFieldName
+        : "";
+      var queryFieldType = affectedSelectsInfo[0].queryFieldType
+        ? affectedSelectsInfo[0].queryFieldType
+        : "";
 
 
+      dynamicAffectSelect.g.affectedSelectsInfo = affectedSelectsInfo;
+      var clientContext = new SP.ClientContext.get_current();
+      var oList = clientContext
+        .get_web()
+        .get_lists()
+        .getByTitle(affectedSelectsInfo[0].listName);
+      var camlQuery = new SP.CamlQuery();
+
+      var Query = "";
+      var valueToFilter = affectedSelectsInfo[0].customFilterValue
+        ? affectedSelectsInfo[0].customFilterValue
+        : affectedSelectsInfo[0].parentFieldValue;
+
+      if (affectedSelectsInfo[0].parentCustomFilterValueFromSibling && affectedSelectsInfo[0].parentCustomFilterValueFromSibling != undefined) {
+        queryFieldValue = affectedSelectsInfo[0].parentCustomFilterValueFromSibling
+      }
 
 
+      if (listkey == 'initiatives' && valueToFilter && valueToFilter == 'strategically') { // specially for trategically value
+        valueToFilter = 'ministry' // becuse there is a value we use it in GoalStrategy list
+      }
 
-    var queryFieldValue = affectedSelectsInfo[0].queryFieldValue
-      ? affectedSelectsInfo[0].queryFieldValue
-      : "";
-    var queryFieldName = affectedSelectsInfo[0].queryFieldName
-      ? affectedSelectsInfo[0].queryFieldName
-      : "";
-    var queryFieldType = affectedSelectsInfo[0].queryFieldType
-      ? affectedSelectsInfo[0].queryFieldType
-      : "";
+      // depends on role
 
+      // var Where_Body = ""
+      // var FilterChoices = [];
+      // var PQueryFilteration = ""
+      // var Where_Body_Final = ""
+      // var checkQuery =""
+      // if (isRoleDataLevelAccess) {
+      //   FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
+      //   checkQuery = dataLevelAccessQuery
+      // }
+      // console.log(checkQuery,"checkQuery")
 
-    console.log(affectedSelectsInfo, "affectedSelectsInfo")
+      // for (var i = 0; i < FilterChoices.length; i++) {
+      //   if (FilterChoices.length == 1) {
 
+      //     console.log(FilterChoices, "FilterChoices FilterChoices")
 
-    dynamicAffectSelect.g.affectedSelectsInfo = affectedSelectsInfo;
-    var clientContext = new SP.ClientContext.get_current();
-    var oList = clientContext
-      .get_web()
-      .get_lists()
-      .getByTitle(affectedSelectsInfo[0].listName);
-    var camlQuery = new SP.CamlQuery();
+      //     if (FilterChoices[i].targetIsMultiFilter) {
+      //       for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+      //         // debugger
+      //         if (j == FilterChoices[i].Values.length - 1) {
+      //           Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+      //         } else {
+      //           Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+      //         }
+      //       }
+      //       var countOr = (Where_Body.match(/<Or>/g) || []).length;
+      //       var ORC = "</Or>".repeat(countOr);
+      //       Where_Body += ORC;
 
-    var Query = "";
-    var valueToFilter = affectedSelectsInfo[0].customFilterValue
-      ? affectedSelectsInfo[0].customFilterValue
-      : affectedSelectsInfo[0].parentFieldValue;
+      //     } else if (FilterChoices[i].Type == "LoggedInUser") {
+      //       Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
+      //     } else {
+      //       Where_Body += '<In><FieldRef Name="' + FilterChoices[i].internalName + '" /><Values>';
+      //       for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+      //         Where_Body += '<Value Type="' + FilterChoices[i].Type + '">' + FilterChoices[i].Values[j] + '</Value>';
+      //       }
+      //       Where_Body += '</Values></In>';
+      //     }
+      //   }
 
-    if (affectedSelectsInfo[0].parentCustomFilterValueFromSibling && affectedSelectsInfo[0].parentCustomFilterValueFromSibling != undefined) {
-      queryFieldValue = affectedSelectsInfo[0].parentCustomFilterValueFromSibling
-    }
+      //   if (i == FilterChoices.length - 1) {
 
+      //     Where_Body = Where_Body.replaceAll('Type="date"', 'IncludeTimeValue="TRUE" Type="DateTime"'); //IncludeTimeValue="false"
 
-    if (listkey == 'initiatives' && valueToFilter && valueToFilter == 'strategically') { // specially for trategically value
-      valueToFilter = 'ministry' // becuse there is a value we use it in GoalStrategy list
-    }
+      //     PQueryFilteration = `<Eq><FieldRef Name="${affectedSelectsInfo[0].filterField}"/><Value Type="${affectedSelectsInfo[0].filterFieldType}">${valueToFilter}</Value></Eq>`
 
-    // depends on role
+      //     console.log(Where_Body,"bbbbbbbbbbb")
+      //     console.log(PQueryFilteration,"PQueryFilteration")
+      //     debugger
+      //     Where_Body_Final =
+      //       "<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And>" +
+      //       Where_Body +
+      //       PQueryFilteration +
+      //       "</And></And></Where>";
 
-    // var Where_Body = ""
-    // var FilterChoices = [];
-    // var PQueryFilteration = ""
-    // var Where_Body_Final = ""
-    // var checkQuery =""
-    // if (isRoleDataLevelAccess) {
-    //   FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
-    //   checkQuery = dataLevelAccessQuery
-    // }
-    // console.log(checkQuery,"checkQuery")
+      //     // console.log(Where_Body_Final, "Where_Body_Final")
+      //     // debugger
 
-    // for (var i = 0; i < FilterChoices.length; i++) {
-    //   if (FilterChoices.length == 1) {
+      //   }
 
-    //     console.log(FilterChoices, "FilterChoices FilterChoices")
-
-    //     if (FilterChoices[i].targetIsMultiFilter) {
-    //       for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-    //         // debugger
-    //         if (j == FilterChoices[i].Values.length - 1) {
-    //           Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
-    //         } else {
-    //           Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
-    //         }
-    //       }
-    //       var countOr = (Where_Body.match(/<Or>/g) || []).length;
-    //       var ORC = "</Or>".repeat(countOr);
-    //       Where_Body += ORC;
-
-    //     } else if (FilterChoices[i].Type == "LoggedInUser") {
-    //       Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
-    //     } else {
-    //       Where_Body += '<In><FieldRef Name="' + FilterChoices[i].internalName + '" /><Values>';
-    //       for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-    //         Where_Body += '<Value Type="' + FilterChoices[i].Type + '">' + FilterChoices[i].Values[j] + '</Value>';
-    //       }
-    //       Where_Body += '</Values></In>';
-    //     }
-    //   }
-
-    //   if (i == FilterChoices.length - 1) {
-
-    //     Where_Body = Where_Body.replaceAll('Type="date"', 'IncludeTimeValue="TRUE" Type="DateTime"'); //IncludeTimeValue="false"
-
-    //     PQueryFilteration = `<Eq><FieldRef Name="${affectedSelectsInfo[0].filterField}"/><Value Type="${affectedSelectsInfo[0].filterFieldType}">${valueToFilter}</Value></Eq>`
-
-    //     console.log(Where_Body,"bbbbbbbbbbb")
-    //     console.log(PQueryFilteration,"PQueryFilteration")
-    //     debugger
-    //     Where_Body_Final =
-    //       "<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And>" +
-    //       Where_Body +
-    //       PQueryFilteration +
-    //       "</And></And></Where>";
-
-    //     // console.log(Where_Body_Final, "Where_Body_Final")
-    //     // debugger
-
-    //   }
-
-    // }
-    //
+      // }
+      //
 
 
-    if (
-      affectedSelectsInfo[0].isCustomFilterValue === "true" &&
-      !affectedSelectsInfo[0].customFilterValue
-    ) {
-      Query = `<View><Query>
+      if (
+        affectedSelectsInfo[0].isCustomFilterValue === "true" &&
+        !affectedSelectsInfo[0].customFilterValue
+      ) {
+        Query = `<View><Query>
         <Where>
           <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
           </Where>
         <OrderBy><FieldRef Name="Name" Ascending="True"/></OrderBy></Query></View>`;
-    } else if (
-      queryFieldValue &&
-      queryFieldValue != "undefined" &&
-      queryFieldName &&
-      queryFieldName != "undefined" &&
-      queryFieldType &&
-      queryFieldType != "undefined"
-    ) {
-      Query = `<View><Query>
+      } else if (
+        queryFieldValue &&
+        queryFieldValue != "undefined" &&
+        queryFieldName &&
+        queryFieldName != "undefined" &&
+        queryFieldType &&
+        queryFieldType != "undefined"
+      ) {
+        Query = `<View><Query>
         <Where><And>
         <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
         <And>
@@ -10773,28 +10768,29 @@ dynamicAffectSelect = {
         <Eq><FieldRef Name="${queryFieldName}" /><Value Type="${queryFieldType}">${queryFieldValue}</Value></Eq></Eq>
         </And></And></Where>
         <OrderBy><FieldRef Name="Name" Ascending="True"/></OrderBy></Query></View>`;
-    } else {
-      Query = `<View><Query>
+      } else {
+        Query = `<View><Query>
         <Where><And>
           <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
           <Eq><FieldRef Name="${affectedSelectsInfo[0].filterField}"/><Value Type="${affectedSelectsInfo[0].filterFieldType}">${valueToFilter}</Value></Eq>
         </And></Where>
         <OrderBy><FieldRef Name="Name" Ascending="True"/></OrderBy></Query></View>`;
 
-      //change FieldRef to Name and Acending True to can sort alphapetics arabic and english
-      //FieldRef Name="Created" Ascending="True"(if we want to sort to alphapetics you need to Name='Name' and  Ascending='True')
+        //change FieldRef to Name and Acending True to can sort alphapetics arabic and english
+        //FieldRef Name="Created" Ascending="True"(if we want to sort to alphapetics you need to Name='Name' and  Ascending='True')
+      }
+
+
+      camlQuery.set_viewXml(Query);
+
+      dynamicAffectSelect.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+      clientContext.load(dynamicAffectSelect.g.collListItem);
+      clientContext.executeQueryAsync(
+        Function.createDelegate(this, dynamicAffectSelect.onSuccess),
+        Function.createDelegate(this, dynamicAffectSelect.onError)
+      );
+      // }
     }
-
-
-    camlQuery.set_viewXml(Query);
-
-    dynamicAffectSelect.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
-    clientContext.load(dynamicAffectSelect.g.collListItem);
-    clientContext.executeQueryAsync(
-      Function.createDelegate(this, dynamicAffectSelect.onSuccess),
-      Function.createDelegate(this, dynamicAffectSelect.onError)
-    );
-    // }
   },
   onSuccess: function (sender, args) {
     var collListItem = dynamicAffectSelect.g.collListItem;

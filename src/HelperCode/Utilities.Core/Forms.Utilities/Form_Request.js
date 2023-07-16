@@ -3466,21 +3466,21 @@ window.Kpi_Related_Goal = {
     //   }
 
     // }
-    $(`#${objectiveId}`).html(
-      '<option data-trans-relatedstrategy class="Resources" value="" selected="" disabled=""></option>'
-    );
+    // $(`#${objectiveId}`).html(
+    //   '<option data-trans-relatedstrategy class="Resources" value="" selected="" disabled=""></option>'
+    // );
 
-    Kpi_Related_Goal.g.array.forEach(function (item, i, arr) {
-      $(`#${objectiveId}`).append(
-        '<option option-id="' +
-        Kpi_Related_Goal.g.array[i].id +
-        '" value="' +
-        Kpi_Related_Goal.g.array[i].code +
-        '">' +
-        Kpi_Related_Goal.g.array[i].name +
-        "</option>"
-      );
-    });
+    // Kpi_Related_Goal.g.array.forEach(function (item, i, arr) {
+    //   $(`#${objectiveId}`).append(
+    //     '<option option-id="' +
+    //     Kpi_Related_Goal.g.array[i].id +
+    //     '" value="' +
+    //     Kpi_Related_Goal.g.array[i].code +
+    //     '">' +
+    //     Kpi_Related_Goal.g.array[i].name +
+    //     "</option>"
+    //   );
+    // });
 
 
 
