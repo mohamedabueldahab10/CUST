@@ -183,7 +183,7 @@ var Information_Form = [
         descPhraseEn: "Related Objective Sector",
         state: 'disabled',
         ToggleName: "Sector",
-        dontSubmit: true,
+        // dontSubmit: true,
       },
       {
         "InternalName": "SubSector",
@@ -207,7 +207,7 @@ var Information_Form = [
         descPhraseAr: "وكالة الهدف المرتبط",
         descPhraseEn: "Related Objective DeputyShip",
         ToggleName: "SubSector",
-        dontSubmit: true,
+        // dontSubmit: true,
       },
       {
         InternalName: 'Classification',

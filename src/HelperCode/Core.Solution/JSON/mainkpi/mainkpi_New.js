@@ -128,7 +128,7 @@ var Information_Form = [
         type: 'lookupWithQuery',
         queryField: 'EntityType',
         queryFieldType: 'dropdownValues', //ex: "Choice"
-        dontSubmit: true,
+        // dontSubmit: true,
         queryFieldValue: 'Sector',
         dynamic: 'parent',
         source: 'Internal Entities',
@@ -152,7 +152,7 @@ var Information_Form = [
         source: 'Internal Entities',
         // "isSector": "True",
         // "EntityType": "Department",
-        dontSubmit: true,
+        // dontSubmit: true,
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
