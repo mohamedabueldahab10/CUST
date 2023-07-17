@@ -60,23 +60,23 @@ var Information_Form = [
         targetelement: 'Weight',
       },
 
-      // {
-      //     "InternalName": "Completed",
-      //     "DisplayNameEn": "Completed",
-      //     "DisplayName": "حالة الاكتمال",
-      //     "type": "yesnoradio",
-      //     options: {
-      //         choices: [{
-      //             display: 'yes',
-      //             value: 'yes'
-      //         },
-      //         {
-      //             display: 'no',
-      //             value: 'no'
-      //         }
-      //         ]
-      //     }
-      // },
+      {
+        "InternalName": "Completed",
+        "DisplayNameEn": "Completed",
+        "DisplayName":"اكتمال الموافقة",
+          "type": "yesnoradio",
+          options: {
+              choices: [{
+                  display: 'yes',
+                  value: 'yes'
+              },
+              {
+                  display: 'no',
+                  value: 'no'
+              }
+              ]
+          }
+      },
       {
         InternalName: 'Delivered',
         DisplayName: 'تم التسليم',
