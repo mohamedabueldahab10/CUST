@@ -17,16 +17,16 @@ var Listing_Info = [
         infilter: true
 
     },
-    {
-        "InternalName": "KPIType",
-        "DisplayNameEn": "KPI Type",
-         "DisplayName": "نوع المؤشر",
-        "type":"text",
-        inlisting: true,
-        infilter: true,
-        needTrans:true,
+    // {
+    //     "InternalName": "KPIType",
+    //     "DisplayNameEn": "KPI Type",
+    //      "DisplayName": "نوع المؤشر",
+    //     "type":"text",
+    //     inlisting: true,
+    //     infilter: true,
+    //     needTrans:true,
        
-    } ,
+    // } ,
     // {
     //     "InternalName": "Owner",
     //     "DisplayNameEn": "Owner",
@@ -81,33 +81,33 @@ var Listing_Info = [
     //     needTrans:true,
        
     // } ,
-    // {
-    //     "InternalName": "PeriodType",
-    //     "DisplayName": "تكرار القياس",
-    //     "DisplayNameEn": "Period Type",
-    //     "type": "text",
-    //     inlisting: true,
-    //     infilter: true,
-    //     needTrans:true
-    // },
-    // {
-    //     "InternalName": "Sector",
-    //     "DisplayName": "القطاع",
-    //     "DisplayNameEn": "Sector",
-    //     "type": "lookup",
-    //     "localStorageVariable":"Dynamo_Internal Entities",
-    //     inlisting: true,
-    //     infilter: true
-    // },
-    // {
-    //     "InternalName": "SubSector",
-    //     "DisplayName": "الوكالات",
-    //     "DisplayNameEn": "Departments",
-    //     "type": "lookup",
-    //     "localStorageVariable":"Dynamo_Internal Entities",
-    //     inlisting: true,
-    //     infilter: true
-    // },
+    {
+        "InternalName": "PeriodType",
+        "DisplayName": "تكرار القياس",
+        "DisplayNameEn": "Period Type",
+        "type": "text",
+        inlisting: true,
+        infilter: true,
+        needTrans:true
+    },
+    {
+        "InternalName": "Sector",
+        "DisplayName": "القطاع",
+        "DisplayNameEn": "Sector",
+        "type": "lookup",
+        "localStorageVariable":"Dynamo_Internal Entities",
+        inlisting: true,
+        infilter: true
+    },
+    {
+        "InternalName": "SubSector",
+        "DisplayName": "الوكالات",
+        "DisplayNameEn": "Departments",
+        "type": "lookup",
+        "localStorageVariable":"Dynamo_Internal Entities",
+        inlisting: true,
+        infilter: true
+    },
     
     // {
     //     "InternalName": "MesurePriority",

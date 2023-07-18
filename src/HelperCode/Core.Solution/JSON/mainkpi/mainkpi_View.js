@@ -1096,13 +1096,13 @@ var Information_Form = [
         // state: 'disabled',
         //editableBy: "PerformanceLeader",
       },
-      // {
-      //   InternalName: 'PerformanceAnalysis',
-      //   DisplayNameEn: 'Performance Analysis',
-      //   DisplayName: 'تحليل الأداء',
-      //   maxchar: '500',
-      //   type: 'multiline',
-      // },
+      {
+        InternalName: 'PerformanceAnalysis',
+        DisplayNameEn: 'Performance Analysis',
+        DisplayName: 'تحليل الأداء',
+        maxchar: '500',
+        type: 'multiline',
+      },
     ],
   },
   // {

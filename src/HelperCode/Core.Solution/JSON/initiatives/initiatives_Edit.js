@@ -114,24 +114,28 @@ var Information_Form = [
             //   value: 'implementationnotstarted',
             //   display: 'implementationnotstarted',
             // },
-            { value: 'executioninitiative', display: 'executioninitiative', otherFields: [
-              { fieldName: 'InitiativeProgressStatus', value: '' },
-              { fieldName: 'InitiativeProgressStatus', value: 'stat3' },
-              // { fieldName: 'DraftStatus', value: '' },
-            ] },
+            { value: 'executioninitiative', display: 'executioninitiative', 
+            // otherFields: [
+            //   // { fieldName: 'InitiativeProgressStatus', value: '' },
+            //   // { fieldName: 'InitiativeProgressStatus', value: 'stat3' },
+            //   // { fieldName: 'DraftStatus', value: '' },
+            // ]
+          },
             { value: 'complete', display: 'complete' },
             { value: 'canceled', display: 'canceled', 
-            otherFields: [
-              { fieldName: 'InitiativeProgressStatus', value: '' },
-              { fieldName: 'InitiativeProgressStatus', value: 'stat7' },
-              // { fieldName: 'DraftStatus', value: '' },
-            ], },
+            // otherFields: [
+            //   { fieldName: 'InitiativeProgressStatus', value: '' },
+            //   { fieldName: 'InitiativeProgressStatus', value: 'stat7' },
+            //   // { fieldName: 'DraftStatus', value: '' },
+            // ], 
+          },
             { value: 'onhold', display: 'onhold',
-            otherFields: [
-              { fieldName: 'InitiativeProgressStatus', value: '' },
-              { fieldName: 'InitiativeProgressStatus', value: 'stat6' },              
-              // { fieldName: 'DraftStatus', value: '' },
-            ], },
+            // otherFields: [
+            //   { fieldName: 'InitiativeProgressStatus', value: '' },
+            //   { fieldName: 'InitiativeProgressStatus', value: 'stat6' },              
+            //   // { fieldName: 'DraftStatus', value: '' },
+            // ], 
+          },
             // { value: 'closureinitiative', display: 'closureinitiative' }
           ],
         },
@@ -697,20 +701,20 @@ var Information_Form = [
       //     "type": "string",
       // },
 
-      {
-        InternalName: 'PlannedPercentageCompleted',
-        DisplayName: 'نسبة اكتمال المبادرة المخططة ',
-        DisplayNameEn: 'Planned Percentage Completed',
-        type: 'floatpercentage',
-        // "state": "disabled"
-      },
-      {
-        InternalName: 'ActualPercentageCompleted',
-        DisplayName: 'نسبة الإكتمال الفعلية ',
-        DisplayNameEn: 'Actual Percentage Completed',
-        type: 'floatpercentage',
-        // "state": "disabled"
-      },
+      // {
+      //   InternalName: 'PlannedPercentageCompleted',
+      //   DisplayName: 'نسبة اكتمال المبادرة المخططة ',
+      //   DisplayNameEn: 'Planned Percentage Completed',
+      //   type: 'floatpercentage',
+      //   // "state": "disabled"
+      // },
+      // {
+      //   InternalName: 'ActualPercentageCompleted',
+      //   DisplayName: 'نسبة الإكتمال الفعلية ',
+      //   DisplayNameEn: 'Actual Percentage Completed',
+      //   type: 'floatpercentage',
+      //   // "state": "disabled"
+      // },
       // {
       //     "InternalName": "DelayPercentage",
       //     "DisplayName": "نسبة التأخير ",

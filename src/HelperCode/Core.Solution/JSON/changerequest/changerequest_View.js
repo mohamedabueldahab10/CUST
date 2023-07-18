@@ -16,6 +16,14 @@ window.Information_Form = [
 			] },
 		  ],
 		subFields: [
+					{
+				"InternalName": "Title",
+				"DisplayNameEn": "Title",
+				"DisplayName": "رمز طلب التغيير",
+				"type": "string",
+				// "validation": "required",
+				"maxchar": "250"
+			},
 			{
 				InternalName: "moduleSelect",
 				DisplayNameEn: "Select Type",
@@ -73,6 +81,7 @@ window.Information_Form = [
 				InternalName: "UpdateType",
 				DisplayName: "نوع طلب التغيير",
 				DisplayNameEn: "Change Request Type",
+				display: "none",
 				type: "dropdownValues",
 				options: {
 					choices: [
