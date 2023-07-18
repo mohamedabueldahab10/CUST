@@ -701,20 +701,20 @@ var Information_Form = [
       //     "type": "string",
       // },
 
-      {
-        InternalName: 'PlannedPercentageCompleted',
-        DisplayName: 'نسبة اكتمال المبادرة المخططة ',
-        DisplayNameEn: 'Planned Percentage Completed',
-        type: 'floatpercentage',
-        // "state": "disabled"
-      },
-      {
-        InternalName: 'ActualPercentageCompleted',
-        DisplayName: 'نسبة الإكتمال الفعلية ',
-        DisplayNameEn: 'Actual Percentage Completed',
-        type: 'floatpercentage',
-        // "state": "disabled"
-      },
+      // {
+      //   InternalName: 'PlannedPercentageCompleted',
+      //   DisplayName: 'نسبة اكتمال المبادرة المخططة ',
+      //   DisplayNameEn: 'Planned Percentage Completed',
+      //   type: 'floatpercentage',
+      //   // "state": "disabled"
+      // },
+      // {
+      //   InternalName: 'ActualPercentageCompleted',
+      //   DisplayName: 'نسبة الإكتمال الفعلية ',
+      //   DisplayNameEn: 'Actual Percentage Completed',
+      //   type: 'floatpercentage',
+      //   // "state": "disabled"
+      // },
       // {
       //     "InternalName": "DelayPercentage",
       //     "DisplayName": "نسبة التأخير ",
