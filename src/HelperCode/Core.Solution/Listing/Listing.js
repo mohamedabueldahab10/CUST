@@ -40,9 +40,9 @@ window.indexoflistingexternalproject = 0;
 var taskClicked = 'relatedTasks', allTasksClicked = false, getNewFilterTask = false, isViewMoreClicked = false;
 
 var emptyData = require('../../../HelperRessources/img/empty-data.png');
-// var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
+var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
 // var emptyData = ''
-var exportExcel = '';
+// var exportExcel = ''
 //all data filter array
 allDataFilterArr = []
 //
