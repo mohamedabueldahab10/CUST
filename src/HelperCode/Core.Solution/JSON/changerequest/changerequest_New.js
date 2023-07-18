@@ -1169,10 +1169,6 @@ window.Information_Form = [
 				InternalName: "UpdateType",
 				descPhraseAr: "تغيير عام: تعديل بيانات",
 				descPhraseEn: "General change: Edit data", 
-				descPhraseAr: "تغيير عام: تعديل بيانات",
-				descPhraseEn: "General change: Edit data", 
-				descPhraseAr: "تغيير عام: تعديل بيانات",
-				descPhraseEn: "General change: Edit data", 
 				DisplayName: "نوع طلب التغيير",
 				DisplayNameEn: "Change Request Type",
 				display: "none",
@@ -1252,8 +1248,8 @@ window.Information_Form = [
 				DisplayNameEn: "Level",
 				type: "string",
 				validation: "required",
-				descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
-				descPhraseEn: "max length of letters equal 255", 
+				descPhraseAr: "عالي - متوسط - منخفض",
+				descPhraseEn: "High - Medium - Low", 
 			},
 			{
 				InternalName: "Description",
@@ -1262,8 +1258,8 @@ window.Information_Form = [
 				type: "multiline",
 				maxchar: 5000,
 				validation: "required",
-				descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-				descPhraseEn: "max length of letters equal 5000", 
+				descPhraseAr: "التغييرات المطلوبة",
+				descPhraseEn: "Required changes", 
 			},
 			{
 				InternalName: "ChangeJustifications0",
@@ -1272,8 +1268,8 @@ window.Information_Form = [
 				type: "multiline",
 				maxchar: 5000,
 				validation: "required",
-				descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-				descPhraseEn: "max length of letters equal 5000", 
+				descPhraseAr:" اسباب التغيير",
+				descPhraseEn: "Justifications for change", 
 			},
 			//
 
