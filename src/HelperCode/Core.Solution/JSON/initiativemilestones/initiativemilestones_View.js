@@ -112,6 +112,17 @@ var Information_Form = [
         type: 'multiline',
         maxchar: '500',
       },
+      // {
+      //   InternalName: "WFStage",
+      //   DisplayName: "المرحلة",
+      //   DisplayNameEn: "Stage",
+      //   type: 'lookup',
+      //   // validation: 'required',
+      //   source: "Tasks Configuration",
+      //   Dispfieldkey: "TaskNameAr",
+      //   DispfieldkeyEn: 'TaskNameEn',
+      //   valfieldkey: "Title",
+      //   },
     ],
   },
   // {

@@ -42,6 +42,15 @@ var Listing_Info = [
 		inlisting: true,
 		infilter: true
 	},
+	// {
+	// 	InternalName: "WFStage",
+	// 	DisplayName: "المرحلة",
+	// 	DisplayNameEn: "WFStage",
+	// 	type: "lookup",
+	// 	localStorageVariable: "Dynamo_Tasks Configuration",
+	// 	inlisting: true,
+	// 	infilter: true,
+	//   },
 	{
 		"InternalName": "Completed",
 		"DisplayNameEn": "Completed",

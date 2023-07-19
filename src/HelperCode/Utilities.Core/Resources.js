@@ -84,7 +84,7 @@
     pr03medium: "متوسط الاهمية",
     // "pr01veryimportant": "مُلحة",
     // "pr02important": "عالي",
-    // "pr03medium": "متوسط",
+    deleted: "محذوف",
     pr04low: "منخفض",
     //lesson leanred type
     strongpoint: "  نقطة قوة تم إثباتها",
@@ -1186,6 +1186,7 @@
     pr02important: "High",
     pr03medium: "Medium",
     pr04low: "Low",
+    deleted: "Deleted",
     //Classification lesson learned
     domainmanagement: "Domain management",
     concerned: "Concerned",

@@ -6710,7 +6710,7 @@ var Access_Project_Info_Request = {
         console.log("YOU Can creat a milestone")
       } else {
         if (!isWF && !IsZeroBudgetProject && !User_isClosureStatus && ProjectWorkingStatus != 'stat14') {
-          if (Create_Access.includes("milestones") || Edit_Access.includes("milestones")) {
+          if (Create_Access.includes("milestones")) {
             Get_Milestones.init()
           }
         }
@@ -7918,7 +7918,7 @@ window.Get_Initiative_Info_Request = {
         console.log("YOU Can creat an initiative milestone")
       } else {
         if (!isWF && !IsZeroBudgetProject) {
-          if (Create_Access.includes("initiativemilestones") || Edit_Access.includes("initiativemilestones")) {
+          if (Create_Access.includes("initiativemilestones")) {
             Get_Milestones.init()
           }
         }
