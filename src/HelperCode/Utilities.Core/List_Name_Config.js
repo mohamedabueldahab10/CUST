@@ -742,7 +742,7 @@ var PageArray = [
 	},
 	{
 		pagename: "KnowledgeBase.aspx",
-		Title: "أسس المعرفة",
+		Title: "مركز المعرفة",
 		TitleEn: "Knowledge Base",
 	},
 ];
