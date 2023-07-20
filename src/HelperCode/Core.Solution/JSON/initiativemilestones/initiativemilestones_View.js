@@ -114,7 +114,7 @@ var Information_Form = [
       },
       {
         InternalName: "WFStage",
-        DisplayName: "المرحلة",
+        DisplayName: " المرحلة",
         DisplayNameEn: "Stage",
         type: 'lookup',
         // validation: 'required',
