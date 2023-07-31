@@ -1272,7 +1272,7 @@ var Deliverables_Info_Request = {
       itemname = oListItem.get_item("Name") || No_Data;
       itemtitle = oListItem.get_item("Title") || No_Data;
       // itemstatus = oListItem.get_item('Status') || No_Data;
-      itemdelivered = oListItem.get_item("Completed") || "nodata";
+      itemdelivered = oListItem.get_item("Delivered") || "nodata";
       itemweight = oListItem.get_item("Weight")
         ? oListItem.get_item("Weight") + "%"
         : No_Data;
@@ -1585,7 +1585,7 @@ var Milestones_Info_Request = {
       );
       itemPlannedClosureDateByLanguage = initiativeHomeInfo_Request.g.dateConvert(oListItem.get_item('PlannedDate'));
 
-      itemdelivered = oListItem.get_item("Completed") || "nodata";
+      itemdelivered = oListItem.get_item("Delivered") || "nodata";
       // item4 = oListItem.get_item('Status') || No_Data;
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
