@@ -77,6 +77,7 @@ window.Information_Form = [
 					{ value: "lmscrmsMainKPI", fields: ["CRRelatedMainKpis", "lmskpi"] }, //we can put more than 1  field
 				],
 			},
+	
 			{
 				InternalName: "UpdateType",
 				DisplayName: "نوع طلب التغيير",
@@ -691,6 +692,17 @@ window.Information_Form = [
 				maxchar: 5000,
 				// validation: "required",
 			},
+			{
+				InternalName: "WFStage",
+				DisplayName: " المرحلة",
+				DisplayNameEn: "Stage",
+				type: 'lookup',
+				// validation: 'required',
+				source: "Tasks Configuration",
+				Dispfieldkey: "TaskNameAr",
+				DispfieldkeyEn: 'TaskNameEn',
+				valfieldkey: "Title",
+				},
 			//
 
 			// {

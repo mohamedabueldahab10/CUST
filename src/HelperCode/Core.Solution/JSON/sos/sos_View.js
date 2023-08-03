@@ -243,6 +243,17 @@ var Information_Form = [
         //   { value: 'yes', fields: ['PillarName'] },
         // ]
       },
+      {
+				InternalName: "WFStage",
+				DisplayName: " المرحلة",
+				DisplayNameEn: "Stage",
+				type: 'lookup',
+				// validation: 'required',
+				source: "Tasks Configuration",
+				Dispfieldkey: "TaskNameAr",
+				DispfieldkeyEn: 'TaskNameEn',
+				valfieldkey: "Title",
+				},
     //   {
     //     InternalName: 'RelatedJobStrategy',
     //     DisplayNameEn: 'Related Job Market Strategy',
