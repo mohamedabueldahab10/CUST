@@ -482,16 +482,16 @@ var Information_Form = [
       },
 
       {
-        InternalName: "Stage",
-        DisplayName: "الطور",
+        InternalName: "WFStage",
+        DisplayName: " المرحلة",
         DisplayNameEn: "Stage",
-        type: "lookup",
-        //from other list:
-        source: "Stages",
-        Dispfieldkey: "StageName",
-        DispfieldkeyEn: "StageNameEn",
+        type: 'lookup',
+        // validation: 'required',
+        source: "Tasks Configuration",
+        Dispfieldkey: "TaskNameAr",
+        DispfieldkeyEn: 'TaskNameEn',
         valfieldkey: "Title",
-      },
+        },
 
       {
         InternalName: "Phase",
