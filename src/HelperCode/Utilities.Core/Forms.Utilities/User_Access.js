@@ -2550,7 +2550,7 @@ window.userCalls = {
 
         Edit_Access = [
           // for initiative
-          // "initiatives",
+          "initiatives",
           "initiativedeliverables",
           "initiativemilestones",
           "initiativerisks",
