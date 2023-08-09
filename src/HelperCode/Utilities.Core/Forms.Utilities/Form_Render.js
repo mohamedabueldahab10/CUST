@@ -150,7 +150,7 @@ window.ListInfo = {
     var htmlBuilder = isWF
       ? '<div class="section1 approvalHeader col-12"><div class="d-flex justify-content-between w-100"><div class=""><span class="bold Resources" data-trans-' +
       USERlistkey +
-      '></span>' + ' ' + '<span class="mx-3 wf-project-name"></span></div><div class=""><span class="bold Resources" data-trans-taskname></span><span class="mx-3 wf-task-name"></span></div></div></div><h2 class="approvalHeader Resources" data-trans-taskformtitle>النموذج المعتمد</h2>'
+      '></span>' + ' ' + '<span class="mx-3 wf-project-name"></span></div><div class=""><span class="bold Resources" data-trans-taskname></span><span class="mx-3 wf-task-name"></span></div></div></div><h2 class="approvalHeader Resources"></h2>'
       : "";
 
     // var htmlBuilder = "";
@@ -8153,7 +8153,7 @@ window.View_ListInfo = {
     var htmlBuilder = isWF
       ? '<div class="section1 approvalHeader col-12"><div class="d-flex justify-content-between w-100"><div class=""><span class="bold Resources" data-trans-' +
       USERlistkey +
-      '></span>' + ' ' + '<span class="mx-3 wf-project-name"></span></div><div class=""><span class="bold Resources" data-trans-taskname></span><span class="mx-3 wf-task-name"></span></div></div></div><h2 class="approvalHeader Resources" data-trans-taskformtitle>النموذج المعتمد</h2>'
+      '></span>' + ' ' + '<span class="mx-3 wf-project-name"></span></div><div class=""><span class="bold Resources" data-trans-taskname></span><span class="mx-3 wf-task-name"></span></div></div></div><h2 class="approvalHeader Resources"></h2>'
       : "";
 
     var Label, Description;
