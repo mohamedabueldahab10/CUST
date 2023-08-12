@@ -492,6 +492,7 @@
 
     strategickpi: " مؤشر وزارة",
     vrokpi: "مؤشر رؤية",
+    inphase: "المرحلة",
     lmskpi: "مؤشر سوق عمل",
 
     completionpercentage: "نسبة الإنجاز",
@@ -2153,6 +2154,7 @@
     taskhistory: "Task History",
     taskdecision: "Decision",
     enabled: "Enabled",
+    inphase: "Phase",
     disabled: "Disabled",
     deletion: "Delete",
     multiselecterr: "should choose at least one option",
