@@ -516,9 +516,39 @@ var Information_Form = [
       {
         InternalName: 'DeliverableSuccessKPI',
         DisplayNameEn: 'Deliverable Success KPI',
-        DisplayName: 'مقياس نجاح المخرج  (إن وجد)',
-        type: 'string',
+        DisplayName: 'مقياس نجاح المخرج',
+        type: 'multiline',
       },
+      {
+        InternalName: 'Description',
+        DisplayNameEn: 'Description',
+        DisplayName: 'وصف المخرج',
+        maxchar: 5000,
+        type: 'multiline',
+        // validation: 'required',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
+      },
+      {
+        InternalName: 'Classification',
+        DisplayName: 'تصنيف المخرج',
+        DisplayNameEn: 'Classification',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            {
+              display: 'operationally',
+              value: 'operationally',
+            },
+            {
+              display: 'transformationally',
+              value: 'transformationally',
+            },
+          ],
+        },
+      
+      },
+  
       {
         InternalName: 'Target',
         DisplayNameEn: 'Target',
