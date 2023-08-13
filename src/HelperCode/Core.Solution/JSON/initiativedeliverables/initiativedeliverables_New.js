@@ -62,6 +62,7 @@ var Information_Form = [
         InternalName: 'Classification',
         DisplayName: 'تصنيف المخرج',
         DisplayNameEn: 'Classification',
+        validation: 'required',
         type: 'dropdownValues',
         options: {
           choices: [
@@ -83,7 +84,7 @@ var Information_Form = [
         DisplayName: 'وصف المخرج',
         maxchar: 5000,
         type: 'multiline',
-        validation: 'required',
+        // validation: 'required',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
       },

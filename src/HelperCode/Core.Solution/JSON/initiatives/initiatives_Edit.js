@@ -1,6 +1,6 @@
 var Information_Form = [
   {
-    label: 'المبادرات',
+    label: 'المبادرة',
     labelEn: 'Initiative Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
@@ -1198,7 +1198,7 @@ var Information_Form = [
         DisplayName: 'وصف المخرج',
         maxchar: 5000,
         type: 'multiline',
-        validation: 'required',
+        // validation: 'required',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
       },
@@ -1207,6 +1207,7 @@ var Information_Form = [
         DisplayName: 'تصنيف المخرج',
         DisplayNameEn: 'Classification',
         type: 'dropdownValues',
+        validation: 'required',
         options: {
           choices: [
             {

@@ -1,6 +1,6 @@
 var Information_Form = [
   {
-    label: 'المبادرات',
+    label: 'المبادرة',
     labelEn: 'Initiative Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
