@@ -20,7 +20,7 @@ export default class GuideLineBook extends React.Component<
 
 
   }
-  guideLineBook = this.props.isArabic ? "كتاب المبادئ التوجيهية" : "Guidance Material Book"
+  guideLineBook = this.props.isArabic ? "كتاب المواد التوجيهية والنماذج" : "Guidelines and templates book"
   bookName = this.props.isArabic ? "اسم الملف" : "File Name"
   bookType = this.props.isArabic ? "نوع الملف" : "File Type"
   date =this.props.isArabic ? "التاريخ" : "Date"

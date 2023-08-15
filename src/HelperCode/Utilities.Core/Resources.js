@@ -1100,7 +1100,7 @@
     bookname: "اسم الملف",
 		booktype: "نوع الملف",
     takeaction: "تنزيل",
-		guidelinebook: "كتاب المبادئ التوجيهية",
+		guidelinebook: "كتاب المواد التوجيهية والنماذج",
     equationerr:"هنالك مشكلة بالمعادلة المدخلة,الرجاء التأكد منها",
     crinfomsg:"مؤشر التغيير على مستوى الحقل"
   },
@@ -2219,7 +2219,7 @@
     bookname: "File Name",
 		booktype: "File Type",
     takeaction: "Download",
-		guidelinebook: "Guidance Material Book",
+		guidelinebook: "Guidelines and templates books",
     equationerr:"there is a problem with equation, please check it",
     crinfomsg: "Change indicator on field level",
 
