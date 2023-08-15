@@ -18,18 +18,15 @@ var Information_Form  = [
             //     "type":"string" 
             // },
             {
-                "InternalName": "Source",
-                "DisplayName":"المصدر",
-                "DisplayNameEn": "Source",
-                "type":"dropdownValues",
-                options:{
-                    choices:
-                    [
-                        { display: 'sector', value: 'sector' },
-                        { display: 'epmo', value: 'epmo' }
-                    ]
-                }
-            },
+                InternalName: 'Source',
+                DisplayName: 'المصدر',
+                DisplayNameEn: 'Source',
+                type: 'string',
+                // validation: 'required',
+                // options: {
+                //   choices: ['القطاع', 'مكتب ادارة المشاريع المؤسسي '],
+                // },
+              },
             {
                 "InternalName": "Date",
                 "DisplayName":"التاريخ",

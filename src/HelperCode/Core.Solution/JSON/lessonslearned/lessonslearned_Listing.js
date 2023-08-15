@@ -13,7 +13,7 @@ var Listing_Info = [
         "DisplayName": "المصدر",
         "DisplayNameEn": "Source",
         "type": "text",
-        needTrans: true,
+        // needTrans: true,
         inlisting: true,
         infilter: true
     },

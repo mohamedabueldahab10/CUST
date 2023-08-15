@@ -21,7 +21,7 @@ export default class LessonsLearned extends React.Component<
 
 	noData = this.props.isArabic ? "لا يوجد" : "No Data"
 	lessonsLearned = this.props.isArabic ? "مركز الدرس المستفاد" : "Lessons Learned"
-	lessonTitle = this.props.isArabic ? "العنوان" : "Title"
+	lessonTitle = this.props.isArabic ? "الرمز" : "Title"
 	date = this.props.isArabic ? "التاريخ" : "Date"
 	type = this.props.isArabic ? "النوع" : "Type"
 	source = this.props.isArabic ? "المصدر" : "Source"
@@ -90,9 +90,9 @@ export default class LessonsLearned extends React.Component<
 											href={`/SitePages/View.aspx?ListKey=lessonslearned&IID=${el.Id}`}
 										>
 											<div className="d-inline-flex flex-column col-3">
-												<h4 className="acc-title">{el.Name}</h4>
+												<h4 className="acc-title">{el.Title}</h4>
 												<span className="des-13">
-													<span className="state-val Resources" data-trans-title>
+													<span className="state-val Resources" data-trans-code>
 														{this.lessonTitle}
 													</span>
 												</span>
@@ -107,7 +107,7 @@ export default class LessonsLearned extends React.Component<
 													</span>
 												</span>
 											</div>
-											<div className="d-inline- wordBreak flex-column col-3">
+											{/* <div className="d-inline- wordBreak flex-column col-3">
 												<h4 className="acc-title  Resources">
 													{el.Classification}
 												</h4>
@@ -116,9 +116,9 @@ export default class LessonsLearned extends React.Component<
 														 {this.type}
 													</span>
 												</span>
-											</div>
+											</div> */}
 											<div className="d-inline-flex wordBreak flex-column pr-03-medium col-3">
-												<h4 className="acc-title  Resources">{el.Source}</h4>
+												<h4 className="acc-title  Resources" >{el.Source}</h4>
 												<span className="des-13">
 													<span className="state-val Resources" data-trans-source>
 														 {this.source}
