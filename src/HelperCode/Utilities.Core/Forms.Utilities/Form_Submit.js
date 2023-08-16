@@ -1647,7 +1647,7 @@ window.Edit_Data_Submit = {
           basedOnFieldCurrentValue = $(`#${basedOnFieldName}`).val()
         }
 
-        debugger
+        
         var checkWfStage = $('#WFStage').val()
         if (checkWfStage != "approved" && checkWfStage != "rejected") {
 
