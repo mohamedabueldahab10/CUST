@@ -192,7 +192,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            // {group:"Development Unit",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -273,7 +273,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            // {group:"Development Unit",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -339,11 +339,12 @@ var Information_Form = [
               },
             ],
           },
-        ],   security: {
+        ], 
+          security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            // {group:"Development Unit",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -613,23 +614,19 @@ var Information_Form = [
         },
       },
       {
-        InternalName: 'Sector',
-        DisplayName: 'القطاع',
-        DisplayNameEn: 'Sector',
-        // type: 'lookup',
-        type: 'lookupWithQuery',
-        queryField: 'EntityType',
-        queryFieldType: 'dropdownValues', //ex: "Choice"
-        queryFieldValue: 'Sector',
-        dynamic: 'parent',
-        validation: 'required',
+        InternalName: "Sector",
+        DisplayName: "القطاع",
+        DisplayNameEn: "Sector",
+        type: "lookup",
+        validation: "required",
         //from other list:
-        source: 'Internal Entities',
-        // isSector: 'True',
-        // EntityType: 'Sector',
-        Dispfieldkey: 'Name',
-        DispfieldkeyEn: 'NameEn',
-        valfieldkey: 'Title',
+        source: "Internal Entities",
+        isSector: "True",
+        EntityType: "Sector",
+        Dispfieldkey: "Name",
+        DispfieldkeyEn: "NameEn",
+        valfieldkey: "Title",
+        disableOnWfTaskStage : "S05,S09",
         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
@@ -639,23 +636,26 @@ var Information_Form = [
 
           ]
         },
+        // ToggleDisabledName:"Sector"
+        // security: {
+        //   groups: ["VRO_E", "LMS_E", ],
+        // },
       },
       {
-        InternalName: 'SubSector',
-        DisplayName: 'الوكالة',
-        DisplayNameEn: 'Deputyship',
-        type: 'lookup',
-        //from other list:
-        source: 'Internal Entities',
-        // isSector: 'True',
-        // EntityType: 'Department',
-        Dispfieldkey: 'Name',
-        DispfieldkeyEn: 'NameEn',
-        valfieldkey: 'Title',
-        dynamic: 'Sector', //InternalName Of Parent field
-        filterField: 'ParentEntity', //InternalName Of Parent field
-        filterFieldType: 'Text', //Type In Sharepoint List for Parent field
+        InternalName: "SubSector",
+        DisplayName: "الوكالة",
+        DisplayNameEn: "DeputyShip",
+        type: "lookup",
         validation: 'required',
+        //from other list:
+        source: "Internal Entities",
+        isSector: "True",
+        EntityType: "Department",
+        Dispfieldkey: "Name",
+        DispfieldkeyEn: "NameEn",
+        valfieldkey: "Title",
+        // disableOnWfTaskStage : "S05,S09",
+        // hideOnWfTaskStage  : "S05;S09",
         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
@@ -665,7 +665,10 @@ var Information_Form = [
 
           ]
         },
-        // "state": "disabled"
+        // ToggleDisabledName:"SubSector"
+        // security: {
+        //   groups: ["VRO_E", "LMS_E", ],
+        // },
       },
       // {
       //   InternalName: 'OwnerEmail',
@@ -1201,6 +1204,15 @@ var Information_Form = [
         // validation: 'required',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
+        security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Development Unit",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
       },
       {
         InternalName: 'Classification',
@@ -1208,6 +1220,15 @@ var Information_Form = [
         DisplayNameEn: 'Classification',
         type: 'dropdownValues',
         validation: 'required',
+        security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Development Unit",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
         options: {
           choices: [
             {
