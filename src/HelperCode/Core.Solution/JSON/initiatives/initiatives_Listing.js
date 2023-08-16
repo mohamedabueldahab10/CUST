@@ -42,8 +42,8 @@ var Listing_Info = [
   // {
   {
     InternalName: 'Types',
-    DisplayNameEn: 'Types',
-    DisplayName: 'النوع',
+    DisplayNameEn: 'Strategy Type',
+    DisplayName: 'نوع الاستراتيجية',
     type: 'dropdownValues',
     inlisting: true,
     needTrans: true,

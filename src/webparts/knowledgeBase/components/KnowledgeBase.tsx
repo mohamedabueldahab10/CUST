@@ -36,10 +36,10 @@ export default class KnowledgeBase extends React.Component<
     };
   }
   title1 = isArabic ? "محرك البحث" : "Search";
-  title2 = isArabic ? "كتاب المواد التوجيهية" : "Guidance Material Book";
-  title3 = isArabic ? "جميع مواد مكتب ادارة المشاريع" : "All Project Management Office Materials";
+  title2 = isArabic ? "كتاب المواد التوجيهية والنماذج" : "Guidelines and templates books ";
+  title3 = isArabic ? "المحتويات المرئية لمكتب إدارة المشاريع" : "PMO Visual Contents";
   title4 = isArabic ? "تقرير تحليل زيارة المستخدمين" : "User Visit Analysis Report";
-  title5 = isArabic ? "مركزية الدروس المستفادة" : "Lessons Learned";
+  title5 = isArabic ? "مركز الدروس المستفادة" : "Lessons Learned";
   title6 = isArabic ? "تحديثات النظام" : "System Updates";
   public componentDidMount(): void {
     setTimeout(function () {

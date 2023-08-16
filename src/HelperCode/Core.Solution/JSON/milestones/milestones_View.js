@@ -128,6 +128,17 @@ var Information_Form = [
         DisplayNameEn: 'Show In Report',
         type: 'radio',
       },
+      {
+				InternalName: "WFStage",
+				DisplayName: " المرحلة",
+				DisplayNameEn: "Stage",
+				type: 'lookup',
+				// validation: 'required',
+				source: "Tasks Configuration",
+				Dispfieldkey: "TaskNameAr",
+				DispfieldkeyEn: 'TaskNameEn',
+				valfieldkey: "Title",
+				},
       // {
       //     "InternalName": "SupportDocumentsDescription",
       //     "DisplayNameEn": "Support Documents Description",

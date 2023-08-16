@@ -170,6 +170,7 @@ var initiativeHomeInfo_Request = {
       ProgramTotalCost = oListItem.get_item("ProgramTotalCost") || 0;
       CurrentBudget = oListItem.get_item("CurrentBuget") || 0;
       instage = oListItem.get_item("WFStage") || No_Data;
+      // inphase = oListItem.get_item("Phase") || No_Data;
       projectTypes = oListItem.get_item("Types") || No_Data;
       // stagename = oListItem.get_item("Stage") || No_Data;
       projectSector = oListItem.get_item("Sector") || No_Data;
@@ -358,7 +359,22 @@ var initiativeHomeInfo_Request = {
             ? initiativeStagearr[0].nameEn
             : "";
       }
-
+      // var initiativePhasearr = [];
+      // if (localStorage.getItem("Dynamo_Src_Phases") != null) {
+      //   initiativePhasearr = JSON.parse(localStorage.getItem("Dynamo_Src_Phases"));
+      //   initiativePhasearr = initiativePhasearr.filter(function (a) {
+      //     return a.code === inphase;
+      //   });
+      //   if (
+      //     localStorage.getItem("lng") == null ||
+      //     localStorage.getItem("lng") == "ar"
+      //   ) {
+      //     inphase = initiativePhasearr.length ? initiativePhasearr[0].name : "";
+      //   } else
+      //   inphase = initiativePhasearr.length
+      //       ? initiativePhasearr[0].nameEn
+      //       : "";
+      // }
       // for Portfolio bylangual
       var portfolioarr = [];
       if (localStorage.getItem("Dynamo_Portfolio") != null) {
@@ -449,6 +465,13 @@ var initiativeHomeInfo_Request = {
           instage +
           "</h4>" +
           "</div>" +
+          // '<div class="d-inline-flex flex-column mx-2">' +
+          // '<span data-trans-inphase class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
+          // // '<h4 data-trans-' + initiativetype + ' class="Resources acc-title d-inline-flex black"></h4>' +
+          // '<h4  class="Resources acc-title d-inline-flex black initiativeProjHomeInfoValueStyle"> ' +
+          // inphase +
+          // "</h4>" +
+          // "</div>" +
           // '<div class="d-inline-flex flex-column mx-2">' +
           // '<span class="des-13"><span data-trans-inclassif class="Resources complition-val"></span> ' +
           // '<h4 class="black actual-complete-val">' + initiativeclassification + '</h4></span>' +

@@ -1,6 +1,6 @@
 var Information_Form = [
   {
-    label: 'المبادرات',
+    label: 'المبادرة',
     labelEn: 'Initiative Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
@@ -187,14 +187,14 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         grpfieldkey: 'Title',
-        initiativeCodeInList: true, //value in look up drop down should be related to current project
-        showlink: true,
-        linkedto: "sos",
-        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
-        fieldsinformlvl1: "RelatedStrategy", // fields in form list
-        sourcefieldlvl1: "RelatedStrategy", // field in look up list
-        fieldsinformlvl2: "RelatedObjectiveLevel", // fields in form  list lvl2
-        sourcefieldlvl2: "Types", //  field in look up list lvl2
+        // initiativeCodeInList: true, //value in look up drop down should be related to current project
+        // showlink: true,
+        // linkedto: "sos",
+        // isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+        // fieldsinformlvl1: "RelatedStrategy", // fields in form list
+        // sourcefieldlvl1: "RelatedStrategy", // field in look up list
+        // fieldsinformlvl2: "RelatedObjectiveLevel", // fields in form  list lvl2
+        // sourcefieldlvl2: "Types", //  field in look up list lvl2
         // queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
         // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
         // queryFieldValue: 'sublevel2,sublevel3', // if i need to make the field with filter should add this
@@ -516,9 +516,39 @@ var Information_Form = [
       {
         InternalName: 'DeliverableSuccessKPI',
         DisplayNameEn: 'Deliverable Success KPI',
-        DisplayName: 'مقياس نجاح المخرج  (إن وجد)',
-        type: 'string',
+        DisplayName: 'مقياس نجاح المخرج',
+        type: 'multiline',
       },
+      {
+        InternalName: 'Description',
+        DisplayNameEn: 'Description',
+        DisplayName: 'وصف المخرج',
+        maxchar: 5000,
+        type: 'multiline',
+        // validation: 'required',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
+      },
+      {
+        InternalName: 'Classification',
+        DisplayName: 'تصنيف المخرج',
+        DisplayNameEn: 'Classification',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            {
+              display: 'operationally',
+              value: 'operationally',
+            },
+            {
+              display: 'transformationally',
+              value: 'transformationally',
+            },
+          ],
+        },
+      
+      },
+  
       {
         InternalName: 'Target',
         DisplayNameEn: 'Target',

@@ -70,6 +70,17 @@ var Information_Form = [
         DisplayName: 'التاريخ المخطط للصرف',
         type: 'datetime',
       },
+      {
+				InternalName: "WFStage",
+				DisplayName: " المرحلة",
+				DisplayNameEn: "Stage",
+				type: 'lookup',
+				// validation: 'required',
+				source: "Tasks Configuration",
+				Dispfieldkey: "TaskNameAr",
+				DispfieldkeyEn: 'TaskNameEn',
+				valfieldkey: "Title",
+				},
     ],
   },
   {

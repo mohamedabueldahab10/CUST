@@ -1,6 +1,6 @@
 var Information_Form = [
   {
-    label: 'المبادرات',
+    label: 'المبادرة',
     labelEn: 'Initiative Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
@@ -154,7 +154,7 @@ var Information_Form = [
         DisplayNameEn: 'Related Strategy',
         DisplayName: 'الاستراتيجية المرتبطة',
         type: 'lookup',
-        dontSubmit: true,
+        // dontSubmit: true,
         source: 'GoalStrategy',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
@@ -215,7 +215,7 @@ var Information_Form = [
         InternalName: 'RelatedObjectiveLevel',
         DisplayNameEn: 'Related Objective Level',
         DisplayName: 'مستوى الهدف المرتبط',
-        dontSubmit: true,
+        // dontSubmit: true,
         grandFieldId: 'RelatedStrategy', // we add this field to handle the two field filtration(parent Id in current form)
         childFieldId: 'RelatedObjective', // we add this field to handle the two field filtration (child Id in current form)
         childFieldIdSource: 'Types', // we add this field to handle the two field filtration (child internal name in destination list)
@@ -957,12 +957,43 @@ var Information_Form = [
       {
         InternalName: 'DeliverableSuccessKPI',
         DisplayNameEn: 'Deliverable Success KPI',
-        DisplayName: 'مقياس نجاح المخرج  (إن وجد)',
+        DisplayName: 'مقياس نجاح المخرج',
         type: 'multiline',
         maxchar: 5000,   
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",     
       },
+      {
+        InternalName: 'Description',
+        DisplayNameEn: 'Description',
+        DisplayName: 'وصف المخرج',
+        maxchar: 5000,
+        type: 'multiline',
+        // validation: 'required',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
+      },
+      {
+        InternalName: 'Classification',
+        DisplayName: 'تصنيف المخرج',
+        DisplayNameEn: 'Classification',
+        type: 'dropdownValues',
+        validation: 'required',
+        options: {
+          choices: [
+            {
+              display: 'operationally',
+              value: 'operationally',
+            },
+            {
+              display: 'transformationally',
+              value: 'transformationally',
+            },
+          ],
+        },
+      
+      },
+    
       {
         InternalName: 'Target',
         DisplayNameEn: 'Target',

@@ -459,8 +459,8 @@ var ListArray = [
 	},
 	{
 		strategicpartnershipsvendors: "Vendors",
-		ListingTitle: "الشريك الخارجي",
-		FormTitle:"الشريك الخارجي",
+		ListingTitle: "ادارة الشركاء",
+		FormTitle:"ادارة الشركاء",
 		TitleEn: "Srategic Parternship Vendors",
 		projnav: "Project Navigation",
 		subfolder: true,
@@ -715,8 +715,8 @@ var PageArray = [
 	},
 	{
 		pagename: "Targets.aspx",
-		Title: "المستهدفات",
-		TitleEn: "Targets",
+		Title: "المستهدفات | القيم الفعلية",
+		TitleEn: "Targets | Actuals",
 		listName: "KPIResults"
 	},
 	{

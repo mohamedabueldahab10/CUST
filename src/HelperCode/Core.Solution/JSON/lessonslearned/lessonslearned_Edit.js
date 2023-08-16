@@ -23,13 +23,10 @@ var Information_Form = [
         InternalName: 'Source',
         DisplayName: 'المصدر',
         DisplayNameEn: 'Source',
-        type: 'dropdownValues',
+        type: 'dropdown',
         validation: 'required',
         options: {
-          choices: [
-            { display: 'sector', value: 'sector' },
-            { display: 'epmo', value: 'epmo' },
-          ],
+          choices: ['القطاع', 'مكتب ادارة المشاريع المؤسسي '],
         },
       },
       {

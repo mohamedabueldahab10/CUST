@@ -489,6 +489,17 @@ var Information_Form = [
         DisplayNameEn: 'Created',
         type: 'datetime',
       },
+      {
+				InternalName: "WFStage",
+				DisplayName: " المرحلة",
+				DisplayNameEn: "Stage",
+				type: 'lookup',
+				// validation: 'required',
+				source: "Tasks Configuration",
+				Dispfieldkey: "TaskNameAr",
+				DispfieldkeyEn: 'TaskNameEn',
+				valfieldkey: "Title",
+				},
       // {
       //   InternalName: 'getfile',
       //   DisplayName: 'مرفقات',

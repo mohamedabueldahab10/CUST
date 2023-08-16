@@ -492,6 +492,7 @@
 
     strategickpi: " مؤشر وزارة",
     vrokpi: "مؤشر رؤية",
+    inphase: "المرحلة",
     lmskpi: "مؤشر سوق عمل",
 
     completionpercentage: "نسبة الإنجاز",
@@ -687,6 +688,7 @@
     dataprovider: "مزود البيانات",
     datasource: "مصدر البيانات",
     businesssector: "قطاع الأعمال",
+    code: "الرمز",
     cumulative: "تراكمي",
     complition: "الإمتثال",
     strategic: "الاستراتيجية",
@@ -1099,7 +1101,7 @@
     bookname: "اسم الملف",
 		booktype: "نوع الملف",
     takeaction: "تنزيل",
-		guidelinebook: "كتاب المبادئ التوجيهية",
+		guidelinebook: "كتاب المواد التوجيهية والنماذج",
     equationerr:"هنالك مشكلة بالمعادلة المدخلة,الرجاء التأكد منها",
     crinfomsg:"مؤشر التغيير على مستوى الحقل"
   },
@@ -2153,6 +2155,7 @@
     taskhistory: "Task History",
     taskdecision: "Decision",
     enabled: "Enabled",
+    inphase: "Phase",
     disabled: "Disabled",
     deletion: "Delete",
     multiselecterr: "should choose at least one option",
@@ -2193,6 +2196,7 @@
     epmococ: "EPMO COC",
     mscrkpi: "MS KPI Change Request",
     lmscoc: "LMS COC",
+    code: "Code",
     vroinitiativemilestone: "VRO Initiative Milestone",
     cr: "Change Request",
     spachievements: "Strategic Partnership Achievement",
@@ -2217,7 +2221,7 @@
     bookname: "File Name",
 		booktype: "File Type",
     takeaction: "Download",
-		guidelinebook: "Guidance Material Book",
+		guidelinebook: "Guidelines and templates books",
     equationerr:"there is a problem with equation, please check it",
     crinfomsg: "Change indicator on field level",
 
