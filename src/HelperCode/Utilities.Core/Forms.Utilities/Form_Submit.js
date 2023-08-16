@@ -583,9 +583,9 @@ window.New_Data_Submit = {
           basedOnFieldCurrentValue = $(`#${basedOnFieldName}`).val()
         }
 
-
+        debugger
         var checkWfStage = $('#WFStage').val()
-        if (checkWfStage != "approved" && checkWfStage != "rejected") {
+        if (!checkWfStage) {
 
 
 
@@ -1647,9 +1647,9 @@ window.Edit_Data_Submit = {
           basedOnFieldCurrentValue = $(`#${basedOnFieldName}`).val()
         }
 
-        
+        debugger
         var checkWfStage = $('#WFStage').val()
-        if (checkWfStage != "approved" && checkWfStage != "rejected") {
+        if (!checkWfStage) { 
 
           if (basedOnCondition) {
             if (basedOnFieldValue == basedOnFieldCurrentValue) {
