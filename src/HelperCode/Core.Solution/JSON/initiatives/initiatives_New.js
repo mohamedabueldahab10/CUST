@@ -154,7 +154,7 @@ var Information_Form = [
         DisplayNameEn: 'Related Strategy',
         DisplayName: 'الاستراتيجية المرتبطة',
         type: 'lookup',
-        dontSubmit: true,
+        // dontSubmit: true,
         source: 'GoalStrategy',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
@@ -215,7 +215,7 @@ var Information_Form = [
         InternalName: 'RelatedObjectiveLevel',
         DisplayNameEn: 'Related Objective Level',
         DisplayName: 'مستوى الهدف المرتبط',
-        dontSubmit: true,
+        // dontSubmit: true,
         grandFieldId: 'RelatedStrategy', // we add this field to handle the two field filtration(parent Id in current form)
         childFieldId: 'RelatedObjective', // we add this field to handle the two field filtration (child Id in current form)
         childFieldIdSource: 'Types', // we add this field to handle the two field filtration (child internal name in destination list)
