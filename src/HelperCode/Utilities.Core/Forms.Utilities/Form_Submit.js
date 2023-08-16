@@ -583,17 +583,14 @@ window.New_Data_Submit = {
           basedOnFieldCurrentValue = $(`#${basedOnFieldName}`).val()
         }
 
-        if (basedOnCondition) {
-          if (basedOnFieldValue == basedOnFieldCurrentValue) {
-            el.valueToSet.forEach(item => {
-              if (valueBasedOnParent.includes(item.condition)) {
-                item.values.forEach(field => {
-                  New_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
-                })
-              }
-            })
-          } else if (basedOnFieldValue == "notempty") {
-            if (basedOnFieldCurrentValue) {
+
+        var checkWfStage = $('#WFStage').val()
+        if (checkWfStage != "approved" && checkWfStage != "rejected") {
+
+
+
+          if (basedOnCondition) {
+            if (basedOnFieldValue == basedOnFieldCurrentValue) {
               el.valueToSet.forEach(item => {
                 if (valueBasedOnParent.includes(item.condition)) {
                   item.values.forEach(field => {
@@ -601,17 +598,28 @@ window.New_Data_Submit = {
                   })
                 }
               })
+            } else if (basedOnFieldValue == "notempty") {
+              if (basedOnFieldCurrentValue) {
+                el.valueToSet.forEach(item => {
+                  if (valueBasedOnParent.includes(item.condition)) {
+                    item.values.forEach(field => {
+                      New_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
+                    })
+                  }
+                })
+              }
             }
+          } else {
+            el.valueToSet.forEach(item => {
+              if (valueBasedOnParent.includes(item.condition)) {
+                item.values.forEach(field => {
+                  New_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
+                })
+              }
+            })
           }
-        } else {
-          el.valueToSet.forEach(item => {
-            if (valueBasedOnParent.includes(item.condition)) {
-              item.values.forEach(field => {
-                New_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
-              })
-            }
-          })
         }
+
       })
 
     })
@@ -1639,10 +1647,33 @@ window.Edit_Data_Submit = {
           basedOnFieldCurrentValue = $(`#${basedOnFieldName}`).val()
         }
 
+        debugger
+        var checkWfStage = $('#WFStage').val()
+        if (checkWfStage != "approved" && checkWfStage != "rejected") {
 
+          if (basedOnCondition) {
+            if (basedOnFieldValue == basedOnFieldCurrentValue) {
+              el.valueToSet.forEach(item => {
+                if (valueBasedOnParent.includes(item.condition)) {
+                  item.values.forEach(field => {
+                    Edit_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
+                  })
+                }
+              })
+            } else if (basedOnFieldValue == "notempty") {
+              if (basedOnFieldCurrentValue) {
+                el.valueToSet.forEach(item => {
 
-        if (basedOnCondition) {
-          if (basedOnFieldValue == basedOnFieldCurrentValue) {
+                  if (valueBasedOnParent.includes(item.condition)) {
+                    item.values.forEach(field => {
+
+                      Edit_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
+                    })
+                  }
+                })
+              }
+            }
+          } else {
             el.valueToSet.forEach(item => {
               if (valueBasedOnParent.includes(item.condition)) {
                 item.values.forEach(field => {
@@ -1650,27 +1681,7 @@ window.Edit_Data_Submit = {
                 })
               }
             })
-          } else if (basedOnFieldValue == "notempty") {
-            if (basedOnFieldCurrentValue) {
-              el.valueToSet.forEach(item => {
-
-                if (valueBasedOnParent.includes(item.condition)) {
-                  item.values.forEach(field => {
-
-                    Edit_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
-                  })
-                }
-              })
-            }
           }
-        } else {
-          el.valueToSet.forEach(item => {
-            if (valueBasedOnParent.includes(item.condition)) {
-              item.values.forEach(field => {
-                Edit_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
-              })
-            }
-          })
         }
       })
 
@@ -2508,8 +2519,8 @@ var New_Master_Details_Submit = {
         // get id of master when create to use it in master field of master section
         var newItemMasterLength = $('.Details-Item.NewItem ul[data-fieldtargetlist]').length
         if (newItemMasterLength) {
-          if(New_Master_Details_Submit.g.oListItem && New_Master_Details_Submit.g.oListItem != 'undefined'){
-          masterIdWhenCreate = New_Master_Details_Submit.g.oListItem.get_id();
+          if (New_Master_Details_Submit.g.oListItem && New_Master_Details_Submit.g.oListItem != 'undefined') {
+            masterIdWhenCreate = New_Master_Details_Submit.g.oListItem.get_id();
           }
         }
 
