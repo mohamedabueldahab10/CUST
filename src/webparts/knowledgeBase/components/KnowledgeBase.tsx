@@ -36,7 +36,7 @@ export default class KnowledgeBase extends React.Component<
     };
   }
   title1 = isArabic ? "محرك البحث" : "Search";
-  title2 = isArabic ? "كتاب المواد التوجيهية والنماذج" : "Guidelines and templates books ";
+  title2 = isArabic ? "مكتبة المواد التوجيهية والنماذج" : "Guidelines and templates books ";
   title3 = isArabic ? "المحتويات المرئية لمكتب إدارة المشاريع" : "PMO Visual Contents";
   title4 = isArabic ? "تقرير تحليل زيارة المستخدمين" : "User Visit Analysis Report";
   title5 = isArabic ? "مركز الدروس المستفادة" : "Lessons Learned";
