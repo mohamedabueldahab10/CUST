@@ -192,6 +192,7 @@ var Information_Form = [
         DispfieldkeyEn: 'TaskNameEn',
         valfieldkey: "Title",
         "state": "disabled",
+        display:'none'
         },
       {
         InternalName: 'ActualCompletedDate',

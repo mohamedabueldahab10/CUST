@@ -457,6 +457,18 @@ var Information_Form = [
           ],
         },
       },
+      {
+        InternalName: "WFStage",
+        DisplayName: " المرحلة",
+        DisplayNameEn: "Stage",
+        type: 'lookup',
+        source: "Tasks Configuration",
+        Dispfieldkey: "TaskNameAr",
+        DispfieldkeyEn: 'TaskNameEn',
+        valfieldkey: "Title",
+        "state": "disabled",
+        display:'none'
+        },
     ],
   },
   {
