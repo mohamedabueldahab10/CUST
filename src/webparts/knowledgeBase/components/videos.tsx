@@ -45,7 +45,7 @@ export default class Videos extends React.Component<
 		return (
 			<div className="videoTab">
 				<h2 className="tabContentTitle Resources" data-trans-videoTabTitle>
-					جميع مواد مكتب ادارة المشاريع و مكتب ادارة المشاريع
+				المحتويات المرئية لمكتب إدارة المشاريع
 				</h2>
 				<div className="videosContainer row">
 					<div className="videoPlayer col-12 mb-4">
