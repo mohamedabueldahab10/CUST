@@ -165,7 +165,7 @@
     implementation: "التنفيذ",
     //Request Status
     submitted: "مقدم",
-    approved: "موافق عليه",
+    approved: "مكتمل",
     forapproval: "للموافقة عليها",
     reject: "رفض",
     rejected: "مرفوض",
