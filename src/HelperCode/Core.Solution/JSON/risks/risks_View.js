@@ -26,6 +26,8 @@ var Information_Form = [
         "source":  "Projects",
         "Dispfieldkey":  "Name",
         "valfieldkey":  "Title",
+        showlink: true,
+				linkedto: "projects",
         // "validation": "required"
     },
       {
