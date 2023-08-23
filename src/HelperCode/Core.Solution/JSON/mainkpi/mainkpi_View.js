@@ -348,8 +348,8 @@ var Information_Form = [
       // },
       {
         InternalName: 'NotMeasurableNow',
-        DisplayNameEn: 'Not Measurable Now',
-        DisplayName: 'لايقاس حاليا',
+        DisplayNameEn: 'Measurable Now',
+        DisplayName: 'يقاس حاليا',
         type: 'yesnoradio',
         options: {
           choices: [
