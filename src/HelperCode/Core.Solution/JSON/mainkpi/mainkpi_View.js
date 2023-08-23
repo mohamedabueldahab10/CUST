@@ -637,7 +637,17 @@ var Information_Form = [
         "type": 'dropdownValues',
 
       },
-
+      {
+				InternalName: "WFStage",
+				DisplayName: " المرحلة",
+				DisplayNameEn: "Stage",
+				type: 'lookup',
+				// validation: 'required',
+				source: "Tasks Configuration",
+				Dispfieldkey: "TaskNameAr",
+				DispfieldkeyEn: 'TaskNameEn',
+				valfieldkey: "Title",
+				},
       // {
       //   "InternalName": "Target",
       //   "DisplayNameEn": "Target",
@@ -869,17 +879,7 @@ var Information_Form = [
         type: 'datetime',
         // validation: "required",
       },
-      {
-				InternalName: "WFStage",
-				DisplayName: " المرحلة",
-				DisplayNameEn: "Stage",
-				type: 'lookup',
-				// validation: 'required',
-				source: "Tasks Configuration",
-				Dispfieldkey: "TaskNameAr",
-				DispfieldkeyEn: 'TaskNameEn',
-				valfieldkey: "Title",
-				},
+ 
       // {
       //   InternalName: 'MesureStatus',
       //   DisplayNameEn: 'MesureStatus',
