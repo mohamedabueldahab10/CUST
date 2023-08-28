@@ -481,21 +481,21 @@ var Information_Form = [
         // "state": "disabled"
       },
 
-      {
-        InternalName: "WFStage",
-        DisplayName: " المرحلة",
-        DisplayNameEn: "Stage",
-        type: 'lookup',
-        // validation: 'required',
-        source: "Tasks Configuration",
-        Dispfieldkey: "TaskNameAr",
-        DispfieldkeyEn: 'TaskNameEn',
-        valfieldkey: "Title",
-        },
+      // {
+      //   InternalName: "WFStage",
+      //   DisplayName: " مرحلة سير العمل",
+      //   DisplayNameEn: "Stage",
+      //   type: 'lookup',
+      //   // validation: 'required',
+      //   source: "Tasks Configuration",
+      //   Dispfieldkey: "TaskNameAr",
+      //   DispfieldkeyEn: 'TaskNameEn',
+      //   valfieldkey: "Title",
+      //   },
 
       {
         InternalName: "Phase",
-        DisplayName: "المرحلة",
+        DisplayName: "مرحلة المشروع",
         DisplayNameEn: "Phase",
         type: "lookup",
         //from other list:
