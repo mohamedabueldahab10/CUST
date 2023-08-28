@@ -202,8 +202,8 @@ var Information_Form = [
         source: "Initiatives",
         Dispfieldkey: "Name",
         valfieldkey: "Title",
-        showlink: true,
-				linkedto: "initiatives",
+        // showlink: true,
+				// linkedto: "initiatives",
         // security: {
         //     groups: [
         //         'EPMO', 'System Admin Group', 'SPMO'
