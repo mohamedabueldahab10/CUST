@@ -175,7 +175,7 @@ var ListArray = [
 		FormTitle: "ميثاق المشروع",
 		TitleEn: "Project Charter",
 		projnav: "Project Navigation",
-		projectrelated: true,
+		projectrelated: false,
 		subfolder: true,
 	},
 	{
