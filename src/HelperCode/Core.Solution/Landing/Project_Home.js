@@ -86,6 +86,8 @@ var TLlstMonthCLicked = "";
 
 var projectIsNotActiveStatus = ""
 
+
+
 if (
   localStorage.getItem("lng") == null ||
   localStorage.getItem("lng") == "ar"
@@ -1132,13 +1134,13 @@ var Issues_Info_Request = {
   onSuccess: function (sender, args) {
     var collListItem = Issues_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-    var itemhtml = [
+    var itemhtml = stagename ? [
       '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
       _spPageContextInfo.webAbsoluteUrl +
       "/sitepages/new.aspx?ListKey=issues&PCODE=" +
       Project_Home_Info_Request.g.PCODE +
       '"><i class="icon-plus"></i></a></li>',
-    ],
+    ] : ['<li class="list-group-item  px-0 phome-btn"></li>'],
       itemID,
       itemname,
       itemstatus,
@@ -1213,7 +1215,7 @@ var Issues_Info_Request = {
     $("div#pills-first > ul.list-group").html(itemhtml.join(""));
 
     var checkValidation = Read_Access.includes('issues')
-    if(!checkValidation){
+    if (!checkValidation) {
       $(".issues").hide()
     }
 
@@ -1324,7 +1326,7 @@ var Risks_Info_Request = {
     $("div#pills-second > ul.list-group").html(itemhtml.join(""));
 
     var checkValidation = Read_Access.includes('risks')
-    if(!checkValidation){
+    if (!checkValidation) {
       $(".risks").hide()
     }
 
@@ -1538,10 +1540,10 @@ var Contracts_Info_Request = {
       itemhtml.push("<h3>" + No_Data + "</h3>");
     }
     $("div#pills-fifth > ul.list-group").html(itemhtml.join(""));
-    
-    
+
+
     var checkValidation = Read_Access.includes('contracts')
-    if(!checkValidation){
+    if (!checkValidation) {
       $(".contracts").hide()
     }
 
@@ -1649,7 +1651,7 @@ var LessonsLearned_Info_Request = {
     $("div#pills-sixth > ul.list-group").html(itemhtml.join(""));
 
     var checkValidation = Read_Access.includes('lessonslearned')
-    if(!checkValidation){
+    if (!checkValidation) {
       $(".lessonslearned").hide()
     }
 
@@ -1973,7 +1975,7 @@ var Deliverables_Info_Request = {
     // StagesConfiguration_Info_Request.init();
 
     var checkValidation = Read_Access.includes('deliverables')
-    if(!checkValidation){
+    if (!checkValidation) {
       $(".deliverables").hide()
     }
 
@@ -3991,7 +3993,7 @@ var Get_ProjectStatus_Info = {
     );
 
 
-      
+
     $(".myCompletionStatus").removeClass("statuscolor" + projectProgressStatusSchedule);
     $(".handlecircle").removeClass("circlecolor" + projectProgressStatusSchedule);
 
