@@ -17,6 +17,7 @@ var ActualBudget = 0,
   numberofyesExp,
   //project vars
   projectname,
+  projectstageforinternallinks,
   abrprojectname,
   phasename,
   stagename,
@@ -186,6 +187,7 @@ var Project_Home_Info_Request = {
 
       //project card1
       projectname = oListItem.get_item("Name") || No_Data;
+      projectstageforinternallinks = oListItem.get_item("Stage") ;
 
       projectsector = oListItem.get_item("Sector") || No_Data;
       projectSubsector = oListItem.get_item("SubSector") || No_Data;
@@ -1134,7 +1136,8 @@ var Issues_Info_Request = {
   onSuccess: function (sender, args) {
     var collListItem = Issues_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-    var itemhtml = stagename ? [
+    debugger
+    var itemhtml = projectstageforinternallinks ? [
       '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
       _spPageContextInfo.webAbsoluteUrl +
       "/sitepages/new.aspx?ListKey=issues&PCODE=" +
@@ -1251,13 +1254,13 @@ var Risks_Info_Request = {
   onSuccess: function (sender, args) {
     var collListItem = Risks_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-    var itemhtml = [
+    var itemhtml = projectstageforinternallinks ? [
       '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
       _spPageContextInfo.webAbsoluteUrl +
-      "/sitepages/new.aspx?ListKey=risks&PCODE=" +
+      "/sitepages/new.aspx?ListKey=issues&PCODE=" +
       Project_Home_Info_Request.g.PCODE +
       '"><i class="icon-plus"></i></a></li>',
-    ],
+    ] : ['<li class="list-group-item  px-0 phome-btn"></li>'],
       itemID,
       itemname,
       itemstatus,
@@ -1365,13 +1368,13 @@ var Deliveries_Info_Request = {
   onSuccess: function (sender, args) {
     var collListItem = Deliveries_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-    var itemhtml = [
+    var itemhtml = projectstageforinternallinks ? [
       '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
       _spPageContextInfo.webAbsoluteUrl +
-      "/sitepages/new.aspx?ListKey=deliveries&PCODE=" +
+      "/sitepages/new.aspx?ListKey=issues&PCODE=" +
       Project_Home_Info_Request.g.PCODE +
       '"><i class="icon-plus"></i></a></li>',
-    ],
+    ] : ['<li class="list-group-item  px-0 phome-btn"></li>'],
       itemID,
       item1,
       item2,
@@ -1473,13 +1476,13 @@ var Contracts_Info_Request = {
   onSuccess: function (sender, args) {
     var collListItem = Contracts_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-    var itemhtml = [
+    var itemhtml = projectstageforinternallinks ? [
       '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
       _spPageContextInfo.webAbsoluteUrl +
-      "/sitepages/new.aspx?ListKey=contracts&PCODE=" +
+      "/sitepages/new.aspx?ListKey=issues&PCODE=" +
       Project_Home_Info_Request.g.PCODE +
       '"><i class="icon-plus"></i></a></li>',
-    ],
+    ] : ['<li class="list-group-item  px-0 phome-btn"></li>'],
       itemID,
       item1,
       item2,
@@ -1584,13 +1587,13 @@ var LessonsLearned_Info_Request = {
   onSuccess: function (sender, args) {
     var collListItem = LessonsLearned_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-    var itemhtml = [
+    var itemhtml = projectstageforinternallinks ? [
       '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
       _spPageContextInfo.webAbsoluteUrl +
-      "/sitepages/new.aspx?ListKey=lessonslearned&PCODE=" +
+      "/sitepages/new.aspx?ListKey=issues&PCODE=" +
       Project_Home_Info_Request.g.PCODE +
       '"><i class="icon-plus"></i></a></li>',
-    ],
+    ] : ['<li class="list-group-item  px-0 phome-btn"></li>'],
       itemID,
       item1,
       item2,
