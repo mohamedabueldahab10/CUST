@@ -57,23 +57,35 @@ var Information_Form = [
         // validation: 'required',
       },
       {
-        InternalName: 'Sector',
-        DisplayName: 'القطاع',
-        DisplayNameEn: 'Sector',
-        type: 'lookupWithQuery',
-        queryField: 'EntityType',
-        queryFieldType: 'dropdownValues', //ex: "Choice"
-        queryFieldValue: 'Sector',
-        // dynamic: 'parent',
-        // type: 'lookup',
-        // validation: 'required',
+        "InternalName": "Sector",
+        "DisplayName": "القطاع",
+        "DisplayNameEn": "Sector",
+        "type": "lookupWithQuery",
+        "queryField": "EntityType",
+        "queryFieldType": "dropdownValues", //ex: "Choice"
+        "queryFieldValue": "Sector",
+        dynamic: "parent",
+        "source": "Internal Entities",
+        "Dispfieldkey": "Name",
+        "DispfieldkeyEn": "NameEn",
+        "valfieldkey": "Title",
+        "validation": "required"
+      },
+      {
+        "InternalName": "SubSector",
+        "DisplayName": "الوكالات",
+        "DisplayNameEn": "DeputyShip",
+        type: "lookup",
         //from other list:
-        source: 'Internal Entities',
-        // isSector: 'True',
-        // EntityType: 'Sector',
-        Dispfieldkey: 'Name',
-        DispfieldkeyEn: 'NameEn',
-        valfieldkey: 'Title',
+        source: "Internal Entities",
+        Dispfieldkey: "Name",
+        valfieldkey: "Title",
+        grpfieldkey: 'Title',
+        // "isRelatedToParent": true, // to show parent value depends on child like sector and subsector
+        dynamic: "Sector", //InternalName Of Parent field
+        filterField: "ParentEntity",
+        filterFieldType: "Text",//Type In Sharepoint List for Parent field
+        // "validation": "required"
       },
     ],
   },

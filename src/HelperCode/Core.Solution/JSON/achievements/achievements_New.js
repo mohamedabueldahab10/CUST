@@ -73,6 +73,37 @@ var Information_Form = [
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
       },
+      {
+        "InternalName": "Sector",
+        "DisplayName": "القطاع",
+        "DisplayNameEn": "Sector",
+        "type": "lookupWithQuery",
+        "queryField": "EntityType",
+        "queryFieldType": "dropdownValues", //ex: "Choice"
+        "queryFieldValue": "Sector",
+        dynamic: "parent",
+        "source": "Internal Entities",
+        "Dispfieldkey": "Name",
+        "DispfieldkeyEn": "NameEn",
+        "valfieldkey": "Title",
+        "validation": "required"
+      },
+      {
+        "InternalName": "SubSector",
+        "DisplayName": "الوكالات",
+        "DisplayNameEn": "DeputyShip",
+        type: "lookup",
+        //from other list:
+        source: "Internal Entities",
+        Dispfieldkey: "Name",
+        valfieldkey: "Title",
+        grpfieldkey: 'Title',
+        // "isRelatedToParent": true, // to show parent value depends on child like sector and subsector
+        dynamic: "Sector", //InternalName Of Parent field
+        filterField: "ParentEntity",
+        filterFieldType: "Text",//Type In Sharepoint List for Parent field
+        // "validation": "required"
+      },
     ],
   },
   {
