@@ -1692,8 +1692,8 @@ input[type=radio] {
 }
 
 p.viewmode-value {
-    word-break: break-all;
-    font-size: 13px;
+    word-break: break-word;
+    font-size: 14px;
 }
 
 
