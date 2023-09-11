@@ -1257,7 +1257,7 @@ var Risks_Info_Request = {
     var itemhtml = projectstageforinternallinks ? [
       '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
       _spPageContextInfo.webAbsoluteUrl +
-      "/sitepages/new.aspx?ListKey=issues&PCODE=" +
+      "/sitepages/new.aspx?ListKey=risks&PCODE=" +
       Project_Home_Info_Request.g.PCODE +
       '"><i class="icon-plus"></i></a></li>',
     ] : ['<li class="list-group-item  px-0 phome-btn"></li>'],
@@ -1590,7 +1590,7 @@ var LessonsLearned_Info_Request = {
     var itemhtml = projectstageforinternallinks ? [
       '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
       _spPageContextInfo.webAbsoluteUrl +
-      "/sitepages/new.aspx?ListKey=issues&PCODE=" +
+      "/sitepages/new.aspx?ListKey=contracts&PCODE=" +
       Project_Home_Info_Request.g.PCODE +
       '"><i class="icon-plus"></i></a></li>',
     ] : ['<li class="list-group-item  px-0 phome-btn"></li>'],
