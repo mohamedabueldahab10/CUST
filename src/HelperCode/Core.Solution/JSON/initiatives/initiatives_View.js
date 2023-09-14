@@ -42,6 +42,7 @@ var Information_Form = [
         // maxchar: '250',
         // validation: 'required',
       },
+    
       {
         InternalName: 'OfficialCode',
         DisplayNameEn: 'Official Code',
@@ -343,6 +344,7 @@ var Information_Form = [
         DisplayNameEn: 'Expense Start Date',
         type: 'datetime',
       },
+     
       // {
       //   InternalName: 'ERPCode',
       //   DisplayNameEn: 'ERP Code',
@@ -382,6 +384,29 @@ var Information_Form = [
         DisplayNameEn: 'Actual Percentage Completed',
         type: 'floatpercentage',
       },
+      // {
+      //   InternalName: "WFStage",
+      //   DisplayName: " الطور",
+      //   DisplayNameEn: "Stage",
+      //   type: 'lookup',
+      //   // validation: 'required',
+      //   source: "Tasks Configuration",
+      //   Dispfieldkey: "TaskNameAr",
+      //   DispfieldkeyEn: 'TaskNameEn',
+      //   valfieldkey: "Title",
+      //   },
+      {
+        InternalName: "Phase",
+        DisplayName: "مرحلة المبادرة",
+        DisplayNameEn: "Phase",
+        type: 'lookup',
+        // //from other list:
+        source: "Phases",
+        Dispfieldkey: "Name",
+        DispfieldkeyEn: "PhaseNameEn",
+        valfieldkey: "Title",
+      },
+    
       // {
       //   InternalName: 'DelayPercentage',
       //   DisplayName: 'نسبة التأخير ',
@@ -616,7 +641,7 @@ var Information_Form = [
       },
       {
         InternalName: "WFStage",
-        DisplayName: " المرحلة",
+        DisplayName: " الخطوة",
         DisplayNameEn: "Stage",
         type: 'lookup',
         // validation: 'required',
@@ -625,6 +650,7 @@ var Information_Form = [
         DispfieldkeyEn: 'TaskNameEn',
         valfieldkey: "Title",
         },
+        
       // {
       //     "InternalName": "RelatedBenefits",
       //     "DisplayNameEn": "Related Benefits",
