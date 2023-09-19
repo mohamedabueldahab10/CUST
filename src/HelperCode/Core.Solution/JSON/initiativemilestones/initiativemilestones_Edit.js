@@ -69,7 +69,7 @@ var Information_Form = [
         DisplayName: 'اسم المعلم',
         type: 'string',
         maxchar: '255',
-        withletters: true,
+        // withletters: true,
         Errmsgkey: 'withletterpattern',
         validation: 'required',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
