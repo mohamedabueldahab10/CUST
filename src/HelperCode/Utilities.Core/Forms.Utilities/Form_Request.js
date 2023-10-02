@@ -6752,10 +6752,10 @@ var View_Current_Kpi = {
       '<label data-trans-actualkpivalue class="Resources"></label>' +
       '<p class="viewmode-value" id="Equation">' + relatedActualValue + '</p>' +
       '</div>' +
-      // '<div class="col-md-12 multiline">' +
-      // '<label data-trans-performanceanalysis class="Resources"></label>' +
-      // '<p class="viewmode-value" id="PerformanceAnalysis">' + relatedPerformanceAnalysis + '</p>' +
-      // '</div>' +
+      '<div class="col-md-12 multiline">' +
+      '<label data-trans-performanceanalysis class="Resources"></label>' +
+      '<p class="viewmode-value" id="PerformanceAnalysis">' + relatedPerformanceAnalysis + '</p>' +
+      '</div>' +
       '</div>'
 
     if (filesUrls.length > 0) { // add view before attachement
@@ -6832,10 +6832,10 @@ var View_Previous_kpi = {
       '<label data-trans-actualkpivalue class="Resources"></label>' +
       '<p class="viewmode-value" id="Equation_Previous">' + targetValue + '</p>' +
       '</div>' +
-      // '<div class="col-md-12 multiline">' +
-      // '<label data-trans-performanceanalysis class="Resources"></label>' +
-      // '<p class="viewmode-value" id="PerformanceAnalysis_Previous">' + targetAnalysis + '</p>' +
-      // '</div>' +
+      '<div class="col-md-12 multiline">' +
+      '<label data-trans-performanceanalysis class="Resources"></label>' +
+      '<p class="viewmode-value" id="PerformanceAnalysis_Previous">' + targetAnalysis + '</p>' +
+      '</div>' +
       '</div>' +
       '</div>'
 
