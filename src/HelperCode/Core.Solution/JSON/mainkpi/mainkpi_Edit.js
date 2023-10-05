@@ -1536,7 +1536,7 @@ var Information_Form = [
         InternalName: 'A',
         DisplayName: 'المكون الأول (A)',
         DisplayNameEn: 'A',
-        type: 'float',
+        type: 'number',
         //ToggleDisabledName: 'A',
         numberOfDigits: "12", // max length of digits in field
         // type: 'number',
@@ -1555,7 +1555,7 @@ var Information_Form = [
         DisplayName: 'المكون الثاني (B)',
         DisplayNameEn: 'B',
         //ToggleDisabledName: 'B',
-        type: 'float',
+        type: 'number',
         numberOfDigits: "12", // max length of digits in field
         //editableBy: "PerformanceLeader",
         security: {
@@ -1573,7 +1573,7 @@ var Information_Form = [
         DisplayNameEn: 'C',
         //ToggleDisabledName: 'CC',
         // type: 'number',
-        type: 'float',
+        type: 'number',
         numberOfDigits: "12", // max length of digits in field
         //editableBy: "PerformanceLeader",
         security: {
@@ -1591,7 +1591,7 @@ var Information_Form = [
         DisplayNameEn: 'D',
         //ToggleDisabledName: 'D',
         // type: 'number',
-        type: 'float',
+        type: 'number',
         numberOfDigits: "12", // max length of digits in field
         //editableBy: "PerformanceLeader",
         security: {
@@ -1609,7 +1609,7 @@ var Information_Form = [
         DisplayNameEn: 'E',
         //ToggleDisabledName: 'E',
         // type: 'number',
-        type: 'float',
+        type: 'number',
         numberOfDigits: "12", // max length of digits in field
         //editableBy: "PerformanceLeader",
         security: {
@@ -1627,7 +1627,7 @@ var Information_Form = [
         DisplayNameEn: 'F',
         //ToggleDisabledName: 'F',
         // type: 'number',
-        type: 'float',
+        type: 'number',
         numberOfDigits: "12", // max length of digits in field
         //editableBy: "PerformanceLeader",
         security: {
@@ -1645,7 +1645,7 @@ var Information_Form = [
         DisplayNameEn: 'G',
         //ToggleDisabledName: 'G',
         // type: 'number',
-        type: 'float',
+        type: 'number',
         numberOfDigits: "12", // max length of digits in field
         //editableBy: "PerformanceLeader",
         security: {
