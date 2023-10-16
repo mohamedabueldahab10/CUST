@@ -75,7 +75,7 @@ var Information_Form = [
         Errmsgkey: 'withletterpatteWrn',
         validation: 'required',
         security: {
-          groups: ['EPMO', 'System Admin Group'],
+          groups: [ 'Administrator','EPMO','LMSUExecution','VROE'],
         },
       },
       // {
@@ -106,7 +106,7 @@ var Information_Form = [
         // "state":"disabled",
         validation: 'required',
         security: {
-          groups: ['EPMO', 'System Admin Group'],
+          groups: [ 'Administrator','EPMO','LMSUExecution','VROE'],
         },
       },
       {
@@ -122,7 +122,7 @@ var Information_Form = [
         targetelement: 'Weight',
         validation: 'required',
         security: {
-          groups: ['EPMO', 'System Admin Group'],
+          groups: [ 'Administrator','EPMO','LMSUExecution','VROE'],
         },
       },
       {
@@ -137,7 +137,7 @@ var Information_Form = [
         endinternalname: 'BaselineFinishDate',
         Errmsgkey: 'btwndatepattern',
         security: {
-          groups: ['EPMO', 'System Admin Group'],
+          groups: [ 'Administrator','EPMO','LMSUExecution','VROE'],
         },
       },
 
@@ -173,7 +173,7 @@ var Information_Form = [
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
         security: {
-          groups: ['EPMO', 'System Admin Group'],
+          groups: [ 'Administrator','EPMO','LMSUExecution','VROE'],
         },
       },
       {
@@ -185,7 +185,7 @@ var Information_Form = [
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
         security: {
-          groups: ['EPMO', 'System Admin Group'],
+          groups: [ 'Administrator','EPMO','LMSUExecution','VROE'],
         },
       },
       // {
@@ -215,7 +215,7 @@ var Information_Form = [
         Dispfieldkey: 'Name', //display in dropdown
         valfieldkey: 'Title', // value in dropdown
         security: {
-          groups: ['EPMO', 'System Admin Group'],
+          groups: [ 'Administrator','EPMO','LMSUExecution','VROE'],
         },
       },
       {
@@ -302,7 +302,7 @@ var Information_Form = [
         descPhraseAr: "ملفات مطلوبة عند الاغلاق",
         descPhraseEn: "File required after closing",
         // security: {
-        //   groups: ['EPMO', 'System Admin Group'],
+        //   groups: [ 'Administrator','EPMO','LMSUExecution','VROE'],
         // },
       },
       {
@@ -314,7 +314,7 @@ var Information_Form = [
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
         // security: {
-        //   groups: ['EPMO', 'System Admin Group'],
+        //   groups: [ 'Administrator','EPMO','LMSUExecution','VROE'],
         // },
       },
     ],
@@ -335,7 +335,7 @@ var Information_Form = [
         descPhraseAr: "ملفات متعلقة بالعنصر",
         descPhraseEn: "File related to the item",
         // security: {
-        //   groups: ['EPMO', 'System Admin Group'],
+        //   groups: [ 'Administrator','EPMO','LMSUExecution','VROE'],
         // },
       },
     ],

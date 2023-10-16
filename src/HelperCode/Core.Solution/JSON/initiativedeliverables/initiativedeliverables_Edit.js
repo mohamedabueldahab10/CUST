@@ -47,7 +47,7 @@ var Information_Form = [
         descPhraseEn: "max length of letters equal 255",  
         security: {
           groups: [
-            'EPMO', 'System Admin Group'
+            'Administrator','EPMO','LMSUExecution','VROE'
           ]
       },
       },
@@ -75,7 +75,7 @@ var Information_Form = [
         validation: 'required',
         security: {
           groups: [
-            'EPMO', 'System Admin Group'
+            'Administrator','EPMO','LMSUExecution','VROE'
           ]
       },
       },
@@ -89,7 +89,7 @@ var Information_Form = [
         descPhraseEn: "max length of letters equal 255",  
         security: {
           groups: [
-            'EPMO', 'System Admin Group'
+            'Administrator','EPMO','LMSUExecution','VROE'
           ]
       },
       },
@@ -131,7 +131,7 @@ var Information_Form = [
         numberOfDigits:"15",
         security: {
           groups: [
-            'EPMO', 'System Admin Group'
+            'Administrator','EPMO','LMSUExecution','VROE'
           ]
       },
       },
@@ -161,7 +161,7 @@ var Information_Form = [
         validation: 'required',
         security: {
           groups: [
-            'EPMO', 'System Admin Group'
+            'Administrator','EPMO','LMSUExecution','VROE'
           ]
       },
       },
@@ -179,7 +179,7 @@ var Information_Form = [
         validation: 'required',
         security: {
           groups: [
-            'EPMO', 'System Admin Group'
+            'Administrator','EPMO','LMSUExecution','VROE'
           ]
       },
       },

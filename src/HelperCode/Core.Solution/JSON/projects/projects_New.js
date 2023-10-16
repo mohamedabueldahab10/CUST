@@ -215,7 +215,7 @@ var Information_Form = [
             { display: "yes", value: "yes" },
             {
               display: "no", value: "no",
-              roles: ['Administrator', 'EPMO','LMSUExecution'],
+              roles: ['Administrator', 'EPMO','LMSUExecution','VROE',],
               otherFields: [
                 { fieldName: 'Phase', value: 'P1' },
                 { fieldName: 'Stage', value: 'S01' },
@@ -224,7 +224,7 @@ var Information_Form = [
             },
             {//allroles
               // display: "no", value: "no", roles: ['allRoles'],
-              display: "no", value: "no", roles: ['VROHead','VROPHead','VROP','ProjectManager','InitiativeOwner','InitiativeManager','ProjectOwner','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','LMSE','LMSP','LMSUPerformance','LMSUControl'],
+              display: "no", value: "no", roles: ['VROHead','VROPHead','VROP','ProjectManager','InitiativeOwner','InitiativeManager','ProjectOwner','VPlanningUnitHead','VPlanningUnit','VROEHead','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','LMSE','LMSP','LMSUPerformance','LMSUControl'],
             
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'EPMOCreateProject' },
@@ -268,7 +268,7 @@ var Information_Form = [
               display: 'vision',
               value: 'vision',
               customFilterValue: "vision",
-              roles: ['Administrator','EPMO','LMSUExecution'],
+              roles: ['Administrator','EPMO','LMSUExecution','VROE',],
               otherFields: [
                 { fieldName: 'Stage', value: 'S01' },
                 { fieldName: 'Phase', value: 'P1' },
@@ -278,7 +278,7 @@ var Information_Form = [
               display: 'strategically',
               value: 'strategically',
               customFilterValue: "strategically",
-              roles: ['Administrator','EPMO','LMSUExecution'],
+              roles: ['Administrator','EPMO','LMSUExecution','VROE'],
               otherFields: [
                 { fieldName: 'Stage', value: 'S01' },
                 { fieldName: 'Phase', value: 'P1' },
@@ -288,7 +288,7 @@ var Information_Form = [
               display: 'lms',
               value: 'lms',
               customFilterValue: "lms",
-              roles: ['Administrator','EPMO','LMSUExecution'],
+              roles: ['Administrator','EPMO','LMSUExecution','VROE',],
               otherFields: [
                 { fieldName: 'Stage', value: 'S01' },
                 { fieldName: 'Phase', value: 'P1' },
@@ -301,7 +301,7 @@ var Information_Form = [
               display: 'vision',
               value: 'vision',
               customFilterValue: "vision",
-              roles: ['VROHead','VROPHead','VROP','ProjectManager','InitiativeOwner','InitiativeManager','ProjectOwner','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','LMSE','LMSP','LMSUPerformance','LMSUControl'],
+              roles: ['VROHead','VROPHead','VROP','ProjectManager','InitiativeOwner','InitiativeManager','ProjectOwner','VPlanningUnitHead','VPlanningUnit','VROEHead','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','LMSE','LMSP','LMSUPerformance','LMSUControl'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'VROCreateProject' },
                 { fieldName: 'WFStage', value: 'VROCreateProject01' },
@@ -314,7 +314,7 @@ var Information_Form = [
               display: 'strategically',
               value: 'strategically',
               customFilterValue: "strategically",
-              roles: ['VROHead','VROPHead','VROP','ProjectManager','InitiativeOwner','InitiativeManager','ProjectOwner','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','LMSE','LMSP','LMSUPerformance','LMSUControl'],
+              roles: ['VROHead','VROPHead','VROP','ProjectManager','InitiativeOwner','InitiativeManager','ProjectOwner','VPlanningUnitHead','VPlanningUnit','VROEHead','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','LMSE','LMSP','LMSUPerformance','LMSUControl'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'EPMOCreateProject' },
                 { fieldName: 'WFStage', value: 'EPMOCreateProject01' },
@@ -327,7 +327,7 @@ var Information_Form = [
               display: 'lms',
               value: 'lms',
               customFilterValue: "lms",
-              roles: ['VROHead','VROPHead','VROP','ProjectManager','InitiativeOwner','InitiativeManager','ProjectOwner','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','LMSE','LMSP','LMSUPerformance','LMSUControl'],
+              roles: ['VROHead','VROPHead','VROP','ProjectManager','InitiativeOwner','InitiativeManager','ProjectOwner','VPlanningUnitHead','VPlanningUnit','VROEHead','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','LMSE','LMSP','LMSUPerformance','LMSUControl'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'LMSCreateProject' },
                 { fieldName: 'WFStage', value: 'LMSCreateProject01' },
