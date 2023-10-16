@@ -51,7 +51,7 @@ var Information_Form = [
               value: 'ministry',
               roles: [
                 'Administrator',
-                // 'EPMO',
+                'EPMO',
                 'SPM'
               ],
             },
@@ -60,7 +60,7 @@ var Information_Form = [
               value: 'vision',
               roles: [
                 'Administrator',
-                // 'VROE',
+                'VROE',
                 'VROP'
               ],
             },
@@ -69,7 +69,7 @@ var Information_Form = [
               value: 'lms',
               roles: [
                 'Administrator', 
-                // 'LMSE', // hasen't access
+                'LMSUExecution', // hasen't access
                 'LMSP',
                 'StrategyTeam'
               ],

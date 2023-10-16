@@ -64,7 +64,7 @@ var Information_Form = [
             {
               display: 'vision',
               value: 'vision',
-              roles: ['Administrator','EPMO'],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
+              roles: ['Administrator','EPMO','LMSUExecution'],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'VisionInitiative' },
                 { fieldName: 'WFStage', value: 'VInStage01' },
@@ -75,7 +75,7 @@ var Information_Form = [
             {
               display: 'strategically',
               value: 'strategically',
-              roles: ['Administrator','EPMO'],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
+              roles: ['Administrator','EPMO','LMSUExecution'],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'StrategicallyInitiative' },
                 { fieldName: 'WFStage', value: 'SInStage01' },
@@ -86,7 +86,7 @@ var Information_Form = [
             {
               display: 'lms',
               value: 'lms',
-              roles: ['Administrator','EPMO'],
+              roles: ['Administrator','EPMO','LMSUExecution'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'LMSInitiative' },
                 { fieldName: 'WFStage', value: 'LInStage01' },
@@ -100,7 +100,7 @@ var Information_Form = [
             display: 'vision',
             value: 'vision',
             // roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','InitiativeManager','InitiativeOwner'],
-            roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'],
+            roles: ['LMSE','LMSP','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'],
             otherFields: [
               { fieldName: 'WFModuleCode', value: 'VROCreateInitiative' },
               { fieldName: 'WFStage', value: 'VROCreateInitiative01' },
@@ -112,7 +112,7 @@ var Information_Form = [
               display: 'strategically',
               value: 'strategically',
               // roles: ['SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','InitiativeManager','InitiativeOwner'],
-              roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'],
+              roles: ['LMSE','LMSP','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'EPMOCreateInitiative' },
                 { fieldName: 'WFStage', value: 'EPMOCreateInitiative01' },
@@ -124,7 +124,7 @@ var Information_Form = [
               display: 'lms',
               value: 'lms',
               // roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','InitiativeManager','InitiativeOwner',], groups
-              roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'],
+              roles: ['LMSE','LMSP','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'LMSCreateInitiative' },
                   { fieldName: 'Phase', value: 'P0' },
