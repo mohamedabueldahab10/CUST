@@ -75,7 +75,7 @@ var Information_Form = [
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
         descPhraseEn: "max length of letters equal 255",  
         security: {
-          groups: ['Administrator','EPMO','LMSUExecution','VROE'],
+          groups: ['System Admin Group','EPMO','LMSU-Execution','VRO_E'],
         },
       },
       {
@@ -90,7 +90,7 @@ var Information_Form = [
         endinternalname: 'FinishDate',
         validation: 'required',
         security: {
-          groups: ['Administrator','EPMO','LMSUExecution','VROE'],
+          groups: ['System Admin Group','EPMO','LMSU-Execution','VRO_E'],
         },
       },
       // {
@@ -101,7 +101,7 @@ var Information_Form = [
       //   validation: 'required',
       //   security: {
       //     groups: [
-      //       'Administrator','EPMO','LMSUExecution','VROE'
+      //       'System Admin Group','EPMO','LMSU-Execution','VRO_E'
       //     ]
       // },
       // },
@@ -118,7 +118,7 @@ var Information_Form = [
         descPhraseAr: "من ميزانية المبادرة",
         descPhraseEn: " From Initiative Budget", 
         security: {
-          groups: ['Administrator','EPMO','LMSUExecution','VROE'],
+          groups: ['System Admin Group','EPMO','LMSU-Execution','VRO_E'],
         },
       },
       {
@@ -134,7 +134,7 @@ var Information_Form = [
         descPhraseAr: "من ميزانية المبادرة",
         descPhraseEn: " From Initiative Budget", 
         security: {
-          groups: ['Administrator','EPMO','LMSUExecution','VROE'],
+          groups: ['System Admin Group','EPMO','LMSU-Execution','VRO_E'],
         },
       },
       //   {
@@ -215,7 +215,7 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         security: {
-          groups: [ 'Administrator','EPMO','LMSUExecution','VROE'],
+          groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
         },
         initiativeCodeInList: true,
       },
@@ -238,7 +238,7 @@ var Information_Form = [
         descPhraseAr: "ملفات مطلوبة عند الاغلاق",
         descPhraseEn: "File required after closing",
         // security: {
-        //   groups: [ 'Administrator','EPMO','LMSUExecution','VROE'],
+        //   groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
         // },
       },
       {
@@ -250,7 +250,7 @@ var Information_Form = [
         descPhraseEn: "max length of letters equal 5000",
         maxchar: '5000',
         // security: {
-        //   groups: [ 'Administrator','EPMO','LMSUExecution','VROE'],
+        //   groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
         // },
       },
     ],
@@ -271,7 +271,7 @@ var Information_Form = [
         descPhraseAr: "ملفات متعلقة بالعنصر",
         descPhraseEn: "File related to the item",
         // security: {
-        //   groups: [ 'Administrator','EPMO','LMSUExecution','VROE'],
+        //   groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
         // },
       },
     ],

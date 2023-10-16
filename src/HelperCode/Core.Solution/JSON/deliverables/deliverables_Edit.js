@@ -49,7 +49,7 @@ var Information_Form = [
         Errmsgkey: "withletterpattern",
         security: {
           groups: [
-            'Administrator','EPMO','LMSUExecution','VROE'
+            'System Admin Group','EPMO','LMSU-Execution','VRO_E'
           ]
       },
       },
@@ -63,7 +63,7 @@ var Information_Form = [
         descPhraseEn: "max length of letters equal 5000",
         security: {
           groups: [
-            'Administrator','EPMO','LMSUExecution','VROE'
+            'System Admin Group','EPMO','LMSU-Execution','VRO_E'
           ]
       },
       },
@@ -90,7 +90,7 @@ var Information_Form = [
         validation: 'required',
         security: {
           groups: [
-            'Administrator','EPMO','LMSUExecution','VROE'
+            'System Admin Group','EPMO','LMSU-Execution','VRO_E'
           ]
       },
       },
@@ -108,7 +108,7 @@ var Information_Form = [
         validation: 'required',
         security: {
           groups: [
-            'Administrator','EPMO','LMSUExecution','VROE'
+            'System Admin Group','EPMO','LMSU-Execution','VRO_E'
           ]
       },
       },
@@ -153,7 +153,7 @@ var Information_Form = [
         validation: 'required',
         security: {
           groups: [
-            'Administrator','EPMO','LMSUExecution','VROE'
+            'System Admin Group','EPMO','LMSU-Execution','VRO_E'
           ]
       },
       },
@@ -239,7 +239,7 @@ var Information_Form = [
         descPhraseEn: "max length of letters equal 5000",
         security: {
           groups: [
-            'Administrator','EPMO','LMSUExecution','VROE'
+            'System Admin Group','EPMO','LMSU-Execution','VRO_E'
           ]
       },
 
@@ -254,7 +254,7 @@ var Information_Form = [
         descPhraseEn: "max length of letters equal 5000",
         security: {
           groups: [
-            'Administrator','EPMO','LMSUExecution','VROE'
+            'System Admin Group','EPMO','LMSU-Execution','VRO_E'
           ]
       },
       },
@@ -281,7 +281,7 @@ var Information_Form = [
         valfieldkey: 'Title', // value in dropdown
         security: {
           groups: [
-            'Administrator','EPMO','LMSUExecution','VROE'
+            'System Admin Group','EPMO','LMSU-Execution','VRO_E'
           ]
       },
       },
@@ -304,7 +304,7 @@ var Information_Form = [
         },
         security: {
           groups: [
-            'Administrator','EPMO','LMSUExecution','VROE'
+            'System Admin Group','EPMO','LMSU-Execution','VRO_E'
           ]
       },
       },
@@ -358,7 +358,7 @@ var Information_Form = [
         descPhraseEn: "File related to the item",
       //   security: {
       //     groups: [
-      //       'Administrator','EPMO','LMSUExecution','VROE'
+      //       'System Admin Group','EPMO','LMSU-Execution','VRO_E'
       //     ]
       // },
       },

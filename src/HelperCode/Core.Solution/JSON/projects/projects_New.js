@@ -268,7 +268,7 @@ var Information_Form = [
               display: 'vision',
               value: 'vision',
               customFilterValue: "vision",
-              roles: ['Administrator','EPMO','LMSUExecution','VROE',],
+              roles: ['System Admin Group','EPMO','LMSU-Execution','VRO_E',],
               otherFields: [
                 { fieldName: 'Stage', value: 'S01' },
                 { fieldName: 'Phase', value: 'P1' },
@@ -278,7 +278,7 @@ var Information_Form = [
               display: 'strategically',
               value: 'strategically',
               customFilterValue: "strategically",
-              roles: ['Administrator','EPMO','LMSUExecution','VROE'],
+              roles: ['System Admin Group','EPMO','LMSU-Execution','VRO_E'],
               otherFields: [
                 { fieldName: 'Stage', value: 'S01' },
                 { fieldName: 'Phase', value: 'P1' },
@@ -288,7 +288,7 @@ var Information_Form = [
               display: 'lms',
               value: 'lms',
               customFilterValue: "lms",
-              roles: ['Administrator','EPMO','LMSUExecution','VROE',],
+              roles: ['System Admin Group','EPMO','LMSU-Execution','VRO_E',],
               otherFields: [
                 { fieldName: 'Stage', value: 'S01' },
                 { fieldName: 'Phase', value: 'P1' },
