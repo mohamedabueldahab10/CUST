@@ -64,7 +64,7 @@ var Information_Form = [
             {
               display: 'vision',
               value: 'vision',
-              roles: ['System Admin Group','EPMO','LMSU-Execution','VRO_E',],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
+              roles: ['Administrator', 'EPMO','LMSUExecution','VROE',],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'VisionInitiative' },
                 { fieldName: 'WFStage', value: 'VInStage01' },
@@ -75,7 +75,7 @@ var Information_Form = [
             {
               display: 'strategically',
               value: 'strategically',
-              roles: ['System Admin Group','EPMO','LMSU-Execution','VRO_E',],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
+              roles: ['Administrator', 'EPMO','LMSUExecution','VROE',],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'StrategicallyInitiative' },
                 { fieldName: 'WFStage', value: 'SInStage01' },
@@ -86,7 +86,7 @@ var Information_Form = [
             {
               display: 'lms',
               value: 'lms',
-              roles: ['System Admin Group','EPMO','LMSU-Execution','VRO_E',],
+              roles: ['Administrator', 'EPMO','LMSUExecution','VROE',],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'LMSInitiative' },
                 { fieldName: 'WFStage', value: 'LInStage01' },
