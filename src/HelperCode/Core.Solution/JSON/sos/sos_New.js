@@ -21,42 +21,43 @@ var Information_Form = [
     //   { fieldName: 'DraftStatus', value: 'draft',roles: ['Administrator','LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
 
     // ],
-    formValuesBasedOnParent: [
-      // add getGrandParent if the value based on grandParent and basedOnCondition to check if based on condition or not
-      {
-        parentList: 'GoalStrategy', listinerField: "RelatedStrategy", parentFieldName: 'Title', fieldName: 'Types', basedOnCondition: false,
-        //listinerField : current field for this form , Field NAme : the field in Parent List that contains the conditions
-        valueToSet: [
-          {
-            condition: "vision", values: [
-              { fieldNameInList: "WFModuleCode", fieldValueInList: "VROCreateObjective" },
-              { fieldNameInList: "WFStage", fieldValueInList: "VROCreateObjective01" },
-              { fieldNameInList: "DraftStatus", fieldValueInList: "draft" },
-              { fieldNameInList: "Status", fieldValueInList: "stat31" },
-              { fieldNameInList: "Class", fieldValueInList: "vision" },
-            ]
-          },
-          {
-            condition: "lms",
-            values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "LMSCreateObjective" },
-            { fieldNameInList: "WFStage", fieldValueInList: "LMSCreateObjective01" },
-            { fieldNameInList: "Class", fieldValueInList: "lms" },
-            { fieldNameInList: "Status", fieldValueInList: "stat31" },
-            { fieldNameInList: "DraftStatus", fieldValueInList: "draft" },]
-          },
-          {
-            condition: "ministry",
-            values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "MSCreateObjective" },
-            { fieldNameInList: "WFStage", fieldValueInList: "MSCreateObjective01" },
-            { fieldNameInList: "Class", fieldValueInList: "ministry" },
-            { fieldNameInList: "Status", fieldValueInList: "stat31" },
-            { fieldNameInList: "DraftStatus", fieldValueInList: "draft" },]
-          },
+    // formValuesBasedOnParent: [
+    //   // add getGrandParent if the value based on grandParent and basedOnCondition to check if based on condition or not
+    //   {
+    //     parentList: 'GoalStrategy', listinerField: "RelatedStrategy", parentFieldName: 'Title', fieldName: 'Types', basedOnCondition: false,
+    //     //listinerField : current field for this form , Field NAme : the field in Parent List that contains the conditions
+    //     valueToSet: [
+    //       {
+    //         condition: "vision", values: [
+    //           { fieldNameInList: "WFModuleCode", fieldValueInList: "VROCreateObjective" },
+    //           { fieldNameInList: "WFStage", fieldValueInList: "VROCreateObjective01" },
+    //           { fieldNameInList: "DraftStatus", fieldValueInList: "draft" },
+    //           { fieldNameInList: "Status", fieldValueInList: "stat31" },
+    //           { fieldNameInList: "Class", fieldValueInList: "vision" },
+    //         ]
+    //       },
+    //       {
+    //         condition: "lms",
+    //         values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "LMSCreateObjective" },
+    //         { fieldNameInList: "WFStage", fieldValueInList: "LMSCreateObjective01" },
+    //         { fieldNameInList: "Class", fieldValueInList: "lms" },
+    //         { fieldNameInList: "Status", fieldValueInList: "stat31" },
+    //         { fieldNameInList: "DraftStatus", fieldValueInList: "draft" },]
+    //       },
+    //       {
+    //         condition: "ministry",
+    //         values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "MSCreateObjective" },
+    //         { fieldNameInList: "WFStage", fieldValueInList: "MSCreateObjective01" },
+    //         { fieldNameInList: "Class", fieldValueInList: "ministry" },
+    //         { fieldNameInList: "Status", fieldValueInList: "stat31" },
+    //         { fieldNameInList: "DraftStatus", fieldValueInList: "draft" },]
+    //       },
 
-        ]
-      }
-    ],
+    //     ]
+    //   }
+    // ],
     subFields: [
+   
       {
         InternalName: 'Name',
         DisplayNameEn: 'Name',
@@ -84,6 +85,84 @@ var Information_Form = [
         maxchar: '5000',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
+      },
+      {
+        InternalName: "Class",
+        DisplayName: "نوع الاستراتيجية",
+        DisplayNameEn: "Strategy Type",
+        type: "dropdownValues",
+        validation: 'required',
+        options: {
+          choices: [
+            {
+              display: 'vision',
+              value: 'vision',
+              roles: ['Administrator', 'EPMO', 'LMSUExecution', 'VROE',],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
+              // otherFields: [
+              //   { fieldName: 'WFModuleCode', value: 'VisionInitiative' },
+              //   { fieldName: 'WFStage', value: 'VInStage01' },
+              //   { fieldName: 'DraftStatus', value: '' },
+              // ],
+            },
+            {
+              display: 'strategically',
+              value: 'strategically',
+              roles: ['Administrator', 'EPMO', 'LMSUExecution', 'VROE',],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
+              // otherFields: [
+              //   { fieldName: 'WFModuleCode', value: 'StrategicallyInitiative' },
+              //   { fieldName: 'WFStage', value: 'SInStage01' },
+              //   { fieldName: 'DraftStatus', value: '' },
+              // ],
+            },
+            {
+              display: 'lms',
+              value: 'lms',
+              roles: ['Administrator', 'EPMO', 'LMSUExecution', 'VROE',],
+              // otherFields: [
+              //   { fieldName: 'WFModuleCode', value: 'LMSInitiative' },
+              //   { fieldName: 'WFStage', value: 'LInStage01' },
+              //   { fieldName: 'DraftStatus', value: '' },
+              // ],
+            },
+            //---end EPMO and Admin Section ----
+            {
+              display: 'vision',
+              value: 'vision',
+              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
+              otherFields: [
+                { fieldName: "WFModuleCode", value: "VROCreateObjective" },
+                { fieldName: "WFStage", value: "VROCreateObjective01" },
+               // { fieldName: "Class", value: "vision" },
+                { fieldName: "Status", value: "stat31" },
+                { fieldName: "DraftStatus", value: "draft" },
+              ],
+            },
+            {
+              display: 'strategically',
+              value: 'strategically',
+              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
+              otherFields: [
+                { fieldName: "WFModuleCode", value: "MSCreateObjective" },
+                { fieldName: "WFStage", value: "MSCreateObjective01" },
+                // { fieldName: "Class", value: "ministry" },
+                { fieldName: "Status", value: "stat31" },
+                { fieldName: "DraftStatus", value: "draft" },
+              ],
+            },
+            {
+              display: 'lms',
+              value: 'lms',
+              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
+              otherFields: [
+                { fieldName: "WFModuleCode", value: "LMSCreateObjective" },
+                { fieldName: "WFStage", value: "LMSCreateObjective01" },
+                { fieldName: "Status", value: "stat31" },
+                { fieldName: "DraftStatus", value: "draft" },
+              ],
+            },
+          ],
+        },
+
       },
       {
         InternalName: 'RelatedStrategy',

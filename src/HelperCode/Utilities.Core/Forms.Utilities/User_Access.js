@@ -1554,6 +1554,8 @@ window.userCalls = {
         en_UserRole = "Execution Guarantee Office";
         //CRUD
         Create_Access = [
+          "sos",
+          "mainkpi",
           "benefitmatrix",
           "initiatives",
           "initiativedeliverables",
@@ -1610,6 +1612,8 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           "contracts",
+          "sos",
+          "mainkpi",
           //"changerequest",
           "documents",
         ];
@@ -1636,6 +1640,8 @@ window.userCalls = {
           "coc",
           "stakeholders",
           "communicationplans",
+          "sos",
+          "mainkpi",
           "contracts"
         ];
         break;
