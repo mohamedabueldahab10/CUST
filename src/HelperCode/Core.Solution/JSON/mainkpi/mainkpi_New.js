@@ -138,7 +138,7 @@ var Information_Form = [
             {
               display: 'vision',
               value: 'vision',
-              roles: ['Administrator', 'EPMO', 'LMSUExecution', 'VROE',],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
+              roles: ['Administrator', 'EPMO','VROE',],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
               // otherFields: [
               //   { fieldName: 'WFModuleCode', value: 'VisionInitiative' },
               //   { fieldName: 'WFStage', value: 'VInStage01' },
@@ -148,7 +148,7 @@ var Information_Form = [
             {
               display: 'strategically',
               value: 'strategically',
-              roles: ['Administrator', 'EPMO', 'LMSUExecution', 'VROE',],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
+              roles: ['Administrator', 'EPMO', ],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
               // otherFields: [
               //   { fieldName: 'WFModuleCode', value: 'StrategicallyInitiative' },
               //   { fieldName: 'WFStage', value: 'SInStage01' },
@@ -158,7 +158,7 @@ var Information_Form = [
             {
               display: 'lms',
               value: 'lms',
-              roles: ['Administrator', 'EPMO', 'LMSUExecution', 'VROE',],
+              roles: ['Administrator', 'EPMO', 'LMSUExecution'],
               // otherFields: [
               //   { fieldName: 'WFModuleCode', value: 'LMSInitiative' },
               //   { fieldName: 'WFStage', value: 'LInStage01' },
@@ -217,6 +217,18 @@ var Information_Form = [
         dynamic: "KPIType", //InternalName Of Parent field
         filterField: "Types",//InternalName Of Parent field
         filterFieldType: "Choice",
+        accessFilter: [
+          {
+            role: 'LMSUExecution',
+            conditions: [
+              {
+                field: 'Class',
+                type: 'Text',
+                values: ['lms'],
+              },
+            ],
+          },
+        ],
         ///
         ///
         // display: 'none',
@@ -442,9 +454,12 @@ var Information_Form = [
         security: {
           groups: [
             'LMS_P',
+            'LMSU-Execution',
             'SPM Admin',
             'SPM Team',
             'VRO_P',
+            'VRO_E',
+            'EPMO',
             'System Admin Group',
           ],
         },
