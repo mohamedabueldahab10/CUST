@@ -56,7 +56,7 @@ var Information_Form = [
               value: 'vision',
               roles: [
                 'Administrator',
-                // 'VROE',
+                'VROE',
                 'VROP'
               ],
             },
@@ -65,7 +65,7 @@ var Information_Form = [
               value: 'lms',
               roles: [
                 'Administrator',
-                // 'LMSE',
+                'LMSUExecution',
                 'LMSP',
                 'StrategyTeam'
               ],

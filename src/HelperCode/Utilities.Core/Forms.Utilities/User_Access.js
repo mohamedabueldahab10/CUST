@@ -1564,7 +1564,7 @@ window.userCalls = {
           "initiativerisks",
           "initiativemom",
           "closureinitiative",
-          // "benefits",
+          "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
           "projects",
@@ -1578,6 +1578,7 @@ window.userCalls = {
           "coc",
           "stakeholders",
           "communicationplans",
+          "goalstrategy",          
           "contracts",
           "changerequest",
           "documents",
@@ -1590,6 +1591,8 @@ window.userCalls = {
         Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
           "benefitmatrix",
+          "kpiequations",
+          "goalstrategy",  
           "initiatives",
           "initiativedeliverables",
           "initiativemilestones",
@@ -1620,6 +1623,7 @@ window.userCalls = {
         Delete_Access = [
           "benefitmatrix",
           "initiatives",
+          "goalstrategy",  
           "initiativedeliverables",
           "initiativemilestones",
           "initiativeissues",
@@ -2013,6 +2017,7 @@ window.userCalls = {
 
         Edit_Access = [
           "goalstrategy",
+          "kpiequations",
           "sos",
           "mainkpi",
           "benefitmatrix",
