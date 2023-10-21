@@ -75,28 +75,33 @@ var Information_Form = [
         DisplayName: "نوع الاستراتيجية",
         DisplayNameEn: "Strategy Type",
         type: "dropdownValues",
-        dynamic: "parent", //main field that affect on other chiled field  
+        // dynamic: "parent", //main field that affect on other chiled field  
         validation: 'required',
+        toggleValues: [
+          { value: 'lms', fields: ['RelatedStrategyLMS'] },
+          { value: 'vision', fields: ['RelatedStrategyVision'] },
+          { value: 'ministry', fields: ['RelatedStrategyMinistry'] },
+        ],
         options: {
           choices: [
             {
               display: 'vision',
               value: 'vision',
-              customFilterValue: "vision",
-              roles: ['Administrator', 'EPMO','VROE'],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
+              // customFilterValue: "vision",
+              roles: ['Administrator', 'EPMO', 'VROE'],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
               // customFilterValue: "vision",
             },
             {
               display: 'ministry',
               value: 'ministry',
-              customFilterValue: "ministry",
-              roles: ['Administrator', 'EPMO','SPMAdmin', ],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
+              // customFilterValue: "ministry",
+              roles: ['Administrator', 'EPMO', 'SPMAdmin',],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
               // customFilterValue: "strategically",
             },
             {
               display: 'lms',
               value: 'lms',
-              customFilterValue: "lms",
+              // customFilterValue: "lms",
               roles: ['Administrator', 'EPMO', 'LMSUExecution'],
               // customFilterValue: "lms",
             },
@@ -108,16 +113,16 @@ var Information_Form = [
               otherFields: [
                 { fieldName: "WFModuleCode", value: "VROCreateKPI" },
                 { fieldName: "WFStage", value: "VROCreateKPI01" },
-               // { fieldName: "Class", value: "vision" },
+                // { fieldName: "Class", value: "vision" },
                 { fieldName: "Status", value: "stat31" },
                 { fieldName: "DraftStatus", value: "draft" },
-                
+
               ],
             },
             {
               display: 'ministry',
               value: 'ministry',
-              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU',  'SPMTeam', 'StrategyTeam', 'CRCommittee'],
+              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
               otherFields: [
                 { fieldName: "WFModuleCode", value: "EPMOCreateKPI" },
                 { fieldName: "WFStage", value: "EPMOCreateKPI01" },
@@ -129,7 +134,7 @@ var Information_Form = [
             {
               display: 'lms',
               value: 'lms',
-              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU',  'SPMTeam', 'StrategyTeam', 'CRCommittee'],
+              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
               otherFields: [
                 { fieldName: "WFModuleCode", value: "LMSCreateKPI" },
                 { fieldName: "WFStage", value: "LMSCreateKPI01" },
@@ -141,62 +146,128 @@ var Information_Form = [
         },
 
       },
+      // {
+      //   InternalName: 'RelatedStrategy',
+      //   DisplayNameEn: 'Related Strategy',
+      //   DisplayName: 'الاستراتيجية المرتبطة',
+      //   type: 'lookup',
+      //   validation: 'required',
+      //   // dontSubmit: true,
+      //   source: 'GoalStrategy',
+      //   Dispfieldkey: 'Name',
+      //   valfieldkey: 'Title',
+
+      //   // dynamic: "Class", //InternalName Of Parent field
+      //   // filterField: "Types",//InternalName Of Parent field
+      //   // filterFieldType: "Text",//Type In Sharepoint List for Parent field
+
+      //   seconeddynamic: 'Types',
+      //   dynamic: 'parent', //main field that affect on other chiled field
+      //   filterField: 'Types',
+      //   filterFieldType: 'Text',
+      //   notInvokeListiner: true, // to not invoke the lookup when change on parent > the filteration depends on other field also
+      //   //in case not parent add below attrs
+      //   //role access
+      //   accessFilter: [
+      //     {
+      //       role: 'VROE',
+      //       conditions: [
+      //         {
+      //           field: 'Types',
+      //           type: 'Choice',
+      //           values: ['vision'],
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       role: 'LMSUExecution',
+      //       conditions: [
+      //         {
+      //           field: 'Types',
+      //           type: 'Choice',
+      //           values: ['lms'],
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       role: 'SPMAdmin',
+      //       conditions: [
+      //         {
+      //           field: 'Types',
+      //           type: 'Choice',
+      //           values: ['ministry'],
+      //         },
+      //       ],
+      //     },
+      //   ],
+      // },
       {
         InternalName: 'RelatedStrategy',
         DisplayNameEn: 'Related Strategy',
         DisplayName: 'الاستراتيجية المرتبطة',
-        type: 'lookup',
+        type: 'lookupWithQuery',
+        ToggleName: 'RelatedStrategyLMS',
+        queryField: 'Types',
+        queryFieldType: 'Text', //ex: "Choice"
+        queryFieldValue: 'lms',
+        validation: 'required',
+        // dontSubmit: true,
+        source: 'GoalStrategy',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        seconeddynamic: 'Types',
+        dynamic: 'parent', //main field that affect on other chiled field
+        filterField: 'Types',
+        filterFieldType: 'Text',
+        notInvokeListiner: true,
+        "display": "none"
+
+      },
+      {
+        InternalName: 'RelatedStrategy',
+        DisplayNameEn: 'Related Strategy',
+        DisplayName: 'الاستراتيجية المرتبطة',
+        type: 'lookupWithQuery',
+        ToggleName: 'RelatedStrategyVision',
+        queryField: 'Types',
+        queryFieldType: 'Text', //ex: "Choice"
+        queryFieldValue: 'vision',
+        validation: 'required',
+        // dontSubmit: true,
+        source: 'GoalStrategy',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        seconeddynamic: 'Types',
+        dynamic: 'parent', //main field that affect on other chiled field
+        filterField: 'Types',
+        filterFieldType: 'Text',
+        notInvokeListiner: true,
+        "display": "none"
+
+      },
+      {
+        InternalName: 'RelatedStrategy',
+        DisplayNameEn: 'Related Strategy',
+        DisplayName: 'الاستراتيجية المرتبطة',
+        type: 'lookupWithQuery',
+        ToggleName: 'RelatedStrategyMinistry',
+        queryField: 'Types',
+        queryFieldType: 'Text', //ex: "Choice"
+        queryFieldValue: 'ministry',
         validation: 'required',
         // dontSubmit: true,
         source: 'GoalStrategy',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
 
-        // dynamic: "Class", //InternalName Of Parent field
-				// filterField: "Types",//InternalName Of Parent field
-				// filterFieldType: "Text",//Type In Sharepoint List for Parent field
-
         seconeddynamic: 'Types',
         dynamic: 'parent', //main field that affect on other chiled field
         filterField: 'Types',
         filterFieldType: 'Text',
-        notInvokeListiner: true, // to not invoke the lookup when change on parent > the filteration depends on other field also
-        //in case not parent add below attrs
-        //role access
-        accessFilter: [
-          {
-            role: 'VROE',
-            conditions: [
-              {
-                field: 'Types',
-                type: 'Choice',
-                values: ['vision'],
-              },
-            ],
-          },
-          {
-            role: 'LMSUExecution',
-            conditions: [
-              {
-                field: 'Types',
-                type: 'Choice',
-                values: ['lms'],
-              },
-            ],
-          },
-          {
-            role: 'SPMAdmin',
-            conditions: [
-              {
-                field: 'Types',
-                type: 'Choice',
-                values: ['ministry'],
-              },
-            ],
-          },
-        ],
+        notInvokeListiner: true,
+        "display": "none"
+
       },
-     
       {
         InternalName: 'KPIType',
         DisplayNameEn: 'KPI Type',
@@ -244,25 +315,9 @@ var Information_Form = [
         validation: 'required',
         dynamic: 'RelatedStrategy',
         filterField: 'RelatedStrategy',
-        filterFieldType: 'Text',            
+        filterFieldType: 'Text',
         descPhraseAr: "تظهر الاهداف بناء على نوع المؤشر والاستراتيجية المختارة",
-        descPhraseEn: "The Objectives appear based on selected Level that related to selected Strategy", 
-        // dynamic: "KPIType", //InternalName Of Parent field
-        // filterField: "Types",//InternalName Of Parent field
-        // filterFieldType: "Choice",
-        // accessFilter: [
-        //   {
-        //     role: 'LMSUExecution',
-        //     conditions: [
-        //       {
-        //         field: 'Class',
-        //         type: 'Text',
-        //         values: ['lms'],
-        //       },
-        //     ],
-        //   },
-        // ],
-
+        descPhraseEn: "The Objectives appear based on selected Level that related to selected Strategy",
       },
       {
         InternalName: 'Sector',
@@ -281,7 +336,7 @@ var Information_Form = [
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
         display: 'none',
-        state: 'disabled',        
+        state: 'disabled',
         descPhraseAr: "قطاع الهدف المرتبط",
         descPhraseEn: "Related Objective Sector",
         // validation: 'required',
@@ -305,7 +360,7 @@ var Information_Form = [
         dynamic: 'Sector', //InternalName Of Parent field
         filterField: 'ParentEntity', //InternalName Of Parent field
         filterFieldType: 'Text', //Type In Sharepoint List for Parent field
-        display: 'none',        
+        display: 'none',
         descPhraseAr: "وكالة الهدف المرتبط",
         descPhraseEn: "Related Objective DeputyShip",
         state: 'disabled'
@@ -360,7 +415,7 @@ var Information_Form = [
         //   ],
         // },
         validation: 'required',
-        Errmsgkey:'fromyearpattern',
+        Errmsgkey: 'fromyearpattern',
       },
       {
         InternalName: 'ToDate',
@@ -369,7 +424,7 @@ var Information_Form = [
         type: 'yearInput',
         // type: "datetime",
         min: 'FromDate',
-        Errmsgkey:'toyearpattern',
+        Errmsgkey: 'toyearpattern',
         //   "state": "disabled",
         //   dynamic: "Initiative",
         // options: {
@@ -465,7 +520,7 @@ var Information_Form = [
       {
         InternalName: 'RelatedMainKpis',
         ToggleName: 'RelatedMainKpis',
-        DisplayNameEn: 'Related Main Kpis',           
+        DisplayNameEn: 'Related Main Kpis',
         descPhraseAr: "المؤشر الرئيسي المرتبط ",
         descPhraseEn: "Related Main KPIs",
         DisplayName: 'المؤشر المرتبط',
@@ -534,7 +589,7 @@ var Information_Form = [
         type: 'picker', //user
         validation: 'required',
         descPhraseAr: "يجب ان يكون المستخدم لديه الصلاحية المناسبة",
-        descPhraseEn: " User Should have right access", 
+        descPhraseEn: " User Should have right access",
       },
       {
         InternalName: 'PerformanceLeader',
@@ -543,7 +598,7 @@ var Information_Form = [
         type: 'picker',
         validation: 'required',
         descPhraseAr: "يجب ان يكون المستخدم لديه الصلاحية المناسبة",
-        descPhraseEn: " User Should have right access", 
+        descPhraseEn: " User Should have right access",
       },
       {
         InternalName: 'PerformanceLeader2',
@@ -552,7 +607,7 @@ var Information_Form = [
         type: 'picker',
         validation: 'required',
         descPhraseAr: "يجب ان يكون المستخدم لديه الصلاحية المناسبة",
-        descPhraseEn: " User Should have right access", 
+        descPhraseEn: " User Should have right access",
       },
       {
         InternalName: 'CalculationType',
@@ -724,7 +779,7 @@ var Information_Form = [
         DisplayName: 'فترة قياس خط الأساس',
         DisplayNameEn: 'Mesure Period',
         min: 'FromDate',
-        Errmsgkey:'todatepattern',
+        Errmsgkey: 'todatepattern',
         type: 'datetime',
         // validation: "required",
       },
