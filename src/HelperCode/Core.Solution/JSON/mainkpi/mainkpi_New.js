@@ -82,19 +82,19 @@ var Information_Form = [
               display: 'vision',
               value: 'vision',
               roles: ['Administrator', 'EPMO','VROE',],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
-
+              // customFilterValue: "vision",
             },
             {
               display: 'strategically',
               value: 'strategically',
               roles: ['Administrator', 'EPMO','SPMAdmin', ],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
-
+              // customFilterValue: "strategically",
             },
             {
               display: 'lms',
               value: 'lms',
               roles: ['Administrator', 'EPMO', 'LMSUExecution'],
-
+              // customFilterValue: "lms",
             },
             //---end EPMO and Admin Section ----
             {
@@ -107,6 +107,7 @@ var Information_Form = [
                // { fieldName: "Class", value: "vision" },
                 { fieldName: "Status", value: "stat31" },
                 { fieldName: "DraftStatus", value: "draft" },
+                
               ],
             },
             {
@@ -141,6 +142,7 @@ var Information_Form = [
         DisplayNameEn: 'Related Strategy',
         DisplayName: 'الاستراتيجية المرتبطة',
         type: 'lookup',
+        validation: 'required',
         // dontSubmit: true,
         source: 'GoalStrategy',
         Dispfieldkey: 'Name',
@@ -155,95 +157,40 @@ var Information_Form = [
         notInvokeListiner: true, // to not invoke the lookup when change on parent > the filteration depends on other field also
         //in case not parent add below attrs
         //role access
-        // accessFilter: [
-        //   {
-        //     role: 'VROE',
-        //     conditions: [
-        //       {
-        //         field: 'Types',
-        //         type: 'Choice',
-        //         values: ['vision'],
-        //       },
-        //     ],
-        //   },
-        //   {
-        //     role: 'LMSUExecution',
-        //     conditions: [
-        //       {
-        //         field: 'Types',
-        //         type: 'Choice',
-        //         values: ['lms'],
-        //       },
-        //     ],
-        //   },
-        // ],
+        accessFilter: [
+          {
+            role: 'VROE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['vision'],
+              },
+            ],
+          },
+          {
+            role: 'LMSUExecution',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['lms'],
+              },
+            ],
+          },
+          {
+            role: 'SPMAdmin',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['ministry'],
+              },
+            ],
+          },
+        ],
       },
-      {
-        InternalName: "Class",
-        DisplayName: "نوع الاستراتيجية",
-        DisplayNameEn: "Strategy Type",
-        type: "dropdownValues",
-        validation: 'required',
-        options: {
-          choices: [
-            {
-              display: 'vision',
-              value: 'vision',
-              roles: ['Administrator', 'EPMO','VROE',],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
-
-            },
-            {
-              display: 'strategically',
-              value: 'strategically',
-              roles: ['Administrator', 'EPMO','SPMAdmin', ],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
-
-            },
-            {
-              display: 'lms',
-              value: 'lms',
-              roles: ['Administrator', 'EPMO', 'LMSUExecution'],
-
-            },
-            //---end EPMO and Admin Section ----
-            {
-              display: 'vision',
-              value: 'vision',
-              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', , 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
-              otherFields: [
-                { fieldName: "WFModuleCode", value: "VROCreateKPI" },
-                { fieldName: "WFStage", value: "VROCreateKPI01" },
-               // { fieldName: "Class", value: "vision" },
-                { fieldName: "Status", value: "stat31" },
-                { fieldName: "DraftStatus", value: "draft" },
-              ],
-            },
-            {
-              display: 'strategically',
-              value: 'strategically',
-              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU',  'SPMTeam', 'StrategyTeam', 'CRCommittee'],
-              otherFields: [
-                { fieldName: "WFModuleCode", value: "EPMOCreateKPI" },
-                { fieldName: "WFStage", value: "EPMOCreateKPI01" },
-                // { fieldName: "Class", value: "ministry" },
-                { fieldName: "Status", value: "stat31" },
-                { fieldName: "DraftStatus", value: "draft" },
-              ],
-            },
-            {
-              display: 'lms',
-              value: 'lms',
-              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU',  'SPMTeam', 'StrategyTeam', 'CRCommittee'],
-              otherFields: [
-                { fieldName: "WFModuleCode", value: "LMSCreateKPI" },
-                { fieldName: "WFStage", value: "LMSCreateKPI01" },
-                { fieldName: "Status", value: "stat31" },
-                { fieldName: "DraftStatus", value: "draft" },
-              ],
-            },
-          ],
-        },
-
-      },
+     
       {
         InternalName: 'KPIType',
         DisplayNameEn: 'KPI Type',
@@ -291,22 +238,24 @@ var Information_Form = [
         validation: 'required',
         dynamic: 'RelatedStrategy',
         filterField: 'RelatedStrategy',
-        filterFieldType: 'Text',
+        filterFieldType: 'Text',            
+        descPhraseAr: "تظهر الاهداف بناء على نوع المؤشر والاستراتيجية المختارة",
+        descPhraseEn: "The Objectives appear based on selected Level that related to selected Strategy", 
         // dynamic: "KPIType", //InternalName Of Parent field
         // filterField: "Types",//InternalName Of Parent field
         // filterFieldType: "Choice",
-        accessFilter: [
-          {
-            role: 'LMSUExecution',
-            conditions: [
-              {
-                field: 'Class',
-                type: 'Text',
-                values: ['lms'],
-              },
-            ],
-          },
-        ],
+        // accessFilter: [
+        //   {
+        //     role: 'LMSUExecution',
+        //     conditions: [
+        //       {
+        //         field: 'Class',
+        //         type: 'Text',
+        //         values: ['lms'],
+        //       },
+        //     ],
+        //   },
+        // ],
 
       },
       {

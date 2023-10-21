@@ -43,33 +43,7 @@ var Information_Form = [
         maxchar: '250',
         // validation: 'required',
       },
-      {
-        InternalName: 'KPIType',
-        DisplayNameEn: 'KPI Type',
-        // validation: 'required',
-        DisplayName: 'نوع المؤشر',
-        toggleValues: [
-          { value: 'sublevel2', fields: ['RelatedStrategyObjective', 'RelatedMainKpis','Sector','SubSector'] }, //we can put more than 1  field
-          { value: 'sublevel3', fields: ['RelatedStrategyObjective', 'RelatedMainKpis','Sector','SubSector'] }, //we can put more than 1  field
-          // { value: 'sub', fields: ['SubRelatedObjective', 'RelatedMainKpis'] }, //we can put more than 1  field
-          // { value: 'main', fields: ['RelatedMainObjective'] }, //we can put more than 1  field
-          // { value: 'strategically', fields: ['StrategyRelatedObjective'] },
-        ],
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            // { display: "strategically", value: "strategically" },
-            { display: 'main', value: 'main' },
-            { display: 'sublevel2', value: 'sublevel2' },
-            { display: 'sublevel3', value: 'sublevel3' },
-            // { display: 'Level2', value: 'Level2' },
-            // { display: 'Level3', value: 'Level3' },
-            // { display: "sub", value: "sub" },
-            // { display: "vision", value: "vision" },
-            // { display: "jobmarket", value: "jobmarket" },
-          ],
-        },
-      },
+   
       {
         InternalName: "Class",
         DisplayName: " نوع الاستراتيجية ",
@@ -96,6 +70,45 @@ var Information_Form = [
             ],
         },
 
+      },
+      {
+        InternalName: 'RelatedStrategy',
+        DisplayNameEn: 'Related Strategy',
+        DisplayName: 'الاستراتيجية المرتبطة',
+        type: 'lookup',
+        // validation: 'required',
+        // dontSubmit: true,
+        source: 'GoalStrategy',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+     
+      },
+      {
+        InternalName: 'KPIType',
+        DisplayNameEn: 'KPI Type',
+        // validation: 'required',
+        DisplayName: 'نوع المؤشر',
+        toggleValues: [
+          { value: 'sublevel2', fields: ['RelatedStrategyObjective', 'RelatedMainKpis','Sector','SubSector'] }, //we can put more than 1  field
+          { value: 'sublevel3', fields: ['RelatedStrategyObjective', 'RelatedMainKpis','Sector','SubSector'] }, //we can put more than 1  field
+          // { value: 'sub', fields: ['SubRelatedObjective', 'RelatedMainKpis'] }, //we can put more than 1  field
+          // { value: 'main', fields: ['RelatedMainObjective'] }, //we can put more than 1  field
+          // { value: 'strategically', fields: ['StrategyRelatedObjective'] },
+        ],
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            // { display: "strategically", value: "strategically" },
+            { display: 'main', value: 'main' },
+            { display: 'sublevel2', value: 'sublevel2' },
+            { display: 'sublevel3', value: 'sublevel3' },
+            // { display: 'Level2', value: 'Level2' },
+            // { display: 'Level3', value: 'Level3' },
+            // { display: "sub", value: "sub" },
+            // { display: "vision", value: "vision" },
+            // { display: "jobmarket", value: "jobmarket" },
+          ],
+        },
       },
       {
         InternalName: 'RelatedStrategyObjective',

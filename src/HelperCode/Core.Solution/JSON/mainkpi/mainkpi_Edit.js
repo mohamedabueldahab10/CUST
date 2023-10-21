@@ -21,7 +21,7 @@ var Information_Form = [
     formValuesBasedOnParent: [
       // add getGrandParent if the value based on grandParent and basedOnCondition to check if based on condition or not
       {
-        parentList: 'SOs', listinerField: "RelatedStrategyObjective", parentFieldName: 'Title', fieldName: 'RelatedStrategy', basedOnCondition: true,basedOnFieldName: "A",basedOnFieldValue: "notempty",
+        parentList: 'SOs', listinerField: "RelatedStrategyObjective", parentFieldName: 'Title', fieldName: 'RelatedStrategy', basedOnCondition: true, basedOnFieldName: "A", basedOnFieldValue: "notempty",
         getGrandParent: [
           { grandParentList: "GoalStrategy", grandParentFieldName: "Title", grandParentTargetFieldName: "Types" }
         ],
@@ -89,50 +89,10 @@ var Information_Form = [
           groups: [
             'LMS_P',
             'SPM Admin',
-            'SPM Team',
-            'VRO_P',
-            'System Admin Group',
-          ],
-        },
-      },
-      {
-        InternalName: 'KPIType',
-        DisplayNameEn: 'KPI Type',
-        validation: 'required',
-        DisplayName: 'نوع المؤشر',
-        dynamic: 'parent', //main field that affect on other chiled field
-        type: 'dropdownValues',
-        toggleValues: [
-          { value: 'main', fields: ['Sector', 'SubSector'] }, //we can put more than 1  field
-          { value: 'sublevel2', fields: ['RelatedMainKpis', 'Sector', 'SubSector'] }, //we can put more than 1  field
-          { value: 'sublevel3', fields: ['RelatedMainKpis', 'Sector', 'SubSector'] }, //we can put more than 1  field
-        ],
-        options: {
-          choices: [
-            {
-              display: 'main', value: 'main',
-              // customFilterValue: 'main',
-
-            },
-            {
-              display: 'sublevel2',
-              value: 'sublevel2',
-              //customFilterValue: 'main',
-            },
-            {
-              display: 'sublevel3',
-              value: 'sublevel3',
-              //customFilterValue: 'sublevel2',
-            },
-          ],
-
-        }, security: {
-          groups: [
-            // 'LMS_P',
             'VRO_E',
             'LMSU-Execution',
-            'EPMO',
-            //'Performance Leaders',
+            'SPM Team',
+            'VRO_P',
             'System Admin Group',
           ],
         },
@@ -148,72 +108,133 @@ var Information_Form = [
             {
               display: 'vision',
               value: 'vision',
-              roles: ['Administrator', 'EPMO','VROE',],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
-              // otherFields: [
-              //   { fieldName: 'WFModuleCode', value: 'VisionInitiative' },
-              //   { fieldName: 'WFStage', value: 'VInStage01' },
-              //   { fieldName: 'DraftStatus', value: '' },
-              // ],
+              roles: ['Administrator', 'EPMO', 'VROE',],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
+              // customFilterValue: "vision",
             },
             {
               display: 'strategically',
               value: 'strategically',
-              roles: ['Administrator', 'EPMO','SPMAdmin', ],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
-              // otherFields: [
-              //   { fieldName: 'WFModuleCode', value: 'StrategicallyInitiative' },
-              //   { fieldName: 'WFStage', value: 'SInStage01' },
-              //   { fieldName: 'DraftStatus', value: '' },
-              // ],
+              roles: ['Administrator', 'EPMO', 'SPMAdmin',],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
+              // customFilterValue: "strategically",
             },
             {
               display: 'lms',
               value: 'lms',
               roles: ['Administrator', 'EPMO', 'LMSUExecution'],
-              // otherFields: [
-              //   { fieldName: 'WFModuleCode', value: 'LMSInitiative' },
-              //   { fieldName: 'WFStage', value: 'LInStage01' },
-              //   { fieldName: 'DraftStatus', value: '' },
-              // ],
+              // customFilterValue: "lms",
             },
             //---end EPMO and Admin Section ----
             {
               display: 'vision',
               value: 'vision',
               roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', , 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
-              // otherFields: [
-              //   { fieldName: "WFModuleCode", value: "VROCreateKPI" },
-              //   { fieldName: "WFStage", value: "VROCreateKPI01" },
-              //  // { fieldName: "Class", value: "vision" },
-              //   { fieldName: "Status", value: "stat31" },
-              //   { fieldName: "DraftStatus", value: "draft" },
-              // ],
+
             },
             {
               display: 'strategically',
               value: 'strategically',
-              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU',  'SPMTeam', 'StrategyTeam', 'CRCommittee'],
-              // otherFields: [
-              //   { fieldName: "WFModuleCode", value: "EPMOCreateKPI" },
-              //   { fieldName: "WFStage", value: "EPMOCreateKPI01" },
-              //   // { fieldName: "Class", value: "ministry" },
-              //   { fieldName: "Status", value: "stat31" },
-              //   { fieldName: "DraftStatus", value: "draft" },
-              // ],
+              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
+
             },
             {
               display: 'lms',
               value: 'lms',
-              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU',  'SPMTeam', 'StrategyTeam', 'CRCommittee'],
-              // otherFields: [
-              //   { fieldName: "WFModuleCode", value: "LMSCreateKPI" },
-              //   { fieldName: "WFStage", value: "LMSCreateKPI01" },
-              //   { fieldName: "Status", value: "stat31" },
-              //   { fieldName: "DraftStatus", value: "draft" },
-              // ],
+              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
+
             },
           ],
         },
 
+      },
+      {
+        InternalName: 'RelatedStrategy',
+        DisplayNameEn: 'Related Strategy',
+        DisplayName: 'الاستراتيجية المرتبطة',
+        type: 'lookup',
+        validation: 'required',
+        // dontSubmit: true,
+        source: 'GoalStrategy',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        // dynamic: 'parent',
+        // dynamic: 'Types',
+        // dynamic:'parent',
+        seconeddynamic: 'Types',
+        dynamic: 'parent', //main field that affect on other chiled field
+        filterField: 'Types',
+        filterFieldType: 'Text',
+        notInvokeListiner: true, // to not invoke the lookup when change on parent > the filteration depends on other field also
+        //in case not parent add below attrs
+        //role access
+        accessFilter: [
+          {
+            role: 'VROE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['vision'],
+              },
+            ],
+          },
+          {
+            role: 'LMSUExecution',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['lms'],
+              },
+            ],
+          },
+          {
+            role: 'SPMAdmin',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['ministry'],
+              },
+            ],
+          },
+        ],
+      },
+
+      {
+        InternalName: 'KPIType',
+        DisplayNameEn: 'KPI Type',
+        validation: 'required',
+        DisplayName: 'نوع المؤشر',
+        grandFieldId: 'RelatedStrategy', // we add this field to handle the two field filtration(parent Id in current form)
+        childFieldId: 'RelatedStrategyObjective', // we add this field to handle the two field filtration (child Id in current form)
+        childFieldIdSource: 'Types',
+        // dynamic: 'parent', //main field that affect on other chiled field
+        type: 'dropdownValues',
+        toggleValues: [
+          { value: 'main', fields: ['Sector', 'SubSector'] }, //we can put more than 1  field
+          { value: 'sublevel2', fields: ['RelatedMainKpis', 'Sector', 'SubSector'] }, //we can put more than 1  field
+          { value: 'sublevel3', fields: ['RelatedMainKpis', 'Sector', 'SubSector'] }, //we can put more than 1  field
+        ],
+        options: {
+          choices: [
+            {
+              display: 'main',
+              value: 'main',
+              // customFilterValue: 'main',
+            },
+            {
+              display: 'sublevel2',
+              value: 'sublevel2',
+              // customFilterValue: 'sublevel2',
+            },
+            {
+              display: 'sublevel3',
+              value: 'sublevel3',
+              //customFilterValue: 'sublevel3',
+            },
+          ],
+
+        },
       },
       {
         InternalName: 'RelatedStrategyObjective',
@@ -224,24 +245,27 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         validation: 'required',
+        dynamic: 'RelatedStrategy',
+        filterField: 'RelatedStrategy',
+        filterFieldType: 'Text',
+        descPhraseAr: "تظهر الاهداف بناء على نوع المؤشر والاستراتيجية المختارة",
+        descPhraseEn: "The Objectives appear based on selected Level that related to selected Strategy",
         // dynamic: "KPIType", //InternalName Of Parent field
         // filterField: "Types",//InternalName Of Parent field
         // filterFieldType: "Choice",
-        // display: 'none',
-        // ToggleName:'RelatedStrategyObjective',
-        fieldsinformlvl1: "Sector", // fields in look up list
-        sourcefieldlvl1: "Sector",
-        fieldsinformlvl2: "SubSector", // fields in look up list
-        sourcefieldlvl2: "SubSector",
-        security: {
-          groups: [
-            'VRO_E',
-            'LMSU-Execution',
-            'EPMO',
-            //'Performance Leaders',
-            'System Admin Group',
-          ],
-        },
+        // accessFilter: [
+        //   {
+        //     role: 'LMSUExecution',
+        //     conditions: [
+        //       {
+        //         field: 'Class',
+        //         type: 'Text',
+        //         values: ['lms'],
+        //       },
+        //     ],
+        //   },
+        // ],
+
       },
       {
         "InternalName": "Sector",
@@ -259,7 +283,7 @@ var Information_Form = [
         "DispfieldkeyEn": "NameEn",
         "valfieldkey": "Title",
         // "validation": "required",
-        display: 'none',        
+        display: 'none',
         descPhraseAr: "قطاع الهدف المرتبط",
         descPhraseEn: "Related Objective Sector",
         state: 'disabled',
@@ -284,7 +308,7 @@ var Information_Form = [
         filterField: "ParentEntity",//InternalName Of Parent field
         filterFieldType: "Text",//Type In Sharepoint List for Parent field
         display: 'none',
-        state: 'disabled',               
+        state: 'disabled',
         descPhraseAr: "وكالة الهدف المرتبط",
         descPhraseEn: "Related Objective DeputyShip",
         ToggleName: "SubSector",
@@ -306,10 +330,10 @@ var Information_Form = [
         },
         security: {
           groups: [
+            'SPM Admin',
             'VRO_E',
             'LMSU-Execution',
             'EPMO',
-            //'Performance Leaders',
             'System Admin Group',
           ],
         },
@@ -343,6 +367,9 @@ var Information_Form = [
             'SPM Team',
             'VRO_P',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
       },
@@ -375,6 +402,9 @@ var Information_Form = [
             'SPM Team',
             'VRO_P',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
       },
@@ -395,6 +425,9 @@ var Information_Form = [
             'SPM Team',
             'VRO_P',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
       },
@@ -413,6 +446,9 @@ var Information_Form = [
             'VRO_P',
             //'Performance Leaders',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
       },
@@ -431,6 +467,9 @@ var Information_Form = [
             'VRO_P',
             //'Performance Leaders',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
       },
@@ -449,6 +488,9 @@ var Information_Form = [
             'VRO_P',
             //'Performance Leaders',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
       },
@@ -468,6 +510,9 @@ var Information_Form = [
             'SPM Team',
             'VRO_P',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
       },
@@ -617,7 +662,7 @@ var Information_Form = [
         queryFieldValue: 'main',
         source: 'MainKPI',
         // "state": "disabled",
-        Dispfieldkey: 'Name',               
+        Dispfieldkey: 'Name',
         descPhraseAr: "المؤشر الرئيسي المرتبط ",
         descPhraseEn: "Related Main KPIs",
         valfieldkey: 'Title',
@@ -629,6 +674,9 @@ var Information_Form = [
             'SPM Team',
             'VRO_P',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
         accessFilter: [
@@ -937,6 +985,9 @@ var Information_Form = [
             'SPM Team',
             'VRO_P',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
       },
@@ -947,7 +998,7 @@ var Information_Form = [
         type: 'picker',
         validation: 'required',
         descPhraseAr: "يجب ان يكون المستخدم لديه الصلاحية المناسبة",
-        descPhraseEn: " User Should have right access", 
+        descPhraseEn: " User Should have right access",
         //ToggleDisabledName: 'PerformanceLeader',
         security: {
           groups: [
@@ -956,6 +1007,9 @@ var Information_Form = [
             'SPM Team',
             'VRO_P',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
       },
@@ -966,7 +1020,7 @@ var Information_Form = [
         type: 'picker',
         validation: 'required',
         descPhraseAr: "يجب ان يكون المستخدم لديه الصلاحية المناسبة",
-        descPhraseEn: " User Should have right access", 
+        descPhraseEn: " User Should have right access",
         //ToggleDisabledName: 'PerformanceLeader2',
         security: {
           groups: [
@@ -975,6 +1029,9 @@ var Information_Form = [
             'SPM Team',
             'VRO_P',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
       },
@@ -989,13 +1046,16 @@ var Information_Form = [
             { display: 'leadingindicator', value: 'leadingindicator' },
             { display: 'laggingindicator', value: 'laggingindicator' },
           ],
-        },  security: {
+        }, security: {
           groups: [
             'LMS_P',
             'SPM Admin',
             'SPM Team',
             'VRO_P',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
         // security: {
@@ -1042,6 +1102,9 @@ var Information_Form = [
             'SPM Team',
             'VRO_P',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
         validation: 'required',
@@ -1057,13 +1120,16 @@ var Information_Form = [
             { display: 'yes', value: 'yes' },
             { display: 'no', value: 'no' },
           ],
-        },  security: {
+        }, security: {
           groups: [
             'LMS_P',
             'SPM Admin',
             'SPM Team',
             'VRO_P',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
       },
@@ -1071,13 +1137,16 @@ var Information_Form = [
         InternalName: 'Performance',
         DisplayNameEn: 'Performance',
         DisplayName: 'الأداء',
-        type: 'number',  security: {
+        type: 'number', security: {
           groups: [
             'LMS_P',
             'SPM Admin',
             'SPM Team',
             'VRO_P',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
       },
@@ -1085,13 +1154,16 @@ var Information_Form = [
         InternalName: 'TotalActual',
         DisplayNameEn: 'Total Actual',
         DisplayName: 'إجمالي الفعلي',
-        type: 'number',  security: {
+        type: 'number', security: {
           groups: [
             'LMS_P',
             'SPM Admin',
             'SPM Team',
             'VRO_P',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
       },
@@ -1099,13 +1171,16 @@ var Information_Form = [
         InternalName: 'TotalPlanned',
         DisplayNameEn: 'Total Planned',
         DisplayName: 'إجمالي المخطط',
-        type: 'number',  security: {
+        type: 'number', security: {
           groups: [
             'LMS_P',
             'SPM Admin',
             'SPM Team',
             'VRO_P',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
       },
@@ -1205,6 +1280,9 @@ var Information_Form = [
             'SPM Team',
             'VRO_P',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
       },
@@ -1224,6 +1302,9 @@ var Information_Form = [
             'SPM Team',
             'VRO_P',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
       },
@@ -1241,6 +1322,9 @@ var Information_Form = [
             'SPM Team',
             'VRO_P',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
       },
@@ -1269,6 +1353,9 @@ var Information_Form = [
             'SPM Team',
             'VRO_P',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
       },
@@ -1304,6 +1391,9 @@ var Information_Form = [
             'SPM Team',
             'VRO_P',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
       },
@@ -1326,6 +1416,9 @@ var Information_Form = [
             'SPM Team',
             'VRO_P',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
       },
@@ -1344,6 +1437,9 @@ var Information_Form = [
             'SPM Team',
             'VRO_P',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
       },
@@ -1361,6 +1457,9 @@ var Information_Form = [
             'SPM Team',
             'VRO_P',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
       },
@@ -1373,7 +1472,11 @@ var Information_Form = [
         // Errmsgkey:'todatepattern',
         type: 'datetime',
         security: {
-          groups: ['LMS_P', 'VRO_P', 'System Admin Group', 'SPM Admin'],
+          groups: ['LMS_P', 'VRO_P', 'System Admin Group', 'SPM Admin',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
+          ],
         },
         // validation: "required",
       },
@@ -1417,7 +1520,7 @@ var Information_Form = [
   {
     label: 'مكونات المعادلة',
     labelEn: 'Equation Component',
-    description: 'يمكن ادخال القيم عند ادخال معادلة للمؤشر', 
+    description: 'يمكن ادخال القيم عند ادخال معادلة للمؤشر',
     descriptionEn: 'you can enter the values when enter the kpi Equation',
     subFields: [
       {
@@ -1435,6 +1538,7 @@ var Information_Form = [
             'VRO_P',
             // 'Performance Leaders',
             'System Admin Group',
+       
           ],
         },
         //editableBy: "PerformanceLeader",
@@ -1469,57 +1573,59 @@ var Information_Form = [
             'VRO_P',
             'Performance Leaders',
             'System Admin Group',
+      
           ],
         },
         validation: 'required',
       },
-        {
-          InternalName: 'Quarter',
-          DisplayNameEn: 'Quarter',
-          DisplayName: 'الربع',
-          ToggleName: 'Quarter',
-          type: 'dropdownValues',
-          options: {
-            choices: [
-              { display: 'quarter1', value: 'ActualQ1' },
-              { display: 'quarter2', value: 'ActualQ2' },
-              { display: 'quarter3', value: 'ActualQ3' },
-              { display: 'quarter4', value: 'ActualQ4' },
-            ],
-            // display: 'none',
-          },
-          // security: {
-          //   groups: [
-          //     'LMS_P',
-          //     'VRO_P',
-          //     'Performance Leaders',
-          //     'System Admin Group',
-          //   ],
-          // },
+      {
+        InternalName: 'Quarter',
+        DisplayNameEn: 'Quarter',
+        DisplayName: 'الربع',
+        ToggleName: 'Quarter',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'quarter1', value: 'ActualQ1' },
+            { display: 'quarter2', value: 'ActualQ2' },
+            { display: 'quarter3', value: 'ActualQ3' },
+            { display: 'quarter4', value: 'ActualQ4' },
+          ],
+          // display: 'none',
         },
-        {
-          InternalName: 'Midterms',
-          DisplayNameEn: 'Midterms',
-          DisplayName: 'النصف السنوي',
-          ToggleName: 'Midterms',
-          type: 'dropdownValues',
-          options: {
-            choices: [
-              { display: 'midterm1', value: 'ActualMid1' },
-              { display: 'midterm2', value: 'ActualMid2' },
-            ],
-            display: 'none',
-          },
-          security: {
-            groups: [
-              'LMS_P',
-              'SPM Team',
-              'VRO_P',
-              'Performance Leaders',
-              'System Admin Group',
-            ],
-          },
+        // security: {
+        //   groups: [
+        //     'LMS_P',
+        //     'VRO_P',
+        //     'Performance Leaders',
+        //     'System Admin Group',
+        //   ],
+        // },
+      },
+      {
+        InternalName: 'Midterms',
+        DisplayNameEn: 'Midterms',
+        DisplayName: 'النصف السنوي',
+        ToggleName: 'Midterms',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'midterm1', value: 'ActualMid1' },
+            { display: 'midterm2', value: 'ActualMid2' },
+          ],
+          display: 'none',
         },
+        security: {
+          groups: [
+            'LMS_P',
+            'SPM Team',
+            'VRO_P',
+            'Performance Leaders',
+            'System Admin Group',
+         
+          ],
+        },
+      },
       //   {
       //     InternalName: 'Years',
       //     DisplayNameEn: 'Years',
@@ -1542,7 +1648,7 @@ var Information_Form = [
       //       ],
       //     },
       //   },
-      
+
       {
         InternalName: 'Months',
         DisplayNameEn: 'Month',
@@ -1573,6 +1679,7 @@ var Information_Form = [
             'VRO_P',
             'Performance Leaders',
             'System Admin Group',
+          
           ],
         },
         // display: 'none',
@@ -1629,6 +1736,7 @@ var Information_Form = [
             'VRO_P',
             'Performance Leaders',
             'System Admin Group',
+       
           ],
         },
       },
@@ -1646,6 +1754,7 @@ var Information_Form = [
             'VRO_P',
             'Performance Leaders',
             'System Admin Group',
+         
           ],
         },
       },
@@ -1664,6 +1773,7 @@ var Information_Form = [
             'VRO_P',
             'Performance Leaders',
             'System Admin Group',
+       
           ],
         },
       },
@@ -1682,6 +1792,7 @@ var Information_Form = [
             'VRO_P',
             'Performance Leaders',
             'System Admin Group',
+       
           ],
         },
       },
@@ -1700,6 +1811,7 @@ var Information_Form = [
             'VRO_P',
             //'Performance Leaders',
             'System Admin Group',
+       
           ],
         },
       },
@@ -1718,6 +1830,7 @@ var Information_Form = [
             'VRO_P',
             //'Performance Leaders',
             'System Admin Group',
+          
           ],
         },
       },
@@ -1756,33 +1869,33 @@ var Information_Form = [
         //   ],
         // },
       },
-        {
-          InternalName: 'PerformanceAnalysis',
-          DisplayNameEn: 'Performance Analysis',
-          DisplayName: 'تحليل الأداء',
-          maxchar: '5000',
-          type: 'multiline',
-          security: {
-            groups: [
-              'LMS_P',
-              'VRO_P',
-              'Performance Leaders',
-              'System Admin Group',
-            ],
-          },
+      {
+        InternalName: 'PerformanceAnalysis',
+        DisplayNameEn: 'Performance Analysis',
+        DisplayName: 'تحليل الأداء',
+        maxchar: '5000',
+        type: 'multiline',
+        security: {
+          groups: [
+            'LMS_P',
+            'VRO_P',
+            'Performance Leaders',
+            'System Admin Group',
+          ],
         },
-        {
-          InternalName: "WFStage",
-          DisplayName: " المرحلة",
-          DisplayNameEn: "Stage",
-          type: 'lookup',
-          source: "Tasks Configuration",
-          Dispfieldkey: "TaskNameAr",
-          DispfieldkeyEn: 'TaskNameEn',
-          valfieldkey: "Title",
-          "state": "disabled",
-          display:'none'
-          },
+      },
+      {
+        InternalName: "WFStage",
+        DisplayName: " المرحلة",
+        DisplayNameEn: "Stage",
+        type: 'lookup',
+        source: "Tasks Configuration",
+        Dispfieldkey: "TaskNameAr",
+        DispfieldkeyEn: 'TaskNameEn',
+        valfieldkey: "Title",
+        "state": "disabled",
+        display: 'none'
+      },
     ],
   },
   {
