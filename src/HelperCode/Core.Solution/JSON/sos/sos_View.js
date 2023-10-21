@@ -46,13 +46,13 @@ var Information_Form = [
         DisplayName: "نوع الاستراتيجية",
         DisplayNameEn: "Strategy Type",
         type: "dropdownValues",
-        validation: 'required',
+        // validation: 'required',
         options: {
           choices: [
             {
               display: 'vision',
               value: 'vision',
-              roles: ['Administrator', 'EPMO', 'VROE',],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
+              // roles: ['Administrator', 'EPMO', 'VROE',],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
               // otherFields: [
               //   { fieldName: 'WFModuleCode', value: 'VisionInitiative' },
               //   { fieldName: 'WFStage', value: 'VInStage01' },
@@ -62,7 +62,7 @@ var Information_Form = [
             {
               display: 'strategically',
               value: 'strategically',
-              roles: ['Administrator', 'EPMO'],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
+              // roles: ['Administrator', 'EPMO'],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
               // otherFields: [
               //   { fieldName: 'WFModuleCode', value: 'StrategicallyInitiative' },
               //   { fieldName: 'WFStage', value: 'SInStage01' },
@@ -72,50 +72,14 @@ var Information_Form = [
             {
               display: 'lms',
               value: 'lms',
-              roles: ['Administrator', 'EPMO', 'LMSUExecution'],
+              // roles: ['Administrator', 'EPMO', 'LMSUExecution'],
               // otherFields: [
               //   { fieldName: 'WFModuleCode', value: 'LMSInitiative' },
               //   { fieldName: 'WFStage', value: 'LInStage01' },
               //   { fieldName: 'DraftStatus', value: '' },
               // ],
             },
-            //---end EPMO and Admin Section ----
-            {
-              display: 'vision',
-              value: 'vision',
-              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
-              // otherFields: [
-              //   { fieldName: "WFModuleCode", value: "VROCreateObjective" },
-              //   { fieldName: "WFStage", value: "VROCreateObjective01" },
-              //  // { fieldName: "Class", value: "vision" },
-              //   { fieldName: "Status", value: "stat31" },
-              //   { fieldName: "DraftStatus", value: "draft" },
-              // ],
-            },
-            {
-              display: 'strategically',
-              value: 'strategically',
-              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
-              // otherFields: [
-              //   { fieldName: "WFModuleCode", value: "MSCreateObjective" },
-              //   { fieldName: "WFStage", value: "MSCreateObjective01" },
-              //   // { fieldName: "Class", value: "ministry" },
-              //   { fieldName: "Status", value: "stat31" },
-              //   { fieldName: "DraftStatus", value: "draft" },
-              // ],
-            },
-            {
-              display: 'lms',
-              value: 'lms',
-              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
-              // otherFields: [
-              //   { fieldName: "WFModuleCode", value: "LMSCreateObjective" },
-              //   { fieldName: "WFStage", value: "LMSCreateObjective01" },
-              //   { fieldName: "Status", value: "stat31" },
-              //   { fieldName: "DraftStatus", value: "draft" },
-              // ],
-            },
-          ],
+            ],
         },
 
       },

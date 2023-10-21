@@ -71,6 +71,33 @@ var Information_Form = [
         },
       },
       {
+        InternalName: "Class",
+        DisplayName: "الاستراتيجية المرتبطة",
+        DisplayNameEn: "Strategy Type",
+        type: "dropdownValues",
+        // validation: 'required',
+        options: {
+          choices: [
+            {
+              display: 'vision',
+              value: 'vision',
+         
+            },
+            {
+              display: 'strategically',
+              value: 'strategically',
+           
+            },
+            {
+              display: 'lms',
+              value: 'lms',
+            
+            },
+            ],
+        },
+
+      },
+      {
         InternalName: 'RelatedStrategyObjective',
         DisplayNameEn: 'Related Objective',
         DisplayName: 'الهدف المرتبط ',

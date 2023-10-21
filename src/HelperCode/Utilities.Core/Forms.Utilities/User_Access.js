@@ -1283,7 +1283,7 @@ window.userCalls = {
           "benefitmatrix",
           "benefitmetrics",
           "BenefitMetrics.aspx",
-          // "benefits",
+          "benefits",
           "Targets.aspx",
           "kpiequations",
           "benefitsequations",

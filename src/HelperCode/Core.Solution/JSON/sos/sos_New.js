@@ -107,7 +107,7 @@ var Information_Form = [
             {
               display: 'strategically',
               value: 'strategically',
-              roles: ['Administrator', 'EPMO'],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
+              roles: ['Administrator', 'EPMO','SPMAdmin'],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
               // otherFields: [
               //   { fieldName: 'WFModuleCode', value: 'StrategicallyInitiative' },
               //   { fieldName: 'WFStage', value: 'SInStage01' },
@@ -128,7 +128,7 @@ var Information_Form = [
             {
               display: 'vision',
               value: 'vision',
-              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
+              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU',  'SPMTeam', 'StrategyTeam', 'CRCommittee'],
               otherFields: [
                 { fieldName: "WFModuleCode", value: "VROCreateObjective" },
                 { fieldName: "WFStage", value: "VROCreateObjective01" },
@@ -140,7 +140,7 @@ var Information_Form = [
             {
               display: 'strategically',
               value: 'strategically',
-              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
+              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU',  'SPMTeam', 'StrategyTeam', 'CRCommittee'],
               otherFields: [
                 { fieldName: "WFModuleCode", value: "MSCreateObjective" },
                 { fieldName: "WFStage", value: "MSCreateObjective01" },
@@ -152,7 +152,7 @@ var Information_Form = [
             {
               display: 'lms',
               value: 'lms',
-              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
+              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
               otherFields: [
                 { fieldName: "WFModuleCode", value: "LMSCreateObjective" },
                 { fieldName: "WFStage", value: "LMSCreateObjective01" },
