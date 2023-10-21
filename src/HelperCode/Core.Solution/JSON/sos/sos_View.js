@@ -60,8 +60,8 @@ var Information_Form = [
               // ],
             },
             {
-              display: 'strategically',
-              value: 'strategically',
+              display: 'ministry',
+              value: 'ministry',
               // roles: ['Administrator', 'EPMO'],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
               // otherFields: [
               //   { fieldName: 'WFModuleCode', value: 'StrategicallyInitiative' },

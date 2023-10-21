@@ -58,8 +58,8 @@ var Information_Form = [
          
             },
             {
-              display: 'strategically',
-              value: 'strategically',
+              display: 'ministry',
+              value: 'ministry',
            
             },
             {

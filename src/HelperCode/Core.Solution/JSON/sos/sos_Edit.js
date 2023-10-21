@@ -61,8 +61,8 @@ var Information_Form = [
               // ],
             },
             {
-              display: 'strategically',
-              value: 'strategically',
+              display: 'ministry',
+              value: 'ministry',
               roles: ['Administrator', 'EPMO','SPMAdmin'],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
               // otherFields: [
               //   { fieldName: 'WFModuleCode', value: 'StrategicallyInitiative' },
@@ -94,8 +94,8 @@ var Information_Form = [
               // ],
             },
             {
-              display: 'strategically',
-              value: 'strategically',
+              display: 'ministry',
+              value: 'ministry',
               roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
               // otherFields: [
               //   { fieldName: "WFModuleCode", value: "MSCreateObjective" },

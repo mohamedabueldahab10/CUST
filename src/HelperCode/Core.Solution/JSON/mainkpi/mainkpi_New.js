@@ -75,24 +75,28 @@ var Information_Form = [
         DisplayName: "نوع الاستراتيجية",
         DisplayNameEn: "Strategy Type",
         type: "dropdownValues",
+        dynamic: "parent", //main field that affect on other chiled field  
         validation: 'required',
         options: {
           choices: [
             {
               display: 'vision',
               value: 'vision',
-              roles: ['Administrator', 'EPMO','VROE',],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
+              customFilterValue: "vision",
+              roles: ['Administrator', 'EPMO','VROE'],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
               // customFilterValue: "vision",
             },
             {
-              display: 'strategically',
-              value: 'strategically',
+              display: 'ministry',
+              value: 'ministry',
+              customFilterValue: "ministry",
               roles: ['Administrator', 'EPMO','SPMAdmin', ],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
               // customFilterValue: "strategically",
             },
             {
               display: 'lms',
               value: 'lms',
+              customFilterValue: "lms",
               roles: ['Administrator', 'EPMO', 'LMSUExecution'],
               // customFilterValue: "lms",
             },
@@ -111,8 +115,8 @@ var Information_Form = [
               ],
             },
             {
-              display: 'strategically',
-              value: 'strategically',
+              display: 'ministry',
+              value: 'ministry',
               roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU',  'SPMTeam', 'StrategyTeam', 'CRCommittee'],
               otherFields: [
                 { fieldName: "WFModuleCode", value: "EPMOCreateKPI" },
@@ -147,9 +151,11 @@ var Information_Form = [
         source: 'GoalStrategy',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        // dynamic: 'parent',
-        // dynamic: 'Types',
-        // dynamic:'parent',
+
+        // dynamic: "Class", //InternalName Of Parent field
+				// filterField: "Types",//InternalName Of Parent field
+				// filterFieldType: "Text",//Type In Sharepoint List for Parent field
+
         seconeddynamic: 'Types',
         dynamic: 'parent', //main field that affect on other chiled field
         filterField: 'Types',
