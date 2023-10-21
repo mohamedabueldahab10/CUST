@@ -72,7 +72,7 @@ var Information_Form = [
       },
       {
         InternalName: "Class",
-        DisplayName: "الاستراتيجية المرتبطة",
+        DisplayName: " نوع الاستراتيجية ",
         DisplayNameEn: "Strategy Type",
         type: "dropdownValues",
         // validation: 'required',

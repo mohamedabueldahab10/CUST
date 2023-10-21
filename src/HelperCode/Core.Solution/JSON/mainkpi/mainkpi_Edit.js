@@ -128,8 +128,10 @@ var Information_Form = [
 
         }, security: {
           groups: [
-            'LMS_P',
-            'VRO_P',
+            // 'LMS_P',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
             //'Performance Leaders',
             'System Admin Group',
           ],
@@ -233,8 +235,9 @@ var Information_Form = [
         sourcefieldlvl2: "SubSector",
         security: {
           groups: [
-            'LMS_P',
-            'VRO_P',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
             //'Performance Leaders',
             'System Admin Group',
           ],
@@ -303,8 +306,9 @@ var Information_Form = [
         },
         security: {
           groups: [
-            'LMS_P',
-            'VRO_P',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
             //'Performance Leaders',
             'System Admin Group',
           ],

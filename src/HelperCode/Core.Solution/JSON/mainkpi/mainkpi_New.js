@@ -71,63 +71,6 @@ var Information_Form = [
         descPhraseEn: "max length of letters equal 255",
       },
       {
-        InternalName: 'KPIType',
-        DisplayNameEn: 'KPI Type',
-        validation: 'required',
-        DisplayName: 'نوع المؤشر',
-        dynamic: 'parent', //main field that affect on other chiled field
-        type: 'dropdownValues',
-        toggleValues: [
-          { value: 'main', fields: ['Sector', 'SubSector'] }, //we can put more than 1  field
-          { value: 'sublevel2', fields: ['RelatedMainKpis', 'Sector', 'SubSector'] }, //we can put more than 1  field
-          { value: 'sublevel3', fields: ['RelatedMainKpis', 'Sector', 'SubSector'] }, //we can put more than 1  field
-        ],
-        options: {
-          choices: [
-            {
-              display: 'main',
-              value: 'main',
-              // customFilterValue: 'main',
-            },
-            {
-              display: 'sublevel2',
-              value: 'sublevel2',
-              // customFilterValue: 'sublevel2',
-            },
-            {
-              display: 'sublevel3',
-              value: 'sublevel3',
-              //customFilterValue: 'sublevel3',
-            },
-          ],
-
-        },
-      },
-      // {
-        //         condition: "vision", values: [
-        //           { fieldNameInList: "WFModuleCode", fieldValueInList: "VROCreateKPI" },
-        //           { fieldNameInList: "WFStage", fieldValueInList: "VROCreateKPI01" },
-        //           { fieldNameInList: "DraftStatus", fieldValueInList: "draft" },
-        //           { fieldNameInList: "Class", fieldValueInList: "vision" },
-        //         ]
-        //       },
-        //       {
-        //         condition: "lms",
-        //         values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "LMSCreateKPI" },
-        //         { fieldNameInList: "WFStage", fieldValueInList: "LMSCreateKPI01" },
-        //         { fieldNameInList: "DraftStatus", fieldValueInList: "draft" },
-        //         { fieldNameInList: "Class", fieldValueInList: "lms" },
-        //       ]
-        //       },
-        //       {
-        //         condition: "ministry",
-        //         values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "EPMOCreateKPI" },
-        //         { fieldNameInList: "WFStage", fieldValueInList: "EPMOCreateKPI01" },
-        //         { fieldNameInList: "DraftStatus", fieldValueInList: "draft" },
-        //         { fieldNameInList: "Class", fieldValueInList: "ministry" },
-        //       ]
-        //       },
-      {
         InternalName: "Class",
         DisplayName: "نوع الاستراتيجية",
         DisplayNameEn: "Strategy Type",
@@ -139,31 +82,19 @@ var Information_Form = [
               display: 'vision',
               value: 'vision',
               roles: ['Administrator', 'EPMO','VROE',],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
-              // otherFields: [
-              //   { fieldName: 'WFModuleCode', value: 'VisionInitiative' },
-              //   { fieldName: 'WFStage', value: 'VInStage01' },
-              //   { fieldName: 'DraftStatus', value: '' },
-              // ],
+
             },
             {
               display: 'strategically',
               value: 'strategically',
               roles: ['Administrator', 'EPMO','SPMAdmin', ],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
-              // otherFields: [
-              //   { fieldName: 'WFModuleCode', value: 'StrategicallyInitiative' },
-              //   { fieldName: 'WFStage', value: 'SInStage01' },
-              //   { fieldName: 'DraftStatus', value: '' },
-              // ],
+
             },
             {
               display: 'lms',
               value: 'lms',
               roles: ['Administrator', 'EPMO', 'LMSUExecution'],
-              // otherFields: [
-              //   { fieldName: 'WFModuleCode', value: 'LMSInitiative' },
-              //   { fieldName: 'WFStage', value: 'LInStage01' },
-              //   { fieldName: 'DraftStatus', value: '' },
-              // ],
+
             },
             //---end EPMO and Admin Section ----
             {
@@ -206,6 +137,150 @@ var Information_Form = [
 
       },
       {
+        InternalName: 'RelatedStrategy',
+        DisplayNameEn: 'Related Strategy',
+        DisplayName: 'الاستراتيجية المرتبطة',
+        type: 'lookup',
+        // dontSubmit: true,
+        source: 'GoalStrategy',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        // dynamic: 'parent',
+        // dynamic: 'Types',
+        // dynamic:'parent',
+        seconeddynamic: 'Types',
+        dynamic: 'parent', //main field that affect on other chiled field
+        filterField: 'Types',
+        filterFieldType: 'Text',
+        notInvokeListiner: true, // to not invoke the lookup when change on parent > the filteration depends on other field also
+        //in case not parent add below attrs
+        //role access
+        // accessFilter: [
+        //   {
+        //     role: 'VROE',
+        //     conditions: [
+        //       {
+        //         field: 'Types',
+        //         type: 'Choice',
+        //         values: ['vision'],
+        //       },
+        //     ],
+        //   },
+        //   {
+        //     role: 'LMSUExecution',
+        //     conditions: [
+        //       {
+        //         field: 'Types',
+        //         type: 'Choice',
+        //         values: ['lms'],
+        //       },
+        //     ],
+        //   },
+        // ],
+      },
+      {
+        InternalName: "Class",
+        DisplayName: "نوع الاستراتيجية",
+        DisplayNameEn: "Strategy Type",
+        type: "dropdownValues",
+        validation: 'required',
+        options: {
+          choices: [
+            {
+              display: 'vision',
+              value: 'vision',
+              roles: ['Administrator', 'EPMO','VROE',],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
+
+            },
+            {
+              display: 'strategically',
+              value: 'strategically',
+              roles: ['Administrator', 'EPMO','SPMAdmin', ],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
+
+            },
+            {
+              display: 'lms',
+              value: 'lms',
+              roles: ['Administrator', 'EPMO', 'LMSUExecution'],
+
+            },
+            //---end EPMO and Admin Section ----
+            {
+              display: 'vision',
+              value: 'vision',
+              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', , 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
+              otherFields: [
+                { fieldName: "WFModuleCode", value: "VROCreateKPI" },
+                { fieldName: "WFStage", value: "VROCreateKPI01" },
+               // { fieldName: "Class", value: "vision" },
+                { fieldName: "Status", value: "stat31" },
+                { fieldName: "DraftStatus", value: "draft" },
+              ],
+            },
+            {
+              display: 'strategically',
+              value: 'strategically',
+              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU',  'SPMTeam', 'StrategyTeam', 'CRCommittee'],
+              otherFields: [
+                { fieldName: "WFModuleCode", value: "EPMOCreateKPI" },
+                { fieldName: "WFStage", value: "EPMOCreateKPI01" },
+                // { fieldName: "Class", value: "ministry" },
+                { fieldName: "Status", value: "stat31" },
+                { fieldName: "DraftStatus", value: "draft" },
+              ],
+            },
+            {
+              display: 'lms',
+              value: 'lms',
+              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl', 'VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU',  'SPMTeam', 'StrategyTeam', 'CRCommittee'],
+              otherFields: [
+                { fieldName: "WFModuleCode", value: "LMSCreateKPI" },
+                { fieldName: "WFStage", value: "LMSCreateKPI01" },
+                { fieldName: "Status", value: "stat31" },
+                { fieldName: "DraftStatus", value: "draft" },
+              ],
+            },
+          ],
+        },
+
+      },
+      {
+        InternalName: 'KPIType',
+        DisplayNameEn: 'KPI Type',
+        validation: 'required',
+        DisplayName: 'نوع المؤشر',
+        grandFieldId: 'RelatedStrategy', // we add this field to handle the two field filtration(parent Id in current form)
+        childFieldId: 'RelatedStrategyObjective', // we add this field to handle the two field filtration (child Id in current form)
+        childFieldIdSource: 'Types',
+        // dynamic: 'parent', //main field that affect on other chiled field
+        type: 'dropdownValues',
+        toggleValues: [
+          { value: 'main', fields: ['Sector', 'SubSector'] }, //we can put more than 1  field
+          { value: 'sublevel2', fields: ['RelatedMainKpis', 'Sector', 'SubSector'] }, //we can put more than 1  field
+          { value: 'sublevel3', fields: ['RelatedMainKpis', 'Sector', 'SubSector'] }, //we can put more than 1  field
+        ],
+        options: {
+          choices: [
+            {
+              display: 'main',
+              value: 'main',
+              // customFilterValue: 'main',
+            },
+            {
+              display: 'sublevel2',
+              value: 'sublevel2',
+              // customFilterValue: 'sublevel2',
+            },
+            {
+              display: 'sublevel3',
+              value: 'sublevel3',
+              //customFilterValue: 'sublevel3',
+            },
+          ],
+
+        },
+      },
+      {
         InternalName: 'RelatedStrategyObjective',
         DisplayNameEn: 'Related Strategy Objective',
         DisplayName: 'الهدف المرتبط',
@@ -214,9 +289,12 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         validation: 'required',
-        dynamic: "KPIType", //InternalName Of Parent field
-        filterField: "Types",//InternalName Of Parent field
-        filterFieldType: "Choice",
+        dynamic: 'RelatedStrategy',
+        filterField: 'RelatedStrategy',
+        filterFieldType: 'Text',
+        // dynamic: "KPIType", //InternalName Of Parent field
+        // filterField: "Types",//InternalName Of Parent field
+        // filterFieldType: "Choice",
         accessFilter: [
           {
             role: 'LMSUExecution',
@@ -229,10 +307,7 @@ var Information_Form = [
             ],
           },
         ],
-        ///
-        ///
-        // display: 'none',
-        // ToggleName:'RelatedStrategyObjective',
+
       },
       {
         InternalName: 'Sector',
