@@ -1585,7 +1585,10 @@ window.userCalls = {
 
         ];
         CreateChangeRequest_Access = [
-          "initiatives", "projects"
+          "initiatives",
+          "projects",
+          "sos",
+          "mainkpi"
         ]
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);

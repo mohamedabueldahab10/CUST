@@ -77,11 +77,11 @@ var Information_Form = [
         type: "dropdownValues",
         // dynamic: "parent", //main field that affect on other chiled field  
         validation: 'required',
-        toggleValues: [
-          { value: 'lms', fields: ['RelatedStrategyLMS'] },
-          { value: 'vision', fields: ['RelatedStrategyVision'] },
-          { value: 'ministry', fields: ['RelatedStrategyMinistry'] },
-        ],
+        // toggleValues: [
+        //   { value: 'lms', fields: ['RelatedStrategyLMS'] },
+        //   { value: 'vision', fields: ['RelatedStrategyVision'] },
+        //   { value: 'ministry', fields: ['RelatedStrategyMinistry'] },
+        // ],
         options: {
           choices: [
             {
@@ -744,6 +744,9 @@ var Information_Form = [
             'SPM Team',
             'VRO_P',
             'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
       },
