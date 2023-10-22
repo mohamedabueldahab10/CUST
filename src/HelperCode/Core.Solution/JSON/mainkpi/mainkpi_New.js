@@ -146,128 +146,128 @@ var Information_Form = [
         },
 
       },
+      {
+        InternalName: 'RelatedStrategy',
+        DisplayNameEn: 'Related Strategy',
+        DisplayName: 'الاستراتيجية المرتبطة',
+        type: 'lookup',
+        validation: 'required',
+        // dontSubmit: true,
+        source: 'GoalStrategy',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+
+        // dynamic: "Class", //InternalName Of Parent field
+        // filterField: "Types",//InternalName Of Parent field
+        // filterFieldType: "Text",//Type In Sharepoint List for Parent field
+
+        seconeddynamic: 'Types',
+        dynamic: 'parent', //main field that affect on other chiled field
+        filterField: 'Types',
+        filterFieldType: 'Text',
+        notInvokeListiner: true, // to not invoke the lookup when change on parent > the filteration depends on other field also
+        //in case not parent add below attrs
+        //role access
+        accessFilter: [
+          {
+            role: 'VROE',
+             conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['vision'],
+              },
+            ],
+          },
+          {
+            role: 'LMSUExecution',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['lms'],
+              },
+            ],
+          },
+          {
+            role: 'SPMAdmin',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['ministry'],
+              },
+            ],
+          },
+        ],
+      },
       // {
       //   InternalName: 'RelatedStrategy',
       //   DisplayNameEn: 'Related Strategy',
       //   DisplayName: 'الاستراتيجية المرتبطة',
-      //   type: 'lookup',
+      //   type: 'lookupWithQuery',
+      //   ToggleName: 'RelatedStrategyLMS',
+      //   queryField: 'Types',
+      //   queryFieldType: 'Text', //ex: "Choice"
+      //   queryFieldValue: 'lms',
+      //   validation: 'required',
+      //   // dontSubmit: true,
+      //   source: 'GoalStrategy',
+      //   Dispfieldkey: 'Name',
+      //   valfieldkey: 'Title',
+      //   seconeddynamic: 'Types',
+      //   dynamic: 'parent', //main field that affect on other chiled field
+      //   filterField: 'Types',
+      //   filterFieldType: 'Text',
+      //   notInvokeListiner: true,
+      //   "display": "none"
+
+      // },
+      // {
+      //   InternalName: 'RelatedStrategy',
+      //   DisplayNameEn: 'Related Strategy',
+      //   DisplayName: 'الاستراتيجية المرتبطة',
+      //   type: 'lookupWithQuery',
+      //   ToggleName: 'RelatedStrategyVision',
+      //   queryField: 'Types',
+      //   queryFieldType: 'Text', //ex: "Choice"
+      //   queryFieldValue: 'vision',
+      //   validation: 'required',
+      //   // dontSubmit: true,
+      //   source: 'GoalStrategy',
+      //   Dispfieldkey: 'Name',
+      //   valfieldkey: 'Title',
+      //   seconeddynamic: 'Types',
+      //   dynamic: 'parent', //main field that affect on other chiled field
+      //   filterField: 'Types',
+      //   filterFieldType: 'Text',
+      //   notInvokeListiner: true,
+      //   "display": "none"
+
+      // },
+      // {
+      //   InternalName: 'RelatedStrategy',
+      //   DisplayNameEn: 'Related Strategy',
+      //   DisplayName: 'الاستراتيجية المرتبطة',
+      //   type: 'lookupWithQuery',
+      //   ToggleName: 'RelatedStrategyMinistry',
+      //   queryField: 'Types',
+      //   queryFieldType: 'Text', //ex: "Choice"
+      //   queryFieldValue: 'ministry',
       //   validation: 'required',
       //   // dontSubmit: true,
       //   source: 'GoalStrategy',
       //   Dispfieldkey: 'Name',
       //   valfieldkey: 'Title',
 
-      //   // dynamic: "Class", //InternalName Of Parent field
-      //   // filterField: "Types",//InternalName Of Parent field
-      //   // filterFieldType: "Text",//Type In Sharepoint List for Parent field
-
       //   seconeddynamic: 'Types',
       //   dynamic: 'parent', //main field that affect on other chiled field
       //   filterField: 'Types',
       //   filterFieldType: 'Text',
-      //   notInvokeListiner: true, // to not invoke the lookup when change on parent > the filteration depends on other field also
-      //   //in case not parent add below attrs
-      //   //role access
-      //   accessFilter: [
-      //     {
-      //       role: 'VROE',
-      //       conditions: [
-      //         {
-      //           field: 'Types',
-      //           type: 'Choice',
-      //           values: ['vision'],
-      //         },
-      //       ],
-      //     },
-      //     {
-      //       role: 'LMSUExecution',
-      //       conditions: [
-      //         {
-      //           field: 'Types',
-      //           type: 'Choice',
-      //           values: ['lms'],
-      //         },
-      //       ],
-      //     },
-      //     {
-      //       role: 'SPMAdmin',
-      //       conditions: [
-      //         {
-      //           field: 'Types',
-      //           type: 'Choice',
-      //           values: ['ministry'],
-      //         },
-      //       ],
-      //     },
-      //   ],
+      //   notInvokeListiner: true,
+      //   "display": "none"
+
       // },
-      {
-        InternalName: 'RelatedStrategy',
-        DisplayNameEn: 'Related Strategy',
-        DisplayName: 'الاستراتيجية المرتبطة',
-        type: 'lookupWithQuery',
-        ToggleName: 'RelatedStrategyLMS',
-        queryField: 'Types',
-        queryFieldType: 'Text', //ex: "Choice"
-        queryFieldValue: 'lms',
-        validation: 'required',
-        // dontSubmit: true,
-        source: 'GoalStrategy',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
-        seconeddynamic: 'Types',
-        dynamic: 'parent', //main field that affect on other chiled field
-        filterField: 'Types',
-        filterFieldType: 'Text',
-        notInvokeListiner: true,
-        "display": "none"
-
-      },
-      {
-        InternalName: 'RelatedStrategy',
-        DisplayNameEn: 'Related Strategy',
-        DisplayName: 'الاستراتيجية المرتبطة',
-        type: 'lookupWithQuery',
-        ToggleName: 'RelatedStrategyVision',
-        queryField: 'Types',
-        queryFieldType: 'Text', //ex: "Choice"
-        queryFieldValue: 'vision',
-        validation: 'required',
-        // dontSubmit: true,
-        source: 'GoalStrategy',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
-        seconeddynamic: 'Types',
-        dynamic: 'parent', //main field that affect on other chiled field
-        filterField: 'Types',
-        filterFieldType: 'Text',
-        notInvokeListiner: true,
-        "display": "none"
-
-      },
-      {
-        InternalName: 'RelatedStrategy',
-        DisplayNameEn: 'Related Strategy',
-        DisplayName: 'الاستراتيجية المرتبطة',
-        type: 'lookupWithQuery',
-        ToggleName: 'RelatedStrategyMinistry',
-        queryField: 'Types',
-        queryFieldType: 'Text', //ex: "Choice"
-        queryFieldValue: 'ministry',
-        validation: 'required',
-        // dontSubmit: true,
-        source: 'GoalStrategy',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
-
-        seconeddynamic: 'Types',
-        dynamic: 'parent', //main field that affect on other chiled field
-        filterField: 'Types',
-        filterFieldType: 'Text',
-        notInvokeListiner: true,
-        "display": "none"
-
-      },
       {
         InternalName: 'KPIType',
         DisplayNameEn: 'KPI Type',
