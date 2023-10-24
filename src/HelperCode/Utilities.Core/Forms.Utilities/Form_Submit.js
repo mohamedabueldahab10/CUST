@@ -801,7 +801,7 @@ window.New_Data_Submit = {
         var stack = args.get_stackTrace();
         var url = window.location.href;
 
-        // show pop up err msg 
+        // show pop up err msg
         Error_PopUp.init()
         //
         writeToEventViewer.preinit(
@@ -1089,7 +1089,7 @@ window.Edit_Data_Submit = {
 
     var isCheckMember = false;
 
-    if ( // in portfolio the user should be in System Portfolio Manager group 
+    if ( // in portfolio the user should be in System Portfolio Manager group
       listkey == "portfolio" &&
       $("#Manager").find("span.sp-peoplepicker-userSpan").attr("sid")
     ) {
@@ -1649,7 +1649,7 @@ window.Edit_Data_Submit = {
 
         debugger
         var checkWfStage = $('#WFStage').val()
-        if (!checkWfStage) { 
+        if (!checkWfStage) {
 
           if (basedOnCondition) {
             if (basedOnFieldValue == basedOnFieldCurrentValue) {
@@ -1813,7 +1813,7 @@ window.Edit_Data_Submit = {
         var stack = args.get_stackTrace();
         var url = window.location.href;
 
-        // show pop up err msg 
+        // show pop up err msg
         Error_PopUp.init()
         //
 
@@ -2046,7 +2046,8 @@ var kpiResults = {
     kpiResults.g.oListItem.set_item("Sector", Sector);
     kpiResults.g.oListItem.set_item("SubSector", SubSector);
     kpiResults.g.oListItem.set_item("Portfolio", Portfolio);
-    kpiResults.g.oListItem.set_item("DraftStatus", 'draft');
+    if(!isAdmin && !isEPMO && !isVROE && !isLMSUExecution && !isSPMAdmin)
+      kpiResults.g.oListItem.set_item("DraftStatus", 'draft');
     if (Types == 'main') {
       kpiResults.g.oListItem.set_item("RelatedGoal", MainGoalRelated)
     } else if (Types == 'sub') {
@@ -2261,7 +2262,7 @@ var newKPIEquation = {
         var msg = args.get_message();
         var stack = args.get_stackTrace();
         var url = window.location.href;
-        // show pop up err msg 
+        // show pop up err msg
         // Error_PopUp.init()
         //
         writeToEventViewer.preinit(
@@ -2315,7 +2316,7 @@ var newBenefitEquation = {
         var msg = args.get_message();
         var stack = args.get_stackTrace();
         var url = window.location.href;
-        // show pop up err msg 
+        // show pop up err msg
         // Error_PopUp.init()
         //
         writeToEventViewer.preinit(
@@ -2646,7 +2647,7 @@ var New_Master_Details_Submit = {
         console.log(
           "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
         );
-        // show pop up err msg 
+        // show pop up err msg
         // Error_PopUp.init()
         //
       })
@@ -2860,7 +2861,7 @@ var Edit_Master_Details_Submit = {
         console.log(
           "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
         );
-        // show pop up err msg 
+        // show pop up err msg
         // Error_PopUp.init()
         //
       })
