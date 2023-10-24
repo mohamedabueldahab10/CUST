@@ -430,7 +430,7 @@ window.Edit_Data_Request = {
         else CrModeFunctionality.init(sectionJSON);
       }
     }
-    // ended 
+    // ended
     if (listkey == "risks" && oListItem.get_item("Status") == "movedtoissue") {
       window.location =
         _spPageContextInfo.siteServerRelativeUrl +
@@ -627,7 +627,7 @@ window.Edit_Data_Request = {
 
       var sector = oListItem.get_item("Sector") ? oListItem.get_item("Sector") : '';
       if (sector) {
-        Department_Sector_Info.init(sector);// 
+        Department_Sector_Info.init(sector);//
       }
     }
 
@@ -1438,7 +1438,7 @@ window.View_Data_Request = {
                     if (!isMasterSection) {
 
                       var elementId = $(this).attr("id"); // get element Id
-                      var elementValue = oListItem.get_item(elementId); // get element value 
+                      var elementValue = oListItem.get_item(elementId); // get element value
 
 
                       if (
@@ -1783,7 +1783,7 @@ window.View_Data_Request = {
           statusTitle = await StrategicObjectives_Status.init(value)
           $(this).text(statusTitle);
         } else if ($(this).data("translatefromresources") == true) {
-          
+
           var value =
             oListItem.get_item("" + $(this).attr("id") + "") == null
               ? No_Data
@@ -1795,7 +1795,7 @@ window.View_Data_Request = {
               ) {
                 $(this).text(Resources.ar[value]);
               } else $(this).text(Resources.en[value]);
-              
+
         } else {
           var value =
             oListItem.get_item("" + $(this).attr("id") + "") == null
@@ -1897,14 +1897,14 @@ window.View_Data_Request = {
           CrModeFunctionality.init(sectionJSON);
       }
     }
-    // ended 
+    // ended
 
     // window.checkNotificationHTML = setInterval(function() {
     //     GetProject_Info.preinit();
     // },1000);
     //custom
 
-    /// to handle the weight percentage in edit 
+    /// to handle the weight percentage in edit
     if (listkey == 'deliverables' || listkey == 'milestones' || listkey == 'initiativedeliverables' || listkey == 'initiativemilestones') {
 
       var parentValue = $('#Amount').data('parentval')
@@ -3388,7 +3388,7 @@ window.Department_Sector_Info = {
     });
     changeResources();
 
-    // to apply the security of fields in subsector 
+    // to apply the security of fields in subsector
     if (USERisForm) {
       window.UsercheckFieldsHtml = setInterval(function () {
         userCalls.g.checkFieldsHtml();
@@ -5942,7 +5942,7 @@ window.equationKPI = {
         $("p#Equation").text(kpiEquation || 0);
       }
     }
-    if ((isAdmin || isSPMAdmin || isVROP || isLMSP) && !USERisWF) { // remove attr disabled for this roles in equation
+    if ((isAdmin || isSPMAdmin || isVROP || isLMSP || isVROE || isLMSUExecution || isEPMO) && !USERisWF) { // remove attr disabled for this roles in equation
       $(".savecancelBtns > div, .btnactionrow > .rightBtns").append(
         '<button data-trans-editequation class="btn btn-action Resources btn-edit-equation bg-warning" type="button"></button>'
       );
@@ -7099,7 +7099,7 @@ window.Get_TaskHistory = {
     if (!$(".task-history-ctx").length) {
       historyHTML = `<div class="section3 row col-12 px-0 task-history-ctx mx-0">
             <div class="approvalHeader">
-             
+
                 <h2 class="Resources" data-trans-taskHistory>
 				العمليات السابقة
                 </h2>
