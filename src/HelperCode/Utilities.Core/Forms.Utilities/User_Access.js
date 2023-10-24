@@ -733,7 +733,8 @@ window.userCalls = {
           "deliverables",
           "milestones",
           "issues",
-          "risks",
+          "risks",                   
+          "Targets.aspx",
           "mom",
           "closureform",
           "lessonslearned",
@@ -1555,7 +1556,8 @@ window.userCalls = {
         //CRUD
         Create_Access = [
           "sos",
-          "mainkpi",
+          "mainkpi",                   
+          "Targets.aspx",
           "benefitmatrix",
           "initiatives",
           "initiativedeliverables",
@@ -2006,7 +2008,8 @@ window.userCalls = {
           "coc",
           "stakeholders",
           "communicationplans",
-          "changerequest",
+          "changerequest",          
+          "Targets.aspx",
           "contracts"
         ]
         CreateChangeRequest_Access = [
