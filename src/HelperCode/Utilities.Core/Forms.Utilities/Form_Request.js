@@ -115,10 +115,10 @@ window.Edit_Data_Request = {
     if (listkey == 'kpiequations') {
       //  (!isAdmin || !isSPMTeam )? window.location = _spPageContextInfo.webAbsoluteUrl : '';
 
-      if (isAdmin || isMinister || isBITeam || isSPMTeam || isPerformanceLeader || isSPMAdmin || isVROP || isLMSP) {
-      } else {
-        window.location = _spPageContextInfo.webAbsoluteUrl
-      }
+      // if (isAdmin || isMinister || isBITeam || isSPMTeam || isPerformanceLeader || isSPMAdmin || isVROP || isLMSP) {
+      // } else {
+      //   window.location = _spPageContextInfo.webAbsoluteUrl
+      // }
     }
 
     // if (listkey == "initiatives") {

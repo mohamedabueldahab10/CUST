@@ -83,15 +83,15 @@ var MainKPIs_Info_Request = {
         console.log(RolePQuery, "RolePQuery")
 
         camlQuery.set_viewXml(RolePQuery)
-        // isRoleDataLevelAccess = false; 
+        // isRoleDataLevelAccess = false;
       }
       else if (filteredValue == "year" || filteredValue === "quarter" || filteredValue == "midterm" || filteredValue == 'monthly') {
         // if (isGeneralManager
-        //   //|| isDU 
+        //   //|| isDU
         //   //|| isMinisterAssistant
         //   //|| isViceMinister
         //   // ||
-        //   // isSectorHead 
+        //   // isSectorHead
         //   //|| isSubSectorHead
         //   ) {
         //   camlQuery.set_viewXml('<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name=\'PeriodType\' /> <Value Type="Choice">' + filteredValue + "</Value></Eq><And><Eq><FieldRef Name=\'Year\' /> <Value Type=\'Text\'>" + kpiYear + "</Value ></Eq><Eq><FieldRef Name=\'" + SecondLevel_FirstLevel_Field + "\' /> <Value Type=\'Text\'>" + UserAccessSectorCode + "</Value ></Eq></And></And></And></Where ><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query ></View >")
@@ -728,7 +728,7 @@ var MainKPIs_Info_Request = {
     }
     $('input[data-internal*="Actual"]').prop('disabled', true);
 
-    if (!isAdmin && !isSPMAdmin && !isVROP && !isLMSP) { // to can the spmAdmin change on  targets
+    if (!isAdmin && !isSPMAdmin && !isVROP && !isLMSP && isEPMO && isVROE && isLMSUExecution && isSPMAdmin) { // to can the spmAdmin change on  targets
       $('td input[data-internal*="Target"]').prop('disabled', true);
     }
     if (!isAdmin && !isPerformanceLeader && isLMSP) { // to can the spmAdmin change on  targets
@@ -752,11 +752,11 @@ var MainKPIs_Info_Request = {
     //disable field when kpi is draft
     $('input[data-kpidraft*="draft"]').prop('disabled', true);
 
-    
+
     //
 
     // if (isMinister || isBITeam || isPerformanceLeader ||
-    //   //isSPMTeam || 
+    //   //isSPMTeam ||
 
     //   isEPMO) {
     //   $("body").append(
@@ -773,7 +773,7 @@ var MainKPIs_Info_Request = {
 
     var hideSendBtn = true
 
-    
+
 
     Create_Access.forEach(el => {
       if (el == 'targets.aspx') {
@@ -859,7 +859,7 @@ var RoleDataLevelBuildQuery = {
     for (var i = 0; i < FilterChoicesRole.length; i++) {
       //only one choice
       if (FilterChoicesRole.length == 1) {
-        // \'Year\' 
+        // \'Year\'
         Where_Body += '<In><FieldRef Name="' + FilterChoicesRole[i].internalName + '" /><Values>';
         for (var j = 0; j < FilterChoicesRole[i].Values.length; j++) {
           Where_Body += '<Value Type="' + FilterChoicesRole[i].Type + '">' + FilterChoicesRole[i].Values[j] + '</Value>';
@@ -1004,10 +1004,10 @@ var Get_All_Dynamic_Filter = {
 
     var query = "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>"
     // if (isGeneralManager
-    //   //|| isDU 
+    //   //|| isDU
     //   // || isMinisterAssistant
     //   //|| isViceMinister
-    //   //|| isSectorHead 
+    //   //|| isSectorHead
     //   //|| isSubSectorHead
     // ) {
     //   // UserAccessSectorCode = 'DP-001';
