@@ -85,7 +85,7 @@ var Listing_Info = [
         "InternalName": "PeriodType",
         "DisplayName": "تكرار القياس",
         "DisplayNameEn": "Period Type",
-        "type": "text",
+        "type": "dropdownValues",
         inlisting: true,
         infilter: true,
         needTrans:true

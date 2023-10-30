@@ -18,7 +18,7 @@ var Listing_Info = [{
         "InternalName": "Status",
         "DisplayName": "الحالة",
         "DisplayNameEn": "Status",
-        "type": "text",
+        "type": "dropdownValues",
         inlisting: true,
         infilter: true,
         needTrans: true
@@ -27,7 +27,7 @@ var Listing_Info = [{
     	"InternalName": "Impact",
     	"DisplayName":"الأثر",
         "DisplayNameEn": "Impact",
-    	"type":"text",
+    	"type":"dropdownValues",
     	inlisting: true,
     	infilter: false,
         needTrans: true

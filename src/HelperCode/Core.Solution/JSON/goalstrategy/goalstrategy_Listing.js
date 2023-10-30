@@ -21,7 +21,7 @@ var Listing_Info = [
         "InternalName": "Types",
         "DisplayNameEn": "Strategy Type",
         "DisplayName":"نوع  الاستراتيجية",
-        "type":"text",
+        "type":"dropdownValues",
         inlisting: true,
         needTrans: true,
         infilter: true

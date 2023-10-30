@@ -35,7 +35,7 @@ var Listing_Info = [{
 	"InternalName": "Types",
 	"DisplayName": "النوع",
 	"DisplayNameEn": "Type",
-	"type": "text",
+	"type": "dropdownValues",
 	inlisting: true,
 	infilter: true,
 	needTrans: true,

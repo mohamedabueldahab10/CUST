@@ -55,7 +55,7 @@ var Listing_Info = [
 		"InternalName": "Completed",
 		"DisplayNameEn": "Completed",
 		"DisplayName":"اكتمال الموافقة",
-		"type": "text",
+		"type": "dropdownValues",
 		needTrans: true,
 		inlisting: true,
 		infilter: true

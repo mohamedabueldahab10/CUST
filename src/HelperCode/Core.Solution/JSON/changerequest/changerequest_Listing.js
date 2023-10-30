@@ -55,7 +55,7 @@ var Listing_Info = [
         "InternalName": "RequestStatus",
         "DisplayName": "حالة الطلب",
         "DisplayNameEn": "Request Status",
-        "type": "text",
+        "type": "dropdownValues",
         needTrans: true,
         inlisting: true,
         infilter: false

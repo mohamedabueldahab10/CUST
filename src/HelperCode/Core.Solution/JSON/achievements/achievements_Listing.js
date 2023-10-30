@@ -21,7 +21,7 @@ var Listing_Info = [
         "InternalName": "AchievementType",
         "DisplayNameEn": "AchievementType",
         "DisplayName":"نوع المنجز",
-        "type":"text",
+        "type":"dropdownValues",
         inlisting: true,
         needTrans: true,
         infilter: true
@@ -38,7 +38,7 @@ var Listing_Info = [
         "InternalName": "AchievementCategory",
         "DisplayNameEn":"Achievement Category",
         "DisplayName": "تصنيف المنجز",
-        "type":"text",
+        "type":"dropdownValues",
         inlisting: true,
         needTrans: true,
         infilter: true

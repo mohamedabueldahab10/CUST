@@ -12,7 +12,7 @@ var Listing_Info = [
         "InternalName": "Source",
         "DisplayName": "المصدر",
         "DisplayNameEn": "Source",
-        "type": "text",
+        "type": "dropdownValues",
         needTrans: true,
         inlisting: true,
         infilter: true

@@ -46,7 +46,7 @@ var Listing_Info = [
     "InternalName": "Delivered",
     "DisplayName": "مكتمل",
     "DisplayNameEn": "Completed",
-    "type": "text",
+    "type": "dropdownValues",
     needTrans: true,
     inlisting: true,
     infilter: true

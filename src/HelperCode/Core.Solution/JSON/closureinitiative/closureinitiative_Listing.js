@@ -10,7 +10,7 @@ var Listing_Info = [{
 	"InternalName": "ClosureReasons",
 	"DisplayNameEn": "Closure Reasons",
 	"DisplayName": "أسباب اغلاق المبادرة",
-	"type": "text",
+	"type": "dropdownValues",
 	inlisting: true,
 	needTrans: true,
 	infilter: false
