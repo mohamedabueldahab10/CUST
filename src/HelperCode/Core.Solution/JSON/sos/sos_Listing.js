@@ -36,7 +36,7 @@ var Listing_Info = [
         "InternalName": "Types",
         "DisplayNameEn": "Types",
         "DisplayName":"نوع الهدف",
-        "type":"text",
+        "type":"dropdownValues",
         inlisting: true,
         infilter: true,
         needTrans:true
