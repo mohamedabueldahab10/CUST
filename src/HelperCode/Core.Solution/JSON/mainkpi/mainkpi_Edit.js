@@ -103,11 +103,17 @@ var Information_Form = [
         DisplayNameEn: "Strategy Type",
         type: "dropdownValues",
         validation: 'required',
-        // toggleValues: [
-        //   { value: 'lms', fields: ['RelatedStrategyLMS'] },
-        //   { value: 'vision', fields: ['RelatedStrategyVision'] },
-        //   { value: 'ministry', fields: ['RelatedStrategyMinistry'] },
-        // ],
+        security: {
+          groups: [
+            'LMS_P',
+            'SPM Admin',
+            'VRO_E',
+            'LMSU-Execution',
+            'SPM Team',
+            'VRO_P',
+            'System Admin Group',
+          ],
+        },
         options: {
           choices: [
             {
@@ -132,19 +138,19 @@ var Information_Form = [
             {
               display: 'vision',
               value: 'vision',
-              roles: ['VROHead', 'VROPHead', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', , 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
+              roles: ['VROHead', 'VROPHead','PerformanceLeader', 'VROP', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', , 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
             
             },
             {
               display: 'ministry',
               value: 'ministry',
-              roles: ['InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
+              roles: ['InitiativeManager','PerformanceLeader', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
              
             },
             {
               display: 'lms',
               value: 'lms',
-              roles: ['LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl',  'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
+              roles: ['LMSE', 'LMSP','PerformanceLeader', 'LMSUPerformance', 'LMSUControl',  'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
             
             },
           ],
@@ -237,6 +243,17 @@ var Information_Form = [
         dynamic: 'parent', //main field that affect on other chiled field
         filterField: 'Types',
         filterFieldType: 'Text',
+        security: {
+          groups: [
+            'LMS_P',
+            'SPM Admin',
+            'VRO_E',
+            'LMSU-Execution',
+            'SPM Team',
+            'VRO_P',
+            'System Admin Group',
+          ],
+        },
         notInvokeListiner: true, // to not invoke the lookup when change on parent > the filteration depends on other field also
         //in case not parent add below attrs
         //role access
@@ -368,6 +385,17 @@ var Information_Form = [
           { value: 'sublevel2', fields: ['RelatedMainKpis', 'Sector', 'SubSector'] }, //we can put more than 1  field
           { value: 'sublevel3', fields: ['RelatedMainKpis', 'Sector', 'SubSector'] }, //we can put more than 1  field
         ],
+        security: {
+          groups: [
+            'LMS_P',
+            'SPM Admin',
+            'VRO_E',
+            'LMSU-Execution',
+            'SPM Team',
+            'VRO_P',
+            'System Admin Group',
+          ],
+        },
         options: {
           choices: [
             {
@@ -403,6 +431,17 @@ var Information_Form = [
         filterFieldType: 'Text',
         descPhraseAr: "تظهر الاهداف بناء على نوع المؤشر والاستراتيجية المختارة",
         descPhraseEn: "The Objectives appear based on selected Level that related to selected Strategy",
+        security: {
+          groups: [
+            'LMS_P',
+            'SPM Admin',
+            'VRO_E',
+            'LMSU-Execution',
+            'SPM Team',
+            'VRO_P',
+            'System Admin Group',
+          ],
+        },
         // dynamic: "KPIType", //InternalName Of Parent field
         // filterField: "Types",//InternalName Of Parent field
         // filterFieldType: "Choice",
