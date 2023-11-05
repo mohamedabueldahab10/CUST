@@ -91,6 +91,15 @@ var Listing_Info = [
         needTrans:true
     },
     {
+        "InternalName": "Class",
+        DisplayName: "نوع الاستراتيجية",
+        DisplayNameEn: "Strategy Type",
+        type: "dropdownValues",
+        inlisting: true,
+        infilter: true,
+        needTrans:true
+    },
+    {
         "InternalName": "Sector",
         "DisplayName": "القطاع",
         "DisplayNameEn": "Sector",
