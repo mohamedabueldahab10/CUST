@@ -24,15 +24,16 @@ var Information_Form  = [
             "DisplayNameEn": "Related Strategy",
             "DisplayName":"الاستراتيجية المرتبطة",
             // "ToggleName": "Ministry",
-            "type": "lookupWithQuery",
-            "queryField": "Types",
-            "queryFieldType": "Choice", //ex: "Choice"
-            "queryFieldValue": "ministry",
+            "type": "lookup",
+            // "queryField": "Types",
+            // "queryFieldType": "dropdownValues", //ex: "Choice"
+            // "queryFieldValue": "ministry",
             //from other list:
             
             "source": "GoalStrategy",
             "Dispfieldkey": "Name",
             "valfieldkey": "Title",
+            "validation": "required"
             // "display":"none"
         },
         // {

@@ -197,6 +197,7 @@ var Information_Form = [
         InternalName: 'Delivered',
         DisplayName: 'تم التسليم',
         DisplayNameEn: 'Delivered',
+        disableonstage:"approved",
         type: 'yesnoradio',
         targetfieldrequired:"ActualCompletedDate",
         options: {
@@ -227,6 +228,7 @@ var Information_Form = [
         listname: 'Initiatives',
         startinternalname: 'StartDate',
         endinternalname: 'FinishDate',
+        disableonstage:"approved",
         max: 'today',
         Errmsgkey: 'cancelationdatepattern',
       },

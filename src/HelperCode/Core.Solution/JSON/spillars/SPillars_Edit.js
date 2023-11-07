@@ -25,10 +25,10 @@ var Information_Form  = [
             "DisplayNameEn": "Related Strategy",
             "DisplayName":"الاستراتيجية المرتبطة",
             // "ToggleName": "Ministry",
-            "type": "lookupWithQuery",
-            "queryField": "Types",
-            "queryFieldType": "dropdownValues", //ex: "Choice"
-            "queryFieldValue": "ministry",
+            "type": "lookup",
+            // "queryField": "Types",
+            // "queryFieldType": "dropdownValues", //ex: "Choice"
+            // "queryFieldValue": "ministry",
             //from other list:
             
             "source": "GoalStrategy",

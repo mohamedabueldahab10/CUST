@@ -174,6 +174,7 @@ var Information_Form = [
         DisplayName: 'تم التسليم',
         DisplayNameEn: 'Delivered',
         type: 'yesnoradio',
+        disableonstage:"approved",
         targetfieldrequired: 'ActualCompletedDate',
         options: {
           choices: [
@@ -199,6 +200,7 @@ var Information_Form = [
         DisplayNameEn: 'Actual Completed Date',
         DisplayName: 'تاريخ الاكتمال الفعلي',
         // type: 'datetime',
+        disableonstage:"approved",
         type: 'datetimetoparent',
         listname: 'Initiatives',
         startinternalname: 'StartDate',
