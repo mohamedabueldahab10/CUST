@@ -92,7 +92,7 @@ var Listing_Info = [
     },
     {
         "InternalName": "Class",
-        DisplayName: "نوع الاستراتيجية",
+        DisplayName: "الاستراتيجية المرتبطة",
         DisplayNameEn: "Strategy Type",
         type: "dropdownValues",
         inlisting: true,
