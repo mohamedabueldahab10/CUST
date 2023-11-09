@@ -13,7 +13,7 @@ var Listing_Info = [
         "DisplayName":"اسم الهدف",
         "type":"text",
         inlisting: true,
-        infilter: false
+        infilter: true
     },
     {
         "InternalName": "ObjectiveOwner",
