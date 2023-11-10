@@ -613,7 +613,11 @@ window.New_Data_Submit = {
             el.valueToSet.forEach(item => {
               if (valueBasedOnParent.includes(item.condition)) {
                 item.values.forEach(field => {
-                  New_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
+                  if (field.fieldValueInList.toLowerCase() == "loggedinuser") {
+                    New_Data_Submit.g.oListItem.set_item(field.fieldNameInList, SP.FieldUserValue.fromUser(UserN.LoginName.split("|")[1]));
+                  } else {
+                    New_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
+                  }
                 })
               }
             })
@@ -1677,7 +1681,11 @@ window.Edit_Data_Submit = {
             el.valueToSet.forEach(item => {
               if (valueBasedOnParent.includes(item.condition)) {
                 item.values.forEach(field => {
-                  Edit_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
+                  if (field.fieldValueInList.toLowerCase() == "loggedinuser") {
+                    Edit_Data_Submit.g.oListItem.set_item(field.fieldNameInList, SP.FieldUserValue.fromUser(UserN.LoginName.split("|")[1]));
+                  } else {
+                    Edit_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
+                  }
                 })
               }
             })
