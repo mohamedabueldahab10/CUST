@@ -723,24 +723,24 @@ var Information_Form = [
           ],
         },
       },
-      {
-        InternalName: 'Performance',
-        DisplayNameEn: 'Performance',
-        DisplayName: 'الأداء',
-        type: 'number',
-      },
-      {
-        InternalName: 'TotalActual',
-        DisplayNameEn: 'TotalActual',
-        DisplayName: 'إجمالي الفعلي',
-        type: 'number',
-      },
-      {
-        InternalName: 'TotalPlanned',
-        DisplayNameEn: 'TotalPlanned',
-        DisplayName: 'إجمالي المخطط',
-        type: 'number',
-      },
+      // {
+      //   InternalName: 'Performance',
+      //   DisplayNameEn: 'Performance',
+      //   DisplayName: 'الأداء',
+      //   type: 'number',
+      // },
+      // {
+      //   InternalName: 'TotalActual',
+      //   DisplayNameEn: 'TotalActual',
+      //   DisplayName: 'إجمالي الفعلي',
+      //   type: 'number',
+      // },
+      // {
+      //   InternalName: 'TotalPlanned',
+      //   DisplayNameEn: 'TotalPlanned',
+      //   DisplayName: 'إجمالي المخطط',
+      //   type: 'number',
+      // },
 
     ],
   },

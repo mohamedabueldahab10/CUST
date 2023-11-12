@@ -23,7 +23,11 @@ var Information_Form = [
               {
                 fieldNameInList: 'WFStage',
                 fieldValueInList: 'VROInitiativeMilestone01',
-              },
+              },	
+              {
+								fieldNameInList: "WFInitiatedBy",
+								fieldValueInList: "LoggedInUser",
+							},
             ],
           },
           {
@@ -36,7 +40,11 @@ var Information_Form = [
               {
                 fieldNameInList: 'WFStage',
                 fieldValueInList: 'LMSInitiativeMilestone01',
-              },
+              },	
+              {
+								fieldNameInList: "WFInitiatedBy",
+								fieldValueInList: "LoggedInUser",
+							},
             ],
           },
           {
@@ -49,7 +57,11 @@ var Information_Form = [
               {
                 fieldNameInList: 'WFStage',
                 fieldValueInList: 'EPMOInitiativeMilestone01',
-              },
+              },	
+              {
+								fieldNameInList: "WFInitiatedBy",
+								fieldValueInList: "LoggedInUser",
+							},
             ],
           },
         ],

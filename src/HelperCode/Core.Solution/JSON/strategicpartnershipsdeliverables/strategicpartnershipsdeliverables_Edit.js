@@ -164,6 +164,8 @@ var Information_Form = [{
             value: 'yes',
             otherFields: [
               { fieldName: 'Status', value: 'completed' },
+              { fieldName: 'WFInitiatedBy', value: 'LoggedInUser' },
+            
               // { fieldName: 'DraftStatus', value: '' },
             ],
           },
