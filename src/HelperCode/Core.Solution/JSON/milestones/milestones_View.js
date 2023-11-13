@@ -106,7 +106,7 @@ var Information_Form = [
         DisplayNameEn: 'Completed',
         targetfieldrequired: 'getFile', // to make the attache required on yes
         targetfield: 'Status',
-        targetfieldvalue: 'completed',
+        targetfieldvalue: 'complete',
         type: 'yesnoradio',
         options: {
           choices: [

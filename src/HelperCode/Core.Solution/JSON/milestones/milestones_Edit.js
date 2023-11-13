@@ -224,7 +224,7 @@ var Information_Form = [
         DisplayNameEn: 'Completed',
         targetfieldrequired: 'getFile,ActualDate', // to make the attache required on yes
         targetfield: 'Status',
-        targetfieldvalue: 'completed',
+        targetfieldvalue: 'complete',
         // validation: 'required',
         type: 'yesnoradio',
         options: {
