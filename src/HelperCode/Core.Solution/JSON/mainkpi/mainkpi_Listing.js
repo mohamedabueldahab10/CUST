@@ -110,8 +110,8 @@ var Listing_Info = [
     },
     {
         "InternalName": "SubSector",
-        "DisplayName": "الوكالات",
-        "DisplayNameEn": "Departments",
+        "DisplayName": "الوكالة",
+        "DisplayNameEn": "Department",
         "type": "lookup",
         "localStorageVariable":"Dynamo_Internal Entities",
         inlisting: true,
