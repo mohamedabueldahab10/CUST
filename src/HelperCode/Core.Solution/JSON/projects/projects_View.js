@@ -1080,7 +1080,7 @@ var Information_Form = [
         DisplayName: "مدير المشروع",
         DisplayNameEn: "Project Manager",
         type: "picker",
-        showonstage: "2",
+        // showonstage: "2",
       },
       // {
 
