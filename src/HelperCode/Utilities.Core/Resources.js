@@ -1108,7 +1108,8 @@
     equationerr:"هنالك مشكلة بالمعادلة المدخلة,الرجاء التأكد منها",
     crinfomsg:"مؤشر التغيير على مستوى الحقل",
     initiativeplannedperc:"نسبة الإنجاز المخططة",
-    initiativeactualperc:"نسبة الإنجاز الفعلية"
+    initiativeactualperc:"نسبة الإنجاز الفعلية",
+    deliverditem:"لا يمكن التعديل بسبب اكتمال الموافقة على العنصر"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -2233,7 +2234,8 @@
     equationerr:"there is a problem with equation, please check it",
     crinfomsg: "Change indicator on field level",
     initiativeplannedperc:"Planned Percentage",
-    initiativeactualperc:"Actual Percentage"
+    initiativeactualperc:"Actual Percentage",
+    deliverditem:"you can't change on this item because it's completed"
   },
 };
 

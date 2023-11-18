@@ -645,6 +645,14 @@ window.Edit_Data_Request = {
         Amount = Amount.toFixed(2)
         $('#Amount').val(Amount)
       }
+
+      var itemWfStage =  oListItem.get_item("WFStage");
+      if(itemWfStage == 'approved'){
+
+        var htmlMsg = '<div data-trans-deliverditem class="kpiPeriodChanged ErrorMsg Resources"></div>';
+        $('.btnactionrow').html(htmlMsg);
+
+      }
     }
     //}
 
@@ -1913,6 +1921,14 @@ window.View_Data_Request = {
       var Amount = (weight * parentValue) / 100
       Amount = Amount.toFixed(2)
       $('#Amount').text(Amount)
+
+      var itemWfStage =  oListItem.get_item("WFStage");
+      if(itemWfStage == 'approved'){
+
+        var htmlMsg = '<div data-trans-deliverditem class="kpiPeriodChanged ErrorMsg Resources"></div>';
+        $('.btnactionrow').html(htmlMsg);
+
+      }
 
     }
 
