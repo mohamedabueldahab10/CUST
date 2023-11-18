@@ -1,4 +1,4 @@
-var logo = require('../../../HelperRessources/img/print-logo.png');
+var logo = require("../../../HelperRessources/img/print-logo.png");
 // var logo = "";
 //= isArabic ? require('../../../HelperRessources/img/main-logo.svg') : require('../../../HelperRessources/img/main-logo-en.svg');
 (window.isNew = window.location.href.toLowerCase().indexOf("new.aspx") > -1),
@@ -10,12 +10,13 @@ var logo = require('../../../HelperRessources/img/print-logo.png');
   (window.MasterDetailsArrayRequest = []),
   (window.MasterDetailsArrayNew = []),
   (window.MasterDetailsArrayEdit = []),
+  (window.stringUniqueArr = []),
   (window.RelativeServerURL =
     _spPageContextInfo.siteServerRelativeUrl == "/"
       ? ""
       : _spPageContextInfo.siteServerRelativeUrl);
 window.isPrint = false;
-window.valueBasedOnParent = [] //valueBasedOnParent for wf delivrable as an ex
+window.valueBasedOnParent = []; //valueBasedOnParent for wf delivrable as an ex
 var attachCount = 0;
 var printDate;
 var pluseAttachCount = 0;
@@ -25,7 +26,6 @@ var revenuesAmountInitMiles = 0;
 var parentBudgetValue = 0;
 
 var requiredFieldsSections = []; // return required field when show hide toggle for master like deliv and miles in proj when change on zero proj
-
 
 if (
   localStorage.getItem("lng") == null ||
@@ -96,8 +96,7 @@ if (window.location.href.indexOf("PCODE=") > -1) {
 } else if (window.location.href.indexOf("ICODE=") > -1) {
   ICODE = window.location.href.split("ICODE=")[1].split("&")[0];
   PCODE_STRING = "&ICODE=" + ICODE;
-}
-else if (window.location.href.indexOf("STCODE=") > -1) {
+} else if (window.location.href.indexOf("STCODE=") > -1) {
   STCODE = window.location.href.split("STCODE=")[1].split("&")[0];
   PCODE_STRING = "&STCODE=" + STCODE;
 }
@@ -133,11 +132,11 @@ window.ListInfo = {
       //get form's json
       $.getScript(
         "" +
-        _spPageContextInfo.webAbsoluteUrl +
-        "/Style%20Library/spm/JSON/" +
-        listkey +
-        "/" +
-        JSON_File_Name
+          _spPageContextInfo.webAbsoluteUrl +
+          "/Style%20Library/spm/JSON/" +
+          listkey +
+          "/" +
+          JSON_File_Name
       ).done(function (script, textStatus) {
         SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
           ListInfo.InfoLoop();
@@ -146,11 +145,12 @@ window.ListInfo = {
     }
   },
   InfoLoop: function () {
-
     var htmlBuilder = isWF
       ? '<div class="section1 approvalHeader col-12"><div class="d-flex justify-content-between w-100"><div class=""><span class="bold Resources" data-trans-' +
-      USERlistkey +
-      '></span>' + ' ' + '<span class="mx-3 wf-project-name"></span></div><div class=""><span class="bold Resources" data-trans-taskname></span><span class="mx-3 wf-task-name"></span></div></div></div><h2 class="approvalHeader Resources"></h2>'
+        USERlistkey +
+        "></span>" +
+        " " +
+        '<span class="mx-3 wf-project-name"></span></div><div class=""><span class="bold Resources" data-trans-taskname></span><span class="mx-3 wf-task-name"></span></div></div></div><h2 class="approvalHeader Resources"></h2>'
       : "";
 
     // var htmlBuilder = "";
@@ -159,13 +159,16 @@ window.ListInfo = {
     var toggleSectionName;
 
     // to handle the default form value
-    var formDefaultValues = [], dataFormDefaultValue = "";
+    var formDefaultValues = [],
+      dataFormDefaultValue = "";
 
-    var workflowSetValues = [], dataWorkflowSetValues = "";
+    var workflowSetValues = [],
+      dataWorkflowSetValues = "";
 
-    var basedOnParentSetValues = [], dataBasedOnParentSetValues = "";
+    var basedOnParentSetValues = [],
+      dataBasedOnParentSetValues = "";
 
-    var basedOnParentSetValuesListiner = ""
+    var basedOnParentSetValuesListiner = "";
 
     asyncFor.seqProcess(
       Information_Form,
@@ -182,49 +185,43 @@ window.ListInfo = {
         }
 
         // to handle the default form value
-        formDefaultValues = item.formDefaultValues
+        formDefaultValues = item.formDefaultValues;
 
         if (formDefaultValues && formDefaultValues.length) {
-          dataFormDefaultValue = 'data-formDefaultValue="' +
-            JSON.stringify(formDefaultValues).replaceAll(
-              `"`,
-              `'`
-            ) +
-            '"'
+          dataFormDefaultValue =
+            'data-formDefaultValue="' +
+            JSON.stringify(formDefaultValues).replaceAll(`"`, `'`) +
+            '"';
         } else {
-          dataFormDefaultValue = ""
+          dataFormDefaultValue = "";
         }
 
         // to handle the workflowSetValues
-        workflowSetValues = item.workflowSetValues
+        workflowSetValues = item.workflowSetValues;
 
         if (workflowSetValues && workflowSetValues.length) {
-          dataWorkflowSetValues = 'data-workflowSetValue="' +
-            JSON.stringify(workflowSetValues).replaceAll(
-              `"`,
-              `'`
-            ) +
-            '"'
+          dataWorkflowSetValues =
+            'data-workflowSetValue="' +
+            JSON.stringify(workflowSetValues).replaceAll(`"`, `'`) +
+            '"';
         } else {
-          dataWorkflowSetValues = ""
+          dataWorkflowSetValues = "";
         }
         //
 
         //to handle set value based on parent
-        basedOnParentSetValues = item.formValuesBasedOnParent
+        basedOnParentSetValues = item.formValuesBasedOnParent;
         if (basedOnParentSetValues && basedOnParentSetValues.length) {
-          dataBasedOnParentSetValues = 'data-basedOnParentSetValues="' +
-            JSON.stringify(basedOnParentSetValues).replaceAll(
-              `"`,
-              `'`
-            ) +
-            '"'
+          dataBasedOnParentSetValues =
+            'data-basedOnParentSetValues="' +
+            JSON.stringify(basedOnParentSetValues).replaceAll(`"`, `'`) +
+            '"';
 
-          var code = ""
+          var code = "";
           if (PCODE) {
-            code = PCODE
+            code = PCODE;
           } else if (ICODE) {
-            code = ICODE
+            code = ICODE;
           }
           // else if (listkey == "mainkpi") {
           //   basedOnParentSetValuesListiner = basedOnParentSetValues
@@ -234,42 +231,46 @@ window.ListInfo = {
           //   code = $(`#${listinerField}`).val()
           // }
           if (PCODE || ICODE) {
+            basedOnParentSetValues.forEach((el) => {
+              get_parent_data.init(
+                el.parentList,
+                code,
+                el.parentFieldName,
+                el.fieldName,
+                el.getGrandParent
+              ); // to get value from parent list to use it when submit
+            });
+          } else {
+            basedOnParentSetValuesListiner = basedOnParentSetValues;
 
-            basedOnParentSetValues.forEach(el => {
-              get_parent_data.init(el.parentList, code, el.parentFieldName, el.fieldName, el.getGrandParent) // to get value from parent list to use it when submit
-            })
+            var listinerField = basedOnParentSetValuesListiner[0].listinerField;
+
+            $("body").on("change", `#${listinerField}`, function (event) {
+              // change it to body to can invoke the listiner in master details
+              get_parent_data.init(
+                basedOnParentSetValuesListiner[0].parentList,
+                event.target.value,
+                basedOnParentSetValuesListiner[0].parentFieldName,
+                basedOnParentSetValuesListiner[0].fieldName,
+                basedOnParentSetValuesListiner[0].getGrandParent
+              ); // to get value from parent list to use it when submit
+            });
           }
-          else {
-            basedOnParentSetValuesListiner = basedOnParentSetValues
-
-            var listinerField = basedOnParentSetValuesListiner[0].listinerField
-
-            $("body").on("change", `#${listinerField}`, function (event) { // change it to body to can invoke the listiner in master details
-              get_parent_data.init(basedOnParentSetValuesListiner[0].parentList, event.target.value, basedOnParentSetValuesListiner[0].parentFieldName, basedOnParentSetValuesListiner[0].fieldName, basedOnParentSetValuesListiner[0].getGrandParent) // to get value from parent list to use it when submit
-            })
-
-          }
-
         } else {
-          dataBasedOnParentSetValues = ""
+          dataBasedOnParentSetValues = "";
         }
         //
 
-
-
-
-        toggleSectionName = item.toggleName
+        toggleSectionName = item.toggleName;
 
         //Handle security
         var groups = [],
-          notAllowForGroups = [],  //notAllowForGroups  to make the field disable if  not allow for current group and on current form like groups
+          notAllowForGroups = [], //notAllowForGroups  to make the field disable if  not allow for current group and on current form like groups
           targetList = "",
           sectionType = "",
           rendersection = true;
         if (item.hasOwnProperty("security")) {
           if (item.security.groups.length > 0) {
-
-
             for (var z = 0; z < item.security.groups.length; z++) {
               groups.push(item.security.groups[z]);
 
@@ -284,20 +285,16 @@ window.ListInfo = {
           }
           ///
           if (item.security.notAllowTo && item.security.notAllowTo.length > 0) {
-
             for (var i = 0; i < item.security.notAllowTo.length; i++) {
-              notAllowForGroups.push(item.security.notAllowTo[i])
+              notAllowForGroups.push(item.security.notAllowTo[i]);
             }
 
             // notAllowForGroups = notAllowForGroups.join(" ");
 
-            notAllowForGroups = 'data-notallowforgroups="' +
-              JSON.stringify(notAllowForGroups).replaceAll(
-                `"`,
-                `'`
-              ) +
-              '"'
-
+            notAllowForGroups =
+              'data-notallowforgroups="' +
+              JSON.stringify(notAllowForGroups).replaceAll(`"`, `'`) +
+              '"';
           }
         }
 
@@ -318,7 +315,9 @@ window.ListInfo = {
           sectionType +
           ' data-groups="' +
           groups +
-          '" ' + notAllowForGroups + '>' +
+          '" ' +
+          notAllowForGroups +
+          ">" +
           '<div class="form-row">' +
           '<div class="col-lg-3 col-md-4 mb-4">' +
           "<h3 class='sideTitle'>" +
@@ -328,7 +327,17 @@ window.ListInfo = {
           Description +
           "</span>" +
           "</div>" +
-          '<div data-togglename=' + toggleSectionName + ' ' + dataFormDefaultValue + ' ' + dataWorkflowSetValues + ' ' + dataBasedOnParentSetValues + ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container ' + item.className + '">';
+          "<div data-togglename=" +
+          toggleSectionName +
+          " " +
+          dataFormDefaultValue +
+          " " +
+          dataWorkflowSetValues +
+          " " +
+          dataBasedOnParentSetValues +
+          ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container ' +
+          item.className +
+          '">';
 
         asyncFor.seqProcess(
           item.subFields,
@@ -362,8 +371,6 @@ window.ListInfo = {
         }
         // console.log('Finishing label ' + Label + ' - IsDone: ' + isDone);
         htmlBuilder += "</div></div></div>";
-
-
 
         if (isDone) {
           actionTaskHeader = "";
@@ -407,11 +414,14 @@ window.ListInfo = {
           }
           // end working on integration btn
 
-
           // hide section create in cr
           //           // hide creation section in cr if there is no access
-          if (CreateChangeRequest_Access.length == 0 && listkey == "changerequest" && isNew) {
-            $('.container-body .section-container.changerequest:first').hide()
+          if (
+            CreateChangeRequest_Access.length == 0 &&
+            listkey == "changerequest" &&
+            isNew
+          ) {
+            $(".container-body .section-container.changerequest:first").hide();
           }
           //
 
@@ -432,13 +442,17 @@ window.ListInfo = {
           // var masterDetailsIndex = 1
           if ($("[data-section_type]").length > 0) {
             $("[data-section_type]").each(function () {
-              Masterindex = '1'
+              Masterindex = "1";
               MasterDetailsArrayRequest.push($(this).attr("data-target_list"));
               // if(isNew)
               // {
               $(this)
                 .find(".fieldset-container > .CFIELD")
-                .wrapAll('<div class="Details-Item NewItem" data-index="' + Masterindex + '"></div>');
+                .wrapAll(
+                  '<div class="Details-Item NewItem" data-index="' +
+                    Masterindex +
+                    '"></div>'
+                );
               // }
               // else if(isEdit)
               // {
@@ -449,8 +463,6 @@ window.ListInfo = {
             MasterDetailsArrayRequest = Array.from(
               new Set(MasterDetailsArrayRequest)
             ); //remove duplicates
-
-
 
             MasterDetailsArrayNew = MasterDetailsArrayRequest;
             MasterDetailsArrayEdit = MasterDetailsArrayRequest;
@@ -501,23 +513,22 @@ window.ListInfo = {
           });
           // this affectes on lookup selects
           $("select[dynamic=parent]").on("change", function () {
-
             let parentFieldName = $(this).attr("id");
             let parentFieldValue = $(this).val();
             let customFilterValue = $(this)
               .find("option[value=" + parentFieldValue + "]")
               .data("customfiltervalue");
 
-
             let isCustomFilterValue = $(this).attr("iscustomfiltervalue");
 
             let affectedSelectsInfo = [];
 
-            let parentCustomFilterValueFromSibling = $(this).attr("data-parentcustomfiltervalue")
-            let notInvokeListiner = $(this).data("notinvokelistiner")
+            let parentCustomFilterValueFromSibling = $(this).attr(
+              "data-parentcustomfiltervalue"
+            );
+            let notInvokeListiner = $(this).data("notinvokelistiner");
 
             $("[dynamic=" + parentFieldName + "]").each(function () {
-
               let affectedFieldName = $(this).attr("id");
               let listName = $(this).data("listname");
               let filterField = $(this).data("filterfield");
@@ -543,10 +554,10 @@ window.ListInfo = {
                 queryFieldValue: queryFieldValue,
                 queryFieldName: queryFieldName,
                 queryFieldType: queryFieldType,
-                parentCustomFilterValueFromSibling: parentCustomFilterValueFromSibling
+                parentCustomFilterValueFromSibling:
+                  parentCustomFilterValueFromSibling,
                 // dataSiblingvalue:dataSiblingvalue
               });
-
             });
 
             // added to handel the field to be dynamicparemnt and other (the filed can be parent and child on the same time)
@@ -579,16 +590,17 @@ window.ListInfo = {
                 queryFieldValue: queryFieldValue,
                 queryFieldName: queryFieldName,
                 queryFieldType: queryFieldType,
-                parentCustomFilterValueFromSibling: parentCustomFilterValueFromSibling
+                parentCustomFilterValueFromSibling:
+                  parentCustomFilterValueFromSibling,
                 // dataSiblingvalue:dataSiblingvalue
               });
             });
             //
             //
 
-            if (notInvokeListiner) { // will not invoke the function if this attr true (we use it on hrsd initiative to filter on sos when chose startegy and level)
-              console.log("Inside not invoke listiner")
-
+            if (notInvokeListiner) {
+              // will not invoke the function if this attr true (we use it on hrsd initiative to filter on sos when chose startegy and level)
+              console.log("Inside not invoke listiner");
             } else {
               dynamicAffectSelect.init(affectedSelectsInfo);
             }
@@ -632,42 +644,45 @@ window.ListInfo = {
 
           //////////////////////////////// get siblings value like AcceptanceCriteria in benefits when change on delivrable
 
-          $('body').on('change', '.getsiblingdata', function (event) { // get sibling value based on oter value
+          $("body").on("change", ".getsiblingdata", function (event) {
+            // get sibling value based on oter value
 
+            var siblingData = $(this).find(":selected").data("siblingvalue");
+            var siblingTarget = $(this).data("siblingtarget");
 
-
-
-            var siblingData = $(this).find(':selected').data('siblingvalue')
-            var siblingTarget = $(this).data('siblingtarget')
-
-            if (siblingTarget && siblingTarget != 'undefined') {
-              $(this).parent().parent().find(`#${siblingTarget}`).val(siblingData)
+            if (siblingTarget && siblingTarget != "undefined") {
+              $(this)
+                .parent()
+                .parent()
+                .find(`#${siblingTarget}`)
+                .val(siblingData);
             }
 
             // handle array values
 
-            var arraySibling = $(this).find(':selected').data('arraysiblingvalues')
-
+            var arraySibling = $(this)
+              .find(":selected")
+              .data("arraysiblingvalues");
 
             if (arraySibling && arraySibling.length) {
-              arraySibling = eval(arraySibling)
+              arraySibling = eval(arraySibling);
 
-              arraySibling.forEach(el => {
-
+              arraySibling.forEach((el) => {
                 if (listkey == "projects") {
                   if (el.name == "StartDate") {
-
                     // to handle project baselinestart and finish to be with duration of initiative
                     var finishDate = arraySibling.filter(function (a) {
                       return a.name == "FinishDate";
                     });
 
-                    let projectBaseLineFinishDate = ""
-                    let projectBaseLineStartDate = ""
+                    let projectBaseLineFinishDate = "";
+                    let projectBaseLineStartDate = "";
 
                     if (el.value) {
                       if (finishDate.length) {
-                        projectBaseLineFinishDate = new Date(finishDate[0].value)
+                        projectBaseLineFinishDate = new Date(
+                          finishDate[0].value
+                        )
                           .toISOString()
                           .split("T")[0];
                       }
@@ -677,18 +692,22 @@ window.ListInfo = {
                         .split("T")[0];
                     }
 
-                    $("input#BaselineStartDate").attr("min", projectBaseLineStartDate);
-                    $("input#BaselineStartDate").attr("max", projectBaseLineFinishDate);
-
+                    $("input#BaselineStartDate").attr(
+                      "min",
+                      projectBaseLineStartDate
+                    );
+                    $("input#BaselineStartDate").attr(
+                      "max",
+                      projectBaseLineFinishDate
+                    );
                   } else if (el.name == "FinishDate") {
                     var startDate = arraySibling.filter(function (a) {
                       return a.name == "StartDate";
                     });
 
-                    let projectBaseLineStartDate = ""
-                    let projectBaseLineFinishDate = ""
+                    let projectBaseLineStartDate = "";
+                    let projectBaseLineFinishDate = "";
                     if (el.value) {
-
                       if (startDate.length) {
                         projectBaseLineStartDate = new Date(startDate[0].value)
                           .toISOString()
@@ -700,21 +719,23 @@ window.ListInfo = {
                         .split("T")[0];
                     }
 
-                    $("input#BaselineFinishDate").attr("min", projectBaseLineStartDate);
-                    $("input#BaselineFinishDate").attr("max", projectBaseLineFinishDate);
+                    $("input#BaselineFinishDate").attr(
+                      "min",
+                      projectBaseLineStartDate
+                    );
+                    $("input#BaselineFinishDate").attr(
+                      "max",
+                      projectBaseLineFinishDate
+                    );
                   } else {
-                    $(this).parent().parent().find(`#${el.name}`).val(el.value)
+                    $(this).parent().parent().find(`#${el.name}`).val(el.value);
                   }
                 } else {
-                  $(this).parent().parent().find(`#${el.name}`).val(el.value)
+                  $(this).parent().parent().find(`#${el.name}`).val(el.value);
                 }
-              })
-
+              });
             }
-
-
-
-          })
+          });
           ////////////////////////////// calculate the tax 15% as ksa
           $("input.tax").keyup(function (event) {
             var taxElement = $(this).data("targetelementtax");
@@ -729,103 +750,102 @@ window.ListInfo = {
           ////////////////////////////// calculate the end date based on start date and duration
 
           $("input.autoSetDate").change(function (event) {
+            var datePicked = event.target.value;
 
-            var datePicked = event.target.value
-
-            var sourceElement = $(this).data('sourceelement');
+            var sourceElement = $(this).data("sourceelement");
             var sourceElementValue = $(`#${sourceElement}`).val();
-            var targetElement = $(this).data('targetelement');
+            var targetElement = $(this).data("targetelement");
 
             if (sourceElementValue && datePicked) {
-
-              sourceElementValue = Number(sourceElementValue)
+              sourceElementValue = Number(sourceElementValue);
 
               let start = new Date(datePicked);
               let end = new Date(start);
-              end.setMonth(end.getMonth() + sourceElementValue)
+              end.setMonth(end.getMonth() + sourceElementValue);
 
               start = Dynamic_Data_Request.g.convertdate(start);
               end = Dynamic_Data_Request.g.convertdate(end);
 
-              $(`#${targetElement}`).val(end)
+              $(`#${targetElement}`).val(end);
 
-              console.log(start, "start")
-              console.log(end, "end")
-
-
+              console.log(start, "start");
+              console.log(end, "end");
             }
-          })
+          });
 
           //
 
           $("input.autoEndDate").keyup(function (event) {
-            // 
+            //
             if (event.which >= 37 && event.which <= 40) return;
 
             $(this).val(function (index, value) {
-              return value
-                .replace(/\D/g, "")
+              return value.replace(/\D/g, "");
             });
 
-            var duration = event.target.value
+            var duration = event.target.value;
 
-            var sourceElement = $(this).data('sourceelementdate');
+            var sourceElement = $(this).data("sourceelementdate");
             var sourceElementValue = $(`#${sourceElement}`).val();
-            var targetElement = $(this).data('targetelementdate');
+            var targetElement = $(this).data("targetelementdate");
 
             if (sourceElementValue && duration) {
-              duration = Number(duration)
+              duration = Number(duration);
               let start = new Date(sourceElementValue);
               let end = new Date(start);
 
-              end.setMonth(end.getMonth() + duration)
-
+              end.setMonth(end.getMonth() + duration);
 
               start = Dynamic_Data_Request.g.convertdate(start);
               end = Dynamic_Data_Request.g.convertdate(end);
-              console.log(start, "start")
-              console.log(end, "end")
-              $(`#${targetElement}`).val(end)
+              console.log(start, "start");
+              console.log(end, "end");
+              $(`#${targetElement}`).val(end);
 
               // const date2 = new Date(BaselineFinishDate);
               // const diffTime = Math.abs(date2 - date1);
               // const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
               // New_Data_Submit.g.oListItem.set_item("BaselineDuration", diffDays);
             }
-
-          })
-
+          });
 
           ///////////////////////////////
-          $("body").on("keyup", "input.percentbyparent", function (event) { // change it to body to can invoke the listiner in master details
+          $("body").on("keyup", "input.percentbyparent", function (event) {
+            // change it to body to can invoke the listiner in master details
 
             // $("input.percentbyparent").keyup(function (event) {
             // calculate the target elemnt like in delivrable
 
-            var isMasterDetails = $(this).parent().parent().hasClass("Details-Item")
+            var isMasterDetails = $(this)
+              .parent()
+              .parent()
+              .hasClass("Details-Item");
             var parentValue = 0,
               targetElement = "",
               fieldValue = 0,
               weight = 0;
-            if (isMasterDetails) { // for new validation in master details
+            if (isMasterDetails) {
+              // for new validation in master details
               if (listkey == "projects") {
-                var actualBudget = $('#ActualBudget').val()
-                var assignedBudget = $('#Amount').val()
-                parentValue = (actualBudget && actualBudget != 0) ? actualBudget : assignedBudget
+                var actualBudget = $("#ActualBudget").val();
+                var assignedBudget = $("#Amount").val();
+                parentValue =
+                  actualBudget && actualBudget != 0
+                    ? actualBudget
+                    : assignedBudget;
               } else if (listkey == "initiatives") {
-                var initiativeBudget = $('#InitiativeBudget').val()
+                var initiativeBudget = $("#InitiativeBudget").val();
 
-                parentValue = initiativeBudget
-
+                parentValue = initiativeBudget;
               }
               if (parentValue) {
-                parentValue = parentValue.replaceAll(",", "")
-                parentValue = Number(parentValue)
+                parentValue = parentValue.replaceAll(",", "");
+                parentValue = Number(parentValue);
                 targetElement = $(this).data("targetelem");
                 fieldValue = event.target.value;
                 weight = (fieldValue / parentValue) * 100;
                 weight = weight.toFixed(2);
-                $(this).parent().parent().find(`#${targetElement}`).val(weight)
+                $(this).parent().parent().find(`#${targetElement}`).val(weight);
               }
             } else {
               targetElement = $(this).data("targetelem");
@@ -838,49 +858,64 @@ window.ListInfo = {
           });
 
           ///////////////////////////////
-          $("body").on("keyup", "input.weightfloatpercentage", function (event) { // change it to body to can invoke the listiner in master details
+          $("body").on(
+            "keyup",
+            "input.weightfloatpercentage",
+            function (event) {
+              // change it to body to can invoke the listiner in master details
 
-            // $("input.weightfloatpercentage").keyup(function (event) {
-            //   
-            var isMasterDetails = $(this).parent().parent().hasClass("Details-Item")
-            var parentValue = 0,
-              targetElement = "",
-              fieldValue = 0,
-              amount = 0;
+              // $("input.weightfloatpercentage").keyup(function (event) {
+              //
+              var isMasterDetails = $(this)
+                .parent()
+                .parent()
+                .hasClass("Details-Item");
+              var parentValue = 0,
+                targetElement = "",
+                fieldValue = 0,
+                amount = 0;
 
-            if (isMasterDetails) { // for new validation in master details
+              if (isMasterDetails) {
+                // for new validation in master details
 
-              if (listkey == "projects") {
-                var actualBudget = $('#ActualBudget').val()
-                var assignedBudget = $('#Amount').val() // change AssignedBudget to Amount
-                parentValue = (actualBudget && actualBudget != 0) ? actualBudget : assignedBudget
-              } else if (listkey == "initiatives") {
-                var initiativeBudget = $('#InitiativeBudget').val()
+                if (listkey == "projects") {
+                  var actualBudget = $("#ActualBudget").val();
+                  var assignedBudget = $("#Amount").val(); // change AssignedBudget to Amount
+                  parentValue =
+                    actualBudget && actualBudget != 0
+                      ? actualBudget
+                      : assignedBudget;
+                } else if (listkey == "initiatives") {
+                  var initiativeBudget = $("#InitiativeBudget").val();
 
-                parentValue = initiativeBudget
-              }
-              if (parentValue && parentValue != 0) {
-                parentValue = parentValue.replaceAll(",", "")
-                parentValue = Number(parentValue)
+                  parentValue = initiativeBudget;
+                }
+                if (parentValue && parentValue != 0) {
+                  parentValue = parentValue.replaceAll(",", "");
+                  parentValue = Number(parentValue);
+                  targetElement = $(this).data("targetelem");
+                  fieldValue = event.target.value;
+                  amount = (parentValue * fieldValue) / 100;
+                  amount = amount.toFixed(2);
+                  $(this)
+                    .parent()
+                    .parent()
+                    .find(`#${targetElement}`)
+                    .val(amount);
+                }
+              } else {
+                parentValue = parentBudgetValue;
                 targetElement = $(this).data("targetelem");
                 fieldValue = event.target.value;
                 amount = (parentValue * fieldValue) / 100;
                 amount = amount.toFixed(2);
-                $(this).parent().parent().find(`#${targetElement}`).val(amount)
+                $(`#${targetElement}`).val(amount);
               }
-            } else {
-              parentValue = parentBudgetValue;
-              targetElement = $(this).data("targetelem");
-              fieldValue = event.target.value;
-              amount = (parentValue * fieldValue) / 100;
-              amount = amount.toFixed(2);
-              $(`#${targetElement}`).val(amount);
             }
-          });
-
+          );
 
           // listiner on ppicker
-          //   $("div[type=picker] input[id$='TopSpan_HiddenInput']").on("change", function () { 
+          //   $("div[type=picker] input[id$='TopSpan_HiddenInput']").on("change", function () {
           //     console.log("fffffffffffffffff")
           //     alert('People Picker Value Changed');
           // })
@@ -893,51 +928,73 @@ window.ListInfo = {
           //
           //////////////////////////////// disable_enable_section like master details if there is a value or not
           $("body").on("keyup", ".disable_enable_section", function (event) {
-
-            var value = event.target.value
+            var value = event.target.value;
             if (value) {
-              if (listkey == 'projects') {
-                $("[data-target_list=Deliverables] .fieldset-container").removeClass("disable_section")
-                $("[data-target_list=Milestones] .fieldset-container").removeClass("disable_section")
-              } else if (listkey == 'initiatives') {
-                $("[data-target_list=InitiativeDeliverables] .fieldset-container").removeClass("disable_section")
-                $("[data-target_list=InitiativeMilestones] .fieldset-container").removeClass("disable_section")
+              if (listkey == "projects") {
+                $(
+                  "[data-target_list=Deliverables] .fieldset-container"
+                ).removeClass("disable_section");
+                $(
+                  "[data-target_list=Milestones] .fieldset-container"
+                ).removeClass("disable_section");
+              } else if (listkey == "initiatives") {
+                $(
+                  "[data-target_list=InitiativeDeliverables] .fieldset-container"
+                ).removeClass("disable_section");
+                $(
+                  "[data-target_list=InitiativeMilestones] .fieldset-container"
+                ).removeClass("disable_section");
               }
-
             } else {
-              if (listkey == 'projects') {
-                $("[data-target_list=Deliverables] .fieldset-container").addClass("disable_section")
-                $("[data-target_list=Milestones] .fieldset-container").addClass("disable_section")
-              } else if (listkey == 'initiatives') {
-                $("[data-target_list=InitiativeDeliverables] .fieldset-container").addClass("disable_section")
-                $("[data-target_list=InitiativeMilestones] .fieldset-container").addClass("disable_section")
+              if (listkey == "projects") {
+                $(
+                  "[data-target_list=Deliverables] .fieldset-container"
+                ).addClass("disable_section");
+                $("[data-target_list=Milestones] .fieldset-container").addClass(
+                  "disable_section"
+                );
+              } else if (listkey == "initiatives") {
+                $(
+                  "[data-target_list=InitiativeDeliverables] .fieldset-container"
+                ).addClass("disable_section");
+                $(
+                  "[data-target_list=InitiativeMilestones] .fieldset-container"
+                ).addClass("disable_section");
               }
             }
-          })
+          });
 
           //////////////////////////////// make attachement required when change on radio yes
           var previuosTargetVal = "";
           $("input.yesnolistener").on("change", function (event) {
-
-
             var value = event.target.value;
 
             var targetElementRequired = $(this).data("targetfieldrequired");
 
             // if we need to apply that when click on is delivered yes the status will be completed
-            var targetElement = $(this).data('targetfield')
-            var targetElementValue = $(this).data('targetfieldvalue')
+            var targetElement = $(this).data("targetfield");
+            var targetElementValue = $(this).data("targetfieldvalue");
 
-
-            if (value == 'yes' && (targetElement && targetElement != 'undefined') && (targetElementValue && targetElementValue != 'undefined')) {
-              previuosTargetVal = $(`#${targetElement}`).val()
-              $(`#${targetElement}`).val(targetElementValue)
-              $(`#${targetElement}`).attr("disabled", true)
-            } else if (value == 'no' && (targetElement && targetElement != 'undefined') && (targetElementValue && targetElementValue != 'undefined')) {
-              console.log(previuosTargetVal, "previuosTargetVal in else")
-              $(`#${targetElement}`).val(previuosTargetVal)
-              $(`#${targetElement}`).attr("disabled", false)
-
+            if (
+              value == "yes" &&
+              targetElement &&
+              targetElement != "undefined" &&
+              targetElementValue &&
+              targetElementValue != "undefined"
+            ) {
+              previuosTargetVal = $(`#${targetElement}`).val();
+              $(`#${targetElement}`).val(targetElementValue);
+              $(`#${targetElement}`).attr("disabled", true);
+            } else if (
+              value == "no" &&
+              targetElement &&
+              targetElement != "undefined" &&
+              targetElementValue &&
+              targetElementValue != "undefined"
+            ) {
+              console.log(previuosTargetVal, "previuosTargetVal in else");
+              $(`#${targetElement}`).val(previuosTargetVal);
+              $(`#${targetElement}`).attr("disabled", false);
             }
 
             // to handle required on attachement
@@ -946,14 +1003,15 @@ window.ListInfo = {
               targetElementRequired &&
               targetElementRequired != "undefined"
             ) {
+              targetElementRequired = targetElementRequired.split(",");
 
-              targetElementRequired = targetElementRequired.split(",")
-
-
-              targetElementRequired.forEach(el => {
+              targetElementRequired.forEach((el) => {
                 $(`#${el}`).attr("required", true);
 
-                var checkAttach = $(`#${el}`).parent().find(">*").closest(".attlabel")
+                var checkAttach = $(`#${el}`)
+                  .parent()
+                  .find(">*")
+                  .closest(".attlabel");
 
                 if (checkAttach.length > 0) {
                   $(`#${el}`)
@@ -962,12 +1020,9 @@ window.ListInfo = {
                     .closest(".attlabel")
                     .attr("required", true);
                 } else {
-                  $(`#${el}`)
-                    .parent()
-                    .find(">*")
-                    .attr("required", true);
+                  $(`#${el}`).parent().find(">*").attr("required", true);
                 }
-              })
+              });
 
               // $(`#${targetElementRequired}`).attr("required", true);
 
@@ -990,14 +1045,15 @@ window.ListInfo = {
               targetElementRequired &&
               targetElementRequired != "undefined"
             ) {
-              targetElementRequired = targetElementRequired.split(",")
+              targetElementRequired = targetElementRequired.split(",");
 
-              targetElementRequired.forEach(el => {
-
+              targetElementRequired.forEach((el) => {
                 $(`#${el}`).attr("required", false);
 
-
-                var checkAttach = $(`#${el}`).parent().find(">*").closest(".attlabel")
+                var checkAttach = $(`#${el}`)
+                  .parent()
+                  .find(">*")
+                  .closest(".attlabel");
 
                 if (checkAttach.length > 0) {
                   $(`#${el}`)
@@ -1006,15 +1062,11 @@ window.ListInfo = {
                     .closest(".attlabel")
                     .attr("required", false);
                 } else {
-                  $(`#${el}`)
-                    .parent()
-                    .find(">*")
-                    .attr("required", false);
+                  $(`#${el}`).parent().find(">*").attr("required", false);
                 }
-              })
+              });
 
               // $(`#${targetElementRequired}`).attr("required", false);
-
 
               // var checkAttach =$(`#${targetElementRequired}`).parent().find(">*").closest(".attlabel")
 
@@ -1030,12 +1082,9 @@ window.ListInfo = {
               //   .find(">*")
               //   .attr("required", false);
               // }
-
-
             }
             //
           });
-
 
           // add new style for wf
 
@@ -1046,7 +1095,7 @@ window.ListInfo = {
             $(".sidebar").attr("style", "display: none !important");
             $(".main-panel").attr("style", "width: 100% !important");
             // getTaskHistory.init();
-            Get_TaskHistory.init()
+            Get_TaskHistory.init();
           }
           //
           //////add section to cr
@@ -1089,80 +1138,74 @@ window.ListInfo = {
               }
             );
           }
-          // get getTotalSelectedValues 
-          var totalValuesWeight = 0
+          // get getTotalSelectedValues
+          var totalValuesWeight = 0;
           $("input.getTotalSelectedValues").change(function () {
-
-
-
-            var fieldValue = $(this).data("getothervalue")
-            var targettotalelement = $(this).data("targettotalelement")
+            var fieldValue = $(this).data("getothervalue");
+            var targettotalelement = $(this).data("targettotalelement");
 
             var budget = 0;
-            var amount = 0
-
+            var amount = 0;
 
             if (isEdit) {
-              totalValuesWeight = $(`#${targettotalelement}`).val()
-              totalValuesWeight = Number(totalValuesWeight)
+              totalValuesWeight = $(`#${targettotalelement}`).val();
+              totalValuesWeight = Number(totalValuesWeight);
             }
 
             if (projectActualBudget > 0) {
-              budget = projectActualBudget
+              budget = projectActualBudget;
             } else {
-              budget = projectAssignedBudget
+              budget = projectAssignedBudget;
             }
 
-            if (fieldValue && fieldValue != 'undefined') {
-              fieldValue = Number(fieldValue)
+            if (fieldValue && fieldValue != "undefined") {
+              fieldValue = Number(fieldValue);
             } else {
-              fieldValue = 0
+              fieldValue = 0;
             }
 
             amount = (budget * fieldValue) / 100;
 
-            if ($(this).is(':checked')) {
-
-              totalValuesWeight = totalValuesWeight + amount
+            if ($(this).is(":checked")) {
+              totalValuesWeight = totalValuesWeight + amount;
             } else {
-              totalValuesWeight = totalValuesWeight - amount
+              totalValuesWeight = totalValuesWeight - amount;
             }
-            $(`#${targettotalelement}`).val(totalValuesWeight)
-            $("input.tax").trigger('keyup') // invoke tax  feature after fill the total amount
-          })
+            $(`#${targettotalelement}`).val(totalValuesWeight);
+            $("input.tax").trigger("keyup"); // invoke tax  feature after fill the total amount
+          });
           //
           //////// apply grandFieldInvoke
           $(".grandFieldInvoke").on("change", function (event) {
+            var grandId = $(this).data("grandfieldid");
+            var childId = $(this).data("childfieldid");
+            var childFieldIdSource = $(this).data("childfieldidsource");
 
-
-
-
-            var grandId = $(this).data("grandfieldid")
-            var childId = $(this).data("childfieldid")
-            var childFieldIdSource = $(this).data("childfieldidsource")
-
-            var elementValue = event.target.value
+            var elementValue = event.target.value;
 
             if (grandId && elementValue && childId && childFieldIdSource) {
-              var customFilterValue = $(this).find("option[value=" + elementValue + "]").data("customfiltervalue"); // will add the value on parent to can handle the query in dynamic func
+              var customFilterValue = $(this)
+                .find("option[value=" + elementValue + "]")
+                .data("customfiltervalue"); // will add the value on parent to can handle the query in dynamic func
 
-              $(`#${grandId}`).data("notinvokelistiner", false)
-              $(`#${grandId}`).attr("data-seconedvaluelistiner", elementValue)
-              $(`#${grandId}`).attr("data-parentcustomfiltervalue", customFilterValue)
-              $(`#${childId}`).data("queryfield", childFieldIdSource)
-              $(`#${childId}`).data("queryfieldvalue", elementValue)
-              $(`#${childId}`).data("queryfieldtype", "Text")
+              $(`#${grandId}`).data("notinvokelistiner", false);
+              $(`#${grandId}`).attr("data-seconedvaluelistiner", elementValue);
+              $(`#${grandId}`).attr(
+                "data-parentcustomfiltervalue",
+                customFilterValue
+              );
+              $(`#${childId}`).data("queryfield", childFieldIdSource);
+              $(`#${childId}`).data("queryfieldvalue", elementValue);
+              $(`#${childId}`).data("queryfieldtype", "Text");
 
               // window.setTimeout(function(){
-              $(`select[dynamic=parent][id=${grandId}]`).trigger('change') // to trigger only one field (correct field)
+              $(`select[dynamic=parent][id=${grandId}]`).trigger("change"); // to trigger only one field (correct field)
               // },1500)
             }
-
-          })
+          });
 
           ///
           $("input.number").keyup(function (event) {
-
             // skip for arrow keys
             if (event.which >= 37 && event.which <= 40) return;
             // format number
@@ -1172,35 +1215,33 @@ window.ListInfo = {
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             });
 
-            var totalElement = $(this).data("totalelement")
-            var sum1 = $(this).data("sum1element")
-            var sum2 = $(this).data("sum2element")
+            var totalElement = $(this).data("totalelement");
+            var sum1 = $(this).data("sum1element");
+            var sum2 = $(this).data("sum2element");
 
-            var max = $(this).data("maxfield")
-            var resetElement = $(this).data('resetelement')
-            var elementVal = event.target.value
+            var max = $(this).data("maxfield");
+            var resetElement = $(this).data("resetelement");
+            var elementVal = event.target.value;
             // set max value
-            if (max && max != 'undefined') {
-
-              var maxValue = 0
+            if (max && max != "undefined") {
+              var maxValue = 0;
               if (listkey == "projects") {
                 if ($(`#${max}`).val()) {
-                  maxValue = $(`#${max}`).val() ? $(`#${max}`).val() : 0
+                  maxValue = $(`#${max}`).val() ? $(`#${max}`).val() : 0;
                 } else if ($(`#Amount`).val()) {
-                  maxValue = $(`#Amount`).val() ? $(`#Amount`).val() : 0
+                  maxValue = $(`#Amount`).val() ? $(`#Amount`).val() : 0;
                 }
               } else {
-                maxValue = $(`#${max}`).val() ? $(`#${max}`).val() : 0
+                maxValue = $(`#${max}`).val() ? $(`#${max}`).val() : 0;
               }
               if (maxValue.includes(",")) {
-                maxValue = maxValue.replaceAll(",", "")
+                maxValue = maxValue.replaceAll(",", "");
               }
               if (elementVal.includes(",")) {
-                elementVal = elementVal.replaceAll(",", "")
-
+                elementVal = elementVal.replaceAll(",", "");
               }
-              elementVal = Number(elementVal)
-              maxValue = Number(maxValue)
+              elementVal = Number(elementVal);
+              maxValue = Number(maxValue);
 
               if (elementVal <= maxValue) {
                 $(this).val(function (index, value) {
@@ -1209,16 +1250,14 @@ window.ListInfo = {
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 });
               } else {
-                $(this).val(null)
+                $(this).val(null);
               }
-            }
-            else if (resetElement && resetElement != 'undefined') {
-              resetElement = eval(resetElement)
-              resetElement.forEach(el => {
-                $(`#${el}`).val(null)
-              })
-            }
-            else {
+            } else if (resetElement && resetElement != "undefined") {
+              resetElement = eval(resetElement);
+              resetElement.forEach((el) => {
+                $(`#${el}`).val(null);
+              });
+            } else {
               // format number
               $(this).val(function (index, value) {
                 return value
@@ -1226,72 +1265,85 @@ window.ListInfo = {
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
               });
             }
-            /// 
+            ///
 
-            if (totalElement && totalElement != 'undefined' && sum1 && sum1 != 'undefined' && sum2 && sum2 != 'undefined') {
-              var value1 = $(`#${sum1}`).val()
-              value1 = value1.replaceAll(",", "")
-              value1 = Number(value1)
-              var value2 = $(`#${sum2}`).val()
-              value2 = value2.replaceAll(",", "")
-              value2 = Number(value2)
-              var total = value1 + value2
-              $(`#${totalElement}`).val(total)
+            if (
+              totalElement &&
+              totalElement != "undefined" &&
+              sum1 &&
+              sum1 != "undefined" &&
+              sum2 &&
+              sum2 != "undefined"
+            ) {
+              var value1 = $(`#${sum1}`).val();
+              value1 = value1.replaceAll(",", "");
+              value1 = Number(value1);
+              var value2 = $(`#${sum2}`).val();
+              value2 = value2.replaceAll(",", "");
+              value2 = Number(value2);
+              var total = value1 + value2;
+              $(`#${totalElement}`).val(total);
 
-              fieldsDependsOnTotal = $(`#${totalElement}`).data('resetelement')
+              fieldsDependsOnTotal = $(`#${totalElement}`).data("resetelement");
 
               if (fieldsDependsOnTotal) {
-                fieldsDependsOnTotal = eval(fieldsDependsOnTotal)
+                fieldsDependsOnTotal = eval(fieldsDependsOnTotal);
 
-                fieldsDependsOnTotal.forEach(el => {
-                  var resVal = $(`#${el}`).val()
-                  if (resVal.includes(',')) {
-                    resVal = resVal.replaceAll(",", "")
-                    resVal = Number(resVal)
+                fieldsDependsOnTotal.forEach((el) => {
+                  var resVal = $(`#${el}`).val();
+                  if (resVal.includes(",")) {
+                    resVal = resVal.replaceAll(",", "");
+                    resVal = Number(resVal);
                   }
                   if (resVal > total) {
-                    $(`#${el}`).val(null)
+                    $(`#${el}`).val(null);
                   }
-                })
+                });
               }
             }
           });
 
           //maxOnChild
           $("body").on("change", ".maxOnChild", function (event) {
-            var value = event.target.value
-            var targetOn = $(this).data('targeton')
-            var childsId = $(this).data('childsid')
-            childsId = eval(childsId)
+            var value = event.target.value;
+            var targetOn = $(this).data("targeton");
+            var childsId = $(this).data("childsid");
+            childsId = eval(childsId);
 
-
-            childsId.forEach(el => {
-              var checkElem = ""
+            childsId.forEach((el) => {
+              var checkElem = "";
               // to use it for current form not only master details
               if (listkey == "changerequest") {
-                checkElem = $(`.section-container:not([data-target_list]) .CFIELD:not(.hide-field)`).find(`#${el}`).length
+                checkElem = $(
+                  `.section-container:not([data-target_list]) .CFIELD:not(.hide-field)`
+                ).find(`#${el}`).length;
               } else {
-                checkElem = $(`.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)`).find(`#${el}`).length
+                checkElem = $(
+                  `.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)`
+                ).find(`#${el}`).length;
               }
 
               if (checkElem > 0) {
                 if (listkey == "changerequest") {
-                  $(`.section-container:not([data-target_list]) .CFIELD:not(.hide-field) #${el}`).each(function () {
+                  $(
+                    `.section-container:not([data-target_list]) .CFIELD:not(.hide-field) #${el}`
+                  ).each(function () {
                     $(this).attr(targetOn, value);
-                  })
+                  });
                 } else {
-                  $(`.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field) #${el}`).each(function () {
+                  $(
+                    `.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field) #${el}`
+                  ).each(function () {
                     $(this).attr(targetOn, value);
-                  })
+                  });
                 }
               }
 
-              $('[data-target_list] .Details-Item').each(function () {
+              $("[data-target_list] .Details-Item").each(function () {
                 $(this).find(`#${el}`).attr(targetOn, value);
-              })
-
-            })
-          })
+              });
+            });
+          });
           //
 
           $("body").on("change", ".decimalnumber", function (event) {
@@ -1319,8 +1371,7 @@ window.ListInfo = {
 
           $("[data-toggledisabledvalues]").on("change", function () {
             ListInfo.g.toggleDisabledFields($(this));
-
-          })
+          });
 
           // hide show required based on selection & onload
           $("[data-requiredvalues]").on("change", function () {
@@ -1472,7 +1523,6 @@ window.ListInfo = {
               // });
             }
             if (listkey == "deliverables") {
-
               ListInfo.g.DeliverablesDelivered();
             }
             if (listkey == "goalstrategy") {
@@ -1684,7 +1734,6 @@ window.ListInfo = {
                   (imp_major && prob_verylikely) ||
                   (imp_extreme && prob_verylikely)
                 ) {
-
                   $("input#RiskGrade").val("High");
                   $("input#RiskGrade").css(
                     "background",
@@ -1738,7 +1787,6 @@ window.ListInfo = {
                 .toISOString()
                 .split("T")[0];
 
-
               $("input#PlannedCompletedDate").attr("min", initStartDate);
             }
           }
@@ -1777,7 +1825,12 @@ window.ListInfo = {
                   });
                   // $("[data-section_type]").show()
                 }
-              } else if ($(this).val() == "ministry" || $(this).val() == "sectorial" || $(this).val() == "lms" || $(this).val() == "sub") {
+              } else if (
+                $(this).val() == "ministry" ||
+                $(this).val() == "sectorial" ||
+                $(this).val() == "lms" ||
+                $(this).val() == "sub"
+              ) {
                 if ($("[data-section_type]").length > 0) {
                   $("[data-section_type]").each(function () {
                     if (
@@ -1908,8 +1961,6 @@ window.ListInfo = {
       ListInfo.g.requiredSpillarsName();
     }
 
-
-
     // if(element.useAccessPolicy){
     //   await FunctionAsync(element.useAccessPolicyList)
     // //  initiateDataLevelAccess(element.useAccessPolicyList)
@@ -1940,7 +1991,9 @@ window.ListInfo = {
         : "",
       dontSubmit = element.hasOwnProperty("dontSubmit") ? "dont-submit" : "",
       hideField = element.display == "none" ? "hide-field" : "",
-      dontSubmitRequired = element.hasOwnProperty("dontSubmitRequired") ? "dont-submit even-required" : "",
+      dontSubmitRequired = element.hasOwnProperty("dontSubmitRequired")
+        ? "dont-submit even-required"
+        : "",
       dontRequest = element.hasOwnProperty("dontRequest") ? "dont-request" : "", // to avoid err on view
       inputLisKey = element.hasOwnProperty("listKey")
         ? `data-listkey="${element.listKey}" `
@@ -1949,13 +2002,10 @@ window.ListInfo = {
       RequiredName = element.hasOwnProperty("RequiredName")
         ? "data-requiredname=" + element.RequiredName
         : "",
-
       toggleDisabledValues = "",
       toggleDisabledName = element.hasOwnProperty("ToggleDisabledName")
         ? "data-toggledisabledname=" + element.ToggleDisabledName
         : "";
-
-
 
     renderfield = true;
     window.acceptedExtensions;
@@ -1975,20 +2025,19 @@ window.ListInfo = {
       }
 
       //
-      if (element.security.notAllowTo && element.security.notAllowTo.length > 0) {
-
+      if (
+        element.security.notAllowTo &&
+        element.security.notAllowTo.length > 0
+      ) {
         for (var i = 0; i < element.security.notAllowTo.length; i++) {
-          notAllowForGroups.push(element.security.notAllowTo[i])
+          notAllowForGroups.push(element.security.notAllowTo[i]);
         }
 
-        notAllowForGroups = 'data-notallowforgroups="' +
-          JSON.stringify(notAllowForGroups).replaceAll(
-            `"`,
-            `'`
-          ) +
-          '"'
+        notAllowForGroups =
+          'data-notallowforgroups="' +
+          JSON.stringify(notAllowForGroups).replaceAll(`"`, `'`) +
+          '"';
       }
-
     }
 
     if (element.hasOwnProperty("requireOnWfTaskStage") && USERisWF) {
@@ -2038,11 +2087,11 @@ window.ListInfo = {
         toggleValues +=
           i == 0
             ? 'data-toggleValues="' +
-            item.value +
-            "[" +
-            item.fields.join(",") +
-            "]" +
-            seperator
+              item.value +
+              "[" +
+              item.fields.join(",") +
+              "]" +
+              seperator
             : item.value + "[" + item.fields.join(",") + "]" + seperator;
       });
     }
@@ -2053,11 +2102,11 @@ window.ListInfo = {
         requiredValues +=
           i == 0
             ? 'data-requiredValues="' +
-            item.value +
-            "[" +
-            item.fields.join(",") +
-            "]" +
-            seperator
+              item.value +
+              "[" +
+              item.fields.join(",") +
+              "]" +
+              seperator
             : item.value + "[" + item.fields.join(",") + "]" + seperator;
       });
     }
@@ -2068,16 +2117,14 @@ window.ListInfo = {
         toggleDisabledValues +=
           i == 0
             ? 'data-toggleDisabledValues="' +
-            item.value +
-            "[" +
-            item.fields.join(",") +
-            "]" +
-            seperator
+              item.value +
+              "[" +
+              item.fields.join(",") +
+              "]" +
+              seperator
             : item.value + "[" + item.fields.join(",") + "]" + seperator;
       });
     }
-
-
 
     var thistip;
     if (element.tooltip == undefined) {
@@ -2113,8 +2160,6 @@ window.ListInfo = {
 
     var jsonListKey;
 
-
-
     if (
       localStorage.getItem("lng") == null ||
       localStorage.getItem("lng") == "ar"
@@ -2130,7 +2175,6 @@ window.ListInfo = {
     } else isexist = true;
 
     if (localStorage.getItem("lng") == "en" && element.DispfieldkeyEn) {
-
       dispfieldkey = element.DispfieldkeyEn;
     } else dispfieldkey = element.Dispfieldkey;
 
@@ -2142,28 +2186,29 @@ window.ListInfo = {
       acceptedExtensions = element.fileExtensions;
     }
 
-
     if (element.Errmsgkey == undefined) {
-      Errmsgkey = 'fieldIsRequired';
-    }
-    else {
+      Errmsgkey = "fieldIsRequired";
+    } else {
       Errmsgkey = element.Errmsgkey;
     }
 
-    // to use it in cr new links 
-    jsonListKey = element.listkey
-
+    // to use it in cr new links
+    jsonListKey = element.listkey;
 
     switch (element.type) {
       case "string":
-
-        var letterPattern = ""
+        var letterPattern = "";
         if (element.withletters) {
-          letterPattern = `pattern="^\\d*[a-zA-Z\\u0600-\\u06FF][a-zA-Z0-9\\u0600-\\u06FF_ -]*$"`
+          letterPattern = `pattern="^\\d*[a-zA-Z\\u0600-\\u06FF][a-zA-Z0-9\\u0600-\\u06FF_ -]*$"`;
         }
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -2192,7 +2237,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '       data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -2208,7 +2255,9 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
-          ' type="text" ' + letterPattern + ' maxlength="' +
+          ' type="text" ' +
+          letterPattern +
+          ' maxlength="' +
           element.maxchar +
           '" placeholder="' +
           displayName +
@@ -2232,10 +2281,131 @@ window.ListInfo = {
           "</div>";
         OnSuccess(flag, htmlBody);
         break;
+
+      case "stringunique":
+        var customQuery =
+          "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+
+        sphttp.get(
+          _spPageContextInfo.siteServerRelativeUrl,
+          element.listname,
+          customQuery,
+          [element.InternalName],
+          function (records, record, listItem, isDone) {
+            if (isDone) {
+              records.forEach(function (el, index) {
+                var uniqueFieldVal = el[element.InternalName];
+                if (uniqueFieldVal) {
+                  stringUniqueArr = [...stringUniqueArr, uniqueFieldVal];
+                }
+              });
+
+              var letterPattern = "";
+              if (element.withletters) {
+                letterPattern = `pattern="^\\d*[a-zA-Z\\u0600-\\u06FF][a-zA-Z0-9\\u0600-\\u06FF_ -]*$"`;
+              }
+
+              var stringUniqueValues =
+                'data-stringuniquevalues="' +
+                JSON.stringify(stringUniqueArr).replaceAll(`"`, `'`) +
+                '"';
+
+              htmlBody =
+                '<div class="col-md-6 CFIELD ' +
+                dontSubmit +
+                " " +
+                dontRequest +
+                " " +
+                dontSubmitRequired +
+                " " +
+                " " +
+                element.className +
+                " " +
+                hideField +
+                ' " ' +
+                thistip +
+                " " +
+                stringUniqueValues +
+                " " +
+                hidestagesIDs +
+                " " +
+                editableBy +
+                " " +
+                showstagesIDs +
+                "  " +
+                disablestagesIDs +
+                "  " +
+                enablestagesIDs +
+                "   " +
+                isWfhidestagesIDs +
+                " " +
+                requireOnWfTaskstagesIDs +
+                " " +
+                isWfshowstagesIDs +
+                "  " +
+                isWfdisablestagesIDs +
+                "  " +
+                isWfenablestagesIDs +
+                '       data-groups="' +
+                groups +
+                '" ' +
+                notAllowForGroups +
+                ' style="display:' +
+                element.display +
+                '">' +
+                '<label for="' +
+                element.InternalName +
+                '" ' +
+                element.validation +
+                ">" +
+                displayName +
+                "</label>" +
+                "<input " +
+                ToggleName +
+                " " +
+                toggleDisabledName +
+                " " +
+                RequiredName +
+                ' type="text" ' +
+                letterPattern +
+                ' maxlength="' +
+                element.maxchar +
+                '" uniqueValueField="yes" placeholder="' +
+                displayName +
+                '" ' +
+                dynamic +
+                ' class="form-control SPIField" id="' +
+                element.InternalName +
+                '" ' +
+                element.state +
+                " " +
+                element.validation +
+                ">" +
+                "<span data-trans-" +
+                Errmsgkey +
+                ' class="errMsgField Resources"></span>' +
+                '<div class="inputInfo ' +
+                isexist +
+                '">' +
+                descPhrase +
+                "</div>" +
+                "</div>";
+              OnSuccess(flag, htmlBody);
+            }
+          }
+        );
+
+        break;
+
       case "yearInput":
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -2264,7 +2434,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           ' data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -2305,14 +2477,19 @@ window.ListInfo = {
         break;
 
       case "number":
-        var numberOfDigits = ""
+        var numberOfDigits = "";
         if (element.numberOfDigits) {
-          numberOfDigits = `maxlength=${element.numberOfDigits}`
+          numberOfDigits = `maxlength=${element.numberOfDigits}`;
         }
 
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -2341,7 +2518,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '"' + notAllowForGroups + ' style="display:' +
+          '"' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -2357,7 +2536,9 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
-          ' type="number" ' + numberOfDigits + ' step="any" placeholder="' +
+          ' type="number" ' +
+          numberOfDigits +
+          ' step="any" placeholder="' +
           displayName +
           '" ' +
           dynamic +
@@ -2380,7 +2561,12 @@ window.ListInfo = {
       case "formula":
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -2409,7 +2595,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '       data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -2450,7 +2638,12 @@ window.ListInfo = {
       case "email":
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -2479,7 +2672,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -2495,7 +2690,6 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
-
           ' type="email" placeholder="' +
           displayName +
           '" ' +
@@ -2519,7 +2713,12 @@ window.ListInfo = {
       case "code":
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -2548,7 +2747,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -2585,13 +2786,18 @@ window.ListInfo = {
         break;
 
       case "floattax":
-        var numberOfDigits = ""
+        var numberOfDigits = "";
         if (element.numberOfDigits) {
-          numberOfDigits = `maxlength=${element.numberOfDigits}`
+          numberOfDigits = `maxlength=${element.numberOfDigits}`;
         }
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -2620,7 +2826,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -2636,7 +2844,9 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
-          ' type="float"  ' + numberOfDigits + '  placeholder="' +
+          ' type="float"  ' +
+          numberOfDigits +
+          '  placeholder="' +
           displayName +
           '" ' +
           dynamic +
@@ -2667,15 +2877,19 @@ window.ListInfo = {
         break;
 
       case "floatDuration":
-
-        var numberOfDigits = ""
+        var numberOfDigits = "";
         if (element.numberOfDigits) {
-          numberOfDigits = `maxlength=${element.numberOfDigits}`
+          numberOfDigits = `maxlength=${element.numberOfDigits}`;
         }
 
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -2704,7 +2918,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -2720,7 +2936,9 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
-          ' type="float" ' + numberOfDigits + ' placeholder="' +
+          ' type="float" ' +
+          numberOfDigits +
+          ' placeholder="' +
           displayName +
           '" ' +
           dynamic +
@@ -2751,44 +2969,52 @@ window.ListInfo = {
         break;
 
       case "float":
-
-        var numberOfDigits = ""
+        var numberOfDigits = "";
         if (element.numberOfDigits) {
-          numberOfDigits = `maxlength=${element.numberOfDigits}`
+          numberOfDigits = `maxlength=${element.numberOfDigits}`;
         }
 
         // to handle that the value should be smaller than other value
-        var max = "", resetElement = "";
+        var max = "",
+          resetElement = "";
 
-        var totalElement = "", sum1Element = "", sum2Element = "", reset = "";
+        var totalElement = "",
+          sum1Element = "",
+          sum2Element = "",
+          reset = "";
 
         if (element.max) {
-          max = `data-maxField=${element.max}`
+          max = `data-maxField=${element.max}`;
         }
 
-
         if (element.resetElement) {
+          reset = "resetElements";
 
-          reset = 'resetElements'
-
-          resetElement = 'data-resetElement="' +
-            JSON.stringify(element.resetElement).replaceAll(
-              `"`,
-              `'`
-            ) +
-            '"'
+          resetElement =
+            'data-resetElement="' +
+            JSON.stringify(element.resetElement).replaceAll(`"`, `'`) +
+            '"';
           // resetElement = `data-resetElement=${element.resetElement}`
         }
 
-        if (element.totalElement && element.sum1Element && element.sum2Element) {
-          totalElement = `data-totalElement=${element.totalElement}`
-          sum1Element = `data-sum1Element=${element.sum1Element}`
-          sum2Element = `data-sum2Element=${element.sum2Element}`
+        if (
+          element.totalElement &&
+          element.sum1Element &&
+          element.sum2Element
+        ) {
+          totalElement = `data-totalElement=${element.totalElement}`;
+          sum1Element = `data-sum1Element=${element.sum1Element}`;
+          sum2Element = `data-sum2Element=${element.sum2Element}`;
         }
 
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -2817,7 +3043,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -2843,11 +3071,15 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
-          ' type="float" ' + numberOfDigits + ' placeholder="' +
+          ' type="float" ' +
+          numberOfDigits +
+          ' placeholder="' +
           displayName +
           '" ' +
           dynamic +
-          ' class="form-control SPIField number ' + reset + '" id="' +
+          ' class="form-control SPIField number ' +
+          reset +
+          '" id="' +
           element.InternalName +
           '" ' +
           element.state +
@@ -2866,7 +3098,12 @@ window.ListInfo = {
       case "phonenumber": // ksa phone number validation
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -2895,7 +3132,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -2935,15 +3174,19 @@ window.ListInfo = {
         break;
 
       case "floatwithoutformatting":
-
-        var numberOfDigits = ""
+        var numberOfDigits = "";
         if (element.numberOfDigits) {
-          numberOfDigits = `maxlength=${element.numberOfDigits}`
+          numberOfDigits = `maxlength=${element.numberOfDigits}`;
         }
 
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -2972,7 +3215,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -2988,7 +3233,9 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
-          ' type="float" ' + numberOfDigits + ' placeholder="' +
+          ' type="float" ' +
+          numberOfDigits +
+          ' placeholder="' +
           displayName +
           '" ' +
           dynamic +
@@ -3026,10 +3273,8 @@ window.ListInfo = {
           [element.targetelement],
           function (records, record, listItem, isDone) {
             if (isDone) {
-
               var totalWeight = 0;
               records.forEach(function (el, index) {
-
                 totalWeight += el[element.targetelement]
                   ? el[element.targetelement]
                   : 0;
@@ -3046,11 +3291,14 @@ window.ListInfo = {
                   : RemainingBudget + inpVal;
               newVal = Number(newVal.toFixed("2"));
 
-
-
               htmlBody =
                 '<div class="col-md-6 CFIELD ' +
-                dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+                dontSubmit +
+                " " +
+                dontRequest +
+                " " +
+                dontSubmitRequired +
+                " " +
                 " " +
                 element.className +
                 " " +
@@ -3079,7 +3327,9 @@ window.ListInfo = {
                 isWfenablestagesIDs +
                 '        data-groups="' +
                 groups +
-                '" ' + notAllowForGroups + ' style="display:' +
+                '" ' +
+                notAllowForGroups +
+                ' style="display:' +
                 element.display +
                 '">' +
                 '<label for="' +
@@ -3131,10 +3381,14 @@ window.ListInfo = {
         break;
 
       case "floatpercentage":
-
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -3163,7 +3417,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -3214,7 +3470,6 @@ window.ListInfo = {
           [element.parentinternalname],
           function (records, record, listItem, isDone) {
             if (isDone) {
-
               var parentValue = "";
               records.forEach(function (el, index) {
                 parentValue = el[element.parentinternalname];
@@ -3224,7 +3479,12 @@ window.ListInfo = {
 
               htmlBody =
                 '<div class="col-md-6 CFIELD ' +
-                dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+                dontSubmit +
+                " " +
+                dontRequest +
+                " " +
+                dontSubmitRequired +
+                " " +
                 " " +
                 element.className +
                 " " +
@@ -3253,7 +3513,9 @@ window.ListInfo = {
                 isWfenablestagesIDs +
                 '        data-groups="' +
                 groups +
-                '" ' + notAllowForGroups + ' style="display:' +
+                '" ' +
+                notAllowForGroups +
+                ' style="display:' +
                 element.display +
                 '">' +
                 '<label for="' +
@@ -3301,10 +3563,14 @@ window.ListInfo = {
         );
         break;
       case "decimalpercentage":
-
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -3333,7 +3599,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -3372,7 +3640,12 @@ window.ListInfo = {
       case "percentage":
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -3401,7 +3674,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -3438,43 +3713,43 @@ window.ListInfo = {
         break;
 
       case "datetime":
-        var maxOnChild = ""
-        var targetOn = ""
+        var maxOnChild = "";
+        var targetOn = "";
 
-        var autoSetDate = "", sourceelement = "", targetelement = "";
-
+        var autoSetDate = "",
+          sourceelement = "",
+          targetelement = "";
 
         if (element.maxOnChild) {
-          maxOnChild = "maxOnChild"
-
+          maxOnChild = "maxOnChild";
         }
 
         if (element.autoSetDate) {
-          autoSetDate = "autoSetDate"
-          sourceelement = `data-sourceelement=${element.sourceelement}`
-          targetelement = `data-targetelement=${element.targetelement}`
+          autoSetDate = "autoSetDate";
+          sourceelement = `data-sourceelement=${element.sourceelement}`;
+          targetelement = `data-targetelement=${element.targetelement}`;
         }
 
         if (element.targetOn && element.targetOn != "undefined") {
-          targetOn = `data-targetOn=${element.targetOn}`
+          targetOn = `data-targetOn=${element.targetOn}`;
         } else {
-          targetOn = ""
+          targetOn = "";
         }
-
 
         let childsId = element.childsId
           ? 'data-childsId="' +
-          JSON.stringify(element.childsId).replaceAll(
-            `"`,
-            `'`
-          ) +
-          '"'
+            JSON.stringify(element.childsId).replaceAll(`"`, `'`) +
+            '"'
           : "";
-
 
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -3503,7 +3778,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -3531,7 +3808,11 @@ window.ListInfo = {
           displayName +
           '" ' +
           dynamic +
-          ' class="form-control SPIField ' + maxOnChild + ' ' + autoSetDate + '" id="' +
+          ' class="form-control SPIField ' +
+          maxOnChild +
+          " " +
+          autoSetDate +
+          '" id="' +
           element.InternalName +
           '" ' +
           element.state +
@@ -3555,10 +3836,7 @@ window.ListInfo = {
         OnSuccess(flag, htmlBody);
         break;
 
-
       case "datetimetoparent": // handle date from parent
-
-
         var code = activeCode;
 
         //activecode
@@ -3587,7 +3865,12 @@ window.ListInfo = {
 
               htmlBody =
                 '<div class="col-md-6 CFIELD ' +
-                dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+                dontSubmit +
+                " " +
+                dontRequest +
+                " " +
+                dontSubmitRequired +
+                " " +
                 " " +
                 element.className +
                 " " +
@@ -3616,7 +3899,9 @@ window.ListInfo = {
                 isWfenablestagesIDs +
                 '        data-groups="' +
                 groups +
-                '" ' + notAllowForGroups + ' style="display:' +
+                '" ' +
+                notAllowForGroups +
+                ' style="display:' +
                 element.display +
                 '">' +
                 '<label for="' +
@@ -3668,9 +3953,7 @@ window.ListInfo = {
         );
         break;
 
-
       case "datewithtimetoparent":
-
         var code = activeCode;
 
         //activecode
@@ -3698,7 +3981,12 @@ window.ListInfo = {
               maxDate = Dynamic_Data_Request.g.convertdate(finishDate);
               htmlBody =
                 '<div class="col-md-6 CFIELD dateTime' +
-                dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+                dontSubmit +
+                " " +
+                dontRequest +
+                " " +
+                dontSubmitRequired +
+                " " +
                 " " +
                 element.className +
                 " " +
@@ -3727,7 +4015,9 @@ window.ListInfo = {
                 isWfenablestagesIDs +
                 '        data-groups="' +
                 groups +
-                '" ' + notAllowForGroups + ' style="display:' +
+                '" ' +
+                notAllowForGroups +
+                ' style="display:' +
                 element.display +
                 '">' +
                 '<label for="' +
@@ -3771,15 +4061,20 @@ window.ListInfo = {
                 "</div>";
               OnSuccess(flag, htmlBody);
             }
-          })
+          }
+        );
 
         break;
-
 
       case "datewithtime":
         htmlBody =
           '<div class="col-md-6 CFIELD dateTime' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -3808,7 +4103,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -3864,21 +4161,28 @@ window.ListInfo = {
       //     break;
 
       case "picker":
+        var targetsiblingarr = "";
+        var addSeblingClass = "";
 
-        var targetsiblingarr = ""
-        var addSeblingClass = ""
-
-        if (element.targetsiblingarr && element.targetsiblingarr != 'undefined') {
-          targetsiblingarr = element.targetsiblingarr
+        if (
+          element.targetsiblingarr &&
+          element.targetsiblingarr != "undefined"
+        ) {
+          targetsiblingarr = element.targetsiblingarr;
           addSeblingClass = "getpickersiblingdata";
-          targetsiblingarr = 'data-targetsiblingarr="' +
-            JSON.stringify(element.targetsiblingarr).replaceAll(`"`, `'`) + '"';
-
+          targetsiblingarr =
+            'data-targetsiblingarr="' +
+            JSON.stringify(element.targetsiblingarr).replaceAll(`"`, `'`) +
+            '"';
         }
 
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
           " " +
           " " +
           element.className +
@@ -3908,7 +4212,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -3924,7 +4230,9 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
-          ' class="PPField SPIField form-control ' + addSeblingClass + '" type="picker" id="' +
+          ' class="PPField SPIField form-control ' +
+          addSeblingClass +
+          '" type="picker" id="' +
           element.InternalName +
           '" value="" placeholder="' +
           displayName +
@@ -3932,7 +4240,9 @@ window.ListInfo = {
           element.InternalName +
           '" ' +
           element.state +
-          ' ' + targetsiblingarr + ' style="display:' +
+          " " +
+          targetsiblingarr +
+          ' style="display:' +
           element.display +
           '" ' +
           element.validation +
@@ -3949,7 +4259,12 @@ window.ListInfo = {
       case "multipicker":
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -3978,7 +4293,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -4019,7 +4336,12 @@ window.ListInfo = {
       case "dropdown":
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -4048,7 +4370,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -4106,8 +4430,6 @@ window.ListInfo = {
         break;
 
       case "dropdownValues":
-
-
         // added for CR module
         let customFilter = element.options.choices[0].hasOwnProperty(
           "customFilterValue"
@@ -4119,44 +4441,42 @@ window.ListInfo = {
           : false;
 
         //////////////////
-        //to not invoke dynamic in edit cause الاستراتيجية المرتبطة don't submit so the value will disappear 
-        var stopinvokeparent = ""
-
+        //to not invoke dynamic in edit cause الاستراتيجية المرتبطة don't submit so the value will disappear
+        var stopinvokeparent = "";
 
         if (element.stopinvokeparent) {
-          stopinvokeparent = `data-stopinvokeparent=${element.stopinvokeparent}`
+          stopinvokeparent = `data-stopinvokeparent=${element.stopinvokeparent}`;
         } else {
-          stopinvokeparent = ""
+          stopinvokeparent = "";
         }
         //////////////////
 
-        var grandFieldId = ""
+        var grandFieldId = "";
         if (element.grandFieldId) {
-          grandFieldId = `data-grandFieldId=${element.grandFieldId}`
+          grandFieldId = `data-grandFieldId=${element.grandFieldId}`;
         } else {
-          grandFieldId = ""
+          grandFieldId = "";
         }
 
-        var childFieldId = ""
+        var childFieldId = "";
         if (element.childFieldId) {
-          childFieldId = `data-childFieldId=${element.childFieldId}`
+          childFieldId = `data-childFieldId=${element.childFieldId}`;
         } else {
-          childFieldId = ""
+          childFieldId = "";
         }
 
-        var grandFieldInvokeclass = ""
+        var grandFieldInvokeclass = "";
 
         if (grandFieldId && childFieldId) {
-          grandFieldInvokeclass = "grandFieldInvoke"
+          grandFieldInvokeclass = "grandFieldInvoke";
         }
 
-
-        var childFieldIdSource = ""
+        var childFieldIdSource = "";
 
         if (element.childFieldIdSource) {
-          childFieldIdSource = `data-childFieldIdSource=${element.childFieldIdSource}`
+          childFieldIdSource = `data-childFieldIdSource=${element.childFieldIdSource}`;
         } else {
-          childFieldIdSource = ""
+          childFieldIdSource = "";
         }
 
         if (crListKey && isCrMode && customCr) {
@@ -4165,7 +4485,12 @@ window.ListInfo = {
         } else {
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             " " +
@@ -4194,7 +4519,9 @@ window.ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -4224,7 +4551,6 @@ window.ListInfo = {
             childFieldIdSource +
             " " +
             stopinvokeparent +
-
             ' type="dropdown" value="" placeholder="' +
             displayName +
             '" ' +
@@ -4247,7 +4573,9 @@ window.ListInfo = {
             element.queryFieldType +
             '" data-filterfieldtype="' +
             element.filterFieldType +
-            '" class="form-control SPIField ' + grandFieldInvokeclass + '" id="' +
+            '" class="form-control SPIField ' +
+            grandFieldInvokeclass +
+            '" id="' +
             element.InternalName +
             '" ' +
             element.state +
@@ -4259,23 +4587,20 @@ window.ListInfo = {
             displayName +
             "</option>";
           for (var i = 0; i < element.options.choices.length; i++) {
-
-
             let customValue = element.options.choices[i].customFilterValue
               ? 'data-customfiltervalue="' +
-              element.options.choices[i].customFilterValue +
-              '"'
+                element.options.choices[i].customFilterValue +
+                '"'
               : "";
 
             let fieldsValue = element.options.choices[i].fields
               ? 'data-fieldsvalue="' +
-              JSON.stringify(element.options.choices[i].fields).replaceAll(
-                `"`,
-                `'`
-              ) +
-              '"'
+                JSON.stringify(element.options.choices[i].fields).replaceAll(
+                  `"`,
+                  `'`
+                ) +
+                '"'
               : "";
-
 
             let isRenderOption = true;
             let optionHasRole =
@@ -4290,14 +4615,12 @@ window.ListInfo = {
 
             let otherFieldsValue = element.options.choices[i].otherFields
               ? 'data-otherfields="' +
-              JSON.stringify(element.options.choices[i].otherFields).replaceAll(
-                `"`,
-                `'`
-              ) +
-              '"'
+                JSON.stringify(
+                  element.options.choices[i].otherFields
+                ).replaceAll(`"`, `'`) +
+                '"'
               : "";
             //
-
 
             if (isRenderOption) {
               htmlBody +=
@@ -4334,7 +4657,12 @@ window.ListInfo = {
       case "radio":
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -4363,7 +4691,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           "<label " +
@@ -4433,7 +4763,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           "<label " +
@@ -4491,7 +4823,12 @@ window.ListInfo = {
       case "checkbox":
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -4520,7 +4857,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -4561,7 +4900,12 @@ window.ListInfo = {
       case "multiselect":
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -4590,7 +4934,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -4650,8 +4996,13 @@ window.ListInfo = {
             "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">" +
             PCODE +
             "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
-        } else if (ICODE && element.queryFieldValue && element.queryFieldValue != "undefined" && element.queryFieldValue.length == 2) {
-          //show sublevel2 and sublevel3 kpi only in form benefit in field RelatedSubKpis         
+        } else if (
+          ICODE &&
+          element.queryFieldValue &&
+          element.queryFieldValue != "undefined" &&
+          element.queryFieldValue.length == 2
+        ) {
+          //show sublevel2 and sublevel3 kpi only in form benefit in field RelatedSubKpis
           customQuery = `<View><Query><Where>
           <And>
           <Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>
@@ -4659,8 +5010,7 @@ window.ListInfo = {
           <Eq><FieldRef Name="${element.queryField}"/><Value Type="${element.queryFieldType}">${element.queryFieldValue[0]}</Value></Eq>
           <Eq><FieldRef Name="${element.queryField}"/><Value Type="${element.queryFieldType}">${element.queryFieldValue[1]}</Value></Eq>
           </Or>
-          </And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>`
-
+          </And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>`;
         } else {
           customQuery =
             "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
@@ -4761,7 +5111,8 @@ window.ListInfo = {
         //   }
         // }
         if (listkey == "BenefitMatrix") {
-          if (isSPMAdmin
+          if (
+            isSPMAdmin
             //  || isSPMTeam
           ) {
             if (element.source == "MainKPI") {
@@ -4785,7 +5136,6 @@ window.ListInfo = {
                 strategicallyarr = strategicallyarr.filter(function (item) {
                   return item.name == "strategically";
                 });
-
               }
               customQuery =
                 "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"InitiativeCode\" /><Values>";
@@ -4840,30 +5190,34 @@ window.ListInfo = {
 
         // to handle dont submit in edit
 
-        var listFields = [element.valfieldkey, dispfieldkey, element.grpfieldkey];
-
+        var listFields = [
+          element.valfieldkey,
+          dispfieldkey,
+          element.grpfieldkey,
+        ];
 
         if (element.sourcefieldlvl1) {
           // to handle sector and subsector (get the element from list)
           parentFieldKey = element.fieldsinformlvl1;
           // listFields = [element.valfieldkey, dispfieldkey, element.filterField];
-          listFields.push(element.sourcefieldlvl1)
+          listFields.push(element.sourcefieldlvl1);
 
           if (element.sourcefieldlvl2) {
-            listFields.push(element.sourcefieldlvl2)
+            listFields.push(element.sourcefieldlvl2);
           }
-
         } else {
           parentFieldKey = "";
         }
         //////////////////////////////////
-        var grandFieldId = ""
+        var grandFieldId = "";
         if (element.grandFieldId) {
-          grandFieldId = `data-grandFieldId=${element.grandFieldId}`
+          grandFieldId = `data-grandFieldId=${element.grandFieldId}`;
         } else {
-          grandFieldId = ""
+          grandFieldId = "";
         }
-        var notInvokeListinerData = "", seconedValueListiner = "", parentCustomFilterValue = "";
+        var notInvokeListinerData = "",
+          seconedValueListiner = "",
+          parentCustomFilterValue = "";
         if (element.notInvokeListiner) {
           notInvokeListinerData = `data-notInvokeListiner=${element.notInvokeListiner}`;
           seconedValueListiner = `data-seconedvaluelistiner=""`;
@@ -4872,10 +5226,14 @@ window.ListInfo = {
         }
         ////////////////////////////////////
 
-
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -4904,7 +5262,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -4919,7 +5279,7 @@ window.ListInfo = {
           '" class="showhide-trigger" title="Show/Hide ' +
           displayName +
           '"></div>' +
-          '<ul ' +
+          "<ul " +
           ToggleName +
           " " +
           grandFieldId +
@@ -4959,8 +5319,9 @@ window.ListInfo = {
           '<a href="#" data-toggle="dropdown" class="dropdown-toggle">' +
           displayName +
           '<b class="caret"></b></a>' +
-          '<ul class="dropdown-menu multiselect_scroll ' + element.validation + '">';
-
+          '<ul class="dropdown-menu multiselect_scroll ' +
+          element.validation +
+          '">';
 
         sphttp.get(
           _spPageContextInfo.siteServerRelativeUrl,
@@ -4983,12 +5344,12 @@ window.ListInfo = {
                     "<li data-parentrelatedvaluelvl1=" +
                     dl[element.sourcefieldlvl1] +
                     " data-parentrelatedkeylvl1= " +
-                    element.fieldsinformlvl1
-                    + " data-parentrelatedvaluelvl2=" +
-                    dl[element.sourcefieldlvl2]
-                    + " data-parentrelatedkeylvl2=" +
-                    element.fieldsinformlvl2
-                    + " class='limulti'>" + // we add class limulti to can check if this element multi select or not in dontsubmit feature to get the data
+                    element.fieldsinformlvl1 +
+                    " data-parentrelatedvaluelvl2=" +
+                    dl[element.sourcefieldlvl2] +
+                    " data-parentrelatedkeylvl2=" +
+                    element.fieldsinformlvl2 +
+                    " class='limulti'>" + // we add class limulti to can check if this element multi select or not in dontsubmit feature to get the data
                     '<div class="checkbox">' +
                     "<label>" +
                     '<input value="' +
@@ -5023,11 +5384,14 @@ window.ListInfo = {
         );
         break;
 
-
       case "lookupchildtoparent":
-        var code = activeCode
+        var code = activeCode;
         var customQuery =
-          '<View><Query><Where><And><Eq><FieldRef Name=' + element.childinternalparentname + ' /><Value Type=' + element.childinternalparenttype + '>' +
+          "<View><Query><Where><And><Eq><FieldRef Name=" +
+          element.childinternalparentname +
+          " /><Value Type=" +
+          element.childinternalparenttype +
+          ">" +
           code +
           "</Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
 
@@ -5039,31 +5403,36 @@ window.ListInfo = {
           customQuery,
           [element.childinternalname],
           function (records, record, listItem, isDone) {
-
-            var allRelatedChild = [] // to get all related child
+            var allRelatedChild = []; // to get all related child
             if (isDone) {
               records.forEach(function (el, index) {
                 allRelatedChild.push(el[element.childinternalname]);
-
               });
 
-              if (allRelatedChild.length == 0) { // to render an empty drop down when there is no item or related child value
-                allRelatedChild.push("")
+              if (allRelatedChild.length == 0) {
+                // to render an empty drop down when there is no item or related child value
+                allRelatedChild.push("");
               }
 
               var internalQuery =
-                '<View><Query><Where><And><In><FieldRef Name="' + element.sourceinternalname +
-                '" /><Values>'
+                '<View><Query><Where><And><In><FieldRef Name="' +
+                element.sourceinternalname +
+                '" /><Values>';
 
               allRelatedChild.forEach(function (item) {
                 internalQuery += '<Value Type="Text">' + item + "</Value>";
               });
 
-              internalQuery += "</Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+              internalQuery +=
+                "</Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
 
-              var filedsArr = [element.valfieldkey, element.Dispfieldkey]
-              if (element.hasOwnProperty('valsiblingkey')) {
-                filedsArr = [element.valfieldkey, element.Dispfieldkey, element.valsiblingkey]
+              var filedsArr = [element.valfieldkey, element.Dispfieldkey];
+              if (element.hasOwnProperty("valsiblingkey")) {
+                filedsArr = [
+                  element.valfieldkey,
+                  element.Dispfieldkey,
+                  element.valsiblingkey,
+                ];
               }
               sphttp.get(
                 _spPageContextInfo.siteServerRelativeUrl,
@@ -5073,11 +5442,14 @@ window.ListInfo = {
                 function (records, record, listItem, isDone) {
                   if (listItem) itemsID.push(listItem.get_id());
                   if (isDone) {
-
-
                     htmlBody =
                       '<div class="col-md-6 CFIELD ' +
-                      dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+                      dontSubmit +
+                      " " +
+                      dontRequest +
+                      " " +
+                      dontSubmitRequired +
+                      " " +
                       " " +
                       element.className +
                       " " +
@@ -5106,7 +5478,9 @@ window.ListInfo = {
                       isWfenablestagesIDs +
                       '        data-groups="' +
                       groups +
-                      '" ' + notAllowForGroups + ' style="display:' +
+                      '" ' +
+                      notAllowForGroups +
+                      ' style="display:' +
                       element.display +
                       '">' +
                       '<label for="' +
@@ -5143,7 +5517,9 @@ window.ListInfo = {
                       element.queryFieldType +
                       '" data-filterfieldtype="' +
                       element.filterFieldType +
-                      '" data-siblingtarget="' + element.targetsiblingkey + '" class="form-control getsiblingdata" type="dropdown" id="' +
+                      '" data-siblingtarget="' +
+                      element.targetsiblingkey +
+                      '" class="form-control getsiblingdata" type="dropdown" id="' +
                       element.InternalName +
                       '" value="" placeholder="' +
                       displayName +
@@ -5157,7 +5533,9 @@ window.ListInfo = {
 
                     records.forEach(function (el, index) {
                       htmlBody +=
-                        '<option data-siblingvalue="' + el[element.valsiblingkey] + '" option-id="' +
+                        '<option data-siblingvalue="' +
+                        el[element.valsiblingkey] +
+                        '" option-id="' +
                         itemsID[index] +
                         '" value="' +
                         el[element.valfieldkey] +
@@ -5179,36 +5557,38 @@ window.ListInfo = {
                       "</div>";
 
                     OnSuccess(flag, htmlBody);
-
                   }
-                })
-
+                }
+              );
             }
-          })
+          }
+        );
         break;
 
       case "lookupchildtoparentmultiselect":
-        if (listkey == "changerequest") { // to get the initiative selected in cr
-          activeCode = $('#InitiativeCode').val()
+        if (listkey == "changerequest") {
+          // to get the initiative selected in cr
+          activeCode = $("#InitiativeCode").val();
         }
 
-
-        var code = activeCode
+        var code = activeCode;
         var customQuery =
-          '<View><Query><Where><And><Eq><FieldRef Name=' + element.childinternalparentname + ' /><Value Type=' + element.childinternalparenttype + '>' +
+          "<View><Query><Where><And><Eq><FieldRef Name=" +
+          element.childinternalparentname +
+          " /><Value Type=" +
+          element.childinternalparenttype +
+          ">" +
           code +
           "</Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
 
         var itemsID = [];
 
         var fieldTargetList = "";
-        var fieldmasterkey = ""
+        var fieldmasterkey = "";
         if (element.fieldtargetlist && element.fieldtargetlist != "undefined") {
-
-          fieldTargetList = `data-fieldTargetList=${element.fieldtargetlist}`
-          fieldmasterkey = `data-fieldmasterkey=${element.fieldmasterkey}`
+          fieldTargetList = `data-fieldTargetList=${element.fieldtargetlist}`;
+          fieldmasterkey = `data-fieldmasterkey=${element.fieldmasterkey}`;
         }
-
 
         sphttp.get(
           _spPageContextInfo.siteServerRelativeUrl,
@@ -5216,13 +5596,15 @@ window.ListInfo = {
           customQuery,
           [element.childinternalname],
           function (records, record, listItem, isDone) {
-
-            var allRelatedChild = [] // to get all related child
+            var allRelatedChild = []; // to get all related child
             if (isDone) {
-
               htmlBody =
                 '<div class="col-md-6 CFIELD ' +
-                dontSubmit + " " + dontRequest + " " + dontSubmitRequired +
+                dontSubmit +
+                " " +
+                dontRequest +
+                " " +
+                dontSubmitRequired +
                 " " +
                 element.className +
                 " " +
@@ -5251,7 +5633,9 @@ window.ListInfo = {
                 isWfenablestagesIDs +
                 '        data-groups="' +
                 groups +
-                '" ' + notAllowForGroups + ' style="display:' +
+                '" ' +
+                notAllowForGroups +
+                ' style="display:' +
                 element.display +
                 '">' +
                 '<label for="' +
@@ -5266,7 +5650,7 @@ window.ListInfo = {
                 '" class="showhide-trigger" title="Show/Hide ' +
                 displayName +
                 '"></div>' +
-                '<ul ' +
+                "<ul " +
                 grandFieldId +
                 " " +
                 notInvokeListinerData +
@@ -5308,30 +5692,38 @@ window.ListInfo = {
                 '<a href="#" data-toggle="dropdown" class="dropdown-toggle">' +
                 displayName +
                 '<b class="caret"></b></a>' +
-                '<ul class="dropdown-menu multiselect_scroll ' + element.validation + '">';
+                '<ul class="dropdown-menu multiselect_scroll ' +
+                element.validation +
+                '">';
 
               records.forEach(function (el, index) {
                 allRelatedChild.push(el[element.childinternalname]);
-
               });
 
-              if (allRelatedChild.length == 0) { // to render an empty drop down when there is no item or related child value
-                allRelatedChild.push("")
+              if (allRelatedChild.length == 0) {
+                // to render an empty drop down when there is no item or related child value
+                allRelatedChild.push("");
               }
 
               var internalQuery =
-                '<View><Query><Where><And><In><FieldRef Name="' + element.sourceinternalname +
-                '" /><Values>'
+                '<View><Query><Where><And><In><FieldRef Name="' +
+                element.sourceinternalname +
+                '" /><Values>';
 
               allRelatedChild.forEach(function (item) {
                 internalQuery += '<Value Type="Text">' + item + "</Value>";
               });
 
-              internalQuery += "</Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+              internalQuery +=
+                "</Values></In><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
 
-              var filedsArr = [element.valfieldkey, element.Dispfieldkey]
-              if (element.hasOwnProperty('valsiblingkey')) {
-                filedsArr = [element.valfieldkey, element.Dispfieldkey, element.valsiblingkey]
+              var filedsArr = [element.valfieldkey, element.Dispfieldkey];
+              if (element.hasOwnProperty("valsiblingkey")) {
+                filedsArr = [
+                  element.valfieldkey,
+                  element.Dispfieldkey,
+                  element.valsiblingkey,
+                ];
               }
               sphttp.get(
                 _spPageContextInfo.siteServerRelativeUrl,
@@ -5341,7 +5733,6 @@ window.ListInfo = {
                 function (records, record, listItem, isDone) {
                   if (listItem) itemsID.push(listItem.get_id());
                   if (isDone) {
-
                     var grpfield = element.grpfieldkey;
                     window.result = records.reduce(function (r, a) {
                       r[a[grpfield]] = r[a[grpfield]] || [];
@@ -5350,18 +5741,17 @@ window.ListInfo = {
                     }, Object.create(null));
 
                     Object.entries(result).forEach((el) => {
-
                       el[1].forEach((dl) => {
                         htmlBody +=
                           "<li data-parentrelatedvaluelvl1=" +
                           dl[element.sourcefieldlvl1] +
                           " data-parentrelatedkeylvl1= " +
-                          element.fieldsinformlvl1
-                          + " data-parentrelatedvaluelvl2=" +
-                          dl[element.sourcefieldlvl2]
-                          + " data-parentrelatedkeylvl2=" +
-                          element.fieldsinformlvl2
-                          + " class='limulti'>" + // we add class limulti to can check if this element multi select or not in dontsubmit feature to get the data
+                          element.fieldsinformlvl1 +
+                          " data-parentrelatedvaluelvl2=" +
+                          dl[element.sourcefieldlvl2] +
+                          " data-parentrelatedkeylvl2=" +
+                          element.fieldsinformlvl2 +
+                          " class='limulti'>" + // we add class limulti to can check if this element multi select or not in dontsubmit feature to get the data
                           '<div class="checkbox">' +
                           "<label>" +
                           '<input value="' +
@@ -5391,9 +5781,11 @@ window.ListInfo = {
                       "</div>";
                     OnSuccess(flag, htmlBody);
                   }
-                })
+                }
+              );
             }
-          })
+          }
+        );
         break;
 
       case "lookuptoparentchild":
@@ -5436,7 +5828,12 @@ window.ListInfo = {
                   if (isDone) {
                     htmlBody =
                       '<div class="col-md-6 CFIELD ' +
-                      dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+                      dontSubmit +
+                      " " +
+                      dontRequest +
+                      " " +
+                      dontSubmitRequired +
+                      " " +
                       " " +
                       element.className +
                       " " +
@@ -5465,7 +5862,9 @@ window.ListInfo = {
                       isWfenablestagesIDs +
                       '        data-groups="' +
                       groups +
-                      '" ' + notAllowForGroups + ' style="display:' +
+                      '" ' +
+                      notAllowForGroups +
+                      ' style="display:' +
                       element.display +
                       '">' +
                       '<label for="' +
@@ -5547,14 +5946,13 @@ window.ListInfo = {
         break;
 
       case "lookupmultiselectwithoutrepeat":
-
         var customQuery;
         var sourcelistQuery;
         var RelatedItemUsed = [];
         var listItemArr = [element.valfieldkey, element.Dispfieldkey];
-        var getValuesfor = element.getValuesfor ? element.getValuesfor : ""
+        var getValuesfor = element.getValuesfor ? element.getValuesfor : "";
         var listenerClass = "";
-        var targetTotalElement = element.targetTotalElement
+        var targetTotalElement = element.targetTotalElement;
 
         customQuery =
           "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
@@ -5574,11 +5972,16 @@ window.ListInfo = {
             "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
         }
 
-        if (element.queryField && element.queryField != "undefined" &&
-          element.queryFieldType && element.queryFieldType != "undefined" &&
-          element.queryFieldValue && element.queryFieldValue != "undefined") {
-
-          sourcelistQuery = '<View><Query><Where><Eq><FieldRef Name="' +
+        if (
+          element.queryField &&
+          element.queryField != "undefined" &&
+          element.queryFieldType &&
+          element.queryFieldType != "undefined" &&
+          element.queryFieldValue &&
+          element.queryFieldValue != "undefined"
+        ) {
+          sourcelistQuery =
+            '<View><Query><Where><Eq><FieldRef Name="' +
             element.queryField +
             '" /><Value Type="' +
             element.queryFieldType +
@@ -5587,13 +5990,12 @@ window.ListInfo = {
             "</Value></Eq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
         }
 
-        // to handle get thired value like weight in coc list in delivrables field 
+        // to handle get thired value like weight in coc list in delivrables field
         if (getValuesfor) {
-          listItemArr.push(getValuesfor)
-          listenerClass = "getTotalSelectedValues"
+          listItemArr.push(getValuesfor);
+          listenerClass = "getTotalSelectedValues";
         }
         //
-
 
         var itemIDlist = [],
           itemsID = [];
@@ -5605,7 +6007,6 @@ window.ListInfo = {
           customQuery,
           [element.valfieldkey, element.targetelement],
           function (records, record, listItem, isDone) {
-
             if (listItem) itemIDlist.push(listItem.get_id());
 
             if (isDone) {
@@ -5615,12 +6016,13 @@ window.ListInfo = {
                     if (itemIDlist[index] != IID) {
                       // console.log(el[element.targetelement],"el[element.targetelement]")
                       if (el[element.targetelement].indexOf(":::") > -1) {
-                        var splitMultiVal = el[element.targetelement].split(":::");
-                        splitMultiVal.forEach(item => {
+                        var splitMultiVal =
+                          el[element.targetelement].split(":::");
+                        splitMultiVal.forEach((item) => {
                           if (!RelatedItemUsed.includes(item)) {
                             RelatedItemUsed.push(item);
                           }
-                        })
+                        });
                       } else {
                         RelatedItemUsed.push(el[element.targetelement]);
                       }
@@ -5631,7 +6033,12 @@ window.ListInfo = {
 
               htmlBody =
                 '<div class="col-md-6 CFIELD ' +
-                dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+                dontSubmit +
+                " " +
+                dontRequest +
+                " " +
+                dontSubmitRequired +
+                " " +
                 " " +
                 element.className +
                 " " +
@@ -5660,7 +6067,9 @@ window.ListInfo = {
                 isWfenablestagesIDs +
                 '        data-groups="' +
                 groups +
-                '" ' + notAllowForGroups + ' style="display:' +
+                '" ' +
+                notAllowForGroups +
+                ' style="display:' +
                 element.display +
                 '">' +
                 '<label for="' +
@@ -5684,7 +6093,9 @@ window.ListInfo = {
                 '<a href="#" data-toggle="dropdown" class="dropdown-toggle">' +
                 displayName +
                 '<b class="caret"></b></a>' +
-                '<ul class="dropdown-menu multiselect_scroll ' + element.validation + '" >';
+                '<ul class="dropdown-menu multiselect_scroll ' +
+                element.validation +
+                '" >';
 
               sphttp.get(
                 _spPageContextInfo.siteServerRelativeUrl,
@@ -5693,7 +6104,6 @@ window.ListInfo = {
                 listItemArr,
                 function (records, record, listItem, isDone) {
                   if (isDone) {
-
                     var grpfield = element.grpfieldkey;
 
                     window.resultMulti = records.reduce(function (r, a) {
@@ -5702,23 +6112,27 @@ window.ListInfo = {
                         r[a[grpfield]].push(a);
                       }
                       return r;
-
                     }, Object.create(null));
 
-
                     Object.entries(resultMulti).forEach((el) => {
-                      htmlBody += '<label class="grp-select">' + el[0] + "</label>";
+                      htmlBody +=
+                        '<label class="grp-select">' + el[0] + "</label>";
                       el[1].forEach((dl) => {
-
                         htmlBody +=
                           "<li>" +
                           '<div class="checkbox">' +
                           "<label>" +
-                          '<input class="' + listenerClass + '" value="' +
+                          '<input class="' +
+                          listenerClass +
+                          '" value="' +
                           dl[element.valfieldkey] +
                           '" id="' +
                           element.InternalName +
-                          '" type="checkbox" data-targettotalelement=' + element.targetTotalElement + ' data-getothervalue=' + dl[element.getValuesfor] + '>' +
+                          '" type="checkbox" data-targettotalelement=' +
+                          element.targetTotalElement +
+                          " data-getothervalue=" +
+                          dl[element.getValuesfor] +
+                          ">" +
                           dl[dispfieldkey] +
                           "</label>" +
                           "</div>" +
@@ -5741,12 +6155,12 @@ window.ListInfo = {
                       "</div>";
 
                     OnSuccess(flag, htmlBody);
-
                   }
-                })
-
+                }
+              );
             }
-          })
+          }
+        );
 
         break;
 
@@ -5761,12 +6175,16 @@ window.ListInfo = {
         sourcelistQuery =
           "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
 
-
-        if (element.queryField && element.queryField != "undefined" &&
-          element.queryFieldType && element.queryFieldType != "undefined" &&
-          element.queryFieldValue && element.queryFieldValue != "undefined") {
-
-          sourcelistQuery = '<View><Query><Where><Eq><FieldRef Name="' +
+        if (
+          element.queryField &&
+          element.queryField != "undefined" &&
+          element.queryFieldType &&
+          element.queryFieldType != "undefined" &&
+          element.queryFieldValue &&
+          element.queryFieldValue != "undefined"
+        ) {
+          sourcelistQuery =
+            '<View><Query><Where><Eq><FieldRef Name="' +
             element.queryField +
             '" /><Value Type="' +
             element.queryFieldType +
@@ -5781,8 +6199,6 @@ window.ListInfo = {
             ICODE +
             "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
         }
-
-
 
         var itemIDlist = [],
           itemsID = [];
@@ -5808,7 +6224,12 @@ window.ListInfo = {
 
               htmlBody =
                 '<div class="col-md-6 CFIELD ' +
-                dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+                dontSubmit +
+                " " +
+                dontRequest +
+                " " +
+                dontSubmitRequired +
+                " " +
                 " " +
                 element.className +
                 " " +
@@ -5837,7 +6258,9 @@ window.ListInfo = {
                 isWfenablestagesIDs +
                 '        data-groups="' +
                 groups +
-                '" ' + notAllowForGroups + ' style="display:' +
+                '" ' +
+                notAllowForGroups +
+                ' style="display:' +
                 element.display +
                 '">' +
                 '<label for="' +
@@ -5930,38 +6353,38 @@ window.ListInfo = {
 
       case "lookup":
         var customQuery;
-        let roleAccess = []
+        let roleAccess = [];
 
-
-        if (element.hasOwnProperty("useAccessPolicy") && element.useAccessPolicy) {
-
+        if (
+          element.hasOwnProperty("useAccessPolicy") &&
+          element.useAccessPolicy
+        ) {
           if (myRoleConfig[0].hasOwnProperty("dataFilter")) {
             isRoleDataLevelAccess = true;
 
-            await get_hierarchies.init(element.source)
-
+            await get_hierarchies.init(element.source);
 
             myRoleConfig[0].dataFilter.hierarchies.forEach((el, i, a) => {
-
               let accessConditions = el.accessConditions;
               let isListConditional1 = el.listName == element.source;
-              let isListConditional2 = el.subRelation.listName == element.source;
+              let isListConditional2 =
+                el.subRelation.listName == element.source;
               let isListConditional3 =
                 el.subRelation.subRelation.listName == element.source;
-              let isListConditional4 = (el.subRelation.subRelation.subRelation ? el.subRelation.subRelation.subRelation.listName == element.source : false);
+              let isListConditional4 = el.subRelation.subRelation.subRelation
+                ? el.subRelation.subRelation.subRelation.listName ==
+                  element.source
+                : false;
               if (isListConditional1) {
-                customQuery = data_Level1_Access.g.dataLevelQuery
+                customQuery = data_Level1_Access.g.dataLevelQuery;
               } else if (isListConditional2) {
-                customQuery = data_Level2_Access.g.dataLevelQuery
+                customQuery = data_Level2_Access.g.dataLevelQuery;
               } else if (isListConditional3) {
-                customQuery = data_Level3_Access.g.dataLevelQuery
+                customQuery = data_Level3_Access.g.dataLevelQuery;
               } else if (isListConditional4) {
-                customQuery = data_Level3_Access.g.dataLevelQuery
-
+                customQuery = data_Level3_Access.g.dataLevelQuery;
               }
-            })
-
-
+            });
 
             // }
           }
@@ -5974,32 +6397,37 @@ window.ListInfo = {
           if (roleAccess.length > 0) {
             customQuery = await ListInfo.roleQuery(roleAccess[0].conditions);
           }
-
         }
-        if (roleAccess.length == 0 && !element.hasOwnProperty("useAccessPolicy")) { // can't put else cause when the roleAccess will be empty arrray will nor render a query so all data(deleted and not deleted will appear)
+        if (
+          roleAccess.length == 0 &&
+          !element.hasOwnProperty("useAccessPolicy")
+        ) {
+          // can't put else cause when the roleAccess will be empty arrray will nor render a query so all data(deleted and not deleted will appear)
 
           if (element.isSector == "True") {
             customQuery =
               "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"EntityType\" /><Value Type=\"Choice\">" +
               element.EntityType +
               "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
-          } else if ((PCODE && element.projectCodeInList)) {
+          } else if (PCODE && element.projectCodeInList) {
             customQuery =
               "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">" +
               PCODE +
               "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
             if (element.hasOwnProperty("projectScopeSecondConditionField")) {
-              customQuery =
-                `<View><Query><Where><And>
+              customQuery = `<View><Query><Where><And>
 								<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And>
 								<Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">${PCODE}</Value></Eq>
 								<Eq><FieldRef Name=\"${element.projectScopeSecondConditionFieldType}\" /><Value Type=\"${element.projectScopeSecondConditionFieldType}\">${element.projectScopeSecondConditionFieldValue}</Value></Eq></And></And>
 								</Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>`;
             }
-          } else if ((ICODE && element.initiativeCodeInList) || (RListKey == "initiatives" && element.initiativeCodeInList)) {
+          } else if (
+            (ICODE && element.initiativeCodeInList) ||
+            (RListKey == "initiatives" && element.initiativeCodeInList)
+          ) {
             // get the data on same parent depends on ICODE in cr
             if (RListKey == "initiatives" && listkey == "changerequest") {
-              ICODE = $('#InitiativeCode').val()
+              ICODE = $("#InitiativeCode").val();
             }
             customQuery =
               "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"InitiativeCode\" /><Value Type=\"Text\">" +
@@ -6156,59 +6584,67 @@ window.ListInfo = {
           }
         }
 
-
         var listFields = [element.valfieldkey, dispfieldkey];
-
 
         if (element.sourcefieldlvl1) {
           // to handle sector and subsector (get the element from list)
           parentFieldKey = element.fieldsinformlvl1;
           // listFields = [element.valfieldkey, dispfieldkey, element.filterField];
-          listFields.push(element.sourcefieldlvl1)
+          listFields.push(element.sourcefieldlvl1);
 
           if (element.sourcefieldlvl2) {
-            listFields.push(element.sourcefieldlvl2)
+            listFields.push(element.sourcefieldlvl2);
           }
-
         } else {
           parentFieldKey = "";
         }
         /////////////////////////////////////////////////////////// to get the seblings value
 
-        if (element.hasOwnProperty('valsiblingkey')) {
-          listFields.push(element.valsiblingkey)
+        if (element.hasOwnProperty("valsiblingkey")) {
+          listFields.push(element.valsiblingkey);
         }
         /////////////////////////////////////////////////////////// to get the seblings array of name and values and assign it on siblings fields
-        if (element.hasOwnProperty('targetsiblingarr')) {
-          element.targetsiblingarr.forEach(el => {
-            listFields.push(el)
-          })
+        if (element.hasOwnProperty("targetsiblingarr")) {
+          element.targetsiblingarr.forEach((el) => {
+            listFields.push(el);
+          });
         }
 
         ///////////////////////////////////////////////////////////
-        var grandFieldId = ""
+        var grandFieldId = "";
         if (element.grandFieldId) {
-          grandFieldId = `data-grandFieldId=${element.grandFieldId}`
+          grandFieldId = `data-grandFieldId=${element.grandFieldId}`;
         } else {
-          grandFieldId = ""
+          grandFieldId = "";
         }
-        var notInvokeListinerData = "", seconedValueListiner = "", parentCustomFilterValue = "";
+        var notInvokeListinerData = "",
+          seconedValueListiner = "",
+          parentCustomFilterValue = "";
         if (element.notInvokeListiner) {
-          notInvokeListinerData = `data-notInvokeListiner=${element.notInvokeListiner}`
-          seconedValueListiner = `data-seconedvaluelistiner=""`
+          notInvokeListinerData = `data-notInvokeListiner=${element.notInvokeListiner}`;
+          seconedValueListiner = `data-seconedvaluelistiner=""`;
 
-          parentCustomFilterValue = `data-parentcustomfiltervalue=""`
+          parentCustomFilterValue = `data-parentcustomfiltervalue=""`;
         }
 
-        // validation of siblings to add a listiner class 
-        var addSeblingClass = ""
-        if ((element.targetsiblingkey && element.targetsiblingkey != 'undefined') || (element.targetsiblingarr && element.targetsiblingarr != 'undefined')) {
-          addSeblingClass = "getsiblingdata"
+        // validation of siblings to add a listiner class
+        var addSeblingClass = "";
+        if (
+          (element.targetsiblingkey &&
+            element.targetsiblingkey != "undefined") ||
+          (element.targetsiblingarr && element.targetsiblingarr != "undefined")
+        ) {
+          addSeblingClass = "getsiblingdata";
         }
         /////////////////////////////////////////////////
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -6237,7 +6673,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -6284,7 +6722,11 @@ window.ListInfo = {
           element.queryFieldType +
           '" data-filterfieldtype="' +
           element.filterFieldType +
-          '" data-siblingtarget="' + element.targetsiblingkey + '" class="form-control ' + addSeblingClass + '" type="dropdown" id="' + // getsiblingdata to get the data based on selection value
+          '" data-siblingtarget="' +
+          element.targetsiblingkey +
+          '" class="form-control ' +
+          addSeblingClass +
+          '" type="dropdown" id="' + // getsiblingdata to get the data based on selection value
           element.InternalName +
           '" value="" placeholder="' +
           displayName +
@@ -6296,7 +6738,6 @@ window.ListInfo = {
           displayName +
           "</option>";
 
-
         var itemsID = [];
         sphttp.get(
           _spPageContextInfo.siteServerRelativeUrl,
@@ -6306,22 +6747,23 @@ window.ListInfo = {
           function (records, record, listItem, isDone) {
             if (listItem) itemsID.push(listItem.get_id());
             if (isDone) {
-              // to handle sibling array values 
-              var dataArraySiblingValues = []
+              // to handle sibling array values
+              var dataArraySiblingValues = [];
               records.forEach(function (el, index) {
-                var arraysiblingvalues = []
+                var arraysiblingvalues = [];
 
-                if (element.targetsiblingarr && element.targetsiblingarr != "undefined") {
-                  element.targetsiblingarr.forEach(item => {
-                    arraysiblingvalues.push({ name: item, value: el[item] })
-                  })
+                if (
+                  element.targetsiblingarr &&
+                  element.targetsiblingarr != "undefined"
+                ) {
+                  element.targetsiblingarr.forEach((item) => {
+                    arraysiblingvalues.push({ name: item, value: el[item] });
+                  });
 
-                  dataArraySiblingValues = 'data-arraysiblingvalues="' +
-                    JSON.stringify(arraysiblingvalues).replaceAll(
-                      `"`,
-                      `'`
-                    ) +
-                    '"'
+                  dataArraySiblingValues =
+                    'data-arraysiblingvalues="' +
+                    JSON.stringify(arraysiblingvalues).replaceAll(`"`, `'`) +
+                    '"';
                 }
                 //
 
@@ -6331,7 +6773,11 @@ window.ListInfo = {
                   var optionText = el[dispfieldkey];
                 }
                 htmlBody +=
-                  '<option data-siblingvalue="' + el[element.valsiblingkey] + '" ' + dataArraySiblingValues + ' option-id="' +
+                  '<option data-siblingvalue="' +
+                  el[element.valsiblingkey] +
+                  '" ' +
+                  dataArraySiblingValues +
+                  ' option-id="' +
                   itemsID[index] +
                   '" value="' +
                   el[element.valfieldkey] + //data-parentrelatedkeylvl1 > to get the target element,data-parentrelatedvaluelvl1 > to save the value of parent like sector
@@ -6376,7 +6822,12 @@ window.ListInfo = {
 
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -6405,7 +6856,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '    data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -6439,7 +6892,6 @@ window.ListInfo = {
           element.queryField +
           '"data-queryfieldtype="' +
           element.queryFieldType +
-
           '" data-filterfieldtype="' +
           element.filterFieldType +
           '" class="form-control" type="dropdown" id="' +
@@ -6532,7 +6984,12 @@ window.ListInfo = {
 
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -6561,7 +7018,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '    data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -6633,7 +7092,12 @@ window.ListInfo = {
       case "multiline":
         htmlBody =
           '<div class="col-md-6 CFIELD multiline ' +
-          dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
           " " +
           element.className +
           " " +
@@ -6662,7 +7126,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label for="' +
@@ -6678,7 +7144,9 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
-          ' type="multiline" maxlength=' + element.maxchar + ' rows="3" value="" placeholder="' +
+          ' type="multiline" maxlength=' +
+          element.maxchar +
+          ' rows="3" value="" placeholder="' +
           displayName +
           '" ' +
           dynamic +
@@ -6704,9 +7172,7 @@ window.ListInfo = {
         break;
 
       case "anchor":
-
         if (CreateChangeRequest_Access.includes(jsonListKey)) {
-
           htmlBody =
             '<div class="col-md-3 CFIELD ' +
             element.className +
@@ -6736,7 +7202,9 @@ window.ListInfo = {
             isWfenablestagesIDs +
             '       data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             "<a " +
@@ -6745,7 +7213,9 @@ window.ListInfo = {
             toggleDisabledName +
             " " +
             RequiredName +
-            ' href="' + element.href + '" ' +
+            ' href="' +
+            element.href +
+            '" ' +
             dynamic +
             ' class="formLink" id="' +
             element.InternalName +
@@ -6759,7 +7229,7 @@ window.ListInfo = {
             "</a>" +
             "</div>";
         } else {
-          htmlBody = ""
+          htmlBody = "";
         }
         // htmlBody = '<div class="col-md-12"></div>';
         OnSuccess(flag, htmlBody);
@@ -6770,7 +7240,9 @@ window.ListInfo = {
           attachCount == 0 ? "getFile" : "getFile" + attachCount;
 
         // to add the purpose of attach
-        let docPurpose = element.docPurpose ? `data-docpurpose=${element.docPurpose}` : ""
+        let docPurpose = element.docPurpose
+          ? `data-docpurpose=${element.docPurpose}`
+          : "";
 
         htmlBody =
           '<div class="col-md-12 CFIELD ' +
@@ -6801,7 +7273,9 @@ window.ListInfo = {
           isWfenablestagesIDs +
           '        data-groups="' +
           groups +
-          '" ' + notAllowForGroups + ' style="display:' +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
           element.display +
           '">' +
           '<label  class="attlabel" ' +
@@ -6911,175 +7385,226 @@ window.ListInfo = {
       });
     },
     newDetail: function () {
-
-
       //to check the length of new master
-      var masterLength = 0
+      var masterLength = 0;
 
       //pluss
       $("[data-target_list] .fieldset-container").append(
         '<div class="add-New-Detail-wrapper"><a class="add-New-Detail" href="javascript:"><i class="fas fa-plus"></i></a><a class="remove-New-Detail" href="javascript:"><i class="fas fa-minus"></i></a></div>'
       );
 
-
       $(".add-New-Detail").on("click", function () {
-
         //check if there is a required field not filled (to stop add master section if there is a required field not filled)
-        var stopAdd = false
-        var nameValueOfMasterItem = true
-        $(this).parent().parent().children('.Details-Item').each(function () {
+        var stopAdd = false;
+        var nameValueOfMasterItem = true;
+        $(this)
+          .parent()
+          .parent()
+          .children(".Details-Item")
+          .each(function () {
+            var requiredArr = $(this).find(
+              "input[required],div[type=picker],textarea[required]"
+            );
 
-          var requiredArr = $(this).find('input[required],div[type=picker],textarea[required]')
+            requiredArr.each(function () {
+              var checkType = $(this).attr("type");
 
-          requiredArr.each(function () {
-            var checkType = $(this).attr('type')
-
-            var val = ""
-            if (checkType == "picker") {
-              if (isNew && listkey != "changerequest") {
-
-                // var checkLabelRequired = $(this).parent().find('label').attr("required")
-                // if (checkLabelRequired) {
-                // var noPickerVal = $(this).find("span.sp-peoplepicker-userSpan").length == 0
-                // if (!noPickerVal) {
-                val = "picker"
-                // }
-                // }
+              var val = "";
+              if (checkType == "picker") {
+                if (isNew && listkey != "changerequest") {
+                  // var checkLabelRequired = $(this).parent().find('label').attr("required")
+                  // if (checkLabelRequired) {
+                  // var noPickerVal = $(this).find("span.sp-peoplepicker-userSpan").length == 0
+                  // if (!noPickerVal) {
+                  val = "picker";
+                  // }
+                  // }
+                } else if (isEdit || listkey == "changerequest") {
+                  val = "picker";
+                  // debugger
+                  // var checkLabelRequired = $(this).parent().find('label').attr("required")
+                  // if (checkLabelRequired || checkLabelRequired == undefined) {
+                  //   var noPickerVal = $(this).find("span.sp-peoplepicker-userSpan").length == 0 && (($(this).attr('data-email') == enternameemail) || !$(this).attr('data-email'))
+                  //   if (!noPickerVal) {
+                  //     val = "picker"
+                  //   }
+                  // }
+                }
+              } else {
+                val = $(this).val();
               }
-              else if (isEdit || listkey == 'changerequest') {
-                val = "picker"
-                // debugger
-                // var checkLabelRequired = $(this).parent().find('label').attr("required")
-                // if (checkLabelRequired || checkLabelRequired == undefined) {
-                //   var noPickerVal = $(this).find("span.sp-peoplepicker-userSpan").length == 0 && (($(this).attr('data-email') == enternameemail) || !$(this).attr('data-email'))
-                //   if (!noPickerVal) {
-                //     val = "picker"
-                //   }
-                // }
+              if (!val) {
+                stopAdd = true;
               }
-            } else {
-              val = $(this).val()
+            });
+            // handle required multi select
+            var multiSelectRequired = $(this).find(
+              ".dropdown-menu.multiselect_scroll.required"
+            ).length;
+            if (multiSelectRequired > 0) {
+              if (
+                $(this).find(
+                  ".dropdown-menu.multiselect_scroll.required :checkbox:checked"
+                ).length == 0
+              ) {
+                stopAdd = true;
+              }
             }
-            if (!val) {
-              stopAdd = true
-            }
-          })
-          // handle required multi select
-          var multiSelectRequired = $(this).find('.dropdown-menu.multiselect_scroll.required').length
-          if (multiSelectRequired > 0) {
-            if ($(this).find('.dropdown-menu.multiselect_scroll.required :checkbox:checked').length == 0) {
-              stopAdd = true
-            }
-          }
-          // check if there is Name in master section Benefits
+            // check if there is Name in master section Benefits
 
-          if ($(this).closest("[data-target_list]").data('target_list') == "Benefits") {
-            if ($(this).closest("[data-target_list]").find(".Details-Item").last().hasClass("firstMasterEmpty")) {
-              console.log("first section")
-            } else {
-              nameValueOfMasterItem = $(this).closest("[data-target_list]").find(".Details-Item").last().find('input#Name').val() ? true : false
+            if (
+              $(this).closest("[data-target_list]").data("target_list") ==
+              "Benefits"
+            ) {
+              if (
+                $(this)
+                  .closest("[data-target_list]")
+                  .find(".Details-Item")
+                  .last()
+                  .hasClass("firstMasterEmpty")
+              ) {
+                console.log("first section");
+              } else {
+                nameValueOfMasterItem = $(this)
+                  .closest("[data-target_list]")
+                  .find(".Details-Item")
+                  .last()
+                  .find("input#Name")
+                  .val()
+                  ? true
+                  : false;
+              }
+              if (!nameValueOfMasterItem) {
+                stopAdd = true;
+              }
             }
-            if (!nameValueOfMasterItem) {
-              stopAdd = true
-            }
-
-          }
-
-        })
+          });
 
         if (stopAdd) {
-          var stoperMsg = ""
+          var stoperMsg = "";
           if (
             localStorage.getItem("lng") == null ||
             localStorage.getItem("lng") == "ar"
           ) {
-            stoperMsg = "يجب تعبئة الاسم و التأكد من الحقول الازامية قبل الاضافة"
+            stoperMsg =
+              "يجب تعبئة الاسم و التأكد من الحقول الازامية قبل الاضافة";
           } else {
-            stoperMsg = "You Should fill the name and check the required fields before add"
+            stoperMsg =
+              "You Should fill the name and check the required fields before add";
           }
-          var masterErr = $(this).parent().find(".master_section_err").length
+          var masterErr = $(this).parent().find(".master_section_err").length;
           if (masterErr == 0) {
-            $(this).parent().append('<span class="master_section_err">' + stoperMsg + '</span>')
+            $(this)
+              .parent()
+              .append(
+                '<span class="master_section_err">' + stoperMsg + "</span>"
+              );
           }
         } else {
           // continue function normally
-          var masterErr = $(this).parent().find(".master_section_err").length
+          var masterErr = $(this).parent().find(".master_section_err").length;
           if (masterErr > 0) {
-            $(this).parent().find(".master_section_err").remove()
+            $(this).parent().find(".master_section_err").remove();
           }
-
 
           // to handle the index on master details
-          var getMasterIndex = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last().attr('data-index')
+          var getMasterIndex = $(this)
+            .closest("[data-target_list]")
+            .find(".Details-Item.NewItem")
+            .last()
+            .attr("data-index");
 
           // add class to hide first master details if there is no data like benefits
-          var firstMasterClass = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last().hasClass('firstMasterEmpty')
-
+          var firstMasterClass = $(this)
+            .closest("[data-target_list]")
+            .find(".Details-Item.NewItem")
+            .last()
+            .hasClass("firstMasterEmpty");
 
           if (isNew && listkey != "changerequest") {
-            getMasterIndex = getMasterIndex ? Number(getMasterIndex) : ""
-            getMasterIndex = getMasterIndex + 1
+            getMasterIndex = getMasterIndex ? Number(getMasterIndex) : "";
+            getMasterIndex = getMasterIndex + 1;
           } else if (isEdit || listkey == "changerequest") {
-            var checkEditMasterCount = $(this).closest("[data-target_list]").find(".Details-Item.EditItem")
-            var checkNewMasterCount = $(this).closest("[data-target_list]").find(".Details-Item.NewItem")
-            checkEditMasterCount = checkEditMasterCount ? checkEditMasterCount.length : 0
-            checkEditMasterCount = Number(checkEditMasterCount)
-            checkNewMasterCount = checkNewMasterCount ? checkNewMasterCount.length : 0
-            checkNewMasterCount = Number(checkNewMasterCount)
-            getMasterIndex = checkEditMasterCount + checkNewMasterCount + 1
+            var checkEditMasterCount = $(this)
+              .closest("[data-target_list]")
+              .find(".Details-Item.EditItem");
+            var checkNewMasterCount = $(this)
+              .closest("[data-target_list]")
+              .find(".Details-Item.NewItem");
+            checkEditMasterCount = checkEditMasterCount
+              ? checkEditMasterCount.length
+              : 0;
+            checkEditMasterCount = Number(checkEditMasterCount);
+            checkNewMasterCount = checkNewMasterCount
+              ? checkNewMasterCount.length
+              : 0;
+            checkNewMasterCount = Number(checkNewMasterCount);
+            getMasterIndex = checkEditMasterCount + checkNewMasterCount + 1;
 
             if (firstMasterClass) {
-              getMasterIndex = 1
+              getMasterIndex = 1;
             }
-
           }
 
-
-
-          if ((listkey == 'projects' || listkey == 'initiatives') && isNew) {
-            var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item").last()
-            lastDetailsItemBeforeAdd.addClass('disable_section')
-          } else if (listkey == "changerequest" && (RListKey == 'projects' || RListKey == 'initiatives')) {
-            var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last()
+          if ((listkey == "projects" || listkey == "initiatives") && isNew) {
+            var lastDetailsItemBeforeAdd = $(this)
+              .closest("[data-target_list]")
+              .find(".Details-Item")
+              .last();
+            lastDetailsItemBeforeAdd.addClass("disable_section");
+          } else if (
+            listkey == "changerequest" &&
+            (RListKey == "projects" || RListKey == "initiatives")
+          ) {
+            var lastDetailsItemBeforeAdd = $(this)
+              .closest("[data-target_list]")
+              .find(".Details-Item.NewItem")
+              .last();
             if (lastDetailsItemBeforeAdd.length == 0) {
-              var onLoadMaster = $(this).closest("[data-target_list]").find(".Details-Item.EditItem")
+              var onLoadMaster = $(this)
+                .closest("[data-target_list]")
+                .find(".Details-Item.EditItem");
               if (onLoadMaster.length) {
                 onLoadMaster.each(function () {
-                  $(this).addClass("disable_section")
-                })
+                  $(this).addClass("disable_section");
+                });
               }
             } else {
-              lastDetailsItemBeforeAdd.addClass('disable_section')
+              lastDetailsItemBeforeAdd.addClass("disable_section");
             }
-          }
-          else if ((listkey == 'projects' || listkey == 'initiatives') && isEdit) {
-
-            var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last()
+          } else if (
+            (listkey == "projects" || listkey == "initiatives") &&
+            isEdit
+          ) {
+            var lastDetailsItemBeforeAdd = $(this)
+              .closest("[data-target_list]")
+              .find(".Details-Item.NewItem")
+              .last();
             if (lastDetailsItemBeforeAdd.length == 0) {
-              var onLoadMaster = $(this).closest("[data-target_list]").find(".Details-Item.EditItem")
+              var onLoadMaster = $(this)
+                .closest("[data-target_list]")
+                .find(".Details-Item.EditItem");
               if (onLoadMaster.length) {
                 onLoadMaster.each(function () {
-                  $(this).addClass("disable_section")
-                })
+                  $(this).addClass("disable_section");
+                });
               }
             } else {
-              lastDetailsItemBeforeAdd.addClass('disable_section')
+              lastDetailsItemBeforeAdd.addClass("disable_section");
             }
-
           }
 
+          var totalWeight = 0;
 
-
-          var totalWeight = 0
-
-
-          $(this).parent().parent().children('.Details-Item').each(function () {
-
-            var value = $(this).find('.weightfloatpercentage').val()
-            value = value ? value : 0
-            totalWeight += Number(value)
-
-          })
+          $(this)
+            .parent()
+            .parent()
+            .children(".Details-Item")
+            .each(function () {
+              var value = $(this).find(".weightfloatpercentage").val();
+              value = value ? value : 0;
+              totalWeight += Number(value);
+            });
 
           //$('.add-New-Detail').closest("[data-target_list]").find(".Details-Item:first-child")
 
@@ -7089,65 +7614,110 @@ window.ListInfo = {
             .html()
             .toString(); //.replaceAll('value', 'value=""');
 
-
-
           //
 
-
-          $('<div class="Details-Item NewItem" data-index="' + getMasterIndex + '">' + toappend + "</div>").insertBefore($(this).parent());
+          $(
+            '<div class="Details-Item NewItem" data-index="' +
+              getMasterIndex +
+              '">' +
+              toappend +
+              "</div>"
+          ).insertBefore($(this).parent());
 
           // to handle attachement in master details for proj and initiative like deliv and milst
 
-          if ((listkey == 'initiatives' || listkey == "projects") && isNew) {
-
+          if ((listkey == "initiatives" || listkey == "projects") && isNew) {
             //to remove the attach from first section
-            $("input[type=file]").trigger('change')
-            $(this).closest("[data-target_list]").find(".Details-Item .CFIELD >input[type=file]").last().parent().find('.attachfilename').html("")
+            $("input[type=file]").trigger("change");
+            $(this)
+              .closest("[data-target_list]")
+              .find(".Details-Item .CFIELD >input[type=file]")
+              .last()
+              .parent()
+              .find(".attachfilename")
+              .html("");
             //
-            var lastListDetails = $(this).closest("[data-target_list]").data('target_list')
+            var lastListDetails = $(this)
+              .closest("[data-target_list]")
+              .data("target_list");
 
             // to add many attach in master details
-            $(this).closest("[data-target_list]").find(".Details-Item .CFIELD >input[type=file]").last().attr('id', `getFile${lastListDetails}-${getMasterIndex}`)
+            $(this)
+              .closest("[data-target_list]")
+              .find(".Details-Item .CFIELD >input[type=file]")
+              .last()
+              .attr("id", `getFile${lastListDetails}-${getMasterIndex}`);
 
-            $(this).closest("[data-target_list]").find(".Details-Item .CFIELD >input[type=file]").last().parent().find('#chooseFile').attr('for', `getFile${lastListDetails}-${getMasterIndex}`)
-
+            $(this)
+              .closest("[data-target_list]")
+              .find(".Details-Item .CFIELD >input[type=file]")
+              .last()
+              .parent()
+              .find("#chooseFile")
+              .attr("for", `getFile${lastListDetails}-${getMasterIndex}`);
           }
           // var fileId = "getFile" + attachCount;
 
           // to hide the err msg when click  on plus
 
-          $(this).closest("[data-target_list]").find(".Details-Item .errMsgField").last().hide()
+          $(this)
+            .closest("[data-target_list]")
+            .find(".Details-Item .errMsgField")
+            .last()
+            .hide();
 
           // insert new max for weight deliv
-          var lastDetailsItem = $(this).closest("[data-target_list]").find(".Details-Item").last()
-          lastDetailsItem.find('.remainpercstyle.remainPercentageVal').html(`${100 - totalWeight}]`) // add new title weight
-          lastDetailsItem.find('.weightfloatpercentage').attr("max", 100 - totalWeight) // add new max weight
+          var lastDetailsItem = $(this)
+            .closest("[data-target_list]")
+            .find(".Details-Item")
+            .last();
+          lastDetailsItem
+            .find(".remainpercstyle.remainPercentageVal")
+            .html(`${100 - totalWeight}]`); // add new title weight
+          lastDetailsItem
+            .find(".weightfloatpercentage")
+            .attr("max", 100 - totalWeight); // add new max weight
           //
 
-          masterLength = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").length
+          masterLength = $(this)
+            .closest("[data-target_list]")
+            .find(".Details-Item.NewItem").length;
 
           // to remove the disabled on multi select when click plus in master filed of master details section like deliv in benefit in edit initiative
-          $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last().find('ul[data-fieldtargetlist]').find("input:checkbox").each(function () {
-            $(this).attr("disabled", false)
-          })
-
+          $(this)
+            .closest("[data-target_list]")
+            .find(".Details-Item.NewItem")
+            .last()
+            .find("ul[data-fieldtargetlist]")
+            .find("input:checkbox")
+            .each(function () {
+              $(this).attr("disabled", false);
+            });
 
           if (isNew && listkey == "changerequest") {
             if (masterLength > 0) {
-              $(this).closest("[data-target_list]").find(".remove-New-Detail").show()
+              $(this)
+                .closest("[data-target_list]")
+                .find(".remove-New-Detail")
+                .show();
             }
           } else if (isNew) {
             // in new > 1 because on render the form there is a new Item so it will be  before click on +
             if (masterLength > 1) {
-              $(this).closest("[data-target_list]").find(".remove-New-Detail").show()
+              $(this)
+                .closest("[data-target_list]")
+                .find(".remove-New-Detail")
+                .show();
             }
           } else if (isEdit) {
             // in edit > 0 because on render the form there is no new Item till will click on +
             if (masterLength > 0) {
-              $(this).closest("[data-target_list]").find(".remove-New-Detail").show()
+              $(this)
+                .closest("[data-target_list]")
+                .find(".remove-New-Detail")
+                .show();
             }
           }
-
 
           var myPPicker = [];
           $(this)
@@ -7158,16 +7728,16 @@ window.ListInfo = {
             .each(function () {
               $(
                 '<div class="PPField SPIField form-control" type="picker" id="' +
-                $(this).attr("id") +
-                "+++" +
-                Math.floor(Math.random() * 1000000) +
-                '" value="" placeholder="' +
-                $(this).attr("placeholder") +
-                '" INppicker="' +
-                $(this).attr("id") +
-                "+++" +
-                Math.floor(Math.random() * 1000000) +
-                '"></div>'
+                  $(this).attr("id") +
+                  "+++" +
+                  Math.floor(Math.random() * 1000000) +
+                  '" value="" placeholder="' +
+                  $(this).attr("placeholder") +
+                  '" INppicker="' +
+                  $(this).attr("id") +
+                  "+++" +
+                  Math.floor(Math.random() * 1000000) +
+                  '"></div>'
               ).insertBefore($(this));
               $(this).remove();
             });
@@ -7188,134 +7758,147 @@ window.ListInfo = {
                 .text("ادخل الإسم أو البريد الإلكتروني ...");
             });
 
-
           if (listkey == "changerequest" && (isNew || isEdit)) {
             // add in master arry when click on plus
-            Add_New_CRMaster.init(getMasterIndex)
+            Add_New_CRMaster.init(getMasterIndex);
           }
-
         }
-
-
       });
 
       // remove new section
       $(".remove-New-Detail").on("click", function () {
-
-
-
-
         if (listkey == "changerequest" && (isNew || isEdit)) {
           // remove from master array when click on minus
-          var lastIndex = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last().data('index')
-          Remove_New_CRMaster.init(lastIndex)
+          var lastIndex = $(this)
+            .closest("[data-target_list]")
+            .find(".Details-Item.NewItem")
+            .last()
+            .data("index");
+          Remove_New_CRMaster.init(lastIndex);
         }
 
-
-        masterLength = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").length
+        masterLength = $(this)
+          .closest("[data-target_list]")
+          .find(".Details-Item.NewItem").length;
         // firstMasterEmpty
         // var firstMasterClass = ''
         // firstMasterClass = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").first().hasClass('firstMasterEmpty')
         // debugger
 
-
         if (isNew && listkey == "changerequest") {
           if (masterLength > 0) {
-            masterLength = masterLength - 1
-            $(this).closest("[data-target_list]").find(".Details-Item.NewItem")[masterLength].remove()
-
-
+            masterLength = masterLength - 1;
+            $(this)
+              .closest("[data-target_list]")
+              .find(".Details-Item.NewItem")
+              [masterLength].remove();
           }
         } else if (isNew) {
           // in new > 1 because on render the form there is a new Item so it will be  before click on +
           if (masterLength > 1) {
-            masterLength = masterLength - 1
-            $(this).closest("[data-target_list]").find(".Details-Item.NewItem")[masterLength].remove()
+            masterLength = masterLength - 1;
+            $(this)
+              .closest("[data-target_list]")
+              .find(".Details-Item.NewItem")
+              [masterLength].remove();
           }
         } else if (isEdit) {
           // in edit > 0 because on render the form there is no new Item till will click on +
           if (masterLength > 0) {
-            masterLength = masterLength - 1
-            $(this).closest("[data-target_list]").find(".Details-Item.NewItem")[masterLength].remove()
+            masterLength = masterLength - 1;
+            $(this)
+              .closest("[data-target_list]")
+              .find(".Details-Item.NewItem")
+              [masterLength].remove();
           }
         }
 
-
-
         if (isNew && listkey == "changerequest") {
           // add firstMasterEmpty to remove the - in first master details if there is no data like benefits
-          if (masterLength == 0 || $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last().hasClass("firstMasterEmpty")) {
+          if (
+            masterLength == 0 ||
+            $(this)
+              .closest("[data-target_list]")
+              .find(".Details-Item.NewItem")
+              .last()
+              .hasClass("firstMasterEmpty")
+          ) {
             // to return the form as rendered
-            $(this).closest("[data-target_list]").find(".remove-New-Detail").hide()
+            $(this)
+              .closest("[data-target_list]")
+              .find(".remove-New-Detail")
+              .hide();
           }
         } else if (isNew) {
           if (masterLength == 1) {
             // to return the form as rendered
-            $(this).closest("[data-target_list]").find(".remove-New-Detail").hide()
+            $(this)
+              .closest("[data-target_list]")
+              .find(".remove-New-Detail")
+              .hide();
           }
         } else if (isEdit) {
           if (masterLength == 0) {
             // to return the form as rendered
-            $(this).closest("[data-target_list]").find(".remove-New-Detail").hide()
+            $(this)
+              .closest("[data-target_list]")
+              .find(".remove-New-Detail")
+              .hide();
           }
         }
-
 
         //to remeove disabled class on the last section
-        if ((listkey == 'projects' || listkey == 'initiatives') && isNew) {
-
-          var lastDetailsItemAfterRemove = $(this).closest("[data-target_list]").find(".Details-Item").last()
-          lastDetailsItemAfterRemove.removeClass('disable_section')
-
-
-
-        } else if (listkey == "changerequest" && (RListKey == 'projects' || RListKey == 'initiatives')) {
-          var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last()
+        if ((listkey == "projects" || listkey == "initiatives") && isNew) {
+          var lastDetailsItemAfterRemove = $(this)
+            .closest("[data-target_list]")
+            .find(".Details-Item")
+            .last();
+          lastDetailsItemAfterRemove.removeClass("disable_section");
+        } else if (
+          listkey == "changerequest" &&
+          (RListKey == "projects" || RListKey == "initiatives")
+        ) {
+          var lastDetailsItemBeforeAdd = $(this)
+            .closest("[data-target_list]")
+            .find(".Details-Item.NewItem")
+            .last();
           if (lastDetailsItemBeforeAdd.length == 0) {
-            var onLoadMaster = $(this).closest("[data-target_list]").find(".Details-Item.EditItem")
+            var onLoadMaster = $(this)
+              .closest("[data-target_list]")
+              .find(".Details-Item.EditItem");
             if (onLoadMaster.length) {
               onLoadMaster.each(function () {
-                $(this).removeClass("disable_section")
-              })
+                $(this).removeClass("disable_section");
+              });
             }
           } else {
-            lastDetailsItemBeforeAdd.removeClass('disable_section')
+            lastDetailsItemBeforeAdd.removeClass("disable_section");
           }
-        } else if ((listkey == 'projects' || listkey == 'initiatives') && isEdit) {
-
-          var lastDetailsItemBeforeAdd = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last()
+        } else if (
+          (listkey == "projects" || listkey == "initiatives") &&
+          isEdit
+        ) {
+          var lastDetailsItemBeforeAdd = $(this)
+            .closest("[data-target_list]")
+            .find(".Details-Item.NewItem")
+            .last();
           if (lastDetailsItemBeforeAdd.length == 0) {
-            var onLoadMaster = $(this).closest("[data-target_list]").find(".Details-Item.EditItem")
+            var onLoadMaster = $(this)
+              .closest("[data-target_list]")
+              .find(".Details-Item.EditItem");
             if (onLoadMaster.length) {
               onLoadMaster.each(function () {
-                $(this).removeClass("disable_section")
-              })
+                $(this).removeClass("disable_section");
+              });
             }
           } else {
-            lastDetailsItemBeforeAdd.removeClass('disable_section')
+            lastDetailsItemBeforeAdd.removeClass("disable_section");
           }
-
         }
         //
-
-
-
-
-
-
-      })
-
-
+      });
 
       //
-
-
-
-
-
-
-
-
 
       // $('.add-New-Detail').click(function()
       // {
@@ -7356,7 +7939,6 @@ window.ListInfo = {
           const file = files[i];
           const fileExtension = "" + file.name.split(".").pop();
           // get attribut
-
 
           if (acceptedExtensions.indexOf(fileExtension.toLowerCase()) > -1) {
             validattachments.push(file);
@@ -7399,8 +7981,8 @@ window.ListInfo = {
         for (var i = 0; i < validattachments.length; i++) {
           fileChosen.append(
             "<span class='attachfilename'><i class='fas fa-file'></i><span>" +
-            validattachments[i].name +
-            "</span><button type='button' class='removeAttchment'><i class='fas fa-times'></i></button></span>"
+              validattachments[i].name +
+              "</span><button type='button' class='removeAttchment'><i class='fas fa-times'></i></button></span>"
           );
         }
 
@@ -7448,11 +8030,17 @@ window.ListInfo = {
         }
 
         //check if have docpurpose to save it in doc library
-        var checkFilePurpose = ""
-        var filePurposeData = ""
-        if ($(this).parent().parent().find("input[data-docpurpose]").length > 0) {
-          filePurposeData = $(this).parent().parent().find("input[data-docpurpose]").data("docpurpose")
-          checkFilePurpose = `data-docpurpose=${filePurposeData}`
+        var checkFilePurpose = "";
+        var filePurposeData = "";
+        if (
+          $(this).parent().parent().find("input[data-docpurpose]").length > 0
+        ) {
+          filePurposeData = $(this)
+            .parent()
+            .parent()
+            .find("input[data-docpurpose]")
+            .data("docpurpose");
+          checkFilePurpose = `data-docpurpose=${filePurposeData}`;
         }
         //
 
@@ -7461,27 +8049,29 @@ window.ListInfo = {
 
         $(
           '<div class="col-md-12 CFIELD" data-groups="" >' + //style="display: flex;align-items: center;"
-          '<label class="attlabel" for="getFile"  undefined="">' +
-          pluseAttachTitle +
-          "</label>" + //class="custom-file-upload"
-          '<input ' + checkFilePurpose + ' type="file" accept="' +
-          acceptedExtensions +
-          '" hidden multiple="multiple" placeholder="' +
-          pluseAttachTitle +
-          '" class="form-control SPIField" id="' +
-          fileId +
-          '" >' +
-          '<label data-trans-choosefile id="chooseFile" for="' +
-          fileId +
-          '" class="Resources"></label>' +
-          '<span id="file-chosen"><span data-trans-nofile id="nofile" class="Resources"></span></span>' +
-          '<div class="AttErrorMsg attErrorMsg" style="display:none"><span data-trans-file class="Resources"></span><span class="notacceptedext"></span><span data-trans-notallowed class="Resources"></span></div>' +
-          '<div class="attErrorMsg"><span data-trans-acceptedfiles class="Resources"></span><span class="acceptedfile"></span></div>' +
-          '<div class="attErrorMsg"><span data-trans-fileSize class="Resources"></span></div>' +
-          '<div class="col-md-6 CFIELD" data-groups="" style="visibility:hidden">' +
-          '<label for="forattach">Attachments</label>' +
-          "</div>" +
-          "</div>"
+            '<label class="attlabel" for="getFile"  undefined="">' +
+            pluseAttachTitle +
+            "</label>" + //class="custom-file-upload"
+            "<input " +
+            checkFilePurpose +
+            ' type="file" accept="' +
+            acceptedExtensions +
+            '" hidden multiple="multiple" placeholder="' +
+            pluseAttachTitle +
+            '" class="form-control SPIField" id="' +
+            fileId +
+            '" >' +
+            '<label data-trans-choosefile id="chooseFile" for="' +
+            fileId +
+            '" class="Resources"></label>' +
+            '<span id="file-chosen"><span data-trans-nofile id="nofile" class="Resources"></span></span>' +
+            '<div class="AttErrorMsg attErrorMsg" style="display:none"><span data-trans-file class="Resources"></span><span class="notacceptedext"></span><span data-trans-notallowed class="Resources"></span></div>' +
+            '<div class="attErrorMsg"><span data-trans-acceptedfiles class="Resources"></span><span class="acceptedfile"></span></div>' +
+            '<div class="attErrorMsg"><span data-trans-fileSize class="Resources"></span></div>' +
+            '<div class="col-md-6 CFIELD" data-groups="" style="visibility:hidden">' +
+            '<label for="forattach">Attachments</label>' +
+            "</div>" +
+            "</div>"
         ).insertBefore($(this).parent());
 
         $("#" + fileId)
@@ -7490,7 +8080,7 @@ window.ListInfo = {
           .append("" + acceptedExtensionsstr + ",");
 
         // pluseAttachCount = pluseAttachCount + 1;
-        attachCount = attachCount + 1
+        attachCount = attachCount + 1;
         changeResources();
       });
 
@@ -7556,18 +8146,18 @@ window.ListInfo = {
                     .text()
                     .indexOf("لعام") > -1
                     ? $("#Cost" + i)
-                      .parent()
-                      .find("label")
-                      .text()
-                      .split("لعام")[0] +
-                    " لعام " +
-                    yeartodisp
+                        .parent()
+                        .find("label")
+                        .text()
+                        .split("لعام")[0] +
+                      " لعام " +
+                      yeartodisp
                     : $("#Cost" + i)
-                      .parent()
-                      .find("label")
-                      .text() +
-                    " لعام " +
-                    yeartodisp;
+                        .parent()
+                        .find("label")
+                        .text() +
+                      " لعام " +
+                      yeartodisp;
               } else {
                 var label =
                   $("#Cost" + i)
@@ -7576,18 +8166,18 @@ window.ListInfo = {
                     .text()
                     .indexOf("For Year") > -1
                     ? $("#Cost" + i)
-                      .parent()
-                      .find("label")
-                      .text()
-                      .split("For Year")[0] +
-                    " For Year " +
-                    yeartodisp
+                        .parent()
+                        .find("label")
+                        .text()
+                        .split("For Year")[0] +
+                      " For Year " +
+                      yeartodisp
                     : $("#Cost" + i)
-                      .parent()
-                      .find("label")
-                      .text() +
-                    " For Year " +
-                    yeartodisp;
+                        .parent()
+                        .find("label")
+                        .text() +
+                      " For Year " +
+                      yeartodisp;
               }
               $("#Cost" + i)
                 .parent()
@@ -7655,7 +8245,6 @@ window.ListInfo = {
     requiredSpillarsName: function () {
       var PillarsExist = $("#PillarsExist:checked").val();
 
-
       if (PillarsExist == "yes") {
         $('[data-target_list="SPillars"] #Name').attr("required", "required");
         $('[data-target_list="SPillars"] #Name')
@@ -7684,14 +8273,11 @@ window.ListInfo = {
     },
 
     toggleFields: function ($this) {
-
       if (isView) {
-
         var myValue = $this.data("viewtogglevalue");
       } else {
         var myValue = $this.val();
       }
-
 
       var mytype = $this,
         toggleValues =
@@ -7722,10 +8308,9 @@ window.ListInfo = {
 
       if (isShowVal) {
         allToggleFields.forEach((item, i, arr) => {
-
           $('[data-togglename="' + item + '"]')
-            .parent().addClass("hide-field")
-
+            .parent()
+            .addClass("hide-field");
 
           $('[data-togglename="' + item + '"]')
             .parent()
@@ -7736,93 +8321,87 @@ window.ListInfo = {
             .find(">*")
             .attr("required", false);
 
-
           // remove required for section hide
-          $('[data-togglename="' + item + '"] .Details-Item .CFIELD').each(function () {
+          $('[data-togglename="' + item + '"] .Details-Item .CFIELD').each(
+            function () {
+              // var fieldId =$(this).find()
+              var isRequired = false,
+                fieldId = "";
 
-            // var fieldId =$(this).find()
-            var isRequired = false, fieldId = "";
+              isRequired = $(this).find(">*").attr("required") ? true : false;
 
-            isRequired = $(this).find(">*").attr("required") ? true : false
+              if (isRequired) {
+                fieldId = $(this).find("input,textarea,select").attr("id");
+                console.log(fieldId, "fieldId");
+                requiredFieldsSections.push(fieldId);
+              }
 
-            if (isRequired) {
-              fieldId = $(this).find('input,textarea,select').attr('id')
-              console.log(fieldId, "fieldId")
-              requiredFieldsSections.push(fieldId)
+              // requiredFieldsSections.push()
+
+              $(this).find(">*").attr("required", false);
             }
-
-            // requiredFieldsSections.push()
-
-            $(this).find(">*")
-              .attr("required", false);
-          })
+          );
 
           $('[data-togglename="' + item + '"]').each(function () {
-            var isSection = $(this).hasClass('fieldset-container')
+            var isSection = $(this).hasClass("fieldset-container");
 
             if (isSection) {
-              $(this).closest('.section-container').addClass('removeborder')
-              $(this).find('.CFIELD').addClass('hide-field')
-
+              $(this).closest(".section-container").addClass("removeborder");
+              $(this).find(".CFIELD").addClass("hide-field");
             }
-          })
-
-
+          });
         });
         toggleFields.forEach(function (item, i, arr) {
           var isHidden = $('[data-togglename="' + item + '"]')
-            .parent()
-            .is(":hidden"),
+              .parent()
+              .is(":hidden"),
             myFieldParent = $('[data-togglename="' + item + '"]').parent();
           myFieldParentofParent = $('[data-togglename="' + item + '"]');
           if (isHidden) {
-
             myFieldParent.show();
-            myFieldParent.removeClass("hide-field")
+            myFieldParent.removeClass("hide-field");
             myFieldParentofParent.show();
             if (!isView) {
-
               myFieldParent.find(">*").attr("required", true);
 
-              $('[data-togglename="' + item + '"] .Details-Item .CFIELD').each(function () {
-
-                requiredFieldsSections.forEach(el => {
-                  var $this = $(this)
-                  var fieldId = $(this).find('input,textarea,select').attr('id')
-                  if (el == fieldId) {
-                    $this.find(">*")
-                      .attr("required", true);
-                  }
-                })
-                // $(this).find(">*")
-                //   .attr("required", true);
-                $(this).removeClass("hide-field")
-
-
-              })
+              $('[data-togglename="' + item + '"] .Details-Item .CFIELD').each(
+                function () {
+                  requiredFieldsSections.forEach((el) => {
+                    var $this = $(this);
+                    var fieldId = $(this)
+                      .find("input,textarea,select")
+                      .attr("id");
+                    if (el == fieldId) {
+                      $this.find(">*").attr("required", true);
+                    }
+                  });
+                  // $(this).find(">*")
+                  //   .attr("required", true);
+                  $(this).removeClass("hide-field");
+                }
+              );
 
               $('[data-togglename="' + item + '"]').each(function () {
-                var isSection = $(this).hasClass('fieldset-container')
+                var isSection = $(this).hasClass("fieldset-container");
                 // to remove the border and hide field from section when toggle
                 if (isSection) {
-                  $(this).closest('.section-container').removeClass('removeborder')
-                  $(this).find('.CFIELD').removeClass('hide-field')
-
+                  $(this)
+                    .closest(".section-container")
+                    .removeClass("removeborder");
+                  $(this).find(".CFIELD").removeClass("hide-field");
                 }
-              })
-
-
-
-
+              });
             } else if (isView) {
               // to remove the class removeborder in view
               $('[data-togglename="' + item + '"]').each(function () {
-                var isSection = $(this).hasClass('fieldset-container')
+                var isSection = $(this).hasClass("fieldset-container");
                 if (isSection) {
-                  $(this).closest('.section-container').removeClass('removeborder')
-                  $(this).find('.CFIELD').removeClass('hide-field')
+                  $(this)
+                    .closest(".section-container")
+                    .removeClass("removeborder");
+                  $(this).find(".CFIELD").removeClass("hide-field");
                 }
-              })
+              });
             }
             //make toggle fields not required
             if (listkey == "mainkpi") {
@@ -7858,11 +8437,7 @@ window.ListInfo = {
           }
         });
       } else {
-
         allToggleFields.forEach((item, i, arr) => {
-
-
-
           $('[data-togglename="' + item + '"]')
             .parent()
             .addClass("hide-field");
@@ -7871,25 +8446,21 @@ window.ListInfo = {
             .parent()
             .hide();
 
-
-
           $('[data-togglename="' + item + '"]').val("");
           $('[data-togglename="' + item + '"]')
             .parent()
             .find(">*")
             .attr("required", false);
         });
-
       }
-
     },
     toggleRequiredFields: function ($this) {
       var myValue = $this.val();
 
       var toggleRequiredValues =
-        $this.data("requiredvalues").indexOf(":::") > -1
-          ? $this.data("requiredvalues").split(":::")
-          : [$this.data("requiredvalues")],
+          $this.data("requiredvalues").indexOf(":::") > -1
+            ? $this.data("requiredvalues").split(":::")
+            : [$this.data("requiredvalues")],
         toggleRequiredValues = toggleRequiredValues.filter(function (t) {
           return t.indexOf(myValue + "[") > -1;
         }),
@@ -7931,16 +8502,14 @@ window.ListInfo = {
             .attr("required", false);
         });
       }
-
-
     },
     toggleDisabledFields: function ($this) {
       var myValue = $this.val();
 
       var toggleDisabledValues =
-        $this.data("toggledisabledvalues").indexOf(":::") > -1
-          ? $this.data("toggledisabledvalues").split(":::")
-          : [$this.data("toggledisabledvalues")],
+          $this.data("toggledisabledvalues").indexOf(":::") > -1
+            ? $this.data("toggledisabledvalues").split(":::")
+            : [$this.data("toggledisabledvalues")],
         toggleDisabledValues = toggleDisabledValues.filter(function (t) {
           return t.indexOf(myValue + "[") > -1;
         }),
@@ -7962,7 +8531,6 @@ window.ListInfo = {
       });
       allToggleDisabledFields = myToggleDisabledFields.split(",");
 
-
       if (isShowVal) {
         allToggleDisabledFields.forEach((item, i, arr) => {
           $('[data-toggledisabledname="' + item + '"]')
@@ -7972,7 +8540,9 @@ window.ListInfo = {
         });
 
         toggleDisabledFields.forEach(function (item, i, arr) {
-          myFieldParent = $('[data-toggledisabledname="' + item + '"]').parent();
+          myFieldParent = $(
+            '[data-toggledisabledname="' + item + '"]'
+          ).parent();
           myFieldParent.find(">*").attr("disabled", true);
         });
       } else {
@@ -7983,7 +8553,6 @@ window.ListInfo = {
             .attr("disabled", false);
         });
       }
-
     },
     // showFieldsIfInitiativeVision: function () {
     //   var typeValue = $("#Types option:selected").val();
@@ -8112,7 +8681,6 @@ window.ListInfo = {
             <OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
             </Query>
           </View>`;
-
         }
       })
     );
@@ -8133,11 +8701,11 @@ window.View_ListInfo = {
       //get form's json
       $.getScript(
         "" +
-        _spPageContextInfo.webAbsoluteUrl +
-        "/Style%20Library/spm/JSON/" +
-        listkey +
-        "/" +
-        JSON_File_Name
+          _spPageContextInfo.webAbsoluteUrl +
+          "/Style%20Library/spm/JSON/" +
+          listkey +
+          "/" +
+          JSON_File_Name
       ).done(function (script, textStatus) {
         isPrint = Information_Form[0].isPrint
           ? Information_Form[0].isPrint
@@ -8149,11 +8717,12 @@ window.View_ListInfo = {
     }
   },
   InfoLoop: function () {
-
     var htmlBuilder = isWF
       ? '<div class="section1 approvalHeader col-12"><div class="d-flex justify-content-between w-100"><div class=""><span class="bold Resources" data-trans-' +
-      USERlistkey +
-      '></span>' + ' ' + '<span class="mx-3 wf-project-name"></span></div><div class=""><span class="bold Resources" data-trans-taskname></span><span class="mx-3 wf-task-name"></span></div></div></div><h2 class="approvalHeader Resources"></h2>'
+        USERlistkey +
+        "></span>" +
+        " " +
+        '<span class="mx-3 wf-project-name"></span></div><div class=""><span class="bold Resources" data-trans-taskname></span><span class="mx-3 wf-task-name"></span></div></div></div><h2 class="approvalHeader Resources"></h2>'
       : "";
 
     var Label, Description;
@@ -8194,20 +8763,16 @@ window.View_ListInfo = {
           }
 
           if (item.security.notAllowTo && item.security.notAllowTo.length > 0) {
-
             for (var i = 0; i < item.security.notAllowTo.length; i++) {
-              notAllowForGroups.push(item.security.notAllowTo[i])
+              notAllowForGroups.push(item.security.notAllowTo[i]);
             }
 
             // notAllowForGroups = notAllowForGroups.join(" ");
 
-            notAllowForGroups = 'data-notallowforgroups="' +
-              JSON.stringify(notAllowForGroups).replaceAll(
-                `"`,
-                `'`
-              ) +
-              '"'
-
+            notAllowForGroups =
+              'data-notallowforgroups="' +
+              JSON.stringify(notAllowForGroups).replaceAll(`"`, `'`) +
+              '"';
           }
         }
         if (item.hasOwnProperty("sectiontype")) {
@@ -8230,24 +8795,22 @@ window.View_ListInfo = {
         }
 
         // to handle the workflowSetValues
-        var workflowSetValues = [], dataWorkflowSetValues = "";
+        var workflowSetValues = [],
+          dataWorkflowSetValues = "";
 
-        workflowSetValues = item.workflowSetValues
+        workflowSetValues = item.workflowSetValues;
 
         if (workflowSetValues && workflowSetValues.length) {
-          dataWorkflowSetValues = 'data-workflowSetValue="' +
-            JSON.stringify(workflowSetValues).replaceAll(
-              `"`,
-              `'`
-            ) +
-            '"'
+          dataWorkflowSetValues =
+            'data-workflowSetValue="' +
+            JSON.stringify(workflowSetValues).replaceAll(`"`, `'`) +
+            '"';
         } else {
-          dataWorkflowSetValues = ""
+          dataWorkflowSetValues = "";
         }
         //
 
-
-        toggleSectionName = item.toggleName
+        toggleSectionName = item.toggleName;
 
         var printFooter = "";
         var printBody = "";
@@ -8282,10 +8845,12 @@ window.View_ListInfo = {
               localStorage.getItem("lng") == "ar"
             ) {
               printBody += `<div style="display:block;padding:20px 0px" class="CFIELD">
-                        <label class="col-md-2 printTitle" for=${el.InternalName
-                }>${el.DisplayName}</label>
-                        <p class="col-md-9 viewmode-value print-field" style="border-bottom:1px solid #ccc;white-space:pre-line"  type=${el.type == "datetime" ? "date" : el.type
-                } id="${el.InternalName}"></p>
+                        <label class="col-md-2 printTitle" for=${
+                          el.InternalName
+                        }>${el.DisplayName}</label>
+                        <p class="col-md-9 viewmode-value print-field" style="border-bottom:1px solid #ccc;white-space:pre-line"  type=${
+                          el.type == "datetime" ? "date" : el.type
+                        } id="${el.InternalName}"></p>
                     </div>
                     `;
             } else {
@@ -8299,12 +8864,12 @@ window.View_ListInfo = {
         }
 
         if (item.sectiontype == "master") {
-
           printHtml += `<div class="py-5 border-bottom section-container ViewPrint_Form printFooterContainer page-avoid" ${targetList} ' ' ${sectionType} ' data-groups="${groups}" ${notAllowForGroups} style="display:none">
-                              <p class="printDescription">${Description
-              ? Label + " | " + Description
-              : Label
-            }</p>
+                              <p class="printDescription">${
+                                Description
+                                  ? Label + " | " + Description
+                                  : Label
+                              }</p>
                               <div class="col-md-11 p-4 fieldset-container">
                               ${printFooter}
                               </div>
@@ -8312,10 +8877,11 @@ window.View_ListInfo = {
                           `;
         } else {
           printHtml += `<div class="py-5 border-bottom section-container ViewPrint_Form printBodyContainer page-avoid" ${targetList} ' ' ${sectionType} ' data-groups="${groups}" ${notAllowForGroups} style="display:none">
-                              <p class="printDescription">${Description
-              ? Label + " | " + Description
-              : Label
-            }</p>
+                              <p class="printDescription">${
+                                Description
+                                  ? Label + " | " + Description
+                                  : Label
+                              }</p>
                               <div>
                               ${printBody}
                               </div>
@@ -8331,7 +8897,9 @@ window.View_ListInfo = {
           sectionType +
           ' data-groups="' +
           groups +
-          '" ' + notAllowForGroups + '>' +
+          '" ' +
+          notAllowForGroups +
+          ">" +
           '<div class="form-row">' +
           '<div class="col-lg-3 col-md-4 mb-4">' +
           "<h3 class='sideTitle'>" +
@@ -8341,7 +8909,11 @@ window.View_ListInfo = {
           Description +
           "</span>" +
           "</div>" +
-          '<div data-togglename=' + toggleSectionName + ' ' + dataWorkflowSetValues + ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container">';
+          "<div data-togglename=" +
+          toggleSectionName +
+          " " +
+          dataWorkflowSetValues +
+          ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container">';
         asyncFor.seqProcess(
           item.subFields,
           function (subitemField, indexField, resolveField) {
@@ -8470,7 +9042,7 @@ window.View_ListInfo = {
             $(".sidebar").attr("style", "display: none !important");
             $(".main-panel").attr("style", "width: 100% !important");
             //getTaskHistory.init();
-            Get_TaskHistory.init()
+            Get_TaskHistory.init();
           }
           //
 
@@ -8537,12 +9109,17 @@ window.View_ListInfo = {
       isWfenablestagesIDs = "",
       renderfield = true,
       dontSubmit = element.hasOwnProperty("dontSubmit") ? "dont-submit" : "", // to avoid err on view
-      dontSubmitRequired = element.hasOwnProperty("dontSubmitRequired") ? "dont-submit even-required" : "",
+      dontSubmitRequired = element.hasOwnProperty("dontSubmitRequired")
+        ? "dont-submit even-required"
+        : "",
       dontRequest = element.hasOwnProperty("dontRequest") ? "dont-request" : "", // to avoid err on view
       toggleValues = "",
-      ToggleName = element.hasOwnProperty("ToggleName") ? "data-togglename=" + element.ToggleName : "",
-      toggleDisabledName = element.hasOwnProperty("ToggleDisabledName") ? "data-toggledisabledname=" + element.ToggleDisabledName : "";
-
+      ToggleName = element.hasOwnProperty("ToggleName")
+        ? "data-togglename=" + element.ToggleName
+        : "",
+      toggleDisabledName = element.hasOwnProperty("ToggleDisabledName")
+        ? "data-toggledisabledname=" + element.ToggleDisabledName
+        : "";
 
     if (element.hasOwnProperty("security")) {
       if (element.security.groups.length > 0) {
@@ -8558,27 +9135,21 @@ window.View_ListInfo = {
         groups = groups.join(" ");
       }
 
-      if (element.security.notAllowTo && element.security.notAllowTo.length > 0) {
-
+      if (
+        element.security.notAllowTo &&
+        element.security.notAllowTo.length > 0
+      ) {
         for (var i = 0; i < element.security.notAllowTo.length; i++) {
-          notAllowForGroups.push(element.security.notAllowTo[i])
+          notAllowForGroups.push(element.security.notAllowTo[i]);
         }
 
-        notAllowForGroups = 'data-notallowforgroups="' +
-          JSON.stringify(notAllowForGroups).replaceAll(
-            `"`,
-            `'`
-          ) +
-          '"'
+        notAllowForGroups =
+          'data-notallowforgroups="' +
+          JSON.stringify(notAllowForGroups).replaceAll(`"`, `'`) +
+          '"';
         // notAllowForGroups = notAllowForGroups.join(",");
-
       }
-
-
-
     }
-
-
 
     if (element.hasOwnProperty("requireOnWfTaskStage") && USERisWF) {
       isWfhidestagesIDs =
@@ -8618,11 +9189,11 @@ window.View_ListInfo = {
         toggleValues +=
           i == 0
             ? 'data-toggleValues="' +
-            item.value +
-            "[" +
-            item.fields.join(",") +
-            "]" +
-            seperator
+              item.value +
+              "[" +
+              item.fields.join(",") +
+              "]" +
+              seperator
             : item.value + "[" + item.fields.join(",") + "]" + seperator;
       });
     }
@@ -8651,16 +9222,20 @@ window.View_ListInfo = {
     if (renderfield) {
       switch (element.type) {
         case "string":
+          var translateFrom = "";
 
-          var translateFrom = ""
-
-          if (element.translate == 'resources') {
-            translateFrom = `data-translateFromResources=${true}`
+          if (element.translate == "resources") {
+            translateFrom = `data-translateFromResources=${true}`;
           }
 
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.addClass +
             '" ' +
@@ -8685,7 +9260,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -8695,7 +9272,9 @@ window.View_ListInfo = {
             ">" +
             displayName +
             "</label>" +
-            '<p type="text" ' + translateFrom + ' class="viewmode-value" id="' +
+            '<p type="text" ' +
+            translateFrom +
+            ' class="viewmode-value" id="' +
             element.InternalName +
             '" ' +
             ToggleName +
@@ -8703,10 +9282,78 @@ window.View_ListInfo = {
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
+
+        case "stringunique":
+          var translateFrom = "";
+
+          if (element.translate == "resources") {
+            translateFrom = `data-translateFromResources=${true}`;
+          }
+
+          htmlBody =
+            '<div class="col-md-6 CFIELD ' +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
+            " " +
+            element.addClass +
+            '" ' +
+            thistip +
+            " " +
+            hidestagesIDs +
+            " " +
+            showstagesIDs +
+            "  " +
+            disablestagesIDs +
+            "  " +
+            enablestagesIDs +
+            "   " +
+            isWfhidestagesIDs +
+            " " +
+            requireOnWfTaskstagesIDs +
+            " " +
+            isWfshowstagesIDs +
+            "  " +
+            isWfdisablestagesIDs +
+            "  " +
+            isWfenablestagesIDs +
+            '        data-groups="' +
+            groups +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
+            element.display +
+            '">' +
+            '<label for="' +
+            element.InternalName +
+            '" ' +
+            element.validation +
+            ">" +
+            displayName +
+            "</label>" +
+            '<p type="text" ' +
+            translateFrom +
+            ' class="viewmode-value" id="' +
+            element.InternalName +
+            '" ' +
+            ToggleName +
+            " ></p>" +
+            "</div>";
+          OnSuccess(flag, htmlBody);
+          break;
+          
         case "yearInput":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -8733,7 +9380,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             ' data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -8773,7 +9422,12 @@ window.View_ListInfo = {
         case "number":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -8798,7 +9452,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -8820,7 +9476,12 @@ window.View_ListInfo = {
         case "multiselectstring":
           htmlBody =
             '<div class="col-md-6 CFIELD" ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             thistip +
             " " +
@@ -8843,7 +9504,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '    data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -8870,7 +9533,12 @@ window.View_ListInfo = {
         case "formula":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.addClass +
             '" ' +
@@ -8895,7 +9563,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -8908,16 +9578,20 @@ window.View_ListInfo = {
             '<p type="text" class="viewmode-value" id="' +
             element.InternalName +
             '" ' +
-            ToggleName
-          '" style="direction: ltr !important;"></p>' +
-            "</div>";
+            ToggleName;
+          '" style="direction: ltr !important;"></p>' + "</div>";
           OnSuccess(flag, htmlBody);
           break;
 
         case "code":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -8942,7 +9616,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -8964,7 +9640,12 @@ window.View_ListInfo = {
         case "floattax":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -8989,7 +9670,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9013,7 +9696,12 @@ window.View_ListInfo = {
         case "float":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -9038,7 +9726,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9060,7 +9750,12 @@ window.View_ListInfo = {
         case "phonenumber": // ksa phone number validation
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -9085,7 +9780,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9110,7 +9807,12 @@ window.View_ListInfo = {
         case "floatwithoutformatting":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -9135,7 +9837,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9157,7 +9861,12 @@ window.View_ListInfo = {
         case "weightfloatpercentage":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -9182,7 +9891,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9204,7 +9915,12 @@ window.View_ListInfo = {
         case "floatpercentage":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -9229,7 +9945,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9249,7 +9967,6 @@ window.View_ListInfo = {
           break;
 
         case "percentbyrelatedparent":
-
           var code = activeCode;
 
           if (code) {
@@ -9265,16 +9982,19 @@ window.View_ListInfo = {
               [element.parentinternalname],
               function (records, record, listItem, isDone) {
                 if (isDone) {
-
                   var parentValue = "";
                   records.forEach(function (el, index) {
                     parentValue = el[element.parentinternalname];
                   });
 
-
                   htmlBody =
                     '<div class="col-md-6 CFIELD ' +
-                    dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+                    dontSubmit +
+                    " " +
+                    dontRequest +
+                    " " +
+                    dontSubmitRequired +
+                    " " +
                     " " +
                     element.className +
                     ' " ' +
@@ -9299,7 +10019,9 @@ window.View_ListInfo = {
                     isWfenablestagesIDs +
                     '        data-groups="' +
                     groups +
-                    '" ' + notAllowForGroups + ' style="display:' +
+                    '" ' +
+                    notAllowForGroups +
+                    ' style="display:' +
                     element.display +
                     '">' +
                     '<label for="' +
@@ -9329,7 +10051,12 @@ window.View_ListInfo = {
         case "decimalpercentage":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -9354,7 +10081,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9375,7 +10104,12 @@ window.View_ListInfo = {
         case "percentage":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -9400,7 +10134,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9422,7 +10158,12 @@ window.View_ListInfo = {
         case "datetime":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -9447,7 +10188,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9468,9 +10211,19 @@ window.View_ListInfo = {
         case "datetimetoparent":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
             " " +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
+            " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -9495,7 +10248,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9519,7 +10274,12 @@ window.View_ListInfo = {
         case "datewithtime":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -9544,7 +10304,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9569,7 +10331,12 @@ window.View_ListInfo = {
         case "picker":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -9594,7 +10361,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9616,7 +10385,12 @@ window.View_ListInfo = {
         case "multipicker":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -9641,7 +10415,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9663,7 +10439,12 @@ window.View_ListInfo = {
         case "dropdown":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -9688,7 +10469,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '  data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9708,11 +10491,14 @@ window.View_ListInfo = {
           break;
 
         case "dropdownValues":
-
-
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -9737,7 +10523,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9761,7 +10549,12 @@ window.View_ListInfo = {
         case "radio":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -9786,7 +10579,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9808,7 +10603,12 @@ window.View_ListInfo = {
         case "yesnoradio":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -9833,7 +10633,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9855,7 +10657,12 @@ window.View_ListInfo = {
         case "checkbox":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -9880,7 +10687,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9901,7 +10710,12 @@ window.View_ListInfo = {
         case "lookuptoparentchild":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -9926,7 +10740,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + '  style="display:' +
+            '" ' +
+            notAllowForGroups +
+            '  style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -9968,7 +10784,12 @@ window.View_ListInfo = {
 
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -9993,7 +10814,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + '  style="display:' +
+            '" ' +
+            notAllowForGroups +
+            '  style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -10003,7 +10826,11 @@ window.View_ListInfo = {
             ">" +
             displayName +
             " " +
-            `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>" : ""}` +
+            `${
+              element.showlink
+                ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>"
+                : ""
+            }` +
             "</label>" +
             '<p type="lookup" data-listname="' +
             element.source +
@@ -10015,7 +10842,7 @@ window.View_ListInfo = {
             element.fieldsinformlvl1 + // to handle the dont submit field in view lvl1
             ' data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1=' +
             element.sourcefieldlvl1 +
-            ' data-parentrelatedkeylvl2=' +
+            " data-parentrelatedkeylvl2=" +
             element.fieldsinformlvl2 + // change from dynamic to fieldsinformlvl1
             ' data-parentrelatedvaluelvl2="" data-parentrelatedfilterkeylvl2=' +
             element.sourcefieldlvl2 +
@@ -10023,7 +10850,9 @@ window.View_ListInfo = {
             element.InternalName +
             '" ' +
             ToggleName +
-            ' data-linkedto="' + element.linkedto + '"></p>' +
+            ' data-linkedto="' +
+            element.linkedto +
+            '"></p>' +
             "</div>";
           OnSuccess(flag, htmlBody);
           ///////////////////////////////////////////////
@@ -10031,7 +10860,12 @@ window.View_ListInfo = {
         case "lookupWithQuery":
           htmlBody =
             '<div class="col-md-6 CFIELD" ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             thistip +
             " " +
@@ -10054,7 +10888,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '    data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -10064,7 +10900,11 @@ window.View_ListInfo = {
             ">" +
             displayName +
             " " +
-            `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>" : ""}` +
+            `${
+              element.showlink
+                ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>"
+                : ""
+            }` +
             "</label>" +
             '<p type="lookup" data-listname="' +
             element.source +
@@ -10076,16 +10916,22 @@ window.View_ListInfo = {
             element.InternalName +
             '" ' +
             ToggleName +
-            ' data-linkedto="' + element.linkedto + '"></p>' +
+            ' data-linkedto="' +
+            element.linkedto +
+            '"></p>' +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
 
         case "lookupmultiselectwithoutrepeat":
-
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -10110,7 +10956,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -10120,7 +10968,13 @@ window.View_ListInfo = {
             ">" +
             displayName +
             "</label>" +
-            '<p type="multiselect" class="viewmode-value" data-valfieldkey="' + element.valfieldkey + '" data-dispfieldkey="' + element.Dispfieldkey + '" data-listname="' + element.source + '" id="' +
+            '<p type="multiselect" class="viewmode-value" data-valfieldkey="' +
+            element.valfieldkey +
+            '" data-dispfieldkey="' +
+            element.Dispfieldkey +
+            '" data-listname="' +
+            element.source +
+            '" id="' +
             element.InternalName +
             '" ' +
             ToggleName +
@@ -10129,11 +10983,15 @@ window.View_ListInfo = {
           OnSuccess(flag, htmlBody);
           break;
 
-
         case "lookupmultiselect":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -10158,7 +11016,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -10170,30 +11030,50 @@ window.View_ListInfo = {
             // " " +
             // `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>" : ""}` +
             "</label>" +
-            '<p type="multiselect" class="viewmode-value" data-valfieldkey="' + element.valfieldkey + '" data-dispfieldkey="' + element.Dispfieldkey + '" data-listname="' + element.source + '" id="' +
+            '<p type="multiselect" class="viewmode-value" data-valfieldkey="' +
+            element.valfieldkey +
+            '" data-dispfieldkey="' +
+            element.Dispfieldkey +
+            '" data-listname="' +
+            element.source +
+            '" id="' +
             element.InternalName +
             '" ' +
             ToggleName +
-            'data-parentrelatedkeylvl1="' + element.fieldsinformlvl1 + '" data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1="' +
-            element.sourcefieldlvl1
-            + '" data-parentrelatedkeylvl2="' + element.fieldsinformlvl2 + '" data-parentrelatedvaluelvl2="" data-parentrelatedfilterkeylvl2="' + element.sourcefieldlvl2 + '" data-linkedto="' + element.linkedto + '"></p>' +
+            'data-parentrelatedkeylvl1="' +
+            element.fieldsinformlvl1 +
+            '" data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1="' +
+            element.sourcefieldlvl1 +
+            '" data-parentrelatedkeylvl2="' +
+            element.fieldsinformlvl2 +
+            '" data-parentrelatedvaluelvl2="" data-parentrelatedfilterkeylvl2="' +
+            element.sourcefieldlvl2 +
+            '" data-linkedto="' +
+            element.linkedto +
+            '"></p>' +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
 
         case "lookupchildtoparentmultiselect":
-
           var fieldTargetList = "";
-          var fieldmasterkey = ""
-          if (element.fieldtargetlist && element.fieldtargetlist != "undefined") {
-
-            fieldTargetList = `data-fieldTargetList=${element.fieldtargetlist}`
-            fieldmasterkey = `data-fieldmasterkey=${element.fieldmasterkey}`
+          var fieldmasterkey = "";
+          if (
+            element.fieldtargetlist &&
+            element.fieldtargetlist != "undefined"
+          ) {
+            fieldTargetList = `data-fieldTargetList=${element.fieldtargetlist}`;
+            fieldmasterkey = `data-fieldmasterkey=${element.fieldmasterkey}`;
           }
 
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -10218,7 +11098,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -10230,20 +11112,43 @@ window.View_ListInfo = {
             // " " +
             // `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>" : ""}` +
             "</label>" +
-            '<p type="multiselect" class="viewmode-value" data-valfieldkey="' + element.valfieldkey + '" data-dispfieldkey="' + element.Dispfieldkey + '" data-listname="' + element.source + '" id="' +
+            '<p type="multiselect" class="viewmode-value" data-valfieldkey="' +
+            element.valfieldkey +
+            '" data-dispfieldkey="' +
+            element.Dispfieldkey +
+            '" data-listname="' +
+            element.source +
+            '" id="' +
             element.InternalName +
             '" ' +
             ToggleName +
-            'data-parentrelatedkeylvl1="' + element.fieldsinformlvl1 + '" data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1="' +
-            element.sourcefieldlvl1
-            + '" data-parentrelatedkeylvl2="' + element.fieldsinformlvl2 + '" data-parentrelatedvaluelvl2="" data-parentrelatedfilterkeylvl2="' + element.sourcefieldlvl2 + '" data-linkedto="' + element.linkedto + '" ' + fieldTargetList + " " + fieldmasterkey + '></p>' +
+            'data-parentrelatedkeylvl1="' +
+            element.fieldsinformlvl1 +
+            '" data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1="' +
+            element.sourcefieldlvl1 +
+            '" data-parentrelatedkeylvl2="' +
+            element.fieldsinformlvl2 +
+            '" data-parentrelatedvaluelvl2="" data-parentrelatedfilterkeylvl2="' +
+            element.sourcefieldlvl2 +
+            '" data-linkedto="' +
+            element.linkedto +
+            '" ' +
+            fieldTargetList +
+            " " +
+            fieldmasterkey +
+            "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
         case "multiselect":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             element.className +
             ' " ' +
@@ -10268,7 +11173,9 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '        data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -10290,12 +11197,19 @@ window.View_ListInfo = {
         case "multiline":
           htmlBody =
             '<div class="col-md-6 CFIELD multiline" ' +
-            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
             " " +
             thistip +
             ' data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             '<label for="' +
@@ -10319,7 +11233,6 @@ window.View_ListInfo = {
           OnSuccess(flag, htmlBody);
           break;
         case "anchor":
-
           htmlBody =
             '<div class="col-md-3 CFIELD ' +
             element.className +
@@ -10347,12 +11260,16 @@ window.View_ListInfo = {
             isWfenablestagesIDs +
             '       data-groups="' +
             groups +
-            '" ' + notAllowForGroups + ' style="display:' +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
             element.display +
             '">' +
             "<a " +
             ToggleName +
-            ' href="' + element.href + '" ' +
+            ' href="' +
+            element.href +
+            '" ' +
             dynamic +
             ' class="formLink" id="' +
             element.InternalName +
@@ -10388,7 +11305,6 @@ window.View_ListInfo = {
 var Dynamic_Data_Request = {
   onSuccess: function (sender, args) {
     $("[dynamic=" + Dynamic_Data_Request.g.dyfieldname + "]").each(function () {
-
       switch ($(this).attr("type")) {
         case "date":
           var d =
@@ -10442,8 +11358,8 @@ var Dynamic_Data_Request = {
             oListItem.get_item("" + $(this).attr("id") + "") == null
               ? "ادخل الإسم أو البريد الإلكتروني ..."
               : oListItem
-                .get_item("" + $(this).attr("id") + "")
-                .get_lookupValue();
+                  .get_item("" + $(this).attr("id") + "")
+                  .get_lookupValue();
           $(this).attr("data-email", pemail);
           var idinternal = $(this).attr("id");
           var mp = new MyPeoplePicker();
@@ -10456,8 +11372,8 @@ var Dynamic_Data_Request = {
             oListItem.get_item("" + $(this).attr("id") + "") == null
               ? "ادخل الإسم أو البريد الإلكتروني ..."
               : oListItem
-                .get_item("" + $(this).attr("id") + "")
-                .get_lookupValue();
+                  .get_item("" + $(this).attr("id") + "")
+                  .get_lookupValue();
           $(this).attr("data-email", pemail);
           var idinternal = $(this).attr("id");
           var mp = new MyPeoplePicker();
@@ -10503,18 +11419,27 @@ var Dynamic_Data_Request = {
             else $(this).val(num);
           } else {
             $(this).val(oListItem.get_item("" + $(this).attr("id") + ""));
-            var valFromList = oListItem.get_item("" + $(this).attr("id") + "") || ""
+            var valFromList =
+              oListItem.get_item("" + $(this).attr("id") + "") || "";
 
             // disable enable master details section on projects depends on Amount
             if (valFromList) {
-              if (listkey == 'projects') {
-                $("[data-target_list=Deliverables] .fieldset-container").removeClass("disable_section")
-                $("[data-target_list=Milestones] .fieldset-container").removeClass("disable_section")
+              if (listkey == "projects") {
+                $(
+                  "[data-target_list=Deliverables] .fieldset-container"
+                ).removeClass("disable_section");
+                $(
+                  "[data-target_list=Milestones] .fieldset-container"
+                ).removeClass("disable_section");
               }
             } else {
-              if (listkey == 'projects') {
-                $("[data-target_list=Deliverables] .fieldset-container").addClass("disable_section")
-                $("[data-target_list=Milestones] .fieldset-container").addClass("disable_section")
+              if (listkey == "projects") {
+                $(
+                  "[data-target_list=Deliverables] .fieldset-container"
+                ).addClass("disable_section");
+                $("[data-target_list=Milestones] .fieldset-container").addClass(
+                  "disable_section"
+                );
               }
             }
           }
@@ -10556,18 +11481,18 @@ var Dynamic_Data_Request = {
                 .text()
                 .indexOf("لعام") > -1
                 ? $("#Cost" + i)
-                  .parent()
-                  .find("label")
-                  .text()
-                  .split("لعام")[0] +
-                " لعام " +
-                yeartodisp
+                    .parent()
+                    .find("label")
+                    .text()
+                    .split("لعام")[0] +
+                  " لعام " +
+                  yeartodisp
                 : $("#Cost" + i)
-                  .parent()
-                  .find("label")
-                  .text() +
-                " لعام " +
-                yeartodisp;
+                    .parent()
+                    .find("label")
+                    .text() +
+                  " لعام " +
+                  yeartodisp;
           } else {
             var label =
               $("#Cost" + i)
@@ -10576,18 +11501,18 @@ var Dynamic_Data_Request = {
                 .text()
                 .indexOf("For Year") > -1
                 ? $("#Cost" + i)
-                  .parent()
-                  .find("label")
-                  .text()
-                  .split("For Year")[0] +
-                " For Year " +
-                yeartodisp
+                    .parent()
+                    .find("label")
+                    .text()
+                    .split("For Year")[0] +
+                  " For Year " +
+                  yeartodisp
                 : $("#Cost" + i)
-                  .parent()
-                  .find("label")
-                  .text() +
-                " For Year " +
-                yeartodisp;
+                    .parent()
+                    .find("label")
+                    .text() +
+                  " For Year " +
+                  yeartodisp;
           }
           $("#Cost" + i)
             .parent()
@@ -10635,14 +11560,12 @@ var Dynamic_Data_Request = {
     },
   },
 };
-var generalOriginalValue = []
+var generalOriginalValue = [];
 
 dynamicAffectSelect = {
   // The main Initialization function
   init: function (affectedSelectsInfo) {
-
     if (affectedSelectsInfo.length) {
-
       var queryFieldValue = affectedSelectsInfo[0].queryFieldValue
         ? affectedSelectsInfo[0].queryFieldValue
         : "";
@@ -10653,7 +11576,6 @@ dynamicAffectSelect = {
       var queryFieldType = affectedSelectsInfo[0].queryFieldType
         ? affectedSelectsInfo[0].queryFieldType
         : "";
-
 
       dynamicAffectSelect.g.affectedSelectsInfo = affectedSelectsInfo;
       var clientContext = new SP.ClientContext.get_current();
@@ -10668,13 +11590,21 @@ dynamicAffectSelect = {
         ? affectedSelectsInfo[0].customFilterValue
         : affectedSelectsInfo[0].parentFieldValue;
 
-      if (affectedSelectsInfo[0].parentCustomFilterValueFromSibling && affectedSelectsInfo[0].parentCustomFilterValueFromSibling != undefined) {
-        queryFieldValue = affectedSelectsInfo[0].parentCustomFilterValueFromSibling
+      if (
+        affectedSelectsInfo[0].parentCustomFilterValueFromSibling &&
+        affectedSelectsInfo[0].parentCustomFilterValueFromSibling != undefined
+      ) {
+        queryFieldValue =
+          affectedSelectsInfo[0].parentCustomFilterValueFromSibling;
       }
 
-
-      if (listkey == 'initiatives' && valueToFilter && valueToFilter == 'strategically') { // specially for trategically value
-        valueToFilter = 'ministry' // becuse there is a value we use it in GoalStrategy list
+      if (
+        listkey == "initiatives" &&
+        valueToFilter &&
+        valueToFilter == "strategically"
+      ) {
+        // specially for trategically value
+        valueToFilter = "ministry"; // becuse there is a value we use it in GoalStrategy list
       }
 
       // depends on role
@@ -10742,7 +11672,6 @@ dynamicAffectSelect = {
       // }
       //
 
-
       if (
         affectedSelectsInfo[0].isCustomFilterValue === "true" &&
         !affectedSelectsInfo[0].customFilterValue
@@ -10780,7 +11709,6 @@ dynamicAffectSelect = {
         //FieldRef Name="Created" Ascending="True"(if we want to sort to alphapetics you need to Name='Name' and  Ascending='True')
       }
 
-
       camlQuery.set_viewXml(Query);
 
       dynamicAffectSelect.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -10797,48 +11725,56 @@ dynamicAffectSelect = {
     var listItemEnum = collListItem.getEnumerator();
     let affectedSelectsInfo = dynamicAffectSelect.g.affectedSelectsInfo[0];
 
-
-    var targetFieldType = ''
+    var targetFieldType = "";
     if (affectedSelectsInfo && affectedSelectsInfo != "undefined") {
-      targetFieldType = $(`#${affectedSelectsInfo.affectedFieldName}`).attr("type");
+      targetFieldType = $(`#${affectedSelectsInfo.affectedFieldName}`).attr(
+        "type"
+      );
     }
 
+    let selectedVal = "";
+    let optionsBody = "";
 
-
-    let selectedVal = ""
-    let optionsBody = ""
-
-
-    var getSiblingsValues = []
-
-
+    var getSiblingsValues = [];
 
     if (affectedSelectsInfo && affectedSelectsInfo != "undefined") {
-
       $(`#${affectedSelectsInfo.affectedFieldName} > option`).each(function () {
         //
-        var dataSeblingValue = $(this).data("siblingvalue")
-        var optionValue = $(this).attr("value")
-        var optionId = $(this).attr("option-id")
-        var textOption = $(this).text()
+        var dataSeblingValue = $(this).data("siblingvalue");
+        var optionValue = $(this).attr("value");
+        var optionId = $(this).attr("option-id");
+        var textOption = $(this).text();
         //
-        var arraysiblingsVal = $(this).attr("data-arraysiblingvalues")
+        var arraysiblingsVal = $(this).attr("data-arraysiblingvalues");
 
-        if (arraysiblingsVal && arraysiblingsVal != 'undefined') {
-          getSiblingsValues.push({ "id": optionId, 'arraySiblings': arraysiblingsVal })
+        if (arraysiblingsVal && arraysiblingsVal != "undefined") {
+          getSiblingsValues.push({
+            id: optionId,
+            arraySiblings: arraysiblingsVal,
+          });
         }
 
-        if (optionId && dataSeblingValue && dataSeblingValue != "undefined" && optionValue) {
-
-          generalOriginalValue.push({ "id": optionId, "siblingvalue": dataSeblingValue, "value": optionValue, textOption: textOption, affectedFieldName: affectedSelectsInfo.affectedFieldName })
-
+        if (
+          optionId &&
+          dataSeblingValue &&
+          dataSeblingValue != "undefined" &&
+          optionValue
+        ) {
+          generalOriginalValue.push({
+            id: optionId,
+            siblingvalue: dataSeblingValue,
+            value: optionValue,
+            textOption: textOption,
+            affectedFieldName: affectedSelectsInfo.affectedFieldName,
+          });
         }
-      })
+      });
     }
 
-    if (targetFieldType == 'multiselect') {
-
-      selectedVal = $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu`)
+    if (targetFieldType == "multiselect") {
+      selectedVal = $(
+        `ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu`
+      )
         .find("input:checked")
         .map(function () {
           //getting selected choices
@@ -10846,34 +11782,31 @@ dynamicAffectSelect = {
         })
         .get();
 
-      $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu`).html("");
-
-
-
-
+      $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu`).html(
+        ""
+      );
     } else {
       // selectedVal = $(`select#${affectedSelectsInfo.affectedFieldName}`).attr("value"); // get selected val to use it in edit
 
       // to filter the value in cr
       if (listkey == "changerequest") {
-        selectedVal = $(`select#${affectedSelectsInfo.affectedFieldName}`).val(); // get selected val to use it in edit
+        selectedVal = $(
+          `select#${affectedSelectsInfo.affectedFieldName}`
+        ).val(); // get selected val to use it in edit
       } else {
-        selectedVal = $(`select#${affectedSelectsInfo.affectedFieldName}`).attr("value"); // get selected val to use it in edit
+        selectedVal = $(`select#${affectedSelectsInfo.affectedFieldName}`).attr(
+          "value"
+        ); // get selected val to use it in edit
       }
 
       $(`select#${affectedSelectsInfo.affectedFieldName}`).html("");
 
-      optionsBody = '<option class="Resources" value="" selected="" disabled=""></option>'; // to not choose the first value in dropdown
+      optionsBody =
+        '<option class="Resources" value="" selected="" disabled=""></option>'; // to not choose the first value in dropdown
     }
-
-
-
-
-
 
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
-
 
       let dispfieldkey = oListItem.get_item(
         `${affectedSelectsInfo.dispFieldKey}`
@@ -10887,11 +11820,8 @@ dynamicAffectSelect = {
         var optionText = dispfieldkey;
       }
 
-
-
       if (targetFieldType == "multiselect") {
-        optionsBody +=
-          `<label class="grp-select">${valfieldkey}</label>
+        optionsBody += `<label class="grp-select">${valfieldkey}</label>
         <li>
         <div class="checkbox">
         <label>
@@ -10900,13 +11830,15 @@ dynamicAffectSelect = {
         </label>
         </div>
         </li>
-        `
+        `;
       } else {
         if (getSiblingsValues.length) {
-          getSiblingsValues.forEach(el => {
+          getSiblingsValues.forEach((el) => {
             if (el.id == oListItem.get_id()) {
               optionsBody +=
-                '<option data-arraysiblingvalues=' + el.arraySiblings + ' option-id="' +
+                "<option data-arraysiblingvalues=" +
+                el.arraySiblings +
+                ' option-id="' +
                 oListItem.get_id() +
                 '" value="' +
                 valfieldkey +
@@ -10914,13 +11846,15 @@ dynamicAffectSelect = {
                 optionText +
                 "</option>";
             }
-          })
+          });
         } else {
           //affectedSelectsInfo.fromCr add to get the data when chosse edit in edit section cr
-          if (listkey == "changerequest" && isRoleDataLevelAccess && !affectedSelectsInfo.fromCr) {
-
+          if (
+            listkey == "changerequest" &&
+            isRoleDataLevelAccess &&
+            !affectedSelectsInfo.fromCr
+          ) {
           } else {
-
             optionsBody +=
               '<option option-id="' +
               oListItem.get_id() +
@@ -10937,10 +11871,16 @@ dynamicAffectSelect = {
     // to handle the change request when dynamic change in roles
     //affectedSelectsInfo.fromCr add to not assign new option body when data request when edit
 
-    if (listkey == "changerequest" && isRoleDataLevelAccess && !affectedSelectsInfo.fromCr) {
-      generalOriginalValue.forEach(el => {
-
-        if ((el.siblingvalue == affectedSelectsInfo.customFilterValue) && (el.affectedFieldName == affectedSelectsInfo.affectedFieldName)) {
+    if (
+      listkey == "changerequest" &&
+      isRoleDataLevelAccess &&
+      !affectedSelectsInfo.fromCr
+    ) {
+      generalOriginalValue.forEach((el) => {
+        if (
+          el.siblingvalue == affectedSelectsInfo.customFilterValue &&
+          el.affectedFieldName == affectedSelectsInfo.affectedFieldName
+        ) {
           optionsBody +=
             '<option option-id="' +
             el.id +
@@ -10950,31 +11890,26 @@ dynamicAffectSelect = {
             el.textOption +
             "</option>";
         }
-      })
-
+      });
     }
 
-
     if (targetFieldType == "multiselect") {
+      $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu`).html(
+        optionsBody
+      );
+      $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu li`).each(
+        function () {
+          var liInputValue = $(this).find("input").val();
 
-
-      $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu`).html(optionsBody)
-      $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu li`).each(function () {
-
-        var liInputValue = $(this).find("input").val()
-
-        if (selectedVal.includes(liInputValue)) {
-          $(this).find("input").attr("checked", true);
+          if (selectedVal.includes(liInputValue)) {
+            $(this).find("input").attr("checked", true);
+          }
         }
-
-
-      })
-
+      );
     } else {
       $(`select#${affectedSelectsInfo.affectedFieldName}`).html(optionsBody);
 
       $(`select#${affectedSelectsInfo.affectedFieldName}`).val(selectedVal);
-
     }
 
     // to can filter if there is more one item in array like cr
@@ -11133,7 +12068,6 @@ window.Stages_Data_Request = {
 //change var to window
 window.Sectors_Info = {
   onSuccess: function (sender, args) {
-
     Sectors_Info.g.SectorArray = [];
     var collListItem = Sectors_Info.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
@@ -11178,7 +12112,6 @@ window.Sectors_Info = {
 
 var GetSector_Info = {
   onSuccess: function (sender, args) {
-
     var collListItem = GetSector_Info.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     while (listItemEnum.moveNext()) {
@@ -11239,7 +12172,6 @@ var GetSector_Info = {
 
 var Projects_Info = {
   onSuccess: function (sender, args) {
-
     var collListItem = Projects_Info.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     while (listItemEnum.moveNext()) {
@@ -11580,8 +12512,8 @@ var GetProject_Info = {
         if (!USERisWF) {
           $(
             '.section-container [data-hidestageID*="allstages"], .section-container [data-hidestageID*=' +
-            value +
-            "]"
+              value +
+              "]"
           ).each(function () {
             let tabId = $(this).parent().attr("id");
             $(`.form-tabs .nav-link[href="#${tabId}"]`).remove();
@@ -11623,7 +12555,9 @@ var GetProject_Info = {
           });
         } else {
           $(
-            '.section-container [data-isWfhidestageID*="allstages"], .section-container [data-isWfhidestageID*=' + value + "]"
+            '.section-container [data-isWfhidestageID*="allstages"], .section-container [data-isWfhidestageID*=' +
+              value +
+              "]"
           ).each(function () {
             let tabId = $(this).parent().attr("id");
             $(`.form-tabs .nav-link[href="#${tabId}"]`).remove();
@@ -11674,13 +12608,13 @@ var GetProject_Info = {
               $(this).children(".PPField").attr("required", true);
               $(this).children("textarea").attr("required", true);
             }
-          })
+          });
         }
       });
     } else {
       if (!USERisWF) {
-
-        $(`.section-container[data-hidestageID*="allstages"], .section-container[data-hidestageID*="${stage}"]`
+        $(
+          `.section-container[data-hidestageID*="allstages"], .section-container[data-hidestageID*="${stage}"]`
         ).each(function () {
           let tabId = $(this).parent().attr("id");
           $(`.form-tabs .nav-link[href="#${tabId}"]`).remove();
@@ -11761,10 +12695,8 @@ var GetProject_Info = {
           }
         });
 
-
         $('.helpful-info-ctx [data-showstageID*="' + stage + '"]').show();
         $('.helpful-info-ctx [data-showstageID*="allstages"]').show();
-
 
         $("[data-isWfrequirestageID]").each(function () {
           var stageofElement = $(this).attr("data-isWfenablestageID");
@@ -11775,20 +12707,20 @@ var GetProject_Info = {
             $(this).children(".PPField").attr("required", true);
             $(this).children("textarea").attr("required", true);
           }
-        })
+        });
       }
     }
     // }
     if (PCODE) {
       $(".headtwo").append(
         '<a class="" href="' +
-        _spPageContextInfo.webAbsoluteUrl +
-        '"><span class="litem">Home</span></a>' +
-        '<a class="" href="' +
-        _spPageContextInfo.webAbsoluteUrl +
-        "/SitePages/View.aspx?ListKey=projects&IID=" +
-        PID +
-        '"><span data-trans-projectdetails class="litem Resources"></span></a>' //+
+          _spPageContextInfo.webAbsoluteUrl +
+          '"><span class="litem">Home</span></a>' +
+          '<a class="" href="' +
+          _spPageContextInfo.webAbsoluteUrl +
+          "/SitePages/View.aspx?ListKey=projects&IID=" +
+          PID +
+          '"><span data-trans-projectdetails class="litem Resources"></span></a>' //+
       );
     }
   },
@@ -11845,26 +12777,26 @@ var GetProject_Info = {
       if (PCODE) {
         $("#O365_SearchBoxContainer_container").append(
           '<div class="User-Not"><div class="SNotifications"><span class="Tasks"><i class="fas fa-tasks" data-count="0"></i><a href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/SitePages/Listing.aspx?ListKey=tasks&PCODE=" +
-          PCODE +
-          '">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="0"></i><a href="/sites/SPM/SitePages/Listing.aspx?ListKey=risks&PCODE=' +
-          PCODE +
-          '">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="0"></i><a href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/SitePages/Listing.aspx?ListKey=issues&PCODE=" +
-          PCODE +
-          '"">Issues</a></span></div><div class="UProfile"></div></div>'
+            _spPageContextInfo.webAbsoluteUrl +
+            "/SitePages/Listing.aspx?ListKey=tasks&PCODE=" +
+            PCODE +
+            '">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="0"></i><a href="/sites/SPM/SitePages/Listing.aspx?ListKey=risks&PCODE=' +
+            PCODE +
+            '">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="0"></i><a href="' +
+            _spPageContextInfo.webAbsoluteUrl +
+            "/SitePages/Listing.aspx?ListKey=issues&PCODE=" +
+            PCODE +
+            '"">Issues</a></span></div><div class="UProfile"></div></div>'
         );
       } else {
         $("#O365_SearchBoxContainer_container").append(
           '<div class="User-Not"><div class="SNotifications"><span class="Tasks"><i class="fas fa-tasks" data-count="0"></i><a href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          '/SitePages/Listing.aspx?ListKey=tasks">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="0"></i><a href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          '/SitePages/Listing.aspx?ListKey=risks">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="0"></i><a href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          '/SitePages/Listing.aspx?ListKey=issues">Issues</a></span></div><div class="UProfile"></div></div>'
+            _spPageContextInfo.webAbsoluteUrl +
+            '/SitePages/Listing.aspx?ListKey=tasks">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="0"></i><a href="' +
+            _spPageContextInfo.webAbsoluteUrl +
+            '/SitePages/Listing.aspx?ListKey=risks">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="0"></i><a href="' +
+            _spPageContextInfo.webAbsoluteUrl +
+            '/SitePages/Listing.aspx?ListKey=issues">Issues</a></span></div><div class="UProfile"></div></div>'
         );
       }
     },
@@ -11931,7 +12863,7 @@ var deliverabePercent = {
           inpVal = parseFloat($("input#Weight").val()) || 0;
         } else {
           inpVal = parseInt($("input#Weight").val()) || 0;
-        }				// if($('input#WeightValue').val() < RemainingBudget){
+        } // if($('input#WeightValue').val() < RemainingBudget){
         newVal =
           RemainingBudget + inpVal >= 100 ? inpVal : RemainingBudget + inpVal;
         newVal = Number(newVal.toFixed("2"));
@@ -11948,8 +12880,8 @@ var deliverabePercent = {
           .find(" > label")
           .append(
             '<span data-trans-remainperc class="Resources remainpercstyle"></span><span class="remainpercstyle ">' +
-            RemainingBudget +
-            "]</span>"
+              RemainingBudget +
+              "]</span>"
           );
         changeResources();
       }
@@ -12184,7 +13116,7 @@ var benefitmetricsPercent = {
           inpVal = parseFloat($("input#Weight").val()) || 0;
         } else {
           inpVal = parseInt($("input#Weight").val()) || 0;
-        }				// if($('input#WeightValue').val() < RemainingBudget){
+        } // if($('input#WeightValue').val() < RemainingBudget){
         newVal =
           RemainingBudget + inpVal >= 100 ? inpVal : RemainingBudget + inpVal;
         newVal = Number(newVal.toFixed("2"));
@@ -12201,8 +13133,8 @@ var benefitmetricsPercent = {
           .find(" > label")
           .append(
             '<span data-trans-remainperc class="Resources remainpercstyle"></span><span class="remainpercstyle">' +
-            RemainingBudget +
-            "]</span>"
+              RemainingBudget +
+              "]</span>"
           );
         changeResources();
       }
@@ -12456,16 +13388,16 @@ window.Idea_Info = {
       if (CreatedBy !== UserN.Title) {
         $(".container-body").prepend(
           '<div class="errormsg alert"><span class="infoIcon"><i class="fas fa-info-circle"></i></span><span>' +
-          editablebyowneronly +
-          "</span></div>"
+            editablebyowneronly +
+            "</span></div>"
         );
       }
 
       if (IdeaStatus != "inprogress" && IdeaStatus != "ideaRejected") {
         $(".container-body").prepend(
           '<div class="errormsg alert"><span class="infoIcon"><i class="fas fa-info-circle"></i></span><span>' +
-          notEditableItem +
-          "</span></div>"
+            notEditableItem +
+            "</span></div>"
         );
       }
     }
@@ -12482,16 +13414,16 @@ window.Idea_Info = {
       if (CreatedBy !== UserN.Title) {
         $(".container-body").prepend(
           '<div class="errormsg alert"><span class="infoIcon"><i class="fas fa-info-circle"></i></span><span>' +
-          editablebyowneronly +
-          "</span></div>"
+            editablebyowneronly +
+            "</span></div>"
         );
       }
 
       if (IdeaStatus != "inprogress" && IdeaStatus != "ideaRejected") {
         $(".container-body").prepend(
           '<div class="errormsg alert"><span class="infoIcon"><i class="fas fa-info-circle"></i></span><span>' +
-          notEditableItem +
-          "</span></div>"
+            notEditableItem +
+            "</span></div>"
         );
       }
     }
@@ -12510,8 +13442,8 @@ window.Idea_Info = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='ID'/><Value Type='Text'>" +
-      IID +
-      "</Value></Eq></And></Where></Query></View>"
+        IID +
+        "</Value></Eq></And></Where></Query></View>"
     );
     Idea_Info.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Idea_Info.g.collListItem);
@@ -12649,8 +13581,8 @@ var Integration_Handler = {
               var ydate = !dateval
                 ? ""
                 : [dateval.slice(5, 10), dateval.slice(0, 4)]
-                  .join("/")
-                  .replace("-", "/");
+                    .join("/")
+                    .replace("-", "/");
 
               if (dateval) {
                 var obj = {};
@@ -12680,8 +13612,8 @@ var Integration_Handler = {
               var ydate = !dateval
                 ? ""
                 : [dateval.slice(5, 10), dateval.slice(0, 4)]
-                  .join("/")
-                  .replace("-", "/");
+                    .join("/")
+                    .replace("-", "/");
 
               if (dateval) {
                 var obj = {};
@@ -12931,7 +13863,6 @@ var Integration_Handler = {
       },
       data: reqData,
       success: function (data) {
-
         // $(".integration-save").addClass("success");
         var responseId = data.DocMngRs.MsgRsHdr.ResponseStatus.StatusCode;
         window.Archive_Data_Submit.init(RqUID, responseId, IID); // in form submit
@@ -13090,19 +14021,19 @@ var GetCurrentStage_Info = {
           $(this).children(".PPField").attr("required", true);
           $(this).children("textarea").attr("required", true);
         }
-      })
+      });
     }
     $(`.form-tabs .nav-link:first-child`).trigger("click");
     if (PCODE) {
       $(".headtwo").append(
         '<a class="" href="' +
-        _spPageContextInfo.webAbsoluteUrl +
-        '"><span class="litem">Home</span></a>' +
-        '<a class="" href="' +
-        _spPageContextInfo.webAbsoluteUrl +
-        "/SitePages/View.aspx?ListKey=projects&IID=" +
-        PID +
-        '"><span data-trans-projectdetails class="litem Resources"></span></a>' //+
+          _spPageContextInfo.webAbsoluteUrl +
+          '"><span class="litem">Home</span></a>' +
+          '<a class="" href="' +
+          _spPageContextInfo.webAbsoluteUrl +
+          "/SitePages/View.aspx?ListKey=projects&IID=" +
+          PID +
+          '"><span data-trans-projectdetails class="litem Resources"></span></a>' //+
       );
     }
   },
@@ -13145,22 +14076,31 @@ var GetCurrentStage_Info = {
 var get_hierarchies = {
   init: async function (lookupList) {
     accessCallisDone = false;
-    let isListConditional1
-    let isListConditional2
-    let isListConditional3
-    let isListConditional4
+    let isListConditional1;
+    let isListConditional2;
+    let isListConditional3;
+    let isListConditional4;
 
     if (!tempRoleHierarchies.length) {
       tempRoleHierarchies = Array.from(myRoleConfig[0].dataFilter.hierarchies);
     }
     if (tempRoleHierarchies.length) {
       isListConditional1 = tempRoleHierarchies[0].listName == lookupList;
-      isListConditional2 = tempRoleHierarchies[0].subRelation.listName == lookupList;
+      isListConditional2 =
+        tempRoleHierarchies[0].subRelation.listName == lookupList;
       isListConditional3 =
         tempRoleHierarchies[0].subRelation.subRelation.listName == lookupList;
-      isListConditional4 = (tempRoleHierarchies[0].subRelation.subRelation.subRelation ? tempRoleHierarchies[0].subRelation.subRelation.subRelation.listName == lookupList : false);
+      isListConditional4 = tempRoleHierarchies[0].subRelation.subRelation
+        .subRelation
+        ? tempRoleHierarchies[0].subRelation.subRelation.subRelation.listName ==
+          lookupList
+        : false;
     }
-    let allGood = isListConditional1 || isListConditional2 || isListConditional3 || isListConditional4;
+    let allGood =
+      isListConditional1 ||
+      isListConditional2 ||
+      isListConditional3 ||
+      isListConditional4;
     if (allGood) {
       tempRoleHierarchies.shift();
       initiateDataLevelAccess(lookupList);
@@ -13169,16 +14109,14 @@ var get_hierarchies = {
       if (tempRoleHierarchies.length) {
         get_hierarchies.init(lookupList);
       } else {
-        accessCallisDone = true
+        accessCallisDone = true;
       }
     } else {
-      accessCallisDone = true
+      accessCallisDone = true;
     }
     await waitUntil(() => accessCallisDone === true);
-  }
-
-
-}
+  },
+};
 
 async function waitUntil(condition, time = 500) {
   while (!condition()) {
@@ -13188,25 +14126,25 @@ async function waitUntil(condition, time = 500) {
 ///////////////////////////////////
 //working on parent type
 
-
 window.get_parent_data = {
   init: function (listName, code, parentFieldName, fieldName, getGrandParent) {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(listName);
     var camlQuery = new SP.CamlQuery();
 
-
-    valueBasedOnParent = []
+    valueBasedOnParent = [];
 
     camlQuery.set_viewXml(
-      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef  Name=\"" + parentFieldName + "\" /><Value Type=\"Text\">" +
-      code +
-      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef  Name=\"" +
+        parentFieldName +
+        '" /><Value Type="Text">' +
+        code +
+        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
 
     get_parent_data.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
-    get_parent_data.g.fieldName = fieldName
-    get_parent_data.g.getGrandParent = getGrandParent
+    get_parent_data.g.fieldName = fieldName;
+    get_parent_data.g.getGrandParent = getGrandParent;
 
     clientContext.load(get_parent_data.g.collListItem);
     clientContext.executeQueryAsync(
@@ -13218,23 +14156,26 @@ window.get_parent_data = {
     var collListItem = get_parent_data.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
 
-    var dynamicFieldName = get_parent_data.g.fieldName
-    var getGrandParent = get_parent_data.g.getGrandParent
-    var dynamicVal = ""
+    var dynamicFieldName = get_parent_data.g.fieldName;
+    var getGrandParent = get_parent_data.g.getGrandParent;
+    var dynamicVal = "";
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       itemID = oListItem.get_id();
 
-      dynamicVal = oListItem.get_item(dynamicFieldName) || '';
+      dynamicVal = oListItem.get_item(dynamicFieldName) || "";
 
       if (getGrandParent && getGrandParent.length) {
-        get_grandparent_data.init(getGrandParent[0].grandParentList, dynamicVal, getGrandParent[0].grandParentFieldName, getGrandParent[0].grandParentTargetFieldName)
+        get_grandparent_data.init(
+          getGrandParent[0].grandParentList,
+          dynamicVal,
+          getGrandParent[0].grandParentFieldName,
+          getGrandParent[0].grandParentTargetFieldName
+        );
       } else {
-        valueBasedOnParent.push(dynamicVal)
+        valueBasedOnParent.push(dynamicVal);
       }
-
     }
-
   },
   onError: function (sender, args) {
     console.log(
@@ -13248,23 +14189,29 @@ window.get_parent_data = {
 //////////////////////////////////
 
 var get_grandparent_data = {
-  init: function (listName, code, grandParentFieldName, grandParentTargetFieldName) {
+  init: function (
+    listName,
+    code,
+    grandParentFieldName,
+    grandParentTargetFieldName
+  ) {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(listName);
     var camlQuery = new SP.CamlQuery();
 
-
-    valueBasedOnParent = []
+    valueBasedOnParent = [];
 
     camlQuery.set_viewXml(
-      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef  Name=\"" + grandParentFieldName + "\" /><Value Type=\"Text\">" +
-      code +
-      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef  Name=\"" +
+        grandParentFieldName +
+        '" /><Value Type="Text">' +
+        code +
+        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
 
     get_grandparent_data.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
-    get_grandparent_data.g.grandParentTargetFieldName = grandParentTargetFieldName
-
+    get_grandparent_data.g.grandParentTargetFieldName =
+      grandParentTargetFieldName;
 
     clientContext.load(get_grandparent_data.g.collListItem);
     clientContext.executeQueryAsync(
@@ -13276,18 +14223,18 @@ var get_grandparent_data = {
     var collListItem = get_grandparent_data.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
 
-    var grandParentTargetFieldName = get_grandparent_data.g.grandParentTargetFieldName
-    var dynamicGrandParentVal = ""
+    var grandParentTargetFieldName =
+      get_grandparent_data.g.grandParentTargetFieldName;
+    var dynamicGrandParentVal = "";
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       itemID = oListItem.get_id();
 
-      dynamicGrandParentVal = oListItem.get_item(grandParentTargetFieldName) || '';
+      dynamicGrandParentVal =
+        oListItem.get_item(grandParentTargetFieldName) || "";
 
-      valueBasedOnParent.push(dynamicGrandParentVal)
-
+      valueBasedOnParent.push(dynamicGrandParentVal);
     }
-
   },
   onError: function (sender, args) {
     console.log(
@@ -13296,4 +14243,4 @@ var get_grandparent_data = {
   },
   // Global variables
   g: {},
-}
+};

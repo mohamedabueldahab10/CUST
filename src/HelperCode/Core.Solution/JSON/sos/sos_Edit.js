@@ -17,7 +17,18 @@ var Information_Form = [
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
         descPhraseEn: "max length of letters equal 255",
       },
-
+      {
+        InternalName: 'ObjectiveCode',
+        DisplayNameEn: 'Objective Code',
+        DisplayName: 'رمز الهدف',
+        type: 'stringunique',
+        listname:"SOs",
+        // maxchar: '255',
+        withletters: true,
+        Errmsgkey: "uniquefield",
+        descPhraseAr: "يجب ان يكون رمز الهدف فريد وغير مكرر",
+        descPhraseEn: "The code should be unique",
+      },
       {
         InternalName: 'ObjectiveOwner',
         DisplayName: 'مالك الهدف',

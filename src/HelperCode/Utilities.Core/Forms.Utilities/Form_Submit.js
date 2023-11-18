@@ -11,18 +11,33 @@ window.IdeaId;
 // if (window.location.href.includes("STCODE")) {
 //   STCODE = window.location.href.split('STCODE=')[1].split('&')[0];
 // }
-var projectManagerPickedToProjectCenter = '';
+var projectManagerPickedToProjectCenter = "";
 
-var kpiName = '', kpiType = '', kpiSector = '', kpiSubSector = '', kpiMainGoalRelated = '', kpiSubGoalRelated = '', kpiPortfolio = '', kpiPerformanceAnalysis = '', kpiYearPicked = '', kpiMidPicked = '', kpiQuarterPicked = '', kpiMonthPicked = '', kpiPeriodTypeUpdate = '', kpiRecurrenceChanged = '';
+var kpiName = "",
+  kpiType = "",
+  kpiSector = "",
+  kpiSubSector = "",
+  kpiMainGoalRelated = "",
+  kpiSubGoalRelated = "",
+  kpiPortfolio = "",
+  kpiPerformanceAnalysis = "",
+  kpiYearPicked = "",
+  kpiMidPicked = "",
+  kpiQuarterPicked = "",
+  kpiMonthPicked = "",
+  kpiPeriodTypeUpdate = "",
+  kpiRecurrenceChanged = "";
 
-var masterIdWhenCreate = 0
+var masterIdWhenCreate = 0;
 
-var allEnterpriseResources = [], projectBuildTeamArr = [], projectManagerPickerToEpm;
+var allEnterpriseResources = [],
+  projectBuildTeamArr = [],
+  projectManagerPickerToEpm;
 
-var fieldTargetListInMaster = []// save the field value in other list as a master section
+var fieldTargetListInMaster = []; // save the field value in other list as a master section
 
 // get all id of master when create
-allNewMasterIdRelatedCodeArr = []
+allNewMasterIdRelatedCodeArr = [];
 //
 
 if (
@@ -57,7 +72,6 @@ var newFormUserCalls = {
       method: "GET",
       headers: { Accept: "application/json; odata=verbose" },
       success: function (data) {
-
         allResourcesArr = data.d.results;
         SP.SOD.registerSod(
           "PS.ProjectContext",
@@ -73,11 +87,10 @@ var newFormUserCalls = {
 };
 
 //added to handle the Koi Results list
-var kpiResultsArr = []
-
+var kpiResultsArr = [];
 
 // to handle BenefitMetric Results list
-var benefitMetricsArr = []
+var benefitMetricsArr = [];
 
 window.New_Data_Submit = {
   preinit: function () {
@@ -93,89 +106,104 @@ window.New_Data_Submit = {
       isCheckMember = true;
       var portfoliomanager =
         $("#Manager").find("span.sp-peoplepicker-userSpan").attr("sid") ==
-          undefined
+        undefined
           ? ""
           : SP.FieldUserValue.fromUser(
-            $("#Manager").find("span.sp-peoplepicker-userSpan").attr("sid")
-          );
+              $("#Manager").find("span.sp-peoplepicker-userSpan").attr("sid")
+            );
       var portfoliomanagername = encodeURIComponent(
         portfoliomanager.get_lookupValue()
       );
-      userCalls.isMember("System Portfolio Manager", portfoliomanagername, 'Manager');
+      userCalls.isMember(
+        "System Portfolio Manager",
+        portfoliomanagername,
+        "Manager"
+      );
     }
     if (
-      ((listkey == "mainkpi") || (listkey == "changerequest" && RListKey == "mainkpi")) &&
+      (listkey == "mainkpi" ||
+        (listkey == "changerequest" && RListKey == "mainkpi")) &&
       $("#Owner").find("span.sp-peoplepicker-userSpan").attr("sid")
     ) {
       isCheckMember = true;
       var kpiowner =
         $("#Owner").find("span.sp-peoplepicker-userSpan").attr("sid") ==
-          undefined
+        undefined
           ? ""
           : SP.FieldUserValue.fromUser(
-            $("#Owner").find("span.sp-peoplepicker-userSpan").attr("sid")
-          );
-      var kpiownername = encodeURIComponent(
-        kpiowner.get_lookupValue()
-      );
+              $("#Owner").find("span.sp-peoplepicker-userSpan").attr("sid")
+            );
+      var kpiownername = encodeURIComponent(kpiowner.get_lookupValue());
       membersGroupCheckArray.push({
         groupName: "KPI Owners",
         userLoginName: kpiownername,
-        fieldID: 'Owner'
-      })
+        fieldID: "Owner",
+      });
     }
     if (
-      ((listkey == "mainkpi") || (listkey == "changerequest" && RListKey == "mainkpi")) &&
+      (listkey == "mainkpi" ||
+        (listkey == "changerequest" && RListKey == "mainkpi")) &&
       $("#PerformanceLeader").find("span.sp-peoplepicker-userSpan").attr("sid")
     ) {
       pickerValidationDone = true;
       isCheckMember = true;
       var perforrmanceleader =
-        $("#PerformanceLeader").find("span.sp-peoplepicker-userSpan").attr("sid") ==
-          undefined
+        $("#PerformanceLeader")
+          .find("span.sp-peoplepicker-userSpan")
+          .attr("sid") == undefined
           ? ""
           : SP.FieldUserValue.fromUser(
-            $("#PerformanceLeader").find("span.sp-peoplepicker-userSpan").attr("sid")
-          );
+              $("#PerformanceLeader")
+                .find("span.sp-peoplepicker-userSpan")
+                .attr("sid")
+            );
       var perforrmanceleadername = encodeURIComponent(
         perforrmanceleader.get_lookupValue()
       );
       membersGroupCheckArray.push({
         groupName: "Performance Leaders",
         userLoginName: perforrmanceleadername,
-        fieldID: 'PerformanceLeader'
-      })
+        fieldID: "PerformanceLeader",
+      });
     }
     if (
-      ((listkey == "mainkpi") || (listkey == "changerequest" && RListKey == "mainkpi")) &&
+      (listkey == "mainkpi" ||
+        (listkey == "changerequest" && RListKey == "mainkpi")) &&
       $("#PerformanceLeader2").find("span.sp-peoplepicker-userSpan").attr("sid")
     ) {
       pickerValidationDone = true;
       isCheckMember = true;
       var perforrmanceleader =
-        $("#PerformanceLeader2").find("span.sp-peoplepicker-userSpan").attr("sid") ==
-          undefined
+        $("#PerformanceLeader2")
+          .find("span.sp-peoplepicker-userSpan")
+          .attr("sid") == undefined
           ? ""
           : SP.FieldUserValue.fromUser(
-            $("#PerformanceLeader2").find("span.sp-peoplepicker-userSpan").attr("sid")
-          );
+              $("#PerformanceLeader2")
+                .find("span.sp-peoplepicker-userSpan")
+                .attr("sid")
+            );
       var perforrmanceleadername = encodeURIComponent(
         perforrmanceleader.get_lookupValue()
       );
       membersGroupCheckArray.push({
         groupName: "Performance Leaders",
         userLoginName: perforrmanceleadername,
-        fieldID: 'PerformanceLeader2'
-      })
+        fieldID: "PerformanceLeader2",
+      });
     }
     // membersGroupCheckArray.length > 0 ? userCalls.isMember(membersGroupCheckArray[0].groupName, membersGroupCheckArray[0].userLoginName, membersGroupCheckArray[0].fieldID) : '';
     var pickervalid = true; //check required people picker
-    var multiSelectValid = true
+    var multiSelectValid = true;
     $("[type=picker][required]").each(function () {
-
-      if (listkey == 'changerequest' && $(this).find("span.sp-peoplepicker-userSpan").length == 0) {
-
-        if (($(this).attr("data-email") == enternameemail) || (!$(this).attr("data-email"))) {
+      if (
+        listkey == "changerequest" &&
+        $(this).find("span.sp-peoplepicker-userSpan").length == 0
+      ) {
+        if (
+          $(this).attr("data-email") == enternameemail ||
+          !$(this).attr("data-email")
+        ) {
           pickervalid = false;
           $(this).addClass("picker-error");
           $(this).removeClass("picker-valid");
@@ -192,29 +220,38 @@ window.New_Data_Submit = {
     });
 
     $("[type=picker]").each(function () {
-
-      if ($(this).find("span.sp-peoplepicker-userSpan").attr('aria-invalid') == 'true') {
+      if (
+        $(this).find("span.sp-peoplepicker-userSpan").attr("aria-invalid") ==
+        "true"
+      ) {
         pickervalid = false;
         $(this).addClass("picker-error");
         $(this).removeClass("picker-valid");
       }
 
-      if ($(this).find('span.ms-formvalidation.sp-peoplepicker-errorMsg').length) {
+      if (
+        $(this).find("span.ms-formvalidation.sp-peoplepicker-errorMsg").length
+      ) {
         pickervalid = false;
         $(this).addClass("picker-error");
         $(this).removeClass("picker-valid");
       }
-    })
-
+    });
 
     //////////
     $("[type=multipicker][required]").each(function () {
-      if ($(this).find("span.sp-peoplepicker-userSpan").length == 0 && ($(this).attr('data-email') == enternameemail)) {
+      if (
+        $(this).find("span.sp-peoplepicker-userSpan").length == 0 &&
+        $(this).attr("data-email") == enternameemail
+      ) {
         pickervalid = false;
         $(this).addClass("picker-error");
         $(this).removeClass("picker-valid");
         // return false;
-      } else if ($(this).find("span.sp-peoplepicker-userSpan").length == 0 && !$(this).attr('data-email')) {
+      } else if (
+        $(this).find("span.sp-peoplepicker-userSpan").length == 0 &&
+        !$(this).attr("data-email")
+      ) {
         pickervalid = false;
         $(this).addClass("picker-error");
         $(this).removeClass("picker-valid");
@@ -225,63 +262,106 @@ window.New_Data_Submit = {
     });
 
     $("[type=multipicker]").each(function () {
-      if ($(this).find("span.sp-peoplepicker-userSpan").attr('aria-invalid') == 'true') {
+      if (
+        $(this).find("span.sp-peoplepicker-userSpan").attr("aria-invalid") ==
+        "true"
+      ) {
         pickervalid = false;
         $(this).addClass("picker-error");
         $(this).removeClass("picker-valid");
       }
-    })
+    });
 
     if ($(".was-validated .form-control:invalid").length == 0 && pickervalid) {
-      membersGroupCheckArray.length > 0 ? userCalls.isMember(membersGroupCheckArray[0].groupName, membersGroupCheckArray[0].userLoginName, membersGroupCheckArray[0].fieldID) : '';
+      membersGroupCheckArray.length > 0
+        ? userCalls.isMember(
+            membersGroupCheckArray[0].groupName,
+            membersGroupCheckArray[0].userLoginName,
+            membersGroupCheckArray[0].fieldID
+          )
+        : "";
     }
-
 
     // to show the err msg in fields
-    if ($(".was-validated .CFIELD:not(.even-required) .form-control").length > 0) {
-
+    if (
+      $(".was-validated .CFIELD:not(.even-required) .form-control").length > 0
+    ) {
       $(".was-validated .form-control:invalid").each(function () {
-        $(this).siblings('.errMsgField').show();
-      })
+        $(this).siblings(".errMsgField").show();
+      });
+
     }
     //validation of multiselect
-    var multiSelectId = false
-    $('.dropdown-menu.multiselect_scroll.required').each(function () {
+    var multiSelectId = false;
+    $(".dropdown-menu.multiselect_scroll.required").each(function () {
       if ($(this).length) {
-        if ($('.dropdown-menu.multiselect_scroll.required :checkbox:checked').length == 0) {
+        if (
+          $(".dropdown-menu.multiselect_scroll.required :checkbox:checked")
+            .length == 0
+        ) {
+          multiSelectValid = false;
+          $(".dropdown-menu.multiselect_scroll.required")
+            .parent()
+            .parent()
+            .siblings(".errMsgField")
+            .show();
 
-          multiSelectValid = false
-          $('.dropdown-menu.multiselect_scroll.required').parent().parent().siblings('.errMsgField').show()
-
-          multiSelectId = $('.dropdown-menu.multiselect_scroll.required').parent().parent().attr("id")
-
+          multiSelectId = $(".dropdown-menu.multiselect_scroll.required")
+            .parent()
+            .parent()
+            .attr("id");
         } else {
-          multiSelectId = false
-          multiSelectValid = true
+          multiSelectId = false;
+          multiSelectValid = true;
         }
       }
-    })
+    });
 
+    // validation of uniqueString
+    var uniqueStringValid = true;
+    var internalNameValidate = "";
+    if ($(`[data-stringuniquevalues]`).length) {
+      $(`[data-stringuniquevalues]`).each(function (index) {
+        var parsingData = eval($(this).data("stringuniquevalues"));
 
+        internalNameValidate = $(this).find("input[type=text]").attr("id");
+
+        var currentValue = $(`#${internalNameValidate}`).val();
+        currentValue = currentValue.trim();
+
+        console.log(currentValue, "currentValue currentValue");
+
+        console.log(parsingData, "parsingData parsingData");
+
+        if (parsingData.includes(currentValue)) {
+          uniqueStringValid = false;
+        } else {
+          // $(`#${internalNameValidate}`)
+          //   .closest(".container-body")
+          //   .removeClass("was-validated");
+          $(`#${internalNameValidate}`)[0].setCustomValidity("");
+        }
+      });
+    }
 
     changeResources();
-
 
     if (
       $(".was-validated .form-control:invalid").length == 0 &&
       pickervalid &&
       !isCheckMember &&
-      multiSelectValid
+      multiSelectValid &&
+      uniqueStringValid
     ) {
       New_Data_Submit.init();
       $("[data-target_list] .Details-Item.NewItem").each(function () {
         $(this)
           .find(
             ".CFIELD>input," +
-            ".CFIELD>div[type=picker]," +
-            ".CFIELD>select[type=dropdown]," +
-            ".CFIELD>textarea," +
-            ".CFIELD>.multiselect-container"
+              ".CFIELD>div[type=picker]," +
+              ".CFIELD>select[type=dropdown]," +
+              ".CFIELD>textarea," +
+              ".CFIELD>.multiselect-container"
           )
           .attr("required", "required")
           .prop("disabled", false);
@@ -302,10 +382,10 @@ window.New_Data_Submit = {
         $(this)
           .find(
             ".CFIELD>input," +
-            ".CFIELD>div[type=picker]," +
-            ".CFIELD>select[type=dropdown]," +
-            ".CFIELD>textarea," +
-            ".CFIELD>.multiselect-container"
+              ".CFIELD>div[type=picker]," +
+              ".CFIELD>select[type=dropdown]," +
+              ".CFIELD>textarea," +
+              ".CFIELD>.multiselect-container"
           )
           .prop("disabled", true);
       });
@@ -317,14 +397,43 @@ window.New_Data_Submit = {
       var $container = $("#s4-workspace"),
         $scrollTo = $(".was-validated .form-control:invalid");
       if ($scrollTo.length == 0) {
-        if (listkey == 'sos') { // because we use mult field picker
-          $scrollTo = $("[type=multipicker][required]");
+        if (listkey == "sos") {
+          // because we use mult field picker
+          if (!uniqueStringValid) {
+            $(`#${internalNameValidate}`)
+              .closest(".container-body")
+              .addClass("was-validated");
+            $(`#${internalNameValidate}`)[0].setCustomValidity(
+              "Invalid field."
+            );
+
+            $(`#${internalNameValidate}`)
+              .get(0)
+              .scrollIntoView({ behavior: "smooth", block: "center" });
+          } else {
+            $scrollTo = $("[type=multipicker][required]");
+          }
         } else {
           $scrollTo = $("[type=picker][required]");
         }
       }
+
+
       if (multiSelectId) {
-        $(`#${multiSelectId}`).get(0).scrollIntoView({ behavior: 'smooth', block: "center" });
+        $(`#${multiSelectId}`)
+          .get(0)
+          .scrollIntoView({ behavior: "smooth", block: "center" });
+      }else if(!uniqueStringValid){
+        $(`#${internalNameValidate}`)
+          .closest(".container-body")
+          .addClass("was-validated");
+        $(`#${internalNameValidate}`)[0].setCustomValidity(
+          "Invalid field."
+        );
+
+        $(`#${internalNameValidate}`)
+          .get(0)
+          .scrollIntoView({ behavior: "smooth", block: "center" });
       } else {
         $container.animate({
           scrollTop:
@@ -335,6 +444,9 @@ window.New_Data_Submit = {
         });
       }
     }
+
+
+
   },
   init: function () {
     $(".btn-save").attr("disabled", true);
@@ -366,15 +478,15 @@ window.New_Data_Submit = {
           var id = $(this).attr("INppicker");
           var ppp =
             $(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
-              undefined
+            undefined
               ? ""
               : SP.FieldUserValue.fromUser(
-                $(this)
-                  .find("span.sp-peoplepicker-userSpan")
-                  .attr("sid")
-                  .split("|")
-                  .slice(-1)[0]
-              );
+                  $(this)
+                    .find("span.sp-peoplepicker-userSpan")
+                    .attr("sid")
+                    .split("|")
+                    .slice(-1)[0]
+                );
           New_Data_Submit.g.oListItem.set_item(id, ppp);
         } else if (
           ($(this).attr("id") == "ProjectOwner" && listkey == "projects") ||
@@ -389,20 +501,17 @@ window.New_Data_Submit = {
           var users = [];
           $("span.sp-peoplepicker-userSpan").each(function () {
             var ppp =
-              $(this).attr("sid") ==
-                undefined
+              $(this).attr("sid") == undefined
                 ? ""
                 : SP.FieldUserValue.fromUser(
-                  $(this).attr("sid").split("|").slice(-1)[0]
-                );
+                    $(this).attr("sid").split("|").slice(-1)[0]
+                  );
 
-
-            users.push(ppp)
-          })
+            users.push(ppp);
+          });
           New_Data_Submit.g.oListItem.set_item(id, users);
         }
-      }
-      else if ($(this).attr("type") == "date") {
+      } else if ($(this).attr("type") == "date") {
         if ($(this).hasClass("withTime")) {
           var dateval = $(this).val();
           var timeval = $(this).closest(".CFIELD").find("#Time").val();
@@ -435,8 +544,8 @@ window.New_Data_Submit = {
           var ydate = !dateval
             ? ""
             : [dateval.slice(5, 10), dateval.slice(0, 4)]
-              .join("/")
-              .replace("-", "/");
+                .join("/")
+                .replace("-", "/");
           if (dateval)
             New_Data_Submit.g.oListItem.set_item($(this).attr("id"), ydate);
         }
@@ -506,15 +615,19 @@ window.New_Data_Submit = {
           New_Data_Submit.g.oListItem.set_item("Stage", CRfirstStage);
         }
 
-        let otherFieldsJSON = eval($(this).find("option:checked").data("otherfields"));
+        let otherFieldsJSON = eval(
+          $(this).find("option:checked").data("otherfields")
+        );
 
-        if (otherFieldsJSON && otherFieldsJSON != 'undefined' && otherFieldsJSON.length) {
-          otherFieldsJSON.forEach(el => {
+        if (
+          otherFieldsJSON &&
+          otherFieldsJSON != "undefined" &&
+          otherFieldsJSON.length
+        ) {
+          otherFieldsJSON.forEach((el) => {
             New_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
-          })
+          });
         }
-
-
       } else if ($(this).hasClass("percentagefield")) {
         New_Data_Submit.g.oListItem.set_item(
           $(this).attr("id"),
@@ -522,14 +635,17 @@ window.New_Data_Submit = {
         );
       } else if ($(this).attr("type") == "multiselect") {
         var myselections = [];
-        $(this).find("input:checkbox:checked").each(function () {
-          myselections.push($(this).val());
+        $(this)
+          .find("input:checkbox:checked")
+          .each(function () {
+            myselections.push($(this).val());
+          });
 
-        });
-
-
-        myselections = myselections.join(':::');
-        New_Data_Submit.g.oListItem.set_item($(this).attr('myfield'), myselections);
+        myselections = myselections.join(":::");
+        New_Data_Submit.g.oListItem.set_item(
+          $(this).attr("myfield"),
+          myselections
+        );
         // console.log("inside multiselect")
         //
         //   var myselections = [];
@@ -547,99 +663,118 @@ window.New_Data_Submit = {
         New_Data_Submit.g.oListItem.set_item($(this).attr("id"), $(this).val());
     });
 
-
     //to handle the for default value submittion
     $(`[data-formdefaultvalue]`).each(function (index) {
-
-      var parsingData = eval($(this).data('formdefaultvalue'))
+      var parsingData = eval($(this).data("formdefaultvalue"));
 
       // var listColumnName = parsingData[index].fieldName;
       // var listColumnValue = parsingData[index].value;
       // var allowToRole = parsingData[index].roles;
-      parsingData.forEach(el => {
+      parsingData.forEach((el) => {
         if (el.roles.includes("allRoles")) {
           New_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
         } else if (el.roles.includes(currentUserRole)) {
           New_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
         }
-      })
-    })
+      });
+    });
     //
 
     // to handle set data based on parent values and current list condition
     $(`[data-basedonparentsetvalues]`).each(function (index) {
-
-      var parsingData = eval($(this).data('basedonparentsetvalues'))
-      var basedOnFieldName = "", basedOnFieldValue = "", basedOnFieldCurrentValue = "", basedOnFieldType = "", basedOnCondition = false;
-      parsingData.forEach(el => {
-
-        basedOnFieldName = el.basedOnFieldName
-        basedOnFieldValue = el.basedOnFieldValue
-        basedOnCondition = el.basedOnCondition ? el.basedOnCondition : false
-        basedOnFieldType = $(`#${basedOnFieldName}`).attr('type')
-        if (basedOnFieldType == 'radio') {
-          basedOnFieldCurrentValue = $(`#${basedOnFieldName}:checked`).val()
+      var parsingData = eval($(this).data("basedonparentsetvalues"));
+      var basedOnFieldName = "",
+        basedOnFieldValue = "",
+        basedOnFieldCurrentValue = "",
+        basedOnFieldType = "",
+        basedOnCondition = false;
+      parsingData.forEach((el) => {
+        basedOnFieldName = el.basedOnFieldName;
+        basedOnFieldValue = el.basedOnFieldValue;
+        basedOnCondition = el.basedOnCondition ? el.basedOnCondition : false;
+        basedOnFieldType = $(`#${basedOnFieldName}`).attr("type");
+        if (basedOnFieldType == "radio") {
+          basedOnFieldCurrentValue = $(`#${basedOnFieldName}:checked`).val();
         } else {
-          basedOnFieldCurrentValue = $(`#${basedOnFieldName}`).val()
+          basedOnFieldCurrentValue = $(`#${basedOnFieldName}`).val();
         }
 
-        debugger
-        var checkWfStage = $('#WFStage').val()
+        debugger;
+        var checkWfStage = $("#WFStage").val();
         if (!checkWfStage) {
-
-
-
           if (basedOnCondition) {
             if (basedOnFieldValue == basedOnFieldCurrentValue) {
-              el.valueToSet.forEach(item => {
+              el.valueToSet.forEach((item) => {
                 if (valueBasedOnParent.includes(item.condition)) {
-                  item.values.forEach(field => {
-                    if (field.fieldValueInList.toLowerCase() == "loggedinuser") {
-                      New_Data_Submit.g.oListItem.set_item(field.fieldNameInList, SP.FieldUserValue.fromUser(UserN.LoginName.split("|")[1]));
+                  item.values.forEach((field) => {
+                    if (
+                      field.fieldValueInList.toLowerCase() == "loggedinuser"
+                    ) {
+                      New_Data_Submit.g.oListItem.set_item(
+                        field.fieldNameInList,
+                        SP.FieldUserValue.fromUser(
+                          UserN.LoginName.split("|")[1]
+                        )
+                      );
                     } else {
-                      New_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
+                      New_Data_Submit.g.oListItem.set_item(
+                        field.fieldNameInList,
+                        field.fieldValueInList
+                      );
                     }
-                  })
+                  });
                 }
-              })
+              });
             } else if (basedOnFieldValue == "notempty") {
               if (basedOnFieldCurrentValue) {
-                el.valueToSet.forEach(item => {
+                el.valueToSet.forEach((item) => {
                   if (valueBasedOnParent.includes(item.condition)) {
-                    item.values.forEach(field => {
-                      if (field.fieldValueInList.toLowerCase() == "loggedinuser") {
-                        New_Data_Submit.g.oListItem.set_item(field.fieldNameInList, SP.FieldUserValue.fromUser(UserN.LoginName.split("|")[1]));
+                    item.values.forEach((field) => {
+                      if (
+                        field.fieldValueInList.toLowerCase() == "loggedinuser"
+                      ) {
+                        New_Data_Submit.g.oListItem.set_item(
+                          field.fieldNameInList,
+                          SP.FieldUserValue.fromUser(
+                            UserN.LoginName.split("|")[1]
+                          )
+                        );
                       } else {
-                        New_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
+                        New_Data_Submit.g.oListItem.set_item(
+                          field.fieldNameInList,
+                          field.fieldValueInList
+                        );
                       }
-                    })
+                    });
                   }
-                })
+                });
               }
             }
           } else {
-            el.valueToSet.forEach(item => {
+            el.valueToSet.forEach((item) => {
               if (valueBasedOnParent.includes(item.condition)) {
-                item.values.forEach(field => {
+                item.values.forEach((field) => {
                   if (field.fieldValueInList.toLowerCase() == "loggedinuser") {
-                    New_Data_Submit.g.oListItem.set_item(field.fieldNameInList, SP.FieldUserValue.fromUser(UserN.LoginName.split("|")[1]));
+                    New_Data_Submit.g.oListItem.set_item(
+                      field.fieldNameInList,
+                      SP.FieldUserValue.fromUser(UserN.LoginName.split("|")[1])
+                    );
                   } else {
-                    New_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
+                    New_Data_Submit.g.oListItem.set_item(
+                      field.fieldNameInList,
+                      field.fieldValueInList
+                    );
                   }
-                })
+                });
               }
-            })
+            });
           }
         }
-
-      })
-
-    })
+      });
+    });
     //
 
-
     if (PCODE && listkey != "projects") {
-
       New_Data_Submit.g.oListItem.set_item("ProjectCode", PCODE);
       if (listkey == "issues") {
         New_Data_Submit.g.oListItem.set_item("ResolutionStatus", "new");
@@ -647,23 +782,27 @@ window.New_Data_Submit = {
 
       //save value based on parent type
 
-      if (listkey == 'deliverables' || listkey == 'milestones') {
+      if (listkey == "deliverables" || listkey == "milestones") {
         New_Data_Submit.g.oListItem.set_item("MasterKey", "projects");
         New_Data_Submit.g.oListItem.set_item("MasterID", relatedProjectId);
       }
-    }
-    else if (ICODE && listkey != "initiatives") {
+    } else if (ICODE && listkey != "initiatives") {
       New_Data_Submit.g.oListItem.set_item("InitiativeCode", ICODE);
-      if (listkey == 'initiativedeliverables' || listkey == 'initiativemilestones' || listkey == 'benefits') {
+      if (
+        listkey == "initiativedeliverables" ||
+        listkey == "initiativemilestones" ||
+        listkey == "benefits"
+      ) {
         New_Data_Submit.g.oListItem.set_item("MasterKey", "initiatives");
         New_Data_Submit.g.oListItem.set_item("MasterID", relatedInitiativeId);
       }
-    }
-    else if (UserSTCode && listkey != "strategicpartnerships") {
-      New_Data_Submit.g.oListItem.set_item("StrategicPartnershipCode", UserSTCode);
+    } else if (UserSTCode && listkey != "strategicpartnerships") {
+      New_Data_Submit.g.oListItem.set_item(
+        "StrategicPartnershipCode",
+        UserSTCode
+      );
     }
     if (listkey == "projects") {
-
       // New_Data_Submit.g.oListItem.set_item(
       //   "Phase",
       //   // Phases_Data_Request.g.PhasesArray[1].phase // this save P5 (الطرح والتعاقد) as a first phase
@@ -673,14 +812,17 @@ window.New_Data_Submit = {
       //   "Stage",
       //   Stages_Data_Request.g.StagesArray[0].stage
       // );
-      New_Data_Submit.g.oListItem.set_item("ProgressStatusDeliverable", "stat6");
+      New_Data_Submit.g.oListItem.set_item(
+        "ProgressStatusDeliverable",
+        "stat6"
+      );
       New_Data_Submit.g.oListItem.set_item("ProgressStatusMilestone", "stat6");
       New_Data_Submit.g.oListItem.set_item("ProgressStatusSchedule", "stat6");
       New_Data_Submit.g.oListItem.set_item("Status", "inprogress");
 
       //لحساب مدة الاساس
-      var BaselineStartDate = $('#BaselineStartDate').val()
-      var BaselineFinishDate = $('#BaselineFinishDate').val()
+      var BaselineStartDate = $("#BaselineStartDate").val();
+      var BaselineFinishDate = $("#BaselineFinishDate").val();
 
       if (BaselineStartDate && BaselineFinishDate) {
         const date1 = new Date(BaselineStartDate);
@@ -693,11 +835,11 @@ window.New_Data_Submit = {
 
       //لحساب حالة الصرف as List Structure Formula: Percentage [ Actual / Planned ] *100
 
-      var ActualBudget = $("#ActualBudget").val().replaceAll(',', '');
+      var ActualBudget = $("#ActualBudget").val().replaceAll(",", "");
       if (ActualBudget) {
         ActualBudget = parseFloat(ActualBudget);
       }
-      var ExpectedBudget = $("#ExpectedBudget").val().replaceAll(',', '');
+      var ExpectedBudget = $("#ExpectedBudget").val().replaceAll(",", "");
       if (ExpectedBudget) {
         ExpectedBudget = parseFloat(ExpectedBudget);
       }
@@ -721,7 +863,8 @@ window.New_Data_Submit = {
         New_Data_Submit.g.oListItem.set_item("RelatedIdeaCode", IdeaId);
       }
     }
-    if (listkey == 'initiatives') { //  to handle the initiative status when create a new one
+    if (listkey == "initiatives") {
+      //  to handle the initiative status when create a new one
       New_Data_Submit.g.oListItem.set_item("InitiativeProgressStatus", "stat6");
     }
 
@@ -730,53 +873,81 @@ window.New_Data_Submit = {
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
         IID = New_Data_Submit.g.oListItem.get_id();
-        if (listkey == 'projects') {
-          projectManagerPickedToProjectCenter = New_Data_Submit.g.oListItem.get_item("ProjectManager")
+        if (listkey == "projects") {
+          projectManagerPickedToProjectCenter =
+            New_Data_Submit.g.oListItem.get_item("ProjectManager");
         }
 
         if (listkey == "mainkpi") {
-          var dateFrom = $('#FromDate').val()
+          var dateFrom = $("#FromDate").val();
           var dateFromTime = new Date(dateFrom); // when use normal date time
           // var yearFrom = dateFromTime.getFullYear();
-          yearFrom = Number(dateFrom)
+          yearFrom = Number(dateFrom);
           // var yearFrom = Number(dateFrom)
-          var dateTo = $('#ToDate').val()
+          var dateTo = $("#ToDate").val();
           var dateToTime = new Date(dateTo); // when use normal date time
           // var yearTo = dateToTime.getFullYear();
-          var yearTo = Number(dateTo)
-          var numberOfResults = yearTo - yearFrom
+          var yearTo = Number(dateTo);
+          var numberOfResults = yearTo - yearFrom;
 
           if (numberOfResults > 0) {
             for (var i = 0; i <= numberOfResults; i++) {
-              var Name = $('#Name').val()
-              var PeriodType = $('#PeriodType').val()
-              var Types = $('#Types').val()
-              var KpiYear = yearFrom + i
-              var MainGoalRelated = $('#RelatedStrategyObjective').val() ? $('#RelatedStrategyObjective').val() : ''
-              var subGoalRelated = $('#SubRelatedObjective').val() ? $('#SubRelatedObjective').val() : ''
-              var Sector = $('#Sector').val();
-              var SubSector = $('#SubSector').val();
-              var Portfolio = $('#Portfolio').val()
-              kpiResults.init(Name, PeriodType, Types, KpiYear, Sector, SubSector, Portfolio, MainGoalRelated, subGoalRelated)
+              var Name = $("#Name").val();
+              var PeriodType = $("#PeriodType").val();
+              var Types = $("#Types").val();
+              var KpiYear = yearFrom + i;
+              var MainGoalRelated = $("#RelatedStrategyObjective").val()
+                ? $("#RelatedStrategyObjective").val()
+                : "";
+              var subGoalRelated = $("#SubRelatedObjective").val()
+                ? $("#SubRelatedObjective").val()
+                : "";
+              var Sector = $("#Sector").val();
+              var SubSector = $("#SubSector").val();
+              var Portfolio = $("#Portfolio").val();
+              kpiResults.init(
+                Name,
+                PeriodType,
+                Types,
+                KpiYear,
+                Sector,
+                SubSector,
+                Portfolio,
+                MainGoalRelated,
+                subGoalRelated
+              );
             }
           } else {
-            var Name = $('#Name').val()
-            var PeriodType = $('#PeriodType').val()
-            var Types = $('#Types').val()
-            var KpiYear = yearFrom
-            var MainGoalRelated = $('#RelatedStrategyObjective').val() ? $('#RelatedStrategyObjective').val() : '';
-            var subGoalRelated = $('#SubRelatedObjective').val() ? $('#SubRelatedObjective').val() : '';
-            var Sector = $('#Sector').val();
-            var SubSector = $('#SubSector').val();
-            var Portfolio = $('#Portfolio').val()
-            kpiResults.init(Name, PeriodType, Types, KpiYear, Sector, SubSector, Portfolio, MainGoalRelated, subGoalRelated)
+            var Name = $("#Name").val();
+            var PeriodType = $("#PeriodType").val();
+            var Types = $("#Types").val();
+            var KpiYear = yearFrom;
+            var MainGoalRelated = $("#RelatedStrategyObjective").val()
+              ? $("#RelatedStrategyObjective").val()
+              : "";
+            var subGoalRelated = $("#SubRelatedObjective").val()
+              ? $("#SubRelatedObjective").val()
+              : "";
+            var Sector = $("#Sector").val();
+            var SubSector = $("#SubSector").val();
+            var Portfolio = $("#Portfolio").val();
+            kpiResults.init(
+              Name,
+              PeriodType,
+              Types,
+              KpiYear,
+              Sector,
+              SubSector,
+              Portfolio,
+              MainGoalRelated,
+              subGoalRelated
+            );
           }
           newKPIEquation.init();
         } else if (listkey == "benefitmetrics") {
-
           var dateFrom = $("#FromDate").val();
           benefitYearFrom = Number(dateFrom);
-          var yearFrom = Number(dateFrom)
+          var yearFrom = Number(dateFrom);
           var dateTo = $("#ToDate").val();
           var yearTo = Number(dateTo);
           var numberOfResults = yearTo - yearFrom;
@@ -784,19 +955,17 @@ window.New_Data_Submit = {
           if (numberOfResults > 0) {
             for (var i = 0; i <= numberOfResults; i++) {
               var benefitYear = yearFrom + i;
-              benefitResults.init(benefitYear)
+              benefitResults.init(benefitYear);
             }
           } else {
             var benefitYear = yearFrom;
-            benefitResults.init(benefitYear)
+            benefitResults.init(benefitYear);
           }
 
           newBenefitEquation.init();
         } else {
           Set_Code_Submit.init();
         }
-
-
 
         if (USERisWF && listkey == "projects") {
           Edit_Item_Field.init("Ideas", "Status", "completed", "Title", IdeaId);
@@ -814,15 +983,15 @@ window.New_Data_Submit = {
         var url = window.location.href;
 
         // show pop up err msg
-        Error_PopUp.init()
+        Error_PopUp.init();
         //
         writeToEventViewer.preinit(
           msg,
           "JS Api Error",
           "High",
           url,
-          '580',
-          '14',
+          "580",
+          "14",
           stack
         );
 
@@ -885,17 +1054,17 @@ var Set_Code_Submit = {
         prt3 = IID.toString().padStart(4, "0");
       Code = prt1 + "-" + prt2 + "-" + prt3;
       Set_Code_Submit.g.oListItem.set_item("Title", Code);
-      if (listkey == 'initiatives') { // added to handle inity attach
-        ICODE = Code
-      } else if (listkey == 'strategicpartnerships') {
-        STCODE = Code
+      if (listkey == "initiatives") {
+        // added to handle inity attach
+        ICODE = Code;
+      } else if (listkey == "strategicpartnerships") {
+        STCODE = Code;
       }
 
       if (isPrjRelated) {
         Set_Code_Submit.g.oListItem.set_item("ProjectCode", PCODE);
       }
     } else if (listkey == "projects") {
-
       // var sectorValue = $("#Sector").val()
 
       // if (sectorValue) { // to save the code depends on sector you chose (this is specific whe the sector be autogenerat)
@@ -904,63 +1073,71 @@ var Set_Code_Submit = {
       //   PCODE = sectorValue + "-" + year;
       // }
 
-
       // Code = PCODE + "-" + IID.toString().padStart(4, "0");
       // PCODE = Code;
       // Set_Code_Submit.g.oListItem.set_item("Title", Code);
 
       //set code depends on ERP
 
-      var isStrategicProject = $("#IsStrategicProject").val() == "yes" ? true : false
+      var isStrategicProject =
+        $("#IsStrategicProject").val() == "yes" ? true : false;
 
       var year = String(new Date().getFullYear()),
         year = year.slice(year.length - 2); //get last 2 characters
 
+      var projectrelatedinitiativesos = [];
+      var relatedInitiative = $("#RelatedInitiative").val();
+      var SectorERPID = "XX",
+        SubSectorERPID = "XX",
+        RelatedSos = "XX";
 
-      var projectrelatedinitiativesos = []
-      var relatedInitiative = $("#RelatedInitiative").val()
-      var SectorERPID = "XX", SubSectorERPID = "XX", RelatedSos = "XX";
+      var relatedObjectiveArr = $("#RelatedInitiative")
+        .find(":selected")
+        .data("arraysiblingvalues")
+        ? $("#RelatedInitiative").find(":selected").data("arraysiblingvalues")
+        : [];
 
-      var relatedObjectiveArr = $("#RelatedInitiative").find(":selected").data("arraysiblingvalues") ? $("#RelatedInitiative").find(":selected").data("arraysiblingvalues") : []
+      SectorERPID = $("#Sector").find(":selected").data("siblingvalue")
+        ? $("#Sector").find(":selected").data("siblingvalue")
+        : "XX";
 
-      SectorERPID = $("#Sector").find(":selected").data("siblingvalue") ? $("#Sector").find(":selected").data("siblingvalue") : "XX"
+      SubSectorERPID = $("#SubSector").find(":selected").data("siblingvalue")
+        ? $("#SubSector").find(":selected").data("siblingvalue")
+        : "XX";
 
-      SubSectorERPID = $("#SubSector").find(":selected").data("siblingvalue") ? $("#SubSector").find(":selected").data("siblingvalue") : "XX"
-
-      relatedObjectiveArr = eval(relatedObjectiveArr)
+      relatedObjectiveArr = eval(relatedObjectiveArr);
 
       if (relatedObjectiveArr.length) {
         projectrelatedinitiativesos = relatedObjectiveArr.filter(function (a) {
-          return a.name === "RelatedObjective"
+          return a.name === "RelatedObjective";
         });
       }
 
-
-      var projItemID = IID.toString().padStart(4, "0")
+      var projItemID = IID.toString().padStart(4, "0");
 
       if (projectrelatedinitiativesos.length) {
         if (projectrelatedinitiativesos[0].value) {
-          RelatedSos = projectrelatedinitiativesos[0].value.split(":::").length > 1 ? "XX" : projectrelatedinitiativesos[0].value
+          RelatedSos =
+            projectrelatedinitiativesos[0].value.split(":::").length > 1
+              ? "XX"
+              : projectrelatedinitiativesos[0].value;
         }
       }
 
-
       if (isStrategicProject) {
-        Code = `ST${year}-${SectorERPID}${SubSectorERPID}-${RelatedSos}${relatedInitiative}${projItemID}`
+        Code = `ST${year}-${SectorERPID}${SubSectorERPID}-${RelatedSos}${relatedInitiative}${projItemID}`;
       } else {
-        Code = `OP${year}-${SectorERPID}${SubSectorERPID}-${projItemID}`
+        Code = `OP${year}-${SectorERPID}${SubSectorERPID}-${projItemID}`;
       }
 
       Set_Code_Submit.g.oListItem.set_item("Title", Code);
       PCODE = Code;
       //
-
     }
     Set_Code_Submit.g.oListItem.update();
     clientContext.load(Set_Code_Submit.g.oListItem);
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
-
         // determinig folder directory
         var host = _spPageContextInfo.webAbsoluteUrl;
         if (PCODE || listkey == "projects") {
@@ -973,18 +1150,20 @@ var Set_Code_Submit = {
         } else if (STCODE || listkey == "strategicpartnerships") {
           Documents_Library = "StrategicPartnerships Documents";
           folderdirectory = STCODE + "/" + listkey;
-        }
-        else if (listkey == 'mainkpi') {
+        } else if (listkey == "mainkpi") {
           Documents_Library = listkey + " Documents";
           folderdirectory = "/";
           // folderdirectory = host+'/'+listkey+' Documents/';
-        }
-        else {
+        } else {
           //
-          Documents_Library = "SPM General Services"
-          folderdirectory = listkey
+          Documents_Library = "SPM General Services";
+          folderdirectory = listkey;
         } //
-        if (listkey != "projects" && listkey != 'initiatives' && listkey != 'strategicpartnerships') {
+        if (
+          listkey != "projects" &&
+          listkey != "initiatives" &&
+          listkey != "strategicpartnerships"
+        ) {
           //Get File Input Control and read the file name
           $("input[type=file]").each(function (e) {
             fileCount += document.querySelector("#" + $(this).attr("id")).files
@@ -1019,18 +1198,19 @@ var Set_Code_Submit = {
               //     PCODE_STRING;
               // }
               // else {
-              window.location = _spPageContextInfo.webAbsoluteUrl + "/SitePages/Listing.aspx?ListKey=" + listkey + PCODE_STRING;
+              window.location =
+                _spPageContextInfo.webAbsoluteUrl +
+                "/SitePages/Listing.aspx?ListKey=" +
+                listkey +
+                PCODE_STRING;
               //}
             }
           }
-        } else if (listkey == 'initiatives') {
-
+        } else if (listkey == "initiatives") {
           if ($(".Details-Item.NewItem").length > 0) {
-
             //calling new master submit
             New_Data_Submit.g.checkNewMasterDetails();
           } else {
-
             createFolder(
               "Initiative Documents",
               ICODE + "/",
@@ -1060,11 +1240,9 @@ var Set_Code_Submit = {
           }
         } else {
           if ($(".Details-Item.NewItem").length > 0) {
-
             //calling new master submit
             New_Data_Submit.g.checkNewMasterDetails();
           } else {
-
             createFolder(
               ListArray[2].documents,
               PCODE + "/",
@@ -1093,7 +1271,6 @@ var Set_Code_Submit = {
 
 window.Edit_Data_Submit = {
   preinit: function (state) {
-
     window.wfHotFixState = state;
 
     $(".errormsg").remove();
@@ -1101,27 +1278,29 @@ window.Edit_Data_Submit = {
 
     var isCheckMember = false;
 
-    if ( // in portfolio the user should be in System Portfolio Manager group
+    if (
+      // in portfolio the user should be in System Portfolio Manager group
       listkey == "portfolio" &&
       $("#Manager").find("span.sp-peoplepicker-userSpan").attr("sid")
     ) {
-
       pickerValidationDone = true;
       isCheckMember = true;
       var portfoliomanager =
         $("#Manager").find("span.sp-peoplepicker-userSpan").attr("sid") ==
-          undefined
+        undefined
           ? ""
           : SP.FieldUserValue.fromUser(
-            $("#Manager").find("span.sp-peoplepicker-userSpan").attr("sid")
-          );
+              $("#Manager").find("span.sp-peoplepicker-userSpan").attr("sid")
+            );
       var portfoliomanagername = encodeURIComponent(
         portfoliomanager.get_lookupValue()
       );
-      userCalls.isMember("System Portfolio Manager", portfoliomanagername, 'Manager');
+      userCalls.isMember(
+        "System Portfolio Manager",
+        portfoliomanagername,
+        "Manager"
+      );
     }
-
-
 
     if (
       listkey == "mainkpi" &&
@@ -1130,19 +1309,17 @@ window.Edit_Data_Submit = {
       isCheckMember = true;
       var kpiowner =
         $("#Owner").find("span.sp-peoplepicker-userSpan").attr("sid") ==
-          undefined
+        undefined
           ? ""
           : SP.FieldUserValue.fromUser(
-            $("#Owner").find("span.sp-peoplepicker-userSpan").attr("sid")
-          );
-      var kpiownername = encodeURIComponent(
-        kpiowner.get_lookupValue()
-      );
+              $("#Owner").find("span.sp-peoplepicker-userSpan").attr("sid")
+            );
+      var kpiownername = encodeURIComponent(kpiowner.get_lookupValue());
       membersGroupCheckArray.push({
         groupName: "KPI Owners",
         userLoginName: kpiownername,
-        fieldID: 'Owner'
-      })
+        fieldID: "Owner",
+      });
     }
     if (
       listkey == "mainkpi" &&
@@ -1151,20 +1328,23 @@ window.Edit_Data_Submit = {
       pickerValidationDone = true;
       isCheckMember = true;
       var perforrmanceleader =
-        $("#PerformanceLeader").find("span.sp-peoplepicker-userSpan").attr("sid") ==
-          undefined
+        $("#PerformanceLeader")
+          .find("span.sp-peoplepicker-userSpan")
+          .attr("sid") == undefined
           ? ""
           : SP.FieldUserValue.fromUser(
-            $("#PerformanceLeader").find("span.sp-peoplepicker-userSpan").attr("sid")
-          );
+              $("#PerformanceLeader")
+                .find("span.sp-peoplepicker-userSpan")
+                .attr("sid")
+            );
       var perforrmanceleadername = encodeURIComponent(
         perforrmanceleader.get_lookupValue()
       );
       membersGroupCheckArray.push({
         groupName: "Performance Leaders",
         userLoginName: perforrmanceleadername,
-        fieldID: 'PerformanceLeader'
-      })
+        fieldID: "PerformanceLeader",
+      });
     }
     if (
       listkey == "mainkpi" &&
@@ -1173,33 +1353,44 @@ window.Edit_Data_Submit = {
       pickerValidationDone = true;
       isCheckMember = true;
       var perforrmanceleader =
-        $("#PerformanceLeader2").find("span.sp-peoplepicker-userSpan").attr("sid") ==
-          undefined
+        $("#PerformanceLeader2")
+          .find("span.sp-peoplepicker-userSpan")
+          .attr("sid") == undefined
           ? ""
           : SP.FieldUserValue.fromUser(
-            $("#PerformanceLeader2").find("span.sp-peoplepicker-userSpan").attr("sid")
-          );
+              $("#PerformanceLeader2")
+                .find("span.sp-peoplepicker-userSpan")
+                .attr("sid")
+            );
       var perforrmanceleadername = encodeURIComponent(
         perforrmanceleader.get_lookupValue()
       );
       membersGroupCheckArray.push({
         groupName: "Performance Leaders",
         userLoginName: perforrmanceleadername,
-        fieldID: 'PerformanceLeader2'
-      })
+        fieldID: "PerformanceLeader2",
+      });
     }
 
-    membersGroupCheckArray.length > 0 ? userCalls.isMember(membersGroupCheckArray[0].groupName, membersGroupCheckArray[0].userLoginName, membersGroupCheckArray[0].fieldID) : '';
+    membersGroupCheckArray.length > 0
+      ? userCalls.isMember(
+          membersGroupCheckArray[0].groupName,
+          membersGroupCheckArray[0].userLoginName,
+          membersGroupCheckArray[0].fieldID
+        )
+      : "";
     var pickervalid = true; //check required people picker
     var multiSelectValid = true;
 
     $("[type=picker][required]").each(function () {
-
-      if ($(this).find("span.sp-peoplepicker-userSpan").length == 0 && ($(this).attr('data-email') == enternameemail)) {
+      if (
+        $(this).find("span.sp-peoplepicker-userSpan").length == 0 &&
+        $(this).attr("data-email") == enternameemail
+      ) {
         pickervalid = false;
         $(this).addClass("picker-error");
         $(this).removeClass("picker-valid");
-        $(this).siblings('.errMsgField').show();
+        $(this).siblings(".errMsgField").show();
 
         // return false;
       } else {
@@ -1209,29 +1400,38 @@ window.Edit_Data_Submit = {
     });
 
     $("[type=picker]").each(function () {
-
-      if ($(this).find("span.sp-peoplepicker-userSpan").attr('aria-invalid') == 'true') {
+      if (
+        $(this).find("span.sp-peoplepicker-userSpan").attr("aria-invalid") ==
+        "true"
+      ) {
         pickervalid = false;
         $(this).addClass("picker-error");
         $(this).removeClass("picker-valid");
       }
 
-      if ($(this).find('span.ms-formvalidation.sp-peoplepicker-errorMsg').length) {
+      if (
+        $(this).find("span.ms-formvalidation.sp-peoplepicker-errorMsg").length
+      ) {
         pickervalid = false;
         $(this).addClass("picker-error");
         $(this).removeClass("picker-valid");
       }
-
-    })
+    });
 
     ////////////////////////for multi picker
     $("[type=multipicker][required]").each(function () {
-      if ($(this).find("span.sp-peoplepicker-userSpan").length == 0 && ($(this).attr('data-email') == enternameemail)) {
+      if (
+        $(this).find("span.sp-peoplepicker-userSpan").length == 0 &&
+        $(this).attr("data-email") == enternameemail
+      ) {
         pickervalid = false;
         $(this).addClass("picker-error");
         $(this).removeClass("picker-valid");
         // return false;
-      } else if ($(this).find("span.sp-peoplepicker-userSpan").length == 0 && !$(this).attr('data-email')) {
+      } else if (
+        $(this).find("span.sp-peoplepicker-userSpan").length == 0 &&
+        !$(this).attr("data-email")
+      ) {
         pickervalid = false;
         $(this).addClass("picker-error");
         $(this).removeClass("picker-valid");
@@ -1241,55 +1441,98 @@ window.Edit_Data_Submit = {
       }
     });
 
-
     $("[type=multipicker]").each(function () {
-
-      if ($(this).find("span.sp-peoplepicker-userSpan").attr('aria-invalid') == 'true') {
+      if (
+        $(this).find("span.sp-peoplepicker-userSpan").attr("aria-invalid") ==
+        "true"
+      ) {
         pickervalid = false;
         $(this).addClass("picker-error");
         $(this).removeClass("picker-valid");
       }
-    })
+    });
     //
 
     // to show the err msg in fields
-    if ($(".was-validated .CFIELD:not(.even-required) .form-control:invalid").length > 0) {
-
-      $(".was-validated .CFIELD:not(.even-required) .form-control:invalid").each(function () {
-        $(this).siblings('.errMsgField').show();
-      })
+    if (
+      $(".was-validated .CFIELD:not(.even-required) .form-control:invalid")
+        .length > 0
+    ) {
+      $(
+        ".was-validated .CFIELD:not(.even-required) .form-control:invalid"
+      ).each(function () {
+        $(this).siblings(".errMsgField").show();
+      });
     }
 
-
     //validation of multiselect
-    var multiSelectId = false
+    var multiSelectId = false;
 
-    $('.dropdown-menu.multiselect_scroll.required').each(function () {
-
+    $(".dropdown-menu.multiselect_scroll.required").each(function () {
       if ($(this).length) {
-        if ($('.dropdown-menu.multiselect_scroll.required :checkbox:checked').length == 0) {
-          multiSelectValid = false
-          $('.dropdown-menu.multiselect_scroll.required').parent().parent().siblings('.errMsgField').show()
+        if (
+          $(".dropdown-menu.multiselect_scroll.required :checkbox:checked")
+            .length == 0
+        ) {
+          multiSelectValid = false;
+          $(".dropdown-menu.multiselect_scroll.required")
+            .parent()
+            .parent()
+            .siblings(".errMsgField")
+            .show();
 
-          multiSelectId = $('.dropdown-menu.multiselect_scroll.required').parent().parent().attr("id")
-
+          multiSelectId = $(".dropdown-menu.multiselect_scroll.required")
+            .parent()
+            .parent()
+            .attr("id");
         } else {
-          multiSelectId = false
-          multiSelectValid = true
+          multiSelectId = false;
+          multiSelectValid = true;
         }
       }
-    })
+    });
+
+    // validation of uniqueString
+    var uniqueStringValid = true;
+    var internalNameValidate = "";
+    if ($(`[data-stringuniquevalues]`).length) {
+      $(`[data-stringuniquevalues]`).each(function (index) {
+        var parsingData = eval($(this).data("stringuniquevalues"));
+
+        internalNameValidate = $(this).find("input[type=text]").attr("id");
+
+        var currentValue = $(`#${internalNameValidate}`).val();
+        currentValue = currentValue.trim();
+
+        console.log(currentValue, "currentValue currentValue");
+
+        console.log(parsingData, "parsingData parsingData");
+
+        if (parsingData.includes(currentValue) && !editUniqueValueArr.includes(currentValue)) {
+          uniqueStringValid = false;
+        } else {
+          // $(`#${internalNameValidate}`)
+          //   .closest(".container-body")
+          //   .removeClass("was-validated");
+          $(`#${internalNameValidate}`)[0].setCustomValidity("");
+        }
+      });
+    }
 
     changeResources();
-
 
     if (listkey == "risks") {
       if ($("#MoveItToIssueList").is(":checked") == true) {
         Risk_To_Issue_Submit.preinit();
       }
     }
-    if ($(".was-validated .form-control:invalid").length == 0 && pickervalid && !isCheckMember && multiSelectValid) {
-
+    if (
+      $(".was-validated .form-control:invalid").length == 0 &&
+      pickervalid &&
+      !isCheckMember &&
+      multiSelectValid &&
+      uniqueStringValid
+    ) {
       if (listkey == "risks") {
         if (
           showpopup == false ||
@@ -1298,7 +1541,6 @@ window.Edit_Data_Submit = {
           Edit_Data_Submit.init();
         }
       } else {
-
         if (isWF && workflowname == "Project") {
           console.log("program_BulkEdit(wfHotFixState);");
           updateProjectStageGet.init(wfHotFixState);
@@ -1311,10 +1553,10 @@ window.Edit_Data_Submit = {
         $(this)
           .find(
             ".CFIELD>input," +
-            ".CFIELD>div[type=picker]," +
-            ".CFIELD>select[type=dropdown]," +
-            ".CFIELD>textarea," +
-            ".CFIELD>.multiselect-container"
+              ".CFIELD>div[type=picker]," +
+              ".CFIELD>select[type=dropdown]," +
+              ".CFIELD>textarea," +
+              ".CFIELD>.multiselect-container"
           )
           .attr("required", "required")
           .prop("disabled", false);
@@ -1335,10 +1577,10 @@ window.Edit_Data_Submit = {
         $(this)
           .find(
             ".CFIELD>input," +
-            ".CFIELD>div[type=picker]," +
-            ".CFIELD>select[type=dropdown]," +
-            ".CFIELD>textarea," +
-            ".CFIELD>.multiselect-container"
+              ".CFIELD>div[type=picker]," +
+              ".CFIELD>select[type=dropdown]," +
+              ".CFIELD>textarea," +
+              ".CFIELD>.multiselect-container"
           )
           .prop("disabled", true);
       });
@@ -1351,17 +1593,42 @@ window.Edit_Data_Submit = {
       var $container = $("#s4-workspace"),
         $scrollTo = $(".was-validated .form-control:invalid");
       if ($scrollTo.length == 0) {
+        if (listkey == "sos") {
+          if (!uniqueStringValid) {
+            $(`#${internalNameValidate}`)
+              .closest(".container-body")
+              .addClass("was-validated");
+            $(`#${internalNameValidate}`)[0].setCustomValidity(
+              "Invalid field."
+            );
 
-        if (listkey == 'sos') {
-          $scrollTo = $("[type=multipicker][required]");
+            $(`#${internalNameValidate}`)
+              .get(0)
+              .scrollIntoView({ behavior: "smooth", block: "center" });
+          } else {
+            $scrollTo = $("[type=multipicker][required]");
+          }
         } else {
           $scrollTo = $("[type=picker][required]");
         }
       }
-      if (multiSelectId) {
-        $(`#${multiSelectId}`).get(0).scrollIntoView({ behavior: 'smooth', block: "center" });
-      } else {
 
+      if (multiSelectId) {
+        $(`#${multiSelectId}`)
+          .get(0)
+          .scrollIntoView({ behavior: "smooth", block: "center" });
+      }else if(!uniqueStringValid){
+          $(`#${internalNameValidate}`)
+            .closest(".container-body")
+            .addClass("was-validated");
+          $(`#${internalNameValidate}`)[0].setCustomValidity(
+            "Invalid field."
+          );
+
+          $(`#${internalNameValidate}`)
+            .get(0)
+            .scrollIntoView({ behavior: "smooth", block: "center" });
+      } else {
         $container.animate({
           scrollTop:
             $scrollTo.offset().top -
@@ -1376,10 +1643,8 @@ window.Edit_Data_Submit = {
     }
   },
   init: function () {
-    if (listkey == 'projects') {
-
+    if (listkey == "projects") {
       checkinProjectEditSubmit.checkin(User_ProjUID);
-
     }
     // $('div.CSformbuttons').prepend('<div class="loading-wait">  Please Wait... <div class="cust-loader"></div></div>');+
     //.dont-submit,.hide-field
@@ -1407,47 +1672,103 @@ window.Edit_Data_Submit = {
         .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> div[type=picker],
          .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field):not(.hide-field)> select[type=dropdown],
           .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)>  textarea,
-           .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field) > .multiselect-container`
-    ).each(function () {
-
-
-      if ($(this).attr("type") == "picker") {
-        if ($(this).find("span.sp-peoplepicker-userSpan").length) {
-          var id = $(this).attr("INppicker");
-          var ppp =
-            $(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
-              undefined
-              ? ""
-              : SP.FieldUserValue.fromUser(
-                $(this).find("span.sp-peoplepicker-userSpan").attr("sid")
-              ); //.split('|').slice(-1)[0]
-          Edit_Data_Submit.g.oListItem.set_item(id, ppp);
-        }
-      } else if ($(this).attr("type") == "multipicker") {
-        if ($(this).find("span.sp-peoplepicker-userSpan").length) {
-          var id = $(this).attr("INppicker");
-          var users = [];
-          $("span.sp-peoplepicker-userSpan").each(function () {
+           .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field) > .multiselect-container`).each(
+      function () {
+        if ($(this).attr("type") == "picker") {
+          if ($(this).find("span.sp-peoplepicker-userSpan").length) {
+            var id = $(this).attr("INppicker");
             var ppp =
-              $(this).attr("sid") ==
-                undefined
+              $(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
+              undefined
                 ? ""
                 : SP.FieldUserValue.fromUser(
-                  $(this).attr("sid").split("|").slice(-1)[0]
+                    $(this).find("span.sp-peoplepicker-userSpan").attr("sid")
+                  ); //.split('|').slice(-1)[0]
+            Edit_Data_Submit.g.oListItem.set_item(id, ppp);
+          }
+        } else if ($(this).attr("type") == "multipicker") {
+          if ($(this).find("span.sp-peoplepicker-userSpan").length) {
+            var id = $(this).attr("INppicker");
+            var users = [];
+            $("span.sp-peoplepicker-userSpan").each(function () {
+              var ppp =
+                $(this).attr("sid") == undefined
+                  ? ""
+                  : SP.FieldUserValue.fromUser(
+                      $(this).attr("sid").split("|").slice(-1)[0]
+                    );
+
+              users.push(ppp);
+            });
+            Edit_Data_Submit.g.oListItem.set_item(id, users);
+          }
+        } else if ($(this).attr("type") == "date") {
+          if ($(this).hasClass("withTime")) {
+            if ($(this).val()) {
+              var dateval = $(this).val();
+              var timeval = $(this).closest(".CFIELD").find("#Time").val();
+              var datetime = new Date(dateval + " " + timeval);
+
+              // format the output
+              var month = datetime.getMonth() + 1;
+              var day = datetime.getDate();
+              var year = datetime.getFullYear();
+              var timezoneOffset = datetime.getTimezoneOffset() / 60;
+              var hour = datetime.getHours() + timezoneOffset;
+              if (hour < 10) {
+                hour = "0" + hour;
+              }
+              var min = datetime.getMinutes();
+              if (min < 10) {
+                min = "0" + min;
+              }
+              var sec = datetime.getSeconds();
+              if (sec < 10) {
+                sec = "0" + sec;
+              }
+
+              var ydate =
+                month +
+                "/" +
+                day +
+                "/" +
+                year +
+                " " +
+                hour +
+                ":" +
+                min +
+                ":" +
+                sec;
+
+              if (dateval && timeval)
+                Edit_Data_Submit.g.oListItem.set_item(
+                  $(this).attr("id"),
+                  ydate
                 );
-
-
-            users.push(ppp)
-          })
-          Edit_Data_Submit.g.oListItem.set_item(id, users);
-        }
-      } else if ($(this).attr("type") == "date") {
-        if ($(this).hasClass("withTime")) {
-          if ($(this).val()) {
+            } else {
+              Edit_Data_Submit.g.oListItem.set_item($(this).attr("id"), null);
+            }
+          } else {
+            if ($(this).val()) {
+              var dateval = $(this).val().replace("-", "/");
+              var ydate = !dateval
+                ? ""
+                : [dateval.slice(5, 10), dateval.slice(0, 4)]
+                    .join("/")
+                    .replace("-", "/");
+              if (dateval)
+                Edit_Data_Submit.g.oListItem.set_item(
+                  $(this).attr("id"),
+                  ydate
+                );
+            } else {
+              Edit_Data_Submit.g.oListItem.set_item($(this).attr("id"), null);
+            }
+          }
+        } else if ($(this).attr("type") == "datetime-local") {
+          if ($(this).hasClass("withTime")) {
             var dateval = $(this).val();
-            var timeval = $(this).closest(".CFIELD").find("#Time").val();
-            var datetime = new Date(dateval + " " + timeval);
-
+            var datetime = new Date(dateval);
             // format the output
             var month = datetime.getMonth() + 1;
             var day = datetime.getDate();
@@ -1479,144 +1800,103 @@ window.Edit_Data_Submit = {
               ":" +
               sec;
 
-            if (dateval && timeval)
-              Edit_Data_Submit.g.oListItem.set_item($(this).attr("id"), ydate);
-          } else {
-            Edit_Data_Submit.g.oListItem.set_item($(this).attr("id"), null);
-          }
-        } else {
-          if ($(this).val()) {
-            var dateval = $(this).val().replace("-", "/");
-            var ydate = !dateval
-              ? ""
-              : [dateval.slice(5, 10), dateval.slice(0, 4)]
-                .join("/")
-                .replace("-", "/");
             if (dateval)
               Edit_Data_Submit.g.oListItem.set_item($(this).attr("id"), ydate);
-          } else {
-            Edit_Data_Submit.g.oListItem.set_item($(this).attr("id"), null);
           }
-        }
-      } else if ($(this).attr("type") == "datetime-local") {
-        if ($(this).hasClass("withTime")) {
-          var dateval = $(this).val();
-          var datetime = new Date(dateval);
-          // format the output
-          var month = datetime.getMonth() + 1;
-          var day = datetime.getDate();
-          var year = datetime.getFullYear();
-          var timezoneOffset = datetime.getTimezoneOffset() / 60;
-          var hour = datetime.getHours() + timezoneOffset;
-          if (hour < 10) {
-            hour = "0" + hour;
-          }
-          var min = datetime.getMinutes();
-          if (min < 10) {
-            min = "0" + min;
-          }
-          var sec = datetime.getSeconds();
-          if (sec < 10) {
-            sec = "0" + sec;
-          }
+        } else if ($(this).attr("type") == "radio") {
+          // var checkedvalue = $('input[id="' + $(this).attr('id') + '"]:checked').val();
+          // Edit_Data_Submit.g.oListItem.set_item($(this).attr('id'), checkedvalue);
+          var checkedvalue = $(
+            'input[id="' + $(this).attr("id") + '"]:checked'
+          ).val();
+          if (checkedvalue == "yes") {
+            Edit_Data_Submit.g.oListItem.set_item($(this).attr("id"), "yes");
+          } else if (checkedvalue == "no" || checkedvalue == "undefined") {
+            Edit_Data_Submit.g.oListItem.set_item($(this).attr("id"), "no");
+          } else
+            Edit_Data_Submit.g.oListItem.set_item(
+              $(this).attr("id"),
+              checkedvalue
+            );
 
-          var ydate =
-            month + "/" + day + "/" + year + " " + hour + ":" + min + ":" + sec;
+          if (SP_ListName == "Deliverables" && checkedvalue == "yes") {
+            if (
+              !oListItem.get_item("" + "Stage" + "") ||
+              oListItem.get_item("" + "Stage" + "") == "rejected"
+            ) {
+              Edit_Data_Submit.g.oListItem.set_item("Stage", DVfirstStage);
+            }
+          } else if (SP_ListName == "ChangeRequest" && checkedvalue == "yes") {
+            if (
+              !oListItem.get_item("" + "Stage" + "") ||
+              oListItem.get_item("" + "Stage" + "") == "rejected"
+            ) {
+              Edit_Data_Submit.g.oListItem.set_item("Stage", CRfirstStage);
+            }
+          }
+        } else if ($(this).attr("type") == "checkbox") {
+          var checkedvalue = $(
+            'input[id="' + $(this).attr("id") + '"]:checked'
+          ).length;
+          if (checkedvalue)
+            Edit_Data_Submit.g.oListItem.set_item($(this).attr("id"), true);
+          else Edit_Data_Submit.g.oListItem.set_item($(this).attr("id"), false);
+        } else if ($(this).attr("type") == "dropdown") {
+          $(this).find(":disabled").removeAttr("disabled"); // avoid remove the data when the dropdown field is disabled
 
-          if (dateval)
-            Edit_Data_Submit.g.oListItem.set_item($(this).attr("id"), ydate);
-        }
-      } else if ($(this).attr("type") == "radio") {
-        // var checkedvalue = $('input[id="' + $(this).attr('id') + '"]:checked').val();
-        // Edit_Data_Submit.g.oListItem.set_item($(this).attr('id'), checkedvalue);
-        var checkedvalue = $(
-          'input[id="' + $(this).attr("id") + '"]:checked'
-        ).val();
-        if (checkedvalue == "yes") {
-          Edit_Data_Submit.g.oListItem.set_item($(this).attr("id"), "yes");
-        } else if (checkedvalue == "no" || checkedvalue == "undefined") {
-          Edit_Data_Submit.g.oListItem.set_item($(this).attr("id"), "no");
-        } else
           Edit_Data_Submit.g.oListItem.set_item(
             $(this).attr("id"),
-            checkedvalue
+            $(this).val()
           );
-
-        if (SP_ListName == "Deliverables" && checkedvalue == "yes") {
-          if (
-            !oListItem.get_item("" + "Stage" + "") ||
-            oListItem.get_item("" + "Stage" + "") == "rejected"
-          ) {
-            Edit_Data_Submit.g.oListItem.set_item("Stage", DVfirstStage);
+          var SubmitForApprovalValue;
+          if ($(this).attr("id") == "SubmitForApproval") {
+            SubmitForApprovalValue = $(this).val();
           }
-        } else if (SP_ListName == "ChangeRequest" && checkedvalue == "yes") {
           if (
-            !oListItem.get_item("" + "Stage" + "") ||
-            oListItem.get_item("" + "Stage" + "") == "rejected"
+            SP_ListName == "Change Request" &&
+            SubmitForApprovalValue == "yes"
           ) {
             Edit_Data_Submit.g.oListItem.set_item("Stage", CRfirstStage);
           }
+
+          let otherFieldsJSON = eval(
+            $(this).find("option:checked").data("otherfields")
+          );
+
+          if (
+            otherFieldsJSON &&
+            otherFieldsJSON != "undefined" &&
+            otherFieldsJSON.length
+          ) {
+            otherFieldsJSON.forEach((el) => {
+              Edit_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
+            });
+          }
+        } else if ($(this).hasClass("percentagefield")) {
+          Edit_Data_Submit.g.oListItem.set_item(
+            $(this).attr("id"),
+            $(this).val() / 100
+          );
+        } else if ($(this).attr("type") == "multiselect") {
+          var myselections = [];
+          $(this)
+            .find("input:checkbox:checked")
+            .each(function () {
+              myselections.push($(this).val());
+            });
+          myselections = myselections.join(":::");
+          Edit_Data_Submit.g.oListItem.set_item(
+            $(this).attr("myfield"),
+            myselections
+          );
+        } else {
+          Edit_Data_Submit.g.oListItem.set_item(
+            $(this).attr("id"),
+            $(this).val()
+          );
         }
-      } else if ($(this).attr("type") == "checkbox") {
-        var checkedvalue = $(
-          'input[id="' + $(this).attr("id") + '"]:checked'
-        ).length;
-        if (checkedvalue)
-          Edit_Data_Submit.g.oListItem.set_item($(this).attr("id"), true);
-        else Edit_Data_Submit.g.oListItem.set_item($(this).attr("id"), false);
-      } else if ($(this).attr("type") == "dropdown") {
-
-        $(this).find(':disabled').removeAttr('disabled'); // avoid remove the data when the dropdown field is disabled
-
-        Edit_Data_Submit.g.oListItem.set_item(
-          $(this).attr("id"),
-          $(this).val()
-        );
-        var SubmitForApprovalValue;
-        if ($(this).attr("id") == "SubmitForApproval") {
-          SubmitForApprovalValue = $(this).val();
-        }
-        if (
-          SP_ListName == "Change Request" &&
-          SubmitForApprovalValue == "yes"
-        ) {
-          Edit_Data_Submit.g.oListItem.set_item("Stage", CRfirstStage);
-        }
-
-
-        let otherFieldsJSON = eval($(this).find("option:checked").data("otherfields"));
-
-        if (otherFieldsJSON && otherFieldsJSON != 'undefined' && otherFieldsJSON.length) {
-          otherFieldsJSON.forEach(el => {
-            Edit_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
-          })
-        }
-
-
-      } else if ($(this).hasClass("percentagefield")) {
-        Edit_Data_Submit.g.oListItem.set_item(
-          $(this).attr("id"),
-          $(this).val() / 100
-        );
-      } else if ($(this).attr("type") == "multiselect") {
-        var myselections = [];
-        $(this)
-          .find("input:checkbox:checked")
-          .each(function () {
-            myselections.push($(this).val());
-          });
-        myselections = myselections.join(":::");
-        Edit_Data_Submit.g.oListItem.set_item(
-          $(this).attr("myfield"),
-          myselections
-        );
-      } else {
-        Edit_Data_Submit.g.oListItem.set_item(
-          $(this).attr("id"),
-          $(this).val()
-        );
       }
-    });
+    );
 
     // save the new stage in wfStage if it's not a project wf
     if (USERisWF && workflowname != "Project") {
@@ -1627,92 +1907,112 @@ window.Edit_Data_Submit = {
       }
     }
 
-
     //to handle the for default value submittion
     $(`[data-formdefaultvalue]`).each(function (index) {
+      var parsingData = eval($(this).data("formdefaultvalue"));
 
-      var parsingData = eval($(this).data('formdefaultvalue'))
-
-      parsingData.forEach(el => {
+      parsingData.forEach((el) => {
         if (el.roles.includes("allRoles")) {
           Edit_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
         } else if (el.roles.includes(currentUserRole)) {
           Edit_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
         }
-      })
-    })
+      });
+    });
     //
     // to handle set data based on parent values and current list condition
     $(`[data-basedonparentsetvalues]`).each(function (index) {
-
-      var parsingData = eval($(this).data('basedonparentsetvalues'))
-      var basedOnFieldName = "", basedOnFieldValue = "", basedOnFieldCurrentValue = "", basedOnFieldType = "", basedOnCondition = false;
-      parsingData.forEach(el => {
-
-        basedOnFieldName = el.basedOnFieldName
-        basedOnFieldValue = el.basedOnFieldValue
-        basedOnCondition = el.basedOnCondition ? el.basedOnCondition : false
-        basedOnFieldType = $(`#${basedOnFieldName}`).attr('type')
-        if (basedOnFieldType == 'radio') {
-          basedOnFieldCurrentValue = $(`#${basedOnFieldName}:checked`).val()
+      var parsingData = eval($(this).data("basedonparentsetvalues"));
+      var basedOnFieldName = "",
+        basedOnFieldValue = "",
+        basedOnFieldCurrentValue = "",
+        basedOnFieldType = "",
+        basedOnCondition = false;
+      parsingData.forEach((el) => {
+        basedOnFieldName = el.basedOnFieldName;
+        basedOnFieldValue = el.basedOnFieldValue;
+        basedOnCondition = el.basedOnCondition ? el.basedOnCondition : false;
+        basedOnFieldType = $(`#${basedOnFieldName}`).attr("type");
+        if (basedOnFieldType == "radio") {
+          basedOnFieldCurrentValue = $(`#${basedOnFieldName}:checked`).val();
         } else {
-          basedOnFieldCurrentValue = $(`#${basedOnFieldName}`).val()
+          basedOnFieldCurrentValue = $(`#${basedOnFieldName}`).val();
         }
 
-        debugger
-        var checkWfStage = $('#WFStage').val()
+        debugger;
+        var checkWfStage = $("#WFStage").val();
         if (!checkWfStage) {
-
           if (basedOnCondition) {
             if (basedOnFieldValue == basedOnFieldCurrentValue) {
-              el.valueToSet.forEach(item => {
+              el.valueToSet.forEach((item) => {
                 if (valueBasedOnParent.includes(item.condition)) {
-                  item.values.forEach(field => {
-                    if (field.fieldValueInList.toLowerCase() == "loggedinuser") {
-                      Edit_Data_Submit.g.oListItem.set_item(field.fieldNameInList, SP.FieldUserValue.fromUser(UserN.LoginName.split("|")[1]));
+                  item.values.forEach((field) => {
+                    if (
+                      field.fieldValueInList.toLowerCase() == "loggedinuser"
+                    ) {
+                      Edit_Data_Submit.g.oListItem.set_item(
+                        field.fieldNameInList,
+                        SP.FieldUserValue.fromUser(
+                          UserN.LoginName.split("|")[1]
+                        )
+                      );
                     } else {
-                      Edit_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
+                      Edit_Data_Submit.g.oListItem.set_item(
+                        field.fieldNameInList,
+                        field.fieldValueInList
+                      );
                     }
-                  })
+                  });
                 }
-              })
+              });
             } else if (basedOnFieldValue == "notempty") {
               if (basedOnFieldCurrentValue) {
-                el.valueToSet.forEach(item => {
-
+                el.valueToSet.forEach((item) => {
                   if (valueBasedOnParent.includes(item.condition)) {
-                    item.values.forEach(field => {
-
-                      if (field.fieldValueInList.toLowerCase() == "loggedinuser") {
-                        Edit_Data_Submit.g.oListItem.set_item(field.fieldNameInList, SP.FieldUserValue.fromUser(UserN.LoginName.split("|")[1]));
+                    item.values.forEach((field) => {
+                      if (
+                        field.fieldValueInList.toLowerCase() == "loggedinuser"
+                      ) {
+                        Edit_Data_Submit.g.oListItem.set_item(
+                          field.fieldNameInList,
+                          SP.FieldUserValue.fromUser(
+                            UserN.LoginName.split("|")[1]
+                          )
+                        );
                       } else {
-                        Edit_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
+                        Edit_Data_Submit.g.oListItem.set_item(
+                          field.fieldNameInList,
+                          field.fieldValueInList
+                        );
                       }
-                    })
+                    });
                   }
-                })
+                });
               }
             }
           } else {
-            el.valueToSet.forEach(item => {
+            el.valueToSet.forEach((item) => {
               if (valueBasedOnParent.includes(item.condition)) {
-                item.values.forEach(field => {
+                item.values.forEach((field) => {
                   if (field.fieldValueInList.toLowerCase() == "loggedinuser") {
-                    Edit_Data_Submit.g.oListItem.set_item(field.fieldNameInList, SP.FieldUserValue.fromUser(UserN.LoginName.split("|")[1]));
+                    Edit_Data_Submit.g.oListItem.set_item(
+                      field.fieldNameInList,
+                      SP.FieldUserValue.fromUser(UserN.LoginName.split("|")[1])
+                    );
                   } else {
-                    Edit_Data_Submit.g.oListItem.set_item(field.fieldNameInList, field.fieldValueInList);
+                    Edit_Data_Submit.g.oListItem.set_item(
+                      field.fieldNameInList,
+                      field.fieldValueInList
+                    );
                   }
-                })
+                });
               }
-            })
+            });
           }
         }
-      })
-
-    })
+      });
+    });
     //
-
-
 
     if (listkey == "issues") {
       if ($("#ResolutionStatus").val() == "Closed") {
@@ -1740,22 +2040,30 @@ window.Edit_Data_Submit = {
           Edit_Data_Submit.g.oListItem.set_item("RiskClosureDate", today);
         }
       }
-    }
-    else if (listkey == "initiatives") {
-      var plannedperc = Edit_Data_Submit.g.oListItem.get_item('PlannedPercentageCompleted');
-      var actualperc = Edit_Data_Submit.g.oListItem.get_item('ActualPercentageCompleted');
+    } else if (listkey == "initiatives") {
+      var plannedperc = Edit_Data_Submit.g.oListItem.get_item(
+        "PlannedPercentageCompleted"
+      );
+      var actualperc = Edit_Data_Submit.g.oListItem.get_item(
+        "ActualPercentageCompleted"
+      );
       var diffbtwplannedactual = plannedperc - actualperc;
-      Edit_Data_Submit.g.oListItem.set_item("DelayPercentage", diffbtwplannedactual);
-
-    }
-    else if (listkey == "projects") {
+      Edit_Data_Submit.g.oListItem.set_item(
+        "DelayPercentage",
+        diffbtwplannedactual
+      );
+    } else if (listkey == "projects") {
       //Ghufran Calculated duration
-      var initstartdate = new Date(Edit_Data_Submit.g.oListItem.get_item('BaselineStartDate'));
-      var initfinishdate = new Date(Edit_Data_Submit.g.oListItem.get_item('BaselineFinishDate'));
+      var initstartdate = new Date(
+        Edit_Data_Submit.g.oListItem.get_item("BaselineStartDate")
+      );
+      var initfinishdate = new Date(
+        Edit_Data_Submit.g.oListItem.get_item("BaselineFinishDate")
+      );
       var months, diff;
-      if ((initfinishdate != null) && (initstartdate != null)) {
+      if (initfinishdate != null && initstartdate != null) {
         diff = (initfinishdate.getTime() - initstartdate.getTime()) / 1000;
-        diff /= (60 * 60 * 24 * 7 * 4);
+        diff /= 60 * 60 * 24 * 7 * 4;
         months = Math.abs(Math.round(diff));
       } else {
         months = 0;
@@ -1764,11 +2072,11 @@ window.Edit_Data_Submit = {
       Edit_Data_Submit.g.oListItem.set_item("BaselineDuration", months);
       //لحساب حالة الصرف as List Structure Formula: Percentage [ Actual / Planned ] *100
 
-      var ActualBudget = $("#ActualBudget").val().replaceAll(',', '');
+      var ActualBudget = $("#ActualBudget").val().replaceAll(",", "");
       if (ActualBudget) {
         ActualBudget = parseFloat(ActualBudget);
       }
-      var ExpectedBudget = $("#ExpectedBudget").val().replaceAll(',', '');
+      var ExpectedBudget = $("#ExpectedBudget").val().replaceAll(",", "");
       if (ExpectedBudget) {
         ExpectedBudget = parseFloat(ExpectedBudget);
       }
@@ -1786,38 +2094,46 @@ window.Edit_Data_Submit = {
       }
       Edit_Data_Submit.g.oListItem.set_item("DisbursementStatus", Disbstatus);
 
-
-      var isZeroBudget = $('#IsZeroBudgetProject').val()
+      var isZeroBudget = $("#IsZeroBudgetProject").val();
       if (isZeroBudget == "yes") {
-        Edit_Data_Submit.g.oListItem.set_item('ActualBudget', "");
-        Edit_Data_Submit.g.oListItem.set_item('Amount', "");
-
+        Edit_Data_Submit.g.oListItem.set_item("ActualBudget", "");
+        Edit_Data_Submit.g.oListItem.set_item("Amount", "");
       }
+    } else if (listkey == "mainkpi") {
+      // get the data to update the kpi result list
+      kpiName = $("#Name").val();
+      kpiType = $("#Types").val();
+      kpiSector = $("#Sector").val();
+      kpiSubSector = $("#SubSector").val();
+      kpiMainGoalRelated = $("#RelatedStrategyObjective").val()
+        ? $("#RelatedStrategyObjective").val()
+        : "";
+      kpiSubGoalRelated = $("#SubRelatedObjective").val()
+        ? $("#SubRelatedObjective").val()
+        : "";
+      kpiPortfolio = $("#Portfolio").val() ? $("#Portfolio").val() : "";
+      kpiPerformanceAnalysis = $("#PerformanceAnalysis").val()
+        ? $("#PerformanceAnalysis").val()
+        : "";
+      kpiPeriodTypeUpdate = $("#PeriodType").val()
+        ? $("#PeriodType").val()
+        : "";
+      kpiYearPicked = $("#Year").val() ? $("#Year").val() : "";
+      kpiMidPicked = $("#Midterms").val() ? $("#Midterms").val() : "";
+      kpiQuarterPicked = $("#Quarter").val() ? $("#Quarter").val() : "";
+      kpiMonthPicked = $("#Months").val() ? $("#Months").val() : "";
+      kpiRecurrenceChanged = $("#RecurrenceChanged").val()
+        ? $("#RecurrenceChanged").val()
+        : "";
 
-    }
-    else if (listkey == 'mainkpi') { // get the data to update the kpi result list
-      kpiName = $('#Name').val()
-      kpiType = $('#Types').val()
-      kpiSector = $('#Sector').val()
-      kpiSubSector = $('#SubSector').val()
-      kpiMainGoalRelated = $('#RelatedStrategyObjective').val() ? $('#RelatedStrategyObjective').val() : ''
-      kpiSubGoalRelated = $('#SubRelatedObjective').val() ? $('#SubRelatedObjective').val() : ''
-      kpiPortfolio = $('#Portfolio').val() ? $('#Portfolio').val() : ''
-      kpiPerformanceAnalysis = $('#PerformanceAnalysis').val() ? $('#PerformanceAnalysis').val() : ''
-      kpiPeriodTypeUpdate = $('#PeriodType').val() ? $('#PeriodType').val() : ''
-      kpiYearPicked = $('#Year').val() ? $('#Year').val() : ''
-      kpiMidPicked = $('#Midterms').val() ? $('#Midterms').val() : ''
-      kpiQuarterPicked = $('#Quarter').val() ? $('#Quarter').val() : ''
-      kpiMonthPicked = $('#Months').val() ? $('#Months').val() : ''
-      kpiRecurrenceChanged = $('#RecurrenceChanged').val() ? $('#RecurrenceChanged').val() : '';
-
-      if (kpiType == 'main') { // remove portfolio and alhadaf elfer3e when change to main cause main don't have portfolio
-        Edit_Data_Submit.g.oListItem.set_item('Portfolio', '');
-        Edit_Data_Submit.g.oListItem.set_item('SubRelatedObjective', '');
-      } else if (kpiType == 'sub') { // remove alhadaf elra2ese elmortabet when change to sub
-        Edit_Data_Submit.g.oListItem.set_item('RelatedStrategyObjective', '');
+      if (kpiType == "main") {
+        // remove portfolio and alhadaf elfer3e when change to main cause main don't have portfolio
+        Edit_Data_Submit.g.oListItem.set_item("Portfolio", "");
+        Edit_Data_Submit.g.oListItem.set_item("SubRelatedObjective", "");
+      } else if (kpiType == "sub") {
+        // remove alhadaf elra2ese elmortabet when change to sub
+        Edit_Data_Submit.g.oListItem.set_item("RelatedStrategyObjective", "");
       }
-
     }
 
     Edit_Data_Submit.g.oListItem.update();
@@ -1825,7 +2141,6 @@ window.Edit_Data_Submit = {
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
         Edit_Data_Submit.g.afterSuccess();
-
       }),
       Function.createDelegate(this, function (sender, args) {
         console.log(
@@ -1838,7 +2153,7 @@ window.Edit_Data_Submit = {
         var url = window.location.href;
 
         // show pop up err msg
-        Error_PopUp.init()
+        Error_PopUp.init();
         //
 
         writeToEventViewer.preinit(
@@ -1846,11 +2161,10 @@ window.Edit_Data_Submit = {
           "JS Api Error",
           "High",
           url,
-          '580',
-          '14',
+          "580",
+          "14",
           stack
         );
-
       })
     );
   },
@@ -1902,7 +2216,6 @@ window.Edit_Data_Submit = {
       }
     },
     afterSuccess: function () {
-
       // determinig folder directory
       if (PCODE || listkey == "projects") {
         Documents_Library = ListArray[2].documents;
@@ -1911,19 +2224,17 @@ window.Edit_Data_Submit = {
       } else if (ICODE || listkey == "initiatives") {
         Documents_Library = "Initiative Documents";
         folderdirectory = ICODE + "/" + listkey;
-
       } else if (STCODE || listkey == "strategicpartnerships") {
         Documents_Library = "StrategicPartnerships Documents";
         folderdirectory = STCODE + "/" + listkey;
-      } else if (listkey == 'mainkpi') {
+      } else if (listkey == "mainkpi") {
         Documents_Library = listkey + " Documents";
         folderdirectory = ""; //_spPageContextInfo.webServerRelativeUrl+
-      }
-      else {
+      } else {
         // Documents_Library = listkey + " Documents";
         // folderdirectory = "";
-        Documents_Library = "SPM General Services"
-        folderdirectory = listkey
+        Documents_Library = "SPM General Services";
+        folderdirectory = listkey;
       }
       // else {
       //   Documents_Library = listkey + " Documents";
@@ -1943,9 +2254,7 @@ window.Edit_Data_Submit = {
       if (fileCount) _uploadFile();
       // readFiles();
       else {
-
         if ($(".Details-Item.NewItem").length > 0 && !crListKey) {
-
           //calling new master submit
           New_Data_Submit.g.checkNewMasterDetails();
         } else if ($(".Details-Item.EditItem").length > 0 && !crListKey) {
@@ -1957,25 +2266,40 @@ window.Edit_Data_Submit = {
             Continue_Submit_Field.init();
           } else {
             $(".btn-save").addClass("success");
-            if (listkey == 'kpiequations') {
+            if (listkey == "kpiequations") {
               window.location =
                 _spPageContextInfo.webAbsoluteUrl +
                 "/SitePages/View.aspx?ListKey=mainkpi" +
                 "&IID=" +
-                $('#KPI option[value="' + $('#KPI').val() + '"]').attr('option-id') +
+                $('#KPI option[value="' + $("#KPI").val() + '"]').attr(
+                  "option-id"
+                ) +
                 PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
             } else if (listkey == "benefitsequations") {
               window.location =
                 _spPageContextInfo.webAbsoluteUrl +
                 "/SitePages/View.aspx?ListKey=benefitmetrics" +
                 "&IID=" +
-                $('#RelatedBenefit option[value="' + $('#RelatedBenefit').val() + '"]').attr('option-id') +
+                $(
+                  '#RelatedBenefit option[value="' +
+                    $("#RelatedBenefit").val() +
+                    '"]'
+                ).attr("option-id") +
                 PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
-            } else if (listkey == 'mainkpi') {
-              Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis, kpiRecurrenceChanged)
-            } else if (listkey == 'projects' && PCODE) {
-
-              getProjectInfoToUpdateEPM()
+            } else if (listkey == "mainkpi") {
+              Edit_KPI_Results.init(
+                kpiName,
+                kpiType,
+                kpiSector,
+                kpiSubSector,
+                kpiPortfolio,
+                kpiMainGoalRelated,
+                kpiSubGoalRelated,
+                kpiPerformanceAnalysis,
+                kpiRecurrenceChanged
+              );
+            } else if (listkey == "projects" && PCODE) {
+              getProjectInfoToUpdateEPM();
             } else {
               window.location =
                 _spPageContextInfo.webAbsoluteUrl +
@@ -1985,14 +2309,11 @@ window.Edit_Data_Submit = {
                 IID +
                 PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
             }
-
-
-
           }
         }
       }
       // }
-    }
+    },
   },
 };
 
@@ -2001,7 +2322,10 @@ window.Edit_Data_Submit = {
 var benefitResults = {
   init: function (benefitYear) {
     var clientContext = new SP.ClientContext.get_current();
-    var oList = clientContext.get_web().get_lists().getByTitle("BenefitsResults");
+    var oList = clientContext
+      .get_web()
+      .get_lists()
+      .getByTitle("BenefitsResults");
     var itemCreateInfo = new SP.ListItemCreationInformation();
     benefitResults.g.oListItem = oList.addItem(itemCreateInfo);
 
@@ -2035,18 +2359,24 @@ var benefitResults = {
         );
       })
     );
-
   },
-  g: {}
-}
-
-
+  g: {},
+};
 
 //kpiResults
 
 var kpiResults = {
-  init: function (Name, PeriodType, Types, KpiYear, Sector, SubSector, Portfolio, MainGoalRelated, subGoalRelated) {
-
+  init: function (
+    Name,
+    PeriodType,
+    Types,
+    KpiYear,
+    Sector,
+    SubSector,
+    Portfolio,
+    MainGoalRelated,
+    subGoalRelated
+  ) {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("KPIResults");
     var itemCreateInfo = new SP.ListItemCreationInformation();
@@ -2070,45 +2400,45 @@ var kpiResults = {
     kpiResults.g.oListItem.set_item("Sector", Sector);
     kpiResults.g.oListItem.set_item("SubSector", SubSector);
     kpiResults.g.oListItem.set_item("Portfolio", Portfolio);
-    if(!isAdmin && !isEPMO && !isVROE && !isLMSUExecution && !isSPMAdmin)
-      kpiResults.g.oListItem.set_item("DraftStatus", 'draft');
-    if (Types == 'main') {
-      kpiResults.g.oListItem.set_item("RelatedGoal", MainGoalRelated)
-    } else if (Types == 'sub') {
-      kpiResults.g.oListItem.set_item("RelatedGoal", subGoalRelated)
+    if (!isAdmin && !isEPMO && !isVROE && !isLMSUExecution && !isSPMAdmin)
+      kpiResults.g.oListItem.set_item("DraftStatus", "draft");
+    if (Types == "main") {
+      kpiResults.g.oListItem.set_item("RelatedGoal", MainGoalRelated);
+    } else if (Types == "sub") {
+      kpiResults.g.oListItem.set_item("RelatedGoal", subGoalRelated);
     }
     ////////  update performance leader1 and performance leader2
-    if ($('#PerformanceLeader').find("span.sp-peoplepicker-userSpan").length) {
-      var id = $('#PerformanceLeader').attr("INppicker");
+    if ($("#PerformanceLeader").find("span.sp-peoplepicker-userSpan").length) {
+      var id = $("#PerformanceLeader").attr("INppicker");
       var ppp =
-        $('#PerformanceLeader').find("span.sp-peoplepicker-userSpan").attr("sid") ==
-          undefined
+        $("#PerformanceLeader")
+          .find("span.sp-peoplepicker-userSpan")
+          .attr("sid") == undefined
           ? ""
           : SP.FieldUserValue.fromUser(
-            $('#PerformanceLeader')
-              .find("span.sp-peoplepicker-userSpan")
-              .attr("sid")
-              .split("|")
-              .slice(-1)[0]
-          );
+              $("#PerformanceLeader")
+                .find("span.sp-peoplepicker-userSpan")
+                .attr("sid")
+                .split("|")
+                .slice(-1)[0]
+            );
 
       kpiResults.g.oListItem.set_item(id, ppp);
-
-
     }
-    if ($('#PerformanceLeader2').find("span.sp-peoplepicker-userSpan").length) {
-      var id = $('#PerformanceLeader2').attr("INppicker");
+    if ($("#PerformanceLeader2").find("span.sp-peoplepicker-userSpan").length) {
+      var id = $("#PerformanceLeader2").attr("INppicker");
       var ppp =
-        $('#PerformanceLeader2').find("span.sp-peoplepicker-userSpan").attr("sid") ==
-          undefined
+        $("#PerformanceLeader2")
+          .find("span.sp-peoplepicker-userSpan")
+          .attr("sid") == undefined
           ? ""
           : SP.FieldUserValue.fromUser(
-            $('#PerformanceLeader2')
-              .find("span.sp-peoplepicker-userSpan")
-              .attr("sid")
-              .split("|")
-              .slice(-1)[0]
-          );
+              $("#PerformanceLeader2")
+                .find("span.sp-peoplepicker-userSpan")
+                .attr("sid")
+                .split("|")
+                .slice(-1)[0]
+            );
 
       kpiResults.g.oListItem.set_item(id, ppp);
     }
@@ -2120,7 +2450,6 @@ var kpiResults = {
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
         console.log("Results KPI added");
-
       }),
       Function.createDelegate(this, function (sender, args) {
         console.log(
@@ -2129,127 +2458,154 @@ var kpiResults = {
       })
     );
   },
-  g: {}
-}
+  g: {},
+};
 
 // Edit Kpi Results list when edit on main kpi to make the target page updated
 var Edit_KPI_Results = {
-  init: function (Name, Types, Sector, SubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis, kpiRecurrenceChanged) {
-
+  init: function (
+    Name,
+    Types,
+    Sector,
+    SubSector,
+    kpiPortfolio,
+    kpiMainGoalRelated,
+    kpiSubGoalRelated,
+    kpiPerformanceAnalysis,
+    kpiRecurrenceChanged
+  ) {
     var context = SP.ClientContext.get_current();
     var dfd = $.Deferred();
-    var programList = context.get_web().get_lists().getByTitle('KPIResults');
+    var programList = context.get_web().get_lists().getByTitle("KPIResults");
     var camlQuery = new SP.CamlQuery();
-    camlQuery.set_viewXml("<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='KPI'/><Value Type='Text'>" + kpiCodeResult + "</Value></Eq></And></Where></Query></View>")
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='KPI'/><Value Type='Text'>" +
+        kpiCodeResult +
+        "</Value></Eq></And></Where></Query></View>"
+    );
 
     //Get items by Query
     var progColl = programList.getItems(camlQuery);
     //Load item collection
     context.load(progColl);
 
-    context.executeQueryAsync(
-      function () {
-        var currentItemArray = [];
-        if (progColl.get_count() > 0) {
-          var progEnum = progColl.getEnumerator();
-          while (progEnum.moveNext()) {
-            var currentItem = progEnum.get_current();
-            var currentId = currentItem.get_item("ID");
-            var yearItem = currentItem.get_item("Year");
+    context.executeQueryAsync(function () {
+      var currentItemArray = [];
+      if (progColl.get_count() > 0) {
+        var progEnum = progColl.getEnumerator();
+        while (progEnum.moveNext()) {
+          var currentItem = progEnum.get_current();
+          var currentId = currentItem.get_item("ID");
+          var yearItem = currentItem.get_item("Year");
 
-            //Get Item by current ID
-            var items = programList.getItemById(currentId);
-            items.set_item('Name', Name);
-            items.set_item('Types', Types);
-            items.set_item('Sector', Sector)
-            items.set_item('SubSector', SubSector)
-            items.set_item('RecurrenceChanged', kpiRecurrenceChanged)
+          //Get Item by current ID
+          var items = programList.getItemById(currentId);
+          items.set_item("Name", Name);
+          items.set_item("Types", Types);
+          items.set_item("Sector", Sector);
+          items.set_item("SubSector", SubSector);
+          items.set_item("RecurrenceChanged", kpiRecurrenceChanged);
 
-            ///////// update performance leader1 and performance leader2
-            if ($('#PerformanceLeader').find("span.sp-peoplepicker-userSpan").length) {
-              var id = $('#PerformanceLeader').attr("INppicker");
-              var ppp =
-                $('#PerformanceLeader').find("span.sp-peoplepicker-userSpan").attr("sid") ==
-                  undefined
-                  ? ""
-                  : SP.FieldUserValue.fromUser(
-                    $('#PerformanceLeader')
+          ///////// update performance leader1 and performance leader2
+          if (
+            $("#PerformanceLeader").find("span.sp-peoplepicker-userSpan").length
+          ) {
+            var id = $("#PerformanceLeader").attr("INppicker");
+            var ppp =
+              $("#PerformanceLeader")
+                .find("span.sp-peoplepicker-userSpan")
+                .attr("sid") == undefined
+                ? ""
+                : SP.FieldUserValue.fromUser(
+                    $("#PerformanceLeader")
                       .find("span.sp-peoplepicker-userSpan")
                       .attr("sid")
                       .split("|")
                       .slice(-1)[0]
                   );
-              items.set_item(id, ppp);
-
-            }
-            if ($('#PerformanceLeader2').find("span.sp-peoplepicker-userSpan").length) {
-              var id = $('#PerformanceLeader2').attr("INppicker");
-              var ppp =
-                $('#PerformanceLeader2').find("span.sp-peoplepicker-userSpan").attr("sid") ==
-                  undefined
-                  ? ""
-                  : SP.FieldUserValue.fromUser(
-                    $('#PerformanceLeader2')
-                      .find("span.sp-peoplepicker-userSpan")
-                      .attr("sid")
-                      .split("|")
-                      .slice(-1)[0]
-                  );
-              items.set_item(id, ppp);
-
-            }
-            /////////
-
-            if (yearItem == kpiYearPicked) { // to update performance analysis
-              if (kpiPeriodTypeUpdate == 'monthly') {
-                items.set_item(`PerformanceAnalysis${kpiMonthPicked}`, kpiPerformanceAnalysis)
-              } else if (kpiPeriodTypeUpdate == 'quarter') {
-                items.set_item(`PerformanceAnalysis${kpiQuarterPicked}`, kpiPerformanceAnalysis)
-              } else if (kpiPeriodTypeUpdate == 'midterm') {
-                items.set_item(`PerformanceAnalysis${kpiMidPicked}`, kpiPerformanceAnalysis)
-              } else if (kpiPeriodTypeUpdate == 'year') {
-                items.set_item('PerformanceAnalysisActualY', kpiPerformanceAnalysis)
-              }
-
-            }
-            if (Types == 'main') {
-              items.set_item("RelatedGoal", kpiMainGoalRelated)
-              items.set_item('Portfolio', '')
-            } else if (Types == 'sub') {
-              items.set_item("RelatedGoal", kpiSubGoalRelated)
-              items.set_item('Portfolio', kpiPortfolio)
-            }
-            //Update the item
-            items.update();
-            currentItemArray.push(items);
-            context.load(currentItemArray[currentItemArray.length - 1]);
+            items.set_item(id, ppp);
           }
-          context.executeQueryAsync(
-            function () {
+          if (
+            $("#PerformanceLeader2").find("span.sp-peoplepicker-userSpan")
+              .length
+          ) {
+            var id = $("#PerformanceLeader2").attr("INppicker");
+            var ppp =
+              $("#PerformanceLeader2")
+                .find("span.sp-peoplepicker-userSpan")
+                .attr("sid") == undefined
+                ? ""
+                : SP.FieldUserValue.fromUser(
+                    $("#PerformanceLeader2")
+                      .find("span.sp-peoplepicker-userSpan")
+                      .attr("sid")
+                      .split("|")
+                      .slice(-1)[0]
+                  );
+            items.set_item(id, ppp);
+          }
+          /////////
 
-              window.location =
-                _spPageContextInfo.webAbsoluteUrl +
-                "/SitePages/View.aspx?ListKey=" +
-                listkey +
-                "&IID=" +
-                IID +
-                PCODE_STRING;
-
-              dfd.resolve();
-            },
-            function (sender, args) {
-              //Item updated fail
-              console.log(
-                "Request Failed to get kpi results Item Items :" + args.get_message()
+          if (yearItem == kpiYearPicked) {
+            // to update performance analysis
+            if (kpiPeriodTypeUpdate == "monthly") {
+              items.set_item(
+                `PerformanceAnalysis${kpiMonthPicked}`,
+                kpiPerformanceAnalysis
+              );
+            } else if (kpiPeriodTypeUpdate == "quarter") {
+              items.set_item(
+                `PerformanceAnalysis${kpiQuarterPicked}`,
+                kpiPerformanceAnalysis
+              );
+            } else if (kpiPeriodTypeUpdate == "midterm") {
+              items.set_item(
+                `PerformanceAnalysis${kpiMidPicked}`,
+                kpiPerformanceAnalysis
+              );
+            } else if (kpiPeriodTypeUpdate == "year") {
+              items.set_item(
+                "PerformanceAnalysisActualY",
+                kpiPerformanceAnalysis
               );
             }
-          );
+          }
+          if (Types == "main") {
+            items.set_item("RelatedGoal", kpiMainGoalRelated);
+            items.set_item("Portfolio", "");
+          } else if (Types == "sub") {
+            items.set_item("RelatedGoal", kpiSubGoalRelated);
+            items.set_item("Portfolio", kpiPortfolio);
+          }
+          //Update the item
+          items.update();
+          currentItemArray.push(items);
+          context.load(currentItemArray[currentItemArray.length - 1]);
         }
-      }
-    )
-  }
-}
+        context.executeQueryAsync(
+          function () {
+            window.location =
+              _spPageContextInfo.webAbsoluteUrl +
+              "/SitePages/View.aspx?ListKey=" +
+              listkey +
+              "&IID=" +
+              IID +
+              PCODE_STRING;
 
+            dfd.resolve();
+          },
+          function (sender, args) {
+            //Item updated fail
+            console.log(
+              "Request Failed to get kpi results Item Items :" +
+                args.get_message()
+            );
+          }
+        );
+      }
+    });
+  },
+};
 
 //New KPI Equation
 var newKPIEquation = {
@@ -2278,7 +2634,6 @@ var newKPIEquation = {
         Set_Code_Submit.init();
       }),
       Function.createDelegate(this, function (sender, args) {
-
         console.log(
           "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
         );
@@ -2294,8 +2649,8 @@ var newKPIEquation = {
           "JS Api Error",
           "High",
           url,
-          '580',
-          '14',
+          "580",
+          "14",
           stack
         );
       })
@@ -2309,7 +2664,10 @@ var newKPIEquation = {
 var newBenefitEquation = {
   init: function () {
     var clientContext = new SP.ClientContext.get_current();
-    var oList = clientContext.get_web().get_lists().getByTitle("BenefitsEquations");
+    var oList = clientContext
+      .get_web()
+      .get_lists()
+      .getByTitle("BenefitsEquations");
     var itemCreateInfo = new SP.ListItemCreationInformation();
     newBenefitEquation.g.oListItem = oList.addItem(itemCreateInfo);
 
@@ -2332,7 +2690,6 @@ var newBenefitEquation = {
         Set_Code_Submit.init();
       }),
       Function.createDelegate(this, function (sender, args) {
-
         console.log(
           "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
         );
@@ -2348,25 +2705,25 @@ var newBenefitEquation = {
           "JS Api Error",
           "High",
           url,
-          '580',
-          '14',
+          "580",
+          "14",
           stack
         );
       })
     );
   },
   g: {},
-}
+};
 //master Data
 var New_Master_Details_Submit = {
   init: function () {
-
     var clientContext = new SP.ClientContext.get_current();
     // $('[data-target_list]').each(function(){
-    var pillerCount = 0
-    $("[data-target_list=Initiatives] .Details-Item.NewItem.master-to-submit" && listkey == 'projectcharter').each(
-      console.log('mmmmmmmm')
-    )
+    var pillerCount = 0;
+    $(
+      "[data-target_list=Initiatives] .Details-Item.NewItem.master-to-submit" &&
+        listkey == "projectcharter"
+    ).each(console.log("mmmmmmmm"));
     $("[data-target_list] .Details-Item.NewItem.master-to-submit").each(
       function () {
         var CurrList = $(this)
@@ -2381,14 +2738,13 @@ var New_Master_Details_Submit = {
         $(this)
           .find(
             ".CFIELD:not(.dont-submit)>input:not([type=file])," +
-            ".CFIELD:not(.dont-submit)>div[type=picker]," +
-            ".CFIELD:not(.dont-submit)>div[type=multipicker]," +
-            ".CFIELD:not(.dont-submit)>select[type=dropdown]," +
-            ".CFIELD:not(.dont-submit)>textarea," +
-            ".CFIELD:not(.dont-submit)>.multiselect-container"
+              ".CFIELD:not(.dont-submit)>div[type=picker]," +
+              ".CFIELD:not(.dont-submit)>div[type=multipicker]," +
+              ".CFIELD:not(.dont-submit)>select[type=dropdown]," +
+              ".CFIELD:not(.dont-submit)>textarea," +
+              ".CFIELD:not(.dont-submit)>.multiselect-container"
           )
           .each(function () {
-
             if ($(this).attr("type") == "picker") {
               if ($(this).find("span.sp-peoplepicker-userSpan").length > 0) {
                 var id =
@@ -2397,15 +2753,15 @@ var New_Master_Details_Submit = {
                     : $(this).attr("INppicker").split("+++")[0];
                 var ppp =
                   $(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
-                    undefined
+                  undefined
                     ? ""
                     : SP.FieldUserValue.fromUser(
-                      $(this)
-                        .find("span.sp-peoplepicker-userSpan")
-                        .attr("sid")
-                        .split("|")
-                        .slice(-1)[0]
-                    );
+                        $(this)
+                          .find("span.sp-peoplepicker-userSpan")
+                          .attr("sid")
+                          .split("|")
+                          .slice(-1)[0]
+                      );
                 New_Master_Details_Submit.g.oListItem.set_item(id, ppp);
               }
             } else if ($(this).attr("type") == "multipicker") {
@@ -2414,16 +2770,14 @@ var New_Master_Details_Submit = {
                 var users = [];
                 $("span.sp-peoplepicker-userSpan").each(function () {
                   var ppp =
-                    $(this).attr("sid") ==
-                      undefined
+                    $(this).attr("sid") == undefined
                       ? ""
                       : SP.FieldUserValue.fromUser(
-                        $(this).attr("sid").split("|").slice(-1)[0]
-                      );
+                          $(this).attr("sid").split("|").slice(-1)[0]
+                        );
 
-
-                  users.push(ppp)
-                })
+                  users.push(ppp);
+                });
                 New_Master_Details_Submit.g.oListItem.set_item(id, users);
               }
             } else if ($(this).attr("type") == "date") {
@@ -2431,8 +2785,8 @@ var New_Master_Details_Submit = {
               var ydate = !dateval
                 ? ""
                 : [dateval.slice(5, 10), dateval.slice(0, 4)]
-                  .join("/")
-                  .replace("-", "/");
+                    .join("/")
+                    .replace("-", "/");
               if (dateval)
                 New_Master_Details_Submit.g.oListItem.set_item(
                   $(this).attr("id"),
@@ -2458,10 +2812,11 @@ var New_Master_Details_Submit = {
               );
             } else if ($(this).attr("type") == "multiselect") {
               var myselections = [];
-              $(this).find("input:checkbox:checked").each(function () {
-                myselections.push($(this).val());
-
-              });
+              $(this)
+                .find("input:checkbox:checked")
+                .each(function () {
+                  myselections.push($(this).val());
+                });
 
               // $(this)
               //   .find("input#Revenue:checked")
@@ -2487,19 +2842,25 @@ var New_Master_Details_Submit = {
         var prt1 = CurrList.substring(0, 2).toUpperCase(),
           prt2 = String(new Date().getFullYear()).slice(4 - 2),
           prt3 = IID.toString().padStart(4, "0"),
-          prt4 = $(this).data('index').toString().padStart(4, "0");
-        ;
-
+          prt4 = $(this).data("index").toString().padStart(4, "0");
         Code = prt1 + "-" + prt2 + "-" + prt3 + "-" + prt4;
 
         // to save the master details attach in project and init
-        isThereAttachement = $(this).find(".CFIELD:not(.dont-submit)>input[type=file]").length
+        isThereAttachement = $(this).find(
+          ".CFIELD:not(.dont-submit)>input[type=file]"
+        ).length;
         if (isThereAttachement > 0) {
-          var checkAttachId = $(this).find(".CFIELD:not(.dont-submit)>input[type=file]").attr("id")
-          var isThereFiles = document.querySelector("#" + checkAttachId).files.length
+          var checkAttachId = $(this)
+            .find(".CFIELD:not(.dont-submit)>input[type=file]")
+            .attr("id");
+          var isThereFiles = document.querySelector("#" + checkAttachId).files
+            .length;
 
           if (isThereFiles > 0) {
-            allNewMasterIdRelatedCodeArr.push({ code: Code, CurrList: CurrList })
+            allNewMasterIdRelatedCodeArr.push({
+              code: Code,
+              CurrList: CurrList,
+            });
           }
         }
         //
@@ -2509,42 +2870,50 @@ var New_Master_Details_Submit = {
         if (PCODE) {
           New_Master_Details_Submit.g.oListItem.set_item("ProjectCode", PCODE);
         } else if (ICODE) {
-          New_Master_Details_Submit.g.oListItem.set_item("InitiativeCode", ICODE);
+          New_Master_Details_Submit.g.oListItem.set_item(
+            "InitiativeCode",
+            ICODE
+          );
         }
 
-
-        if (listkey == 'goalstrategy') {
-          var itemId = IID + pillerCount // to save a newTitle for mult master details item
+        if (listkey == "goalstrategy") {
+          var itemId = IID + pillerCount; // to save a newTitle for mult master details item
           var prt1 = CurrList.substring(0, 2).toUpperCase(),
             prt2 = String(new Date().getFullYear()).slice(4 - 2),
             prt3 = itemId.toString().padStart(4, "0");
           var pillerCode = prt1 + "-" + prt2 + "-" + prt3;
           New_Master_Details_Submit.g.oListItem.set_item("Title", pillerCode);
-          pillerCount += 1
-          var type = $('#Types').val()
-          if (type == 'vision') {
+          pillerCount += 1;
+          var type = $("#Types").val();
+          if (type == "vision") {
             New_Master_Details_Submit.g.oListItem.set_item("Types", "program");
-          } else if (type == 'ministry' || type == 'sectorial' || type == 'lms' || type == 'sub') {
+          } else if (
+            type == "ministry" ||
+            type == "sectorial" ||
+            type == "lms" ||
+            type == "sub"
+          ) {
             New_Master_Details_Submit.g.oListItem.set_item("Types", "pillar");
           }
         }
 
         New_Master_Details_Submit.g.oListItem.update();
         clientContext.load(New_Master_Details_Submit.g.oListItem);
-
       }
     );
     // });
 
-
-
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
-
         // get id of master when create to use it in master field of master section
-        var newItemMasterLength = $('.Details-Item.NewItem ul[data-fieldtargetlist]').length
+        var newItemMasterLength = $(
+          ".Details-Item.NewItem ul[data-fieldtargetlist]"
+        ).length;
         if (newItemMasterLength) {
-          if (New_Master_Details_Submit.g.oListItem && New_Master_Details_Submit.g.oListItem != 'undefined') {
+          if (
+            New_Master_Details_Submit.g.oListItem &&
+            New_Master_Details_Submit.g.oListItem != "undefined"
+          ) {
             masterIdWhenCreate = New_Master_Details_Submit.g.oListItem.get_id();
           }
         }
@@ -2554,7 +2923,6 @@ var New_Master_Details_Submit = {
         // allNewMasterIdArr.push(
         //   New_Master_Details_Submit.g.oListItem.get_id()
         // )
-
 
         if ($(".Details-Item.EditItem").length > 0) {
           //calling Edit master submit
@@ -2576,7 +2944,6 @@ var New_Master_Details_Submit = {
           });
         } else if (isNew) {
           if (listkey == "projects") {
-
             createFolder(
               ListArray[2].documents,
               PCODE + "/",
@@ -2588,8 +2955,7 @@ var New_Master_Details_Submit = {
               }
             );
             // window.location = _spPageContextInfo.webAbsoluteUrl + '/SitePages/Listing.aspx?ListKey=' + listkey + PCODE_STRING;
-          } else if (listkey == 'initiatives') {
-
+          } else if (listkey == "initiatives") {
             createFolder(
               "Initiative Documents",
               ICODE + "/",
@@ -2622,8 +2988,6 @@ var New_Master_Details_Submit = {
               "/SitePages/Listing.aspx?ListKey=" +
               listkey +
               PCODE_STRING;
-
-
           }
         } else {
           // console.log('successful');
@@ -2636,8 +3000,7 @@ var New_Master_Details_Submit = {
             $(".successmsg").show();
             $(".btn-save").addClass("success");
             if (listkey == "projects") {
-
-              getProjectInfoToUpdateEPM()
+              getProjectInfoToUpdateEPM();
 
               // window.location =
               //   _spPageContextInfo.webAbsoluteUrl +
@@ -2646,8 +3009,7 @@ var New_Master_Details_Submit = {
               //   "&IID=" +
               //   IID +
               //   PCODE_STRING;
-            }
-            else {
+            } else {
               if (listkey == "initiativecards" && ICODE) {
                 window.location =
                   _spPageContextInfo.webAbsoluteUrl +
@@ -2680,8 +3042,7 @@ var New_Master_Details_Submit = {
   g: {},
 };
 
-var countSuccessMaster = 0
-
+var countSuccessMaster = 0;
 
 var Edit_Master_Details_Submit = {
   init: function (DetailsList, IDs) {
@@ -2691,40 +3052,37 @@ var Edit_Master_Details_Submit = {
     // var masterLength = $("[data-target_list][data-section_type=master]").length
 
     $("[data-target_list] .Details-Item.EditItem").each(function () {
-
-
       CurrList = $(this).closest("[data-target_list]").attr("data-target_list");
       oList = clientContext.get_web().get_lists().getByTitle(CurrList);
       itemID = $(this).attr("data-id");
       Edit_Master_Details_Submit.g.oListItem = oList.getItemById(itemID);
       $(
         '[data-target_list="' +
-        CurrList +
-        '"] [data-ID="' +
-        itemID +
-        '"] > .CFIELD:not(.dont-submit):not(.dont-request)> input,' +
-        '[data-target_list="' +
-        CurrList +
-        '"] [data-ID="' +
-        itemID +
-        '"] > .CFIELD:not(.dont-submit):not(.dont-request)> div[type=picker],' +
-        '[data-target_list="' +
-        CurrList +
-        '"] [data-ID="' +
-        itemID +
-        '"] > .CFIELD:not(.dont-submit):not(.dont-request)> select[type=dropdown],' +
-        '[data-target_list="' +
-        CurrList +
-        '"] [data-ID="' +
-        itemID +
-        '"] > .CFIELD:not(.dont-submit):not(.dont-request)>  textarea,' +
-        '[data-target_list="' +
-        CurrList +
-        '"] [data-ID="' +
-        itemID +
-        '"] > .CFIELD:not(.dont-submit):not(.dont-request) > .multiselect-container'
+          CurrList +
+          '"] [data-ID="' +
+          itemID +
+          '"] > .CFIELD:not(.dont-submit):not(.dont-request)> input,' +
+          '[data-target_list="' +
+          CurrList +
+          '"] [data-ID="' +
+          itemID +
+          '"] > .CFIELD:not(.dont-submit):not(.dont-request)> div[type=picker],' +
+          '[data-target_list="' +
+          CurrList +
+          '"] [data-ID="' +
+          itemID +
+          '"] > .CFIELD:not(.dont-submit):not(.dont-request)> select[type=dropdown],' +
+          '[data-target_list="' +
+          CurrList +
+          '"] [data-ID="' +
+          itemID +
+          '"] > .CFIELD:not(.dont-submit):not(.dont-request)>  textarea,' +
+          '[data-target_list="' +
+          CurrList +
+          '"] [data-ID="' +
+          itemID +
+          '"] > .CFIELD:not(.dont-submit):not(.dont-request) > .multiselect-container'
       ).each(function () {
-
         if ($(this).attr("type") == "picker") {
           if ($(this).find("span.sp-peoplepicker-userSpan").length) {
             var id =
@@ -2733,11 +3091,11 @@ var Edit_Master_Details_Submit = {
                 : $(this).attr("INppicker").split("+++")[0];
             var ppp =
               $(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
-                undefined
+              undefined
                 ? ""
                 : SP.FieldUserValue.fromUser(
-                  $(this).find("span.sp-peoplepicker-userSpan").attr("sid")
-                ); //.split('|').slice(-1)[0]
+                    $(this).find("span.sp-peoplepicker-userSpan").attr("sid")
+                  ); //.split('|').slice(-1)[0]
             Edit_Master_Details_Submit.g.oListItem.set_item(id, ppp);
           }
         } else if ($(this).attr("type") == "multipicker") {
@@ -2746,16 +3104,14 @@ var Edit_Master_Details_Submit = {
             var users = [];
             $("span.sp-peoplepicker-userSpan").each(function () {
               var ppp =
-                $(this).attr("sid") ==
-                  undefined
+                $(this).attr("sid") == undefined
                   ? ""
                   : SP.FieldUserValue.fromUser(
-                    $(this).attr("sid").split("|").slice(-1)[0]
-                  );
+                      $(this).attr("sid").split("|").slice(-1)[0]
+                    );
 
-
-              users.push(ppp)
-            })
+              users.push(ppp);
+            });
             Edit_Master_Details_Submit.g.oListItem.set_item(id, users);
           }
         } else if ($(this).attr("type") == "date") {
@@ -2764,8 +3120,8 @@ var Edit_Master_Details_Submit = {
             var ydate = !dateval
               ? ""
               : [dateval.slice(5, 10), dateval.slice(0, 4)]
-                .join("/")
-                .replace("-", "/");
+                  .join("/")
+                  .replace("-", "/");
             if (dateval)
               Edit_Master_Details_Submit.g.oListItem.set_item(
                 $(this).attr("id"),
@@ -2804,9 +3160,8 @@ var Edit_Master_Details_Submit = {
             $(this).val() / 100
           );
         } else if ($(this).attr("type") == "multiselect") {
-
           // handle fieldTargetList to save the field in other list not master details list like delivrable in benifit in edit initiative
-          var masterFieldTargetList = $(this).data("fieldtargetlist")
+          var masterFieldTargetList = $(this).data("fieldtargetlist");
 
           if (masterFieldTargetList && masterFieldTargetList != "undefined") {
             // will loop on value on when update the values
@@ -2830,11 +3185,16 @@ var Edit_Master_Details_Submit = {
           );
       });
 
-      if (listkey == 'goalstrategy') {
-        var type = $('#Types').val()
-        if (type == 'vision') {
+      if (listkey == "goalstrategy") {
+        var type = $("#Types").val();
+        if (type == "vision") {
           Edit_Master_Details_Submit.g.oListItem.set_item("Types", "program");
-        } else if (type == 'ministry' || type == 'sectorial' || type == 'lms' || type == 'sub') {
+        } else if (
+          type == "ministry" ||
+          type == "sectorial" ||
+          type == "lms" ||
+          type == "sub"
+        ) {
           Edit_Master_Details_Submit.g.oListItem.set_item("Types", "piller");
         }
       }
@@ -2845,8 +3205,7 @@ var Edit_Master_Details_Submit = {
 
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
-
-        countSuccessMaster++
+        countSuccessMaster++;
 
         // determinig folder directory
         if (USERisWF && workflowname == "Project") {
@@ -2854,19 +3213,30 @@ var Edit_Master_Details_Submit = {
         } else if (USERisWF && workflowname != "Project") {
           Continue_Submit_Field.init();
         } else {
-
           $(".errormsg").hide();
           $(".successmsg").show();
           $(".btn-save").addClass("success");
 
-          if (listkey == 'mainkpi') { // to update the kpi result list
-            Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis, kpiRecurrenceChanged)
+          if (listkey == "mainkpi") {
+            // to update the kpi result list
+            Edit_KPI_Results.init(
+              kpiName,
+              kpiType,
+              kpiSector,
+              kpiSubSector,
+              kpiPortfolio,
+              kpiMainGoalRelated,
+              kpiSubGoalRelated,
+              kpiPerformanceAnalysis,
+              kpiRecurrenceChanged
+            );
           } else {
-
-            var fieldTargetListLength = $('.Details-Item.EditItem ul[data-fieldtargetlist]').length
+            var fieldTargetListLength = $(
+              ".Details-Item.EditItem ul[data-fieldtargetlist]"
+            ).length;
 
             if (fieldTargetListLength > 0) {
-              Field_MasterDetails_Data.init()
+              Field_MasterDetails_Data.init();
             } else {
               window.location =
                 _spPageContextInfo.webAbsoluteUrl +
@@ -2876,8 +3246,6 @@ var Edit_Master_Details_Submit = {
                 IID +
                 PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
             }
-
-
           }
         }
       }),
@@ -2894,128 +3262,170 @@ var Edit_Master_Details_Submit = {
   g: {},
 };
 
-
 // to get the data of  master details field in master details section like deliv in benifit in initiative edit for (multi select)
 var Field_MasterDetails_Data = {
   init: function () {
+    var masterFieldTargetList = "";
 
-    var masterFieldTargetList = ""
+    $(".Details-Item.EditItem ul[data-fieldtargetlist]").each(function () {
+      masterFieldTargetList = $(this).data("fieldtargetlist");
+      var fieldmasterkey = $(this).data("fieldmasterkey");
+      var fieldId = $(this).attr("id");
 
-    $('.Details-Item.EditItem ul[data-fieldtargetlist]').each(function () {
-
-      masterFieldTargetList = $(this).data("fieldtargetlist")
-      var fieldmasterkey = $(this).data("fieldmasterkey")
-      var fieldId = $(this).attr("id")
-
-      var parentCode = ""
+      var parentCode = "";
       if (PCODE) {
-        parentCode = PCODE
+        parentCode = PCODE;
       } else if (ICODE) {
-        parentCode = ICODE
+        parentCode = ICODE;
       } else if (STCODE) {
-        parentCode = STCODE
+        parentCode = STCODE;
       }
 
-      $(this).find("input:checkbox:checked").not(":disabled").each(function (index) {
+      $(this)
+        .find("input:checkbox:checked")
+        .not(":disabled")
+        .each(function (index) {
+          var fieldMasterId = $(this)
+            .closest(".Details-Item.EditItem")
+            .data("id");
 
-
-
-        var fieldMasterId = $(this).closest(".Details-Item.EditItem").data('id')
-
-        if (countSuccessMaster == 1) {
-          if (fieldTargetListInMaster.filter(e => ((e.masterId == fieldMasterId) && (e.fieldValue == $(this).val())))) {
-
-            fieldTargetListInMaster.push({ targetList: masterFieldTargetList, fieldId: fieldId, fieldValue: $(this).val(), masterId: fieldMasterId, parentCode: parentCode, fieldmasterkey: fieldmasterkey })
+          if (countSuccessMaster == 1) {
+            if (
+              fieldTargetListInMaster.filter(
+                (e) =>
+                  e.masterId == fieldMasterId && e.fieldValue == $(this).val()
+              )
+            ) {
+              fieldTargetListInMaster.push({
+                targetList: masterFieldTargetList,
+                fieldId: fieldId,
+                fieldValue: $(this).val(),
+                masterId: fieldMasterId,
+                parentCode: parentCode,
+                fieldmasterkey: fieldmasterkey,
+              });
+            }
           }
-        }
-      });
-    })
+        });
+    });
 
-    var newItemMasterLength = $('.Details-Item.NewItem ul[data-fieldtargetlist]').length
+    var newItemMasterLength = $(
+      ".Details-Item.NewItem ul[data-fieldtargetlist]"
+    ).length;
 
-    $('.Details-Item.NewItem ul[data-fieldtargetlist]').each(function () {
-      masterFieldTargetList = $(this).data("fieldtargetlist")
-      var fieldmasterkey = $(this).data("fieldmasterkey")
-      var fieldId = $(this).attr("id")
+    $(".Details-Item.NewItem ul[data-fieldtargetlist]").each(function () {
+      masterFieldTargetList = $(this).data("fieldtargetlist");
+      var fieldmasterkey = $(this).data("fieldmasterkey");
+      var fieldId = $(this).attr("id");
 
-      var parentCode = ""
+      var parentCode = "";
       if (PCODE) {
-        parentCode = PCODE
+        parentCode = PCODE;
       } else if (ICODE) {
-        parentCode = ICODE
+        parentCode = ICODE;
       } else if (STCODE) {
-        parentCode = STCODE
+        parentCode = STCODE;
       }
 
       // to get the correct master id if we add two section of master
       if (newItemMasterLength) {
-        newItemMasterLength = newItemMasterLength - 1
+        newItemMasterLength = newItemMasterLength - 1;
       }
 
-      $(this).find("input:checkbox:checked").not(":disabled").each(function (index) {
-
-        var fieldMasterId = Number(masterIdWhenCreate) - newItemMasterLength
-        if (countSuccessMaster == 1) {
-
-
-          if (fieldTargetListInMaster.filter(e => ((e.masterId == fieldMasterId) && (e.fieldValue == $(this).val())))) {
-
-            fieldTargetListInMaster.push({ targetList: masterFieldTargetList, fieldId: fieldId, fieldValue: $(this).val(), masterId: fieldMasterId, parentCode: parentCode, fieldmasterkey: fieldmasterkey })
+      $(this)
+        .find("input:checkbox:checked")
+        .not(":disabled")
+        .each(function (index) {
+          var fieldMasterId = Number(masterIdWhenCreate) - newItemMasterLength;
+          if (countSuccessMaster == 1) {
+            if (
+              fieldTargetListInMaster.filter(
+                (e) =>
+                  e.masterId == fieldMasterId && e.fieldValue == $(this).val()
+              )
+            ) {
+              fieldTargetListInMaster.push({
+                targetList: masterFieldTargetList,
+                fieldId: fieldId,
+                fieldValue: $(this).val(),
+                masterId: fieldMasterId,
+                parentCode: parentCode,
+                fieldmasterkey: fieldmasterkey,
+              });
+            }
           }
-        }
-      })
-    })
+        });
+    });
 
-
-    if (masterFieldTargetList && masterFieldTargetList != "undefined" && countSuccessMaster == 1) { // countSuccessMaster put it one to invoke the Field_Master_Details only one time if we have multi sections of master details in form
-      Field_Master_Details.init(fieldTargetListInMaster)
+    if (
+      masterFieldTargetList &&
+      masterFieldTargetList != "undefined" &&
+      countSuccessMaster == 1
+    ) {
+      // countSuccessMaster put it one to invoke the Field_Master_Details only one time if we have multi sections of master details in form
+      Field_Master_Details.init(fieldTargetListInMaster);
     }
-
-
-  }
-}
+  },
+};
 
 // submit master details field in master details section like deliv in benifit in initiative edit for (multi select)
 var Field_Master_Details = {
   init: function (fieldTargetData) {
-
     if (fieldTargetData.length) {
       var clientContext = new SP.ClientContext.get_current();
       var CurrList, oList, valueSelection, code;
 
-      CurrList = fieldTargetData[0].targetList
-      valueSelection = fieldTargetData[0].fieldValue
-
+      CurrList = fieldTargetData[0].targetList;
+      valueSelection = fieldTargetData[0].fieldValue;
 
       var oList = clientContext.get_web().get_lists().getByTitle(CurrList);
 
       var itemCreateInfo = new SP.ListItemCreationInformation();
       Field_Master_Details.g.oListItem = oList.addItem(itemCreateInfo);
 
-      valueSelection = valueSelection.split("-")
-      valueSelection = valueSelection[valueSelection.length - 1]
+      valueSelection = valueSelection.split("-");
+      valueSelection = valueSelection[valueSelection.length - 1];
 
-      var prt1 = fieldTargetData[0].fieldmasterkey.substring(0, 2).toUpperCase(),
+      var prt1 = fieldTargetData[0].fieldmasterkey
+          .substring(0, 2)
+          .toUpperCase(),
         prt2 = String(new Date().getFullYear()).slice(4 - 2),
         prt3 = fieldTargetData[0].masterId.toString().padStart(4, "0");
 
-      code = prt1 + "-" + prt2 + "-" + prt3 + "-" + valueSelection
+      code = prt1 + "-" + prt2 + "-" + prt3 + "-" + valueSelection;
 
       Field_Master_Details.g.oListItem.set_item("Title", code);
 
-
       // valueSelection.forEach(el => {
-      Field_Master_Details.g.oListItem.set_item(fieldTargetData[0].fieldId, fieldTargetData[0].fieldValue);
+      Field_Master_Details.g.oListItem.set_item(
+        fieldTargetData[0].fieldId,
+        fieldTargetData[0].fieldValue
+      );
 
-      Field_Master_Details.g.oListItem.set_item("MasterKey", fieldTargetData[0].fieldmasterkey);
-      Field_Master_Details.g.oListItem.set_item('MasterID', fieldTargetData[0].masterId);
+      Field_Master_Details.g.oListItem.set_item(
+        "MasterKey",
+        fieldTargetData[0].fieldmasterkey
+      );
+      Field_Master_Details.g.oListItem.set_item(
+        "MasterID",
+        fieldTargetData[0].masterId
+      );
 
       if (PCODE) {
-        Field_Master_Details.g.oListItem.set_item('ProjectCode', fieldTargetData[0].parentCode);
+        Field_Master_Details.g.oListItem.set_item(
+          "ProjectCode",
+          fieldTargetData[0].parentCode
+        );
       } else if (ICODE) {
-        Field_Master_Details.g.oListItem.set_item('InitiativeCode', fieldTargetData[0].parentCode);
+        Field_Master_Details.g.oListItem.set_item(
+          "InitiativeCode",
+          fieldTargetData[0].parentCode
+        );
       } else if (STCODE) {
-        Field_Master_Details.g.oListItem.set_item('StrategicPartnershipCode', fieldTargetData[0].parentCode);
+        Field_Master_Details.g.oListItem.set_item(
+          "StrategicPartnershipCode",
+          fieldTargetData[0].parentCode
+        );
       }
 
       // New_Data_Submit.g.oListItem.set_item("MasterKey", "projects");
@@ -3023,21 +3433,15 @@ var Field_Master_Details = {
 
       // })
 
-
-
       Field_Master_Details.g.oListItem.update();
       clientContext.load(Field_Master_Details.g.oListItem);
 
-
       clientContext.executeQueryAsync(
         Function.createDelegate(this, function () {
-
-
-          fieldTargetData.shift()
-          Field_Master_Details.init(fieldTargetData)
+          fieldTargetData.shift();
+          Field_Master_Details.init(fieldTargetData);
         })
-      )
-
+      );
     } else {
       window.location =
         _spPageContextInfo.webAbsoluteUrl +
@@ -3047,12 +3451,9 @@ var Field_Master_Details = {
         IID +
         PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
     }
-
-
-
   },
   g: {},
-}
+};
 
 //upload multiple files to specific folder with column assigning
 function readFiles() {
@@ -3129,7 +3530,6 @@ function UploadQuerySuccess() {
     } // if on new page other than project
     else {
       if ($(".Details-Item.NewItem").length > 0) {
-
         //calling new master submit
         New_Data_Submit.g.checkNewMasterDetails();
       } else {
@@ -3144,8 +3544,7 @@ function UploadQuerySuccess() {
             "&IID=" +
             IID +
             PCODE_STRING;
-        }
-        else {
+        } else {
           window.location =
             _spPageContextInfo.webAbsoluteUrl +
             "/SitePages/Listing.aspx?ListKey=" +
@@ -3164,8 +3563,8 @@ function UploadQueryFailure(sender, args) {
   if (args.get_message().indexOf("already exists") > -1) {
     $(".CSformbuttons").prepend(
       '<p class="errormsg">' +
-      args.get_message().split("/").pop().split("It was")[0] +
-      "</p>"
+        args.get_message().split("/").pop().split("It was")[0] +
+        "</p>"
     );
   }
 }
@@ -3174,33 +3573,31 @@ var isFirst_Upload = true;
 window.files;
 window.attachments = [];
 
-window.filesPurpose = []
+window.filesPurpose = [];
 
 function _uploadFile() {
   //
 
-
   // .section-container:not([data-target_list])
 
   $("input[type=file]").each(function (e) {
+    var docPurpose = $(this).data("docpurpose")
+      ? $(this).data("docpurpose")
+      : "";
 
+    var checkParent = $(this).closest("[data-target_list]");
 
-
-
-
-
-    var docPurpose = $(this).data("docpurpose") ? $(this).data("docpurpose") : ""
-
-    var checkParent = $(this).closest("[data-target_list]")
-
-    var dataTargetList = "", isMaster = false
+    var dataTargetList = "",
+      isMaster = false;
 
     if (checkParent.length > 0) {
-      dataTargetList = $(this).closest("[data-target_list]").data('target_list')
-      isMaster = true
+      dataTargetList = $(this)
+        .closest("[data-target_list]")
+        .data("target_list");
+      isMaster = true;
     }
 
-    console.log(dataTargetList, "dataTargetList")
+    console.log(dataTargetList, "dataTargetList");
 
     // var filesArr = document.querySelectorAll("#" + $(this).attr("id"))
 
@@ -3211,15 +3608,18 @@ function _uploadFile() {
     var myfiles = document.querySelector("#" + $(this).attr("id")).files;
 
     for (var i = 0; i < myfiles.length; i++) {
-
-
       const file = myfiles[i];
       const fileExtension = "" + file.name.split(".").pop();
       // get attribut
       if (acceptedExtensions.indexOf(fileExtension.toLowerCase()) > -1) {
         attachments.push(file);
 
-        filesPurpose.push({ name: file.name, purpose: docPurpose, dataTargetList: dataTargetList, isMaster: isMaster })
+        filesPurpose.push({
+          name: file.name,
+          purpose: docPurpose,
+          dataTargetList: dataTargetList,
+          isMaster: isMaster,
+        });
       }
     }
     // })
@@ -3264,28 +3664,25 @@ function _uploadFile() {
         var Doc_Title = "";
         var ActualY = "ActualY";
 
+        var purpose = filesPurpose[index].purpose;
 
+        var checkMaster = filesPurpose[index].isMaster;
+        var dataTargetList = filesPurpose[index].dataTargetList;
 
-
-        var purpose = filesPurpose[index].purpose
-
-        var checkMaster = filesPurpose[index].isMaster
-        var dataTargetList = filesPurpose[index].dataTargetList
-
-
-
-        if (checkMaster && allNewMasterIdRelatedCodeArr.length && isNew && (listkey == "initiatives" || listkey == "projects")) {
-
+        if (
+          checkMaster &&
+          allNewMasterIdRelatedCodeArr.length &&
+          isNew &&
+          (listkey == "initiatives" || listkey == "projects")
+        ) {
           var customquery =
-            '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Title" /><Value Type="Text">' +
-            allNewMasterIdRelatedCodeArr[0].code
-            +
+            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Title\" /><Value Type=\"Text\">" +
+            allNewMasterIdRelatedCodeArr[0].code +
             "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
 
-          var getMasterList = allNewMasterIdRelatedCodeArr[0].CurrList
+          var getMasterList = allNewMasterIdRelatedCodeArr[0].CurrList;
 
-          allNewMasterIdRelatedCodeArr.shift()
-
+          allNewMasterIdRelatedCodeArr.shift();
 
           sphttp.get(
             _spPageContextInfo.siteServerRelativeUrl,
@@ -3294,19 +3691,16 @@ function _uploadFile() {
             ["ID", "Title"],
             function (records, record, listItem, isDone) {
               if (isDone) {
-
-
                 records.forEach(function (el, index) {
-
-                  var itemId = el.ID
+                  var itemId = el.ID;
 
                   if (PCODE || ICODE) {
                     var code = PCODE ? PCODE : ICODE;
 
                     if (checkMaster && dataTargetList) {
-                      dataTargetList = dataTargetList.toLowerCase()
-                      Doc_Title = dataTargetList + "-" + code
-                      folderdirectory = code + "/" + dataTargetList
+                      dataTargetList = dataTargetList.toLowerCase();
+                      Doc_Title = dataTargetList + "-" + code;
+                      folderdirectory = code + "/" + dataTargetList;
                     } else {
                       Doc_Title = listkey + "-" + code;
                       folderdirectory = code + "/" + listkey;
@@ -3322,30 +3716,31 @@ function _uploadFile() {
                     <div class="upload-progress bg-success"" style="width:0px"></div>\
                 </div>\
                 <p data-trans-fileuploading class="upload-name Resources"><span class="progress-file-name">"' +
-                        file.name.replaceAll('�', '') +
-                        '" </span><span class="upload-percent"></span></p>\
+                          file.name.replaceAll("�", "") +
+                          '" </span><span class="upload-percent"></span></p>\
             </div>'
                       );
                   }
 
-
-
-
                   isFirst_Upload = false;
-                  var fieldsObj = {}
+                  var fieldsObj = {};
 
                   fieldsObj = {
                     Title: Doc_Title,
                     ItemID: itemId,
-                    docPurpose: purpose
-                  }
-
+                    docPurpose: purpose,
+                  };
 
                   return $SP()
                     .list(Documents_Library)
                     .createFile({
                       content: file.content,
-                      filename: folderdirectory + "/" + new Date().toLocaleString().replaceAll("/", "-") + '_-_SystemUploadTime_-_' + file.name.replaceAll('�', ''),
+                      filename:
+                        folderdirectory +
+                        "/" +
+                        new Date().toLocaleString().replaceAll("/", "-") +
+                        "_-_SystemUploadTime_-_" +
+                        file.name.replaceAll("�", ""),
                       fields: fieldsObj,
                       progress: function (perc) {
                         // console.log("Progress => ", perc + "%");
@@ -3355,7 +3750,6 @@ function _uploadFile() {
                     })
                     .then(
                       function (file) {
-
                         isuploaddone++;
                         if (fileCount == isuploaddone) {
                           if (listkey == "projects") {
@@ -3367,11 +3761,11 @@ function _uploadFile() {
                             $(".btn-save").addClass("success");
                             window.location =
                               _spPageContextInfo.webAbsoluteUrl +
-                              "/SitePages/initiativeHome.aspx?ICODE=" + ICODE;
-
+                              "/SitePages/initiativeHome.aspx?ICODE=" +
+                              ICODE;
                           }
                         }
-                        console.log("uplad maste attach")
+                        console.log("uplad maste attach");
                       },
                       function (error) {
                         $(".form-btns-wrapper").prepend(
@@ -3380,7 +3774,6 @@ function _uploadFile() {
                         console.log("Error Uploading: ", error);
                       }
                     );
-
                 });
               }
             }
@@ -3392,17 +3785,16 @@ function _uploadFile() {
           if (PCODE || ICODE) {
             var code = PCODE ? PCODE : ICODE;
             if (checkMaster && dataTargetList) {
-              dataTargetList = dataTargetList.toLowerCase()
-              Doc_Title = dataTargetList + "-" + code
-              folderdirectory = code + "/" + dataTargetList
+              dataTargetList = dataTargetList.toLowerCase();
+              Doc_Title = dataTargetList + "-" + code;
+              folderdirectory = code + "/" + dataTargetList;
             } else {
               Doc_Title = listkey + "-" + code;
               folderdirectory = code + "/" + listkey;
             }
           } else if (STCODE) {
-            var code = STCODE
+            var code = STCODE;
             Doc_Title = listkey + "-" + code;
-
           } else {
             Doc_Title = listkey;
           }
@@ -3416,65 +3808,67 @@ function _uploadFile() {
                     <div class="upload-progress bg-success"" style="width:0px"></div>\
                 </div>\
                 <p data-trans-fileuploading class="upload-name Resources"><span class="progress-file-name">"' +
-                file.name.replaceAll('�', '') +
-                '" </span><span class="upload-percent"></span></p>\
+                  file.name.replaceAll("�", "") +
+                  '" </span><span class="upload-percent"></span></p>\
             </div>'
               );
           }
 
-
-
           isFirst_Upload = false;
-          var fieldsObj = {}
-          if (isEdit && listkey == 'mainkpi') {
-            var kpiPeriodType = $('#PeriodType').val()
-            if (kpiPeriodType == 'monthly') {
+          var fieldsObj = {};
+          if (isEdit && listkey == "mainkpi") {
+            var kpiPeriodType = $("#PeriodType").val();
+            if (kpiPeriodType == "monthly") {
               fieldsObj = {
                 Title: Doc_Title,
                 ItemID: IID,
-                RelatedMonth: $('#Months').val(),
-                RelatedYear: $('#Year').val(),
-                docPurpose: purpose
-              }
-            } else if (kpiPeriodType == 'quarter') {
+                RelatedMonth: $("#Months").val(),
+                RelatedYear: $("#Year").val(),
+                docPurpose: purpose,
+              };
+            } else if (kpiPeriodType == "quarter") {
               fieldsObj = {
                 Title: Doc_Title,
                 ItemID: IID,
-                RelatedQuarter: $('#Quarter').val(),
-                RelatedYear: $('#Year').val(),
-                docPurpose: purpose
-              }
-            } else if (kpiPeriodType == 'midterm') {
+                RelatedQuarter: $("#Quarter").val(),
+                RelatedYear: $("#Year").val(),
+                docPurpose: purpose,
+              };
+            } else if (kpiPeriodType == "midterm") {
               fieldsObj = {
                 Title: Doc_Title,
                 ItemID: IID,
-                RelatedMid: $('#Midterms').val(),
-                RelatedYear: $('#Year').val(),
-                docPurpose: purpose
-              }
-            } else if (kpiPeriodType == 'year') {
+                RelatedMid: $("#Midterms").val(),
+                RelatedYear: $("#Year").val(),
+                docPurpose: purpose,
+              };
+            } else if (kpiPeriodType == "year") {
               fieldsObj = {
                 Title: Doc_Title,
                 ItemID: IID,
                 RelatedActualY: ActualY,
-                RelatedYear: $('#Year').val(),
-                docPurpose: purpose
-
-              }
+                RelatedYear: $("#Year").val(),
+                docPurpose: purpose,
+              };
             }
           } else {
             fieldsObj = {
               Title: Doc_Title,
               ItemID: IID,
-              docPurpose: purpose
-            }
+              docPurpose: purpose,
+            };
           }
 
           return $SP()
             .list(Documents_Library)
             .createFile({
               content: file.content,
-              filename: folderdirectory + "/" + new Date().toLocaleString().replaceAll("/", "-") + '_-_SystemUploadTime_-_' + file.name.replaceAll('�', ''),
+              filename:
+                folderdirectory +
+                "/" +
+                new Date().toLocaleString().replaceAll("/", "-") +
+                "_-_SystemUploadTime_-_" +
+                file.name.replaceAll("�", ""),
               fields: fieldsObj,
               progress: function (perc) {
                 // console.log("Progress => ", perc + "%");
@@ -3484,7 +3878,6 @@ function _uploadFile() {
             })
             .then(
               function (file) {
-
                 isuploaddone++;
                 if (fileCount == isuploaddone) {
                   if (isEdit) {
@@ -3504,7 +3897,7 @@ function _uploadFile() {
                     } else {
                       $(".btn-save").addClass("success");
                       if (listkey == "projects") {
-                        getProjectInfoToUpdateEPM()
+                        getProjectInfoToUpdateEPM();
                         // window.location =
                         //   _spPageContextInfo.webAbsoluteUrl +
                         //   "/SitePages/View.aspx?ListKey=" +
@@ -3512,12 +3905,20 @@ function _uploadFile() {
                         //   "&IID=" +
                         //   IID +
                         //   PCODE_STRING;
-                      }
-                      else {
-                        if (listkey == 'mainkpi') { // to update the kpi result list
-                          Edit_KPI_Results.init(kpiName, kpiType, kpiSector, kpiSubSector, kpiPortfolio, kpiMainGoalRelated, kpiSubGoalRelated, kpiPerformanceAnalysis.kpiRecurrenceChanged)
+                      } else {
+                        if (listkey == "mainkpi") {
+                          // to update the kpi result list
+                          Edit_KPI_Results.init(
+                            kpiName,
+                            kpiType,
+                            kpiSector,
+                            kpiSubSector,
+                            kpiPortfolio,
+                            kpiMainGoalRelated,
+                            kpiSubGoalRelated,
+                            kpiPerformanceAnalysis.kpiRecurrenceChanged
+                          );
                         } else {
-
                           window.location =
                             _spPageContextInfo.webAbsoluteUrl +
                             "/SitePages/View.aspx?ListKey=" +
@@ -3537,8 +3938,8 @@ function _uploadFile() {
                     $(".btn-save").addClass("success");
                     window.location =
                       _spPageContextInfo.webAbsoluteUrl +
-                      "/SitePages/initiativeHome.aspx?ICODE=" + ICODE;
-
+                      "/SitePages/initiativeHome.aspx?ICODE=" +
+                      ICODE;
                   } else if (listkey == "strategicpartnerships") {
                     $(".errormsg").hide();
                     $(".successmsg").show();
@@ -3548,14 +3949,12 @@ function _uploadFile() {
                       "/SitePages/Listing.aspx?ListKey=" +
                       listkey +
                       PCODE_STRING;
-
                   } // if on new page other than project
                   else {
                     if ($(".Details-Item.NewItem").length > 0) {
                       //calling new master submit
                       New_Data_Submit.g.checkNewMasterDetails();
                     } else {
-
                       // console.log('successful');
                       $(".errormsg").hide();
                       $(".successmsg").show();
@@ -3585,7 +3984,6 @@ function _uploadFile() {
 //file delete
 window.deleteFile = {
   init: function (fileurl) {
-
     var clientContext;
     var oWebsite;
     window.hreftodelete = fileurl;
@@ -3615,7 +4013,6 @@ window.deleteFile = {
 
 //create folder on project creation
 var createFolder = function (listTitle, folderUrl, success, error) {
-
   var ctx = SP.ClientContext.get_current();
   var list = ctx.get_web().get_lists().getByTitle(listTitle);
   var createFolderInternal = function (
@@ -3630,7 +4027,6 @@ var createFolder = function (listTitle, folderUrl, success, error) {
     var curFolder = parentFolder.get_folders().add(folderName);
     ctx.load(curFolder);
     ctx.executeQueryAsync(function () {
-
       if (folderNames.length > 1) {
         //    var subFolderUrl = folderNames.slice(1,folderNames.length).join('/');
         for (var i = 0; i < KeysFolders.length; i++) {
@@ -3645,20 +4041,27 @@ var createFolder = function (listTitle, folderUrl, success, error) {
               // readFiles();
 
               _uploadFile();
-            }
-            else {
+            } else {
               $(".errormsg").hide();
               $(".successmsg").show();
-              if (listkey == 'initiatives') {
-                setTimeout(function () { // add setTimeOut to make sure that the folders created successfully on Initiative Document
+              if (listkey == "initiatives") {
+                setTimeout(function () {
+                  // add setTimeOut to make sure that the folders created successfully on Initiative Document
 
-                  window.location = _spPageContextInfo.webAbsoluteUrl + "/SitePages/initiativeHome.aspx?ICODE=" + ICODE
+                  window.location =
+                    _spPageContextInfo.webAbsoluteUrl +
+                    "/SitePages/initiativeHome.aspx?ICODE=" +
+                    ICODE;
                 }, 3000);
 
                 // New_InitiativeStages_Submit.init()
-              } else if (listkey == 'strategicpartnerships') {
-                setTimeout(function () { // add setTimeOut to make sure that the folders created successfully on Initiative Document
-                  window.location = _spPageContextInfo.webAbsoluteUrl + "/SitePages/StrategicPartnershipHome.aspx?STCODE=" + STCODE
+              } else if (listkey == "strategicpartnerships") {
+                setTimeout(function () {
+                  // add setTimeOut to make sure that the folders created successfully on Initiative Document
+                  window.location =
+                    _spPageContextInfo.webAbsoluteUrl +
+                    "/SitePages/StrategicPartnershipHome.aspx?STCODE=" +
+                    STCODE;
                 }, 3000);
               } else {
                 New_ProjectStages_Submit.init();
@@ -3714,8 +4117,6 @@ var New_ProjectStages_Submit = {
       .get_web()
       .get_lists()
       .getByTitle("Project Stages");
-
-
 
     for (var i = 0; i < Stages_Data_Request.g.StagesArray.length; i++) {
       var itemCreateInfo = new SP.ListItemCreationInformation();
@@ -3776,7 +4177,7 @@ var projects;
 // Add a project the projects collection.
 function CreateProject() {
   // Initialize the current client context.
-  console.log("before")
+  console.log("before");
 
   var projContext = PS.ProjectContext.get_current();
   // Initialize a ProjectCreationInformation object and specify properties
@@ -3824,9 +4225,8 @@ var GUIDS = [];
 // Get the projects collection.
 // function GetProjects() {
 window.GetProjects = function () {
-
   // Initialize the current client context.
-  console.log("GetProjects in")
+  console.log("GetProjects in");
   projContext = PS.ProjectContext.get_current();
   // Get the projects collection.
   projects = projContext.get_projects();
@@ -3836,12 +4236,12 @@ window.GetProjects = function () {
   projContext.load(projects, "Include(Name, Id)"); //, Description, StartDate, Id, Owner
   // Run the request on the server.
   projContext.executeQueryAsync(IterateThroughProjects, QueryFailed);
-}
+};
 // Iterate through the projects collection.
 function IterateThroughProjects(response) {
   // Get the enumerator and iterate through the collection.
 
-  console.log("IterateThroughProjects in")
+  console.log("IterateThroughProjects in");
 
   var enumerator = projects.getEnumerator();
   while (enumerator.moveNext()) {
@@ -3877,7 +4277,12 @@ function IterateThroughProjects(response) {
 function QueryFailed(sender, args) {
   console.log("Request failed: " + args.get_message());
 }
-var projectowner, projectsponsor, projectDirectorUnit, projectObjectiveOwner, projectQualityOfficer, projectResponsible;
+var projectowner,
+  projectsponsor,
+  projectDirectorUnit,
+  projectObjectiveOwner,
+  projectQualityOfficer,
+  projectResponsible;
 
 var Edit_PInfo_Submit = {
   preinit: function () {
@@ -3905,12 +4310,11 @@ var Edit_PInfo_Submit = {
         Edit_PInfo_Submit.g.oListItem.update();
         clientContext.executeQueryAsync(
           Function.createDelegate(this, function () {
-
             $(".errormsg").hide();
             $(".successmsg").show();
             $(".btn-save").addClass("success");
             newprojectsubmitted = true;
-            console.log("inside GUID")
+            console.log("inside GUID");
 
             projectowner = Edit_PInfo_Submit.g.oListItem
               .get_item("ProjectOwner")
@@ -3920,17 +4324,41 @@ var Edit_PInfo_Submit = {
               .get_item("ProjectSponsor")
               .get_lookupValue();
 
-            projectDirectorUnit = Edit_PInfo_Submit.g.oListItem.get_item("DirectorUnit") ? Edit_PInfo_Submit.g.oListItem.get_item("DirectorUnit").get_lookupValue() : '';
-            projectObjectiveOwner = Edit_PInfo_Submit.g.oListItem.get_item("ObjectiveOwner") ? Edit_PInfo_Submit.g.oListItem.get_item("ObjectiveOwner").get_lookupValue() : '';
-            projectQualityOfficer = Edit_PInfo_Submit.g.oListItem.get_item("QualityOfficer") ? Edit_PInfo_Submit.g.oListItem.get_item("QualityOfficer").get_lookupValue() : '';
-            projectResponsible = Edit_PInfo_Submit.g.oListItem.get_item("ProjectResponsible") ? Edit_PInfo_Submit.g.oListItem.get_item("ProjectResponsible").get_lookupValue() : '';
+            projectDirectorUnit = Edit_PInfo_Submit.g.oListItem.get_item(
+              "DirectorUnit"
+            )
+              ? Edit_PInfo_Submit.g.oListItem
+                  .get_item("DirectorUnit")
+                  .get_lookupValue()
+              : "";
+            projectObjectiveOwner = Edit_PInfo_Submit.g.oListItem.get_item(
+              "ObjectiveOwner"
+            )
+              ? Edit_PInfo_Submit.g.oListItem
+                  .get_item("ObjectiveOwner")
+                  .get_lookupValue()
+              : "";
+            projectQualityOfficer = Edit_PInfo_Submit.g.oListItem.get_item(
+              "QualityOfficer"
+            )
+              ? Edit_PInfo_Submit.g.oListItem
+                  .get_item("QualityOfficer")
+                  .get_lookupValue()
+              : "";
+            projectResponsible = Edit_PInfo_Submit.g.oListItem.get_item(
+              "ProjectResponsible"
+            )
+              ? Edit_PInfo_Submit.g.oListItem
+                  .get_item("ProjectResponsible")
+                  .get_lookupValue()
+              : "";
 
             buildTeamResourcesArr.push(projectowner);
             buildTeamResourcesArr.push(projectsponsor);
-            buildTeamResourcesArr.push(projectDirectorUnit)
-            buildTeamResourcesArr.push(projectObjectiveOwner)
-            buildTeamResourcesArr.push(projectQualityOfficer)
-            buildTeamResourcesArr.push(projectResponsible)
+            buildTeamResourcesArr.push(projectDirectorUnit);
+            buildTeamResourcesArr.push(projectObjectiveOwner);
+            buildTeamResourcesArr.push(projectQualityOfficer);
+            buildTeamResourcesArr.push(projectResponsible);
             //to be replaced
             InternalEntities_Request.preinit();
 
@@ -3981,12 +4409,12 @@ var InternalEntities_Request = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       '<View><Query><Where><In><FieldRef Name="Title" /><Values><Value Type="Text">' +
-      projectsector +
-      '</Value><Value Type="Text">' +
-      projectsection +
-      '</Value><Value Type="Text">' +
-      projectdepartment +
-      "</Value></Values></In></Where></Query></View>"
+        projectsector +
+        '</Value><Value Type="Text">' +
+        projectsection +
+        '</Value><Value Type="Text">' +
+        projectdepartment +
+        "</Value></Values></In></Where></Query></View>"
     );
     InternalEntities_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(InternalEntities_Request.g.collListItem);
@@ -3998,7 +4426,7 @@ var InternalEntities_Request = {
   onSuccess: function (sender, args) {
     var collListItem = InternalEntities_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-    console.log("inside internal entity")
+    console.log("inside internal entity");
 
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
@@ -4036,7 +4464,6 @@ function ChangeProject() {
   draftProject = project.checkOut();
   for (var i = 0; i < buildTeamResourcesArr.length; i++) {
     allResourcesArr.forEach((el) => {
-
       if (buildTeamResourcesArr[i] == el.Name) {
         var new_resource_id = el.Id;
         var new_resource = new PS.ProjectResourceCreationInformation();
@@ -4049,36 +4476,35 @@ function ChangeProject() {
     });
   }
   var publishJob = draftProject.update();
-  console.log(PGUID, "User_ProjUID in new proj")
+  console.log(PGUID, "User_ProjUID in new proj");
 
   // projContext.waitForQueueAsync(publishJob, 100, QueueJobSent); // comment and write a new function to change the owner on project center when create a project
   projContext.waitForQueueAsync(publishJob, 100, GetProjectsCreate);
-
-
 }
 ///////////////////////////  work to change the owner on project center when create a project
 function GetProjectsCreate() {
   projContext = PS.ProjectContext.get_current();
   projects = projContext.get_projects();
-  projContext.load(projects, 'Include(Name, Id)'); //, Description, StartDate, Id, Owner
+  projContext.load(projects, "Include(Name, Id)"); //, Description, StartDate, Id, Owner
   projContext.executeQueryAsync(ChangeProjectOwnerEpmCreateProj, QueryFailed);
 }
 
-
-function ChangeProjectOwnerEpmCreateProj() { // change the owner on project center when create a project
+function ChangeProjectOwnerEpmCreateProj() {
+  // change the owner on project center when create a project
   var project = projects.getById(PGUID);
   var draftProject = project.checkOut();
-  var web = projContext.get_web()
+  var web = projContext.get_web();
 
+  var projectManagerId = projectManagerPickedToProjectCenter.get_lookupId();
+  var userPicked = web.getUserById(projectManagerId); //147
 
-  var projectManagerId = projectManagerPickedToProjectCenter.get_lookupId()
-  var userPicked = web.getUserById(projectManagerId) //147
-
-
-  draftProject.set_owner(userPicked)
+  draftProject.set_owner(userPicked);
   var publishJob = draftProject.publish(true);
-  projContext.waitForQueueAsync(publishJob, 100, QueueJobSentOwnerEpmCreateProj);
-
+  projContext.waitForQueueAsync(
+    publishJob,
+    100,
+    QueueJobSentOwnerEpmCreateProj
+  );
 }
 
 function QueueJobSentOwnerEpmCreateProj(response) {
@@ -4086,7 +4512,6 @@ function QueueJobSentOwnerEpmCreateProj(response) {
     _spPageContextInfo.siteAbsoluteUrl +
     "/SitePages/ProjectHome.aspx?PCODE=" +
     PNAME;
-
 }
 //////////////////////////
 
@@ -4124,7 +4549,6 @@ var checkinProject = {
   g: {},
 };
 
-
 //*****edit task list when create new project */
 window.NewProjectTask_Edit_Data = {
   init: function () {
@@ -4161,10 +4585,10 @@ window.Edit_Item_Field = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       '<View><Query><Where><Eq><FieldRef Name="' +
-      field +
-      '" /> <Value Type="Text">' +
-      value +
-      "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
+        field +
+        '" /> <Value Type="Text">' +
+        value +
+        "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
     );
     //Get items by Query
     var progColl = programList.getItems(camlQuery);
@@ -4217,83 +4641,111 @@ window.Edit_Item_Field = {
 
 // Archived integration submit
 window.Archive_Data_Submit = {
-  preinit: function () {
-  },
+  preinit: function () {},
   init: function (RqUID, resId, itemId) {
     var clientContext = new SP.ClientContext.get_current();
-    var oList = clientContext.get_web().get_lists().getByTitle("IntegrationArchive");
+    var oList = clientContext
+      .get_web()
+      .get_lists()
+      .getByTitle("IntegrationArchive");
     var itemCreateInfo = new SP.ListItemCreationInformation();
     Archive_Data_Submit.g.oListItem = oList.addItem(itemCreateInfo);
 
-    $(".section-container:not([data-target_list]) .CFIELD> input[type=text], .section-container:not([data-target_list]) .CFIELD> input[type=number], .section-container:not([data-target_list]) .CFIELD> input[type=float], .section-container:not([data-target_list]) .CFIELD>  input[type=date],.section-container:not([data-target_list]) .CFIELD> .datetimeinputs input[type=date],.section-container:not([data-target_list]) .CFIELD> .datetimeinputs input[type=datetime-local],.section-container:not([data-target_list]) .CFIELD> input[type=radio], .section-container:not([data-target_list]) .CFIELD> input[type=checkbox], .section-container:not([data-target_list]) .CFIELD> div[type=picker], .section-container:not([data-target_list]) .CFIELD> select[type=dropdown], .section-container:not([data-target_list]) .CFIELD>  textarea, .section-container:not([data-target_list]) .CFIELD > .multiselect-container"
+    $(
+      ".section-container:not([data-target_list]) .CFIELD> input[type=text], .section-container:not([data-target_list]) .CFIELD> input[type=number], .section-container:not([data-target_list]) .CFIELD> input[type=float], .section-container:not([data-target_list]) .CFIELD>  input[type=date],.section-container:not([data-target_list]) .CFIELD> .datetimeinputs input[type=date],.section-container:not([data-target_list]) .CFIELD> .datetimeinputs input[type=datetime-local],.section-container:not([data-target_list]) .CFIELD> input[type=radio], .section-container:not([data-target_list]) .CFIELD> input[type=checkbox], .section-container:not([data-target_list]) .CFIELD> div[type=picker], .section-container:not([data-target_list]) .CFIELD> select[type=dropdown], .section-container:not([data-target_list]) .CFIELD>  textarea, .section-container:not([data-target_list]) .CFIELD > .multiselect-container"
     ).each(function () {
       if ($(this).attr("type") == "date") {
-        if (listkey == 'projectcharter' && PCODE) {
-          if ($(this).attr("id") == "BaselineStartDate" || $(this).attr("id") == "ActualStartDate") {
+        if (listkey == "projectcharter" && PCODE) {
+          if (
+            $(this).attr("id") == "BaselineStartDate" ||
+            $(this).attr("id") == "ActualStartDate"
+          ) {
             if ($(this).val()) {
               var dateval = $(this).val().replace("-", "/");
-              var datesId = $(this).attr("id")
+              var datesId = $(this).attr("id");
               var ydate = !dateval
                 ? ""
                 : [dateval.slice(5, 10), dateval.slice(0, 4)]
-                  .join("/")
-                  .replace("-", "/");
+                    .join("/")
+                    .replace("-", "/");
 
               if (dateval) {
-                Archive_Data_Submit.g.oListItem.set_item($(this).attr("id"), ydate);
+                Archive_Data_Submit.g.oListItem.set_item(
+                  $(this).attr("id"),
+                  ydate
+                );
               }
             }
           }
-        } else if (listkey == 'initiativecards' && ICODE) {
-          if ($(this).attr("id") == "StartDate" || $(this).attr("id") == "FinishDate") {
+        } else if (listkey == "initiativecards" && ICODE) {
+          if (
+            $(this).attr("id") == "StartDate" ||
+            $(this).attr("id") == "FinishDate"
+          ) {
             if ($(this).val()) {
               var dateval = $(this).val().replace("-", "/");
-              var datesId = $(this).attr("id")
+              var datesId = $(this).attr("id");
               var ydate = !dateval
                 ? ""
                 : [dateval.slice(5, 10), dateval.slice(0, 4)]
-                  .join("/")
-                  .replace("-", "/");
+                    .join("/")
+                    .replace("-", "/");
 
               if (dateval) {
-                Archive_Data_Submit.g.oListItem.set_item($(this).attr("id"), ydate);
+                Archive_Data_Submit.g.oListItem.set_item(
+                  $(this).attr("id"),
+                  ydate
+                );
               }
             }
           }
         }
       } else if ($(this).attr("type") == "dropdown") {
-        var id = $(this).attr("id")
-        if (listkey == 'projectcharter' && PCODE) {
-          if (id == 'Sector' || id == 'SubSector' || id == 'RelatedInitiative') {
-            var val = $(this).val()
+        var id = $(this).attr("id");
+        if (listkey == "projectcharter" && PCODE) {
+          if (
+            id == "Sector" ||
+            id == "SubSector" ||
+            id == "RelatedInitiative"
+          ) {
+            var val = $(this).val();
             if (val) {
-              Archive_Data_Submit.g.oListItem.set_item($(this).attr("id"), $(this).val());
+              Archive_Data_Submit.g.oListItem.set_item(
+                $(this).attr("id"),
+                $(this).val()
+              );
             }
           }
-        } else if (listkey == 'initiativecards' && ICODE) {
-          if (id == 'SubSector') {
-            var val = $(this).val()
+        } else if (listkey == "initiativecards" && ICODE) {
+          if (id == "SubSector") {
+            var val = $(this).val();
             if (val) {
-              Archive_Data_Submit.g.oListItem.set_item($(this).attr("id"), $(this).val());
+              Archive_Data_Submit.g.oListItem.set_item(
+                $(this).attr("id"),
+                $(this).val()
+              );
             }
           }
         }
       } else if ($(this).attr("type") == "picker") {
-
       } else if ($(this).attr("type") == "multipicker") {
-
-      }
-      else if ($(this).attr("type") == "radio") {
-        var id = $(this).attr("id")
-        if (listkey == 'projectcharter' && PCODE) {
-          if (id == 'NTP') {
+      } else if ($(this).attr("type") == "radio") {
+        var id = $(this).attr("id");
+        if (listkey == "projectcharter" && PCODE) {
+          if (id == "NTP") {
             var checkedvalue = $(
               'input[id="' + $(this).attr("id") + '"]:checked'
             ).val();
             if (checkedvalue == "yes") {
-              Archive_Data_Submit.g.oListItem.set_item($(this).attr("id"), "yes");
+              Archive_Data_Submit.g.oListItem.set_item(
+                $(this).attr("id"),
+                "yes"
+              );
             } else if (checkedvalue == "no") {
-              Archive_Data_Submit.g.oListItem.set_item($(this).attr("id"), "no");
+              Archive_Data_Submit.g.oListItem.set_item(
+                $(this).attr("id"),
+                "no"
+              );
             } else {
               Archive_Data_Submit.g.oListItem.set_item(
                 $(this).attr("id"),
@@ -4303,30 +4755,51 @@ window.Archive_Data_Submit = {
           }
         }
       } else {
-        var id = $(this).attr("id")
-        if (listkey == 'projectcharter' && PCODE) {
-          if (id == 'Title' || id == 'Name' || id == 'Description' || id == 'ScopeOfWork' || id == 'ActualCostWorkCompleted') {
-            Archive_Data_Submit.g.oListItem.set_item($(this).attr("id"), $(this).val());
+        var id = $(this).attr("id");
+        if (listkey == "projectcharter" && PCODE) {
+          if (
+            id == "Title" ||
+            id == "Name" ||
+            id == "Description" ||
+            id == "ScopeOfWork" ||
+            id == "ActualCostWorkCompleted"
+          ) {
+            Archive_Data_Submit.g.oListItem.set_item(
+              $(this).attr("id"),
+              $(this).val()
+            );
           }
-        } else if (listkey == 'initiativecards' && ICODE) {
-          if (id == 'Title' || id == 'Name' || id == 'Description' || id == 'ProgramTotalCost' || id == 'Expenditures' || id == 'ActualCost') {
-            Archive_Data_Submit.g.oListItem.set_item($(this).attr("id"), $(this).val());
+        } else if (listkey == "initiativecards" && ICODE) {
+          if (
+            id == "Title" ||
+            id == "Name" ||
+            id == "Description" ||
+            id == "ProgramTotalCost" ||
+            id == "Expenditures" ||
+            id == "ActualCost"
+          ) {
+            Archive_Data_Submit.g.oListItem.set_item(
+              $(this).attr("id"),
+              $(this).val()
+            );
           }
         }
-
       }
-    })
+    });
 
-    if ((listkey == 'projectcharter' && PCODE) || (listkey == 'initiativecards' && ICODE)) {
+    if (
+      (listkey == "projectcharter" && PCODE) ||
+      (listkey == "initiativecards" && ICODE)
+    ) {
       Archive_Data_Submit.g.oListItem.set_item("RqUID", RqUID);
       Archive_Data_Submit.g.oListItem.set_item("ResponseId", resId);
-      Archive_Data_Submit.g.oListItem.set_item("RelatedItemId", itemId)
+      Archive_Data_Submit.g.oListItem.set_item("RelatedItemId", itemId);
     }
     Archive_Data_Submit.g.oListItem.update();
     clientContext.load(Archive_Data_Submit.g.oListItem);
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
-        console.log("SAVEED SUCCESSFULLY")
+        console.log("SAVEED SUCCESSFULLY");
         $(".integration-save").addClass("success");
       }),
       Function.createDelegate(this, function (sender, args) {
@@ -4340,20 +4813,22 @@ window.Archive_Data_Submit = {
       })
     );
   },
-  g: {}
-}
+  g: {},
+};
 
 //
-
-
 
 function getProjectInfoToUpdateEPM() {
   var context = SP.ClientContext.get_current();
   var dfd = $.Deferred();
   //Get list from host web
-  var programList = context.get_web().get_lists().getByTitle('Projects');
+  var programList = context.get_web().get_lists().getByTitle("Projects");
   var camlQuery = new SP.CamlQuery();
-  camlQuery.set_viewXml("<View><Query><Where><Eq><FieldRef Name=\'Title\'/><Value Type=\'Text\'>" + PCODE + "</Value></Eq></Where></Query></View>");
+  camlQuery.set_viewXml(
+    "<View><Query><Where><Eq><FieldRef Name='Title'/><Value Type='Text'>" +
+      PCODE +
+      "</Value></Eq></Where></Query></View>"
+  );
   //Get items by Query
   var progColl = programList.getItems(camlQuery);
   //Load item collection
@@ -4364,99 +4839,131 @@ function getProjectInfoToUpdateEPM() {
       var progEnum = progColl.getEnumerator();
       while (progEnum.moveNext()) {
         var currentItem = progEnum.get_current();
-        var projectOwnerPicker = currentItem.get_item("ProjectOwner") ? currentItem.get_item("ProjectOwner") : ''
-        projectManagerPickerToEpm = currentItem.get_item("ProjectManager") ? currentItem.get_item("ProjectManager") : ''
-        var projectSponsorPicker = currentItem.get_item("ProjectSponsor") ? currentItem.get_item("ProjectSponsor") : ''
+        var projectOwnerPicker = currentItem.get_item("ProjectOwner")
+          ? currentItem.get_item("ProjectOwner")
+          : "";
+        projectManagerPickerToEpm = currentItem.get_item("ProjectManager")
+          ? currentItem.get_item("ProjectManager")
+          : "";
+        var projectSponsorPicker = currentItem.get_item("ProjectSponsor")
+          ? currentItem.get_item("ProjectSponsor")
+          : "";
         // var projectDirectorUnit = currentItem.get_item("DirectorUnit") ? currentItem.get_item("DirectorUnit") : ''
         // var projectObjectiveOwner = currentItem.get_item("ObjectiveOwner") ? currentItem.get_item("ObjectiveOwner") : ''
         // var projectResponsible = currentItem.get_item("ProjectResponsible") ? currentItem.get_item("ProjectResponsible") : ''
         // var projectQualityOfficer = currentItem.get_item("QualityOfficer") ? currentItem.get_item("QualityOfficer") : ''
-
       }
-      if (projectOwnerPicker && !projectBuildTeamArr.includes(projectOwnerPicker.get_lookupValue())) {
-        projectBuildTeamArr.push(projectOwnerPicker.get_lookupValue())
+      if (
+        projectOwnerPicker &&
+        !projectBuildTeamArr.includes(projectOwnerPicker.get_lookupValue())
+      ) {
+        projectBuildTeamArr.push(projectOwnerPicker.get_lookupValue());
       }
-      if (projectSponsorPicker && !projectBuildTeamArr.includes(projectSponsorPicker.get_lookupValue())) {
-        projectBuildTeamArr.push(projectSponsorPicker.get_lookupValue())
+      if (
+        projectSponsorPicker &&
+        !projectBuildTeamArr.includes(projectSponsorPicker.get_lookupValue())
+      ) {
+        projectBuildTeamArr.push(projectSponsorPicker.get_lookupValue());
       }
-      if (projectDirectorUnit && !projectBuildTeamArr.includes(projectDirectorUnit.get_lookupValue())) {
-        projectBuildTeamArr.push(projectDirectorUnit.get_lookupValue())
-      }
-
-      if (projectObjectiveOwner && !projectBuildTeamArr.includes(projectObjectiveOwner.get_lookupValue())) {
-        projectBuildTeamArr.push(projectObjectiveOwner.get_lookupValue())
-      }
-
-      if (projectResponsible && !projectBuildTeamArr.includes(projectResponsible.get_lookupValue())) {
-        projectBuildTeamArr.push(projectResponsible.get_lookupValue())
-      }
-
-      if (projectQualityOfficer && !projectBuildTeamArr.includes(projectQualityOfficer.get_lookupValue())) {
-        projectBuildTeamArr.push(projectQualityOfficer.get_lookupValue())
+      if (
+        projectDirectorUnit &&
+        !projectBuildTeamArr.includes(projectDirectorUnit.get_lookupValue())
+      ) {
+        projectBuildTeamArr.push(projectDirectorUnit.get_lookupValue());
       }
 
+      if (
+        projectObjectiveOwner &&
+        !projectBuildTeamArr.includes(projectObjectiveOwner.get_lookupValue())
+      ) {
+        projectBuildTeamArr.push(projectObjectiveOwner.get_lookupValue());
+      }
 
-      context.executeQueryAsync(function () {
+      if (
+        projectResponsible &&
+        !projectBuildTeamArr.includes(projectResponsible.get_lookupValue())
+      ) {
+        projectBuildTeamArr.push(projectResponsible.get_lookupValue());
+      }
 
-        Update_Project_Center.getAllResources()
+      if (
+        projectQualityOfficer &&
+        !projectBuildTeamArr.includes(projectQualityOfficer.get_lookupValue())
+      ) {
+        projectBuildTeamArr.push(projectQualityOfficer.get_lookupValue());
+      }
 
-      }, function (sender, args) {
-        //Item updated fail
-        console.log("Request Failed to get projectlist Items :" + args.get_message());
-      })
+      context.executeQueryAsync(
+        function () {
+          Update_Project_Center.getAllResources();
+        },
+        function (sender, args) {
+          //Item updated fail
+          console.log(
+            "Request Failed to get projectlist Items :" + args.get_message()
+          );
+        }
+      );
     }
-  })
+  });
 }
-
-
 
 var Update_Project_Center = {
   getAllResources: function () {
     $.ajax({
-      url: _spPageContextInfo.webAbsoluteUrl + "/_api/ProjectServer/EnterpriseResources",
+      url:
+        _spPageContextInfo.webAbsoluteUrl +
+        "/_api/ProjectServer/EnterpriseResources",
       method: "GET",
-      headers: { "Accept": "application/json; odata=verbose" },
+      headers: { Accept: "application/json; odata=verbose" },
       success: function (data) {
-        allEnterpriseResources = data.d.results
+        allEnterpriseResources = data.d.results;
 
-        SP.SOD.registerSod('PS.ProjectContext', SP.Utilities.Utility.getLayoutsPageUrl('ps.js'));
-        SP.SOD.loadMultiple(['PS.ProjectContext'], EPMProjectToUpdate);
-      }
+        SP.SOD.registerSod(
+          "PS.ProjectContext",
+          SP.Utilities.Utility.getLayoutsPageUrl("ps.js")
+        );
+        SP.SOD.loadMultiple(["PS.ProjectContext"], EPMProjectToUpdate);
+      },
     });
-  }
-}
+  },
+};
 
-var editProjectContext = '', epmProjects, deleteProjectContext = '';
+var editProjectContext = "",
+  epmProjects,
+  deleteProjectContext = "";
 
 function EPMProjectToUpdate() {
-
   editProjectContext = PS.ProjectContext.get_current();
   epmProjects = editProjectContext.get_projects();
-  editProjectContext.load(epmProjects, 'Include(Name, Id)');
+  editProjectContext.load(epmProjects, "Include(Name, Id)");
   // editProjectContext.executeQueryAsync(EPMProjectEdit, QueryFailedCenter);
-  editProjectContext.executeQueryAsync(delete_resources.preinit, QueryFailedCenter);
-
-
+  editProjectContext.executeQueryAsync(
+    delete_resources.preinit,
+    QueryFailedCenter
+  );
 }
 
-var ResourcesEnterprise = ''
-var resourcesArrDelete = []
-var globresArr = []
+var ResourcesEnterprise = "";
+var resourcesArrDelete = [];
+var globresArr = [];
 var delete_resources = {
   preinit: function () {
-    SP.SOD.registerSod('PS.ProjectContext', SP.Utilities.Utility.getLayoutsPageUrl('ps.js'));
-    SP.SOD.loadMultiple(['PS.ProjectContext'], delete_resources.init);
+    SP.SOD.registerSod(
+      "PS.ProjectContext",
+      SP.Utilities.Utility.getLayoutsPageUrl("ps.js")
+    );
+    SP.SOD.loadMultiple(["PS.ProjectContext"], delete_resources.init);
   },
   init: function () {
-
     deleteProjectContext = PS.ProjectContext.get_current();
     var oProjects = deleteProjectContext.get_projects();
     delete_resources.g.oProjectsItem = oProjects.getById(User_ProjUID); //declared inside object scope only
 
-
     ResourcesEnterprise = delete_resources.g.oProjectsItem.checkOut();
 
-    delete_resources.g.testDuration = ResourcesEnterprise.get_projectResources()
+    delete_resources.g.testDuration =
+      ResourcesEnterprise.get_projectResources();
 
     deleteProjectContext.load(delete_resources.g.testDuration);
 
@@ -4467,32 +4974,27 @@ var delete_resources = {
     );
   },
   onError: function (sender, args) {
-    console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
   },
   onSuccess: function (sender, args) {
-
-
-
-    resourcesArrDelete = delete_resources.g.testDuration.get_data()
-
-
+    resourcesArrDelete = delete_resources.g.testDuration.get_data();
 
     Promise.all(
       resourcesArrDelete.map(function (item) {
-        globresArr.push(item)
-        console.log(item.get_name(), "item")
+        globresArr.push(item);
+        console.log(item.get_name(), "item");
       })
-    ).then(function (files) {
-
-      delete_resourcesForupdate.init()
-    }).catch(function (err) {
-
-    })
+    )
+      .then(function (files) {
+        delete_resourcesForupdate.init();
+      })
+      .catch(function (err) {});
 
     // for (var i = 0; i < resourcesArrDelete.length; i++) {
     //   resourcesArrDelete[i].deleteObject()
     // }
-
 
     // var checkinJobd = ResourcesEnterprise
 
@@ -4503,44 +5005,36 @@ var delete_resources = {
     //   delete_resourcesForupdate.init()
     // },3000)
     // deleteProjectContext.waitForQueueAsync(1000, delete_resourcesForupdate.init);
-
   },
   // Global variables
-  g: {}
-}
+  g: {},
+};
 
 var delete_resourcesForupdate = {
-
   init: function () {
-
-
     deleteProjectContext.executeQueryAsync(
       Function.createDelegate(this, delete_resourcesForupdate.onSuccess),
       Function.createDelegate(this, delete_resourcesForupdate.onError)
     );
-
   },
   onError: function (sender, args) {
-    console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
   },
   onSuccess: async function (sender, args) {
-
-
     for (var i = 0; i < globresArr.length; i++) {
-      globresArr[i].deleteObject()
+      globresArr[i].deleteObject();
     }
-
 
     var checkinJob = ResourcesEnterprise.update();
 
-
     deleteProjectContext.waitForQueueAsync(checkinJob, 100, EPMProjectEdit);
-  }
-}
-
+  },
+};
 
 function QueryFailedCenter(sender, args) {
-  console.log('Request failed: ' + args.get_message());
+  console.log("Request failed: " + args.get_message());
 }
 
 function EPMProjectEdit() {
@@ -4549,24 +5043,19 @@ function EPMProjectEdit() {
   var project = epmProjects.getById(User_ProjUID); //User_ProjUID it's the GUID for Project
   draftProject = project.checkOut();
 
-
   for (var i = 0; i < projectBuildTeamArr.length; i++) {
     allEnterpriseResources.forEach((el) => {
       if (projectBuildTeamArr[i] == el.Name) {
-
         var new_resource_id = el.Id;
         var new_resource = new PS.ProjectResourceCreationInformation();
         new_resource.set_name(projectBuildTeamArr[i]);
         new_resource.set_id(new_resource_id);
         var project_resources_list = draftProject.get_projectResources();
 
-
         var project_resource = project_resources_list.add(new_resource);
         draftProject.get_projectResources().add(new_resource);
       }
-
     });
-
   }
   var publishJob = draftProject.update();
   editProjectContext.waitForQueueAsync(publishJob, 100, ChangeProjectOwnerEpm);
@@ -4575,13 +5064,11 @@ function EPMProjectEdit() {
 function ChangeProjectOwnerEpm() {
   var project = epmProjects.getById(User_ProjUID);
   var draftProject = project.checkOut();
-  var web = editProjectContext.get_web()
-  var projectManagerId = projectManagerPickerToEpm.get_lookupId()
-  var userPicked = web.getUserById(projectManagerId) //76
+  var web = editProjectContext.get_web();
+  var projectManagerId = projectManagerPickerToEpm.get_lookupId();
+  var userPicked = web.getUserById(projectManagerId); //76
 
-
-
-  draftProject.set_owner(userPicked)
+  draftProject.set_owner(userPicked);
   var publishJob = draftProject.publish(true);
   // $('.wfLoader').hide();
 
@@ -4596,10 +5083,10 @@ function QueueJobSentOwnerEpm(response) {
     "&IID=" +
     IID +
     PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
-
 }
 
-var checkinProjectEditSubmit = { // create this function to check in the project on project center before edit on project
+var checkinProjectEditSubmit = {
+  // create this function to check in the project on project center before edit on project
   checkin: function (ProjGuid) {
     $.ajax({
       url:
@@ -4616,7 +5103,7 @@ var checkinProjectEditSubmit = { // create this function to check in the project
         "if-Match": "*",
       },
       success: function (data) {
-        console.log("Project checked in successfully")
+        console.log("Project checked in successfully");
         // window.location =
         //   _spPageContextInfo.siteAbsoluteUrl +
         //   "/SitePages/ProjectHome.aspx?PCODE=" +

@@ -71,6 +71,17 @@ var Information_Form = [
         descPhraseEn: "max length of letters equal 255",
       },
       {
+        InternalName: 'ObjectiveCode',
+        DisplayNameEn: 'Objective Code',
+        DisplayName: 'رمز الهدف',
+        type: 'stringunique', // this type to make the field value unique 
+        listname:"SOs", // list name 
+        withletters: true,
+        Errmsgkey: "uniquefield",
+        descPhraseAr: "يجب ان يكون رمز الهدف فريد وغير مكرر",
+        descPhraseEn: "The code should be unique",
+      },
+      {
         InternalName: 'ObjectiveOwner',
         DisplayName: 'مالك الهدف',
         DisplayNameEn: 'Objective Owner',

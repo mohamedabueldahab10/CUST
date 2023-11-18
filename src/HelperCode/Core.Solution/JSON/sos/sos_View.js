@@ -13,8 +13,8 @@ var Information_Form = [
     subFields: [
       {
         InternalName: 'Title',
-        DisplayName: 'رمز الهدف',
-        DisplayNameEn: 'Objective Code',
+        DisplayName: 'رمز الهدف التلقائي',
+        DisplayNameEn: 'Objective Auto Code',
         type: 'string',
         // maxchar: '250',
         // state: 'disabled',
@@ -24,6 +24,14 @@ var Information_Form = [
         DisplayNameEn: 'Name',
         DisplayName: 'اسم الهدف',
         type: 'string',
+        // maxchar: '250',
+        // validation: 'required',
+      },
+      {
+        InternalName: 'ObjectiveCode',
+        DisplayNameEn: 'Objective Entered Code',
+        DisplayName: 'رمز الهدف المدخل',
+        type: 'stringunique',
         // maxchar: '250',
         // validation: 'required',
       },

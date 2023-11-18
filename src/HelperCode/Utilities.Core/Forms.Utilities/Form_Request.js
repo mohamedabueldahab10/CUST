@@ -45,6 +45,7 @@ var benefitsEquationID,
 
 window.benefitsEquationsComponents = []
 ////////
+window.editUniqueValueArr = []
 
 var projRelatedInit = '', initiativeDelevrableArr = [], initiativeMilestoneVal = '';
 
@@ -322,6 +323,10 @@ window.Edit_Data_Request = {
           break;
 
         default:
+          if($(this).attr('uniquevaluefield') && $(this).attr('uniquevaluefield') == 'yes'){
+            console.log($(this).attr('uniquevaluefield'),'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+            editUniqueValueArr.push(oListItem.get_item("" + $(this).attr("id") + ""))
+          }
           $(this).val(oListItem.get_item("" + $(this).attr("id") + ""));
           break;
       }
