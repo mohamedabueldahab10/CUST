@@ -83,22 +83,28 @@ var Information_Form = [
       //   display: 'none',
       // },
       {
-        InternalName: 'Status',
-        DisplayName: 'مرحلة المبادرة',
-        DisplayNameEn: 'Initiative Phase',
-        type: 'dropdownValues',
-        // validation: 'required',
-        options: {
-          choices: [
-            // { value: 'notstarted', display: 'notstarted' },
-            { value: 'executioninitiative', display: 'executioninitiative' },
-            // { value: 'complete', display: 'complete' },
-            { value: 'canceled', display: 'canceled' },
-            { value: 'onhold', display: 'onhold' },
-            // { value: 'closureinitiative', display: 'closureinitiative' }
-          ],
-        },
+        InternalName: 'ComplianceRate',
+        DisplayName: 'نسبة الإمتثال',
+        DisplayNameEn: 'Compliance Rate',
+        type: 'floatpercentage',
       },
+      // {
+      //   InternalName: 'Status',
+      //   DisplayName: 'مرحلة المبادرة',
+      //   DisplayNameEn: 'Initiative Phase',
+      //   type: 'dropdownValues',
+      //   // validation: 'required',
+      //   options: {
+      //     choices: [
+      //       // { value: 'notstarted', display: 'notstarted' },
+      //       { value: 'executioninitiative', display: 'executioninitiative' },
+      //       // { value: 'complete', display: 'complete' },
+      //       { value: 'canceled', display: 'canceled' },
+      //       { value: 'onhold', display: 'onhold' },
+      //       // { value: 'closureinitiative', display: 'closureinitiative' }
+      //     ],
+      //   },
+      // },
       // {
       //     "InternalName": "RelatedObjectiveAgency",
       //     "DisplayNameEn": "Objective Name",

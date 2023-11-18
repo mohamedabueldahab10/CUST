@@ -124,53 +124,59 @@ var Information_Form = [
       //   maxchar: '250',
       //   // "validation": "required"
       // },
-      {
-        InternalName: 'Status',
-        DisplayName: 'حالة المبادرة',
-        DisplayNameEn: 'Initiative Stage',
-        type: 'dropdownValues',
-        // validation: 'required',
-        options: {
-          choices: [
-            // { value: 'notstarted', display: 'notstarted' },
-            // { value: 'inactive', display: 'inactive' },
-            // {
-            //   value: 'implementationnotstarted',
-            //   display: 'implementationnotstarted',
-            // },
-            { value: 'executioninitiative', display: 'executioninitiative', 
-            // otherFields: [
-            //   // { fieldName: 'InitiativeProgressStatus', value: '' },
-            //   // { fieldName: 'InitiativeProgressStatus', value: 'stat3' },
-            //   // { fieldName: 'DraftStatus', value: '' },
-            // ]
-          },
-            { value: 'complete', display: 'complete' },
-            { value: 'canceled', display: 'canceled', 
-            // otherFields: [
-            //   { fieldName: 'InitiativeProgressStatus', value: '' },
-            //   { fieldName: 'InitiativeProgressStatus', value: 'stat7' },
-            //   // { fieldName: 'DraftStatus', value: '' },
-            // ], 
-          },
-            { value: 'onhold', display: 'onhold',
-            // otherFields: [
-            //   { fieldName: 'InitiativeProgressStatus', value: '' },
-            //   { fieldName: 'InitiativeProgressStatus', value: 'stat6' },              
-            //   // { fieldName: 'DraftStatus', value: '' },
-            // ], 
-          },
-            // { value: 'closureinitiative', display: 'closureinitiative' }
-          ],
-        },   security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
+      // {
+      //   InternalName: 'Status',
+      //   DisplayName: 'حالة المبادرة',
+      //   DisplayNameEn: 'Initiative Stage',
+      //   type: 'dropdownValues',
+      //   // validation: 'required',
+      //   options: {
+      //     choices: [
+      //       // { value: 'notstarted', display: 'notstarted' },
+      //       // { value: 'inactive', display: 'inactive' },
+      //       // {
+      //       //   value: 'implementationnotstarted',
+      //       //   display: 'implementationnotstarted',
+      //       // },
+      //       { value: 'executioninitiative', display: 'executioninitiative', 
+      //       // otherFields: [
+      //       //   // { fieldName: 'InitiativeProgressStatus', value: '' },
+      //       //   // { fieldName: 'InitiativeProgressStatus', value: 'stat3' },
+      //       //   // { fieldName: 'DraftStatus', value: '' },
+      //       // ]
+      //     },
+      //       { value: 'complete', display: 'complete' },
+      //       { value: 'canceled', display: 'canceled', 
+      //       // otherFields: [
+      //       //   { fieldName: 'InitiativeProgressStatus', value: '' },
+      //       //   { fieldName: 'InitiativeProgressStatus', value: 'stat7' },
+      //       //   // { fieldName: 'DraftStatus', value: '' },
+      //       // ], 
+      //     },
+      //       { value: 'onhold', display: 'onhold',
+      //       // otherFields: [
+      //       //   { fieldName: 'InitiativeProgressStatus', value: '' },
+      //       //   { fieldName: 'InitiativeProgressStatus', value: 'stat6' },              
+      //       //   // { fieldName: 'DraftStatus', value: '' },
+      //       // ], 
+      //     },
+      //       // { value: 'closureinitiative', display: 'closureinitiative' }
+      //     ],
+      //   },   security: {
+      //     groups: [ ],
+      //     // groups: [], // should be empty array if will use notAllowTo
+      //     notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+      //       {group:"Development Unit",form:["origin"]},
+      //       // {group:"EPMO",form:["origin" ]}
 
-          ]
-        },
+      //     ]
+      //   },
+      // },
+      {
+        InternalName: 'ComplianceRate',
+        DisplayName: 'نسبة الإمتثال',
+        DisplayNameEn: 'Compliance Rate',
+        type: 'floatpercentage',
       },
       {
         InternalName: 'RelatedStrategy',

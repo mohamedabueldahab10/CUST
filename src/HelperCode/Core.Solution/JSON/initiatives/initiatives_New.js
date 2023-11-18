@@ -206,12 +206,79 @@ var Information_Form = [
             { display: 'main', value: 'main' },
             { display: 'sublevel2', value: 'sublevel2' },
             { display: 'sublevel3', value: 'sublevel3' },
-
+            // {
+            //   display: 'objl1',
+            //   value: 'objl1',
+            // },
+            // {
+            //   display: 'objl2',
+            //   value: 'objl2',
+            // },
+            // {
+            //   display: 'objl3',
+            //   value: 'objl3',
+            // },
           ],
         },
         // validation: 'required',
       },
-    
+      // {
+      //   InternalName: 'RelatedObjective',
+      //   DisplayNameEn: 'Related Objective',
+      //   DisplayName: 'الهدف المرتبط',
+      //   type: 'lookup',
+      //   source: 'SOs',
+      //   Dispfieldkey: 'Name',
+      //   valfieldkey: 'Title',
+      //   isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+      //   dynamic: 'RelatedStrategy',
+      //   // fieldsinlookup: "RelatedStrategy",
+      //   filterField: 'RelatedStrategy',
+      //   filterFieldType: 'Text',
+      //   //
+      //   accessFilter: [
+      //     {
+      //       role: 'VROE',
+      //       conditions: [
+      //         {
+      //           field: 'Types',
+      //           type: 'Text',
+      //           values: ['vision'],
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       role: 'VROP',
+      //       conditions: [
+      //         {
+      //           field: 'Types',
+      //           type: 'Text',
+      //           values: ['vision'],
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       role: 'LMSE',
+      //       conditions: [
+      //         {
+      //           field: 'Types',
+      //           type: 'Text',
+      //           values: ['lms'],
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       role: 'LMSP',
+      //       conditions: [
+      //         {
+      //           field: 'Types',
+      //           type: 'Text',
+      //           values: ['lms'],
+      //         },
+      //       ],
+      //     },
+      //   ],
+      // },
       {
         InternalName: 'RelatedObjective',
         DisplayNameEn: 'Related Objective',
@@ -483,6 +550,12 @@ var Information_Form = [
         InternalName: 'DependencyCost',
         DisplayName: 'حجم الارتباط (منصة اعتماد) ',
         DisplayNameEn: 'Dependency Cost',
+        type: 'floatpercentage',
+      },
+      {
+        InternalName: 'ComplianceRate',
+        DisplayName: 'نسبة الإمتثال',
+        DisplayNameEn: 'Compliance Rate',
         type: 'floatpercentage',
       },
       // {

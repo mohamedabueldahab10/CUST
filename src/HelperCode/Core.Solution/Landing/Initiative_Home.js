@@ -52,10 +52,10 @@ var fullphasename;
 var actualPercentageFromList = "",
   plannedPercentageFromList = "";
 
-var lstMonthCLicked = "", milestonelstMonthClicked = "";
+var lstMonthCLicked = "",
+  milestonelstMonthClicked = "";
 
 var MilestoneArr = [];
-
 
 var completedRatio = 0,
   totalMilesDelivrable = 0,
@@ -109,8 +109,8 @@ var initiativeHomeInfo_Request = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
-      initiativeHomeInfo_Request.g.ICODE +
-      "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>"
+        initiativeHomeInfo_Request.g.ICODE +
+        "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>"
     );
 
     initiativeHomeInfo_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -130,10 +130,10 @@ var initiativeHomeInfo_Request = {
       $(".project-info-ctx .card-header > a").attr(
         "href",
         _spPageContextInfo.webAbsoluteUrl +
-        "/sitepages/view.aspx?ListKey=initiatives&IID=" +
-        oListItem.get_id() +
-        "&ICODE=" +
-        initiativeHomeInfo_Request.g.ICODE
+          "/sitepages/view.aspx?ListKey=initiatives&IID=" +
+          oListItem.get_id() +
+          "&ICODE=" +
+          initiativeHomeInfo_Request.g.ICODE
       );
       //getting 1st stats data
       ActualBudget = oListItem.get_item("InitiativeBudget") || 0; // al mizaniya l haliya
@@ -179,28 +179,30 @@ var initiativeHomeInfo_Request = {
       initstartdate = oListItem.get_item("StartDate");
       initfinishdate = oListItem.get_item("FinishDate");
       if (initfinishdate != null && initstartdate != null) {
+        var formatteStartDate =
+          initiativeHomeInfo_Request.g.dateConvert2(initstartdate);
+        var formatteEndDate =
+          initiativeHomeInfo_Request.g.dateConvert2(initfinishdate);
 
-        var formatteStartDate = initiativeHomeInfo_Request.g.dateConvert2(initstartdate)
-        var formatteEndDate = initiativeHomeInfo_Request.g.dateConvert2(initfinishdate)
+        formatteStartDate = new Date(formatteStartDate);
+        formatteEndDate = new Date(formatteEndDate);
 
-        formatteStartDate = new Date(formatteStartDate)
-        formatteEndDate = new Date(formatteEndDate)
-
-        var diff = formatteEndDate.getMonth() -
+        var diff =
+          formatteEndDate.getMonth() -
           formatteStartDate.getMonth() +
-          12 * (formatteEndDate.getFullYear() - formatteStartDate.getFullYear())
-
+          12 *
+            (formatteEndDate.getFullYear() - formatteStartDate.getFullYear());
 
         var months = Math.trunc(diff);
         ////
 
-        var initiativePeriodInDays = 0
+        var initiativePeriodInDays = 0;
         if (initstartdate && initfinishdate) {
           initiativePeriodInDays =
             initfinishdate.getTime() - initstartdate.getTime();
         }
         ///
-        initiativePeriodInDays = initiativePeriodInDays / (1000 * 3600 * 24)
+        initiativePeriodInDays = initiativePeriodInDays / (1000 * 3600 * 24);
 
         if (months > 0 && initiativePeriodInDays >= 30) {
           if (
@@ -345,7 +347,9 @@ var initiativeHomeInfo_Request = {
       // for initiative stage bilangual
       var initiativeStagearr = [];
       if (localStorage.getItem("Dynamo_GenericWFStagesConfig") != null) {
-        initiativeStagearr = JSON.parse(localStorage.getItem("Dynamo_GenericWFStagesConfig"));
+        initiativeStagearr = JSON.parse(
+          localStorage.getItem("Dynamo_GenericWFStagesConfig")
+        );
         initiativeStagearr = initiativeStagearr.filter(function (a) {
           return a.code === instage;
         });
@@ -418,98 +422,103 @@ var initiativeHomeInfo_Request = {
           oListItem.get_item("InitiativeProgressStatus") || No_Data),
         card1.push(
           '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
-          '<div class="d-inline-flex flex-row align-items-center">' +
-          '<span class="icon-user lg d-inline-flex align-items-center text-center handlecircle circlecolor' +
-          initiativeprogress +
-          '">' + // add circlecolor' + initiativeprogress + ' to change the color of circle as status color
-          // '<span class="user-name lg w-100">' + abrinitiativename + '</span>' +
-          "</span>" +
-          '<div class="d-inline-flex flex-column mx-3">' +
-          '<h3 class="acc-title d-inline-flex black initiativeProjHomeInfoTitleStyle">' +
-          initiativename +
-          "</h3>" +
-          '<h3 data-trans-inpattr4 class="Resources black inlineMargin0"></h3>' +
-          '<span class="des-13"><span class="complition-val initiativeProjHomeInfoValueStyle">' +
-          projectcode +
-          "</span></span>" +
-          "</div>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          '<h3 data-trans-relatedstratobj class="Resources black initiativeProjHomeInfoTitleStyle"></h3>' +
-          '<span class="des-13"><span class="state-val initiativeProjHomeInfoValueStyle" id="relatedSos">' +
-          RelatedObjective +
-          "</span></span>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          '<span class="des-13 project-date">' +
-          '<span class="start-date"><span data-trans-pattr1 class="Resources initiativeProjHomeInfoTitleStyle"></span><span class="px-2 initiativeProjHomeInfoValueStyle">' +
-          Pstartdate +
-          "</span></span>" +
-          '<span class="end-date"><span data-trans-pattr2 class="Resources initiativeProjHomeInfoTitleStyle"></span><span class="px-2 initiativeProjHomeInfoValueStyle">' +
-          Pfinishdate +
-          "</span></span>" +
-          "</span>" +
-          "</div>" +
-          "</div>" +
-          '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          '<span data-trans-inportfolio class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' + //resourcekey="pattr5"
-          '<h4 class="acc-title d-inline-flex black initiativeProjHomeInfoValueStyle">' +
-          initiativeportfolio +
-          "</h4>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          '<span data-trans-instage class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
-          // '<h4 data-trans-' + initiativetype + ' class="Resources acc-title d-inline-flex black"></h4>' +
-          '<h4  class="Resources acc-title d-inline-flex black initiativeProjHomeInfoValueStyle"> ' +
-          instage +
-          "</h4>" +
-          "</div>" +
-          // '<div class="d-inline-flex flex-column mx-2">' +
-          // '<span data-trans-inphase class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
-          // // '<h4 data-trans-' + initiativetype + ' class="Resources acc-title d-inline-flex black"></h4>' +
-          // '<h4  class="Resources acc-title d-inline-flex black initiativeProjHomeInfoValueStyle"> ' +
-          // inphase +
-          // "</h4>" +
-          // "</div>" +
-          // '<div class="d-inline-flex flex-column mx-2">' +
-          // '<span class="des-13"><span data-trans-inclassif class="Resources complition-val"></span> ' +
-          // '<h4 class="black actual-complete-val">' + initiativeclassification + '</h4></span>' +
-          // '</div>' +
-          '<div class="d-inline-flex flex-column mx-2 ' +
-          initiativeprogress +
-          '">' +
-          '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-          "<h4 data-trans-" +
-          initiativeprogress +
-          ' class="black Resources myCompletionStatus statuscolor' +
-          initiativeprogress +
-          '"></h4>' + //
-          "</div>" +
-          "</div>" +
-          '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
-          //   '<div class="d-inline-flex flex-column mx-2">' +
-          //   '<span class="des-13"><span data-trans-pattr6 class="Resources state-val"></span></span>' +
-          //   '<h4 class="black">' + plannedPercentageFromList + '%' + '</h4>' +
-          //   '</div>' +
-
-          //   '<div class="d-inline-flex flex-column mx-2">' +
-          //   '<span class="des-13"><span data-trans-pattr7 class="Resources state-val"></span></span>' +
-          //   '<h4 class="black">' + actualPercentageFromList + '%' + '</h4>' + //
-          //   '</div>' +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          '<span class="des-13"><span data-trans-sector class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-          '<h4 class="black initiativeProjHomeInfoValueStyle">' +
-          projectSector +
-          "</h4>" + //
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          '<span class="des-13"><span data-trans-subsector class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-          '<h4 class="black initiativeProjHomeInfoValueStyle">' +
-          projectSubsector +
-          "</h4>" + //
-          "</div>" +
-          "</div>"
+            '<div class="d-inline-flex flex-row align-items-center">' +
+            '<span class="icon-user lg d-inline-flex align-items-center text-center handlecircle circlecolor' +
+            initiativeprogress +
+            '">' + // add circlecolor' + initiativeprogress + ' to change the color of circle as status color
+            // '<span class="user-name lg w-100">' + abrinitiativename + '</span>' +
+            "</span>" +
+            '<div class="d-inline-flex flex-column mx-3">' +
+            '<h3 class="acc-title d-inline-flex black initiativeProjHomeInfoTitleStyle">' +
+            initiativename +
+            "</h3>" +
+            '<h3 data-trans-inpattr4 class="Resources black inlineMargin0"></h3>' +
+            '<span class="des-13"><span class="complition-val initiativeProjHomeInfoValueStyle">' +
+            projectcode +
+            "</span></span>" +
+            "</div>" +
+            "</div>" +
+            '<div class="d-inline-flex flex-column mx-2">' +
+            '<h3 data-trans-relatedstratobj class="Resources black initiativeProjHomeInfoTitleStyle"></h3>' +
+            '<span class="des-13"><span class="state-val initiativeProjHomeInfoValueStyle" id="relatedSos">' +
+            RelatedObjective +
+            "</span></span>" +
+            "</div>" +
+            '<div class="d-inline-flex flex-column mx-2">' +
+            '<span class="des-13 project-date">' +
+            '<span class="start-date"><span data-trans-pattr1 class="Resources initiativeProjHomeInfoTitleStyle"></span><span class="px-2 initiativeProjHomeInfoValueStyle">' +
+            Pstartdate +
+            "</span></span>" +
+            '<span class="end-date"><span data-trans-pattr2 class="Resources initiativeProjHomeInfoTitleStyle"></span><span class="px-2 initiativeProjHomeInfoValueStyle">' +
+            Pfinishdate +
+            "</span></span>" +
+            "</span>" +
+            "</div>" +
+            "</div>" +
+            '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
+            '<div class="d-inline-flex flex-column mx-2">' +
+            '<span data-trans-inportfolio class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' + //resourcekey="pattr5"
+            '<h4 class="acc-title d-inline-flex black initiativeProjHomeInfoValueStyle">' +
+            initiativeportfolio +
+            "</h4>" +
+            "</div>" +
+            '<div class="d-inline-flex flex-column mx-2">' +
+            '<span data-trans-instage class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
+            // '<h4 data-trans-' + initiativetype + ' class="Resources acc-title d-inline-flex black"></h4>' +
+            '<h4  class="Resources acc-title d-inline-flex black initiativeProjHomeInfoValueStyle"> ' +
+            instage +
+            "</h4>" +
+            "</div>" +
+            // '<div class="d-inline-flex flex-column mx-2">' +
+            // '<span data-trans-inphase class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
+            // // '<h4 data-trans-' + initiativetype + ' class="Resources acc-title d-inline-flex black"></h4>' +
+            // '<h4  class="Resources acc-title d-inline-flex black initiativeProjHomeInfoValueStyle"> ' +
+            // inphase +
+            // "</h4>" +
+            // "</div>" +
+            // '<div class="d-inline-flex flex-column mx-2">' +
+            // '<span class="des-13"><span data-trans-inclassif class="Resources complition-val"></span> ' +
+            // '<h4 class="black actual-complete-val">' + initiativeclassification + '</h4></span>' +
+            // '</div>' +
+            '<div class="d-inline-flex flex-column mx-2 ' +
+            initiativeprogress +
+            '">' +
+            '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+            "<h4 data-trans-" +
+            initiativeprogress +
+            ' class="black Resources myCompletionStatus statuscolor' +
+            initiativeprogress +
+            '"></h4>' + //
+            "</div>" +
+            "</div>" +
+            '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
+            '<div class="d-inline-flex flex-column mx-2">' +
+            '<span class="des-13"><span data-trans-initiativeplannedperc class="Resources state-val"></span></span>' +
+            '<h4 class="black initPlannedPercentage">' +
+            plannedPercentageFromList +
+            "%" +
+            "</h4>" +
+            "</div>" +
+            '<div class="d-inline-flex flex-column mx-2">' +
+            '<span class="des-13"><span data-trans-initiativeactualperc class="Resources state-val"></span></span>' +
+            '<h4 class="black initActualPercentage">' +
+            actualPercentageFromList +
+            "%" +
+            "</h4>" + //
+            "</div>" +
+            '<div class="d-inline-flex flex-column mx-2">' +
+            '<span class="des-13"><span data-trans-sector class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+            '<h4 class="black initiativeProjHomeInfoValueStyle">' +
+            projectSector +
+            "</h4>" + //
+            "</div>" +
+            '<div class="d-inline-flex flex-column mx-2">' +
+            '<span class="des-13"><span data-trans-subsector class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+            '<h4 class="black initiativeProjHomeInfoValueStyle">' +
+            projectSubsector +
+            "</h4>" + //
+            "</div>" +
+            "</div>"
         ),
         //project card 5
         (projectimportance = oListItem.get_item("RelatedProgram") || "nodata");
@@ -535,7 +544,7 @@ var initiativeHomeInfo_Request = {
         (projectlength = Math.round(
           (new Date(standardisedPfinishdate) -
             new Date(standardisedPstartdate)) /
-          (1000 * 60 * 60 * 24 * 30)
+            (1000 * 60 * 60 * 24 * 30)
         ));
     }
 
@@ -545,7 +554,6 @@ var initiativeHomeInfo_Request = {
       $(".sidebar").attr("style", "display: none !important");
       $(".main-panel").attr("style", "width: 100% !important");
     }
-
 
     if (RelatedObjective && RelatedObjective != No_Data) {
       Get_RelatedObjective.init();
@@ -618,62 +626,75 @@ var initiativeHomeInfo_Request = {
     // $('.card-body.project-status-info.border-bottom.pb-4 span.badge.bg-primary.white.p-3.font-13.bold').text(instage);
     $(
       ".card-body.project-status-info.border-bottom.pb-4 span.badge.bg-primary.white.py-3.font-13.bold"
-    ).html("<p data-trans-" + initiativetype + ' class="Resources initiativeProjHomeInfoValueStyle"></p>');
+    ).html(
+      "<p data-trans-" +
+        initiativetype +
+        ' class="Resources initiativeProjHomeInfoValueStyle"></p>'
+    );
 
     $(
       ".card-body.project-status-info.border-bottom.pb-4 span.badge.bg-success.white.font-13.bold"
     ).html(
-      "<span data-trans-" + initiativestatus + ' class="Resources initiativeProjHomeInfoValueStyle"></span>'
+      "<span data-trans-" +
+        initiativestatus +
+        ' class="Resources initiativeProjHomeInfoValueStyle"></span>'
     );
 
     // show the initiative name in bredcrum in initiative home and apply the tooltip
     $(".page-title").html(
       '<a href="' +
-      _spPageContextInfo.webAbsoluteUrl +
-      "/sitepages/InitiativeHome.aspx?ICODE=" +
-      projectcode +
-      '">' +
-      initiativename +
-      '<span class="tooltiptext">' +
-      initiativename +
-      "</span>" + // to handle the tooltip
-      "</a>"
+        _spPageContextInfo.webAbsoluteUrl +
+        "/sitepages/InitiativeHome.aspx?ICODE=" +
+        projectcode +
+        '">' +
+        initiativename +
+        '<span class="tooltiptext">' +
+        initiativename +
+        "</span>" + // to handle the tooltip
+        "</a>"
     );
 
-
-
-
-    var estimatedCostInfo = ""
+    var estimatedCostInfo = "";
     if (
       localStorage.getItem("lng") == null ||
       localStorage.getItem("lng") == "ar"
     ) {
-      estimatedCostInfo = Resources.ar["estimatedcostinfo"]
+      estimatedCostInfo = Resources.ar["estimatedcostinfo"];
     } else {
-      estimatedCostInfo = Resources.en["estimatedcostinfo"]
-
+      estimatedCostInfo = Resources.en["estimatedcostinfo"];
     }
 
-    $(".project-budget-ctx .card-body > div:nth-child(1) .my-info-i").attr("title", estimatedCostInfo)
-    $(".project-budget-ctx .card-body > div:nth-child(1) .my-info-i").attr("data-original-title", estimatedCostInfo)
+    $(".project-budget-ctx .card-body > div:nth-child(1) .my-info-i").attr(
+      "title",
+      estimatedCostInfo
+    );
+    $(".project-budget-ctx .card-body > div:nth-child(1) .my-info-i").attr(
+      "data-original-title",
+      estimatedCostInfo
+    );
 
     //////////////////////////////////////////////////////
 
-    var initiativeBudgetInfo = ""
+    var initiativeBudgetInfo = "";
     if (
       localStorage.getItem("lng") == null ||
       localStorage.getItem("lng") == "ar"
     ) {
-      initiativeBudgetInfo = Resources.ar["initiativebudgetinfo"]
+      initiativeBudgetInfo = Resources.ar["initiativebudgetinfo"];
     } else {
-      initiativeBudgetInfo = Resources.en["initiativebudgetinfo"]
+      initiativeBudgetInfo = Resources.en["initiativebudgetinfo"];
     }
 
-    $(".project-budget-ctx .card-body > div:nth-child(2) .my-info-i").attr("title", initiativeBudgetInfo)
-    $(".project-budget-ctx .card-body > div:nth-child(2) .my-info-i").attr("data-original-title", initiativeBudgetInfo)
+    $(".project-budget-ctx .card-body > div:nth-child(2) .my-info-i").attr(
+      "title",
+      initiativeBudgetInfo
+    );
+    $(".project-budget-ctx .card-body > div:nth-child(2) .my-info-i").attr(
+      "data-original-title",
+      initiativeBudgetInfo
+    );
 
     ////////////////
-
 
     // card 6
     if (AssignedBudget) {
@@ -684,81 +705,73 @@ var initiativeHomeInfo_Request = {
       );
     }
     if (scheduleSrcFeatureIsOn) {
-
-      var schedualInfo = ""
+      var schedualInfo = "";
       if (
         localStorage.getItem("lng") == null ||
         localStorage.getItem("lng") == "ar"
       ) {
-
-        schedualInfo = Resources.ar["delevrableinfoschedual"]
+        schedualInfo = Resources.ar["delevrableinfoschedual"];
       } else {
-        schedualInfo = Resources.en["delevrableinfoschedual"]
-
+        schedualInfo = Resources.en["delevrableinfoschedual"];
       }
-
 
       $(".sched-head").append(
         '<div class="schedule-src-wrapper">' +
-        '<span class="schedule-info"><i data-toggle="tooltip" data-html="true" title="' + schedualInfo + '" class="my-info-i fas fa-info-circle"></i></span>' +
-        '<select class="schedule-src">' +
-        '<option data-trans-schedsystem class="Resources" value="deliverables">deliverables</option>' +
-        '<option data-trans-milestones class="Resources" value="milestones">milestones</option>' +
-        "</select>" +
-        "</div>"
+          '<span class="schedule-info"><i data-toggle="tooltip" data-html="true" title="' +
+          schedualInfo +
+          '" class="my-info-i fas fa-info-circle"></i></span>' +
+          '<select class="schedule-src">' +
+          '<option data-trans-schedsystem class="Resources" value="deliverables">deliverables</option>' +
+          '<option data-trans-milestones class="Resources" value="milestones">milestones</option>' +
+          "</select>" +
+          "</div>"
       );
 
-      $(".fromDeliverables .tlContainer").html(`<p style="text-align:center">${No_Data}</p>`); // container of data
+      $(".fromDeliverables .tlContainer").html(
+        `<p style="text-align:center">${No_Data}</p>`
+      ); // container of data
 
       $(".schedule-src").on("change", function () {
-
         if ($(this).val() == "deliverables") {
-
-
           if (
             localStorage.getItem("lng") == null ||
             localStorage.getItem("lng") == "ar"
           ) {
-            schedualInfo = Resources.ar["delevrableinfoschedual"]
+            schedualInfo = Resources.ar["delevrableinfoschedual"];
           } else {
-            schedualInfo = Resources.en["delevrableinfoschedual"]
+            schedualInfo = Resources.en["delevrableinfoschedual"];
           }
 
-          $('.fromDeliverables').show()
+          $(".fromDeliverables").show();
           // $('.fromTimeLine').hide()
-          $('.fromMilestones').hide()
+          $(".fromMilestones").hide();
 
           $(".fromDeliverables select#inputYear").val("");
-
-
         } else if ($(this).val() == "milestones") {
-
           if (
             localStorage.getItem("lng") == null ||
             localStorage.getItem("lng") == "ar"
           ) {
-
-            schedualInfo = Resources.ar["milestoneinfoschedual"]
+            schedualInfo = Resources.ar["milestoneinfoschedual"];
           } else {
-            schedualInfo = Resources.en["milestoneinfoschedual"]
-
+            schedualInfo = Resources.en["milestoneinfoschedual"];
           }
 
-          $('.fromDeliverables').hide()
+          $(".fromDeliverables").hide();
           // $('.fromTimeLine').hide()
-          $('.fromMilestones').show()
+          $(".fromMilestones").show();
 
           $(".fromMilestones select#inputYear").val("");
         }
-        $(".schedule-info > .my-info-i").attr("title", schedualInfo)
-        $(".schedule-info > .my-info-i").attr("data-original-title", schedualInfo)
+        $(".schedule-info > .my-info-i").attr("title", schedualInfo);
+        $(".schedule-info > .my-info-i").attr(
+          "data-original-title",
+          schedualInfo
+        );
         $(".tlContainer").html(`<p style="text-align:center">${No_Data}</p>`); // container of data
-
-
-      })
+      });
 
       $('[data-toggle="tooltip"]').tooltip();
-
 
       // $(".fromDeliverables").toggle();
     }
@@ -871,8 +884,8 @@ var Get_RelatedObjective = {
 
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Title\" /><Value Type=\"Text\">" +
-      RelatedObjective +
-      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+        RelatedObjective +
+        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
     Get_RelatedObjective.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Get_RelatedObjective.g.collListItem);
@@ -908,8 +921,8 @@ var Risks_Info_Request = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"InitiativeCode\" /><Value Type=\"Text\">" +
-      initiativeHomeInfo_Request.g.ICODE +
-      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+        initiativeHomeInfo_Request.g.ICODE +
+        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
     Risks_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Risks_Info_Request.g.collListItem);
@@ -922,20 +935,18 @@ var Risks_Info_Request = {
     var collListItem = Risks_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var itemhtml = [
-      '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
-      _spPageContextInfo.webAbsoluteUrl +
-      "/sitepages/new.aspx?ListKey=initiativerisks&ICODE=" +
-      initiativeHomeInfo_Request.g.ICODE +
-      '"><i class="icon-plus"></i></a></li>',
-    ],
+        '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
+          _spPageContextInfo.webAbsoluteUrl +
+          "/sitepages/new.aspx?ListKey=initiativerisks&ICODE=" +
+          initiativeHomeInfo_Request.g.ICODE +
+          '"><i class="icon-plus"></i></a></li>',
+      ],
       itemID,
       itemname,
       itemstatus,
       itemdate,
       itemuser,
       itemProjectCode;
-
-
 
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
@@ -956,39 +967,39 @@ var Risks_Info_Request = {
         : No_Data;
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
-        '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
-        _spPageContextInfo.webAbsoluteUrl +
-        "/sitepages/View.aspx?ListKey=risks&IID=" +
-        itemID +
-        "&ICODE=" +
-        itemProjectCode +
-        '">' +
-        '<div class="d-inline-flex flex-column">' +
-        '<h3 class="acc-title d-inline-flex black">' +
-        itemname +
-        "</h3>" +
-        '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
-        itemtitle +
-        "</span>" +
-        "</div>" +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        // '<h4 class="black">' + itemDateIdentified + '</h4>' +
-        '<span data-trans-riskdateident class="Resources des-13"></span>' +
-        '<h4 class="black">' +
-        itemDateIdentified +
-        "</h4>" +
-        "</div>" +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        // '<h4 class="text-warning">' + itemdate + '</h4>' +
-        '<span data-trans-riskdateclos class="Resources des-13"></span>' +
-        '<h4 class="text-warning">' +
-        itemdate +
-        "</h4>" +
-        "</div>" +
-        '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
-        "</div>" +
-        "</a>" +
-        "</li>"
+          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
+          _spPageContextInfo.webAbsoluteUrl +
+          "/sitepages/View.aspx?ListKey=risks&IID=" +
+          itemID +
+          "&ICODE=" +
+          itemProjectCode +
+          '">' +
+          '<div class="d-inline-flex flex-column">' +
+          '<h3 class="acc-title d-inline-flex black">' +
+          itemname +
+          "</h3>" +
+          '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
+          itemtitle +
+          "</span>" +
+          "</div>" +
+          '<div class="d-inline-flex flex-column mx-2">' +
+          // '<h4 class="black">' + itemDateIdentified + '</h4>' +
+          '<span data-trans-riskdateident class="Resources des-13"></span>' +
+          '<h4 class="black">' +
+          itemDateIdentified +
+          "</h4>" +
+          "</div>" +
+          '<div class="d-inline-flex flex-column mx-2">' +
+          // '<h4 class="text-warning">' + itemdate + '</h4>' +
+          '<span data-trans-riskdateclos class="Resources des-13"></span>' +
+          '<h4 class="text-warning">' +
+          itemdate +
+          "</h4>" +
+          "</div>" +
+          '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
+          "</div>" +
+          "</a>" +
+          "</li>"
       );
 
       //
@@ -998,11 +1009,10 @@ var Risks_Info_Request = {
     }
     $("div#pills-second > ul.list-group").html(itemhtml.join(""));
 
-    var checkValidation = Read_Access.includes('initiativerisks')
-    if(!checkValidation){
-      $(".initiativerisks").hide()
+    var checkValidation = Read_Access.includes("initiativerisks");
+    if (!checkValidation) {
+      $(".initiativerisks").hide();
     }
-
 
     changeResources();
   },
@@ -1023,8 +1033,8 @@ var Issues_Info_Request = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"InitiativeCode\" /><Value Type=\"Text\">" +
-      initiativeHomeInfo_Request.g.ICODE +
-      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+        initiativeHomeInfo_Request.g.ICODE +
+        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
     Issues_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Issues_Info_Request.g.collListItem);
@@ -1037,12 +1047,12 @@ var Issues_Info_Request = {
     var collListItem = Issues_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var itemhtml = [
-      '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
-      _spPageContextInfo.webAbsoluteUrl +
-      "/sitepages/new.aspx?ListKey=initiativeissues&ICODE=" +
-      initiativeHomeInfo_Request.g.ICODE +
-      '"><i class="icon-plus"></i></a></li>',
-    ],
+        '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
+          _spPageContextInfo.webAbsoluteUrl +
+          "/sitepages/new.aspx?ListKey=initiativeissues&ICODE=" +
+          initiativeHomeInfo_Request.g.ICODE +
+          '"><i class="icon-plus"></i></a></li>',
+      ],
       itemID,
       itemname,
       itemstatus,
@@ -1070,39 +1080,39 @@ var Issues_Info_Request = {
 
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
-        '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
-        _spPageContextInfo.webAbsoluteUrl +
-        "/sitepages/View.aspx?ListKey=issues&IID=" +
-        itemID +
-        "&ICODE=" +
-        itemProjectCode +
-        '">' +
-        '<div class="d-inline-flex flex-column">' +
-        '<h3 class="acc-title d-inline-flex black">' +
-        itemname +
-        "</h3>" +
-        '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
-        itemtitle +
-        "</span>" +
-        "</div>" +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        // '<h4 class="black">' + DateRaised + '</h4>' +
-        '<span data-trans-riskdateident class="Resources des-13"></span>' +
-        '<h4 class="black">' +
-        DateRaised +
-        "</h4>" +
-        "</div>" +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        // '<h4 class="text-warning">' + itemdate + '</h4>' +
-        '<span data-trans-riskdateclos class="Resources des-13"></span>' +
-        '<h4 class="text-warning">' +
-        itemdate +
-        "</h4>" +
-        "</div>" +
-        '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
-        "</div>" +
-        "</a>" +
-        "</li>"
+          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
+          _spPageContextInfo.webAbsoluteUrl +
+          "/sitepages/View.aspx?ListKey=issues&IID=" +
+          itemID +
+          "&ICODE=" +
+          itemProjectCode +
+          '">' +
+          '<div class="d-inline-flex flex-column">' +
+          '<h3 class="acc-title d-inline-flex black">' +
+          itemname +
+          "</h3>" +
+          '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
+          itemtitle +
+          "</span>" +
+          "</div>" +
+          '<div class="d-inline-flex flex-column mx-2">' +
+          // '<h4 class="black">' + DateRaised + '</h4>' +
+          '<span data-trans-riskdateident class="Resources des-13"></span>' +
+          '<h4 class="black">' +
+          DateRaised +
+          "</h4>" +
+          "</div>" +
+          '<div class="d-inline-flex flex-column mx-2">' +
+          // '<h4 class="text-warning">' + itemdate + '</h4>' +
+          '<span data-trans-riskdateclos class="Resources des-13"></span>' +
+          '<h4 class="text-warning">' +
+          itemdate +
+          "</h4>" +
+          "</div>" +
+          '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
+          "</div>" +
+          "</a>" +
+          "</li>"
       );
     }
 
@@ -1111,11 +1121,10 @@ var Issues_Info_Request = {
     }
     $("div#pills-seventh > ul.list-group").html(itemhtml.join(""));
 
-    var checkValidation = Read_Access.includes('initiativeissues')
-    if(!checkValidation){
-      $(".initiativeissues").hide()
+    var checkValidation = Read_Access.includes("initiativeissues");
+    if (!checkValidation) {
+      $(".initiativeissues").hide();
     }
-
 
     changeResources();
   },
@@ -1136,8 +1145,8 @@ var Projects_Info_Request = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"RelatedInitiative\" /><Value Type=\"Text\">" +
-      initiativeHomeInfo_Request.g.ICODE +
-      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+        initiativeHomeInfo_Request.g.ICODE +
+        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
     Projects_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Projects_Info_Request.g.collListItem);
@@ -1181,39 +1190,39 @@ var Projects_Info_Request = {
         : No_Data;
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
-        '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
-        _spPageContextInfo.webAbsoluteUrl +
-        "/sitepages/View.aspx?ListKey=projects&IID=" +
-        itemID +
-        "&PCODE=" +
-        itemtitle +
-        '">' +
-        '<div class="d-inline-flex flex-column">' +
-        '<h3 class="acc-title d-inline-flex black">' +
-        itemname +
-        "</h3>" +
-        '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
-        itemtitle +
-        "</span>" +
-        "</div>" +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        // '<h4 class="text-warning">' + itemdateraised + '</h4>' +
-        '<span data-trans-basestart class="Resources des-13"></span>' +
-        '<h4 class="text-warning">' +
-        itemstartdate +
-        "</h4>" +
-        "</div>" +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        // '<h4 class="black">' + itemdate + '</h4>' +
-        '<span data-trans-basefinish class="Resources des-13"></span>' +
-        '<h4 class="black">' +
-        itemfinishdate +
-        "</h4>" +
-        "</div>" +
-        '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
-        "</div>" +
-        "</a>" +
-        "</li>"
+          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
+          _spPageContextInfo.webAbsoluteUrl +
+          "/sitepages/View.aspx?ListKey=projects&IID=" +
+          itemID +
+          "&PCODE=" +
+          itemtitle +
+          '">' +
+          '<div class="d-inline-flex flex-column">' +
+          '<h3 class="acc-title d-inline-flex black">' +
+          itemname +
+          "</h3>" +
+          '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
+          itemtitle +
+          "</span>" +
+          "</div>" +
+          '<div class="d-inline-flex flex-column mx-2">' +
+          // '<h4 class="text-warning">' + itemdateraised + '</h4>' +
+          '<span data-trans-basestart class="Resources des-13"></span>' +
+          '<h4 class="text-warning">' +
+          itemstartdate +
+          "</h4>" +
+          "</div>" +
+          '<div class="d-inline-flex flex-column mx-2">' +
+          // '<h4 class="black">' + itemdate + '</h4>' +
+          '<span data-trans-basefinish class="Resources des-13"></span>' +
+          '<h4 class="black">' +
+          itemfinishdate +
+          "</h4>" +
+          "</div>" +
+          '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
+          "</div>" +
+          "</a>" +
+          "</li>"
       );
 
       //
@@ -1223,11 +1232,10 @@ var Projects_Info_Request = {
     }
     $("div#pills-first > ul.list-group").html(itemhtml.join(""));
 
-    var checkValidation = Read_Access.includes('projects')
-    if(!checkValidation){
-      $(".projects").hide()
+    var checkValidation = Read_Access.includes("projects");
+    if (!checkValidation) {
+      $(".projects").hide();
     }
-
 
     changeResources();
   },
@@ -1251,8 +1259,8 @@ var Deliverables_Info_Request = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"InitiativeCode\" /><Value Type=\"Text\">" +
-      initiativeHomeInfo_Request.g.ICODE +
-      "</Value></Eq></And></Where><OrderBy><FieldRef Name='PlannedCompletedDate' Ascending='False' /></OrderBy></Query></View>"
+        initiativeHomeInfo_Request.g.ICODE +
+        "</Value></Eq></And></Where><OrderBy><FieldRef Name='PlannedCompletedDate' Ascending='False' /></OrderBy></Query></View>"
     ); //<Where><Geq><FieldRef Name=\'Committed_x0020_Date\' /><Value IncludeTimeValue=\'TRUE\'  Type=\'DateTime\'><Today /></Value></Geq></Where>
     Deliverables_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Deliverables_Info_Request.g.collListItem);
@@ -1272,10 +1280,10 @@ var Deliverables_Info_Request = {
     if (initiativeActualBudget) {
       var itemhtml = [
         '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
-        _spPageContextInfo.webAbsoluteUrl +
-        "/sitepages/new.aspx?ListKey=initiativedeliverables&ICODE=" +
-        initiativeHomeInfo_Request.g.ICODE +
-        '"><i class="icon-plus"></i></a></li>',
+          _spPageContextInfo.webAbsoluteUrl +
+          "/sitepages/new.aspx?ListKey=initiativedeliverables&ICODE=" +
+          initiativeHomeInfo_Request.g.ICODE +
+          '"><i class="icon-plus"></i></a></li>',
       ];
     } else {
       var itemhtml = [""];
@@ -1304,52 +1312,50 @@ var Deliverables_Info_Request = {
       );
       // PlannedFinishDate
       CommittedDate = oListItem.get_item("PlannedCompletedDate");
-        debugger
+      debugger;
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
-        '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
-        _spPageContextInfo.webAbsoluteUrl +
-        "/sitepages/View.aspx?ListKey=initiativedeliverables&IID=" +
-        itemID +
-        "&ICODE=" +
-        itemProjectCode +
-        '">' +
-        '<div class="d-inline-flex flex-column">' +
-        '<h3 class="acc-title d-inline-flex black">' +
-        itemname +
-        "</h3>" +
-        '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
-        itemtitle +
-        "</span>" +
-        "</div>" +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        // '<h4 class="black Resources">' + itemdate + '</h4>' +
-        '<span data-trans-pattr50 class="Resources des-13"></span>' +
-        '<h4 class="black Resources">' +
-        itemdate +
-        "</h4>" +
-        "</div>" +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        // '<h4 class="text-warning">' + itemweight + '</h4>' +
-        '<span data-trans-weight class="Resources des-13"></span>' +
-        '<h4 class="text-warning">' +
-        itemweight +
-        "</h4>" +
-        "</div>" +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        // '<h4 data-trans-' + itemdelivered + ' class="black Resources"></h4>' +
-        '<span data-trans-deliveredyesno class="Resources des-13"></span>' +
-        "<h4 data-trans-" +
-        itemdelivered +
-        ' class="black Resources"></h4>' +
-        "</div>" +
-        '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
-        "</div>" +
-        "</a>" +
-        "</li>"
+          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
+          _spPageContextInfo.webAbsoluteUrl +
+          "/sitepages/View.aspx?ListKey=initiativedeliverables&IID=" +
+          itemID +
+          "&ICODE=" +
+          itemProjectCode +
+          '">' +
+          '<div class="d-inline-flex flex-column">' +
+          '<h3 class="acc-title d-inline-flex black">' +
+          itemname +
+          "</h3>" +
+          '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
+          itemtitle +
+          "</span>" +
+          "</div>" +
+          '<div class="d-inline-flex flex-column mx-2">' +
+          // '<h4 class="black Resources">' + itemdate + '</h4>' +
+          '<span data-trans-pattr50 class="Resources des-13"></span>' +
+          '<h4 class="black Resources">' +
+          itemdate +
+          "</h4>" +
+          "</div>" +
+          '<div class="d-inline-flex flex-column mx-2">' +
+          // '<h4 class="text-warning">' + itemweight + '</h4>' +
+          '<span data-trans-weight class="Resources des-13"></span>' +
+          '<h4 class="text-warning">' +
+          itemweight +
+          "</h4>" +
+          "</div>" +
+          '<div class="d-inline-flex flex-column mx-2">' +
+          // '<h4 data-trans-' + itemdelivered + ' class="black Resources"></h4>' +
+          '<span data-trans-deliveredyesno class="Resources des-13"></span>' +
+          "<h4 data-trans-" +
+          itemdelivered +
+          ' class="black Resources"></h4>' +
+          "</div>" +
+          '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
+          "</div>" +
+          "</a>" +
+          "</li>"
       );
-
-
 
       Deliverablesarray.push({
         name: itemname,
@@ -1358,7 +1364,6 @@ var Deliverables_Info_Request = {
         date: itemdate,
         Code: oListItem.get_item("Title"),
       });
-
 
       NDelivrables++;
     }
@@ -1372,8 +1377,7 @@ var Deliverables_Info_Request = {
     var sdlyear = "",
       iscuryear = true;
     var yearExcist = false;
-    var delivrablesYears = []
-
+    var delivrablesYears = [];
 
     $(".fromDeliverables select#inputYear").html("");
 
@@ -1381,13 +1385,14 @@ var Deliverables_Info_Request = {
       `<option data-trans-year class="Resources" value=""></option>`
     );
 
-    Deliverablesarray.forEach(function (dl, i) { //appending years
+    Deliverablesarray.forEach(function (dl, i) {
+      //appending years
 
-      var dataYear = isArabic ? dl.date.split('-')[0] : dl.date.split('-')[2];
+      var dataYear = isArabic ? dl.date.split("-")[0] : dl.date.split("-")[2];
 
-      if (dataYear && dataYear != No_Data) { // to handle no data in drop down when there is no data
+      if (dataYear && dataYear != No_Data) {
+        // to handle no data in drop down when there is no data
         if (sdlyear != dataYear) {
-
           if (dataYear == new Date().getFullYear()) {
             iscuryear = false;
           } else {
@@ -1395,18 +1400,17 @@ var Deliverables_Info_Request = {
           }
 
           if (!delivrablesYears.includes(dataYear)) {
-            $('.fromDeliverables select#inputYear').append(
+            $(".fromDeliverables select#inputYear").append(
               new Option(dataYear, dataYear, iscuryear, iscuryear)
             );
           }
-          delivrablesYears.push(dataYear)
+          delivrablesYears.push(dataYear);
 
-          yearExcist = true
+          yearExcist = true;
         }
       }
       sdlyear = dataYear;
     });
-
 
     if (!yearExcist) {
       // to append no data in drop down when there is no data
@@ -1415,19 +1419,16 @@ var Deliverables_Info_Request = {
       );
     }
 
-    $('.fromDeliverables select#inputYear').on('change', function () {
-      $(`#month-${lstMonthCLicked}`).css('background', '#F0F3F8')
-      $('.tlContainer').html('') // to reset the data when change on year
+    $(".fromDeliverables select#inputYear").on("change", function () {
+      $(`#month-${lstMonthCLicked}`).css("background", "#F0F3F8");
+      $(".tlContainer").html(""); // to reset the data when change on year
       Deliverables_Info_Request.g.dltimeline($(this).val());
-
     });
 
-    
-    var checkValidation = Read_Access.includes('initiativedeliverables')
-    if(!checkValidation){
-      $(".initiativedeliverables").hide()
+    var checkValidation = Read_Access.includes("initiativedeliverables");
+    if (!checkValidation) {
+      $(".initiativedeliverables").hide();
     }
-
 
     changeResources();
   },
@@ -1439,102 +1440,160 @@ var Deliverables_Info_Request = {
   // Global variables
   g: {
     dltimeline: function (year) {
-
-      $('.fromTimeLine').hide();
-      $('.fromTimeLine .milestone-item[data-year=' + year + ']').show();
-      $('.fromTimeLine .time-box').remove();
-      var dlyear = '',
-        dlmonth = '',
-        curdl = $('body'),
-        dlhtml = '',
-        datetoshow = '';
+      $(".fromTimeLine").hide();
+      $(".fromTimeLine .milestone-item[data-year=" + year + "]").show();
+      $(".fromTimeLine .time-box").remove();
+      var dlyear = "",
+        dlmonth = "",
+        curdl = $("body"),
+        dlhtml = "",
+        datetoshow = "";
       //click new timeline
-      var monthsArr = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'] // handle the click on all months
-      var istimelineData = false // check if there is a data in time line or no
+      var monthsArr = [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+      ]; // handle the click on all months
+      var istimelineData = false; // check if there is a data in time line or no
 
+      $(".tlContainer").html(""); // container of data
 
-      $('.tlContainer').html('') // container of data
-
-
-      monthsArr.forEach(el => {
+      monthsArr.forEach((el) => {
         $(`.fromDeliverables .month-list-ctx #month-${el}`).click(function () {
-          istimelineData = false
-          $(`.fromDeliverables .month-list-ctx #month-${lstMonthCLicked}`).css('background', '#F0F3F8') // return the previous background color to the origin color
-          var dateTitle = '', nameTitle = '';
-          if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
-            dateTitle = 'التاريخ'
-            nameTitle = 'الاسم'
+          istimelineData = false;
+          $(`.fromDeliverables .month-list-ctx #month-${lstMonthCLicked}`).css(
+            "background",
+            "#F0F3F8"
+          ); // return the previous background color to the origin color
+          var dateTitle = "",
+            nameTitle = "";
+          if (
+            localStorage.getItem("lng") == null ||
+            localStorage.getItem("lng") == "ar"
+          ) {
+            dateTitle = "التاريخ";
+            nameTitle = "الاسم";
           } else {
-            dateTitle = 'Date'
-            nameTitle = 'Name'
+            dateTitle = "Date";
+            nameTitle = "Name";
           }
-          dlhtml = '<table style="width:100%">'
-          dlhtml += '<tr class="timeLineTableHeader"><th style="border:1px solid #ddd">' + dateTitle + '</th><th style="border:1px solid #ddd">' + nameTitle + '</th></tr>'
-          $('.tlContainer').html('')
-          $(`.fromDeliverables .month-list-ctx #month-${el}`).css('background', '#D0D0D0') // change background color when click on month
-          lstMonthCLicked = el
+          dlhtml = '<table style="width:100%">';
+          dlhtml +=
+            '<tr class="timeLineTableHeader"><th style="border:1px solid #ddd">' +
+            dateTitle +
+            '</th><th style="border:1px solid #ddd">' +
+            nameTitle +
+            "</th></tr>";
+          $(".tlContainer").html("");
+          $(`.fromDeliverables .month-list-ctx #month-${el}`).css(
+            "background",
+            "#D0D0D0"
+          ); // change background color when click on month
+          lstMonthCLicked = el;
           Deliverablesarray.forEach(function (dl, i) {
             // datetoshow = dl.date.split('/'), datetoshow = datetoshow[0] + '/' + datetoshow[1];
-            var dataYear = isArabic ? dl.date.split('-')[0] : dl.date.split('-')[2];
-            var dataDay = isArabic ? dl.date.split('-')[2] : dl.date.split('-')[0];
-            datetoshow = dl.date.split('-'),
-              isArabic ? datetoshow = datetoshow[1] + '-' + dataDay : dataDay + '-' + datetoshow[1];
+            var dataYear = isArabic
+              ? dl.date.split("-")[0]
+              : dl.date.split("-")[2];
+            var dataDay = isArabic
+              ? dl.date.split("-")[2]
+              : dl.date.split("-")[0];
+            (datetoshow = dl.date.split("-")),
+              isArabic
+                ? (datetoshow = datetoshow[1] + "-" + dataDay)
+                : dataDay + "-" + datetoshow[1];
             dlyear = dataYear;
 
             if (dlyear == year) {
-              if (dl.date.split('-')[1] == 10) { // to handle the data on october month
-                if ((el == dl.date.split('-')[1])) {
-                  istimelineData = true
-                  dlhtml += '<tr><td class="p-date" style="border:1px solid #ddd">' + datetoshow + '</td>' +
-                    '<td class="p-title" style="border:1px solid #ddd">' + dl.name + '</td></tr>';
+              if (dl.date.split("-")[1] == 10) {
+                // to handle the data on october month
+                if (el == dl.date.split("-")[1]) {
+                  istimelineData = true;
+                  dlhtml +=
+                    '<tr><td class="p-date" style="border:1px solid #ddd">' +
+                    datetoshow +
+                    "</td>" +
+                    '<td class="p-title" style="border:1px solid #ddd">' +
+                    dl.name +
+                    "</td></tr>";
                 }
               } else {
-                if ((el == dl.date.split('-')[1].replace('0', ''))) {
-                  istimelineData = true
-                  dlhtml += '<tr><td class="p-date" style="border:1px solid #ddd">' + datetoshow + '</td>' +
-                    '<td class="p-title" style="border:1px solid #ddd">' + dl.name + '</td></tr>';
+                if (el == dl.date.split("-")[1].replace("0", "")) {
+                  istimelineData = true;
+                  dlhtml +=
+                    '<tr><td class="p-date" style="border:1px solid #ddd">' +
+                    datetoshow +
+                    "</td>" +
+                    '<td class="p-title" style="border:1px solid #ddd">' +
+                    dl.name +
+                    "</td></tr>";
                 }
               }
             }
             if (i == Deliverablesarray.length - 1) {
-              dlhtml += '</table>'
-              $('.tlContainer').append(dlhtml)
+              dlhtml += "</table>";
+              $(".tlContainer").append(dlhtml);
               if (!istimelineData) {
-                $('.timeLineTableHeader').css('display', 'none') // hide the table if there is no data
-                $(".fromDeliverables .tlContainer").html(`<p style="text-align:center">${No_Data}</p>`)
-
+                $(".timeLineTableHeader").css("display", "none"); // hide the table if there is no data
+                $(".fromDeliverables .tlContainer").html(
+                  `<p style="text-align:center">${No_Data}</p>`
+                );
               }
-              $('.fromDeliverables .time-box').hover(function () {
-                $('.fromDeliverables .delivery-timeline').css('overflow', 'initial');
-              }, function () {
-                $('.fromDeliverables .delivery-timeline').css('overflow', 'hidden');
-              });
+              $(".fromDeliverables .time-box").hover(
+                function () {
+                  $(".fromDeliverables .delivery-timeline").css(
+                    "overflow",
+                    "initial"
+                  );
+                },
+                function () {
+                  $(".fromDeliverables .delivery-timeline").css(
+                    "overflow",
+                    "hidden"
+                  );
+                }
+              );
             }
           });
         });
-      })
+      });
 
-      $(`.fromDeliverables .month-list-ctx #month-1`).click()
-      $(`.fromDeliverables .month-list .monthBadge`).remove()  // to remove star on the month on change to reset
-
+      $(`.fromDeliverables .month-list-ctx #month-1`).click();
+      $(`.fromDeliverables .month-list .monthBadge`).remove(); // to remove star on the month on change to reset
 
       Deliverablesarray.forEach(function (dl, i) {
         var delivYear = isArabic
           ? dl.date.split("-")[0]
           : dl.date.split("-")[2];
         if (delivYear == year) {
-          var targetMonth = ""
+          var targetMonth = "";
           if (dl.date.split("-")[1] == 10) {
-            targetMonth = dl.date.split("-")[1]
+            targetMonth = dl.date.split("-")[1];
           } else {
-            targetMonth = dl.date.split("-")[1].replace("0", "")
+            targetMonth = dl.date.split("-")[1].replace("0", "");
           }
 
-          if ($(`.fromDeliverables .month-list #month-${targetMonth} > .monthBadge`).length == 0) { // to add star on the month that have value
-            $(`.fromDeliverables .month-list #month-${targetMonth}`).prepend(`<span class="monthBadge">*</span>`)
+          if (
+            $(
+              `.fromDeliverables .month-list #month-${targetMonth} > .monthBadge`
+            ).length == 0
+          ) {
+            // to add star on the month that have value
+            $(`.fromDeliverables .month-list #month-${targetMonth}`).prepend(
+              `<span class="monthBadge">*</span>`
+            );
           }
         }
-      })
+      });
     },
   },
 };
@@ -1551,8 +1610,8 @@ var Milestones_Info_Request = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"InitiativeCode\" /><Value Type=\"Text\">" +
-      initiativeHomeInfo_Request.g.ICODE +
-      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+        initiativeHomeInfo_Request.g.ICODE +
+        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
     Milestones_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Milestones_Info_Request.g.collListItem);
@@ -1566,16 +1625,15 @@ var Milestones_Info_Request = {
     var listItemEnum = collListItem.getEnumerator();
 
     if (initiativeActualBudget) {
-
       var itemhtml = [
         '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
-        _spPageContextInfo.webAbsoluteUrl +
-        "/sitepages/new.aspx?ListKey=initiativemilestones&ICODE=" +
-        initiativeHomeInfo_Request.g.ICODE +
-        '"><i class="icon-plus"></i></a></li>',
+          _spPageContextInfo.webAbsoluteUrl +
+          "/sitepages/new.aspx?ListKey=initiativemilestones&ICODE=" +
+          initiativeHomeInfo_Request.g.ICODE +
+          '"><i class="icon-plus"></i></a></li>',
       ];
     } else {
-      var itemhtml = [""]
+      var itemhtml = [""];
     }
 
     var itemID,
@@ -1606,59 +1664,62 @@ var Milestones_Info_Request = {
       item3date2 = initiativeHomeInfo_Request.g.dateConvert(
         oListItem.get_item("ActualCompletedDate")
       );
-      itemPlannedClosureDateByLanguage = initiativeHomeInfo_Request.g.dateConvert(oListItem.get_item('PlannedDate'));
+      itemPlannedClosureDateByLanguage =
+        initiativeHomeInfo_Request.g.dateConvert(
+          oListItem.get_item("PlannedDate")
+        );
 
       itemdelivered = oListItem.get_item("Delivered") || "nodata";
       // item4 = oListItem.get_item('Status') || No_Data;
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
-        '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
-        _spPageContextInfo.webAbsoluteUrl +
-        "/sitepages/View.aspx?ListKey=initiativemilestones&IID=" +
-        itemID +
-        "&ICODE=" +
-        itemProjectCode +
-        '">' +
-        '<div class="d-inline-flex flex-column">' +
-        '<h3 class="acc-title d-inline-flex black">' +
-        item1 +
-        "</h3>" +
-        '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
-        item2 +
-        "</span>" +
-        "</div>" +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        // '<h4 class="text-warning">' + item3 + '</h4>' +
-        '<span data-trans-pattr50 class="Resources des-13"></span>' +
-        '<h4 class="text-warning">' +
-        item3 +
-        "</h4>" +
-        "</div>" +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        // '<h4 class="black">' + item3date2 + '</h4>' +
-        '<span data-trans-dateend class="Resources des-13"></span>' +
-        '<h4 class="black">' +
-        item3date2 +
-        "</h4>" +
-        "</div>" +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        // '<h4 class="text-warning">' + item3 + '</h4>' +
-        '<span data-trans-pattrstatus class="Resources des-13"></span>' +
-        '<h4 class="Resources text-warning" data-trans-' +
-        Status +
-        "></h4>" +
-        "</div>" +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        // '<h4 class="text-warning">' + item3 + '</h4>' +
-        '<span data-trans-pattrweight class="Resources des-13"></span>' +
-        '<h4 class="text-warning">' +
-        Weight +
-        "</h4>" +
-        "</div>" +
-        '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
-        "</div>" +
-        "</a>" +
-        "</li>"
+          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
+          _spPageContextInfo.webAbsoluteUrl +
+          "/sitepages/View.aspx?ListKey=initiativemilestones&IID=" +
+          itemID +
+          "&ICODE=" +
+          itemProjectCode +
+          '">' +
+          '<div class="d-inline-flex flex-column">' +
+          '<h3 class="acc-title d-inline-flex black">' +
+          item1 +
+          "</h3>" +
+          '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
+          item2 +
+          "</span>" +
+          "</div>" +
+          '<div class="d-inline-flex flex-column mx-2">' +
+          // '<h4 class="text-warning">' + item3 + '</h4>' +
+          '<span data-trans-pattr50 class="Resources des-13"></span>' +
+          '<h4 class="text-warning">' +
+          item3 +
+          "</h4>" +
+          "</div>" +
+          '<div class="d-inline-flex flex-column mx-2">' +
+          // '<h4 class="black">' + item3date2 + '</h4>' +
+          '<span data-trans-dateend class="Resources des-13"></span>' +
+          '<h4 class="black">' +
+          item3date2 +
+          "</h4>" +
+          "</div>" +
+          '<div class="d-inline-flex flex-column mx-2">' +
+          // '<h4 class="text-warning">' + item3 + '</h4>' +
+          '<span data-trans-pattrstatus class="Resources des-13"></span>' +
+          '<h4 class="Resources text-warning" data-trans-' +
+          Status +
+          "></h4>" +
+          "</div>" +
+          '<div class="d-inline-flex flex-column mx-2">' +
+          // '<h4 class="text-warning">' + item3 + '</h4>' +
+          '<span data-trans-pattrweight class="Resources des-13"></span>' +
+          '<h4 class="text-warning">' +
+          Weight +
+          "</h4>" +
+          "</div>" +
+          '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
+          "</div>" +
+          "</a>" +
+          "</li>"
       );
       // delevrableDateExpired = initiativeHomeInfo_Request.g.dateConvert2(
       //   oListItem.get_item("PlannedCompletedDate")
@@ -1694,14 +1755,13 @@ var Milestones_Info_Request = {
       //   });
       // }
 
-
       MilestoneArr.push({
         name: itemname,
         delivered: Status,
         // ammount: oListItem.get_item("Weight"),
         date: itemPlannedClosureDateByLanguage,
         Code: item2,
-      })
+      });
 
       // Deliverablesarray.push({
       //   name: itemname,
@@ -1733,12 +1793,12 @@ var Milestones_Info_Request = {
 
     remain = (plannedRatio - completedRatio) / milestoneCount;
 
-    $('button.updateprogress').on('click', function () {
+    $("button.updateprogress").on("click", function () {
       //   ProgressStatus_Data_Submit.init();
       if (!isWF) {
         Update_InitiativeStatus_Service.init();
       }
-    })
+    });
     // $('button.updateprogress').prop('disabled', false);
 
     if (itemhtml.length == 1) {
@@ -1755,7 +1815,7 @@ var Milestones_Info_Request = {
     var sdlyear = "",
       iscuryear = true;
     var yearExcist = false;
-    var MilestonesYears = []
+    var MilestonesYears = [];
     $(".fromMilestones select#inputYear").html("");
 
     $(".fromMilestones select#inputYear").append(
@@ -1766,12 +1826,10 @@ var Milestones_Info_Request = {
       //appending years
       var dataYear = isArabic ? dl.date.split("-")[0] : dl.date.split("-")[2];
 
-
       if (sdlyear != dataYear) {
         if (dataYear == new Date().getFullYear()) {
           iscuryear = true;
-        }
-        else {
+        } else {
           iscuryear = false;
         }
         if (!MilestonesYears.includes(dataYear)) {
@@ -1780,12 +1838,11 @@ var Milestones_Info_Request = {
           );
         }
 
-        MilestonesYears.push(dataYear)
+        MilestonesYears.push(dataYear);
         yearExcist = true;
       }
       sdlyear = dataYear;
     });
-
 
     if (!yearExcist) {
       // to append no data in drop down when there is no data
@@ -1796,14 +1853,12 @@ var Milestones_Info_Request = {
 
     ///
 
-
-
     // if (
     //   // isMinisterAssistant ||
     //   //isSectorHead ||
     //   // isViceMinister ||
     //   // isSubSectorHead ||
-    //   isGeneralManager 
+    //   isGeneralManager
     //   // isMinister
     //   // ||
     //   // isBITeam ||
@@ -1814,12 +1869,12 @@ var Milestones_Info_Request = {
     // }
 
     if (!isWF) {
-      Update_InitiativeStatus_Service.init();// update the initiative status when open the page auto
+      Update_InitiativeStatus_Service.init(); // update the initiative status when open the page auto
     }
 
-    var checkValidation = Read_Access.includes('initiativemilestones')
-    if(!checkValidation){
-      $(".initiativemilestones").hide()
+    var checkValidation = Read_Access.includes("initiativemilestones");
+    if (!checkValidation) {
+      $(".initiativemilestones").hide();
     }
 
     changeResources();
@@ -1832,81 +1887,134 @@ var Milestones_Info_Request = {
   // Global variables
   g: {
     dltimeline: function (year) {
-      $('.fromTimeLine').hide();
-      $('.fromTimeLine .milestone-item[data-year=' + year + ']').show();
-      $('.fromTimeLine .time-box').remove();
-      var dlyear = '',
-        dlmonth = '',
-        curdl = $('body'),
-        dlhtml = '',
-        datetoshow = '';
+      $(".fromTimeLine").hide();
+      $(".fromTimeLine .milestone-item[data-year=" + year + "]").show();
+      $(".fromTimeLine .time-box").remove();
+      var dlyear = "",
+        dlmonth = "",
+        curdl = $("body"),
+        dlhtml = "",
+        datetoshow = "";
       //click new timeline
-      var monthsArr = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'] // handle the click on all months
-      var istimelineData = false // check if there is a data in time line or no
+      var monthsArr = [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+      ]; // handle the click on all months
+      var istimelineData = false; // check if there is a data in time line or no
 
-      $('.tlContainer').html('') // container of data
+      $(".tlContainer").html(""); // container of data
 
-      monthsArr.forEach(el => {
+      monthsArr.forEach((el) => {
         $(`.fromMilestones .month-list-ctx #month-${el}`).click(function () {
-          istimelineData = false
-          $(`.fromMilestones .month-list-ctx #month-${milestonelstMonthClicked}`).css('background', '#F0F3F8') // return the previous background color to the origin color
-          var dateTitle = '', nameTitle = '';
-          if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
-            dateTitle = 'التاريخ'
-            nameTitle = 'الاسم'
+          istimelineData = false;
+          $(
+            `.fromMilestones .month-list-ctx #month-${milestonelstMonthClicked}`
+          ).css("background", "#F0F3F8"); // return the previous background color to the origin color
+          var dateTitle = "",
+            nameTitle = "";
+          if (
+            localStorage.getItem("lng") == null ||
+            localStorage.getItem("lng") == "ar"
+          ) {
+            dateTitle = "التاريخ";
+            nameTitle = "الاسم";
           } else {
-            dateTitle = 'Date'
-            nameTitle = 'Name'
+            dateTitle = "Date";
+            nameTitle = "Name";
           }
-          dlhtml = '<table style="width:100%">'
-          dlhtml += '<tr class="timeLineTableHeader"><th style="border:1px solid #ddd">' + dateTitle + '</th><th style="border:1px solid #ddd">' + nameTitle + '</th></tr>'
-          $('.tlContainer').html('')
-          $(`.fromMilestones .month-list-ctx #month-${el}`).css('background', '#D0D0D0') // change background color when click on month
-          milestonelstMonthClicked = el
+          dlhtml = '<table style="width:100%">';
+          dlhtml +=
+            '<tr class="timeLineTableHeader"><th style="border:1px solid #ddd">' +
+            dateTitle +
+            '</th><th style="border:1px solid #ddd">' +
+            nameTitle +
+            "</th></tr>";
+          $(".tlContainer").html("");
+          $(`.fromMilestones .month-list-ctx #month-${el}`).css(
+            "background",
+            "#D0D0D0"
+          ); // change background color when click on month
+          milestonelstMonthClicked = el;
           MilestoneArr.forEach(function (dl, i) {
             // datetoshow = dl.date.split('/'), datetoshow = datetoshow[0] + '/' + datetoshow[1];
-            var dataYear = isArabic ? dl.date.split('-')[0] : dl.date.split('-')[2];
-            var dataDay = isArabic ? dl.date.split('-')[2] : dl.date.split('-')[0];
-            datetoshow = dl.date.split('-'),
-              isArabic ? datetoshow = datetoshow[1] + '-' + dataDay : dataDay + '-' + datetoshow[1];
+            var dataYear = isArabic
+              ? dl.date.split("-")[0]
+              : dl.date.split("-")[2];
+            var dataDay = isArabic
+              ? dl.date.split("-")[2]
+              : dl.date.split("-")[0];
+            (datetoshow = dl.date.split("-")),
+              isArabic
+                ? (datetoshow = datetoshow[1] + "-" + dataDay)
+                : dataDay + "-" + datetoshow[1];
             dlyear = dataYear;
 
             if (dlyear == year) {
-              if (dl.date.split('-')[1] == 10) { // to handle the data on october month
-                if ((el == dl.date.split('-')[1])) {
-                  istimelineData = true
-                  dlhtml += '<tr><td class="p-date" style="border:1px solid #ddd">' + datetoshow + '</td>' +
-                    '<td class="p-title" style="border:1px solid #ddd">' + dl.name + '</td></tr>';
+              if (dl.date.split("-")[1] == 10) {
+                // to handle the data on october month
+                if (el == dl.date.split("-")[1]) {
+                  istimelineData = true;
+                  dlhtml +=
+                    '<tr><td class="p-date" style="border:1px solid #ddd">' +
+                    datetoshow +
+                    "</td>" +
+                    '<td class="p-title" style="border:1px solid #ddd">' +
+                    dl.name +
+                    "</td></tr>";
                 }
               } else {
-                if ((el == dl.date.split('-')[1].replace('0', ''))) {
-                  istimelineData = true
-                  dlhtml += '<tr><td class="p-date" style="border:1px solid #ddd">' + datetoshow + '</td>' +
-                    '<td class="p-title" style="border:1px solid #ddd">' + dl.name + '</td></tr>';
+                if (el == dl.date.split("-")[1].replace("0", "")) {
+                  istimelineData = true;
+                  dlhtml +=
+                    '<tr><td class="p-date" style="border:1px solid #ddd">' +
+                    datetoshow +
+                    "</td>" +
+                    '<td class="p-title" style="border:1px solid #ddd">' +
+                    dl.name +
+                    "</td></tr>";
                 }
               }
             }
             if (i == MilestoneArr.length - 1) {
-              dlhtml += '</table>'
-              $('.tlContainer').append(dlhtml)
+              dlhtml += "</table>";
+              $(".tlContainer").append(dlhtml);
               if (!istimelineData) {
-                $('.timeLineTableHeader').css('display', 'none') // hide the table if there is no data
-                $(".fromMilestones .tlContainer").html(`<p style="text-align:center">${No_Data}</p>`)
-
+                $(".timeLineTableHeader").css("display", "none"); // hide the table if there is no data
+                $(".fromMilestones .tlContainer").html(
+                  `<p style="text-align:center">${No_Data}</p>`
+                );
               }
-              $('.fromMilestones .time-box').hover(function () {
-                $('.fromMilestones .delivery-timeline').css('overflow', 'initial');
-              }, function () {
-                $('.fromMilestones .delivery-timeline').css('overflow', 'hidden');
-              });
+              $(".fromMilestones .time-box").hover(
+                function () {
+                  $(".fromMilestones .delivery-timeline").css(
+                    "overflow",
+                    "initial"
+                  );
+                },
+                function () {
+                  $(".fromMilestones .delivery-timeline").css(
+                    "overflow",
+                    "hidden"
+                  );
+                }
+              );
             }
           });
         });
-      })
+      });
 
-      $(`.fromMilestones .month-list-ctx #month-1`).click()
-      $(`.fromMilestones .month-list .monthBadge`).remove()  // to remove star on the month on change to reset
-
+      $(`.fromMilestones .month-list-ctx #month-1`).click();
+      $(`.fromMilestones .month-list .monthBadge`).remove(); // to remove star on the month on change to reset
 
       MilestoneArr.forEach(function (dl, i) {
         var milestoneYear = isArabic
@@ -1914,20 +2022,25 @@ var Milestones_Info_Request = {
           : dl.date.split("-")[2];
 
         if (milestoneYear == year) {
-          var targetMonth = ""
+          var targetMonth = "";
           if (dl.date.split("-")[1] == 10) {
-            targetMonth = dl.date.split("-")[1]
+            targetMonth = dl.date.split("-")[1];
           } else {
-            targetMonth = dl.date.split("-")[1].replace("0", "")
+            targetMonth = dl.date.split("-")[1].replace("0", "");
           }
 
-          if ($(`.fromMilestones .month-list #month-${targetMonth} > .monthBadge`).length == 0) { // to add star on the month that have value
-            $(`.fromMilestones .month-list #month-${targetMonth}`).prepend(`<span class="monthBadge">*</span>`)
+          if (
+            $(`.fromMilestones .month-list #month-${targetMonth} > .monthBadge`)
+              .length == 0
+          ) {
+            // to add star on the month that have value
+            $(`.fromMilestones .month-list #month-${targetMonth}`).prepend(
+              `<span class="monthBadge">*</span>`
+            );
           }
         }
-      })
-
-    }
+      });
+    },
   },
 };
 //Benefits
@@ -1939,8 +2052,8 @@ var Benefits_Info_Request = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"InitiativeCode\" /><Value Type=\"Text\">" +
-      initiativeHomeInfo_Request.g.ICODE +
-      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+        initiativeHomeInfo_Request.g.ICODE +
+        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
     Benefits_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Benefits_Info_Request.g.collListItem);
@@ -1953,12 +2066,12 @@ var Benefits_Info_Request = {
     var collListItem = Benefits_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var itemhtml = [
-      '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
-      _spPageContextInfo.webAbsoluteUrl +
-      "/sitepages/new.aspx?ListKey=benefits&ICODE=" +
-      initiativeHomeInfo_Request.g.ICODE +
-      '"><i class="icon-plus"></i></a></li>',
-    ],
+        '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
+          _spPageContextInfo.webAbsoluteUrl +
+          "/sitepages/new.aspx?ListKey=benefits&ICODE=" +
+          initiativeHomeInfo_Request.g.ICODE +
+          '"><i class="icon-plus"></i></a></li>',
+      ],
       itemID,
       item1,
       item2,
@@ -1966,8 +2079,6 @@ var Benefits_Info_Request = {
       item4,
       itemProjectCode;
 
- 
-      
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       itemID = oListItem.get_id();
@@ -1980,37 +2091,37 @@ var Benefits_Info_Request = {
       // item4 = lessonLearnedSource[item4.replace(/ /g, "")] || No_Data;
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
-        '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
-        _spPageContextInfo.webAbsoluteUrl +
-        "/sitepages/View.aspx?ListKey=benefits&IID=" +
-        itemID +
-        '">' +
-        '<div class="d-inline-flex flex-column">' +
-        '<h3 class="acc-title d-inline-flex black">' +
-        item2 +
-        "</h3>" +
-        '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
-        item1 +
-        "</span>" +
-        "</div>" +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        // '<h4 class="text-warning">' + item3 + '</h4>' +
-        '<span data-trans-benefscale class="Resources des-13"></span>' +
-        '<h4 class="text-warning">' +
-        item3 +
-        "</h4>" +
-        "</div>" +
-        // '<div class="d-inline-flex flex-column mx-2">' +
-        // // '<h4 data-trans-' + item4 + ' class="black Resources"></h4>' +
-        // '<span data-trans-pattr54 class="Resources des-13"></span>' +
-        // "<h4 data-trans-" +
-        // item4 +
-        // ' class="black Resources"></h4>' +
-        // "</div>" +
-        '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
-        "</div>" +
-        "</a>" +
-        "</li>"
+          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
+          _spPageContextInfo.webAbsoluteUrl +
+          "/sitepages/View.aspx?ListKey=benefits&IID=" +
+          itemID +
+          '">' +
+          '<div class="d-inline-flex flex-column">' +
+          '<h3 class="acc-title d-inline-flex black">' +
+          item2 +
+          "</h3>" +
+          '<span class="des-13"><span data-trans-pattr49 class="codespan Resources"></span>' +
+          item1 +
+          "</span>" +
+          "</div>" +
+          '<div class="d-inline-flex flex-column mx-2">' +
+          // '<h4 class="text-warning">' + item3 + '</h4>' +
+          '<span data-trans-benefscale class="Resources des-13"></span>' +
+          '<h4 class="text-warning">' +
+          item3 +
+          "</h4>" +
+          "</div>" +
+          // '<div class="d-inline-flex flex-column mx-2">' +
+          // // '<h4 data-trans-' + item4 + ' class="black Resources"></h4>' +
+          // '<span data-trans-pattr54 class="Resources des-13"></span>' +
+          // "<h4 data-trans-" +
+          // item4 +
+          // ' class="black Resources"></h4>' +
+          // "</div>" +
+          '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
+          "</div>" +
+          "</a>" +
+          "</li>"
       );
 
       //
@@ -2020,11 +2131,10 @@ var Benefits_Info_Request = {
     }
     $("div#pills-sixth > ul.list-group").html(itemhtml.join(""));
 
-    var checkValidation = Read_Access.includes('benefits')
-    if(!checkValidation){
-      $(".benefits").hide()
+    var checkValidation = Read_Access.includes("benefits");
+    if (!checkValidation) {
+      $(".benefits").hide();
     }
-
 
     changeResources();
   },
@@ -2283,33 +2393,34 @@ var Benefits_Info_Request = {
 
 var Update_InitiativeStatus_Service = {
   init: function () {
-
     $.ajax({
-      type: 'GET',
+      type: "GET",
       url: `${APIURL}/job/updateinitiativestatusbymilestones/${initiativeHomeInfo_Request.g.ICODE}`,
       success: function (data) {
-        Get_InitiativeStatus_Info.init()
+        Get_InitiativeStatus_Info.init();
       },
       error: function (data) {
         console.log("call failed in update initiative service", data);
       },
     });
-  }
-}
-
+  },
+};
 
 var Get_InitiativeStatus_Info = {
-
   init: function () {
-
     $("button.updateprogress").removeClass("loader-action-success");
     $("button.updateprogress").removeClass("loader-action-error");
     $("button.updateprogress").addClass("loader-action");
     var clientContext = new SP.ClientContext.get_current();
-    var oList = clientContext.get_web().get_lists().getByTitle(ListArray[4].initiatives);
+    var oList = clientContext
+      .get_web()
+      .get_lists()
+      .getByTitle(ListArray[4].initiatives);
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
-      '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' + initiativeHomeInfo_Request.g.ICODE + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query><RowLimit>1</RowLimit></View>'
+      '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
+        initiativeHomeInfo_Request.g.ICODE +
+        "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>"
     );
     Get_InitiativeStatus_Info.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Get_InitiativeStatus_Info.g.collListItem);
@@ -2321,24 +2432,34 @@ var Get_InitiativeStatus_Info = {
   onSuccess: function (sender, args) {
     var collListItem = Get_InitiativeStatus_Info.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-    var itemID, InitiativeProgressStatus = "";
+    var itemID,
+      InitiativeProgressStatus = "",
+      initActualPercentage = "",
+      initPlannedPercentage = "";
 
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       itemID = oListItem.get_id();
-      InitiativeProgressStatus = oListItem.get_item("InitiativeProgressStatus") || No_Data;
+      InitiativeProgressStatus =
+        oListItem.get_item("InitiativeProgressStatus") || No_Data;
+        initActualPercentage =  oListItem.get_item("ActualPercentageCompleted") || 0;
+        initPlannedPercentage =  oListItem.get_item("PlannedPercentageCompleted") || 0;
     }
 
     $(".myCompletionStatus").removeAttr(
       "data-trans-stat1 data-trans-stat2 data-trans-stat3 data-trans-stat4 data-trans-stat5 data-trans-stat6 data-trans-stat7 data-trans-stat29"
     );
 
-    $(".myCompletionStatus").removeClass("statuscolor" + listInitiativeProgress);
+    $(".myCompletionStatus").removeClass(
+      "statuscolor" + listInitiativeProgress
+    );
     $(".handlecircle").removeClass("circlecolor" + listInitiativeProgress);
-
 
     $(".myCompletionStatus").attr("data-trans-" + InitiativeProgressStatus, "");
     $(".black.myCompletionStatus").text(InitiativeProgressStatus);
+
+    $(".black.initActualPercentage").text(initActualPercentage + "%");
+    $(".black.initPlannedPercentage").text(initPlannedPercentage + "%");
 
     $(".myCompletionStatus").addClass("statuscolor" + InitiativeProgressStatus);
     $(".handlecircle").addClass("circlecolor" + InitiativeProgressStatus);
@@ -2347,8 +2468,6 @@ var Get_InitiativeStatus_Info = {
     $("button.updateprogress").addClass("loader-action-success");
 
     changeResources();
-
-
   },
   onError: function (sender, args) {
     $("button.updateprogress").removeClass("loader-action");
@@ -2360,4 +2479,4 @@ var Get_InitiativeStatus_Info = {
   },
   // Global variables
   g: {},
-}
+};
