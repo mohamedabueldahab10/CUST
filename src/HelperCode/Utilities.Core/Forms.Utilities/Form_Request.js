@@ -83,6 +83,7 @@ if (
 }
 //Start of calls
 var departmenetValue;
+var externalEntityValue;
 var budgetitemValue;
 
 window.relatedToProject = [
@@ -260,6 +261,9 @@ window.Edit_Data_Request = {
 
           if ($(this).attr("id") == "SubSector") {
             departmenetValue = oListItem.get_item("" + $(this).attr("id") + "");
+          }
+          if($(this).attr("id") == "ExternalEntities"){
+            externalEntityValue = oListItem.get_item("" + $(this).attr("id") + "");
           }
           if ($(this).attr("id") == "BudgetItem") {
             budgetitemValue = oListItem.get_item("" + $(this).attr("id") + "");
@@ -3369,6 +3373,7 @@ window.Department_Sector_Info = {
         code: oListItem.get_item("Title"),
         id: oListItem.get_id(),
         ERPID: oListItem.get_item("ERPID"),
+        EntityType:oListItem.get_item("EntityType")
       });
     }
 
@@ -3384,13 +3389,30 @@ window.Department_Sector_Info = {
     }
 
 
-    debugger
+    
 
     $("#SubSector").prop("disabled", false);
     $("#SubSector").html(
       '<option data-trans-department class="Resources" value="" selected="" disabled=""></option>'
     );
+
+    $("#ExternalEntities").prop("disabled", false);
+    $("#ExternalEntities").html(
+      '<option data-trans-department class="Resources" value="" selected="" disabled=""></option>'
+    );
+
     Department_Sector_Info.g.array.forEach(function (item, i, arr) {
+      if(item.EntityType == 'ExternalEntities'){
+        $("#ExternalEntities").append(
+          '<option data-siblingvalue="' + Department_Sector_Info.g.array[i].ERPID + '" option-id="' +
+          Department_Sector_Info.g.array[i].id +
+          '" value="' +
+          Department_Sector_Info.g.array[i].code +
+          '">' +
+          Department_Sector_Info.g.array[i].name +
+          "</option>"
+        );
+      }else{
       $("#SubSector").append(
         '<option data-siblingvalue="' + Department_Sector_Info.g.array[i].ERPID + '" option-id="' +
         Department_Sector_Info.g.array[i].id +
@@ -3400,9 +3422,11 @@ window.Department_Sector_Info = {
         Department_Sector_Info.g.array[i].name +
         "</option>"
       );
+      }
     });
     if (isEdit || (listkey == "changerequest" && RListKey == "projects")) {
       $("#SubSector").val(departmenetValue);
+      $("#ExternalEntities").val(externalEntityValue)
     }
     $("#SubSector").change(function () {
       $("#Section").prop("disabled", false);

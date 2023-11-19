@@ -421,6 +421,28 @@ var Information_Form = [
         dynamic: 'Sector', //InternalName Of Parent field
         filterField: 'ParentEntity', //InternalName Of Parent field
         filterFieldType: 'Text', //Type In Sharepoint List for Parent field
+        queryField:"EntityType",
+        queryFieldType:"Choice",
+        queryFieldValue:"Department",
+      },
+      {
+        InternalName: 'ExternalEntities',
+        DisplayName: 'الجهات الشقيقة',
+        DisplayNameEn: 'External Entities',
+        type: 'lookup',
+        //from other list:
+        source: 'Internal Entities',
+        Dispfieldkey: 'Name',
+        DispfieldkeyEn: 'NameEn',
+        valfieldkey: 'Title',
+        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+        dynamic: 'Sector', //InternalName Of Parent field
+        filterField: 'ParentEntity', //InternalName Of Parent field
+        filterFieldType: 'Text', //Type In Sharepoint List for Parent field
+        RequiredName: 'ExternalEntities',
+        queryField:"EntityType",
+        queryFieldType:"Choice",
+        queryFieldValue:"ExternalEntities",
       },
       {
         InternalName: 'StartDate',

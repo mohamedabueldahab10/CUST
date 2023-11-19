@@ -11565,6 +11565,8 @@ var generalOriginalValue = [];
 dynamicAffectSelect = {
   // The main Initialization function
   init: function (affectedSelectsInfo) {
+
+    
     if (affectedSelectsInfo.length) {
       var queryFieldValue = affectedSelectsInfo[0].queryFieldValue
         ? affectedSelectsInfo[0].queryFieldValue
@@ -11709,6 +11711,7 @@ dynamicAffectSelect = {
         //FieldRef Name="Created" Ascending="True"(if we want to sort to alphapetics you need to Name='Name' and  Ascending='True')
       }
 
+      
       camlQuery.set_viewXml(Query);
 
       dynamicAffectSelect.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only

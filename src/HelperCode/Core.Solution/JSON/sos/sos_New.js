@@ -359,6 +359,9 @@ var Information_Form = [
         filterField: 'ParentEntity', //InternalName Of Parent field
         filterFieldType: 'Text', //Type In Sharepoint List for Parent field
         RequiredName: 'SubSector',
+        queryField:"EntityType", //الحقل الذي سيتم الفلترة عليه
+        queryFieldType:"Choice",// نوع هذا الحقل
+        queryFieldValue:"Department",//قيمة هذا الحقل
 
       },
       {
@@ -388,13 +391,33 @@ var Information_Form = [
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
         isRelatedToParent: true, // to show parent value depends on child like sector and subsector
-        dynamic: 'parent', //InternalName Of Parent field
-        seconeddynamic: "Sector",
+        dynamic: 'Sector', //InternalName Of Parent field
         filterField: 'ParentEntity', //InternalName Of Parent field
         filterFieldType: 'Text', //Type In Sharepoint List for Parent field
         RequiredName: 'ExternalEntities',
+        queryField:"EntityType", //الحقل الذي ستتم الفلترة عليه
+        queryFieldType:"Choice",//نوع هذا الحقل
+        queryFieldValue:"ExternalEntities",//قيمة هذا الحقال
 
       },
+      // {
+      //   InternalName: 'ExternalEntities',
+      //   DisplayName: 'الجهات الشقيقة',
+      //   DisplayNameEn: 'External Entities',
+      //   type: 'lookup',
+      //   //from other list:
+      //   source: 'Internal Entities',
+      //   Dispfieldkey: 'Name',
+      //   DispfieldkeyEn: 'NameEn',
+      //   valfieldkey: 'Title',
+      //   isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+      //   dynamic: 'parent', //InternalName Of Parent field
+      //   seconeddynamic: "Sector",
+      //   filterField: 'ParentEntity', //InternalName Of Parent field
+      //   filterFieldType: 'Text', //Type In Sharepoint List for Parent field
+      //   RequiredName: 'ExternalEntities',
+
+      // },
       // {
       // 	"InternalName": "RelatedStrategyType",
       // 	"DisplayNameEn": "Strategy Type",
