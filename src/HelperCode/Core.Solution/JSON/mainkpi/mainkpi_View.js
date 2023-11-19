@@ -318,9 +318,17 @@ var Information_Form = [
         DisplayNameEn: 'Owner',
         DisplayName: 'مالك المؤشر',
         type: 'picker',
-        state: 'disabled',
+        // state: 'disabled',
         // validation: 'required',
       },
+      {
+        InternalName: 'ExternalKPIOwner',
+        DisplayName: 'مالك المؤشر الخارجي',
+        DisplayNameEn: 'External KPI Owner',
+        type: 'string',
+        // validation: 'required',
+        //ToggleDisabledName: 'Owner',
+       },
       {
         InternalName: 'PerformanceLeader',
         DisplayNameEn: 'Performance Leader',

@@ -86,7 +86,14 @@ var Information_Form = [
         DisplayName: 'مالك الهدف',
         DisplayNameEn: 'Objective Owner',
         type: 'picker',
-        validation: 'required',
+        // validation: 'required',
+      },
+      {
+        InternalName: 'ExternalObjectiveOwner',
+        DisplayName: 'مالك الهدف الخارجي',
+        DisplayNameEn: 'External Objective Owner',
+        type: 'string',
+        // validation: 'required',
       },
       {
         InternalName: 'Description',

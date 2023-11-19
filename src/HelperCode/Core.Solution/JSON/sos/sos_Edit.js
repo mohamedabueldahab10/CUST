@@ -34,7 +34,14 @@ var Information_Form = [
         DisplayName: 'مالك الهدف',
         DisplayNameEn: 'Objective Owner',
         type: 'picker',
-        validation: 'required',
+        // validation: 'required',
+      },
+      {
+        InternalName: 'ExternalObjectiveOwner',
+        DisplayName: 'مالك الهدف الخارجي',
+        DisplayNameEn: 'External Objective Owner',
+        type: 'string',
+        // validation: 'required',
       },
       // {  // status type string cause it's auto calculated and just want to handle it
       //   "InternalName": "Status",

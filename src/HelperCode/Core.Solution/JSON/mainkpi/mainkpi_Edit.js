@@ -1168,7 +1168,27 @@ var Information_Form = [
         DisplayNameEn: 'Owner',
         DisplayName: 'مالك المؤشر',
         type: 'picker',
-        validation: 'required',
+        // validation: 'required',
+        //ToggleDisabledName: 'Owner',
+        security: {
+          groups: [
+            'LMS_P',
+            'SPM Admin',
+            'SPM Team',
+            'VRO_P',
+            'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
+          ],
+        },
+      },
+      {
+        InternalName: 'ExternalKPIOwner',
+        DisplayName: 'مالك المؤشر الخارجي',
+        DisplayNameEn: 'External KPI Owner',
+        type: 'string',
+        // validation: 'required',
         //ToggleDisabledName: 'Owner',
         security: {
           groups: [

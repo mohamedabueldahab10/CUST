@@ -667,9 +667,16 @@ var Information_Form = [
         DisplayNameEn: 'Owner',
         DisplayName: 'مالك المؤشر',
         type: 'picker', //user
-        validation: 'required',
+        // validation: 'required',
         descPhraseAr: "يجب ان يكون المستخدم لديه الصلاحية المناسبة",
         descPhraseEn: " User Should have right access",
+      },
+      {
+        InternalName: 'ExternalKPIOwner',
+        DisplayName: 'مالك المؤشر الخارجي',
+        DisplayNameEn: 'External KPI Owner',
+        type: 'string',
+        // validation: 'required',
       },
       {
         InternalName: 'PerformanceLeader',
