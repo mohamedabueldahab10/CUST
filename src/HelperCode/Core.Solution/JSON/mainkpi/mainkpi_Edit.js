@@ -381,9 +381,9 @@ var Information_Form = [
         // dynamic: 'parent', //main field that affect on other chiled field
         type: 'dropdownValues',
         toggleValues: [
-          { value: 'main', fields: ['Sector', 'SubSector'] }, //we can put more than 1  field
-          { value: 'sublevel2', fields: ['RelatedMainKpis', 'Sector', 'SubSector'] }, //we can put more than 1  field
-          { value: 'sublevel3', fields: ['RelatedMainKpis', 'Sector', 'SubSector'] }, //we can put more than 1  field
+          { value: 'main', fields: ['Sector', 'SubSector','ExternalEntities'] }, //we can put more than 1  field
+          { value: 'sublevel2', fields: ['RelatedMainKpis', 'Sector', 'SubSector','ExternalEntities'] }, //we can put more than 1  field
+          { value: 'sublevel3', fields: ['RelatedMainKpis', 'Sector', 'SubSector','ExternalEntities'] }, //we can put more than 1  field
         ],
         security: {
           groups: [
@@ -505,6 +505,31 @@ var Information_Form = [
         descPhraseEn: "Related Objective DeputyShip",
         ToggleName: "SubSector",
         // dontSubmit: true,
+      },
+      {
+        InternalName: 'ExternalEntities',
+        DisplayName: 'الجهات الشقيقة',
+        DisplayNameEn: 'External Entities',
+        ToggleName: "ExternalEntities",
+        type: 'lookup',
+        //from other list:
+        source: 'Internal Entities',
+        // "isSector": "True",
+        // "EntityType": "Department",
+        // dontSubmit: true,
+        Dispfieldkey: 'Name',
+        DispfieldkeyEn: 'NameEn',
+        valfieldkey: 'Title',
+        // validation: 'required',
+        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+        dynamic: 'Sector', //InternalName Of Parent field
+        filterField: 'ParentEntity', //InternalName Of Parent field
+        filterFieldType: 'Text', //Type In Sharepoint List for Parent field
+        display: 'none',
+        descPhraseAr: "الجهة الشقيقة للهدف المرتبط",
+        descPhraseEn: "Related External Entities",
+        state: 'disabled'
+
       },
       {
         InternalName: 'Classification',

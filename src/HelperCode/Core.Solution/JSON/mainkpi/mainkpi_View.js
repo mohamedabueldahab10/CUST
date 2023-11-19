@@ -208,6 +208,31 @@ var Information_Form = [
         filterFieldType: 'Text', //Type In Sharepoint List for Parent field
       },
       {
+        InternalName: 'ExternalEntities',
+        DisplayName: 'الجهات الشقيقة',
+        DisplayNameEn: 'External Entities',
+        ToggleName: "ExternalEntities",
+        type: 'lookup',
+        //from other list:
+        source: 'Internal Entities',
+        // "isSector": "True",
+        // "EntityType": "Department",
+        // dontSubmit: true,
+        Dispfieldkey: 'Name',
+        DispfieldkeyEn: 'NameEn',
+        valfieldkey: 'Title',
+        // validation: 'required',
+        // isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+        // dynamic: 'Sector', //InternalName Of Parent field
+        // filterField: 'ParentEntity', //InternalName Of Parent field
+        // filterFieldType: 'Text', //Type In Sharepoint List for Parent field
+        // display: 'none',
+        // descPhraseAr: "الجهة الشقيقة للهدف المرتبط",
+        // descPhraseEn: "Related External Entities",
+        // state: 'disabled'
+
+      },
+      {
         InternalName: 'Classification',
         DisplayNameEn: 'Classification',
         DisplayName: 'تصنيف المؤشر',
