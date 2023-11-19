@@ -177,6 +177,15 @@ var Information_Form = [
         DisplayName: 'نسبة الإمتثال',
         DisplayNameEn: 'Compliance Rate',
         type: 'floatpercentage',
+        security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Development Unit",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
       },
       {
         InternalName: 'RelatedStrategy',
