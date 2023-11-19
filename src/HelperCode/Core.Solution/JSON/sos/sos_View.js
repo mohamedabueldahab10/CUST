@@ -30,7 +30,7 @@ var Information_Form = [
       {
         InternalName: 'ObjectiveCode',
         DisplayNameEn: 'Objective Entered Code',
-        DisplayName: 'رمز الهدف المدخل',
+        DisplayName: 'رمز الهدف اليدوي',
         type: 'stringunique',
         // maxchar: '250',
         // validation: 'required',
@@ -242,6 +242,24 @@ var Information_Form = [
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
         RequiredName: 'Department',
+      },
+      {
+        InternalName: 'ExternalEntities',
+        DisplayName: 'الجهات الشقيقة',
+        DisplayNameEn: 'External Entities',
+        type: 'lookup',
+        //from other list:
+        source: 'Internal Entities',
+        Dispfieldkey: 'Name',
+        DispfieldkeyEn: 'NameEn',
+        valfieldkey: 'Title',
+        // isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+        // dynamic: 'parent', //InternalName Of Parent field
+        // seconeddynamic: "Sector",
+        // filterField: 'ParentEntity', //InternalName Of Parent field
+        // filterFieldType: 'Text', //Type In Sharepoint List for Parent field
+        RequiredName: 'ExternalEntities',
+
       },
       {
         InternalName: 'ProgressPercentage',
