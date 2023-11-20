@@ -450,51 +450,23 @@ var Information_Form = [
         InternalName: 'ExternalEntities',
         DisplayName: 'الجهات الشقيقة',
         DisplayNameEn: 'External Entities',
-        ToggleName: "ExternalEntities",
         type: 'lookup',
         //from other list:
         source: 'Internal Entities',
-        // "isSector": "True",
-        // "EntityType": "Department",
-        // dontSubmit: true,
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
-        // validation: 'required',
         isRelatedToParent: true, // to show parent value depends on child like sector and subsector
         dynamic: 'Sector', //InternalName Of Parent field
         filterField: 'ParentEntity', //InternalName Of Parent field
         filterFieldType: 'Text', //Type In Sharepoint List for Parent field
-        display: 'none',
-        descPhraseAr: "الجهة الشقيقة للهدف المرتبط",
-        descPhraseEn: "Related External Entities",
-        state: 'disabled'
+        RequiredName: 'ExternalEntities',
+        queryField:"EntityType", //الحقل الذي ستتم الفلترة عليه
+        queryFieldType:"Choice",//نوع هذا الحقل
+        queryFieldValue:"ExternalEntities",//قيمة هذا الحقال
 
       },
-      {
-        InternalName: 'Classification',
-        DisplayNameEn: 'Classification',
-        DisplayName: 'تصنيف المؤشر',
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            { display: 'kpiassigned', value: 'kpiassigned' },
-            { display: 'kpisuscomp', value: 'kpisuscomp' },
-            { display: 'kpivision', value: 'kpivision' },
-            { display: 'kpistrategic', value: 'kpistrategic' },
-          ],
-        },
-        validation: 'required',
-        // security: {
-        //   groups: [
-        //     'LMS_P',
-        //     'SPM Admin',
-        //     'SPM Team',
-        //     'VRO_P',
-        //     'System Admin Group',
-        //   ],
-        // },
-      },
+  
       {
         InternalName: 'FromDate',
         DisplayName: 'من سنة',
@@ -548,6 +520,30 @@ var Information_Form = [
         //   ],
         // },
         validation: 'required',
+      },
+      {
+        InternalName: 'Classification',
+        DisplayNameEn: 'Classification',
+        DisplayName: 'تصنيف المؤشر',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'kpiassigned', value: 'kpiassigned' },
+            { display: 'kpisuscomp', value: 'kpisuscomp' },
+            { display: 'kpivision', value: 'kpivision' },
+            { display: 'kpistrategic', value: 'kpistrategic' },
+          ],
+        },
+        validation: 'required',
+        // security: {
+        //   groups: [
+        //     'LMS_P',
+        //     'SPM Admin',
+        //     'SPM Team',
+        //     'VRO_P',
+        //     'System Admin Group',
+        //   ],
+        // },
       },
       {
         InternalName: 'CategoryKPI',
