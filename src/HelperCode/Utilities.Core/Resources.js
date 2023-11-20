@@ -178,6 +178,7 @@
     //lesson learned source
     sector: "القطاع",
     department: "الوكالات",
+    externalentity:"الجهات الشقيقه",
     subsector: "الوكالة",
     unit: "وحدة",
     budgetitem: "البند المرتبط",
@@ -1345,6 +1346,7 @@
 
     //lesson learned source
     department: "Department",
+    externalentity:"External Entity",
     subsector: "Deputyship",
     unit: "Unit",
     budgetitem: "Budget Item",

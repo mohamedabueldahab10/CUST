@@ -3539,7 +3539,7 @@ window.Department_Sector_Info = {
     if ($("#ExternalEntities").length) {
       $("#ExternalEntities").prop("disabled", false);
       $("#ExternalEntities").html(
-        '<option data-trans-department class="Resources" value="" selected="" disabled=""></option>'
+        '<option data-trans-externalentity class="Resources" value="" selected="" disabled=""></option>'
       );
     }
     Department_Sector_Info.g.array.forEach(function (item, i, arr) {
