@@ -3544,18 +3544,18 @@ window.Department_Sector_Info = {
     }
     Department_Sector_Info.g.array.forEach(function (item, i, arr) {
       if (item.EntityType == "ExternalEntities") {
-        if($("#ExternalEntities").length){
-        $("#ExternalEntities").append(
-          '<option data-siblingvalue="' +
-            Department_Sector_Info.g.array[i].ERPID +
-            '" option-id="' +
-            Department_Sector_Info.g.array[i].id +
-            '" value="' +
-            Department_Sector_Info.g.array[i].code +
-            '">' +
-            Department_Sector_Info.g.array[i].name +
-            "</option>"
-        );
+        if ($("#ExternalEntities").length) {
+          $("#ExternalEntities").append(
+            '<option data-siblingvalue="' +
+              Department_Sector_Info.g.array[i].ERPID +
+              '" option-id="' +
+              Department_Sector_Info.g.array[i].id +
+              '" value="' +
+              Department_Sector_Info.g.array[i].code +
+              '">' +
+              Department_Sector_Info.g.array[i].name +
+              "</option>"
+          );
         }
       } else {
         $("#SubSector").append(
@@ -3573,8 +3573,8 @@ window.Department_Sector_Info = {
     });
     if (isEdit || (listkey == "changerequest" && RListKey == "projects")) {
       $("#SubSector").val(departmenetValue);
-      if($("#ExternalEntities").length){
-      $("#ExternalEntities").val(externalEntityValue);
+      if ($("#ExternalEntities").length) {
+        $("#ExternalEntities").val(externalEntityValue);
       }
     }
     $("#SubSector").change(function () {
@@ -3738,11 +3738,17 @@ window.Get_Related_Sos_Sector = {
       var subSector = oListItem.get_item("SubSector")
         ? oListItem.get_item("SubSector")
         : "";
+      var externalEntity = oListItem.get_item("ExternalEntities")
+        ? oListItem.get_item("ExternalEntities")
+        : "";
       var portfolio = oListItem.get_item("RelatedPortfolio")
         ? oListItem.get_item("RelatedPortfolio")
         : "";
       $("#Sector").val(sector);
       $("#SubSector").val(subSector);
+      if($("#ExternalEntities").length){
+      $("#ExternalEntities").val(externalEntity);
+      }
 
       // if(KPIType == 'sublevel3'){
       //   parentMainSos = oListItem.get_item("RelatedStrategyObjective")
