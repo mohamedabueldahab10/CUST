@@ -1,7 +1,7 @@
-window.kpiCodeResult = '';
+window.kpiCodeResult = "";
 ////////////
-var allFileIndex = 0
-var relatedObjInit = '';
+var allFileIndex = 0;
+var relatedObjInit = "";
 /////////////
 var filesUrls = [];
 var NIssues = 0,
@@ -17,16 +17,16 @@ var NIssues = 0,
   sosType;
 
 var KPIYear = "",
-  KPIMonth = '',
-  KPIQuarter = '',
-  KPIMid = '',
-  KPIYearHandler = '';
+  KPIMonth = "",
+  KPIQuarter = "",
+  KPIMid = "",
+  KPIYearHandler = "";
 
-var kpiFromYear = '',
-  kpiToYear = '',
+var kpiFromYear = "",
+  kpiToYear = "",
   PeriodType = "";
 
-var kpiName = ''
+var kpiName = "";
 
 var isLoadMore = false;
 
@@ -34,37 +34,44 @@ var isLoadMore = false;
 var benefitsEquationID,
   benefitsEquation,
   benefitCode = "",
-  benefitFromYear = '',
-  benefitToYear = '',
+  benefitFromYear = "",
+  benefitToYear = "",
   benefitYear = "",
-  benefitMonth = '',
-  benefitQuarter = '',
-  benefitMid = '',
-  benefitYearHandler = '';
+  benefitMonth = "",
+  benefitQuarter = "",
+  benefitMid = "",
+  benefitYearHandler = "";
 // benefitMetricsYear="";
 
-window.benefitsEquationsComponents = []
+window.benefitsEquationsComponents = [];
 ////////
-window.editUniqueValueArr = []
+window.editUniqueValueArr = [];
 
-var projRelatedInit = '', initiativeDelevrableArr = [], initiativeMilestoneVal = '';
+var projRelatedInit = "",
+  initiativeDelevrableArr = [],
+  initiativeMilestoneVal = "";
 
-var relatedMainGoal = '', relatedSubGoal = '', indexTypekpi = '', relatedStrategyKpi = '';
+var relatedMainGoal = "",
+  relatedSubGoal = "",
+  indexTypekpi = "",
+  relatedStrategyKpi = "";
 
-var globalInitiativeCode = '';
+var globalInitiativeCode = "";
 
 // handle previous kpi info
-var targetYear = new Date().getFullYear(), targetActualValue = '', targetPerformanceAnalysis = '', targetPerioudType = '', targetPerioudTypeValue = '';
+var targetYear = new Date().getFullYear(),
+  targetActualValue = "",
+  targetPerformanceAnalysis = "",
+  targetPerioudType = "",
+  targetPerioudTypeValue = "";
 //
 
 window.kpiEquationsComponents = [];
 
-
 var getMasterFilesArr = [];
 
-
 // window.portfolioCreatedBy;
-var relatedPiller = ''
+var relatedPiller = "";
 if (
   localStorage.getItem("lng") == null ||
   localStorage.getItem("lng") == "ar"
@@ -109,14 +116,11 @@ window.relatedToProject = [
 
 window.relatedToIdea = [{ listName: "Tasks", RelatedItem: "ProjectCode" }];
 
-
-
 window.Edit_Data_Request = {
   onSuccess: async function (sender, args) {
-    var pillersRadio = ''
-    if (listkey == 'kpiequations') {
+    var pillersRadio = "";
+    if (listkey == "kpiequations") {
       //  (!isAdmin || !isSPMTeam )? window.location = _spPageContextInfo.webAbsoluteUrl : '';
-
       // if (isAdmin || isMinister || isBITeam || isSPMTeam || isPerformanceLeader || isSPMAdmin || isVROP || isLMSP) {
       // } else {
       //   window.location = _spPageContextInfo.webAbsoluteUrl
@@ -204,11 +208,12 @@ window.Edit_Data_Request = {
             var day = riyadh.getDate();
             var hour = riyadh.getHours();
             var minutes = riyadh.getMinutes();
-            month = ((month.toString().length == 1) ? ('0' + month) : month);
-            day = ((day.toString().length == 1) ? ('0' + day) : day);
-            hour = ((hour.toString().length == 1) ? ('0' + hour) : hour);
-            minutes = ((minutes.toString().length == 1) ? ('0' + minutes) : minutes);
-            var datetouse2 = year + '-' + month + '-' + day + 'T' + hour + ':' + minutes;
+            month = month.toString().length == 1 ? "0" + month : month;
+            day = day.toString().length == 1 ? "0" + day : day;
+            hour = hour.toString().length == 1 ? "0" + hour : hour;
+            minutes = minutes.toString().length == 1 ? "0" + minutes : minutes;
+            var datetouse2 =
+              year + "-" + month + "-" + day + "T" + hour + ":" + minutes;
           }
           $(this).val(datetouse2);
           break;
@@ -218,8 +223,8 @@ window.Edit_Data_Request = {
             oListItem.get_item("" + $(this).attr("id") + "") == null
               ? enternameemail
               : oListItem
-                .get_item("" + $(this).attr("id") + "")
-                .get_lookupValue();
+                  .get_item("" + $(this).attr("id") + "")
+                  .get_lookupValue();
 
           $(this).attr("data-email", pemail);
 
@@ -235,18 +240,16 @@ window.Edit_Data_Request = {
 
           break;
         case "multipicker":
-
           var pemail =
             oListItem.get_item("" + $(this).attr("id") + "") == null
               ? []
-              : oListItem
-                .get_item("" + $(this).attr("id") + "");
+              : oListItem.get_item("" + $(this).attr("id") + "");
 
           var userItems = [];
 
           pemail.forEach(function (element) {
             userItems.push(element.get_lookupValue());
-          })
+          });
 
           $(this).attr("data-email", userItems.join(", "));
 
@@ -254,16 +257,17 @@ window.Edit_Data_Request = {
           mp.init($(this).attr("id"), { AllowMultipleValues: true });
           break;
         case "dropdown":
-
           $(this).val(oListItem.get_item($(this).attr("id")));
 
-          $(this).attr('value', oListItem.get_item($(this).attr("id"))) // save the value in select to use it edit select[dynamic=parent]
+          $(this).attr("value", oListItem.get_item($(this).attr("id"))); // save the value in select to use it edit select[dynamic=parent]
 
           if ($(this).attr("id") == "SubSector") {
             departmenetValue = oListItem.get_item("" + $(this).attr("id") + "");
           }
-          if($(this).attr("id") == "ExternalEntities"){
-            externalEntityValue = oListItem.get_item("" + $(this).attr("id") + "");
+          if ($(this).attr("id") == "ExternalEntities") {
+            externalEntityValue = oListItem.get_item(
+              "" + $(this).attr("id") + ""
+            );
           }
           if ($(this).attr("id") == "BudgetItem") {
             budgetitemValue = oListItem.get_item("" + $(this).attr("id") + "");
@@ -274,8 +278,8 @@ window.Edit_Data_Request = {
         case "radio":
           var radioval = oListItem.get_item($(this).attr("id"));
           // to handle the master details section show and hide
-          if (listkey == 'goalstrategy') {
-            pillersRadio = radioval
+          if (listkey == "goalstrategy") {
+            pillersRadio = radioval;
           }
           if (radioval == "Yes" || radioval == "yes") {
             $('input[id="' + $(this).attr("id") + '"]')
@@ -304,13 +308,16 @@ window.Edit_Data_Request = {
           break;
 
         case "multiselect":
+          if (oListItem.get_item($(this).attr("myfield"))) {
+            var myselections = oListItem
+              .get_item($(this).attr("myfield"))
+              .split(":::");
 
-          if (oListItem.get_item($(this).attr('myfield'))) {
-            var myselections = oListItem.get_item($(this).attr('myfield')).split(':::');
-
-            initiativeDelevrableArr = myselections // to use it in edit page to get the data checked
+            initiativeDelevrableArr = myselections; // to use it in edit page to get the data checked
             for (var i = 0; i < myselections.length; i++) {
-              $(this).find("input:checkbox[value='" + myselections[i] + "']").prop("checked", true);
+              $(this)
+                .find("input:checkbox[value='" + myselections[i] + "']")
+                .prop("checked", true);
             }
           }
           break;
@@ -327,30 +334,43 @@ window.Edit_Data_Request = {
           break;
 
         default:
-          if($(this).attr('uniquevaluefield') && $(this).attr('uniquevaluefield') == 'yes'){
-            console.log($(this).attr('uniquevaluefield'),'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-            editUniqueValueArr.push(oListItem.get_item("" + $(this).attr("id") + ""))
+          if (
+            $(this).attr("uniquevaluefield") &&
+            $(this).attr("uniquevaluefield") == "yes"
+          ) {
+            console.log(
+              $(this).attr("uniquevaluefield"),
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            );
+            editUniqueValueArr.push(
+              oListItem.get_item("" + $(this).attr("id") + "")
+            );
           }
           $(this).val(oListItem.get_item("" + $(this).attr("id") + ""));
           break;
       }
     });
 
-
-    if (listkey == 'sos') { // add this after loop to apply don't submit feature to not change on value when submit edit
-      var statusTitle = "", value = oListItem.get_item("Status");
-      statusTitle = await StrategicObjectives_Status.init(value)
-      $('#Status').val(statusTitle);
+    if (listkey == "sos") {
+      // add this after loop to apply don't submit feature to not change on value when submit edit
+      var statusTitle = "",
+        value = oListItem.get_item("Status");
+      statusTitle = await StrategicObjectives_Status.init(value);
+      $("#Status").val(statusTitle);
     }
 
     //checking field ownership
-    $('[data-editableby]').each(function () {
-      let keyOwner = $(this).data('editableby');
-      let itemOwner = oListItem.get_item(keyOwner) ? oListItem.get_item(keyOwner).get_lookupValue() : null;
-      let isItDisabled = (itemOwner != UserN.Title) && !isAdmin && !isMinister && !isBITeam
-        //  && !isSPMTeam
-        ? true : false;
-      $(this).find('>*').prop('disabled', isItDisabled);
+    $("[data-editableby]").each(function () {
+      let keyOwner = $(this).data("editableby");
+      let itemOwner = oListItem.get_item(keyOwner)
+        ? oListItem.get_item(keyOwner).get_lookupValue()
+        : null;
+      let isItDisabled =
+        itemOwner != UserN.Title && !isAdmin && !isMinister && !isBITeam
+          ? //  && !isSPMTeam
+            true
+          : false;
+      $(this).find(">*").prop("disabled", isItDisabled);
     });
     $("input[type=date]:not([minimumdate=undefined])").each(function () {
       window.start = $("#" + $(this).attr("minimumdate"));
@@ -379,21 +399,19 @@ window.Edit_Data_Request = {
       PCODE = oListItem.get_item("Title");
       $(".headtwo").append(
         '<a class="" href="' +
-        _spPageContextInfo.webServerRelativeUrl +
-        "/SitePages/ProjectHome.aspx?PCODE=" +
-        PCODE +
-        '"><span class="litem">Project Home</span></a>'
+          _spPageContextInfo.webServerRelativeUrl +
+          "/SitePages/ProjectHome.aspx?PCODE=" +
+          PCODE +
+          '"><span class="litem">Project Home</span></a>'
       );
       // $("select#BudgetItem").change();
     }
     // added for CR module
     //! CR
     else if (crListKey) {
-
       let UpdateType = oListItem.get_item("UpdateType") || "";
       // let crIsGeneral = UpdateType.includes("general");
       let crIsGeneral = UpdateType.includes("automatic"); // to get the related section on load in edit
-
 
       changeRequestBody = oListItem.get_item("ChangeBody");
       changeRequestBody = changeRequestBody
@@ -405,9 +423,6 @@ window.Edit_Data_Request = {
         ? JSON.parse(changeRequestMasterBody)
         : [];
       //
-
-
-
 
       let sectionJSON;
       if (changeRequestBody.length) {
@@ -426,17 +441,15 @@ window.Edit_Data_Request = {
         ];
       }
 
-
       if (changeRequestMasterBody.length) {
-        changeRequestBodyMasterEdit = changeRequestMasterBody
+        changeRequestBodyMasterEdit = changeRequestMasterBody;
       }
 
       if (isCrMode) {
         if (crIsGeneral) {
           CrModeFunctionality.preinit();
           //  $('[data-togglename*="UpdateType"]').trigger("change")
-        }
-        else CrModeFunctionality.init(sectionJSON);
+        } else CrModeFunctionality.init(sectionJSON);
       }
     }
     // ended
@@ -447,7 +460,6 @@ window.Edit_Data_Request = {
         listkey;
     }
     if (listkey == "projectcharter" && PCODE) {
-
       $("[data-target_list] .fieldset-container").append(
         '<div class="add-New-Detail-wrapper"><a class="add-New-Detail" href="javascript:"></a></div>'
       );
@@ -458,8 +470,6 @@ window.Edit_Data_Request = {
         // $("i.fas.fa-plus").css("display", "none");
         RelatedInitiative_Data_Request.init(relatedInitval);
       }
-
-
     }
     if (listkey == "portfolio" || listkey == "budgetitems") {
       CreatedBy = oListItem.get_item("Author").get_lookupValue();
@@ -468,8 +478,8 @@ window.Edit_Data_Request = {
         $(".btn-save").remove();
         $(".container-body").prepend(
           '<div class="errormsg alert"><span class="infoIcon"><i class="fas fa-info-circle"></i></span><span>' +
-          editablebyowneronly +
-          "</span></div>"
+            editablebyowneronly +
+            "</span></div>"
         );
         $(".form-control.SPIField").attr("disabled", true);
       }
@@ -486,50 +496,57 @@ window.Edit_Data_Request = {
       //   Initiative_Strategy_Sos.init("SOs")
       // }
 
-      relatedObjInit = oListItem.get_item("RelatedObjective") ? oListItem.get_item("RelatedObjective") : ''
+      relatedObjInit = oListItem.get_item("RelatedObjective")
+        ? oListItem.get_item("RelatedObjective")
+        : "";
 
-      var sector = oListItem.get_item("Sector") ? oListItem.get_item("Sector") : '';
+      var sector = oListItem.get_item("Sector")
+        ? oListItem.get_item("Sector")
+        : "";
       if (sector) {
-        Department_Sector_Info.init(sector);// to get the departments related to sector
+        Department_Sector_Info.init(sector); // to get the departments related to sector
       }
-
     }
-    if (listkey == 'sos') {
-      var relatedStrategy = $('#RelatedStrategy').val()
-      relatedPiller = oListItem.get_item("PillarName")
+    if (listkey == "sos") {
+      var relatedStrategy = $("#RelatedStrategy").val();
+      relatedPiller = oListItem.get_item("PillarName");
 
-      Goal_Strategy_Info.init(relatedStrategy)
+      Goal_Strategy_Info.init(relatedStrategy);
 
-      var sector = oListItem.get_item("Sector") ? oListItem.get_item("Sector") : '';
+      var sector = oListItem.get_item("Sector")
+        ? oListItem.get_item("Sector")
+        : "";
       if (sector) {
-        Department_Sector_Info.init(sector);// to get the departments related to sector
+        Department_Sector_Info.init(sector); // to get the departments related to sector
       }
     }
-    if (listkey == 'deliverables' && PCODE) {
-      var Delivered = $('#Delivered:checked').val();
+    if (listkey == "deliverables" && PCODE) {
+      var Delivered = $("#Delivered:checked").val();
 
-      if (Delivered == 'yes') {
-        $('#DeliveredDate').attr('required', 'required');
-        $('#DeliveredDate').parent().attr('required', 'required');
-        $('#DeliveredDate').prev('label').attr('required', 'required');
+      if (Delivered == "yes") {
+        $("#DeliveredDate").attr("required", "required");
+        $("#DeliveredDate").parent().attr("required", "required");
+        $("#DeliveredDate").prev("label").attr("required", "required");
       } else {
-        $('#DeliveredDate').attr('disabled', true);
+        $("#DeliveredDate").attr("disabled", true);
       }
     }
 
-    if (listkey == 'goalstrategy') {
-      var PillarsExist = $('#PillarsExist:checked').val();
+    if (listkey == "goalstrategy") {
+      var PillarsExist = $("#PillarsExist:checked").val();
 
-
-      if (PillarsExist == 'yes') {
-        $('[data-target_list="SPillars"] #Name').attr('required', 'required');
-        $('[data-target_list="SPillars"] #Name').parent().attr('required', 'required');
-        $('[data-target_list="SPillars"] #Name').prev('label').attr('required', 'required');
+      if (PillarsExist == "yes") {
+        $('[data-target_list="SPillars"] #Name').attr("required", "required");
+        $('[data-target_list="SPillars"] #Name')
+          .parent()
+          .attr("required", "required");
+        $('[data-target_list="SPillars"] #Name')
+          .prev("label")
+          .attr("required", "required");
       } else {
-        $('[data-target_list="SPillars"] #Name').prop('required', false);
+        $('[data-target_list="SPillars"] #Name').prop("required", false);
       }
     }
-
 
     if (listkey == "mainkpi") {
       // if (isVROP) {
@@ -537,85 +554,120 @@ window.Edit_Data_Request = {
       //   $('#Types').prop('disabled', true);
       // }
       KPICode = oListItem.get_item("Title");
-      kpiCodeResult = oListItem.get_item("Title")
-      KPIYear = oListItem.get_item("Year")
-      KPIMonth = oListItem.get_item("Months") ? oListItem.get_item("Months") : '';
-      KPIQuarter = oListItem.get_item("Quarter") ? oListItem.get_item("Quarter") : '';
-      KPIMid = oListItem.get_item("Midterms") ? oListItem.get_item("Midterms") : '';
-      KPIYearHandler = oListItem.get_item("Years") ? oListItem.get_item("Years") : '';
-      kpiFromYear = oListItem.get_item("FromDate") ? oListItem.get_item("FromDate") : '';
-      kpiToYear = oListItem.get_item("ToDate") ? oListItem.get_item("ToDate") : ''
-      PeriodType = oListItem.get_item("PeriodType") ? oListItem.get_item("PeriodType") : ''
+      kpiCodeResult = oListItem.get_item("Title");
+      KPIYear = oListItem.get_item("Year");
+      KPIMonth = oListItem.get_item("Months")
+        ? oListItem.get_item("Months")
+        : "";
+      KPIQuarter = oListItem.get_item("Quarter")
+        ? oListItem.get_item("Quarter")
+        : "";
+      KPIMid = oListItem.get_item("Midterms")
+        ? oListItem.get_item("Midterms")
+        : "";
+      KPIYearHandler = oListItem.get_item("Years")
+        ? oListItem.get_item("Years")
+        : "";
+      kpiFromYear = oListItem.get_item("FromDate")
+        ? oListItem.get_item("FromDate")
+        : "";
+      kpiToYear = oListItem.get_item("ToDate")
+        ? oListItem.get_item("ToDate")
+        : "";
+      PeriodType = oListItem.get_item("PeriodType")
+        ? oListItem.get_item("PeriodType")
+        : "";
 
-      relatedMainGoal = oListItem.get_item("RelatedStrategyObjective") ? oListItem.get_item("RelatedStrategyObjective") : '';
-      relatedSubGoal = oListItem.get_item("SubRelatedObjective") ? oListItem.get_item("SubRelatedObjective") : '';
-      relatedStrategyKpi = oListItem.get_item("RelatedStrategy") ? oListItem.get_item("RelatedStrategy") : '';
-      indexTypekpi = oListItem.get_item("Types") ? oListItem.get_item("Types") : '';
+      relatedMainGoal = oListItem.get_item("RelatedStrategyObjective")
+        ? oListItem.get_item("RelatedStrategyObjective")
+        : "";
+      relatedSubGoal = oListItem.get_item("SubRelatedObjective")
+        ? oListItem.get_item("SubRelatedObjective")
+        : "";
+      relatedStrategyKpi = oListItem.get_item("RelatedStrategy")
+        ? oListItem.get_item("RelatedStrategy")
+        : "";
+      indexTypekpi = oListItem.get_item("Types")
+        ? oListItem.get_item("Types")
+        : "";
 
       if (relatedStrategyKpi && indexTypekpi) {
-        Kpi_Related_Goal.init(relatedStrategyKpi, indexTypekpi)
+        Kpi_Related_Goal.init(relatedStrategyKpi, indexTypekpi);
         setTimeout(function () {
-          Check_Item_Deleted.init('GoalStrategy', relatedStrategyKpi, 'Title') // check if GoalStrategy deleted hide the related val
-        }, 2000)
+          Check_Item_Deleted.init("GoalStrategy", relatedStrategyKpi, "Title"); // check if GoalStrategy deleted hide the related val
+        }, 2000);
       }
-
 
       $("#Year").html(
         '<option data-trans-yeartype class="Resources" value="" selected="" disabled=""></option>'
       );
 
       for (var i = kpiFromYear; i <= kpiToYear; i++) {
-        $("#Year").append(
-          '<option value="' + i + '">' +
-          i +
-          "</option>"
-        );
+        $("#Year").append('<option value="' + i + '">' + i + "</option>");
       }
 
-      $('#Year').val(oListItem.get_item("Year") ? oListItem.get_item("Year") : '')
+      $("#Year").val(
+        oListItem.get_item("Year") ? oListItem.get_item("Year") : ""
+      );
 
       equationKPI.init();
 
       // to get the parent related like strategy from mainkpi to can save and start the wf of main kpi
-      var parsingDataBasedOnParentSetValues = ""
+      var parsingDataBasedOnParentSetValues = "";
       $(`[data-basedonparentsetvalues]`).each(function (index) {
-        parsingDataBasedOnParentSetValues = eval($(this).data('basedonparentsetvalues'))
-      })
+        parsingDataBasedOnParentSetValues = eval(
+          $(this).data("basedonparentsetvalues")
+        );
+      });
 
-      parsingDataBasedOnParentSetValues.forEach(el => {
-        var listinerField = parsingDataBasedOnParentSetValues[0].listinerField
-        var code = $(`#${listinerField}`).val()
-        get_parent_data.init(el.parentList, code, el.parentFieldName, el.fieldName, el.getGrandParent) // to get value from parent list to use it when submit
-      })
+      parsingDataBasedOnParentSetValues.forEach((el) => {
+        var listinerField = parsingDataBasedOnParentSetValues[0].listinerField;
+        var code = $(`#${listinerField}`).val();
+        get_parent_data.init(
+          el.parentList,
+          code,
+          el.parentFieldName,
+          el.fieldName,
+          el.getGrandParent
+        ); // to get value from parent list to use it when submit
+      });
     }
 
     if (listkey == "benefitmetrics") {
-
       benefitCode = oListItem.get_item("Title");
-      benefitFromYear = oListItem.get_item("FromDate") ? oListItem.get_item("FromDate") : '';
-      benefitToYear = oListItem.get_item("ToDate") ? oListItem.get_item("ToDate") : '';
+      benefitFromYear = oListItem.get_item("FromDate")
+        ? oListItem.get_item("FromDate")
+        : "";
+      benefitToYear = oListItem.get_item("ToDate")
+        ? oListItem.get_item("ToDate")
+        : "";
 
-      benefitYear = oListItem.get_item("Year")
+      benefitYear = oListItem.get_item("Year");
       // benefitMetricsYear = oListItem.get_item("Year")
-      benefitMonth = oListItem.get_item("Months") ? oListItem.get_item("Months") : '';
-      benefitQuarter = oListItem.get_item("Quarter") ? oListItem.get_item("Quarter") : '';
-      benefitMid = oListItem.get_item("Midterms") ? oListItem.get_item("Midterms") : '';
-      benefitYearHandler = oListItem.get_item("Years") ? oListItem.get_item("Years") : '';
-
+      benefitMonth = oListItem.get_item("Months")
+        ? oListItem.get_item("Months")
+        : "";
+      benefitQuarter = oListItem.get_item("Quarter")
+        ? oListItem.get_item("Quarter")
+        : "";
+      benefitMid = oListItem.get_item("Midterms")
+        ? oListItem.get_item("Midterms")
+        : "";
+      benefitYearHandler = oListItem.get_item("Years")
+        ? oListItem.get_item("Years")
+        : "";
 
       $("#Year").html(
         '<option data-trans-yeartype class="Resources" value="" selected="" disabled=""></option>'
       );
 
       for (var i = benefitFromYear; i <= benefitToYear; i++) {
-        $("#Year").append(
-          '<option value="' + i + '">' +
-          i +
-          "</option>"
-        );
+        $("#Year").append('<option value="' + i + '">' + i + "</option>");
       }
 
-      $('#Year').val(oListItem.get_item("Year") ? oListItem.get_item("Year") : '')
+      $("#Year").val(
+        oListItem.get_item("Year") ? oListItem.get_item("Year") : ""
+      );
 
       equationBenefit.init();
     }
@@ -627,95 +679,116 @@ window.Edit_Data_Request = {
     //   }
     // }
     if (listkey == "projects" && PCODE) {
-
       projRelatedInit = oListItem.get_item("RelatedInitiative");
 
-      globalInitiativeCode = projRelatedInit
+      globalInitiativeCode = projRelatedInit;
 
-      Check_Item_Deleted.init('Initiatives', projRelatedInit, 'Title') // check if initiative deleted hide the related delev
+      Check_Item_Deleted.init("Initiatives", projRelatedInit, "Title"); // check if initiative deleted hide the related delev
 
-      var sector = oListItem.get_item("Sector") ? oListItem.get_item("Sector") : '';
+      var sector = oListItem.get_item("Sector")
+        ? oListItem.get_item("Sector")
+        : "";
       if (sector) {
-        Department_Sector_Info.init(sector);//
+        Department_Sector_Info.init(sector); //
       }
     }
 
-    if (listkey == 'milestones' && PCODE) {
-      initiativeMilestoneVal = oListItem.get_item('RelatedInitiativeMilestone') ? oListItem.get_item('RelatedInitiativeMilestone') : ''
-      Get_ProjectData_ByCode.init()
+    if (listkey == "milestones" && PCODE) {
+      initiativeMilestoneVal = oListItem.get_item("RelatedInitiativeMilestone")
+        ? oListItem.get_item("RelatedInitiativeMilestone")
+        : "";
+      Get_ProjectData_ByCode.init();
     }
-    if (listkey == "deliverables" || listkey == 'milestones' || listkey == 'initiativedeliverables' || listkey == 'initiativemilestones') {
+    if (
+      listkey == "deliverables" ||
+      listkey == "milestones" ||
+      listkey == "initiativedeliverables" ||
+      listkey == "initiativemilestones"
+    ) {
       if ($("[data-targetelem]").length > 0) {
-
-        var parentValue = $('#Amount').data('parentval')
+        var parentValue = $("#Amount").data("parentval");
         var weight = oListItem.get_item("Weight");
-        weight = Number(weight)
-        var Amount = (weight * parentValue) / 100
-        Amount = Amount.toFixed(2)
-        $('#Amount').val(Amount)
+        weight = Number(weight);
+        var Amount = (weight * parentValue) / 100;
+        Amount = Amount.toFixed(2);
+        $("#Amount").val(Amount);
       }
 
-      var itemWfStage =  oListItem.get_item("WFStage");
-      if(itemWfStage == 'approved'){
-
-        var htmlMsg = '<div data-trans-deliverditem class="kpiPeriodChanged ErrorMsg Resources"></div>';
-        $('.btnactionrow').html(htmlMsg);
-
+      var itemWfStage = oListItem.get_item("WFStage");
+      if (itemWfStage == "approved") {
+        var htmlMsg =
+          '<div data-trans-deliverditem class="kpiPeriodChanged ErrorMsg Resources"></div>';
+        $(".btnactionrow").html(htmlMsg);
       }
     }
     //}
 
-    DontSubmit_DataRequest.init()
-
-
-
+    DontSubmit_DataRequest.init();
 
     // to handle the title change and the master details section show and hide
-    if (isEdit && listkey == 'goalstrategy') {
-      if ($('#Types').val() == 'vision') {
+    if (isEdit && listkey == "goalstrategy") {
+      if ($("#Types").val() == "vision") {
         if ($("[data-section_type]").length > 0) {
           $("[data-section_type]").each(function () {
-            if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
-              $(this).find("label[for=Name]").html('البرنامج الاستراتيجي')
-              $(this).find("#Name").attr("placeholder", "البرنامج الاستراتيجي")
-              $(this).find(".sideTitle").html("البرامج الاستراتيجية")
-              $(document).find("label[for=PillarsExist]").html('هل يوجد برامج؟')
+            if (
+              localStorage.getItem("lng") == null ||
+              localStorage.getItem("lng") == "ar"
+            ) {
+              $(this).find("label[for=Name]").html("البرنامج الاستراتيجي");
+              $(this).find("#Name").attr("placeholder", "البرنامج الاستراتيجي");
+              $(this).find(".sideTitle").html("البرامج الاستراتيجية");
+              $(document)
+                .find("label[for=PillarsExist]")
+                .html("هل يوجد برامج؟");
             } else {
-              $(this).find("label[for=Name]").html('Strategy Program')
-              $(this).find("#Name").attr("placeholder", "Strategy Program")
-              $(this).find(".sideTitle").html("Strategy Programs")
-              $(document).find("label[for=PillarsExist]").html('Is Programs Exist?')
+              $(this).find("label[for=Name]").html("Strategy Program");
+              $(this).find("#Name").attr("placeholder", "Strategy Program");
+              $(this).find(".sideTitle").html("Strategy Programs");
+              $(document)
+                .find("label[for=PillarsExist]")
+                .html("Is Programs Exist?");
             }
-          })
+          });
         }
       } else {
         if ($("[data-section_type]").length > 0) {
           $("[data-section_type]").each(function () {
-            if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
-              $(this).find("label[for=Name]").html('المحور الاستراتيجي')
-              $(this).find("#Name").attr("placeholder", "المحور الاستراتيجي")
-              $(this).find(".sideTitle").html("المحاور الاستراتيجية")
-              $(document).find("label[for=PillarsExist]").html('هل يوجد محاور؟')
+            if (
+              localStorage.getItem("lng") == null ||
+              localStorage.getItem("lng") == "ar"
+            ) {
+              $(this).find("label[for=Name]").html("المحور الاستراتيجي");
+              $(this).find("#Name").attr("placeholder", "المحور الاستراتيجي");
+              $(this).find(".sideTitle").html("المحاور الاستراتيجية");
+              $(document)
+                .find("label[for=PillarsExist]")
+                .html("هل يوجد محاور؟");
             } else {
-              $(this).find("label[for=Name]").html('Name')
-              $(this).find("#Name").attr("placeholder", "Name")
-              $(this).find(".sideTitle").html("Strategy pillars")
-              $(document).find("label[for=PillarsExist]").html('Is Pillars Exist?')
+              $(this).find("label[for=Name]").html("Name");
+              $(this).find("#Name").attr("placeholder", "Name");
+              $(this).find(".sideTitle").html("Strategy pillars");
+              $(document)
+                .find("label[for=PillarsExist]")
+                .html("Is Pillars Exist?");
             }
-          })
+          });
         }
       }
-      if ($('#Types').val() == 'vision' || $('#Types').val() == 'ministry' || $('#Types').val() == 'sub' || $('#Types').val() == 'lms' || $('#Types').val() == 'sectorial') {
-
-        if (pillersRadio == 'yes') {
-          $("[data-section_type]").show()
+      if (
+        $("#Types").val() == "vision" ||
+        $("#Types").val() == "ministry" ||
+        $("#Types").val() == "sub" ||
+        $("#Types").val() == "lms" ||
+        $("#Types").val() == "sectorial"
+      ) {
+        if (pillersRadio == "yes") {
+          $("[data-section_type]").show();
         } else {
-          $("[data-section_type]").hide()
+          $("[data-section_type]").hide();
         }
       } else {
-        $("[data-section_type]").hide()
+        $("[data-section_type]").hide();
       }
-
 
       // })
     }
@@ -723,9 +796,7 @@ window.Edit_Data_Request = {
 
     //hide show fields based on selection & onload
 
-
     // trigger the dynamic parent field to get the data in edit
-
 
     $("[data-togglevalues]").each(function () {
       ListInfo.g.toggleFields($(this));
@@ -736,58 +807,53 @@ window.Edit_Data_Request = {
       ListInfo.g.toggleRequiredFields($(this));
     });
 
-
-
     // $(".grandFieldInvoke").trigger("change")
-
-
 
     // to handle toggle disabled fields in edit
     $("[data-toggledisabledvalues]").each(function () {
       ListInfo.g.toggleDisabledFields($(this));
-    })
-
-
-
+    });
 
     // to get the value of weight in delivrable and milestone correct in edit
 
-    if (MasterDetailsArrayRequest.length == 0) { // to avoid the error if there is master details like project ana initiative
+    if (MasterDetailsArrayRequest.length == 0) {
+      // to avoid the error if there is master details like project ana initiative
       $("[data-weightvalue]").each(function () {
-
-        var elementId = $(this).attr('id')
-        var inputVal = oListItem.get_item(elementId) ? oListItem.get_item(elementId) : 0
-        var remainingBudget = $(this).attr('max')
-        remainingBudget = Number(remainingBudget)
-        var newVal = remainingBudget + inputVal > 100 ? inputVal : remainingBudget + inputVal;
+        var elementId = $(this).attr("id");
+        var inputVal = oListItem.get_item(elementId)
+          ? oListItem.get_item(elementId)
+          : 0;
+        var remainingBudget = $(this).attr("max");
+        remainingBudget = Number(remainingBudget);
+        var newVal =
+          remainingBudget + inputVal > 100
+            ? inputVal
+            : remainingBudget + inputVal;
         newVal = Number(newVal.toFixed("2"));
 
-        remainingBudget == 100 ? $(this).attr("max", remainingBudget) : $(this).attr("max", newVal);
-      })
+        remainingBudget == 100
+          ? $(this).attr("max", remainingBudget)
+          : $(this).attr("max", newVal);
+      });
     }
 
     // $("select[dynamic=parent]").trigger("change")
 
     // to handle dynamic parent trigger in edit form
-    var dynamicArrId = []
+    var dynamicArrId = [];
     $("select[dynamic=parent]").each(function () {
-
-      var checkStopInvoke = $(this).data("stopinvokeparent") // use it on type in initiative to not remove the related strategy in edit
+      var checkStopInvoke = $(this).data("stopinvokeparent"); // use it on type in initiative to not remove the related strategy in edit
 
       if (checkStopInvoke == "yes") {
-        console.log("continue without call dynamic parent")
+        console.log("continue without call dynamic parent");
       } else {
-
-        dynamicArrId.push($(this).attr("id"))
+        dynamicArrId.push($(this).attr("id"));
       }
-
-    })
+    });
     if (dynamicArrId.length) {
-      get_DynamicValues.init(dynamicArrId)
+      get_DynamicValues.init(dynamicArrId);
     }
     //
-
-
 
     //getting related files
     // var host = _spPageContextInfo.webAbsoluteUrl;
@@ -798,14 +864,15 @@ window.Edit_Data_Request = {
     if (PCODE || ICODE) {
       getfolderurl =
         host + "/" + ListArray[2].documents + "/" + PCODE + "/" + listkey;
-      DocumentLibraryName = PCODE ? ListArray[2].documents : "Initiative Documents";
+      DocumentLibraryName = PCODE
+        ? ListArray[2].documents
+        : "Initiative Documents";
     } else if (STCODE) {
-      DocumentLibraryName = "StrategicPartnerships Documents"
-    } else if (listkey == 'mainkpi') {
+      DocumentLibraryName = "StrategicPartnerships Documents";
+    } else if (listkey == "mainkpi") {
       getfolderurl = host + "/" + listkey + " Documents/";
       DocumentLibraryName = listkey + " Documents";
-    }
-    else {
+    } else {
       // getfolderurl = host + "/" + listkey + " Documents/";
       // DocumentLibraryName = listkey + " Documents";
       getfolderurl = host + "/" + "SPM General Services" + "/" + listkey;
@@ -836,11 +903,10 @@ window.Edit_Data_Request = {
         $(this).addClass("autofill");
       }
     });
-    if ($('.PPField.SPIField.form-control').attr('disabled') == "disabled") {
-      $('input.sp-peoplepicker-editorInput').prop('disabled', true);
+    if ($(".PPField.SPIField.form-control").attr("disabled") == "disabled") {
+      $("input.sp-peoplepicker-editorInput").prop("disabled", true);
     }
     $(".loader-box").fadeOut();
-
   },
   onError: function (sender, args) {
     console.log(
@@ -865,8 +931,8 @@ window.Edit_Data_Request = {
       const logo = require("../../../HelperRessources/img/main-logo.png");
       $(".o365cs-nav-header16 .o365cs-nav-o365Branding").html(
         '<div class="Logo"><a href=""><img class="img-Logo" src="' +
-        logo +
-        '"></a></div>'
+          logo +
+          '"></a></div>'
       );
       $(".o365cs-nav-centerAlign").append(
         '<div class="User-Not"><div class="SNotifications"><span class="Tasks"><i class="fas fa-tasks" data-count="10"></i><a href="#">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="10"></i><a href="#">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="30"></i><a href="#">Issues</a></span></div><div class="UProfile"></div></div>'
@@ -906,18 +972,18 @@ window.Edit_Data_Request = {
                     .text()
                     .indexOf("لعام") > -1
                     ? $("#Cost" + i)
-                      .parent()
-                      .find("label")
-                      .text()
-                      .split("لعام")[0] +
-                    " لعام " +
-                    yeartodisp
+                        .parent()
+                        .find("label")
+                        .text()
+                        .split("لعام")[0] +
+                      " لعام " +
+                      yeartodisp
                     : $("#Cost" + i)
-                      .parent()
-                      .find("label")
-                      .text() +
-                    " لعام " +
-                    yeartodisp;
+                        .parent()
+                        .find("label")
+                        .text() +
+                      " لعام " +
+                      yeartodisp;
               } else {
                 var label =
                   $("#Cost" + i)
@@ -926,18 +992,18 @@ window.Edit_Data_Request = {
                     .text()
                     .indexOf("For Year") > -1
                     ? $("#Cost" + i)
-                      .parent()
-                      .find("label")
-                      .text()
-                      .split("For Year")[0] +
-                    " For Year " +
-                    yeartodisp
+                        .parent()
+                        .find("label")
+                        .text()
+                        .split("For Year")[0] +
+                      " For Year " +
+                      yeartodisp
                     : $("#Cost" + i)
-                      .parent()
-                      .find("label")
-                      .text() +
-                    " For Year " +
-                    yeartodisp;
+                        .parent()
+                        .find("label")
+                        .text() +
+                      " For Year " +
+                      yeartodisp;
               }
               $("#Cost" + i)
                 .parent()
@@ -985,18 +1051,18 @@ window.Edit_Data_Request = {
                   .text()
                   .indexOf("لعام") > -1
                   ? $("#Cost" + i)
-                    .parent()
-                    .find("label")
-                    .text()
-                    .split("لعام")[0] +
-                  " لعام " +
-                  yeartodisp
+                      .parent()
+                      .find("label")
+                      .text()
+                      .split("لعام")[0] +
+                    " لعام " +
+                    yeartodisp
                   : $("#Cost" + i)
-                    .parent()
-                    .find("label")
-                    .text() +
-                  " لعام " +
-                  yeartodisp;
+                      .parent()
+                      .find("label")
+                      .text() +
+                    " لعام " +
+                    yeartodisp;
             } else {
               var label =
                 $("#Cost" + i)
@@ -1005,18 +1071,18 @@ window.Edit_Data_Request = {
                   .text()
                   .indexOf("For Year") > -1
                   ? $("#Cost" + i)
-                    .parent()
-                    .find("label")
-                    .text()
-                    .split("For Year")[0] +
-                  " For Year " +
-                  yeartodisp
+                      .parent()
+                      .find("label")
+                      .text()
+                      .split("For Year")[0] +
+                    " For Year " +
+                    yeartodisp
                   : $("#Cost" + i)
-                    .parent()
-                    .find("label")
-                    .text() +
-                  " For Year " +
-                  yeartodisp;
+                      .parent()
+                      .find("label")
+                      .text() +
+                    " For Year " +
+                    yeartodisp;
             }
             $("#Cost" + i)
               .parent()
@@ -1074,10 +1140,10 @@ window.RelatedIdeaProject = {
         ProjectCode;
       $(".ideas").prepend(
         '<div class="relatedcode"><span data-trans-relatedproject class="Resources"></span> : <a href="' +
-        projectLink +
-        '" target="_blank">' +
-        ProjectCode +
-        "</a></div>"
+          projectLink +
+          '" target="_blank">' +
+          ProjectCode +
+          "</a></div>"
       );
     }
     changeResources();
@@ -1116,15 +1182,12 @@ window.RelatedIdeaProject = {
 };
 window.View_Data_Request = {
   onSuccess: function (sender, args) {
-    var strategyType = ''
-    var pillersRadio = ''
+    var strategyType = "";
+    var pillersRadio = "";
 
     $(
       ".section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request) > .viewmode-value"
     ).each(async function () {
-
-
-
       if ($(this).attr("type") == "date") {
         var d =
           oListItem.get_item("" + $(this).attr("id") + "") == null
@@ -1161,14 +1224,16 @@ window.View_Data_Request = {
             if (hour > 12) {
               meridian = "PM";
               hour -= 12;
-              hour = ((hour.toString().length == 1) ? ('0' + hour) : hour);
-              minutes = ((minutes.toString().length == 1) ? ('0' + minutes) : minutes);
+              hour = hour.toString().length == 1 ? "0" + hour : hour;
+              minutes =
+                minutes.toString().length == 1 ? "0" + minutes : minutes;
             } else if (hour < 12) {
               meridian = "AM";
               if (hour == 0) {
                 hour = 12;
-                hour = ((hour.toString().length == 1) ? ('0' + hour) : hour);
-                minutes = ((minutes.toString().length == 1) ? ('0' + minutes) : minutes);
+                hour = hour.toString().length == 1 ? "0" + hour : hour;
+                minutes =
+                  minutes.toString().length == 1 ? "0" + minutes : minutes;
               }
             } else {
               meridian = "PM";
@@ -1186,53 +1251,47 @@ window.View_Data_Request = {
           oListItem.get_item("" + $(this).attr("id") + "") == null
             ? No_Data
             : oListItem
-              .get_item("" + $(this).attr("id") + "")
-              .get_lookupValue();
+                .get_item("" + $(this).attr("id") + "")
+                .get_lookupValue();
         $(this).text(pp);
         if (pp != UserNo_Data)
           $(this).attr(
             "user-email",
             oListItem.get_item($(this).attr("id")).get_email()
           );
-      }
-      else if ($(this).attr("type") == "multipicker") {
-
+      } else if ($(this).attr("type") == "multipicker") {
         var pp =
           oListItem.get_item("" + $(this).attr("id") + "") == null
             ? No_Data
-            : oListItem
-              .get_item("" + $(this).attr("id") + "");
+            : oListItem.get_item("" + $(this).attr("id") + "");
 
         usersItems = "";
 
         if (pp != No_Data) {
           pp.forEach(function (element) {
-            usersItems += '<div>' + element.get_lookupValue() + '</div>';
-          })
+            usersItems += "<div>" + element.get_lookupValue() + "</div>";
+          });
         }
         $(this).html(usersItems);
-      }
-      else if ($(this).attr("type") == "dropdown") {
+      } else if ($(this).attr("type") == "dropdown") {
         var value =
           oListItem.get_item("" + $(this).attr("id") + "") == null
             ? No_Data
             : oListItem.get_item("" + $(this).attr("id") + "");
         // $(this).text(value);
         $(this).attr("data-viewtogglevalue", value);
-        if (listkey == 'goalstrategy') {
+        if (listkey == "goalstrategy") {
           // to handle the title change
-          if ($(this).attr("id") == 'Types') {
-            strategyType = value
+          if ($(this).attr("id") == "Types") {
+            strategyType = value;
           }
         }
-        if (listkey == 'sos') {
+        if (listkey == "sos") {
           // to handle the title change
-          if ($(this).attr("id") == 'Types') {
+          if ($(this).attr("id") == "Types") {
             sosType = value;
-
           }
         }
-
 
         if (value == No_Data) {
           $(this).text(No_Data);
@@ -1251,10 +1310,9 @@ window.View_Data_Request = {
             $(this).text(Resources.ar["no"]);
           } else $(this).text(Resources.en["no"]);
         } else {
-
-          if (listkey == 'mainkpi') {
-            if ($(this).attr("id") == 'Year') {
-              $(this).text(value)
+          if (listkey == "mainkpi") {
+            if ($(this).attr("id") == "Year") {
+              $(this).text(value);
             } else {
               if (
                 localStorage.getItem("lng") == null ||
@@ -1263,17 +1321,19 @@ window.View_Data_Request = {
                 $(this).text(Resources.ar[value.toLowerCase()]);
               } else $(this).text(Resources.en[value.toLowerCase()]);
             }
-          }
-          else if (listkey == 'benefitmetrics') {
-            if ($(this).attr("id") == 'Year') {
-
-              $(this).text(value)
+          } else if (listkey == "benefitmetrics") {
+            if ($(this).attr("id") == "Year") {
+              $(this).text(value);
             } else {
-              var periodType = oListItem.get_item("PeriodType")
-              var currentId = $(this).attr("id")
-              if (currentId == 'Months' || currentId == 'Quarter' || currentId == 'Midterms') {
+              var periodType = oListItem.get_item("PeriodType");
+              var currentId = $(this).attr("id");
+              if (
+                currentId == "Months" ||
+                currentId == "Quarter" ||
+                currentId == "Midterms"
+              ) {
                 // if (periodType == 'monthly') {
-                var period = value.toLowerCase() + periodType
+                var period = value.toLowerCase() + periodType;
 
                 if (
                   localStorage.getItem("lng") == null ||
@@ -1281,7 +1341,6 @@ window.View_Data_Request = {
                 ) {
                   $(this).text(Resources.ar[period.toLowerCase()]);
                 } else $(this).text(Resources.en[period.toLowerCase()]);
-
 
                 // }
               } else {
@@ -1293,8 +1352,7 @@ window.View_Data_Request = {
                 } else $(this).text(Resources.en[value.toLowerCase()]);
               }
             }
-          }
-          else {
+          } else {
             if (
               localStorage.getItem("lng") == null ||
               localStorage.getItem("lng") == "ar"
@@ -1318,8 +1376,8 @@ window.View_Data_Request = {
             ? "no"
             : oListItem.get_item("" + $(this).attr("id") + "");
         // to handle the master details section show and hide
-        if (listkey == 'goalstrategy') {
-          pillersRadio = radioval
+        if (listkey == "goalstrategy") {
+          pillersRadio = radioval;
         }
 
         if (radioval == "Yes" || radioval == "yes" || radioval == true) {
@@ -1376,40 +1434,46 @@ window.View_Data_Request = {
 
         $(this).text(value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
       } else if ($(this).attr("type") == "multiselect") {
-
         var valfieldkey = $(this).data("valfieldkey"),
           Dispfieldkey = $(this).data("dispfieldkey"),
           listname = $(this).data("listname"),
           linkedto = $(this).data("linkedto"),
-          parentrelatedfilterkeylvl1 = $(this).data("parentrelatedfilterkeylvl1"),
-          parentrelatedfilterkeylvl2 = $(this).data("parentrelatedfilterkeylvl2"),
+          parentrelatedfilterkeylvl1 = $(this).data(
+            "parentrelatedfilterkeylvl1"
+          ),
+          parentrelatedfilterkeylvl2 = $(this).data(
+            "parentrelatedfilterkeylvl2"
+          ),
           $this = $(this);
 
         var listFields = ["ID", valfieldkey, Dispfieldkey];
-        if (parentrelatedfilterkeylvl1 && parentrelatedfilterkeylvl1 != "undefined") {
-
-          listFields.push(parentrelatedfilterkeylvl1)
-          if (parentrelatedfilterkeylvl2 && parentrelatedfilterkeylvl2 != "undefined") {
-            listFields.push(parentrelatedfilterkeylvl2)
+        if (
+          parentrelatedfilterkeylvl1 &&
+          parentrelatedfilterkeylvl1 != "undefined"
+        ) {
+          listFields.push(parentrelatedfilterkeylvl1);
+          if (
+            parentrelatedfilterkeylvl2 &&
+            parentrelatedfilterkeylvl2 != "undefined"
+          ) {
+            listFields.push(parentrelatedfilterkeylvl2);
           }
         }
 
         var value =
           oListItem.get_item("" + $(this).attr("id") + "") == null
             ? No_Data
-            : oListItem
-              .get_item("" + $(this).attr("id") + "")
-              .split(":::")
+            : oListItem.get_item("" + $(this).attr("id") + "").split(":::");
 
         var customquerymulti =
-          '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="' + valfieldkey + '" /><Values>';
+          "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"" +
+          valfieldkey +
+          '" /><Values>';
         for (var i = 0; i <= value.length; i++) {
-          customquerymulti += '<Value Type="Text">' + value[i] + '</Value>';
+          customquerymulti += '<Value Type="Text">' + value[i] + "</Value>";
         }
-        customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
-
-
-
+        customquerymulti +=
+          "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
 
         sphttp.get(
           _spPageContextInfo.siteServerRelativeUrl,
@@ -1418,30 +1482,22 @@ window.View_Data_Request = {
           listFields,
           function (records, record, listItem, isDone) {
             if (isDone) {
-              var items = ''
+              var items = "";
               records.forEach(function (el, index) {
+                var htmlLink = "";
+                var handleHref = "javascript:";
 
-
-                var htmlLink = ""
-                var handleHref = "javascript:"
-
-                if (el["ID"] && linkedto && linkedto != 'undefined') {
-                  handleHref = `/SitePages/View.aspx?ListKey=${linkedto}&IID=${el["ID"]}`
-                  htmlLink = `<span><a class='elementLink' href=${handleHref} target='_blank'><i class='fas fa-external-link-alt'></i></a></span>`
+                if (el["ID"] && linkedto && linkedto != "undefined") {
+                  handleHref = `/SitePages/View.aspx?ListKey=${linkedto}&IID=${el["ID"]}`;
+                  htmlLink = `<span><a class='elementLink' href=${handleHref} target='_blank'><i class='fas fa-external-link-alt'></i></a></span>`;
                 }
 
-
-
-
-
-                items += el[Dispfieldkey] + htmlLink + '<br>'
+                items += el[Dispfieldkey] + htmlLink + "<br>";
 
                 if (
                   parentrelatedfilterkeylvl1 &&
                   parentrelatedfilterkeylvl1 != "undefined"
                 ) {
-
-
                   $this.attr(
                     "data-parentrelatedvaluelvl1",
                     el[parentrelatedfilterkeylvl1]
@@ -1449,42 +1505,39 @@ window.View_Data_Request = {
                   $(
                     "[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
                   ).each(function () {
-
-                    var isMasterSection = $(this).parent().parent().hasClass("Details-Item")
+                    var isMasterSection = $(this)
+                      .parent()
+                      .parent()
+                      .hasClass("Details-Item");
 
                     if (!isMasterSection) {
-
                       var elementId = $(this).attr("id"); // get element Id
                       var elementValue = oListItem.get_item(elementId); // get element value
-
 
                       if (
                         oListItem.get_item(elementId) &&
                         oListItem.get_item(elementId) == elementValue
                       ) {
                         // matching between value on list
-                        var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
+                        var parentElement = $(this).data(
+                          "parentrelatedkeylvl1"
+                        ); // parent internal name
                         var parenetValue = $(this).attr(
                           "data-parentrelatedvaluelvl1"
                         ); // parent value
 
-
-
                         if (parentElement && parenetValue) {
                           $(`#${parentElement}`).html(parenetValue);
                         }
-
                       }
                     }
-                  })
-
+                  });
                 }
 
                 if (
                   parentrelatedfilterkeylvl2 &&
                   parentrelatedfilterkeylvl2 != "undefined"
                 ) {
-
                   $this.attr(
                     "data-parentrelatedvaluelvl2",
                     el[parentrelatedfilterkeylvl2]
@@ -1492,10 +1545,12 @@ window.View_Data_Request = {
                   $(
                     "[data-parentrelatedvaluelvl2]:not([data-parentrelatedvaluelvl2=undefined])"
                   ).each(function () {
-                    var isMasterSection = $(this).parent().parent().hasClass("Details-Item")
+                    var isMasterSection = $(this)
+                      .parent()
+                      .parent()
+                      .hasClass("Details-Item");
 
                     if (!isMasterSection) {
-
                       var elementId = $(this).attr("id"); // get element Id
                       var elementValue = oListItem.get_item(elementId); // get element value
                       if (
@@ -1503,21 +1558,20 @@ window.View_Data_Request = {
                         oListItem.get_item(elementId) == elementValue
                       ) {
                         // matching between value on list
-                        var parentElement = $(this).data("parentrelatedkeylvl2"); // parent internal name
+                        var parentElement = $(this).data(
+                          "parentrelatedkeylvl2"
+                        ); // parent internal name
                         var parenetValue = $(this).attr(
                           "data-parentrelatedvaluelvl2"
                         ); // parent value
-
 
                         if (parentElement && parenetValue) {
                           $(`#${parentElement}`).html(parenetValue);
                         }
                       }
                     }
-                  })
-
+                  });
                 }
-
               });
               $this.html(items);
             }
@@ -1532,36 +1586,39 @@ window.View_Data_Request = {
         //         .join("; <br>");
 
         //   $(this).html(value);
-
       } else if ($(this).attr("type") == "lookup") {
-
         var valfieldkey = $(this).data("valfieldkey"),
           Dispfieldkey = $(this).data("dispfieldkey"),
           listname = $(this).data("listname"),
           linkedto = $(this).data("linkedto"),
-          parentrelatedfilterkeylvl1 = $(this).data("parentrelatedfilterkeylvl1"),
-          parentrelatedfilterkeylvl2 = $(this).data("parentrelatedfilterkeylvl2"),
+          parentrelatedfilterkeylvl1 = $(this).data(
+            "parentrelatedfilterkeylvl1"
+          ),
+          parentrelatedfilterkeylvl2 = $(this).data(
+            "parentrelatedfilterkeylvl2"
+          ),
           $this = $(this);
 
         var listFields = ["ID", valfieldkey, Dispfieldkey];
-        if (parentrelatedfilterkeylvl1 && parentrelatedfilterkeylvl1 != "undefined") {
-
-          listFields.push(parentrelatedfilterkeylvl1)
-          if (parentrelatedfilterkeylvl2 && parentrelatedfilterkeylvl2 != "undefined") {
-            listFields.push(parentrelatedfilterkeylvl2)
+        if (
+          parentrelatedfilterkeylvl1 &&
+          parentrelatedfilterkeylvl1 != "undefined"
+        ) {
+          listFields.push(parentrelatedfilterkeylvl1);
+          if (
+            parentrelatedfilterkeylvl2 &&
+            parentrelatedfilterkeylvl2 != "undefined"
+          ) {
+            listFields.push(parentrelatedfilterkeylvl2);
           }
           // listFields = ["ID",valfieldkey, Dispfieldkey, parentrelatedfilterkeylvl1];
         }
 
-
-
         if (oListItem.get_item($(this).attr("id")) == null) {
-
           $(this).html(No_Data);
         } else {
-
           customquery =
-            '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="' +
+            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
             $(this).data("valfieldkey") +
             '" /><Value Type="Text">' +
             oListItem.get_item($(this).attr("id")) +
@@ -1574,12 +1631,19 @@ window.View_Data_Request = {
             listFields,
             function (records, record, listItem, isDone) {
               if (isDone) {
-
                 records.forEach(function (el, index) {
-
                   $this.html(el[Dispfieldkey]);
-                  $this.parent().find('a').attr('href', '/SitePages/View.aspx?ListKey=' + linkedto + '&IID=' + el["ID"] + '')
-
+                  $this
+                    .parent()
+                    .find("a")
+                    .attr(
+                      "href",
+                      "/SitePages/View.aspx?ListKey=" +
+                        linkedto +
+                        "&IID=" +
+                        el["ID"] +
+                        ""
+                    );
 
                   // dont submit part
 
@@ -1587,7 +1651,6 @@ window.View_Data_Request = {
                     parentrelatedfilterkeylvl1 &&
                     parentrelatedfilterkeylvl1 != "undefined"
                   ) {
-
                     $this.attr(
                       "data-parentrelatedvaluelvl1",
                       el[parentrelatedfilterkeylvl1]
@@ -1595,11 +1658,12 @@ window.View_Data_Request = {
                     $(
                       "[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
                     ).each(function () {
-
-                      var isMasterSection = $(this).parent().parent().hasClass("Details-Item")
+                      var isMasterSection = $(this)
+                        .parent()
+                        .parent()
+                        .hasClass("Details-Item");
 
                       if (!isMasterSection) {
-
                         var elementId = $(this).attr("id"); // get element Id
                         var elementValue = oListItem.get_item(elementId); // get element value
                         if (
@@ -1607,20 +1671,27 @@ window.View_Data_Request = {
                           oListItem.get_item(elementId) == elementValue
                         ) {
                           // matching between value on list
-                          var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
-                          var dataListName = $(this).data("listname")
+                          var parentElement = $(this).data(
+                            "parentrelatedkeylvl1"
+                          ); // parent internal name
+                          var dataListName = $(this).data("listname");
                           var parenetValue = $(this).attr(
                             "data-parentrelatedvaluelvl1"
                           ); // parent value
-
 
                           if (parentElement && parenetValue) {
                             //to get the sector name and subsector name in don't submit view
                             if (parentElement == "Sector") {
                               var sectorArr = [];
-                              if (localStorage.getItem("Dynamo_Internal Entities") != null) {
+                              if (
+                                localStorage.getItem(
+                                  "Dynamo_Internal Entities"
+                                ) != null
+                              ) {
                                 sectorArr = JSON.parse(
-                                  localStorage.getItem("Dynamo_Internal Entities")
+                                  localStorage.getItem(
+                                    "Dynamo_Internal Entities"
+                                  )
                                 );
                                 sectorArr = sectorArr.filter(function (a) {
                                   return a.code === parenetValue;
@@ -1639,16 +1710,21 @@ window.View_Data_Request = {
                               }
 
                               $(`#${parentElement}`).html(parenetValue);
-
-
                             } else if (parentElement == "SubSector") {
-
                               var subSectorArr = [];
-                              if (localStorage.getItem("Dynamo_Internal Entities") != null) {
+                              if (
+                                localStorage.getItem(
+                                  "Dynamo_Internal Entities"
+                                ) != null
+                              ) {
                                 subSectorArr = JSON.parse(
-                                  localStorage.getItem("Dynamo_Internal Entities")
+                                  localStorage.getItem(
+                                    "Dynamo_Internal Entities"
+                                  )
                                 );
-                                subSectorArr = subSectorArr.filter(function (a) {
+                                subSectorArr = subSectorArr.filter(function (
+                                  a
+                                ) {
                                   return a.code === parenetValue;
                                 });
                                 if (
@@ -1665,8 +1741,10 @@ window.View_Data_Request = {
                               }
 
                               $(`#${parentElement}`).html(parenetValue);
-
-                            } else if (parenetValue == "yes" || parenetValue == "no") {
+                            } else if (
+                              parenetValue == "yes" ||
+                              parenetValue == "no"
+                            ) {
                               if (
                                 localStorage.getItem("lng") == null ||
                                 localStorage.getItem("lng") == "ar"
@@ -1682,8 +1760,7 @@ window.View_Data_Request = {
                           }
                         }
                       }
-                    })
-
+                    });
                   }
 
                   ////////////////////////////////////////////////////////////////
@@ -1692,7 +1769,6 @@ window.View_Data_Request = {
                     parentrelatedfilterkeylvl2 &&
                     parentrelatedfilterkeylvl2 != "undefined"
                   ) {
-
                     $this.attr(
                       "data-parentrelatedvaluelvl2",
                       el[parentrelatedfilterkeylvl2]
@@ -1700,7 +1776,10 @@ window.View_Data_Request = {
                     $(
                       "[data-parentrelatedvaluelvl2]:not([data-parentrelatedvaluelvl2=undefined])"
                     ).each(function () {
-                      var isMasterSection = $(this).parent().parent().hasClass("Details-Item")
+                      var isMasterSection = $(this)
+                        .parent()
+                        .parent()
+                        .hasClass("Details-Item");
 
                       if (!isMasterSection) {
                         var elementId = $(this).attr("id"); // get element Id
@@ -1710,16 +1789,21 @@ window.View_Data_Request = {
                           oListItem.get_item(elementId) == elementValue
                         ) {
                           // matching between value on list
-                          var parentElement = $(this).data("parentrelatedkeylvl2"); // parent internal name
+                          var parentElement = $(this).data(
+                            "parentrelatedkeylvl2"
+                          ); // parent internal name
                           var parenetValue = $(this).attr(
                             "data-parentrelatedvaluelvl2"
                           ); // parent value
 
-
                           //to get the sector name and subsector name in don't submit view
                           if (parentElement == "Sector") {
                             var sectorArr = [];
-                            if (localStorage.getItem("Dynamo_Internal Entities") != null) {
+                            if (
+                              localStorage.getItem(
+                                "Dynamo_Internal Entities"
+                              ) != null
+                            ) {
                               sectorArr = JSON.parse(
                                 localStorage.getItem("Dynamo_Internal Entities")
                               );
@@ -1740,11 +1824,14 @@ window.View_Data_Request = {
                             }
 
                             $(`#${parentElement}`).html(parenetValue);
-
                           } else if (parentElement == "SubSector") {
                             //to get the sector name and subsector name in don't submit view
                             var subSectorArr = [];
-                            if (localStorage.getItem("Dynamo_Internal Entities") != null) {
+                            if (
+                              localStorage.getItem(
+                                "Dynamo_Internal Entities"
+                              ) != null
+                            ) {
                               subSectorArr = JSON.parse(
                                 localStorage.getItem("Dynamo_Internal Entities")
                               );
@@ -1765,9 +1852,10 @@ window.View_Data_Request = {
                             }
 
                             $(`#${parentElement}`).html(parenetValue);
-
-
-                          } else if (parenetValue == "yes" || parenetValue == "no") {
+                          } else if (
+                            parenetValue == "yes" ||
+                            parenetValue == "no"
+                          ) {
                             if (
                               localStorage.getItem("lng") == null ||
                               localStorage.getItem("lng") == "ar"
@@ -1782,37 +1870,32 @@ window.View_Data_Request = {
                           }
                         }
                       }
-                    })
-
+                    });
                   }
-
-
-
-
                 });
               }
             }
           );
         }
       } else {
-        if (listkey == 'sos' && $(this).attr("id") == "Status") { // add this here to handle status of strategic objective in view and print
-          var statusTitle = "", value = oListItem.get_item("" + $(this).attr("id") + "")
-          statusTitle = await StrategicObjectives_Status.init(value)
+        if (listkey == "sos" && $(this).attr("id") == "Status") {
+          // add this here to handle status of strategic objective in view and print
+          var statusTitle = "",
+            value = oListItem.get_item("" + $(this).attr("id") + "");
+          statusTitle = await StrategicObjectives_Status.init(value);
           $(this).text(statusTitle);
         } else if ($(this).data("translatefromresources") == true) {
-
           var value =
             oListItem.get_item("" + $(this).attr("id") + "") == null
               ? No_Data
               : oListItem.get_item("" + $(this).attr("id") + "");
 
-              if (
-                localStorage.getItem("lng") == null ||
-                localStorage.getItem("lng") == "ar"
-              ) {
-                $(this).text(Resources.ar[value]);
-              } else $(this).text(Resources.en[value]);
-
+          if (
+            localStorage.getItem("lng") == null ||
+            localStorage.getItem("lng") == "ar"
+          ) {
+            $(this).text(Resources.ar[value]);
+          } else $(this).text(Resources.en[value]);
         } else {
           var value =
             oListItem.get_item("" + $(this).attr("id") + "") == null
@@ -1823,16 +1906,16 @@ window.View_Data_Request = {
       }
     });
 
-
-    if (listkey == 'projects') {
-
-      var myselections = oListItem.get_item("RelatedInitiativeDeliverable") ? oListItem.get_item("RelatedInitiativeDeliverable").split(":::") : [] // to get the name of delivrable over the code
-      var initiativeCode = oListItem.get_item("RelatedInitiative")
-      initiativeDelevrableArr = myselections // to use it in view page to get the deliv Name
+    if (listkey == "projects") {
+      var myselections = oListItem.get_item("RelatedInitiativeDeliverable")
+        ? oListItem.get_item("RelatedInitiativeDeliverable").split(":::")
+        : []; // to get the name of delivrable over the code
+      var initiativeCode = oListItem.get_item("RelatedInitiative");
+      initiativeDelevrableArr = myselections; // to use it in view page to get the deliv Name
 
       if (initiativeCode) {
-        globalInitiativeCode = initiativeCode // to use it after check if initiative deleted or not
-        Check_Item_Deleted.init('Initiatives', initiativeCode, 'Title')
+        globalInitiativeCode = initiativeCode; // to use it after check if initiative deleted or not
+        Check_Item_Deleted.init("Initiatives", initiativeCode, "Title");
 
         // ProjectInitiativeDelevrable.init('InitiativeDeliverables', initiativeCode) // ocomment moved after check if initiative deleted or not
       }
@@ -1842,7 +1925,6 @@ window.View_Data_Request = {
       $(".btn-save").remove(); // to remove the edit btn from view cr
     }
 
-
     if (isView && listkey == "ideas") {
       RelatedIdeaProject.preinit();
     }
@@ -1850,16 +1932,15 @@ window.View_Data_Request = {
       $(".container-body .d-flex.btnactionrow").hide();
     }
 
-
     //handle top menu navigation
     if (SP_ListName == ListArray[0].projects) {
       PCODE = oListItem.get_item("Title");
       $(".headtwo").append(
         '<a class="" href="' +
-        _spPageContextInfo.webServerRelativeUrl +
-        "/SitePages/ProjectHome.aspx?PCODE=" +
-        PCODE +
-        '"><span class="litem">Project Home</span></a>'
+          _spPageContextInfo.webServerRelativeUrl +
+          "/SitePages/ProjectHome.aspx?PCODE=" +
+          PCODE +
+          '"><span class="litem">Project Home</span></a>'
       );
     }
     // added for CR module
@@ -1868,7 +1949,6 @@ window.View_Data_Request = {
       let UpdateType = oListItem.get_item("UpdateType") || "";
       // let crIsGeneral = UpdateType.includes("general");
       let crIsGeneral = UpdateType.includes("automatic");
-
 
       changeRequestBody = oListItem.get_item("ChangeBody");
 
@@ -1882,18 +1962,15 @@ window.View_Data_Request = {
         CrRelatedList = changeRequestBody[0].listName;
         RListKey = changeRequestBody[0].listKey;
 
-        changeRequestBody.forEach(el => {
+        changeRequestBody.forEach((el) => {
           if (el.type == "picker") {
-            el.originalValue = el.originalValue ? el.originalValue.$5c_1 : ""
+            el.originalValue = el.originalValue ? el.originalValue.$5c_1 : "";
           } else if (el.type == "email") {
-            el.type = "string"
+            el.type = "string";
           }
 
           //
-
-        })
-
-
+        });
 
         sectionJSON = [
           {
@@ -1906,12 +1983,9 @@ window.View_Data_Request = {
         ];
       }
 
-
-
       if (isCrMode) {
         if (crIsGeneral) CrModeFunctionality.preinit();
-        else
-          CrModeFunctionality.init(sectionJSON);
+        else CrModeFunctionality.init(sectionJSON);
       }
     }
     // ended
@@ -1922,23 +1996,25 @@ window.View_Data_Request = {
     //custom
 
     /// to handle the weight percentage in edit
-    if (listkey == 'deliverables' || listkey == 'milestones' || listkey == 'initiativedeliverables' || listkey == 'initiativemilestones') {
-
-      var parentValue = $('#Amount').data('parentval')
+    if (
+      listkey == "deliverables" ||
+      listkey == "milestones" ||
+      listkey == "initiativedeliverables" ||
+      listkey == "initiativemilestones"
+    ) {
+      var parentValue = $("#Amount").data("parentval");
       var weight = oListItem.get_item("Weight");
-      weight = Number(weight)
-      var Amount = (weight * parentValue) / 100
-      Amount = Amount.toFixed(2)
-      $('#Amount').text(Amount)
+      weight = Number(weight);
+      var Amount = (weight * parentValue) / 100;
+      Amount = Amount.toFixed(2);
+      $("#Amount").text(Amount);
 
-      var itemWfStage =  oListItem.get_item("WFStage");
-      if(itemWfStage == 'approved'){
-
-        var htmlMsg = '<div data-trans-deliverditem class="kpiPeriodChanged ErrorMsg Resources"></div>';
-        $('.btnactionrow').html(htmlMsg);
-
+      var itemWfStage = oListItem.get_item("WFStage");
+      if (itemWfStage == "approved") {
+        var htmlMsg =
+          '<div data-trans-deliverditem class="kpiPeriodChanged ErrorMsg Resources"></div>';
+        $(".btnactionrow").html(htmlMsg);
       }
-
     }
 
     ////
@@ -1954,7 +2030,8 @@ window.View_Data_Request = {
       $(".btn-to-issue").hide();
       $(".form-row.justify-content-end button").addClass("disablebtns");
     }
-    if (!PCODE || isMinister || isBITeam) { // add isMinister to hide the btn for this role
+    if (!PCODE || isMinister || isBITeam) {
+      // add isMinister to hide the btn for this role
       $(".btn-to-issue").hide();
     }
     if (listkey == "portfolio" || listkey == "budgetitems") {
@@ -1964,89 +2041,130 @@ window.View_Data_Request = {
         $(".btn-save").remove();
         $(".container-body").prepend(
           '<div class="errormsg alert"><span class="infoIcon"><i class="fas fa-info-circle"></i></span><span>' +
-          editablebyowneronly +
-          "</span></div>"
+            editablebyowneronly +
+            "</span></div>"
         );
       }
     }
     if (listkey == "mainkpi") {
+      var recurrenceChanged = oListItem.get_item("RecurrenceChanged")
+        ? oListItem.get_item("RecurrenceChanged")
+        : "";
 
-      var recurrenceChanged = oListItem.get_item("RecurrenceChanged") ? oListItem.get_item("RecurrenceChanged") : '';
-
-      var kpiDraftStatus = oListItem.get_item("DraftStatus") ? oListItem.get_item("DraftStatus") : ''
+      var kpiDraftStatus = oListItem.get_item("DraftStatus")
+        ? oListItem.get_item("DraftStatus")
+        : "";
 
       KPICode = oListItem.get_item("Title");
       KPIYear = oListItem.get_item("Year");
-      KPIMonth = oListItem.get_item("Months") ? oListItem.get_item("Months") : '';
-      KPIQuarter = oListItem.get_item("Quarter") ? oListItem.get_item("Quarter") : '';
-      KPIMid = oListItem.get_item("Midterms") ? oListItem.get_item("Midterms") : '';
-      KPIYearHandler = oListItem.get_item("Years") ? oListItem.get_item("Years") : '';
+      KPIMonth = oListItem.get_item("Months")
+        ? oListItem.get_item("Months")
+        : "";
+      KPIQuarter = oListItem.get_item("Quarter")
+        ? oListItem.get_item("Quarter")
+        : "";
+      KPIMid = oListItem.get_item("Midterms")
+        ? oListItem.get_item("Midterms")
+        : "";
+      KPIYearHandler = oListItem.get_item("Years")
+        ? oListItem.get_item("Years")
+        : "";
 
-      kpiFromYear = oListItem.get_item("FromDate") ? oListItem.get_item("FromDate") : '';
-      kpiToYear = oListItem.get_item("ToDate") ? oListItem.get_item("ToDate") : ''
-      PeriodType = oListItem.get_item("PeriodType") ? oListItem.get_item("PeriodType") : ''
+      kpiFromYear = oListItem.get_item("FromDate")
+        ? oListItem.get_item("FromDate")
+        : "";
+      kpiToYear = oListItem.get_item("ToDate")
+        ? oListItem.get_item("ToDate")
+        : "";
+      PeriodType = oListItem.get_item("PeriodType")
+        ? oListItem.get_item("PeriodType")
+        : "";
 
-
-      relatedStrategyKpi = oListItem.get_item("RelatedStrategy") ? oListItem.get_item("RelatedStrategy") : '';
-      indexTypekpi = oListItem.get_item("Types") ? oListItem.get_item("Types") : '';
+      relatedStrategyKpi = oListItem.get_item("RelatedStrategy")
+        ? oListItem.get_item("RelatedStrategy")
+        : "";
+      indexTypekpi = oListItem.get_item("Types")
+        ? oListItem.get_item("Types")
+        : "";
       if (relatedStrategyKpi && indexTypekpi) {
-        Check_Item_Deleted.init('GoalStrategy', relatedStrategyKpi, 'Title') // check if GoalStrategy deleted hide the related item
+        Check_Item_Deleted.init("GoalStrategy", relatedStrategyKpi, "Title"); // check if GoalStrategy deleted hide the related item
       }
       equationKPI.init();
-      $('#Year,#Months,#Quarter,#Midterms,#Years').removeAttr('required');
+      $("#Year,#Months,#Quarter,#Midterms,#Years").removeAttr("required");
 
-      if (PeriodType == 'monthly') {
-        $('#Quarter,#Midterms,#Years').parent().hide();
-      } else if (PeriodType == 'quarter') {
-        $('#Months,#Midterms,#Years').parent().hide();
-      } else if (PeriodType == 'midterm') {
-        $('#Months,#Quarter,#Years').parent().hide();
-      } else if (PeriodType == 'year') {
-        $('#Months,#Quarter,#Midterms').parent().hide();
+      if (PeriodType == "monthly") {
+        $("#Quarter,#Midterms,#Years").parent().hide();
+      } else if (PeriodType == "quarter") {
+        $("#Months,#Midterms,#Years").parent().hide();
+      } else if (PeriodType == "midterm") {
+        $("#Months,#Quarter,#Years").parent().hide();
+      } else if (PeriodType == "year") {
+        $("#Months,#Quarter,#Midterms").parent().hide();
       }
 
-
-      if (recurrenceChanged == 'yes') {
-        var htmlMsg = '<div data-trans-recurrencerepeat class="kpiPeriodChanged ErrorMsg Resources"></div>';
-        $('.btnactionrow').html(htmlMsg);
+      if (recurrenceChanged == "yes") {
+        var htmlMsg =
+          '<div data-trans-recurrencerepeat class="kpiPeriodChanged ErrorMsg Resources"></div>';
+        $(".btnactionrow").html(htmlMsg);
       }
 
       if (kpiDraftStatus && !USERisWF) {
-        var htmlMsg = '<div data-trans-draftkpi class="kpiPeriodChanged ErrorMsg Resources"></div>';
-        $('.btnactionrow').html(htmlMsg);
+        var htmlMsg =
+          '<div data-trans-draftkpi class="kpiPeriodChanged ErrorMsg Resources"></div>';
+        $(".btnactionrow").html(htmlMsg);
       }
-
 
       if (!USERisWF) {
-        $('#printableArea').prepend('<a class="linkmsg alert" href="' + _spPageContextInfo.siteAbsoluteUrl + '/sitepages/Targets.aspx?KpiCode=' + KPICode + '"><i class="fas fa-info-circle iconfontawesome"></i><span data-trans-kpiresulttext class="Resources">' +
-          "</span></a>")
+        $("#printableArea").prepend(
+          '<a class="linkmsg alert" href="' +
+            _spPageContextInfo.siteAbsoluteUrl +
+            "/sitepages/Targets.aspx?KpiCode=" +
+            KPICode +
+            '"><i class="fas fa-info-circle iconfontawesome"></i><span data-trans-kpiresulttext class="Resources">' +
+            "</span></a>"
+        );
       }
-
     }
     if (listkey == "sos") {
-      var sosDraftStatus = oListItem.get_item("DraftStatus") ? oListItem.get_item("DraftStatus") : ''
+      var sosDraftStatus = oListItem.get_item("DraftStatus")
+        ? oListItem.get_item("DraftStatus")
+        : "";
 
       if (sosDraftStatus && !USERisWF) {
-        var htmlMsg = '<div data-trans-draftsos class="kpiPeriodChanged ErrorMsg Resources"></div>';
-        $('.btnactionrow').html(htmlMsg);
+        var htmlMsg =
+          '<div data-trans-draftsos class="kpiPeriodChanged ErrorMsg Resources"></div>';
+        $(".btnactionrow").html(htmlMsg);
       }
     }
 
-    if (listkey == 'benefitmetrics') {
-
+    if (listkey == "benefitmetrics") {
       benefitCode = oListItem.get_item("Title");
-      benefitYear = oListItem.get_item("Year")
-      benefitMonth = oListItem.get_item("Months") ? oListItem.get_item("Months") : '';
-      benefitQuarter = oListItem.get_item("Quarter") ? oListItem.get_item("Quarter") : '';
-      benefitMid = oListItem.get_item("Midterms") ? oListItem.get_item("Midterms") : '';
-      benefitYearHandler = oListItem.get_item("Years") ? oListItem.get_item("Years") : '';
+      benefitYear = oListItem.get_item("Year");
+      benefitMonth = oListItem.get_item("Months")
+        ? oListItem.get_item("Months")
+        : "";
+      benefitQuarter = oListItem.get_item("Quarter")
+        ? oListItem.get_item("Quarter")
+        : "";
+      benefitMid = oListItem.get_item("Midterms")
+        ? oListItem.get_item("Midterms")
+        : "";
+      benefitYearHandler = oListItem.get_item("Years")
+        ? oListItem.get_item("Years")
+        : "";
       // benefitYearHandler = oListItem.get_item("Years") ? oListItem.get_item("Years") : '';
 
       // benefitMetricsYear =oListItem.get_item("Year")
 
       if (!USERisWF) {
-        $('#printableArea').prepend('<a class="linkmsg alert" href="' + _spPageContextInfo.siteAbsoluteUrl + '/sitepages/BenefitMetrics.aspx?BenefitMetricsCode=' + benefitCode + '"><i class="fas fa-info-circle iconfontawesome"></i><span data-trans-benefitmetricstext class="Resources">' +
-          "</span></a>")
+        $("#printableArea").prepend(
+          '<a class="linkmsg alert" href="' +
+            _spPageContextInfo.siteAbsoluteUrl +
+            "/sitepages/BenefitMetrics.aspx?BenefitMetricsCode=" +
+            benefitCode +
+            '"><i class="fas fa-info-circle iconfontawesome"></i><span data-trans-benefitmetricstext class="Resources">' +
+            "</span></a>"
+        );
       }
 
       equationBenefit.init();
@@ -2070,9 +2188,12 @@ window.View_Data_Request = {
     //     // MultiSelect_View.init('Deliverables', myselections)
     //   }
     // }
-    if (listkey == 'milestones' && PCODE) { // add it on view to update the milestone when delete
-      initiativeMilestoneVal = oListItem.get_item('RelatedInitiativeMilestone') ? oListItem.get_item('RelatedInitiativeMilestone') : ''
-      Get_ProjectData_ByCode.init()
+    if (listkey == "milestones" && PCODE) {
+      // add it on view to update the milestone when delete
+      initiativeMilestoneVal = oListItem.get_item("RelatedInitiativeMilestone")
+        ? oListItem.get_item("RelatedInitiativeMilestone")
+        : "";
+      Get_ProjectData_ByCode.init();
     }
 
     // if (isVROE) {
@@ -2098,14 +2219,15 @@ window.View_Data_Request = {
     if (PCODE || ICODE) {
       getfolderurl =
         host + "/" + ListArray[2].documents + "/" + PCODE + "/" + listkey;
-      DocumentLibraryName = PCODE ? ListArray[2].documents : "Initiative Documents";
+      DocumentLibraryName = PCODE
+        ? ListArray[2].documents
+        : "Initiative Documents";
     } else if (STCODE) {
-      DocumentLibraryName = "StrategicPartnerships Documents"
-    } else if (listkey == 'mainkpi') {
+      DocumentLibraryName = "StrategicPartnerships Documents";
+    } else if (listkey == "mainkpi") {
       getfolderurl = host + "/" + listkey + " Documents/";
       DocumentLibraryName = listkey + " Documents";
-    }
-    else {
+    } else {
       // getfolderurl = host + "/" + listkey + " Documents/";
       // DocumentLibraryName = listkey + " Documents";
       getfolderurl = host + "/" + "SPM General Services" + "/" + listkey;
@@ -2121,83 +2243,100 @@ window.View_Data_Request = {
 
     ////////////////////////////////////////////////
 
-    if (isView && listkey == 'goalstrategy') {
+    if (isView && listkey == "goalstrategy") {
       // to handle the title change and the master details section show and hide
-      if (strategyType == 'vision') {
+      if (strategyType == "vision") {
         if ($("[data-section_type]").length > 0) {
           $("[data-section_type]").each(function () {
-            if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
-              $(this).find("label[for=Name]").html('البرنامج الاستراتيجي')
+            if (
+              localStorage.getItem("lng") == null ||
+              localStorage.getItem("lng") == "ar"
+            ) {
+              $(this).find("label[for=Name]").html("البرنامج الاستراتيجي");
               // $(this).find("#Name").attr("placeholder", "البرنامج الاستراتيجي")
-              $(this).find(".sideTitle").html("البرامج الاستراتيجية")
-              $(document).find("label[for=PillarsExist]").html('هل يوجد برامج؟')
+              $(this).find(".sideTitle").html("البرامج الاستراتيجية");
+              $(document)
+                .find("label[for=PillarsExist]")
+                .html("هل يوجد برامج؟");
             } else {
-              $(this).find("label[for=Name]").html('Strategy Program')
+              $(this).find("label[for=Name]").html("Strategy Program");
               // $(this).find("#Name").attr("placeholder", "Strategy Program")
-              $(this).find(".sideTitle").html("Strategy Programs")
-              $(document).find("label[for=PillarsExist]").html('Is Programs Exist?')
+              $(this).find(".sideTitle").html("Strategy Programs");
+              $(document)
+                .find("label[for=PillarsExist]")
+                .html("Is Programs Exist?");
             }
-          })
+          });
         }
       } else {
         if ($("[data-section_type]").length > 0) {
           $("[data-section_type]").each(function () {
-            if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
-              $(this).find("label[for=Name]").html('المحور الاستراتيجي')
+            if (
+              localStorage.getItem("lng") == null ||
+              localStorage.getItem("lng") == "ar"
+            ) {
+              $(this).find("label[for=Name]").html("المحور الاستراتيجي");
               // $(this).find("#Name").attr("placeholder", "المحور الاستراتيجي")
-              $(this).find(".sideTitle").html("المحاور الاستراتيجية")
-              $(document).find("label[for=PillarsExist]").html('هل يوجد محاور؟')
+              $(this).find(".sideTitle").html("المحاور الاستراتيجية");
+              $(document)
+                .find("label[for=PillarsExist]")
+                .html("هل يوجد محاور؟");
             } else {
-              $(this).find("label[for=Name]").html('Name')
+              $(this).find("label[for=Name]").html("Name");
               // $(this).find("#Name").attr("placeholder", "Name")
-              $(this).find(".sideTitle").html("Strategy pillars")
-              $(document).find("label[for=PillarsExist]").html('Is Pillars Exist?')
-
+              $(this).find(".sideTitle").html("Strategy pillars");
+              $(document)
+                .find("label[for=PillarsExist]")
+                .html("Is Pillars Exist?");
             }
-          })
+          });
         }
       }
-      if (strategyType == 'vision' || strategyType == 'ministry' || strategyType == 'sub' || strategyType == 'lms' || strategyType == 'sectorial') {
-        if (pillersRadio == 'yes') {
-          $("[data-section_type]").show()
+      if (
+        strategyType == "vision" ||
+        strategyType == "ministry" ||
+        strategyType == "sub" ||
+        strategyType == "lms" ||
+        strategyType == "sectorial"
+      ) {
+        if (pillersRadio == "yes") {
+          $("[data-section_type]").show();
         } else {
-          $("[data-section_type]").hide()
+          $("[data-section_type]").hide();
         }
       } else {
-        $("[data-section_type]").hide()
+        $("[data-section_type]").hide();
       }
       // })
     }
-    if (isView && listkey == 'sos') {
-      if (sosType == 'main') {
-        $('#RelatedPortfolio , #RelatedObjective , #RelatedJobStrategy').parent().hide();
-
+    if (isView && listkey == "sos") {
+      if (sosType == "main") {
+        $("#RelatedPortfolio , #RelatedObjective , #RelatedJobStrategy")
+          .parent()
+          .hide();
+      } else if (sosType == "sub") {
+        $("#RelatedPillar , #RelatedJobStrategy").parent().hide();
+      } else if (sosType == "vision") {
+        $(
+          "#RelatedPillar , #RelatedPortfolio , #RelatedObjective , #RelatedJobStrategy"
+        )
+          .parent()
+          .hide();
+      } else if (sosType == "jobmarket") {
+        $("#RelatedPillar , #RelatedPortfolio , #RelatedObjective")
+          .parent()
+          .hide();
+      } else if (sosType == "strategically") {
+        $(
+          "#RelatedPillar , #RelatedPortfolio , #RelatedObjective , #RelatedJobStrategy"
+        )
+          .parent()
+          .hide();
       }
-      else
-        if (sosType == 'sub') {
-          $('#RelatedPillar , #RelatedJobStrategy').parent().hide();
-
-
-        }
-        else
-          if (sosType == 'vision') {
-            $('#RelatedPillar , #RelatedPortfolio , #RelatedObjective , #RelatedJobStrategy').parent().hide();
-
-          } else
-            if (sosType == 'jobmarket') {
-              $('#RelatedPillar , #RelatedPortfolio , #RelatedObjective').parent().hide();
-
-
-            } else
-              if (sosType == 'strategically') {
-                $('#RelatedPillar , #RelatedPortfolio , #RelatedObjective , #RelatedJobStrategy').parent().hide();
-
-              }
     }
-    if (isView && listkey == 'goalstrategy') {
-      if ((strategyType == 'sub') || (strategyType == 'sectorial')) {
-        $('#PillarsExist').parent().hide();
-
+    if (isView && listkey == "goalstrategy") {
+      if (strategyType == "sub" || strategyType == "sectorial") {
+        $("#PillarsExist").parent().hide();
       }
     }
     ////////////////////////////////////////////////
@@ -2222,7 +2361,7 @@ window.View_Data_Request = {
     }
 
     $(".loader-box").fadeOut();
-    changeResources()
+    changeResources();
     //alert(PCODE_STRING);
   },
   onError: function (sender, args) {
@@ -2250,8 +2389,8 @@ window.View_Data_Request = {
 
       $(".o365cs-nav-header16 .o365cs-nav-o365Branding").html(
         '<div class="Logo"><a href=""><img class="img-Logo" src="' +
-        logo +
-        '"></a></div>'
+          logo +
+          '"></a></div>'
       );
       $(".o365cs-nav-centerAlign").append(
         '<div class="User-Not"><div class="SNotifications"><span class="Tasks"><i class="fas fa-tasks" data-count="10"></i><a href="#">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="10"></i><a href="#">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="30"></i><a href="#">Issues</a></span></div><div class="UProfile"></div></div>'
@@ -2278,7 +2417,7 @@ window.View_Data_Request = {
         //     window.history.back();
         // }
         // else
-        console.log("when click on cancel btn")
+        console.log("when click on cancel btn");
 
         if (listkey == "strategicpartnerships") {
           window.location =
@@ -2288,8 +2427,8 @@ window.View_Data_Request = {
         } else if (listkey == "initiatives") {
           window.location =
             _spPageContextInfo.webAbsoluteUrl +
-            "/SitePages/initiativeHome.aspx?ICODE=" + ICODE;
-
+            "/SitePages/initiativeHome.aspx?ICODE=" +
+            ICODE;
         } else if (listkey == "projects") {
           window.location =
             _spPageContextInfo.webAbsoluteUrl +
@@ -2331,18 +2470,18 @@ window.View_Data_Request = {
                     .text()
                     .indexOf("لعام") > -1
                     ? $("#Cost" + i)
-                      .parent()
-                      .find("label")
-                      .text()
-                      .split("لعام")[0] +
-                    " لعام " +
-                    yeartodisp
+                        .parent()
+                        .find("label")
+                        .text()
+                        .split("لعام")[0] +
+                      " لعام " +
+                      yeartodisp
                     : $("#Cost" + i)
-                      .parent()
-                      .find("label")
-                      .text() +
-                    " لعام " +
-                    yeartodisp;
+                        .parent()
+                        .find("label")
+                        .text() +
+                      " لعام " +
+                      yeartodisp;
               } else {
                 var label =
                   $("#Cost" + i)
@@ -2351,18 +2490,18 @@ window.View_Data_Request = {
                     .text()
                     .indexOf("For Year") > -1
                     ? $("#Cost" + i)
-                      .parent()
-                      .find("label")
-                      .text()
-                      .split("For Year")[0] +
-                    " For Year " +
-                    yeartodisp
+                        .parent()
+                        .find("label")
+                        .text()
+                        .split("For Year")[0] +
+                      " For Year " +
+                      yeartodisp
                     : $("#Cost" + i)
-                      .parent()
-                      .find("label")
-                      .text() +
-                    " For Year " +
-                    yeartodisp;
+                        .parent()
+                        .find("label")
+                        .text() +
+                      " For Year " +
+                      yeartodisp;
               }
               $("#Cost" + i)
                 .parent()
@@ -2398,18 +2537,18 @@ window.View_Data_Request = {
                   .text()
                   .indexOf("لعام") > -1
                   ? $("#Cost" + i)
-                    .parent()
-                    .find("label")
-                    .text()
-                    .split("لعام")[0] +
-                  " لعام " +
-                  yeartodisp
+                      .parent()
+                      .find("label")
+                      .text()
+                      .split("لعام")[0] +
+                    " لعام " +
+                    yeartodisp
                   : $("#Cost" + i)
-                    .parent()
-                    .find("label")
-                    .text() +
-                  " لعام " +
-                  yeartodisp;
+                      .parent()
+                      .find("label")
+                      .text() +
+                    " لعام " +
+                    yeartodisp;
             } else {
               var label =
                 $("#Cost" + i)
@@ -2418,18 +2557,18 @@ window.View_Data_Request = {
                   .text()
                   .indexOf("For Year") > -1
                   ? $("#Cost" + i)
-                    .parent()
-                    .find("label")
-                    .text()
-                    .split("For Year")[0] +
-                  " For Year " +
-                  yeartodisp
+                      .parent()
+                      .find("label")
+                      .text()
+                      .split("For Year")[0] +
+                    " For Year " +
+                    yeartodisp
                   : $("#Cost" + i)
-                    .parent()
-                    .find("label")
-                    .text() +
-                  " For Year " +
-                  yeartodisp;
+                      .parent()
+                      .find("label")
+                      .text() +
+                    " For Year " +
+                    yeartodisp;
             }
             $("#Cost" + i)
               .parent()
@@ -2457,7 +2596,7 @@ let checkDataAccess = (oListItem) => {
   // if (!el.value.includes(oListItem.get_item(el.field))) {
   //   window.location = "/";
   // }
-}
+};
 //risk to issue*******
 window.showpopup = true;
 window.Risk_To_Issue_Submit = {
@@ -2492,7 +2631,6 @@ window.Risk_To_Issue_Submit = {
           Risk_Update_Data.init();
           showpopup = false;
         } else {
-
           showpopup = false;
         }
       },
@@ -2554,7 +2692,6 @@ window.Risk_To_Issue_Submit = {
     clientContext.load(Risk_To_Issue_Submit.g.oListItem);
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
-
         Risk_To_Issue_Code.g.IIID = Risk_To_Issue_Submit.g.oListItem.get_id();
         Risk_To_Issue_Code.init();
       }),
@@ -2648,22 +2785,21 @@ var Risk_To_Issue_Code = {
 
 //master Data
 // to call the master file when one time and after fill data in array
-var callMasterFile = false
+var callMasterFile = false;
 
 var Master_Details_Request = {
   // The main Initialization function
   init: function (DetailsList) {
-
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(DetailsList);
     Master_Details_Request.g.DetailsList = DetailsList;
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       '<View><Query><Where><And><Eq><FieldRef Name="MasterID" /><Value Type="Text">' +
-      IID +
-      '</Value></Eq><And><Eq><FieldRef Name="MasterKey" /><Value Type="Text">' +
-      listkey +
-      "</Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></And></Where><OrderBy><FieldRef Name='Created' Ascending='True' /></OrderBy></Query></View>"
+        IID +
+        '</Value></Eq><And><Eq><FieldRef Name="MasterKey" /><Value Type="Text">' +
+        listkey +
+        "</Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></And></Where><OrderBy><FieldRef Name='Created' Ascending='True' /></OrderBy></Query></View>"
     );
     // camlQuery.set_viewXml(
     //   '<View><Query><Where><And><Eq><FieldRef Name="MasterID" /><Value Type="Text">' +
@@ -2680,15 +2816,14 @@ var Master_Details_Request = {
     );
   },
   onSuccess: function (sender, args) {
-
     var collListItem = Master_Details_Request.g.collListItem;
     console.log(collListItem);
     var listItemEnum = collListItem.getEnumerator();
     var CurrList = Master_Details_Request.g.DetailsList,
       FieldsToRender = $(
         '[data-target_list="' +
-        CurrList +
-        '"] .fieldset-container .Details-Item'
+          CurrList +
+          '"] .fieldset-container .Details-Item'
       ).html(),
       HTMLtoAppend,
       MyValues = [];
@@ -2698,8 +2833,6 @@ var Master_Details_Request = {
       $('[data-target_list="' + CurrList + '"] .fieldset-container').html(""); //remove html
     }
     while (listItemEnum.moveNext()) {
-
-
       var oListItem = listItemEnum.get_current();
       HTMLtoAppend = "";
       HTMLtoAppend +=
@@ -2711,7 +2844,6 @@ var Master_Details_Request = {
       HTMLtoAppend += FieldsToRender;
       HTMLtoAppend += "</div>";
 
-
       if (HTMLtoAppend)
         $('[data-target_list="' + CurrList + '"] .fieldset-container').append(
           HTMLtoAppend
@@ -2720,12 +2852,11 @@ var Master_Details_Request = {
       if (isView) {
         $(
           '[data-target_list="' +
-          CurrList +
-          '"] [data-ID="' +
-          oListItem.get_id() +
-          '"] > .CFIELD > .viewmode-value'
+            CurrList +
+            '"] [data-ID="' +
+            oListItem.get_id() +
+            '"] > .CFIELD > .viewmode-value'
         ).each(function () {
-
           if ($(this).attr("type") == "date") {
             var d =
               oListItem.get_item("" + $(this).attr("id") + "") == null
@@ -2780,8 +2911,8 @@ var Master_Details_Request = {
               oListItem.get_item("" + $(this).attr("id") + "") == null
                 ? No_Data
                 : oListItem
-                  .get_item("" + $(this).attr("id") + "")
-                  .get_lookupValue();
+                    .get_item("" + $(this).attr("id") + "")
+                    .get_lookupValue();
             $(this).text(pp);
           } else if ($(this).attr("type") == "dropdown") {
             var value =
@@ -2800,8 +2931,8 @@ var Master_Details_Request = {
                 ? "no"
                 : oListItem.get_item("" + $(this).attr("id") + "");
             // to handle the master details section show and hide
-            if (listkey == 'goalstrategy') {
-              pillersRadio = radioval
+            if (listkey == "goalstrategy") {
+              pillersRadio = radioval;
             }
 
             if (radioval == "Yes" || radioval == "yes" || radioval == true) {
@@ -2811,7 +2942,11 @@ var Master_Details_Request = {
               ) {
                 $(this).text(Resources.ar["yes"]);
               } else $(this).text(Resources.en["yes"]);
-            } else if (radioval == "No" || radioval == "no" || radioval == false) {
+            } else if (
+              radioval == "No" ||
+              radioval == "no" ||
+              radioval == false
+            ) {
               if (
                 localStorage.getItem("lng") == null ||
                 localStorage.getItem("lng") == "ar"
@@ -2858,11 +2993,10 @@ var Master_Details_Request = {
               value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             );
           } else if ($(this).attr("type") == "multiselect") {
+            var masterFieldTargetList = $(this).data("fieldtargetlist");
 
-
-            var masterFieldTargetList = $(this).data("fieldtargetlist")
-
-            if (masterFieldTargetList && masterFieldTargetList != 'undefined') { // to handle master detials field inside master details in form request
+            if (masterFieldTargetList && masterFieldTargetList != "undefined") {
+              // to handle master detials field inside master details in form request
 
               var valfieldkey = "MasterID",
                 Dispfieldkey = $(this).data("dispfieldkey"),
@@ -2870,19 +3004,22 @@ var Master_Details_Request = {
                 parentListname = $(this).data("listname"),
                 listname = masterFieldTargetList,
                 fieldId = $(this).attr("id"),
-                dataId = $(this).parent().parent().data('id'),
+                dataId = $(this).parent().parent().data("id"),
                 $this = $(this);
-
 
               var listFields = ["ID", fieldId];
 
-              var value = [dataId]
+              var value = [dataId];
               var customquerymulti =
-                '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="' + valfieldkey + '" /><Values>';
+                "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"" +
+                valfieldkey +
+                '" /><Values>';
               for (var i = 0; i <= value.length; i++) {
-                customquerymulti += '<Value Type="Text">' + value[i] + '</Value>';
+                customquerymulti +=
+                  '<Value Type="Text">' + value[i] + "</Value>";
               }
-              customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
+              customquerymulti +=
+                "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
 
               sphttp.get(
                 _spPageContextInfo.siteServerRelativeUrl,
@@ -2891,20 +3028,26 @@ var Master_Details_Request = {
                 listFields,
                 function (records, record, listItem, isDone) {
                   if (isDone) {
-                    var masterValues = []
+                    var masterValues = [];
                     records.forEach(function (el, index) {
-                      masterValues.push(el[fieldId])
+                      masterValues.push(el[fieldId]);
                     });
 
-                    var parentListFields = ["ID", parentValfieldkey, Dispfieldkey];
+                    var parentListFields = [
+                      "ID",
+                      parentValfieldkey,
+                      Dispfieldkey,
+                    ];
                     var parentquerymulti =
-                      '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="' + parentValfieldkey + '" /><Values>';
+                      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"" +
+                      parentValfieldkey +
+                      '" /><Values>';
                     for (var i = 0; i <= masterValues.length; i++) {
-                      parentquerymulti += '<Value Type="Text">' + masterValues[i] + '</Value>';
+                      parentquerymulti +=
+                        '<Value Type="Text">' + masterValues[i] + "</Value>";
                     }
-                    parentquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
-
-
+                    parentquerymulti +=
+                      "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
 
                     sphttp.get(
                       _spPageContextInfo.siteServerRelativeUrl,
@@ -2913,16 +3056,14 @@ var Master_Details_Request = {
                       parentListFields,
                       function (records, record, listItem, isDone) {
                         if (isDone) {
-                          var items = ''
+                          var items = "";
                           records.forEach(function (el, index) {
-
-                            items += el[Dispfieldkey] + '<br>'
-
+                            items += el[Dispfieldkey] + "<br>";
                           });
                           $this.html(items);
                         }
-
-                      })
+                      }
+                    );
                   }
                 }
               );
@@ -2935,22 +3076,23 @@ var Master_Details_Request = {
 
               var listFields = ["ID", valfieldkey, Dispfieldkey];
 
-
               var value =
                 oListItem.get_item("" + $(this).attr("id") + "") == null
                   ? No_Data
                   : oListItem
-                    .get_item("" + $(this).attr("id") + "")
-                    .split(":::")
+                      .get_item("" + $(this).attr("id") + "")
+                      .split(":::");
 
               var customquerymulti =
-                '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="' + valfieldkey + '" /><Values>';
+                "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"" +
+                valfieldkey +
+                '" /><Values>';
               for (var i = 0; i <= value.length; i++) {
-                customquerymulti += '<Value Type="Text">' + value[i] + '</Value>';
+                customquerymulti +=
+                  '<Value Type="Text">' + value[i] + "</Value>";
               }
-              customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
-
-
+              customquerymulti +=
+                "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
 
               sphttp.get(
                 _spPageContextInfo.siteServerRelativeUrl,
@@ -2959,12 +3101,9 @@ var Master_Details_Request = {
                 listFields,
                 function (records, record, listItem, isDone) {
                   if (isDone) {
-                    var items = ''
+                    var items = "";
                     records.forEach(function (el, index) {
-
-                      items += el[Dispfieldkey] + '<br>'
-
-
+                      items += el[Dispfieldkey] + "<br>";
                     });
                     $this.html(items);
                   }
@@ -3004,44 +3143,42 @@ var Master_Details_Request = {
           }
         });
 
-
         // to get the master details files
-        var masterItemId = oListItem.get_id()
+        var masterItemId = oListItem.get_id();
 
-        getMasterFilesArr.push({ masterItemId: masterItemId, CurrList: CurrList })
-
-
-
+        getMasterFilesArr.push({
+          masterItemId: masterItemId,
+          CurrList: CurrList,
+        });
       } else if (isEdit) {
-
         $(
           '[data-target_list="' +
-          CurrList +
-          '"] [data-ID="' +
-          oListItem.get_id() +
-          '"] > .CFIELD:not(.dont-submit):not(.dont-request)> input,' +
-          '[data-target_list="' +
-          CurrList +
-          '"] [data-ID="' +
-          oListItem.get_id() +
-          '"] > .CFIELD:not(.dont-submit):not(.dont-request)> div[type=picker],' +
-          '[data-target_list="' +
-          CurrList +
-          '"] [data-ID="' +
-          oListItem.get_id() +
-          '"] > .CFIELD:not(.dont-submit):not(.dont-request)> select[type=dropdown],' +
-          '[data-target_list="' +
-          CurrList +
-          '"] [data-ID="' +
-          oListItem.get_id() +
-          '"] > .CFIELD:not(.dont-submit):not(.dont-request)>  textarea,' +
-          ///////////////////////
-          //////////////////////
-          '[data-target_list="' +
-          CurrList +
-          '"] [data-ID="' +
-          oListItem.get_id() +
-          '"] > .CFIELD:not(.dont-submit):not(.dont-request) > .multiselect-container'
+            CurrList +
+            '"] [data-ID="' +
+            oListItem.get_id() +
+            '"] > .CFIELD:not(.dont-submit):not(.dont-request)> input,' +
+            '[data-target_list="' +
+            CurrList +
+            '"] [data-ID="' +
+            oListItem.get_id() +
+            '"] > .CFIELD:not(.dont-submit):not(.dont-request)> div[type=picker],' +
+            '[data-target_list="' +
+            CurrList +
+            '"] [data-ID="' +
+            oListItem.get_id() +
+            '"] > .CFIELD:not(.dont-submit):not(.dont-request)> select[type=dropdown],' +
+            '[data-target_list="' +
+            CurrList +
+            '"] [data-ID="' +
+            oListItem.get_id() +
+            '"] > .CFIELD:not(.dont-submit):not(.dont-request)>  textarea,' +
+            ///////////////////////
+            //////////////////////
+            '[data-target_list="' +
+            CurrList +
+            '"] [data-ID="' +
+            oListItem.get_id() +
+            '"] > .CFIELD:not(.dont-submit):not(.dont-request) > .multiselect-container'
         ).each(function () {
           switch ($(this).attr("type")) {
             case "date":
@@ -3122,13 +3259,12 @@ var Master_Details_Request = {
               break;
 
             case "picker":
-
               var pemail =
                 oListItem.get_item("" + $(this).attr("id") + "") == null
                   ? enternameemail
                   : oListItem
-                    .get_item("" + $(this).attr("id") + "")
-                    .get_lookupValue();
+                      .get_item("" + $(this).attr("id") + "")
+                      .get_lookupValue();
               $(this).attr("data-email", pemail);
 
               if (pemail != enternameemail)
@@ -3175,28 +3311,34 @@ var Master_Details_Request = {
               break;
 
             case "multiselect":
+              var masterFieldTargetList = $(this).data("fieldtargetlist");
 
-              var masterFieldTargetList = $(this).data("fieldtargetlist")
-
-              if (masterFieldTargetList && masterFieldTargetList != 'undefined') { // to handle master detials field inside master details in form request
+              if (
+                masterFieldTargetList &&
+                masterFieldTargetList != "undefined"
+              ) {
+                // to handle master detials field inside master details in form request
 
                 var valfieldkey = "MasterID",
                   Dispfieldkey = $(this).data("dispfieldkey"),
                   listname = masterFieldTargetList,
                   fieldId = $(this).attr("id"),
-                  dataId = $(this).parent().parent().data('id'),
+                  dataId = $(this).parent().parent().data("id"),
                   $this = $(this);
-
 
                 var listFields = ["ID", fieldId];
 
-                var value = [dataId]
+                var value = [dataId];
                 var customquerymulti =
-                  '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="' + valfieldkey + '" /><Values>';
+                  "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"" +
+                  valfieldkey +
+                  '" /><Values>';
                 for (var i = 0; i <= value.length; i++) {
-                  customquerymulti += '<Value Type="Text">' + value[i] + '</Value>';
+                  customquerymulti +=
+                    '<Value Type="Text">' + value[i] + "</Value>";
                 }
-                customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
+                customquerymulti +=
+                  "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
 
                 sphttp.get(
                   _spPageContextInfo.siteServerRelativeUrl,
@@ -3205,23 +3347,19 @@ var Master_Details_Request = {
                   listFields,
                   function (records, record, listItem, isDone) {
                     if (isDone) {
-                      var items = ''
+                      var items = "";
                       records.forEach(function (el, index) {
-
                         $this.find(`input[type=checkbox]`).each(function () {
-                          if ($(this).val() == el['DeliverableID']) {
-                            $(this).prop("checked", true)
-                            $(this).prop("disabled", true)
+                          if ($(this).val() == el["DeliverableID"]) {
+                            $(this).prop("checked", true);
+                            $(this).prop("disabled", true);
                           }
-
-                        })
+                        });
                       });
                     }
                   }
                 );
-
               } else {
-
                 if (oListItem.get_item($(this).attr("myfield"))) {
                   var myselections = oListItem
                     .get_item($(this).attr("myfield"))
@@ -3236,7 +3374,6 @@ var Master_Details_Request = {
               break;
 
             case "number":
-
               if ($(this).hasClass("percentagefield")) {
                 var num = oListItem.get_item($(this).attr("id")) * 100;
                 if (num % 1 != 0)
@@ -3248,29 +3385,44 @@ var Master_Details_Request = {
                 $(this).val(oListItem.get_item("" + $(this).attr("id") + ""));
               }
 
-              if ((listkey == 'initiatives' || listkey == 'projects')) { // to handle amount in master details based on weight in project and initiative
+              if (listkey == "initiatives" || listkey == "projects") {
+                // to handle amount in master details based on weight in project and initiative
                 // to get the Amount of initiative if there is no benefit created on
-                if (MasterDetailsArrayRequest.length == 0 || (MasterDetailsArrayRequest.length == 1 && MasterDetailsArrayRequest[0] == "Benefits")) {
+                if (
+                  MasterDetailsArrayRequest.length == 0 ||
+                  (MasterDetailsArrayRequest.length == 1 &&
+                    MasterDetailsArrayRequest[0] == "Benefits")
+                ) {
                   if ($("[data-targetelem]").length > 0) {
                     $("[data-targetelem]").each(function () {
-                      var targetElem = $(this).data('targetelem')
+                      var targetElem = $(this).data("targetelem");
 
-                      if (targetElem == 'Weight') {
-                        var parentValue = $(this).data('parentval')
-                        var weight = $(this).parent().parent().find(`#${targetElem}`).val()
-                        var maxAttr = $(this).parent().parent().find(`#${targetElem}`).attr('max')
+                      if (targetElem == "Weight") {
+                        var parentValue = $(this).data("parentval");
+                        var weight = $(this)
+                          .parent()
+                          .parent()
+                          .find(`#${targetElem}`)
+                          .val();
+                        var maxAttr = $(this)
+                          .parent()
+                          .parent()
+                          .find(`#${targetElem}`)
+                          .attr("max");
 
+                        weight = Number(weight);
+                        var newMax = Number(maxAttr) + weight;
+                        $(this)
+                          .parent()
+                          .parent()
+                          .find(`#${targetElem}`)
+                          .attr("max", newMax);
 
-
-                        weight = Number(weight)
-                        var newMax = Number(maxAttr) + weight
-                        $(this).parent().parent().find(`#${targetElem}`).attr('max', newMax)
-
-                        var Amount = (weight * parentValue) / 100
-                        Amount = Amount.toFixed(2)
-                        $(this).val(Amount)
+                        var Amount = (weight * parentValue) / 100;
+                        Amount = Amount.toFixed(2);
+                        $(this).val(Amount);
                       }
-                    })
+                    });
                   }
                 }
               }
@@ -3283,7 +3435,6 @@ var Master_Details_Request = {
         });
       }
     }
-
 
     // window.setTimeout(function(){
     //     $('[type="picker"]').each(function(){
@@ -3305,18 +3456,12 @@ var Master_Details_Request = {
       });
       ListInfo.g.newDetail();
 
-      var isMaxOnChild = $('.container-body').find('.maxOnChild').length
+      var isMaxOnChild = $(".container-body").find(".maxOnChild").length;
       // set max attr of date for child depends on parent in same form like deliv and miles in initiative form
       if (isMaxOnChild > 0) {
-
-        $('.maxOnChild').trigger('change')
+        $(".maxOnChild").trigger("change");
       }
-
-
     } else {
-
-
-
       //handle people picker inputs
       $("div[type=picker]").each(function () {
         var mp = new MyPeoplePicker();
@@ -3327,18 +3472,19 @@ var Master_Details_Request = {
       });
     }
 
-
     if (listkey == "projects" || listkey == "initiatives") {
-
-      if (getMasterFilesArr.length && MasterDetailsArrayRequest.length == 0 && !callMasterFile) {
-
-        callMasterFile = true
-        ViewAll_MasterFiles.init(getMasterFilesArr[0].masterItemId, getMasterFilesArr[0].CurrList)
+      if (
+        getMasterFilesArr.length &&
+        MasterDetailsArrayRequest.length == 0 &&
+        !callMasterFile
+      ) {
+        callMasterFile = true;
+        ViewAll_MasterFiles.init(
+          getMasterFilesArr[0].masterItemId,
+          getMasterFilesArr[0].CurrList
+        );
       }
-
     }
-
-
   },
   onError: function (sender, args) {
     console.log(
@@ -3352,9 +3498,6 @@ var Master_Details_Request = {
 //department based on sector
 window.Department_Sector_Info = {
   onSuccess: function (sender, args) {
-
-
-
     Department_Sector_Info.g.array = [];
     var collListItem = Department_Sector_Info.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
@@ -3373,60 +3516,66 @@ window.Department_Sector_Info = {
         code: oListItem.get_item("Title"),
         id: oListItem.get_id(),
         ERPID: oListItem.get_item("ERPID"),
-        EntityType:oListItem.get_item("EntityType")
+        EntityType: oListItem.get_item("EntityType"),
       });
     }
 
     if (listkey == "changerequest" && RListKey == "projects") {
       //to get the subsector value in change request project
       if (changeRequestBody.length) {
-        changeRequestBody.forEach(el => {
+        changeRequestBody.forEach((el) => {
           if (el.InternalName == "SubSector") {
-            departmenetValue = el.originalValue
+            departmenetValue = el.originalValue;
           }
-        })
+        });
       }
     }
-
-
-    
 
     $("#SubSector").prop("disabled", false);
     $("#SubSector").html(
       '<option data-trans-department class="Resources" value="" selected="" disabled=""></option>'
     );
 
-    $("#ExternalEntities").prop("disabled", false);
-    $("#ExternalEntities").html(
-      '<option data-trans-department class="Resources" value="" selected="" disabled=""></option>'
-    );
-
-    Department_Sector_Info.g.array.forEach(function (item, i, arr) {
-      if(item.EntityType == 'ExternalEntities'){
-        $("#ExternalEntities").append(
-          '<option data-siblingvalue="' + Department_Sector_Info.g.array[i].ERPID + '" option-id="' +
-          Department_Sector_Info.g.array[i].id +
-          '" value="' +
-          Department_Sector_Info.g.array[i].code +
-          '">' +
-          Department_Sector_Info.g.array[i].name +
-          "</option>"
-        );
-      }else{
-      $("#SubSector").append(
-        '<option data-siblingvalue="' + Department_Sector_Info.g.array[i].ERPID + '" option-id="' +
-        Department_Sector_Info.g.array[i].id +
-        '" value="' +
-        Department_Sector_Info.g.array[i].code +
-        '">' +
-        Department_Sector_Info.g.array[i].name +
-        "</option>"
+    if ($("#ExternalEntities").length) {
+      $("#ExternalEntities").prop("disabled", false);
+      $("#ExternalEntities").html(
+        '<option data-trans-department class="Resources" value="" selected="" disabled=""></option>'
       );
+    }
+    Department_Sector_Info.g.array.forEach(function (item, i, arr) {
+      if (item.EntityType == "ExternalEntities") {
+        if($("#ExternalEntities").length){
+        $("#ExternalEntities").append(
+          '<option data-siblingvalue="' +
+            Department_Sector_Info.g.array[i].ERPID +
+            '" option-id="' +
+            Department_Sector_Info.g.array[i].id +
+            '" value="' +
+            Department_Sector_Info.g.array[i].code +
+            '">' +
+            Department_Sector_Info.g.array[i].name +
+            "</option>"
+        );
+        }
+      } else {
+        $("#SubSector").append(
+          '<option data-siblingvalue="' +
+            Department_Sector_Info.g.array[i].ERPID +
+            '" option-id="' +
+            Department_Sector_Info.g.array[i].id +
+            '" value="' +
+            Department_Sector_Info.g.array[i].code +
+            '">' +
+            Department_Sector_Info.g.array[i].name +
+            "</option>"
+        );
       }
     });
     if (isEdit || (listkey == "changerequest" && RListKey == "projects")) {
       $("#SubSector").val(departmenetValue);
-      $("#ExternalEntities").val(externalEntityValue)
+      if($("#ExternalEntities").length){
+      $("#ExternalEntities").val(externalEntityValue);
+      }
     }
     $("#SubSector").change(function () {
       $("#Section").prop("disabled", false);
@@ -3447,7 +3596,6 @@ window.Department_Sector_Info = {
   },
   // The main Initialization function
   init: function (SectorCode) {
-
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext
       .get_web()
@@ -3456,8 +3604,8 @@ window.Department_Sector_Info = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><Eq><FieldRef Name='ParentEntity'/><Value Type='Text'>" +
-      SectorCode +
-      "</Value></Eq></Where></Query></View>"
+        SectorCode +
+        "</Value></Eq></Where></Query></View>"
     );
     Department_Sector_Info.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Department_Sector_Info.g.collListItem);
@@ -3474,7 +3622,7 @@ window.Department_Sector_Info = {
 //end department based on sector
 
 // KPI get telated Goal
-var typeOfIndex = ''
+var typeOfIndex = "";
 window.Kpi_Related_Goal = {
   onSuccess: function (sender, args) {
     Kpi_Related_Goal.g.array = [];
@@ -3527,20 +3675,15 @@ window.Kpi_Related_Goal = {
     //   );
     // });
 
-
-
     if (isEdit) {
-      if (indexTypekpi == 'main') {
-        $('#RelatedStrategyObjective').val(relatedMainGoal)
+      if (indexTypekpi == "main") {
+        $("#RelatedStrategyObjective").val(relatedMainGoal);
       }
       //  else if (indexTypekpi == 'sub') {
       //   $('#SubRelatedObjective').val(relatedSubGoal)
       // }
-
-
     }
     changeResources();
-
   },
   onError: function (sender, args) {
     console.log(
@@ -3551,16 +3694,17 @@ window.Kpi_Related_Goal = {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("SOs");
     var camlQuery = new SP.CamlQuery();
-    typeOfIndex = indexType
-
-
+    typeOfIndex = indexType;
 
     // var query = '<View><Query><Where><And><Eq><FieldRef Name="RelatedStrategy" /><Value Type="Text">' + SosCode + '</Value></Eq><Eq><FieldRef Name="Types" /><Value Type="Choice">' + indexType + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
 
     //add FieldRef Name and Acending tru to sorth the data alphabetical
-    var query = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name="RelatedStrategy" /><Value Type="Text">' + SosCode + '</Value></Eq><Eq><FieldRef Name="Types" /><Value Type="Choice">' + indexType + '</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>'
-
-
+    var query =
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And><Eq><FieldRef Name=\"RelatedStrategy\" /><Value Type=\"Text\">" +
+      SosCode +
+      '</Value></Eq><Eq><FieldRef Name="Types" /><Value Type="Choice">' +
+      indexType +
+      "</Value></Eq></And></And></Where><OrderBy><FieldRef Name='Name' Ascending='True' /></OrderBy></Query></View>";
 
     camlQuery.set_viewXml(query);
     Kpi_Related_Goal.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -3571,11 +3715,10 @@ window.Kpi_Related_Goal = {
     );
   },
   g: {
-    array: []
+    array: [],
   },
-}
+};
 // end of get related goal
-
 
 window.Get_Related_Sos_Sector = {
   onSuccess: function (sender, args) {
@@ -3585,16 +3728,21 @@ window.Get_Related_Sos_Sector = {
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
 
-
       // var KPIType = $('#KPIType').val()
       // var parentMainSos = ""
 
-      var type = $('#Types').val()
-      var sector = oListItem.get_item("Sector") ? oListItem.get_item("Sector") : '';
-      var subSector = oListItem.get_item("SubSector") ? oListItem.get_item("SubSector") : ''
-      var portfolio = oListItem.get_item("RelatedPortfolio") ? oListItem.get_item("RelatedPortfolio") : ""
-      $('#Sector').val(sector)
-      $('#SubSector').val(subSector)
+      var type = $("#Types").val();
+      var sector = oListItem.get_item("Sector")
+        ? oListItem.get_item("Sector")
+        : "";
+      var subSector = oListItem.get_item("SubSector")
+        ? oListItem.get_item("SubSector")
+        : "";
+      var portfolio = oListItem.get_item("RelatedPortfolio")
+        ? oListItem.get_item("RelatedPortfolio")
+        : "";
+      $("#Sector").val(sector);
+      $("#SubSector").val(subSector);
 
       // if(KPIType == 'sublevel3'){
       //   parentMainSos = oListItem.get_item("RelatedStrategyObjective")
@@ -3610,7 +3758,6 @@ window.Get_Related_Sos_Sector = {
       // }
     }
     changeResources();
-
   },
   onError: function (sender, args) {
     console.log(
@@ -3622,7 +3769,10 @@ window.Get_Related_Sos_Sector = {
     var oList = clientContext.get_web().get_lists().getByTitle("SOs");
     var camlQuery = new SP.CamlQuery();
 
-    var query = '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' + SosCode + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
+    var query =
+      '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
+      SosCode +
+      "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
 
     camlQuery.set_viewXml(query);
     Get_Related_Sos_Sector.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -3633,42 +3783,53 @@ window.Get_Related_Sos_Sector = {
     );
   },
   g: {
-    array: []
+    array: [],
   },
-}
+};
 
 // Get Goal Strategy
 
 window.Goal_Strategy_Info = {
   onSuccess: function (sender, args) {
-
     var collListItem = Goal_Strategy_Info.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-    var pillersExist = ''
-    var strategyId = ''
+    var pillersExist = "";
+    var strategyId = "";
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
-      var strategyType = oListItem.get_item('Types') ? oListItem.get_item('Types') : ''
-      pillersExist = oListItem.get_item('PillarsExist') ? oListItem.get_item('PillarsExist') : ''
-      strategyId = oListItem.get_id()
-      $('#RelatedStrategyType').val(strategyType)
+      var strategyType = oListItem.get_item("Types")
+        ? oListItem.get_item("Types")
+        : "";
+      pillersExist = oListItem.get_item("PillarsExist")
+        ? oListItem.get_item("PillarsExist")
+        : "";
+      strategyId = oListItem.get_id();
+      $("#RelatedStrategyType").val(strategyType);
       // if (listkey == 'sos') {
       //   $('#RelatedStrategyPillars').val(pillersExist)
       // }
     }
 
     if (pillersExist === "Yes" || pillersExist == "yes") {
-      $('#PillarName').parent().parent().parent().parent().css('display', 'block')
-      Get_Pillers_Info.init(strategyId)
+      $("#PillarName")
+        .parent()
+        .parent()
+        .parent()
+        .parent()
+        .css("display", "block");
+      Get_Pillers_Info.init(strategyId);
     } else {
-
-      if (listkey == 'sos' || (listkey == 'changerequest')) {
-        $('#PillarName').parent().parent().parent().parent().css('display', 'none')
-        $('#PillarName').val("")
-        $('#StrategicDescription').val("")
+      if (listkey == "sos" || listkey == "changerequest") {
+        $("#PillarName")
+          .parent()
+          .parent()
+          .parent()
+          .parent()
+          .css("display", "none");
+        $("#PillarName").val("");
+        $("#StrategicDescription").val("");
       }
     }
-
   },
   onError: function (sender, args) {
     console.log(
@@ -3680,7 +3841,11 @@ window.Goal_Strategy_Info = {
     var oList = clientContext.get_web().get_lists().getByTitle("GoalStrategy");
     var camlQuery = new SP.CamlQuery();
     // camlQuery.set_viewXml("<View><Query></Query></View>");
-    camlQuery.set_viewXml('<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Title" /><Value Type="Text">' + StrategyTitle + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query><RowLimit>1</RowLimit></View>');
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Title\" /><Value Type=\"Text\">" +
+        StrategyTitle +
+        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>"
+    );
 
     Goal_Strategy_Info.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Goal_Strategy_Info.g.collListItem);
@@ -3689,114 +3854,104 @@ window.Goal_Strategy_Info = {
       Function.createDelegate(this, Goal_Strategy_Info.onError)
     );
   },
-  g: {
-  },
-}
+  g: {},
+};
 
 window.RelatedInitiative_Data_Request = {
   onSuccess: function (sender, args) {
     var collListItem = RelatedInitiative_Data_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-    var pillersExist = ''
-    var strategyId = ''
+    var pillersExist = "";
+    var strategyId = "";
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
 
+      $("[data-target_list=Initiatives] .Details-Item.NewItem").each(
+        function () {
+          $(this)
+            .find(
+              ".CFIELD>input," +
+                ".CFIELD>div[type=picker]," +
+                ".CFIELD>select[type=dropdown]," +
+                ".CFIELD>textarea," +
+                ".CFIELD>.multiselect-container"
+            )
 
-      $("[data-target_list=Initiatives] .Details-Item.NewItem").each(function () {
-        $(this)
-          .find(
-            ".CFIELD>input," +
+            .each(function () {
+              if ($(this).attr("type") == "picker") {
+                var id = $(this).attr("id");
+                // if (id) {
+                // $(`#${id}`).val(oListItem.get_item(id).get_lookupValue());
+                // //   oListItem
+                // // .get_item("" + $(this).attr("id") + "")
+                // // .get_lookupValue();
+                var pemail =
+                  oListItem.get_item("" + $(this).attr("id") + "") == null
+                    ? enternameemail
+                    : oListItem
+                        .get_item("" + $(this).attr("id") + "")
+                        .get_lookupValue();
+                $(this).attr("data-email", pemail);
 
-            ".CFIELD>div[type=picker]," +
+                if (pemail != enternameemail)
+                  $(this).attr(
+                    "user-email",
+                    oListItem.get_item($(this).attr("id")).get_email()
+                  );
 
-            ".CFIELD>select[type=dropdown]," +
+                var idinternal = $(this).attr("id");
+                var mp = new MyPeoplePicker();
+                mp.init($(this).attr("id"), { AllowMultipleValues: false });
 
-            ".CFIELD>textarea," +
+                // }
+              } else if ($(this).attr("type") == "date") {
+                var d =
+                  oListItem.get_item("" + $(this).attr("id") + "") == null
+                    ? "empty"
+                    : oListItem.get_item("" + $(this).attr("id") + "");
+                if (d != "empty") {
+                  var local = d.getTime();
+                  var offset = d.getTimezoneOffset() * (60 * 1000);
+                  var utc = new Date(local + offset);
+                  var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+                  var datetouse = riyadh
+                    .toLocaleString("en-US")
+                    .split(",")[0]
+                    .split("/");
+                  datetouse[0] =
+                    datetouse[0].length == 1
+                      ? "0" + datetouse[0]
+                      : datetouse[0];
+                  datetouse[1] =
+                    datetouse[1].length == 1
+                      ? "0" + datetouse[1]
+                      : datetouse[1];
+                  var datetouse2 =
+                    datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
+                  if ($(this).hasClass("withTime")) {
+                    var hour = d.getHours();
+                    var minutes = d.getMinutes();
+                    var timehour = hour + ":" + minutes + ":00";
+                    $("#Time").val("" + timehour);
+                  }
+                }
+                $(this).val(datetouse2);
 
-            ".CFIELD>.multiselect-container"
-
-          )
-
-          .each(function () {
-
-            if ($(this).attr("type") == "picker") {
-              var id = $(this).attr("id")
-              // if (id) {
-              // $(`#${id}`).val(oListItem.get_item(id).get_lookupValue());
-              // //   oListItem
-              // // .get_item("" + $(this).attr("id") + "")
-              // // .get_lookupValue();
-              var pemail =
-                oListItem.get_item("" + $(this).attr("id") + "") == null
-                  ? enternameemail
-                  : oListItem
-                    .get_item("" + $(this).attr("id") + "")
-                    .get_lookupValue();
-              $(this).attr("data-email", pemail);
-
-              if (pemail != enternameemail)
-                $(this).attr(
-                  "user-email",
-                  oListItem.get_item($(this).attr("id")).get_email()
-                );
-
-              var idinternal = $(this).attr("id");
-              var mp = new MyPeoplePicker();
-              mp.init($(this).attr("id"), { AllowMultipleValues: false });
-
-              // }
-
-            } else if ($(this).attr("type") == "date") {
-              var d =
-                oListItem.get_item("" + $(this).attr("id") + "") == null
-                  ? "empty"
-                  : oListItem.get_item("" + $(this).attr("id") + "");
-              if (d != "empty") {
-                var local = d.getTime();
-                var offset = d.getTimezoneOffset() * (60 * 1000);
-                var utc = new Date(local + offset);
-                var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
-                var datetouse = riyadh
-                  .toLocaleString("en-US")
-                  .split(",")[0]
-                  .split("/");
-                datetouse[0] =
-                  datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
-                datetouse[1] =
-                  datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
-                var datetouse2 =
-                  datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
-                if ($(this).hasClass("withTime")) {
-                  var hour = d.getHours();
-                  var minutes = d.getMinutes();
-                  var timehour = hour + ":" + minutes + ":00";
-                  $("#Time").val("" + timehour);
+                //hnm
+              } else if ($(this).attr("type") == "dropdown") {
+                var id = $(this).attr("id");
+                if (id) {
+                  $(`#${id}`).val(oListItem.get_item(id));
+                }
+              } else {
+                var id = $(this).attr("id");
+                if (id) {
+                  $(`#${id}`).val(oListItem.get_item(id));
                 }
               }
-              $(this).val(datetouse2);
-
-
-              //hnm
-            } else if ($(this).attr("type") == "dropdown") {
-              var id = $(this).attr("id")
-              if (id) {
-                $(`#${id}`).val(oListItem.get_item(id))
-              }
-
-            } else {
-              var id = $(this).attr("id")
-              if (id) {
-                $(`#${id}`).val(oListItem.get_item(id))
-              }
-
-            }
-
-          })
-
-      }
-
-      )
+            });
+        }
+      );
     }
   },
   onError: function (sender, args) {
@@ -3809,7 +3964,11 @@ window.RelatedInitiative_Data_Request = {
     var oList = clientContext.get_web().get_lists().getByTitle("Initiatives");
     var camlQuery = new SP.CamlQuery();
     // camlQuery.set_viewXml("<View><Query></Query></View>");
-    camlQuery.set_viewXml('<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' + relatedInitCode + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query><RowLimit>1</RowLimit></View>');
+    camlQuery.set_viewXml(
+      '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
+        relatedInitCode +
+        "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>"
+    );
 
     RelatedInitiative_Data_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(RelatedInitiative_Data_Request.g.collListItem);
@@ -3818,9 +3977,8 @@ window.RelatedInitiative_Data_Request = {
       Function.createDelegate(this, RelatedInitiative_Data_Request.onError)
     );
   },
-  g: {
-  },
-}
+  g: {},
+};
 // get pillers
 window.Get_Pillers_Info = {
   onSuccess: function (sender, args) {
@@ -3833,15 +3991,13 @@ window.Get_Pillers_Info = {
         name: oListItem.get_item("Name"),
         code: oListItem.get_item("Title"),
         id: oListItem.get_id(),
-        description: oListItem.get_item("Description")
+        description: oListItem.get_item("Description"),
       });
     }
 
     if (listkey == "changerequest") {
-      var pillerNameVal = $('#PillarName').val()
-      relatedPiller = $('#PillarName').val()
-
-
+      var pillerNameVal = $("#PillarName").val();
+      relatedPiller = $("#PillarName").val();
     }
 
     $("#PillarName").html(
@@ -3850,24 +4006,25 @@ window.Get_Pillers_Info = {
 
     Get_Pillers_Info.g.array.forEach(function (item, i, arr) {
       $("#PillarName").append(
-        '<option data-siblingvalue="' + Get_Pillers_Info.g.array[i].description + '" option-id="' +
-        Get_Pillers_Info.g.array[i].id +
-        '" value="' +
-        Get_Pillers_Info.g.array[i].code +
-        '">' +
-        Get_Pillers_Info.g.array[i].name +
-        "</option>"
+        '<option data-siblingvalue="' +
+          Get_Pillers_Info.g.array[i].description +
+          '" option-id="' +
+          Get_Pillers_Info.g.array[i].id +
+          '" value="' +
+          Get_Pillers_Info.g.array[i].code +
+          '">' +
+          Get_Pillers_Info.g.array[i].name +
+          "</option>"
       );
     });
     changeResources();
     if (isEdit) {
-      if (listkey == 'sos' && relatedPiller) {
-        $('#PillarName').val(relatedPiller)
+      if (listkey == "sos" && relatedPiller) {
+        $("#PillarName").val(relatedPiller);
       }
     } else if (listkey == "changerequest") {
-      $('#PillarName').val(relatedPiller)
+      $("#PillarName").val(relatedPiller);
     }
-
   },
   onError: function (sender, args) {
     console.log(
@@ -3878,7 +4035,11 @@ window.Get_Pillers_Info = {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("SPillars");
     var camlQuery = new SP.CamlQuery();
-    camlQuery.set_viewXml('<View><Query><Where><Eq><FieldRef Name="MasterID" /><Value Type="Text">' + strategyId + '</Value></Eq></Where></Query></View>');
+    camlQuery.set_viewXml(
+      '<View><Query><Where><Eq><FieldRef Name="MasterID" /><Value Type="Text">' +
+        strategyId +
+        "</Value></Eq></Where></Query></View>"
+    );
 
     Get_Pillers_Info.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Get_Pillers_Info.g.collListItem);
@@ -3888,11 +4049,10 @@ window.Get_Pillers_Info = {
     );
   },
   g: {
-    array: []
-  }
-}
+    array: [],
+  },
+};
 //
-
 
 //get sos for initiative
 //get related sos on initiative
@@ -3919,21 +4079,20 @@ window.Initiative_Sos = {
     Initiative_Sos.g.array.forEach(function (item, i, arr) {
       $("#RelatedObjective").append(
         '<option option-id="' +
-        Initiative_Sos.g.array[i].id +
-        '" value="' +
-        Initiative_Sos.g.array[i].code +
-        '">' +
-        Initiative_Sos.g.array[i].name +
-        "</option>"
+          Initiative_Sos.g.array[i].id +
+          '" value="' +
+          Initiative_Sos.g.array[i].code +
+          '">' +
+          Initiative_Sos.g.array[i].name +
+          "</option>"
       );
     });
 
     if (isEdit) {
-      $("#RelatedObjective").val(relatedObjInit)
+      $("#RelatedObjective").val(relatedObjInit);
     }
 
     changeResources();
-
   },
   onError: function (sender, args) {
     console.log(
@@ -3945,11 +4104,13 @@ window.Initiative_Sos = {
     var oList = clientContext.get_web().get_lists().getByTitle(listName);
     var camlQuery = new SP.CamlQuery();
 
-    var query = ''
-    if (type == 'vision') {
-      query = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type="Choice">main</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
-    } else if (type == 'strategically') {
-      query = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="Types" /><Value Type="Choice">sub</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
+    var query = "";
+    if (type == "vision") {
+      query =
+        "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">main</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+    } else if (type == "strategically") {
+      query =
+        "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">sub</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
     }
     //////////////////////////////////
     // if (type == 'vision') {
@@ -3969,7 +4130,7 @@ window.Initiative_Sos = {
   g: {
     array: [],
   },
-}
+};
 //
 
 // get related strategy sos on initiative
@@ -3997,16 +4158,15 @@ window.Initiative_Strategy_Sos = {
     Initiative_Strategy_Sos.g.array.forEach(function (item, i, arr) {
       $("#RelatedStrategyObjective").append(
         '<option option-id="' +
-        Initiative_Strategy_Sos.g.array[i].id +
-        '" value="' +
-        Initiative_Strategy_Sos.g.array[i].code +
-        '">' +
-        Initiative_Strategy_Sos.g.array[i].name +
-        "</option>"
+          Initiative_Strategy_Sos.g.array[i].id +
+          '" value="' +
+          Initiative_Strategy_Sos.g.array[i].code +
+          '">' +
+          Initiative_Strategy_Sos.g.array[i].name +
+          "</option>"
       );
     });
     changeResources();
-
   },
   onError: function (sender, args) {
     console.log(
@@ -4018,7 +4178,8 @@ window.Initiative_Strategy_Sos = {
     var oList = clientContext.get_web().get_lists().getByTitle(listName);
     var camlQuery = new SP.CamlQuery();
 
-    var query = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name="Types" /><Value Type="Choice">sub</Value></Eq><Eq><FieldRef Name="RelatedStrategyType" /><Value Type="Text">ministry</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
+    var query =
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And><Eq><FieldRef Name=\"Types\" /><Value Type=\"Choice\">sub</Value></Eq><Eq><FieldRef Name=\"RelatedStrategyType\" /><Value Type=\"Text\">ministry</Value></Eq></And></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
     //
     camlQuery.set_viewXml(query);
     Initiative_Strategy_Sos.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -4031,7 +4192,7 @@ window.Initiative_Strategy_Sos = {
   g: {
     array: [],
   },
-}
+};
 
 // comment it cause we handle it from json view type multiselectstring
 // window.MultiSelect_View = { // use it for invoices cause we need to save the delivrable code to use it in chart elmezaneyah in project home
@@ -4093,7 +4254,7 @@ window.Initiative_Strategy_Sos = {
 //get ProjectInitiativeDelevrable
 window.ProjectInitiativeDelevrable = {
   onSuccess: function (sender, args) {
-    var isDisabled = ''
+    var isDisabled = "";
     ProjectInitiativeDelevrable.g.array = [];
     var collListItem = ProjectInitiativeDelevrable.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
@@ -4107,15 +4268,13 @@ window.ProjectInitiativeDelevrable = {
     }
     if (listkey == "changerequest") {
       if (changeRequestBody.length) {
-        changeRequestBody.forEach(el => {
+        changeRequestBody.forEach((el) => {
           if (el.InternalName == "RelatedInitiativeDeliverable") {
+            var myselections = el.originalValue.split(":::");
 
-            var myselections = el.originalValue.split(':::');
-
-            initiativeDelevrableArr = myselections // to use it in edit page to get the data checked
-
+            initiativeDelevrableArr = myselections; // to use it in edit page to get the data checked
           }
-        })
+        });
       }
     }
     // $("#RelatedInitiativeDeliverable").prop("disabled", false);
@@ -4127,29 +4286,34 @@ window.ProjectInitiativeDelevrable = {
       var multiSelectHtml =
         '<li class="dropdown ul-bullet-remove">' +
         '<a href="#" data-toggle="dropdown" class="dropdown-toggle"><span data-trans-relatedinitiativedelevrable class="Resources"></span><b class="caret"></b></a>' +
-        '<ul type="" class="dropdown-menu">'
+        '<ul type="" class="dropdown-menu">';
 
       ProjectInitiativeDelevrable.g.array.forEach(function (item, i, arr) {
         multiSelectHtml +=
-          '<label class="grp-select">' + item.code + '</label>' +
-          '<li>' +
+          '<label class="grp-select">' +
+          item.code +
+          "</label>" +
+          "<li>" +
           '<div class="checkbox">' +
-          '<label>' +
-          '<input value="' + item.code + '" id="RelatedInitiativeDeliverable" type="checkbox" ' + isDisabled + ' ">' + item.name +
-          '</label>' +
-          '</div>' +
-          '</li>'
+          "<label>" +
+          '<input value="' +
+          item.code +
+          '" id="RelatedInitiativeDeliverable" type="checkbox" ' +
+          isDisabled +
+          ' ">' +
+          item.name +
+          "</label>" +
+          "</div>" +
+          "</li>";
       });
 
-      multiSelectHtml += '</li></ul>'
+      multiSelectHtml += "</li></ul>";
 
-      $("#RelatedInitiativeDeliverable").html(multiSelectHtml)
+      $("#RelatedInitiativeDeliverable").html(multiSelectHtml);
     }
 
-
-
-    if (isView) { // to get the name of delivrable over the code
-
+    if (isView) {
+      // to get the name of delivrable over the code
       // var relatedDelevrableName = ''
       // ProjectInitiativeDelevrable.g.array.forEach(el => {
       //   if (initiativeDelevrableArr.indexOf(el.code) > -1) {
@@ -4157,10 +4321,12 @@ window.ProjectInitiativeDelevrable = {
       //   }
       // })
       // $('#RelatedInitiativeDeliverable').html(relatedDelevrableName)
-
-    } else if (isEdit || listkey == "changerequest") { // checked the value from list on multi select
+    } else if (isEdit || listkey == "changerequest") {
+      // checked the value from list on multi select
       for (var i = 0; i < initiativeDelevrableArr.length; i++) {
-        $('#RelatedInitiativeDeliverable').find("input:checkbox[value='" + initiativeDelevrableArr[i] + "']").prop("checked", true);
+        $("#RelatedInitiativeDeliverable")
+          .find("input:checkbox[value='" + initiativeDelevrableArr[i] + "']")
+          .prop("checked", true);
       }
     }
 
@@ -4172,12 +4338,14 @@ window.ProjectInitiativeDelevrable = {
     );
   },
   init: function (listName, code) {
-
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(listName);
     var camlQuery = new SP.CamlQuery();
 
-    var query = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + code + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Name\' Ascending=\'True\' /></OrderBy></Query></View>'
+    var query =
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"InitiativeCode\" /><Value Type=\"Text\">" +
+      code +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Name' Ascending='True' /></OrderBy></Query></View>";
 
     camlQuery.set_viewXml(query);
     ProjectInitiativeDelevrable.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -4190,12 +4358,11 @@ window.ProjectInitiativeDelevrable = {
   g: {
     array: [],
   },
-}
+};
 
 //get ProjectInitiativeMilestone
 window.ProjectInitiativeMilestone = {
   onSuccess: function (sender, args) {
-
     ProjectInitiativeMilestone.g.array = [];
     var collListItem = ProjectInitiativeMilestone.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
@@ -4215,29 +4382,31 @@ window.ProjectInitiativeMilestone = {
         '<option data-trans-relatedinitiativemilestone class="Resources" value="" selected="" disabled=""></option>'
       );
 
-
       ProjectInitiativeMilestone.g.array.forEach(function (item, i, arr) {
         $("#RelatedInitiativeMilestone").append(
           '<option option-id="' +
-          ProjectInitiativeMilestone.g.array[i].id +
-          '" value="' +
-          ProjectInitiativeMilestone.g.array[i].code +
-          '">' +
-          ProjectInitiativeMilestone.g.array[i].name +
-          "</option>"
+            ProjectInitiativeMilestone.g.array[i].id +
+            '" value="' +
+            ProjectInitiativeMilestone.g.array[i].code +
+            '">' +
+            ProjectInitiativeMilestone.g.array[i].name +
+            "</option>"
         );
       });
     }
     if (isEdit) {
-      $("#RelatedInitiativeMilestone").val(initiativeMilestoneVal)
+      $("#RelatedInitiativeMilestone").val(initiativeMilestoneVal);
     }
 
     if (isView) {
-      Check_Item_Deleted.init('InitiativeMilestones', initiativeMilestoneVal, 'Title')
+      Check_Item_Deleted.init(
+        "InitiativeMilestones",
+        initiativeMilestoneVal,
+        "Title"
+      );
     }
 
     changeResources();
-
   },
   onError: function (sender, args) {
     console.log(
@@ -4248,7 +4417,10 @@ window.ProjectInitiativeMilestone = {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(listName);
     var camlQuery = new SP.CamlQuery();
-    var query = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + code + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
+    var query =
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"InitiativeCode\" /><Value Type=\"Text\">" +
+      code +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
 
     camlQuery.set_viewXml(query);
     ProjectInitiativeMilestone.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -4261,7 +4433,7 @@ window.ProjectInitiativeMilestone = {
   g: {
     array: [],
   },
-}
+};
 //budget item based on sector
 window.BudgetItem_Sector_Info = {
   onSuccess: function (sender, args) {
@@ -4280,18 +4452,17 @@ window.BudgetItem_Sector_Info = {
       '<option data-trans-budgetitem class="Resources" value="" selected="" disabled=""></option>'
     );
 
-
     $("#BudgetItem").prop("disabled", false);
 
     BudgetItem_Sector_Info.g.array.forEach(function (item, i, arr) {
       $("select#BudgetItem").append(
         '<option option-id="' +
-        BudgetItem_Sector_Info.g.array[i].id +
-        '" value="' +
-        BudgetItem_Sector_Info.g.array[i].code +
-        '">' +
-        BudgetItem_Sector_Info.g.array[i].name +
-        "</option>"
+          BudgetItem_Sector_Info.g.array[i].id +
+          '" value="' +
+          BudgetItem_Sector_Info.g.array[i].code +
+          '">' +
+          BudgetItem_Sector_Info.g.array[i].name +
+          "</option>"
       );
     });
     if (isEdit) {
@@ -4311,8 +4482,8 @@ window.BudgetItem_Sector_Info = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><Eq><FieldRef Name='RelatedToSector'/><Value Type='Text'>" +
-      SectorCode +
-      "</Value></Eq></Where></Query></View>"
+        SectorCode +
+        "</Value></Eq></Where></Query></View>"
     );
     BudgetItem_Sector_Info.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(BudgetItem_Sector_Info.g.collListItem);
@@ -4363,10 +4534,10 @@ window.Related_Info_Request = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       '<View><Query><Where><Eq><FieldRef Name="' +
-      field +
-      '" /> <Value Type="Text">' +
-      value +
-      "</Value></Eq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>"
+        field +
+        '" /> <Value Type="Text">' +
+        value +
+        "</Value></Eq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>"
     );
     Related_Info_Request.g.collListItem =
       Related_Info_Request.g.oList.getItems(camlQuery); //declared inside object scope only
@@ -4465,7 +4636,6 @@ window.Delete_Data_Submit = {
             listkey +
             PCODE_STRING;
         }
-
       }),
       Function.createDelegate(this, function (sender, args) {
         $("button.btn-delete").removeClass("loader-action");
@@ -4539,15 +4709,14 @@ window.Delete_Data_Submit = {
   },
 };
 
-
 window.Delete_Item_Via_Api = {
   init: function () {
-    debugger
-    var urlHandlerToDelete = ''
-    if (listkey == 'projects' && PCODE) {
-      urlHandlerToDelete = `${APIURL}/general/deleteprojectbyprojectcode?projectCode=${PCODE}`
-    } else if (listkey == 'initiatives' && ICODE) {
-      urlHandlerToDelete = `${APIURL}/general/deleteinitiativeitembyinitiativecode?initiativeCode=${ICODE}`
+    debugger;
+    var urlHandlerToDelete = "";
+    if (listkey == "projects" && PCODE) {
+      urlHandlerToDelete = `${APIURL}/general/deleteprojectbyprojectcode?projectCode=${PCODE}`;
+    } else if (listkey == "initiatives" && ICODE) {
+      urlHandlerToDelete = `${APIURL}/general/deleteinitiativeitembyinitiativecode?initiativeCode=${ICODE}`;
     }
     // else if(listkey == 'strategicpartnerships' && STCODE){
 
@@ -4557,27 +4726,25 @@ window.Delete_Item_Via_Api = {
       url: urlHandlerToDelete,
       method: "POST",
       contentType: "application/json;odata=verbose",
-      data: '',
+      data: "",
       headers: {
         Accept: "application/json; odata=verbose",
         // Authorization: `Bearer ${token}`,
         "X-HTTP-Method": "POST",
-        "if-Match": "*"
+        "if-Match": "*",
       },
       success: function (data) {
         $("button.btn-delete").removeClass("loader-action");
         $("button.btn-delete").addClass("loader-action-success");
         if (filesUrls.length) {
           for (let i = 0; i < filesUrls.length; i++) {
-            deleteAllFileFromDoc.init(filesUrls[i].url)
+            deleteAllFileFromDoc.init(filesUrls[i].url);
           }
         } else {
-
           window.location =
             _spPageContextInfo.webAbsoluteUrl +
             "/SitePages/Listing.aspx?ListKey=" +
             listkey;
-
         }
       },
       error: function (err) {
@@ -4586,10 +4753,8 @@ window.Delete_Item_Via_Api = {
         $("button.btn-delete").addClass("loader-action-error");
       },
     });
-
-
-  }
-}
+  },
+};
 
 //main delete
 window.Delete_Item_Submit = {
@@ -4611,7 +4776,7 @@ window.Delete_Item_Submit = {
 
         if (filesUrls.length) {
           for (let i = 0; i < filesUrls.length; i++) {
-            deleteAllFileFromDoc.init(filesUrls[i].url)
+            deleteAllFileFromDoc.init(filesUrls[i].url);
           }
         } else {
           if (
@@ -4626,9 +4791,9 @@ window.Delete_Item_Submit = {
               "/SitePages/Listing.aspx?ListKey=" +
               listkey;
           } else {
-            if (listkey == 'mainkpi') {
-              Delete_Kpi_Results.init() // to delete the kpi from kpi results
-            } else if (listkey == 'benefitmetrics' && ICODE) {
+            if (listkey == "mainkpi") {
+              Delete_Kpi_Results.init(); // to delete the kpi from kpi results
+            } else if (listkey == "benefitmetrics" && ICODE) {
               Delete_Benefits_Results.init();
             } else {
               window.location =
@@ -4693,15 +4858,13 @@ window.Delete_Item_Submit = {
         deletetitle = Resources.en["deleteconfirmation"];
       }
 
-
-
       bootbox.addLocale("custom", locale);
       bootbox.confirm({
         message: deletetitle,
         locale: "custom",
         callback: function (result) {
           if (result == true) {
-            if (listkey == 'projects' || listkey == 'initiatives') {
+            if (listkey == "projects" || listkey == "initiatives") {
               Delete_Item_Via_Api.init();
             } else {
               Delete_Item_Submit.init();
@@ -4715,111 +4878,118 @@ window.Delete_Item_Submit = {
   },
 };
 
-
 var Delete_Kpi_Results = {
   init: function () {
-    console.log("IN DELETE")
+    console.log("IN DELETE");
 
     var context = SP.ClientContext.get_current();
     var dfd = $.Deferred();
-    var programList = context.get_web().get_lists().getByTitle('KPIResults');
+    var programList = context.get_web().get_lists().getByTitle("KPIResults");
     var camlQuery = new SP.CamlQuery();
-    camlQuery.set_viewXml("<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='KPI'/><Value Type='Text'>" + KPICode + "</Value></Eq></And></Where></Query></View>")
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='KPI'/><Value Type='Text'>" +
+        KPICode +
+        "</Value></Eq></And></Where></Query></View>"
+    );
     //Get items by Query
     var progColl = programList.getItems(camlQuery);
     //Load item collection
     context.load(progColl);
-    context.executeQueryAsync(
-      function () {
-        var currentItemArray = [];
-        if (progColl.get_count() > 0) {
-          var progEnum = progColl.getEnumerator();
-          while (progEnum.moveNext()) {
-            var currentItem = progEnum.get_current();
-            var currentId = currentItem.get_item("ID");
-            //Get Item by current ID
-            var items = programList.getItemById(currentId);
-            items.set_item('DeletionStatus', 'Deleted');
-            //Update the item
-            items.update();
-            currentItemArray.push(items);
-            context.load(currentItemArray[currentItemArray.length - 1]);
-          }
-          context.executeQueryAsync(
-            function () {
-              window.location =
-                _spPageContextInfo.webAbsoluteUrl +
-                "/SitePages/Listing.aspx?ListKey=" +
-                listkey +
-                PCODE_STRING;
-
-              dfd.resolve();
-            },
-            function (sender, args) {
-              //Item updated fail
-              console.log(
-                "Request Failed to get kpi results Item Items :" + args.get_message()
-              );
-            }
-          );
+    context.executeQueryAsync(function () {
+      var currentItemArray = [];
+      if (progColl.get_count() > 0) {
+        var progEnum = progColl.getEnumerator();
+        while (progEnum.moveNext()) {
+          var currentItem = progEnum.get_current();
+          var currentId = currentItem.get_item("ID");
+          //Get Item by current ID
+          var items = programList.getItemById(currentId);
+          items.set_item("DeletionStatus", "Deleted");
+          //Update the item
+          items.update();
+          currentItemArray.push(items);
+          context.load(currentItemArray[currentItemArray.length - 1]);
         }
+        context.executeQueryAsync(
+          function () {
+            window.location =
+              _spPageContextInfo.webAbsoluteUrl +
+              "/SitePages/Listing.aspx?ListKey=" +
+              listkey +
+              PCODE_STRING;
+
+            dfd.resolve();
+          },
+          function (sender, args) {
+            //Item updated fail
+            console.log(
+              "Request Failed to get kpi results Item Items :" +
+                args.get_message()
+            );
+          }
+        );
       }
-    )
-  }
-}
+    });
+  },
+};
 
 var Delete_Benefits_Results = {
   init: function () {
-    debugger
+    debugger;
     var context = SP.ClientContext.get_current();
     var dfd = $.Deferred();
-    var programList = context.get_web().get_lists().getByTitle('BenefitsResults');
+    var programList = context
+      .get_web()
+      .get_lists()
+      .getByTitle("BenefitsResults");
     var camlQuery = new SP.CamlQuery();
-    camlQuery.set_viewXml("<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='RelatedBenefitMetrics'/><Value Type='Text'>" + benefitCode + "</Value></Eq></And></Where></Query></View>")
-
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='RelatedBenefitMetrics'/><Value Type='Text'>" +
+        benefitCode +
+        "</Value></Eq></And></Where></Query></View>"
+    );
 
     //Get items by Query
     var progColl = programList.getItems(camlQuery);
     //Load item collection
     context.load(progColl);
-    context.executeQueryAsync(
-      function () {
-        var currentItemArray = [];
-        if (progColl.get_count() > 0) {
-          var progEnum = progColl.getEnumerator();
-          while (progEnum.moveNext()) {
-            var currentItem = progEnum.get_current();
-            var currentId = currentItem.get_item("ID");
-            //Get Item by current ID
-            var items = programList.getItemById(currentId);
-            items.set_item('DeletionStatus', 'Deleted');
-            //Update the item
-            items.update();
-            currentItemArray.push(items);
-            context.load(currentItemArray[currentItemArray.length - 1]);
-          }
-          context.executeQueryAsync(
-            function () {
-              window.location =
-                _spPageContextInfo.webAbsoluteUrl +
-                "/SitePages/Listing.aspx?ListKey=" +
-                listkey +
-                PCODE_STRING;
-
-              dfd.resolve();
-            },
-            function (sender, args) {
-              //Item updated fail
-              console.log(
-                "Request Failed to get kpi results Item Items :" + args.get_message()
-              );
-            }
-          );
+    context.executeQueryAsync(function () {
+      var currentItemArray = [];
+      if (progColl.get_count() > 0) {
+        var progEnum = progColl.getEnumerator();
+        while (progEnum.moveNext()) {
+          var currentItem = progEnum.get_current();
+          var currentId = currentItem.get_item("ID");
+          //Get Item by current ID
+          var items = programList.getItemById(currentId);
+          items.set_item("DeletionStatus", "Deleted");
+          //Update the item
+          items.update();
+          currentItemArray.push(items);
+          context.load(currentItemArray[currentItemArray.length - 1]);
         }
+        context.executeQueryAsync(
+          function () {
+            window.location =
+              _spPageContextInfo.webAbsoluteUrl +
+              "/SitePages/Listing.aspx?ListKey=" +
+              listkey +
+              PCODE_STRING;
+
+            dfd.resolve();
+          },
+          function (sender, args) {
+            //Item updated fail
+            console.log(
+              "Request Failed to get kpi results Item Items :" +
+                args.get_message()
+            );
+          }
+        );
       }
-    )
-  }
-}
+    });
+  },
+};
 
 //get related documents
 //importent to read:
@@ -4871,7 +5041,9 @@ window.ViewAllFiles = {
         '<div class="col-lg-9 col-md-8 white-box p-4 fieldset-container"><div class="col-md-6 multiline"><label data-trans-document class="Resources">مرفقات: </label>';
       for (var i = 0; i < filesUrls.length; i++) {
         var filename = filesUrls[i].url.split("/").slice(-1)[0];
-        filename = filename.includes("_-_SystemUploadTime_-_") ? filename.split('_-_SystemUploadTime_-_')[1] : filename;
+        filename = filename.includes("_-_SystemUploadTime_-_")
+          ? filename.split("_-_SystemUploadTime_-_")[1]
+          : filename;
         if (isEdit) {
           FilesLink +=
             '<div class="file-container"><a class="File-Link" file-id="' +
@@ -4880,7 +5052,9 @@ window.ViewAllFiles = {
             filesUrls[i].title +
             '"  href="' +
             filesUrls[i].url +
-            '" download="' + filename + '" title="Download ' +
+            '" download="' +
+            filename +
+            '" title="Download ' +
             filename +
             '"><i class="fas fa-file-download" ></i>' +
             filename +
@@ -4891,7 +5065,6 @@ window.ViewAllFiles = {
             "', '" +
             filename +
             '\')"><i class="fas fa-times"></i></div>';
-
         } else {
           FilesLink +=
             '<div class="file-container"><a class="File-Link" file-id="' +
@@ -4900,7 +5073,9 @@ window.ViewAllFiles = {
             filesUrls[i].title +
             '"  href="' +
             filesUrls[i].url +
-            '" download="' + filename + '" title="Download ' +
+            '" download="' +
+            filename +
+            '" title="Download ' +
             filename +
             '"><i class="fas fa-file-download"></i>' +
             filename +
@@ -4914,9 +5089,7 @@ window.ViewAllFiles = {
       // );
 
       // $('.section-container.View_Form')
-      $(FilesLink).insertAfter(
-        $('.section-container.View_Form').last()
-      );
+      $(FilesLink).insertAfter($(".section-container.View_Form").last());
     }
     changeResources();
   },
@@ -4950,7 +5123,6 @@ window.ViewAllFiles = {
 // we use the ViewAllFiles_Main_Strategy to handle the threshold error so we create a query to RecursiveAll files based on ItedID and Title on  the Projects Document Library
 window.ViewAllFiles_Main_Strategy = {
   init: function () {
-
     var context = new SP.ClientContext.get_current();
     var web = context.get_web();
     var list = web.get_lists().getByTitle(DocumentLibraryName);
@@ -4960,13 +5132,13 @@ window.ViewAllFiles_Main_Strategy = {
 
     if (PCODE || ICODE || STCODE) {
       // var code = PCODE ? PCODE : ICODE
-      var code = ""
+      var code = "";
       if (PCODE) {
-        code = PCODE
+        code = PCODE;
       } else if (ICODE) {
-        code = ICODE
+        code = ICODE;
       } else if (STCODE) {
-        code = STCODE
+        code = STCODE;
       }
       query.set_viewXml(
         '<View Scope="RecursiveAll"> \
@@ -4976,16 +5148,16 @@ window.ViewAllFiles_Main_Strategy = {
                               <Eq> \
                                   <FieldRef Name="ItemID" /> \
                                   <Value Type="Text">' +
-        IID +
-        '</Value> \
+          IID +
+          '</Value> \
                               </Eq> \
                               <Eq> \
                               <FieldRef Name="Title" /> \
                               <Value Type="Text">' +
-        listkey +
-        "-" +
-        code +
-        "</Value> \
+          listkey +
+          "-" +
+          code +
+          "</Value> \
                           </Eq> \
                           </And>\
                           </Where> \
@@ -5002,14 +5174,14 @@ window.ViewAllFiles_Main_Strategy = {
                               <Eq> \
                                   <FieldRef Name="ItemID" /> \
                                   <Value Type="Text">' +
-        IID +
-        '</Value> \
+          IID +
+          '</Value> \
                               </Eq> \
                               <Eq> \
                               <FieldRef Name="Title" /> \
                               <Value Type="Text">' +
-        listkey +
-        "</Value> \
+          listkey +
+          "</Value> \
                           </Eq> \
                           </And>\
                           </Where> \
@@ -5020,7 +5192,7 @@ window.ViewAllFiles_Main_Strategy = {
     }
 
     ViewAllFiles_Main_Strategy.g.allItems = list.getItems(query);
-    if (listkey == 'mainkpi') {
+    if (listkey == "mainkpi") {
       context.load(
         ViewAllFiles_Main_Strategy.g.allItems,
         "Include(ID, Title, ContentType, File, ItemID, RelatedYear, RelatedMonth, RelatedQuarter, RelatedMid, RelatedActualY,docPurpose)"
@@ -5038,15 +5210,11 @@ window.ViewAllFiles_Main_Strategy = {
     );
   },
   success: function () {
-
-
     // var filesUrls = [];
     filesUrls = [];
     var ListEnumerator = ViewAllFiles_Main_Strategy.g.allItems.getEnumerator();
 
-
     while (ListEnumerator.moveNext()) {
-
       var currentFile = ListEnumerator.get_current();
       var FileID = currentFile.get_item("ItemID");
       var _contentType = currentFile.get_contentType();
@@ -5057,51 +5225,59 @@ window.ViewAllFiles_Main_Strategy = {
           if (currentFile.get_item("Title").indexOf("-") > -1) {
             title = currentFile.get_item("Title").split("-")[1];
           } else {
-            title = currentFile.get_item("Title")
+            title = currentFile.get_item("Title");
           }
 
-          if (listkey == 'mainkpi') {
-
+          if (listkey == "mainkpi") {
             filesUrls.push({
               url: File.get_serverRelativeUrl(),
               id: currentFile.get_item("ID"),
               title: title,
-              RelatedYear: currentFile.get_item("RelatedYear") ? currentFile.get_item("RelatedYear") : '',
-              RelatedMonth: currentFile.get_item("RelatedMonth") ? currentFile.get_item("RelatedMonth") : '',
-              RelatedQuarter: currentFile.get_item("RelatedQuarter") ? currentFile.get_item("RelatedQuarter") : '',
-              RelatedMid: currentFile.get_item("RelatedMid") ? currentFile.get_item("RelatedMid") : '',
-              RelatedActualY: currentFile.get_item("RelatedActualY") ? currentFile.get_item("RelatedActualY") : '',
-              filePurpose: currentFile.get_item("docPurpose") ? currentFile.get_item("docPurpose") : ""
+              RelatedYear: currentFile.get_item("RelatedYear")
+                ? currentFile.get_item("RelatedYear")
+                : "",
+              RelatedMonth: currentFile.get_item("RelatedMonth")
+                ? currentFile.get_item("RelatedMonth")
+                : "",
+              RelatedQuarter: currentFile.get_item("RelatedQuarter")
+                ? currentFile.get_item("RelatedQuarter")
+                : "",
+              RelatedMid: currentFile.get_item("RelatedMid")
+                ? currentFile.get_item("RelatedMid")
+                : "",
+              RelatedActualY: currentFile.get_item("RelatedActualY")
+                ? currentFile.get_item("RelatedActualY")
+                : "",
+              filePurpose: currentFile.get_item("docPurpose")
+                ? currentFile.get_item("docPurpose")
+                : "",
             });
           } else {
             filesUrls.push({
               url: File.get_serverRelativeUrl(),
               id: currentFile.get_item("ID"),
               title: title,
-              filePurpose: currentFile.get_item("docPurpose") ? currentFile.get_item("docPurpose") : ""
+              filePurpose: currentFile.get_item("docPurpose")
+                ? currentFile.get_item("docPurpose")
+                : "",
             });
           }
-
-
         }
       }
     }
 
     if (filesUrls.length > 0) {
-
-      console.log(filesUrls, "filePurpose")
-
+      console.log(filesUrls, "filePurpose");
 
       var FilesLink =
         '<div class="py-5 border-bottom section-container " id="file_container" data-groups="">' +
         '<div class="form-row"><div class="col-lg-3 col-md-4 mb-4"><h3 data-trans-documents class="Resources"></h3><span class="font-14"></span></div>' +
         '<div class="col-lg-9 col-md-8 white-box p-4 fieldset-container"><div class="col-md-6 multiline"><label data-trans-document class="Resources">مرفقات: </label>';
 
-      if (listkey == 'mainkpi') {
+      if (listkey == "mainkpi") {
+        var collapseContent = "";
 
-        var collapseContent = ''
-
-        if (PeriodType == 'monthly') {
+        if (PeriodType == "monthly") {
           collapseContent = `
             <table style="width:100%">
               <tr style="font-size:12px">
@@ -5119,8 +5295,8 @@ window.ViewAllFiles_Main_Strategy = {
                 <th data-trans-pattr20 class="Resources kpi-attach-table-head" id="ActualM12"></th>
               </tr>
             </table>
-          `
-        } else if (PeriodType == 'quarter') {
+          `;
+        } else if (PeriodType == "quarter") {
           collapseContent = `
           <table style="width:100%">
             <tr style="font-size:12px">
@@ -5130,8 +5306,8 @@ window.ViewAllFiles_Main_Strategy = {
               <th data-trans-quarter4 class="Resources kpi-attach-table-head" id="ActualQ4"></th>
             </tr>
           </table>
-            `
-        } else if (PeriodType == 'midterm') {
+            `;
+        } else if (PeriodType == "midterm") {
           collapseContent = `
           <table style="width:100%">
             <tr style="font-size:12px">
@@ -5139,23 +5315,22 @@ window.ViewAllFiles_Main_Strategy = {
               <th data-trans-actualmid2 class="Resources kpi-attach-table-head" id="ActualMid2"></th>
             </tr>
           </table>
-            `
-        } else if (PeriodType == 'year') {
+            `;
+        } else if (PeriodType == "year") {
           collapseContent = `
           <table style="width:100%">
             <tr style="font-size:12px">
               <th data-trans-actualy class="Resources kpi-attach-table-head" id="ActualY"></th>
             </tr>
           </table>
-            `
+            `;
         }
         collapseContent += `
           <div id="attachRow" class="kpi-attach-container">
           </div>
-          `
+          `;
 
-
-        FilesLink += `<div class="accordion" id="mainkpiattachtables">`
+        FilesLink += `<div class="accordion" id="mainkpiattachtables">`;
 
         FilesLink += `
           <div class="card" id="general-attach">
@@ -5172,7 +5347,7 @@ window.ViewAllFiles_Main_Strategy = {
             </div>
           </div>
         </div>
-          `
+          `;
 
         for (var i = kpiFromYear; i <= kpiToYear; i++) {
           FilesLink += `
@@ -5190,14 +5365,16 @@ window.ViewAllFiles_Main_Strategy = {
               </div>
             </div>
           </div>
-          `
+          `;
         }
-        FilesLink += `</div>`
+        FilesLink += `</div>`;
       }
       for (var i = 0; i < filesUrls.length; i++) {
         var filename = filesUrls[i].url.split("/").slice(-1)[0];
-        filename = filename.includes("_-_SystemUploadTime_-_") ? filename.split('_-_SystemUploadTime_-_')[1] : filename;
-        if (listkey != 'mainkpi') {
+        filename = filename.includes("_-_SystemUploadTime_-_")
+          ? filename.split("_-_SystemUploadTime_-_")[1]
+          : filename;
+        if (listkey != "mainkpi") {
           if (isEdit) {
             FilesLink +=
               '<div class="file-container"><a class="File-Link" file-id="' +
@@ -5206,7 +5383,9 @@ window.ViewAllFiles_Main_Strategy = {
               filesUrls[i].title +
               '"  href="' +
               filesUrls[i].url +
-              '" download="' + filename + '" title="Download ' +
+              '" download="' +
+              filename +
+              '" title="Download ' +
               filename +
               '"><i class="fas fa-file-download" ></i>' +
               filename +
@@ -5216,7 +5395,9 @@ window.ViewAllFiles_Main_Strategy = {
               filesUrls[i].url +
               "', '" +
               filename +
-              '\')"><i class="fas fa-times"><span class="filePurpose">' + filesUrls[i].filePurpose + '</span></i></div>';
+              '\')"><i class="fas fa-times"><span class="filePurpose">' +
+              filesUrls[i].filePurpose +
+              "</span></i></div>";
           } else {
             FilesLink +=
               '<div class="file-container"><a class="File-Link" file-id="' +
@@ -5225,12 +5406,15 @@ window.ViewAllFiles_Main_Strategy = {
               filesUrls[i].title +
               '"  href="' +
               filesUrls[i].url +
-              '" download="' + filename + '" title="Download ' +
+              '" download="' +
+              filename +
+              '" title="Download ' +
               filename +
               '"><i class="fas fa-file-download"></i>' +
-              '<span class="filePurpose">' + filesUrls[i].filePurpose + '</span>' +
+              '<span class="filePurpose">' +
+              filesUrls[i].filePurpose +
+              "</span>" +
               filename +
-
               "</a></div>";
           }
         }
@@ -5238,83 +5422,99 @@ window.ViewAllFiles_Main_Strategy = {
       FilesLink += "</div></div></div></div>";
       // $('.section-container:not([data-target_list]) .fieldset-container').eq($('.section-container:not([data-target_list]) .fieldset-container').length-1).append(FilesLink);
 
-
-
       if (isView) {
-        $(FilesLink).insertAfter(
-          $('.section-container.View_Form').last()
-        );
+        $(FilesLink).insertAfter($(".section-container.View_Form").last());
       } else {
         $(FilesLink).insertBefore(
           $("button.btn.btn-action.btn-cancel").parent().parent()
         );
       }
 
-
-      if (listkey == 'mainkpi') {
-
+      if (listkey == "mainkpi") {
         var yearsArr = [],
-          lstTabCLicked = '',
-          lstYearClicked = '',
+          lstTabCLicked = "",
+          lstYearClicked = "",
           typeArr = [],
-          relatedType = '';
+          relatedType = "";
 
-        var numberOfResults = kpiToYear - kpiFromYear
+        var numberOfResults = kpiToYear - kpiFromYear;
 
         for (var i = 0; i <= numberOfResults; i++) {
-          yearsArr.push(Number(kpiFromYear) + i)
+          yearsArr.push(Number(kpiFromYear) + i);
         }
 
-        if (PeriodType == 'monthly') {
-          var monthsArr = ['ActualM1', 'ActualM2', 'ActualM3', 'ActualM4', 'ActualM5', 'ActualM6', 'ActualM7', 'ActualM8', 'ActualM9', 'ActualM10', 'ActualM11', 'ActualM12']
-          typeArr = monthsArr
-        } else if (PeriodType == 'quarter') {
-          var quarterArr = ['ActualQ1', 'ActualQ2', 'ActualQ3', 'ActualQ4']
-          typeArr = quarterArr
-        } else if (PeriodType == 'midterm') {
-          var midArr = ['ActualMid1', 'ActualMid2']
-          typeArr = midArr
-        } else if (PeriodType == 'year') {
-          var yearArr = ['ActualY']
-          typeArr = yearArr
+        if (PeriodType == "monthly") {
+          var monthsArr = [
+            "ActualM1",
+            "ActualM2",
+            "ActualM3",
+            "ActualM4",
+            "ActualM5",
+            "ActualM6",
+            "ActualM7",
+            "ActualM8",
+            "ActualM9",
+            "ActualM10",
+            "ActualM11",
+            "ActualM12",
+          ];
+          typeArr = monthsArr;
+        } else if (PeriodType == "quarter") {
+          var quarterArr = ["ActualQ1", "ActualQ2", "ActualQ3", "ActualQ4"];
+          typeArr = quarterArr;
+        } else if (PeriodType == "midterm") {
+          var midArr = ["ActualMid1", "ActualMid2"];
+          typeArr = midArr;
+        } else if (PeriodType == "year") {
+          var yearArr = ["ActualY"];
+          typeArr = yearArr;
         }
-        yearsArr.forEach(yearVal => {
-          typeArr.forEach(type => {
-
+        yearsArr.forEach((yearVal) => {
+          typeArr.forEach((type) => {
             $(`#year${yearVal} .card-body #${type}`).click(function () {
-
-              console.log(lstTabCLicked, "lstTabCLicked")
-              console.log(yearVal, "yearVal")
+              console.log(lstTabCLicked, "lstTabCLicked");
+              console.log(yearVal, "yearVal");
 
               if (lstTabCLicked && lstYearClicked)
-                $(`#year${lstYearClicked} .card-body #${lstTabCLicked}`).css('background', '#fff') // change background color when click on month
+                $(`#year${lstYearClicked} .card-body #${lstTabCLicked}`).css(
+                  "background",
+                  "#fff"
+                ); // change background color when click on month
 
-              $(`#year${yearVal} .card-body #${type}`).css('background', '#D0D0D0') // change background color when click on month
+              $(`#year${yearVal} .card-body #${type}`).css(
+                "background",
+                "#D0D0D0"
+              ); // change background color when click on month
 
-              var attachment = ''
+              var attachment = "";
               filesUrls.filter((ele) => {
-                if (PeriodType == 'monthly') {
-                  relatedType = ele.RelatedMonth
-                } else if (PeriodType == 'quarter') {
-                  relatedType = ele.RelatedQuarter
-                } else if (PeriodType == 'midterm') {
-                  relatedType = ele.RelatedMid
-                } else if (PeriodType == 'year') {
-                  relatedType = ele.RelatedActualY
+                if (PeriodType == "monthly") {
+                  relatedType = ele.RelatedMonth;
+                } else if (PeriodType == "quarter") {
+                  relatedType = ele.RelatedQuarter;
+                } else if (PeriodType == "midterm") {
+                  relatedType = ele.RelatedMid;
+                } else if (PeriodType == "year") {
+                  relatedType = ele.RelatedActualY;
                 }
 
-                if ((ele.RelatedYear == yearVal) && (relatedType == type)) {
+                if (ele.RelatedYear == yearVal && relatedType == type) {
                   if (isEdit) {
                     var filename = ele.url.split("/").slice(-1)[0];
-                    filename = filename.includes("_-_SystemUploadTime_-_") ? filename.split('_-_SystemUploadTime_-_')[1] : filename;
+                    filename = filename.includes("_-_SystemUploadTime_-_")
+                      ? filename.split("_-_SystemUploadTime_-_")[1]
+                      : filename;
 
-                    attachment += '<div class="file-container"><a class="File-Link" file-id="' +
+                    attachment +=
+                      '<div class="file-container"><a class="File-Link" file-id="' +
                       ele.id +
                       '"  file-title="' +
                       ele.title +
                       '"  href="' +
                       ele.url +
-                      '" download="' + filename + '" title="Download ' +
+                      '" download="' +
+                      filename +
+                      '" title="Download ' +
                       filename +
                       '"><i class="fas fa-file-download" ></i>' +
                       filename +
@@ -5324,10 +5524,14 @@ window.ViewAllFiles_Main_Strategy = {
                       ele.url +
                       "', '" +
                       filename +
-                      '\')"><i class="fas fa-times"><span class="filePurpose">' + ele.filePurpose + '</span></i></div>';
+                      '\')"><i class="fas fa-times"><span class="filePurpose">' +
+                      ele.filePurpose +
+                      "</span></i></div>";
                   } else {
                     var filename = ele.url.split("/").slice(-1)[0];
-                    filename = filename.includes("_-_SystemUploadTime_-_") ? filename.split('_-_SystemUploadTime_-_')[1] : filename;
+                    filename = filename.includes("_-_SystemUploadTime_-_")
+                      ? filename.split("_-_SystemUploadTime_-_")[1]
+                      : filename;
 
                     attachment +=
                       '<div class="file-container"><a class="File-Link" file-id="' +
@@ -5336,35 +5540,41 @@ window.ViewAllFiles_Main_Strategy = {
                       ele.title +
                       '"  href="' +
                       ele.url +
-                      '" download="' + filename + '" title="Download ' +
+                      '" download="' +
+                      filename +
+                      '" title="Download ' +
                       filename +
                       '"><i class="fas fa-file-download"></i>' +
-                      '<span class="filePurpose">' + ele.filePurpose + '</span>' +
+                      '<span class="filePurpose">' +
+                      ele.filePurpose +
+                      "</span>" +
                       filename +
                       "</a></div>";
                   }
                 }
                 $(`#year${yearVal} .card-body #attachRow`).html(attachment);
-
-              })
-              lstTabCLicked = type
-              lstYearClicked = yearVal
-
-
-            })
-          })
-
-        })
-
-
+              });
+              lstTabCLicked = type;
+              lstYearClicked = yearVal;
+            });
+          });
+        });
 
         if (filesUrls.length > 0) {
-          var generalAttach = ''
+          var generalAttach = "";
 
-          filesUrls.forEach(el => {
-            if (!el.RelatedActualY && !el.RelatedMid && !el.RelatedMonth && !el.RelatedQuarter && !el.RelatedYear) {
+          filesUrls.forEach((el) => {
+            if (
+              !el.RelatedActualY &&
+              !el.RelatedMid &&
+              !el.RelatedMonth &&
+              !el.RelatedQuarter &&
+              !el.RelatedYear
+            ) {
               var filename = el.url.split("/").slice(-1)[0];
-              filename = filename.includes("_-_SystemUploadTime_-_") ? filename.split('_-_SystemUploadTime_-_')[1] : filename;
+              filename = filename.includes("_-_SystemUploadTime_-_")
+                ? filename.split("_-_SystemUploadTime_-_")[1]
+                : filename;
 
               if (isEdit) {
                 generalAttach +=
@@ -5374,7 +5584,9 @@ window.ViewAllFiles_Main_Strategy = {
                   el.title +
                   '"  href="' +
                   el.url +
-                  '" download="' + filename + '" title="Download ' +
+                  '" download="' +
+                  filename +
+                  '" title="Download ' +
                   filename +
                   '"><i class="fas fa-file-download" ></i>' +
                   filename +
@@ -5384,7 +5596,9 @@ window.ViewAllFiles_Main_Strategy = {
                   el.url +
                   "', '" +
                   filename +
-                  '\')"><i class="fas fa-times"><span class="filePurpose">' + el.filePurpose + '</span></i></div>';
+                  '\')"><i class="fas fa-times"><span class="filePurpose">' +
+                  el.filePurpose +
+                  "</span></i></div>";
               } else {
                 generalAttach +=
                   '<div class="file-container"><a class="File-Link" file-id="' +
@@ -5393,18 +5607,23 @@ window.ViewAllFiles_Main_Strategy = {
                   el.title +
                   '"  href="' +
                   el.url +
-                  '" download="' + filename + '" title="Download ' +
+                  '" download="' +
+                  filename +
+                  '" title="Download ' +
                   filename +
                   '"><i class="fas fa-file-download"></i>' +
-                  '<span class="filePurpose">' + el.filePurpose + '</span>' +
+                  '<span class="filePurpose">' +
+                  el.filePurpose +
+                  "</span>" +
                   filename +
                   "</a></div>";
               }
-              console.log("THIS IS AN ELEMENTT")
+              console.log("THIS IS AN ELEMENTT");
             }
-          })
-          $(`#general-attach .card-body #general-attach-content`).html(generalAttach);
-
+          });
+          $(`#general-attach .card-body #general-attach-content`).html(
+            generalAttach
+          );
         }
 
         if (isView) {
@@ -5417,7 +5636,7 @@ window.ViewAllFiles_Main_Strategy = {
       // );
       changeResources();
     }
-    if (filesUrls.length == 0 && listkey == 'mainkpi' && isView) {
+    if (filesUrls.length == 0 && listkey == "mainkpi" && isView) {
       View_Current_Kpi.init(); // show the kpi result for current time (extra section of view) to invoke the func if there is no attach
     }
   },
@@ -5451,7 +5670,6 @@ window.ViewAllFiles_Main_Strategy = {
 
 window.ViewAll_MasterFiles = {
   init: function (itemId, listName) {
-
     var context = new SP.ClientContext.get_current();
     var web = context.get_web();
     var list = web.get_lists().getByTitle(DocumentLibraryName);
@@ -5461,13 +5679,13 @@ window.ViewAll_MasterFiles = {
 
     if (PCODE || ICODE || STCODE) {
       // var code = PCODE ? PCODE : ICODE
-      var code = ""
+      var code = "";
       if (PCODE) {
-        code = PCODE
+        code = PCODE;
       } else if (ICODE) {
-        code = ICODE
+        code = ICODE;
       } else if (STCODE) {
-        code = STCODE
+        code = STCODE;
       }
       query.set_viewXml(
         '<View Scope="RecursiveAll"> \
@@ -5477,16 +5695,16 @@ window.ViewAll_MasterFiles = {
                               <Eq> \
                                   <FieldRef Name="ItemID" /> \
                                   <Value Type="Text">' +
-        itemId +
-        '</Value> \
+          itemId +
+          '</Value> \
                               </Eq> \
                               <Eq> \
                               <FieldRef Name="Title" /> \
                               <Value Type="Text">' +
-        listName +
-        "-" +
-        code +
-        "</Value> \
+          listName +
+          "-" +
+          code +
+          "</Value> \
                           </Eq> \
                           </And>\
                           </Where> \
@@ -5498,10 +5716,9 @@ window.ViewAll_MasterFiles = {
 
     ViewAll_MasterFiles.g.allItems = list.getItems(query);
 
+    ViewAll_MasterFiles.g.itemId = itemId;
 
-    ViewAll_MasterFiles.g.itemId = itemId
-
-    ViewAll_MasterFiles.g.listName = listName
+    ViewAll_MasterFiles.g.listName = listName;
 
     context.load(
       ViewAll_MasterFiles.g.allItems,
@@ -5512,17 +5729,15 @@ window.ViewAll_MasterFiles = {
       Function.createDelegate(this, ViewAll_MasterFiles.success),
       Function.createDelegate(this, ViewAll_MasterFiles.failed)
     );
-
   },
   success: function () {
     filesUrls = [];
     var ListEnumerator = ViewAll_MasterFiles.g.allItems.getEnumerator();
 
-    var itemId = ViewAll_MasterFiles.g.itemId
-    var listName = ViewAll_MasterFiles.g.listName
+    var itemId = ViewAll_MasterFiles.g.itemId;
+    var listName = ViewAll_MasterFiles.g.listName;
 
     while (ListEnumerator.moveNext()) {
-
       var currentFile = ListEnumerator.get_current();
       var FileID = currentFile.get_item("ItemID");
 
@@ -5535,29 +5750,28 @@ window.ViewAll_MasterFiles = {
           if (currentFile.get_item("Title").indexOf("-") > -1) {
             title = currentFile.get_item("Title").split("-")[1];
           } else {
-            title = currentFile.get_item("Title")
+            title = currentFile.get_item("Title");
           }
-
 
           filesUrls.push({
             url: File.get_serverRelativeUrl(),
             id: currentFile.get_item("ID"),
             title: title,
-            filePurpose: currentFile.get_item("docPurpose") ? currentFile.get_item("docPurpose") : ""
+            filePurpose: currentFile.get_item("docPurpose")
+              ? currentFile.get_item("docPurpose")
+              : "",
           });
-
-
         }
       }
     }
     if (filesUrls.length > 0) {
+      var generalAttach = "";
 
-
-      var generalAttach = ''
-
-      filesUrls.forEach(el => {
+      filesUrls.forEach((el) => {
         var filename = el.url.split("/").slice(-1)[0];
-        filename = filename.includes("_-_SystemUploadTime_-_") ? filename.split('_-_SystemUploadTime_-_')[1] : filename;
+        filename = filename.includes("_-_SystemUploadTime_-_")
+          ? filename.split("_-_SystemUploadTime_-_")[1]
+          : filename;
 
         generalAttach +=
           '<div class="file-container col-md-12"><a class="File-Link" file-id="' +
@@ -5566,35 +5780,39 @@ window.ViewAll_MasterFiles = {
           el.title +
           '"  href="' +
           el.url +
-          '" download="' + filename + '" title="Download ' +
+          '" download="' +
+          filename +
+          '" title="Download ' +
           filename +
           '"><i class="fas fa-file-download"></i>' +
-          '<span class="filePurpose">' + el.filePurpose + '</span>' +
+          '<span class="filePurpose">' +
+          el.filePurpose +
+          "</span>" +
           filename +
           "</a></div>";
-
-      })
+      });
 
       // InitiativeDeliverables
       // 435
-      $('[data-target_list="' + listName + '"] [data-ID="' + itemId + '"]').append(generalAttach)
-
-
+      $(
+        '[data-target_list="' + listName + '"] [data-ID="' + itemId + '"]'
+      ).append(generalAttach);
     }
 
-    getMasterFilesArr.shift()
+    getMasterFilesArr.shift();
 
     if (getMasterFilesArr.length) {
-
-      ViewAll_MasterFiles.init(getMasterFilesArr[0].masterItemId, getMasterFilesArr[0].CurrList)
+      ViewAll_MasterFiles.init(
+        getMasterFilesArr[0].masterItemId,
+        getMasterFilesArr[0].CurrList
+      );
     }
-
   },
   failed: function (sender, args) {
     console.log("failed. Message:" + args.get_message());
   },
   g: {},
-}
+};
 
 var GetProject_Info = {
   onSuccess: function (sender, args) {
@@ -5612,13 +5830,13 @@ var GetProject_Info = {
     if (PCODE && listkey != "projects") {
       $(".headtwo").append(
         '<a class="" href="' +
-        _spPageContextInfo.webServerRelativeUrl +
-        '"><span class="litem">Home</span></a>' +
-        '<a class="" href="' +
-        _spPageContextInfo.webServerRelativeUrl +
-        "/SitePages/View.aspx?ListKey=projects&IID=" +
-        PID +
-        '"><span data-trans-projectdetails class="litem Resources"></span></a>' //+
+          _spPageContextInfo.webServerRelativeUrl +
+          '"><span class="litem">Home</span></a>' +
+          '<a class="" href="' +
+          _spPageContextInfo.webServerRelativeUrl +
+          "/SitePages/View.aspx?ListKey=projects&IID=" +
+          PID +
+          '"><span data-trans-projectdetails class="litem Resources"></span></a>' //+
         //'<a class="" href="'+_spPageContextInfo.webServerRelativeUrl+'"><span class="litem">Project Phase</span></a>'//+
         // '<a class="" href="'+_spPageContextInfo.webServerRelativeUrl+'"><span class="litem">Project Report</span></a>'
       );
@@ -5673,28 +5891,28 @@ var GetProject_Info = {
       if (PCODE) {
         $("#O365_SearchBoxContainer_container").append(
           '<div class="User-Not"><div class="SNotifications"><span class="Tasks"><i class="fas fa-tasks" data-count="0"></i><a href="' +
-          _spPageContextInfo.siteServerRelativeUrl +
-          "/SitePages/Listing.aspx?ListKey=tasks&PCODE=" +
-          PCODE +
-          '">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="0"></i><a href="' +
-          _spPageContextInfo.siteServerRelativeUrl +
-          "/SitePages/Listing.aspx?ListKey=risks&PCODE=" +
-          PCODE +
-          '">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="0"></i><a href="' +
-          _spPageContextInfo.siteServerRelativeUrl +
-          "/SitePages/Listing.aspx?ListKey=issues&PCODE=" +
-          PCODE +
-          '"">Issues</a></span></div><div class="UProfile"></div></div>'
+            _spPageContextInfo.siteServerRelativeUrl +
+            "/SitePages/Listing.aspx?ListKey=tasks&PCODE=" +
+            PCODE +
+            '">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="0"></i><a href="' +
+            _spPageContextInfo.siteServerRelativeUrl +
+            "/SitePages/Listing.aspx?ListKey=risks&PCODE=" +
+            PCODE +
+            '">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="0"></i><a href="' +
+            _spPageContextInfo.siteServerRelativeUrl +
+            "/SitePages/Listing.aspx?ListKey=issues&PCODE=" +
+            PCODE +
+            '"">Issues</a></span></div><div class="UProfile"></div></div>'
         );
       } else {
         $("#O365_SearchBoxContainer_container").append(
           '<div class="User-Not"><div class="SNotifications"><span class="Tasks"><i class="fas fa-tasks" data-count="0"></i><a href="' +
-          _spPageContextInfo.siteServerRelativeUrl +
-          '/SitePages/Listing.aspx?ListKey=tasks">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="0"></i><a href="' +
-          _spPageContextInfo.siteServerRelativeUrl +
-          '/SitePages/Listing.aspx?ListKey=risks">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="0"></i><a href="' +
-          _spPageContextInfo.siteServerRelativeUrl +
-          '/SitePages/Listing.aspx?ListKey=issues">Issues</a></span></div><div class="UProfile"></div></div>'
+            _spPageContextInfo.siteServerRelativeUrl +
+            '/SitePages/Listing.aspx?ListKey=tasks">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="0"></i><a href="' +
+            _spPageContextInfo.siteServerRelativeUrl +
+            '/SitePages/Listing.aspx?ListKey=risks">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="0"></i><a href="' +
+            _spPageContextInfo.siteServerRelativeUrl +
+            '/SitePages/Listing.aspx?ListKey=issues">Issues</a></span></div><div class="UProfile"></div></div>'
         );
       }
     },
@@ -5755,8 +5973,8 @@ var Revenue_Info_Request = {
           .find(" > label")
           .append(
             '<span style="font-size:12px;color: #b6c7b6;"> - [Remaining Budget is ' +
-            RemainingBudget +
-            "]</span>"
+              RemainingBudget +
+              "]</span>"
           );
       }
     },
@@ -5877,13 +6095,11 @@ var Issues_Info_Request = {
 //KPI equations
 window.equationKPI = {
   onSuccess: function (sender, args) {
-
     equationKPI.g.array = [];
     var collListItem = equationKPI.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
 
     while (listItemEnum.moveNext()) {
-
       var oListItem = listItemEnum.get_current();
       kpiEquationID = oListItem.get_id();
       kpiEquation = oListItem.get_item("KPIInput") || "";
@@ -5898,60 +6114,60 @@ window.equationKPI = {
         F: oListItem.get_item("F"),
         G: oListItem.get_item("G"),
       });
-      $('input#KPIEquation').val(oListItem.get_item("Equation") || '');
-      $('p#KPIEquation').text(oListItem.get_item("Equation") || '');
+      $("input#KPIEquation").val(oListItem.get_item("Equation") || "");
+      $("p#KPIEquation").text(oListItem.get_item("Equation") || "");
     }
-
 
     var myCKeys =
       kpiEquationsComponents.length > 0
         ? Object.keys(kpiEquationsComponents[0])
         : []; // get internal names keys
 
-
-
     // remove required field when there is no equation
-    if (!kpiEquation && (isEdit || RListKey == 'mainkpi')) {
-      $('#Year,#Months,#Quarter,#Midterms,#Years').removeAttr('required');
-      $('#Year,#Months,#Quarter,#Midterms,#Years').parent().removeAttr('required');
-      $('#Year,#Months,#Quarter,#Midterms,#Years').prev('label').removeAttr('required');
+    if (!kpiEquation && (isEdit || RListKey == "mainkpi")) {
+      $("#Year,#Months,#Quarter,#Midterms,#Years").removeAttr("required");
+      $("#Year,#Months,#Quarter,#Midterms,#Years")
+        .parent()
+        .removeAttr("required");
+      $("#Year,#Months,#Quarter,#Midterms,#Years")
+        .prev("label")
+        .removeAttr("required");
 
       // to make the section disable if there is no equation yet
-      var disableSection = $('#KPIEquation').closest(".section-container")
-      disableSection.addClass("disable_section")
+      var disableSection = $("#KPIEquation").closest(".section-container");
+      disableSection.addClass("disable_section");
     }
 
     if (kpiEquation) {
-      kpiEquation = kpiEquation.toUpperCase() // kpi eq should be upper case to avoid the  editequation btn not appear in view
+      kpiEquation = kpiEquation.toUpperCase(); // kpi eq should be upper case to avoid the  editequation btn not appear in view
       // set display text
 
       myCKeys.forEach((o) => {
         kpiEquationsComponents[0][o]
           ? $(`input#${o},p#${o}`)
-            .parent()
-            .show()
-            .find(">label")
-            .text(kpiEquationsComponents[0][o])
+              .parent()
+              .show()
+              .find(">label")
+              .text(kpiEquationsComponents[0][o])
           : $(`input#${o},p#${o}`).parent().remove();
         // kpiEquation = isView                                   // rewrite the if condition to handle the btn eq in view
         //   ? kpiEquation.replaceAll(o, $(`p#${o}`).text())
         //   : kpiEquation.replaceAll(o, $(`input#${o}`).val());
         if (isView) {
-          var val = $(`p#${o}`).text()
+          var val = $(`p#${o}`).text();
           if (val != No_Data) {
-            kpiEquation = kpiEquation.replaceAll(o, $(`p#${o}`).text())
+            kpiEquation = kpiEquation.replaceAll(o, $(`p#${o}`).text());
           } else {
-            kpiEquation = kpiEquation.replaceAll(o, 0)
+            kpiEquation = kpiEquation.replaceAll(o, 0);
           }
         } else {
           // assign val = 0 if there is no val to avoid err and to make try cath working normally as expectid
-          var elemVal = $(`input#${o}`).val() ? $(`input#${o}`).val() : 0
-          kpiEquation = kpiEquation.replaceAll(o, elemVal)
+          var elemVal = $(`input#${o}`).val() ? $(`input#${o}`).val() : 0;
+          kpiEquation = kpiEquation.replaceAll(o, elemVal);
         }
       });
 
-
-      kpiEquation = kpiEquation.replaceAll(',', '') // remove , from high number
+      kpiEquation = kpiEquation.replaceAll(",", ""); // remove , from high number
 
       // add try if there is no issue with equation
       // add catch to appear a msg and make the btn disabled if there is an issue with equation
@@ -5963,21 +6179,31 @@ window.equationKPI = {
             : eval(kpiEquation);
       } catch (err) {
         if (listkey == "changerequest") {
-          $(".cr-related-item-section.changerequest").last().find(".fieldset-container").addClass("disable_section")
-          $(".cr-related-item-section.changerequest").last().find(".form-row .col-lg-3.col-md-4.mb-4").append(`<p data-trans-equationerr class="redColor Resources"></p>`)
+          $(".cr-related-item-section.changerequest")
+            .last()
+            .find(".fieldset-container")
+            .addClass("disable_section");
+          $(".cr-related-item-section.changerequest")
+            .last()
+            .find(".form-row .col-lg-3.col-md-4.mb-4")
+            .append(
+              `<p data-trans-equationerr class="redColor Resources"></p>`
+            );
         } else {
           $("body").append(
             "<style>" +
-            ".btn.btn-action.btn-cancel{opacity: .6;pointer-events: none;}" +
-            ".btn.btn-action.btn-save{opacity: .6;pointer-events: none;}" +
-            ".btn.btn-action.btn-delete{opacity: .6;pointer-events: none;}" +
-            "</style>"
+              ".btn.btn-action.btn-cancel{opacity: .6;pointer-events: none;}" +
+              ".btn.btn-action.btn-save{opacity: .6;pointer-events: none;}" +
+              ".btn.btn-action.btn-delete{opacity: .6;pointer-events: none;}" +
+              "</style>"
           );
-          $(".form-row.rightBtns.justify-content-end.form-btns-wrapper").prepend(`<span data-trans-equationerr class="equationErrMsg redColor Resources"><span/>`)
+          $(
+            ".form-row.rightBtns.justify-content-end.form-btns-wrapper"
+          ).prepend(
+            `<span data-trans-equationerr class="equationErrMsg redColor Resources"><span/>`
+          );
         }
       }
-
-
 
       if (kpiEquation === "NaN") {
         $("input#Equation").val(0);
@@ -5987,16 +6213,26 @@ window.equationKPI = {
         $("p#Equation").text(kpiEquation || 0);
       }
     }
-    if ((isAdmin || isSPMAdmin || isVROP || isLMSP || isVROE || isLMSUExecution || isEPMO) && !USERisWF) { // remove attr disabled for this roles in equation
+    if (
+      (isAdmin ||
+        isSPMAdmin ||
+        isVROP ||
+        isLMSP ||
+        isVROE ||
+        isLMSUExecution ||
+        isEPMO) &&
+      !USERisWF
+    ) {
+      // remove attr disabled for this roles in equation
       $(".savecancelBtns > div, .btnactionrow > .rightBtns").append(
         '<button data-trans-editequation class="btn btn-action Resources btn-edit-equation bg-warning" type="button"></button>'
       );
-
     }
     if (isAdmin || isPerformanceLeader || isVROP || isLMSP) {
       // $("input#KPIEquation, input#Equation ,input#B, input#A, input#CC , input#D ,input#E,input#F,input#G").removeAttr('disabled');
-      $("input#B, input#A, input#CC , input#D ,input#E,input#F,input#G").removeAttr('disabled');
-
+      $(
+        "input#B, input#A, input#CC , input#D ,input#E,input#F,input#G"
+      ).removeAttr("disabled");
     }
 
     $(".btn-edit-equation").on("click", () => {
@@ -6006,13 +6242,10 @@ window.equationKPI = {
     // to make the equation fields disabled after render
     $("[data-toggledisabledvalues]").each(function () {
       ListInfo.g.toggleDisabledFields($(this));
-    })
+    });
     //
 
-
-
-    Update_Kpi_Results.init(kpiEquation)
-
+    Update_Kpi_Results.init(kpiEquation);
 
     changeResources();
   },
@@ -6022,14 +6255,11 @@ window.equationKPI = {
     );
   },
   init: function () {
-
-
     if (listkey == "changerequest" && !USERisWF) {
-      KPICode = $('#CRRelatedMainKpis').val()
+      KPICode = $("#CRRelatedMainKpis").val();
     } else if (listkey == "changerequest" && USERisWF) {
       if (changeRequestBody.length) {
-
-        KPICode = changeRequestBody[0].changeRequestRCode
+        KPICode = changeRequestBody[0].changeRequestRCode;
       }
     }
 
@@ -6038,8 +6268,8 @@ window.equationKPI = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='KPI'/><Value Type='Text'>" +
-      KPICode +
-      "</Value></Eq></And></Where></Query></View>"
+        KPICode +
+        "</Value></Eq></And></Where></Query></View>"
     );
 
     equationKPI.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -6061,19 +6291,15 @@ window.equationKPI = {
   },
 };
 
-
 // BenefitMetrics equation
 
 var equationBenefit = {
-
   onSuccess: function (sender, args) {
-
     equationBenefit.g.array = [];
     var collListItem = equationBenefit.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
 
     while (listItemEnum.moveNext()) {
-
       var oListItem = listItemEnum.get_current();
       benefitsEquationID = oListItem.get_id();
       benefitsEquation = oListItem.get_item("BenefitInput") || "";
@@ -6089,15 +6315,14 @@ var equationBenefit = {
         G: oListItem.get_item("G"),
       });
 
-      $('input#BenefitEquation').val(oListItem.get_item("Equation") || '');
-      $('p#BenefitEquation').text(oListItem.get_item("Equation") || '');
+      $("input#BenefitEquation").val(oListItem.get_item("Equation") || "");
+      $("p#BenefitEquation").text(oListItem.get_item("Equation") || "");
     }
 
     var myCKeys =
       benefitsEquationsComponents.length > 0
         ? Object.keys(benefitsEquationsComponents[0])
         : []; // get internal names keys
-
 
     // remove required field when there is no equation
     if (!benefitsEquation && isEdit) {
@@ -6106,44 +6331,43 @@ var equationBenefit = {
       // $('#Year,#Months,#Quarter,#Midterms,#Years').prev('label').removeAttr('required');
 
       // to make the section disable if there is no equation yet
-      var disableSection = $('#BenefitEquation').closest(".section-container")
-      disableSection.addClass("disable_section")
-
+      var disableSection = $("#BenefitEquation").closest(".section-container");
+      disableSection.addClass("disable_section");
     }
 
     if (benefitsEquation) {
-      benefitsEquation = benefitsEquation.toUpperCase() // kpi eq should be upper case to avoid the  editequation btn not appear in view
+      benefitsEquation = benefitsEquation.toUpperCase(); // kpi eq should be upper case to avoid the  editequation btn not appear in view
       // set display text
 
       myCKeys.forEach((o) => {
         benefitsEquationsComponents[0][o]
           ? $(`input#${o},p#${o}`)
-            .parent()
-            .show()
-            .find(">label")
-            .text(benefitsEquationsComponents[0][o])
+              .parent()
+              .show()
+              .find(">label")
+              .text(benefitsEquationsComponents[0][o])
           : $(`input#${o},p#${o}`).parent().remove();
 
         if (isView) {
-          var val = $(`p#${o}`).text()
+          var val = $(`p#${o}`).text();
           if (val != No_Data) {
-            benefitsEquation = benefitsEquation.replaceAll(o, $(`p#${o}`).text())
+            benefitsEquation = benefitsEquation.replaceAll(
+              o,
+              $(`p#${o}`).text()
+            );
           } else {
-            benefitsEquation = benefitsEquation.replaceAll(o, 0)
+            benefitsEquation = benefitsEquation.replaceAll(o, 0);
           }
         } else {
-          var elemVal = $(`input#${o}`).val() ? $(`input#${o}`).val() : 0
-          benefitsEquation = benefitsEquation.replaceAll(o, elemVal)
-
+          var elemVal = $(`input#${o}`).val() ? $(`input#${o}`).val() : 0;
+          benefitsEquation = benefitsEquation.replaceAll(o, elemVal);
         }
       });
 
+      benefitsEquation = benefitsEquation.replaceAll(",", ""); // remove , from high number
 
-      benefitsEquation = benefitsEquation.replaceAll(',', '') // remove , from high number
-
-      console.log(benefitsEquation, "benefitsEquation")
-      debugger
-
+      console.log(benefitsEquation, "benefitsEquation");
+      debugger;
 
       try {
         benefitsEquation =
@@ -6153,14 +6377,15 @@ var equationBenefit = {
       } catch (err) {
         $("body").append(
           "<style>" +
-          ".btn.btn-action.btn-cancel{opacity: .6;pointer-events: none;}" +
-          ".btn.btn-action.btn-save{opacity: .6;pointer-events: none;}" +
-          ".btn.btn-action.btn-delete{opacity: .6;pointer-events: none;}" +
-          "</style>"
+            ".btn.btn-action.btn-cancel{opacity: .6;pointer-events: none;}" +
+            ".btn.btn-action.btn-save{opacity: .6;pointer-events: none;}" +
+            ".btn.btn-action.btn-delete{opacity: .6;pointer-events: none;}" +
+            "</style>"
         );
-        $(".form-row.rightBtns.justify-content-end.form-btns-wrapper").prepend(`<span data-trans-equationerr class="equationErrMsg redColor Resources"><span/>`)
+        $(".form-row.rightBtns.justify-content-end.form-btns-wrapper").prepend(
+          `<span data-trans-equationerr class="equationErrMsg redColor Resources"><span/>`
+        );
       }
-
 
       if (benefitsEquation === "NaN") {
         $("input#Equation").val(0);
@@ -6171,28 +6396,26 @@ var equationBenefit = {
       }
     }
 
-    if ((isAdmin || isSPMAdmin) && !USERisWF) { // remove attr disabled for this roles in equation
+    if ((isAdmin || isSPMAdmin) && !USERisWF) {
+      // remove attr disabled for this roles in equation
       $(".savecancelBtns > div, .btnactionrow > .rightBtns").append(
         '<button data-trans-editequation class="btn btn-action Resources btn-edit-equation bg-warning" type="button"></button>'
       );
-
     }
     if (isAdmin) {
       // $("input#KPIEquation, input#Equation ,input#B, input#A, input#CC , input#D ,input#E,input#F,input#G").removeAttr('disabled');
-      $("input#B, input#A, input#CC , input#D ,input#E,input#F,input#G").removeAttr('disabled');
-
+      $(
+        "input#B, input#A, input#CC , input#D ,input#E,input#F,input#G"
+      ).removeAttr("disabled");
     }
 
     $(".btn-edit-equation").on("click", () => {
       equationBenefit.g.editEquation();
     });
 
-    Update_Benefits_Results.init(benefitsEquation)
-
+    Update_Benefits_Results.init(benefitsEquation);
 
     changeResources();
-
-
   },
   onError: function (sender, args) {
     console.log(
@@ -6200,15 +6423,17 @@ var equationBenefit = {
     );
   },
   init: function () {
-
     var clientContext = new SP.ClientContext.get_current();
 
-    var oList = clientContext.get_web().get_lists().getByTitle("BenefitsEquations");
+    var oList = clientContext
+      .get_web()
+      .get_lists()
+      .getByTitle("BenefitsEquations");
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='RelatedBenefit'/><Value Type='Text'>" +
-      benefitCode +
-      "</Value></Eq></And></Where></Query></View>"
+        benefitCode +
+        "</Value></Eq></And></Where></Query></View>"
     );
 
     equationBenefit.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -6228,7 +6453,7 @@ var equationBenefit = {
     },
     array: [],
   },
-}
+};
 
 //////////////////////////////////////////////////////
 
@@ -6242,10 +6467,7 @@ var getAttachements = {
       method: "GET",
       headers: { Accept: "application/json; odata=verbose" },
       success: function (data) {
-        console.log(
-          data.d,
-          "ddd"
-        );
+        console.log(data.d, "ddd");
 
         //console.log(UserN);
       },
@@ -6328,26 +6550,28 @@ var UpcomingTasks_Info_Request = {
 
 // update benefits results
 
-
 window.Update_Benefits_Results = {
   init: function () {
     var context = SP.ClientContext.get_current();
     var dfd = $.Deferred();
     //Get list from host web
-    var programList = context.get_web().get_lists().getByTitle("BenefitsResults");
+    var programList = context
+      .get_web()
+      .get_lists()
+      .getByTitle("BenefitsResults");
     var camlQuery = new SP.CamlQuery();
 
     // console.log(benefitMetricsYear,"benefitMetricsYear")
     // var onYear = benefitMetricsYear
 
     // var code = benefitCode+"-"+onYear
-    console.log(benefitCode, "benefitCode benefitCodebenefitCode")
+    console.log(benefitCode, "benefitCode benefitCodebenefitCode");
 
     // console.log(code,"codecodecode")
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='RelatedBenefitMetrics'/><Value Type='Text'>" +
-      benefitCode +
-      "</Value></Eq></And></Where></Query></View>"
+        benefitCode +
+        "</Value></Eq></And></Where></Query></View>"
     );
     //Get items by Query
     var progColl = programList.getItems(camlQuery);
@@ -6355,7 +6579,7 @@ window.Update_Benefits_Results = {
     context.load(progColl);
     context.executeQueryAsync(function () {
       var currentItemArray = [];
-      console.log(progColl.get_count(), "ccccccccccccccccccccccccccc")
+      console.log(progColl.get_count(), "ccccccccccccccccccccccccccc");
       if (progColl.get_count() > 0) {
         var progEnum = progColl.getEnumerator();
         while (progEnum.moveNext()) {
@@ -6403,15 +6627,14 @@ window.Update_Benefits_Results = {
             //Item updated fail
             console.log(
               "Request Failed to get kpi results Item Items :" +
-              args.get_message()
+                args.get_message()
             );
           }
         );
       }
     });
   },
-}
-
+};
 
 // update on kpi results list
 
@@ -6420,112 +6643,111 @@ window.Update_Kpi_Results = {
     var context = SP.ClientContext.get_current();
     var dfd = $.Deferred();
     //Get list from host web
-    var programList = context.get_web().get_lists().getByTitle('KPIResults');
+    var programList = context.get_web().get_lists().getByTitle("KPIResults");
     var camlQuery = new SP.CamlQuery();
 
     // if (listkey == "changerequest") {
     //   KPICode = $('#CRRelatedMainKpis').val()
     // }
 
-
     // camlQuery.set_viewXml(
     //   '<View><Query><Where><Eq><FieldRef Name="KPI" /> <Value Type="Text">' + value + "</Value></Eq></Where></Query></View>"
     // );
     // var query = "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='KPI'/><Value Type='Text'>" + KPICode + "</Value></Eq></And></Where></Query></View>"
 
-    camlQuery.set_viewXml("<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='KPI'/><Value Type='Text'>" + KPICode + "</Value></Eq></And></Where></Query></View>")
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='KPI'/><Value Type='Text'>" +
+        KPICode +
+        "</Value></Eq></And></Where></Query></View>"
+    );
     //Get items by Query
     var progColl = programList.getItems(camlQuery);
     //Load item collection
     context.load(progColl);
-    context.executeQueryAsync(
-      function () {
-        var currentItemArray = [];
-        if (progColl.get_count() > 0) {
-          var progEnum = progColl.getEnumerator();
-          while (progEnum.moveNext()) {
+    context.executeQueryAsync(function () {
+      var currentItemArray = [];
+      if (progColl.get_count() > 0) {
+        var progEnum = progColl.getEnumerator();
+        while (progEnum.moveNext()) {
+          var currentItem = progEnum.get_current();
+          var currentId = currentItem.get_item("ID");
+          var yearItem = currentItem.get_item("Year");
+          //Get Item by current ID
+          var items = programList.getItemById(currentId);
+          var yearPicked = "",
+            monthHandler = "",
+            quarterHandler = "",
+            midHandler = "",
+            yearHandler = "";
 
-            var currentItem = progEnum.get_current();
-            var currentId = currentItem.get_item("ID");
-            var yearItem = currentItem.get_item("Year");
-            //Get Item by current ID
-            var items = programList.getItemById(currentId);
-            var yearPicked = "", monthHandler = "", quarterHandler = "", midHandler = "", yearHandler = "";
-
-            if (listkey == "changerequest" && USERisWF) { // to update the kpi result via wf cr
-              if (changeRequestBody.length) {
-                changeRequestBody.forEach(el => {
-                  if (el.InternalName == "Year") {
-                    yearPicked = el.value
-                  } else if (el.InternalName == "Months") {
-                    monthHandler = el.value
-                  } else if (el.InternalName == "Quarter") {
-                    quarterHandler = el.value
-                  } else if (el.InternalName == "Midterms") {
-                    midHandler = el.value
-                  } else if (el.InternalName == "Years") {
-                    yearHandler = el.value
-                  }
-                })
-              }
-            } else {
-
-              yearPicked = KPIYear
-              monthHandler = KPIMonth
-              quarterHandler = KPIQuarter
-              midHandler = KPIMid
-              yearHandler = KPIYearHandler
+          if (listkey == "changerequest" && USERisWF) {
+            // to update the kpi result via wf cr
+            if (changeRequestBody.length) {
+              changeRequestBody.forEach((el) => {
+                if (el.InternalName == "Year") {
+                  yearPicked = el.value;
+                } else if (el.InternalName == "Months") {
+                  monthHandler = el.value;
+                } else if (el.InternalName == "Quarter") {
+                  quarterHandler = el.value;
+                } else if (el.InternalName == "Midterms") {
+                  midHandler = el.value;
+                } else if (el.InternalName == "Years") {
+                  yearHandler = el.value;
+                }
+              });
             }
-
-
-            if (yearItem == yearPicked) {
-
-              if (!kpiEquation) {
-                kpiEquation = 0
-              }
-              if (monthHandler) {
-                items.set_item(monthHandler, kpiEquation);
-              } else if (quarterHandler) {
-                items.set_item(quarterHandler, kpiEquation);
-              } else if (midHandler) {
-                items.set_item(midHandler, kpiEquation);
-              } else {
-                yearHandler = "ActualY"
-                items.set_item(yearHandler, kpiEquation);
-              }
-            }
-
-
-
-            //Update the item
-            items.update();
-            currentItemArray.push(items);
-
-            context.load(currentItemArray[currentItemArray.length - 1]);
-
+          } else {
+            yearPicked = KPIYear;
+            monthHandler = KPIMonth;
+            quarterHandler = KPIQuarter;
+            midHandler = KPIMid;
+            yearHandler = KPIYearHandler;
           }
-          context.executeQueryAsync(
-            function () {
-              if (listkey == "changerequest" && USERisWF) {
 
-                Task_Edit_Data.init();
-              }
-              //Item Updated sucess
-              // Edit_Item_Field.init('Ideas', 'Stage', 'IdeaStage04', 'Title', IdeaId);
-              dfd.resolve();
-            },
-            function (sender, args) {
-              //Item updated fail
-              console.log(
-                "Request Failed to get kpi results Item Items :" + args.get_message()
-              );
+          if (yearItem == yearPicked) {
+            if (!kpiEquation) {
+              kpiEquation = 0;
             }
-          );
+            if (monthHandler) {
+              items.set_item(monthHandler, kpiEquation);
+            } else if (quarterHandler) {
+              items.set_item(quarterHandler, kpiEquation);
+            } else if (midHandler) {
+              items.set_item(midHandler, kpiEquation);
+            } else {
+              yearHandler = "ActualY";
+              items.set_item(yearHandler, kpiEquation);
+            }
+          }
+
+          //Update the item
+          items.update();
+          currentItemArray.push(items);
+
+          context.load(currentItemArray[currentItemArray.length - 1]);
         }
+        context.executeQueryAsync(
+          function () {
+            if (listkey == "changerequest" && USERisWF) {
+              Task_Edit_Data.init();
+            }
+            //Item Updated sucess
+            // Edit_Item_Field.init('Ideas', 'Stage', 'IdeaStage04', 'Title', IdeaId);
+            dfd.resolve();
+          },
+          function (sender, args) {
+            //Item updated fail
+            console.log(
+              "Request Failed to get kpi results Item Items :" +
+                args.get_message()
+            );
+          }
+        );
       }
-    )
-  }
-}
+    });
+  },
+};
 
 ///////////////////
 
@@ -6552,8 +6774,6 @@ var deleteAllFileFromDoc = {
     }, deleteAllFileFromDoc.error);
   },
   success: function () {
-
-
     if (allFileIndex == filesUrls.length - 1) {
       if (
         listkey == "projects" ||
@@ -6566,8 +6786,8 @@ var deleteAllFileFromDoc = {
           "/SitePages/Listing.aspx?ListKey=" +
           listkey;
       } else {
-        if (listkey == 'mainkpi') {
-          Delete_Kpi_Results.init() // to delete the kpi from kpi results
+        if (listkey == "mainkpi") {
+          Delete_Kpi_Results.init(); // to delete the kpi from kpi results
         } else {
           window.location =
             _spPageContextInfo.webAbsoluteUrl +
@@ -6577,8 +6797,7 @@ var deleteAllFileFromDoc = {
         }
       }
     }
-    allFileIndex++
-
+    allFileIndex++;
 
     // $('.File-Link[href="' + hreftodelete + '"]')
     //   .parent()
@@ -6616,14 +6835,15 @@ window.Get_ProjectData_ByCode = {
   onSuccess: function (sender, args) {
     var collListItem = Get_ProjectData_ByCode.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-    var relatedInitCode = ''
+    var relatedInitCode = "";
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
-      relatedInitCode = oListItem.get_item("RelatedInitiative") ? oListItem.get_item("RelatedInitiative") : ''
+      relatedInitCode = oListItem.get_item("RelatedInitiative")
+        ? oListItem.get_item("RelatedInitiative")
+        : "";
     }
 
-
-    ProjectInitiativeMilestone.init('InitiativeMilestones', relatedInitCode)
+    ProjectInitiativeMilestone.init("InitiativeMilestones", relatedInitCode);
   },
   onError: function (sender, args) {
     console.log(
@@ -6632,10 +6852,17 @@ window.Get_ProjectData_ByCode = {
   },
   init: function () {
     var clientContext = new SP.ClientContext.get_current();
-    var oList = clientContext.get_web().get_lists().getByTitle(ListArray[0].projects);
+    var oList = clientContext
+      .get_web()
+      .get_lists()
+      .getByTitle(ListArray[0].projects);
     var camlQuery = new SP.CamlQuery();
 
-    camlQuery.set_viewXml('<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' + PCODE + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query><RowLimit>1</RowLimit></View>');
+    camlQuery.set_viewXml(
+      '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
+        PCODE +
+        "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>"
+    );
     Get_ProjectData_ByCode.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Get_ProjectData_ByCode.g.collListItem);
     clientContext.executeQueryAsync(
@@ -6643,144 +6870,165 @@ window.Get_ProjectData_ByCode = {
       Function.createDelegate(this, Get_ProjectData_ByCode.onError)
     );
   },
-  g: {}
-}
+  g: {},
+};
 ///////////////
 var View_Current_Kpi = {
   onSuccess: function (sender, args) {
     var collListItem = View_Current_Kpi.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
 
-    var relatedKpiYear = '', relatedPerformanceAnalysis, relatedPeriodType, relatedActualValue = '', relatedPerformanceAnalysis;
-    var periodType = '';
-
+    var relatedKpiYear = "",
+      relatedPerformanceAnalysis,
+      relatedPeriodType,
+      relatedActualValue = "",
+      relatedPerformanceAnalysis;
+    var periodType = "";
 
     var currentMonth = new Date().getMonth() + 1;
 
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
 
-      relatedKpiYear = (oListItem.get_item('Year') == null) ? No_Data : oListItem.get_item('Year');
+      relatedKpiYear =
+        oListItem.get_item("Year") == null
+          ? No_Data
+          : oListItem.get_item("Year");
 
-
-      relatedPeriodType = oListItem.get_item('PeriodType') == null ? No_Data : oListItem.get_item('PeriodType');
+      relatedPeriodType =
+        oListItem.get_item("PeriodType") == null
+          ? No_Data
+          : oListItem.get_item("PeriodType");
 
       ////////////////////////////
-      if (relatedPeriodType == 'year') {
+      if (relatedPeriodType == "year") {
+        relatedActualValue = oListItem.get_item("ActualY") || 0;
+        relatedPerformanceAnalysis =
+          oListItem.get_item("PerformanceAnalysisActualY") || No_Data;
 
-        relatedActualValue = oListItem.get_item('ActualY') || 0
-        relatedPerformanceAnalysis = oListItem.get_item('PerformanceAnalysisActualY') || No_Data
+        periodType +=
+          '<label data-trans-yearkpitype class="Resources"></label>';
+        periodType +=
+          '<p data-trans-actualy class="viewmode-value Resources" id="Years"></p>';
 
-        periodType += '<label data-trans-yearkpitype class="Resources"></label>'
-        periodType += '<p data-trans-actualy class="viewmode-value Resources" id="Years"></p>'
-
-        targetYear = targetYear - 1
-        targetActualValue = 'ActualY'
-        targetPerformanceAnalysis = 'PerformanceAnalysisActualY'
-        targetPerioudType = '<label data-trans-yearkpitype class="Resources"></label>'
-        targetPerioudType += '<p data-trans-actualy class="viewmode-value Resources" id="Years_Previous"></p>'
-
-
-      } else if (relatedPeriodType == 'midterm') {
-
-
-        periodType += '<label data-trans-midkpitype class="Resources"></label>'
-        targetPerioudType = '<label data-trans-midkpitype class="Resources"></label>'
-
+        targetYear = targetYear - 1;
+        targetActualValue = "ActualY";
+        targetPerformanceAnalysis = "PerformanceAnalysisActualY";
+        targetPerioudType =
+          '<label data-trans-yearkpitype class="Resources"></label>';
+        targetPerioudType +=
+          '<p data-trans-actualy class="viewmode-value Resources" id="Years_Previous"></p>';
+      } else if (relatedPeriodType == "midterm") {
+        periodType += '<label data-trans-midkpitype class="Resources"></label>';
+        targetPerioudType =
+          '<label data-trans-midkpitype class="Resources"></label>';
 
         if (currentMonth >= 1 && currentMonth <= 6) {
+          relatedPerformanceAnalysis =
+            oListItem.get_item("PerformanceAnalysisActualMid1") || No_Data;
+          relatedActualValue = oListItem.get_item("ActualMid1") || 0;
+          periodType +=
+            '<p data-trans-actualmid1 class="viewmode-value Resources" id="Midterms"></p>';
 
-          relatedPerformanceAnalysis = oListItem.get_item('PerformanceAnalysisActualMid1') || No_Data
-          relatedActualValue = oListItem.get_item('ActualMid1') || 0
-          periodType += '<p data-trans-actualmid1 class="viewmode-value Resources" id="Midterms"></p>'
-
-          targetPerioudType += '<p data-trans-actualmid2 class="viewmode-value Resources" id="Midterms_Previous"></p>'
-          targetYear = targetYear - 1
-          targetActualValue = 'ActualMid2'
-          targetPerformanceAnalysis = 'PerformanceAnalysisActualMid2'
-
+          targetPerioudType +=
+            '<p data-trans-actualmid2 class="viewmode-value Resources" id="Midterms_Previous"></p>';
+          targetYear = targetYear - 1;
+          targetActualValue = "ActualMid2";
+          targetPerformanceAnalysis = "PerformanceAnalysisActualMid2";
         } else if (currentMonth > 6 && currentMonth <= 12) {
+          relatedPerformanceAnalysis =
+            oListItem.get_item("PerformanceAnalysisActualMid2") || No_Data;
+          relatedActualValue = oListItem.get_item("ActualMid2") || 0;
+          periodType +=
+            '<p data-trans-actualmid2 class="viewmode-value Resources" id="Midterms"></p>';
+          targetPerioudType +=
+            '<p data-trans-actualmid1 class="viewmode-value Resources" id="Midterms_Previous"></p>';
 
-          relatedPerformanceAnalysis = oListItem.get_item('PerformanceAnalysisActualMid2') || No_Data
-          relatedActualValue = oListItem.get_item('ActualMid2') || 0
-          periodType += '<p data-trans-actualmid2 class="viewmode-value Resources" id="Midterms"></p>'
-          targetPerioudType += '<p data-trans-actualmid1 class="viewmode-value Resources" id="Midterms_Previous"></p>'
-
-          targetActualValue = 'ActualMid1'
-          targetPerformanceAnalysis = 'PerformanceAnalysisActualMid1'
+          targetActualValue = "ActualMid1";
+          targetPerformanceAnalysis = "PerformanceAnalysisActualMid1";
         }
-
-      } else if (relatedPeriodType == 'quarter') {
-
-        periodType += '<label data-trans-quarterkpitype class="Resources"></label>'
-        targetPerioudType = '<label data-trans-quarterkpitype class="Resources"></label>'
+      } else if (relatedPeriodType == "quarter") {
+        periodType +=
+          '<label data-trans-quarterkpitype class="Resources"></label>';
+        targetPerioudType =
+          '<label data-trans-quarterkpitype class="Resources"></label>';
 
         if (currentMonth >= 1 && currentMonth <= 3) {
-          relatedPerformanceAnalysis = oListItem.get_item('PerformanceAnalysisActualQ1') || No_Data
-          relatedActualValue = oListItem.get_item('ActualQ1') || 0
-          periodType += '<p data-trans-actualq1 class="viewmode-value Resources" id="Quarter"></p>'
+          relatedPerformanceAnalysis =
+            oListItem.get_item("PerformanceAnalysisActualQ1") || No_Data;
+          relatedActualValue = oListItem.get_item("ActualQ1") || 0;
+          periodType +=
+            '<p data-trans-actualq1 class="viewmode-value Resources" id="Quarter"></p>';
 
-          targetPerioudType += '<p data-trans-actualq4 class="viewmode-value Resources" id="Quarter_Previous"></p>'
-          targetYear = targetYear - 1
-          targetActualValue = 'ActualQ4'
-          targetPerformanceAnalysis = 'PerformanceAnalysisActualQ4'
-
+          targetPerioudType +=
+            '<p data-trans-actualq4 class="viewmode-value Resources" id="Quarter_Previous"></p>';
+          targetYear = targetYear - 1;
+          targetActualValue = "ActualQ4";
+          targetPerformanceAnalysis = "PerformanceAnalysisActualQ4";
         } else if (currentMonth > 3 && currentMonth <= 6) {
-          relatedPerformanceAnalysis = oListItem.get_item('PerformanceAnalysisActualQ2') || No_Data
-          relatedActualValue = oListItem.get_item('ActualQ2') || 0
-          periodType += '<p data-trans-actualq2 class="viewmode-value Resources" id="Quarter"></p>'
+          relatedPerformanceAnalysis =
+            oListItem.get_item("PerformanceAnalysisActualQ2") || No_Data;
+          relatedActualValue = oListItem.get_item("ActualQ2") || 0;
+          periodType +=
+            '<p data-trans-actualq2 class="viewmode-value Resources" id="Quarter"></p>';
 
-          targetPerioudType += '<p data-trans-actualq1 class="viewmode-value Resources" id="Quarter_Previous"></p>'
-          targetActualValue = 'ActualQ1'
-          targetPerformanceAnalysis = 'PerformanceAnalysisActualQ1'
-
+          targetPerioudType +=
+            '<p data-trans-actualq1 class="viewmode-value Resources" id="Quarter_Previous"></p>';
+          targetActualValue = "ActualQ1";
+          targetPerformanceAnalysis = "PerformanceAnalysisActualQ1";
         } else if (currentMonth > 6 && currentMonth <= 9) {
-          relatedPerformanceAnalysis = oListItem.get_item('PerformanceAnalysisActualQ3') || No_Data
-          relatedActualValue = oListItem.get_item('ActualQ3') || 0
-          periodType += '<p data-trans-actualq3 class="viewmode-value Resources" id="Quarter"></p>'
+          relatedPerformanceAnalysis =
+            oListItem.get_item("PerformanceAnalysisActualQ3") || No_Data;
+          relatedActualValue = oListItem.get_item("ActualQ3") || 0;
+          periodType +=
+            '<p data-trans-actualq3 class="viewmode-value Resources" id="Quarter"></p>';
 
-          targetPerioudType += '<p data-trans-actualq2 class="viewmode-value Resources" id="Quarter_Previous"></p>'
-          targetActualValue = 'ActualQ2'
-          targetPerformanceAnalysis = 'PerformanceAnalysisActualQ2'
-
+          targetPerioudType +=
+            '<p data-trans-actualq2 class="viewmode-value Resources" id="Quarter_Previous"></p>';
+          targetActualValue = "ActualQ2";
+          targetPerformanceAnalysis = "PerformanceAnalysisActualQ2";
         } else if (currentMonth > 9 && currentMonth <= 12) {
+          relatedPerformanceAnalysis =
+            oListItem.get_item("PerformanceAnalysisActualQ4") || No_Data;
+          relatedActualValue = oListItem.get_item("ActualQ4") || 0;
+          periodType +=
+            '<p data-trans-actualq4 class="viewmode-value Resources" id="Quarter"></p>';
 
-          relatedPerformanceAnalysis = oListItem.get_item('PerformanceAnalysisActualQ4') || No_Data
-          relatedActualValue = oListItem.get_item('ActualQ4') || 0
-          periodType += '<p data-trans-actualq4 class="viewmode-value Resources" id="Quarter"></p>'
-
-          targetPerioudType += '<p data-trans-actualq3 class="viewmode-value Resources" id="Quarter_Previous"></p>'
-          targetActualValue = 'ActualQ3'
-          targetPerformanceAnalysis = 'PerformanceAnalysisActualQ3'
+          targetPerioudType +=
+            '<p data-trans-actualq3 class="viewmode-value Resources" id="Quarter_Previous"></p>';
+          targetActualValue = "ActualQ3";
+          targetPerformanceAnalysis = "PerformanceAnalysisActualQ3";
         }
+      } else if (relatedPeriodType == "monthly") {
+        relatedPerformanceAnalysis =
+          oListItem.get_item(`PerformanceAnalysisActualM${currentMonth}`) ||
+          No_Data;
+        relatedActualValue = oListItem.get_item(`ActualM${currentMonth}`) || 0;
+        periodType +=
+          '<label data-trans-monthlykpitype class="Resources"></label>';
+        periodType += `<p data-trans-month${currentMonth} class="viewmode-value Resources" id="Months"></p>`;
 
-      } else if (relatedPeriodType == 'monthly') {
-
-        relatedPerformanceAnalysis = oListItem.get_item(`PerformanceAnalysisActualM${currentMonth}`) || No_Data
-        relatedActualValue = oListItem.get_item(`ActualM${currentMonth}`) || 0
-        periodType += '<label data-trans-monthlykpitype class="Resources"></label>'
-        periodType += `<p data-trans-month${currentMonth} class="viewmode-value Resources" id="Months"></p>`
-
-        targetPerioudType = '<label data-trans-monthlykpitype class="Resources"></label>'
+        targetPerioudType =
+          '<label data-trans-monthlykpitype class="Resources"></label>';
 
         if (currentMonth == 1) {
-          targetPerioudType += `<p data-trans-month12 class="viewmode-value Resources" id="Months_Previous"></p>`
-          targetYear = targetYear - 1
-          targetActualValue = 'ActualM12'
-          targetPerformanceAnalysis = 'PerformanceAnalysisActualM12'
+          targetPerioudType += `<p data-trans-month12 class="viewmode-value Resources" id="Months_Previous"></p>`;
+          targetYear = targetYear - 1;
+          targetActualValue = "ActualM12";
+          targetPerformanceAnalysis = "PerformanceAnalysisActualM12";
         } else {
-          targetPerioudType += `<p data-trans-month${currentMonth - 1} class="viewmode-value Resources" id="Months_Previous"></p>`
-          targetActualValue = `ActualM${currentMonth - 1}`
-          targetPerformanceAnalysis = `PerformanceAnalysisActualM${currentMonth - 1}`
+          targetPerioudType += `<p data-trans-month${
+            currentMonth - 1
+          } class="viewmode-value Resources" id="Months_Previous"></p>`;
+          targetActualValue = `ActualM${currentMonth - 1}`;
+          targetPerformanceAnalysis = `PerformanceAnalysisActualM${
+            currentMonth - 1
+          }`;
         }
-
-
       }
 
       ////////////////////////////
-
     }
-
 
     var currentKpiView =
       '<div class="py-5 border-bottom section-container current_kpi" data-groups="">' +
@@ -6788,42 +7036,46 @@ var View_Current_Kpi = {
       '<div class="col-lg-9 col-md-8 white-box p-4 fieldset-container">' +
       '<div class="col-md-6 multiline">' +
       '<label data-trans-yeartype class="Resources"></label>' +
-      '<p class="viewmode-value" id="Year">' + relatedKpiYear + '</p>' +
-      '</div>' +
+      '<p class="viewmode-value" id="Year">' +
+      relatedKpiYear +
+      "</p>" +
+      "</div>" +
       '<div class="col-md-6 multiline">' +
       periodType +
-      '</div>' +
+      "</div>" +
       '<div class="col-md-6 multiline">' +
       '<label data-trans-actualkpivalue class="Resources"></label>' +
-      '<p class="viewmode-value" id="Equation">' + relatedActualValue + '</p>' +
-      '</div>' +
+      '<p class="viewmode-value" id="Equation">' +
+      relatedActualValue +
+      "</p>" +
+      "</div>" +
       '<div class="col-md-12 multiline">' +
       '<label data-trans-performanceanalysis class="Resources"></label>' +
-      '<p class="viewmode-value" id="PerformanceAnalysis">' + relatedPerformanceAnalysis + '</p>' +
-      '</div>' +
-      '</div>'
+      '<p class="viewmode-value" id="PerformanceAnalysis">' +
+      relatedPerformanceAnalysis +
+      "</p>" +
+      "</div>" +
+      "</div>";
 
-    if (filesUrls.length > 0) { // add view before attachement
+    if (filesUrls.length > 0) {
+      // add view before attachement
 
       // $(currentKpiView).insertBefore(
       //   $("#file_container")
       // );
-      $(currentKpiView).insertAfter(
-        $('.mainkpi').last()
-      );
-    } else { // add view before cancel btn
+      $(currentKpiView).insertAfter($(".mainkpi").last());
+    } else {
+      // add view before cancel btn
       // $(currentKpiView).insertBefore(
       //   $("button.btn.btn-action.btn-cancel").parent().parent()
       // );
 
-      $(currentKpiView).insertAfter(
-        $('.mainkpi').last()
-      );
+      $(currentKpiView).insertAfter($(".mainkpi").last());
     }
 
-    View_Previous_kpi.init() // should return it when need to show the previous info of kpi
+    View_Previous_kpi.init(); // should return it when need to show the previous info of kpi
 
-    changeResources()
+    changeResources();
   },
   onError: function (sender, args) {
     console.log(
@@ -6834,9 +7086,13 @@ var View_Current_Kpi = {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("KPIResults");
     var camlQuery = new SP.CamlQuery();
-    var currentYear = new Date().getFullYear()
+    var currentYear = new Date().getFullYear();
     camlQuery.set_viewXml(
-      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And><Eq><FieldRef Name='KPI'/><Value Type='Text'>" + KPICode + "</Value></Eq><Eq><FieldRef Name='Year'/><Value Type='Text'>" + currentYear + "</Value></Eq></And></And></Where></Query></View>"
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And><Eq><FieldRef Name='KPI'/><Value Type='Text'>" +
+        KPICode +
+        "</Value></Eq><Eq><FieldRef Name='Year'/><Value Type='Text'>" +
+        currentYear +
+        "</Value></Eq></And></And></Where></Query></View>"
     );
 
     View_Current_Kpi.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -6845,21 +7101,20 @@ var View_Current_Kpi = {
       Function.createDelegate(this, View_Current_Kpi.onSuccess),
       Function.createDelegate(this, View_Current_Kpi.onError)
     );
-
   },
-  g: {
-  }
-}
+  g: {},
+};
 
 var View_Previous_kpi = {
   onSuccess: function (sender, args) {
     var collListItem = View_Previous_kpi.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-    var targetValue = '', targetAnalysis = '';
+    var targetValue = "",
+      targetAnalysis = "";
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
-      targetValue = oListItem.get_item(targetActualValue) || 0
-      targetAnalysis = oListItem.get_item(targetPerformanceAnalysis) || No_Data
+      targetValue = oListItem.get_item(targetActualValue) || 0;
+      targetAnalysis = oListItem.get_item(targetPerformanceAnalysis) || No_Data;
     }
 
     var previousKpiView =
@@ -6868,27 +7123,30 @@ var View_Previous_kpi = {
       '<div class="col-lg-9 col-md-8 white-box p-4 fieldset-container">' +
       '<div class="col-md-6 multiline">' +
       '<label data-trans-yeartype class="Resources"></label>' +
-      '<p class="viewmode-value" id="Year_Previous">' + targetYear + '</p>' +
-      '</div>' +
+      '<p class="viewmode-value" id="Year_Previous">' +
+      targetYear +
+      "</p>" +
+      "</div>" +
       '<div class="col-md-6 multiline">' +
       targetPerioudType +
-      '</div>' +
+      "</div>" +
       '<div class="col-md-6 multiline">' +
       '<label data-trans-actualkpivalue class="Resources"></label>' +
-      '<p class="viewmode-value" id="Equation_Previous">' + targetValue + '</p>' +
-      '</div>' +
+      '<p class="viewmode-value" id="Equation_Previous">' +
+      targetValue +
+      "</p>" +
+      "</div>" +
       '<div class="col-md-12 multiline">' +
       '<label data-trans-performanceanalysis class="Resources"></label>' +
-      '<p class="viewmode-value" id="PerformanceAnalysis_Previous">' + targetAnalysis + '</p>' +
-      '</div>' +
-      '</div>' +
-      '</div>'
+      '<p class="viewmode-value" id="PerformanceAnalysis_Previous">' +
+      targetAnalysis +
+      "</p>" +
+      "</div>" +
+      "</div>" +
+      "</div>";
 
-    $(previousKpiView).insertBefore(
-      $(".current_kpi")
-    );
-    changeResources()
-
+    $(previousKpiView).insertBefore($(".current_kpi"));
+    changeResources();
   },
   onError: function (sender, args) {
     console.log(
@@ -6899,9 +7157,13 @@ var View_Previous_kpi = {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("KPIResults");
     var camlQuery = new SP.CamlQuery();
-    var currentYear = new Date().getFullYear()
+    var currentYear = new Date().getFullYear();
     camlQuery.set_viewXml(
-      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And><Eq><FieldRef Name='KPI'/><Value Type='Text'>" + KPICode + "</Value></Eq><Eq><FieldRef Name='Year'/><Value Type='Text'>" + targetYear + "</Value></Eq></And></And></Where></Query></View>"
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And><Eq><FieldRef Name='KPI'/><Value Type='Text'>" +
+        KPICode +
+        "</Value></Eq><Eq><FieldRef Name='Year'/><Value Type='Text'>" +
+        targetYear +
+        "</Value></Eq></And></And></Where></Query></View>"
     );
     View_Previous_kpi.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(View_Previous_kpi.g.collListItem);
@@ -6910,34 +7172,36 @@ var View_Previous_kpi = {
       Function.createDelegate(this, View_Previous_kpi.onError)
     );
   },
-  g: {}
-}
+  g: {},
+};
 
 var Check_Item_Deleted = {
   onSuccess: function (sender, args) {
     var collListItem = Check_Item_Deleted.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-    var deleted = true
+    var deleted = true;
 
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
-      deleted = false
+      deleted = false;
     }
 
     if (deleted) {
-      if (isView) {// to remove the child from view
-        if (listkey == 'milestones') {
-          $('#RelatedInitiativeMilestone').html(No_Data)
-        } else if (listkey == 'projects') {
-          $('#RelatedInitiative').html(No_Data)
-          $('#RelatedInitiativeDeliverable').html(No_Data)
-        } else if (listkey == 'mainkpi') { // to remove the child from view
-          $('#RelatedStrategyType').html(No_Data)
-          if (indexTypekpi == 'main') {
-            var sosVal = $('#RelatedStrategyObjective').html()
+      if (isView) {
+        // to remove the child from view
+        if (listkey == "milestones") {
+          $("#RelatedInitiativeMilestone").html(No_Data);
+        } else if (listkey == "projects") {
+          $("#RelatedInitiative").html(No_Data);
+          $("#RelatedInitiativeDeliverable").html(No_Data);
+        } else if (listkey == "mainkpi") {
+          // to remove the child from view
+          $("#RelatedStrategyType").html(No_Data);
+          if (indexTypekpi == "main") {
+            var sosVal = $("#RelatedStrategyObjective").html();
             if (!sosVal) {
-              $('#Sector').html(No_Data)
-              $('#SubSector').html(No_Data)
+              $("#Sector").html(No_Data);
+              $("#SubSector").html(No_Data);
             }
           }
           // else if (indexTypekpi == 'sub') {
@@ -6949,17 +7213,17 @@ var Check_Item_Deleted = {
           //   }
           // }
         }
-
-      } else if (isEdit) { // to remove the child from view
-        if (listkey == 'projects') {
-          $('#RelatedInitiativeDeliverable').html('')
-        } else if (listkey == 'mainkpi') {
-          $('#RelatedStrategyType').val('')
-          if (indexTypekpi == 'main') {
-            var sosVal = $('#RelatedStrategyObjective').val()
+      } else if (isEdit) {
+        // to remove the child from view
+        if (listkey == "projects") {
+          $("#RelatedInitiativeDeliverable").html("");
+        } else if (listkey == "mainkpi") {
+          $("#RelatedStrategyType").val("");
+          if (indexTypekpi == "main") {
+            var sosVal = $("#RelatedStrategyObjective").val();
             if (!sosVal) {
-              $('#Sector').val('')
-              $('#SubSector').val('')
+              $("#Sector").val("");
+              $("#SubSector").val("");
             }
           }
           //  else if (indexTypekpi == 'sub') {
@@ -6974,14 +7238,15 @@ var Check_Item_Deleted = {
       }
     } else {
       if (isView) {
-        if (listkey == 'projects') {
+        if (listkey == "projects") {
           // ProjectInitiativeDelevrable.init('InitiativeDeliverables', globalInitiativeCode) // no needed cause in view we use field multiselectstring
-        } else if (listkey == 'mainkpi') { // to remove the child from view
-          if (indexTypekpi == 'main') {
-            var sosVal = $('#RelatedStrategyObjective').html()
+        } else if (listkey == "mainkpi") {
+          // to remove the child from view
+          if (indexTypekpi == "main") {
+            var sosVal = $("#RelatedStrategyObjective").html();
             if (!sosVal) {
-              $('#Sector').html(No_Data)
-              $('#SubSector').html(No_Data)
+              $("#Sector").html(No_Data);
+              $("#SubSector").html(No_Data);
             }
           }
           // else if (indexTypekpi == 'sub') {
@@ -6994,34 +7259,34 @@ var Check_Item_Deleted = {
           // }
         }
       } else if (isEdit) {
-        if (listkey == 'projects') {
-          ProjectInitiativeDelevrable.init('InitiativeDeliverables', globalInitiativeCode)
-        } else if (listkey == 'mainkpi') {
-          Goal_Strategy_Info.init(relatedStrategyKpi)
+        if (listkey == "projects") {
+          ProjectInitiativeDelevrable.init(
+            "InitiativeDeliverables",
+            globalInitiativeCode
+          );
+        } else if (listkey == "mainkpi") {
+          Goal_Strategy_Info.init(relatedStrategyKpi);
 
-          if (indexTypekpi == 'main') {
-
-            var sosVal = relatedMainGoal
+          if (indexTypekpi == "main") {
+            var sosVal = relatedMainGoal;
             if (!sosVal) {
-              $('#Sector').val(No_Data)
-              $('#SubSector').val(No_Data)
+              $("#Sector").val(No_Data);
+              $("#SubSector").val(No_Data);
             }
-          } else if (indexTypekpi == 'sub') {
-
+          } else if (indexTypekpi == "sub") {
             // var sosVal = $('#SubRelatedObjective').val()
-            var sosVal = relatedSubGoal
+            var sosVal = relatedSubGoal;
 
             if (!sosVal) {
-              $('#Sector').val(No_Data)
-              $('#SubSector').val(No_Data)
-              $('#Portfolio').val(No_Data)
+              $("#Sector").val(No_Data);
+              $("#SubSector").val(No_Data);
+              $("#Portfolio").val(No_Data);
             }
           }
           // Kpi_Related_Goal.init(relatedStrategyKpi, indexTypekpi)
         }
       }
     }
-
   },
   onError: function (sender, args) {
     console.log(
@@ -7033,9 +7298,13 @@ var Check_Item_Deleted = {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(listName);
     var camlQuery = new SP.CamlQuery();
-    var currentYear = new Date().getFullYear()
+    var currentYear = new Date().getFullYear();
     camlQuery.set_viewXml(
-      '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name=' + fielRef + ' /><Value Type="Text">' + code + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=" +
+        fielRef +
+        ' /><Value Type="Text">' +
+        code +
+        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
 
     Check_Item_Deleted.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -7044,38 +7313,33 @@ var Check_Item_Deleted = {
       Function.createDelegate(this, Check_Item_Deleted.onSuccess),
       Function.createDelegate(this, Check_Item_Deleted.onError)
     );
-
   },
-  g: {
-  }
-}
-
+  g: {},
+};
 
 var StrategicObjectives_Status = {
   init: function (value) {
-
-    var status = ''
+    var status = "";
     if (value && value != No_Data) {
       if (
         localStorage.getItem("lng") == null ||
         localStorage.getItem("lng") == "ar"
       ) {
-        status = Resources.ar[value]
+        status = Resources.ar[value];
       } else {
-        status = Resources.en[value]
+        status = Resources.en[value];
       }
     } else {
-      status = No_Data
+      status = No_Data;
     }
-    return status
-  }
-}
+    return status;
+  },
+};
 
 //get task history
 let SPHTTPitemsEnumerable;
 window.Get_TaskHistory = {
   init: function () {
-
     $(".wf-project-name").text(projectNameTitle);
     $(".wf-task-name").text(actionbuttonTitle);
     $("button.loadMore").addClass("disabled");
@@ -7089,18 +7353,17 @@ window.Get_TaskHistory = {
     <Eq><FieldRef Name='Status'/><Value Type='Choice'>Closed</Value></Eq>
     <Eq><FieldRef Name='WorkflowName'/><Value Type='Text'>${workflowname}</Value></Eq>
     </And></And>
-    </Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query><RowLimit>5</RowLimit></View>`
-
+    </Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query><RowLimit>5</RowLimit></View>`;
 
     if (isLoadMore) {
-      camelQuery = camelQuery.replace('</Query>', '</Query><RowLimit>5</RowLimit></View>');
+      camelQuery = camelQuery.replace(
+        "</Query>",
+        "</Query><RowLimit>5</RowLimit></View>"
+      );
     } else {
       Get_TaskHistory.g.camlQuery = new SP.CamlQuery();
       Get_TaskHistory.g.camlQuery.set_viewXml(camelQuery);
     }
-
-
-
 
     SPHTTPitemsEnumerable = oList.getItems(Get_TaskHistory.g.camlQuery);
     clientContext.load(SPHTTPitemsEnumerable);
@@ -7115,10 +7378,7 @@ window.Get_TaskHistory = {
 
     let wfHistoryLink = "";
 
-    let isThereHistory = false
-
-
-
+    let isThereHistory = false;
 
     if (workflowname == "Project") {
       wfHistoryLink =
@@ -7157,23 +7417,31 @@ window.Get_TaskHistory = {
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       let stage = oListItem.get_item("Title");
-      let taskDescription = oListItem.get_item('Body') ? oListItem.get_item('Body') : No_Data;
+      let taskDescription = oListItem.get_item("Body")
+        ? oListItem.get_item("Body")
+        : No_Data;
 
-      let createdDate = oListItem.get_item('Created') || No_Data;
+      let createdDate = oListItem.get_item("Created") || No_Data;
       createdDate = createdDate.toLocaleDateString("en-US");
 
-      let modifiedNoteDate = oListItem.get_item('Modified') || No_Data;
+      let modifiedNoteDate = oListItem.get_item("Modified") || No_Data;
       modifiedNoteDate = modifiedNoteDate.toLocaleDateString("en-US");
 
+      let takenAction = oListItem.get_item("TakenAction");
 
-      let takenAction = oListItem.get_item('TakenAction');
+      isThereHistory = true;
 
-      isThereHistory = true
-
-      if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
-        takenAction = takenAction ? Resources.ar[takenAction.toLowerCase()] : No_Data;
+      if (
+        localStorage.getItem("lng") == null ||
+        localStorage.getItem("lng") == "ar"
+      ) {
+        takenAction = takenAction
+          ? Resources.ar[takenAction.toLowerCase()]
+          : No_Data;
       } else {
-        takenAction = takenAction ? Resources.en[takenAction.toLowerCase()] : No_Data;
+        takenAction = takenAction
+          ? Resources.en[takenAction.toLowerCase()]
+          : No_Data;
       }
 
       var assignedTo = [];
@@ -7183,21 +7451,24 @@ window.Get_TaskHistory = {
         });
       }
 
-      let tasktitlearr = []
+      let tasktitlearr = [];
 
-      if (localStorage.getItem('Dynamo_Tasks Configuration') != null) {
-        tasktitlearr = JSON.parse(localStorage.getItem("Dynamo_Tasks Configuration") || "[]");
+      if (localStorage.getItem("Dynamo_Tasks Configuration") != null) {
+        tasktitlearr = JSON.parse(
+          localStorage.getItem("Dynamo_Tasks Configuration") || "[]"
+        );
         tasktitlearr = tasktitlearr.filter(function (item) {
-          return item.code == stage
+          return item.code == stage;
         });
-        if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+        if (
+          localStorage.getItem("lng") == null ||
+          localStorage.getItem("lng") == "ar"
+        ) {
           stage = tasktitlearr[0].name;
         } else {
           stage = tasktitlearr[0].nameEn;
         }
       }
-
-
 
       // //date
       // let d =
@@ -7251,14 +7522,16 @@ window.Get_TaskHistory = {
             `;
     }
 
-
     let noTaskhistory = isThereHistory ? "" : UserNo_Data;
     if (!$(".task-history-ctx").length) {
       historyHTML += `<p style="text-align:center">${noTaskhistory}</p>
-                    ${isThereHistory ? `<button type="button"class="loadMore Resources mb-3" data-trans-viewmore>
+                    ${
+                      isThereHistory
+                        ? `<button type="button"class="loadMore Resources mb-3" data-trans-viewmore>
                         loadmore
                     </button>`
-          : ''}
+                        : ""
+                    }
                 </div>
             </div>
             `;
@@ -7277,7 +7550,6 @@ window.Get_TaskHistory = {
       SPHTTPitemsEnumerable.get_listItemCollectionPosition();
     $("button.loadMore").removeClass("disabled loader-action");
     changeResources();
-
   },
   onError: function (sender, args) {
     console.log(
@@ -7285,7 +7557,6 @@ window.Get_TaskHistory = {
     );
   },
   loadMore: function () {
-
     //Position will be null if all the items in the collection are fetched and there are no more items to be fetched.
     if (Get_TaskHistory.g.position != null) {
       isLoadMore = true;
@@ -7302,8 +7573,7 @@ window.Get_TaskHistory = {
   },
   // Global variables
   g: {},
-}
-
+};
 
 var DontSubmit_DataRequest = {
   init: function () {
@@ -7312,32 +7582,27 @@ var DontSubmit_DataRequest = {
     $(
       "[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
     ).each(function (e) {
-
-
-      var isMasterSection = $(this).parent().parent().hasClass("Details-Item")
+      var isMasterSection = $(this).parent().parent().hasClass("Details-Item");
 
       if (!isMasterSection) {
-
-        var elementId = ""
-        var elementValue = ""
-        var isMultiSelect = false
-
-
+        var elementId = "";
+        var elementValue = "";
+        var isMultiSelect = false;
 
         if ($(this).hasClass("limulti")) {
-          isMultiSelect = true
+          isMultiSelect = true;
           elementId = $(this).parent().parent().parent().attr("id"); // get element Id
-          elementValue = $(this).find("input:checked").val()
+          elementValue = $(this).find("input:checked").val();
         } else {
           elementId = $(this).parent().attr("id"); // get element Id
           elementValue = $(this).val(); // get element value
         }
 
-
-
         if (isMultiSelect) {
-
-          if (oListItem.get_item(elementId) && oListItem.get_item(elementId).includes(elementValue)) {
+          if (
+            oListItem.get_item(elementId) &&
+            oListItem.get_item(elementId).includes(elementValue)
+          ) {
             var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
             var parenetValue = $(this).data("parentrelatedvaluelvl1"); // parent value
 
@@ -7346,12 +7611,10 @@ var DontSubmit_DataRequest = {
             }
           }
         } else {
-
           if (
             oListItem.get_item(elementId) &&
             oListItem.get_item(elementId) == elementValue
           ) {
-
             // matching between value on list
             var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
             var parenetValue = $(this).data("parentrelatedvaluelvl1"); // parent value
@@ -7363,31 +7626,28 @@ var DontSubmit_DataRequest = {
       }
     });
 
-
     // to handle dont submit in edit lvl2
     $(
       "[data-parentrelatedvaluelvl2]:not([data-parentrelatedvaluelvl2=undefined])"
     ).each(function () {
-
       var elementId = ""; // get element Id
       var elementValue = ""; // get element value
-      var isMultiSelect = false
-
+      var isMultiSelect = false;
 
       if ($(this).hasClass("limulti")) {
-        isMultiSelect = true
+        isMultiSelect = true;
         elementId = $(this).parent().parent().parent().attr("id"); // get element Id
-        elementValue = $(this).find("input:checked").val()
+        elementValue = $(this).find("input:checked").val();
       } else {
         elementId = $(this).parent().attr("id"); // get element Id
         elementValue = $(this).val(); // get element value
       }
 
-
-
       if (isMultiSelect) {
-
-        if (oListItem.get_item(elementId) && oListItem.get_item(elementId).includes(elementValue)) {
+        if (
+          oListItem.get_item(elementId) &&
+          oListItem.get_item(elementId).includes(elementValue)
+        ) {
           var parentElement = $(this).data("parentrelatedkeylvl2"); // parent internal name
           var parenetValue = $(this).data("parentrelatedvaluelvl2"); // parent value
 
@@ -7408,42 +7668,31 @@ var DontSubmit_DataRequest = {
           }
         }
       }
-
-
-
-
     });
 
-    if ($(".grandFieldInvoke").length > 0) { // to use it in initiative
-      $(".grandFieldInvoke").trigger("change")
+    if ($(".grandFieldInvoke").length > 0) {
+      // to use it in initiative
+      $(".grandFieldInvoke").trigger("change");
     }
     if ($(".getsiblingdata").length > 0) {
-      $(".getsiblingdata").trigger("change")//to invoke the sibling data
+      $(".getsiblingdata").trigger("change"); //to invoke the sibling data
     }
-
-  }
-}
-
+  },
+};
 
 // to get the dynamic value trigger in edit when we have more than one dynamic in form
 window.get_DynamicValues = {
   init: function (dynamicArrId) {
-
     if (dynamicArrId.length) {
-
-      var id = dynamicArrId[0]
-      $(`select[id=${id}][dynamic=parent]`).trigger("change")
-      dynamicArrId.shift()
-
+      var id = dynamicArrId[0];
+      $(`select[id=${id}][dynamic=parent]`).trigger("change");
+      dynamicArrId.shift();
     }
 
     if (dynamicArrId.length) {
       window.setTimeout(function () {
-        get_DynamicValues.init(dynamicArrId)
-
-      }, 2000)
+        get_DynamicValues.init(dynamicArrId);
+      }, 2000);
     }
-
-
-  }
-}
+  },
+};
