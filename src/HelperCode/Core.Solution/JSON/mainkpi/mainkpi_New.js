@@ -451,7 +451,7 @@ var Information_Form = [
         DisplayName: 'الجهات الشقيقة',
         DisplayNameEn: 'External Entities',
         type: 'lookup',
-        //from other list:
+        //from other list:      
         source: 'Internal Entities',
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
@@ -464,6 +464,8 @@ var Information_Form = [
         queryField:"EntityType", //الحقل الذي ستتم الفلترة عليه
         queryFieldType:"Choice",//نوع هذا الحقل
         queryFieldValue:"ExternalEntities",//قيمة هذا الحقال
+        // display: 'none',
+        state: 'disabled',
 
       },
   
