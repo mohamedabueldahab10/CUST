@@ -54,7 +54,7 @@ var Information_Form = [
         DisplayNameEn: 'Types',
         DisplayName: 'النوع',
         toggleValues: [
-          { value: 'vision', fields: ['RelatedBudgetItem'] }, //we can put more than 1  field
+          { value: 'vision', fields: ['RelatedProgram'] }, //we can put more than 1  field
         ],
         type: 'dropdownValues',
         options: {
@@ -64,6 +64,26 @@ var Information_Form = [
             { display: 'others', value: 'others' },
           ],
         },
+      },
+      {
+        InternalName: 'RelatedProgram',
+        DisplayNameEn: 'Related Program',
+        ToggleName: 'RelatedProgram',
+        DisplayName: 'البرنامج المرتبط',
+        type: 'lookupWithQuery',
+        queryField: 'Types',
+        queryFieldType: 'Text', //ex: "Choice"
+        queryFieldValue: 'program',
+        //from other list:
+        source: 'SPillars',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+          // "display": "none"
+        // isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+        // to get the seblings value
+        // valsiblingkey: 'Description', // internal name on sorce list
+        // targetsiblingkey: 'StrategicDescription', // internal name on current list
+        // display: 'none',
       },
       {
         InternalName: 'Portfolio',
