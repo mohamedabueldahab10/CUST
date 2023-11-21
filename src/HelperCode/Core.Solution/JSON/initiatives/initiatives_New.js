@@ -54,7 +54,7 @@ var Information_Form = [
         validation: 'required',
         dynamic: 'parent', // parent to get the child depends on this field value
         toggleValues: [
-          { value: 'vision', fields: ['RelatedStrategyObjective'] }, //we can put more than 1  field
+          { value: 'vision', fields: ['RelatedProgram'] }, //we can put more than 1  field
         ],
         type: 'dropdownValues',
         options: {
@@ -70,6 +70,7 @@ var Information_Form = [
                 { fieldName: 'WFStage', value: 'VInStage01' },
                 { fieldName: 'Phase', value: 'P1' },
                 { fieldName: 'DraftStatus', value: '' },
+                { fieldName: 'InitiativeProgressStatus', value: 'stat5' },
               ],
             },
             {
@@ -81,6 +82,8 @@ var Information_Form = [
                 { fieldName: 'WFStage', value: 'SInStage01' },
                 { fieldName: 'Phase', value: 'P1' },
                 { fieldName: 'DraftStatus', value: '' },
+                { fieldName: 'InitiativeProgressStatus', value: 'stat5' },
+                
               ],
             },
             {
@@ -92,6 +95,7 @@ var Information_Form = [
                 { fieldName: 'WFStage', value: 'LInStage01' },
                 { fieldName: 'Phase', value: 'P1' },
                 { fieldName: 'DraftStatus', value: '' },
+                { fieldName: 'InitiativeProgressStatus', value: 'stat5' },
               ],
             },
 
@@ -137,6 +141,26 @@ var Information_Form = [
           ],
         },
         requiredValues: [{ value: 'vision', fields: ['Portfolio'] }],
+      },
+      {
+        InternalName: 'RelatedProgram',
+        DisplayNameEn: 'Related Program',
+        ToggleName: 'RelatedProgram',
+        DisplayName: 'البرنامج المرتبط',
+        type: 'lookupWithQuery',
+        queryField: 'Types',
+        queryFieldType: 'Text', //ex: "Choice"
+        queryFieldValue: 'program',
+        //from other list:
+        source: 'SPillars',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+          "display": "none"
+        // isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+        // to get the seblings value
+        // valsiblingkey: 'Description', // internal name on sorce list
+        // targetsiblingkey: 'StrategicDescription', // internal name on current list
+        // display: 'none',
       },
       {
         InternalName: 'Portfolio',
