@@ -289,7 +289,6 @@ window.New_Data_Submit = {
       $(".was-validated .form-control:invalid").each(function () {
         $(this).siblings(".errMsgField").show();
       });
-
     }
     //validation of multiselect
     var multiSelectId = false;
@@ -418,18 +417,15 @@ window.New_Data_Submit = {
         }
       }
 
-
       if (multiSelectId) {
         $(`#${multiSelectId}`)
           .get(0)
           .scrollIntoView({ behavior: "smooth", block: "center" });
-      }else if(!uniqueStringValid){
+      } else if (!uniqueStringValid) {
         $(`#${internalNameValidate}`)
           .closest(".container-body")
           .addClass("was-validated");
-        $(`#${internalNameValidate}`)[0].setCustomValidity(
-          "Invalid field."
-        );
+        $(`#${internalNameValidate}`)[0].setCustomValidity("Invalid field.");
 
         $(`#${internalNameValidate}`)
           .get(0)
@@ -444,9 +440,6 @@ window.New_Data_Submit = {
         });
       }
     }
-
-
-
   },
   init: function () {
     $(".btn-save").attr("disabled", true);
@@ -699,7 +692,6 @@ window.New_Data_Submit = {
           basedOnFieldCurrentValue = $(`#${basedOnFieldName}`).val();
         }
 
-        debugger;
         var checkWfStage = $("#WFStage").val();
         if (!checkWfStage) {
           if (basedOnCondition) {
@@ -710,12 +702,30 @@ window.New_Data_Submit = {
                     if (
                       field.fieldValueInList.toLowerCase() == "loggedinuser"
                     ) {
-                      New_Data_Submit.g.oListItem.set_item(
-                        field.fieldNameInList,
-                        SP.FieldUserValue.fromUser(
-                          UserN.LoginName.split("|")[1]
-                        )
-                      );
+                      console.log("1");
+                     
+                      // New_Data_Submit.g.oListItem.set_item(
+                      //   field.fieldNameInList,
+                      //   SP.FieldUserValue.fromUser(
+                      //     UserN.LoginName.split("|")[1]
+                      //   )
+                      // );
+                      var currentDeliveredVal = "";
+                      if ($("#Delivered").length) {
+                        if ($("#Delivered").attr("type") == "radio") {
+                          currentDeliveredVal = $("#Delivered:checked").val();
+                        } else {
+                          currentDeliveredVal = $("#Delivered").val();
+                        }
+                      }
+                      if (currentDeliveredVal == 'yes') {
+                        New_Data_Submit.g.oListItem.set_item(
+                          field.fieldNameInList,
+                          SP.FieldUserValue.fromUser(UserN.LoginName)
+                        );
+                      }
+
+               
                     } else {
                       New_Data_Submit.g.oListItem.set_item(
                         field.fieldNameInList,
@@ -733,12 +743,20 @@ window.New_Data_Submit = {
                       if (
                         field.fieldValueInList.toLowerCase() == "loggedinuser"
                       ) {
-                        New_Data_Submit.g.oListItem.set_item(
-                          field.fieldNameInList,
-                          SP.FieldUserValue.fromUser(
-                            UserN.LoginName.split("|")[1]
-                          )
-                        );
+                        var currentDeliveredVal = "";
+                        if ($("#Delivered").length) {
+                          if ($("#Delivered").attr("type") == "radio") {
+                            currentDeliveredVal = $("#Delivered:checked").val();
+                          } else {
+                            currentDeliveredVal = $("#Delivered").val();
+                          }
+                        }
+                        if (currentDeliveredVal == 'yes') {
+                          New_Data_Submit.g.oListItem.set_item(
+                            field.fieldNameInList,
+                            SP.FieldUserValue.fromUser(UserN.LoginName)
+                          );
+                        }
                       } else {
                         New_Data_Submit.g.oListItem.set_item(
                           field.fieldNameInList,
@@ -755,10 +773,20 @@ window.New_Data_Submit = {
               if (valueBasedOnParent.includes(item.condition)) {
                 item.values.forEach((field) => {
                   if (field.fieldValueInList.toLowerCase() == "loggedinuser") {
-                    New_Data_Submit.g.oListItem.set_item(
-                      field.fieldNameInList,
-                      SP.FieldUserValue.fromUser(UserN.LoginName.split("|")[1])
-                    );
+                    var currentDeliveredVal = "";
+                    if ($("#Delivered").length) {
+                      if ($("#Delivered").attr("type") == "radio") {
+                        currentDeliveredVal = $("#Delivered:checked").val();
+                      } else {
+                        currentDeliveredVal = $("#Delivered").val();
+                      }
+                    }
+                    if (currentDeliveredVal == 'yes') {
+                      New_Data_Submit.g.oListItem.set_item(
+                        field.fieldNameInList,
+                        SP.FieldUserValue.fromUser(UserN.LoginName)
+                      );
+                    }
                   } else {
                     New_Data_Submit.g.oListItem.set_item(
                       field.fieldNameInList,
@@ -1508,7 +1536,10 @@ window.Edit_Data_Submit = {
 
         console.log(parsingData, "parsingData parsingData");
 
-        if (parsingData.includes(currentValue) && !editUniqueValueArr.includes(currentValue)) {
+        if (
+          parsingData.includes(currentValue) &&
+          !editUniqueValueArr.includes(currentValue)
+        ) {
           uniqueStringValid = false;
         } else {
           // $(`#${internalNameValidate}`)
@@ -1617,17 +1648,15 @@ window.Edit_Data_Submit = {
         $(`#${multiSelectId}`)
           .get(0)
           .scrollIntoView({ behavior: "smooth", block: "center" });
-      }else if(!uniqueStringValid){
-          $(`#${internalNameValidate}`)
-            .closest(".container-body")
-            .addClass("was-validated");
-          $(`#${internalNameValidate}`)[0].setCustomValidity(
-            "Invalid field."
-          );
+      } else if (!uniqueStringValid) {
+        $(`#${internalNameValidate}`)
+          .closest(".container-body")
+          .addClass("was-validated");
+        $(`#${internalNameValidate}`)[0].setCustomValidity("Invalid field.");
 
-          $(`#${internalNameValidate}`)
-            .get(0)
-            .scrollIntoView({ behavior: "smooth", block: "center" });
+        $(`#${internalNameValidate}`)
+          .get(0)
+          .scrollIntoView({ behavior: "smooth", block: "center" });
       } else {
         $container.animate({
           scrollTop:
@@ -1939,23 +1968,37 @@ window.Edit_Data_Submit = {
           basedOnFieldCurrentValue = $(`#${basedOnFieldName}`).val();
         }
 
-        debugger;
         var checkWfStage = $("#WFStage").val();
         if (!checkWfStage) {
           if (basedOnCondition) {
+          
             if (basedOnFieldValue == basedOnFieldCurrentValue) {
+            
               el.valueToSet.forEach((item) => {
+                console.log(item.condition,"item.condition")
+              
                 if (valueBasedOnParent.includes(item.condition)) {
+               
                   item.values.forEach((field) => {
+                  
                     if (
                       field.fieldValueInList.toLowerCase() == "loggedinuser"
                     ) {
-                      Edit_Data_Submit.g.oListItem.set_item(
-                        field.fieldNameInList,
-                        SP.FieldUserValue.fromUser(
-                          UserN.LoginName.split("|")[1]
-                        )
-                      );
+                      
+                      var currentDeliveredVal = "";
+                      if ($("#Delivered").length) {
+                        if ($("#Delivered").attr("type") == "radio") {
+                          currentDeliveredVal = $("#Delivered:checked").val();
+                        } else {
+                          currentDeliveredVal = $("#Delivered").val();
+                        }
+                      }
+                      if ((deliveredValFromList != currentDeliveredVal) && currentDeliveredVal == 'yes') {
+                        Edit_Data_Submit.g.oListItem.set_item(
+                          field.fieldNameInList,
+                          SP.FieldUserValue.fromUser(UserN.LoginName)
+                        );
+                      }
                     } else {
                       Edit_Data_Submit.g.oListItem.set_item(
                         field.fieldNameInList,
@@ -1973,12 +2016,27 @@ window.Edit_Data_Submit = {
                       if (
                         field.fieldValueInList.toLowerCase() == "loggedinuser"
                       ) {
-                        Edit_Data_Submit.g.oListItem.set_item(
-                          field.fieldNameInList,
-                          SP.FieldUserValue.fromUser(
-                            UserN.LoginName.split("|")[1]
-                          )
-                        );
+                 
+                        // Edit_Data_Submit.g.oListItem.set_item(
+                        //   field.fieldNameInList,
+                        //   SP.FieldUserValue.fromUser(
+                        //     UserN.LoginName.split("|")[1]
+                        //   )
+                        // );
+                        var currentDeliveredVal = "";
+                        if ($("#Delivered").length) {
+                          if ($("#Delivered").attr("type") == "radio") {
+                            currentDeliveredVal = $("#Delivered:checked").val();
+                          } else {
+                            currentDeliveredVal = $("#Delivered").val();
+                          }
+                        }
+                        if ((deliveredValFromList != currentDeliveredVal) && currentDeliveredVal == 'yes') {
+                          Edit_Data_Submit.g.oListItem.set_item(
+                            field.fieldNameInList,
+                            SP.FieldUserValue.fromUser(UserN.LoginName)
+                          );
+                        }
                       } else {
                         Edit_Data_Submit.g.oListItem.set_item(
                           field.fieldNameInList,
@@ -1995,15 +2053,137 @@ window.Edit_Data_Submit = {
               if (valueBasedOnParent.includes(item.condition)) {
                 item.values.forEach((field) => {
                   if (field.fieldValueInList.toLowerCase() == "loggedinuser") {
-                    Edit_Data_Submit.g.oListItem.set_item(
-                      field.fieldNameInList,
-                      SP.FieldUserValue.fromUser(UserN.LoginName.split("|")[1])
-                    );
+        
+                    var currentDeliveredVal = "";
+                    if ($("#Delivered").length) {
+                      if ($("#Delivered").attr("type") == "radio") {
+                        currentDeliveredVal = $("#Delivered:checked").val();
+                      } else {
+                        currentDeliveredVal = $("#Delivered").val();
+                      }
+                    }
+                    if ((deliveredValFromList != currentDeliveredVal) && currentDeliveredVal == 'yes') {
+                      Edit_Data_Submit.g.oListItem.set_item(
+                        field.fieldNameInList,
+                        SP.FieldUserValue.fromUser(UserN.LoginName)
+                      );
+                    }
+                    // Edit_Data_Submit.g.oListItem.set_item(
+                    //   field.fieldNameInList,
+                    //   SP.FieldUserValue.fromUser(
+                    //     UserN.LoginName.split("|")[1]
+                    //     )
+                    // );
                   } else {
                     Edit_Data_Submit.g.oListItem.set_item(
                       field.fieldNameInList,
                       field.fieldValueInList
                     );
+                  }
+                });
+              }
+            });
+          }
+        } else {
+          // handle else to can update the loggedinuser
+          if (basedOnCondition) {
+            if (basedOnFieldValue == basedOnFieldCurrentValue) {
+            
+              el.valueToSet.forEach((item) => {
+                if (valueBasedOnParent.includes(item.condition)) {
+                  console.log(item.values,"item.values item.values")
+                  item.values.forEach((field) => {
+                    console.log(field.fieldValueInList,"field field")
+                   
+                    if (
+                      field.fieldValueInList.toLowerCase() == "loggedinuser"
+                    ) {
+               
+                      // Edit_Data_Submit.g.oListItem.set_item(
+                      //   field.fieldNameInList,
+                      //   SP.FieldUserValue.fromUser(
+                      //     UserN.LoginName.split("|")[1]
+                      //   )
+                      // );
+                      var currentDeliveredVal = "";
+                      if ($("#Delivered").length) {
+                        if ($("#Delivered").attr("type") == "radio") {
+                          currentDeliveredVal = $("#Delivered:checked").val();
+                        } else {
+                          currentDeliveredVal = $("#Delivered").val();
+                        }
+                      }
+                      if ((deliveredValFromList != currentDeliveredVal) && currentDeliveredVal == 'yes') {
+                        Edit_Data_Submit.g.oListItem.set_item(
+                          field.fieldNameInList,
+                          SP.FieldUserValue.fromUser(UserN.LoginName)
+                        );
+                      }
+                    }
+                  });
+                }
+              });
+            } else if (basedOnFieldValue == "notempty") {
+              if (basedOnFieldCurrentValue) {
+                el.valueToSet.forEach((item) => {
+                  if (valueBasedOnParent.includes(item.condition)) {
+                    item.values.forEach((field) => {
+                      if (
+                        field.fieldValueInList.toLowerCase() == "loggedinuser"
+                      ) {
+                       
+                        // Edit_Data_Submit.g.oListItem.set_item(
+                        //   field.fieldNameInList,
+                        //   SP.FieldUserValue.fromUser(
+                        //     UserN.LoginName.split("|")[1]
+                        //   )
+                        // );
+                        var currentDeliveredVal = "";
+                        if ($("#Delivered").length) {
+                          if ($("#Delivered").attr("type") == "radio") {
+                            currentDeliveredVal = $("#Delivered:checked").val();
+                          } else {
+                            currentDeliveredVal = $("#Delivered").val();
+                          }
+                        }
+                        if ((deliveredValFromList != currentDeliveredVal) && currentDeliveredVal == 'yes') {
+                          Edit_Data_Submit.g.oListItem.set_item(
+                            field.fieldNameInList,
+                            SP.FieldUserValue.fromUser(UserN.LoginName)
+                          );
+                        }
+                      }
+                    });
+                  }
+                });
+              }
+            }
+          } else {
+            el.valueToSet.forEach((item) => {
+              if (valueBasedOnParent.includes(item.condition)) {
+                item.values.forEach((field) => {
+                  if (field.fieldValueInList.toLowerCase() == "loggedinuser") {
+                    
+                    var currentDeliveredVal = "";
+                    if ($("#Delivered").length) {
+                      if ($("#Delivered").attr("type") == "radio") {
+                        currentDeliveredVal = $("#Delivered:checked").val();
+                      } else {
+                        currentDeliveredVal = $("#Delivered").val();
+                      }
+                    }
+                    if ((deliveredValFromList != currentDeliveredVal) && currentDeliveredVal == 'yes') {
+                      Edit_Data_Submit.g.oListItem.set_item(
+                        field.fieldNameInList,
+                        SP.FieldUserValue.fromUser(UserN.LoginName)
+                      );
+                    }
+                    // Edit_Data_Submit.g.oListItem.set_item(
+                    //   field.fieldNameInList,
+                    //   SP.FieldUserValue.fromUser(
+                    //     UserN.LoginName.split("|")[1]
+                    //     )
+                    // );
                   }
                 });
               }

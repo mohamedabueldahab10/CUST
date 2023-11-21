@@ -46,6 +46,8 @@ var benefitsEquationID,
 window.benefitsEquationsComponents = [];
 ////////
 window.editUniqueValueArr = [];
+///////
+window.deliveredValFromList ='' // to check the value on list and match with current value in form to change on WFInitiatedBy column value
 
 var projRelatedInit = "",
   initiativeDelevrableArr = [],
@@ -548,6 +550,26 @@ window.Edit_Data_Request = {
       }
     }
 
+    if($(`[data-basedonparentsetvalues]`) && $(`[data-basedonparentsetvalues]`).length){
+      var parsingDataBasedOnParent =""
+
+    $(`[data-basedonparentsetvalues]`).each(function (index) {
+    
+      parsingDataBasedOnParent = eval(
+        $(this).data("basedonparentsetvalues")
+      );
+      if(parsingDataBasedOnParent.length){
+        var targetField = parsingDataBasedOnParent[0].basedOnFieldName
+        if(targetField){
+        
+
+          deliveredValFromList = oListItem.get_item("" + targetField + "")
+        }
+      }
+    
+    });
+  }
+
     if (listkey == "mainkpi") {
       // if (isVROP) {
       //   // $('#Types').val('vision'); // comminted to get the value as saved on list (for Vrop value saved Main)
@@ -619,7 +641,7 @@ window.Edit_Data_Request = {
           $(this).data("basedonparentsetvalues")
         );
       });
-
+    
       parsingDataBasedOnParentSetValues.forEach((el) => {
         var listinerField = parsingDataBasedOnParentSetValues[0].listinerField;
         var code = $(`#${listinerField}`).val();
@@ -3746,8 +3768,8 @@ window.Get_Related_Sos_Sector = {
         : "";
       $("#Sector").val(sector);
       $("#SubSector").val(subSector);
-      if($("#ExternalEntities").length){
-      $("#ExternalEntities").val(externalEntity);
+      if ($("#ExternalEntities").length) {
+        $("#ExternalEntities").val(externalEntity);
       }
 
       // if(KPIType == 'sublevel3'){
