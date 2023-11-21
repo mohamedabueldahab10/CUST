@@ -70,7 +70,7 @@ var Information_Form = [
                 { fieldName: 'WFStage', value: 'VInStage01' },
                 { fieldName: 'Phase', value: 'P1' },
                 { fieldName: 'DraftStatus', value: '' },
-                { fieldName: 'InitiativeProgressStatus', value: 'stat5' },
+                // { fieldName: 'InitiativeProgressStatus', value: 'stat5' },
               ],
             },
             {
@@ -82,7 +82,7 @@ var Information_Form = [
                 { fieldName: 'WFStage', value: 'SInStage01' },
                 { fieldName: 'Phase', value: 'P1' },
                 { fieldName: 'DraftStatus', value: '' },
-                { fieldName: 'InitiativeProgressStatus', value: 'stat5' },
+                // { fieldName: 'InitiativeProgressStatus', value: 'stat5' },
                 
               ],
             },
@@ -95,7 +95,7 @@ var Information_Form = [
                 { fieldName: 'WFStage', value: 'LInStage01' },
                 { fieldName: 'Phase', value: 'P1' },
                 { fieldName: 'DraftStatus', value: '' },
-                { fieldName: 'InitiativeProgressStatus', value: 'stat5' },
+                // { fieldName: 'InitiativeProgressStatus', value: 'stat5' },
               ],
             },
 
