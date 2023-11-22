@@ -64,6 +64,7 @@ var Information_Form = [
         "InternalName": "Completed",
         "DisplayNameEn": "Completed",
         "DisplayName":"اكتمال الموافقة",
+        display:'none',
           "type": "yesnoradio",
           options: {
               choices: [{

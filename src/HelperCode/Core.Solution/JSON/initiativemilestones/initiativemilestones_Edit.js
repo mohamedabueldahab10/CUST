@@ -186,7 +186,9 @@ var Information_Form = [
         DisplayName: 'تم التسليم',
         DisplayNameEn: 'Delivered',
         type: 'yesnoradio',
-        disableonstage:"approved",
+        // disableonstage:"approved",
+        enableOnWfTaskStage: 'EPMOInitiativeMilestone00,VROInitiativeMilestone00,LMSInitiativeMilestone00',
+        requireOnWfTaskStage: 'EPMOInitiativeMilestone00,VROInitiativeMilestone00,LMSInitiativeMilestone00',
         targetfieldrequired: 'ActualCompletedDate',
         options: {
           choices: [
@@ -240,6 +242,7 @@ var Information_Form = [
     label: 'الوثائق داعمة',
     labelEn: 'Supporting Documents',
     description: '',
+    // hideOnWfTaskStage :'EPMOInitiativeMilestone00,VROInitiativeMilestone00,LMSInitiativeMilestone00',
     descriptionEn: '',
     subFields: [
       {
@@ -251,6 +254,7 @@ var Information_Form = [
         withAddBtn: 'true',
         descPhraseAr: "ملفات مطلوبة عند الاغلاق",
         descPhraseEn: "File required after closing",
+        // hideOnWfTaskStage :'EPMOInitiativeMilestone00,VROInitiativeMilestone00,LMSInitiativeMilestone00',
         // security: {
         //   groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
         // },
@@ -263,6 +267,7 @@ var Information_Form = [
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
         maxchar: '5000',
+        // hideOnWfTaskStage :'EPMOInitiativeMilestone00,VROInitiativeMilestone00,LMSInitiativeMilestone00',
         // security: {
         //   groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
         // },
@@ -273,6 +278,7 @@ var Information_Form = [
     label: 'المرفقات',
     labelEn: 'Attachments',
     description: 'التفاصيل',
+    // hideOnWfTaskStage :'EPMOInitiativeMilestone00,VROInitiativeMilestone00,LMSInitiativeMilestone00',
     descriptionEn: 'Details',
     subFields: [
       {
@@ -284,6 +290,7 @@ var Information_Form = [
         withAddBtn: 'true',
         descPhraseAr: "ملفات متعلقة بالعنصر",
         descPhraseEn: "File related to the item",
+        // hideOnWfTaskStage :'EPMOInitiativeMilestone00,VROInitiativeMilestone00,LMSInitiativeMilestone00',
         // security: {
         //   groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
         // },

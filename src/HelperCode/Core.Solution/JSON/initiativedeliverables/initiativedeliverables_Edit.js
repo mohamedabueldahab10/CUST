@@ -225,7 +225,9 @@ var Information_Form = [
 				InternalName: "Delivered",
 				DisplayName: "تم التسليم",
 				DisplayNameEn: "Delivered",
-				disableonstage: "approved",
+				// disableonstage: "approved",
+				enableOnWfTaskStage: 'VROInitiativeDeliverable00,EPMOInitiativeDeliverable00,LMSInitiativeDeliverable00',
+				requireOnWfTaskStage: 'VROInitiativeDeliverable00,EPMOInitiativeDeliverable00,LMSInitiativeDeliverable00',
 				type: "yesnoradio",
 				targetfieldrequired: "ActualCompletedDate",
 				options: {
