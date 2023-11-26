@@ -80,7 +80,11 @@ var Information_Form = [
 
           ]
         },
-        requiredValues: [{ value: 'vision', fields: ['Portfolio'] }],
+        requiredValues: [
+          { value: 'vision', fields: ['Portfolio'] },
+          { value: 'lms', fields: ['SubSector'] },
+          { value: 'strategically', fields: ['SubSector'] },
+      ],
       },
       {
         InternalName: 'RelatedProgram',
@@ -672,7 +676,8 @@ var Information_Form = [
         DisplayName: "الوكالة",
         DisplayNameEn: "DeputyShip",
         type: "lookup",
-        validation: 'required',
+        // validation: 'required',
+        RequiredName: 'SubSector',
         //from other list:
         source: "Internal Entities",
         isSector: "True",

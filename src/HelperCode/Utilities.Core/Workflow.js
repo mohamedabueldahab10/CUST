@@ -5073,6 +5073,7 @@ var reset_Delivered_Value = {
           //Get Item by current ID
           var items = programList.getItemById(currentId);
           items.set_item("Delivered", "no");
+          items.set_item("ActualCompletedDate", null);
           //Update the item
           items.update();
           //Push item on the array

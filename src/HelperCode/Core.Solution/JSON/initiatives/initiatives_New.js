@@ -140,7 +140,11 @@ var Information_Form = [
 
           ],
         },
-        requiredValues: [{ value: 'vision', fields: ['Portfolio'] }],
+        requiredValues: [
+          { value: 'vision', fields: ['Portfolio'] },
+          { value: 'lms', fields: ['SubSector'] },
+          { value: 'strategically', fields: ['SubSector'] },
+      ],
       },
       {
         InternalName: 'RelatedProgram',
@@ -440,7 +444,8 @@ var Information_Form = [
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
         // "state": "disabled"
-        validation: 'required',
+        RequiredName: 'SubSector',
+        // validation: 'required',
         isRelatedToParent: true, // to show parent value depends on child like sector and subsector
         dynamic: 'Sector', //InternalName Of Parent field
         filterField: 'ParentEntity', //InternalName Of Parent field
