@@ -34,6 +34,15 @@ var Listing_Info = [
     infilter: true,
   },
   {
+    InternalName: "WorkflowName",
+    DisplayName: "تابع ل",
+    DisplayNameEn: "Related To",
+    type: "text",
+    needTrans: true,
+    inlisting: true,
+    infilter: false,
+  },
+  {
     InternalName: "Status",
     DisplayName: "الحالة",
     DisplayNameEn: "Status",

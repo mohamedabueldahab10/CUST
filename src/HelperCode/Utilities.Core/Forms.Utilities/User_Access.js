@@ -15,14 +15,15 @@ window.relatedProjectId = "";
 window.relatedInitiativeId = "";
 //window.finishRenderAccessRole = false
 
-
 window.USERisProjectHome =
   window.location.href.toLowerCase().indexOf("/projecthome.aspx") > -1;
 window.USERisInitiativeHome =
   window.location.href.toLowerCase().indexOf("/initiativehome.aspx") > -1;
 window.USERisStrategicPartnershipHome =
-  window.location.href.toLowerCase().indexOf("/strategicpartnershiphome.aspx") > -1;
-window.USERisTargets = window.location.href.toLowerCase().indexOf("/targets.aspx") > -1;
+  window.location.href.toLowerCase().indexOf("/strategicpartnershiphome.aspx") >
+  -1;
+window.USERisTargets =
+  window.location.href.toLowerCase().indexOf("/targets.aspx") > -1;
 
 var BreakException = {};
 var workingstatus = "";
@@ -128,14 +129,17 @@ var UserRole,
   istherePCODE = window.location.href.toLowerCase().indexOf("pcode=") > -1,
   isthereICODE = window.location.href.indexOf("ICODE=") > -1,
   isthereSTCODE = window.location.href.indexOf("STCODE=") > -1,
-  UserSTCode = isthereSTCODE ? window.location.href.split("STCODE=")[1].split("&")[0] : "",
+  UserSTCode = isthereSTCODE
+    ? window.location.href.split("STCODE=")[1].split("&")[0]
+    : "",
   UserICode = isthereICODE
     ? window.location.href.split("ICODE=")[1].split("&")[0]
     : "",
   isWF = window.location.href.toLowerCase().indexOf("&wfs") > -1,
   USERisWF = window.location.href.toLowerCase().indexOf("&wfs") > -1,
   isTarget = window.location.href.toLowerCase().indexOf("targets.aspx") > -1,
-  isBenefitsMetrics = window.location.href.toLowerCase().indexOf("benefitmetrics.aspx") > -1,
+  isBenefitsMetrics =
+    window.location.href.toLowerCase().indexOf("benefitmetrics.aspx") > -1,
   isTaskDetails =
     window.location.href.toLowerCase().indexOf("taskdetails") > -1,
   USERlistkey =
@@ -234,13 +238,84 @@ window.isRequestorTeam = false;
 window.isRequestorTeamUser = false;
 window.UserHaveLicense = true;
 
+// to handle wf name related to
+window.WorkflowTranslate = [
+  { wfName: "Project", nameAr: "مشروع", nameEn: "project" },
+
+  { wfName: "VROCOC", nameAr: "شهادة انجاز", nameEn: "COC" },
+  { wfName: "EPMOCOC", nameAr: "شهادة انجاز", nameEn: "COC" },
+  { wfName: "LMSCOC", nameAr: "شهادة انجاز", nameEn: "COC" },
+
+  { wfName: "VisionInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
+  { wfName: "StrategicallyInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
+  { wfName: "LMSInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
+  { wfName: "VROCreateInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
+  { wfName: "EPMOCreateInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
+  { wfName: "LMSCreateInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
+
+  { wfName: "VROInitiativeMilestone", nameAr: "معلم مبادرة", nameEn: "Initiative Milestone" },
+  { wfName: "EPMOInitiativeMilestone", nameAr: "معلم مبادرة", nameEn: "Initiative Milestone" },
+  { wfName: "LMSInitiativeMilestone", nameAr: "معلم مبادرة", nameEn: "Initiative Milestone" },
+
+  { wfName: "VROInitiativeDeliverable", nameAr: "مخرج مبادرة", nameEn: "Initiative Deliverable" },
+  { wfName: "EPMOInitiativeDeliverable", nameAr: "مخرج مبادرة", nameEn: "Initiative Deliverable" },
+  { wfName: "LMSInitiativeDeliverable", nameAr: "مخرج مبادرة", nameEn: "Initiative Deliverable" },
+
+  { wfName: "VROCreateProject", nameAr: "مشروع", nameEn: "Project" },
+  { wfName: "EPMOCreateProject", nameAr: "مشروع", nameEn: "Project" },
+  { wfName: "LMSCreateProject", nameAr: "مشروع", nameEn: "Project" },
+
+  { wfName: "VROProjDeliverable", nameAr: "مخرج مشروع", nameEn: "Project Deliverable" },
+  { wfName: "EPMOProjDeliverable", nameAr: "مخرج مشروع", nameEn: "Project Deliverable" },
+  { wfName: "LMSProjDeliverable", nameAr: "مخرج مشروع", nameEn: "Project Deliverable" },
+
+  { wfName: "VROProjMilestone", nameAr: "معلم مشروع", nameEn: "Project Milestone" },
+  { wfName: "EPMOProjMilestone", nameAr: "معلم مشروع", nameEn: "Project Milestone" },
+  { wfName: "LMSProjMilestone", nameAr: "معلم مشروع", nameEn: "Project Milestone" },
+
+  
+  { wfName: "VROActualKPI", nameAr: "مؤشر", nameEn: "KPI" },
+  { wfName: "MSActualKPI", nameAr: "مؤشر", nameEn: "KPI" },
+  { wfName: "LMSActualKPI", nameAr: "مؤشر", nameEn: "KPI" },
+
+  { wfName: "VROCreateKPI", nameAr: "مؤشر", nameEn: "KPI" },
+  { wfName: "EPMOCreateKPI", nameAr: "مؤشر", nameEn: "KPI" },
+  { wfName: "LMSCreateKPI", nameAr: "مؤشر", nameEn: "KPI" },
+
+  { wfName: "VROBenefitActual", nameAr: "منفعة", nameEn: "Benefit" },
+  { wfName: "EPMOBenefitActual", nameAr: "منفعة", nameEn: "Benefit" },
+  { wfName: "LMSBenefitActual", nameAr: "منفعة", nameEn: "Benefit" },
+
+  { wfName: "VROCreateObjective", nameAr: "هدف", nameEn: "Objective" },
+  { wfName: "LMSCreateObjective", nameAr: "هدف", nameEn: "Objective" },
+  { wfName: "MSCreateObjective", nameAr: "هدف", nameEn: "Objective" },
+
+
+  { wfName: "VROCRObjective", nameAr: "هدف", nameEn: "Objective" },
+  { wfName: "MSCRObjective", nameAr: "هدف", nameEn: "Objective" },
+  { wfName: "LMSCRObjective", nameAr: "هدف", nameEn: "Objective" },
+
+  { wfName: "VROCRProject", nameAr: "مشروع", nameEn: "Project" },
+  { wfName: "EPMOCRProject", nameAr: "مشروع", nameEn: "Project" },
+  { wfName: "LMSCRProject", nameAr: "مشروع", nameEn: "Project" },
+
+  { wfName: "VROCRKPI", nameAr: "مؤشر", nameEn: "KPI" },
+  { wfName: "MSCRKPI", nameAr: "مؤشر", nameEn: "KPI" },
+  { wfName: "LMSCRKPI", nameAr: "مؤشر", nameEn: "KPI" },
+
+  { wfName: "VROCRInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
+  { wfName: "EPMOCRInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
+  { wfName: "LMSCRInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
+];
+//
+
 // handle child when delete project
 window.userProjects = [];
 //
 window.USERINID; // to get the initiative id
 
 // window.activeCode = istherePCODE ? USERPCODE : isthereICODE ? UserICode : "";
-window.activeCode = ""
+window.activeCode = "";
 //
 window.tempRoleHierarchies = [];
 window.accessCallisDone = false;
@@ -249,9 +324,13 @@ window.accessCallisDone = false;
 
 (window.crListKey = USERlistkey == "changerequest" ? true : false),
   (window.isCrMode = window.location.href.indexOf("RID=") > -1),
-  (window.RID = isCrMode ? window.location.href.split("RID=")[1].split("&")[0] : ""),
+  (window.RID = isCrMode
+    ? window.location.href.split("RID=")[1].split("&")[0]
+    : ""),
   (window.isRListKey = window.location.href.indexOf("RKey=") > -1),
-  (window.RListKey = isCrMode ? window.location.href.split("RKey=")[1].split("&")[0] : ""),
+  (window.RListKey = isCrMode
+    ? window.location.href.split("RKey=")[1].split("&")[0]
+    : ""),
   (window.CrRelatedList = ""),
   (window.changeRequestBody = []),
   (window.changeRequestBodyMaster = []),
@@ -262,21 +341,18 @@ window.accessCallisDone = false;
   (window.USER_HomePage = "initiativesmain.aspx");
 // ended
 
-
-
-var projectStartToValidation = "",projectFinishToValidation="", initiativeStartToValidation = "", initiativeFinishToValidation = "";
-
-
-
+var projectStartToValidation = "",
+  projectFinishToValidation = "",
+  initiativeStartToValidation = "",
+  initiativeFinishToValidation = "";
 
 if (istherePCODE) {
-  activeCode = USERPCODE
+  activeCode = USERPCODE;
 } else if (isthereICODE) {
-  activeCode = UserICode
+  activeCode = UserICode;
 } else if (isthereSTCODE) {
-  activeCode = UserSTCode
+  activeCode = UserSTCode;
 }
-
 
 if (window.location.href.indexOf("ListKey") > -1) {
   for (var i = 0; i < ListArray.length; i++) {
@@ -357,12 +433,11 @@ window.userCalls = {
         Accept: "application/json; odata=verbose",
       },
       success: function (data) {
-
         console.timeEnd();
         UserN = data.d;
         userCalls.get_CurrentUserGroupColl(data.d.Id);
       },
-      error: function (data) { },
+      error: function (data) {},
     });
   },
   get_CurrentUserGroupColl: function (UserID) {
@@ -389,12 +464,10 @@ window.userCalls = {
         userCalls.get_userAccess();
 
         Get_Configure_Api.preinit();
-
       },
     });
   },
   isMember: function (groupName, userLoginName, fieldID) {
-
     $.ajax({
       url:
         _spPageContextInfo.webAbsoluteUrl +
@@ -418,10 +491,10 @@ window.userCalls = {
             membersGroupCheckArray.length == 0 ? true : false;
           !pickerValidationDone
             ? userCalls.isMember(
-              membersGroupCheckArray[0].groupName,
-              membersGroupCheckArray[0].userLoginName,
-              membersGroupCheckArray[0].fieldID
-            )
+                membersGroupCheckArray[0].groupName,
+                membersGroupCheckArray[0].userLoginName,
+                membersGroupCheckArray[0].fieldID
+              )
             : (membersGroupCheckArray = []);
           //
           if (isNew && pickerValidationDone) New_Data_Submit.init();
@@ -486,7 +559,6 @@ window.userCalls = {
 
       if (i == userCalls.g.SPGroups.length - 1 && Groups.length > 0) {
         userCalls.get_AccessAction();
-
       }
     }
     //*****
@@ -557,14 +629,14 @@ window.userCalls = {
       ) {
         $("body").html(
           '<div class="popupComment access-denied"><div class="wrapcomments"><div class="denied-icon"><i class="fas fa-user-shield"></i></div><label>عذرا، ليس لديك صلاحية لرؤية البيانات</label>' +
-          '<div style="margin-bottom:15px">الرجاء التواصل مع مسؤول النظام للمزيد من المعلومات</div>' +
-          "</div></div></div>"
+            '<div style="margin-bottom:15px">الرجاء التواصل مع مسؤول النظام للمزيد من المعلومات</div>' +
+            "</div></div></div>"
         );
       } else {
         $("body").html(
           '<div class="popupComment access-denied"><div class="wrapcomments"><div class="denied-icon"><i class="fas fa-user-shield"></i></div><label>Sorry, you don\'t have permission to view the data</label>' +
-          '<div style="margin-bottom:15px">Please contact the system administrator for more information</div>' +
-          "</div></div></div>"
+            '<div style="margin-bottom:15px">Please contact the system administrator for more information</div>' +
+            "</div></div></div>"
         );
       }
     }
@@ -574,7 +646,6 @@ window.userCalls = {
     }
   },
   get_AccessAction: function () {
-
     switch (UserPage_Name) {
       case "listing.aspx":
         if (isArabic) {
@@ -657,7 +728,9 @@ window.userCalls = {
         document.title = USERPageTitle;
     }
     (Create_Access = Create_Access.map((name) => name.toLowerCase())), //making sure everything is lower case
-      (CreateChangeRequest_Access = CreateChangeRequest_Access.map((name) => name.toLowerCase())), //making sure everything is lower case
+      (CreateChangeRequest_Access = CreateChangeRequest_Access.map((name) =>
+        name.toLowerCase()
+      )), //making sure everything is lower case
       (Read_Access = Read_Access.map((name) => name.toLowerCase())),
       (Edit_Access = Edit_Access.map((name) => name.toLowerCase())),
       (Delete_Access = Delete_Access.map((name) => name.toLowerCase()));
@@ -674,14 +747,14 @@ window.userCalls = {
     //Add permission for default chart view on home Page + User Title Role
 
     switch (
-    currentUserRole //we need first role for user
+      currentUserRole //we need first role for user
     ) {
       case "Administrator":
         USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" +
-          "div#s4-ribbonrow, div#O365_MainLink_Settings_container{display:block!important}html #s4-workspace {min-height:auto !important;}.Progress-Action {display:block!important;}" +
-          "</style>"
+            "div#s4-ribbonrow, div#O365_MainLink_Settings_container{display:block!important}html #s4-workspace {min-height:auto !important;}.Progress-Action {display:block!important;}" +
+            "</style>"
         );
         isAdmin = true;
         //***** */
@@ -702,8 +775,8 @@ window.userCalls = {
           "initiatives",
           "projects",
           "sos",
-          "mainkpi"
-        ]
+          "mainkpi",
+        ];
         break;
       case "EPMO":
         USER_HomePage = "InitiativesMain.aspx";
@@ -733,7 +806,7 @@ window.userCalls = {
           "deliverables",
           "milestones",
           "issues",
-          "risks",                   
+          "risks",
           "Targets.aspx",
           "mom",
           "closureform",
@@ -744,7 +817,7 @@ window.userCalls = {
           "contracts",
           "changerequest",
           "sos",
-          "mainkpi"
+          "mainkpi",
         ];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
@@ -773,7 +846,7 @@ window.userCalls = {
           "communicationplans",
           "contracts",
           "sos",
-          "mainkpi"
+          "mainkpi",
           //"changerequest",
         ];
         Delete_Access = [
@@ -801,14 +874,14 @@ window.userCalls = {
           "communicationplans",
           "contracts",
           "sos",
-          "mainkpi"
+          "mainkpi",
         ];
         CreateChangeRequest_Access = [
           "initiatives",
           "projects",
           "sos",
-          "mainkpi"
-        ]
+          "mainkpi",
+        ];
         // Delete_Access = AllListKeys;
         // Delete_Access = Delete_Access.concat(SP_Page_Name); // to can delete everything
         break;
@@ -846,7 +919,6 @@ window.userCalls = {
         break;
 
       case "ProjectManager":
-
         USER_HomePage = "home.aspx";
 
         $("body").append(
@@ -875,7 +947,7 @@ window.userCalls = {
           "communicationplans",
           "contracts",
           "documents",
-          "changerequest"
+          "changerequest",
         ];
         CreateChangeRequest_Access = [
           /////////
@@ -1012,7 +1084,7 @@ window.userCalls = {
           "contracts",
           "changerequest",
         ];
-        CreateChangeRequest_Access = ["initiatives", "projects"]
+        CreateChangeRequest_Access = ["initiatives", "projects"];
         Read_Access = [
           "initiatives",
           "initiativedeliverables",
@@ -1134,7 +1206,7 @@ window.userCalls = {
           "contracts",
           "changerequest",
         ];
-        CreateChangeRequest_Access = ["initiatives", "projects"]
+        CreateChangeRequest_Access = ["initiatives", "projects"];
         Read_Access = [
           "initiatives",
           "initiativedeliverables",
@@ -1211,7 +1283,6 @@ window.userCalls = {
           // "projects",
           // "deliverables",
           // "milestones",
-
         ];
 
         // Delete_Access = AllListKeys;
@@ -1248,10 +1319,7 @@ window.userCalls = {
           "Targets.aspx",
           "kpiequations",
         ];
-        CreateChangeRequest_Access = [
-          "sos",
-          "mainkpi",
-        ]
+        CreateChangeRequest_Access = ["sos", "mainkpi"];
         Read_Access = [
           "initiativeissues",
           "initiativerisks",
@@ -1289,7 +1357,6 @@ window.userCalls = {
           "kpiequations",
           "benefitsequations",
           //"changerequest",
-
         ];
         Delete_Access = [
           "mainkpi",
@@ -1321,7 +1388,9 @@ window.userCalls = {
         ar_UserRole = "إدارة الأداء الإستراتيجي";
         en_UserRole = "Strategy Performance Management";
         //CRUD
-        Create_Access = ["benefitmetrics", "BenefitMetrics.aspx",
+        Create_Access = [
+          "benefitmetrics",
+          "BenefitMetrics.aspx",
           "changerequest",
           // "benefits",
         ];
@@ -1344,10 +1413,12 @@ window.userCalls = {
           "BenefitMetrics.aspx",
           "MainIndicators.aspx",
           "initiativesmain.aspx",
-          "changerequest"
+          "changerequest",
         ];
 
-        Edit_Access = ["benefitmetrics", "BenefitMetrics.aspx",
+        Edit_Access = [
+          "benefitmetrics",
+          "BenefitMetrics.aspx",
           // "changerequest",
           // "benefits"
         ];
@@ -1370,12 +1441,9 @@ window.userCalls = {
           "goalstrategy",
           // "sos",
           // "mainkpi",
-          "changerequest"
+          "changerequest",
         ];
-        CreateChangeRequest_Access = [
-          "sos",
-          "mainkpi",
-        ]
+        CreateChangeRequest_Access = ["sos", "mainkpi"];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
@@ -1408,12 +1476,9 @@ window.userCalls = {
           "goalstrategy",
           // "sos",
           // "mainkpi",
-          "changerequest"
+          "changerequest",
         ];
-        CreateChangeRequest_Access = [
-          "sos",
-          "mainkpi",
-        ]
+        CreateChangeRequest_Access = ["sos", "mainkpi"];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
@@ -1445,13 +1510,9 @@ window.userCalls = {
           "goalstrategy",
           // "sos",
           // "mainkpi",
-          "changerequest"
+          "changerequest",
         ];
-        CreateChangeRequest_Access = [
-          "sos",
-          "mainkpi",
-          "projects"
-        ]
+        CreateChangeRequest_Access = ["sos", "mainkpi", "projects"];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
@@ -1483,12 +1544,9 @@ window.userCalls = {
           "goalstrategy",
           // "sos",
           // "mainkpi",
-          "changerequest"
+          "changerequest",
         ];
-        CreateChangeRequest_Access = [
-          "sos",
-          "mainkpi",
-        ]
+        CreateChangeRequest_Access = ["sos", "mainkpi"];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
@@ -1520,13 +1578,9 @@ window.userCalls = {
           "goalstrategy",
           // "sos",
           // "mainkpi",
-          "changerequest"
+          "changerequest",
         ];
-        CreateChangeRequest_Access = [
-          "sos",
-          "mainkpi",
-          "projects"
-        ]
+        CreateChangeRequest_Access = ["sos", "mainkpi", "projects"];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
@@ -1556,7 +1610,7 @@ window.userCalls = {
         //CRUD
         Create_Access = [
           "sos",
-          "mainkpi",                   
+          "mainkpi",
           "Targets.aspx",
           "benefitmatrix",
           "initiatives",
@@ -1580,24 +1634,23 @@ window.userCalls = {
           "coc",
           "stakeholders",
           "communicationplans",
-          "goalstrategy",          
+          "goalstrategy",
           "contracts",
           "changerequest",
           "documents",
-
         ];
         CreateChangeRequest_Access = [
           "initiatives",
           "projects",
           "sos",
-          "mainkpi"
-        ]
+          "mainkpi",
+        ];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
           "benefitmatrix",
           "kpiequations",
-          "goalstrategy",  
+          "goalstrategy",
           "initiatives",
           "initiativedeliverables",
           "initiativemilestones",
@@ -1628,7 +1681,7 @@ window.userCalls = {
         Delete_Access = [
           "benefitmatrix",
           "initiatives",
-          "goalstrategy",  
+          "goalstrategy",
           "initiativedeliverables",
           "initiativemilestones",
           "initiativeissues",
@@ -1651,7 +1704,7 @@ window.userCalls = {
           "communicationplans",
           "sos",
           "mainkpi",
-          "contracts"
+          "contracts",
         ];
         break;
 
@@ -1693,12 +1746,8 @@ window.userCalls = {
           "contracts",
           "changerequest",
           "documents",
-
         ];
-        CreateChangeRequest_Access = [
-          "initiatives",
-          "projects",
-        ]
+        CreateChangeRequest_Access = ["initiatives", "projects"];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
@@ -1752,12 +1801,11 @@ window.userCalls = {
           "coc",
           "stakeholders",
           "communicationplans",
-          "contracts"
+          "contracts",
         ];
         break;
 
       case "LMSE":
-
         USER_HomePage = "InitiativesMain.aspx";
 
         $("body").append(
@@ -1766,7 +1814,8 @@ window.userCalls = {
         //***** */
         isLMSE = true;
 
-        ChartHide = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
         ar_UserRole = "مكتب ضمان التنفيذ لسوق العمل";
         en_UserRole = "Execution Guarantee Office";
@@ -1798,9 +1847,7 @@ window.userCalls = {
           "changerequest",
           "documents",
         ];
-        CreateChangeRequest_Access = [
-          "initiatives", "projects"
-        ]
+        CreateChangeRequest_Access = ["initiatives", "projects"];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
@@ -1866,7 +1913,8 @@ window.userCalls = {
 
         isLMSUControl = true;
 
-        ChartHide = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
         ar_UserRole = "وحدة استراتيجية سوق العمل ( إدارة الحوكمة والجودة)";
         en_UserRole = "LMSU Control";
@@ -1898,14 +1946,14 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           "changerequest",
-          "contracts"
-        ]
+          "contracts",
+        ];
         CreateChangeRequest_Access = [
           "initiatives",
           "projects",
           "sos",
-          "mainkpi"
-        ]
+          "mainkpi",
+        ];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
 
@@ -1937,8 +1985,8 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           // "changerequest",
-          "contracts"
-        ]
+          "contracts",
+        ];
         Delete_Access = [
           "goalstrategy",
           // "sos",
@@ -1966,7 +2014,7 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           "changerequest",
-        ]
+        ];
         break;
 
       case "LMSUExecution":
@@ -1977,7 +2025,8 @@ window.userCalls = {
 
         isLMSUExecution = true;
 
-        ChartHide = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
         ar_UserRole = "وحدة استراتيجية سوق العمل (إدارة التنفيذ)";
         en_UserRole = "LMSU Execution";
@@ -2008,16 +2057,16 @@ window.userCalls = {
           "coc",
           "stakeholders",
           "communicationplans",
-          "changerequest",          
+          "changerequest",
           "Targets.aspx",
-          "contracts"
-        ]
+          "contracts",
+        ];
         CreateChangeRequest_Access = [
           "initiatives",
           "projects",
           "sos",
-          "mainkpi"
-        ]
+          "mainkpi",
+        ];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
 
@@ -2050,8 +2099,8 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           //"changerequest",
-          "contracts"
-        ]
+          "contracts",
+        ];
         Delete_Access = [
           "goalstrategy",
           "sos",
@@ -2079,11 +2128,10 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           "changerequest",
-        ]
+        ];
         break;
 
       case "LMSUPerformance":
-
         USER_HomePage = "InitiativesMain.aspx";
 
         $("body").append(
@@ -2092,7 +2140,8 @@ window.userCalls = {
 
         isLMSUPerformance = true;
 
-        ChartHide = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
         ar_UserRole = " وحدة استراتيجية سوق العمل (إدارة الآداء)";
         en_UserRole = "LMSU Performance";
@@ -2124,14 +2173,14 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           "changerequest",
-          "contracts"
-        ]
+          "contracts",
+        ];
         CreateChangeRequest_Access = [
           "initiatives",
           "projects",
           "sos",
-          "mainkpi"
-        ]
+          "mainkpi",
+        ];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
 
@@ -2163,8 +2212,8 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           //"changerequest",
-          "contracts"
-        ]
+          "contracts",
+        ];
         Delete_Access = [
           "goalstrategy",
           // "sos",
@@ -2192,7 +2241,7 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           "changerequest",
-        ]
+        ];
 
         break;
 
@@ -2204,7 +2253,8 @@ window.userCalls = {
 
         isCRCommittee = true;
 
-        ChartHide = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
         ar_UserRole = "لجنة طلبات التغيير";
         en_UserRole = "Change Request Committee";
@@ -2214,9 +2264,9 @@ window.userCalls = {
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
 
-        Edit_Access = []
+        Edit_Access = [];
 
-        Delete_Access = []
+        Delete_Access = [];
 
         break;
 
@@ -2228,7 +2278,8 @@ window.userCalls = {
 
         isCRCommitteeVision = true;
 
-        ChartHide = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
         ar_UserRole = "لجنة طلبات التغيير (الرؤية)";
         en_UserRole = "Change Request Committee (Vision)";
@@ -2238,9 +2289,9 @@ window.userCalls = {
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
 
-        Edit_Access = []
+        Edit_Access = [];
 
-        Delete_Access = []
+        Delete_Access = [];
 
         break;
 
@@ -2252,7 +2303,8 @@ window.userCalls = {
 
         isLMSP = true;
 
-        ChartHide = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
         ar_UserRole = "مكتب التخطيط الإستراتيجي لسوق العمل";
         en_UserRole = "Strategic Planning Office";
@@ -2262,12 +2314,9 @@ window.userCalls = {
           // "sos",
           "goalstrategy",
           "Targets.aspx",
-          "changerequest"
+          "changerequest",
         ];
-        CreateChangeRequest_Access = [
-          "sos",
-          "mainkpi",
-        ]
+        CreateChangeRequest_Access = ["sos", "mainkpi"];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
@@ -2320,11 +2369,9 @@ window.userCalls = {
           "communicationplans",
           "contracts",
           "changerequest",
-          "achievements"
+          "achievements",
         ];
-        CreateChangeRequest_Access = [
-          "initiatives", "projects"
-        ]
+        CreateChangeRequest_Access = ["initiatives", "projects"];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = [
@@ -2354,8 +2401,7 @@ window.userCalls = {
           "communicationplans",
           "contracts",
           //"changerequest",
-          "achievements"
-
+          "achievements",
         ];
         Delete_Access = [
           // for initiative
@@ -2426,7 +2472,7 @@ window.userCalls = {
           "contracts",
           "changerequest",
         ];
-        CreateChangeRequest_Access = ["initiatives", "projects"]
+        CreateChangeRequest_Access = ["initiatives", "projects"];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
 
@@ -2555,13 +2601,9 @@ window.userCalls = {
           "communicationplans",
           "contracts",
           "changerequest",
-          "achievements"
-
+          "achievements",
         ];
-        CreateChangeRequest_Access = [
-          "initiatives",
-          "projects",
-        ]
+        CreateChangeRequest_Access = ["initiatives", "projects"];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
 
@@ -2592,8 +2634,7 @@ window.userCalls = {
           "communicationplans",
           "contracts",
           //"changerequest",
-          "achievements"
-
+          "achievements",
         ];
         Delete_Access = [
           // for initiative
@@ -2717,12 +2758,9 @@ window.userCalls = {
           "spillars",
           // "sos",
           // "mainkpi",
-          "changerequest"
+          "changerequest",
         ];
-        CreateChangeRequest_Access = [
-          "sos",
-          "mainkpi",
-        ]
+        CreateChangeRequest_Access = ["sos", "mainkpi"];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
 
@@ -2752,9 +2790,7 @@ window.userCalls = {
         ar_UserRole = "مالك المؤشرات";
         en_UserRole = "KPIs Owner";
         //CRUD
-        Create_Access = [
-          "changerequest"
-        ];
+        Create_Access = ["changerequest"];
         Read_Access = [
           "mainkpi",
           "sos",
@@ -2763,7 +2799,7 @@ window.userCalls = {
           "Targets.aspx",
           "kpiequations",
           "MainIndicators.aspx",
-          "tasks"
+          "tasks",
         ];
         Edit_Access = [
           // "mainkpi"
@@ -2785,15 +2821,13 @@ window.userCalls = {
 
         isObjectiveOwner = true;
 
-        ChartHide = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
         ar_UserRole = "مالك الهدف";
         en_UserRole = "Objective Owner";
 
-        Create_Access = [
-          "mainkpi",
-          "changerequest"
-        ];
+        Create_Access = ["mainkpi", "changerequest"];
         Read_Access = [
           "mainkpi",
           "sos",
@@ -2802,7 +2836,7 @@ window.userCalls = {
           "kpiequations",
           "MainIndicators.aspx",
           "tasks",
-          "changerequest"
+          "changerequest",
         ];
         Edit_Access = [
           "mainkpi",
@@ -2828,9 +2862,11 @@ window.userCalls = {
         ar_UserRole = "رائد الأداء";
         en_UserRole = "Performance Leader";
         //CRUD
-        Create_Access = ["Targets.aspx",
+        Create_Access = [
+          "Targets.aspx",
           "BenefitMetrics.aspx",
-          "changerequest"];
+          "changerequest",
+        ];
         Read_Access = [
           "mainkpi",
           "sos",
@@ -2847,7 +2883,7 @@ window.userCalls = {
           "initiatives",
           "InitiativeHome.aspx",
           "initiativesmain.aspx",
-          "changerequest"
+          "changerequest",
         ];
         Edit_Access = [
           "Targets.aspx",
@@ -2868,7 +2904,7 @@ window.userCalls = {
         //     _spPageContextInfo.webAbsoluteUrl +
         //     "/sitepages/Listing.aspx?ListKey=strategicpartnerships";
 
-        USER_HomePage = "Listing.aspx?ListKey=strategicpartnerships"
+        USER_HomePage = "Listing.aspx?ListKey=strategicpartnerships";
 
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
@@ -2892,7 +2928,7 @@ window.userCalls = {
           "strategicpartnershipslessonslearned",
           "strategicpartnershipsmom",
           "strategicpartnershipsachievements",
-          "strategicpartnershipsvendors"
+          "strategicpartnershipsvendors",
         ];
 
         Read_Access = [
@@ -2908,7 +2944,7 @@ window.userCalls = {
           "documents",
           "strategicpartnershipsachievements",
           "tasks",
-          "strategicpartnershipsvendors"
+          "strategicpartnershipsvendors",
         ];
         Edit_Access = [
           "strategicpartnerships",
@@ -2922,7 +2958,7 @@ window.userCalls = {
           "strategicpartnershipsmom",
           "strategicpartnershipsachievements",
           "tasks",
-          "strategicpartnershipsvendors"
+          "strategicpartnershipsvendors",
         ];
         Delete_Access = [
           "strategicpartnerships",
@@ -2935,7 +2971,7 @@ window.userCalls = {
           "strategicpartnershipslessonslearned",
           "strategicpartnershipsmom",
           "strategicpartnershipsachievements",
-          "strategicpartnershipsvendors"
+          "strategicpartnershipsvendors",
         ];
         break;
 
@@ -2945,14 +2981,13 @@ window.userCalls = {
         //     _spPageContextInfo.webAbsoluteUrl +
         //     "/sitepages/Listing.aspx?ListKey=strategicpartnerships";
 
-
-        USER_HomePage = "Listing.aspx?ListKey=strategicpartnerships"
+        USER_HomePage = "Listing.aspx?ListKey=strategicpartnerships";
 
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
 
-        isPartnershipRepresentative = true
+        isPartnershipRepresentative = true;
 
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
@@ -2969,7 +3004,6 @@ window.userCalls = {
           "strategicpartnershipsrisks",
           "strategicpartnershipslessonslearned",
           "strategicpartnershipsmom",
-
         ];
         Read_Access = [
           "strategicpartnerships",
@@ -2984,10 +3018,10 @@ window.userCalls = {
           "documents",
           "strategicpartnershipsachievements",
           "tasks",
-          "strategicpartnershipsvendors"
+          "strategicpartnershipsvendors",
         ];
         Edit_Access = [];
-        Delete_Access = []
+        Delete_Access = [];
         break;
 
       case "RelationshipManager":
@@ -2996,14 +3030,13 @@ window.userCalls = {
         //     _spPageContextInfo.webAbsoluteUrl +
         //     "/sitepages/Listing.aspx?ListKey=strategicpartnerships";
 
-        USER_HomePage = "Listing.aspx?ListKey=strategicpartnerships"
-
+        USER_HomePage = "Listing.aspx?ListKey=strategicpartnerships";
 
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
 
-        isRelationshipManager = true
+        isRelationshipManager = true;
 
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
@@ -3011,7 +3044,7 @@ window.userCalls = {
         ar_UserRole = "مدير علاقات الشراكة الاستراتيجية";
         en_UserRole = "Relationship Manager";
 
-        Create_Access = []
+        Create_Access = [];
         Read_Access = [
           "strategicpartnerships",
           "StrategicPartnershipHome.aspx",
@@ -3024,7 +3057,7 @@ window.userCalls = {
           "strategicpartnershipsmom",
           "documents",
           "strategicpartnershipsachievements",
-          "tasks"
+          "tasks",
         ];
         Edit_Access = [];
         Delete_Access = [];
@@ -3032,8 +3065,7 @@ window.userCalls = {
         break;
 
       case "StrategicAchievementTeam":
-
-        USER_HomePage = "Listing.aspx?ListKey=achievements"
+        USER_HomePage = "Listing.aspx?ListKey=achievements";
         // if (USERisHome)
         //   window.location =
         //     _spPageContextInfo.webAbsoluteUrl +
@@ -3043,7 +3075,7 @@ window.userCalls = {
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
 
-        isStrategicAchievementTeam = true
+        isStrategicAchievementTeam = true;
 
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
@@ -3051,15 +3083,14 @@ window.userCalls = {
         ar_UserRole = "فريق المنجزات الاستراتيجية";
         en_UserRole = "Startegic Achievement Team";
 
-        Create_Access = ["documents",
-          "achievements"]
+        Create_Access = ["documents", "achievements"];
         Read_Access = [
           // "strategicpartnerships",
           // "StrategicPartnershipHome.aspx",
           "documents",
           "achievements",
           // "strategicpartnershipsachievements",
-          "tasks"
+          "tasks",
         ];
         Edit_Access = [
           // "strategicpartnerships",
@@ -3067,14 +3098,15 @@ window.userCalls = {
           "documents",
           "achievements",
           // "strategicpartnershipsachievements",
-          "tasks"];
+          "tasks",
+        ];
         Delete_Access = [
           // "strategicpartnerships",
           // "StrategicPartnershipHome.aspx",
           "documents",
           "achievements",
           // "strategicpartnershipsachievements",
-          "tasks"
+          "tasks",
         ];
         break;
 
@@ -3087,7 +3119,8 @@ window.userCalls = {
 
         isBudgetManager = true;
 
-        ChartHide = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
         ar_UserRole = "مدير الميزانية";
         en_UserRole = "Budget Manager";
@@ -3112,13 +3145,12 @@ window.userCalls = {
           // "issues",
           // "risks",
           //"benefits"
-          "home.aspx"
-
+          "home.aspx",
         ];
 
-        Edit_Access = []
+        Edit_Access = [];
 
-        Delete_Access = []
+        Delete_Access = [];
 
         break;
 
@@ -3130,8 +3162,8 @@ window.userCalls = {
 
         isPortfolioManager = true;
 
-        ChartHide = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
         ar_UserRole = "مدير المحفظة";
         en_UserRole = "Portfolio Manager";
@@ -3141,9 +3173,9 @@ window.userCalls = {
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
 
-        Edit_Access = []
+        Edit_Access = [];
 
-        Delete_Access = []
+        Delete_Access = [];
         break;
 
       default:
@@ -3157,21 +3189,29 @@ window.userCalls = {
 
     //New CRUD Access Solution [will not affect below behavior]
     (Create_Access = Create_Access.map((name) => name.toLowerCase())), //making sure everything is lower case
-      (CreateChangeRequest_Access = CreateChangeRequest_Access.map((name) => name.toLowerCase())),
+      (CreateChangeRequest_Access = CreateChangeRequest_Access.map((name) =>
+        name.toLowerCase()
+      )),
       (Read_Access = Read_Access.map((name) => name.toLowerCase())),
       (Edit_Access = Edit_Access.map((name) => name.toLowerCase())),
       (Delete_Access = Delete_Access.map((name) => name.toLowerCase()));
 
     switch (
-    true //Create Access
+      true //Create Access
     ) {
-      case (USERisNew || USERisListing || USERisProjectHome || USERisInitiativeHome || USERisStrategicPartnershipHome) &&
+      case (USERisNew ||
+        USERisListing ||
+        USERisProjectHome ||
+        USERisInitiativeHome ||
+        USERisStrategicPartnershipHome) &&
         Create_Access.indexOf(USERlistkey) == -1 &&
         Create_Access.indexOf(Page_UrlName) == -1 &&
         !USERisWF:
         if (USERisNew) {
-          if (CreateChangeRequest_Access.indexOf(USERlistkey) == -1 &&
-            CreateChangeRequest_Access.indexOf(Page_UrlName) == -1) {
+          if (
+            CreateChangeRequest_Access.indexOf(USERlistkey) == -1 &&
+            CreateChangeRequest_Access.indexOf(Page_UrlName) == -1
+          ) {
             // on edit/new forms
             userCalls.g.Security_Msg();
             console.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -3187,25 +3227,25 @@ window.userCalls = {
 
         $("body").append(
           "<style>" +
-          ".btn-add{opacity: .6;pointer-events: none;display:none}" +
-          "</style>"
+            ".btn-add{opacity: .6;pointer-events: none;display:none}" +
+            "</style>"
         );
 
         // reenable if has access
         Create_Access.forEach(function (o, i, a) {
           $("body").append(
             "<style>" +
-            '.btn-add[href*="ListKey=' +
-            o +
-            '"]{opacity: 1!important;pointer-events: auto!important;display:block}' +
-            "</style>"
+              '.btn-add[href*="ListKey=' +
+              o +
+              '"]{opacity: 1!important;pointer-events: auto!important;display:block}' +
+              "</style>"
           );
         });
         break;
     }
 
     switch (
-    true //Read Access
+      true //Read Access
     ) {
       case Read_Access.indexOf(USERlistkey) == -1 &&
         Read_Access.indexOf(Page_UrlName) == -1 &&
@@ -3225,7 +3265,7 @@ window.userCalls = {
         break;
     }
     switch (
-    true //Edit Access
+      true //Edit Access
     ) {
       case (USERisEdit || USERisView) &&
         Edit_Access.indexOf(USERlistkey.toLowerCase()) == -1 &&
@@ -3237,8 +3277,8 @@ window.userCalls = {
           //on view pages
           $("body").append(
             "<style>" +
-            ".btn-save{opacity: .6;pointer-events: none;display:none}" +
-            "</style>"
+              ".btn-save{opacity: .6;pointer-events: none;display:none}" +
+              "</style>"
           );
         } else if (isSP_Page) {
           // on restricted  page
@@ -3256,21 +3296,21 @@ window.userCalls = {
           //on edit
           $("body").append(
             "<style>" +
-            ".btn-save{opacity: .6;pointer-events: none;display:none}" +
-            "</style>"
+              ".btn-save{opacity: .6;pointer-events: none;display:none}" +
+              "</style>"
           );
         }
         break;
     }
     switch (
-    true //Delete Access
+      true //Delete Access
     ) {
       case Delete_Access.indexOf(USERlistkey.toLowerCase()) == -1:
         //Delete btn
         $("body").append(
           "<style>" +
-          ".btn-delete{opacity: .6;pointer-events: none;display:none;}" +
-          "</style>"
+            ".btn-delete{opacity: .6;pointer-events: none;display:none;}" +
+            "</style>"
         );
         break;
     }
@@ -3294,13 +3334,14 @@ window.userCalls = {
     //   }
     //end CRUD
 
-
-    if (isthereICODE) { // to get the info of initiatives
-      Get_Initiative_Info_Request.preinit()
+    if (isthereICODE) {
+      // to get the info of initiatives
+      Get_Initiative_Info_Request.preinit();
     }
 
-    if (isthereSTCODE) { // to render the info of strategic partnership
-      Get_StrategicPartnerShip_Info_Request.preinit()
+    if (isthereSTCODE) {
+      // to render the info of strategic partnership
+      Get_StrategicPartnerShip_Info_Request.preinit();
     }
 
     // if (
@@ -3331,18 +3372,16 @@ window.userCalls = {
         USERisHome ||
         USERisListing ||
         isInitiativesHomePage ||
-        isTarget
-        // || isMainIndicator
-      ) &&
-      (isSectionHead
-        //isSectorHead ||
-        // isSPMO ||
-        // isSubSectorHead ||
-        // isGeneralManager
-        // isDU ||
-        // isMinisterAssistant ||
-        //isViceMinister
-      )
+        isTarget) &&
+      // || isMainIndicator
+      isSectionHead
+      //isSectorHead ||
+      // isSPMO ||
+      // isSubSectorHead ||
+      // isGeneralManager
+      // isDU ||
+      // isMinisterAssistant ||
+      //isViceMinister
     ) {
       //if data getting from other list related to project
 
@@ -3370,7 +3409,6 @@ window.userCalls = {
         $(".btn-save").remove();
       }
     }
-
 
     // handle the initiative manager and owner Groups
     // if (isInitiativesHomePage) {
@@ -3547,12 +3585,12 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-                  }
+                  },
                 },
               },
             },
-          ]
-        }
+          ],
+        },
       },
       {
         Role: "ProjectManager",
@@ -3647,7 +3685,6 @@ window.userCalls = {
                 subRelation: {
                   level: 3,
                   listName: "",
-
                 },
               },
             },
@@ -3803,8 +3840,7 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-
-                  }
+                  },
                 },
               },
             },
@@ -3835,10 +3871,10 @@ window.userCalls = {
                   parentRelationField: "Title",
                   RelationField: "RelatedObjective",
                   isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
-                  RelationFieldType: "Text"
+                  RelationFieldType: "Text",
                 },
               },
-            }
+            },
           ],
         },
       },
@@ -3880,7 +3916,7 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-                  }
+                  },
                 },
               },
             },
@@ -3911,11 +3947,10 @@ window.userCalls = {
                   parentRelationField: "Title",
                   RelationField: "RelatedObjective",
                   isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
-                  RelationFieldType: "Text"
+                  RelationFieldType: "Text",
                 },
               },
-            }
-
+            },
 
             // {
             // 	level: 1,
@@ -3993,8 +4028,8 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-                  }
-                }
+                  },
+                },
               },
             },
             {
@@ -4065,9 +4100,8 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-
-                  }
-                }
+                  },
+                },
               },
             },
             {
@@ -4138,8 +4172,8 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-                  }
-                }
+                  },
+                },
               },
             },
             {
@@ -4210,8 +4244,8 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-                  }
-                }
+                  },
+                },
               },
             },
             {
@@ -4350,7 +4384,7 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-                  }
+                  },
                 },
               },
             },
@@ -4388,10 +4422,10 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "RelatedInitiative",
                     RelationFieldType: "Text",
-                  }
+                  },
                 },
               },
-            }
+            },
           ],
         },
       },
@@ -4525,13 +4559,12 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-                  }
+                  },
                 },
               },
             },
-
-          ]
-        }
+          ],
+        },
       },
       {
         Role: "DU",
@@ -4663,13 +4696,12 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-                  }
+                  },
                 },
               },
             },
-
-          ]
-        }
+          ],
+        },
       },
       // {
       // 	Role: "SPMO",
@@ -4814,12 +4846,12 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-                  }
+                  },
                 },
               },
             },
-          ]
-        }
+          ],
+        },
       },
       {
         Role: "ViceMinister",
@@ -4951,12 +4983,12 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-                  }
+                  },
                 },
               },
             },
-          ]
-        }
+          ],
+        },
       },
       {
         Role: "BITeam",
@@ -5012,10 +5044,10 @@ window.userCalls = {
                 RelationFieldType: "Text",
                 subRelation: {
                   level: 3,
-                  listName: ""
-                }
-              }
-            }
+                  listName: "",
+                },
+              },
+            },
           ],
         },
       },
@@ -5157,12 +5189,12 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-                  }
+                  },
                 },
               },
             },
-          ]
-        }
+          ],
+        },
       },
       {
         Role: "GeneralManager",
@@ -5294,12 +5326,12 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-                  }
+                  },
                 },
               },
             },
-          ]
-        }
+          ],
+        },
       },
       // {
       //   Role: "GeneralManager",
@@ -5318,21 +5350,21 @@ window.userCalls = {
               level: 1,
               listName: "MainKPI",
               accessConditions: [
-                // add condition type or for two obj in accessConditions to can get the data and related data 
-                //if the user is LoogedInUser in field one or LoggedInUser in field 2  
+                // add condition type or for two obj in accessConditions to can get the data and related data
+                //if the user is LoogedInUser in field one or LoggedInUser in field 2
                 {
                   field: "PerformanceLeader",
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
-                  conditionType: "Or"
+                  conditionType: "Or",
                 },
                 {
                   field: "PerformanceLeader2",
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
-                  conditionType: "Or"
+                  conditionType: "Or",
                 },
               ],
               subRelation: {
@@ -5354,8 +5386,8 @@ window.userCalls = {
               level: 1,
               listName: "MainKPI",
               accessConditions: [
-                // add condition type or for two obj in accessConditions to can get the data and related data 
-                //if the user is LoogedInUser in field one or LoggedInUser in field 2  
+                // add condition type or for two obj in accessConditions to can get the data and related data
+                //if the user is LoogedInUser in field one or LoggedInUser in field 2
                 {
                   field: "PerformanceLeader",
                   type: "LoggedInUser",
@@ -5367,7 +5399,7 @@ window.userCalls = {
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
-                  conditionType: "Or"
+                  conditionType: "Or",
                 },
               ],
               subRelation: {
@@ -5378,16 +5410,16 @@ window.userCalls = {
                 RelationFieldType: "Text",
                 subRelation: {
                   level: 3,
-                  listName: ""
-                }
-              }
+                  listName: "",
+                },
+              },
             },
             {
               level: 1,
               listName: "MainKPI",
               accessConditions: [
-                // add condition type or for two obj in accessConditions to can get the data and related data 
-                //if the user is LoogedInUser in field one or LoggedInUser in field 2  
+                // add condition type or for two obj in accessConditions to can get the data and related data
+                //if the user is LoogedInUser in field one or LoggedInUser in field 2
                 {
                   field: "PerformanceLeader",
                   type: "LoggedInUser",
@@ -5399,7 +5431,7 @@ window.userCalls = {
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
-                  conditionType: "Or"
+                  conditionType: "Or",
                 },
               ],
               subRelation: {
@@ -5414,17 +5446,16 @@ window.userCalls = {
                   parentRelationField: "Title",
                   RelationField: "RelatedObjective",
                   isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
-                  RelationFieldType: "Text"
+                  RelationFieldType: "Text",
                 },
-              }
-            }
+              },
+            },
           ],
         },
       },
       {
         Role: "StrategicPartnershipsTeam",
         groupsName: ["Strategic Partnerships Team"],
-
       },
       {
         Role: "PartnershipRepresentative",
@@ -5460,9 +5491,9 @@ window.userCalls = {
                   listName: "",
                 },
               },
-            }
-          ]
-        }
+            },
+          ],
+        },
       },
       {
         Role: "RelationshipManager",
@@ -5489,8 +5520,8 @@ window.userCalls = {
                 },
               },
             },
-          ]
-        }
+          ],
+        },
       },
       {
         Role: "StrategicAchievementTeam",
@@ -5534,9 +5565,8 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-
-                  }
-                }
+                  },
+                },
               },
             },
             {
@@ -5607,9 +5637,8 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-
-                  }
-                }
+                  },
+                },
               },
             },
             {
@@ -5680,9 +5709,8 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-
-                  }
-                }
+                  },
+                },
               },
             },
             {
@@ -5753,9 +5781,8 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-
-                  }
-                }
+                  },
+                },
               },
             },
             {
@@ -5826,8 +5853,8 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-                  }
-                }
+                  },
+                },
               },
             },
             {
@@ -5873,9 +5900,7 @@ window.userCalls = {
                   field: "Types",
                   type: "Choice",
                   values: ["lms"],
-                  targetPages: [
-
-                  ],
+                  targetPages: [],
                 },
               ],
               subRelation: {
@@ -5896,8 +5921,8 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-                  }
-                }
+                  },
+                },
               },
             },
             {
@@ -5908,8 +5933,7 @@ window.userCalls = {
                   field: "Types",
                   type: "Text",
                   values: ["lms"],
-                  targetPages: [
-                  ],
+                  targetPages: [],
                 },
               ],
               subRelation: {
@@ -5940,9 +5964,7 @@ window.userCalls = {
                   field: "Types",
                   type: "Choice",
                   values: ["lms"],
-                  targetPages: [
-
-                  ],
+                  targetPages: [],
                 },
               ],
               subRelation: {
@@ -5963,8 +5985,8 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-                  }
-                }
+                  },
+                },
               },
             },
             {
@@ -5975,8 +5997,7 @@ window.userCalls = {
                   field: "Types",
                   type: "Text",
                   values: ["lms"],
-                  targetPages: [
-                  ],
+                  targetPages: [],
                 },
               ],
               subRelation: {
@@ -6007,9 +6028,7 @@ window.userCalls = {
                   field: "Types",
                   type: "Choice",
                   values: ["lms"],
-                  targetPages: [
-
-                  ],
+                  targetPages: [],
                 },
               ],
               subRelation: {
@@ -6030,8 +6049,8 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-                  }
-                }
+                  },
+                },
               },
             },
             {
@@ -6042,8 +6061,7 @@ window.userCalls = {
                   field: "Types",
                   type: "Text",
                   values: ["lms"],
-                  targetPages: [
-                  ],
+                  targetPages: [],
                 },
               ],
               subRelation: {
@@ -6099,7 +6117,7 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-                  }
+                  },
                 },
               },
             },
@@ -6137,10 +6155,10 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "RelatedInitiative",
                     RelationFieldType: "Text",
-                  }
+                  },
                 },
               },
-            }
+            },
           ],
         },
       },
@@ -6182,9 +6200,8 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-
-                  }
-                }
+                  },
+                },
               },
             },
             {
@@ -6272,9 +6289,9 @@ window.userCalls = {
                   parentRelationField: "Title",
                   RelationField: "KPI",
                   RelationFieldType: "Text",
-                }
-              }
-            }
+                },
+              },
+            },
           ],
         },
       },
@@ -6408,13 +6425,12 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-                  }
+                  },
                 },
               },
             },
-
-          ]
-        }
+          ],
+        },
       },
       {
         Role: "PortfolioManager",
@@ -6502,8 +6518,8 @@ window.userCalls = {
                     parentRelationField: "Title",
                     RelationField: "KPI",
                     RelationFieldType: "Text",
-                  }
-                }
+                  },
+                },
               },
             },
           ],
@@ -6533,14 +6549,14 @@ window.userCalls = {
             ) {
               $("body").html(
                 '<div class="popupComment access-denied"><div class="wrapcomments"><div class="denied-icon"><i class="fas fa-user-shield"></i></div><label>عذرا، ليس لديك صلاحية لرؤية البيانات</label>' +
-                '<div style="margin-bottom:15px">الرجاء التواصل مع مسؤول النظام للمزيد من المعلومات</div>' +
-                '<button class="btn btn-action" type="button" style="margin:0px" onclick="window.location=_spPageContextInfo.webAbsoluteUrl+\'/sitepages/\'+USER_HomePage;">الصفحة الرئيسية</button></div></div></div>'
+                  '<div style="margin-bottom:15px">الرجاء التواصل مع مسؤول النظام للمزيد من المعلومات</div>' +
+                  '<button class="btn btn-action" type="button" style="margin:0px" onclick="window.location=_spPageContextInfo.webAbsoluteUrl+\'/sitepages/\'+USER_HomePage;">الصفحة الرئيسية</button></div></div></div>'
               );
             } else {
               $("body").html(
                 '<div class="popupComment access-denied"><div class="wrapcomments"><div class="denied-icon"><i class="fas fa-user-shield"></i></div><label>Sorry, you don\'t have permission to view the data</label>' +
-                '<div style="margin-bottom:15px">Please contact the system administrator for more information</div>' +
-                '<button class="btn btn-action" type="button" style="margin:0px" onclick="window.location=_spPageContextInfo.webAbsoluteUrl+\'/sitepages/\'+USER_HomePage;">Home Page</button></div></div></div>'
+                  '<div style="margin-bottom:15px">Please contact the system administrator for more information</div>' +
+                  '<button class="btn btn-action" type="button" style="margin:0px" onclick="window.location=_spPageContextInfo.webAbsoluteUrl+\'/sitepages/\'+USER_HomePage;">Home Page</button></div></div></div>'
               );
             }
             $("body").animate({ opacity: 1 });
@@ -6590,30 +6606,29 @@ window.userCalls = {
             }
           }
 
-
           // not allow grp
           var notAllowDataGroups = $(this).attr("data-notallowforgroups");
-          var notAllowDataGroupsArr = notAllowDataGroups ? eval(notAllowDataGroups) : [];
+          var notAllowDataGroupsArr = notAllowDataGroups
+            ? eval(notAllowDataGroups)
+            : [];
           if (notAllowDataGroupsArr.length) {
-            notAllowDataGroupsArr.forEach(el => {
+            notAllowDataGroupsArr.forEach((el) => {
               if (currentUserGroupArr.includes(el.group)) {
-                if (USERlistkey == 'changerequest') {
-                  if (el.form.includes('changerequest')) {
+                if (USERlistkey == "changerequest") {
+                  if (el.form.includes("changerequest")) {
                     if (!isAdmin) {
-
                       $(this).find("*").attr("disabled", true);
                     }
                   }
                 } else {
-                  if (el.form.includes('origin')) {
+                  if (el.form.includes("origin")) {
                     if (!isAdmin) {
-
                       $(this).find("*").attr("disabled", true);
                     }
                   }
                 }
               }
-            })
+            });
           }
           //
 
@@ -6682,29 +6697,40 @@ var Access_Project_Info_Request = {
           ? oListItem.get_item("Name")
           : UserNo_Data;
         USERPID = oListItem.get_id();
-        User_isClosureStatus = oListItem.get_item("ClosureStatus") == "Failed" ||
+        User_isClosureStatus =
+          oListItem.get_item("ClosureStatus") == "Failed" ||
           oListItem.get_item("ClosureStatus") == "Cancelled" ||
-          oListItem.get_item("ClosureStatus") == "closed" ? true : false;
+          oListItem.get_item("ClosureStatus") == "closed"
+            ? true
+            : false;
         //////////
 
         //
 
-        User_NotActiveStatus = (oListItem.get_item("WorkingStatus") != 'active' && oListItem.get_item("WorkingStatus")) ? true : false;
+        User_NotActiveStatus =
+          oListItem.get_item("WorkingStatus") != "active" &&
+          oListItem.get_item("WorkingStatus")
+            ? true
+            : false;
         ProjectWorkingStatus = oListItem.get_item("WorkingStatus");
-        ProjectIsDraft = oListItem.get_item("DraftStatus") == 'draft' ? true : false;
+        ProjectIsDraft =
+          oListItem.get_item("DraftStatus") == "draft" ? true : false;
 
         User_ProjUID = oListItem.get_item("ProjectGUID") || UserNo_Data;
         //for milestones source
         User_ScheduleSource = oListItem.get_item("ScheduleSource") || No_Data;
 
-        projectStartToValidation = oListItem.get_item("BaselineStartDate") || '';
+        projectStartToValidation =
+          oListItem.get_item("BaselineStartDate") || "";
 
-        projectFinishToValidation = oListItem.get_item("BaselineFinishDate") || '';
+        projectFinishToValidation =
+          oListItem.get_item("BaselineFinishDate") || "";
 
-        IsZeroBudgetProject = oListItem.get_item("IsZeroBudgetProject") == "yes" ? true : false;
+        IsZeroBudgetProject =
+          oListItem.get_item("IsZeroBudgetProject") == "yes" ? true : false;
 
-        projectActualBudget = oListItem.get_item('ActualBudget') || 0;
-        projectAssignedBudget = oListItem.get_item('Amount') || 0;
+        projectActualBudget = oListItem.get_item("ActualBudget") || 0;
+        projectAssignedBudget = oListItem.get_item("Amount") || 0;
         relatedProjectId = oListItem.get_id();
 
         // if (User_ScheduleSource == 'عبر النظام') {
@@ -6719,23 +6745,24 @@ var Access_Project_Info_Request = {
       userProjects.push(oListItem.get_item("Title"));
     }
 
-
     //should uncomment when need to applt the validation on milstones every month for proj and every 3 months for initiative
 
     if (istherePCODE && projectStartToValidation && projectFinishToValidation) {
-      if (USERlistkey == 'milestones' && isNew) {
-        console.log("YOU Can creat a milestone")
+      if (USERlistkey == "milestones" && isNew) {
+        console.log("YOU Can creat a milestone");
       } else {
-        if (!isWF && !IsZeroBudgetProject && !User_isClosureStatus && ProjectWorkingStatus != 'stat14') {
+        if (
+          !isWF &&
+          !IsZeroBudgetProject &&
+          !User_isClosureStatus &&
+          ProjectWorkingStatus != "stat14"
+        ) {
           if (Create_Access.includes("milestones")) {
-            Get_Milestones.init()
+            Get_Milestones.init();
           }
         }
       }
-
     }
-
-
 
     if (isthereICODE) {
       GetInitiativeTitle_Request.preinit();
@@ -6765,7 +6792,14 @@ var Access_Project_Info_Request = {
       userCalls.g.Security_Msg();
     }
 
-    if (!isAdmin && !isMinister && !isITSteering && !isEPMO && !isBITeam && !isBudgetManager) {
+    if (
+      !isAdmin &&
+      !isMinister &&
+      !isITSteering &&
+      !isEPMO &&
+      !isBITeam &&
+      !isBudgetManager
+    ) {
       //Access caml query for home page and listing pages
       //
 
@@ -6782,7 +6816,6 @@ var Access_Project_Info_Request = {
         isShowAll = true;
         fieldtoquery = "Title";
       }
-
 
       if (Access_Project_Info_Request.g.User_Projects.length > 0) {
         var PermissionQuery =
@@ -6824,7 +6857,6 @@ var Access_Project_Info_Request = {
               "</Values></In></And></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
             forfilterQuery += "</div></div>";
             AccessQuery = PermissionQuery;
-
 
             if (USERisHome) {
               //call homepage
@@ -6918,7 +6950,6 @@ var Access_Project_Info_Request = {
       }
       //
       else if (isShowAll) {
-
         //
         ///////Ghufran Listing Query
         //if on listing pages other then projects and its child data (risks, issues...)
@@ -7066,19 +7097,20 @@ var Access_Project_Info_Request = {
 
     //if project is closed or failed
     if (
-      User_isClosureStatus && (USERlistkey == "projects" || USERProjRelated.indexOf(USERlistkey) > -1)
+      User_isClosureStatus &&
+      (USERlistkey == "projects" || USERProjRelated.indexOf(USERlistkey) > -1)
     ) {
       if (USERlistkey == "issues" && (USERisListing || USERisNew)) {
       } else {
         $("body").append(
           "<style>" +
-          ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
-          ".form-control{color: #b1b1b1 !important;" +
-          "border-color: #e1e1e1 !important;" +
-          "background-color: #fdfdfd !important;" +
-          "background-color: #fdfdfd !important;" +
-          "opacity: .6;pointer-events: none;}" +
-          "</style>"
+            ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+            ".form-control{color: #b1b1b1 !important;" +
+            "border-color: #e1e1e1 !important;" +
+            "background-color: #fdfdfd !important;" +
+            "background-color: #fdfdfd !important;" +
+            "opacity: .6;pointer-events: none;}" +
+            "</style>"
         );
       }
     }
@@ -7086,35 +7118,37 @@ var Access_Project_Info_Request = {
     // if project is Cancelled or Holded
 
     if (
-      User_NotActiveStatus && (USERlistkey == "projects" || USERProjRelated.indexOf(USERlistkey) > -1 || istherePCODE) || (ProjectIsDraft && (istherePCODE || USERlistkey == "projects") && !isWF)
+      (User_NotActiveStatus &&
+        (USERlistkey == "projects" ||
+          USERProjRelated.indexOf(USERlistkey) > -1 ||
+          istherePCODE)) ||
+      (ProjectIsDraft && (istherePCODE || USERlistkey == "projects") && !isWF)
     ) {
       $("body").append(
         "<style>" +
-        `.btn-add, .btn-add[href*="ListKey"], .btn-save{opacity: .6!important;pointer-events: none!important;display:none!important}` +
-        "</style>"
+          `.btn-add, .btn-add[href*="ListKey"], .btn-save{opacity: .6!important;pointer-events: none!important;display:none!important}` +
+          "</style>"
       );
-      if ((USERisNew || USERisEdit)) {
+      if (USERisNew || USERisEdit) {
         $("body").append(
           "<style>" +
-          ".add-New-Detail-wrapper," +
-          ".form-control{color: #b1b1b1 !important;" +
-          "border-color: #e1e1e1 !important;" +
-          "background-color: #fdfdfd !important;" +
-          "background-color: #fdfdfd !important;" +
-          "opacity: .6;pointer-events: none;}" +
-          "</style>"
+            ".add-New-Detail-wrapper," +
+            ".form-control{color: #b1b1b1 !important;" +
+            "border-color: #e1e1e1 !important;" +
+            "background-color: #fdfdfd !important;" +
+            "background-color: #fdfdfd !important;" +
+            "opacity: .6;pointer-events: none;}" +
+            "</style>"
         );
       }
-
     }
     if (User_NotActiveStatus && USERisProjectHome) {
       $("body").append(
         "<style>" +
-        ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none!important}" +
-        "</style>"
+          ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none!important}" +
+          "</style>"
       );
     }
-
   },
 
   onError: function (sender, args) {
@@ -7168,7 +7202,14 @@ var Access_Project_Info_Request = {
       // isViceMinister
     ) {
       camlQuery.set_viewXml(SectorHeadQuery);
-    } else if (isAdmin || isMinister || isBITeam || isITSteering || isEPMO || isBudgetManager) {
+    } else if (
+      isAdmin ||
+      isMinister ||
+      isBITeam ||
+      isITSteering ||
+      isEPMO ||
+      isBudgetManager
+    ) {
       // to can see everything
       camlQuery.set_viewXml(
         "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where></Query><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></View>"
@@ -7198,11 +7239,11 @@ var Access_Project_Info_Request = {
     else if (isPSponsor) {
       camlQuery.set_viewXml(
         "<View><Query><Where>" +
-        "<And>" +
-        "<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
-        '<Eq><FieldRef Name="ProjectSponsor" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>' +
-        "</And>" +
-        "</Where></Query></View>"
+          "<And>" +
+          "<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
+          '<Eq><FieldRef Name="ProjectSponsor" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>' +
+          "</And>" +
+          "</Where></Query></View>"
       );
     } else if (isRequestorTeam && !USERisIdeas && !USERisHome) {
       userCalls.g.Security_Msg();
@@ -7246,69 +7287,69 @@ var Access_Project_Info_Request = {
           if (window.location.href.indexOf("projects") > -1) {
             $(".page-title").html(
               '<a href="' +
-              _spPageContextInfo.webAbsoluteUrl +
-              "/sitepages/ProjectHome.aspx?PCODE=" +
-              USERPCODE +
-              '">' +
-              USERPName +
-              '<span class="tooltiptext">' +
-              USERPName +
-              "</span>" + // to handle the tooltip
-              "</a>"
+                _spPageContextInfo.webAbsoluteUrl +
+                "/sitepages/ProjectHome.aspx?PCODE=" +
+                USERPCODE +
+                '">' +
+                USERPName +
+                '<span class="tooltiptext">' +
+                USERPName +
+                "</span>" + // to handle the tooltip
+                "</a>"
             );
             $(".title-item:first-child").html(
               '<a href="' +
-              _spPageContextInfo.webAbsoluteUrl +
-              "/sitepages/Listing.aspx?ListKey=" +
-              USERlistkey +
-              '">' +
-              USERPageTitle +
-              ""
+                _spPageContextInfo.webAbsoluteUrl +
+                "/sitepages/Listing.aspx?ListKey=" +
+                USERlistkey +
+                '">' +
+                USERPageTitle +
+                ""
             );
           } else {
             $(".page-title").html(
               '<a href="' +
-              _spPageContextInfo.webAbsoluteUrl +
-              "/sitepages/ProjectHome.aspx?PCODE=" +
-              USERPCODE +
-              '">' +
-              USERPName +
-              '<span class="tooltiptext">' +
-              USERPName +
-              "</span>" + // to handle the tooltip
-              "</a>"
+                _spPageContextInfo.webAbsoluteUrl +
+                "/sitepages/ProjectHome.aspx?PCODE=" +
+                USERPCODE +
+                '">' +
+                USERPName +
+                '<span class="tooltiptext">' +
+                USERPName +
+                "</span>" + // to handle the tooltip
+                "</a>"
             );
             $(".title-item:first-child").html(
               '<a href="' +
-              _spPageContextInfo.webAbsoluteUrl +
-              "/sitepages/Listing.aspx?ListKey=" +
-              USERlistkey +
-              "&PCODE=" +
-              USERPCODE +
-              '">' +
-              USERPageTitle +
-              ""
+                _spPageContextInfo.webAbsoluteUrl +
+                "/sitepages/Listing.aspx?ListKey=" +
+                USERlistkey +
+                "&PCODE=" +
+                USERPCODE +
+                '">' +
+                USERPageTitle +
+                ""
             );
           }
         } else if (isthereICODE) {
           if (window.location.href.indexOf("initiatives") > -1) {
             $(".page-title").html(
               '<a href="' +
-              _spPageContextInfo.webAbsoluteUrl +
-              "/sitepages/InitiativeHome.aspx?ICODE=" +
-              UserICode +
-              '">' +
-              InitiativeTitle +
-              "</a>"
+                _spPageContextInfo.webAbsoluteUrl +
+                "/sitepages/InitiativeHome.aspx?ICODE=" +
+                UserICode +
+                '">' +
+                InitiativeTitle +
+                "</a>"
             );
             $(".title-item:first-child").html(
               '<a href="' +
-              _spPageContextInfo.webAbsoluteUrl +
-              "/sitepages/Listing.aspx?ListKey=" +
-              USERlistkey +
-              '">' +
-              USERPageTitle +
-              ""
+                _spPageContextInfo.webAbsoluteUrl +
+                "/sitepages/Listing.aspx?ListKey=" +
+                USERlistkey +
+                '">' +
+                USERPageTitle +
+                ""
             );
           } else if (USERlistkey == "documents") {
             if (
@@ -7322,75 +7363,97 @@ var Access_Project_Info_Request = {
 
             $(".page-title").html(
               '<a href="' +
-              _spPageContextInfo.webAbsoluteUrl +
-              "/sitepages/InitiativeHome.aspx?ICODE=" +
-              UserICode +
-              '">' +
-              //
-              InitiativeTitle +
-              "</a>"
+                _spPageContextInfo.webAbsoluteUrl +
+                "/sitepages/InitiativeHome.aspx?ICODE=" +
+                UserICode +
+                '">' +
+                //
+                InitiativeTitle +
+                "</a>"
             );
             $(".title-item:first-child").html(
               '<a href="' +
-              _spPageContextInfo.webAbsoluteUrl +
-              "/sitepages/Listing.aspx?ListKey=" +
-              USERlistkey +
-              "&ICODE=" +
-              UserICode +
-              '">' +
-              USERPageTitle +
-              ""
+                _spPageContextInfo.webAbsoluteUrl +
+                "/sitepages/Listing.aspx?ListKey=" +
+                USERlistkey +
+                "&ICODE=" +
+                UserICode +
+                '">' +
+                USERPageTitle +
+                ""
             );
           } else {
             //
             $(".page-title").html(
               '<a href="' +
-              _spPageContextInfo.webAbsoluteUrl +
-              "/sitepages/InitiativeHome.aspx?ICODE=" +
-              UserICode +
-              '">' +
-              //
-              InitiativeTitle +
-              "</a>"
+                _spPageContextInfo.webAbsoluteUrl +
+                "/sitepages/InitiativeHome.aspx?ICODE=" +
+                UserICode +
+                '">' +
+                //
+                InitiativeTitle +
+                "</a>"
             );
             $(".title-item:first-child").html(
               '<a href="' +
-              _spPageContextInfo.webAbsoluteUrl +
-              "/sitepages/Listing.aspx?ListKey=" +
-              USERlistkey +
-              "&ICODE=" +
-              UserICode +
-              '">' +
-              USERPageTitle +
-              ""
+                _spPageContextInfo.webAbsoluteUrl +
+                "/sitepages/Listing.aspx?ListKey=" +
+                USERlistkey +
+                "&ICODE=" +
+                UserICode +
+                '">' +
+                USERPageTitle +
+                ""
             );
           }
-
-        }
-        else if (isthereSTCODE) {
+        } else if (isthereSTCODE) {
           if (window.location.href.indexOf("strategicpartnerships") > -1) {
             $(".page-title").html(
               '<a href="' +
-              _spPageContextInfo.webAbsoluteUrl +
-              "/sitepages/StrategicPartnershipHome.aspx?STCODE=" +
-              UserSTCode +
-              '">' +
-              StrategicPartnershipTitle +
-              "</a>"
+                _spPageContextInfo.webAbsoluteUrl +
+                "/sitepages/StrategicPartnershipHome.aspx?STCODE=" +
+                UserSTCode +
+                '">' +
+                StrategicPartnershipTitle +
+                "</a>"
             );
             if (USERlistkey == "strategicpartnerships") {
               $(".title-item:first-child").html(
                 '<a href="' +
-                _spPageContextInfo.webAbsoluteUrl +
-                "/sitepages/Listing.aspx?ListKey=" +
-                USERlistkey +
-                '">' +
-                USERPageTitle +
-                ""
+                  _spPageContextInfo.webAbsoluteUrl +
+                  "/sitepages/Listing.aspx?ListKey=" +
+                  USERlistkey +
+                  '">' +
+                  USERPageTitle +
+                  ""
               );
             } else {
               $(".title-item:first-child").html(
                 '<a href="' +
+                  _spPageContextInfo.webAbsoluteUrl +
+                  "/sitepages/Listing.aspx?ListKey=" +
+                  USERlistkey +
+                  "&STCODE=" +
+                  UserSTCode +
+                  '">' +
+                  USERPageTitle +
+                  ""
+              );
+            }
+          } else {
+            //
+            $(".page-title").html(
+              '<a href="' +
+                _spPageContextInfo.webAbsoluteUrl +
+                "/sitepages/StrategicPartnershipHome.aspx?STCODE=" +
+                UserSTCode +
+                '">' +
+                //
+                StrategicPartnershipTitle +
+                "</a>"
+            );
+            $(".title-item:first-child").html(
+              '<a href="' +
                 _spPageContextInfo.webAbsoluteUrl +
                 "/sitepages/Listing.aspx?ListKey=" +
                 USERlistkey +
@@ -7399,36 +7462,9 @@ var Access_Project_Info_Request = {
                 '">' +
                 USERPageTitle +
                 ""
-              );
-            }
-
-          }
-          else {
-            //
-            $(".page-title").html(
-              '<a href="' +
-              _spPageContextInfo.webAbsoluteUrl +
-              "/sitepages/StrategicPartnershipHome.aspx?STCODE=" +
-              UserSTCode +
-              '">' +
-              //
-              StrategicPartnershipTitle +
-              "</a>"
-            );
-            $(".title-item:first-child").html(
-              '<a href="' +
-              _spPageContextInfo.webAbsoluteUrl +
-              "/sitepages/Listing.aspx?ListKey=" +
-              USERlistkey +
-              "&STCODE=" +
-              UserSTCode +
-              '">' +
-              USERPageTitle +
-              ""
             );
           }
-        }
-        else {
+        } else {
           if (
             !isInitiativesHomePage &&
             !isTarget &&
@@ -7440,15 +7476,22 @@ var Access_Project_Info_Request = {
           ) {
             $(".page-title").html(
               '<a href="' +
-              _spPageContextInfo.webAbsoluteUrl +
-              "/sitepages/Listing.aspx?ListKey=" +
-              USERlistkey +
-              '">' +
-              USERPageTitle +
-              ""
+                _spPageContextInfo.webAbsoluteUrl +
+                "/sitepages/Listing.aspx?ListKey=" +
+                USERlistkey +
+                '">' +
+                USERPageTitle +
+                ""
             );
             $(".firsttitle").hide();
-          } else if (isTarget || isBenefitsMetrics || isMainIndicator || isAdminPanel || isKnowledgeBase || isAllTasks) {
+          } else if (
+            isTarget ||
+            isBenefitsMetrics ||
+            isMainIndicator ||
+            isAdminPanel ||
+            isKnowledgeBase ||
+            isAllTasks
+          ) {
             $(".page-title").html(
               `<span style="color:#fff">${USERPageTitle}</span>`
             );
@@ -7822,26 +7865,23 @@ window.Get_StrategicPartnerShip_Info_Request = {
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       if (UserSTCode == oListItem.get_item("Title")) {
-        strategicPartnerShipStatus = oListItem.get_item("Status")
-
+        strategicPartnerShipStatus = oListItem.get_item("Status");
       }
     }
 
     // make the fields disabled and remove the add btns when status is notstandard
-    if (strategicPartnerShipStatus == 'notstandard' && isthereSTCODE) {
+    if (strategicPartnerShipStatus == "notstandard" && isthereSTCODE) {
       $("body").append(
         "<style>" +
-        ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
-        ".form-control{color: #b1b1b1 !important;" +
-        "border-color: #e1e1e1 !important;" +
-        "background-color: #fdfdfd !important;" +
-        "background-color: #fdfdfd !important;" +
-        "opacity: .6;pointer-events: none;}" +
-        "</style>"
+          ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+          ".form-control{color: #b1b1b1 !important;" +
+          "border-color: #e1e1e1 !important;" +
+          "background-color: #fdfdfd !important;" +
+          "background-color: #fdfdfd !important;" +
+          "opacity: .6;pointer-events: none;}" +
+          "</style>"
       );
     }
-
-
   },
   onError: function (sender, args) {
     //
@@ -7856,27 +7896,39 @@ window.Get_StrategicPartnerShip_Info_Request = {
   },
   init: function () {
     var clientContext = new SP.ClientContext.get_current();
-    var oList = clientContext.get_web().get_lists().getByTitle("Strategic Partnerships");
+    var oList = clientContext
+      .get_web()
+      .get_lists()
+      .getByTitle("Strategic Partnerships");
     var camlQuery = new SP.CamlQuery();
     //
-    var SQuery = "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where></Query><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></View>"
+    var SQuery =
+      "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where></Query><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></View>";
     if (UserSTCode) {
-      SQuery = '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' + UserSTCode + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query><RowLimit>1</RowLimit></View>'
+      SQuery =
+        '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
+        UserSTCode +
+        "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
     }
 
     camlQuery.set_viewXml(SQuery);
 
-
-    Get_StrategicPartnerShip_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    Get_StrategicPartnerShip_Info_Request.g.collListItem =
+      oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Get_StrategicPartnerShip_Info_Request.g.collListItem);
     clientContext.executeQueryAsync(
-      Function.createDelegate(this, Get_StrategicPartnerShip_Info_Request.onSuccess),
-      Function.createDelegate(this, Get_StrategicPartnerShip_Info_Request.onError)
+      Function.createDelegate(
+        this,
+        Get_StrategicPartnerShip_Info_Request.onSuccess
+      ),
+      Function.createDelegate(
+        this,
+        Get_StrategicPartnerShip_Info_Request.onError
+      )
     );
   },
   g: {},
-}
-
+};
 
 //getting Related Initiatives
 window.Get_Initiative_Info_Request = {
@@ -7884,59 +7936,60 @@ window.Get_Initiative_Info_Request = {
     var collListItem = Get_Initiative_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
 
-    var initiativeDraftStatus = false
+    var initiativeDraftStatus = false;
 
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       if (UserICode == oListItem.get_item("Title")) {
-        initiativeStartToValidation = oListItem.get_item("StartDate") ? oListItem.get_item("StartDate") : ""
+        initiativeStartToValidation = oListItem.get_item("StartDate")
+          ? oListItem.get_item("StartDate")
+          : "";
 
-        initiativeFinishToValidation = oListItem.get_item("FinishDate") ? oListItem.get_item("FinishDate") : ""
+        initiativeFinishToValidation = oListItem.get_item("FinishDate")
+          ? oListItem.get_item("FinishDate")
+          : "";
 
-        initiativeActualBudget = oListItem.get_item("InitiativeBudget")
+        initiativeActualBudget = oListItem.get_item("InitiativeBudget");
 
-        initiativeDraftStatus = oListItem.get_item("DraftStatus") == 'draft' ? true : false
-
-
-
-
-
+        initiativeDraftStatus =
+          oListItem.get_item("DraftStatus") == "draft" ? true : false;
       }
       relatedInitiativeId = oListItem.get_id();
     }
 
-
     if (initiativeDraftStatus && isthereICODE && !isWF) {
       $("body").append(
         "<style>" +
-        ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
-        ".form-control{color: #b1b1b1 !important;" +
-        "border-color: #e1e1e1 !important;" +
-        "background-color: #fdfdfd !important;" +
-        "background-color: #fdfdfd !important;" +
-        "opacity: .6;pointer-events: none;}" +
-        "</style>"
+          ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+          ".form-control{color: #b1b1b1 !important;" +
+          "border-color: #e1e1e1 !important;" +
+          "background-color: #fdfdfd !important;" +
+          "background-color: #fdfdfd !important;" +
+          "opacity: .6;pointer-events: none;}" +
+          "</style>"
       );
-
 
       if (initiativeDraftStatus && USERisInitiativeHome) {
         $("body").append(
           "<style>" +
-          ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none!important}" +
-          "</style>"
+            ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none!important}" +
+            "</style>"
         );
       }
-
     }
 
     //should uncomment when need to applt the validation on milstones every month for proj and every 3 months for initiative
-    if (isthereICODE && initiativeStartToValidation && initiativeFinishToValidation) {
-      if (USERlistkey == 'initiativemilestones' && isNew) {
-        console.log("YOU Can creat an initiative milestone")
+    if (
+      isthereICODE &&
+      initiativeStartToValidation &&
+      initiativeFinishToValidation
+    ) {
+      if (USERlistkey == "initiativemilestones" && isNew) {
+        console.log("YOU Can creat an initiative milestone");
       } else {
         if (!isWF && !IsZeroBudgetProject) {
           if (Create_Access.includes("initiativemilestones")) {
-            Get_Milestones.init()
+            Get_Milestones.init();
           }
         }
       }
@@ -7958,13 +8011,16 @@ window.Get_Initiative_Info_Request = {
     var oList = clientContext.get_web().get_lists().getByTitle("Initiatives");
     var camlQuery = new SP.CamlQuery();
     //
-    var IQuery = "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where></Query><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></View>"
+    var IQuery =
+      "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where></Query><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></View>";
     if (UserICode) {
-      IQuery = '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' + UserICode + '</Value></Eq></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query><RowLimit>1</RowLimit></View>'
+      IQuery =
+        '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
+        UserICode +
+        "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
     }
 
     camlQuery.set_viewXml(IQuery);
-
 
     Get_Initiative_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Get_Initiative_Info_Request.g.collListItem);
@@ -7977,12 +8033,9 @@ window.Get_Initiative_Info_Request = {
     PCODE: istherePCODE
       ? window.location.href.split("PCODE=")[1].split("&")[0]
       : "",
-    User_Initiatives: []
+    User_Initiatives: [],
   },
 };
-
-
-
 
 //getting related Sectors if there user sector head
 var Access_Sector_Info_Request = {
@@ -8017,7 +8070,6 @@ var Access_Sector_Info_Request = {
     //   //|| isSubSectorHead
     //   //|| isSectorHead
     // ) {
-
 
     //   var subsectorname, substorcode;
     //   if (localStorage.getItem("Dynamo_Internal Entities") != null) {
@@ -8064,14 +8116,14 @@ var Access_Sector_Info_Request = {
       ) {
         $("body").html(
           '<div class="popupComment access-denied"><div class="wrapcomments"><div class="denied-icon"><i class="fas fa-user-shield"></i></div><label>عذرا، ليس لديك بيانات لرؤيتها</label>' +
-          '<div style="margin-bottom:15px">الرجاء التواصل مع مسؤول النظام للمزيد من المعلومات</div>' +
-          "</div></div></div>"
+            '<div style="margin-bottom:15px">الرجاء التواصل مع مسؤول النظام للمزيد من المعلومات</div>' +
+            "</div></div></div>"
         );
       } else {
         $("body").html(
           '<div class="popupComment access-denied"><div class="wrapcomments"><div class="denied-icon"><i class="fas fa-user-shield"></i></div><label>Sorry, you don\'t have any data to view</label>' +
-          '<div style="margin-bottom:15px">Please contact the system administrator for more information</div>' +
-          "</div></div></div>"
+            '<div style="margin-bottom:15px">Please contact the system administrator for more information</div>' +
+            "</div></div></div>"
         );
       }
     }
@@ -8305,7 +8357,6 @@ var Notifications_Info_Request = {
     ).html(notificationshtml);
     // $("span.Rsupprot").text(UserNTasks + NRisks + NIssues + NNotifications);
 
-
     $("span.bell-value").text(NTasks + NRisks + NIssues + NNotifications);
   },
   onError: function (sender, args) {
@@ -8394,6 +8445,23 @@ var Tasks_Info_Request_User = {
       var tasktitlearr = [];
       tasksID = oListItem.get_item("ID") || No_Data;
       delegateMessage = oListItem.get_item("DelegationReason");
+
+      var WfRelatedTask = "";
+      WorkflowTranslate.forEach((el) => {
+        if (el.wfName.toLowerCase() == wfname.toLowerCase()) {
+          if (
+            localStorage.getItem("lng") == null ||
+            localStorage.getItem("lng") == "ar"
+          ) {
+            WfRelatedTask = el.nameAr;
+          } else {
+            WfRelatedTask = el.nameEn;
+          }
+        }
+      });
+
+      console.log(WfRelatedTask, "WfRelatedTask ");
+
       // (A) STRIP TAGS FUNCTION
       function stripTags(original) {
         return original.replace(/(<([^>]+)>)/gi, "");
@@ -8443,36 +8511,35 @@ var Tasks_Info_Request_User = {
       }
 
       if (tasktype == "Approval") {
-
         mycount++;
         // if (mycount <= 10) {
         HPtaskshtml.push(
           '<li class="list-group-item">' +
-          '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
-          pcode +
-          "','" +
-          icode +
-          "','" +
-          tasksID +
-          "','" +
-          tasktype +
-          "','" +
-          stageid +
-          "','" +
-          ritemid +
-          "','" +
-          sourceitemid +
-          "','" +
-          wfname +
-          "','" +
-          puid +
-          "')\">" +
-          '<h3 class="des-14 w-0">' +
-          tasktitle +
-          '</h3><div class="des-12 text-nowrap">' +
-          taskname +
-          '</div><div class="tasksButtons"><span data-trans-forapproval class="Resources"></span></div></a>' +
-          "</li>"
+            '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
+            pcode +
+            "','" +
+            icode +
+            "','" +
+            tasksID +
+            "','" +
+            tasktype +
+            "','" +
+            stageid +
+            "','" +
+            ritemid +
+            "','" +
+            sourceitemid +
+            "','" +
+            wfname +
+            "','" +
+            puid +
+            "')\">" +
+            '<h3 class="des-14 w-0">' +
+            tasktitle +
+            '</h3><div class="des-12 text-nowrap">' +
+            taskname +
+            '</div><div class="tasksButtons"><span data-trans-forapproval class="Resources"></span></div></a>' +
+            "</li>"
         );
         UserNTasks = ++UserNTasks;
         // }
@@ -8481,31 +8548,31 @@ var Tasks_Info_Request_User = {
         // if (mycount <= 10) {
         HPtaskshtml.push(
           '<li class="list-group-item">' +
-          '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
-          pcode +
-          "','" +
-          icode +
-          "','" +
-          tasksID +
-          "','" +
-          tasktype +
-          "','" +
-          stageid +
-          "','" +
-          ritemid +
-          "','" +
-          sourceitemid +
-          "','" +
-          wfname +
-          "','" +
-          puid +
-          "')\">" +
-          '<h3 class="des-14 w-0">' +
-          tasktitle +
-          '</h3><div class="des-12 text-nowrap">' +
-          taskname +
-          "</div></a>" +
-          "</li>"
+            '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
+            pcode +
+            "','" +
+            icode +
+            "','" +
+            tasksID +
+            "','" +
+            tasktype +
+            "','" +
+            stageid +
+            "','" +
+            ritemid +
+            "','" +
+            sourceitemid +
+            "','" +
+            wfname +
+            "','" +
+            puid +
+            "')\">" +
+            '<h3 class="des-14 w-0">' +
+            tasktitle +
+            '</h3><div class="des-12 text-nowrap">' +
+            taskname +
+            "</div></a>" +
+            "</li>"
         );
         UserNTasks = ++UserNTasks;
         // }
@@ -8514,209 +8581,211 @@ var Tasks_Info_Request_User = {
         if (delegateMessage) {
           taskshtml.push(
             '<li class="list-group-item taskitem" title="' +
-            delegateMessage +
-            '">' +
-            '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
-            pcode +
-            "','" +
-            icode +
-            "','" +
-            tasksID +
-            "','" +
-            tasktype +
-            "','" +
-            stageid +
-            "','" +
-            ritemid +
-            "','" +
-            sourceitemid +
-            "','" +
-            wfname +
-            "','" +
-            puid +
-            "')\">" +
-            '<div><i class="fas fa-user-friends"></i></div>' +
-            '<div><h3 class="title-13">' +
-            tasktitle +
-            '</h3><div class="des-12 text-nowrap"><span data-trans-idea class="Resources ideaLabel"></span><span>: ' +
-            taskname +
-            "</span></div></div></a>" +
-            '<div id="viewhistory"><a href="' +
-            historyLinkNotification +
-            '"><i title="' +
-            taskdetails +
-            '" class="fas fa-history"></i></a></div>' +
-            "</li>"
+              delegateMessage +
+              '">' +
+              '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
+              pcode +
+              "','" +
+              icode +
+              "','" +
+              tasksID +
+              "','" +
+              tasktype +
+              "','" +
+              stageid +
+              "','" +
+              ritemid +
+              "','" +
+              sourceitemid +
+              "','" +
+              wfname +
+              "','" +
+              puid +
+              "')\">" +
+              '<div><i class="fas fa-user-friends"></i></div>' +
+              '<div><h3 class="title-13">' +
+              tasktitle + " - " + WfRelatedTask +
+              '</h3><div class="des-12 text-nowrap"><span data-trans-idea class="Resources ideaLabel"></span><span>: ' +
+              taskname +
+              "</span></div></div></a>" +
+              '<div id="viewhistory"><a href="' +
+              historyLinkNotification +
+              '"><i title="' +
+              taskdetails +
+              '" class="fas fa-history"></i></a></div>' +
+              "</li>"
           );
         } else {
           taskshtml.push(
             '<li class="list-group-item taskitem">' +
-            '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
-            pcode +
-            "','" +
-            icode +
-            "','" +
-            tasksID +
-            "','" +
-            tasktype +
-            "','" +
-            stageid +
-            "','" +
-            ritemid +
-            "','" +
-            sourceitemid +
-            "','" +
-            wfname +
-            "','" +
-            puid +
-            "')\">" +
-            '<div><h3 class="title-13">' +
-            tasktitle +
-            '</h3><div class="des-12 text-nowrap"><span data-trans-idea class="Resources ideaLabel"></span><span>: ' +
-            taskname +
-            "</span></div></div></a>" +
-            '<div id="viewhistory"><a href="' +
-            historyLinkNotification +
-            '"><i title="' +
-            taskdetails +
-            '" class="fas fa-history"></i></a></div>' +
-            "</li>"
+              '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
+              pcode +
+              "','" +
+              icode +
+              "','" +
+              tasksID +
+              "','" +
+              tasktype +
+              "','" +
+              stageid +
+              "','" +
+              ritemid +
+              "','" +
+              sourceitemid +
+              "','" +
+              wfname +
+              "','" +
+              puid +
+              "')\">" +
+              '<div><h3 class="title-13">' +
+              tasktitle +" - " + WfRelatedTask +
+              '</h3><div class="des-12 text-nowrap"><span data-trans-idea class="Resources ideaLabel"></span><span>: ' +
+              taskname +
+              "</span></div></div></a>" +
+              '<div id="viewhistory"><a href="' +
+              historyLinkNotification +
+              '"><i title="' +
+              taskdetails +
+              '" class="fas fa-history"></i></a></div>' +
+              "</li>"
           );
         }
       } else if (wfname == "Project") {
         if (delegateMessage) {
           taskshtml.push(
             '<li class="list-group-item taskitem" title="' +
-            delegateMessage +
-            '">' +
-            '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
-            pcode +
-            "','" +
-            icode +
-            "','" +
-            tasksID +
-            "','" +
-            tasktype +
-            "','" +
-            stageid +
-            "','" +
-            ritemid +
-            "','" +
-            sourceitemid +
-            "','" +
-            wfname +
-            "','" +
-            puid +
-            "')\">" +
-            '<div><i class="fas fa-user-friends"></i></div>' +
-            '<div><h3 class="title-13">' +
-            tasktitle +
-            '</h3><div class="des-12 text-nowrap">' +
-            taskname +
-            "</div></div></a>" +
-            '<div id="viewhistory"><a href="' +
-            historyLinkNotification +
-            '"><i title="' +
-            taskdetails +
-            '" class="fas fa-history"></i></a></div>' +
-            "</li>"
+              delegateMessage +
+              '">' +
+              '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
+              pcode +
+              "','" +
+              icode +
+              "','" +
+              tasksID +
+              "','" +
+              tasktype +
+              "','" +
+              stageid +
+              "','" +
+              ritemid +
+              "','" +
+              sourceitemid +
+              "','" +
+              wfname +
+              "','" +
+              puid +
+              "')\">" +
+              '<div><i class="fas fa-user-friends"></i></div>' +
+              '<div><h3 class="title-13">' +
+              tasktitle + " - " + WfRelatedTask +
+              '</h3><div class="des-12 text-nowrap">' +
+              taskname +
+              "</div></div></a>" +
+              '<div id="viewhistory"><a href="' +
+              historyLinkNotification +
+              '"><i title="' +
+              taskdetails +
+              '" class="fas fa-history"></i></a></div>' +
+              "</li>"
           );
         } else {
           taskshtml.push(
             '<li class="list-group-item taskitem">' +
-            '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
-            pcode +
-            "','" +
-            icode +
-            "','" +
-            tasksID +
-            "','" +
-            tasktype +
-            "','" +
-            stageid +
-            "','" +
-            ritemid +
-            "','" +
-            sourceitemid +
-            "','" +
-            wfname +
-            "','" +
-            puid +
-            "')\">" +
-            '<div><h3 class="title-13">' +
-            tasktitle +
-            '</h3><div class="des-12 text-nowrap">' +
-            taskname +
-            "</div></div></a>" +
-            '<div id="viewhistory"><a href="' +
-            historyLinkNotification +
-            '"><i title="' +
-            taskdetails +
-            '" class="fas fa-history"></i></a></div>' +
-            "</li>"
+              '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
+              pcode +
+              "','" +
+              icode +
+              "','" +
+              tasksID +
+              "','" +
+              tasktype +
+              "','" +
+              stageid +
+              "','" +
+              ritemid +
+              "','" +
+              sourceitemid +
+              "','" +
+              wfname +
+              "','" +
+              puid +
+              "')\">" +
+              '<div><h3 class="title-13">' +
+              tasktitle +
+              " - " +
+              WfRelatedTask +
+              '</h3><div class="des-12 text-nowrap">' +
+              taskname +
+              "</div></div></a>" +
+              '<div id="viewhistory"><a href="' +
+              historyLinkNotification +
+              '"><i title="' +
+              taskdetails +
+              '" class="fas fa-history"></i></a></div>' +
+              "</li>"
           );
         }
       } else {
         if (delegateMessage) {
           taskshtml.push(
             '<li class="list-group-item taskitem" title="' +
-            delegateMessage +
-            '">' +
-            '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
-            pcode +
-            "','" +
-            icode +
-            "','" +
-            tasksID +
-            "','" +
-            tasktype +
-            "','" +
-            stageid +
-            "','" +
-            ritemid +
-            "','" +
-            sourceitemid +
-            "','" +
-            wfname +
-            "','" +
-            puid +
-            "')\">" +
-            '<div><i class="fas fa-user-friends"></i></div>' +
-            '<div><h3 class="title-13">' +
-            tasktitle +
-            '</h3><div class="des-12 text-nowrap">' +
-            taskname +
-            "</div></div></a>" +
-            "</li>"
+              delegateMessage +
+              '">' +
+              '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
+              pcode +
+              "','" +
+              icode +
+              "','" +
+              tasksID +
+              "','" +
+              tasktype +
+              "','" +
+              stageid +
+              "','" +
+              ritemid +
+              "','" +
+              sourceitemid +
+              "','" +
+              wfname +
+              "','" +
+              puid +
+              "')\">" +
+              '<div><i class="fas fa-user-friends"></i></div>' +
+              '<div><h3 class="title-13">' +
+              tasktitle + " - " + WfRelatedTask +
+              '</h3><div class="des-12 text-nowrap">' +
+              taskname +
+              "</div></div></a>" +
+              "</li>"
           );
         } else {
           taskshtml.push(
             '<li class="list-group-item taskitem">' +
-            '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
-            pcode +
-            "','" +
-            icode +
-            "','" +
-            tasksID +
-            "','" +
-            tasktype +
-            "','" +
-            stageid +
-            "','" +
-            ritemid +
-            "','" +
-            sourceitemid +
-            "','" +
-            wfname +
-            "','" +
-            puid +
-            "')\">" +
-            '<div><h3 class="title-13">' +
-            tasktitle +
-            '</h3><div class="des-12 text-nowrap">' +
-            taskname +
-            "</div></div></a>" +
-            "</li>"
+              '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
+              pcode +
+              "','" +
+              icode +
+              "','" +
+              tasksID +
+              "','" +
+              tasktype +
+              "','" +
+              stageid +
+              "','" +
+              ritemid +
+              "','" +
+              sourceitemid +
+              "','" +
+              wfname +
+              "','" +
+              puid +
+              "')\">" +
+              '<div><h3 class="title-13">' +
+              tasktitle + " - " + WfRelatedTask +
+              '</h3><div class="des-12 text-nowrap">' +
+              taskname +
+              "</div></div></a>" +
+              "</li>"
           );
         }
       }
@@ -8768,8 +8837,6 @@ var Tasks_Info_Request_User = {
       puid,
       rurl //rurl,
     ) {
-
-
       if (wfname == "Project") {
         curstage_org = User_Stages_Data_Request.g.StagesArray.filter(function (
           obj
@@ -8782,13 +8849,13 @@ var Tasks_Info_Request_User = {
         // 	return obj.stage == curstage_org[0].stage;
         // });
       } else {
-        targerstage_org = Generic_WF_Stages_Data_Request.g.GWFStagesArray.filter(
-          function (obj) {
+        targerstage_org =
+          Generic_WF_Stages_Data_Request.g.GWFStagesArray.filter(function (
+            obj
+          ) {
             return obj.stage == stageid;
-          }
-        );
+          });
         var rurl = targerstage_org[0].relatedURL;
-
       }
       Tasks_Info_Request_User.g.handlelinks(
         pcode,
@@ -8815,12 +8882,10 @@ var Tasks_Info_Request_User = {
       wfname,
       puid
     ) {
-
       switch (wfname) {
         case "Project":
           if (
-            rurl.toLowerCase().indexOf("pcode") > -1
-            &&
+            rurl.toLowerCase().indexOf("pcode") > -1 &&
             window.location.href.toLowerCase().indexOf("&wfs") > -1
           ) {
             if (rurl.toLowerCase().indexOf("view.aspx") > -1) {
@@ -8829,14 +8894,14 @@ var Tasks_Info_Request_User = {
 
               window.open(
                 _spPageContextInfo.webAbsoluteUrl +
-                rurl +
-                "&IID=" +
-                ritemid +
-                "&PCODE=" +
-                pcode +
-                "&TID=" +
-                taskid +
-                "&WFs",
+                  rurl +
+                  "&IID=" +
+                  ritemid +
+                  "&PCODE=" +
+                  pcode +
+                  "&TID=" +
+                  taskid +
+                  "&WFs",
                 "_self"
               ); //
             } else if (rurl.toLowerCase().indexOf("edit") > -1) {
@@ -8845,25 +8910,25 @@ var Tasks_Info_Request_User = {
 
               window.open(
                 _spPageContextInfo.webAbsoluteUrl +
-                rurl +
-                "&IID=" +
-                ritemid +
-                "&PCODE=" +
-                pcode +
-                "&TID=" +
-                taskid +
-                "&WFs",
+                  rurl +
+                  "&IID=" +
+                  ritemid +
+                  "&PCODE=" +
+                  pcode +
+                  "&TID=" +
+                  taskid +
+                  "&WFs",
                 "_self"
               ); //
             } //Listing page with pcode
             else {
               window.open(
                 _spPageContextInfo.webAbsoluteUrl +
-                rurl +
-                pcode +
-                "&TID=" +
-                taskid +
-                "&WFs",
+                  rurl +
+                  pcode +
+                  "&TID=" +
+                  taskid +
+                  "&WFs",
                 "_self"
               );
             }
@@ -8874,14 +8939,14 @@ var Tasks_Info_Request_User = {
             //edit page without pcode
             window.open(
               _spPageContextInfo.webAbsoluteUrl +
-              rurl +
-              "&PCODE=" +
-              pcode +
-              "&IID=" +
-              ritemid +
-              "&TID=" +
-              taskid +
-              "&WFs",
+                rurl +
+                "&PCODE=" +
+                pcode +
+                "&IID=" +
+                ritemid +
+                "&TID=" +
+                taskid +
+                "&WFs",
               "_self"
             ); //+'&TID='+taskid
           } else if (
@@ -8891,14 +8956,14 @@ var Tasks_Info_Request_User = {
             //view page without pcode
             window.open(
               _spPageContextInfo.webAbsoluteUrl +
-              rurl +
-              "&PCODE=" +
-              pcode +
-              "&IID=" +
-              ritemid +
-              "&TID=" +
-              taskid +
-              "&WFs",
+                rurl +
+                "&PCODE=" +
+                pcode +
+                "&IID=" +
+                ritemid +
+                "&TID=" +
+                taskid +
+                "&WFs",
               "_self"
             ); //+'&TID='+taskid
           } else if (
@@ -8908,25 +8973,25 @@ var Tasks_Info_Request_User = {
             rurl = rurl.replace("&PCODE=", "");
             window.open(
               _spPageContextInfo.webAbsoluteUrl +
-              rurl +
-              puid +
-              "&PCODE=" +
-              pcode +
-              "&TID=" +
-              taskid +
-              "&WFs",
+                rurl +
+                puid +
+                "&PCODE=" +
+                pcode +
+                "&TID=" +
+                taskid +
+                "&WFs",
               "_self"
             ); //+'&TID='+taskid
           } else {
             window.open(
               _spPageContextInfo.webAbsoluteUrl +
-              rurl +
-              pcode +
-              "&IID=" +
-              ritemid +
-              "&TID=" +
-              taskid +
-              "&WFs",
+                rurl +
+                pcode +
+                "&IID=" +
+                ritemid +
+                "&TID=" +
+                taskid +
+                "&WFs",
               "_self"
             );
           }
@@ -8936,27 +9001,59 @@ var Tasks_Info_Request_User = {
           var keyNameParams = "";
           if (wfname == "ProjectCharter") {
             keyNameParams = "projectcharter";
-          }
-          else if (wfname == "InitiativeSample") {
+          } else if (wfname == "InitiativeSample") {
             keyNameParams = "initiativesample";
-          }
-          else if (wfname == "DV") {
+          } else if (wfname == "DV") {
             keyNameParams = "deliverables";
-          } else if (wfname == "CR" || wfname == "VROCRInitiative" || wfname == "EPMOCRInitiative" || wfname == "LMSCRInitiative") {
+          } else if (
+            wfname == "CR" ||
+            wfname == "VROCRInitiative" ||
+            wfname == "EPMOCRInitiative" ||
+            wfname == "LMSCRInitiative"
+          ) {
             keyNameParams = "changerequest";
-          } else if (wfname == 'VROCreateInitiative' || wfname == 'EPMOCreateInitiative' || wfname == 'LMSCreateInitiative') {
-            keyNameParams = 'initiatives'
-          } else if (wfname == "CR" || wfname == "VROCRProject" || wfname == "EPMOCRProject" || wfname == "LMSCRProject") {
+          } else if (
+            wfname == "VROCreateInitiative" ||
+            wfname == "EPMOCreateInitiative" ||
+            wfname == "LMSCreateInitiative"
+          ) {
+            keyNameParams = "initiatives";
+          } else if (
+            wfname == "CR" ||
+            wfname == "VROCRProject" ||
+            wfname == "EPMOCRProject" ||
+            wfname == "LMSCRProject"
+          ) {
             keyNameParams = "changerequest";
-          } else if (wfname == "VROCreateProject" || wfname == "EPMOCreateProject" || wfname == "LMSCreateProject") {
+          } else if (
+            wfname == "VROCreateProject" ||
+            wfname == "EPMOCreateProject" ||
+            wfname == "LMSCreateProject"
+          ) {
             keyNameParams = "projects";
-          } else if (wfname == "VROCRObjective" || wfname == "MSCRObjective" || wfname == "LMSCRObjective") {
+          } else if (
+            wfname == "VROCRObjective" ||
+            wfname == "MSCRObjective" ||
+            wfname == "LMSCRObjective"
+          ) {
             keyNameParams = "changerequest";
-          } else if (wfname == "VROActualKPI" || wfname == "MSActualKPI" || wfname == "LMSActualKPI") {
+          } else if (
+            wfname == "VROActualKPI" ||
+            wfname == "MSActualKPI" ||
+            wfname == "LMSActualKPI"
+          ) {
             keyNameParams = "mainkpi";
-          } else if (wfname == 'VROCreateKPI' || wfname == 'EPMOCreateKPI' || wfname == 'LMSCreateKPI') {
-            keyNameParams = 'mainkpi'
-          } else if (wfname == "VROCRKPI" || wfname == "MSCRKPI" || wfname == "LMSCRKPI") {
+          } else if (
+            wfname == "VROCreateKPI" ||
+            wfname == "EPMOCreateKPI" ||
+            wfname == "LMSCreateKPI"
+          ) {
+            keyNameParams = "mainkpi";
+          } else if (
+            wfname == "VROCRKPI" ||
+            wfname == "MSCRKPI" ||
+            wfname == "LMSCRKPI"
+          ) {
             keyNameParams = "changerequest";
           } else if (wfname == "Issue") {
             keyNameParams = "issues";
@@ -8964,89 +9061,115 @@ var Tasks_Info_Request_User = {
             keyNameParams = "risks";
           } else if (wfname == "MoM") {
             keyNameParams = "mom";
-          } else if (wfname == 'VisionInitiative' || wfname == 'StrategicallyInitiative' || wfname == 'LMSInitiative') {
-            keyNameParams = "initiatives"
-          } else if (wfname == 'StrategicPartnerships') {
-            keyNameParams = 'strategicpartnerships'
-          } else if (wfname == 'Achievements') {
-            keyNameParams = 'achievements'
-          } else if (wfname == 'VROBenefitActual' || wfname == 'EPMOBenefitActual' || wfname == 'LMSBenefitActual') {
-            keyNameParams = 'benefitmetrics'
-          } else if (wfname == 'VROInitiativeMilestone' || wfname == 'EPMOInitiativeMilestone' || wfname == 'LMSInitiativeMilestone') {
-            keyNameParams = 'initiativemilestones'
-          } else if (wfname == 'VROInitiativeDeliverable' || wfname == 'EPMOInitiativeDeliverable' || wfname == 'LMSInitiativeDeliverable') {
-            keyNameParams = 'initiativedeliverables'
-          } else if (wfname == 'VROProjMilestone' || wfname == 'EPMOProjMilestone' || wfname == 'LMSProjMilestone') {
-            keyNameParams = 'milestones'
-          } else if (wfname == 'VROCOC' || wfname == 'EPMOCOC' || wfname == 'LMSCOC') {
-            keyNameParams = 'coc'
-          } else if (wfname == 'VROProjDeliverable' || wfname == 'EPMOProjDeliverable' || wfname == 'LMSProjDeliverable') {
-            keyNameParams = 'deliverables'
-          } else if (wfname == "VROCreateObjective" || wfname == "LMSCreateObjective" || wfname == "MSCreateObjective") {
+          } else if (
+            wfname == "VisionInitiative" ||
+            wfname == "StrategicallyInitiative" ||
+            wfname == "LMSInitiative"
+          ) {
+            keyNameParams = "initiatives";
+          } else if (wfname == "StrategicPartnerships") {
+            keyNameParams = "strategicpartnerships";
+          } else if (wfname == "Achievements") {
+            keyNameParams = "achievements";
+          } else if (
+            wfname == "VROBenefitActual" ||
+            wfname == "EPMOBenefitActual" ||
+            wfname == "LMSBenefitActual"
+          ) {
+            keyNameParams = "benefitmetrics";
+          } else if (
+            wfname == "VROInitiativeMilestone" ||
+            wfname == "EPMOInitiativeMilestone" ||
+            wfname == "LMSInitiativeMilestone"
+          ) {
+            keyNameParams = "initiativemilestones";
+          } else if (
+            wfname == "VROInitiativeDeliverable" ||
+            wfname == "EPMOInitiativeDeliverable" ||
+            wfname == "LMSInitiativeDeliverable"
+          ) {
+            keyNameParams = "initiativedeliverables";
+          } else if (
+            wfname == "VROProjMilestone" ||
+            wfname == "EPMOProjMilestone" ||
+            wfname == "LMSProjMilestone"
+          ) {
+            keyNameParams = "milestones";
+          } else if (
+            wfname == "VROCOC" ||
+            wfname == "EPMOCOC" ||
+            wfname == "LMSCOC"
+          ) {
+            keyNameParams = "coc";
+          } else if (
+            wfname == "VROProjDeliverable" ||
+            wfname == "EPMOProjDeliverable" ||
+            wfname == "LMSProjDeliverable"
+          ) {
+            keyNameParams = "deliverables";
+          } else if (
+            wfname == "VROCreateObjective" ||
+            wfname == "LMSCreateObjective" ||
+            wfname == "MSCreateObjective"
+          ) {
             keyNameParams = "sos";
           }
           switch (tasktype) {
             case "SubmitProject":
               window.open(
                 _spPageContextInfo.webAbsoluteUrl +
-                "/sitepages/new.aspx?ListKey=projects&IID=" +
-                ritemid +
-                "&TID=" +
-                taskid +
-                "&IdeaId=" +
-                pcode +
-                "&WFs",
+                  "/sitepages/new.aspx?ListKey=projects&IID=" +
+                  ritemid +
+                  "&TID=" +
+                  taskid +
+                  "&IdeaId=" +
+                  pcode +
+                  "&WFs",
                 "_self"
               );
               break;
             case "SubmitField":
               window.open(
                 _spPageContextInfo.webAbsoluteUrl +
-                rurl +
-                "&IID=" +
-                ritemid +
-                "&TID=" +
-                taskid +
-                "&WFs",
+                  rurl +
+                  "&IID=" +
+                  ritemid +
+                  "&TID=" +
+                  taskid +
+                  "&WFs",
                 "_self"
               );
               break;
             default:
-              if (
-                rurl.toLowerCase().indexOf("icode") > -1
-              ) {
-
-
+              if (rurl.toLowerCase().indexOf("icode") > -1) {
                 //view page with pcode
                 rurl = rurl.replace("&ICODE=", "");
 
                 window.open(
                   _spPageContextInfo.webAbsoluteUrl +
-                  rurl +
-                  "&TID=" +
-                  taskid +
-                  "&IID=" +
-                  ritemid +
-                  "&ICODE=" +
-                  pcode +
-                  "&WFs",
+                    rurl +
+                    "&TID=" +
+                    taskid +
+                    "&IID=" +
+                    ritemid +
+                    "&ICODE=" +
+                    pcode +
+                    "&WFs",
                   "_self"
                 );
-
-
               } else if (rurl.toLowerCase().indexOf("pcode") > -1) {
                 rurl = rurl.replace("&PCODE=", "");
 
                 window.open(
                   _spPageContextInfo.webAbsoluteUrl +
-                  rurl +
-                  "&TID=" +
-                  taskid +
-                  "&IID=" +
-                  ritemid +
-                  "&PCODE=" +
-                  pcode +
-                  "&WFs",
+                    rurl +
+                    "&TID=" +
+                    taskid +
+                    "&IID=" +
+                    ritemid +
+                    "&PCODE=" +
+                    pcode +
+                    "&WFs",
                   "_self"
                 );
               } else if (rurl.toLowerCase().indexOf("stcode") > -1) {
@@ -9054,26 +9177,25 @@ var Tasks_Info_Request_User = {
 
                 window.open(
                   _spPageContextInfo.webAbsoluteUrl +
-                  rurl +
-                  "&TID=" +
-                  taskid +
-                  "&IID=" +
-                  ritemid +
-                  "&STCODE=" +
-                  pcode +
-                  "&WFs",
+                    rurl +
+                    "&TID=" +
+                    taskid +
+                    "&IID=" +
+                    ritemid +
+                    "&STCODE=" +
+                    pcode +
+                    "&WFs",
                   "_self"
                 );
-
               } else {
                 window.open(
                   _spPageContextInfo.webAbsoluteUrl +
-                  rurl +
-                  "&TID=" +
-                  taskid +
-                  "&IID=" +
-                  ritemid +
-                  "&WFs",
+                    rurl +
+                    "&TID=" +
+                    taskid +
+                    "&IID=" +
+                    ritemid +
+                    "&WFs",
                   "_self"
                 );
               }
@@ -9123,7 +9245,6 @@ var User_Stages_Data_Request = {
     StagesArray: [],
   },
 };
-
 
 ////Generic_WF_Stages_Data_Request
 window.Generic_WF_Stages_Data_Request = {
@@ -9189,8 +9310,8 @@ window.PCODE_Stage_Data_Request = {
       $(".btnactionrow").hide();
       $("body").append(
         "<style>" +
-        ".btn-add{opacity: .6;pointer-events: none;display:none}" +
-        "</style>"
+          ".btn-add{opacity: .6;pointer-events: none;display:none}" +
+          "</style>"
       );
     }
   },
@@ -9206,8 +9327,8 @@ window.PCODE_Stage_Data_Request = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
-      USERPCODE +
-      "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
+        USERPCODE +
+        "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
     ); //caml query
     PCODE_Stage_Data_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(PCODE_Stage_Data_Request.g.collListItem);
@@ -9233,7 +9354,10 @@ if (!USERisHome) {
     if (e.target == except) {
       return e.stopPropagation();
     }
-    if (document.getElementById("navcheckboxId") && document.getElementById("navcheckboxId").checked) {
+    if (
+      document.getElementById("navcheckboxId") &&
+      document.getElementById("navcheckboxId").checked
+    ) {
       document.getElementById("navcheckboxId").checked = false;
     } else {
     }
@@ -9315,7 +9439,6 @@ var GetInitiativeTitle_Request = {
         : UserNo_Data;
       InitiativeStartDate = oListItem.get_item("StartDate");
       InitiativeFinishDate = oListItem.get_item("FinishDate");
-
     }
 
     if (USERlistkey == "initiativemilestones" && (isEdit || isNew)) {
@@ -9358,8 +9481,8 @@ var GetInitiativeTitle_Request = {
 
     camlQuery.set_viewXml(
       '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
-      UserICode +
-      "</Value></Eq></Where></Query></View>"
+        UserICode +
+        "</Value></Eq></Where></Query></View>"
     );
     GetInitiativeTitle_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(GetInitiativeTitle_Request.g.collListItem);
@@ -9399,19 +9522,29 @@ var GetStrategicPartnershipTitle_Request = {
   },
   init: function () {
     var clientContext = new SP.ClientContext.get_current();
-    var oList = clientContext.get_web().get_lists().getByTitle("Strategic Partnerships");
+    var oList = clientContext
+      .get_web()
+      .get_lists()
+      .getByTitle("Strategic Partnerships");
     var camlQuery = new SP.CamlQuery();
 
     camlQuery.set_viewXml(
       '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
-      UserSTCode +
-      "</Value></Eq></Where></Query></View>"
+        UserSTCode +
+        "</Value></Eq></Where></Query></View>"
     );
-    GetStrategicPartnershipTitle_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    GetStrategicPartnershipTitle_Request.g.collListItem =
+      oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(GetStrategicPartnershipTitle_Request.g.collListItem);
     clientContext.executeQueryAsync(
-      Function.createDelegate(this, GetStrategicPartnershipTitle_Request.onSuccess),
-      Function.createDelegate(this, GetStrategicPartnershipTitle_Request.onError)
+      Function.createDelegate(
+        this,
+        GetStrategicPartnershipTitle_Request.onSuccess
+      ),
+      Function.createDelegate(
+        this,
+        GetStrategicPartnershipTitle_Request.onError
+      )
     );
   },
   g: {},
@@ -9419,13 +9552,10 @@ var GetStrategicPartnershipTitle_Request = {
 
 // data level access
 async function initiateDataLevelAccess(lookupList) {
-
   try {
-
     if (myRoleConfig[0].hasOwnProperty("dataFilter")) {
       isRoleDataLevelAccess = true;
       myRoleConfig[0].dataFilter.hierarchies.forEach((el, i, a) => {
-
         let accessConditions = el.accessConditions;
         let isListConditional1;
         let isListConditional2;
@@ -9436,13 +9566,17 @@ async function initiateDataLevelAccess(lookupList) {
           isListConditional2 = el.subRelation.listName == currentMainList;
           isListConditional3 =
             el.subRelation.subRelation.listName == currentMainList;
-          isListConditional4 = (el.subRelation.subRelation.subRelation ? el.subRelation.subRelation.subRelation.listName == currentMainList : false);
+          isListConditional4 = el.subRelation.subRelation.subRelation
+            ? el.subRelation.subRelation.subRelation.listName == currentMainList
+            : false;
         } else {
           isListConditional1 = el.listName == lookupList;
           isListConditional2 = el.subRelation.listName == lookupList;
           isListConditional3 =
             el.subRelation.subRelation.listName == lookupList;
-          isListConditional4 = (el.subRelation.subRelation.subRelation ? el.subRelation.subRelation.subRelation.listName == lookupList : false);
+          isListConditional4 = el.subRelation.subRelation.subRelation
+            ? el.subRelation.subRelation.subRelation.listName == lookupList
+            : false;
         }
         if (isListConditional1) {
           data_Level1_Access.buildCamlQuery(
@@ -9493,7 +9627,6 @@ let data_Level1_Access = {
     level,
     hierarchyIndex
   ) {
-
     data_Level1_Access.g.hierarchyIndex = hierarchyIndex;
     let whereBody = ``,
       queryBody = ``,
@@ -9533,13 +9666,15 @@ let data_Level1_Access = {
         if (i == fieldsConditionConfig.length - 1) {
           if (el.type == "LoggedInUser") {
             if (el.conditionType == "Or") {
-              // add condition type or for two obj in accessConditions to can get the data and related data 
-              //if the user is LoogedInUser in field one or LoggedInUser in field 2  
-              whereBody += `<Or><Eq><FieldRef Name="${el.field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Eq><FieldRef Name="${fieldsConditionConfig[i - 1].field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
-
+              // add condition type or for two obj in accessConditions to can get the data and related data
+              //if the user is LoogedInUser in field one or LoggedInUser in field 2
+              whereBody += `<Or><Eq><FieldRef Name="${
+                el.field
+              }" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Eq><FieldRef Name="${
+                fieldsConditionConfig[i - 1].field
+              }" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
             } else {
               whereBody += `<And><Eq><FieldRef Name="${el.field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>`;
-
             }
             // whereBody += `<And><Eq><FieldRef Name="${el.field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>`;
           } else {
@@ -9552,7 +9687,6 @@ let data_Level1_Access = {
           }
 
           if (el.conditionType == "Or") {
-
             // append Or closure
             var countOr = (whereBody.match(/<Or>/g) || []).length;
             var ORC = `</Or>`.repeat(countOr);
@@ -9561,7 +9695,6 @@ let data_Level1_Access = {
             var count = (whereBody.match(/<And>/g) || []).length;
             var ANDC = `</And>`.repeat(count);
             whereBody += ANDC;
-
           } else {
             // // append Or closure
             // var countOr = (whereBody.match(/<Or>/g) || []).length;
@@ -9570,16 +9703,14 @@ let data_Level1_Access = {
             var count = (whereBody.match(/<And>/g) || []).length;
             var ANDC = `</And>`.repeat(count);
             whereBody += ANDC;
-
           }
-
         }
         //normal And
         else {
           if (el.type == "LoggedInUser") {
             if (el.conditionType == "Or") {
-              // add condition type or for two obj in accessConditions to can get the data and related data 
-              //if the user is LoogedInUser in field one or LoggedInUser in field 2  
+              // add condition type or for two obj in accessConditions to can get the data and related data
+              //if the user is LoogedInUser in field one or LoggedInUser in field 2
               whereBody += `<And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>`;
               // <Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>
             } else {
@@ -9597,7 +9728,6 @@ let data_Level1_Access = {
       }
       //Finish Line, make last changes and build query
       if (i == fieldsConditionConfig.length - 1) {
-
         whereBody = whereBody.replaceAll(
           `Type="date"`,
           `IncludeTimeValue="TRUE" Type="DateTime"`
@@ -9634,7 +9764,7 @@ let data_Level1_Access = {
             data_Level1_Access.init(dataListName);
           });
         } else {
-          tempRoleHierarchies = []
+          tempRoleHierarchies = [];
           accessCallisDone = true;
         }
         console.log("Data 1st level access query", queryBody);
@@ -9669,7 +9799,6 @@ let data_Level1_Access = {
     let fieldName = secondLevelConfig.parentRelationField;
 
     while (listItemEnum.moveNext()) {
-
       var oListItem = listItemEnum.get_current();
       let itemCode = oListItem.get_item(fieldName);
       data_Level1_Access.g.relationFieldData.push(itemCode);
@@ -9704,8 +9833,7 @@ let data_Level1_Access = {
     let fieldType = levelConfig.RelationFieldType;
     let level = levelConfig.level;
 
-    let targetIsMulti = levelConfig.isMultiSelectField
-
+    let targetIsMulti = levelConfig.isMultiSelectField;
 
     let whereBody = ``,
       queryBody = ``,
@@ -9723,10 +9851,8 @@ let data_Level1_Access = {
       internalName: fieldToQuery,
       Type: fieldType,
       Values: valuesArray,
-
     });
     valuesArray.forEach((el, i, a) => {
-
       //only one choice
       whereBody += `<Value Type="${fieldType}">${el}</Value>`;
       //Finish Line, make last changes and build query
@@ -9737,20 +9863,19 @@ let data_Level1_Access = {
           `IncludeTimeValue="TRUE" Type="DateTime"`
         );
 
-
         //section to handle multi look up selected
-        containBody += `<Contains><FieldRef Name="${fieldToQuery}" /><Value Type="${fieldType}">${el}</Value></Contains>`
+        containBody += `<Contains><FieldRef Name="${fieldToQuery}" /><Value Type="${fieldType}">${el}</Value></Contains>`;
         var counttest = (containBody.match(/<Or>/g) || []).length;
         var ORC = "</Or>".repeat(counttest);
         containBody += ORC;
 
-        containBodyFinal = `<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>${containBody}</And></Where>`
+        containBodyFinal = `<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>${containBody}</And></Where>`;
         containqueryBody = `<View>
                   <Query>
                   ${containBodyFinal}
                   <OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
                   </Query>
-              </View>`
+              </View>`;
 
         // end section to handle multi look up selected
 
@@ -9763,29 +9888,23 @@ let data_Level1_Access = {
 						</Query>
 					</View>`;
 
-
-        if (targetIsMulti) { // to check if the target is multi
+        if (targetIsMulti) {
+          // to check if the target is multi
           data_Level2_Access.g.dataLevelQuery = containqueryBody;
           dataLevelAccessQuery = containqueryBody;
         } else {
-
           data_Level2_Access.g.dataLevelQuery = queryBody;
           dataLevelAccessQuery = queryBody;
         }
 
-
-
         if (data_Level1_Access.g.dataLevel > 2) {
           data_Level2_Access.init(listName);
         } else {
-          tempRoleHierarchies = []
+          tempRoleHierarchies = [];
           accessCallisDone = true;
-
-
         }
         console.log("Data 2nd level access query", queryBody);
         // finishRenderAccessRole = true
-
       }
     });
   },
@@ -9819,8 +9938,6 @@ let data_Level2_Access = {
       ].subRelation.subRelation;
     let fieldName = thirdLevelConfig.parentRelationField;
     while (listItemEnum.moveNext()) {
-
-
       var oListItem = listItemEnum.get_current();
       let itemCode = oListItem.get_item(fieldName);
       data_Level2_Access.g.relationFieldData.push(itemCode);
@@ -9839,13 +9956,12 @@ let data_Level2_Access = {
 
   //currenty handles one field not more
   dynamicCamlQueryBuilder: function (levelConfig, valuesArray) {
-
     let listName = levelConfig.listName;
     let fieldToQuery = levelConfig.RelationField;
     let fieldType = levelConfig.RelationFieldType;
     let level = levelConfig.level;
 
-    let targetIsMulti = levelConfig.isMultiSelectField
+    let targetIsMulti = levelConfig.isMultiSelectField;
 
     let whereBody = ``,
       queryBody = ``,
@@ -9864,7 +9980,6 @@ let data_Level2_Access = {
       Type: fieldType,
       Values: valuesArray,
       targetIsMultiFilter: targetIsMulti,
-
     });
     valuesArray.forEach((el, i, a) => {
       //only one choice
@@ -9872,7 +9987,6 @@ let data_Level2_Access = {
 
       //Finish Line, make last changes and build query
       if (i == valuesArray.length - 1) {
-
         whereBody += `</Values></In>`;
         whereBody = whereBody.replaceAll(
           `Type="date"`,
@@ -9880,19 +9994,18 @@ let data_Level2_Access = {
         );
 
         //section to handle multi look up selected
-        containBody += `<Contains><FieldRef Name="${fieldToQuery}" /><Value Type="${fieldType}">${el}</Value></Contains>`
+        containBody += `<Contains><FieldRef Name="${fieldToQuery}" /><Value Type="${fieldType}">${el}</Value></Contains>`;
         var counttest = (containBody.match(/<Or>/g) || []).length;
         var ORC = "</Or>".repeat(counttest);
         containBody += ORC;
 
-        containBodyFinal = `<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>${containBody}</And></Where>`
+        containBodyFinal = `<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>${containBody}</And></Where>`;
         containqueryBody = `<View>
             <Query>
             ${containBodyFinal}
             <OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
             </Query>
-        </View>`
-
+        </View>`;
 
         // end section to handle multi look up selected
 
@@ -9906,7 +10019,8 @@ let data_Level2_Access = {
 					</Query>
 				</View>`;
 
-        if (targetIsMulti) { // to check if the target is multi
+        if (targetIsMulti) {
+          // to check if the target is multi
           dataLevelAccessQuery = containqueryBody;
           //add it  to handle 4 th level query
           data_Level3_Access.g.dataLevelQuery = containqueryBody;
@@ -9916,18 +10030,15 @@ let data_Level2_Access = {
           data_Level3_Access.g.dataLevelQuery = queryBody;
         }
 
-
-
         if (data_Level1_Access.g.dataLevel > 3) {
           data_Level3_Access.init(listName);
         } else {
-          tempRoleHierarchies = []
+          tempRoleHierarchies = [];
           accessCallisDone = true;
         }
         // console.log("Data3nd level access query", queryBody);
-
       } else {
-        containBody += `<Or><Contains><FieldRef Name="${fieldToQuery}" /><Value Type="${fieldType}">${el}</Value></Contains>`
+        containBody += `<Or><Contains><FieldRef Name="${fieldToQuery}" /><Value Type="${fieldType}">${el}</Value></Contains>`;
       }
     });
   },
@@ -9945,13 +10056,9 @@ let data_Level2_Access = {
   },
 };
 
-
 let data_Level3_Access = {
   // The main Initialization function
   init: function (dataListName) {
-
-
-
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(dataListName);
     var camlQuery = new SP.CamlQuery();
@@ -9996,13 +10103,12 @@ let data_Level3_Access = {
   },
   //currenty handles one field not more
   dynamicCamlQueryBuilder: function (levelConfig, valuesArray) {
-
     let listName = levelConfig.listName;
     let fieldToQuery = levelConfig.RelationField;
     let fieldType = levelConfig.RelationFieldType;
     let level = levelConfig.level;
 
-    let targetIsMulti = levelConfig.isMultiSelectField
+    let targetIsMulti = levelConfig.isMultiSelectField;
 
     let whereBody = ``,
       queryBody = ``,
@@ -10020,7 +10126,6 @@ let data_Level3_Access = {
       internalName: fieldToQuery,
       Type: fieldType,
       Values: valuesArray,
-
     });
     valuesArray.forEach((el, i, a) => {
       //only one choice
@@ -10034,20 +10139,19 @@ let data_Level3_Access = {
         );
 
         //section to handle multi look up selected
-        containBody += `<Contains><FieldRef Name="${fieldToQuery}" /><Value Type="${fieldType}">${el}</Value></Contains>`
+        containBody += `<Contains><FieldRef Name="${fieldToQuery}" /><Value Type="${fieldType}">${el}</Value></Contains>`;
         var counttest = (containBody.match(/<Or>/g) || []).length;
         var ORC = "</Or>".repeat(counttest);
         containBody += ORC;
 
-        containBodyFinal = `<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>${containBody}</And></Where>`
+        containBodyFinal = `<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>${containBody}</And></Where>`;
         containqueryBody = `<View>
               <Query>
               ${containBodyFinal}
               <OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
               </Query>
-          </View>`
+          </View>`;
         // end section to handle multi look up selected
-
 
         whereBodyFinal = `<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>${whereBody}
 					</And></Where>`;
@@ -10058,7 +10162,8 @@ let data_Level3_Access = {
 						</Query>
 					</View>`;
 
-        if (targetIsMulti) { // to check if the target is multi
+        if (targetIsMulti) {
+          // to check if the target is multi
           data_Level3_Access.g.dataLevelQuery = containqueryBody;
           dataLevelAccessQuery = containqueryBody;
         } else {
@@ -10066,11 +10171,10 @@ let data_Level3_Access = {
           dataLevelAccessQuery = queryBody;
         }
 
-        tempRoleHierarchies = []
+        tempRoleHierarchies = [];
         accessCallisDone = true;
 
         // console.log("Data 4rd level access query", queryBody);
-
       }
     });
   },
@@ -10086,34 +10190,34 @@ let data_Level3_Access = {
     relationField: ``,
     relationFieldData: [],
   },
-}
+};
 
 ///////////////////////////////////
 
-
 var Get_Milestones = {
   init: function () {
-
-    var listHandler = ""
-    var query = ''
+    var listHandler = "";
+    var query = "";
 
     if (USERPCODE) {
-      listHandler = "Milestones"
+      listHandler = "Milestones";
 
-
-      query = "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">" +
+      query =
+        "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">" +
         USERPCODE +
-        "</Value></Eq></And></Where><OrderBy><FieldRef Name='CommittedDate' Ascending='False' /></OrderBy></Query></View>"
+        "</Value></Eq></And></Where><OrderBy><FieldRef Name='CommittedDate' Ascending='False' /></OrderBy></Query></View>";
     } else if (UserICode) {
-      listHandler = "InitiativeMilestones"
+      listHandler = "InitiativeMilestones";
 
-      query = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + UserICode + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
+      query =
+        "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"InitiativeCode\" /><Value Type=\"Text\">" +
+        UserICode +
+        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
     }
 
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(listHandler);
     var camlQuery = new SP.CamlQuery();
-
 
     camlQuery.set_viewXml(query);
 
@@ -10125,7 +10229,7 @@ var Get_Milestones = {
     );
   },
   onSuccess: async function (sender, args) {
-    debugger
+    debugger;
     var collListItem = Get_Milestones.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var itemhtml = [],
@@ -10143,238 +10247,264 @@ var Get_Milestones = {
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       itemID = oListItem.get_id();
-      itemname = oListItem.get_item("Name") || '';
-      itemtitle = oListItem.get_item("Title") || '';
+      itemname = oListItem.get_item("Name") || "";
+      itemtitle = oListItem.get_item("Title") || "";
       if (USERPCODE) {
-
-        itemPlannedClosureDate = Get_Milestones.g.dateConvert2(oListItem.get_item("PlannedDate")) || '' //PlannedClosureDate
+        itemPlannedClosureDate =
+          Get_Milestones.g.dateConvert2(oListItem.get_item("PlannedDate")) ||
+          ""; //PlannedClosureDate
       } else if (UserICode) {
-        itemPlannedClosureDate = Get_Milestones.g.dateConvert2(oListItem.get_item("PlannedCompletedDate")) || '' //PlannedClosureDate
-
+        itemPlannedClosureDate =
+          Get_Milestones.g.dateConvert2(
+            oListItem.get_item("PlannedCompletedDate")
+          ) || ""; //PlannedClosureDate
       }
-
 
       if (itemPlannedClosureDate) {
         allMilestonesArr.push({
           id: itemID,
           name: itemname,
           title: itemtitle,
-          date: itemPlannedClosureDate
-        })
+          date: itemPlannedClosureDate,
+        });
       }
-
-
     }
 
     if (USERPCODE) {
-
-      var noMsg = "", noPopupMsg = ""
+      var noMsg = "",
+        noPopupMsg = "";
       if (
         localStorage.getItem("lng") == null ||
         localStorage.getItem("lng") == "ar"
       ) {
-        noMsg = "يجب انشاء معلم جديد على الشهر الحالي"
-        noPopupMsg = "لا يوجد معالم على هذه الشهور ,الرجاء انشاء معالم "
+        noMsg = "يجب انشاء معلم جديد على الشهر الحالي";
+        noPopupMsg = "لا يوجد معالم على هذه الشهور ,الرجاء انشاء معالم ";
       } else {
-        noMsg = "you should create a Milestone on Current Month"
-        noPopupMsg = "There is no milestones on this Months, please create a milestones"
+        noMsg = "you should create a Milestone on Current Month";
+        noPopupMsg =
+          "There is no milestones on this Months, please create a milestones";
       }
 
       if (allMilestonesArr.length > 0) {
-        var projectStartDate = Get_Milestones.g.dateConvert2(projectStartToValidation);
-        var projectFinishDate =  Get_Milestones.g.dateConvert2(projectFinishToValidation);
+        var projectStartDate = Get_Milestones.g.dateConvert2(
+          projectStartToValidation
+        );
+        var projectFinishDate = Get_Milestones.g.dateConvert2(
+          projectFinishToValidation
+        );
         var now = new Date();
         var day = ("0" + now.getDate()).slice(-2);
         var month = ("0" + (now.getMonth() + 1)).slice(-2);
         var year = now.getFullYear();
         var today = now.getFullYear() + "-" + month + "-" + day;
-        var todayArr = [today]
+        var todayArr = [today];
 
         // var dateRangeArr = await dateRange(projectStartDate, today)
 
-        var dateRangeArr = await dateRange(projectStartDate, projectFinishDate)
+        var dateRangeArr = await dateRange(projectStartDate, projectFinishDate);
 
+        var datesWithoutMilesArr = dateRangeArr;
 
-        var datesWithoutMilesArr = dateRangeArr
+        var isMatch = false;
 
-        var isMatch = false
-
-        allMilestonesArr.forEach(el => {
-
-          isMatch = dateRangeArr.some((e) => e.match(el.date.slice(0, -2)))
+        allMilestonesArr.forEach((el) => {
+          isMatch = dateRangeArr.some((e) => e.match(el.date.slice(0, -2)));
 
           if (isMatch) {
             let index = datesWithoutMilesArr.indexOf(el.date.slice(0, -2));
-            datesWithoutMilesArr.splice(index, 1)
-
+            datesWithoutMilesArr.splice(index, 1);
           } else {
           }
-        })
+        });
 
         if (datesWithoutMilesArr.length > 0) {
+          var isMatchCurrentMonth = datesWithoutMilesArr.some((e) =>
+            e.match(today.slice(0, -2))
+          );
 
-          var isMatchCurrentMonth = datesWithoutMilesArr.some((e) => e.match(today.slice(0, -2)))
-
-
-          debugger
+          debugger;
           if (datesWithoutMilesArr.length == 1 && isMatchCurrentMonth) {
-
-
-
-            $('.page-nav').after(`<p style="padding:0 5%;color:#f00">${noMsg}</p>`)
-
+            $(".page-nav").after(
+              `<p style="padding:0 5%;color:#f00">${noMsg}</p>`
+            );
           } else {
+            var datesHtml = '<div style="width:100%;padding:20px 0">';
+            datesWithoutMilesArr.forEach((el) => {
+              datesHtml += `<span class="col-2" style="display:inline-block">${el.slice(
+                0,
+                -1
+              )}</span>`;
+            });
+            datesHtml += "</div>";
 
-            var datesHtml = '<div style="width:100%;padding:20px 0">'
-            datesWithoutMilesArr.forEach(el => {
-              datesHtml += `<span class="col-2" style="display:inline-block">${el.slice(0, -1)}</span>`
-            })
-            datesHtml += '</div>'
-
-
-            $('.page-nav').after('<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;margin-top:10%">' +
-              '<label><span  style="font-size:13px">' + noMsg + '</span></label>' + datesHtml + '<div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' + _spPageContextInfo.webAbsoluteUrl
-              + '/SitePages/new.aspx?ListKey=milestones&PCODE=' + USERPCODE +
-              '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>')
+            $(".page-nav").after(
+              '<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;margin-top:10%">' +
+                '<label><span  style="font-size:13px">' +
+                noMsg +
+                "</span></label>" +
+                datesHtml +
+                '<div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' +
+                _spPageContextInfo.webAbsoluteUrl +
+                "/SitePages/new.aspx?ListKey=milestones&PCODE=" +
+                USERPCODE +
+                '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>'
+            );
           }
         }
-
-
-
       } else {
-        $('.page-nav').after('<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;justify-content:flex-start;margin-top:10%">' +
-          '<label><span  style="font-size:13px">' + noMsg + '</span></label><div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' + _spPageContextInfo.webAbsoluteUrl
-          + '/SitePages/new.aspx?ListKey=milestones&PCODE=' + USERPCODE +
-          '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>')
+        $(".page-nav").after(
+          '<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;justify-content:flex-start;margin-top:10%">' +
+            '<label><span  style="font-size:13px">' +
+            noMsg +
+            '</span></label><div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' +
+            _spPageContextInfo.webAbsoluteUrl +
+            "/SitePages/new.aspx?ListKey=milestones&PCODE=" +
+            USERPCODE +
+            '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>'
+        );
       }
     } else if (UserICode) {
-
-
-      var noMsg = "", noPopupMsg = ""
+      var noMsg = "",
+        noPopupMsg = "";
       if (
         localStorage.getItem("lng") == null ||
         localStorage.getItem("lng") == "ar"
       ) {
-        noMsg = "يجب انشاء معلم جديد على الفترة الحالية"
-        noPopupMsg = "لا يوجد معالم على هذه الفترة ,الرجاء انشاء معالم "
+        noMsg = "يجب انشاء معلم جديد على الفترة الحالية";
+        noPopupMsg = "لا يوجد معالم على هذه الفترة ,الرجاء انشاء معالم ";
       } else {
-        noMsg = "you should create a Milestone on Current Period"
-        noPopupMsg = "There is no milestones on this period, please create a milestones"
+        noMsg = "you should create a Milestone on Current Period";
+        noPopupMsg =
+          "There is no milestones on this period, please create a milestones";
       }
 
       if (allMilestonesArr.length > 0) {
-        debugger
-        var initiativeStartDate = Get_Milestones.g.dateConvert2(initiativeStartToValidation) || '';
-        var initiativeFinishDate =  Get_Milestones.g.dateConvert2(initiativeFinishToValidation) || '';
+        debugger;
+        var initiativeStartDate =
+          Get_Milestones.g.dateConvert2(initiativeStartToValidation) || "";
+        var initiativeFinishDate =
+          Get_Milestones.g.dateConvert2(initiativeFinishToValidation) || "";
         // var initiativeFinishDate = standardisedPfinishdate;
         var now = new Date();
         var day = ("0" + now.getDate()).slice(-2);
         var month = ("0" + (now.getMonth() + 1)).slice(-2);
         var year = now.getFullYear();
         var today = now.getFullYear() + "-" + month + "-" + day;
-        var todayArr = [today]
-        var splitThreeMontshArr = []
-
+        var todayArr = [today];
+        var splitThreeMontshArr = [];
 
         // var dateRangeArr = await dateRange(initiativeStartDate, today)
-        var dateRangeArr = await dateRange(initiativeStartDate, initiativeFinishDate)
+        var dateRangeArr = await dateRange(
+          initiativeStartDate,
+          initiativeFinishDate
+        );
 
-
-        const perChunk = 3 // items per chunk
-
+        const perChunk = 3; // items per chunk
 
         const result = await dateRangeArr.reduce((resultArray, item, index) => {
-          const chunkIndex = Math.floor(index / perChunk)
+          const chunkIndex = Math.floor(index / perChunk);
 
           if (!resultArray[chunkIndex]) {
-            resultArray[chunkIndex] = [] // start a new chunk
+            resultArray[chunkIndex] = []; // start a new chunk
           }
 
-          resultArray[chunkIndex].push(item)
+          resultArray[chunkIndex].push(item);
 
-          return resultArray
-        }, [])
+          return resultArray;
+        }, []);
 
-        splitThreeMontshArr = result
+        splitThreeMontshArr = result;
 
+        var datesWithoutMilesArrFiltered = splitThreeMontshArr;
 
-        var datesWithoutMilesArrFiltered = splitThreeMontshArr
-
-        var isMatch = false
-        allMilestonesArr.forEach(el => {
-
-          splitThreeMontshArr.forEach(item => {
-            isMatch = item.some((e) => e.match(el.date.slice(0, -2)))
+        var isMatch = false;
+        allMilestonesArr.forEach((el) => {
+          splitThreeMontshArr.forEach((item) => {
+            isMatch = item.some((e) => e.match(el.date.slice(0, -2)));
             if (isMatch) {
               let index = splitThreeMontshArr.indexOf(item);
-              datesWithoutMilesArrFiltered.splice(index, 1)
+              datesWithoutMilesArrFiltered.splice(index, 1);
             } else {
-              console.log("Date")
+              console.log("Date");
             }
-          })
+          });
+        });
 
-        })
-
-
-
-        debugger
+        debugger;
         if (datesWithoutMilesArrFiltered.length > 0) {
           if (datesWithoutMilesArrFiltered.length == 1) {
-            var internalArr = datesWithoutMilesArrFiltered[0]
-            var isMatchCurrentMonth = internalArr.some((e) => e.match(today.slice(0, -2)))
+            var internalArr = datesWithoutMilesArrFiltered[0];
+            var isMatchCurrentMonth = internalArr.some((e) =>
+              e.match(today.slice(0, -2))
+            );
             if (isMatchCurrentMonth) {
-
-
-              $('.page-nav').after(`<p data-trans-nomilestoneonperiod style="padding:0 5%;color:#f00" class="Resources">${noMsg}</p>`)
+              $(".page-nav").after(
+                `<p data-trans-nomilestoneonperiod style="padding:0 5%;color:#f00" class="Resources">${noMsg}</p>`
+              );
             } else {
+              var datesHtml = '<div style="width:100%;padding:20px 0">';
+              datesWithoutMilesArrFiltered.forEach((el) => {
+                var formatArr = [];
+                el.forEach((item) => {
+                  formatArr.push(item.slice(0, -1));
+                });
+                datesHtml += `<span class="col-5" style="display:inline-block">[${formatArr}]</span>`;
+              });
+              datesHtml += "</div>";
 
-              var datesHtml = '<div style="width:100%;padding:20px 0">'
-              datesWithoutMilesArrFiltered.forEach(el => {
-                var formatArr = []
-                el.forEach(item => {
-                  formatArr.push(item.slice(0, -1))
-                })
-                datesHtml += `<span class="col-5" style="display:inline-block">[${formatArr}]</span>`
-              })
-              datesHtml += '</div>'
-
-
-              $('.page-nav').after('<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;margin-top:10%">' +
-                '<label><span  style="font-size:13px">' + noPopupMsg + '</span></label>' + datesHtml + '<div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' + _spPageContextInfo.webAbsoluteUrl
-                + '/SitePages/new.aspx?ListKey=initiativemilestones&ICODE=' + UserICode +
-                '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>')
+              $(".page-nav").after(
+                '<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;margin-top:10%">' +
+                  '<label><span  style="font-size:13px">' +
+                  noPopupMsg +
+                  "</span></label>" +
+                  datesHtml +
+                  '<div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' +
+                  _spPageContextInfo.webAbsoluteUrl +
+                  "/SitePages/new.aspx?ListKey=initiativemilestones&ICODE=" +
+                  UserICode +
+                  '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>'
+              );
             }
           } else {
+            var datesHtml = '<div style="width:100%;padding:20px 0">';
+            datesWithoutMilesArrFiltered.forEach((el) => {
+              var formatArr = [];
+              el.forEach((item) => {
+                formatArr.push(item.slice(0, -1));
+              });
+              datesHtml += `<span class="col-5" style="display:inline-block">[${formatArr}]</span>`;
+            });
+            datesHtml += "</div>";
 
-
-            var datesHtml = '<div style="width:100%;padding:20px 0">'
-            datesWithoutMilesArrFiltered.forEach(el => {
-              var formatArr = []
-              el.forEach(item => {
-                formatArr.push(item.slice(0, -1))
-              })
-              datesHtml += `<span class="col-5" style="display:inline-block">[${formatArr}]</span>`
-            })
-            datesHtml += '</div>'
-
-            $('.page-nav').after('<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;margin-top:10%">' +
-              '<label><span  style="font-size:13px">' + noPopupMsg + '</span></label>' + datesHtml + '<div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' + _spPageContextInfo.webAbsoluteUrl
-              + '/SitePages/new.aspx?ListKey=initiativemilestones&ICODE=' + UserICode +
-              '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>')
+            $(".page-nav").after(
+              '<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;margin-top:10%">' +
+                '<label><span  style="font-size:13px">' +
+                noPopupMsg +
+                "</span></label>" +
+                datesHtml +
+                '<div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' +
+                _spPageContextInfo.webAbsoluteUrl +
+                "/SitePages/new.aspx?ListKey=initiativemilestones&ICODE=" +
+                UserICode +
+                '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>'
+            );
           }
         }
-
       } else {
-        $('.page-nav').after('<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;margin-top:10%">' +
-          '<label><span  style="font-size:13px">' + noPopupMsg + '</span></label><div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' + _spPageContextInfo.webAbsoluteUrl
-          + '/SitePages/new.aspx?ListKey=initiativemilestones&ICODE=' + UserICode +
-          '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>')
+        $(".page-nav").after(
+          '<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;margin-top:10%">' +
+            '<label><span  style="font-size:13px">' +
+            noPopupMsg +
+            '</span></label><div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' +
+            _spPageContextInfo.webAbsoluteUrl +
+            "/SitePages/new.aspx?ListKey=initiativemilestones&ICODE=" +
+            UserICode +
+            '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>'
+        );
       }
     }
 
-
-    changeResources()
-
+    changeResources();
   },
   onError: function (sender, args) {
     console.log(
@@ -10403,14 +10533,11 @@ var Get_Milestones = {
       }
     },
   },
-
-}
-
-
+};
 
 async function dateRange(startDate, endDate) {
-  var start = startDate.split('-');
-  var end = endDate.split('-');
+  var start = startDate.split("-");
+  var end = endDate.split("-");
   var startYear = parseInt(start[0]);
   var endYear = parseInt(end[0]);
   var dates = [];
@@ -10420,14 +10547,12 @@ async function dateRange(startDate, endDate) {
     var startMon = i === startYear ? parseInt(start[1]) - 1 : 0;
     for (var j = startMon; j <= endMonth; j = j > 12 ? j % 12 || 11 : j + 1) {
       var month = j + 1;
-      var displayMonth = month < 10 ? '0' + month : month;
-      dates.push([i, displayMonth, ''].join('-'));
+      var displayMonth = month < 10 ? "0" + month : month;
+      dates.push([i, displayMonth, ""].join("-"));
     }
   }
   return dates;
 }
-
-
 
 var Get_Configure_Api = {
   // The main Initialization function
@@ -10437,15 +10562,16 @@ var Get_Configure_Api = {
     });
   },
   init: function () {
-
     var clientContext = new SP.ClientContext.get_current();
-    var oList = clientContext.get_web().get_lists().getByTitle("Configurations");
+    var oList = clientContext
+      .get_web()
+      .get_lists()
+      .getByTitle("Configurations");
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Title\" /><Value Type=\"Text\">" +
-      "API_URL"
-      +
-      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+        "API_URL" +
+        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
     Get_Configure_Api.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Get_Configure_Api.g.collListItem);
@@ -10459,9 +10585,8 @@ var Get_Configure_Api = {
     var listItemEnum = collListItem.getEnumerator();
 
     while (listItemEnum.moveNext()) {
-
       var oListItem = listItemEnum.get_current();
-      APIURL = oListItem.get_item("Value")
+      APIURL = oListItem.get_item("Value");
     }
   },
   onError: function (sender, args) {
@@ -10471,6 +10596,4 @@ var Get_Configure_Api = {
   },
   // Global variables
   g: {},
-
-}
-
+};
