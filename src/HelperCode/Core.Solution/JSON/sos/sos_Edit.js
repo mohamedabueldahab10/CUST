@@ -167,10 +167,10 @@ var Information_Form = [
         validation: 'required',
         // dynamic: 'parent', //main field that affect on other chiled field
         requiredValues: [
-          { value: 'sublevel2', fields: ['RelatedObjective', 'SubSector'] }, //we can put more than 1  field
+          { value: 'sublevel2', fields: ['RelatedObjective',] }, //we can put more than 1  field
           {
             value: 'sublevel3',
-            fields: ['RelatedObjective', 'Department', 'SubSector'],
+            fields: ['RelatedObjective', ],
           },
         ],
         grandFieldId: "RelatedStrategy", // we add this field to handle the two field filtration(parent Id in current form) 
