@@ -148,7 +148,8 @@ var Information_Form = [
         source: 'InitiativeDeliverables',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        initiativeCodeInList: true
+        initiativeCodeInList: true,        
+        validation: 'required',
       },
       {
         InternalName: 'SupportDocumentsDescription',

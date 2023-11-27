@@ -75,6 +75,22 @@ var Listing_Info = [
     inlisting: true,
     infilter: true,
   },
+  {
+    InternalName: "ActualImplementationMilestone",
+    DisplayName: "نسبة التنفيذ الفعلية (المعالم)",
+    DisplayNameEn: "Actual Implementation Milestone",
+    type: "text",
+    inlisting: true,
+    infilter: false,
+  },
+  {
+    InternalName: "PlannedImplementationMilestone",
+    DisplayName: "نسبة التنفيذ المخططة (المعالم)",
+    DisplayNameEn: "Planned Implementation Milestone",
+    type: "text",
+    inlisting: true,
+    infilter: false,
+  },
   //   {
   //     InternalName: 'ProjectOwner',
   //     DisplayName: 'مالك المشروع',

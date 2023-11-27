@@ -214,7 +214,7 @@ var Information_Form = [
         DisplayNameEn: 'Actual Completed Date',
         DisplayName: 'تاريخ الاكتمال الفعلي',
         // type: 'datetime',
-        disableonstage:"approved",
+        // disableonstage:"approved",
         type: 'datetimetoparent',
         listname: 'Initiatives',
         startinternalname: 'StartDate',
@@ -227,7 +227,8 @@ var Information_Form = [
         DisplayNameEn: 'Related Initiative Deliverable',
         DisplayName: 'مخرج المبادرة المرتبط',
         type: 'lookup',
-        source: 'InitiativeDeliverables',
+        source: 'InitiativeDeliverables',                
+        validation: 'required',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         security: {
@@ -266,7 +267,8 @@ var Information_Form = [
         type: 'multiline',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
-        maxchar: '5000',
+        maxchar: '5000',                
+        validation: 'required',
         // hideOnWfTaskStage :'EPMOInitiativeMilestone00,VROInitiativeMilestone00,LMSInitiativeMilestone00',
         // security: {
         //   groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
