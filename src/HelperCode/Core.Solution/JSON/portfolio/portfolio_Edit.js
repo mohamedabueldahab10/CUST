@@ -49,7 +49,7 @@ var Information_Form = [{
             "DisplayName": "مالك المحفظة",
             "DisplayNameEn": "Portfolio Owner",
             "type": "picker",
-            "validation": "required"
+            // "validation": "required"
 
 
         }
