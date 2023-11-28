@@ -1638,6 +1638,8 @@ var Information_Form = [
             { display: 'volunteer', value: 'volunteer' },
             { display: 'percentage', value: 'percentage' },
             { display: 'saudiriyal', value: 'saudiriyal' },
+            { display: 'volunteeropportunity', value: 'volunteeropportunity' },
+            { display: 'riyalorindividual', value: 'riyalorindividual' },
           ],
         },
         security: {
