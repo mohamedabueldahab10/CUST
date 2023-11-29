@@ -295,6 +295,18 @@ var Information_Form = [
         childFieldId: "RelatedObjective",// we add this field to handle the two field filtration (child Id in current form)
         childFieldIdSource: "Types",// we add this field to handle the two field filtration (child internal name in destination list)
       },
+      {
+        InternalName: 'ObjectiveRelation',
+        DisplayNameEn: 'Objective Relation',
+        DisplayName: 'علاقة الهدف بالوزارة',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'property', value: 'property' },
+            { display: 'contributor', value: 'contributor' },
+          ],
+        },
+     },
 
       {
         InternalName: 'RelatedObjective',

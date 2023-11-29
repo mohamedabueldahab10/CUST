@@ -170,6 +170,18 @@ var Information_Form = [
         sourcefieldlvl1: "PillarsExist", // field in look up list
       },
       {
+        InternalName: 'ObjectiveRelation',
+        DisplayNameEn: 'Objective Relation',
+        DisplayName: 'علاقة الهدف بالوزارة',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'property', value: 'property' },
+            { display: 'contributor', value: 'contributor' },
+          ],
+        },
+     },
+      {
         InternalName: 'RelatedObjective',
         DisplayNameEn: 'Related Objective',
         DisplayName: 'الهدف المرتبط',

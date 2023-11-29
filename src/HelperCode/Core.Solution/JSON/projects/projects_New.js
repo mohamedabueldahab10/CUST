@@ -215,7 +215,7 @@ var Information_Form = [
             { display: "yes", value: "yes" },
             {
               display: "no", value: "no",
-              roles: ['Administrator', 'EPMO','LMSUExecution','VROE',],
+              roles: ['Administrator', 'EPMO', 'LMSUExecution', 'VROE',],
               otherFields: [
                 { fieldName: 'Phase', value: 'P1' },
                 { fieldName: 'Stage', value: 'S01' },
@@ -224,8 +224,8 @@ var Information_Form = [
             },
             {//allroles
               // display: "no", value: "no", roles: ['allRoles'],
-              display: "no", value: "no", roles: ['VROHead','VROPHead','VROP','ProjectManager','InitiativeOwner','InitiativeManager','ProjectOwner','VPlanningUnitHead','VPlanningUnit','VROEHead','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','LMSE','LMSP','LMSUPerformance','LMSUControl'],
-            
+              display: "no", value: "no", roles: ['VROHead', 'VROPHead', 'VROP', 'ProjectManager', 'InitiativeOwner', 'InitiativeManager', 'ProjectOwner', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee', 'LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl'],
+
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'EPMOCreateProject' },
                 { fieldName: 'WFStage', value: 'EPMOCreateProject01' },
@@ -268,7 +268,7 @@ var Information_Form = [
               display: 'vision',
               value: 'vision',
               customFilterValue: "vision",
-              roles: ['Administrator','EPMO','VROE',],
+              roles: ['Administrator', 'EPMO', 'VROE',],
               otherFields: [
                 { fieldName: 'Stage', value: 'S01' },
                 { fieldName: 'Phase', value: 'P1' },
@@ -278,7 +278,7 @@ var Information_Form = [
               display: 'strategically',
               value: 'strategically',
               customFilterValue: "strategically",
-              roles: ['Administrator','EPMO'],
+              roles: ['Administrator', 'EPMO'],
               otherFields: [
                 { fieldName: 'Stage', value: 'S01' },
                 { fieldName: 'Phase', value: 'P1' },
@@ -288,7 +288,7 @@ var Information_Form = [
               display: 'lms',
               value: 'lms',
               customFilterValue: "lms",
-              roles: ['Administrator','LMSUExecution'],
+              roles: ['Administrator', 'LMSUExecution'],
               otherFields: [
                 { fieldName: 'Stage', value: 'S01' },
                 { fieldName: 'Phase', value: 'P1' },
@@ -301,7 +301,7 @@ var Information_Form = [
               display: 'vision',
               value: 'vision',
               customFilterValue: "vision",
-              roles: ['VROHead','VROPHead','VROP','ProjectManager','InitiativeOwner','InitiativeManager','ProjectOwner','VPlanningUnitHead','VPlanningUnit','VROEHead','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','LMSE','LMSP','LMSUPerformance','LMSUControl'],
+              roles: ['VROHead', 'VROPHead', 'VROP', 'ProjectManager', 'InitiativeOwner', 'InitiativeManager', 'ProjectOwner', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee', 'LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'VROCreateProject' },
                 { fieldName: 'WFStage', value: 'VROCreateProject01' },
@@ -314,7 +314,7 @@ var Information_Form = [
               display: 'strategically',
               value: 'strategically',
               customFilterValue: "strategically",
-              roles: ['VROHead','VROPHead','VROP','ProjectManager','InitiativeOwner','InitiativeManager','ProjectOwner','VPlanningUnitHead','VPlanningUnit','VROEHead','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','LMSE','LMSP','LMSUPerformance','LMSUControl'],
+              roles: ['VROHead', 'VROPHead', 'VROP', 'ProjectManager', 'InitiativeOwner', 'InitiativeManager', 'ProjectOwner', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee', 'LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'EPMOCreateProject' },
                 { fieldName: 'WFStage', value: 'EPMOCreateProject01' },
@@ -327,7 +327,7 @@ var Information_Form = [
               display: 'lms',
               value: 'lms',
               customFilterValue: "lms",
-              roles: ['VROHead','VROPHead','VROP','ProjectManager','InitiativeOwner','InitiativeManager','ProjectOwner','VPlanningUnitHead','VPlanningUnit','VROEHead','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','LMSE','LMSP','LMSUPerformance','LMSUControl'],
+              roles: ['VROHead', 'VROPHead', 'VROP', 'ProjectManager', 'InitiativeOwner', 'InitiativeManager', 'ProjectOwner', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee', 'LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'LMSCreateProject' },
                 { fieldName: 'WFStage', value: 'LMSCreateProject01' },
@@ -354,7 +354,7 @@ var Information_Form = [
         dynamic: "InitiativeType", //InternalName Of Parent field
         filterField: "Types",//InternalName Of Parent field
         filterFieldType: "Text",//Type In Sharepoint List for Parent field
-        targetsiblingarr: ["Sector", "SubSector","StartDate","FinishDate","RelatedObjective"], // get siblings value
+        targetsiblingarr: ["Sector", "SubSector", "StartDate", "FinishDate", "RelatedObjective"], // get siblings value
         // security: {
         //   groups: [
         //     "VRO_E",
@@ -439,7 +439,7 @@ var Information_Form = [
         source: 'SPillars',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-          "display": "none"
+        "display": "none"
       },
       {
         InternalName: "Sector",
@@ -620,6 +620,9 @@ var Information_Form = [
               value: "transformativeproject",
             },
             { display: "operationalproject", value: "operationalproject" },
+            { display: "technical", value: "technical" },
+            { display: "others", value: "others" },
+            { display: "consulting", value: "consulting" },
           ],
         },
       },
@@ -629,17 +632,17 @@ var Information_Form = [
         DisplayNameEn: "Baseline Start Date",
         type: "datetime",
         max: "BaselineFinishDate",
-        Errmsgkey:'fromdatepattern',
+        Errmsgkey: 'fromdatepattern',
         descPhraseAr: "التاريخ ضمن مدة المبادرة",
         descPhraseEn: "Date within Initiative period",
         // 
         maxOnChild: true,
         childsId: ["PlannedFinishDate", "PlannedDate", "ActualDate",
-        'PlannedOfferingDate',
-        'ActualOfferingDate',
-        'AwardDate',
-        'ContractualDate',
-      ],
+          'PlannedOfferingDate',
+          'ActualOfferingDate',
+          'AwardDate',
+          'ContractualDate',
+        ],
         targetOn: "min"
       },
       {
@@ -648,16 +651,16 @@ var Information_Form = [
         DisplayNameEn: "Baseline Finish Date",
         type: "datetime",
         min: "BaselineStartDate",
-        Errmsgkey:'todatepattern',
+        Errmsgkey: 'todatepattern',
         descPhraseAr: "التاريخ ضمن مدة المبادرة",
         descPhraseEn: "Date within Initiative period",
         // 
         maxOnChild: true,
         childsId: ["PlannedFinishDate", "PlannedDate", "ActualDate",
-        'PlannedOfferingDate',
-        'ActualOfferingDate',
-        'AwardDate',
-        'ContractualDate',],
+          'PlannedOfferingDate',
+          'ActualOfferingDate',
+          'AwardDate',
+          'ContractualDate',],
         targetOn: "max"
       },
 
@@ -875,7 +878,7 @@ var Information_Form = [
         DisplayName: "التكلفة",
         DisplayNameEn: "Amount",
         type: "float",
-        className: "disable_enable_section",        
+        className: "disable_enable_section",
         descPhraseAr: "الحقل مطلوب لادخال المخرجات والمعالم",
         descPhraseEn: "Filed is required to add milestones and Deliverables",
         // "state": "disabled",
@@ -897,7 +900,7 @@ var Information_Form = [
         DisplayName: "التكلفة الفعلية",
         DisplayNameEn: "Actual Budget",
         type: "float",
-        className: "disable_enable_section",        
+        className: "disable_enable_section",
         descPhraseAr: "الحقل مطلوب لادخال المخرجات والمعالم",
         descPhraseEn: "Filed is required to add milestones and Deliverables",
         // "state": "disabled",
@@ -1008,8 +1011,8 @@ var Information_Form = [
         // listname: 'Projects',
         // startinternalname: 'BaselineStartDate',
         // endinternalname: 'BaselineFinishDate',
-          "min": "PlannedStartDate",
-          Errmsgkey:"todatepattern",
+        "min": "PlannedStartDate",
+        Errmsgkey: "todatepattern",
       },
       {
         InternalName: "ActualOfferingDate",
@@ -1032,7 +1035,7 @@ var Information_Form = [
         listname: 'Projects',
         startinternalname: 'BaselineStartDate',
         endinternalname: 'BaselineFinishDate',
-        Errmsgkey:'btwndatepattern',
+        Errmsgkey: 'btwndatepattern',
       },
       {
         InternalName: "ContractualDate",
@@ -1043,7 +1046,7 @@ var Information_Form = [
         listname: 'Projects',
         startinternalname: 'BaselineStartDate',
         endinternalname: 'BaselineFinishDate',
-        Errmsgkey:'btwndatepattern',
+        Errmsgkey: 'btwndatepattern',
       },
       {
         InternalName: 'ApprovedBrochure',
@@ -1249,7 +1252,7 @@ var Information_Form = [
         DisplayName: "حالة العمل",
         DisplayNameEn: "Working Status",
         type: "dropdownValues",
-         "state": "disabled",
+        "state": "disabled",
         options: {
           choices: [
             { display: "active", value: "active", selected: 'selected' },
@@ -1317,7 +1320,7 @@ var Information_Form = [
         // "state":"disabled",
         validation: 'required',
         descPhraseAr: "من التكلفة",
-        descPhraseEn: " From Budget", 
+        descPhraseEn: " From Budget",
       },
       {
         InternalName: 'Amount',
@@ -1330,7 +1333,7 @@ var Information_Form = [
         targetelement: 'Weight',
         validation: 'required',
         descPhraseAr: "من التكلفة",
-        descPhraseEn: " From Budget", 
+        descPhraseEn: " From Budget",
       },
       // {
       //   InternalName: 'Status',
@@ -1372,7 +1375,7 @@ var Information_Form = [
         endinternalname: 'BaselineFinishDate',
         // min: 'PlannedStartDate',
         validation: 'required',
-        Errmsgkey:'btwndatepattern',
+        Errmsgkey: 'btwndatepattern',
       },
       // {
       //   InternalName: 'Delivered',
@@ -1565,7 +1568,7 @@ var Information_Form = [
         targetelement: 'Weight',
         seconedtarget: 'Amount',
         descPhraseAr: "من التكلفة",
-        descPhraseEn: " From Budget", 
+        descPhraseEn: " From Budget",
         // "state":"disabled",
         validation: 'required',
       },
@@ -1578,7 +1581,7 @@ var Information_Form = [
         listname: 'Projects',
         parentinternalname: 'ActualBudget',
         descPhraseAr: "من التكلفة",
-        descPhraseEn: " From Budget", 
+        descPhraseEn: " From Budget",
         targetelement: 'Weight',
         validation: 'required',
       },
@@ -1592,7 +1595,7 @@ var Information_Form = [
         startinternalname: 'BaselineStartDate',
         endinternalname: 'BaselineFinishDate',
         validation: 'required',
-        Errmsgkey:'btwndatepattern',
+        Errmsgkey: 'btwndatepattern',
       },
       {
         InternalName: 'ActualDate',
@@ -1761,6 +1764,18 @@ var Information_Form = [
         DisplayNameEn: "Attachments",
         type: "file",
         withAddBtn: "true",
+      },
+      {
+        InternalName: "FileType",
+        DisplayName: "نوع المرفق",
+        DisplayNameEn: "File Type",
+        type: "multiselect",
+        options: {
+                  choices:[
+                  'الموافقات','دراسة الجدوى','ميثاق المشروع'
+                ]
+          }
+       
       },
     ],
   },

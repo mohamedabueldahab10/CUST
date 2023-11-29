@@ -306,7 +306,7 @@ var Information_Form = [
         InternalName: "Category",
         DisplayName: "تصنيف  المشروع",
         DisplayNameEn: "Category",
-        // validation: 'required',
+        validation: "required",
         type: "dropdownValues",
         options: {
           choices: [
@@ -317,6 +317,9 @@ var Information_Form = [
               value: "transformativeproject",
             },
             { display: "operationalproject", value: "operationalproject" },
+            { display: "technical", value: "technical" },
+            { display: "others", value: "others" },
+            { display: "consulting", value: "consulting" },
           ],
         },
       },
@@ -1567,6 +1570,18 @@ var Information_Form = [
             { display: 'no', value: 'no' },
           ],
         },
+      },
+      {
+        InternalName: "FileType",
+        DisplayName: "نوع المرفق",
+        DisplayNameEn: "File Type",
+        type: "multiselect",
+        options: {
+                  choices:[
+                  'الموافقات','دراسة الجدوى','ميثاق المشروع'
+                ]
+          }
+       
       },
       // {
       //     "InternalName": "SupportDocumentsDescription",

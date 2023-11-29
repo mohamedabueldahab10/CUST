@@ -219,6 +219,9 @@
     etude: "دراسة",
     legislation: "تشريع",
     technical: "تقني",
+    consulting: "استشاري",
+    property: "ملكية",
+    contributor: "مساهمة",
     //Invoices Status
     paid: "تم الدفع",
     notpaid: "لم يتم الدفع",
@@ -1378,6 +1381,7 @@
     etude: "Etude",
     legislation: "Legislation",
     technical: "Technical",
+    consulting: "Consulting",
 
     ministry: "Ministry",
 
@@ -1803,6 +1807,9 @@
     actual3quarter: "Quarter 3",
     actual4quarter: "Quarter 4",
     //
+    
+    property: "Property",
+    contributor: "Contributor",
     actual1monthly: "Jan",
     actual2monthly: "Feb",
     actual3monthly: "Quarter 1",

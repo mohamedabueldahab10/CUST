@@ -721,7 +721,6 @@ var Information_Form = [
         DisplayNameEn: "Category",
         validation: "required",
         type: "dropdownValues",
-        disableOnWfTaskStage : "S05,S09",
         options: {
           choices: [
             // شغيلي- تحولي - استراتيجي
@@ -731,15 +730,10 @@ var Information_Form = [
               value: "transformativeproject",
             },
             { display: "operationalproject", value: "operationalproject" },
+            { display: "technical", value: "technical" },
+            { display: "others", value: "others" },
+            { display: "consulting", value: "consulting" },
           ],
-        },    security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
-
-          ]
         },
       },
       {
@@ -2697,6 +2691,18 @@ var Information_Form = [
         withAddBtn: "true",
         // disableOnWfTaskStage : "S05,S09",
         // hideOnWfTaskStage  : "S05;S09",
+      },
+      {
+        InternalName: "FileType",
+        DisplayName: "نوع المرفق",
+        DisplayNameEn: "File Type",
+        type: "multiselect",
+        options: {
+                  choices:[
+                  'الموافقات','دراسة الجدوى','ميثاق المشروع'
+                ]
+          }
+       
       },
     ],
   },
