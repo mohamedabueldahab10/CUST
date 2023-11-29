@@ -217,6 +217,7 @@ var Information_Form = [
         security: {
           groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
         },
+        validation: "required",
       },
       {
         InternalName: 'Delivered',

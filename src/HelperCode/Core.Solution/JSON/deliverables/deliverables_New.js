@@ -244,7 +244,8 @@ var Information_Form = [
         source: 'InitiativeDeliverables', // target list
         sourceinternalname: 'InitiativeCode', // column in target list
         Dispfieldkey: 'Name', //display in dropdown
-        valfieldkey: 'Title', // value in dropdown
+        valfieldkey: 'Title', // value in dropdown        
+        validation: "required",
       },
       // {
       //   InternalName: 'RelatedInitiativeDeliverable',

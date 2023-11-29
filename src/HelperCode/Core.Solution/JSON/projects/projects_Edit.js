@@ -639,24 +639,24 @@ var Information_Form = [
       //     // "maxchar": 5000,
       //     // hideonstage: "1"
       // },
-      {
-        InternalName: "CorrectivePlan",
-        DisplayName: "الخطة التصحيحية",
-        DisplayNameEn: "Corrective Plan",
-        type: "multiline",
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
-        maxchar: 5000,
-        disableOnWfTaskStage : "S05,S09",
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
+      // {
+      //   InternalName: "CorrectivePlan",
+      //   DisplayName: "الخطة التصحيحية",
+      //   DisplayNameEn: "Corrective Plan",
+      //   type: "multiline",
+      //   descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+      //   descPhraseEn: "max length of letters equal 5000",
+      //   maxchar: 5000,
+      //   disableOnWfTaskStage : "S05,S09",
+      //   security: {
+      //     groups: [ ],
+      //     // groups: [], // should be empty array if will use notAllowTo
+      //     notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+      //       {group:"Project Managers for Project Web App",form:["origin"]},
+      //       // {group:"EPMO",form:["origin" ]}
 
-          ]
-        },
+      //     ]
+      //   },
         // security: {
         //   groups: [
         //     "VRO_E",
@@ -670,7 +670,7 @@ var Information_Form = [
         // },
         // "maxchar": 5000,
         // hideonstage: "1"
-      },
+      // },
       {
         InternalName: "ProjectType",
         DisplayName: "نوع المشروع",
@@ -1203,6 +1203,7 @@ var Information_Form = [
         DisplayName: "مصادر التمويل",
         DisplayNameEn: "Funding Sources",
         type: "string",
+        validation: "required",
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
         descPhraseEn: "max length of letters equal 255",
         maxchar: 255,
@@ -1527,29 +1528,29 @@ var Information_Form = [
       //     "DisplayNameEn": "Spent Budget",
       //     "type": "float"
       // },
-      {
-        InternalName: "BudgetStatus",
-        DisplayName: "حالة تمويل المشروع (حسب الحوكمة)",
-        DisplayNameEn: "Budget Status",
-        type: "dropdownValues",
-        disableOnWfTaskStage : "S05,S09",
-        options: {
-          choices: [
-            { display: "finance", value: "finance" },
-            { display: "notfinanced", value: "notfinanced" },
-            { display: "nofinance", value: "nofinance" },
-            { display: "externalfinance", value: "externalfinance" },
-          ],
-        },
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
+      // {
+      //   InternalName: "BudgetStatus",
+      //   DisplayName: "حالة تمويل المشروع (حسب الحوكمة)",
+      //   DisplayNameEn: "Budget Status",
+      //   type: "dropdownValues",
+      //   disableOnWfTaskStage : "S05,S09",
+      //   options: {
+      //     choices: [
+      //       { display: "finance", value: "finance" },
+      //       { display: "notfinanced", value: "notfinanced" },
+      //       { display: "nofinance", value: "nofinance" },
+      //       { display: "externalfinance", value: "externalfinance" },
+      //     ],
+      //   },
+      //   security: {
+      //     groups: [ ],
+      //     // groups: [], // should be empty array if will use notAllowTo
+      //     notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+      //       {group:"Project Managers for Project Web App",form:["origin"]},
+      //       // {group:"EPMO",form:["origin" ]}
 
-          ]
-        },
+      //     ]
+      //   },
         // security: {
         //   groups: [
         //     "VRO_E",
@@ -1562,7 +1563,7 @@ var Information_Form = [
         //   ],
         // },
         //"state": "disabled"
-      },
+      // },
     ],
   },
   {

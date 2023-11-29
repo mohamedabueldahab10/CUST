@@ -549,28 +549,28 @@ var Information_Form = [
       //     // "maxchar": 5000,
       //     // hideonstage: "1"
       // },
-      {
-        InternalName: "CorrectivePlan",
-        DisplayName: "الخطة التصحيحية",
-        DisplayNameEn: "Corrective Plan",
-        type: "multiline",
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
-        maxchar: 5000,
-        // security: {
-        //   groups: [
-        //     "VRO_E",
-        //     "LMS_E",
-        //     "EPMO",
-        //     "System Admin Group",
-        //     "SPMO",
-        //     "Development Unit",
-        //     "Project Managers for Project Web App",
-        //   ],
-        // },
-        // "maxchar": 5000,
-        // hideonstage: "1"
-      },
+      // {
+      //   InternalName: "CorrectivePlan",
+      //   DisplayName: "الخطة التصحيحية",
+      //   DisplayNameEn: "Corrective Plan",
+      //   type: "multiline",
+      //   descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+      //   descPhraseEn: "max length of letters equal 5000",
+      //   maxchar: 5000,
+      //   // security: {
+      //   //   groups: [
+      //   //     "VRO_E",
+      //   //     "LMS_E",
+      //   //     "EPMO",
+      //   //     "System Admin Group",
+      //   //     "SPMO",
+      //   //     "Development Unit",
+      //   //     "Project Managers for Project Web App",
+      //   //   ],
+      //   // },
+      //   // "maxchar": 5000,
+      //   // hideonstage: "1"
+      // },
       {
         InternalName: "ProjectType",
         DisplayName: "نوع المشروع",
@@ -814,6 +814,7 @@ var Information_Form = [
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
         descPhraseEn: "max length of letters equal 255",
         maxchar: 255,
+        validation: "required",
       },
       {
         InternalName: "FundingStatus",
@@ -959,32 +960,32 @@ var Information_Form = [
       //     "DisplayNameEn": "Spent Budget",
       //     "type": "float"
       // },
-      {
-        InternalName: "BudgetStatus",
-        DisplayName: "حالة تمويل المشروع (حسب الحوكمة)",
-        DisplayNameEn: "Budget Status",
-        type: "dropdownValues",
-        options: {
-          choices: [
-            { display: "finance", value: "finance" },
-            { display: "notfinanced", value: "notfinanced" },
-            { display: "nofinance", value: "nofinance" },
-            { display: "externalfinance", value: "externalfinance" },
-          ],
-        },
-        security: {
-          groups: [
-            "VRO_E",
-            "LMS_E",
-            "EPMO",
-            "System Admin Group",
-            "SPMO",
-            "Development Unit",
-            "Project Managers for Project Web App",
-          ],
-        },
-        //"state": "disabled"
-      },
+      // {
+      //   InternalName: "BudgetStatus",
+      //   DisplayName: "حالة تمويل المشروع (حسب الحوكمة)",
+      //   DisplayNameEn: "Budget Status",
+      //   type: "dropdownValues",
+      //   options: {
+      //     choices: [
+      //       { display: "finance", value: "finance" },
+      //       { display: "notfinanced", value: "notfinanced" },
+      //       { display: "nofinance", value: "nofinance" },
+      //       { display: "externalfinance", value: "externalfinance" },
+      //     ],
+      //   },
+      //   security: {
+      //     groups: [
+      //       "VRO_E",
+      //       "LMS_E",
+      //       "EPMO",
+      //       "System Admin Group",
+      //       "SPMO",
+      //       "Development Unit",
+      //       "Project Managers for Project Web App",
+      //     ],
+      //   },
+      //   //"state": "disabled"
+      // },
     ],
   },
   {

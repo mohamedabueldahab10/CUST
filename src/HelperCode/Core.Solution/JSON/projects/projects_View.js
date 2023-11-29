@@ -266,15 +266,15 @@ var Information_Form = [
         DispfieldkeyEn: "NameEn",
         valfieldkey: "Title",
       },
-      {
-        InternalName: "CorrectivePlan",
-        DisplayName: "الخطة التصحيحية",
-        DisplayNameEn: "Corrective Plan",
-        // type: 'string',
-        type: "multiline",
-        // "maxchar": 5000,
-        // hideonstage: "1"
-      },
+      // {
+      //   InternalName: "CorrectivePlan",
+      //   DisplayName: "الخطة التصحيحية",
+      //   DisplayNameEn: "Corrective Plan",
+      //   // type: 'string',
+      //   type: "multiline",
+      //   // "maxchar": 5000,
+      //   // hideonstage: "1"
+      // },
       {
         InternalName: "Status",
         DisplayName: "مرحلة المشروع",
@@ -334,6 +334,14 @@ var Information_Form = [
         DisplayNameEn: "Baseline Finish Date",
         type: "datetime",
         min: "BaselineStartDate",
+        // "state": "disabled"
+      },
+      {
+        InternalName: "Created",
+        DisplayName: "تاريخ انشاء المشروع",
+        DisplayNameEn: "Created Date",
+        type: "datetime",
+        // min: "BaselineStartDate",
         // "state": "disabled"
       },
 
@@ -980,21 +988,21 @@ var Information_Form = [
         // "state": "disabled"
       },
 
-      {
-        InternalName: "BudgetStatus",
-        DisplayName: "حالة تمويل المشروع (حسب الحوكمة)",
-        DisplayNameEn: "Budget Status",
-        type: "dropdownValues",
-        options: {
-          choices: [
-            { display: "finance", value: "finance" },
-            { display: "notfinanced", value: "notfinanced" },
-            { display: "nofinance", value: "nofinance" },
-            { display: "externalfinance", value: "externalfinance" },
-          ],
-        },
-        //"state": "disabled"
-      },
+      // {
+      //   InternalName: "BudgetStatus",
+      //   DisplayName: "حالة تمويل المشروع (حسب الحوكمة)",
+      //   DisplayNameEn: "Budget Status",
+      //   type: "dropdownValues",
+      //   options: {
+      //     choices: [
+      //       { display: "finance", value: "finance" },
+      //       { display: "notfinanced", value: "notfinanced" },
+      //       { display: "nofinance", value: "nofinance" },
+      //       { display: "externalfinance", value: "externalfinance" },
+      //     ],
+      //   },
+      //   //"state": "disabled"
+      // },
     ],
   },
   {
