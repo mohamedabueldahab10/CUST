@@ -321,6 +321,20 @@ var Information_Form = [
 				//     ]
 				// },
 			},
+			{
+				InternalName: 'SupportDocumentsDescription',
+				DisplayNameEn: 'Support Documents Description',
+				DisplayName: 'وصف الوثائق الداعمة',
+				type: 'multiline',
+				descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+				descPhraseEn: "max length of letters equal 5000",
+				maxchar: '5000',                
+				validation: 'required',
+				// hideOnWfTaskStage :'EPMOInitiativeMilestone00,VROInitiativeMilestone00,LMSInitiativeMilestone00',
+				// security: {
+				//   groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
+				// },
+			  },
 		],
 	},
 	{

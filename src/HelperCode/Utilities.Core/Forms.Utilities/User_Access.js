@@ -8439,6 +8439,7 @@ var Tasks_Info_Request_User = {
           ? No_Data
           : oListItem.get_item("SourceItemID");
       wfname = oListItem.get_item("WorkflowName");
+      RelatedItemName = oListItem.get_item("RelatedItemName");
       puid = oListItem.get_item("ProjectUID");
       tasktitle = oListItem.get_item("Title") || No_Data;
       taskname = oListItem.get_item("RelatedItemTitle") || No_Data;
@@ -8460,7 +8461,7 @@ var Tasks_Info_Request_User = {
         }
       });
 
-      console.log(WfRelatedTask, "WfRelatedTask ");
+      console.log(RelatedItemName, "RelatedItemName ");
 
       // (A) STRIP TAGS FUNCTION
       function stripTags(original) {
@@ -8604,7 +8605,7 @@ var Tasks_Info_Request_User = {
               "')\">" +
               '<div><i class="fas fa-user-friends"></i></div>' +
               '<div><h3 class="title-13">' +
-              tasktitle + " - " + WfRelatedTask +
+              tasktitle + " - " + RelatedItemName +
               '</h3><div class="des-12 text-nowrap"><span data-trans-idea class="Resources ideaLabel"></span><span>: ' +
               taskname +
               "</span></div></div></a>" +
@@ -8638,7 +8639,7 @@ var Tasks_Info_Request_User = {
               puid +
               "')\">" +
               '<div><h3 class="title-13">' +
-              tasktitle +" - " + WfRelatedTask +
+              tasktitle +" - " + RelatedItemName +
               '</h3><div class="des-12 text-nowrap"><span data-trans-idea class="Resources ideaLabel"></span><span>: ' +
               taskname +
               "</span></div></div></a>" +
@@ -8677,7 +8678,7 @@ var Tasks_Info_Request_User = {
               "')\">" +
               '<div><i class="fas fa-user-friends"></i></div>' +
               '<div><h3 class="title-13">' +
-              tasktitle + " - " + WfRelatedTask +
+              tasktitle + " - " + RelatedItemName +
               '</h3><div class="des-12 text-nowrap">' +
               taskname +
               "</div></div></a>" +
@@ -8713,7 +8714,7 @@ var Tasks_Info_Request_User = {
               '<div><h3 class="title-13">' +
               tasktitle +
               " - " +
-              WfRelatedTask +
+              RelatedItemName +
               '</h3><div class="des-12 text-nowrap">' +
               taskname +
               "</div></div></a>" +
@@ -8752,7 +8753,7 @@ var Tasks_Info_Request_User = {
               "')\">" +
               '<div><i class="fas fa-user-friends"></i></div>' +
               '<div><h3 class="title-13">' +
-              tasktitle + " - " + WfRelatedTask +
+              tasktitle + " - " + RelatedItemName +
               '</h3><div class="des-12 text-nowrap">' +
               taskname +
               "</div></div></a>" +
@@ -8781,7 +8782,7 @@ var Tasks_Info_Request_User = {
               puid +
               "')\">" +
               '<div><h3 class="title-13">' +
-              tasktitle + " - " + WfRelatedTask +
+              tasktitle + " - " + RelatedItemName +
               '</h3><div class="des-12 text-nowrap">' +
               taskname +
               "</div></div></a>" +
