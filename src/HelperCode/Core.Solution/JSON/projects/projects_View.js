@@ -819,9 +819,28 @@ var Information_Form = [
         InternalName: "FundingSources",
         DisplayName: "مصادر التمويل",
         DisplayNameEn: "Funding Sources",
-        type: "string",
+        type: "dropdownValues",
+        // disableOnWfTaskStage : "S05,S09",
+        options: {
+          choices: [
+            { display: "internalfinancing", value: "internalfinancing" },
+            { display: "externalfinancing", value: "externalfinancing" },
+            // { display: "large", value: "large" },
+          ],
+        },
+        // "RequiredName": "FundingSources",
+        toggleValues: [
+          { value: 'externalfinancing', fields: ['ExternalFundingSource'] },
+        ],
+        // validation: "required",
       },
-
+      {
+        InternalName: "ExternalFundingSource",
+        DisplayName: "مصدر التمويل الخارجي",
+        DisplayNameEn: "External FundingSource",
+        type: "string",
+        ToggleName: "ExternalFundingSource",
+      },
       {
         InternalName: "FundingStatus",
         DisplayName: "حالة التمويل",

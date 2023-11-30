@@ -426,9 +426,9 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         validation: 'required',
-        // dynamic: 'RelatedStrategy',
-        // filterField: 'RelatedStrategy',
-        // filterFieldType: 'Text',
+        dynamic: 'RelatedStrategy',
+        filterField: 'RelatedStrategy',
+        filterFieldType: 'Text',
         descPhraseAr: "تظهر الاهداف بناء على نوع المؤشر والاستراتيجية المختارة",
         descPhraseEn: "The Objectives appear based on selected Level that related to selected Strategy",
         security: {

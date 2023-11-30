@@ -1,6 +1,6 @@
 var Information_Form = [
   {
-    label: 'بيانات خطة التواصل',
+    label: 'بيانات خطة ادارة التغيير',
     labelEn: 'Communication Plan Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',

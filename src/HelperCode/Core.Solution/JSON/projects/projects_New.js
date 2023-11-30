@@ -796,6 +796,10 @@ var Information_Form = [
           { value: 'yes', fields: [] },
           { value: 'no', fields: ['FundingSection', 'TenderSection', 'BudgetSection', 'Delivrables', 'Milestones'] },
         ],
+        requiredValues: [
+          { value: "no", fields: ["FundingSources","FundingStatus"] }, //we can put more than 1  field
+        ],
+
       },
     ],
   },
@@ -813,16 +817,33 @@ var Information_Form = [
         InternalName: "FundingSources",
         DisplayName: "مصادر التمويل",
         DisplayNameEn: "Funding Sources",
+        type: "dropdownValues",
+        // disableOnWfTaskStage : "S05,S09",
+        options: {
+          choices: [
+            { display: "internalfinancing", value: "internalfinancing" },
+            { display: "externalfinancing", value: "externalfinancing" },
+            // { display: "large", value: "large" },
+          ],
+        },"RequiredName": "FundingSources",
+        toggleValues: [
+          { value: 'externalfinancing', fields: ['ExternalFundingSource'] },
+        ],
+        // validation: "required",
+      },
+      {
+        InternalName: "ExternalFundingSource",
+        DisplayName: "مصدر التمويل الخارجي",
+        DisplayNameEn: "External FundingSource",
         type: "string",
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
-        descPhraseEn: "max length of letters equal 255",
-        maxchar: 255,
-        validation: "required",
+        ToggleName: "ExternalFundingSource",
+        display :'none'
       },
       {
         InternalName: "FundingStatus",
         DisplayName: "حالة التمويل",
-        DisplayNameEn: "Funding Status",
+        DisplayNameEn: "Funding Status",        
+        "RequiredName": "FundingStatus",
         type: "dropdownValues",
         options: {
           choices: [

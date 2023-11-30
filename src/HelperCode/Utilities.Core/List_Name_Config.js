@@ -392,9 +392,9 @@ var ListArray = [
 	},
 	{
 		communicationplans: "Communication Plans",
-		ListingTitle: "خطط التواصل",
-		FormTitle: "خطط التواصل",
-		TitleEn: "Communication Plans",
+		ListingTitle: "خطط ادارة التغيير",
+		FormTitle: "خطط ادارة التغيير",
+		TitleEn: "Change management plan",
 		projnav: "Project Navigation",
 		subfolder: true,
 		projectrelated: true,

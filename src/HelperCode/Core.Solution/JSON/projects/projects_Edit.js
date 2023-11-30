@@ -311,9 +311,9 @@ var Information_Form = [
           { value: 'yes', fields: ['InitiativeType', 'RelatedInitiative', 'RelatedInitiativeDeliverable'] }, //we can put more than 1  field
           { value: 'no', fields: [''] }, //we can put more than 1  field
         ],
-        // toggleDisabledValues: [
-        //   { value: 'yes', fields: ['Sector','SubSector'] }, 
-        // ],
+        requiredValues: [
+          { value: "no", fields: ["FundingSources","FundingStatus"] }, //we can put more than 1  field
+        ],
         validation: "required",
       },
       
@@ -1196,21 +1196,27 @@ var Information_Form = [
         InternalName: "FundingSources",
         DisplayName: "مصادر التمويل",
         DisplayNameEn: "Funding Sources",
+        type: "dropdownValues",
+        // disableOnWfTaskStage : "S05,S09",
+        options: {
+          choices: [
+            { display: "internalfinancing", value: "internalfinancing" },
+            { display: "externalfinancing", value: "externalfinancing" },
+            // { display: "large", value: "large" },
+          ],
+        },"RequiredName": "FundingSources",
+        toggleValues: [
+          { value: 'externalfinancing', fields: ['ExternalFundingSource'] },
+        ],
+        // validation: "required",
+      },
+      {
+        InternalName: "ExternalFundingSource",
+        DisplayName: "مصدر التمويل الخارجي",
+        DisplayNameEn: "External FundingSource",
         type: "string",
-        validation: "required",
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
-        descPhraseEn: "max length of letters equal 255",
-        maxchar: 255,
-        disableOnWfTaskStage : "S05,S09", 
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
-
-          ]
-        },
+        ToggleName: "ExternalFundingSource",
+        display :'none'
       },
       {
         InternalName: "FundingStatus",
