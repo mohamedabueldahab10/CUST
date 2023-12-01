@@ -75,7 +75,7 @@ var Information_Form = [
         DisplayName: "نوع الاستراتيجية",
         DisplayNameEn: "Strategy Type",
         type: "dropdownValues",
-        // dynamic: "parent", //main field that affect on other chiled field  
+        dynamic: "parent", //main field that affect on other chiled field  
         validation: 'required',
         // toggleValues: [
         //   { value: 'lms', fields: ['RelatedStrategyLMS'] },
@@ -161,7 +161,7 @@ var Information_Form = [
         // filterField: "Types",//InternalName Of Parent field
         // filterFieldType: "Text",//Type In Sharepoint List for Parent field
 
-        seconeddynamic: 'Types',
+        seconeddynamic: 'Class',
         dynamic: 'parent', //main field that affect on other chiled field
         filterField: 'Types',
         filterFieldType: 'Text',

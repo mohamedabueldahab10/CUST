@@ -103,6 +103,7 @@ var Information_Form = [
         DisplayNameEn: "Strategy Type",
         type: "dropdownValues",
         validation: 'required',
+        dynamic: 'parent',
         security: {
           groups: [
             'LMS_P',
@@ -239,7 +240,7 @@ var Information_Form = [
         // filterField: "Types",//InternalName Of Parent field
         // filterFieldType: "Text",//Type In Sharepoint List for Parent field
 
-        seconeddynamic: 'Types',
+        seconeddynamic: 'Class',
         dynamic: 'parent', //main field that affect on other chiled field
         filterField: 'Types',
         filterFieldType: 'Text',

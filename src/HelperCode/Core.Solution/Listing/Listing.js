@@ -1153,18 +1153,21 @@ window.ListingData = {
 
 
             //hide btn and appear msg if there is no Actual budget
-
-            if (PCODE && (listkey == 'deliverables' || listkey == 'milestones') && !projectActualBudget) {
-              var HtmlStart = '<div data-trans-addActualBudget class="actualBudget ErrorMsg Resources"></div>';
-            }
-
-            if (ICODE && (listkey == 'initiativedeliverables' || listkey == 'initiativemilestones') && !initiativeActualBudget) {
-              var HtmlStart = '<div data-trans-addinitiativebudget class="actualBudget ErrorMsg Resources"></div>';
-
-            }
-
+            
             if (originalstate) {
               $('.content-list-head > .listing-new-at').html(HtmlStart);
+              
+              if (PCODE && (listkey == 'deliverables' || listkey == 'milestones') && !projectActualBudget) {
+                var HtmlStartNoProjBudgetMsg = '<div data-trans-addActualBudget class="actualBudget d-flex w-100 mx-3 mb-3 ErrorMsg Resources"></div>';
+                $(HtmlStartNoProjBudgetMsg).insertBefore($('.content-list-head > .listing-new-at'));
+                $(".btn-add").css("display", "none");
+              }
+              
+              if (ICODE && (listkey == 'initiativedeliverables' || listkey == 'initiativemilestones') && !initiativeActualBudget) {
+                var HtmlStartNoInitBudgetMsg = '<div data-trans-addinitiativebudget class="actualBudget d-flex w-100 mx-3 mb-3 ErrorMsg Resources"></div>';
+                $(HtmlStartNoInitBudgetMsg).insertBefore($('.content-list-head > .listing-new-at'));
+                $(".btn-add").css("display", "none");
+              }              
             }
 
             changeResources();

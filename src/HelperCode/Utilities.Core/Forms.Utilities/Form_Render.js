@@ -515,6 +515,7 @@ window.ListInfo = {
           $("select[dynamic=parent]").on("change", function () {
             let parentFieldName = $(this).attr("id");
             let parentFieldValue = $(this).val();
+            let isDisabled = $(this).attr("disabled");
             let customFilterValue = $(this)
               .find("option[value=" + parentFieldValue + "]")
               .data("customfiltervalue");
@@ -527,7 +528,7 @@ window.ListInfo = {
               "data-parentcustomfiltervalue"
             );
             let notInvokeListiner = $(this).data("notinvokelistiner");
-
+            if(isDisabled !="disabled"){
             $("[dynamic=" + parentFieldName + "]").each(function () {
               let affectedFieldName = $(this).attr("id");
               let listName = $(this).data("listname");
@@ -604,7 +605,7 @@ window.ListInfo = {
             } else {
               dynamicAffectSelect.init(affectedSelectsInfo);
             }
-          });
+          }});
           //max min dates
           $("input[type=date]:not([minimumdate=undefined])").change(
             function () {
@@ -11711,7 +11712,7 @@ dynamicAffectSelect = {
         //FieldRef Name="Created" Ascending="True"(if we want to sort to alphapetics you need to Name='Name' and  Ascending='True')
       }
 
-      
+      console.log('current query',Query);
       camlQuery.set_viewXml(Query);
 
       dynamicAffectSelect.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -11807,7 +11808,6 @@ dynamicAffectSelect = {
       optionsBody =
         '<option class="Resources" value="" selected="" disabled=""></option>'; // to not choose the first value in dropdown
     }
-
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
 
@@ -11817,6 +11817,7 @@ dynamicAffectSelect = {
       let valfieldkey = oListItem.get_item(
         `${affectedSelectsInfo.valFieldKey}`
       );
+      console.log('dispfieldkey::',dispfieldkey)
       if (dispfieldkey && dispfieldkey.length > 100) {
         var optionText = dispfieldkey.substr(0, 100) + "...";
       } else {
