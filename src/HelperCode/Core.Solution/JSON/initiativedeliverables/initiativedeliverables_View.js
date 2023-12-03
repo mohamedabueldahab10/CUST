@@ -52,16 +52,42 @@ var Information_Form = [
         InternalName: 'Classification',
         DisplayName: 'تصنيف المخرج',
         DisplayNameEn: 'Classification',
+        validation: 'required',
         type: 'dropdownValues',
         options: {
           choices: [
             {
-              display: 'operationally',
-              value: 'operationally',
+              display: 'operationally', value: 'operationally',
             },
             {
-              display: 'transformationally',
-              value: 'transformationally',
+              display: 'transformationally', value: 'transformationally',
+            },
+            {
+              display: 'plansandstrategies', value: 'plansandstrategies',
+            },
+            {
+              display: 'regulationsandorganizations', value: 'regulationsandorganizations',
+            },
+            {
+              display: 'electronicsystemandplatforms', value: 'electronicsystemandplatforms',
+            },
+            {
+              display: 'partnershipsagreements', value: 'partnershipsagreements',
+            },
+            {
+              display: 'servicesandproducts', value: 'servicesandproducts',
+            },
+            {
+              display: 'studiesandreports', value: 'studiesandreports',
+            },
+            {
+              display: 'constructionandinfrastructure', value: 'constructionandinfrastructure',
+            },
+            {
+              display: 'operationalwork', value: 'operationalwork',
+            },
+            {
+              display: 'newentities', value: 'newentities',
             },
           ],
         },
