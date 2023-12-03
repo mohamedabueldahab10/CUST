@@ -1084,6 +1084,16 @@
     initiativeactualperc:"نسبة الإنجاز الفعلية",
     deliverditem:"لا يمكن التعديل بسبب اكتمال الموافقة على العنصر",
     ////////////////////////////////
+    plansandstrategies: "استراتيجيات وخطط", 
+    regulationsandorganizations: "لوائح وتنظيمات", 
+    electronicsystemandplatforms: "نظام ومنصات الكترونية", 
+    partnershipsagreements: " شراكات واتفاقيات وخصخصة", 
+    servicesandproducts: "خدمات ومنتجات", 
+    studiesandreports: "دراسات وتقارير", 
+    constructionandinfrastructure: "انشاءات وبنى تحتية",
+    operationalwork: "أعمال تشغيلية",
+    newentities: "كيانات جديدة",
+
     vrococ:"شهادة انجاز",
     epmococ:"شهادة انجاز",
     lmscoc:"شهادة انجاز",
@@ -1969,16 +1979,6 @@
     constructionandinfrastructure: "Construction and infrastructure", 
     operationalwork: "Operational work", 
     newentities: "New entities",
-
-    plansandstrategies: "استراتيجيات وخطط", 
-    regulationsandorganizations: "لوائح وتنظيمات", 
-    electronicsystemandplatforms: "نظام ومنصات الكترونية", 
-    partnershipsagreements: " شراكات واتفاقيات وخصخصة", 
-    servicesandproducts: "خدمات ومنتجات", 
-    studiesandreports: "دراسات وتقارير", 
-    constructionandinfrastructure: "انشاءات وبنى تحتية",
-    operationalwork: "أعمال تشغيلية",
-    newentities: "كيانات جديدة",
 
     internalfinancing: "Internal financing",
     externalfinancing: "External financing",    
