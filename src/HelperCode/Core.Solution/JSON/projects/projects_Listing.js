@@ -29,8 +29,8 @@ var Listing_Info = [
     DisplayName: "نوع المشروع",
     DisplayNameEn: "Project Type",
     type: "dropdownValues",
-    needTrans: true, 
-    inlisting: true,
+    needTrans: false,
+    inlisting: false,
     infilter: false,
   },
   {
@@ -67,17 +67,10 @@ var Listing_Info = [
     inlisting: true,
     infilter: true,
   },
-  {
-    InternalName: "ProjectManager",
-    DisplayName: "مدير المشروع",
-    DisplayNameEn: "Project Manager",
-    type: "picker",
-    inlisting: true,
-    infilter: true,
-  },
+
   {
     InternalName: "ActualImplementationMilestone",
-    DisplayName: "نسبة التنفيذ الفعلية (المعالم)",
+    DisplayName: "النسبة الفعلية للمعالم",
     DisplayNameEn: "Actual Implementation Milestone",
     type: "text",
     inlisting: true,
@@ -85,11 +78,19 @@ var Listing_Info = [
   },
   {
     InternalName: "PlannedImplementationMilestone",
-    DisplayName: "نسبة التنفيذ المخططة (المعالم)",
+    DisplayName: "النسبة المخططة للمعالم",
     DisplayNameEn: "Planned Implementation Milestone",
     type: "text",
     inlisting: true,
     infilter: false,
+  },
+  {
+    InternalName: "ProjectManager",
+    DisplayName: "مدير المشروع",
+    DisplayNameEn: "Project Manager",
+    type: "picker",
+    inlisting: true,
+    infilter: true,
   },
   //   {
   //     InternalName: 'ProjectOwner',
