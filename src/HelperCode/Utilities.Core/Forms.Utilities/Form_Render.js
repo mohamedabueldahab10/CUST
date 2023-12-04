@@ -11808,6 +11808,7 @@ dynamicAffectSelect = {
       optionsBody =
         '<option class="Resources" value="" selected="" disabled=""></option>'; // to not choose the first value in dropdown
     }
+    var optionsArray = [];
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
 
@@ -11817,7 +11818,6 @@ dynamicAffectSelect = {
       let valfieldkey = oListItem.get_item(
         `${affectedSelectsInfo.valFieldKey}`
       );
-      console.log('dispfieldkey::',dispfieldkey)
       if (dispfieldkey && dispfieldkey.length > 100) {
         var optionText = dispfieldkey.substr(0, 100) + "...";
       } else {
@@ -11825,30 +11825,12 @@ dynamicAffectSelect = {
       }
 
       if (targetFieldType == "multiselect") {
-        optionsBody += `<label class="grp-select">${valfieldkey}</label>
-        <li>
-        <div class="checkbox">
-        <label>
-          <input value="${valfieldkey}" id="${affectedSelectsInfo.affectedFieldName}" type="checkbox">
-          ${dispfieldkey}
-        </label>
-        </div>
-        </li>
-        `;
+        optionsArray.push({id:affectedSelectsInfo.affectedFieldName,value:valfieldkey,text:dispfieldkey});
       } else {
         if (getSiblingsValues.length) {
           getSiblingsValues.forEach((el) => {
             if (el.id == oListItem.get_id()) {
-              optionsBody +=
-                "<option data-arraysiblingvalues=" +
-                el.arraySiblings +
-                ' option-id="' +
-                oListItem.get_id() +
-                '" value="' +
-                valfieldkey +
-                '">' +
-                optionText +
-                "</option>";
+              optionsArray.push({sibling:el.arraySiblings, id:oListItem.get_id(),value:valfieldkey,text:optionText});
             }
           });
         } else {
@@ -11859,19 +11841,12 @@ dynamicAffectSelect = {
             !affectedSelectsInfo.fromCr
           ) {
           } else {
-            optionsBody +=
-              '<option option-id="' +
-              oListItem.get_id() +
-              '" value="' +
-              valfieldkey +
-              '">' +
-              optionText +
-              "</option>";
+              optionsArray.push({id:oListItem.get_id(),value:valfieldkey,text:optionText});
           }
         }
       }
     }
-
+    console.log(optionsArray,'optionsArrayoptionsArray');
     // to handle the change request when dynamic change in roles
     //affectedSelectsInfo.fromCr add to not assign new option body when data request when edit
 
@@ -11896,7 +11871,52 @@ dynamicAffectSelect = {
         }
       });
     }
-
+    optionsArray.sort(function(a, b) {
+      var textA = a.text.toUpperCase();
+      var textB = b.text.toUpperCase();
+      return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    });
+    if((targetFieldType == "multiselect")){
+        optionsArray.forEach(function(option) {
+          optionsBody += `<label class="grp-select">${option.value}</label>
+          <li>
+          <div class="checkbox">
+          <label>
+            <input value="${option.value}" id="${option.id}" type="checkbox">
+            ${option.text}
+          </label>
+          </div>
+          </li>
+          `;
+      });
+    }
+    else
+    if(getSiblingsValues.length){
+      optionsArray.forEach(function(option) {
+        optionsBody +=   
+        "<option data-arraysiblingvalues=" +
+        option.sibling +
+        ' option-id="' +
+        option.id +
+        '" value="' +
+        option.value +
+        '">' +
+        option.text +
+        "</option>";
+    });
+    }
+  else {
+    optionsArray.forEach(function(option) {
+      optionsBody +=
+          '<option option-id="' +
+          option.id +
+          '" value="' +
+          option.value +
+          '">' +
+          option.text +
+          '</option>';
+  });
+  }
     if (targetFieldType == "multiselect") {
       $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu`).html(
         optionsBody
