@@ -47,9 +47,14 @@ var Information_Form = [
       //   "InternalName": "Status",
       //   "DisplayName": " الحالة",
       //   "DisplayNameEn": "Status",
-      //   dontSubmit: true,
-      //   "type": "string",
-      //   "state": "disabled"
+      //   type: 'dropdownValues',
+      //   options: {
+      //     choices: [
+      //       { display: 'stat21', value: 'stat21' },
+      //       { display: 'stat20', value: 'stat20' },
+      //       // { display: 'stat21', value: 'stat21' },
+      //     ],
+      //   },
       // },
       {
         InternalName: 'Description',

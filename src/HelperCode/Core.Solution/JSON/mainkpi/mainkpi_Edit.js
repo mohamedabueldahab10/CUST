@@ -79,7 +79,7 @@ var Information_Form = [
         DisplayName: 'المؤشر ',
         type: 'string',
         maxchar: '255',
-        withletters: true,
+        // withletters: true,
         Errmsgkey: "withletterpattern",
         validation: 'required',
         //ToggleDisabledName: 'Name',
@@ -97,6 +97,21 @@ var Information_Form = [
           ],
         },
       },
+      //  {
+      //   "InternalName": "Status",
+      //   "DisplayNameEn": "Status",
+      //   "DisplayName": "الحالة",
+      //   "type": "dropdownValues",
+      //   options: {
+      //     choices: [
+      //       { display: 'stat17', value: 'stat17' },
+      //       { display: 'stat16', value: 'stat16' },
+      //       { display: 'stat15', value: 'stat15' },
+      //       { display: 'stat18', value: 'stat18' },
+
+      //     ]
+      //   }
+      // },
       {
         InternalName: "Class",
         DisplayName: "نوع الاستراتيجية",
@@ -1641,6 +1656,7 @@ var Information_Form = [
             { display: 'saudiriyal', value: 'saudiriyal' },
             { display: 'volunteeropportunity', value: 'volunteeropportunity' },
             { display: 'riyalorindividual', value: 'riyalorindividual' },
+            { display: 'degree', value: 'degree' },
           ],
         },
         security: {

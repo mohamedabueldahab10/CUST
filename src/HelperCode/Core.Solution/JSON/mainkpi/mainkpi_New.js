@@ -847,6 +847,7 @@ var Information_Form = [
             { display: 'saudiriyal', value: 'saudiriyal' },
             { display: 'volunteeropportunity', value: 'volunteeropportunity' },
             { display: 'riyalorindividual', value: 'riyalorindividual' },
+            { display: 'degree', value: 'degree' },
           ],
         },
         security: {
