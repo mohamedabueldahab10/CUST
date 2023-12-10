@@ -899,7 +899,7 @@ var Information_Form = [
         DisplayName: "التكلفة",
         DisplayNameEn: "Amount",
         type: "float",
-        className: "disable_enable_section",
+        // className: "disable_enable_section",
         descPhraseAr: "الحقل مطلوب لادخال المخرجات والمعالم",
         descPhraseEn: "Filed is required to add milestones and Deliverables",
         // "state": "disabled",

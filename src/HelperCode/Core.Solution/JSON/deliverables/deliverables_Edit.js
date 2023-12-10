@@ -58,7 +58,8 @@ var Information_Form = [
         DisplayName: 'الوصف',
         DisplayNameEn: 'Description',
         type: 'multiline',
-        maxchar: 5000,
+        maxchar: 5000,        
+        validation: 'required',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
         security: {
@@ -335,8 +336,8 @@ var Information_Form = [
         DisplayNameEn: 'Supporting Documents',
         type: 'file',
         docPurpose: "Spporting_Documents",
-        withAddBtn: 'true',
-     
+        withAddBtn: 'true',     
+        validation: 'required',
         descPhraseAr: "ملفات مطلوبة عند الاغلاق",
         descPhraseEn: "File required after closing",
       },
@@ -356,7 +357,8 @@ var Information_Form = [
         docPurpose: "Attachments",
         withAddBtn: 'true',        
         descPhraseAr: "ملفات متعلقة بالعنصر",
-        descPhraseEn: "File related to the item",
+        descPhraseEn: "File related to the item",        
+        // validation: 'required',
       //   security: {
       //     groups: [
       //       'System Admin Group','EPMO','LMSU-Execution','VRO_E'
