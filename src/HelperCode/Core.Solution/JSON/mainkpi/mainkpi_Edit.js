@@ -626,6 +626,19 @@ var Information_Form = [
         },
       },
       {
+        InternalName: 'CommitmentKPI',
+        DisplayNameEn: 'Commitment KPI?',
+        DisplayName: 'مؤشر إلتزام؟',
+        // type: "dropdownValues",
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            { display: 'yes', value: 'yes' },
+            { display: 'no', value: 'no' },
+          ],
+        },
+      },
+      {
         InternalName: 'PeriodType',
         DisplayNameEn: 'Period Type',
         DisplayName: 'تكرار القياس',
