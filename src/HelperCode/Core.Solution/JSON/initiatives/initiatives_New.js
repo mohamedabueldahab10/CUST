@@ -532,12 +532,13 @@ var Information_Form = [
         maxchar: '5000',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
-        // "validation": "required"
+        "validation": "required"
       },
       {
         InternalName: 'Classification',
         DisplayName: 'تصنيف المبادرة',
         DisplayNameEn: 'Classification',
+        "validation": "required",        
         type: 'dropdownValues',
         options: {
           choices: [

@@ -818,6 +818,7 @@ var Information_Form = [
       {
         InternalName: 'Description',
         DisplayNameEn: 'Description',
+        "validation": "required",
         DisplayName: 'وصف المبادرة',
         type: 'multiline',
         maxchar: '5000',
@@ -837,6 +838,7 @@ var Information_Form = [
       {
         InternalName: 'Classification',
         DisplayName: 'تصنيف المبادرة',
+        "validation": "required",
         DisplayNameEn: 'Classification',
         type: 'dropdownValues',
         options: {
