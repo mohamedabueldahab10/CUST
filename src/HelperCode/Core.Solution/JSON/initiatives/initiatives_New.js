@@ -185,7 +185,8 @@ var Information_Form = [
         // dontSubmit: true,
         source: 'GoalStrategy',
         Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
+        valfieldkey: 'Title',        
+        "validation": "required",
         // dynamic: 'parent',
         // dynamic: 'Types',
         // dynamic:'parent',
@@ -222,7 +223,8 @@ var Information_Form = [
       {
         InternalName: 'RelatedObjectiveLevel',
         DisplayNameEn: 'Related Objective Level',
-        DisplayName: 'مستوى الهدف المرتبط',
+        DisplayName: 'مستوى الهدف المرتبط',        
+        "validation": "required",
         // dontSubmit: true,
         grandFieldId: 'RelatedStrategy', // we add this field to handle the two field filtration(parent Id in current form)
         childFieldId: 'RelatedObjective', // we add this field to handle the two field filtration (child Id in current form)
@@ -316,7 +318,7 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         grpfieldkey: 'Title',
-        
+        "validation": "required",
         descPhraseAr: "تظهر الاهداف بناء على نوع  مستوى الهدف المرتبط بالاستراتيجية المختارة",
         descPhraseEn: "The Objectives appear based on selected Level that related to selected Strategy", 
         //
