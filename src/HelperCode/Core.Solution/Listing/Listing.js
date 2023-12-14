@@ -2660,6 +2660,7 @@ window.delegatedtaskcode,
   window.RelatedItemId,
   window.TaskComment,
   window.RelatedItemTitle,
+  window.RelatedItemName,
   window.delegateComment,
   window.ppp,
   window.ProjectCode,
@@ -2687,6 +2688,7 @@ window.Delegate_Data_Submit = {
       RelatedItemId = currentItem.get_item('RelatedItemID');
       TaskComment = currentItem.get_item('Body');
       RelatedItemTitle = currentItem.get_item('RelatedItemTitle');
+      RelatedItemName = currentItem.get_item('RelatedItemName');
       ProjectCode = currentItem.get_item('ProjectCode');
       TaskDelegatedFrom = currentItem.get_item('AssignedTo');
 
@@ -2761,6 +2763,7 @@ window.addDelegatedTask = {
     addDelegatedTask.g.oListItem.set_item('RelatedItemID', RelatedItemId);
     addDelegatedTask.g.oListItem.set_item('Body', TaskComment);
     addDelegatedTask.g.oListItem.set_item('RelatedItemTitle', RelatedItemTitle);
+    addDelegatedTask.g.oListItem.set_item('RelatedItemName', RelatedItemName);
     addDelegatedTask.g.oListItem.set_item('AssignedTo', ppp);
     addDelegatedTask.g.oListItem.set_item('ProjectCode', ProjectCode);
     addDelegatedTask.g.oListItem.set_item('DelegationReason', delegateComment);
