@@ -201,6 +201,15 @@ var Information_Form = [
         DisplayName: 'نسبة الإمتثال',
         DisplayNameEn: 'Compliance Rate',
         type: 'floatpercentage',
+        security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Development Unit",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
       },
       {
         InternalName: 'RelatedStrategy',
@@ -223,7 +232,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            // {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -272,7 +281,7 @@ var Information_Form = [
             ],
           },
         ],
-      },
+        },
       {
         InternalName: 'RelatedObjectiveLevel',
         DisplayNameEn: 'Related Objective Level',
@@ -305,7 +314,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            // {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -376,7 +385,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            // {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -714,6 +723,15 @@ var Information_Form = [
         Dispfieldkey: 'Name',
         DispfieldkeyEn: 'NameEn',
         valfieldkey: 'Title',
+        security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Development Unit",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
         // isRelatedToParent: true, // to show parent value depends on child like sector and subsector
         // filterField: 'ParentEntity', //InternalName Of Parent field
         // filterFieldType: 'Text', //Type In Sharepoint List for Parent field
@@ -1253,7 +1271,7 @@ var Information_Form = [
         DisplayName: 'وصف المخرج',
         maxchar: 5000,
         type: 'multiline',
-        // validation: 'required',
+        validation: 'required',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
         security: {
