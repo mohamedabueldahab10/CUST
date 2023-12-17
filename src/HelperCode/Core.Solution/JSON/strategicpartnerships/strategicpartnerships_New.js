@@ -152,8 +152,8 @@ var Information_Form = [
   {
     label: 'التفاصيل',
     labelEn: 'Details',
-    description: 'التفاصيل',
-    descriptionEn: 'Details',
+    description: '',
+    descriptionEn: '',
     subFields: [
       {
         InternalName: 'Description',
@@ -241,7 +241,9 @@ var Information_Form = [
         sourceelementdate: "StartDate",
         targetelementdate: "FinishDate",
         validation: 'required',
-        numberOfDigits: "3"
+        numberOfDigits: "3",        
+        descPhraseAr: "يجب إدخال رقم",
+        descPhraseEn: "Enter a number", 
       },
       {
         InternalName: 'FinishDate',
@@ -256,13 +258,20 @@ var Information_Form = [
         InternalName: 'NoticePeriod',
         DisplayName: 'مهلة الإخطار بعدم الرغبة بتجديد الشراكة',
         DisplayNameEn: 'Notice Period',
-        type: 'float',
+        type: 'floatDuration',
+        sourceelementdate: "StartDate",
+        targetelementdate: "LastNotice",     
+        descPhraseAr: "يجب إدخال رقم",
+        descPhraseEn: "Enter a number", 
       },
       {
         InternalName: 'LastNotice',
         DisplayName: 'آخر تاريخ للإخطار بعدم الرغبة بتجديد الشراكة',
         DisplayNameEn: 'Last Notice Date (Close)',
         type: 'datetime',
+        state: 'disabled',
+        descPhraseAr: "تساوي تاريخ بداية الشراكة + مهلة الإخطار",
+        descPhraseEn: "Equal to Start date + Duration",
       },
       {
         InternalName: 'LastNoticeEmail',

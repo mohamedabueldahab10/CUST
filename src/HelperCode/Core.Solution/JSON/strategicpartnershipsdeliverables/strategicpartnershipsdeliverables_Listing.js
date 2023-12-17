@@ -1,7 +1,7 @@
 var Listing_Info = [
   {
     InternalName: 'Title',
-    DisplayName: 'رمز المخرج',
+    DisplayName: 'رمز البند',
     DisplayNameEn: 'Code',
     type: 'text',
     inlisting: true,
@@ -9,7 +9,7 @@ var Listing_Info = [
   },
   {
     InternalName: 'Name',
-    DisplayName: 'اسم المخرج',
+    DisplayName: 'اسم البند',
     DisplayNameEn: 'Name',
     type: 'text',
     inlisting: true,

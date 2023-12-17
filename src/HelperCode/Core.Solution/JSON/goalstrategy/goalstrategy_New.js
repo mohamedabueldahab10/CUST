@@ -161,6 +161,7 @@ var Information_Form = [
         DisplayNameEn: 'Approval Date',
         type: 'datetime',
         max: 'today',
+        validation: 'required',
         Errmsgkey: 'cancelationdatepattern',
       },
       {

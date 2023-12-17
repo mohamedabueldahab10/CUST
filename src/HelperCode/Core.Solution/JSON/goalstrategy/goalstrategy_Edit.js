@@ -157,6 +157,7 @@ var Information_Form = [
         DisplayName: 'تاريخ إعتماد الإستراتيجية',
         DisplayNameEn: 'Approval Date',
         type: 'datetime',
+        validation: 'required',
         max: 'today',
         Errmsgkey: 'cancelationdatepattern',
       },

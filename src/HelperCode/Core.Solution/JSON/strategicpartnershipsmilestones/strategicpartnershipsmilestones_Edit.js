@@ -111,7 +111,7 @@ var Information_Form = [
       // },
       {
         InternalName: 'Deliverables',
-        DisplayName: 'المخرجات',
+        DisplayName: 'البنود',
         DisplayNameEn: 'Deliverables',
         type: 'multiline',
         maxchar: 5000,

@@ -162,8 +162,8 @@ var ListArray = [
 	},
 	{
 		strategicpartnershipsdeliverables: "Deliverables",
-		ListingTitle: "مخرجات الشراكات الاستراتيجية",
-		FormTitle: "مخرجات الشراكات الاستراتيجية",
+		ListingTitle: "بنود الشراكات الاستراتيجية",
+		FormTitle: "بنود الشراكات الاستراتيجية",
 		TitleEn: "Strategic Partnerships Deliverables",
 		projnav: "Project Navigation",
 		// projectrelated: true,

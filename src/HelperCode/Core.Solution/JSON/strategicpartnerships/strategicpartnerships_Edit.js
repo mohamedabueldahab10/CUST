@@ -282,8 +282,8 @@ var Information_Form = [
   {
     label: 'التفاصيل',
     labelEn: 'Details',
-    description: 'التفاصيل',
-    descriptionEn: 'Details',
+    description: '',
+    descriptionEn: '',
     subFields: [
       {
         InternalName: 'Description',
@@ -367,38 +367,40 @@ var Information_Form = [
         DisplayName: 'مدة الشراكة (شهر)',
         DisplayNameEn: 'Duration (Month)',
         type: 'floatDuration',
-        sourceelementdate:"StartDate", // date from
-        targetelementdate:"FinishDate",// destination 
+        sourceelementdate: "StartDate",
+        targetelementdate: "FinishDate",
         validation: 'required',
-        numberOfDigits:"3"
+        numberOfDigits: "3",        
+        descPhraseAr: "يجب إدخال رقم",
+        descPhraseEn: "Enter a number", 
       },
       {
         InternalName: 'FinishDate',
-        DisplayName: 'تاريخ نهاية الشراكة', 
+        DisplayName: 'تاريخ نهاية الشراكة',
         DisplayNameEn: 'Finish Date',
         type: 'datetime',
         state: 'disabled',
         descPhraseAr: "تساوي تاريخ بداية الشراكة + مدة الشراكة",
         descPhraseEn: "Equal to Start date + Duration",
       },
-      // {
-      //    "InternalName":"Duration",
-      //    "DisplayName":"مدة الشراكة (شهر)",
-      //    "DisplayNameEn":"Duration (Month)",
-      //    "type":"float",
-      //    "validation":"required"
-      // },
       {
-         "InternalName":"NoticePeriod",
-         "DisplayName":"مهلة الإخطار بعدم الرغبة بتجديد الشراكة",
-         "DisplayNameEn":"Notice Period",
-         "type":"float",
+        InternalName: 'NoticePeriod',
+        DisplayName: 'مهلة الإخطار بعدم الرغبة بتجديد الشراكة',
+        DisplayNameEn: 'Notice Period',
+        type: 'floatDuration',
+        sourceelementdate: "StartDate",
+        targetelementdate: "LastNotice",     
+        descPhraseAr: "يجب إدخال رقم",
+        descPhraseEn: "Enter a number", 
       },
       {
-         "InternalName":"LastNotice",
-         "DisplayName":"آخر تاريخ للإخطار بعدم الرغبة بتجديد الشراكة",
-         "DisplayNameEn":"Last Notice Date (Close)",
-         "type":"datetime",
+        InternalName: 'LastNotice',
+        DisplayName: 'آخر تاريخ للإخطار بعدم الرغبة بتجديد الشراكة',
+        DisplayNameEn: 'Last Notice Date (Close)',
+        type: 'datetime',
+        state: 'disabled',
+        descPhraseAr: "تساوي تاريخ بداية الشراكة + مهلة الإخطار",
+        descPhraseEn: "Equal to Start date + Duration",
       },
       {
          "InternalName":"LastNoticeEmail",

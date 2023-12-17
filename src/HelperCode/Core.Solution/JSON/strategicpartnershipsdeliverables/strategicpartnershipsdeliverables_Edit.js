@@ -1,12 +1,12 @@
 var Information_Form = [{
-  label: 'بيانات المخرج',
+  label: 'بيانات البند',
   labelEn: 'Delivrable Data',
   description: "التفاصيل",
   descriptionEn: "Details",
   subFields: [
     // {
     //     "InternalName": "Title",
-    //     "DisplayName":"رمز المخرج",
+    //     "DisplayName":"رمز البند",
     // "DisplayNameEn": "Deliverable Title",
 
     //     "type":"string",
@@ -14,7 +14,7 @@ var Information_Form = [{
     // },
     {
       "InternalName": "Name",
-      "DisplayName": "اسم المخرج",
+      "DisplayName": "اسم البند",
       "DisplayNameEn": "Name",
       "type": "string",
       "validation": "required",
@@ -194,7 +194,7 @@ var Information_Form = [{
     },
     {
       "InternalName": "AcceptanceCriteria",
-      "DisplayName": "معايير قبول المخرج",
+      "DisplayName": "معايير قبول البند",
       "DisplayNameEn": "Acceptance Criteria",
       "type": "multiline",
       maxchar: 5000,  
