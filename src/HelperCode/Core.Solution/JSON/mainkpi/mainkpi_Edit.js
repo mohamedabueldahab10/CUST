@@ -1873,14 +1873,18 @@ var Information_Form = [
           ],
           // display: 'none',
         },
-        // security: {
-        //   groups: [
-        //     'LMS_P',
-        //     'VRO_P',
-        //     'Performance Leaders',
-        //     'System Admin Group',
-        //   ],
-        // },
+        security: {
+          groups: [
+            'LMS_P',
+            'SPM Team',
+            'VRO_P',
+            'Performance Leaders',
+            'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
+          ],
+        },
       },
       {
         InternalName: 'Midterms',
