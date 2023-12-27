@@ -500,6 +500,7 @@
     lmskpi: "مؤشر سوق عمل",
     volunteeropportunity: "فرصة تطوعية",
     riyalorindividual: "ريال / فرد",
+    billionriyals: "مليار ريال",
 
     completionpercentage: "نسبة الإنجاز",
     budgetexpenditure: "الصرف من الميزانية",
@@ -1986,6 +1987,7 @@
     externalfinancing: "External financing",    
     volunteeropportunity: "Volunteer Opportunity",
     riyalorindividual: "Riyal \ individual",
+    billionriyals: "Billion Riyals",
     indirect: "Indirect",
     economical: "Economical",
     social: "Social",
