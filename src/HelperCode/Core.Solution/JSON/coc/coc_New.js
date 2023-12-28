@@ -59,7 +59,9 @@ var Information_Form = [
         validation: 'required',
         getValuesfor:'Weight', // add this internal name to get ther values
         targetTotalElement:"TotalAmount", // targetTotalElement to set the values inside it
-        Errmsgkey:"multiselecterr"
+        Errmsgkey:"multiselecterr",        
+        descPhraseAr: "تظهر هنا مخرجات المشروع ويحق لكل مخرج شهادة انجاز واحدة فقط",
+        descPhraseEn: "The project outputs appear here, and each output is entitled to only one certificate of completion",
       },
       // {
       //   InternalName: 'Deliverables',

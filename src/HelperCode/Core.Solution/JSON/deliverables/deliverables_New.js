@@ -60,7 +60,7 @@ var Information_Form = [
         maxchar: '255',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
         descPhraseEn: "max length of letters equal 255",
-        withletters: true,
+        // withletters: true,
         Errmsgkey: "withletterpattern",
       },
       {

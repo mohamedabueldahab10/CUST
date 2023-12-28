@@ -18,7 +18,7 @@ var Information_Form = [
         type: 'string',
         validation: 'required',
         maxchar: '255',
-        withletters: true,
+        // withletters: true,
         Errmsgkey: 'withletterpattern',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
         descPhraseEn: "max length of letters equal 255",  
