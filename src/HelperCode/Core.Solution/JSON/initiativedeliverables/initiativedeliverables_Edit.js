@@ -111,7 +111,7 @@ var Information_Form = [
 				startinternalname: "StartDate",
 				endinternalname: "FinishDate",
 				// "min": "PlannedStartDate",
-				validation: "required",
+				// validation: "required",
 				security: {
 					groups: ["System Admin Group", "EPMO", "LMSU-Execution", "VRO_E"],
 				},
@@ -186,7 +186,7 @@ var Information_Form = [
 			{
 				InternalName: "Target",
 				DisplayNameEn: "Target",
-				DisplayName: "المستهدف (إن وجد)",
+				DisplayName: "المستهدف",
 				type: "string",
 				// numberOfDigits: "15",
 				security: {
@@ -216,7 +216,7 @@ var Information_Form = [
 				descPhraseAr: "من ميزانية المبادرة",
 				descPhraseEn: " From Initiative Budget",
 				// "state":"disabled",
-				validation: "required",
+				// validation: "required",
 				security: {
 					groups: ["System Admin Group", "EPMO", "LMSU-Execution", "VRO_E"],
 				},
@@ -232,7 +232,7 @@ var Information_Form = [
 				targetelement: "Weight",
 				descPhraseAr: "من ميزانية المبادرة",
 				descPhraseEn: " From Initiative Budget",
-				validation: "required",
+				// validation: "required",
 				security: {
 					groups: ["System Admin Group", "EPMO", "LMSU-Execution", "VRO_E"],
 				},

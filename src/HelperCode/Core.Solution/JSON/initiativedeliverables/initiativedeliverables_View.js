@@ -52,7 +52,7 @@ var Information_Form = [
         InternalName: 'Classification',
         DisplayName: 'تصنيف المخرج',
         DisplayNameEn: 'Classification',
-        validation: 'required',
+        // validation: 'required',
         type: 'dropdownValues',
         options: {
           choices: [
@@ -106,7 +106,7 @@ var Information_Form = [
       {
         InternalName: 'Target',
         DisplayNameEn: 'Target',
-        DisplayName: 'المستهدف (إن وجد)',
+        DisplayName: 'المستهدف',
         type: 'string',
       },
       {
@@ -187,7 +187,7 @@ var Information_Form = [
           descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
           descPhraseEn: "max length of letters equal 5000",
           maxchar: '5000',                
-          validation: 'required',
+          // validation: 'required',
           // hideOnWfTaskStage :'EPMOInitiativeMilestone00,VROInitiativeMilestone00,LMSInitiativeMilestone00',
           // security: {
           //   groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],

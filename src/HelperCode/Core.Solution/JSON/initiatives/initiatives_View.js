@@ -646,7 +646,7 @@ var Information_Form = [
       {
         InternalName: 'Target',
         DisplayNameEn: 'Target',
-        DisplayName: 'المستهدف (إن وجد)',
+        DisplayName: 'المستهدف',
         type: 'string',
       },
       {

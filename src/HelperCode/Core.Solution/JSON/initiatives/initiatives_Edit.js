@@ -1233,7 +1233,7 @@ var Information_Form = [
         endinternalname: 'FinishDate',
         Errmsgkey:'btwndatepattern',
         // "min": "PlannedStartDate",
-        validation: 'required',
+        // validation: 'required',
         // security: {
         //   groups: ['EPMO', 'System Admin Group'],
         // },
@@ -1342,7 +1342,7 @@ var Information_Form = [
       {
         InternalName: 'Target',
         DisplayNameEn: 'Target',
-        DisplayName: 'المستهدف (إن وجد)',
+        DisplayName: 'المستهدف',
         type: 'string',
         // numberOfDigits: '15',
         security: {
@@ -1376,7 +1376,7 @@ var Information_Form = [
         targetelement: 'Weight',
         seconedtarget: 'Amount',
         // "state":"disabled",
-        validation: 'required',
+        // validation: 'required',
         descPhraseAr: "من ميزانية المبادرة",
         descPhraseEn: " From Initiative Budget", 
         security: {
@@ -1398,7 +1398,7 @@ var Information_Form = [
         listname: 'Initiatives',
         parentinternalname: 'InitiativeBudget',
         targetelement: 'Weight',
-        validation: 'required',
+        // validation: 'required',
         descPhraseAr: "من ميزانية المبادرة",
         descPhraseEn: " From Initiative Budget",
         security: {
@@ -1421,48 +1421,48 @@ var Information_Form = [
       //     groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
       //   },
       // },
-      {
-        InternalName: 'Delivered',
-        DisplayName: 'تم التسليم',
-        DisplayNameEn: 'Delivered',
-        type: 'dropdownValues',
-        targetfieldrequired: 'ActualCompletedDate',
-        options: {
-          choices: [
-            { display: 'yes', value: 'yes' },
-            { display: 'no', value: 'no' },
-          ],
-        },  security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
+      // {
+      //   InternalName: 'Delivered',
+      //   DisplayName: 'تم التسليم',
+      //   DisplayNameEn: 'Delivered',
+      //   type: 'dropdownValues',
+      //   targetfieldrequired: 'ActualCompletedDate',
+      //   options: {
+      //     choices: [
+      //       { display: 'yes', value: 'yes' },
+      //       { display: 'no', value: 'no' },
+      //     ],
+      //   },  security: {
+      //     groups: [ ],
+      //     // groups: [], // should be empty array if will use notAllowTo
+      //     notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+      //       {group:"Development Unit",form:["origin"]},
+      //       // {group:"EPMO",form:["origin" ]}
 
-          ]
-        },
-      },
-      {
-        InternalName: 'ActualCompletedDate',
-        DisplayNameEn: 'Actual Completed Date',
-        DisplayName: 'تاريخ الاكتمال الفعلي',
-        type: 'datetime',
-        // type: 'datetimetoparent',
-        // listname: 'Initiatives',
-        // startinternalname: 'StartDate',
-        // endinternalname: 'FinishDate',
-        // max: 'today',
-        // Errmsgkey:'btwndatepattern',
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
+      //     ]
+      //   },
+      // },
+      // {
+      //   InternalName: 'ActualCompletedDate',
+      //   DisplayNameEn: 'Actual Completed Date',
+      //   DisplayName: 'تاريخ الاكتمال الفعلي',
+      //   type: 'datetime',
+      //   // type: 'datetimetoparent',
+      //   // listname: 'Initiatives',
+      //   // startinternalname: 'StartDate',
+      //   // endinternalname: 'FinishDate',
+      //   // max: 'today',
+      //   // Errmsgkey:'btwndatepattern',
+      //   security: {
+      //     groups: [ ],
+      //     // groups: [], // should be empty array if will use notAllowTo
+      //     notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+      //       {group:"Development Unit",form:["origin"]},
+      //       // {group:"EPMO",form:["origin" ]}
 
-          ]
-        },
-      },
+      //     ]
+      //   },
+      // },
       //   {
       //     InternalName: 'Completed',
       //     DisplayNameEn: 'Completed',
@@ -1646,67 +1646,67 @@ var Information_Form = [
       //         ]
       //     },
       // },
-      {
-        InternalName: 'Delivered',
-        DisplayName: 'تم التسليم',
-        DisplayNameEn: 'Delivered',
-        type: 'dropdownValues',
-        targetfieldrequired: 'ActualCompletedDate',
-        options: {
-          choices: [
-            { display: 'yes', value: 'yes' },
-            { display: 'no', value: 'no' },
-          ],
-        },  security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
+      // {
+      //   InternalName: 'Delivered',
+      //   DisplayName: 'تم التسليم',
+      //   DisplayNameEn: 'Delivered',
+      //   type: 'dropdownValues',
+      //   targetfieldrequired: 'ActualCompletedDate',
+      //   options: {
+      //     choices: [
+      //       { display: 'yes', value: 'yes' },
+      //       { display: 'no', value: 'no' },
+      //     ],
+      //   },  security: {
+      //     groups: [ ],
+      //     // groups: [], // should be empty array if will use notAllowTo
+      //     notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+      //       {group:"Development Unit",form:["origin"]},
+      //       // {group:"EPMO",form:["origin" ]}
 
-          ]
-        },
-      },
-      {
-        InternalName: 'ActualCompletedDate',
-        DisplayNameEn: 'Actual Completed Date',
-        DisplayName: 'تاريخ الاكتمال الفعلي',
-        type: 'datetime',
-        // type: 'datetimetoparent',
-        // listname: 'Initiatives',
-        // startinternalname: 'StartDate',
-        // endinternalname: 'FinishDate',
-        // max: 'today',
-        // Errmsgkey:'btwndatepattern',
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
+      //     ]
+      //   },
+      // },
+      // {
+      //   InternalName: 'ActualCompletedDate',
+      //   DisplayNameEn: 'Actual Completed Date',
+      //   DisplayName: 'تاريخ الاكتمال الفعلي',
+      //   type: 'datetime',
+      //   // type: 'datetimetoparent',
+      //   // listname: 'Initiatives',
+      //   // startinternalname: 'StartDate',
+      //   // endinternalname: 'FinishDate',
+      //   // max: 'today',
+      //   // Errmsgkey:'btwndatepattern',
+      //   security: {
+      //     groups: [ ],
+      //     // groups: [], // should be empty array if will use notAllowTo
+      //     notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+      //       {group:"Development Unit",form:["origin"]},
+      //       // {group:"EPMO",form:["origin" ]}
 
-          ]
-        },
-      },
-      {
-        InternalName: 'RelatedInitiativeDeliverable',
-        DisplayNameEn: 'Related Initiative Deliverable',
-        DisplayName: 'مخرج المبادرة المرتبط',
-        type: 'lookup',
-        source: 'InitiativeDeliverables',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
-        initiativeCodeInList: true, //value in look up drop down should be related to current project
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
+      //     ]
+      //   },
+      // },
+      // {
+      //   InternalName: 'RelatedInitiativeDeliverable',
+      //   DisplayNameEn: 'Related Initiative Deliverable',
+      //   DisplayName: 'مخرج المبادرة المرتبط',
+      //   type: 'lookup',
+      //   source: 'InitiativeDeliverables',
+      //   Dispfieldkey: 'Name',
+      //   valfieldkey: 'Title',
+      //   initiativeCodeInList: true, //value in look up drop down should be related to current project
+      //   security: {
+      //     groups: [ ],
+      //     // groups: [], // should be empty array if will use notAllowTo
+      //     notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+      //       {group:"Development Unit",form:["origin"]},
+      //       // {group:"EPMO",form:["origin" ]}
 
-          ]
-        },
-      },
+      //     ]
+      //   },
+      // },
       {
         InternalName: 'SupportDocumentsDescription',
         DisplayNameEn: 'Support Documents Description',

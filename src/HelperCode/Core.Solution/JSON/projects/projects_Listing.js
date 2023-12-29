@@ -34,6 +34,16 @@ var Listing_Info = [
     infilter: false,
   },
   {
+
+    InternalName: 'InitiativeType',
+    DisplayNameEn: 'Related Strategy',
+    DisplayName: 'نوع الإستراتيجية',
+    type: "dropdownValues",
+    needTrans: true,
+    inlisting: true,
+    infilter: true,
+  },
+  {
     InternalName: "BaselineStartDate",
     DisplayNameEn: "Baseline Start Date",
     DisplayName: "تاريخ بدء الأساس",
