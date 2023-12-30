@@ -965,38 +965,38 @@ var Information_Form = [
         // validation: "required",
       },
  
-      // {
-      //   InternalName: 'MesureStatus',
-      //   DisplayNameEn: 'MesureStatus',
-      //   DisplayName: 'حالة القياس',
-      //   type: 'dropdownValues',
-      //   //   "state": "disabled",
-      //   //   dynamic: "Initiative",
-      //   options: {
-      //     choices: [
-      //       {
-      //         display: 'mersurable',
-      //         value: 'mersurable',
-      //       },
-      //       {
-      //         display: 'unmersurable',
-      //         value: 'unmersurable',
-      //       },
-      //       // {
-      //       //     display: 'novalue',
-      //       //     value: 'novalue'
-      //       // },
-      //       {
-      //         display: 'completed',
-      //         value: 'completed',
-      //       },
-      //       {
-      //         display: 'unspecific',
-      //         value: 'unspecific',
-      //       },
-      //     ],
-      //   },
-      // },
+      {
+        InternalName: 'MesureStatus',
+        DisplayNameEn: 'MesureStatus',
+        DisplayName: 'حالة القياس',
+        type: 'dropdownValues',
+        //   "state": "disabled",
+        //   dynamic: "Initiative",
+        options: {
+          choices: [
+            {
+              display: 'mersurable',
+              value: 'mersurable',
+            },
+            {
+              display: 'unmersurable',
+              value: 'unmersurable',
+            },
+            // {
+            //     display: 'novalue',
+            //     value: 'novalue'
+            // },
+            {
+              display: 'completed',
+              value: 'completed',
+            },
+            {
+              display: 'deleted',
+              value: 'deleted',
+            },
+          ],
+        },
+      },
     ],
   },
   {
