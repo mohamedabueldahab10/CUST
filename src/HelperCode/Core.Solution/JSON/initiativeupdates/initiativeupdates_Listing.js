@@ -28,9 +28,9 @@ var Listing_Info = [{
     	"DisplayName":"الأثر",
         "DisplayNameEn": "Impact",
     	"type":"dropdownValues",
-    	inlisting: true,
+    	inlisting: false,
     	infilter: false,
-        needTrans: true
+        needTrans: false
     },
     {
     	"InternalName": "MitigationOwner",
