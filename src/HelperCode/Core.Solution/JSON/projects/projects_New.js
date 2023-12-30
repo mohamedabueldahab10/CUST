@@ -1485,19 +1485,19 @@ var Information_Form = [
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
       },
-      {
-        //tried
-        InternalName: 'RelatedInitiativeDeliverable',
-        DisplayName: 'مخرج المبادرة المرتبط',
-        DisplayNameEn: 'Related Initiative Deliverable',
-        type: 'lookuptoparentchild',
-        parentlist: 'Projects', //parent list name
-        parentinternalname: 'RelatedInitiative', // internal name in parent list
-        source: 'InitiativeDeliverables', // target list
-        sourceinternalname: 'InitiativeCode', // column in target list
-        Dispfieldkey: 'Name', //display in dropdown
-        valfieldkey: 'Title', // value in dropdown
-      },
+      // {
+      //   //tried
+      //   InternalName: 'RelatedInitiativeDeliverable',
+      //   DisplayName: 'مخرج المبادرة المرتبط',
+      //   DisplayNameEn: 'Related Initiative Deliverable',
+      //   type: 'lookuptoparentchild',
+      //   parentlist: 'Projects', //parent list name
+      //   parentinternalname: 'RelatedInitiative', // internal name in parent list
+      //   source: 'InitiativeDeliverables', // target list
+      //   sourceinternalname: 'InitiativeCode', // column in target list
+      //   Dispfieldkey: 'Name', //display in dropdown
+      //   valfieldkey: 'Title', // value in dropdown
+      // },
       // {
       //   InternalName: 'RelatedInitiativeDeliverable',
       //   DisplayNameEn: 'Related Initiative Deliverable',
@@ -1694,19 +1694,19 @@ var Information_Form = [
       //   Dispfieldkey: 'Name',
       //   valfieldkey: 'Title',
       // },
-      {
-        InternalName: 'RelatedInitiativeMilestone',
-        DisplayName: 'معلم المبادرة المرتبط',
-        DisplayNameEn: 'Related Initiative Milestone',
-        type: 'lookuptoparentchild',
-        parentlist: 'Projects', //parent list name
-        parentinternalname: 'RelatedInitiative', // internal name in parent list
-        // source: 'InitiativeMilestones', // target list
-        source: 'InitiativeMilestones',
-        sourceinternalname: 'InitiativeCode', // column in target list
-        Dispfieldkey: 'Name', //display in dropdown
-        valfieldkey: 'Title', // value in dropdown
-      },
+      // {
+      //   InternalName: 'RelatedInitiativeMilestone',
+      //   DisplayName: 'معلم المبادرة المرتبط',
+      //   DisplayNameEn: 'Related Initiative Milestone',
+      //   type: 'lookuptoparentchild',
+      //   parentlist: 'Projects', //parent list name
+      //   parentinternalname: 'RelatedInitiative', // internal name in parent list
+      //   // source: 'InitiativeMilestones', // target list
+      //   source: 'InitiativeMilestones',
+      //   sourceinternalname: 'InitiativeCode', // column in target list
+      //   Dispfieldkey: 'Name', //display in dropdown
+      //   valfieldkey: 'Title', // value in dropdown
+      // },
       //   {
       //     InternalName: 'SupportDocumentsDescription',
       //     DisplayNameEn: 'Support Documents Description',
