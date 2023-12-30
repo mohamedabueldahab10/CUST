@@ -791,7 +791,9 @@ window.userCalls = {
         en_UserRole = "EPMO";
         //CRUD
         Create_Access = [
-          "benefitmatrix",
+          "benefitmatrix",         
+          "initiativeupdates",
+          "projectupdates",
           "initiatives",
           "initiativedeliverables",
           "initiativemilestones",
@@ -824,6 +826,8 @@ window.userCalls = {
         Edit_Access = [
           "benefitmatrix",
           "initiatives",
+          "initiativeupdates",
+          "projectupdates",
           "initiativedeliverables",
           "initiativemilestones",
           "initiativeissues",
@@ -853,6 +857,8 @@ window.userCalls = {
           "benefitmatrix",
           "initiatives",
           "initiativedeliverables",
+          "initiativeupdates",
+          "projectupdates",
           "initiativemilestones",
           "initiativeissues",
           "initiativemom",
@@ -936,7 +942,9 @@ window.userCalls = {
           /////////
           // "projects",
           // "deliverables",
-          // "milestones",
+          // "milestones",          
+          // "initiativeupdates",
+          "projectupdates",
           "issues",
           "risks",
           "mom",
@@ -955,6 +963,7 @@ window.userCalls = {
         ];
         Read_Access = [
           "projects",
+          "projectupdates",
           "deliverables",
           "milestones",
           "issues",
@@ -980,6 +989,7 @@ window.userCalls = {
           "milestones",
           "issues",
           "risks",
+          "projectupdates",
           "mom",
           "closureform",
           "lessonslearned",
@@ -1000,6 +1010,7 @@ window.userCalls = {
           "mom",
           "closureform",
           "lessonslearned",
+          "projectupdates",
           "coc",
           "stakeholders",
           "communicationplans",
@@ -1638,6 +1649,8 @@ window.userCalls = {
           "contracts",
           "changerequest",
           "documents",
+          "initiativeupdates",
+          "projectupdates",
         ];
         CreateChangeRequest_Access = [
           "initiatives",
@@ -1677,6 +1690,8 @@ window.userCalls = {
           "mainkpi",
           //"changerequest",
           "documents",
+          "initiativeupdates",
+          "projectupdates",
         ];
         Delete_Access = [
           "benefitmatrix",
@@ -1705,6 +1720,8 @@ window.userCalls = {
           "sos",
           "mainkpi",
           "contracts",
+          "initiativeupdates",
+          "projectupdates",
         ];
         break;
 
@@ -2060,6 +2077,8 @@ window.userCalls = {
           "changerequest",
           "Targets.aspx",
           "contracts",
+          "initiativeupdates",
+          "projectupdates",
         ];
         CreateChangeRequest_Access = [
           "initiatives",
@@ -2100,6 +2119,8 @@ window.userCalls = {
           "communicationplans",
           //"changerequest",
           "contracts",
+          "initiativeupdates",
+          "projectupdates",
         ];
         Delete_Access = [
           "goalstrategy",
@@ -2128,6 +2149,8 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           "changerequest",
+          "initiativeupdates",
+          "projectupdates",
         ];
         break;
 
@@ -2583,6 +2606,8 @@ window.userCalls = {
           "initiativeissues",
           "initiativemom",
           // "benefits",
+          "initiativeupdates",
+          "projectupdates",
           "benefitmetrics",
           "BenefitMetrics.aspx",
           "benefitmatrix",
@@ -2615,7 +2640,9 @@ window.userCalls = {
           "initiativerisks",
           "initiativeissues",
           "initiativemom",
-          // "benefits",
+          // "benefits",          
+          "initiativeupdates",
+          "projectupdates",
           "benefitmetrics",
           "BenefitMetrics.aspx",
           "benefitmatrix",
@@ -2640,7 +2667,9 @@ window.userCalls = {
           // for initiative
           // "initiatives",
           // "initiativedeliverables",
-          // "initiativemilestones",
+          // "initiativemilestones",          
+          "initiativeupdates",
+          "projectupdates",
           "initiativerisks",
           "initiativeissues",
           "initiativemom",

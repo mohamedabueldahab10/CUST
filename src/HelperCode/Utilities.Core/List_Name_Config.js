@@ -590,6 +590,22 @@ var ListArray = [
 		subfolder: true,
 	},
 	{
+		initiativeupdates: "Updates",
+		ListingTitle: "التحديثات",
+		FormTitle: "التحديثات",
+		TitleEn: "Updates",
+		projnav: "Project Navigation",
+		subfolder: true,
+	},
+	{
+		projectupdates: "Updates",
+		ListingTitle: "التحديثات",
+		FormTitle: "التحديثات",
+		TitleEn: "Updates",
+		projnav: "Project Navigation",
+		subfolder: true,
+	},
+	{
 		initiativemilestones: "InitiativeMilestones",
 		ListingTitle: "معالم المبادرة",
 		FormTitle: "معالم المبادرة",
