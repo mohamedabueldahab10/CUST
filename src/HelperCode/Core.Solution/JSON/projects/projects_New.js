@@ -122,36 +122,36 @@ var Information_Form = [
         // hideonstage: "1"
       },
 
-      {
-        InternalName: "FlaggedProjects",
-        DisplayName: "مشروع مشار اليه؟",
-        DisplayNameEn: "Is Flagged Project?",
-        validation: "required",
-        type: "yesnoradio",
-        options: {
-          choices: [
-            {
-              display: "yes",
-              value: "yes",
-            },
-            {
-              display: "no",
-              value: "no",
-            },
-          ],
-        },
-        // security: {
-        //   groups: [
-        //     "VRO_E",
-        //     "LMS_E",
-        //     "EPMO",
-        //     "System Admin Group",
-        //     "Project Managers for Project Web App",
-        //     "SPMO",
-        //     "Development Unit",
-        //   ],
-        // },
-      },
+      // {
+      //   InternalName: "FlaggedProjects",
+      //   DisplayName: "مشروع مشار اليه؟",
+      //   DisplayNameEn: "Is Flagged Project?",
+      //   validation: "required",
+      //   type: "yesnoradio",
+      //   options: {
+      //     choices: [
+      //       {
+      //         display: "yes",
+      //         value: "yes",
+      //       },
+      //       {
+      //         display: "no",
+      //         value: "no",
+      //       },
+      //     ],
+      //   },
+      //   // security: {
+      //   //   groups: [
+      //   //     "VRO_E",
+      //   //     "LMS_E",
+      //   //     "EPMO",
+      //   //     "System Admin Group",
+      //   //     "Project Managers for Project Web App",
+      //   //     "SPMO",
+      //   //     "Development Unit",
+      //   //   ],
+      //   // },
+      // },
       // {
       //   InternalName: "NTP",
       //   DisplayName: "NTP",

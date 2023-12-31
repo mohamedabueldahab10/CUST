@@ -182,46 +182,46 @@ var Information_Form = [
         // hideonstage: "1"
       },
 
-      {
-        InternalName: "FlaggedProjects",
-        DisplayName: "مشروع مشار اليه؟",
-        DisplayNameEn: "Is Flagged Project?",
-        validation: "required",
-        type: "yesnoradio",
-        disableOnWfTaskStage : "S05,S09",
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
+      // {
+      //   InternalName: "FlaggedProjects",
+      //   DisplayName: "مشروع مشار اليه؟",
+      //   DisplayNameEn: "Is Flagged Project?",
+      //   validation: "required",
+      //   type: "yesnoradio",
+      //   disableOnWfTaskStage : "S05,S09",
+      //   security: {
+      //     groups: [ ],
+      //     // groups: [], // should be empty array if will use notAllowTo
+      //     notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+      //       {group:"Project Managers for Project Web App",form:["origin"]},
+      //       // {group:"EPMO",form:["origin" ]}
 
-          ]
-        },
-        options: {
-          choices: [
-            {
-              display: "yes",
-              value: "yes",
-            },
-            {
-              display: "no",
-              value: "no",
-            },
-          ],
-        },
-        // security: {
-        //   groups: [
-        //     "VRO_E",
-        //     "LMS_E",
-        //     "EPMO",
-        //     "System Admin Group",
-        //     "Project Managers for Project Web App",
-        //     "SPMO",
-        //     "Development Unit",
-        //   ],
-        // },
-      },
+      //     ]
+      //   },
+      //   options: {
+      //     choices: [
+      //       {
+      //         display: "yes",
+      //         value: "yes",
+      //       },
+      //       {
+      //         display: "no",
+      //         value: "no",
+      //       },
+      //     ],
+      //   },
+      //   // security: {
+      //   //   groups: [
+      //   //     "VRO_E",
+      //   //     "LMS_E",
+      //   //     "EPMO",
+      //   //     "System Admin Group",
+      //   //     "Project Managers for Project Web App",
+      //   //     "SPMO",
+      //   //     "Development Unit",
+      //   //   ],
+      //   // },
+      // },
       // {
       //   InternalName: "NTP",
       //   DisplayName: "NTP",

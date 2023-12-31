@@ -91,25 +91,25 @@ var Information_Form = [
         maxchar: 5000,
         // hideonstage: "1"
       },
-      {
-        InternalName: "FlaggedProjects",
-        DisplayName: "مشروع مشار اليه؟",
-        DisplayNameEn: "Is Flagged Project?",
-        // validation: 'required',
-        type: "yesnoradio",
-        options: {
-          choices: [
-            {
-              display: "yes",
-              value: "yes",
-            },
-            {
-              display: "no",
-              value: "no",
-            },
-          ],
-        },
-      },
+      // {
+      //   InternalName: "FlaggedProjects",
+      //   DisplayName: "مشروع مشار اليه؟",
+      //   DisplayNameEn: "Is Flagged Project?",
+      //   // validation: 'required',
+      //   type: "yesnoradio",
+      //   options: {
+      //     choices: [
+      //       {
+      //         display: "yes",
+      //         value: "yes",
+      //       },
+      //       {
+      //         display: "no",
+      //         value: "no",
+      //       },
+      //     ],
+      //   },
+      // },
       
 
       {
