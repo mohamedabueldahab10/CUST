@@ -5,10 +5,9 @@ let monthFileName = new Date().toString().split(" ")[1],
 	excelFilePath = "",
 	excelFileExtension = ".csv",
 	filePrefix = "";
-
 let activityConfig =
-	JSON.parse(localStorage.getItem("Dynamo_User Activity Configuration")) ||
-	[],
+		JSON.parse(localStorage.getItem("Dynamo_User Activity Configuration")) ||
+		[],
 	trackCountClicks = {},
 	trackCountViews = {},
 	activeModuleType,
@@ -16,7 +15,6 @@ let activityConfig =
 		"Site Id,Module Type,Item Type,User Id,User Full Name,User Email,Document Location,Occurred (GMT),Event,Event Source,Role Name, SP Group(s) Ids, SP Group(s),Platform,Device,Browser,Language \n";
 let userBrowser = "";
 let handleModuleActivity = (el) => {
-
 	var context = SP.ClientContext.get_current();
 	var dfd = $.Deferred();
 	//Get list from host web
@@ -38,20 +36,18 @@ let handleModuleActivity = (el) => {
 
 			//Check itemcollection count greater than 0
 			if (activityColl.get_count() > 0) {
-
 				activeModuleType = el.ModuleType;
 				readExcelReport(); //!update excel report
 				var activityEnum = activityColl.getEnumerator();
 				while (activityEnum.moveNext()) {
-
 					var currentItem = activityEnum.get_current();
 					var currentId = currentItem.get_item("ID");
 					var hits = currentItem.get_item("Hits") || 0;
 					var numberOfClicks = currentItem.get_item("NumberOfClicks") || 0;
 					var numberOfViews = currentItem.get_item("NumberOfViews") || 0;
 
-					// var visitedBy = currentItem.get_item("VisitedBy") || [];
-					// visitedBy.push(SP.FieldUserValue.fromUser(UserN.LoginName));
+					var visitedBy = currentItem.get_item("VisitedBy") || [];
+					visitedBy.push(SP.FieldUserValue.fromUser(UserN.LoginName));
 					// click count
 					let temp = JSON.parse(sessionStorage.getItem("clickCounts"));
 					let temp1 = temp ? temp[`${el.code}`] : 0;
@@ -62,7 +58,7 @@ let handleModuleActivity = (el) => {
 					//Get Item by current ID
 					var activityObject = programList.getItemById(currentId);
 					//set
-					// activityObject.set_item("VisitedBy", visitedBy);
+					activityObject.set_item("VisitedBy", visitedBy);
 					if (el.ModuleType == "Page")
 						activityObject.set_item("Hits", hits + 1);
 
@@ -147,7 +143,6 @@ let countClicks = (el) => {
 		// 	}
 		// }, 7000);
 	} else {
-
 		let element = document.querySelector(el.ModuleIdentifier);
 		if (element) {
 			element.addEventListener("click", () => {
@@ -165,15 +160,12 @@ let loopAuditingConfig = async () => {
 	await Promise.all(
 		activityConfig.map(async (el, i, a) => {
 			if (el.ModuleType == "Page") {
-
 				if (window.location.href.indexOf(el.ModuleURL) > -1) {
 					// countClicks(el);
-
 					handleModuleActivity(el);
 				}
 			} else if (el.ModuleType == "Button") {
 				if (window.location.href.indexOf(el.ModuleURL) > -1) {
-
 					countClicks(el);
 				}
 			} else if (el.ModuleType == "Component") {
@@ -192,7 +184,7 @@ function elementInViewport(element) {
 		rect.top >= 0 &&
 		rect.left >= 0 &&
 		rect.bottom <=
-		(window.innerHeight || document.documentElement.clientHeight) &&
+			(window.innerHeight || document.documentElement.clientHeight) &&
 		rect.right <= (window.innerWidth || document.documentElement.clientWidth)
 	);
 }
@@ -365,19 +357,33 @@ function csvToArray(str, delimiter = ",") {
 let fireTimes = 0;
 let checkMainHtmlStatus = setInterval(function () {
 	fireTimes++;
-	if ($(".container-ctx").length) {
-		clearInterval(checkMainHtmlStatus);
-		loopAuditingConfig();
-	} else if (fireTimes == 15) {
-		clearInterval(checkMainHtmlStatus);
+	let isForm = USERisNew || USERisView || USERisEdit;
+	if (isForm) {
+		if ($(".CFIELD").length) {
+			clearInterval(checkMainHtmlStatus);
+			loopAuditingConfig();
+		} else if (fireTimes == 15) {
+			clearInterval(checkMainHtmlStatus);
+		}
+	} else {
+		if ($(".container-ctx").length) {
+			clearInterval(checkMainHtmlStatus);
+			loopAuditingConfig();
+		} else if (fireTimes == 15) {
+			clearInterval(checkMainHtmlStatus);
+		}
 	}
 }, 1000);
 // !check browser
 var isIE = /*@cc_on!@*/ false || !!document.documentMode;
-var isChrome =!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime); // add to avoid the err isChrome is not defined
-var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0; // add to avoid the err isOpera is not defined
-// Opera 8.0+
+var isOpera =
+	(!!window.opr && !!opr.addons) ||
+	!!window.opera ||
+	navigator.userAgent.indexOf(" OPR/") >= 0;
+var isChrome =
+	!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
 
+// Opera 8.0+
 if (
 	(!!window.opr && !!opr.addons) ||
 	!!window.opera ||
@@ -393,7 +399,7 @@ else if (
 		return p.toString() === "[object SafariRemoteNotification]";
 	})(
 		!window["safari"] ||
-		(typeof safari !== "undefined" && window["safari"].pushNotification)
+			(typeof safari !== "undefined" && window["safari"].pushNotification)
 	)
 )
 	userBrowser = "Safari";
