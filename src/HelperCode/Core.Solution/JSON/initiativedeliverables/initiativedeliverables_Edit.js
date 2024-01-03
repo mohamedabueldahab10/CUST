@@ -170,6 +170,8 @@ var Information_Form = [
 					  display: 'newentities', value: 'newentities',
 					},
 				  ],
+				},security: {
+					groups: ["System Admin Group", "EPMO", "LMSU-Execution", "VRO_E"],
 				},
 			  
 			  },
@@ -182,6 +184,9 @@ var Information_Form = [
 				validation: 'required',
 				descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
 				descPhraseEn: "max length of letters equal 5000",
+				security: {
+					groups: ["System Admin Group", "EPMO", "LMSU-Execution", "VRO_E"],
+				},
 			},
 			{
 				InternalName: "Target",
