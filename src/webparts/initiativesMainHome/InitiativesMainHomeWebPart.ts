@@ -308,7 +308,7 @@ export default class InitiativesMainHomeWebPart extends BaseClientSideWebPart<II
                                     </div>
 
                                 </div>
-                                <div class="col-12 col-lg-4 px-2 mb-3 cardIemClass chartHeight" id="carditem2">
+                                <div class="col-12 col-lg-4 px-2 mb-3 cardIemClass chartHeight" id="carditem2" style="display:none">
                                 <div class="card h-100">
                                     <div class="card-body">
                                         <div class="inner-title d-flex justify-content-between align-items-center">
