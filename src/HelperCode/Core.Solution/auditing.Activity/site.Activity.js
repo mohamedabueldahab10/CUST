@@ -10,9 +10,10 @@ let activityConfig =
 		[],
 	trackCountClicks = {},
 	trackCountViews = {},
+	activeModuleCode,
 	activeModuleType,
 	reportHeaders =
-		"Site Id,Module Type,Item Type,User Id,User Full Name,User Email,Document Location,Occurred (GMT),Event,Event Source,Role Name, SP Group(s) Ids, SP Group(s),Platform,Device,Browser,Language \n";
+		"Site Id,Module Code,Module Type,Item Type,User Id,User Full Name,User Email,Document Location,Occurred (GMT),Event,Event Source,Role Name, SP Group(s) Ids, SP Group(s),Platform,Device,Browser,Language \n";
 let userBrowser = "";
 let handleModuleActivity = (el) => {
 	var context = SP.ClientContext.get_current();
@@ -36,6 +37,7 @@ let handleModuleActivity = (el) => {
 
 			//Check itemcollection count greater than 0
 			if (activityColl.get_count() > 0) {
+				activeModuleCode = el.code;
 				activeModuleType = el.ModuleType;
 				readExcelReport(); //!update excel report
 				var activityEnum = activityColl.getEnumerator();
@@ -160,16 +162,16 @@ let loopAuditingConfig = async () => {
 	await Promise.all(
 		activityConfig.map(async (el, i, a) => {
 			if (el.ModuleType == "Page") {
-				if (window.location.href.indexOf(el.ModuleURL) > -1) {
+				if (window.location.href.toLocaleLowerCase().indexOf(el.ModuleURL.toLocaleLowerCase()) > -1) {
 					// countClicks(el);
 					handleModuleActivity(el);
 				}
 			} else if (el.ModuleType == "Button") {
-				if (window.location.href.indexOf(el.ModuleURL) > -1) {
+				if (window.location.href.toLocaleLowerCase().indexOf(el.ModuleURL.toLocaleLowerCase()) > -1) {
 					countClicks(el);
 				}
 			} else if (el.ModuleType == "Component") {
-				if (window.location.href.indexOf(el.ModuleURL) > -1) {
+				if (window.location.href.toLocaleLowerCase().indexOf(el.ModuleURL.toLocaleLowerCase()) > -1) {
 					countViews(el);
 				}
 			}
@@ -243,7 +245,7 @@ function setNewAuditingRow(excelContent) {
 		localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar"
 			? "ar"
 			: "en";
-	newExcelContent = `${excelContent} ${siteId},${activeModuleType},${itemType},${userId},${userName},${userEmail},${documentLocation},${occuredGMT},${event},${eventSrc},${roleName},${spGroupsIds},${spGroups},${platform},${device},${userBrowser},${language} \n`;
+	newExcelContent = `${excelContent} ${siteId},${activeModuleCode},${activeModuleType},${itemType},${userId},${userName},${userEmail},${documentLocation},${occuredGMT},${event},${eventSrc},${roleName},${spGroupsIds},${spGroups},${platform},${device},${userBrowser},${language} \n`;
 	updateExcelReport(newExcelContent);
 }
 function updateExcelReport(content) {
