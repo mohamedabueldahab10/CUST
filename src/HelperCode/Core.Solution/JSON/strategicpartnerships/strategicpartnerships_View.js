@@ -292,7 +292,7 @@ var Information_Form = [
         InternalName: 'PartnershipManager',
         DisplayName: 'مدير العلاقة',
         DisplayNameEn: 'Partnership Manager',
-        type: 'multipicker',
+        type: 'picker',
         // validation: 'required',
       },
       {
