@@ -43,14 +43,14 @@ var Listing_Info = [
         needTrans: true,
         infilter: true
     },
-    {
-        InternalName: "WFStage",
-        DisplayName: "المرحلة",
-        DisplayNameEn: "WFStage",
-        type: "lookup",
-        localStorageVariable: "Dynamo_GenericWFStagesConfig",
-        inlisting: true,
-        infilter: true,
-      },
+    // {
+    //     InternalName: "WFStage",
+    //     DisplayName: "المرحلة",
+    //     DisplayNameEn: "WFStage",
+    //     type: "lookup",
+    //     localStorageVariable: "Dynamo_GenericWFStagesConfig",
+    //     inlisting: true,
+    //     infilter: true,
+    //   },
   
 ];
