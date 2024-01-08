@@ -42,15 +42,15 @@ var Listing_Info = [
       "infilter":true,
       "needTrans": true
    },
-   {
-      "InternalName":"PartnerName",
-      "DisplayName":"اسم الشريك",
-      "DisplayNameEn":"Partner Name",
-      "type":"lookup",
-      "localStorageVariable":"Dynamo_Vendors",
-      "inlisting":true,
-      "infilter":false
-   },
+   // {
+   //    "InternalName":"PartnerName",
+   //    "DisplayName":"اسم الشريك",
+   //    "DisplayNameEn":"Partner Name",
+   //    "type":"lookup",
+   //    "localStorageVariable":"Dynamo_Vendors",
+   //    "inlisting":true,
+   //    "infilter":false
+   // },
    {
       "InternalName":"RelatedStrategyObjective",
       "DisplayName":"الهدف الاستراتيجي المرتبط",

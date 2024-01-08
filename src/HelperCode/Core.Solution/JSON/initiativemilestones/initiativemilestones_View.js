@@ -49,16 +49,16 @@ var Information_Form = [
         DisplayName: 'الوزن المكافئ للإنجاز %',
         type: 'floatpercentage',
       },
-      {
-        InternalName: 'Amount',
-        DisplayName: 'القيمة',
-        DisplayNameEn: 'Amount',
-        // dontSubmit: true,
-        type: 'percentbyrelatedparent',
-        listname: 'Initiatives',
-        parentinternalname: 'InitiativeBudget',
-        targetelement: 'Weight',
-      },
+      // {
+      //   InternalName: 'Amount',
+      //   DisplayName: 'القيمة',
+      //   DisplayNameEn: 'Amount',
+      //   dontSubmit: true,
+      //   type: 'percentbyrelatedparent',
+      //   listname: 'Initiatives',
+      //   parentinternalname: 'InitiativeBudget',
+      //   targetelement: 'Weight',
+      // },
 
       {
         "InternalName": "Completed",

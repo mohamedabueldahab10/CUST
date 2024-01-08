@@ -119,11 +119,12 @@ var Information_Form = [
         DisplayName: 'اسم الشريك',
         DisplayNameEn: 'Partner Name',
         validation: 'required',
-        type: 'lookup',
+        type: 'lookupmultiselect',
         // source:'SOs',
         source: 'Vendors',
         Dispfieldkey:'Name',
         valfieldkey:'Title',
+        "grpfieldkey": "Title",
       },
 
       // {
