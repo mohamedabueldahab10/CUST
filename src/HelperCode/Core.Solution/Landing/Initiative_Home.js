@@ -1179,6 +1179,19 @@ var Projects_Info_Request = {
       itemtitle = oListItem.get_item("Title") || No_Data;
       itemstatus = oListItem.get_item("Status") || No_Data;
       itemstatus = IssuesStatus[itemstatus.replace(/ /g, "")] || No_Data;
+      projectstatusBasedOnSchedule = oListItem.get_item("ProgressStatusSchedule") || No_Data;
+      projectstatusBasedOnScheduleForStyling =oListItem.get_item("ProgressStatusSchedule") || No_Data;
+      if (
+        localStorage.getItem("lng") == null ||
+        localStorage.getItem("lng") == "ar"
+      ) {
+        projectstatusBasedOnSchedule = Resources.ar[projectstatusBasedOnSchedule];
+      } else
+      {        
+        projectstatusBasedOnSchedule = Resources.en[projectstatusBasedOnSchedule];
+      }
+       // statusOccuresData.forEach(function (element) {
+      // });
       itemfinishdate = initiativeHomeInfo_Request.g.dateConvert(
         oListItem.get_item("BaselineFinishDate")
       );
@@ -1218,6 +1231,19 @@ var Projects_Info_Request = {
           '<h4 class="black">' +
           itemfinishdate +
           "</h4>" +
+          "</div>" +
+          '<div class="d-flex justify-content-center align-items-start">'+ 
+          '<span class="icon-user lg d-inline-flex align-items-center text-center handlecircle circlecolor' +
+          projectstatusBasedOnScheduleForStyling +'"></span>'
+      +
+           '<div class="d-inline-flex flex-column mx-2">' +
+                '<span data-trans-completionstatus class="Resources des-13"></span>' +
+                '<h4 class="black">' +
+                projectstatusBasedOnSchedule +
+                "</h4>" +
+                
+                '</div>'
+                + 
           "</div>" +
           '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
           "</div>" +

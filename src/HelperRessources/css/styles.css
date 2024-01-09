@@ -4317,6 +4317,10 @@ a.taskButton:hover {
 /* end of strategic partnership */
 
 /* for projects circle status */
+.circlecolorstat5 {
+    background: #696969 !important;
+}
+
 .circlecolorstat8 {
     background: #C53737 !important;
 }
@@ -4368,10 +4372,6 @@ a.taskButton:hover {
     background: #15425a !important;
 }
 
-
-.circlecolorstat5 {
-    background: #696969 !important;
-}
 
 .circlecolorstat29 {
     background: #696969 !important;

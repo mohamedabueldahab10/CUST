@@ -197,7 +197,7 @@ window.initiativeRequest = {
         //}
       }
       //**** Start*/check user rule and buld query to get projects;
-      $(ChartHide).hide();
+      $(ChartHideForInitiatives).hide();
       $(".required-support-ctx").show(); // to show the alejra2 elmatloob section after moved to up
       //**** End*/check user rule and buld query to get projects;
     }

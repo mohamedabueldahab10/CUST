@@ -4,6 +4,7 @@ var ActualBudget = 0,
   EstimatedBudget = 0,
   phaseNameArray = [],
   subsectorNameArray = [],
+  sectorNameArray = [],
   phasesArrayCodes = [],
   phaseOccurence = [],
   phaseOccurenceReverse = [],
@@ -139,6 +140,7 @@ var PQuery =
 (originalstate = true),
   (FilterChoices = []),
   (subsectorfilterarray = []),
+  (sectorFilterArray = []),
   (Query_Body = ""),
   (Where_Body = ""),
   (ViewFields = ""),
@@ -228,6 +230,7 @@ window.Project_Info_Request = {
     var Priorityarray = [];
     var ProgressStatusarray = [];
     var subsectorCodeArray = [];
+    var sectorCodeArray = [];
     var projectPercentageSchedual = 0;
     while (Project_Info_Request.g.listItemEnum.moveNext()) {
       var oListItem = Project_Info_Request.g.listItemEnum.get_current();
@@ -260,6 +263,9 @@ window.Project_Info_Request = {
         subsector = oListItem.get_item("SubSector")
           ? oListItem.get_item("SubSector")
           : No_Data;
+          sector = oListItem.get_item("Sector")
+          ? oListItem.get_item("Sector")
+          : No_Data;
         // console.log('priority', priority);
         var phasename, phasecode;
         if (localStorage.getItem("Dynamo_Phases") != null) {
@@ -284,7 +290,7 @@ window.Project_Info_Request = {
           subsectorArray = JSON.parse(
             localStorage.getItem("Dynamo_Internal Entities") || "[]"
           );
-          subsectorArray = subsectorArray.filter(function (a) {
+          subsectorArray = subsectorArray.filter(function (a) {     
             return a.code == subsector;
           });
           if (subsectorArray.length) {
@@ -301,6 +307,30 @@ window.Project_Info_Request = {
                 : "";
 
             substorcode = subsectorArray.length ? subsectorArray[0].code : "";
+          }
+        }
+        var sectorName, sectorCode;
+        if (localStorage.getItem("Dynamo_Internal Entities") != null) {
+          sectorArray = JSON.parse(
+            localStorage.getItem("Dynamo_Internal Entities") || "[]"
+          );
+          sectorArray = sectorArray.filter(function (a) {
+            return a.code == sector;
+          });
+          if (sectorArray.length) {
+            if (
+              localStorage.getItem("lng") == null ||
+              localStorage.getItem("lng") == "ar"
+            ) {
+              sectorName = sectorArray.length
+                ? sectorArray[0].name
+                : "";
+            } else
+              sectorName = sectorArray.length
+                ? sectorArray[0].nameEn
+                : "";
+
+                sectorCode = sectorArray.length ? sectorArray[0].code : "";
           }
         }
 
@@ -337,6 +367,13 @@ window.Project_Info_Request = {
             });
             subsectorfilterarray.sort((a, b) => (a.code > b.code ? 1 : -1));
           }
+          if(sectorCode){
+            sectorFilterArray.push({
+              code: sectorCode,
+              name: sectorName,
+            });
+            sectorFilterArray.sort((a, b) => (a.code > b.code ? 1 : -1));
+          }
 
           uniqueArray = (a) =>
             [...new Set(a.map((o) => JSON.stringify(o)))].map((s) =>
@@ -344,6 +381,7 @@ window.Project_Info_Request = {
             );
           phasefilterarray = uniqueArray(phasefilterarray);
           subsectorfilterarray = uniqueArray(subsectorfilterarray);
+          sectorFilterArray = uniqueArray(sectorFilterArray);
           Priorities.push(priority);
           priorityfilterarray = uniqueArray(Priorities);
           Progressarray.push(ProgressStatus);
@@ -351,170 +389,170 @@ window.Project_Info_Request = {
         }
 
         projectshtml =
-          '<div id class="card ProjectCards ' +
-          projectType +
-          ' " >' +
-          '<div class="card-header bg-white" id="headingProject' +
-          projectcode +
-          '">' +
-          '<div class="acc-header mb-0 py-3 px-2 d-flex justify-content-between collapsed" data-toggle="collapse" data-target="#collapseProject' +
-          projectcode +
-          '" aria-expanded="false" aria-controls="collapseProject' +
-          projectcode +
-          '">' +
-          '<h4 class="acc-title d-inline-flex"><a href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/sitepages/ProjectHome.aspx?PCODE=" +
-          oListItem.get_item("Title") +
-          '">' +
-          projectname +
-          "<a/></h4>" +
-          '<div class="d-inline-flex flex-column mx-2 ' +
-          phases +
-          '">' +
-          // '<h4 class="text-warning">' + phasename + '</h4>' +
-          '<span class="des-13 d-flex"><img src="' +
-          iconstagesm +
-          '" class="h-100" data-themekey="#"><span data-trans-filter1 class="state-val mx-2 Resources"></span></span>' +
-          '<h4 class="text-warning">' +
-          phasename +
-          "</h4>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2 ' +
-          ProgressStatus +
-          ' ">' + //deliv-status
-          // '<h4 data-trans-' + ProgressStatus + '  data-prname="' + projectcode + '" class="Resources"></h4>' +
-          '<span class="des-13 d-flex " ><img src="' +
-          iconstatustimesm +
-          '" class="h-100" data-themekey="#"><span data-trans-completionstatus class="complition-val mx-2 Resources"></span></span>' +
-          "<h4 data-trans-" +
-          ProgressStatus +
-          '  data-prname="' +
-          projectcode +
-          '" class="Resources"></h4>' +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          // '<h4 data-trans-' + priority + ' class="black Resources" ></h4>' +
-          '<span class="des-13 d-flex"><img src="' +
-          iconimportantsm +
-          '" class="h-100" data-themekey="#"><span data-trans-Importance class="v-important-val mx-2 Resources"></span></span>' +
-          "<h4 data-trans-" +
-          priority +
-          ' class="black Resources" ></h4>' +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2">' +
-          // '<h4 data-trans-' + strategy + ' class="black Resources"></h4>' +
-          '<span class="des-13 d-flex"><img src="' +
-          iconstrategysm +
-          '" class="h-100" data-themekey="#"><span data-trans-strategy class="v-important-val mx-2 Resources"></span></span>' +
-          "<h4 data-trans-" +
-          strategy +
-          ' class="black Resources"></h4>' +
-          "</div>" +
-          '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
-          "</div>" +
-          "</div>" +
-          "</div>" +
-          '<div id="collapseProject' +
-          projectcode +
-          '" class="collapse" aria-labelledby="headingProject' +
-          projectcode +
-          '" data-parent="#accordionProject" style="">' +
-          '<div class="card-body">' +
-          '<div class="d-flex justify-content-between pb-2">' +
-          '<div class="d-inline-flex flex-row mx-2">' +
-          '<a href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/SitePages/Listing.aspx?ListKey=issues&PCODE=" +
-          projectcode +
-          '">' +
-          '<span class="project-inner inner-data1">' +
-          '<img src="' +
-          calendar +
-          '" class="" data-themekey="#">' +
-          '<span data-trans-Issues class="mx-2 inner-title des-12 reg Resources"></span>' +
-          '<span data-prname="' +
-          projectcode +
-          '" class="inner-val fnt-14 bold">12</span>' +
-          "</span>" +
-          "</a>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-row mx-2">' +
-          '<a href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/SitePages/Listing.aspx?ListKey=risks&PCODE=" +
-          projectcode +
-          '">' +
-          '<span class="project-inner inner-data2">' +
-          '<img src="' +
-          risk +
-          '" class="" data-themekey="#">' +
-          '<span data-trans-Risks class="mx-2 inner-title des-12 reg Resources"></span>' +
-          '<span data-prname="' +
-          projectcode +
-          '" class="inner-val fnt-14 bold">12</span>' +
-          "</span>" +
-          "</a>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-row mx-2">' +
-          '<span class="project-inner inner-data3">' +
-          '<img src="' +
-          progress +
-          '" class="" data-themekey="#">' +
-          '<span data-trans-CompletionPercentage class="mx-2 inner-title des-12 reg Resources"></span>' +
-          '<span data-prname="' +
-          projectcode +
-          '" class="inner-val fnt-14 bold"> ' +
-          projectPercentageSchedual +
-          " %</span>" +
-          "</span>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-row mx-2">' +
-          '<span class="project-inner inner-data4">' +
-          '<img src="' +
-          mizania +
-          '" class="" data-themekey="#">' +
-          '<span data-trans-BudgetExpenditure class="mx-2 inner-title des-12 reg Resources"></span>' +
-          '<span data-prname="' +
-          projectcode +
-          '" class="inner-val fnt-14 bold">' +
-          0 +
-          // Project_Info_Request.g.kFormatter(SpendFromBudget) +
-          "</span>" +
-          "</span>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-row mx-2" style="display:none !important">' +
-          '<span class="project-inner inner-data5">' +
-          '<img src="' +
-          mizania +
-          '" class="" data-themekey="#">' +
-          '<span data-trans-Portfolio class="mx-2 inner-title des-12 reg Resources"></span>' +
-          '<span title="' +
-          projectPortfolioCode +
-          '" data-prname="' +
-          oListItem.get_item("Title") +
-          '" class="inner-val fnt-14 bold portfolioName"></span>' +
-          "</span>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-row mx-2" style="display:none !important">' +
-          '<span class="project-inner inner-data6">' +
-          '<img src="' +
-          mizania +
-          '" class="" data-themekey="#">' +
-          '<span data-trans-Section class="mx-2 inner-title des-12 reg Resources"></span>' +
-          '<span title="' +
-          projectSector +
-          '" data-prname="' +
-          oListItem.get_item("Title") +
-          '" class="inner-val fnt-14 bold SectorName"></span>' +
-          "</span>" +
-          "</div>" +
-          '<div class="d-inline-flex flex-row mx-2" style="width:20px">' +
-          "</div>" +
-          "</div>" +
-          "</div>" +
-          "</div>" +
-          "</div>";
+        '<div id class="card ProjectCards ' +
+        projectType +
+        ' " >' +
+        '<div class="card-header bg-white" id="headingProject' +
+        projectcode +
+        '">' +
+        '<div class="acc-header mb-0 py-3 px-2 d-flex justify-content-between collapsed" data-toggle="collapse" data-target="#collapseProject' +
+        projectcode +
+        '" aria-expanded="false" aria-controls="collapseProject' +
+        projectcode +
+        '">' +
+        '<h4 class="acc-title d-inline-flex"><a href="' +
+        _spPageContextInfo.webAbsoluteUrl +
+        "/sitepages/ProjectHome.aspx?PCODE=" +
+        oListItem.get_item("Title") +
+        '">' +
+        projectname +
+        "<a/></h4>" +
+        '<div class="d-inline-flex flex-column mx-2 ' +
+        phases +
+        '">' +
+        // '<h4 class="text-warning">' + phasename + '</h4>' +
+        '<span class="des-13 d-flex"><img src="' +
+        iconstagesm +
+        '" class="h-100" data-themekey="#"><span data-trans-filter1 class="state-val mx-2 Resources"></span></span>' +
+        '<h4 class="text-warning">' +
+        phasename +
+        "</h4>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2 ' +
+        ProgressStatus +
+        ' ">' + //deliv-status
+        // '<h4 data-trans-' + ProgressStatus + '  data-prname="' + projectcode + '" class="Resources"></h4>' +
+        '<span class="des-13 d-flex " ><img src="' +
+        iconstatustimesm +
+        '" class="h-100" data-themekey="#"><span data-trans-completionstatus class="complition-val mx-2 Resources"></span></span>' +
+        "<h4 data-trans-" +
+        ProgressStatus +
+        '  data-prname="' +
+        projectcode +
+        '" class="Resources"></h4>' +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        // '<h4 data-trans-' + priority + ' class="black Resources" ></h4>' +
+        '<span class="des-13 d-flex"><img src="' +
+        iconimportantsm +
+        '" class="h-100" data-themekey="#"><span data-trans-Importance class="v-important-val mx-2 Resources"></span></span>' +
+        "<h4 data-trans-" +
+        priority +
+        ' class="black Resources" ></h4>' +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2">' +
+        // '<h4 data-trans-' + strategy + ' class="black Resources"></h4>' +
+        '<span class="des-13 d-flex"><img src="' +
+        iconstrategysm +
+        '" class="h-100" data-themekey="#"><span data-trans-strategy class="v-important-val mx-2 Resources"></span></span>' +
+        "<h4 data-trans-" +
+        strategy +
+        ' class="black Resources"></h4>' +
+        "</div>" +
+        '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
+        "</div>" +
+        "</div>" +
+        "</div>" +
+        '<div id="collapseProject' +
+        projectcode +
+        '" class="collapse" aria-labelledby="headingProject' +
+        projectcode +
+        '" data-parent="#accordionProject" style="">' +
+        '<div class="card-body">' +
+        '<div class="d-flex justify-content-between pb-2">' +
+        '<div class="d-inline-flex flex-row mx-2">' +
+        '<a href="' +
+        _spPageContextInfo.webAbsoluteUrl +
+        "/SitePages/Listing.aspx?ListKey=issues&PCODE=" +
+        projectcode +
+        '">' +
+        '<span class="project-inner inner-data1">' +
+        '<img src="' +
+        calendar +
+        '" class="" data-themekey="#">' +
+        '<span data-trans-Issues class="mx-2 inner-title des-12 reg Resources"></span>' +
+        '<span data-prname="' +
+        projectcode +
+        '" class="inner-val fnt-14 bold">12</span>' +
+        "</span>" +
+        "</a>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-row mx-2">' +
+        '<a href="' +
+        _spPageContextInfo.webAbsoluteUrl +
+        "/SitePages/Listing.aspx?ListKey=risks&PCODE=" +
+        projectcode +
+        '">' +
+        '<span class="project-inner inner-data2">' +
+        '<img src="' +
+        risk +
+        '" class="" data-themekey="#">' +
+        '<span data-trans-Risks class="mx-2 inner-title des-12 reg Resources"></span>' +
+        '<span data-prname="' +
+        projectcode +
+        '" class="inner-val fnt-14 bold">12</span>' +
+        "</span>" +
+        "</a>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-row mx-2">' +
+        '<span class="project-inner inner-data3">' +
+        '<img src="' +
+        progress +
+        '" class="" data-themekey="#">' +
+        '<span data-trans-CompletionPercentage class="mx-2 inner-title des-12 reg Resources"></span>' +
+        '<span data-prname="' +
+        projectcode +
+        '" class="inner-val fnt-14 bold"> ' +
+        projectPercentageSchedual +
+        " %</span>" +
+        "</span>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-row mx-2">' +
+        '<span class="project-inner inner-data4">' +
+        '<img src="' +
+        mizania +
+        '" class="" data-themekey="#">' +
+        '<span data-trans-BudgetExpenditure class="mx-2 inner-title des-12 reg Resources"></span>' +
+        '<span data-prname="' +
+        projectcode +
+        '" class="inner-val fnt-14 bold">' +
+        0 +
+        // Project_Info_Request.g.kFormatter(SpendFromBudget) +
+        "</span>" +
+        "</span>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-row mx-2" style="display:none !important">' +
+        '<span class="project-inner inner-data5">' +
+        '<img src="' +
+        mizania +
+        '" class="" data-themekey="#">' +
+        '<span data-trans-Portfolio class="mx-2 inner-title des-12 reg Resources"></span>' +
+        '<span title="' +
+        projectPortfolioCode +
+        '" data-prname="' +
+        oListItem.get_item("Title") +
+        '" class="inner-val fnt-14 bold portfolioName"></span>' +
+        "</span>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-row mx-2" style="display:none !important">' +
+        '<span class="project-inner inner-data6">' +
+        '<img src="' +
+        mizania +
+        '" class="" data-themekey="#">' +
+        '<span data-trans-Section class="mx-2 inner-title des-12 reg Resources"></span>' +
+        '<span title="' +
+        projectSector +
+        '" data-prname="' +
+        oListItem.get_item("Title") +
+        '" class="inner-val fnt-14 bold SectorName"></span>' +
+        "</span>" +
+        "</div>" +
+        '<div class="d-inline-flex flex-row mx-2" style="width:20px">' +
+        "</div>" +
+        "</div>" +
+        "</div>" +
+        "</div>" +
+        "</div>";
 
         if (projectType === "Internal") {
           internalProjectHtml += projectshtml;
@@ -527,6 +565,7 @@ window.Project_Info_Request = {
 
         phaseCodeArray.push(phases);
         subsectorCodeArray.push(subsector);
+        sectorCodeArray.push(sector);
         Priorityarray.push(priority);
         ProgressStatusarray.push(ProgressStatus);
         // console.log('internalProjectHtml', 'internalProjectHtml');
@@ -613,6 +652,7 @@ window.Project_Info_Request = {
     //Phase
     phaseCodeArray.sort();
     subsectorCodeArray.sort();
+    sectorCodeArray.sort();
     // console.log('phaseCodeArray', phaseCodeArray);
     var phaseOccurenceNumb = arrToInstanceCountObj(phaseCodeArray);
 
@@ -626,6 +666,10 @@ window.Project_Info_Request = {
     subsectorfilterarray.forEach((element) =>
       subsectorNameArray.push(element.name)
     );
+
+    sectorFilterArray.forEach((element) =>
+    sectorNameArray.push(element.name)
+  );
     // console.log('phaseOccurence', phaseOccurence);
     handlePhaseChartBarChart();
     handlePriorityChartBarChart();
@@ -665,6 +709,19 @@ window.Project_Info_Request = {
       }
       $(".content-list-head .page-filter .dropdown-menu.Filter-5").html(
         subsectorfilterhtml
+      );
+       var sectorFilterHtml =
+        '<label class="dropdown-item main-action-filter"><button data-trans-CanselSelections class="clear-filter Resources" type="button"></button></label>';
+      for (var i = 0; i < sectorFilterArray.length; i++) {
+        sectorFilterHtml +=
+          '<label class="dropdown-item"><span>' +
+          sectorFilterArray[i].name +
+          '</span><input data-type="Text" data-internal="Sector" type="checkbox" name="Sector" value="' +
+          sectorFilterArray[i].code +
+          '"></label>';
+      }
+      $(".content-list-head .page-filter .dropdown-menu.Filter-6").html(
+        sectorFilterHtml
       );
 
       var priorityfilterhtml =
@@ -755,6 +812,7 @@ window.Project_Info_Request = {
     //calling other data
 
     Risks_Info_Request.init();
+    
 
     Deliverables_Info_Request.init();
     // Project_Info_Request.g.showprojectonclick(); //view more action
@@ -904,6 +962,7 @@ window.Project_Info_Request = {
         (phaseOccurenceReverse = []),
         (phaseNameArray = []),
         (subsectorNameArray = []),
+        (sectorNameArray = []),
         (Low = 0),
         (Medium = 0),
         (Hight = 0),
@@ -948,7 +1007,6 @@ window.Project_Info_Request = {
         //dynamic query building
         for (var i = 0; i < FilterChoices.length; i++) {
           //only one choice
-          debugger
           if (FilterChoices.length == 1) {
             if (FilterChoices[i].targetIsMultiFilter) {
               for (var j = 0; j < FilterChoices[i].Values.length; j++) {
@@ -1998,6 +2056,7 @@ var Deliverables_Info_Request = {
 
 
     handleStatusBarChart();
+    
     //
     //1st bars section budgets
     var toatlamountAllofProjects = Deliverablesarray.reduce(
