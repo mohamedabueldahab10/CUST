@@ -554,19 +554,19 @@ window.Edit_Data_Request = {
       var parsingDataBasedOnParent =""
 
     $(`[data-basedonparentsetvalues]`).each(function (index) {
-    
+
       parsingDataBasedOnParent = eval(
         $(this).data("basedonparentsetvalues")
       );
       if(parsingDataBasedOnParent.length){
         var targetField = parsingDataBasedOnParent[0].basedOnFieldName
         if(targetField){
-        
+
 
           deliveredValFromList = oListItem.get_item("" + targetField + "")
         }
       }
-    
+
     });
   }
 
@@ -641,7 +641,7 @@ window.Edit_Data_Request = {
           $(this).data("basedonparentsetvalues")
         );
       });
-    
+
       parsingDataBasedOnParentSetValues.forEach((el) => {
         var listinerField = parsingDataBasedOnParentSetValues[0].listinerField;
         var code = $(`#${listinerField}`).val();
@@ -735,6 +735,7 @@ window.Edit_Data_Request = {
         Amount = Amount.toFixed(2);
         $("#Amount").val(Amount);
       }
+
 
       var itemWfStage = oListItem.get_item("WFStage");
       if (itemWfStage == "approved") {

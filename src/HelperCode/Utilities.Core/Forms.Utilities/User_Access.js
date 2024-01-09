@@ -202,7 +202,7 @@ var UserRole,
   PMORepresentativeQuery =
     "<View><Query><Where><And><Eq><FieldRef Name=\"PMORepresentative\" LookupId=\"TRUE\" /><Value Type=\"Lookup\"><UserID /></Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>",
   TasksQuery = // add DeletionStatus to avoid the deleted tasks
-    '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>',
+    '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query><RowLimit>5000</RowLimit></View>',
   IssueQuery =
     '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>',
   RiskQuery =
@@ -273,7 +273,7 @@ window.WorkflowTranslate = [
   { wfName: "EPMOProjMilestone", nameAr: "معلم مشروع", nameEn: "Project Milestone" },
   { wfName: "LMSProjMilestone", nameAr: "معلم مشروع", nameEn: "Project Milestone" },
 
-  
+
   { wfName: "VROActualKPI", nameAr: "مؤشر", nameEn: "KPI" },
   { wfName: "MSActualKPI", nameAr: "مؤشر", nameEn: "KPI" },
   { wfName: "LMSActualKPI", nameAr: "مؤشر", nameEn: "KPI" },
@@ -757,7 +757,7 @@ window.userCalls = {
             "</style>"
         );
         isAdmin = true;
-        //***** */        
+        //***** */
         ChartHide =
        ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1), .statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(2), .statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(4), .statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5), .statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
 
@@ -797,7 +797,7 @@ window.userCalls = {
         en_UserRole = "EPMO";
         //CRUD
         Create_Access = [
-          "benefitmatrix",         
+          "benefitmatrix",
           "initiativeupdates",
           "projectupdates",
           "initiatives",
@@ -951,7 +951,7 @@ window.userCalls = {
           /////////
           // "projects",
           // "deliverables",
-          // "milestones",          
+          // "milestones",
           // "initiativeupdates",
           "projectupdates",
           "issues",
@@ -1770,7 +1770,7 @@ window.userCalls = {
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
           ChartHideForInitiatives = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-        
+
           ar_UserRole = "مدير ادارة ضمان التنفيذ";
         en_UserRole = "Execution Guarantee Office Head";
         //CRUD
@@ -2406,7 +2406,7 @@ window.userCalls = {
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
           ChartHideForInitiatives=  ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-        
+
           ar_UserRole = "مكتب إدارة المشاريع القطاعي";
         en_UserRole = "Sectoral Project Management Office";
 
@@ -2611,7 +2611,7 @@ window.userCalls = {
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
           ChartHideForInitiatives= ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-        
+
           ar_UserRole = "معالى مساعد الوزير";
         en_UserRole = "Minister Assistant";
 
@@ -2628,7 +2628,7 @@ window.userCalls = {
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(4),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
           ChartHideForInitiatives=".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(4),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-        
+
           ar_UserRole = "معالى نائب الوزير";
         en_UserRole = "Vice Minister";
 
@@ -2692,7 +2692,7 @@ window.userCalls = {
           "initiativerisks",
           "initiativeissues",
           "initiativemom",
-          // "benefits",          
+          // "benefits",
           "initiativeupdates",
           "projectupdates",
           "benefitmetrics",
@@ -2719,7 +2719,7 @@ window.userCalls = {
           // for initiative
           // "initiatives",
           // "initiativedeliverables",
-          // "initiativemilestones",          
+          // "initiativemilestones",
           "initiativeupdates",
           "projectupdates",
           "initiativerisks",
@@ -2789,7 +2789,7 @@ window.userCalls = {
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
           ChartHideForInitiatives=   ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-      
+
           ar_UserRole = " مدير إدارة ";
         en_UserRole = "General Manager of ";
         USER_HomePage = "InitiativesMain.aspx";
@@ -2810,7 +2810,7 @@ window.userCalls = {
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
           ChartHideForInitiatives= ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-        
+
           ar_UserRole = "فريق ذكاء الأعمال";
         en_UserRole = "BI Team";
         //CRUD
@@ -2877,7 +2877,7 @@ window.userCalls = {
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
           ChartHideForInitiatives=  ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-       
+
           ar_UserRole = "مالك المؤشرات";
         en_UserRole = "KPIs Owner";
         //CRUD
@@ -2952,7 +2952,7 @@ window.userCalls = {
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
           ChartHideForInitiatives=".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-        
+
           ar_UserRole = "رائد الأداء";
         en_UserRole = "Performance Leader";
         //CRUD
@@ -3009,7 +3009,7 @@ window.userCalls = {
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
           ChartHideForInitiatives= ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-        
+
           ar_UserRole = "فريق الشراكة الاستراتيجية";
         en_UserRole = "Startegic Partnerships Team";
 
@@ -3284,7 +3284,7 @@ window.userCalls = {
         ChartHide =
           ".ctx-block.row.mx-n2 > div:nth-child(4),.ctx-block.row.mx-n2 > div:nth-child(5),.ctx-block.row.mx-n2 > div:nth-child(6),.ctx-block.row.mx-n2 > div:nth-child(1)";
           ChartHideForInitiatives=  ".ctx-block.row.mx-n2 > div:nth-child(4),.ctx-block.row.mx-n2 > div:nth-child(5),.ctx-block.row.mx-n2 > div:nth-child(6),.ctx-block.row.mx-n2 > div:nth-child(7)";
-       
+
           //CRUD
         Create_Access = [];
         Read_Access = [];

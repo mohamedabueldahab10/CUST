@@ -1383,6 +1383,14 @@ window.ListInfo = {
           $("[data-togglevalues]").on("change", function () {
             ListInfo.g.toggleFields($(this));
           });
+          // #add validation on amount field to be like weight
+          $(".percentbyparent[data-targetelem]").each(function () {
+            let percentField = $(`#${$(this).attr("data-targetelem")}`);
+            let maxValue =
+              parseFloat(percentField.attr("max"))/100 *
+              parseFloat($(this).attr("data-parentval"));
+            $(this).attr("max", maxValue);
+          });
           //remove require on disbaled fields
           setTimeout(function () {
             $(".CFIELD .disabled").removeAttr("required");
