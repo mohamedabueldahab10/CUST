@@ -4906,7 +4906,7 @@ window.ListInfo = {
         OnSuccess(flag, htmlBody);
         break;
 
-      case "multiselect":
+      case "multiselect" || "multiselectForFiles":
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit +
