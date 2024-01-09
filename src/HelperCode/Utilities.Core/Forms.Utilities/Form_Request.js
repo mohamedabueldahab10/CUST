@@ -3449,7 +3449,7 @@ var Master_Details_Request = {
                 }
               }
               break;
-
+             
             default:
               $(this).val(oListItem.get_item("" + $(this).attr("id") + ""));
               break;
@@ -4738,8 +4738,7 @@ window.Delete_Data_Submit = {
 };
 
 window.Delete_Item_Via_Api = {
-  init: function () {
-    debugger;
+  init: function () {    
     var urlHandlerToDelete = "";
     if (listkey == "projects" && PCODE) {
       urlHandlerToDelete = `${APIURL}/general/deleteprojectbyprojectcode?projectCode=${PCODE}`;
@@ -4812,7 +4811,8 @@ window.Delete_Item_Submit = {
             listkey == "initiatives" ||
             listkey == "ideas" ||
             listkey == "portfolio" ||
-            listkey == "budgetitems"
+            listkey == "budgetitems" || 
+            listkey == "strategicpartnerships"
           ) {
             window.location =
               _spPageContextInfo.webAbsoluteUrl +
@@ -4892,7 +4892,7 @@ window.Delete_Item_Submit = {
         locale: "custom",
         callback: function (result) {
           if (result == true) {
-            if (listkey == "projects" || listkey == "initiatives") {
+            if (listkey == "projects" || listkey == "initiatives" || listkey == "initiatives") {
               Delete_Item_Via_Api.init();
             } else {
               Delete_Item_Submit.init();
