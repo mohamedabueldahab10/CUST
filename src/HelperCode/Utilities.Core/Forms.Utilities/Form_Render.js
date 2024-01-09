@@ -3365,7 +3365,7 @@ window.ListInfo = {
                 '"' +
                 " " +
                 element.validation +
-                ' oninput="this.value = (this.value && Math.abs(this.value) >= 1) && (this.value && Math.abs(this.value) <= 100) ? Math.abs(this.value) : null">' +
+                ` onchange="this.value = (this.value && Math.abs(this.value) >= 1) && (this.value && Math.abs(this.value) <= 100) ? Math.abs(this.value) : null">` +
                 "<span data-trans-" +
                 Errmsgkey +
                 ' class="errMsgField Resources"></span>' +
@@ -9345,7 +9345,7 @@ window.View_ListInfo = {
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
-          
+
         case "yearInput":
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
@@ -11567,7 +11567,7 @@ dynamicAffectSelect = {
   // The main Initialization function
   init: function (affectedSelectsInfo) {
 
-    
+
     if (affectedSelectsInfo.length) {
       var queryFieldValue = affectedSelectsInfo[0].queryFieldValue
         ? affectedSelectsInfo[0].queryFieldValue
@@ -11893,7 +11893,7 @@ dynamicAffectSelect = {
     else
     if(getSiblingsValues.length){
       optionsArray.forEach(function(option) {
-        optionsBody +=   
+        optionsBody +=
         "<option data-arraysiblingvalues=" +
         option.sibling +
         ' option-id="' +
