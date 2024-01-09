@@ -40,7 +40,8 @@ var benefitsEquationID,
   benefitMonth = "",
   benefitQuarter = "",
   benefitMid = "",
-  benefitYearHandler = "";
+  benefitYearHandler = "",
+  currentItemCode = "";
 // benefitMetricsYear="";
 
 window.benefitsEquationsComponents = [];
@@ -121,6 +122,7 @@ window.relatedToIdea = [{ listName: "Tasks", RelatedItem: "ProjectCode" }];
 window.Edit_Data_Request = {
   onSuccess: async function (sender, args) {
     var pillersRadio = "";
+
     if (listkey == "kpiequations") {
       //  (!isAdmin || !isSPMTeam )? window.location = _spPageContextInfo.webAbsoluteUrl : '';
       // if (isAdmin || isMinister || isBITeam || isSPMTeam || isPerformanceLeader || isSPMAdmin || isVROP || isLMSP) {
@@ -360,7 +362,7 @@ window.Edit_Data_Request = {
       statusTitle = await StrategicObjectives_Status.init(value);
       $("#Status").val(statusTitle);
     }
-
+    currentItemCode = oListItem.get_item("Title");
     //checking field ownership
     $("[data-editableby]").each(function () {
       let keyOwner = $(this).data("editableby");
@@ -3461,7 +3463,7 @@ var Master_Details_Request = {
                 }
               }
               break;
-             
+
             default:
               $(this).val(oListItem.get_item("" + $(this).attr("id") + ""));
               break;
@@ -4750,7 +4752,7 @@ window.Delete_Data_Submit = {
 };
 
 window.Delete_Item_Via_Api = {
-  init: function () {    
+  init: function () {
     var urlHandlerToDelete = "";
     if (listkey == "projects" && PCODE) {
       urlHandlerToDelete = `${APIURL}/general/deleteprojectbyprojectcode?projectCode=${PCODE}`;
@@ -4823,7 +4825,7 @@ window.Delete_Item_Submit = {
             listkey == "initiatives" ||
             listkey == "ideas" ||
             listkey == "portfolio" ||
-            listkey == "budgetitems" || 
+            listkey == "budgetitems" ||
             listkey == "strategicpartnerships"
           ) {
             window.location =
@@ -7443,7 +7445,15 @@ window.Get_TaskHistory = {
         "";
     }
     if (!$(".task-history-ctx").length) {
-      historyHTML = `<div class="section3 row col-12 px-0 task-history-ctx mx-0">
+      historyHTML = `<div class="section4 row col-12 px-0 deliverables-ctx mx-0 d-none">
+      <div class="approvalHeader">
+          <h2 class="Resources" data-trans-relateddeliverables>
+          </h2>
+      </div>
+          <div class="taskHistory row mx-0 mt-5 col-12 flex-column">
+          </div>
+      </div>
+      <div class="section3 row col-12 px-0 task-history-ctx mx-0">
             <div class="approvalHeader">
 
                 <h2 class="Resources" data-trans-taskHistory>
@@ -7615,7 +7625,155 @@ window.Get_TaskHistory = {
   // Global variables
   g: {},
 };
+// !in progress
+// window.Get_InitiativeDeliverables = {
+//   init: function () {
+//     var clientContext = new SP.ClientContext.get_current();
+//     var oList = clientContext.get_web().get_lists().getByTitle("InitiativeDeliverables");
 
+//     var camelQuery = `<View><Query><Where>
+//     <Eq><FieldRef Name='InitiativeCode'/><Value Type='Text'>${currentItemCode}</Value></Eq>
+//     </Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>`;
+
+//     Get_InitiativeDeliverables.g.camlQuery = new SP.CamlQuery();
+//     Get_InitiativeDeliverables.g.camlQuery.set_viewXml(camelQuery);
+
+//     SPHTTPitemsEnumerable = oList.getItems(Get_InitiativeDeliverables.g.camlQuery);
+//     clientContext.load(SPHTTPitemsEnumerable);
+//     clientContext.executeQueryAsync(
+//       Function.createDelegate(this, Get_InitiativeDeliverables.onSuccess),
+//       Function.createDelegate(this, Get_InitiativeDeliverables.onError)
+//     );
+//   },
+//   onSuccess: function (sender, args) {
+//     var listItemEnum = SPHTTPitemsEnumerable.getEnumerator();
+//     let historyHTML = ``;
+
+//     let wfHistoryLink = "";
+
+//     let isThereHistory = false;
+
+//     if (!$(".task-history-ctx").length) {
+//       delivHTML = `<div class="section4 row col-12 px-0 deliverables-ctx mx-0 d-none">
+//       <div class="approvalHeader">
+//           <h2 class="Resources" data-trans-relateddeliverables>
+//           </h2>
+//       </div>
+//           <div class="relateddeliverables row mx-0 mt-5 col-12 flex-column">
+
+//         `;
+//     }
+
+//     while (listItemEnum.moveNext()) {
+//       var oListItem = listItemEnum.get_current();
+//       let field1 = oListItem.get_item("Title") || No_Data;
+//       let field2 = oListItem.get_item("Name") || No_Data;
+//       let field3 = oListItem.get_item("PlannedCompletedDate") || No_Data;
+//       field3 = createdDate.toLocaleDateString("en-US");
+//       let field4 = oListItem.get_item("Weight") || No_Data;
+//       let field5 = oListItem.get_item("InitiativeCode") || No_Data
+
+
+//       // if (localStorage.getItem("Dynamo_Tasks Configuration") != null) {
+//       //   tasktitlearr = JSON.parse(
+//       //     localStorage.getItem("Dynamo_Tasks Configuration") || "[]"
+//       //   );
+//       //   tasktitlearr = tasktitlearr.filter(function (item) {
+//       //     return item.code == stage;
+//       //   });
+//       //   if (
+//       //     localStorage.getItem("lng") == null ||
+//       //     localStorage.getItem("lng") == "ar"
+//       //   ) {
+//       //     stage = tasktitlearr[0].name;
+//       //   } else {
+//       //     stage = tasktitlearr[0].nameEn;
+//       //   }
+//       // }
+
+
+//       //end date
+//       delivHTML += `
+//             <div class="row mx-0 my-3 history-row-ctx">
+//                 <div class="col-3">
+//                     <p>${stage}</p>
+//                 </div>
+//                 <div class="col-2">
+//                     <p class="historyValue">${field1}</p>
+//                     <p class="Resources historyLabel" data-trans-delivcode></p>
+//                 </div>
+//                 <div class="col-2">
+//                     <p class="historyValue">${field2}</p>
+//                     <p  class="Resources historyLabel" data-trans-delivname></p>
+//                 </div>
+//                 <div class="col-2">
+//                     <p class="historyValue">${field3}</p>
+//                     <p  class="Resources historyLabel" data-trans-deliveplannedcompleteddate></p>
+//                 </div>
+//                 <div class="col-2">
+//                     <p class="historyValue">${field4}</p>
+//                     <p  class="Resources historyLabel" data-trans-delivweight></p>
+//                 </div>
+//                 <div class="col-1">
+//                     <p class="historyValue"><span class="Resources" data-trans-delivinitiative></span>${field5}</p>
+//                     <p  class="Resources historyLabel" data-trans-delivsource>taken action</p>
+//                 </div>
+//             </div>
+//             `;
+//     }
+
+//     let noTaskhistory = isThereHistory ? "" : UserNo_Data;
+//     if (!$(".task-history-ctx").length) {
+//       historyHTML += `<p style="text-align:center">${noTaskhistory}</p>
+//                     ${
+//                       isThereHistory
+//                         ? `<button type="button"class="loadMore Resources mb-3" data-trans-viewmore>
+//                         loadmore
+//                     </button>`
+//                         : ""
+//                     }
+//                 </div>
+//             </div>
+//             `;
+//       $(".btnactionrow").before(historyHTML);
+//       $("button.loadMore").on("click", () => {
+//         Get_InitiativeDeliverables.loadMore();
+//       });
+//     } else {
+//       // $(".task-history-ctx .taskHistory").append(historyHTML);
+//       $(historyHTML).insertBefore(
+//         $(".task-history-ctx .taskHistory button.loadMore")
+//       );
+//     }
+//     $(".btnactionrow .form-btns-wrapper").show();
+//     Get_InitiativeDeliverables.g.position =
+//       SPHTTPitemsEnumerable.get_listItemCollectionPosition();
+//     $("button.loadMore").removeClass("disabled loader-action");
+//     changeResources();
+//   },
+//   onError: function (sender, args) {
+//     console.log(
+//       "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+//     );
+//   },
+//   loadMore: function () {
+//     //Position will be null if all the items in the collection are fetched and there are no more items to be fetched.
+//     if (Get_InitiativeDeliverables.g.position != null) {
+//       isLoadMore = true;
+//       //If more items are to be fetched, make a second call to the server and fetch the next group of items.
+//       Get_InitiativeDeliverables.g.camlQuery.set_listItemCollectionPosition(
+//         Get_InitiativeDeliverables.g.position
+//       );
+//       Get_InitiativeDeliverables.init();
+//       $("button.loadMore").addClass("loader-action");
+//     } else if (Get_InitiativeDeliverables.g.position == null) {
+//       // $("button.loadMore").hide();
+//       $("button.loadMore").addClass("disabled");
+//     }
+//   },
+//   // Global variables
+//   g: {},
+// };
 var DontSubmit_DataRequest = {
   init: function () {
     // to handle dont submit in edit lvl1
