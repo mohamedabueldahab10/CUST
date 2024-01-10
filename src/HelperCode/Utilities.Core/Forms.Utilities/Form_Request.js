@@ -1458,6 +1458,16 @@ window.View_Data_Request = {
             : oListItem.get_item("" + $(this).attr("id") + "");
 
         $(this).text(value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+      } else if ($(this).attr("type") == "multiselectForFiles") {
+        var value =
+          oListItem.get_item("" + $(this).attr("id") + "") == null
+            ? No_Data
+            : oListItem
+              .get_item("" + $(this).attr("id") + "")
+              .split(":::")
+              .join("; <br>");
+
+        $(this).html(value);
       } else if ($(this).attr("type") == "multiselect") {
         var valfieldkey = $(this).data("valfieldkey"),
           Dispfieldkey = $(this).data("dispfieldkey"),
@@ -1611,18 +1621,7 @@ window.View_Data_Request = {
         //         .join("; <br>");
 
         //   $(this).html(value);
-      }else if ($(this).attr("type") == "multiselectForFiles") {
-          var value =
-            oListItem.get_item("" + $(this).attr("id") + "") == null
-              ? No_Data
-              : oListItem
-                .get_item("" + $(this).attr("id") + "")
-                .split(":::")
-                .join("; <br>");
-
-          $(this).html(value);
-      }
-       else if ($(this).attr("type") == "lookup") {
+      } else if ($(this).attr("type") == "lookup") {
         var valfieldkey = $(this).data("valfieldkey"),
           Dispfieldkey = $(this).data("dispfieldkey"),
           listname = $(this).data("listname"),
@@ -5314,7 +5313,6 @@ window.ViewAllFiles_Main_Strategy = {
       var FilesLink =
         '<div class="py-5 border-bottom section-container " id="file_container" data-groups="">' +
         '<div class="form-row"><div class="col-lg-3 col-md-4 mb-4"><h3 data-trans-documents class="Resources"></h3><span class="font-14"></span></div>' +
-        '<div class="col-md-6 CFIELD " data-groups="" ><label for="multiselectText" undefined="">نوع المرفق</label><p type="multiselect" class="viewmode-value" id="multiselectText"></p></div>' +
         '<div class="col-lg-9 col-md-8 white-box p-4 fieldset-container"><div class="col-md-6 multiline"><label data-trans-document class="Resources">مرفقات: </label>';
 
       if (listkey == "mainkpi") {

@@ -1594,7 +1594,7 @@ var Information_Form = [
         InternalName: "FileType",
         DisplayName: "نوع المرفق",
         DisplayNameEn: "File Type",
-        type: "multiselect",
+        type: "multiselectForFiles",
         options: {
                   choices:[
                   'الموافقات','دراسة الجدوى','ميثاق المشروع'

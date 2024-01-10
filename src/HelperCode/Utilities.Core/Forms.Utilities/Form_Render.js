@@ -4906,7 +4906,94 @@ window.ListInfo = {
         OnSuccess(flag, htmlBody);
         break;
 
-      case "multiselect" || "multiselectForFiles":
+        case "multiselectForFiles":
+          htmlBody =
+          '<div class="col-md-6 CFIELD ' +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
+          " " +
+          element.className +
+          " " +
+          hideField +
+          ' " ' +
+          thistip +
+          " " +
+          hidestagesIDs +
+          " " +
+          editableBy +
+          " " +
+          showstagesIDs +
+          "  " +
+          disablestagesIDs +
+          "  " +
+          enablestagesIDs +
+          "   " +
+          isWfhidestagesIDs +
+          " " +
+          requireOnWfTaskstagesIDs +
+          " " +
+          isWfshowstagesIDs +
+          "  " +
+          isWfdisablestagesIDs +
+          "  " +
+          isWfenablestagesIDs +
+          '        data-groups="' +
+          groups +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
+          element.display +
+          '">' +
+          '<label for="' +
+          element.InternalName +
+          '" ' +
+          element.validation +
+          ">" +
+          displayName +
+          "</label>" +
+          '<ul myfield="' +
+          element.InternalName +
+          '" id="' +
+          element.InternalName +
+          '" type="multiselect" class="multiselect-container form-control" type="multiselect">' +
+          '<li class="dropdown">' +
+          '<a href="#" data-toggle="dropdown" class="dropdown-toggle">' +
+          displayName +
+          '<b class="caret"></b></a>' +
+          '<ul type="" class="dropdown-menu multiselect_scroll">';
+        for (var i = 0; i < element.options.choices.length; i++) {
+          htmlBody +=
+            "<li>" +
+            '<div class="checkbox">' +
+            "<label>" +
+            '<input value="' +
+            element.options.choices[i] +
+            '" id="' +
+            element.InternalName +
+            '" type="checkbox">' +
+            element.options.choices[i] +
+            "</label>" +
+            "</div>" +
+            "</li>";
+        }
+        htmlBody +=
+          "</ul>" +
+          "</li>" +
+          "</ul>" +
+          '<div class="inputInfo ' +
+          isexist +
+          '">' +
+          descPhrase +
+          "</div>";
+        "</div>";
+        OnSuccess(flag, htmlBody);
+        break;
+
+      case "multiselect":
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit +
