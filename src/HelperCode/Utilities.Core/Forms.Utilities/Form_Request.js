@@ -7444,14 +7444,7 @@ window.Get_TaskHistory = {
         "";
     }
     if (!$(".task-history-ctx").length) {
-      historyHTML = `<div class="section4 row col-12 px-0 deliverables-ctx mx-0 d-none">
-      <div class="approvalHeader">
-          <h2 class="Resources" data-trans-relateddeliverables>
-          </h2>
-      </div>
-          <div class="taskHistory row mx-0 mt-5 col-12 flex-column">
-          </div>
-      </div>
+      historyHTML = `
       <div class="section3 row col-12 px-0 task-history-ctx mx-0">
             <div class="approvalHeader">
 
@@ -7678,8 +7671,7 @@ window.Get_InitiativeDeliverables = {
       var oListItem = listItemEnum.get_current();
       let field1 = oListItem.get_item("Title") || No_Data;
       let field2 = oListItem.get_item("Name") || No_Data;
-      let field3 = oListItem.get_item("PlannedCompletedDate") || No_Data;
-      field3 = field3.toLocaleDateString("en-US");
+      let field3 = oListItem.get_item("PlannedCompletedDate") ? field3.toLocaleDateString("en-US") : No_Data;
       let field4 = oListItem.get_item("Weight") || No_Data;
       let field5 = oListItem.get_item("InitiativeCode") || No_Data
 
@@ -7704,26 +7696,24 @@ window.Get_InitiativeDeliverables = {
 
       delivHTML += `
             <div class="row mx-0 my-3 history-row-ctx">
-                <div class="col-3">
-                    <p>${stage}</p>
-                </div>
-                <div class="col-2">
+
+                <div class="col-1">
                     <p class="historyValue">${field1}</p>
                     <p class="Resources historyLabel" data-trans-delivcode></p>
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     <p class="historyValue">${field2}</p>
                     <p  class="Resources historyLabel" data-trans-delivname></p>
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     <p class="historyValue">${field3}</p>
                     <p  class="Resources historyLabel" data-trans-deliveplannedcompleteddate></p>
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     <p class="historyValue">${field4}</p>
                     <p  class="Resources historyLabel" data-trans-delivweight></p>
                 </div>
-                <div class="col-1">
+                <div class="col-2">
                     <p class="historyValue"><span class="Resources" data-trans-delivinitiative></span>${field5}</p>
                     <p  class="Resources historyLabel" data-trans-delivsource>taken action</p>
                 </div>
@@ -7735,6 +7725,7 @@ window.Get_InitiativeDeliverables = {
       $(".section3")
     );
     changeResources();
+    Get_RelatedProjects_Initiatives.init();
   },
   onError: function (sender, args) {
     console.log(
@@ -7759,6 +7750,141 @@ window.Get_InitiativeDeliverables = {
   // Global variables
   g: {},
 };
+window.Get_RelatedProjects_Initiatives = {
+	init: function () {
+		var clientContext = new SP.ClientContext.get_current();
+		var oList = clientContext.get_web().get_lists().getByTitle("Projects");
+
+		var camelQuery = `<View><Query><Where>
+    <Eq><FieldRef Name='RelatedInitiative'/><Value Type='Text'>${currentItemCode}</Value></Eq>
+    </Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>`;
+
+		Get_RelatedProjects_Initiatives.g.camlQuery = new SP.CamlQuery();
+		Get_RelatedProjects_Initiatives.g.camlQuery.set_viewXml(camelQuery);
+
+		SPHTTPitemsEnumerable = oList.getItems(
+			Get_RelatedProjects_Initiatives.g.camlQuery
+		);
+		clientContext.load(SPHTTPitemsEnumerable);
+		clientContext.executeQueryAsync(
+			Function.createDelegate(this, Get_RelatedProjects_Initiatives.onSuccess),
+			Function.createDelegate(this, Get_RelatedProjects_Initiatives.onError)
+		);
+	},
+	onSuccess: function (sender, args) {
+		var listItemEnum = SPHTTPitemsEnumerable.getEnumerator();
+    Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives = [];
+		while (listItemEnum.moveNext()) {
+			var oListItem = listItemEnum.get_current();
+			Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives.push(
+				oListItem.get_item("Title")
+			);
+    }
+    Get_ProjectsDeliverables.init();
+	},
+	onError: function (sender, args) {
+		console.log(
+			"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+		);
+	},
+	// Global variables
+	g: {},
+};
+window.Get_ProjectsDeliverables = {
+	preinit: function () {
+		if (currentItemCode) {
+			Get_ProjectsDeliverables.init();
+			clearInterval(checkStatusHtmlForDeliv);
+		}
+	},
+	init: function () {
+		var clientContext = new SP.ClientContext.get_current();
+		var oList = clientContext
+			.get_web()
+			.get_lists()
+			.getByTitle("Deliverables");
+
+		var inQuery = `<In><FieldRef Name="RelatedInitiative" /><Values><`;
+		for (
+			var j = 0;
+			j < Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives.length;
+			j++
+		) {
+			inQuery += `<Value Type="ProjectCode">${Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives[j]}</Value>`;
+		}
+    inQuery += `</Values></In>`;
+
+    var camelQuery = ``;
+    if (Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives.length) {
+      camelQuery = `<View><Query><Where>
+      ${inQuery}</Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>`;
+      Get_ProjectsDeliverables.g.camlQuery = new SP.CamlQuery();
+      Get_ProjectsDeliverables.g.camlQuery.set_viewXml(camelQuery);
+
+      SPHTTPitemsEnumerable = oList.getItems(
+        Get_ProjectsDeliverables.g.camlQuery
+      );
+      clientContext.load(SPHTTPitemsEnumerable);
+      clientContext.executeQueryAsync(
+        Function.createDelegate(this, Get_ProjectsDeliverables.onSuccess),
+        Function.createDelegate(this, Get_ProjectsDeliverables.onError)
+      );
+    }
+
+	},
+	onSuccess: function (sender, args) {
+		var listItemEnum = SPHTTPitemsEnumerable.getEnumerator();
+		let delivHTML = ``;
+
+		while (listItemEnum.moveNext()) {
+			var oListItem = listItemEnum.get_current();
+			let field1 = oListItem.get_item("Title") || No_Data;
+			let field2 = oListItem.get_item("Name") || No_Data;
+			let field3 = oListItem.get_item("PlannedCompletedDate")
+				? field3.toLocaleDateString("en-US")
+				: No_Data;
+			let field4 = oListItem.get_item("Weight") || No_Data;
+			let field5 = oListItem.get_item("InitiativeCode") || No_Data;
+
+			delivHTML += `
+            <div class="row mx-0 my-3 history-row-ctx">
+
+                <div class="col-1">
+                    <p class="historyValue">${field1}</p>
+                    <p class="Resources historyLabel" data-trans-delivcode></p>
+                </div>
+                <div class="col-3">
+                    <p class="historyValue">${field2}</p>
+                    <p  class="Resources historyLabel" data-trans-delivname></p>
+                </div>
+                <div class="col-3">
+                    <p class="historyValue">${field3}</p>
+                    <p  class="Resources historyLabel" data-trans-deliveplannedcompleteddate></p>
+                </div>
+                <div class="col-3">
+                    <p class="historyValue">${field4}</p>
+                    <p  class="Resources historyLabel" data-trans-delivweight></p>
+                </div>
+                <div class="col-2">
+                    <p class="historyValue"><span class="Resources" data-trans-delivproject></span>${field5}</p>
+                    <p  class="Resources historyLabel" data-trans-delivsource>taken action</p>
+                </div>
+            </div>
+            `;
+		}
+		$(delivHTML).append($(".relateddeliverables"));
+		changeResources();
+	},
+	onError: function (sender, args) {
+		console.log(
+			"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+		);
+	},
+	// Global variables
+	g: {},
+};
+
+//
 var DontSubmit_DataRequest = {
   init: function () {
     // to handle dont submit in edit lvl1
