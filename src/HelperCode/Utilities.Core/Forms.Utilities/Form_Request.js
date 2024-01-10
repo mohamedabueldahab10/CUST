@@ -2386,6 +2386,7 @@ window.View_Data_Request = {
     }
 
     $(".loader-box").fadeOut();
+    currentItemCode = oListItem.get_item("Title");
     changeResources();
     //alert(PCODE_STRING);
   },
@@ -7589,6 +7590,13 @@ window.Get_TaskHistory = {
       SPHTTPitemsEnumerable.get_listItemCollectionPosition();
     $("button.loadMore").removeClass("disabled loader-action");
     changeResources();
+    isDelivStage = stageid == "SInStage02" || stageid == "SInStage03" || stageid == "VInStage02" || stageid == "VInStage03" || stageid == "VInStage04" || stageid == "VInStage05" || stageid == "LInStage02" || stageid == "LInStage03";
+    if (isDelivStage) {
+      //calling relevant function
+      window.checkStatusHtmlForDeliv = setInterval(function () {
+          Get_InitiativeDeliverables.preinit();
+      }, 1000);
+    }
   },
   onError: function (sender, args) {
     console.log(
@@ -7614,154 +7622,133 @@ window.Get_TaskHistory = {
   g: {},
 };
 // !in progress
-// window.Get_InitiativeDeliverables = {
-//   init: function () {
-//     var clientContext = new SP.ClientContext.get_current();
-//     var oList = clientContext.get_web().get_lists().getByTitle("InitiativeDeliverables");
+window.Get_InitiativeDeliverables = {
+  preinit: function () {
+    if (currentItemCode) {
+      Get_InitiativeDeliverables.init();
+      clearInterval(checkStatusHtmlForDeliv);
 
-//     var camelQuery = `<View><Query><Where>
-//     <Eq><FieldRef Name='InitiativeCode'/><Value Type='Text'>${currentItemCode}</Value></Eq>
-//     </Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>`;
+    }
+  },
+  init: function () {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("InitiativeDeliverables");
 
-//     Get_InitiativeDeliverables.g.camlQuery = new SP.CamlQuery();
-//     Get_InitiativeDeliverables.g.camlQuery.set_viewXml(camelQuery);
+    var camelQuery = `<View><Query><Where>
+    <Eq><FieldRef Name='InitiativeCode'/><Value Type='Text'>${currentItemCode}</Value></Eq>
+    </Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>`;
 
-//     SPHTTPitemsEnumerable = oList.getItems(Get_InitiativeDeliverables.g.camlQuery);
-//     clientContext.load(SPHTTPitemsEnumerable);
-//     clientContext.executeQueryAsync(
-//       Function.createDelegate(this, Get_InitiativeDeliverables.onSuccess),
-//       Function.createDelegate(this, Get_InitiativeDeliverables.onError)
-//     );
-//   },
-//   onSuccess: function (sender, args) {
-//     var listItemEnum = SPHTTPitemsEnumerable.getEnumerator();
-//     let historyHTML = ``;
+    Get_InitiativeDeliverables.g.camlQuery = new SP.CamlQuery();
+    Get_InitiativeDeliverables.g.camlQuery.set_viewXml(camelQuery);
 
-//     let wfHistoryLink = "";
-
-//     let isThereHistory = false;
-
-//     if (!$(".task-history-ctx").length) {
-//       delivHTML = `<div class="section4 row col-12 px-0 deliverables-ctx mx-0 d-none">
-//       <div class="approvalHeader">
-//           <h2 class="Resources" data-trans-relateddeliverables>
-//           </h2>
-//       </div>
-//           <div class="relateddeliverables row mx-0 mt-5 col-12 flex-column">
-
-//         `;
-//     }
-
-//     while (listItemEnum.moveNext()) {
-//       var oListItem = listItemEnum.get_current();
-//       let field1 = oListItem.get_item("Title") || No_Data;
-//       let field2 = oListItem.get_item("Name") || No_Data;
-//       let field3 = oListItem.get_item("PlannedCompletedDate") || No_Data;
-//       field3 = createdDate.toLocaleDateString("en-US");
-//       let field4 = oListItem.get_item("Weight") || No_Data;
-//       let field5 = oListItem.get_item("InitiativeCode") || No_Data
+    SPHTTPitemsEnumerable = oList.getItems(Get_InitiativeDeliverables.g.camlQuery);
+    clientContext.load(SPHTTPitemsEnumerable);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Get_InitiativeDeliverables.onSuccess),
+      Function.createDelegate(this, Get_InitiativeDeliverables.onError)
+    );
+  },
+  onSuccess: function (sender, args) {
+    var listItemEnum = SPHTTPitemsEnumerable.getEnumerator();
+    let delivHTML = ``;
 
 
-//       // if (localStorage.getItem("Dynamo_Tasks Configuration") != null) {
-//       //   tasktitlearr = JSON.parse(
-//       //     localStorage.getItem("Dynamo_Tasks Configuration") || "[]"
-//       //   );
-//       //   tasktitlearr = tasktitlearr.filter(function (item) {
-//       //     return item.code == stage;
-//       //   });
-//       //   if (
-//       //     localStorage.getItem("lng") == null ||
-//       //     localStorage.getItem("lng") == "ar"
-//       //   ) {
-//       //     stage = tasktitlearr[0].name;
-//       //   } else {
-//       //     stage = tasktitlearr[0].nameEn;
-//       //   }
-//       // }
+
+      delivHTML = `<div class="section4 row col-12 px-0 deliverables-ctx mx-0">
+      <div class="approvalHeader">
+          <h2 class="Resources" data-trans-relateddeliverables>
+          </h2>
+      </div>
+          <div class="relateddeliverables row mx-0 mt-5 col-12 flex-column">
+
+        `;
 
 
-//       //end date
-//       delivHTML += `
-//             <div class="row mx-0 my-3 history-row-ctx">
-//                 <div class="col-3">
-//                     <p>${stage}</p>
-//                 </div>
-//                 <div class="col-2">
-//                     <p class="historyValue">${field1}</p>
-//                     <p class="Resources historyLabel" data-trans-delivcode></p>
-//                 </div>
-//                 <div class="col-2">
-//                     <p class="historyValue">${field2}</p>
-//                     <p  class="Resources historyLabel" data-trans-delivname></p>
-//                 </div>
-//                 <div class="col-2">
-//                     <p class="historyValue">${field3}</p>
-//                     <p  class="Resources historyLabel" data-trans-deliveplannedcompleteddate></p>
-//                 </div>
-//                 <div class="col-2">
-//                     <p class="historyValue">${field4}</p>
-//                     <p  class="Resources historyLabel" data-trans-delivweight></p>
-//                 </div>
-//                 <div class="col-1">
-//                     <p class="historyValue"><span class="Resources" data-trans-delivinitiative></span>${field5}</p>
-//                     <p  class="Resources historyLabel" data-trans-delivsource>taken action</p>
-//                 </div>
-//             </div>
-//             `;
-//     }
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      let field1 = oListItem.get_item("Title") || No_Data;
+      let field2 = oListItem.get_item("Name") || No_Data;
+      let field3 = oListItem.get_item("PlannedCompletedDate") || No_Data;
+      field3 = field3.toLocaleDateString("en-US");
+      let field4 = oListItem.get_item("Weight") || No_Data;
+      let field5 = oListItem.get_item("InitiativeCode") || No_Data
 
-//     let noTaskhistory = isThereHistory ? "" : UserNo_Data;
-//     if (!$(".task-history-ctx").length) {
-//       historyHTML += `<p style="text-align:center">${noTaskhistory}</p>
-//                     ${
-//                       isThereHistory
-//                         ? `<button type="button"class="loadMore Resources mb-3" data-trans-viewmore>
-//                         loadmore
-//                     </button>`
-//                         : ""
-//                     }
-//                 </div>
-//             </div>
-//             `;
-//       $(".btnactionrow").before(historyHTML);
-//       $("button.loadMore").on("click", () => {
-//         Get_InitiativeDeliverables.loadMore();
-//       });
-//     } else {
-//       // $(".task-history-ctx .taskHistory").append(historyHTML);
-//       $(historyHTML).insertBefore(
-//         $(".task-history-ctx .taskHistory button.loadMore")
-//       );
-//     }
-//     $(".btnactionrow .form-btns-wrapper").show();
-//     Get_InitiativeDeliverables.g.position =
-//       SPHTTPitemsEnumerable.get_listItemCollectionPosition();
-//     $("button.loadMore").removeClass("disabled loader-action");
-//     changeResources();
-//   },
-//   onError: function (sender, args) {
-//     console.log(
-//       "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
-//     );
-//   },
-//   loadMore: function () {
-//     //Position will be null if all the items in the collection are fetched and there are no more items to be fetched.
-//     if (Get_InitiativeDeliverables.g.position != null) {
-//       isLoadMore = true;
-//       //If more items are to be fetched, make a second call to the server and fetch the next group of items.
-//       Get_InitiativeDeliverables.g.camlQuery.set_listItemCollectionPosition(
-//         Get_InitiativeDeliverables.g.position
-//       );
-//       Get_InitiativeDeliverables.init();
-//       $("button.loadMore").addClass("loader-action");
-//     } else if (Get_InitiativeDeliverables.g.position == null) {
-//       // $("button.loadMore").hide();
-//       $("button.loadMore").addClass("disabled");
-//     }
-//   },
-//   // Global variables
-//   g: {},
-// };
+
+      // if (localStorage.getItem("Dynamo_Tasks Configuration") != null) {
+      //   tasktitlearr = JSON.parse(
+      //     localStorage.getItem("Dynamo_Tasks Configuration") || "[]"
+      //   );
+      //   tasktitlearr = tasktitlearr.filter(function (item) {
+      //     return item.code == stage;
+      //   });
+      //   if (
+      //     localStorage.getItem("lng") == null ||
+      //     localStorage.getItem("lng") == "ar"
+      //   ) {
+      //     stage = tasktitlearr[0].name;
+      //   } else {
+      //     stage = tasktitlearr[0].nameEn;
+      //   }
+      // }
+
+
+      delivHTML += `
+            <div class="row mx-0 my-3 history-row-ctx">
+                <div class="col-3">
+                    <p>${stage}</p>
+                </div>
+                <div class="col-2">
+                    <p class="historyValue">${field1}</p>
+                    <p class="Resources historyLabel" data-trans-delivcode></p>
+                </div>
+                <div class="col-2">
+                    <p class="historyValue">${field2}</p>
+                    <p  class="Resources historyLabel" data-trans-delivname></p>
+                </div>
+                <div class="col-2">
+                    <p class="historyValue">${field3}</p>
+                    <p  class="Resources historyLabel" data-trans-deliveplannedcompleteddate></p>
+                </div>
+                <div class="col-2">
+                    <p class="historyValue">${field4}</p>
+                    <p  class="Resources historyLabel" data-trans-delivweight></p>
+                </div>
+                <div class="col-1">
+                    <p class="historyValue"><span class="Resources" data-trans-delivinitiative></span>${field5}</p>
+                    <p  class="Resources historyLabel" data-trans-delivsource>taken action</p>
+                </div>
+            </div>
+            `;
+    }
+    delivHTML+=`</div></div>`
+    $(delivHTML).insertBefore(
+      $(".section3")
+    );
+    changeResources();
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  loadMore: function () {
+    //Position will be null if all the items in the collection are fetched and there are no more items to be fetched.
+    if (Get_InitiativeDeliverables.g.position != null) {
+      isLoadMore = true;
+      //If more items are to be fetched, make a second call to the server and fetch the next group of items.
+      Get_InitiativeDeliverables.g.camlQuery.set_listItemCollectionPosition(
+        Get_InitiativeDeliverables.g.position
+      );
+      Get_InitiativeDeliverables.init();
+      $("button.loadMore").addClass("loader-action");
+    } else if (Get_InitiativeDeliverables.g.position == null) {
+      // $("button.loadMore").hide();
+      $("button.loadMore").addClass("disabled");
+    }
+  },
+  // Global variables
+  g: {},
+};
 var DontSubmit_DataRequest = {
   init: function () {
     // to handle dont submit in edit lvl1

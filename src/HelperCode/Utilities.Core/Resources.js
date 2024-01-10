@@ -1084,6 +1084,7 @@
     delivsource: "مصدر المخرج",
     delivinitiative: "مبادرة: ",
     delivproject: "مشروع: ",
+    relateddeliverables: "المخرجات",
     //KnowladgeBase
     bookname: "اسم الملف",
 		booktype: "نوع الملف",
@@ -2265,6 +2266,7 @@
     delivsource: "Source",
     delivinitiative: "Initiative: ",
     delivproject: "Project: ",
+    relateddeliverables: "Related Deliverables",
     //KnowladgeBase
     bookname: "File Name",
 		booktype: "File Type",
