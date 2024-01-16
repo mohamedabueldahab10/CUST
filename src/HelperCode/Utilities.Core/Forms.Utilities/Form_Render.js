@@ -1,5 +1,5 @@
-var logo = require("../../../HelperRessources/img/print-logo.png");
-//  var logo = "";
+// var logo = require("../../../HelperRessources/img/print-logo.png");
+ var logo = "";
 //= isArabic ? require('../../../HelperRessources/img/main-logo.svg') : require('../../../HelperRessources/img/main-logo-en.svg');
 (window.isNew = window.location.href.toLowerCase().indexOf("new.aspx") > -1),
   (window.isEdit =
@@ -517,8 +517,7 @@ window.ListInfo = {
             let maxDateField = $(this).attr("date-max-field");
             let dateControlingInput = $(this).attr("date-controling-field");
             dateControlingInput = $(`#${dateControlingInput}`);
-            let $this = $(this);
-            debugger
+            let $this = $(this);            
             dateControlingInput.on("change", function (e){
               let controlingCode = $(this).val();
               let controlingListName = $(this).data("listname");
@@ -14458,9 +14457,12 @@ let date_Controlling_Call = {
 			tableRows = "";
 			var oListItem = listItemEnum.get_current();
 			let maxvalue = oListItem.get_item(date_Controlling_Call.g.maxDateField);
+      maxvalue = new Date(maxvalue);
       let year = maxvalue.getFullYear();
       let month = maxvalue.getMonth() + 1; // Months are zero-indexed, so we add 1
+      month = month < 10? `0${month}`:month;
       let day = maxvalue.getDate();
+      day = day <10 ? `0${day}`:day;
 
       maxvalue = `${year}-${month}-${day}`;
       date_Controlling_Call.g.$this.attr("max",maxvalue)
