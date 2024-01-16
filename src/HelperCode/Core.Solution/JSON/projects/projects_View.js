@@ -41,6 +41,18 @@ var Information_Form = [
         type: "string",
       },
       {
+        InternalName: "FileType",
+        DisplayName: "نوع المرفق",
+        DisplayNameEn: "File Type",
+        type: "multiselectForFiles",
+        options: {
+                  choices:[
+                  'الموافقات','دراسة الجدوى','ميثاق المشروع'
+                ]
+          }
+       
+      },
+      {
         InternalName: "Portfolio",
         DisplayName: "المحفظة",
         DisplayNameEn: "Portfolio",
@@ -1590,18 +1602,6 @@ var Information_Form = [
           ],
         },
       },
-      {
-        InternalName: "FileType",
-        DisplayName: "نوع المرفق",
-        DisplayNameEn: "File Type",
-        type: "multiselectForFiles",
-        options: {
-                  choices:[
-                  'الموافقات','دراسة الجدوى','ميثاق المشروع'
-                ]
-          }
-       
-      },
       // {
       //     "InternalName": "SupportDocumentsDescription",
       //     "DisplayNameEn": "Support Documents Description",
@@ -1613,3 +1613,4 @@ var Information_Form = [
     ],
   },
 ];
+w

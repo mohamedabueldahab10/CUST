@@ -571,6 +571,11 @@ window.Edit_Data_Request = {
 
     });
   }
+  // date controllin
+  if($("[date-controling-field]").length){
+    debugger
+    $("[data-listname]").trigger("change");
+  }
 
     if (listkey == "mainkpi") {
       // if (isVROP) {
@@ -1459,14 +1464,14 @@ window.View_Data_Request = {
 
         $(this).text(value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
       } else if ($(this).attr("type") == "multiselectForFiles") {
+        
         var value =
           oListItem.get_item("" + $(this).attr("id") + "") == null
             ? No_Data
             : oListItem
               .get_item("" + $(this).attr("id") + "")
               .split(":::")
-              .join("; <br>");
-
+              .join("<br>");
         $(this).html(value);
       } else if ($(this).attr("type") == "multiselect") {
         var valfieldkey = $(this).data("valfieldkey"),

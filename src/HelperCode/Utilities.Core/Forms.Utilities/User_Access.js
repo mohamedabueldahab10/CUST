@@ -922,6 +922,7 @@ window.userCalls = {
         isSectorHead = true;
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
+          ChartHideForInitiatives=".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
         ar_UserRole = " مدير  ";
         en_UserRole = "Sector Head of ";
 
@@ -2644,7 +2645,7 @@ window.userCalls = {
         USER_HomePage = "InitiativesMain.aspx";
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives=  ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+          ChartHideForInitiatives=  ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
 
         ar_UserRole = "مدير وحدة الانجاز";
         en_UserRole = "Development Unit";
