@@ -111,6 +111,10 @@ var Information_Form = [
               value: 'acooperationagreement',
               display: 'acooperationagreement',
             },
+            {
+              value: 'datasharingagreement',
+              display: 'datasharingagreement',
+            },
           ],
         },
       },

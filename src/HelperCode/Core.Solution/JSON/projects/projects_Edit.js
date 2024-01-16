@@ -385,7 +385,7 @@ var Information_Form = [
       },
       {
         InternalName: "RelatedInitiative",
-        DisplayName: " المبادرة المرتبطة",
+        DisplayName: "المبادرة المرتبطة",
         DisplayNameEn: "Related Initiative",
         ToggleName: "RelatedInitiative",
         type: "lookup",
@@ -396,18 +396,7 @@ var Information_Form = [
         dynamic: "InitiativeType", //InternalName Of Parent field
         filterField: "Types",//InternalName Of Parent field
         filterFieldType: "Text",//Type In Sharepoint List for Parent field
-        disableOnWfTaskStage : "S05,S09",
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
-
-          ]
-        },
-        targetsiblingarr: ["Sector", "SubSector","StartDate","FinishDate"], // get siblings value
-
+        targetsiblingarr: ["Sector", "SubSector", "StartDate", "FinishDate", "RelatedObjective"], // get siblings value
         // security: {
         //   groups: [
         //     "VRO_E",
@@ -741,20 +730,19 @@ var Information_Form = [
         DisplayName: "تاريخ بدء الأساس",
         DisplayNameEn: "Baseline Start Date",
         type: "datetime",
-        disableOnWfTaskStage : "S05,S09",
         max: "BaselineFinishDate",
-        Errmsgkey:'fromdatepattern',
-        //
+        Errmsgkey: 'fromdatepattern',
         descPhraseAr: "التاريخ ضمن مدة المبادرة",
         descPhraseEn: "Date within Initiative period",
+        // 
         maxOnChild: true,
         childsId: ["PlannedFinishDate", "PlannedDate", "ActualDate",
-        'PlannedOfferingDate',
-        'ActualOfferingDate',
-        'AwardDate',
-        'ContractualDate',],
-        targetOn: "min",
-        security: {
+          'PlannedOfferingDate',
+          'ActualOfferingDate',
+          'AwardDate',
+          'ContractualDate',
+        ],
+        targetOn: "min" ,      security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
@@ -763,28 +751,17 @@ var Information_Form = [
 
           ]
         },
-        // "state": "disabled"
       },
       {
         InternalName: "BaselineFinishDate",
         DisplayName: "تاريخ إنهاء الأساس",
         DisplayNameEn: "Baseline Finish Date",
         type: "datetime",
-        descPhraseAr: "التاريخ ضمن مدة المبادرة",
-        descPhraseEn: "Date within Initiative period",
-        disableOnWfTaskStage : "S05,S09",
         min: "BaselineStartDate",
-        Errmsgkey:'todatepattern',
-        //
-        // 
-        maxOnChild: true,
-        childsId: ["PlannedFinishDate", "PlannedDate", "ActualDate",
-        'PlannedOfferingDate',
-        'ActualOfferingDate',
-        'AwardDate',
-        'ContractualDate',],
-        targetOn: "max",
-        security: {
+        Errmsgkey: 'todatepattern',
+        descPhraseAr: "التاريخ ضمن مدة المبادرة",
+        descPhraseEn: "Date within Initiative period", 
+         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
@@ -793,6 +770,14 @@ var Information_Form = [
 
           ]
         },
+        // 
+        maxOnChild: true,
+        childsId: ["PlannedFinishDate", "PlannedDate", "ActualDate",
+          'PlannedOfferingDate',
+          'ActualOfferingDate',
+          'AwardDate',
+          'ContractualDate',],
+        targetOn: "max"
       },
 
       

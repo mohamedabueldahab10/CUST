@@ -91,7 +91,7 @@ var Information_Form = [
         DisplayName: 'تصنيف الشراكة',
         DisplayNameEn: 'Partnership Classification',
         type: 'dropdownValues',
-        // validation: 'required',
+        validation: 'required',
         options: {
           choices: [
             {
@@ -105,6 +105,10 @@ var Information_Form = [
             {
               value: 'acooperationagreement',
               display: 'acooperationagreement',
+            },
+            {
+              value: 'datasharingagreement',
+              display: 'datasharingagreement',
             },
           ],
         },
@@ -292,7 +296,7 @@ var Information_Form = [
         InternalName: 'PartnershipManager',
         DisplayName: 'مدير العلاقة',
         DisplayNameEn: 'Partnership Manager',
-        type: 'picker',
+        type: 'multipicker',
         // validation: 'required',
       },
       {
