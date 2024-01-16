@@ -340,7 +340,7 @@ var MainKPIs_Info_Request = {
           '<th scope="row" class="Resources" data-trans-target></th>' +
           // ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' + oListItem.get_id() + '">' + total +
           // "</td>" +
-          ' <td id="totalTarget"><input class="QarterInputStyle inputStyle1 myInput" data-internal="Total" type="number" name="" value="' +
+          ' <td id="totalTarget"><input class="QarterInputStyle inputStyle1 myInput" data-internal="Total"  data-recurrencechanged="' + recurrenceChanged + '" data-kpidraft="' + kpiDraft + '"type="number" name="" value="' +
           TotalAllTarget +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
@@ -386,7 +386,7 @@ var MainKPIs_Info_Request = {
           // '">' +
           // total +
           // "</td>" +
-          ' <td id="totalTarget"><input class="QarterInputStyle inputStyle1 myInput" data-internal="Total" type="number" name="" value="' +
+          ' <td id="totalTarget"><input class="QarterInputStyle inputStyle1 myInput" data-internal="Total"  data-recurrencechanged="' + recurrenceChanged + '" data-kpidraft="' + kpiDraft + '"type="number" name="" value="' +
           TotalAllTarget +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
@@ -472,7 +472,7 @@ var MainKPIs_Info_Request = {
           '<th scope="row" class="Resources" data-trans-target></th>' +
           // ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' + oListItem.get_id() + '">' + total +
           // "</td>" +
-          ' <td id="totalTarget"><input class="QarterInputStyle inputStyle1 myInput" data-internal="Total" type="number" name="" value="' +
+          ' <td id="totalTarget"><input class="QarterInputStyle inputStyle1 myInput" data-internal="Total"  data-recurrencechanged="' + recurrenceChanged + '" data-kpidraft="' + kpiDraft + '"type="number" name="" value="' +
           TotalAllTarget +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
@@ -532,7 +532,7 @@ var MainKPIs_Info_Request = {
           // '">' +
           // total +
           // "</td>" +
-          ' <td id="totalTarget"><input class="QarterInputStyle inputStyle1 myInput" data-internal="Total" type="number" name="" value="' +
+          ' <td id="totalTarget"><input class="QarterInputStyle inputStyle1 myInput" data-internal="Total"  data-recurrencechanged="' + recurrenceChanged + '" data-kpidraft="' + kpiDraft + '"type="number" name="" value="' +
           TotalAllTarget +
           '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
@@ -752,6 +752,7 @@ var MainKPIs_Info_Request = {
 
     if (!isAdmin && !isSPMAdmin && !isVROP && !isLMSP && !isEPMO && !isVROE && !isLMSUExecution && !isSPMAdmin) { // to can the spmAdmin change on  targets
       $('td input[data-internal*="Target"]').prop('disabled', true);
+      $('td input[data-internal="Total"]').prop('disabled', true);
     }
     if (!isAdmin && !isPerformanceLeader && isLMSP) { // to can the spmAdmin change on  targets
       $('input[data-internal*="Actual"]').prop('disabled', true);
