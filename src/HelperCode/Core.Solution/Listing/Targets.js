@@ -128,7 +128,7 @@ var MainKPIs_Info_Request = {
         "<tr>" +
         '<th scope="col" data-trans-kpi class="Resources">المؤشر </th>' +
         '<th scope="col"></th>' +
-        '<th scope="col" data-trans-total class="Resources">الإجمالي</th>' +
+        '<th scope="col" data-trans-totalyearly class="Resources">الإجمالي</th>' +
         '<th scope="col" data-trans-yearly Class="Resources">سنوي</th>' +
         "</tr>" +
         "</div>" +
@@ -141,7 +141,7 @@ var MainKPIs_Info_Request = {
         "<tr>" +
         '<th scope="col" data-trans-kpi class="Resources">المؤشر </th>' +
         '<th scope="col"></th>' +
-        '<th scope="col" data-trans-total class="Resources">الإجمالي</th>' +
+        '<th scope="col" data-trans-totalyearly class="Resources">الإجمالي</th>' +
         '<th scope="col" data-trans-quart1 Class="Resources">الربع 1</th>' +
         '<th scope="col" data-trans-quart2 Class="Resources">الربع 2</th>' +
         '<th scope="col" data-trans-quart3 Class="Resources">الربع 3</th>' +
@@ -157,7 +157,7 @@ var MainKPIs_Info_Request = {
         "<tr>" +
         '<th scope="col" data-trans-kpi class="Resources">المؤشر </th>' +
         '<th scope="col"></th>' +
-        '<th scope="col" data-trans-total class="Resources">الإجمالي</th>' +
+        '<th scope="col" data-trans-totalyearly class="Resources">الإجمالي</th>' +
         '<th scope="col" data-trans-midterm1 Class="Resources">النصف 1</th>' +
         '<th scope="col" data-trans-midterm2 Class="Resources">النصف 2</th>' +
         "</tr>" +
@@ -171,7 +171,7 @@ var MainKPIs_Info_Request = {
         "<tr>" +
         '<th scope="col" data-trans-kpi class="Resources">المؤشر </th>' +
         '<th scope="col"></th>' +
-        '<th scope="col" data-trans-total class="Resources">الإجمالي</th>' +
+        '<th scope="col" data-trans-totalyearly class="Resources">الإجمالي</th>' +
         '<th scope="col" data-trans-month1 Class="Resources">يناير</th>' +
         '<th scope="col" data-trans-month2 Class="Resources">فبراير</th>' +
         '<th scope="col" data-trans-month3 Class="Resources">الربع الأول</th>' +
@@ -278,6 +278,8 @@ var MainKPIs_Info_Request = {
       var actualM10 = (oListItem.get_item("ActualM10") ? Number(oListItem.get_item("ActualM10").toFixed(2)) : 0);
       var actualM11 = (oListItem.get_item("ActualM11") ? Number(oListItem.get_item("ActualM11").toFixed(2)) : 0);
       var actualM12 = (oListItem.get_item("ActualM12") ? Number(oListItem.get_item("ActualM12").toFixed(2)) : 0);
+      var TotalAllTarget = (oListItem.get_item("Total") ? Number(oListItem.get_item("Total").toFixed(2)) : 0);
+      // console.log(TotalAllTarget,'TotalAllTarget')
       ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       var performanceleader = oListItem.get_item("PerformanceLeader")
         ? oListItem.get_item("PerformanceLeader").get_lookupValue()
@@ -336,8 +338,13 @@ var MainKPIs_Info_Request = {
           '<tr data-target_list="KPIResults" data-id="' + oListItem.get_id() + '" data-category="' + category + '" is-updated="false" id="MyTr">' +
           `<th rowspan="2"><span>${name}</span><span class="target_recurrencechanged Resources" ${recurrenceChanged == 'yes' ? "data-trans-recurrencechanged" : ""}></span><span class="target_recurrencechanged Resources" ${kpiDraft == 'draft' ? "data-trans-draftkpi" : ""}></span></th>` +
           '<th scope="row" class="Resources" data-trans-target></th>' +
-          ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' + oListItem.get_id() + '">' + total +
-          "</td>" +
+          // ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' + oListItem.get_id() + '">' + total +
+          // "</td>" +
+          ' <td id="totalTarget"><input class="QarterInputStyle inputStyle1 myInput" data-internal="Total" type="number" name="" value="' +
+          TotalAllTarget +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
           ' <td><input class="QarterInputStyle inputStyle1 myInput" data-recurrencechanged="' + recurrenceChanged + '" data-kpidraft="' + kpiDraft + '"  data-internal="TargetY" type="number" name="" value="' +
           targetY +
           '" data-result-type="' +
@@ -374,11 +381,16 @@ var MainKPIs_Info_Request = {
           //' <th rowspan="2">' + name +"</th>" +
           `<th rowspan="2"><span>${name}</span><span class="target_recurrencechanged Resources" ${recurrenceChanged == 'yes' ? "data-trans-recurrencechanged" : ""}></span><span class="target_recurrencechanged Resources" ${kpiDraft == 'draft' ? "data-trans-draftkpi" : ""}></span></th>` +
           '<th scope="row" class="Resources" data-trans-target></th>' +
-          ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' +
+          // ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' +
+          // oListItem.get_id() +
+          // '">' +
+          // total +
+          // "</td>" +
+          ' <td id="totalTarget"><input class="QarterInputStyle inputStyle1 myInput" data-internal="Total" type="number" name="" value="' +
+          TotalAllTarget +
+          '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
-          '">' +
-          total +
-          "</td>" +
+          '"></td>' +
           ' <td><input class="QarterInputStyle inputStyle1 myInput" data-recurrencechanged="' + recurrenceChanged + '" data-kpidraft="' + kpiDraft + '" data-internal="TargetQ1" type="number" name="" value="' +
           targetQ1 +
           '" data-result-type="' +
@@ -458,8 +470,13 @@ var MainKPIs_Info_Request = {
           // ' <th rowspan="2">' + name + "</th>" +
           `<th rowspan="2"><span>${name}</span><span class="target_recurrencechanged Resources" ${recurrenceChanged == 'yes' ? "data-trans-recurrencechanged" : ""}></span><span class="target_recurrencechanged Resources" ${kpiDraft == 'draft' ? "data-trans-draftkpi" : ""}></span></th>` +
           '<th scope="row" class="Resources" data-trans-target></th>' +
-          ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' + oListItem.get_id() + '">' + total +
-          "</td>" +
+          // ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' + oListItem.get_id() + '">' + total +
+          // "</td>" +
+          ' <td id="totalTarget"><input class="QarterInputStyle inputStyle1 myInput" data-internal="Total" type="number" name="" value="' +
+          TotalAllTarget +
+          '" oninput="checkTypes.init(this)" data-id="' +
+          oListItem.get_id() +
+          '"></td>' +
           ' <td><input class="QarterInputStyle inputStyle1 myInput" data-recurrencechanged="' + recurrenceChanged + '" data-kpidraft="' + kpiDraft + '" data-internal="TargetMid1" type="number" name="" value="' +
           targetMid1 +
           '" data-result-type="' +
@@ -510,11 +527,16 @@ var MainKPIs_Info_Request = {
           //' <th rowspan="2">' +name +"</th>" +
           `<th rowspan="2"><span>${name}</span><span class="target_recurrencechanged Resources" ${recurrenceChanged == 'yes' ? "data-trans-recurrencechanged" : ""}></span><span class="target_recurrencechanged Resources" ${kpiDraft == 'draft' ? "data-trans-draftkpi" : ""}></span></th>` +
           '<th scope="row" class="Resources" data-trans-target></th>' +
-          ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' +
+          // ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' +
+          // oListItem.get_id() +
+          // '">' +
+          // total +
+          // "</td>" +
+          ' <td id="totalTarget"><input class="QarterInputStyle inputStyle1 myInput" data-internal="Total" type="number" name="" value="' +
+          TotalAllTarget +
+          '" oninput="checkTypes.init(this)" data-id="' +
           oListItem.get_id() +
-          '">' +
-          total +
-          "</td>" +
+          '"></td>' +
           ' <td><input class="QarterInputStyle inputStyle1 myInput" data-recurrencechanged="' + recurrenceChanged + '" data-kpidraft="' + kpiDraft + '" data-internal="TargetM1" type="number" name="" value="' +
           targetM1 +
           '" data-result-type="' +
@@ -1626,7 +1648,7 @@ var InitiativeKPIs_Info_Request = {
           "<tr>" +
           '<th scope="col" data-trans-kpi class="Resources">المؤشر </th>' +
           // '<th scope="col">اسم البرنامج</th>'+
-          '<th scope="col" data-trans-total class="Resources">الإجمالي</th>' +
+          '<th scope="col" data-trans-totalyearly class="Resources">الإجمالي</th>' +
           '<th scope="col" data-trans-quart1 Class="Resources">الربع 1</th>' +
           '<th scope="col" data-trans-quart2 Class="Resources">الربع 2</th>' +
           '<th scope="col" data-trans-quart3 Class="Resources">الربع 3</th>' +
@@ -1844,7 +1866,7 @@ var InstrumentKPIs_Info_Request = {
           "<tr>" +
           '<th scope="col" data-trans-kpi class="Resources">المؤشر </th>' +
           // '<th scope="col">اسم البرنامج</th>'+
-          '<th scope="col" data-trans-total class="Resources">الإجمالي</th>' +
+          '<th scope="col" data-trans-totalyearly class="Resources">الإجمالي</th>' +
           '<th scope="col" data-trans-quart1 Class="Resources">الربع 1</th>' +
           '<th scope="col" data-trans-quart2 Class="Resources">الربع 2</th>' +
           '<th scope="col" data-trans-quart3 Class="Resources">الربع 3</th>' +
