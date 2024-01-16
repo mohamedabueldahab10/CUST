@@ -1338,7 +1338,7 @@ var Deliverables_Info_Request = {
       );
       // PlannedFinishDate
       CommittedDate = oListItem.get_item("PlannedCompletedDate");
-      debugger;
+      // debugger;
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
           '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +

@@ -1136,7 +1136,7 @@ var Issues_Info_Request = {
   onSuccess: function (sender, args) {
     var collListItem = Issues_Info_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-    debugger
+    // debugger
     var itemhtml = projectstageforinternallinks ? [
       '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
       _spPageContextInfo.webAbsoluteUrl +

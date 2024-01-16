@@ -573,7 +573,7 @@ window.Edit_Data_Request = {
   }
   // date controllin
   if($("[date-controling-field]").length){
-    debugger
+    // debugger
     $("[data-listname]").trigger("change");
   }
 
@@ -4982,7 +4982,7 @@ var Delete_Kpi_Results = {
 
 var Delete_Benefits_Results = {
   init: function () {
-    debugger;
+    // debugger;
     var context = SP.ClientContext.get_current();
     var dfd = $.Deferred();
     var programList = context
@@ -6414,7 +6414,7 @@ var equationBenefit = {
       benefitsEquation = benefitsEquation.replaceAll(",", ""); // remove , from high number
 
       console.log(benefitsEquation, "benefitsEquation");
-      debugger;
+      // debugger;
 
       try {
         benefitsEquation =
