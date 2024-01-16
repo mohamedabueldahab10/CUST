@@ -16,6 +16,7 @@ window.Information_Form = [
 				DisplayNameEn: 'Create Project',
 				DisplayName: 'انشاء مشروع',
 				type: 'anchor',
+				
 				href: "/SitePages/new.aspx?ListKey=projects",
 				listkey:"projects"
 			},
@@ -27,22 +28,22 @@ window.Information_Form = [
 				href: "/SitePages/new.aspx?ListKey=initiatives",
 				listkey:"initiatives"
 			},
-			{
-				// InternalName: 'Title',
-				DisplayNameEn: 'Create objective',
-				DisplayName: 'انشاء هدف',
-				type: 'anchor',
-				href: "/SitePages/new.aspx?ListKey=sos",
-				listkey:"sos"
-			},
-			{
-				// InternalName: 'Title',
-				DisplayNameEn: 'Create KPI',
-				DisplayName: 'انشاء مؤشر',
-				type: 'anchor',
-				href: "/SitePages/new.aspx?ListKey=mainkpi",
-				listkey:"mainkpi"
-			},
+			// {
+			// 	// InternalName: 'Title',
+			// 	DisplayNameEn: 'Create objective',
+			// 	DisplayName: 'انشاء هدف',
+			// 	type: 'anchor',
+			// 	href: "/SitePages/new.aspx?ListKey=sos",
+			// 	listkey:"sos"
+			// },
+			// {
+			// 	// InternalName: 'Title',
+			// 	DisplayNameEn: 'Create KPI',
+			// 	DisplayName: 'انشاء مؤشر',
+			// 	type: 'anchor',
+			// 	href: "/SitePages/new.aspx?ListKey=mainkpi",
+			// 	listkey:"mainkpi"
+			// },
 		]
 	},
 	{
@@ -58,6 +59,7 @@ window.Information_Form = [
 				validation: "required",
 				// dontSubmit: true,
 				// display: "none",
+				state: 'disabled',
 				customCr: true,
 				dynamic: "parent", //main field that affect on other chiled field  
 				stopinvokeparent:"yes",
@@ -107,6 +109,7 @@ window.Information_Form = [
 				DisplayName: "مقدم الطلب",
 				DisplayNameEn: "Requester",
 				type: "picker",
+				state: 'disabled',
 				validation: "required",
 			},
 			{
@@ -115,6 +118,7 @@ window.Information_Form = [
 				DisplayName: "المشروع المرتبط",
 				display: "none",
 				type: "lookup",
+				state: 'disabled',
 				listKey: "projects",
 				ToggleName: "ProjectCode",
 				customCr: true,
@@ -132,6 +136,7 @@ window.Information_Form = [
 				descPhraseAr: "تغيير عام: تعديل بيانات",
 				descPhraseEn: "General change: Edit data", 
 				DisplayName: "نوع طلب التغيير",
+				state: 'disabled',
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
@@ -362,6 +367,7 @@ window.Information_Form = [
 				descPhraseAr: "تغيير عام: تعديل بيانات",
 				descPhraseEn: "General change: Edit data", 
 				DisplayName: "نوع طلب التغيير",
+				state: 'disabled',
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
@@ -591,6 +597,7 @@ window.Information_Form = [
 				descPhraseAr: "تغيير عام: تعديل بيانات",
 				descPhraseEn: "General change: Edit data", 
 				DisplayName: "نوع طلب التغيير",
+				state: 'disabled',
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
@@ -824,6 +831,7 @@ window.Information_Form = [
 				listKey: "initiatives",
 				display: "none",
 				type: "lookup",
+				state: 'disabled',
 				ToggleName: "InitiativeCode",
 				customCr: true,
 				valsiblingkey: 'Types', // to use it on roles filter on data
@@ -843,6 +851,7 @@ window.Information_Form = [
 				descPhraseEn: "General change: Edit data", 
 				DisplayName: "نوع طلب التغيير",
 				DisplayNameEn: "Change Request Type",
+				state: 'disabled',
 				display: "none",
 				customCr: true,
 				ToggleName: "strategicinitiativesUpdateType",
@@ -1248,6 +1257,7 @@ window.Information_Form = [
 				DisplayNameEn: "Level",
 				type: "string",
 				validation: "required",
+				state: 'disabled',
 				descPhraseAr: "عالي - متوسط - منخفض",
 				descPhraseEn: "High - Medium - Low", 
 			},
@@ -1255,6 +1265,7 @@ window.Information_Form = [
 				InternalName: "Description",
 				DisplayName: "وصف التغيير",
 				DisplayNameEn: "Description",
+				state: 'disabled',
 				type: "multiline",
 				maxchar: 5000,
 				validation: "required",
@@ -1268,6 +1279,7 @@ window.Information_Form = [
 				type: "multiline",
 				maxchar: 5000,
 				validation: "required",
+				state: 'disabled',
 				descPhraseAr:" اسباب التغيير",
 				descPhraseEn: "Justifications for change", 
 			},
