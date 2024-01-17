@@ -1199,6 +1199,19 @@ var Information_Form = [
         maxchar: '500',
         type: 'multiline',
       },
+      {
+        InternalName: 'Actual',
+        DisplayName: 'الإجمالي الفعلي السنوي',
+        DisplayNameEn: 'Annual Actual Total',
+        type: 'float',
+        dontSubmit: true,
+        security: {
+          groups: [
+            'Performance Leaders',
+            'System Admin Group',
+          ],
+        },
+      },
     ],
   },
   // {

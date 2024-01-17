@@ -638,7 +638,6 @@ window.Edit_Data_Request = {
       $("#Year").val(
         oListItem.get_item("Year") ? oListItem.get_item("Year") : ""
       );
-
       equationKPI.init();
 
       // to get the parent related like strategy from mainkpi to can save and start the wf of main kpi
@@ -660,6 +659,9 @@ window.Edit_Data_Request = {
           el.getGrandParent
         ); // to get value from parent list to use it when submit
       });
+      var yearValue = $("#Actual").parent().parent().find("#Year").val();
+      console.log('yearValue',yearValue);
+      Get_ActualAnnualTotal.init(yearValue);
     }
 
     if (listkey == "benefitmetrics") {
@@ -2164,6 +2166,9 @@ window.View_Data_Request = {
             "</span></a>"
         );
       }
+      var yearValue = $("#Actual").parent().parent().find("#Year").text();
+      console.log('yearValue',yearValue);
+      Get_ActualAnnualTotal.init(yearValue);
     }
     if (listkey == "sos") {
       var sosDraftStatus = oListItem.get_item("DraftStatus")
@@ -7076,7 +7081,7 @@ var View_Current_Kpi = {
 
       ////////////////////////////
     }
-
+    
     var currentKpiView =
       '<div class="py-5 border-bottom section-container current_kpi" data-groups="">' +
       '<div class="form-row"><div class="col-lg-3 col-md-4 mb-4"><h3 data-trans-currentkpi class="Resources"></h3><span class="font-14"></span></div>' +
@@ -8010,4 +8015,46 @@ window.get_DynamicValues = {
       }, 2000);
     }
   },
+};
+window.Get_ActualAnnualTotal = {
+  onSuccess: function (sender, args) {
+    var collListItem = Get_ActualAnnualTotal.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      var totalAllActual =
+        oListItem.get_item("Actual") == null ? 0 : oListItem.get_item("Actual");
+      if (isEdit) {
+        $("#Actual").val(totalAllActual);
+      }
+      if (isView) {
+        $("#Actual").html(totalAllActual);
+      }
+    }
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  init: function (year) {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("KPIResults");
+    var camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And><Eq><FieldRef Name='KPI'/><Value Type='Text'>" +
+        KPICode +
+        "</Value></Eq><Eq><FieldRef Name='Year'/><Value Type='Text'>" +
+        year +
+        "</Value></Eq></And></And></Where></Query></View>"
+    );
+
+    Get_ActualAnnualTotal.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(Get_ActualAnnualTotal.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Get_ActualAnnualTotal.onSuccess),
+      Function.createDelegate(this, Get_ActualAnnualTotal.onError)
+    );
+  },
+  g: {},
 };

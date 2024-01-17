@@ -2196,6 +2196,19 @@ var Information_Form = [
         },
       },
       {
+        InternalName: 'Actual',
+        DisplayName: 'الإجمالي الفعلي السنوي',
+        DisplayNameEn: 'Annual Actual Total',
+        type: 'float',
+        dontSubmit: true,
+        security: {
+          groups: [
+            'Performance Leaders',
+            'System Admin Group',
+          ],
+        },
+      },
+      {
         InternalName: "WFStage",
         DisplayName: " المرحلة",
         DisplayNameEn: "Stage",
