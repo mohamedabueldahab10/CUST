@@ -4465,7 +4465,7 @@ a.view-more.d-block.text-center.py-2.Resources.disabled {
 .master_section_err{
     font-size: 15px;
     color: #f8ae3a;
-    padding: 0px 20px; 
+    padding: 0px 20px;
 }
 
 /* ghufran end style */
@@ -6858,7 +6858,10 @@ p.task-name {
     display: inline-flex !important;
 }
 
-
+.section4.deliverables-ctx{
+    max-height: 1000px;
+    overflow-y: auto;
+}
 .task-history-ctx {
     background-color: #fff;
 }

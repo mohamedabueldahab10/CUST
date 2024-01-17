@@ -7775,9 +7775,11 @@ window.Get_RelatedProjects_Initiatives = {
 		var listItemEnum = SPHTTPitemsEnumerable.getEnumerator();
     Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives = [];
 		while (listItemEnum.moveNext()) {
-			var oListItem = listItemEnum.get_current();
-			Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives.push(
-				oListItem.get_item("Title")
+      var oListItem = listItemEnum.get_current(); debugger;
+      Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives.push({
+        code: oListItem.get_item("Title"),
+        name: oListItem.get_item("Name")
+      }
 			);
     }
     Get_ProjectsDeliverables.init();
@@ -7804,20 +7806,19 @@ window.Get_ProjectsDeliverables = {
 			.get_lists()
 			.getByTitle("Deliverables");
 
-		var inQuery = `<In><FieldRef Name="RelatedInitiative" /><Values><`;
+		var inQuery = `<In><FieldRef Name="ProjectCode" /><Values>`;
 		for (
 			var j = 0;
 			j < Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives.length;
 			j++
 		) {
-			inQuery += `<Value Type="ProjectCode">${Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives[j]}</Value>`;
+			inQuery += `<Value Type="Text">${Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives[j].code}</Value>`;
 		}
     inQuery += `</Values></In>`;
 
     var camelQuery = ``;
     if (Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives.length) {
-      camelQuery = `<View><Query><Where>
-      ${inQuery}</Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>`;
+      camelQuery = `<View><Query><Where>${inQuery}</Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>`;
       Get_ProjectsDeliverables.g.camlQuery = new SP.CamlQuery();
       Get_ProjectsDeliverables.g.camlQuery.set_viewXml(camelQuery);
 
@@ -7840,11 +7841,14 @@ window.Get_ProjectsDeliverables = {
 			var oListItem = listItemEnum.get_current();
 			let field1 = oListItem.get_item("Title") || No_Data;
 			let field2 = oListItem.get_item("Name") || No_Data;
-			let field3 = oListItem.get_item("PlannedCompletedDate")
+      let field3 = oListItem.get_item("PlannedFinishDate");
+			field3 = field3
 				? field3.toLocaleDateString("en-US")
 				: No_Data;
 			let field4 = oListItem.get_item("Weight") || No_Data;
-			let field5 = oListItem.get_item("InitiativeCode") || No_Data;
+      let field5 = Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives.filter(function (el) {
+        return el.code == oListItem.get_item("ProjectCode");
+      })
 
 			delivHTML += `
             <div class="row mx-0 my-3 history-row-ctx">
@@ -7859,20 +7863,20 @@ window.Get_ProjectsDeliverables = {
                 </div>
                 <div class="col-3">
                     <p class="historyValue">${field3}</p>
-                    <p  class="Resources historyLabel" data-trans-deliveplannedcompleteddate></p>
+                    <p  class="Resources historyLabel" data-trans-deliveplannedfinishdate></p>
                 </div>
                 <div class="col-3">
                     <p class="historyValue">${field4}</p>
                     <p  class="Resources historyLabel" data-trans-delivweight></p>
                 </div>
                 <div class="col-2">
-                    <p class="historyValue"><span class="Resources" data-trans-delivproject></span>${field5}</p>
+                    <p class="historyValue"><span class="Resources" data-trans-delivproject></span>${field5.name}</p>
                     <p  class="Resources historyLabel" data-trans-delivsource>taken action</p>
                 </div>
             </div>
             `;
 		}
-		$(delivHTML).append($(".relateddeliverables"));
+		$(".relateddeliverables").append(delivHTML);
 		changeResources();
 	},
 	onError: function (sender, args) {
