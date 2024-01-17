@@ -104,7 +104,7 @@ var Information_Form = [
             display: 'vision',
             value: 'vision',
             // roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE','InitiativeManager','InitiativeOwner'],
-            roles: ['LMSE','LMSP','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'],
+            roles: ['LMSE','LMSP','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'],
             otherFields: [
               { fieldName: 'WFModuleCode', value: 'VROCreateInitiative' },
               { fieldName: 'WFStage', value: 'VROCreateInitiative01' },
@@ -128,7 +128,7 @@ var Information_Form = [
               display: 'lms',
               value: 'lms',
               // roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','InitiativeManager','InitiativeOwner',], groups
-              roles: ['LMSE','LMSP','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'],
+              roles: ['LMSE','LMSP','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'LMSCreateInitiative' },
                   { fieldName: 'Phase', value: 'P0' },

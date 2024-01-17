@@ -14,6 +14,8 @@ window.IdeaId;
 var projectManagerPickedToProjectCenter = "";
 
 var kpiName = "",
+  kpicurrentYear = "",
+  kpiTotalActual=0,
   kpiType = "",
   kpiSector = "",
   kpiSubSector = "",
@@ -2282,8 +2284,10 @@ window.Edit_Data_Submit = {
     } else if (listkey == "mainkpi") {
       // get the data to update the kpi result list
       kpiName = $("#Name").val();
+      kpicurrentYear = $("#Year").val();
       kpiType = $("#Types").val();
       kpiSector = $("#Sector").val();
+      kpiTotalActual = $("#Actual").val();
       kpiSubSector = $("#SubSector").val();
       kpiMainGoalRelated = $("#RelatedStrategyObjective").val()
         ? $("#RelatedStrategyObjective").val()
@@ -2476,7 +2480,9 @@ window.Edit_Data_Submit = {
                 kpiMainGoalRelated,
                 kpiSubGoalRelated,
                 kpiPerformanceAnalysis,
-                kpiRecurrenceChanged
+                kpiRecurrenceChanged,
+                kpicurrentYear,
+                kpiTotalActual
               );
             } else if (listkey == "projects" && PCODE) {
               getProjectInfoToUpdateEPM();
@@ -2652,7 +2658,9 @@ var Edit_KPI_Results = {
     kpiMainGoalRelated,
     kpiSubGoalRelated,
     kpiPerformanceAnalysis,
-    kpiRecurrenceChanged
+    kpiRecurrenceChanged,
+    kpicurrentYear,
+    kpiTotalActuals
   ) {
     var context = SP.ClientContext.get_current();
     var dfd = $.Deferred();
@@ -2685,6 +2693,9 @@ var Edit_KPI_Results = {
           items.set_item("Sector", Sector);
           items.set_item("SubSector", SubSector);
           items.set_item("RecurrenceChanged", kpiRecurrenceChanged);
+          if(yearItem == kpicurrentYear){
+            items.set_item("Actual", kpiTotalActuals);
+          }
 
           ///////// update performance leader1 and performance leader2
           if (
@@ -2786,7 +2797,6 @@ var Edit_KPI_Results = {
     });
   },
 };
-
 //New KPI Equation
 var newKPIEquation = {
   init: function () {
@@ -3408,7 +3418,9 @@ var Edit_Master_Details_Submit = {
               kpiMainGoalRelated,
               kpiSubGoalRelated,
               kpiPerformanceAnalysis,
-              kpiRecurrenceChanged
+              kpiRecurrenceChanged,
+              kpicurrentYear,
+              kpiTotalActual
             );
           } else {
             var fieldTargetListLength = $(
@@ -4096,7 +4108,9 @@ function _uploadFile() {
                             kpiPortfolio,
                             kpiMainGoalRelated,
                             kpiSubGoalRelated,
-                            kpiPerformanceAnalysis.kpiRecurrenceChanged
+                            kpiPerformanceAnalysis.kpiRecurrenceChanged,
+                            kpicurrentYear,
+                            kpiTotalActual
                           );
                         } else {
                           window.location =

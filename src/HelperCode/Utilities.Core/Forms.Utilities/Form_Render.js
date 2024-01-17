@@ -1,5 +1,5 @@
-var logo = require("../../../HelperRessources/img/print-logo.png");
-//  var logo = "";
+// var logo = require("../../../HelperRessources/img/print-logo.png");
+ var logo = "";
 //= isArabic ? require('../../../HelperRessources/img/main-logo.svg') : require('../../../HelperRessources/img/main-logo-en.svg');
 (window.isNew = window.location.href.toLowerCase().indexOf("new.aspx") > -1),
   (window.isEdit =
@@ -157,7 +157,7 @@ window.ListInfo = {
     var Label, Description;
     var printHtml = "";
     var toggleSectionName;
-
+    var selectedInitiativeDeliverable;
     // to handle the default form value
     var formDefaultValues = [],
       dataFormDefaultValue = "";
@@ -509,8 +509,23 @@ window.ListInfo = {
                 dyid,
                 dyfieldname
               );
-            }
+            }            
           });
+          // date controlling feature 
+          $("[date-controling-field]").each(function(){
+            
+            let maxDateField = $(this).attr("date-max-field");
+            let dateControlingInput = $(this).attr("date-controling-field");
+            dateControlingInput = $(`#${dateControlingInput}`);
+            let $this = $(this);            
+            dateControlingInput.on("change", function (e){
+              let controlingCode = $(this).val();
+              let controlingListName = $(this).data("listname");
+              date_Controlling_Call.init(controlingListName, controlingCode, maxDateField, dateControlingInput, $this);
+            });
+          });
+          
+         
           // this affectes on lookup selects
           $("select[dynamic=parent]").on("change", function () {
             let parentFieldName = $(this).attr("id");
@@ -1472,6 +1487,7 @@ window.ListInfo = {
             }
 
             if (listkey == "mainkpi") {
+             
               // $("#RelatedStrategyObjective").prop("disabled", true);
 
               // var relatedStrategyCode = $('#RelatedStrategy').val()
@@ -1960,7 +1976,14 @@ window.ListInfo = {
               });
             });
           }
+          if (listkey == "mainkpi" && isEdit) {
+            $("#Year").on("change", function () {
+              var yearValue = $(this).val();
+              Get_ActualAnnualTotal.init(yearValue);
+            });
+          }
           ListInfo.g.attachmentsExtensions();
+          
         }
       }
     );
@@ -1969,6 +1992,7 @@ window.ListInfo = {
     if (listkey == "goalstrategy") {
       ListInfo.g.requiredSpillarsName();
     }
+  
 
     // if(element.useAccessPolicy){
     //   await FunctionAsync(element.useAccessPolicyList)
@@ -2018,6 +2042,12 @@ window.ListInfo = {
 
     renderfield = true;
     window.acceptedExtensions;
+    var datecontrolingfield="", dmaxControlingField="";
+        // to handle date controlling field
+    if (element.hasOwnProperty("dateControlingField")){          
+        datecontrolingfield = `date-controling-field="${element.dateControlingField}"`;
+      dmaxControlingField=`date-max-field="${element.maxinternalName}"`;
+    }
     if (element.hasOwnProperty("security")) {
       if (element.security.groups.length > 0) {
         for (var z = 0; z < element.security.groups.length; z++) {
@@ -3745,6 +3775,130 @@ window.ListInfo = {
           targetOn = "";
         }
 
+        let childrenIDs = element.childsId
+          ? 'data-childsId="' +
+            JSON.stringify(element.childsId).replaceAll(`"`, `'`) +
+            '"'
+          : "";
+
+        htmlBody =
+          '<div class="col-md-6 CFIELD ' +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
+          " " +
+          element.className +
+          " " +
+          hideField +
+          ' " ' +
+          thistip +
+          " " +
+          hidestagesIDs +
+          " " +
+          editableBy +
+          " " +
+          showstagesIDs +
+          "  " +
+          disablestagesIDs +
+          "  " +
+          enablestagesIDs +
+          "   " +
+          isWfhidestagesIDs +
+          " " +
+          requireOnWfTaskstagesIDs +
+          " " +
+          isWfshowstagesIDs +
+          "  " +
+          isWfdisablestagesIDs +
+          "  " +
+          isWfenablestagesIDs +
+          '        data-groups="' +
+          groups +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
+          element.display +
+          '">' +
+          '<label for="' +
+          element.InternalName +
+          '" ' +
+          element.validation +
+          ">" +
+          displayName +
+          "</label>" +
+          "<input " +
+          ToggleName +
+          " " +
+          toggleDisabledName +
+          " " +
+          RequiredName +
+          " " +
+          childrenIDs +
+          " " +
+          targetOn +
+          " " +
+          sourceelement +
+          " " +
+          targetelement +
+          ' type="date" placeholder="' +
+          displayName +
+          '" ' +
+          dynamic +
+          ' class="form-control SPIField ' +
+          maxOnChild +
+          " " +
+          autoSetDate +
+          '" id="' +
+          element.InternalName +
+          '" ' +
+          element.state +
+          " " +
+          element.validation +
+          ' minimumdate="' +
+          element.min +
+          '" maximumdate="' +
+          element.max +
+          '"  max="' +
+          max +
+          '" min=' +
+          min +
+          ">" +
+          '<div class="inputInfo ' +
+          isexist +
+          '">' +
+          descPhrase +
+          "</div>" +
+          "</div>";
+        OnSuccess(flag, htmlBody);
+        break;
+      case "datecontrolingfield":
+        
+        var maxOnChild = "";
+        var targetOn = "";
+
+        var autoSetDate = "",
+          sourceelement = "",
+          targetelement = "";
+
+        if (element.maxOnChild) {
+          maxOnChild = "maxOnChild";
+        }
+
+        if (element.autoSetDate) {
+          autoSetDate = "autoSetDate";
+          sourceelement = `data-sourceelement=${element.sourceelement}`;
+          targetelement = `data-targetelement=${element.targetelement}`;
+        }
+
+        if (element.targetOn && element.targetOn != "undefined") {
+          targetOn = `data-targetOn=${element.targetOn}`;
+        } else {
+          targetOn = "";
+        }
+
         let childsId = element.childsId
           ? 'data-childsId="' +
             JSON.stringify(element.childsId).replaceAll(`"`, `'`) +
@@ -3834,7 +3988,10 @@ window.ListInfo = {
           '"  max="' +
           max +
           '" min=' +
-          min +
+          min 
+          + ' ' 
+          + datecontrolingfield
+          + dmaxControlingField +
           ">" +
           '<div class="inputInfo ' +
           isexist +
@@ -3847,119 +4004,119 @@ window.ListInfo = {
 
       case "datetimetoparent": // handle date from parent
         var code = activeCode;
-
+        
         //activecode
         var customQuery =
           '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
           code +
           "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
-
-        var startDate = "",
-          finishDate = "";
-        sphttp.get(
-          _spPageContextInfo.siteServerRelativeUrl,
-          element.listname,
-          customQuery,
-          [element.startinternalname, element.endinternalname],
-          function (records, record, listItem, isDone) {
-            // if (listItem) itemsID.push(listItem.get_id());
-            if (isDone) {
-              records.forEach(function (el, index) {
-                startDate = el[element.startinternalname];
-                finishDate = el[element.endinternalname];
-              });
-
-              minDate = Dynamic_Data_Request.g.convertdate(startDate);
-              maxDate = Dynamic_Data_Request.g.convertdate(finishDate);
-
-              htmlBody =
-                '<div class="col-md-6 CFIELD ' +
-                dontSubmit +
-                " " +
-                dontRequest +
-                " " +
-                dontSubmitRequired +
-                " " +
-                " " +
-                element.className +
-                " " +
-                hideField +
-                ' " ' +
-                thistip +
-                " " +
-                hidestagesIDs +
-                " " +
-                editableBy +
-                " " +
-                showstagesIDs +
-                "  " +
-                disablestagesIDs +
-                "  " +
-                enablestagesIDs +
-                "   " +
-                isWfhidestagesIDs +
-                " " +
-                requireOnWfTaskstagesIDs +
-                " " +
-                isWfshowstagesIDs +
-                "  " +
-                isWfdisablestagesIDs +
-                "  " +
-                isWfenablestagesIDs +
-                '        data-groups="' +
-                groups +
-                '" ' +
-                notAllowForGroups +
-                ' style="display:' +
-                element.display +
-                '">' +
-                '<label for="' +
-                element.InternalName +
-                '" ' +
-                element.validation +
-                ">" +
-                displayName +
-                "</label>" +
-                "<input " +
-                ToggleName +
-                " " +
-                toggleDisabledName +
-                " " +
-                RequiredName +
-                ' type="date" onkeydown="return false" placeholder="' +
-                displayName +
-                '" ' +
-                dynamic +
-                ' class="form-control SPIField" id="' +
-                element.InternalName +
-                '" ' +
-                element.state +
-                " " +
-                element.validation +
-                ' minimumdate="' +
-                element.min +
-                '" maximumdate="' +
-                element.max +
-                '"  max="' +
-                maxDate +
-                '" min=' +
-                minDate +
-                ">" +
-                "<span data-trans-" +
-                Errmsgkey +
-                ' class="errMsgField Resources"></span>' +
-                '<div class="inputInfo ' +
-                isexist +
-                '">' +
-                descPhrase +
-                "</div>" +
-                "</div>";
-              OnSuccess(flag, htmlBody);
-
-              // OnSuccess(flag, htmlBody);
-            }
-          }
-        );
+       
+          var startDate = "",
+          finishDate = "";           
+            sphttp.get(
+              _spPageContextInfo.siteServerRelativeUrl,
+              element.listname,
+              customQuery,
+              [element.startinternalname, element.endinternalname],
+              function (records, record, listItem, isDone) {
+                // if (listItem) itemsID.push(listItem.get_id());
+                if (isDone) {
+                  records.forEach(function (el, index) {
+                    startDate = el[element.startinternalname];
+                    finishDate = el[element.endinternalname];
+                  });
+    
+                  minDate = Dynamic_Data_Request.g.convertdate(startDate);
+                  maxDate = Dynamic_Data_Request.g.convertdate(finishDate);
+    
+                  htmlBody =
+                    '<div class="col-md-6 CFIELD ' +
+                    dontSubmit +
+                    " " +
+                    dontRequest +
+                    " " +
+                    dontSubmitRequired +
+                    " " +
+                    " " +
+                    element.className +
+                    " " +
+                    hideField +
+                    ' " ' +
+                    thistip +
+                    " " +
+                    hidestagesIDs +
+                    " " +
+                    editableBy +
+                    " " +
+                    showstagesIDs +
+                    "  " +
+                    disablestagesIDs +
+                    "  " +
+                    enablestagesIDs +
+                    "   " +
+                    isWfhidestagesIDs +
+                    " " +
+                    requireOnWfTaskstagesIDs +
+                    " " +
+                    isWfshowstagesIDs +
+                    "  " +
+                    isWfdisablestagesIDs +
+                    "  " +
+                    isWfenablestagesIDs +
+                    '        data-groups="' +
+                    groups +
+                    '" ' +
+                    notAllowForGroups +
+                    ' style="display:' +
+                    element.display +
+                    '">' +
+                    '<label for="' +
+                    element.InternalName +
+                    '" ' +
+                    element.validation +
+                    ">" +
+                    displayName +
+                    "</label>" +
+                    "<input " +
+                    ToggleName +
+                    " " +
+                    toggleDisabledName +
+                    " " +
+                    RequiredName +
+                    ' type="date" onkeydown="return false" placeholder="' +
+                    displayName +
+                    '" ' +
+                    dynamic +
+                    ' class="form-control SPIField" id="' +
+                    element.InternalName +
+                    '" ' +
+                    element.state +
+                    " " +
+                    element.validation +
+                    ' minimumdate="' +
+                    element.min +
+                    '" maximumdate="' +
+                    element.max +
+                    '"  max="' +
+                    maxDate +
+                    '" min=' +
+                    minDate +
+                    ">" +
+                    "<span data-trans-" +
+                    Errmsgkey +
+                    ' class="errMsgField Resources"></span>' +
+                    '<div class="inputInfo ' +
+                    isexist +
+                    '">' +
+                    descPhrase +
+                    "</div>" +
+                    "</div>";
+                  OnSuccess(flag, htmlBody);
+    
+                  // OnSuccess(flag, htmlBody);
+                }
+              }
+            );               
         break;
 
       case "datewithtimetoparent":
@@ -4906,93 +5063,7 @@ window.ListInfo = {
         OnSuccess(flag, htmlBody);
         break;
 
-        case "multiselectForFiles":
-          htmlBody =
-          '<div class="col-md-6 CFIELD ' +
-          dontSubmit +
-          " " +
-          dontRequest +
-          " " +
-          dontSubmitRequired +
-          " " +
-          " " +
-          element.className +
-          " " +
-          hideField +
-          ' " ' +
-          thistip +
-          " " +
-          hidestagesIDs +
-          " " +
-          editableBy +
-          " " +
-          showstagesIDs +
-          "  " +
-          disablestagesIDs +
-          "  " +
-          enablestagesIDs +
-          "   " +
-          isWfhidestagesIDs +
-          " " +
-          requireOnWfTaskstagesIDs +
-          " " +
-          isWfshowstagesIDs +
-          "  " +
-          isWfdisablestagesIDs +
-          "  " +
-          isWfenablestagesIDs +
-          '        data-groups="' +
-          groups +
-          '" ' +
-          notAllowForGroups +
-          ' style="display:' +
-          element.display +
-          '">' +
-          '<label for="' +
-          element.InternalName +
-          '" ' +
-          element.validation +
-          ">" +
-          displayName +
-          "</label>" +
-          '<ul myfield="' +
-          element.InternalName +
-          '" id="' +
-          element.InternalName +
-          '" type="multiselect" class="multiselect-container form-control" type="multiselect">' +
-          '<li class="dropdown">' +
-          '<a href="#" data-toggle="dropdown" class="dropdown-toggle">' +
-          displayName +
-          '<b class="caret"></b></a>' +
-          '<ul type="" class="dropdown-menu multiselect_scroll">';
-        for (var i = 0; i < element.options.choices.length; i++) {
-          htmlBody +=
-            "<li>" +
-            '<div class="checkbox">' +
-            "<label>" +
-            '<input value="' +
-            element.options.choices[i] +
-            '" id="' +
-            element.InternalName +
-            '" type="checkbox">' +
-            element.options.choices[i] +
-            "</label>" +
-            "</div>" +
-            "</li>";
-        }
-        htmlBody +=
-          "</ul>" +
-          "</li>" +
-          "</ul>" +
-          '<div class="inputInfo ' +
-          isexist +
-          '">' +
-          descPhrase +
-          "</div>";
-        "</div>";
-        OnSuccess(flag, htmlBody);
-        break;
-
+        
       case "multiselect":
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
@@ -9570,6 +9641,7 @@ window.View_ListInfo = {
           break;
 
         case "multiselectstring":
+        case "multiselectForFiles":
           htmlBody =
             '<div class="col-md-6 CFIELD" ' +
             dontSubmit +
@@ -9612,7 +9684,7 @@ window.View_ListInfo = {
             ">" +
             displayName +
             "</label>" +
-            '<p type="multiselect" data-listname="' +
+            '<p type="multiselectForFiles" data-listname="' +
             element.source +
             '" data-valfieldkey="' +
             element.valfieldkey +
@@ -14361,5 +14433,98 @@ var get_grandparent_data = {
     );
   },
   // Global variables
+  g: {},
+};
+
+
+let date_Controlling_Call = {
+	// The main Initialization function
+	init: function (controlingListName, controlingCode, maxDateField, dateControlingInput, $this) {
+		var clientContext = new SP.ClientContext.get_current();
+		var oList = clientContext.get_web().get_lists().getByTitle(controlingListName);
+		var camlQuery = new SP.CamlQuery();
+		camlQuery.set_viewXml(
+			`<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">${controlingCode}</Value></Eq></Where><OrderBy><FieldRef Name="Created" Ascending="True" /></OrderBy></Query></View>`
+		);
+    debugger
+    date_Controlling_Call.g.maxDateField = maxDateField;
+    date_Controlling_Call.g.$this = $this;
+		date_Controlling_Call.g.collListItem = oList.getItems(camlQuery);
+		clientContext.load(date_Controlling_Call.g.collListItem);
+		clientContext.executeQueryAsync(
+			Function.createDelegate(this, date_Controlling_Call.onSuccess),
+			Function.createDelegate(this, date_Controlling_Call.onError)
+		);
+	},
+	onSuccess: function (sender, args) {
+		var collListItem = date_Controlling_Call.g.collListItem;
+ 
+		var listItemEnum = collListItem.getEnumerator();
+ 
+		
+		while (listItemEnum.moveNext()) {
+			tableRows = "";
+			var oListItem = listItemEnum.get_current();
+			let maxvalue = oListItem.get_item(date_Controlling_Call.g.maxDateField);
+      maxvalue = new Date(maxvalue);
+      let year = maxvalue.getFullYear();
+      let month = maxvalue.getMonth() + 1; // Months are zero-indexed, so we add 1
+      month = month < 10? `0${month}`:month;
+      let day = maxvalue.getDate();
+      day = day <10 ? `0${day}`:day;
+
+      maxvalue = `${year}-${month}-${day}`;
+      date_Controlling_Call.g.$this.attr("max",maxvalue)
+		}
+	},
+	onError: function (sender, args) {
+		console.log(
+			"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+		);
+	},	
+  g:{
+  }
+};
+window.Get_ActualAnnualTotal = {
+  onSuccess: function (sender, args) {
+    debugger
+    var collListItem = Get_ActualAnnualTotal.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      var totalAllActual =
+        oListItem.get_item("Actual") == null ? 0 : oListItem.get_item("Actual");
+      if (isEdit) {
+        $("#Actual").val(totalAllActual);
+      }
+      if (isView) {
+        $("#Actual").html(totalAllActual);
+      }
+    }
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  init: function (year) {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("KPIResults");
+    var camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And><Eq><FieldRef Name='KPI'/><Value Type='Text'>" +
+        KPICode +
+        "</Value></Eq><Eq><FieldRef Name='Year'/><Value Type='Text'>" +
+        year +
+        "</Value></Eq></And></And></Where></Query></View>"
+    );
+
+    Get_ActualAnnualTotal.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(Get_ActualAnnualTotal.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Get_ActualAnnualTotal.onSuccess),
+      Function.createDelegate(this, Get_ActualAnnualTotal.onError)
+    );
+  },
   g: {},
 };

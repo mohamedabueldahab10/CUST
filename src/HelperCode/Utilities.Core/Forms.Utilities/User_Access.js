@@ -922,6 +922,7 @@ window.userCalls = {
         isSectorHead = true;
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
+          ChartHideForInitiatives=".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
         ar_UserRole = " مدير  ";
         en_UserRole = "Sector Head of ";
 
@@ -2644,7 +2645,7 @@ window.userCalls = {
         USER_HomePage = "InitiativesMain.aspx";
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives=  ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+          ChartHideForInitiatives=  ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
 
         ar_UserRole = "مدير وحدة الانجاز";
         en_UserRole = "Development Unit";
@@ -10334,7 +10335,7 @@ var Get_Milestones = {
     );
   },
   onSuccess: async function (sender, args) {
-    debugger;
+    // debugger;
     var collListItem = Get_Milestones.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var itemhtml = [],
@@ -10427,7 +10428,7 @@ var Get_Milestones = {
             e.match(today.slice(0, -2))
           );
 
-          debugger;
+          // debugger;
           if (datesWithoutMilesArr.length == 1 && isMatchCurrentMonth) {
             $(".page-nav").after(
               `<p style="padding:0 5%;color:#f00">${noMsg}</p>`
@@ -10484,7 +10485,7 @@ var Get_Milestones = {
       }
 
       if (allMilestonesArr.length > 0) {
-        debugger;
+        // debugger;
         var initiativeStartDate =
           Get_Milestones.g.dateConvert2(initiativeStartToValidation) || "";
         var initiativeFinishDate =
@@ -10535,7 +10536,7 @@ var Get_Milestones = {
           });
         });
 
-        debugger;
+        // debugger;
         if (datesWithoutMilesArrFiltered.length > 0) {
           if (datesWithoutMilesArrFiltered.length == 1) {
             var internalArr = datesWithoutMilesArrFiltered[0];
