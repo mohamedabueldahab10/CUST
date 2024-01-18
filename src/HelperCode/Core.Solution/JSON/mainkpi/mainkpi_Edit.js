@@ -651,6 +651,11 @@ var Information_Form = [
           { value: 'year', fields: ['Years'] },
         ],
         state: 'disabled',
+        toggleValues: [
+          { value: 'monthly', fields: ['Actual'] },
+          { value: 'quarter', fields: ['Actual'] },
+          { value: 'midterm', fields: ['Actual'] },
+        ],
         options: {
           choices: [
             { display: 'monthly', value: 'monthly' },
@@ -2194,6 +2199,21 @@ var Information_Form = [
             'EPMO',
           ],
         },
+      },
+      {
+        InternalName: 'Actual',
+        DisplayName: 'الإجمالي الفعلي السنوي',
+        DisplayNameEn: 'Annual Actual Total',
+        ToggleName: 'Actual',
+        type: 'float',
+        dontSubmit: true,
+        security: {
+          groups: [
+            'Performance Leaders',
+            'System Admin Group',
+          ],
+        },
+        display: "none",
       },
       {
         InternalName: "WFStage",

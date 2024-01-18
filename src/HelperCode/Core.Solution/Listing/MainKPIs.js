@@ -378,7 +378,7 @@ var stratigicObjectivesRequest = {
         }
       }
 
-      debugger
+      // debugger
 
       if (!strategyArray.includes(relatedGoal)) {
         strategyArray.push(relatedGoal)
@@ -1097,7 +1097,7 @@ var GoalsKPIs_Info_Request = {
     //////
 
     console.log(allRelatedStrategyArr,"allRelatedStrategyArr")
-    debugger
+    // debugger
     if (allRelatedStrategyArr.length) {
       goalKpiQuery = '<View><Query><Where><And><In><FieldRef Name="Title" /><Values>';
       allRelatedStrategyArr.forEach(function (item) {

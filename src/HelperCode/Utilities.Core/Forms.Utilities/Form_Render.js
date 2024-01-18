@@ -1491,6 +1491,7 @@ window.ListInfo = {
             }
 
             if (listkey == "mainkpi") {
+             
               // $("#RelatedStrategyObjective").prop("disabled", true);
 
               // var relatedStrategyCode = $('#RelatedStrategy').val()
@@ -1979,9 +1980,13 @@ window.ListInfo = {
               });
             });
           }
-
+          if (listkey == "mainkpi" && isEdit) {
+            $("#Year").on("change", function () {
+              var yearValue = $(this).val();
+              Get_ActualAnnualTotal.init(yearValue);
+            });
+          }
           ListInfo.g.attachmentsExtensions();
-        
           
         }
       }
@@ -1991,6 +1996,7 @@ window.ListInfo = {
     if (listkey == "goalstrategy") {
       ListInfo.g.requiredSpillarsName();
     }
+  
 
     // if(element.useAccessPolicy){
     //   await FunctionAsync(element.useAccessPolicyList)
@@ -14529,5 +14535,48 @@ let convertToWantedDateFormat = {
     convertedDate = `${year}-${month}-${day}`;
 
     return convertedDate;
-  }
+  }}
+
+window.Get_ActualAnnualTotal = {
+  onSuccess: function (sender, args) {
+    debugger
+    var collListItem = Get_ActualAnnualTotal.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      var totalAllActual =
+        oListItem.get_item("Actual") == null ? 0 : oListItem.get_item("Actual");
+      if (isEdit) {
+        $("#Actual").val(totalAllActual);
+      }
+      if (isView) {
+        $("#Actual").html(totalAllActual);
+      }
+    }
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  init: function (year) {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("KPIResults");
+    var camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And><Eq><FieldRef Name='KPI'/><Value Type='Text'>" +
+        KPICode +
+        "</Value></Eq><Eq><FieldRef Name='Year'/><Value Type='Text'>" +
+        year +
+        "</Value></Eq></And></And></Where></Query></View>"
+    );
+
+    Get_ActualAnnualTotal.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(Get_ActualAnnualTotal.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Get_ActualAnnualTotal.onSuccess),
+      Function.createDelegate(this, Get_ActualAnnualTotal.onError)
+    );
+  },
+  g: {},
 };

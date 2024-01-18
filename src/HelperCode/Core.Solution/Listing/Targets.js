@@ -279,6 +279,7 @@ var MainKPIs_Info_Request = {
       var actualM11 = (oListItem.get_item("ActualM11") ? Number(oListItem.get_item("ActualM11").toFixed(2)) : 0);
       var actualM12 = (oListItem.get_item("ActualM12") ? Number(oListItem.get_item("ActualM12").toFixed(2)) : 0);
       var TotalAllTarget = (oListItem.get_item("Total") ? Number(oListItem.get_item("Total").toFixed(2)) : 0);
+      var totalAllActual = (oListItem.get_item("Actual") ? Number(oListItem.get_item("Actual").toFixed(2)) : 0);
       // console.log(TotalAllTarget,'TotalAllTarget')
       ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       var performanceleader = oListItem.get_item("PerformanceLeader")
@@ -430,7 +431,7 @@ var MainKPIs_Info_Request = {
           ' <td id="totalActual" class="myInput" data-internal="Actual" data-id="' +
           oListItem.get_id() +
           '">' +
-          totalActual +
+          totalAllActual +
           "</td>" +
           ' <td><input class="QarterInputStyle inputStyle1 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-kpidraft="' + kpiDraft + '" data-internal="ActualQ1" type="number" name="" value="' +
           actualQ1 +
@@ -497,7 +498,7 @@ var MainKPIs_Info_Request = {
           oListItem.get_id() + '" data-category="' + category + '" is-updated="false" id="MyTr">' +
           '<th scope="row" class="Resources" data-trans-actual></th>' +
           ' <td id="totalActual" class="myInput" data-internal="Actual" data-id="' + oListItem.get_id() + '">' +
-          totalActual +
+          totalAllActual +
           "</td>" +
           ' <td><input class="QarterInputStyle inputStyle1 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-kpidraft="' + kpiDraft + '" data-internal="ActualMid1" type="number" name="" value="' +
           actualMid1 +
@@ -634,7 +635,7 @@ var MainKPIs_Info_Request = {
           ' <td id="totalActual" class="myInput" data-internal="Actual" data-id="' +
           oListItem.get_id() +
           '">' +
-          totalActual +
+          totalAllActual +
           "</td>" +
           ' <td><input class="QarterInputStyle inputStyle1 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-kpidraft="' + kpiDraft + '" data-internal="ActualM1" type="number" name="" value="' +
           actualM1 +

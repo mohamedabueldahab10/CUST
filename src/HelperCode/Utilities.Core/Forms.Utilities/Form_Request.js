@@ -573,7 +573,7 @@ window.Edit_Data_Request = {
   }
   // date controllin
   if($("[date-controling-field]").length){
-    debugger
+    // debugger
     $("[data-listname]").trigger("change");
   }
 
@@ -638,7 +638,6 @@ window.Edit_Data_Request = {
       $("#Year").val(
         oListItem.get_item("Year") ? oListItem.get_item("Year") : ""
       );
-
       equationKPI.init();
 
       // to get the parent related like strategy from mainkpi to can save and start the wf of main kpi
@@ -660,6 +659,9 @@ window.Edit_Data_Request = {
           el.getGrandParent
         ); // to get value from parent list to use it when submit
       });
+      var yearValue = $("#Actual").parent().parent().find("#Year").val();
+      console.log('yearValue',yearValue);
+      Get_ActualAnnualTotal.init(yearValue);
     }
 
     if (listkey == "benefitmetrics") {
@@ -2164,6 +2166,9 @@ window.View_Data_Request = {
             "</span></a>"
         );
       }
+      var yearValue = $("#Actual").parent().parent().find("#Year").text();
+      console.log('yearValue',yearValue);
+      Get_ActualAnnualTotal.init(yearValue);
     }
     if (listkey == "sos") {
       var sosDraftStatus = oListItem.get_item("DraftStatus")
@@ -4982,7 +4987,7 @@ var Delete_Kpi_Results = {
 
 var Delete_Benefits_Results = {
   init: function () {
-    debugger;
+    // debugger;
     var context = SP.ClientContext.get_current();
     var dfd = $.Deferred();
     var programList = context
@@ -6414,7 +6419,7 @@ var equationBenefit = {
       benefitsEquation = benefitsEquation.replaceAll(",", ""); // remove , from high number
 
       console.log(benefitsEquation, "benefitsEquation");
-      debugger;
+      // debugger;
 
       try {
         benefitsEquation =
@@ -7076,7 +7081,7 @@ var View_Current_Kpi = {
 
       ////////////////////////////
     }
-
+    
     var currentKpiView =
       '<div class="py-5 border-bottom section-container current_kpi" data-groups="">' +
       '<div class="form-row"><div class="col-lg-3 col-md-4 mb-4"><h3 data-trans-currentkpi class="Resources"></h3><span class="font-14"></span></div>' +
@@ -7780,9 +7785,11 @@ window.Get_RelatedProjects_Initiatives = {
 		var listItemEnum = SPHTTPitemsEnumerable.getEnumerator();
     Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives = [];
 		while (listItemEnum.moveNext()) {
-			var oListItem = listItemEnum.get_current();
-			Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives.push(
-				oListItem.get_item("Title")
+      var oListItem = listItemEnum.get_current(); debugger;
+      Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives.push({
+        code: oListItem.get_item("Title"),
+        name: oListItem.get_item("Name")
+      }
 			);
     }
     Get_ProjectsDeliverables.init();
@@ -7809,20 +7816,19 @@ window.Get_ProjectsDeliverables = {
 			.get_lists()
 			.getByTitle("Deliverables");
 
-		var inQuery = `<In><FieldRef Name="RelatedInitiative" /><Values><`;
+		var inQuery = `<In><FieldRef Name="ProjectCode" /><Values>`;
 		for (
 			var j = 0;
 			j < Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives.length;
 			j++
 		) {
-			inQuery += `<Value Type="ProjectCode">${Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives[j]}</Value>`;
+			inQuery += `<Value Type="Text">${Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives[j].code}</Value>`;
 		}
     inQuery += `</Values></In>`;
 
     var camelQuery = ``;
     if (Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives.length) {
-      camelQuery = `<View><Query><Where>
-      ${inQuery}</Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>`;
+      camelQuery = `<View><Query><Where>${inQuery}</Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>`;
       Get_ProjectsDeliverables.g.camlQuery = new SP.CamlQuery();
       Get_ProjectsDeliverables.g.camlQuery.set_viewXml(camelQuery);
 
@@ -7845,11 +7851,14 @@ window.Get_ProjectsDeliverables = {
 			var oListItem = listItemEnum.get_current();
 			let field1 = oListItem.get_item("Title") || No_Data;
 			let field2 = oListItem.get_item("Name") || No_Data;
-			let field3 = oListItem.get_item("PlannedCompletedDate")
+      let field3 = oListItem.get_item("PlannedFinishDate");
+			field3 = field3
 				? field3.toLocaleDateString("en-US")
 				: No_Data;
 			let field4 = oListItem.get_item("Weight") || No_Data;
-			let field5 = oListItem.get_item("InitiativeCode") || No_Data;
+      let field5 = Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives.filter(function (el) {
+        return el.code == oListItem.get_item("ProjectCode");
+      })
 
 			delivHTML += `
             <div class="row mx-0 my-3 history-row-ctx">
@@ -7864,20 +7873,20 @@ window.Get_ProjectsDeliverables = {
                 </div>
                 <div class="col-3">
                     <p class="historyValue">${field3}</p>
-                    <p  class="Resources historyLabel" data-trans-deliveplannedcompleteddate></p>
+                    <p  class="Resources historyLabel" data-trans-deliveplannedfinishdate></p>
                 </div>
                 <div class="col-3">
                     <p class="historyValue">${field4}</p>
                     <p  class="Resources historyLabel" data-trans-delivweight></p>
                 </div>
                 <div class="col-2">
-                    <p class="historyValue"><span class="Resources" data-trans-delivproject></span>${field5}</p>
+                    <p class="historyValue"><span class="Resources" data-trans-delivproject></span>${field5.name}</p>
                     <p  class="Resources historyLabel" data-trans-delivsource>taken action</p>
                 </div>
             </div>
             `;
 		}
-		$(delivHTML).append($(".relateddeliverables"));
+		$(".relateddeliverables").append(delivHTML);
 		changeResources();
 	},
 	onError: function (sender, args) {
@@ -8010,4 +8019,46 @@ window.get_DynamicValues = {
       }, 2000);
     }
   },
+};
+window.Get_ActualAnnualTotal = {
+  onSuccess: function (sender, args) {
+    var collListItem = Get_ActualAnnualTotal.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      var totalAllActual =
+        oListItem.get_item("Actual") == null ? 0 : oListItem.get_item("Actual");
+      if (isEdit) {
+        $("#Actual").val(totalAllActual);
+      }
+      if (isView) {
+        $("#Actual").html(totalAllActual);
+      }
+    }
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  init: function (year) {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("KPIResults");
+    var camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And><Eq><FieldRef Name='KPI'/><Value Type='Text'>" +
+        KPICode +
+        "</Value></Eq><Eq><FieldRef Name='Year'/><Value Type='Text'>" +
+        year +
+        "</Value></Eq></And></And></Where></Query></View>"
+    );
+
+    Get_ActualAnnualTotal.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(Get_ActualAnnualTotal.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Get_ActualAnnualTotal.onSuccess),
+      Function.createDelegate(this, Get_ActualAnnualTotal.onError)
+    );
+  },
+  g: {},
 };
