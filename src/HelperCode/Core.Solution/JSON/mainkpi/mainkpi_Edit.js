@@ -636,6 +636,13 @@ var Information_Form = [
             { display: 'yes', value: 'yes' },
             { display: 'no', value: 'no' },
           ],
+        },  security: {
+          groups: [
+            'SPM Admin',          
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
+          ],
         },
       },
       {
@@ -1769,45 +1776,45 @@ var Information_Form = [
         },
         // validation: "required",
       },
-        {
-          InternalName: 'MesureStatus',
-          DisplayNameEn: 'MesureStatus',
-          DisplayName: 'حالة القياس',
-          type: 'dropdownValues',
-          //   "state": "disabled",
-          //   dynamic: "Initiative",
-          options: {
-            choices: [
-              {
-                display: 'mersurable',
-                value: 'mersurable',
-              },
-              {
-                display: 'unmersurable',
-                value: 'unmersurable',
-              },
-              // {
-              //     display: 'novalue',
-              //     value: 'novalue'
-              // },
-              {
-                display: 'completed',
-                value: 'completed',
-              },
-              {
-                display: 'deleted',
-                value: 'deleted',
-              },
-            ],
-          },
-          security: {
-            groups: ['LMS_P', 'VRO_P', 'System Admin Group', 'SPM Admin',
-              'VRO_E',
-              'LMSU-Execution',
-              'EPMO',
-            ],
-          },
-        },
+        // {
+        //   InternalName: 'MesureStatus',
+        //   DisplayNameEn: 'MesureStatus',
+        //   DisplayName: 'حالة القياس',
+        //   type: 'dropdownValues',
+        //   //   "state": "disabled",
+        //   //   dynamic: "Initiative",
+        //   options: {
+        //     choices: [
+        //       {
+        //         display: 'mersurable',
+        //         value: 'mersurable',
+        //       },
+        //       {
+        //         display: 'unmersurable',
+        //         value: 'unmersurable',
+        //       },
+        //       // {
+        //       //     display: 'novalue',
+        //       //     value: 'novalue'
+        //       // },
+        //       {
+        //         display: 'completed',
+        //         value: 'completed',
+        //       },
+        //       {
+        //         display: 'deleted',
+        //         value: 'deleted',
+        //       },
+        //     ],
+        //   },
+        //   security: {
+        //     groups: ['LMS_P', 'VRO_P', 'System Admin Group', 'SPM Admin',
+        //       'VRO_E',
+        //       'LMSU-Execution',
+        //       'EPMO',
+        //     ],
+        //   },
+        // },
     ],
   },
   {
@@ -2200,7 +2207,8 @@ var Information_Form = [
         DisplayName: 'الإجمالي الفعلي السنوي',
         DisplayNameEn: 'Annual Actual Total',
         ToggleName: 'Actual',
-        type: 'float',
+        type: 'number',
+        numberOfDigits: "12",
         dontSubmit: true,
         security: {
           groups: [
