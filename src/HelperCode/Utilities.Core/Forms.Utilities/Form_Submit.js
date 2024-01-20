@@ -2435,7 +2435,9 @@ window.Edit_Data_Submit = {
           .length;
       });
 
-      if (fileCount) _uploadFile();
+      if (fileCount) {
+        _uploadFile();
+      }
       // readFiles();
       else {
         if ($(".Details-Item.NewItem").length > 0 && !crListKey) {
@@ -4010,6 +4012,19 @@ function _uploadFile() {
           var fieldsObj = {};
           if (isEdit && listkey == "mainkpi") {
             var kpiPeriodType = $("#PeriodType").val();
+            Edit_KPI_Results.init(
+              kpiName,
+              kpiType,
+              kpiSector,
+              kpiSubSector,
+              kpiPortfolio,
+              kpiMainGoalRelated,
+              kpiSubGoalRelated,
+              kpiPerformanceAnalysis,
+              kpiRecurrenceChanged,
+              kpicurrentYear,
+              kpiTotalActual
+            );
             if (kpiPeriodType == "monthly") {
               fieldsObj = {
                 Title: Doc_Title,
