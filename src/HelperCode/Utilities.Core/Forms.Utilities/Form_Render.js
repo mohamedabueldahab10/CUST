@@ -2247,8 +2247,8 @@ window.ListInfo = {
         var letterPattern = "";
         if (element.withletters) {
           // letterPattern = `pattern="^\\d*[a-zA-Z\\u0600-\\u06FF][a-zA-Z0-9\\u0600-\\u06FF_ -]*$"`;
+          letterPattern = `pattern="^(?=.*[a-zA-Z\u0600-\u06FF])(?:[a-zA-Z\u0600-\u06FF]|[\\s\\d\\-\\/@+!&$\\(\\)])+"`;
 
-          letterPattern = `pattern="[0-9]*[a-zA-Z\u0600-\u06FF]+[!@#\$%\^\&*\)\(+=._-]*$"`;
 
         }
         htmlBody =
@@ -2352,7 +2352,7 @@ window.ListInfo = {
 
               var letterPattern = "";
               if (element.withletters) {
-          letterPattern = `pattern="[0-9]*[a-zA-Z\u0600-\u06FF]+[!@#\$%\^\&*\)\(+=._-]*$"`;
+                    letterPattern = `pattern="^(?=.*[a-zA-Z\u0600-\u06FF])(?:[a-zA-Z\u0600-\u06FF]|[\\s\\d\\-\\/@+!&$\\(\\)])+"`;
 
               }
 
