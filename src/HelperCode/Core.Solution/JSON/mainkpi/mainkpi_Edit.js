@@ -636,6 +636,13 @@ var Information_Form = [
             { display: 'yes', value: 'yes' },
             { display: 'no', value: 'no' },
           ],
+        },  security: {
+          groups: [
+            'SPM Admin',          
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
+          ],
         },
       },
       {
@@ -645,17 +652,12 @@ var Information_Form = [
         type: 'dropdownValues',
         validation: 'required',
         toggleValues: [
-          { value: 'monthly', fields: ['Months'] }, //we can put more than 1  field
-          { value: 'quarter', fields: ['Quarter'] }, //we can put more than 1  field
-          { value: 'midterm', fields: ['Midterms'] },
+          { value: 'monthly', fields: ['Months','Actual'] }, //we can put more than 1  field
+          { value: 'quarter', fields: ['Quarter','Actual'] }, //we can put more than 1  field
+          { value: 'midterm', fields: ['Midterms','Actual'] },
           { value: 'year', fields: ['Years'] },
         ],
         state: 'disabled',
-        toggleValues: [
-          { value: 'monthly', fields: ['Actual'] },
-          { value: 'quarter', fields: ['Actual'] },
-          { value: 'midterm', fields: ['Actual'] },
-        ],
         options: {
           choices: [
             { display: 'monthly', value: 'monthly' },
@@ -1774,45 +1776,45 @@ var Information_Form = [
         },
         // validation: "required",
       },
-        {
-          InternalName: 'MesureStatus',
-          DisplayNameEn: 'MesureStatus',
-          DisplayName: 'حالة القياس',
-          type: 'dropdownValues',
-          //   "state": "disabled",
-          //   dynamic: "Initiative",
-          options: {
-            choices: [
-              {
-                display: 'mersurable',
-                value: 'mersurable',
-              },
-              {
-                display: 'unmersurable',
-                value: 'unmersurable',
-              },
-              // {
-              //     display: 'novalue',
-              //     value: 'novalue'
-              // },
-              {
-                display: 'completed',
-                value: 'completed',
-              },
-              {
-                display: 'deleted',
-                value: 'deleted',
-              },
-            ],
-          },
-          security: {
-            groups: ['LMS_P', 'VRO_P', 'System Admin Group', 'SPM Admin',
-              'VRO_E',
-              'LMSU-Execution',
-              'EPMO',
-            ],
-          },
-        },
+        // {
+        //   InternalName: 'MesureStatus',
+        //   DisplayNameEn: 'MesureStatus',
+        //   DisplayName: 'حالة القياس',
+        //   type: 'dropdownValues',
+        //   //   "state": "disabled",
+        //   //   dynamic: "Initiative",
+        //   options: {
+        //     choices: [
+        //       {
+        //         display: 'mersurable',
+        //         value: 'mersurable',
+        //       },
+        //       {
+        //         display: 'unmersurable',
+        //         value: 'unmersurable',
+        //       },
+        //       // {
+        //       //     display: 'novalue',
+        //       //     value: 'novalue'
+        //       // },
+        //       {
+        //         display: 'completed',
+        //         value: 'completed',
+        //       },
+        //       {
+        //         display: 'deleted',
+        //         value: 'deleted',
+        //       },
+        //     ],
+        //   },
+        //   security: {
+        //     groups: ['LMS_P', 'VRO_P', 'System Admin Group', 'SPM Admin',
+        //       'VRO_E',
+        //       'LMSU-Execution',
+        //       'EPMO',
+        //     ],
+        //   },
+        // },
     ],
   },
   {
@@ -2205,7 +2207,8 @@ var Information_Form = [
         DisplayName: 'الإجمالي الفعلي السنوي',
         DisplayNameEn: 'Annual Actual Total',
         ToggleName: 'Actual',
-        type: 'float',
+        type: 'number',
+        numberOfDigits: "12",
         dontSubmit: true,
         security: {
           groups: [
@@ -2213,7 +2216,7 @@ var Information_Form = [
             'System Admin Group',
           ],
         },
-        display: "none",
+        // display: "none",
       },
       {
         InternalName: "WFStage",

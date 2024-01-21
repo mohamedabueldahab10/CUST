@@ -8604,7 +8604,8 @@ window.ListInfo = {
               if (
                 item == "RelatedMainKpis" ||
                 item == "RelatedMainObjective" ||
-                item == "Portfolio"
+                item == "Portfolio" ||
+                item == "Actual"
               ) {
                 myFieldParent.find(">*").attr("required", false);
               }

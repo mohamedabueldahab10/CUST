@@ -7661,7 +7661,7 @@ window.Get_InitiativeDeliverables = {
       Function.createDelegate(this, Get_InitiativeDeliverables.onError)
     );
   },
-  onSuccess: function (sender, args) {
+  onSuccess: async function (sender, args) {
     var listItemEnum = SPHTTPitemsEnumerable.getEnumerator();
     let delivHTML = ``;
 
@@ -7683,7 +7683,13 @@ window.Get_InitiativeDeliverables = {
       let field2 = oListItem.get_item("Name") || No_Data;
       let field3 = oListItem.get_item("PlannedCompletedDate") ? field3.toLocaleDateString("en-US") : No_Data;
       let field4 = oListItem.get_item("Weight") || No_Data;
-      let field5 = oListItem.get_item("InitiativeCode") || No_Data
+      let field5 = oListItem.get_item("InitiativeCode") || No_Data;
+      function getInitiativeNameAsync(listname, code) {
+        return new Promise((resolve, reject) => {
+          window.Get_InitiativeProjectName.init(listname, code, resolve);
+        });
+      }
+      let nameofinitiative = await getInitiativeNameAsync('Initiatives', field5);
 
 
       // if (localStorage.getItem("Dynamo_Tasks Configuration") != null) {
@@ -7724,7 +7730,7 @@ window.Get_InitiativeDeliverables = {
                     <p  class="Resources historyLabel" data-trans-delivweight></p>
                 </div>
                 <div class="col-2">
-                    <p class="historyValue"><span class="Resources" data-trans-delivinitiative></span>${field5}</p>
+                    <p class="historyValue"><span class="Resources" data-trans-delivinitiative></span>${nameofinitiative}</p>
                     <p  class="Resources historyLabel" data-trans-delivsource>taken action</p>
                 </div>
             </div>
@@ -7880,7 +7886,7 @@ window.Get_ProjectsDeliverables = {
                     <p  class="Resources historyLabel" data-trans-delivweight></p>
                 </div>
                 <div class="col-2">
-                    <p class="historyValue"><span class="Resources" data-trans-delivproject></span>${field5.name}</p>
+                    <p class="historyValue"><span class="Resources" data-trans-delivproject></span>${field5[0].name}</p>
                     <p  class="Resources historyLabel" data-trans-delivsource>taken action</p>
                 </div>
             </div>
@@ -8058,6 +8064,47 @@ window.Get_ActualAnnualTotal = {
     clientContext.executeQueryAsync(
       Function.createDelegate(this, Get_ActualAnnualTotal.onSuccess),
       Function.createDelegate(this, Get_ActualAnnualTotal.onError)
+    );
+  },
+  g: {},
+};
+window.Get_InitiativeProjectName = {
+  onSuccess: function (sender, args, callback) {
+    var collListItem = Get_InitiativeProjectName.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      var RequestedName =
+        oListItem.get_item("Name") == null
+          ? 'No_Data'
+          : oListItem.get_item("Name");
+      callback(RequestedName);
+    }
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  init: function (listname, code, callback) {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle(listname);
+    var camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='Title'/><Value Type='Text'>" +
+        code +
+        "</Value></Eq></And></Where></Query></View>"
+    );
+
+    Get_InitiativeProjectName.g.collListItem = oList.getItems(camlQuery);
+    clientContext.load(Get_InitiativeProjectName.g.collListItem);
+    
+    clientContext.executeQueryAsync(
+      function () {
+        Get_InitiativeProjectName.onSuccess(null, null, callback);
+      },
+      Function.createDelegate(this, Get_InitiativeProjectName.onError)
     );
   },
   g: {},
