@@ -73,7 +73,7 @@ var Information_Form = [
       {
         InternalName: "ScopeOfWork",
         DisplayName: "نطاق العمل",
-        DisplayNameEn: "Scope Of Work ",
+        DisplayNameEn: "Scope Of Work",
         type: "multiline",
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
