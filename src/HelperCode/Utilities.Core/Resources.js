@@ -313,7 +313,7 @@
     /////////////////// for Sos
     stat20: "تم تحقيقه جزئيا",
     stat21: "تم تحقيق المستهدف",
-    stat22: "مكتمل",
+    stat22: "على المسار",
     stat32: "قيد الموافقة",
     ///////////////////for strategic partnership
     stat23: "متأخر جدا",
@@ -1469,7 +1469,7 @@
     /////////////////// for Sos
     stat20: "Partially achieved",
     stat21: "Target achieved",
-    stat22: "Completed",
+    stat22: "On Track",
     stat32: "Under Approval",
     ///////////////////for strategic partnership
     stat23: "Too Late",
