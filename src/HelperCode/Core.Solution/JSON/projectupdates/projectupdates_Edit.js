@@ -90,17 +90,17 @@ var Information_Form = [
       //     ],
       //   },
       // },
-      {
-        InternalName: 'DateIdentified',
-        DisplayName: 'تاريخ التحديد',
-        DisplayNameEn: 'Date Identified',
-        // type: 'datetime',
-        type: 'datetimetoparent',
-        listname: 'Projects', // list name
-        startinternalname: 'BaselineStartDate', // internalname of parent start
-        endinternalname: 'BaselineFinishDate',
-        Errmsgkey:'btwndatepattern',
-      },
+      // {
+      //   InternalName: 'DateIdentified',
+      //   DisplayName: 'تاريخ التحديد',
+      //   DisplayNameEn: 'Date Identified',
+      //   // type: 'datetime',
+      //   type: 'datetimetoparent',
+      //   listname: 'Projects', // list name
+      //   startinternalname: 'BaselineStartDate', // internalname of parent start
+      //   endinternalname: 'BaselineFinishDate',
+      //   Errmsgkey:'btwndatepattern',
+      // },
       {
         InternalName: 'Description',
         DisplayName: 'وصف التحديث',
