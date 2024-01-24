@@ -5,152 +5,13 @@ var Information_Form = [
     description: 'التفاصيل',
     descriptionEn: 'Details',
     subFields: [
-      // {
-      //     "InternalName": "Title",
-      //     "DisplayName":"رمز التحديث",
-      //     "type":"string",
-      //     "validation": "required"
-      // },
       {
-        InternalName: 'Name',
-        DisplayName: 'اسم التحديث',
-        DisplayNameEn: 'Update Name',
-        type: 'string',
-        validation: 'required',
-        maxchar: '255',
-        // withletters: true,
-        Errmsgkey: 'withletterpattern',
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
-        descPhraseEn: "max length of letters equal 255",  
+          "InternalName": "Title",
+          "DisplayName":"رمز التحديث",
+          "type":"string",
+          "validation": "required"
       },
-      {
-        InternalName: 'Category',
-        DisplayName: 'نوع التحديث',
-        DisplayNameEn: 'Update Category',
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            {
-              display: 'financial',
-              value: 'financial',
-            },
-            {
-              display: 'legal',
-              value: 'legal',
-            },
-            {
-              display: 'contractual',
-              value: 'contractual',
-            },
-            {
-              display: 'others',
-              value: 'others',
-            },
-          ],
-        },
-      },
-      // {
-      //   InternalName: 'Status',
-      //   DisplayName: 'حالة التحديث',
-      //   DisplayNameEn: 'Status',
-      //   type: 'dropdownValues',
-      //   validation: 'required',
-      //   options: {
-      //     choices: [
-      //       {
-      //         display: 'closed',
-      //         value: 'closed',
-      //       },
-      //       {
-      //         display: 'open',
-      //         value: 'open',
-      //       },
-      //     ],
-      //   },
-      // },
-      // {
-      //   InternalName: 'Probability',
-      //   DisplayName: 'إحتمالية الحدوث',
-      //   DisplayNameEn: 'Probability',
-      //   type: 'dropdownValues',
-      //   options: {
-      //     choices: [
-      //       {
-      //         display: 'hight',
-      //         value: 'hight',
-      //       },
-      //       {
-      //         display: 'medium',
-      //         value: 'medium',
-      //       },
-      //       {
-      //         display: 'low',
-      //         value: 'low',
-      //       },
-      //     ],
-      //   },
-      // },
-      // {
-      //   InternalName: 'DateIdentified',
-      //   DisplayName: 'تاريخ تحديد التحديث',
-      //   DisplayNameEn: 'Date Identified',
-      //   // "type": "datetime"
-      //   type: 'datetimetoparent',
-      //   Errmsgkey:'btwndatepattern',
-      //   listname: 'Initiatives',
-      //   startinternalname: 'StartDate',
-      //   endinternalname: 'FinishDate',
-      // },
-      {
-        InternalName: 'Description',
-        DisplayName: 'وصف التحديث',
-        DisplayNameEn: 'Description',
-        type: 'multiline',
-        maxchar: 5000,
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
-      },
-      // {
-      //   InternalName: 'Impact',
-      //   DisplayName: 'الأثر',
-      //   DisplayNameEn: 'Impact',
-      //   validation: 'required',
-      //   type: 'dropdownValues',
-      //   options: {
-      //     choices: [
-      //       {
-      //         display: 'hight',
-      //         value: 'hight',
-      //       },
-      //       {
-      //         display: 'medium',
-      //         value: 'medium',
-      //       },
-      //       {
-      //         display: 'low',
-      //         value: 'low',
-      //       },
-      //     ],
-      //   },
-      // },
-      // {
-      //   InternalName: 'ImpactDescription',
-      //   DisplayName: 'وصف الأثر',
-      //   DisplayNameEn: 'Impact Description',
-      //   type: 'multiline',
-      //   maxchar: 5000,
-      //   descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-      //   descPhraseEn: "max length of letters equal 5000",
-      // },
-      // {
-      //   InternalName: 'ResolutionPlan',
-      //   DisplayName: 'خطة التعامل مع التحديث',
-      //   DisplayNameEn: 'Resolution Plan',
-      //   type: 'multiline',
-      //   maxchar: 5000,
-      //   descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-      //   descPhraseEn: "max length of letters equal 5000",
-      // },
+     
       {
         InternalName: 'Comments',
         DisplayName: 'الملاحظات',
@@ -159,145 +20,18 @@ var Information_Form = [
         maxchar: 5000,
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
+        "validation": "required"
       },
-      // {
-      //   InternalName: 'MitigationStatus',
-      //   DisplayName: 'حالة الاستجابة',
-      //   DisplayNameEn: 'Mitigation Status',
-      //   type: 'dropdownValues',
-      //   options: {
-      //     choices: [
-      //       {
-      //         display: 'notstarted',
-      //         value: 'notstarted',
-      //       },
-      //       {
-      //         display: 'inprogress2',
-      //         value: 'inprogress2',
-      //       },
-      //       {
-      //         display: 'donecomplete',
-      //         value: 'donecomplete',
-      //       },
-      //       // ,
-      //       // {
-      //       //   display: 'new',
-      //       //   value: 'new'
-      //       // }
-      //     ],
-      //   },
-      // },
-      // {
-      //   InternalName: 'MitigationOwner',
-      //   DisplayName: 'المسؤول عن الاستجابة',
-      //   DisplayNameEn: 'Mitigation Owner',
-      //   type: 'picker',
-      //   validation: 'required',
-      // },
-      // {
-      //   InternalName: 'MitigationTargetDate',
-      //   DisplayName: 'التاريخ المخطط للاستجابة',
-      //   DisplayNameEn: 'Mitigation Target Date',
-      //   // type: 'datetime',
-      //   type: 'datetimetoparent',
-      //   listname: 'Initiatives',
-      //   startinternalname: 'StartDate',
-      //   endinternalname: 'FinishDate',
-      // },
-      // {
-      //   InternalName: 'MitigationActualCompletionDate',
-      //   DisplayName: 'تاريخ الانتهاء من الاستجابة',
-      //   DisplayNameEn: 'Mitigation Actual Completion Date',
-      //   // type: 'datetime',
-      //   type: 'datetimetoparent',
-      //   Errmsgkey:'btwndatepattern',
-      //   listname: 'Initiatives',
-      //   startinternalname: 'StartDate',
-      //   endinternalname: 'FinishDate',
-      // },
-      // {
-      //   InternalName: 'MitigationPlan',
-      //   DisplayName: 'خطة الاستجابة',
-      //   DisplayNameEn: 'Mitigation Plan',
-      //   type: 'multiline',
-      //   maxchar: 5000,
-      //   descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-      //   descPhraseEn: "max length of letters equal 5000",
-      // },
-      // {
-      //     "InternalName": "UpdateClosureDate",
-      //     "DisplayName":"تاريخ اغلاق التحديث",
-      //     "type":"datetime",
-      //     "state":"disabled"
-      // },
-      // {
-      //     "InternalName": "UpdateOwner",
-      //     "DisplayName": "مالك التحديث",
-      //     "DisplayNameEn": "Update Owner",
-      //     "type": "picker"
-      // },
-      {
-        InternalName: 'AgreedAction',
-        DisplayName: 'الاجراءات المتفق عليها',
-        DisplayNameEn: 'Agreed Action',
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            {
-              display: 'mitigate',
-              value: 'mitigate',
-            },
-            {
-              display: 'monitor',
-              value: 'monitor',
-            },
-            {
-              display: 'leave',
-              value: 'leave',
-            },
-            {
-              display: 'move',
-              value: 'move',
-            },
-            {
-              display: 'avoid',
-              value: 'avoid',
-            },
-            {
-              display: 'assumption',
-              value: 'assumption',
-            },
-          ],
-        },
-      },
-      // {
-      //   InternalName: 'MoveItToIssueList',
-      //   DisplayName: 'نقلها للائحة التحديات',
-      //   DisplayNameEn: 'Move It To Issue List',
-      //   type: 'yesnoradio',
-      //   options: {
-      //     choices: [
-      //       {
-      //         display: 'yes',
-      //         value: 'yes',
-      //       },
-      //       {
-      //         display: 'no',
-      //         value: 'no',
-      //       },
-      //     ],
-      //   },
-      // },
+     
     ],
   },
   {
     label: 'الوثائق الداعمة',
     labelEn: 'Supporting Documents',
-    description: '',
-    descriptionEn: '',
+    description: 'التفاصيل',
+    descriptionEn: 'Details',
     subFields: [
       {
-        // "InternalName": "getfile",
         InternalName: 'getfile',
         DisplayName: 'المرفقات',
         DisplayNameEn: 'Attachments',
