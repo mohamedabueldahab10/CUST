@@ -59,7 +59,7 @@ window.Information_Form = [
 				validation: "required",
 				// dontSubmit: true,
 				// display: "none",
-				state: 'disabled',
+				// //state: 'disabled',
 				customCr: true,
 				dynamic: "parent", //main field that affect on other chiled field  
 				stopinvokeparent:"yes",
@@ -109,7 +109,7 @@ window.Information_Form = [
 				DisplayName: "مقدم الطلب",
 				DisplayNameEn: "Requester",
 				type: "picker",
-				state: 'disabled',
+				////state: 'disabled',
 				validation: "required",
 			},
 			{
@@ -118,7 +118,7 @@ window.Information_Form = [
 				DisplayName: "المشروع المرتبط",
 				display: "none",
 				type: "lookup",
-				state: 'disabled',
+				//state: 'disabled',
 				listKey: "projects",
 				ToggleName: "ProjectCode",
 				customCr: true,
@@ -136,7 +136,7 @@ window.Information_Form = [
 				descPhraseAr: "تغيير عام: تعديل بيانات",
 				descPhraseEn: "General change: Edit data", 
 				DisplayName: "نوع طلب التغيير",
-				state: 'disabled',
+				//state: 'disabled',
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
@@ -158,13 +158,13 @@ window.Information_Form = [
 								{ fieldName: 'WFStage', value: 'VROCRProject01' },
 							]
 						},
-						{
-							display: "deletion", value: "delete",
-							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
-								{ fieldName: 'WFStage', value: 'VROCRProject01' },
-							]
-						}
+						// {
+						// 	display: "deletion", value: "delete",
+						// 	otherFields: [
+						// 		{ fieldName: 'WFModuleCode', value: 'VROCRProject' },
+						// 		{ fieldName: 'WFStage', value: 'VROCRProject01' },
+						// 	]
+						// }
 						// {
 						// 	display: "baseline",
 						// 	value: "manual",
@@ -367,7 +367,7 @@ window.Information_Form = [
 				descPhraseAr: "تغيير عام: تعديل بيانات",
 				descPhraseEn: "General change: Edit data", 
 				DisplayName: "نوع طلب التغيير",
-				state: 'disabled',
+				//state: 'disabled',
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
@@ -391,14 +391,14 @@ window.Information_Form = [
 								// { fieldName: 'DraftStatus', value: 'draft' },
 							],
 						},
-						{
-							display: "deletion", value: "delete",
-							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
-								{ fieldName: 'WFStage', value: 'LMSCRProject01' },
-								// { fieldName: 'DraftStatus', value: 'draft' },
-							],
-						}
+						// {
+						// 	display: "deletion", value: "delete",
+						// 	otherFields: [
+						// 		{ fieldName: 'WFModuleCode', value: 'LMSCRProject' },
+						// 		{ fieldName: 'WFStage', value: 'LMSCRProject01' },
+						// 		// { fieldName: 'DraftStatus', value: 'draft' },
+						// 	],
+						// }
 						// {
 						// 	display: "baseline",
 						// 	value: "manual",
@@ -597,7 +597,7 @@ window.Information_Form = [
 				descPhraseAr: "تغيير عام: تعديل بيانات",
 				descPhraseEn: "General change: Edit data", 
 				DisplayName: "نوع طلب التغيير",
-				state: 'disabled',
+				//state: 'disabled',
 				DisplayNameEn: "Change Request Type",
 				display: "none",
 				customCr: true,
@@ -620,13 +620,13 @@ window.Information_Form = [
 								{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
 							]
 						},
-						{
-							display: "deletion", value: "delete",
-							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
-								{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
-							]
-						}
+						// {
+						// 	display: "deletion", value: "delete",
+						// 	otherFields: [
+						// 		{ fieldName: 'WFModuleCode', value: 'EPMOCRProject' },
+						// 		{ fieldName: 'WFStage', value: 'EPMOCRProject01' },
+						// 	]
+						// }
 						// {
 						// 	display: "baseline",
 						// 	value: "manual",
@@ -831,7 +831,7 @@ window.Information_Form = [
 				listKey: "initiatives",
 				display: "none",
 				type: "lookup",
-				state: 'disabled',
+				//state: 'disabled',
 				ToggleName: "InitiativeCode",
 				customCr: true,
 				valsiblingkey: 'Types', // to use it on roles filter on data
@@ -851,7 +851,7 @@ window.Information_Form = [
 				descPhraseEn: "General change: Edit data", 
 				DisplayName: "نوع طلب التغيير",
 				DisplayNameEn: "Change Request Type",
-				state: 'disabled',
+				//state: 'disabled',
 				display: "none",
 				customCr: true,
 				ToggleName: "strategicinitiativesUpdateType",
@@ -872,13 +872,13 @@ window.Information_Form = [
 								{ fieldName: 'WFStage', value: 'EPMOCRInitiative01' },
 							]
 						},
-						{
-							display: "deletion", value: "delete",
-							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'EPMOCRInitiative' },
-								{ fieldName: 'WFStage', value: 'EPMOCRInitiative01' },
-							]
-						}
+						// {
+						// 	display: "deletion", value: "delete",
+						// 	otherFields: [
+						// 		{ fieldName: 'WFModuleCode', value: 'EPMOCRInitiative' },
+						// 		{ fieldName: 'WFStage', value: 'EPMOCRInitiative01' },
+						// 	]
+						// }
 					],
 				},
 			},
@@ -908,10 +908,10 @@ window.Information_Form = [
 								{ fieldName: 'WFStage', value: 'VROCRInitiative01' },
 							]
 						},
-						{ display: "deletion", value: "delete", otherFields: [
-							{ fieldName: 'WFModuleCode', value: 'VROCRInitiative' },
-							{ fieldName: 'WFStage', value: 'VROCRInitiative01' },
-						] }
+						// { display: "deletion", value: "delete", otherFields: [
+						// 	{ fieldName: 'WFModuleCode', value: 'VROCRInitiative' },
+						// 	{ fieldName: 'WFStage', value: 'VROCRInitiative01' },
+						// ] }
 					],
 				},
 			},
@@ -941,10 +941,10 @@ window.Information_Form = [
 								{ fieldName: 'WFStage', value: 'LMSCRInitiative01' },
 							]
 						},
-						{ display: "deletion", value: "delete", otherFields: [
-							{ fieldName: 'WFModuleCode', value: 'LMSCRInitiative' },
-							{ fieldName: 'WFStage', value: 'LMSCRInitiative01' },
-						] }
+						// { display: "deletion", value: "delete", otherFields: [
+						// 	{ fieldName: 'WFModuleCode', value: 'LMSCRInitiative' },
+						// 	{ fieldName: 'WFStage', value: 'LMSCRInitiative01' },
+						// ] }
 					],
 				},
 			},
@@ -971,7 +971,7 @@ window.Information_Form = [
 
 							],
 						},
-						{ display: "deletion", value: "delete" }
+						// { display: "deletion", value: "delete" }
 					],
 				},
 			},
@@ -1028,14 +1028,14 @@ window.Information_Form = [
 								// { fieldName: 'DraftStatus', value: 'draft' },
 							],
 						},
-						{
-							display: "deletion", value: "delete",
-							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'MSCRObjective' },
-								{ fieldName: 'WFStage', value: 'MSCRSOS01' },
-								// { fieldName: 'DraftStatus', value: 'draft' },
-							],
-						}
+						// {
+						// 	display: "deletion", value: "delete",
+						// 	otherFields: [
+						// 		{ fieldName: 'WFModuleCode', value: 'MSCRObjective' },
+						// 		{ fieldName: 'WFStage', value: 'MSCRSOS01' },
+						// 		// { fieldName: 'DraftStatus', value: 'draft' },
+						// 	],
+						// }
 					],
 				},
 			},
@@ -1067,14 +1067,14 @@ window.Information_Form = [
 								// { fieldName: 'DraftStatus', value: 'draft' },
 							],
 						},
-						{
-							display: "deletion", value: "delete",
-							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'VROCRObjective' },
-								{ fieldName: 'WFStage', value: 'VROCRSOS01' },
-								// { fieldName: 'DraftStatus', value: 'draft' },
-							],
-						}
+						// {
+						// 	display: "deletion", value: "delete",
+						// 	otherFields: [
+						// 		{ fieldName: 'WFModuleCode', value: 'VROCRObjective' },
+						// 		{ fieldName: 'WFStage', value: 'VROCRSOS01' },
+						// 		// { fieldName: 'DraftStatus', value: 'draft' },
+						// 	],
+						// }
 					],
 				},
 			},
@@ -1106,14 +1106,14 @@ window.Information_Form = [
 								// { fieldName: 'DraftStatus', value: 'draft' },
 							],
 						},
-						{
-							display: "deletion", value: "delete",
-							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'LMSCRObjective' },
-								{ fieldName: 'WFStage', value: 'LMSCRSOS01' },
-								// { fieldName: 'DraftStatus', value: 'draft' },
-							],
-						}
+						// {
+						// 	display: "deletion", value: "delete",
+						// 	otherFields: [
+						// 		{ fieldName: 'WFModuleCode', value: 'LMSCRObjective' },
+						// 		{ fieldName: 'WFStage', value: 'LMSCRSOS01' },
+						// 		// { fieldName: 'DraftStatus', value: 'draft' },
+						// 	],
+						// }
 					],
 				},
 			},
@@ -1163,14 +1163,14 @@ window.Information_Form = [
 								// { fieldName: 'DraftStatus', value: 'draft' },
 							],
 						},
-						{
-							display: "deletion", value: "delete",
-							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'MSCRKPI' },
-								{ fieldName: 'WFStage', value: 'MSCRKPI01' },
-								// { fieldName: 'DraftStatus', value: 'draft' },
-							],
-						}
+						// {
+						// 	display: "deletion", value: "delete",
+						// 	otherFields: [
+						// 		{ fieldName: 'WFModuleCode', value: 'MSCRKPI' },
+						// 		{ fieldName: 'WFStage', value: 'MSCRKPI01' },
+						// 		// { fieldName: 'DraftStatus', value: 'draft' },
+						// 	],
+						// }
 					],
 				},
 			},
@@ -1201,14 +1201,14 @@ window.Information_Form = [
 								// { fieldName: 'DraftStatus', value: 'draft' },
 							],
 						},
-						{
-							display: "deletion", value: "delete",
-							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'VROCRKPI' },
-								{ fieldName: 'WFStage', value: 'VROCRKPI01' },
-								// { fieldName: 'DraftStatus', value: 'draft' },
-							],
-						}
+					// 	{
+					// 		display: "deletion", value: "delete",
+					// 		otherFields: [
+					// 			{ fieldName: 'WFModuleCode', value: 'VROCRKPI' },
+					// 			{ fieldName: 'WFStage', value: 'VROCRKPI01' },
+					// 			// { fieldName: 'DraftStatus', value: 'draft' },
+					// 		],
+					// 	}
 					],
 				},
 			},
@@ -1239,14 +1239,14 @@ window.Information_Form = [
 								// { fieldName: 'DraftStatus', value: 'draft' },
 							],
 						},
-						{
-							display: "deletion", value: "delete",
-							otherFields: [
-								{ fieldName: 'WFModuleCode', value: 'LMSCRKPI' },
-								{ fieldName: 'WFStage', value: 'LMSCRKPI01' },
-								// { fieldName: 'DraftStatus', value: 'draft' },
-							],
-						}
+						// {
+						// 	display: "deletion", value: "delete",
+						// 	otherFields: [
+						// 		{ fieldName: 'WFModuleCode', value: 'LMSCRKPI' },
+						// 		{ fieldName: 'WFStage', value: 'LMSCRKPI01' },
+						// 		// { fieldName: 'DraftStatus', value: 'draft' },
+						// 	],
+						// }
 					],
 				},
 			},
@@ -1257,7 +1257,7 @@ window.Information_Form = [
 				DisplayNameEn: "Level",
 				type: "string",
 				validation: "required",
-				state: 'disabled',
+				//state: 'disabled',
 				descPhraseAr: "عالي - متوسط - منخفض",
 				descPhraseEn: "High - Medium - Low", 
 			},
@@ -1265,7 +1265,7 @@ window.Information_Form = [
 				InternalName: "Description",
 				DisplayName: "وصف التغيير",
 				DisplayNameEn: "Description",
-				state: 'disabled',
+				//state: 'disabled',
 				type: "multiline",
 				maxchar: 5000,
 				validation: "required",
@@ -1279,7 +1279,7 @@ window.Information_Form = [
 				type: "multiline",
 				maxchar: 5000,
 				validation: "required",
-				state: 'disabled',
+				//state: 'disabled',
 				descPhraseAr:" اسباب التغيير",
 				descPhraseEn: "Justifications for change", 
 			},
