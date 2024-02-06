@@ -313,7 +313,7 @@
     /////////////////// for Sos
     stat20: "تم تحقيقه جزئيا",
     stat21: "تم تحقيق المستهدف",
-    stat22: "مكتمل",
+    stat22: "على المسار",
     stat32: "قيد الموافقة",
     ///////////////////for strategic partnership
     stat23: "متأخر جدا",
@@ -623,7 +623,7 @@
     kpi: "المؤشر",
     programname: "اسم البرنامج",
     total: "الإجمالي",
-    totalyearly:"الإجمالي السنوي",
+    totalyearly:"السنوي",
     quart1: "الربع 1",
     quart2: "الربع 2",
     quart3: "الربع 3",
@@ -1470,7 +1470,7 @@
     /////////////////// for Sos
     stat20: "Partially achieved",
     stat21: "Target achieved",
-    stat22: "Completed",
+    stat22: "On Track",
     stat32: "Under Approval",
     ///////////////////for strategic partnership
     stat23: "Too Late",
@@ -1780,7 +1780,7 @@
     operationalindicator: "Operational Indicator",
     programname: "Program Name",
     total: "Total",
-    totalyearly:"Annual Total",
+    totalyearly:"Annual",
     quart1: "Quarter 1",
     quart2: "Quarter 2",
     quart3: "Quarter 3",
