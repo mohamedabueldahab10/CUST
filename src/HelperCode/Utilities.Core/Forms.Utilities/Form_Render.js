@@ -8460,20 +8460,20 @@ window.ListInfo = {
         var myValue = $this.val();
       }
         
-      $("#IsStrategicProject").on('change', function (){
-        if(listkey == 'projects'){
-          if($(this).val() == 'no'){
-              $('#InitiativeType').val('')
-              $('#InitiativeType option:selected').removeAttr('selected');
-              $('#RelatedInitiative').val('')
-              $('#RelatedInitiative option:selected').removeAttr('selected');
-              $('#RelatedInitiativeDeliverable').val('')
-              $('#RelatedInitiativeDeliverable option:selected').removeAttr('selected');
+      // $("#IsStrategicProject").on('change', function (){
+      //   if(listkey == 'projects'){
+      //     if($(this).val() == 'no'){
+      //         $('#InitiativeType').val('')
+      //         $('#InitiativeType option:selected').removeAttr('selected');
+      //         $('#RelatedInitiative').val('')
+      //         $('#RelatedInitiative option:selected').removeAttr('selected');
+      //         $('#RelatedInitiativeDeliverable').val('')
+      //         $('#RelatedInitiativeDeliverable option:selected').removeAttr('selected');
             
             
-            }
-          }
-        });   
+      //       }
+      //     }
+      //   });   
       var mytype = $this,
         toggleValues =
           $this.data("togglevalues").indexOf(":::") > -1
@@ -8504,13 +8504,45 @@ window.ListInfo = {
 
       if (isShowVal) {
         allToggleFields.forEach((item, i, arr) => {
-          $('[data-togglename="' + item + '"]')
-            .parent()
-            .addClass("hide-field");
+          // if (listkey == "projects" &&
+          //        (item != "InitiativeType" 
+          //       || item != "RelatedInitiative" 
+          //       ||item != "RelatedInitiativeDeliverable" )
+          //     ) 
+          // {
+            
 
-          $('[data-togglename="' + item + '"]')
-            .parent()
-            .hide();
+          // }
+        if(listkey == 'projects'){
+
+          $('#InitiativeType').parent().show();
+          $('#InitiativeType').parent().css("display","unset");
+          $('#RelatedInitiative').parent().show();
+          $('#RelatedInitiative').parent().css("display","unset");
+          $('#RelatedInitiativeDeliverable').parent().show();
+          $('#RelatedInitiativeDeliverable').parent().css("display","unset");
+        }
+          $('[data-togglename="' + item + '"]').prop('disabled', true);
+      $("#IsStrategicProject").on('change', function (){
+        if(listkey == 'projects'){
+          if($(this).val() == 'no'){
+              $('#InitiativeType').val('');
+              $('#InitiativeType option:selected').removeAttr('selected');
+              $('#RelatedInitiative').val('')
+              $('#RelatedInitiative option:selected').removeAttr('selected');
+              $('#RelatedInitiativeDeliverable').val('')
+              $('#RelatedInitiativeDeliverable option:selected').removeAttr('selected');
+            
+            
+            }
+          }
+        });   
+            // .parent().prop('disabled', true);
+            // .addClass("hide-field");
+
+          // $('[data-togglename="' + item + '"]')
+          //   .parent().hide();
+            
           // $('[data-togglename="' + item + '"]').val("");
           $('[data-togglename="' + item + '"]')
             .parent()
@@ -8549,11 +8581,11 @@ window.ListInfo = {
         });
         toggleFields.forEach(function (item, i, arr) {
           var isHidden = $('[data-togglename="' + item + '"]')
-              .parent()
-              .is(":hidden"),
+              .is(":disabled"),
             myFieldParent = $('[data-togglename="' + item + '"]').parent();
           myFieldParentofParent = $('[data-togglename="' + item + '"]');
           if (isHidden) {
+            $('[data-togglename="' + item + '"]').prop('disabled', false);
             myFieldParent.show();
             myFieldParent.removeClass("hide-field");
             myFieldParentofParent.show();
@@ -9166,7 +9198,7 @@ window.View_ListInfo = {
             actionTaskHeader +
             '<div class="leftBtns">' +
             '<button data-trans-toissue class="btn btn-action btn-to-issue Resources" type="button"></button>' +
-            '<button class="btn btn-action btn-delete" type="button">' +
+            '<button class="btn btn-action btn-delete" style="margin:unset" type="button">' +
             btnDeleteLabel +
             "</button>" +
             "</div>" +
