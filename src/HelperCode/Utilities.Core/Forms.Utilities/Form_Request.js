@@ -2053,9 +2053,13 @@ window.View_Data_Request = {
 
       var itemWfStage = oListItem.get_item("WFStage");
       if (itemWfStage == "approved") {
+        $(".btn-save").prop('disabled', true).addClass('unset-loading');
         var htmlMsg =
-          '<div data-trans-deliverditem class="kpiPeriodChanged ErrorMsg Resources"></div>';
-        $(".btnactionrow").html(htmlMsg);
+        '<div data-trans-deliverditem class="kpiPeriodChanged ErrorMsg Resources" style="width:unset"></div>';
+        $(".btnactionrow").children("div:eq(0)").after(htmlMsg);
+      } else{
+        // this class is for removing the loading indicator
+        $(".btn-save").removeClass('unset-loading')
       }
     }
 
@@ -7390,6 +7394,7 @@ var StrategicObjectives_Status = {
 
 //get task history
 let SPHTTPitemsEnumerable;
+let SPHTTPitemsEnumerable2;
 window.Get_TaskHistory = {
   init: function () {
     $(".wf-project-name").text(projectNameTitle);
@@ -7604,11 +7609,18 @@ window.Get_TaskHistory = {
     $("button.loadMore").removeClass("disabled loader-action");
     changeResources();
     isDelivStage = stageid == "SInStage02" || stageid == "SInStage03" || stageid == "VInStage02" || stageid == "VInStage03" || stageid == "VInStage04" || stageid == "VInStage05" || stageid == "LInStage02" || stageid == "LInStage03";
+
+    isDelivStageForProject = stageid == "S00" || stageid == "S01" || stageid == "S02" || stageid == "S03" || stageid == "S03.1" || stageid == "S03.2" || stageid == "S04" || stageid == "S05" || stageid == "S06" || stageid == "S07" || stageid == "S07.1" || stageid == "S08" || stageid == "S09" || stageid == "S09.1" || stageid == "S10" || stageid == "S11" || stageid == "S11.1" || stageid == "S12" || stageid == "S13" || stageid == "S14" || stageid == "S14.1" || stageid == "S15"  || stageid == "S16" || stageid == "S17";
+    
     if (isDelivStage) {
       //calling relevant function
       window.checkStatusHtmlForDeliv = setInterval(function () {
           Get_InitiativeDeliverables.preinit();
       }, 1000);
+    } else if(isDelivStageForProject){
+      window.checkStatusHtmlForDeliv = setInterval(function () {
+        Get_ProjectsDeliverables.preinit();
+    }, 1000);
     }
   },
   onError: function (sender, args) {
@@ -7646,16 +7658,46 @@ window.Get_InitiativeDeliverables = {
   init: function () {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("InitiativeDeliverables");
+    var oListForInititaive = clientContext.get_web().get_lists().getByTitle("Initiatives");
+    
+    const url = window.location.href;
+    const urlParams = new URLSearchParams(new URL(url).search);
+    const iidValue = urlParams.get("IID");
 
+    // Call the function with the IID value
+    // let initiativeBudget = executeCamlQuery(iidValue) || 0; 
+
+ 
     var camelQuery = `<View><Query><Where>
     <Eq><FieldRef Name='InitiativeCode'/><Value Type='Text'>${currentItemCode}</Value></Eq>
     </Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>`;
+   
+    const camlQueryXml = `<View>
+                          <Query>
+                              <Where>
+                                  <Eq>
+                                      <FieldRef Name='ID' />
+                                      <Value Type='Text'>${iidValue}</Value>
+                                  </Eq>
+                              </Where>
+                          </Query>
+                      </View>`
 
     Get_InitiativeDeliverables.g.camlQuery = new SP.CamlQuery();
     Get_InitiativeDeliverables.g.camlQuery.set_viewXml(camelQuery);
 
+    Get_InitiativeDeliverables.g.camlQuery2 = new SP.CamlQuery();
+    Get_InitiativeDeliverables.g.camlQuery2.set_viewXml(camlQueryXml);
+
     SPHTTPitemsEnumerable = oList.getItems(Get_InitiativeDeliverables.g.camlQuery);
+    SPHTTPitemsEnumerable2 = oListForInititaive.getItems(Get_InitiativeDeliverables.g.camlQuery2);
+    
     clientContext.load(SPHTTPitemsEnumerable);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Get_InitiativeDeliverables.onSuccess),
+      Function.createDelegate(this, Get_InitiativeDeliverables.onError)
+    );
+    clientContext.load(SPHTTPitemsEnumerable2);
     clientContext.executeQueryAsync(
       Function.createDelegate(this, Get_InitiativeDeliverables.onSuccess),
       Function.createDelegate(this, Get_InitiativeDeliverables.onError)
@@ -7663,6 +7705,8 @@ window.Get_InitiativeDeliverables = {
   },
   onSuccess: async function (sender, args) {
     var listItemEnum = SPHTTPitemsEnumerable.getEnumerator();
+    // var listItemEnum2 = SPHTTPitemsEnumerable2.getEnumerator();
+    
     let delivHTML = ``;
 
 
@@ -7680,16 +7724,21 @@ window.Get_InitiativeDeliverables = {
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       let field1 = oListItem.get_item("Title") || No_Data;
-      let field2 = oListItem.get_item("Name") || No_Data;
+      let field2 = oListItem.get_item("Name") || No_Data;      
       let field3 = oListItem.get_item("PlannedCompletedDate") ? field3.toLocaleDateString("en-US") : No_Data;
-      let field4 = oListItem.get_item("Weight") || No_Data;
+      let field4 = oListItem.get_item("Weight") || No_Data;      
+      
       let field5 = oListItem.get_item("InitiativeCode") || No_Data;
-      function getInitiativeNameAsync(listname, code) {
+      
+      function getInitiativeNameAsync(listname, code,fieldName) {
         return new Promise((resolve, reject) => {
-          window.Get_InitiativeProjectName.init(listname, code, resolve);
+          window.Get_InitiativeProjectName.init(listname, code, resolve,fieldName);
         });
       }
-      let nameofinitiative = await getInitiativeNameAsync('Initiatives', field5);
+      
+      let budget = await getInitiativeNameAsync('Initiatives',field5, 'InitiativeBudget') || 0;
+      let nameofinitiative = await getInitiativeNameAsync('Initiatives', field5, 'Name');
+      let field6 = field4 == No_Data ? field4 : (Number(field4) * budget / 100);
 
 
       // if (localStorage.getItem("Dynamo_Tasks Configuration") != null) {
@@ -7711,29 +7760,42 @@ window.Get_InitiativeDeliverables = {
 
 
       delivHTML += `
-            <div class="row mx-0 my-3 history-row-ctx">
+                  <div class="row mx-0 my-3 history-row-ctx">
 
-                <div class="col-1">
-                    <p class="historyValue">${field1}</p>
-                    <p class="Resources historyLabel" data-trans-delivcode></p>
-                </div>
-                <div class="col-3">
-                    <p class="historyValue">${field2}</p>
-                    <p  class="Resources historyLabel" data-trans-delivname></p>
-                </div>
-                <div class="col-3">
-                    <p class="historyValue">${field3}</p>
-                    <p  class="Resources historyLabel" data-trans-deliveplannedcompleteddate></p>
-                </div>
-                <div class="col-3">
-                    <p class="historyValue">${field4}</p>
-                    <p  class="Resources historyLabel" data-trans-delivweight></p>
-                </div>
-                <div class="col-2">
-                    <p class="historyValue"><span class="Resources" data-trans-delivinitiative></span>${nameofinitiative}</p>
-                    <p  class="Resources historyLabel" data-trans-delivsource>taken action</p>
-                </div>
-            </div>
+                  <div class="col-1">
+                      <p class="historyValue">${field1}</p>
+                      <p class="Resources historyLabel" data-trans-delivcode></p>
+                  </div>
+              
+                  <div class="col-2">
+                      <p class="historyValue">${field2}</p>
+                      <p class="Resources historyLabel" data-trans-delivname></p>
+                  </div>
+              
+                  <div class="col-2">
+                      <p class="historyValue">${field3}</p>
+                      <p class="Resources historyLabel" data-trans-deliveplannedcompleteddate></p>
+                  </div>
+              
+                  <div class="col-2">
+                      <p class="historyValue">${field4}</p>
+                      <p class="Resources historyLabel" data-trans-delivweight></p>
+                  </div> 
+              
+                  <div class="col-2">
+                      <p class="historyValue">${field6}</p>
+                      <p class="Resources historyLabel" data-trans-delivamount></p>
+                  </div> 
+              
+                  <div class="col-3">
+                      <p class="historyValue">
+                          <span class="Resources" data-trans-delivinitiative></span>${nameofinitiative}
+                      </p>
+                      <p class="Resources historyLabel" data-trans-delivsource>taken action</p>
+                  </div>
+              
+              </div>
+  
             `;
     }
     delivHTML+=`</div></div>`
@@ -7791,7 +7853,7 @@ window.Get_RelatedProjects_Initiatives = {
 		var listItemEnum = SPHTTPitemsEnumerable.getEnumerator();
     Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives = [];
 		while (listItemEnum.moveNext()) {
-      var oListItem = listItemEnum.get_current(); debugger;
+      var oListItem = listItemEnum.get_current(); 
       Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives.push({
         code: oListItem.get_item("Title"),
         name: oListItem.get_item("Name")
@@ -7808,6 +7870,118 @@ window.Get_RelatedProjects_Initiatives = {
 	// Global variables
 	g: {},
 };
+// window.Get_ProjectsDeliverables = {
+// 	preinit: function () {
+// 		if (currentItemCode) {
+// 			Get_ProjectsDeliverables.init();
+// 			clearInterval(checkStatusHtmlForDeliv);
+// 		}
+// 	},
+// 	init: function () {
+// 		var clientContext = new SP.ClientContext.get_current();
+// 		var oList = clientContext
+// 			.get_web()
+// 			.get_lists()
+// 			.getByTitle("Deliverables");
+
+// 		var inQuery = `<In><FieldRef Name="ProjectCode" /><Values>`;
+//     for (
+// 			var j = 0;
+// 			j < Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives.length;
+// 			j++
+// 		) {
+// 			inQuery += `<Value Type="Text">${Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives[j].code}</Value>`;
+// 		}
+//     inQuery += `</Values></In>`;
+
+//     var camelQuery = ``;
+//     if (Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives.length) {
+//       camelQuery = `<View><Query><Where>${inQuery}</Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>`;
+//       Get_ProjectsDeliverables.g.camlQuery = new SP.CamlQuery();
+//       Get_ProjectsDeliverables.g.camlQuery.set_viewXml(camelQuery);
+
+//       SPHTTPitemsEnumerable = oList.getItems(
+//         Get_ProjectsDeliverables.g.camlQuery
+//       );
+//       clientContext.load(SPHTTPitemsEnumerable);
+//       clientContext.executeQueryAsync(
+//         Function.createDelegate(this, Get_ProjectsDeliverables.onSuccess),
+//         Function.createDelegate(this, Get_ProjectsDeliverables.onError)
+//       );
+//     }
+
+// 	},
+// 	onSuccess: function (sender, args) {
+// 		var listItemEnum = SPHTTPitemsEnumerable.getEnumerator();
+// 		let delivHTML = ``;
+
+// 		while (listItemEnum.moveNext()) {
+// 			var oListItem = listItemEnum.get_current();
+// 			let field1 = oListItem.get_item("Title") || No_Data;
+// 			let field2 = oListItem.get_item("Name") || No_Data; 
+//       let field3 = oListItem.get_item("PlannedFinishDate");
+// 			field3 = field3
+//       ? field3.toLocaleDateString("en-US")
+//       : No_Data;
+// 			let field4 = oListItem.get_item("Weight") || No_Data;
+//       let field6 = 1;
+//       // let InitiativeBudget = oListItem.get_item("InitiativeBudget") || 0;
+//       //   field6 = field4 == No_Data ? field4 : (Number(field4) * Number(InitiativeBudget) / 100);
+//       let field5 = Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives.filter(function (el) {
+//         return el.code == oListItem.get_item("ProjectCode");
+//       })
+
+// 			delivHTML += `
+//       <div class="row mx-0 my-3 history-row-ctx">
+
+//       <div class="col-1">
+//           <p class="historyValue">${field1}</p>
+//           <p class="Resources historyLabel" data-trans-delivcode></p>
+//       </div>
+  
+//       <div class="col-2">
+//           <p class="historyValue">${field2}</p>
+//           <p class="Resources historyLabel" data-trans-delivname></p>
+//       </div>
+  
+//       <div class="col-2">
+//           <p class="historyValue">${field3}</p>
+//           <p class="Resources historyLabel" data-trans-deliveplannedcompleteddate></p>
+//       </div>
+  
+//       <div class="col-2">
+//           <p class="historyValue">${field4}</p>
+//           <p class="Resources historyLabel" data-trans-delivweight></p>
+//       </div> 
+  
+//       <div class="col-2">
+//           <p class="historyValue">${field6}</p>
+//           <p class="Resources historyLabel" data-trans-delivamount></p>
+//       </div> 
+  
+//       <div class="col-3">
+//           <p class="historyValue">
+//               <span class="Resources" data-trans-delivinitiative></span>${nameofinitiative}
+//           </p>
+//           <p class="Resources historyLabel" data-trans-delivsource>taken action</p>
+//       </div>
+  
+//   </div>
+  
+//             `;
+// 		}
+// 		$(".relateddeliverables").append(delivHTML);
+// 		changeResources();
+// 	},
+// 	onError: function (sender, args) {
+// 		console.log(
+// 			"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+// 		);
+// 	},
+// 	// Global variables
+// 	g: {},
+// };
+
 window.Get_ProjectsDeliverables = {
 	preinit: function () {
 		if (currentItemCode) {
@@ -7823,17 +7997,21 @@ window.Get_ProjectsDeliverables = {
 			.getByTitle("Deliverables");
 
 		var inQuery = `<In><FieldRef Name="ProjectCode" /><Values>`;
-		for (
-			var j = 0;
-			j < Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives.length;
-			j++
-		) {
-			inQuery += `<Value Type="Text">${Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives[j].code}</Value>`;
-		}
-    inQuery += `</Values></In>`;
+    
+    const url = window.location.href;
+    const urlParams = new URLSearchParams(new URL(url).search);
+    const projectCode = urlParams.get("PCODE");
+    
+    // for (
+		// 	var j = 0;
+		// 	j < Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives.length;
+		// 	j++
+		// ) {
+    // }
+    inQuery += `<Value Type="Text">${projectCode}</Value></Values></In>`;
 
     var camelQuery = ``;
-    if (Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives.length) {
+    if (projectCode) {
       camelQuery = `<View><Query><Where>${inQuery}</Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>`;
       Get_ProjectsDeliverables.g.camlQuery = new SP.CamlQuery();
       Get_ProjectsDeliverables.g.camlQuery.set_viewXml(camelQuery);
@@ -7853,46 +8031,68 @@ window.Get_ProjectsDeliverables = {
 		var listItemEnum = SPHTTPitemsEnumerable.getEnumerator();
 		let delivHTML = ``;
 
+      delivHTML = `<div class="section4 row col-12 px-0 deliverables-ctx mx-0">
+      <div class="approvalHeader">
+          <h2 class="Resources" data-trans-relateddeliverables>
+          </h2>
+      </div>
+          <div class="relateddeliverables row mx-0 mt-5 col-12 flex-column">
+
+        `;
 		while (listItemEnum.moveNext()) {
 			var oListItem = listItemEnum.get_current();
 			let field1 = oListItem.get_item("Title") || No_Data;
-			let field2 = oListItem.get_item("Name") || No_Data;
+			let field2 = oListItem.get_item("Name") || No_Data; 
       let field3 = oListItem.get_item("PlannedFinishDate");
 			field3 = field3
-				? field3.toLocaleDateString("en-US")
-				: No_Data;
+      ? field3.toLocaleDateString("en-US")
+      : No_Data;
 			let field4 = oListItem.get_item("Weight") || No_Data;
-      let field5 = Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives.filter(function (el) {
-        return el.code == oListItem.get_item("ProjectCode");
-      })
+      let field6 = 1;
+      field6 = field4 == No_Data ? field4 : (Number(field4) * projectActualBudget / 100);
+      
 
 			delivHTML += `
-            <div class="row mx-0 my-3 history-row-ctx">
+      <div class="row mx-0 my-3 history-row-ctx">
 
-                <div class="col-1">
-                    <p class="historyValue">${field1}</p>
-                    <p class="Resources historyLabel" data-trans-delivcode></p>
-                </div>
-                <div class="col-3">
-                    <p class="historyValue">${field2}</p>
-                    <p  class="Resources historyLabel" data-trans-delivname></p>
-                </div>
-                <div class="col-3">
-                    <p class="historyValue">${field3}</p>
-                    <p  class="Resources historyLabel" data-trans-deliveplannedfinishdate></p>
-                </div>
-                <div class="col-3">
-                    <p class="historyValue">${field4}</p>
-                    <p  class="Resources historyLabel" data-trans-delivweight></p>
-                </div>
-                <div class="col-2">
-                    <p class="historyValue"><span class="Resources" data-trans-delivproject></span>${field5[0].name}</p>
-                    <p  class="Resources historyLabel" data-trans-delivsource>taken action</p>
-                </div>
-            </div>
+      <div class="col-2">
+          <p class="historyValue">${field1}</p>
+          <p class="Resources historyLabel" data-trans-delivcode></p>
+      </div>
+  
+      <div class="col-3">
+          <p class="historyValue">${field2}</p>
+          <p class="Resources historyLabel" data-trans-delivname></p>
+      </div>
+  
+      <div class="col-3">
+          <p class="historyValue">${field3}</p>
+          <p class="Resources historyLabel" data-trans-deliveplannedcompleteddate></p>
+      </div>
+  
+      <div class="col-2">
+          <p class="historyValue">${field4}</p>
+          <p class="Resources historyLabel" data-trans-delivweight></p>
+      </div> 
+  
+      <div class="col-2">
+          <p class="historyValue">${field6}</p>
+          <p class="Resources historyLabel" data-trans-delivamount></p>
+      </div> 
+  
+      
+  
+  </div>
+  
             `;
+
+
 		}
-		$(".relateddeliverables").append(delivHTML);
+    
+    delivHTML+=`</div></div>`
+    $(delivHTML).insertBefore(
+      $(".section3")
+    );
 		changeResources();
 	},
 	onError: function (sender, args) {
@@ -8069,17 +8269,17 @@ window.Get_ActualAnnualTotal = {
   g: {},
 };
 window.Get_InitiativeProjectName = {
-  onSuccess: function (sender, args, callback) {
+  onSuccess: function (sender, args, callback,fieldName) {
     var collListItem = Get_InitiativeProjectName.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
-      var RequestedName =
-        oListItem.get_item("Name") == null
+      var RequestedField =
+        oListItem.get_item(fieldName) == null
           ? 'No_Data'
-          : oListItem.get_item("Name");
-      callback(RequestedName);
+          : oListItem.get_item(fieldName);
+      callback(RequestedField);
     }
   },
   onError: function (sender, args) {
@@ -8087,7 +8287,7 @@ window.Get_InitiativeProjectName = {
       "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
     );
   },
-  init: function (listname, code, callback) {
+  init: function (listname, code, callback, fieldName) {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(listname);
     var camlQuery = new SP.CamlQuery();
@@ -8102,10 +8302,14 @@ window.Get_InitiativeProjectName = {
     
     clientContext.executeQueryAsync(
       function () {
-        Get_InitiativeProjectName.onSuccess(null, null, callback);
+        Get_InitiativeProjectName.onSuccess(null, null, callback, fieldName);
       },
       Function.createDelegate(this, Get_InitiativeProjectName.onError)
     );
   },
   g: {},
 };
+
+
+
+

@@ -3048,6 +3048,9 @@ button.btn.btn-action.btn-save[disabled]:before {
     border-top-color: #183a66;
     animation: spinner .7s linear infinite;
 }
+button.btn.btn-action.unset-loading.btn-save[disabled]:before {
+    content: unset;    
+}
 
 button.btn.btn-action.btn-save.success[disabled]:before {
     content: '\2713' !important;
@@ -6703,7 +6706,7 @@ a.a-important-link:hover>* {
 }
 
 .kpiPeriodChanged.ErrorMsg {
-    width: 100%;
+    width: 50%;
     text-align: end !important;
     color: red !important;
     font-size: 14px;
