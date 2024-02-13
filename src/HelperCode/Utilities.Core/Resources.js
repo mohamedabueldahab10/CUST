@@ -2414,6 +2414,15 @@ window.Dynamo_Data = [
     Code: "Title",
   },
   {
+    ListName: "User Activity Configuration",
+    Name: "Title",
+    Code: "ModuleCode",
+    ModuleType: "ModuleType",
+    ModuleIdentifier: "ModuleIdentifier",
+    ModuleURL: "ModuleURL",
+    // loadOn: [],// all pages if empty
+  },
+  {
     ListName: "Internal Entities",
     Name: "Name",
     NameEn: "NameEn",
@@ -2481,16 +2490,7 @@ window.Dynamo_Data = [
     Name: "Name",
     NameEn: "Name",
     Code: "Title",
-  },
-  {
-    ListName: "User Activity Configuration",
-    Name: "Title",
-    Code: "ModuleCode",
-    ModuleType: "ModuleType",
-    ModuleIdentifier: "ModuleIdentifier",
-    ModuleURL: "ModuleURL",
-    // loadOn: [],// all pages if empty
-  },
+  }
 ];
 
 function setLocalStorage(name, value) {
