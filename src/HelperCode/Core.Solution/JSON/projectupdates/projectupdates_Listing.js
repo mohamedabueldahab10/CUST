@@ -1,44 +1,52 @@
 var Listing_Info = [{
-        "InternalName": "Title",
-        "DisplayName": "رمز التحديث",
-        "DisplayNameEn": "Update ID",
-        "type": "text",
-        inlisting: true,
-        infilter: true
-    },
-    {
-        "InternalName": "Name",
-        "DisplayName": "اسم التحديث",
-        "DisplayNameEn": "Update Name",
-        "type": "text",
-        inlisting: true,
-        infilter: true
-    },
+    "InternalName": "Title",
+    "DisplayName": "رمز التحديث",
+    "DisplayNameEn": "Update ID",
+    "type": "text",
+    inlisting: true,
+    infilter: true
+},
+{
+    InternalName: 'Comments',
+    DisplayName: 'الملاحظات',
+    DisplayNameEn: 'Comments',
+    type: 'string',
+    inlisting: true,
+    infilter: true
+},
+// {
+//     InternalName: 'Created',
+//     DisplayName: 'تاريخ التحديث',
+//     DisplayNameEn: 'Date Identified',
+//     type: 'datetime',
+//     inlisting: true,
+//     infilter: false
+// },
     // {
     //     "InternalName": "Status",
-    //     "DisplayName": "حالة التحديث",
+    //     "DisplayName": "الحالة",
     //     "DisplayNameEn": "Status",
-    //     "type": "text",
-    //     needTrans: true,
+    //     "type": "dropdownValues",
     //     inlisting: true,
-    //     infilter: true
+    //     infilter: true,
+    //     needTrans: true
     // },
     // {
     //     "InternalName": "Impact",
-    //     "DisplayName": "الأثر",
+    //     "DisplayName":"الأثر",
     //     "DisplayNameEn": "Impact",
-    //     "type": "text",
-    //     needTrans: true,
-    //     inlisting: true,
-    //     infilter: false
+    //     "type":"dropdownValues",
+    //     inlisting: false,
+    //     infilter: false,
+    //     needTrans: false
     // },
     // {
-    // 	"InternalName": "MitigationOwner",
-    // 	"DisplayName":"المسؤول عن الاستجابة",
+    //     "InternalName": "MitigationOwner",
+    //     "DisplayName":"المسؤول عن الاستجابة",
     //     "DisplayNameEn": "Mitigation Owner",
-    // 	"type":"picker",
-    // 	inlisting: true,
-    // 	infilter: false,
+    //     "type":"picker",
+    //     inlisting: true,
+    //     infilter: false,
     // },
     // {
     //     "InternalName": "ProjectCode",
@@ -46,7 +54,7 @@ var Listing_Info = [{
     //     "DisplayNameEn": "Project Code",
     //     "type": "text",
     //     inlisting: true,
-    //     infilter: false,
+    //     infilter: true,
     //     isLinkable: true,
     //     ShowUnderProjectListing: false
     // },
@@ -56,7 +64,7 @@ var Listing_Info = [{
     //     "DisplayNameEn": "Mitigation Target Date",
     //     "type": "date",
     //     inlisting: true,
-    //     infilter: false
+    //     infilter: true
     // },
     // {
     //     "InternalName": "MitigationActualCompletionDate",
@@ -64,7 +72,7 @@ var Listing_Info = [{
     //     "DisplayNameEn": "Mitigation Actual Completion Date",
     //     "type": "date",
     //     inlisting: true,
-    //     infilter: false
+    //     infilter: true
     // }
 
 ];

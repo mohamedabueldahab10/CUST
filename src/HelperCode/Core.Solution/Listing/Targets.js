@@ -339,13 +339,13 @@ var MainKPIs_Info_Request = {
           '<tr data-target_list="KPIResults" data-id="' + oListItem.get_id() + '" data-category="' + category + '" is-updated="false" id="MyTr">' +
           `<th rowspan="2"><span>${name}</span><span class="target_recurrencechanged Resources" ${recurrenceChanged == 'yes' ? "data-trans-recurrencechanged" : ""}></span><span class="target_recurrencechanged Resources" ${kpiDraft == 'draft' ? "data-trans-draftkpi" : ""}></span></th>` +
           '<th scope="row" class="Resources" data-trans-target></th>' +
-          // ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' + oListItem.get_id() + '">' + total +
-          // "</td>" +
-          ' <td id="totalTarget"><input class="QarterInputStyle inputStyle1 myInput" data-internal="Total"  data-recurrencechanged="' + recurrenceChanged + '" data-kpidraft="' + kpiDraft + '"type="number" name="" value="' +
-          TotalAllTarget +
-          '" oninput="checkTypes.init(this)" data-id="' +
-          oListItem.get_id() +
-          '"></td>' +
+          ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' + oListItem.get_id() + '">' + total +
+          "</td>" +
+          // ' <td id="totalTarget"><input class="QarterInputStyle inputStyle1 myInput" data-internal="Total"  data-recurrencechanged="' + recurrenceChanged + '" data-kpidraft="' + kpiDraft + '"type="number" name="" value="' +
+          // TotalAllTarget +
+          // '" oninput="checkTypes.init(this)" data-id="' +
+          // oListItem.get_id() +
+          // '"></td>' +
           ' <td><input class="QarterInputStyle inputStyle1 myInput" data-recurrencechanged="' + recurrenceChanged + '" data-kpidraft="' + kpiDraft + '"  data-internal="TargetY" type="number" name="" value="' +
           targetY +
           '" data-result-type="' +
@@ -428,11 +428,12 @@ var MainKPIs_Info_Request = {
           category +
           '" is-updated="false" id="MyTr">' +
           '<th scope="row" class="Resources" data-trans-actual></th>' +
-          ' <td id="totalActual" class="myInput" data-internal="Actual" data-id="' +
+          ' <td  class="myInput" data-internal="Actual" data-id="' +
           oListItem.get_id() +
           '">' +
           totalAllActual +
-          "</td>" +
+          "</td>" + 
+          // id="totalActual"
           ' <td><input class="QarterInputStyle inputStyle1 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-kpidraft="' + kpiDraft + '" data-internal="ActualQ1" type="number" name="" value="' +
           actualQ1 +
           '" data-result-type="' +
@@ -497,9 +498,10 @@ var MainKPIs_Info_Request = {
           '<tr data-target_list="KPIResults" data-id="' +
           oListItem.get_id() + '" data-category="' + category + '" is-updated="false" id="MyTr">' +
           '<th scope="row" class="Resources" data-trans-actual></th>' +
-          ' <td id="totalActual" class="myInput" data-internal="Actual" data-id="' + oListItem.get_id() + '">' +
+          ' <td  class="myInput" data-internal="Actual" data-id="' + oListItem.get_id() + '">' +
           totalAllActual +
           "</td>" +
+          // id="totalActual"
           ' <td><input class="QarterInputStyle inputStyle1 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-kpidraft="' + kpiDraft + '" data-internal="ActualMid1" type="number" name="" value="' +
           actualMid1 +
           '" data-result-type="' +
@@ -632,11 +634,12 @@ var MainKPIs_Info_Request = {
           category +
           '" is-updated="false" id="MyTr">' +
           '<th scope="row" class="Resources" data-trans-actual></th>' +
-          ' <td id="totalActual" class="myInput" data-internal="Actual" data-id="' +
+          ' <td class="myInput" data-internal="Actual" data-id="' +
           oListItem.get_id() +
           '">' +
           totalAllActual +
           "</td>" +
+          // id="totalActual" 
           ' <td><input class="QarterInputStyle inputStyle1 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-kpidraft="' + kpiDraft + '" data-internal="ActualM1" type="number" name="" value="' +
           actualM1 +
           '" data-result-type="' +

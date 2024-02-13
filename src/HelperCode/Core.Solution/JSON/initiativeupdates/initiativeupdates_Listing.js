@@ -1,19 +1,27 @@
 var Listing_Info = [{
-        "InternalName": "Title",
-        "DisplayName": "رمز التحديث",
-        "DisplayNameEn": "Update ID",
-        "type": "text",
-        inlisting: true,
-        infilter: true
-    },
-    {
-        "InternalName": "Name",
-        "DisplayName": "اسم التحديث",
-        "DisplayNameEn": "Update Name",
-        "type": "text",
-        inlisting: true,
-        infilter: true
-    },
+    "InternalName": "Title",
+    "DisplayName": "رمز التحديث",
+    "DisplayNameEn": "Update ID",
+    "type": "text",
+    inlisting: true,
+    infilter: true
+},
+{
+    InternalName: 'Comments',
+    DisplayName: 'الملاحظات',
+    DisplayNameEn: 'Comments',
+    type: 'string',
+       inlisting: true,
+    infilter: true
+},
+// {
+//     InternalName: 'Created',
+//     DisplayName: 'تاريخ التحديث',
+//     DisplayNameEn: 'Date Identified',
+//     type: 'datetime',
+//     inlisting: true,
+//     infilter: false
+// },
     // {
     //     "InternalName": "Status",
     //     "DisplayName": "الحالة",
@@ -23,23 +31,23 @@ var Listing_Info = [{
     //     infilter: true,
     //     needTrans: true
     // },
-    {
-    	"InternalName": "Impact",
-    	"DisplayName":"الأثر",
-        "DisplayNameEn": "Impact",
-    	"type":"dropdownValues",
-    	inlisting: false,
-    	infilter: false,
-        needTrans: false
-    },
-    {
-    	"InternalName": "MitigationOwner",
-    	"DisplayName":"المسؤول عن الاستجابة",
-        "DisplayNameEn": "Mitigation Owner",
-    	"type":"picker",
-    	inlisting: true,
-    	infilter: false,
-    },
+    // {
+    //     "InternalName": "Impact",
+    //     "DisplayName":"الأثر",
+    //     "DisplayNameEn": "Impact",
+    //     "type":"dropdownValues",
+    //     inlisting: false,
+    //     infilter: false,
+    //     needTrans: false
+    // },
+    // {
+    //     "InternalName": "MitigationOwner",
+    //     "DisplayName":"المسؤول عن الاستجابة",
+    //     "DisplayNameEn": "Mitigation Owner",
+    //     "type":"picker",
+    //     inlisting: true,
+    //     infilter: false,
+    // },
     // {
     //     "InternalName": "ProjectCode",
     //     "DisplayName": "رمز المشروع",

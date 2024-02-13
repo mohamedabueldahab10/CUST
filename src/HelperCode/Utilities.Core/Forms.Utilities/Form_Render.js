@@ -515,17 +515,21 @@ window.ListInfo = {
           $("[date-controling-field]").each(function(){
             
             let maxDateField = $(this).attr("date-max-field");
+            // let minDateField = $(this).attr("date-min-field");
             let dateControlingInput = $(this).attr("date-controling-field");
             dateControlingInput = $(`#${dateControlingInput}`);
             let $this = $(this);            
             dateControlingInput.on("change", function (e){
               let controlingCode = $(this).val();
+              // let controlingCodeForMinDate = $(this).val();
               let controlingListName = $(this).data("listname");
+              // let controlingListNameForMinDate = $(this).data("listname");
               date_Controlling_Call.init(controlingListName, controlingCode, maxDateField, dateControlingInput, $this);
+              // date_Controlling_Call.init(controlingListName, controlingCode, maxDateField, dateControlingInput, $this,minDateField,controlingListNameForMinDate, controlingCodeForMinDate);
             });
           });
           
-         
+            
           // this affectes on lookup selects
           $("select[dynamic=parent]").on("change", function () {
             let parentFieldName = $(this).attr("id");
@@ -2042,11 +2046,14 @@ window.ListInfo = {
 
     renderfield = true;
     window.acceptedExtensions;
-    var datecontrolingfield="", dmaxControlingField="";
+    var datecontrolingfield="", dmaxControlingField="",dMinControlingField="", datecontrolingfieldForMinDate="";
         // to handle date controlling field
     if (element.hasOwnProperty("dateControlingField")){          
         datecontrolingfield = `date-controling-field="${element.dateControlingField}"`;
       dmaxControlingField=`date-max-field="${element.maxinternalName}"`;
+      dMinControlingField=`date-min-field="${element.minInternalName}"`;
+      datecontrolingfieldForMinDate = `date-controling-field="${element.listname}"`;
+      
     }
     if (element.hasOwnProperty("security")) {
       if (element.security.groups.length > 0) {
@@ -2133,6 +2140,7 @@ window.ListInfo = {
               seperator
             : item.value + "[" + item.fields.join(",") + "]" + seperator;
       });
+
     }
     /////////////////////////
     if (element.hasOwnProperty("requiredValues")) {
@@ -2238,7 +2246,10 @@ window.ListInfo = {
       case "string":
         var letterPattern = "";
         if (element.withletters) {
-          letterPattern = `pattern="^\\d*[a-zA-Z\\u0600-\\u06FF][a-zA-Z0-9\\u0600-\\u06FF_ -]*$"`;
+          // letterPattern = `pattern="^\\d*[a-zA-Z\\u0600-\\u06FF][a-zA-Z0-9\\u0600-\\u06FF_ -]*$"`;
+          letterPattern = `pattern="^(?=.*[a-zA-Z\u0600-\u06FF])(?:[a-zA-Z\u0600-\u06FF]|[\\s\\d\\-\\/@+!&$\\(\\)])+"`;
+
+
         }
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
@@ -2341,7 +2352,8 @@ window.ListInfo = {
 
               var letterPattern = "";
               if (element.withletters) {
-                letterPattern = `pattern="^\\d*[a-zA-Z\\u0600-\\u06FF][a-zA-Z0-9\\u0600-\\u06FF_ -]*$"`;
+                    letterPattern = `pattern="^(?=.*[a-zA-Z\u0600-\u06FF])(?:[a-zA-Z\u0600-\u06FF]|[\\s\\d\\-\\/@+!&$\\(\\)])+"`;
+
               }
 
               var stringUniqueValues =
@@ -3991,7 +4003,9 @@ window.ListInfo = {
           min 
           + ' ' 
           + datecontrolingfield
-          + dmaxControlingField +
+          + dmaxControlingField 
+          + dMinControlingField
+          +
           ">" +
           '<div class="inputInfo ' +
           isexist +
@@ -8445,7 +8459,21 @@ window.ListInfo = {
       } else {
         var myValue = $this.val();
       }
-
+        
+      // $("#IsStrategicProject").on('change', function (){
+      //   if(listkey == 'projects'){
+      //     if($(this).val() == 'no'){
+      //         $('#InitiativeType').val('')
+      //         $('#InitiativeType option:selected').removeAttr('selected');
+      //         $('#RelatedInitiative').val('')
+      //         $('#RelatedInitiative option:selected').removeAttr('selected');
+      //         $('#RelatedInitiativeDeliverable').val('')
+      //         $('#RelatedInitiativeDeliverable option:selected').removeAttr('selected');
+            
+            
+      //       }
+      //     }
+      //   });   
       var mytype = $this,
         toggleValues =
           $this.data("togglevalues").indexOf(":::") > -1
@@ -8464,6 +8492,7 @@ window.ListInfo = {
             ? $this.data("togglevalues").split(":::")
             : [$this.data("togglevalues")],
         myToggleFields = "";
+        
 
       allToggleFields.forEach((item, i, arr) => {
         myToggleFields +=
@@ -8475,13 +8504,45 @@ window.ListInfo = {
 
       if (isShowVal) {
         allToggleFields.forEach((item, i, arr) => {
-          $('[data-togglename="' + item + '"]')
-            .parent()
-            .addClass("hide-field");
+          // if (listkey == "projects" &&
+          //        (item != "InitiativeType" 
+          //       || item != "RelatedInitiative" 
+          //       ||item != "RelatedInitiativeDeliverable" )
+          //     ) 
+          // {
+            
 
-          $('[data-togglename="' + item + '"]')
-            .parent()
-            .hide();
+          // }
+        if(listkey == 'projects'){
+
+          $('#InitiativeType').parent().show();
+          $('#InitiativeType').parent().css("display","unset");
+          $('#RelatedInitiative').parent().show();
+          $('#RelatedInitiative').parent().css("display","unset");
+          $('#RelatedInitiativeDeliverable').parent().show();
+          $('#RelatedInitiativeDeliverable').parent().css("display","unset");
+        }
+          $('[data-togglename="' + item + '"]').prop('disabled', true);
+      $("#IsStrategicProject").on('change', function (){
+        if(listkey == 'projects'){
+          if($(this).val() == 'no'){
+              $('#InitiativeType').val('');
+              $('#InitiativeType option:selected').removeAttr('selected');
+              $('#RelatedInitiative').val('')
+              $('#RelatedInitiative option:selected').removeAttr('selected');
+              $('#RelatedInitiativeDeliverable').val('')
+              $('#RelatedInitiativeDeliverable option:selected').removeAttr('selected');
+            
+            
+            }
+          }
+        });   
+            // .parent().prop('disabled', true);
+            // .addClass("hide-field");
+
+          // $('[data-togglename="' + item + '"]')
+          //   .parent().hide();
+            
           // $('[data-togglename="' + item + '"]').val("");
           $('[data-togglename="' + item + '"]')
             .parent()
@@ -8520,11 +8581,11 @@ window.ListInfo = {
         });
         toggleFields.forEach(function (item, i, arr) {
           var isHidden = $('[data-togglename="' + item + '"]')
-              .parent()
-              .is(":hidden"),
+              .is(":disabled"),
             myFieldParent = $('[data-togglename="' + item + '"]').parent();
           myFieldParentofParent = $('[data-togglename="' + item + '"]');
           if (isHidden) {
+            $('[data-togglename="' + item + '"]').prop('disabled', false);
             myFieldParent.show();
             myFieldParent.removeClass("hide-field");
             myFieldParentofParent.show();
@@ -8575,7 +8636,8 @@ window.ListInfo = {
               if (
                 item == "RelatedMainKpis" ||
                 item == "RelatedMainObjective" ||
-                item == "Portfolio"
+                item == "Portfolio" ||
+                item == "Actual"
               ) {
                 myFieldParent.find(">*").attr("required", false);
               }
@@ -8605,6 +8667,7 @@ window.ListInfo = {
         });
       } else {
         allToggleFields.forEach((item, i, arr) => {
+         
           $('[data-togglename="' + item + '"]')
             .parent()
             .addClass("hide-field");
@@ -8853,6 +8916,7 @@ window.ListInfo = {
     );
     return queryBody;
   },
+
 };
 // for view
 window.View_ListInfo = {
@@ -9134,7 +9198,7 @@ window.View_ListInfo = {
             actionTaskHeader +
             '<div class="leftBtns">' +
             '<button data-trans-toissue class="btn btn-action btn-to-issue Resources" type="button"></button>' +
-            '<button class="btn btn-action btn-delete" type="button">' +
+            '<button class="btn btn-action btn-delete" style="margin:unset" type="button">' +
             btnDeleteLabel +
             "</button>" +
             "</div>" +
@@ -14439,17 +14503,27 @@ var get_grandparent_data = {
 
 let date_Controlling_Call = {
 	// The main Initialization function
-	init: function (controlingListName, controlingCode, maxDateField, dateControlingInput, $this) {
+	init: function (controlingListName, controlingCode, maxDateField, dateControlingInput, $this,minDateField, minDateControlList,minDateControlingCode ) {
 		var clientContext = new SP.ClientContext.get_current();
 		var oList = clientContext.get_web().get_lists().getByTitle(controlingListName);
+		var secondMinList = clientContext.get_web().get_lists().getByTitle(minDateControlList);
 		var camlQuery = new SP.CamlQuery();
 		camlQuery.set_viewXml(
 			`<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">${controlingCode}</Value></Eq></Where><OrderBy><FieldRef Name="Created" Ascending="True" /></OrderBy></Query></View>`
 		);
+    // var camlQueryForMinDate = new SP.CamlQuery();
+		// camlQuery.set_viewXml(
+		// 	`<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">${minDateControlingCode}</Value></Eq></Where><OrderBy><FieldRef Name="Created" Ascending="True" /></OrderBy></Query></View>`
+		// );
     debugger
     date_Controlling_Call.g.maxDateField = maxDateField;
+    date_Controlling_Call.g.minDateField = minDateField;
     date_Controlling_Call.g.$this = $this;
 		date_Controlling_Call.g.collListItem = oList.getItems(camlQuery);
+    // if(minDateField){
+
+    //   date_Controlling_Call.g.collListItem = secondMinList.getItems(camlQueryForMinDate);
+    // }
 		clientContext.load(date_Controlling_Call.g.collListItem);
 		clientContext.executeQueryAsync(
 			Function.createDelegate(this, date_Controlling_Call.onSuccess),
@@ -14466,15 +14540,12 @@ let date_Controlling_Call = {
 			tableRows = "";
 			var oListItem = listItemEnum.get_current();
 			let maxvalue = oListItem.get_item(date_Controlling_Call.g.maxDateField);
-      maxvalue = new Date(maxvalue);
-      let year = maxvalue.getFullYear();
-      let month = maxvalue.getMonth() + 1; // Months are zero-indexed, so we add 1
-      month = month < 10? `0${month}`:month;
-      let day = maxvalue.getDate();
-      day = day <10 ? `0${day}`:day;
-
-      maxvalue = `${year}-${month}-${day}`;
-      date_Controlling_Call.g.$this.attr("max",maxvalue)
+			// let minDateValue = oListItem.get_item(date_Controlling_Call.g.minDateField);
+      // maxvalue = `${year}-${month}-${day}`;
+       maxDate = convertToWantedDateFormat.convert(maxvalue);
+      //  minDateValue = convertToWantedDateFormat.convert(minDateValue);
+      // date_Controlling_Call.g.$this.attr("min",minDateValue);
+      date_Controlling_Call.g.$this.attr("max",maxDate);
 		}
 	},
 	onError: function (sender, args) {
@@ -14485,6 +14556,20 @@ let date_Controlling_Call = {
   g:{
   }
 };
+
+let convertToWantedDateFormat = {
+
+  convert(dateToBeConverted){
+    let year = dateToBeConverted.getFullYear();
+    let month = dateToBeConverted.getMonth() + 1; // Months are zero-indexed, so we add 1
+    month = month < 10? `0${month}`:month;
+    let day = dateToBeConverted.getDate();
+    day = day <10 ? `0${day}`:day;
+    convertedDate = `${year}-${month}-${day}`;
+
+    return convertedDate;
+  }}
+
 window.Get_ActualAnnualTotal = {
   onSuccess: function (sender, args) {
     debugger

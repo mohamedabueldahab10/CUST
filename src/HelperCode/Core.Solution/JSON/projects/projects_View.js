@@ -287,14 +287,14 @@ var Information_Form = [
       //   // "maxchar": 5000,
       //   // hideonstage: "1"
       // },
-      {
-        InternalName: "Status",
-        DisplayName: "مرحلة المشروع",
-        DisplayNameEn: "Status",
-        type: "string",
-        translate:'resources',
-        // maxchar: 255,
-      },
+      // {
+      //   InternalName: "Status",
+      //   DisplayName: "مرحلة المشروع",
+      //   DisplayNameEn: "Status",
+      //   type: "string",
+      //   translate:'resources',
+      //   // maxchar: 255,
+      // },
       {
         InternalName: "ProjectType",
         DisplayName: "نوع المشروع",
