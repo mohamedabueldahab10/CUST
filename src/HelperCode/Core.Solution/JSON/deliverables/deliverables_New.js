@@ -167,6 +167,7 @@ var Information_Form = [
         DisplayName: 'معايير قبول المخرج',
         DisplayNameEn: 'Acceptance Criteria',
         type: 'multiline',
+        "validation": "required",
         maxchar: 5000,
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",

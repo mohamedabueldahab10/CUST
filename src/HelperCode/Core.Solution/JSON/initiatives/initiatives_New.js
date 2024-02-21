@@ -853,7 +853,7 @@ var Information_Form = [
         InternalName: 'EstimatedCost',
         DisplayName: 'التكلفة التقديرية ',
         DisplayNameEn: 'Estimated Cost',
-        type: 'float',
+        type: 'number',
         numberOfDigits: "15"
       },
 
@@ -915,7 +915,7 @@ var Information_Form = [
         InternalName: 'Expenditures',
         DisplayName: 'المنصرف الأجمالي ',
         DisplayNameEn: 'Expenditures',
-        type: 'float',
+        type: 'number',
         numberOfDigits: "15",
         max:"InitiativeBudget",
         descPhraseAr: "يجب ان تكون اقل من او يساوي ميزانية المبادرة",
@@ -925,7 +925,7 @@ var Information_Form = [
         InternalName: 'CurrentExpenditures',
         DisplayName: 'المنصرف من العالم المالي الحالي ',
         DisplayNameEn: 'Current Expenditures',
-        type: 'float',
+        type: 'number',
         numberOfDigits: "15",
         max:"InitiativeBudget",
         descPhraseAr: "يجب ان تكون اقل من او يساوي ميزانية المبادرة",
