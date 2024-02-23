@@ -36,10 +36,6 @@ var Information_Form = [
               value: 'establishingimportantmeetingpartnershipsprogramlevel',
             },
             { display: 'legalmilestonesgroup', value: 'legalmilestonesgroup' },
-            { display: 'lmsstrategy', value: 'lmsstrategy' },
-            { display: 'achievementsofbudgetforum', value: 'achievementsofbudgetforum' },
-            { display: 'achievementsofkingdom', value: 'achievementsofkingdom' },
-            { display: 'organizationalstructure', value: 'organizationalstructure' },
             {
               display: 'achievingkeyperformancetargets',
               value: 'achievingkeyperformancetargets',
@@ -54,55 +50,24 @@ var Information_Form = [
         type: 'datetime',
         validation: 'required',
       },
-      // {
-      //   InternalName: 'Sector',
-      //   DisplayName: 'القطاع',
-      //   DisplayNameEn: 'Sector',
-      //   type: 'lookupWithQuery',
-      //   queryField: 'EntityType',
-      //   queryFieldType: 'dropdownValues', //ex: "Choice"
-      //   queryFieldValue: 'Sector',
-      //   // dynamic: 'parent',
-      //   // type: 'lookup',
-      //   validation: 'required',
-      //   //from other list:
-      //   source: 'Internal Entities',
-      //   // isSector: 'True',
-      //   // EntityType: 'Sector',
-      //   Dispfieldkey: 'Name',
-      //   DispfieldkeyEn: 'NameEn',
-      //   valfieldkey: 'Title',
-      // },
       {
-        "InternalName": "Sector",
-        "DisplayName": "القطاع",
-        "DisplayNameEn": "Sector",
-        "type": "lookupWithQuery",
-        "queryField": "EntityType",
-        "queryFieldType": "dropdownValues", //ex: "Choice"
-        "queryFieldValue": "Sector",
-        dynamic: "parent",
-        "source": "Internal Entities",
-        "Dispfieldkey": "Name",
-        "DispfieldkeyEn": "NameEn",
-        "valfieldkey": "Title",
-        "validation": "required"
-      },
-      {
-        "InternalName": "SubSector",
-        "DisplayName": "الوكالات",
-        "DisplayNameEn": "DeputyShip",
-        type: "lookup",
+        InternalName: 'Sector',
+        DisplayName: 'القطاع',
+        DisplayNameEn: 'Sector',
+        type: 'lookupWithQuery',
+        queryField: 'EntityType',
+        queryFieldType: 'dropdownValues', //ex: "Choice"
+        queryFieldValue: 'Sector',
+        // dynamic: 'parent',
+        // type: 'lookup',
+        validation: 'required',
         //from other list:
-        source: "Internal Entities",
-        Dispfieldkey: "Name",
-        valfieldkey: "Title",
-        grpfieldkey: 'Title',
-        // "isRelatedToParent": true, // to show parent value depends on child like sector and subsector
-        dynamic: "Sector", //InternalName Of Parent field
-        filterField: "ParentEntity",
-        filterFieldType: "Text",//Type In Sharepoint List for Parent field
-        // "validation": "required"
+        source: 'Internal Entities',
+        // isSector: 'True',
+        // EntityType: 'Sector',
+        Dispfieldkey: 'Name',
+        DispfieldkeyEn: 'NameEn',
+        valfieldkey: 'Title',
       },
     ],
   },
@@ -122,25 +87,25 @@ var Information_Form = [
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000", 
       },
-      // {
-      //   InternalName: 'LinkType',
-      //   DisplayNameEn: 'Link Type',
-      //   DisplayName: 'نوع ارتباط المنجز',
-      //   validation: 'required',
-      //   type: 'dropdownValues',
-      //   options: {
-      //     choices: [
-      //       { display: 'objective', value: 'objective' },
-      //       { display: 'initiative', value: 'initiative' },
-      //     ],
-      //   },
-      //   toggleValues: [
-      //     { value: 'objective', fields: ['AchievementCategory','RelatedAchievementStrategy','RelatedObjective', 'RelatedKPI'] },
-      //     { value: 'initiative', fields: ['AchievementCategoryInitiative','RelatedInitiative', 'RelatedMilestone'] },
-      //   ],
+      {
+        InternalName: 'LinkType',
+        DisplayNameEn: 'Link Type',
+        DisplayName: 'نوع ارتباط المنجز',
+        validation: 'required',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'objective', value: 'objective' },
+            { display: 'initiative', value: 'initiative' },
+          ],
+        },
+        toggleValues: [
+          { value: 'objective', fields: ['AchievementCategory','RelatedAchievementStrategy','RelatedObjective', 'RelatedKPI'] },
+          { value: 'initiative', fields: ['AchievementCategoryInitiative','RelatedInitiative', 'RelatedMilestone'] },
+        ],
 
 
-      // },
+      },
       {
         InternalName: 'AchievementCategory',
         DisplayNameEn: 'Achievement Category',
@@ -148,10 +113,6 @@ var Information_Form = [
         validation: 'required',
         type: 'dropdownValues',
         dynamic: 'parent',
-        toggleValues: [
-          { value: 'vision', fields: ['Program'] },
-          // {value:'strategically', fields:['StrategyRelatedObjective']}
-        ],
         options: {
           choices: [
             {display: 'strategically',
@@ -163,38 +124,38 @@ var Information_Form = [
             customFilterValue:  "lms", },
           ],
         },
-        // ToggleName:'AchievementCategory',
-        // display:'none'
+        ToggleName:'AchievementCategory',
+        display:'none'
 
       },
-      // {
-      //   InternalName: 'AchievementCategoryInitiative',
-      //   DisplayNameEn: 'Achievement Category',
-      //   DisplayName: 'تصنيف المنجز',
-      //   validation: 'required',
-      //   type: 'dropdownValues',
-      //   dynamic: 'parent',
-      //   options: {
-      //     choices: [
-      //       {display: 'strategically',
-      //       value: 'strategically',
-      //       customFilterValue: "strategically", },
-      //       { display: 'vision', value: 'vision',
-      //       customFilterValue:  "vision", },
-      //       { display: 'lms', value: 'lms',
-      //       customFilterValue:  "lms", },
-      //     ],
-      //   },
-        // ToggleName:'AchievementCategoryInitiative',
-        // display:'none'
+      {
+        InternalName: 'AchievementCategoryInitiative',
+        DisplayNameEn: 'Achievement Category',
+        DisplayName: 'تصنيف المنجز',
+        validation: 'required',
+        type: 'dropdownValues',
+        dynamic: 'parent',
+        options: {
+          choices: [
+            {display: 'strategically',
+            value: 'strategically',
+            customFilterValue: "strategically", },
+            { display: 'vision', value: 'vision',
+            customFilterValue:  "vision", },
+            { display: 'lms', value: 'lms',
+            customFilterValue:  "lms", },
+          ],
+        },
+        ToggleName:'AchievementCategoryInitiative',
+        display:'none'
 
-      // },
+      },
       {
         InternalName: 'RelatedAchievementStrategy',
         DisplayNameEn: 'Related Strategy',
         DisplayName: 'الاستراتيجية المرتبطة',
         type: 'lookup',
-        // ToggleName:'RelatedAchievementStrategy',
+        ToggleName:'RelatedAchievementStrategy',
         validation: 'required',
         source: "GoalStrategy",
         Dispfieldkey: "Name",
@@ -203,23 +164,7 @@ var Information_Form = [
         seconeddynamic: "AchievementCategory",
         filterField: "Types",//InternalName Of Parent field
                 filterFieldType: "Text",//Type In Sharepoint List for Parent field
-        // display: "none",
-      },
-      {
-        InternalName: "Program",
-        DisplayName: "البرنامج",
-        DisplayNameEn: "Program",
-        ToggleName: 'Program',
-        // RequiredName: 'Ministry',
-        type: 'lookupWithQuery',
-        queryField: 'Types',
-        queryFieldType: 'Text', //ex: "Choice"
-        queryFieldValue: 'program',
-        //from other list:
-        source: 'SPillars',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
-          "display": "none"
+        display: "none",
       },
       {
         InternalName: 'RelatedObjective',
@@ -229,14 +174,13 @@ var Information_Form = [
         source: 'SOs',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        // ToggleName: "RelatedObjective",
+        ToggleName: "RelatedObjective",
         isRelatedToParent: true,
         dynamic: 'parent', //InternalName Of Parent field
         seconeddynamic: "RelatedAchievementStrategy",
         filterField: 'RelatedStrategy',
         filterFieldType: 'Text',
-        validation: 'required',
-        // display:"none"
+        display:"none"
         
       },
       {
@@ -245,10 +189,10 @@ var Information_Form = [
         DisplayName: 'المؤشر المرتبط',
         type: 'lookup',
         source: 'MainKPI',
-        // display: "none",
+        display: "none",
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        // ToggleName: "RelatedKPI",
+        ToggleName: "RelatedKPI",
         isRelatedToParent: true,
         dynamic: 'RelatedObjective',
         filterField: 'RelatedStrategyObjective',
@@ -263,11 +207,11 @@ var Information_Form = [
         Dispfieldkey: "Name",
         valfieldkey: "Title",
         dynamic: 'parent', //InternalName Of Parent field
-        // seconeddynamic: "AchievementCategoryInitiative",
+        seconeddynamic: "AchievementCategoryInitiative",
         filterField: "Types",//InternalName Of Parent field
         filterFieldType: "Text",//Type In Sharepoint List for Parent field
-        // display: "none",
-        // ToggleName: "RelatedInitiative",
+        display: "none",
+        ToggleName: "RelatedInitiative",
       },
       {
         InternalName: 'RelatedMilestone',
@@ -275,11 +219,11 @@ var Information_Form = [
         DisplayName: 'معلم المبادرة المرتبط',
         type: 'lookup',
         source: 'InitiativeMilestones',
-        display: "none",
+        // display: "none",
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        validation: 'required',
-        // ToggleName: "RelatedMilestone",
+        // validation: 'required',
+        ToggleName: "RelatedMilestone",
         //
         isRelatedToParent: true,
         dynamic: 'RelatedInitiative',
@@ -370,9 +314,8 @@ var Information_Form = [
         validation: 'required',
       },
       {
-     
-        DisplayName: 'ارسال الموافقة لمكتب المشاريع القطاعية',
-        DisplayNameEn: 'Submit the approval for SPMO',
+        DisplayName: 'ارسال للموافقة',
+        DisplayNameEn: 'Submit For Approval',
         InternalName: 'SubmitForApproval',
         validation: 'required',
         type: 'dropdownValues',

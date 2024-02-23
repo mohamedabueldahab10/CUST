@@ -275,10 +275,10 @@ var Information_Form = [
         DisplayName: 'معلم المبادرة المرتبط',
         type: 'lookup',
         source: 'InitiativeMilestones',
-        display: "none",
+        // display: "none",
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-        validation: 'required',
+        // validation: 'required',
         // ToggleName: "RelatedMilestone",
         //
         isRelatedToParent: true,
