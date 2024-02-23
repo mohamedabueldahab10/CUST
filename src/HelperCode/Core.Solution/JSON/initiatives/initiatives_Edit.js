@@ -1180,7 +1180,7 @@ var Information_Form = [
     ],
   },
   {
-    label: 'بيانات المخرج',
+    label: 'بيانات المخرج الرئيسي',
     labelEn: 'Delivrable Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
@@ -1502,7 +1502,7 @@ var Information_Form = [
     ],
   },
   {
-    label: 'بيانات المعلم',
+    label: 'بيانات المعلم الرئيسي',
     labelEn: 'Milestone Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',

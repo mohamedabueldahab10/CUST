@@ -950,7 +950,7 @@ var Information_Form = [
   //   ],
   // },
   {
-    label: 'بيانات المخرج',
+    label: 'بيانات المخرج الرئيسي',
     labelEn: 'Delivrable Data',
     description: 'التفاصيل (يمكن ادخال القيم عند ادخال ميزانية المبادرة)',
     descriptionEn: 'Details (you can enter the values when enter the Initiative Budget)',
@@ -1116,7 +1116,7 @@ var Information_Form = [
     ]
   },
   {
-    label: 'بيانات المعلم',
+    label: 'بيانات المعلم الرئيسي',
     labelEn: 'Milestone Data',
     description: 'التفاصيل (يمكن ادخال القيم عند ادخال ميزانية المبادرة)',
     descriptionEn: 'Details (you can enter the values when enter the Initiative Budget)',
