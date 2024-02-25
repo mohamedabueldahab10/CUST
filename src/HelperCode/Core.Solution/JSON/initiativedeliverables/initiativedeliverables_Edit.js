@@ -170,8 +170,6 @@ var Information_Form = [
 					  display: 'newentities', value: 'newentities',
 					},
 				  ],
-				},security: {
-					groups: ["System Admin Group", "EPMO", "LMSU-Execution", "VRO_E"],
 				},
 			  
 			  },
@@ -184,9 +182,6 @@ var Information_Form = [
 				validation: 'required',
 				descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
 				descPhraseEn: "max length of letters equal 5000",
-				security: {
-					groups: ["System Admin Group", "EPMO", "LMSU-Execution", "VRO_E"],
-				},
 			},
 			{
 				InternalName: "Target",
@@ -260,7 +255,8 @@ var Information_Form = [
 				enableOnWfTaskStage: 'VROInitiativeDeliverable00,EPMOInitiativeDeliverable00,LMSInitiativeDeliverable00',
 				requireOnWfTaskStage: 'VROInitiativeDeliverable00,EPMOInitiativeDeliverable00,LMSInitiativeDeliverable00',
 				type: "yesnoradio",
-				targetfieldrequired: "ActualCompletedDate",
+				// targetfieldrequired: "ActualCompletedDate",
+				targetfieldrequired: ["ActualCompletedDate","getfile","SupportDocumentsDescription" ], 
 				options: {
 					choices: [
 						{ display: "yes", value: "yes" },
@@ -344,7 +340,7 @@ var Information_Form = [
 				type: "file",
 				docPurpose: "Spporting_Documents",
 				withAddBtn: "true",
-				validation: "required",
+				// validation: "required",
 				descPhraseAr: "ملفات مطلوبة عند الاغلاق",
 				descPhraseEn: "File required after closing",
 				
@@ -362,7 +358,7 @@ var Information_Form = [
 				descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
 				descPhraseEn: "max length of letters equal 5000",
 				maxchar: '5000',                
-				validation: 'required',
+				// validation: 'required',
 				// hideOnWfTaskStage :'EPMOInitiativeMilestone00,VROInitiativeMilestone00,LMSInitiativeMilestone00',
 				// security: {
 				//   groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
