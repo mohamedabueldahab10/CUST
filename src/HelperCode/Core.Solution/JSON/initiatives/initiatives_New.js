@@ -1059,13 +1059,13 @@ var Information_Form = [
       
       },
     
-      {
-        InternalName: 'Target',
-        DisplayNameEn: 'Target',
-        DisplayName: 'المستهدف',
-        type: 'string',
-        // numberOfDigits:"15"
-      },
+      // {
+      //   InternalName: 'Target',
+      //   DisplayNameEn: 'Target',
+      //   DisplayName: 'المستهدف',
+      //   type: 'string',
+      //   // numberOfDigits:"15"
+      // },
       {
         InternalName: 'Weight',
         DisplayName: 'الوزن(%)',

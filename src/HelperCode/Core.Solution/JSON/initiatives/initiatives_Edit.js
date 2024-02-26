@@ -1339,22 +1339,22 @@ var Information_Form = [
       
       },
     
-      {
-        InternalName: 'Target',
-        DisplayNameEn: 'Target',
-        DisplayName: 'المستهدف',
-        type: 'string',
-        // numberOfDigits: '15',
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
+      // {
+      //   InternalName: 'Target',
+      //   DisplayNameEn: 'Target',
+      //   DisplayName: 'المستهدف',
+      //   type: 'string',
+      //   // numberOfDigits: '15',
+      //   security: {
+      //     groups: [ ],
+      //     // groups: [], // should be empty array if will use notAllowTo
+      //     notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+      //       {group:"Development Unit",form:["origin"]},
+      //       // {group:"EPMO",form:["origin" ]}
 
-          ]
-        },
-      },
+      //     ]
+      //   },
+      // },
       // {
       //     "InternalName": "CommittedDate",
       //     "DisplayName": "تاريخ الالتزام",

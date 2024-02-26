@@ -643,12 +643,12 @@ var Information_Form = [
       
       },
   
-      {
-        InternalName: 'Target',
-        DisplayNameEn: 'Target',
-        DisplayName: 'المستهدف',
-        type: 'string',
-      },
+      // {
+      //   InternalName: 'Target',
+      //   DisplayNameEn: 'Target',
+      //   DisplayName: 'المستهدف',
+      //   type: 'string',
+      // },
       {
         InternalName: 'Weight',
         DisplayNameEn: 'Weight (%)',
