@@ -748,10 +748,10 @@
     instage: "الخطوة",
     relatedstratobj: "الهدف التابع له",
     inptitle6: "المشاريع",
-    inptitle10: "المعالم الرئيسية",
+    inptitle10: "المعالم ",
     inptitle11: "المنافع",
     inptitle12: "التحديات",
-    delinioutput: "المخرجات الرئيسية",
+    delinioutput: "المخرجات ",
     //initiativeMainHome
     instrategy: "استراتيجي",
     initiatives: "المبادرات",
