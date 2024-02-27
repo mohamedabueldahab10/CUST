@@ -596,7 +596,7 @@ var ListArray = [
 		TitleEn: "Updates",
 		projnav: "Project Navigation",
 		subfolder: true,
-		projectrelated: true, // this should be added to appear the Create btn inside project
+		// projectrelated: true, // this should be added to appear the Create btn inside project
 	},
 	{
 		projectupdates: "Updates",
