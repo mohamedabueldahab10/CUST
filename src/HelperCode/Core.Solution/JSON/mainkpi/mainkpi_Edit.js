@@ -417,11 +417,17 @@ var Information_Form = [
             {
               display: 'main',
               value: 'main',
+              otherFields: [
+                { fieldName: "Types", value: "main" },
+              ],
               // customFilterValue: 'main',
             },
             {
               display: 'sublevel2',
               value: 'sublevel2',
+              otherFields: [
+                { fieldName: "Types", value: "sub" },
+              ],
               // customFilterValue: 'sublevel2',
             },
             {
