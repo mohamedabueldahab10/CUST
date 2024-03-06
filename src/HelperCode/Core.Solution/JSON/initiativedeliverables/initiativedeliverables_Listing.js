@@ -40,6 +40,24 @@ var Listing_Info = [
 		inlisting: true,
 		infilter: false
 	},	
+	{
+		"InternalName": "Delivered",
+		"DisplayName": "تم التسليم",
+		"DisplayNameEn": "Delivered",
+		"type": "yesnoradio",
+		needTrans: true,
+		inlisting: true,
+		infilter: true
+	},
+	{
+		"InternalName": "Completed",
+		"DisplayNameEn": "Completed",
+		"DisplayName":"اكتمال الموافقة",
+		"type": "dropdownValues",
+		needTrans: true,
+		inlisting: true,
+		infilter: true
+	},
 	// {
 	// 	"InternalName": "Completed",
 	// 	"DisplayNameEn": "Completed",
