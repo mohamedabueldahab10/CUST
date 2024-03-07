@@ -119,8 +119,8 @@ var Information_Form = [
       // },
       {
         InternalName: 'Weight',
-        DisplayName: 'الوزن(%)',
         DisplayName: 'الوزن المكافئ للإنجاز %',
+        DisplayNameEn: 'Weight (%)',
         type: 'weightfloatpercentage',
         listname: 'InitiativeMilestones',
         targetcode: 'InitiativeCode',
