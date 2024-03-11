@@ -68,7 +68,7 @@ var Information_Form = [
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'VisionInitiative' },
                 { fieldName: 'WFStage', value: 'VInStage01' },
-                { fieldName: 'Phase', value: 'P1' },
+                { fieldName: 'Phase', value: 'P3' },
                 { fieldName: 'DraftStatus', value: '' },
                 // { fieldName: 'InitiativeProgressStatus', value: 'stat5' },
               ],
@@ -80,7 +80,7 @@ var Information_Form = [
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'StrategicallyInitiative' },
                 { fieldName: 'WFStage', value: 'SInStage01' },
-                { fieldName: 'Phase', value: 'P1' },
+                { fieldName: 'Phase', value: 'P3' },
                 { fieldName: 'DraftStatus', value: '' },
                 // { fieldName: 'InitiativeProgressStatus', value: 'stat5' },
                 
@@ -93,7 +93,7 @@ var Information_Form = [
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'LMSInitiative' },
                 { fieldName: 'WFStage', value: 'LInStage01' },
-                { fieldName: 'Phase', value: 'P1' },
+                { fieldName: 'Phase', value: 'P3' },
                 { fieldName: 'DraftStatus', value: '' },
                 // { fieldName: 'InitiativeProgressStatus', value: 'stat5' },
               ],
