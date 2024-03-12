@@ -11,16 +11,28 @@ var Information_Form = [
           {
             condition: "vision", values: [
               { fieldNameInList: "WFModuleCode", fieldValueInList: "VROProjDeliverable" },
+              {
+								fieldNameInList: "WFInitiatedBy",
+								fieldValueInList: "LoggedInUser",
+							},
               { fieldNameInList: "WFStage", fieldValueInList: "VROProjDeliverable01" },]
           },
           {
             condition: "lms",
             values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "LMSProjDeliverable" },
+            {
+              fieldNameInList: "WFInitiatedBy",
+              fieldValueInList: "LoggedInUser",
+            },
             { fieldNameInList: "WFStage", fieldValueInList: "LMSProjDeliverable01" }]
           },
           {
             condition: "strategically",
             values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "EPMOProjDeliverable" },
+            {
+              fieldNameInList: "WFInitiatedBy",
+              fieldValueInList: "LoggedInUser",
+            },
             { fieldNameInList: "WFStage", fieldValueInList: "EPMOProjDeliverable01" }]
           },
 
