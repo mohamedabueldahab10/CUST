@@ -942,8 +942,8 @@ var Information_Form = [
         InternalName: 'Baseline',
         DisplayNameEn: 'Baseline',
         DisplayName: 'خط الأساس',
-        // type: "number",
-        type: 'float',
+        type: "number",
+        // type: 'float',
       },
       {
         InternalName: 'MesurePeriod',
