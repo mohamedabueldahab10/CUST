@@ -907,8 +907,8 @@ window.userCalls = {
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
           ChartHideForInitiatives =  ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "معالي الوزير";
-        en_UserRole = "Minister";
+          ar_UserRole = "الصلاحية الشاملة";
+        en_UserRole = "Gloabl Access";
 
         Create_Access = [];
         Read_Access = AllListKeys;
