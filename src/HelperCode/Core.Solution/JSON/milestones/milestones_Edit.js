@@ -24,6 +24,10 @@ var Information_Form = [
                 fieldNameInList: 'WFStage',
                 fieldValueInList: 'VROProjMilestone01',
               },
+              {
+								fieldNameInList: "WFInitiatedBy",
+								fieldValueInList: "LoggedInUser",
+							},
             ],
           },
           {
@@ -37,6 +41,10 @@ var Information_Form = [
                 fieldNameInList: 'WFStage',
                 fieldValueInList: 'LMSProjMilestone01',
               },
+              {
+								fieldNameInList: "WFInitiatedBy",
+								fieldValueInList: "LoggedInUser",
+							},
             ],
           },
           {
@@ -50,6 +58,10 @@ var Information_Form = [
                 fieldNameInList: 'WFStage',
                 fieldValueInList: 'EPMOProjMilestone01',
               },
+              {
+								fieldNameInList: "WFInitiatedBy",
+								fieldValueInList: "LoggedInUser",
+							},
             ],
           },
         ],

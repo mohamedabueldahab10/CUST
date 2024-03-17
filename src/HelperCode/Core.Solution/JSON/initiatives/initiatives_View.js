@@ -439,17 +439,17 @@ var Information_Form = [
       //   DispfieldkeyEn: 'TaskNameEn',
       //   valfieldkey: "Title",
       //   },
-      // {
-      //   InternalName: "Phase",
-      //   DisplayName: "مرحلة المبادرة",
-      //   DisplayNameEn: "Phase",
-      //   type: 'lookup',
-      //   // //from other list:
-      //   source: "Phases",
-      //   Dispfieldkey: "Name",
-      //   DispfieldkeyEn: "PhaseNameEn",
-      //   valfieldkey: "Title",
-      // },
+      {
+        InternalName: "Phase",
+        DisplayName: "مرحلة المبادرة",
+        DisplayNameEn: "Phase",
+        type: 'lookup',
+        // //from other list:
+        source: "Phases",
+        Dispfieldkey: "Name",
+        DispfieldkeyEn: "PhaseNameEn",
+        valfieldkey: "Title",
+      },
     
       // {
       //   InternalName: 'DelayPercentage',

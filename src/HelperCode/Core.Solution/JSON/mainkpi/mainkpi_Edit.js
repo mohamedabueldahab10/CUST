@@ -417,11 +417,17 @@ var Information_Form = [
             {
               display: 'main',
               value: 'main',
+              otherFields: [
+                { fieldName: "Types", value: "main" },
+              ],
               // customFilterValue: 'main',
             },
             {
               display: 'sublevel2',
               value: 'sublevel2',
+              otherFields: [
+                { fieldName: "Types", value: "sub" },
+              ],
               // customFilterValue: 'sublevel2',
             },
             {
@@ -1743,8 +1749,8 @@ var Information_Form = [
         InternalName: 'Baseline',
         DisplayNameEn: 'Baseline',
         DisplayName: 'خط الأساس',
-        // type: 'number',
-        type: 'float',
+        type: 'number',
+        // type: 'float',
         //ToggleDisabledName: 'Baseline',
         security: {
           groups: [
