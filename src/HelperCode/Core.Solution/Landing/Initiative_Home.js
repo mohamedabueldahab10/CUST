@@ -1233,7 +1233,7 @@ var Projects_Info_Request = {
           "</h4>" +
           "</div>" +
           '<div class="d-flex justify-content-center align-items-start">'+ 
-          '<span class="icon-user lg d-inline-flex align-items-center text-center handlecircle circlecolor' +
+          '<span class="icon-user lg d-inline-flex align-items-center text-center circlecolor' +
           projectstatusBasedOnScheduleForStyling +'"></span>'
       +
            '<div class="d-inline-flex flex-column mx-2">' +

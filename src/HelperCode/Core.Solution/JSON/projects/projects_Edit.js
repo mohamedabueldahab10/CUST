@@ -2691,7 +2691,8 @@ var Information_Form = [
         type: "multiselect",
         options: {
                   choices:[
-                  'الموافقات','دراسة الجدوى','ميثاق المشروع'
+                    approvals,feasibility_study,project_charter
+                  // 'الموافقات','دراسة الجدوى','ميثاق المشروع'
                 ]
           }
        

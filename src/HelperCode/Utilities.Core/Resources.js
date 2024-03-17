@@ -1156,7 +1156,10 @@
     lmscrkpi:"مؤشر",
     vrocrinitiative: "مبادرة",
     epmocrinitiative:"مبادرة",
-    lmscrinitiative:"مبادرة"
+    lmscrinitiative:"مبادرة",
+    approvals: 'الموافقات',
+    feasibilitystudy:'دراسة الجدوى',
+    projectcharter:'ميثاق المشروع'
   },
   en: {
     clearfilter: "Clear Filter",
@@ -2331,7 +2334,10 @@
     lmscrkpi:"KPI",
     vrocrinitiative: "Initiative",
     epmocrinitiative:"Initiative",
-    lmscrinitiative:"Initiative"
+    lmscrinitiative:"Initiative",
+    approvals: 'approvals',
+    feasibilitystudy:'Feasibility Study',
+    projectcharter:'Project Charter'
   },
 };
 
