@@ -226,6 +226,7 @@ var Information_Form = [
 				DisplayName: "القيمة",
 				DisplayNameEn: "Amount",
 				dontSubmit: true,
+				"state":"disabled",
 				type: "percentbyrelatedparent",
 				listname: "Initiatives",
 				parentinternalname: "InitiativeBudget",

@@ -143,6 +143,7 @@ var Information_Form = [
         parentinternalname: 'InitiativeBudget',
         targetelement: 'Weight',
         validation: 'required',
+        "state":"disabled",
         descPhraseAr: "من ميزانية المبادرة",
         descPhraseEn: " From Initiative Budget", 
         security: {
