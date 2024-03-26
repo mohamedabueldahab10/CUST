@@ -5143,11 +5143,11 @@ window.ListInfo = {
             '<div class="checkbox">' +
             "<label>" +
             '<input value="' +
-            'data-trans-'+element.options.choices[i].value +
+            'data-trans-'+element.options.choices[i] +
             '" id="' +
             element.InternalName +
             '" type="checkbox"'> +
-            element.options.choices[i].display
+            element.options.choices[i]
             "</label>" +
             "</div>" +
             "</li>";
@@ -5162,7 +5162,6 @@ window.ListInfo = {
           descPhrase +
           "</div>";
         "</div>";
-        changeResources();
         OnSuccess(flag, htmlBody);
         break;
 
