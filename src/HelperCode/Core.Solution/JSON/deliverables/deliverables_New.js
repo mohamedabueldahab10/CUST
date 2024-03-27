@@ -106,6 +106,13 @@ var Information_Form = [
         targetelement: 'Weight',
         validation: 'required',
       },
+      {
+        InternalName: 'Quantity',
+        DisplayNameEn: 'Quantity',
+        DisplayName: 'الكمية',
+        type: "number",
+        // type: 'float',
+      },
       // {
       //   InternalName: 'Status',
       //   DisplayName: 'الحالة',
