@@ -8504,39 +8504,47 @@ window.ListInfo = {
 
       if (isShowVal) {
         allToggleFields.forEach((item, i, arr) => {
-          // if (listkey == "projects" &&
-          //        (item != "InitiativeType" 
-          //       || item != "RelatedInitiative" 
-          //       ||item != "RelatedInitiativeDeliverable" )
-          //     ) 
-          // {
-            
+          if (listkey == "projects" &&
+              (item == "InitiativeType" 
+              || item == "RelatedInitiative" 
+              ||item == "RelatedInitiativeDeliverable" )
+            ) 
+          {
+            if(listkey == 'projects'){
+    
+              $('#InitiativeType').parent().show();
+              $('#InitiativeType').parent().css("display","unset");
+              $('#RelatedInitiative').parent().show();
+              $('#RelatedInitiative').parent().css("display","unset");
+              $('#RelatedInitiativeDeliverable').parent().show();
+              $('#RelatedInitiativeDeliverable').parent().css("display","unset");
+            }            
+            $('[data-togglename="' + item + '"]').prop('disabled', true);
+            $("#IsStrategicProject").on('change', function (){
+              if(listkey == 'projects'){
+                if($(this).val() == 'no'){
+                    $('#InitiativeType').val('');
+                    $('#InitiativeType option:selected').removeAttr('selected');
+                    $('#RelatedInitiative').val('')
+                    $('#RelatedInitiative option:selected').removeAttr('selected');
+                    $('#RelatedInitiativeDeliverable').val('')
+                    $('#RelatedInitiativeDeliverable option:selected').removeAttr('selected');
+                  
+                  
+                  }
+                }
+              });   
+          } else {
+            $('[data-togglename="' + item + '"]')
+            .parent()
+            .addClass("hide-field");
 
-          // }
-        if(listkey == 'projects'){
+            $('[data-togglename="' + item + '"]')
+              .parent()
+              .hide();
 
-          $('#InitiativeType').parent().show();
-          $('#InitiativeType').parent().css("display","unset");
-          $('#RelatedInitiative').parent().show();
-          $('#RelatedInitiative').parent().css("display","unset");
-          $('#RelatedInitiativeDeliverable').parent().show();
-          $('#RelatedInitiativeDeliverable').parent().css("display","unset");
-        }
-          $('[data-togglename="' + item + '"]').prop('disabled', true);
-      $("#IsStrategicProject").on('change', function (){
-        if(listkey == 'projects'){
-          if($(this).val() == 'no'){
-              $('#InitiativeType').val('');
-              $('#InitiativeType option:selected').removeAttr('selected');
-              $('#RelatedInitiative').val('')
-              $('#RelatedInitiative option:selected').removeAttr('selected');
-              $('#RelatedInitiativeDeliverable').val('')
-              $('#RelatedInitiativeDeliverable option:selected').removeAttr('selected');
-            
-            
-            }
           }
-        });   
+          
             // .parent().prop('disabled', true);
             // .addClass("hide-field");
 
@@ -8580,14 +8588,32 @@ window.ListInfo = {
           });
         });
         toggleFields.forEach(function (item, i, arr) {
-          var isHidden = $('[data-togglename="' + item + '"]')
-              .is(":disabled"),
-            myFieldParent = $('[data-togglename="' + item + '"]').parent();
+          if (listkey == "projects" &&
+              (item == "InitiativeType" 
+              || item == "RelatedInitiative" 
+              ||item == "RelatedInitiativeDeliverable" )
+            ) 
+          {
+            var isHidden = $('[data-togglename="' + item + '"]')
+              .is(":disabled");
+          } else{
+            var isHidden = $('[data-togglename="' + item + '"]')
+            .is(":hidden");
+          }
+           var myFieldParent = $('[data-togglename="' + item + '"]').parent();
           myFieldParentofParent = $('[data-togglename="' + item + '"]');
           if (isHidden) {
-            $('[data-togglename="' + item + '"]').prop('disabled', false);
+            if (listkey == "projects" &&
+              (item == "InitiativeType" 
+              || item == "RelatedInitiative" 
+              ||item == "RelatedInitiativeDeliverable" )
+            ) 
+          {
+              $('[data-togglename="' + item + '"]').prop('disabled', false);
+          }
             myFieldParent.show();
             myFieldParent.removeClass("hide-field");
+            myFieldParent.parent().addClass('py-5').addClass('border-bottom');
             myFieldParentofParent.show();
             if (!isView) {
               myFieldParent.find(">*").attr("required", true);
@@ -8669,6 +8695,8 @@ window.ListInfo = {
         allToggleFields.forEach((item, i, arr) => {
          
           $('[data-togglename="' + item + '"]')
+            .parent().parent().removeClass('py-5').removeClass('border-bottom');
+          $('[data-togglename="' + item + '"]')
             .parent()
             .addClass("hide-field");
 
@@ -8679,7 +8707,7 @@ window.ListInfo = {
           $('[data-togglename="' + item + '"]').val("");
           $('[data-togglename="' + item + '"]')
             .parent()
-            .find(">*")
+            .find("*")
             .attr("required", false);
         });
       }
