@@ -31,7 +31,7 @@ var Listing_Info = [
       "type":"lookupmultiselect",
       "localStorageVariable":"Dynamo_Internal Entities",
       "inlisting":true,
-      "infilter":false 
+      "infilter":true 
    },
    {
       "InternalName": "PartnershipType",
@@ -42,15 +42,15 @@ var Listing_Info = [
       "infilter":true,
       "needTrans": true
    },
-   // {
-   //    "InternalName":"PartnerName",
-   //    "DisplayName":"اسم الشريك",
-   //    "DisplayNameEn":"Partner Name",
-   //    "type":"lookup",
-   //    "localStorageVariable":"Dynamo_Vendors",
-   //    "inlisting":true,
-   //    "infilter":false
-   // },
+   {
+      InternalName: 'StartDate',
+      DisplayName: 'تاريخ بداية الشراكة',
+      DisplayNameEn: 'Start Date',
+      type: 'date',
+      // "localStorageVariable":"Dynamo_Vendors",
+      "inlisting":false,
+      "infilter":true
+   },
    {
       "InternalName":"RelatedStrategyObjective",
       "DisplayName":"الهدف الاستراتيجي المرتبط",

@@ -50,6 +50,13 @@ var Information_Form = [
           "parentinternalname":"ActualBudget",
           "targetelement":"Weight",
       },
+      {
+        InternalName: 'Quantity',
+        DisplayNameEn: 'Quantity',
+        DisplayName: 'الكمية',
+        type: "number",
+        // type: 'float',
+      },
       // {
       //   InternalName: 'Status',
       //   DisplayName: 'الحالة',

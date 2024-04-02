@@ -110,6 +110,14 @@ var Information_Form = [
               value: 'datasharingagreement',
               display: 'datasharingagreement',
             },
+            {
+              value: 'strategicpartnership',
+              display: 'strategicpartnership',
+            },
+            {
+              value: 'agreement',
+              display: 'agreement',
+            },
           ],
         },
       },

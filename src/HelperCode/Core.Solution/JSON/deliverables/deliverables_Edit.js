@@ -125,6 +125,13 @@ var Information_Form = [
           ]
       },
       },
+      {
+        InternalName: 'Quantity',
+        DisplayNameEn: 'Quantity',
+        DisplayName: 'الكمية',
+        type: "number",
+        // type: 'float',
+      },
       // {
       //   "InternalName": "Status",
       //   "DisplayName": "الحالة",
