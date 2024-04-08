@@ -15,7 +15,7 @@ var projectManagerPickedToProjectCenter = "";
 
 var kpiName = "",
   kpicurrentYear = "",
-  kpiTotalActual=0,
+  kpiTotalActual = 0,
   kpiType = "",
   kpiSector = "",
   kpiSubSector = "",
@@ -29,6 +29,8 @@ var kpiName = "",
   kpiMonthPicked = "",
   kpiPeriodTypeUpdate = "",
   kpiRecurrenceChanged = "";
+
+var mainKpiIsUpload = false;
 
 var masterIdWhenCreate = 0;
 
@@ -705,7 +707,7 @@ window.New_Data_Submit = {
                       field.fieldValueInList.toLowerCase() == "loggedinuser"
                     ) {
                       console.log("1");
-                     
+
                       // New_Data_Submit.g.oListItem.set_item(
                       //   field.fieldNameInList,
                       //   SP.FieldUserValue.fromUser(
@@ -720,14 +722,12 @@ window.New_Data_Submit = {
                           currentDeliveredVal = $("#Delivered").val();
                         }
                       }
-                      if (currentDeliveredVal == 'yes') {
+                      if (currentDeliveredVal == "yes") {
                         New_Data_Submit.g.oListItem.set_item(
                           field.fieldNameInList,
                           SP.FieldUserValue.fromUser(UserN.LoginName)
                         );
                       }
-
-               
                     } else {
                       New_Data_Submit.g.oListItem.set_item(
                         field.fieldNameInList,
@@ -753,7 +753,7 @@ window.New_Data_Submit = {
                             currentDeliveredVal = $("#Delivered").val();
                           }
                         }
-                        if (currentDeliveredVal == 'yes') {
+                        if (currentDeliveredVal == "yes") {
                           New_Data_Submit.g.oListItem.set_item(
                             field.fieldNameInList,
                             SP.FieldUserValue.fromUser(UserN.LoginName)
@@ -783,7 +783,7 @@ window.New_Data_Submit = {
                         currentDeliveredVal = $("#Delivered").val();
                       }
                     }
-                    if (currentDeliveredVal == 'yes') {
+                    if (currentDeliveredVal == "yes") {
                       New_Data_Submit.g.oListItem.set_item(
                         field.fieldNameInList,
                         SP.FieldUserValue.fromUser(UserN.LoginName)
@@ -1973,20 +1973,15 @@ window.Edit_Data_Submit = {
         var checkWfStage = $("#WFStage").val();
         if (!checkWfStage) {
           if (basedOnCondition) {
-          
             if (basedOnFieldValue == basedOnFieldCurrentValue) {
-            
               el.valueToSet.forEach((item) => {
-                console.log(item.condition,"item.condition")
-              
+                console.log(item.condition, "item.condition");
+
                 if (valueBasedOnParent.includes(item.condition)) {
-               
                   item.values.forEach((field) => {
-                  
                     if (
                       field.fieldValueInList.toLowerCase() == "loggedinuser"
                     ) {
-                      
                       var currentDeliveredVal = "";
                       if ($("#Delivered").length) {
                         if ($("#Delivered").attr("type") == "radio") {
@@ -1995,7 +1990,10 @@ window.Edit_Data_Submit = {
                           currentDeliveredVal = $("#Delivered").val();
                         }
                       }
-                      if ((deliveredValFromList != currentDeliveredVal) && currentDeliveredVal == 'yes') {
+                      if (
+                        deliveredValFromList != currentDeliveredVal &&
+                        currentDeliveredVal == "yes"
+                      ) {
                         Edit_Data_Submit.g.oListItem.set_item(
                           field.fieldNameInList,
                           SP.FieldUserValue.fromUser(UserN.LoginName)
@@ -2018,7 +2016,6 @@ window.Edit_Data_Submit = {
                       if (
                         field.fieldValueInList.toLowerCase() == "loggedinuser"
                       ) {
-                 
                         // Edit_Data_Submit.g.oListItem.set_item(
                         //   field.fieldNameInList,
                         //   SP.FieldUserValue.fromUser(
@@ -2033,7 +2030,10 @@ window.Edit_Data_Submit = {
                             currentDeliveredVal = $("#Delivered").val();
                           }
                         }
-                        if ((deliveredValFromList != currentDeliveredVal) && currentDeliveredVal == 'yes') {
+                        if (
+                          deliveredValFromList != currentDeliveredVal &&
+                          currentDeliveredVal == "yes"
+                        ) {
                           Edit_Data_Submit.g.oListItem.set_item(
                             field.fieldNameInList,
                             SP.FieldUserValue.fromUser(UserN.LoginName)
@@ -2055,7 +2055,6 @@ window.Edit_Data_Submit = {
               if (valueBasedOnParent.includes(item.condition)) {
                 item.values.forEach((field) => {
                   if (field.fieldValueInList.toLowerCase() == "loggedinuser") {
-        
                     var currentDeliveredVal = "";
                     if ($("#Delivered").length) {
                       if ($("#Delivered").attr("type") == "radio") {
@@ -2064,7 +2063,10 @@ window.Edit_Data_Submit = {
                         currentDeliveredVal = $("#Delivered").val();
                       }
                     }
-                    if ((deliveredValFromList != currentDeliveredVal) && currentDeliveredVal == 'yes') {
+                    if (
+                      deliveredValFromList != currentDeliveredVal &&
+                      currentDeliveredVal == "yes"
+                    ) {
                       Edit_Data_Submit.g.oListItem.set_item(
                         field.fieldNameInList,
                         SP.FieldUserValue.fromUser(UserN.LoginName)
@@ -2090,17 +2092,15 @@ window.Edit_Data_Submit = {
           // handle else to can update the loggedinuser
           if (basedOnCondition) {
             if (basedOnFieldValue == basedOnFieldCurrentValue) {
-            
               el.valueToSet.forEach((item) => {
                 if (valueBasedOnParent.includes(item.condition)) {
-                  console.log(item.values,"item.values item.values")
+                  console.log(item.values, "item.values item.values");
                   item.values.forEach((field) => {
-                    console.log(field.fieldValueInList,"field field")
-                   
+                    console.log(field.fieldValueInList, "field field");
+
                     if (
                       field.fieldValueInList.toLowerCase() == "loggedinuser"
                     ) {
-               
                       // Edit_Data_Submit.g.oListItem.set_item(
                       //   field.fieldNameInList,
                       //   SP.FieldUserValue.fromUser(
@@ -2115,7 +2115,10 @@ window.Edit_Data_Submit = {
                           currentDeliveredVal = $("#Delivered").val();
                         }
                       }
-                      if ((deliveredValFromList != currentDeliveredVal) && currentDeliveredVal == 'yes') {
+                      if (
+                        deliveredValFromList != currentDeliveredVal &&
+                        currentDeliveredVal == "yes"
+                      ) {
                         Edit_Data_Submit.g.oListItem.set_item(
                           field.fieldNameInList,
                           SP.FieldUserValue.fromUser(UserN.LoginName)
@@ -2133,7 +2136,6 @@ window.Edit_Data_Submit = {
                       if (
                         field.fieldValueInList.toLowerCase() == "loggedinuser"
                       ) {
-                       
                         // Edit_Data_Submit.g.oListItem.set_item(
                         //   field.fieldNameInList,
                         //   SP.FieldUserValue.fromUser(
@@ -2148,7 +2150,10 @@ window.Edit_Data_Submit = {
                             currentDeliveredVal = $("#Delivered").val();
                           }
                         }
-                        if ((deliveredValFromList != currentDeliveredVal) && currentDeliveredVal == 'yes') {
+                        if (
+                          deliveredValFromList != currentDeliveredVal &&
+                          currentDeliveredVal == "yes"
+                        ) {
                           Edit_Data_Submit.g.oListItem.set_item(
                             field.fieldNameInList,
                             SP.FieldUserValue.fromUser(UserN.LoginName)
@@ -2165,7 +2170,6 @@ window.Edit_Data_Submit = {
               if (valueBasedOnParent.includes(item.condition)) {
                 item.values.forEach((field) => {
                   if (field.fieldValueInList.toLowerCase() == "loggedinuser") {
-                    
                     var currentDeliveredVal = "";
                     if ($("#Delivered").length) {
                       if ($("#Delivered").attr("type") == "radio") {
@@ -2174,7 +2178,10 @@ window.Edit_Data_Submit = {
                         currentDeliveredVal = $("#Delivered").val();
                       }
                     }
-                    if ((deliveredValFromList != currentDeliveredVal) && currentDeliveredVal == 'yes') {
+                    if (
+                      deliveredValFromList != currentDeliveredVal &&
+                      currentDeliveredVal == "yes"
+                    ) {
                       Edit_Data_Submit.g.oListItem.set_item(
                         field.fieldNameInList,
                         SP.FieldUserValue.fromUser(UserN.LoginName)
@@ -2695,7 +2702,7 @@ var Edit_KPI_Results = {
           items.set_item("Sector", Sector);
           items.set_item("SubSector", SubSector);
           items.set_item("RecurrenceChanged", kpiRecurrenceChanged);
-          if(yearItem == kpicurrentYear){
+          if (yearItem == kpicurrentYear) {
             items.set_item("Actual", kpiTotalActuals);
           }
 
@@ -2777,13 +2784,15 @@ var Edit_KPI_Results = {
         }
         context.executeQueryAsync(
           function () {
-            window.location =
-              _spPageContextInfo.webAbsoluteUrl +
-              "/SitePages/View.aspx?ListKey=" +
-              listkey +
-              "&IID=" +
-              IID +
-              PCODE_STRING;
+            if (!mainKpiIsUpload) {
+              window.location =
+                _spPageContextInfo.webAbsoluteUrl +
+                "/SitePages/View.aspx?ListKey=" +
+                listkey +
+                "&IID=" +
+                IID +
+                PCODE_STRING;
+            }
 
             dfd.resolve();
           },
@@ -4012,6 +4021,7 @@ function _uploadFile() {
           var fieldsObj = {};
           if (isEdit && listkey == "mainkpi") {
             var kpiPeriodType = $("#PeriodType").val();
+            mainKpiIsUpload = true;
             Edit_KPI_Results.init(
               kpiName,
               kpiType,
@@ -4087,6 +4097,7 @@ function _uploadFile() {
               function (file) {
                 isuploaddone++;
                 if (fileCount == isuploaddone) {
+             
                   if (isEdit) {
                     // if on edit page
                     $(".errormsg").hide();
@@ -4115,6 +4126,7 @@ function _uploadFile() {
                       } else {
                         if (listkey == "mainkpi") {
                           // to update the kpi result list
+                          mainKpiIsUpload = false
                           Edit_KPI_Results.init(
                             kpiName,
                             kpiType,
