@@ -855,7 +855,7 @@ window.userCalls = {
           "stakeholders",
           "communicationplans",
           "contracts",
-          "sos",
+          // "sos",
           "mainkpi",
           //"changerequest",
         ];
@@ -1393,7 +1393,7 @@ window.userCalls = {
         ];
         Delete_Access = [
           "mainkpi",
-          "sos",
+          // "sos",
           "benefitmatrix",
           "benefitmetrics",
           "BenefitMetrics.aspx",
@@ -1753,7 +1753,7 @@ window.userCalls = {
           "coc",
           "stakeholders",
           "communicationplans",
-          "sos",
+          // "sos",
           "mainkpi",
           "contracts",
           "initiativeupdates",
@@ -2165,7 +2165,7 @@ window.userCalls = {
         ];
         Delete_Access = [
           "goalstrategy",
-          "sos",
+          // "sos",
           "mainkpi",
           "benefitmatrix",
           "initiatives",

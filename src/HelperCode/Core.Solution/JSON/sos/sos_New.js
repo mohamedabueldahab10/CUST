@@ -659,13 +659,19 @@ var Information_Form = [
       },
     ],
   },
-  // {
-  //   label: '',
-  //   labelEn: '',
-  //   description: 'التفاصيل',
-  //   descriptionEn: 'Details',
-  //   subFields: [
-
-  //   ],
-  // },
+  {
+    label: 'الوثائق الداعمة',
+    labelEn: 'Supporting Documents',
+    description: 'التفاصيل',
+    descriptionEn: 'Details',
+    subFields: [
+      {
+        InternalName: 'getfile',
+        DisplayName: 'المرفقات',
+        DisplayNameEn: 'Attachments',
+        type: 'file',
+        // withAddBtn: 'true',
+      },
+    ],
+  },
 ]
