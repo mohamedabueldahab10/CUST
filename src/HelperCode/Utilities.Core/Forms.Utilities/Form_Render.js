@@ -5143,11 +5143,11 @@ window.ListInfo = {
             '<div class="checkbox">' +
             "<label>" +
             '<input value="' +
-            'data-trans-'+element.options.choices[i] +
+            element.options.choices[i] +
             '" id="' +
             element.InternalName +
-            '" type="checkbox"'> +
-            element.options.choices[i]
+            '" type="checkbox">' +
+            element.options.choices[i] +
             "</label>" +
             "</div>" +
             "</li>";
