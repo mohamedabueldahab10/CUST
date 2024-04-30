@@ -1652,7 +1652,7 @@ window.userCalls = {
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
           ChartHideForInitiatives = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "مكتب ضمان التنفيذ";
+          ar_UserRole = "مكتب تحقيق الرؤية";
         en_UserRole = "Execution Guarantee Office";
         //CRUD
         Create_Access = [

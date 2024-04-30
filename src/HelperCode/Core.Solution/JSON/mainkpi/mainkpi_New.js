@@ -737,27 +737,27 @@ var Information_Form = [
         descPhraseAr: "يجب ان يكون المستخدم لديه الصلاحية المناسبة",
         descPhraseEn: " User Should have right access",
       },
-      {
-        InternalName: 'CalculationType',
-        DisplayNameEn: 'Calculation Type',
-        DisplayName: 'نوع الحساب',
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            { display: 'leadingindicator', value: 'leadingindicator' },
-            { display: 'laggingindicator', value: 'laggingindicator' },
-          ],
-        },
-        // security: {
-        // 	groups: [
-        // 		"LMS_P",
-        // 		"SPM Admin",
-        // 		"SPM Team",
-        // 		"VRO_P",
-        // 		"System Admin Group"
-        // 	],
-        // },
-      },
+      // {
+      //   InternalName: 'CalculationType',
+      //   DisplayNameEn: 'Calculation Type',
+      //   DisplayName: 'نوع الحساب',
+      //   type: 'dropdownValues',
+      //   options: {
+      //     choices: [
+      //       { display: 'leadingindicator', value: 'leadingindicator' },
+      //       { display: 'laggingindicator', value: 'laggingindicator' },
+      //     ],
+      //   },
+      //   // security: {
+      //   // 	groups: [
+      //   // 		"LMS_P",
+      //   // 		"SPM Admin",
+      //   // 		"SPM Team",
+      //   // 		"VRO_P",
+      //   // 		"System Admin Group"
+      //   // 	],
+      //   // },
+      // },
       {
         InternalName: 'NotMeasurableNow',
         DisplayNameEn: 'Measurable Now',

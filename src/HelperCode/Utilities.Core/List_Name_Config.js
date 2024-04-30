@@ -425,6 +425,14 @@ var ListArray = [
 		projectrelated: true,
 	},
 	{
+		mainkpidatasources: "MainKPIDataSources",
+		ListingTitle: "مصادر بيانات المؤشرات",
+		FormTitle: "مصادر بيانات المؤشرات",
+		TitleEn: "Main KPI Data Sources",
+		projnav: "Project Navigation",
+		projectrelated: true,
+	},
+	{
 		benefitsequations: "BenefitsEquations",
 		ListingTitle: "معادلات مقياس المنفعة",
 		FormTitle: "معادلات مقياس المنفعة",
