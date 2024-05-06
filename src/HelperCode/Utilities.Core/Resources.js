@@ -555,6 +555,8 @@
     movedtoissue: "متحول إلى عائق",
     viewhistory: "عرض سجل المهام",
     taskdetails: "سجل المهام",
+    owneragency: "الجهة المالكة",
+    executingagency: "الجهة المنفذة",
     taskname: "إسم المهمة",
     modifiedby: "من قبل",
     modifieddate: "تاريخ الإجراء",
@@ -819,6 +821,7 @@
     indirect: " غير مباشر",
     economical: "اقتصادى",
     social: "إجتماعى",
+    
     impactonervices: "اثر على الخدمات والبنية الحتية",
     memorandumofunderstanding: "مذكرة تفاهم",
     memorandumofcooperation: "مذكرة تعاون",
@@ -1768,6 +1771,9 @@
     exellencedata: "Explanation of two lines only about Exellence",
     focusresult: "Focus on results",
     focusresultdata: "Explanation of two lines only about Focus on results",
+    
+    owneragency: "Owner agency",
+    executingagency: "Executing agency",
     quarter: "Quarter",
     year: "Year",
     yearly: "Yearly",

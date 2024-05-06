@@ -252,7 +252,59 @@ var Information_Form = [
       //   //   ],
       //   // },
       // },
-      
+      {
+        InternalName: "IsProjectStatusByMilestones",
+        DisplayNameEn: "Is Project Status By Milestones?",
+        DisplayName: "هل ترغب بإدارة المشروع حسب المعالم (نعم / لا)",
+        // validation: "required",
+        type: "yesnoradio",
+        options: {
+          choices: [
+            {
+              display: "yes",
+              value: "yes",
+            },
+            {
+              display: "no",
+              value: "no",
+            },
+          ],
+        },
+        security: {
+          groups: [
+            "VRO_E",
+            "LMS_E",
+            "EPMO",
+            "System Admin Group",
+            "SPMO",
+            "Development Unit",
+            "ProjectManager"
+          ],
+        },
+      },
+      {
+        InternalName: "AgencyType",
+        DisplayName: "نوع الجهة",
+        DisplayNameEn: "Agency Type",
+        // validation: "required",
+        type: "dropdownValues",
+        // disableOnWfTaskStage : "S05,S09",
+        // security: {
+        //   groups: [ ],
+        //   // groups: [], // should be empty array if will use notAllowTo
+        //   notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+        //     {group:"Project Managers for Project Web App",form:["origin"]},
+        //     // {group:"EPMO",form:["origin" ]}
+
+        //   ]
+        // },
+        options: {
+          choices: [
+            { display: "executingagency", value: "executingagency" },
+            { display: "owneragency", value: "owneragency" },
+          ],
+        },
+      },
       {
         InternalName: "Committees",
         DisplayName: "اللجان",

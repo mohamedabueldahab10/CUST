@@ -147,6 +147,18 @@ var Information_Form = [
       ],
       },
       {
+        InternalName: 'StrategySource',
+        DisplayNameEn: 'Strategy Source',
+        DisplayName: 'مصدر الاستراتيجية',
+        type: 'lookup',
+        source: 'GoalStrategy',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        // dontSubmit: true,
+        // showlink:true,
+        // linkedto: "goalstrategy"
+      },
+      {
         InternalName: 'RelatedProgram',
         DisplayNameEn: 'Related Program',
         ToggleName: 'RelatedProgram',

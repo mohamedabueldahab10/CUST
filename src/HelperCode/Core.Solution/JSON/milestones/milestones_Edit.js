@@ -90,6 +90,17 @@ var Information_Form = [
           groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
         },
       },
+      {
+        InternalName: "Phase",
+        DisplayName: "المرحلة",
+        DisplayNameEn: "Phase",
+        type: "lookup",
+        //from other list:
+        source: "Phases",
+        Dispfieldkey: "Name",
+        DispfieldkeyEn: "PhaseNameEn",
+        valfieldkey: "Title",
+      },
       // {
       //   InternalName: 'Weight',
       //   DisplayNameEn: 'Weight',

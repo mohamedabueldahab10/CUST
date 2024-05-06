@@ -28,6 +28,17 @@ var Information_Form = [
         DisplayNameEn: 'Name',
         type: 'string',
       },
+      {
+        InternalName: "Phase",
+        DisplayName: "المرحلة",
+        DisplayNameEn: "Phase",
+        type: "lookup",
+        //from other list:
+        source: "Phases",
+        Dispfieldkey: "Name",
+        DispfieldkeyEn: "PhaseNameEn",
+        valfieldkey: "Title",
+      },
       // {
       //   InternalName: 'Weight',
       //   DisplayNameEn: 'Weight',

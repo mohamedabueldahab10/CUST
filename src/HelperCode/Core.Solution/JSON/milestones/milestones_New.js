@@ -56,6 +56,17 @@ var Information_Form = [
       //   // dynamic: "Initiative"
       // },
       {
+        InternalName: "Phase",
+        DisplayName: "المرحلة",
+        DisplayNameEn: "Phase",
+        type: "lookup",
+        //from other list:
+        source: "Phases",
+        Dispfieldkey: "Name",
+        DispfieldkeyEn: "PhaseNameEn",
+        valfieldkey: "Title",
+      },
+      {
         InternalName: 'Weight',
         DisplayName: 'الوزن(%)',
         DisplayNameEn: 'Weight (%)',
