@@ -753,7 +753,7 @@
     inptitle10: "المعالم ",
     inptitle11: "المنافع",
     inptitle12: "التحديات",
-    delinioutput: "المخرجات ",
+    delinioutput: "المخرجات الرئيسية",
     //initiativeMainHome
     instrategy: "استراتيجي",
     initiatives: "المبادرات",
