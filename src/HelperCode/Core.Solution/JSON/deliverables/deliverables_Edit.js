@@ -111,14 +111,14 @@ var Information_Form = [
         InternalName: 'Amount',
         DisplayName: 'القيمة',
         DisplayNameEn: 'Amount',
-        dontSubmit: true,
+        // dontSubmit: true,
         type: 'percentbyrelatedparent',
         listname: 'Projects',
         parentinternalname: 'ActualBudget',
         descPhraseAr: "من التكلفة",
         descPhraseEn: " From Budget", 
         targetelement: 'Weight',
-        validation: 'required',
+        // validation: 'required',
         security: {
           groups: [
             'System Admin Group','EPMO','LMSU-Execution','VRO_E'

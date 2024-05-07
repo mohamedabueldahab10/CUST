@@ -44,7 +44,7 @@ var Information_Form = [
           "InternalName": "Amount",
           "DisplayName": "القيمة",
           "DisplayNameEn": "Amount",
-          dontSubmit: true,
+          // dontSubmit: true,
           "type": "percentbyrelatedparent",
           "listname":"Projects",
           "parentinternalname":"ActualBudget",
