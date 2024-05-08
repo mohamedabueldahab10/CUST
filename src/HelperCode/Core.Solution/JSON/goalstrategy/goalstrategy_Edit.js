@@ -251,4 +251,22 @@ var Information_Form = [
       },
     ],
   },
+  {
+    label: 'المرفقات',
+    labelEn: 'Attachments',
+    description: 'التفاصيل',
+    descriptionEn: 'Details',
+    subFields: [
+      {
+        InternalName: 'getfile',
+        DisplayName: 'المرفقات',
+        DisplayNameEn: 'Attachments',
+        type: 'file',
+        docPurpose: "Attachments",
+        withAddBtn: 'true',      
+        descPhraseAr: "ملفات متعلقة بالعنصر",
+        descPhraseEn: "File related to the item",
+      },
+    ],
+  },
 ]

@@ -1561,6 +1561,8 @@ var Information_Form = [
     labelEn: 'Data Source',
     description: 'التفاصيل',
     descriptionEn: 'Details',
+    sectiontype: 'master', // to make the section disabled on form render
+    targetlist: 'MainKPIDataSources',
     subFields: [
       {
         InternalName: 'DataSource',
