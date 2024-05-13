@@ -915,7 +915,7 @@ var Information_Form = [
         // Dispfieldkey: "Name",
         // valfieldkey: "Title",
         // "validation": "required",
-        // "state": "disabled"
+        "state": "disabled"
       },
       {
         InternalName: "Amount",
@@ -925,11 +925,20 @@ var Information_Form = [
         // className: "disable_enable_section",
         descPhraseAr: "الحقل مطلوب لادخال المخرجات والمعالم",
         descPhraseEn: "Filed is required to add milestones and Deliverables",
-        // "state": "disabled",
+        "state": "disabled",
         dynamic: "BudgetItem", //being controlled by main field
         numberOfDigits: "15",
         resetElement: ["ContractualEngagements", "ExpensesDate", "RemainingCost"]
 
+      },
+      {
+        InternalName: "AssignedBudget",
+        DisplayName: "الميزانية المعتمدة",
+        DisplayNameEn: "Assigned Budget",
+        type: "float",
+        numberOfDigits:"15",
+        "state": "disabled"
+        // "showonstage":"1"
       },
       {
         InternalName: "ExpectedBudget",
@@ -980,7 +989,7 @@ var Information_Form = [
         max: "ActualBudget",
         descPhraseAr: "يجب ان تكون اقل من او يساوي التكلفة الفعلية او التكلفة",
         descPhraseEn: "should be less than or equal Actual Budget or Amount",
-        // "state": "disabled"
+        "state": "disabled"
       },
       {
         InternalName: "RemainingCost",
@@ -991,7 +1000,7 @@ var Information_Form = [
         max: "ActualBudget",
         descPhraseAr: "يجب ان تكون اقل من او يساوي التكلفة الفعلية او التكلفة",
         descPhraseEn: "should be less than or equal Actual Budget or Amount",
-        // "state": "disabled"
+        "state": "disabled"
       },
       {
         InternalName: "OutOfCash",
@@ -1062,6 +1071,7 @@ var Information_Form = [
         InternalName: "ActualOfferingDate",
         DisplayName: "تاريخ  الطرح الفعلى",
         DisplayNameEn: "Actual Offering Date",
+        "state": "disabled",
         // type: "datetime",
         type: 'datetimetoparent',
         listname: 'Projects',
@@ -1086,11 +1096,21 @@ var Information_Form = [
         DisplayName: "تاريخ التعاقد",
         DisplayNameEn: "Contractual Date",
         // type: "datetime",
+        "state": "disabled",
         type: 'datetimetoparent',
         listname: 'Projects',
         startinternalname: 'BaselineStartDate',
         endinternalname: 'BaselineFinishDate',
         Errmsgkey: 'btwndatepattern',
+      },
+      {
+        InternalName: "POApprovalDate",
+        DisplayName: "تاريخ اعتماد التعاقد",
+        DisplayNameEn: "PO Approval Date",
+        type: "datetime",
+  
+        "state": "disabled",
+  
       },
       {
         InternalName: 'ApprovedBrochure',

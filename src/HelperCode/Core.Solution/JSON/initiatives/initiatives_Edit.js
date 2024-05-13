@@ -1076,7 +1076,8 @@ var Information_Form = [
         InternalName: 'ActualCost',
         DisplayName: 'التكاليف الكلية المعتمدة ',
         DisplayNameEn: 'Actual Cost',
-        type: 'float',
+        type: 'float',        
+        "state": "disabled",
         numberOfDigits: '15',
         targetelement: 'ActualCost',
         seconedtarget: 'ProgramTotalCost',
@@ -1130,6 +1131,8 @@ var Information_Form = [
         InternalName: 'CurrentBuget',
         DisplayName: 'السيولة المخصصة للعام المالي الحالي ',
         DisplayNameEn: 'Current Budget',
+        
+        "state": "disabled",
         type: 'number',
         numberOfDigits: '15',
         enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
@@ -1152,6 +1155,8 @@ var Information_Form = [
         DisplayName: 'المنصرف الأجمالي ',
         DisplayNameEn: 'Expenditures',
         type: 'number',
+        
+        "state": "disabled",
         numberOfDigits: '15',
         enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
@@ -1173,6 +1178,8 @@ var Information_Form = [
         DisplayName: 'المنصرف من العالم المالي الحالي ',
         DisplayNameEn: 'Current Expenditures',
         type: 'number',
+        
+        "state": "disabled",
         numberOfDigits: '15',
         enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
         requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',

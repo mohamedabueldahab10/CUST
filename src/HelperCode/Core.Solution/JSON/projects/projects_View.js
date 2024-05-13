@@ -1014,6 +1014,15 @@ var Information_Form = [
       //   // "showonstage":"1"
       // },
       {
+        InternalName: "AssignedBudget",
+        DisplayName: "الميزانية المعتمدة",
+        DisplayNameEn: "Assigned Budget",
+        type: "float",
+        // numberOfDigits:"15",
+        // "state": "disabled"
+        // "showonstage":"1"
+      },
+      {
         InternalName: "ExpectedBudget",
         DisplayName: "الموازنة المتوقعة",
         DisplayNameEn: "Expected Budget",
@@ -1120,6 +1129,15 @@ var Information_Form = [
         DisplayName: "تاريخ التعاقد",
         DisplayNameEn: "Contractual Date",
         type: "datetime",
+      },
+      {
+        InternalName: "POApprovalDate",
+        DisplayName: "تاريخ اعتماد التعاقد",
+        DisplayNameEn: "PO Approval Date",
+        type: "datetime",
+  
+        "state": "disabled",
+  
       },
       {
         InternalName: 'ApprovedBrochure',

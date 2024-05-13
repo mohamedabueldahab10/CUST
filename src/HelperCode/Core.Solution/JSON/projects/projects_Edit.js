@@ -1306,6 +1306,7 @@ var Information_Form = [
       {
         InternalName: "BudgetItem",
         DisplayName: "البند المرتبط",
+        "state": "disabled",
         DisplayNameEn: "Budget Item",
         type: "string", 
         security: {
@@ -1334,7 +1335,7 @@ var Information_Form = [
         disableOnWfTaskStage : "S05,S09",        
         descPhraseAr: "الحقل مطلوب لادخال المخرجات والمعالم",
         descPhraseEn: "Filed is required to add milestones and Deliverables",
-        // "state": "disabled",
+        "state": "disabled",
         dynamic: "BudgetItem", //being controlled by main field
         numberOfDigits: "15",
         resetElement:["ContractualEngagements","ExpensesDate","RemainingCost"],
@@ -1373,15 +1374,15 @@ var Information_Form = [
       //   state: "disabled",
       //   dynamic: "BudgetItem",
       // },
-      // {
-      //   InternalName: "AssignedBudget",
-      //   DisplayName: "الميزانية المعتمدة",
-      //   DisplayNameEn: "Assigned Budget",
-      //   type: "float",
-      //   numberOfDigits:"15",
-      //   //"state": "disabled"
-      //   // "showonstage":"1"
-      // },
+      {
+        InternalName: "AssignedBudget",
+        DisplayName: "الميزانية المعتمدة",
+        DisplayNameEn: "Assigned Budget",
+        type: "float",
+        numberOfDigits:"15",
+        "state": "disabled"
+        // "showonstage":"1"
+      },
       {
         InternalName: "ExpectedBudget",
         DisplayName: "الموازنة المتوقعة",
@@ -1503,6 +1504,7 @@ var Information_Form = [
         DisplayNameEn: "Expenses",
         type: "float",
         disableOnWfTaskStage : "S05,S09",
+        "state": "disabled",
         numberOfDigits: "15",
         max:"ActualBudget",
         descPhraseAr: "يجب ان تكون اقل من او يساوي التكلفة الفعلية او التكلفة",
@@ -1538,7 +1540,7 @@ var Information_Form = [
           ]
         },
 
-        // "state": "disabled"
+        "state": "disabled"
       },
       {
         InternalName: "OutOfCash",
@@ -1642,6 +1644,7 @@ var Information_Form = [
         DisplayNameEn: 'Actual Offering Date',
         // type: "datetime",
         type: 'datetimetoparent',
+        "state": "disabled",
         listname: 'Projects',
         startinternalname: 'BaselineStartDate',
         endinternalname: 'BaselineFinishDate',
@@ -1694,6 +1697,7 @@ var Information_Form = [
         endinternalname: 'BaselineFinishDate',
         Errmsgkey:'btwndatepattern',
         enableOnWfTaskStage: "S05",
+        "state": "disabled",
         requireOnWfTaskStage: "S05",
         disableOnWfTaskStage : "S09",
         security: {
@@ -1705,6 +1709,15 @@ var Information_Form = [
 
           ]
         },
+      },
+      {
+        InternalName: "POApprovalDate",
+        DisplayName: "تاريخ اعتماد التعاقد",
+        DisplayNameEn: "PO Approval Date",
+        type: "datetime",
+  
+        "state": "disabled",
+  
       },
       {
         InternalName: 'ApprovedBrochure',

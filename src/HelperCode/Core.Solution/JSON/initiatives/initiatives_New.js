@@ -891,6 +891,7 @@ var Information_Form = [
         DisplayNameEn: 'Actual Cost',
         type: 'float',
         numberOfDigits:"15",
+        "state": "disabled",
         // targetelement: 'ActualCost',
         // seconedtarget: 'ProgramTotalCost',
         max: 'ProgramTotalCost', // max value will be smaller than or equal ProgramTotalCost
@@ -917,6 +918,8 @@ var Information_Form = [
         InternalName: 'CurrentBuget',
         DisplayName: 'السيولة المخصصة للعام المالي الحالي ',
         DisplayNameEn: 'Current Budget',
+        
+        "state": "disabled",
         type: 'float',
         numberOfDigits: "15",
         max:"InitiativeBudget",
@@ -929,6 +932,8 @@ var Information_Form = [
         DisplayNameEn: 'Expenditures',
         type: 'number',
         numberOfDigits: "15",
+        
+        "state": "disabled",
         max:"InitiativeBudget",
         descPhraseAr: "يجب ان تكون اقل من او يساوي ميزانية المبادرة",
         descPhraseEn: "should be less than or equal the initiative budget",
@@ -938,6 +943,8 @@ var Information_Form = [
         DisplayName: 'المنصرف من العالم المالي الحالي ',
         DisplayNameEn: 'Current Expenditures',
         type: 'number',
+        
+        "state": "disabled",
         numberOfDigits: "15",
         max:"InitiativeBudget",
         descPhraseAr: "يجب ان تكون اقل من او يساوي ميزانية المبادرة",
