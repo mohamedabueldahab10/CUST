@@ -1379,6 +1379,13 @@ var Information_Form = [
         descPhraseAr: "من التكلفة",
         descPhraseEn: " From Budget",
       },
+      {
+        InternalName: 'Quantity',
+        DisplayNameEn: 'Quantity',
+        DisplayName: 'الكمية',
+        type: "number",    
+        validation: 'required',
+      },
       // {
       //   InternalName: 'Status',
       //   DisplayName: 'الحالة',

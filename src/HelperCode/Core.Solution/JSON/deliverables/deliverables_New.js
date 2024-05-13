@@ -103,14 +103,16 @@ var Information_Form = [
         parentinternalname: 'ActualBudget',
         descPhraseAr: "من التكلفة",
         descPhraseEn: " From Budget", 
-        targetelement: 'Weight',
+        targetelement: 'Weight',            
+        validation: 'required',
         // validation: 'required',
       },
       {
         InternalName: 'Quantity',
         DisplayNameEn: 'Quantity',
         DisplayName: 'الكمية',
-        type: "number",
+        type: "number",        
+        validation: 'required',
         // type: 'float',
       },
       // {

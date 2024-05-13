@@ -2108,7 +2108,7 @@ var Information_Form = [
         listname: 'Projects',
         parentinternalname: 'ActualBudget',
         targetelement: 'Weight',
-        // validation: 'required',
+        validation: 'required',
         disableOnWfTaskStage : "S05,S09",
         descPhraseAr: "من التكلفة",
         descPhraseEn: " From Budget", 
@@ -2121,6 +2121,13 @@ var Information_Form = [
 
           ]
         },
+      },
+      {
+        InternalName: 'Quantity',
+        DisplayNameEn: 'Quantity',
+        DisplayName: 'الكمية',
+        type: "number",    
+        validation: 'required',
       },
       // {
       //   "InternalName": "Status",

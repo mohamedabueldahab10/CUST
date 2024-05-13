@@ -118,7 +118,7 @@ var Information_Form = [
         descPhraseAr: "من التكلفة",
         descPhraseEn: " From Budget", 
         targetelement: 'Weight',
-        // validation: 'required',
+        validation: 'required',
         security: {
           groups: [
             'System Admin Group','EPMO','LMSU-Execution','VRO_E'
@@ -129,8 +129,8 @@ var Information_Form = [
         InternalName: 'Quantity',
         DisplayNameEn: 'Quantity',
         DisplayName: 'الكمية',
-        type: "number",
-        // type: 'float',
+        type: "number",    
+        validation: 'required',
       },
       // {
       //   "InternalName": "Status",
