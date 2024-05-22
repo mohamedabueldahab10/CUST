@@ -348,7 +348,12 @@ window.New_Data_Submit = {
     }
 
     changeResources();
-
+    if (listkey == "initiatives") {
+      var istherRisk = $(`[data-target_list="Risks"] .Details-Item.NewItem`).length > 1;
+      if (istherRisk) {
+        pickervalid = false;
+      }
+    }
     if (
       $(".was-validated .form-control:invalid").length == 0 &&
       pickervalid &&
@@ -4097,7 +4102,7 @@ function _uploadFile() {
               function (file) {
                 isuploaddone++;
                 if (fileCount == isuploaddone) {
-             
+
                   if (isEdit) {
                     // if on edit page
                     $(".errormsg").hide();

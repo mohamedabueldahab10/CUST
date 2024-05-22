@@ -1466,7 +1466,7 @@ window.View_Data_Request = {
 
         $(this).text(value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
       } else if ($(this).attr("type") == "multiselectForFiles") {
-        
+
         var value =
           oListItem.get_item("" + $(this).attr("id") + "") == null
             ? No_Data
@@ -2708,10 +2708,10 @@ window.Risk_To_Issue_Submit = {
         "Comments",
         $("#Comments").text()
       );
-      if ($("#RiskOwner").text() != UserNo_Data)
+      if ($("#MitigationOwner").text() != UserNo_Data)
         Risk_To_Issue_Submit.g.oListItem.set_item(
           "Owner",
-          SP.FieldUserValue.fromUser($("#RiskOwner").attr("user-email"))
+          SP.FieldUserValue.fromUser($("#MitigationOwner").attr("user-email"))
         );
     }
 
@@ -2731,10 +2731,10 @@ window.Risk_To_Issue_Submit = {
         "Comments",
         $("#Comments").val()
       );
-      if ($("#RiskOwner").text() != enternameemail)
+      if ($("#MitigationOwner").text() != enternameemail)
         Risk_To_Issue_Submit.g.oListItem.set_item(
           "Owner",
-          SP.FieldUserValue.fromUser($("#RiskOwner").attr("user-email"))
+          SP.FieldUserValue.fromUser($("#MitigationOwner").attr("user-email"))
         );
     }
 
@@ -2778,7 +2778,8 @@ window.Risk_Update_Data = {
 
     Risk_Update_Data.g.oListItem = oList.getItemById(IID); //declared inside object scope only
     Risk_Update_Data.g.oListItem.set_item("MoveItToIssueList", true);
-    Risk_Update_Data.g.oListItem.set_item("Status", "movedtoissue");
+    Risk_Update_Data.g.oListItem.set_item("Status", "closed");
+    // Risk_Update_Data.g.oListItem.set_item("Status", "movedtoissue");
     Risk_Update_Data.g.oListItem.update();
     clientContext.load(Risk_Update_Data.g.oListItem);
     clientContext.executeQueryAsync(
@@ -7085,7 +7086,7 @@ var View_Current_Kpi = {
 
       ////////////////////////////
     }
-    
+
     var currentKpiView =
       '<div class="py-5 border-bottom section-container current_kpi" data-groups="">' +
       '<div class="form-row"><div class="col-lg-3 col-md-4 mb-4"><h3 data-trans-currentkpi class="Resources"></h3><span class="font-14"></span></div>' +
@@ -7611,7 +7612,7 @@ window.Get_TaskHistory = {
     isDelivStage = stageid == "SInStage02" || stageid == "SInStage03" || stageid == "VInStage02" || stageid == "VInStage03" || stageid == "VInStage04" || stageid == "VInStage05" || stageid == "LInStage02" || stageid == "LInStage03";
 
     isDelivStageForProject = stageid == "S00" || stageid == "S01" || stageid == "S02" || stageid == "S03" || stageid == "S03.1" || stageid == "S03.2" || stageid == "S04" || stageid == "S05" || stageid == "S06" || stageid == "S07" || stageid == "S07.1" || stageid == "S08" || stageid == "S09" || stageid == "S09.1" || stageid == "S10" || stageid == "S11" || stageid == "S11.1" || stageid == "S12" || stageid == "S13" || stageid == "S14" || stageid == "S14.1" || stageid == "S15"  || stageid == "S16" || stageid == "S17";
-    
+
     if (isDelivStage) {
       //calling relevant function
       window.checkStatusHtmlForDeliv = setInterval(function () {
@@ -7659,19 +7660,19 @@ window.Get_InitiativeDeliverables = {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("InitiativeDeliverables");
     var oListForInititaive = clientContext.get_web().get_lists().getByTitle("Initiatives");
-    
+
     const url = window.location.href;
     const urlParams = new URLSearchParams(new URL(url).search);
     const iidValue = urlParams.get("IID");
 
     // Call the function with the IID value
-    // let initiativeBudget = executeCamlQuery(iidValue) || 0; 
+    // let initiativeBudget = executeCamlQuery(iidValue) || 0;
 
- 
+
     var camelQuery = `<View><Query><Where>
     <Eq><FieldRef Name='InitiativeCode'/><Value Type='Text'>${currentItemCode}</Value></Eq>
     </Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>`;
-   
+
     const camlQueryXml = `<View>
                           <Query>
                               <Where>
@@ -7691,7 +7692,7 @@ window.Get_InitiativeDeliverables = {
 
     SPHTTPitemsEnumerable = oList.getItems(Get_InitiativeDeliverables.g.camlQuery);
     SPHTTPitemsEnumerable2 = oListForInititaive.getItems(Get_InitiativeDeliverables.g.camlQuery2);
-    
+
     clientContext.load(SPHTTPitemsEnumerable);
     clientContext.executeQueryAsync(
       Function.createDelegate(this, Get_InitiativeDeliverables.onSuccess),
@@ -7706,7 +7707,7 @@ window.Get_InitiativeDeliverables = {
   onSuccess: async function (sender, args) {
     var listItemEnum = SPHTTPitemsEnumerable.getEnumerator();
     // var listItemEnum2 = SPHTTPitemsEnumerable2.getEnumerator();
-    
+
     let delivHTML = ``;
 
 
@@ -7724,18 +7725,18 @@ window.Get_InitiativeDeliverables = {
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       let field1 = oListItem.get_item("Title") || No_Data;
-      let field2 = oListItem.get_item("Name") || No_Data;      
+      let field2 = oListItem.get_item("Name") || No_Data;
       let field3 = oListItem.get_item("PlannedCompletedDate") ? field3.toLocaleDateString("en-US") : No_Data;
-      let field4 = oListItem.get_item("Weight") || No_Data;      
-      
+      let field4 = oListItem.get_item("Weight") || No_Data;
+
       let field5 = oListItem.get_item("InitiativeCode") || No_Data;
-      
+
       function getInitiativeNameAsync(listname, code,fieldName) {
         return new Promise((resolve, reject) => {
           window.Get_InitiativeProjectName.init(listname, code, resolve,fieldName);
         });
       }
-      
+
       let budget = await getInitiativeNameAsync('Initiatives',field5, 'InitiativeBudget') || 0;
       let nameofinitiative = await getInitiativeNameAsync('Initiatives', field5, 'Name');
       let field6 = field4 == No_Data ? field4 : (Number(field4) * budget / 100);
@@ -7766,36 +7767,36 @@ window.Get_InitiativeDeliverables = {
                       <p class="historyValue">${field1}</p>
                       <p class="Resources historyLabel" data-trans-delivcode></p>
                   </div>
-              
+
                   <div class="col-2">
                       <p class="historyValue">${field2}</p>
                       <p class="Resources historyLabel" data-trans-delivname></p>
                   </div>
-              
+
                   <div class="col-2">
                       <p class="historyValue">${field3}</p>
                       <p class="Resources historyLabel" data-trans-deliveplannedcompleteddate></p>
                   </div>
-              
+
                   <div class="col-2">
                       <p class="historyValue">${field4}</p>
                       <p class="Resources historyLabel" data-trans-delivweight></p>
-                  </div> 
-              
+                  </div>
+
                   <div class="col-2">
                       <p class="historyValue">${field6}</p>
                       <p class="Resources historyLabel" data-trans-delivamount></p>
-                  </div> 
-              
+                  </div>
+
                   <div class="col-3">
                       <p class="historyValue">
                           <span class="Resources" data-trans-delivinitiative></span>${nameofinitiative}
                       </p>
                       <p class="Resources historyLabel" data-trans-delivsource>taken action</p>
                   </div>
-              
+
               </div>
-  
+
             `;
     }
     delivHTML+=`</div></div>`
@@ -7853,7 +7854,7 @@ window.Get_RelatedProjects_Initiatives = {
 		var listItemEnum = SPHTTPitemsEnumerable.getEnumerator();
     Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives = [];
 		while (listItemEnum.moveNext()) {
-      var oListItem = listItemEnum.get_current(); 
+      var oListItem = listItemEnum.get_current();
       Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives.push({
         code: oListItem.get_item("Title"),
         name: oListItem.get_item("Name")
@@ -7918,7 +7919,7 @@ window.Get_RelatedProjects_Initiatives = {
 // 		while (listItemEnum.moveNext()) {
 // 			var oListItem = listItemEnum.get_current();
 // 			let field1 = oListItem.get_item("Title") || No_Data;
-// 			let field2 = oListItem.get_item("Name") || No_Data; 
+// 			let field2 = oListItem.get_item("Name") || No_Data;
 //       let field3 = oListItem.get_item("PlannedFinishDate");
 // 			field3 = field3
 //       ? field3.toLocaleDateString("en-US")
@@ -7938,36 +7939,36 @@ window.Get_RelatedProjects_Initiatives = {
 //           <p class="historyValue">${field1}</p>
 //           <p class="Resources historyLabel" data-trans-delivcode></p>
 //       </div>
-  
+
 //       <div class="col-2">
 //           <p class="historyValue">${field2}</p>
 //           <p class="Resources historyLabel" data-trans-delivname></p>
 //       </div>
-  
+
 //       <div class="col-2">
 //           <p class="historyValue">${field3}</p>
 //           <p class="Resources historyLabel" data-trans-deliveplannedcompleteddate></p>
 //       </div>
-  
+
 //       <div class="col-2">
 //           <p class="historyValue">${field4}</p>
 //           <p class="Resources historyLabel" data-trans-delivweight></p>
-//       </div> 
-  
+//       </div>
+
 //       <div class="col-2">
 //           <p class="historyValue">${field6}</p>
 //           <p class="Resources historyLabel" data-trans-delivamount></p>
-//       </div> 
-  
+//       </div>
+
 //       <div class="col-3">
 //           <p class="historyValue">
 //               <span class="Resources" data-trans-delivinitiative></span>${nameofinitiative}
 //           </p>
 //           <p class="Resources historyLabel" data-trans-delivsource>taken action</p>
 //       </div>
-  
+
 //   </div>
-  
+
 //             `;
 // 		}
 // 		$(".relateddeliverables").append(delivHTML);
@@ -7997,11 +7998,11 @@ window.Get_ProjectsDeliverables = {
 			.getByTitle("Deliverables");
 
 		var inQuery = `<In><FieldRef Name="ProjectCode" /><Values>`;
-    
+
     const url = window.location.href;
     const urlParams = new URLSearchParams(new URL(url).search);
     const projectCode = urlParams.get("PCODE");
-    
+
     // for (
 		// 	var j = 0;
 		// 	j < Get_RelatedProjects_Initiatives.g.relatedProjects_Initiatives.length;
@@ -8042,7 +8043,7 @@ window.Get_ProjectsDeliverables = {
 		while (listItemEnum.moveNext()) {
 			var oListItem = listItemEnum.get_current();
 			let field1 = oListItem.get_item("Title") || No_Data;
-			let field2 = oListItem.get_item("Name") || No_Data; 
+			let field2 = oListItem.get_item("Name") || No_Data;
       let field3 = oListItem.get_item("PlannedFinishDate");
 			field3 = field3
       ? field3.toLocaleDateString("en-US")
@@ -8050,7 +8051,7 @@ window.Get_ProjectsDeliverables = {
 			let field4 = oListItem.get_item("Weight") || No_Data;
       let field6 = 1;
       field6 = field4 == No_Data ? field4 : (Number(field4) * projectActualBudget / 100);
-      
+
 
 			delivHTML += `
       <div class="row mx-0 my-3 history-row-ctx">
@@ -8059,36 +8060,36 @@ window.Get_ProjectsDeliverables = {
           <p class="historyValue">${field1}</p>
           <p class="Resources historyLabel" data-trans-delivcode></p>
       </div>
-  
+
       <div class="col-3">
           <p class="historyValue">${field2}</p>
           <p class="Resources historyLabel" data-trans-delivname></p>
       </div>
-  
+
       <div class="col-3">
           <p class="historyValue">${field3}</p>
           <p class="Resources historyLabel" data-trans-deliveplannedcompleteddate></p>
       </div>
-  
+
       <div class="col-2">
           <p class="historyValue">${field4}</p>
           <p class="Resources historyLabel" data-trans-delivweight></p>
-      </div> 
-  
+      </div>
+
       <div class="col-2">
           <p class="historyValue">${field6}</p>
           <p class="Resources historyLabel" data-trans-delivamount></p>
-      </div> 
-  
-      
-  
+      </div>
+
+
+
   </div>
-  
+
             `;
 
 
 		}
-    
+
     delivHTML+=`</div></div>`
     $(delivHTML).insertBefore(
       $(".section3")
@@ -8272,7 +8273,7 @@ window.Get_InitiativeProjectName = {
   onSuccess: function (sender, args, callback,fieldName) {
     var collListItem = Get_InitiativeProjectName.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-    
+
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       var RequestedField =
@@ -8299,7 +8300,7 @@ window.Get_InitiativeProjectName = {
 
     Get_InitiativeProjectName.g.collListItem = oList.getItems(camlQuery);
     clientContext.load(Get_InitiativeProjectName.g.collListItem);
-    
+
     clientContext.executeQueryAsync(
       function () {
         Get_InitiativeProjectName.onSuccess(null, null, callback, fieldName);
