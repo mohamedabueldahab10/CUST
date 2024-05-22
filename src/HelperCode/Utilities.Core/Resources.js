@@ -821,7 +821,7 @@
     indirect: " غير مباشر",
     economical: "اقتصادى",
     social: "إجتماعى",
-    
+
     impactonervices: "اثر على الخدمات والبنية الحتية",
     memorandumofunderstanding: "مذكرة تفاهم",
     memorandumofcooperation: "مذكرة تعاون",
@@ -1081,6 +1081,7 @@
     vrocrmsmainkpi: "مؤشرات الرؤية",
     lmscrmsmainkpi: "مؤشرات سوق عمل",
     milestonebutton: "معالم",
+    riskbutton: "مخاطر",
     zerobudgetproject: "المشروع صفري",
     // Deliv table wf
     delivcode: "رمز المخرج",
@@ -1771,7 +1772,7 @@
     exellencedata: "Explanation of two lines only about Exellence",
     focusresult: "Focus on results",
     focusresultdata: "Explanation of two lines only about Focus on results",
-    
+
     owneragency: "Owner agency",
     executingagency: "Executing agency",
     quarter: "Quarter",
@@ -2268,12 +2269,13 @@
     vrocrmsinitiatives: "VRO initiatives",
     lmscrmsinitiatives: "LMS initiatives",
     strategiccrmsmainkpi: "Strategic KPI",
-    vrocrmsmainkpi: "Vision KPI",    
+    vrocrmsmainkpi: "Vision KPI",
     strategicpartnership: "Strategic partnership",
     agreement: "Agreement",
     lmscrmsmainkpi: "LMS KPI",
     nomilestoneonperiod: "you should create a Milestone on Current Period",
     milestonebutton: "Milestones",
+    riskbutton: "Risks",
     zerobudgetproject: "Zero Budget Project",
     // Deliv table wf
     delivcode: "Code",

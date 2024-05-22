@@ -157,6 +157,7 @@ var UserRole,
   USERForBreadCrumbs = "",
   USERPageTitle,
   USERPName,
+  IsProjectStatusByMilestones,
   USERIName,
   InitiativeTitle,
   StrategicPartnershipTitle,
@@ -6801,6 +6802,7 @@ var Access_Project_Info_Request = {
         USERPName = oListItem.get_item("Name")
           ? oListItem.get_item("Name")
           : UserNo_Data;
+        IsProjectStatusByMilestones = oListItem.get_item("IsProjectStatusByMilestones") ? oListItem.get_item("IsProjectStatusByMilestones") : "no";
         USERPID = oListItem.get_id();
         User_isClosureStatus =
           oListItem.get_item("ClosureStatus") == "Failed" ||
@@ -6851,7 +6853,9 @@ var Access_Project_Info_Request = {
     }
 
     //should uncomment when need to applt the validation on milstones every month for proj and every 3 months for initiative
-
+    if (IsProjectStatusByMilestones == "yes") {
+      $(`body`).append(`<style>.nav-item > a[href*="schedule.aspx"]{display:none!important}</style>`)
+    }
     if (istherePCODE && projectStartToValidation && projectFinishToValidation) {
       if (USERlistkey == "milestones" && isNew) {
         console.log("YOU Can creat a milestone");
@@ -6867,6 +6871,7 @@ var Access_Project_Info_Request = {
           }
         }
       }
+
     }
 
     if (isthereICODE) {
@@ -10348,7 +10353,8 @@ var Get_Milestones = {
       itemdate2,
       itemuser,
       allMilestonesArr = [],
-      isactive;
+      isactive,
+      weight = 0;
 
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
@@ -10360,6 +10366,8 @@ var Get_Milestones = {
           Get_Milestones.g.dateConvert2(oListItem.get_item("PlannedDate")) ||
           ""; //PlannedClosureDate
       } else if (UserICode) {
+        debugger;
+        weight += oListItem.get_item("Weight") ? oListItem.get_item("Weight") : 0;
         itemPlannedClosureDate =
           Get_Milestones.g.dateConvert2(
             oListItem.get_item("PlannedCompletedDate")
@@ -10471,17 +10479,20 @@ var Get_Milestones = {
       }
     } else if (UserICode) {
       var noMsg = "",
-        noPopupMsg = "";
+        noPopupMsg = "",
+        weightPopupMsg = "";
       if (
         localStorage.getItem("lng") == null ||
         localStorage.getItem("lng") == "ar"
       ) {
         noMsg = "يجب انشاء معلم جديد على الفترة الحالية";
         noPopupMsg = "لا يوجد معالم على هذه الفترة ,الرجاء انشاء معالم ";
+        weightPopupMsg = "الرجاء انشاء خطر";
       } else {
         noMsg = "you should create a Milestone on Current Period";
         noPopupMsg =
           "There is no milestones on this period, please create a milestones";
+        weightPopupMsg = "Please create a risk";
       }
 
       if (allMilestonesArr.length > 0) {
@@ -10537,7 +10548,7 @@ var Get_Milestones = {
         });
 
         // debugger;
-        if (datesWithoutMilesArrFiltered.length > 0) {
+        if (datesWithoutMilesArrFiltered.length > 0 && weight < 100) {
           if (datesWithoutMilesArrFiltered.length == 1) {
             var internalArr = datesWithoutMilesArrFiltered[0];
             var isMatchCurrentMonth = internalArr.some((e) =>
@@ -10595,6 +10606,17 @@ var Get_Milestones = {
                 '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>'
             );
           }
+        } else if (weight >= 100) {
+          var tt = '<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;margin-top:10%">' +
+            '<label><span  style="font-size:13px">' +
+            weightPopupMsg +
+            "</span></label>" +
+            '<div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' +
+            _spPageContextInfo.webAbsoluteUrl +
+            "/SitePages/new.aspx?ListKey=initiativerisks&ICODE=" +
+            UserICode +
+            '\'"><span data-trans-riskbutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>';
+          Initiatives_Risks_Info.init(tt);
         }
       } else {
         $(".page-nav").after(
@@ -10640,7 +10662,61 @@ var Get_Milestones = {
     },
   },
 };
+//Risks
+var Initiatives_Risks_Info = {
+  // The main Initialization function
+  init: function (tt) {
+    Initiatives_Risks_Info.g.tt = tt;
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("Risks");
+    var camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"InitiativeCode\" /><Value Type=\"Text\">" +
+      UserICode +
+        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+    );
+    Initiatives_Risks_Info.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(Initiatives_Risks_Info.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Initiatives_Risks_Info.onSuccess),
+      Function.createDelegate(this, Initiatives_Risks_Info.onError)
+    );
+  },
+  onSuccess: function (sender, args) {
+    var collListItem = Initiatives_Risks_Info.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    var itemhtml = [
+        '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
+          _spPageContextInfo.webAbsoluteUrl +
+          "/sitepages/new.aspx?ListKey=initiativerisks&ICODE=" +
+          UserICode +
+          '"><i class="icon-plus"></i></a></li>',
+      ],
+      itemID,
+      itemname,
+      itemstatus,
+      itemdate,
+      itemuser,
+      itemProjectCode;
 
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      itemID = oListItem.get_id();
+      itemname = oListItem.get_item("Name") || No_Data;
+
+    }
+    !itemname ? $(".page-nav").after(Initiatives_Risks_Info.g.tt) : "";
+
+    changeResources();
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  // Global variables
+  g: {},
+};
 async function dateRange(startDate, endDate) {
   var start = startDate.split("-");
   var end = endDate.split("-");

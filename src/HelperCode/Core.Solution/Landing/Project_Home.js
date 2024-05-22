@@ -425,12 +425,12 @@ var Project_Home_Info_Request = {
       }
 
       fullphasename = oListItem.get_item("Phase") || No_Data;
-
+      var ttcolor = IsProjectStatusByMilestones == "yes" ? projectProgressStatusMilestone : projectProgressStatusSchedule;
       card1.push(
         '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
         '<div class="d-inline-flex flex-row align-items-center">' +
         '<span class="icon-user lg d-inline-flex align-items-center text-center handlecircle circlecolor' +
-        projectProgressStatusSchedule +
+        ttcolor +
         '">' +
         "</span>" +
         '<div class="d-inline-flex flex-column mx-3">' +
@@ -792,8 +792,7 @@ var Project_Home_Info_Request = {
       // $('.navbar.page-nav.px-5').append('<div class="closebtn"><button style="float: left;color:White;text-align:center;background: #853232;" class="btn pop-green close-project" style="float: left;font-size: 17px;" type="button" onclick="ProjectClosure_Submit.g.closureappend()"><span data-trans-closeproject class="Resources"></span></button></div>');
     }
 
-
-
+    IsProjectStatusByMilestones == "yes" ? $(".scnd-row").remove() : "";
 
     //calling other data
     Issues_Info_Request.init();

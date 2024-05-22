@@ -290,7 +290,7 @@ window.Project_Info_Request = {
           subsectorArray = JSON.parse(
             localStorage.getItem("Dynamo_Internal Entities") || "[]"
           );
-          subsectorArray = subsectorArray.filter(function (a) {     
+          subsectorArray = subsectorArray.filter(function (a) {
             return a.code == subsector;
           });
           if (subsectorArray.length) {
@@ -812,7 +812,7 @@ window.Project_Info_Request = {
     //calling other data
 
     Risks_Info_Request.init();
-    
+
 
     Deliverables_Info_Request.init();
     // Project_Info_Request.g.showprojectonclick(); //view more action
@@ -860,6 +860,7 @@ window.Project_Info_Request = {
     if (originalstate) {
       Project_Info_Request.g.ChartsFilteration();
     }
+    originalstate ? Project_Info_Request.g.alterUIRequirement() : "";//NOTE hide charts and make load faster requirement
     PortfoliosInfoRequest.preinit();
     SectorsInfoRequest.preinit();
   },
@@ -1699,6 +1700,18 @@ window.Project_Info_Request = {
         }
       });
       Project_Info_Request.g.camlfilterbuilder();
+    },
+    alterUIRequirement: () => { //NOTE hide charts and make load faster requirement
+      $(".statistics-ctx > .content-list-head > .d-flex.align-items-center").css("visibility", "hidden");
+      $("body").append(`<style>.statistics-ctx > .ctx-block.row.mx-n2 { display: none !important; }</style>`);
+      $(".projects-ctx").removeClass("col-lg-12");
+      $(".projects-ctx").addClass("col-lg-9");
+
+      let supportHTML = $(".required-support-ctx").clone();
+      supportHTML.removeClass("col-lg-4");
+      supportHTML.addClass("col-lg-3");
+      $(".projects-ctx").parent().append(supportHTML);
+      $(".projects-ctx > .content-list-head").removeClass("py-4");
     }
   },
 };
@@ -2056,7 +2069,7 @@ var Deliverables_Info_Request = {
 
 
     handleStatusBarChart();
-    
+
     //
     //1st bars section budgets
     var toatlamountAllofProjects = Deliverablesarray.reduce(

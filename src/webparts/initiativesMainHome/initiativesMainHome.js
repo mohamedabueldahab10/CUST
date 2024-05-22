@@ -157,6 +157,7 @@ window.initiativeRequest = {
   // Pre-initialization functions ensure scripts, SharePoint dependencies are loaded
   preinit: function () {
     if ($(".d-flex").length) {
+
       clearInterval(checkInitiativeHomeHtml);
       if (checkHomeInitiativeStatus) {
         clearInterval(checkHomeInitiativeStatus);
@@ -181,7 +182,7 @@ window.initiativeRequest = {
         //*****call charts filteration */
         // if (isInManager || isInOwner) {
         //   PQuery = InitiativeAccessQuery;
-        // } else 
+        // } else
         // if (
         //   // isDU ||
         //   // isMinisterAssistant ||
@@ -634,7 +635,7 @@ window.initiativeRequest = {
       subsectorNameArray.push(element.name)
     );
     // console.log('phaseOccurence', phaseOccurence);
-    handlePhaseChartBarChart();
+    // handlePhaseChartBarChart(); //NOTE hide charts and make load faster requirement
 
     $(".projects-ctx .PNumber").text(numberofInitiatives);
     $("div#accordionProject.internalAccordion").html(initiativesStratigalHTML);
@@ -760,9 +761,12 @@ window.initiativeRequest = {
     //calling other data
     Risks_Info_Request.init();
     budgetItemRequest.init();
-    Deliverables_Info_Request.init();
+    // Deliverables_Info_Request.init();//NOTE hide charts and make load faster requirement
+    ProjectsOrder.init();//NOTE hide charts and make load faster requirement
+    initiativeRequest.g.showprojectonclick();//NOTE hide charts and make load faster requirement
     // initiativeRequest.g.showprojectonclick(); //view more action
     changeResources();
+    originalstate ? initiativeRequest.g.alterUIRequirement() : "";//NOTE hide charts and make load faster requirement
     $("body").animate(
       {
         opacity: 1,
@@ -802,8 +806,8 @@ window.initiativeRequest = {
     if (originalstate) {
       initiativeRequest.g.ChartsFilteration();
     }
-    PortfoliosInfoRequest.preinit();
-    SectorsInfoRequest.preinit();
+    // PortfoliosInfoRequest.preinit();//NOTE hide charts and make load faster requirement
+    // SectorsInfoRequest.preinit();//NOTE hide charts and make load faster requirement
   },
   onError: function (sender, args) {
     console.log(
@@ -1738,6 +1742,18 @@ window.initiativeRequest = {
         }
       });
       initiativeRequest.g.camlfilterbuilder();
+    },
+    alterUIRequirement: () => { //NOTE hide charts and make load faster requirement
+      $(".statistics-ctx > .content-list-head > .d-flex.align-items-center").css("visibility", "hidden");
+      $("body").append(`<style>.statistics-ctx > .ctx-block.row.mx-n2 { display: none !important; }</style>`);
+      $(".projects-ctx").removeClass("col-lg-12");
+      $(".projects-ctx").addClass("col-lg-9");
+
+      let supportHTML = $(".required-support-ctx").clone();
+      supportHTML.removeClass("col-lg-4");
+      supportHTML.addClass("col-lg-3");
+      $(".projects-ctx").parent().append(supportHTML);
+      $(".projects-ctx > .content-list-head").removeClass("py-4");
     }
   },
 };
@@ -1821,7 +1837,7 @@ var Risks_Info_Request = {
       }
     }
 
-    handleCircleRiskChart();
+    // handleCircleRiskChart();//NOTE hide charts and make load faster requirement
     if (!riskshtml) {
       riskshtml = "<p>" + No_Data + "</p>";
     }
@@ -2021,7 +2037,7 @@ var budgetItemRequest = {
         RSupport++;
       }
     }
-    handleBudgetBarChart();
+    // handleBudgetBarChart();//NOTE hide charts and make load faster requirement
     //*****start */Risk,task and issues card
     RisksCount = budgetItemarray.length;
 
@@ -2487,7 +2503,7 @@ var SectorsInfoRequest = {
         );
     }
 
-    handleCircleDepartmentsChart();
+    // handleCircleDepartmentsChart();//NOTE hide charts and make load faster requirement
   },
   onError: function (sender, args) {
     console.log(
