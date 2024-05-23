@@ -2071,12 +2071,12 @@ window.View_Data_Request = {
     //   View_Data_Request.g.showFieldsIfInitiativeVision();
     // }
 
-    if (listkey == "risks" && oListItem.get_item("Status") == "movedtoissue") {
+    if ((listkey == "risks" || listkey == "initiativerisks") && oListItem.get_item("Status") == "movedtoissue") {
       $(".form-row.justify-content-end button").hide();
       $(".btn-to-issue").hide();
       $(".form-row.justify-content-end button").addClass("disablebtns");
     }
-    if (!PCODE || isMinister || isBITeam) {
+    if ((!PCODE && !ICODE) || isMinister || isBITeam) {
       // add isMinister to hide the btn for this role
       $(".btn-to-issue").hide();
     }
@@ -2699,7 +2699,11 @@ window.Risk_To_Issue_Submit = {
         "RelatedRiskCode",
         $("#Title").text()
       );
-      Risk_To_Issue_Submit.g.oListItem.set_item("ProjectCode", PCODE);
+
+      UserICode ?
+        Risk_To_Issue_Submit.g.oListItem.set_item("InitiativeCode", UserICode)
+        :
+        Risk_To_Issue_Submit.g.oListItem.set_item("ProjectCode", PCODE);
       Risk_To_Issue_Submit.g.oListItem.set_item(
         "Description",
         $("#Description").text()
@@ -2722,7 +2726,10 @@ window.Risk_To_Issue_Submit = {
         "RelatedRiskCode",
         $("#Title").val()
       );
-      Risk_To_Issue_Submit.g.oListItem.set_item("ProjectCode", PCODE);
+      UserICode ?
+        Risk_To_Issue_Submit.g.oListItem.set_item("InitiativeCode", UserICode)
+        :
+        Risk_To_Issue_Submit.g.oListItem.set_item("ProjectCode", PCODE);
       Risk_To_Issue_Submit.g.oListItem.set_item(
         "Description",
         $("#Description").val()
@@ -2817,9 +2824,10 @@ var Risk_To_Issue_Code = {
     clientContext.load(Risk_To_Issue_Code.g.oListItem);
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
+        var myKEY = ICODE ? "initiativeissues" : "issues";
         window.location =
           _spPageContextInfo.webAbsoluteUrl +
-          "/sitepages/view.aspx?ListKey=issues&IID=" +
+          "/sitepages/view.aspx?ListKey="+myKEY+"&IID=" +
           Risk_To_Issue_Code.g.IIID +
           PCODE_STRING;
       }),

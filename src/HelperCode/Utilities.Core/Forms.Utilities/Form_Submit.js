@@ -362,41 +362,42 @@ window.New_Data_Submit = {
       uniqueStringValid
     ) {
       New_Data_Submit.init();
-      $("[data-target_list] .Details-Item.NewItem").each(function () {
-        $(this)
-          .find(
-            ".CFIELD>input," +
-              ".CFIELD>div[type=picker]," +
-              ".CFIELD>select[type=dropdown]," +
-              ".CFIELD>textarea," +
-              ".CFIELD>.multiselect-container"
-          )
-          .attr("required", "required")
-          .prop("disabled", false);
-        var isPickerValue = false; //check required people picker
-        $(this)
-          .find("[type=picker]")
-          .each(function () {
-            if ($(this).find("span.sp-peoplepicker-userSpan").length > 0) {
-              isPickerValue = true;
-              // return false;
-            } else {
-            }
-          });
-        console.warn($(this).find(".form-control:valid").length);
-        if ($(this).find(".form-control:valid").length > 0 || isPickerValue) {
-          $(this).addClass("master-to-submit");
-        }
-        $(this)
-          .find(
-            ".CFIELD>input," +
-              ".CFIELD>div[type=picker]," +
-              ".CFIELD>select[type=dropdown]," +
-              ".CFIELD>textarea," +
-              ".CFIELD>.multiselect-container"
-          )
-          .prop("disabled", true);
-      });
+      New_Data_Submit.g.checkNewMasterDetails2()
+      // $("[data-target_list] .Details-Item.NewItem").each(function () {
+      //   $(this)
+      //     .find(
+      //       ".CFIELD>input," +
+      //         ".CFIELD>div[type=picker]," +
+      //         ".CFIELD>select[type=dropdown]," +
+      //         ".CFIELD>textarea," +
+      //         ".CFIELD>.multiselect-container"
+      //     )
+      //     .attr("required", "required")
+      //     .prop("disabled", false);
+      //   var isPickerValue = false; //check required people picker
+      //   $(this)
+      //     .find("[type=picker]")
+      //     .each(function () {
+      //       if ($(this).find("span.sp-peoplepicker-userSpan").length > 0) {
+      //         isPickerValue = true;
+      //         // return false;
+      //       } else {
+      //       }
+      //     });
+      //   console.warn($(this).find(".form-control:valid").length);
+      //   if ($(this).find(".form-control:valid").length > 0 || isPickerValue) {
+      //     $(this).addClass("master-to-submit");
+      //   }
+      //   $(this)
+      //     .find(
+      //       ".CFIELD>input," +
+      //         ".CFIELD>div[type=picker]," +
+      //         ".CFIELD>select[type=dropdown]," +
+      //         ".CFIELD>textarea," +
+      //         ".CFIELD>.multiselect-container"
+      //     )
+      //     .prop("disabled", true);
+      // });
     } else {
       $(".CSformbuttons").prepend(
         '<p class="errormsg">Please check info above</p>'
@@ -1073,6 +1074,43 @@ window.New_Data_Submit = {
         }
       }
     },
+    checkNewMasterDetails2: ()=>{
+      $("[data-target_list] .Details-Item.NewItem").each(function () {
+        $(this)
+          .find(
+            ".CFIELD>input," +
+              ".CFIELD>div[type=picker]," +
+              ".CFIELD>select[type=dropdown]," +
+              ".CFIELD>textarea," +
+              ".CFIELD>.multiselect-container"
+          )
+          .attr("required", "required")
+          .prop("disabled", false);
+        var isPickerValue = false; //check required people picker
+        $(this)
+          .find("[type=picker]")
+          .each(function () {
+            if ($(this).find("span.sp-peoplepicker-userSpan").length > 0) {
+              isPickerValue = true;
+              // return false;
+            } else {
+            }
+          });
+        console.warn($(this).find(".form-control:valid").length);
+        if ($(this).find(".form-control:valid").length > 0 || isPickerValue) {
+          $(this).addClass("master-to-submit");
+        }
+        $(this)
+          .find(
+            ".CFIELD>input," +
+              ".CFIELD>div[type=picker]," +
+              ".CFIELD>select[type=dropdown]," +
+              ".CFIELD>textarea," +
+              ".CFIELD>.multiselect-container"
+          )
+          .prop("disabled", true);
+      });
+    }
   },
 };
 

@@ -969,7 +969,7 @@ var Risks_Info_Request = {
         '<li class="list-group-item link-arrow px-0">' +
           '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
           _spPageContextInfo.webAbsoluteUrl +
-          "/sitepages/View.aspx?ListKey=risks&IID=" +
+          "/sitepages/View.aspx?ListKey=initiativerisks&IID=" +
           itemID +
           "&ICODE=" +
           itemProjectCode +
@@ -1187,7 +1187,7 @@ var Projects_Info_Request = {
       ) {
         projectstatusBasedOnSchedule = Resources.ar[projectstatusBasedOnSchedule];
       } else
-      {        
+      {
         projectstatusBasedOnSchedule = Resources.en[projectstatusBasedOnSchedule];
       }
        // statusOccuresData.forEach(function (element) {
@@ -1232,7 +1232,7 @@ var Projects_Info_Request = {
           itemfinishdate +
           "</h4>" +
           "</div>" +
-          '<div class="d-flex justify-content-center align-items-start">'+ 
+          '<div class="d-flex justify-content-center align-items-start">'+
           '<span class="icon-user lg d-inline-flex align-items-center text-center circlecolor' +
           projectstatusBasedOnScheduleForStyling +'"></span>'
       +
@@ -1241,9 +1241,9 @@ var Projects_Info_Request = {
                 '<h4 class="black">' +
                 projectstatusBasedOnSchedule +
                 "</h4>" +
-                
+
                 '</div>'
-                + 
+                +
           "</div>" +
           '<div class="d-inline-flex flex-column mx-2" style="width:20px;">' +
           "</div>" +

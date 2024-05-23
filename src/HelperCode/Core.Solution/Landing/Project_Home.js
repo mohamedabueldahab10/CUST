@@ -791,8 +791,10 @@ var Project_Home_Info_Request = {
     if (fullphasename == "P3") {
       // $('.navbar.page-nav.px-5').append('<div class="closebtn"><button style="float: left;color:White;text-align:center;background: #853232;" class="btn pop-green close-project" style="float: left;font-size: 17px;" type="button" onclick="ProjectClosure_Submit.g.closureappend()"><span data-trans-closeproject class="Resources"></span></button></div>');
     }
+    window.checkSchedulHTML = setInterval(function () {
+      Project_Home_Info_Request.g.checkSchedulHTML();
 
-    IsProjectStatusByMilestones == "yes" ? $(".scnd-row").remove() : "";
+    }, 500);
 
     //calling other data
     Issues_Info_Request.init();
@@ -889,6 +891,12 @@ var Project_Home_Info_Request = {
         ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + "k"
         : Math.sign(num) * Math.abs(num);
     },
+    checkSchedulHTML: () => {
+      if ($(".scnd-row").length) {
+        clearInterval(checkSchedulHTML);
+        IsProjectStatusByMilestones == "yes" ? $(".scnd-row").remove() : "";
+      }
+    }
   },
 };
 var checkHomeStatusHtml = setInterval(function () {

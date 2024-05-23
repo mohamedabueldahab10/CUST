@@ -509,16 +509,16 @@ window.ListInfo = {
                 dyid,
                 dyfieldname
               );
-            }            
+            }
           });
-          // date controlling feature 
+          // date controlling feature
           $("[date-controling-field]").each(function(){
-            
+
             let maxDateField = $(this).attr("date-max-field");
             // let minDateField = $(this).attr("date-min-field");
             let dateControlingInput = $(this).attr("date-controling-field");
             dateControlingInput = $(`#${dateControlingInput}`);
-            let $this = $(this);            
+            let $this = $(this);
             dateControlingInput.on("change", function (e){
               let controlingCode = $(this).val();
               // let controlingCodeForMinDate = $(this).val();
@@ -528,8 +528,8 @@ window.ListInfo = {
               // date_Controlling_Call.init(controlingListName, controlingCode, maxDateField, dateControlingInput, $this,minDateField,controlingListNameForMinDate, controlingCodeForMinDate);
             });
           });
-          
-            
+
+
           // this affectes on lookup selects
           $("select[dynamic=parent]").on("change", function () {
             let parentFieldName = $(this).attr("id");
@@ -1230,9 +1230,16 @@ window.ListInfo = {
             if (event.which >= 37 && event.which <= 40) return;
             // format number
             $(this).val(function (index, value) {
-              return value
-                .replace(/\D/g, "")
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              value = value.replace(/[^\d.]/g, '');
+              // Split the value into integer and decimal parts
+              const parts = value.split('.');
+              // Format the integer part with commas
+              parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+              // Join the parts with a decimal point if there's a fractional part
+              return parts.join('.');
+              // return value
+              //   .replace(/\D/g, "")
+              //   .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             });
 
             var totalElement = $(this).data("totalelement");
@@ -1243,6 +1250,7 @@ window.ListInfo = {
             var resetElement = $(this).data("resetelement");
             var elementVal = event.target.value;
             // set max value
+            debugger;
             if (max && max != "undefined") {
               var maxValue = 0;
               if (listkey == "projects") {
@@ -1265,9 +1273,16 @@ window.ListInfo = {
 
               if (elementVal <= maxValue) {
                 $(this).val(function (index, value) {
-                  return value
-                    .replace(/\D/g, "")
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  value = value.replace(/[^\d.]/g, '');
+                  // Split the value into integer and decimal parts
+                  const parts = value.split('.');
+                  // Format the integer part with commas
+                  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                  // Join the parts with a decimal point if there's a fractional part
+                  return parts.join('.');
+                  // return value
+                  //   .replace(/\D/g, "")
+                  //   .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 });
               } else {
                 $(this).val(null);
@@ -1280,9 +1295,16 @@ window.ListInfo = {
             } else {
               // format number
               $(this).val(function (index, value) {
-                return value
-                  .replace(/\D/g, "")
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                value = value.replace(/[^\d.]/g, '');
+                  // Split the value into integer and decimal parts
+                  const parts = value.split('.');
+                  // Format the integer part with commas
+                  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                  // Join the parts with a decimal point if there's a fractional part
+                  return parts.join('.');
+                // return value
+                //   .replace(/\D/g, "")
+                //   .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
               });
             }
             ///
@@ -1491,7 +1513,7 @@ window.ListInfo = {
             }
 
             if (listkey == "mainkpi") {
-             
+
               // $("#RelatedStrategyObjective").prop("disabled", true);
 
               // var relatedStrategyCode = $('#RelatedStrategy').val()
@@ -1987,7 +2009,7 @@ window.ListInfo = {
             });
           }
           ListInfo.g.attachmentsExtensions();
-          
+
         }
       }
     );
@@ -1996,7 +2018,7 @@ window.ListInfo = {
     if (listkey == "goalstrategy") {
       ListInfo.g.requiredSpillarsName();
     }
-  
+
 
     // if(element.useAccessPolicy){
     //   await FunctionAsync(element.useAccessPolicyList)
@@ -2048,12 +2070,12 @@ window.ListInfo = {
     window.acceptedExtensions;
     var datecontrolingfield="", dmaxControlingField="",dMinControlingField="", datecontrolingfieldForMinDate="";
         // to handle date controlling field
-    if (element.hasOwnProperty("dateControlingField")){          
+    if (element.hasOwnProperty("dateControlingField")){
         datecontrolingfield = `date-controling-field="${element.dateControlingField}"`;
       dmaxControlingField=`date-max-field="${element.maxinternalName}"`;
       dMinControlingField=`date-min-field="${element.minInternalName}"`;
       datecontrolingfieldForMinDate = `date-controling-field="${element.listname}"`;
-      
+
     }
     if (element.hasOwnProperty("security")) {
       if (element.security.groups.length > 0) {
@@ -3887,7 +3909,7 @@ window.ListInfo = {
         OnSuccess(flag, htmlBody);
         break;
       case "datecontrolingfield":
-        
+
         var maxOnChild = "";
         var targetOn = "";
 
@@ -4000,10 +4022,10 @@ window.ListInfo = {
           '"  max="' +
           max +
           '" min=' +
-          min 
-          + ' ' 
+          min
+          + ' '
           + datecontrolingfield
-          + dmaxControlingField 
+          + dmaxControlingField
           + dMinControlingField
           +
           ">" +
@@ -4018,15 +4040,15 @@ window.ListInfo = {
 
       case "datetimetoparent": // handle date from parent
         var code = activeCode;
-        
+
         //activecode
         var customQuery =
           '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
           code +
           "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
-       
+
           var startDate = "",
-          finishDate = "";           
+          finishDate = "";
             sphttp.get(
               _spPageContextInfo.siteServerRelativeUrl,
               element.listname,
@@ -4039,10 +4061,10 @@ window.ListInfo = {
                     startDate = el[element.startinternalname];
                     finishDate = el[element.endinternalname];
                   });
-    
+
                   minDate = Dynamic_Data_Request.g.convertdate(startDate);
                   maxDate = Dynamic_Data_Request.g.convertdate(finishDate);
-    
+
                   htmlBody =
                     '<div class="col-md-6 CFIELD ' +
                     dontSubmit +
@@ -4126,11 +4148,11 @@ window.ListInfo = {
                     "</div>" +
                     "</div>";
                   OnSuccess(flag, htmlBody);
-    
+
                   // OnSuccess(flag, htmlBody);
                 }
               }
-            );               
+            );
         break;
 
       case "datewithtimetoparent":
@@ -5077,7 +5099,7 @@ window.ListInfo = {
         OnSuccess(flag, htmlBody);
         break;
 
-        
+
       case "multiselect":
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
@@ -8459,7 +8481,7 @@ window.ListInfo = {
       } else {
         var myValue = $this.val();
       }
-        
+
       // $("#IsStrategicProject").on('change', function (){
       //   if(listkey == 'projects'){
       //     if($(this).val() == 'no'){
@@ -8469,11 +8491,11 @@ window.ListInfo = {
       //         $('#RelatedInitiative option:selected').removeAttr('selected');
       //         $('#RelatedInitiativeDeliverable').val('')
       //         $('#RelatedInitiativeDeliverable option:selected').removeAttr('selected');
-            
-            
+
+
       //       }
       //     }
-      //   });   
+      //   });
       var mytype = $this,
         toggleValues =
           $this.data("togglevalues").indexOf(":::") > -1
@@ -8492,7 +8514,7 @@ window.ListInfo = {
             ? $this.data("togglevalues").split(":::")
             : [$this.data("togglevalues")],
         myToggleFields = "";
-        
+
 
       allToggleFields.forEach((item, i, arr) => {
         myToggleFields +=
@@ -8505,20 +8527,20 @@ window.ListInfo = {
       if (isShowVal) {
         allToggleFields.forEach((item, i, arr) => {
           if (listkey == "projects" &&
-              (item == "InitiativeType" 
-              || item == "RelatedInitiative" 
+              (item == "InitiativeType"
+              || item == "RelatedInitiative"
               ||item == "RelatedInitiativeDeliverable" )
-            ) 
+            )
           {
             if(listkey == 'projects'){
-    
+
               $('#InitiativeType').parent().show();
               $('#InitiativeType').parent().css("display","unset");
               $('#RelatedInitiative').parent().show();
               $('#RelatedInitiative').parent().css("display","unset");
               $('#RelatedInitiativeDeliverable').parent().show();
               $('#RelatedInitiativeDeliverable').parent().css("display","unset");
-            }            
+            }
             $('[data-togglename="' + item + '"]').prop('disabled', true);
             $("#IsStrategicProject").on('change', function (){
               if(listkey == 'projects'){
@@ -8529,11 +8551,11 @@ window.ListInfo = {
                     $('#RelatedInitiative option:selected').removeAttr('selected');
                     $('#RelatedInitiativeDeliverable').val('')
                     $('#RelatedInitiativeDeliverable option:selected').removeAttr('selected');
-                  
-                  
+
+
                   }
                 }
-              });   
+              });
           } else {
             $('[data-togglename="' + item + '"]')
             .parent()
@@ -8544,13 +8566,13 @@ window.ListInfo = {
               .hide();
 
           }
-          
+
             // .parent().prop('disabled', true);
             // .addClass("hide-field");
 
           // $('[data-togglename="' + item + '"]')
           //   .parent().hide();
-            
+
           // $('[data-togglename="' + item + '"]').val("");
           $('[data-togglename="' + item + '"]')
             .parent()
@@ -8589,10 +8611,10 @@ window.ListInfo = {
         });
         toggleFields.forEach(function (item, i, arr) {
           if (listkey == "projects" &&
-              (item == "InitiativeType" 
-              || item == "RelatedInitiative" 
+              (item == "InitiativeType"
+              || item == "RelatedInitiative"
               ||item == "RelatedInitiativeDeliverable" )
-            ) 
+            )
           {
             var isHidden = $('[data-togglename="' + item + '"]')
               .is(":disabled");
@@ -8604,10 +8626,10 @@ window.ListInfo = {
           myFieldParentofParent = $('[data-togglename="' + item + '"]');
           if (isHidden) {
             if (listkey == "projects" &&
-              (item == "InitiativeType" 
-              || item == "RelatedInitiative" 
+              (item == "InitiativeType"
+              || item == "RelatedInitiative"
               ||item == "RelatedInitiativeDeliverable" )
-            ) 
+            )
           {
               $('[data-togglename="' + item + '"]').prop('disabled', false);
           }
@@ -8693,7 +8715,7 @@ window.ListInfo = {
         });
       } else {
         allToggleFields.forEach((item, i, arr) => {
-         
+
           $('[data-togglename="' + item + '"]')
             .parent().parent().removeClass('py-5').removeClass('border-bottom');
           $('[data-togglename="' + item + '"]')
@@ -9322,7 +9344,7 @@ window.View_ListInfo = {
               },
             }
           );
-          if (listkey == "risks") {
+          if (listkey == "risks" || listkey == "initiativerisks") {
             //move to issue
             $(".btn-to-issue").show();
             Risk_To_Issue_Submit.g.toissueClick();
@@ -14560,10 +14582,10 @@ let date_Controlling_Call = {
 	},
 	onSuccess: function (sender, args) {
 		var collListItem = date_Controlling_Call.g.collListItem;
- 
+
 		var listItemEnum = collListItem.getEnumerator();
- 
-		
+
+
 		while (listItemEnum.moveNext()) {
 			tableRows = "";
 			var oListItem = listItemEnum.get_current();
@@ -14580,7 +14602,7 @@ let date_Controlling_Call = {
 		console.log(
 			"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
 		);
-	},	
+	},
   g:{
   }
 };

@@ -498,7 +498,10 @@ window.userCalls = {
               )
             : (membersGroupCheckArray = []);
           //
-          if (isNew && pickerValidationDone) New_Data_Submit.init();
+          if (isNew && pickerValidationDone) {
+            New_Data_Submit.init();
+            New_Data_Submit.g.checkNewMasterDetails2()
+          }
           else if (isEdit && pickerValidationDone) Edit_Data_Submit.init();
           if (USERlistkey == "tasks") {
             addDelegatedTask.init();
@@ -6853,9 +6856,9 @@ var Access_Project_Info_Request = {
     }
 
     //should uncomment when need to applt the validation on milstones every month for proj and every 3 months for initiative
-    if (IsProjectStatusByMilestones == "yes") {
-      $(`body`).append(`<style>.nav-item > a[href*="schedule.aspx"]{display:none!important}</style>`)
-    }
+    // if (IsProjectStatusByMilestones == "yes") {
+    //   $(`body`).append(`<style>.nav-item > a[href*="schedule.aspx"]{display:none!important}</style>`)
+    // }
     if (istherePCODE && projectStartToValidation && projectFinishToValidation) {
       if (USERlistkey == "milestones" && isNew) {
         console.log("YOU Can creat a milestone");
@@ -10616,7 +10619,7 @@ var Get_Milestones = {
             "/SitePages/new.aspx?ListKey=initiativerisks&ICODE=" +
             UserICode +
             '\'"><span data-trans-riskbutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>';
-          Initiatives_Risks_Info.init(tt);
+            USERisNew && USERlistkey == "initiativerisks" ? "" : Initiatives_Risks_Info.init(tt);
         }
       } else {
         $(".page-nav").after(
