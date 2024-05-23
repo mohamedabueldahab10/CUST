@@ -36,7 +36,7 @@ var Information_Form = [
         Errmsgkey: 'withletterpattern',
         validation: 'required',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
-        descPhraseEn: "max length of letters equal 255",
+        descPhraseEn: "max length of letters equal 255",  
       },
       {
         InternalName: 'OfficialCode',
@@ -45,7 +45,7 @@ var Information_Form = [
         type: 'string',
         maxchar: 255,
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
-        descPhraseEn: "max length of letters equal 255",
+        descPhraseEn: "max length of letters equal 255",  
       },
       {
         InternalName: 'Types',
@@ -59,7 +59,7 @@ var Information_Form = [
         type: 'dropdownValues',
         options: {
           choices: [
-
+        
               //---start EPMO and Admin Section ----
             {
               display: 'vision',
@@ -83,7 +83,7 @@ var Information_Form = [
                 { fieldName: 'Phase', value: 'P3' },
                 { fieldName: 'DraftStatus', value: '' },
                 // { fieldName: 'InitiativeProgressStatus', value: 'stat5' },
-
+                
               ],
             },
             {
@@ -197,7 +197,7 @@ var Information_Form = [
         // dontSubmit: true,
         source: 'GoalStrategy',
         Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
+        valfieldkey: 'Title',        
         "validation": "required",
         // dynamic: 'parent',
         // dynamic: 'Types',
@@ -235,7 +235,7 @@ var Information_Form = [
       {
         InternalName: 'RelatedObjectiveLevel',
         DisplayNameEn: 'Related Objective Level',
-        DisplayName: 'مستوى الهدف المرتبط',
+        DisplayName: 'مستوى الهدف المرتبط',        
         "validation": "required",
         // dontSubmit: true,
         grandFieldId: 'RelatedStrategy', // we add this field to handle the two field filtration(parent Id in current form)
@@ -332,7 +332,7 @@ var Information_Form = [
         grpfieldkey: 'Title',
         "validation": "required",
         descPhraseAr: "تظهر الاهداف بناء على نوع  مستوى الهدف المرتبط بالاستراتيجية المختارة",
-        descPhraseEn: "The Objectives appear based on selected Level that related to selected Strategy",
+        descPhraseEn: "The Objectives appear based on selected Level that related to selected Strategy", 
         //
         dynamic: 'RelatedStrategy',
         filterField: 'RelatedStrategy',
@@ -405,7 +405,7 @@ var Information_Form = [
         type: 'picker',
         validation: 'required',
         descPhraseAr: "يجب ان يكون المستخدم لديه الصلاحية المناسبة",
-        descPhraseEn: " User Should have right access",
+        descPhraseEn: " User Should have right access", 
       },
       {
         InternalName: 'InitiativeActualOwner',
@@ -415,7 +415,7 @@ var Information_Form = [
         maxchar: 255,
         validation: 'required',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
-        descPhraseEn: "max length of letters equal 255",
+        descPhraseEn: "max length of letters equal 255",  
       },
       {
         InternalName: 'InitiativePM',
@@ -424,7 +424,7 @@ var Information_Form = [
         type: 'picker',
         validation: 'required',
         descPhraseAr: "يجب ان يكون المستخدم لديه الصلاحية المناسبة",
-        descPhraseEn: " User Should have right access",
+        descPhraseEn: " User Should have right access", 
       },
       {
         InternalName: 'Sector',
@@ -512,7 +512,7 @@ var Information_Form = [
         childsId:["PlannedCompletedDate","ActualCompletedDate","PlannedDate","ActualCompletedDate","ExpenseStartDate"],
         targetOn:"max"
 
-
+        
       },
       // {
       //   InternalName: 'StartDate',
@@ -552,7 +552,7 @@ var Information_Form = [
         InternalName: 'Classification',
         DisplayName: 'تصنيف المبادرة',
         DisplayNameEn: 'Classification',
-        "validation": "required",
+        "validation": "required",        
         type: 'dropdownValues',
         options: {
           choices: [
@@ -918,7 +918,7 @@ var Information_Form = [
         InternalName: 'CurrentBuget',
         DisplayName: 'السيولة المخصصة للعام المالي الحالي ',
         DisplayNameEn: 'Current Budget',
-
+        
         "state": "disabled",
         type: 'float',
         numberOfDigits: "15",
@@ -932,7 +932,7 @@ var Information_Form = [
         DisplayNameEn: 'Expenditures',
         type: 'number',
         numberOfDigits: "15",
-
+        
         "state": "disabled",
         max:"InitiativeBudget",
         descPhraseAr: "يجب ان تكون اقل من او يساوي ميزانية المبادرة",
@@ -943,7 +943,7 @@ var Information_Form = [
         DisplayName: 'المنصرف من العالم المالي الحالي ',
         DisplayNameEn: 'Current Expenditures',
         type: 'number',
-
+        
         "state": "disabled",
         numberOfDigits: "15",
         max:"InitiativeBudget",
@@ -977,7 +977,7 @@ var Information_Form = [
     className: "disable_section", // to make the section disabled on form render
     targetlist: 'InitiativeDeliverables',
     subFields: [
-
+      
       {
         InternalName: 'Name',
         DisplayNameEn: 'Name',
@@ -988,7 +988,7 @@ var Information_Form = [
         Errmsgkey:"withletterpattern",
         validation: 'required',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
-        descPhraseEn: "max length of letters equal 255",
+        descPhraseEn: "max length of letters equal 255",  
       },
       // {
       //   InternalName: 'PlannedFinishDate',
@@ -1018,9 +1018,9 @@ var Information_Form = [
         DisplayNameEn: 'Deliverable Success KPI',
         DisplayName: 'مقياس نجاح المخرج',
         type: 'multiline',
-        maxchar: 5000,
+        maxchar: 5000,   
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
+        descPhraseEn: "max length of letters equal 5000",     
       },
       {
         InternalName: 'Description',
@@ -1075,9 +1075,9 @@ var Information_Form = [
             },
           ],
         },
-
+      
       },
-
+    
       // {
       //   InternalName: 'Target',
       //   DisplayNameEn: 'Target',
@@ -1097,7 +1097,7 @@ var Information_Form = [
         // "state":"disabled",
         // validation: 'required',
         descPhraseAr: "من ميزانية المبادرة",
-        descPhraseEn: " From Initiative Budget",
+        descPhraseEn: " From Initiative Budget", 
       },
       {
         InternalName: 'Amount',
@@ -1110,7 +1110,7 @@ var Information_Form = [
         targetelement: 'Weight',
         // validation: 'required',
         descPhraseAr: "من ميزانية المبادرة",
-        descPhraseEn: " From Initiative Budget",
+        descPhraseEn: " From Initiative Budget", 
       },
       // {
       //   InternalName: 'ActualCompletedDate',
@@ -1131,7 +1131,7 @@ var Information_Form = [
         type: 'file',
         // withAddBtn: 'true',
       },
-
+    
     ]
   },
   {
@@ -1153,7 +1153,7 @@ var Information_Form = [
         Errmsgkey:"withletterpattern",
         validation: 'required',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
-        descPhraseEn: "max length of letters equal 255",
+        descPhraseEn: "max length of letters equal 255",  
       },
       {
         InternalName: 'PlannedCompletedDate',
@@ -1186,7 +1186,7 @@ var Information_Form = [
         // "state":"disabled",
         validation: 'required',
         descPhraseAr: "من ميزانية المبادرة",
-        descPhraseEn: " From Initiative Budget",
+        descPhraseEn: " From Initiative Budget", 
       },
       {
         InternalName: 'Amount',
@@ -1199,7 +1199,7 @@ var Information_Form = [
         targetelement: 'Weight',
         validation: 'required',
         descPhraseAr: "من ميزانية المبادرة",
-        descPhraseEn: " From Initiative Budget",
+        descPhraseEn: " From Initiative Budget", 
       },
       // {
       //   InternalName: 'ActualCompletedDate',
@@ -1233,7 +1233,7 @@ var Information_Form = [
         type: 'multiline',
         maxchar: '5000',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
+        descPhraseEn: "max length of letters equal 5000",  
       },
       {
         InternalName: 'getfile',
@@ -1242,278 +1242,7 @@ var Information_Form = [
         type: 'file',
         // withAddBtn: 'true',
       },
-
-    ]
-  },
-  {
-    label: 'بيانات المخاطر',
-    labelEn: 'Risks Data',
-    description: '',
-    descriptionEn: '',
-    sectiontype: 'master',
-    // className: "disable_section", // to make the section disabled on form render
-    targetlist: 'Risks',
-    subFields: [
-      {
-        InternalName: 'Name',
-        DisplayName: 'اسم الخطر',
-        DisplayNameEn: 'Risk Name',
-        type: 'string',
-        validation: 'required',
-        maxchar: '255',
-        // withletters: true,
-        Errmsgkey: 'withletterpattern',
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
-        descPhraseEn: "max length of letters equal 255",
-      },
-      {
-        InternalName: 'Category',
-        DisplayName: 'نوع الخطر',
-        DisplayNameEn: 'Risk Category',
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            {
-              display: 'financial',
-              value: 'financial',
-            },
-            {
-              display: 'legal',
-              value: 'legal',
-            },
-            {
-              display: 'contractual',
-              value: 'contractual',
-            },
-            {
-              display: 'others',
-              value: 'others',
-            },
-          ],
-        },
-      },
-      {
-        InternalName: 'Status',
-        DisplayName: 'حالة الخطر',
-        DisplayNameEn: 'Status',
-        type: 'dropdownValues',
-        validation: 'required',
-        options: {
-          choices: [
-            {
-              display: 'closed',
-              value: 'closed',
-            },
-            {
-              display: 'open',
-              value: 'open',
-            },
-          ],
-        },
-      },
-      {
-        InternalName: 'Probability',
-        DisplayName: 'إحتمالية الحدوث',
-        DisplayNameEn: 'Probability',
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            {
-              display: 'hight',
-              value: 'hight',
-            },
-            {
-              display: 'medium',
-              value: 'medium',
-            },
-            {
-              display: 'low',
-              value: 'low',
-            },
-          ],
-        },
-      },
-      {
-        InternalName: 'DateIdentified',
-        DisplayName: 'تاريخ تحديد الخطر',
-        DisplayNameEn: 'Date Identified',
-        // "type": "datetime"
-        type: 'datetimetoparent',
-        Errmsgkey:'btwndatepattern',
-        listname: 'Initiatives',
-        startinternalname: 'StartDate',
-        endinternalname: 'FinishDate',
-      },
-      {
-        InternalName: 'Description',
-        DisplayName: 'وصف الخطر',
-        DisplayNameEn: 'Description',
-        type: 'multiline',
-        maxchar: 5000,
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
-      },
-      {
-        InternalName: 'Impact',
-        DisplayName: 'الأثر',
-        DisplayNameEn: 'Impact',
-        validation: 'required',
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            {
-              display: 'hight',
-              value: 'hight',
-            },
-            {
-              display: 'medium',
-              value: 'medium',
-            },
-            {
-              display: 'low',
-              value: 'low',
-            },
-          ],
-        },
-      },
-      {
-        InternalName: 'ImpactDescription',
-        DisplayName: 'وصف الأثر',
-        DisplayNameEn: 'Impact Description',
-        type: 'multiline',
-        maxchar: 5000,
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
-      },
-      {
-        InternalName: 'ResolutionPlan',
-        DisplayName: 'خطة التعامل مع الخطر',
-        DisplayNameEn: 'Resolution Plan',
-        type: 'multiline',
-        maxchar: 5000,
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
-      },
-      {
-        InternalName: 'Comments',
-        DisplayName: 'الملاحظات',
-        DisplayNameEn: 'Comments',
-        type: 'multiline',
-        maxchar: 5000,
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
-      },
-      {
-        InternalName: 'MitigationStatus',
-        DisplayName: 'حالة الاستجابة',
-        DisplayNameEn: 'Mitigation Status',
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            {
-              display: 'notstarted',
-              value: 'notstarted',
-            },
-            {
-              display: 'inprogress2',
-              value: 'inprogress2',
-            },
-            {
-              display: 'donecomplete',
-              value: 'donecomplete',
-            },
-            // ,
-            // {
-            //   display: 'new',
-            //   value: 'new'
-            // }
-          ],
-        },
-      },
-      {
-        InternalName: 'MitigationOwner',
-        DisplayName: 'المسؤول عن الاستجابة',
-        DisplayNameEn: 'Mitigation Owner',
-        type: 'picker',
-        validation: 'required',
-      },
-      {
-        InternalName: 'MitigationTargetDate',
-        DisplayName: 'التاريخ المخطط للاستجابة',
-        DisplayNameEn: 'Mitigation Target Date',
-        // type: 'datetime',
-        type: 'datetimetoparent',
-        listname: 'Initiatives',
-        startinternalname: 'StartDate',
-        endinternalname: 'FinishDate',
-      },
-      {
-        InternalName: 'MitigationActualCompletionDate',
-        DisplayName: 'تاريخ الانتهاء من الاستجابة',
-        DisplayNameEn: 'Mitigation Actual Completion Date',
-        // type: 'datetime',
-        type: 'datetimetoparent',
-        Errmsgkey:'btwndatepattern',
-        listname: 'Initiatives',
-        startinternalname: 'StartDate',
-        endinternalname: 'FinishDate',
-      },
-      {
-        InternalName: 'MitigationPlan',
-        DisplayName: 'خطة الاستجابة',
-        DisplayNameEn: 'Mitigation Plan',
-        type: 'multiline',
-        maxchar: 5000,
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
-      },
-      // {
-      //     "InternalName": "RiskClosureDate",
-      //     "DisplayName":"تاريخ اغلاق الخطر",
-      //     "type":"datetime",
-      //     "state":"disabled"
-      // },
-      // {
-      //     "InternalName": "RiskOwner",
-      //     "DisplayName": "مالك الخطر",
-      //     "DisplayNameEn": "Risk Owner",
-      //     "type": "picker"
-      // },
-      {
-        InternalName: 'AgreedAction',
-        DisplayName: 'الاجراءات المتفق عليها',
-        DisplayNameEn: 'Agreed Action',
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            {
-              display: 'mitigate',
-              value: 'mitigate',
-            },
-            {
-              display: 'monitor',
-              value: 'monitor',
-            },
-            {
-              display: 'leave',
-              value: 'leave',
-            },
-            {
-              display: 'move',
-              value: 'move',
-            },
-            {
-              display: 'avoid',
-              value: 'avoid',
-            },
-            {
-              display: 'assumption',
-              value: 'assumption',
-            },
-          ],
-        },
-      },
-
+    
     ]
   },
   {
@@ -1535,9 +1264,9 @@ var Information_Form = [
         // withletters:true,
         Errmsgkey:"withletterpattern",
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
-        descPhraseEn: "max length of letters equal 255",
+        descPhraseEn: "max length of letters equal 255",  
       },
-
+    
       {
         InternalName: 'Owner',
         DisplayNameEn: 'Benefit Owner',
@@ -1549,11 +1278,11 @@ var Information_Form = [
         InternalName: 'Description',
         DisplayNameEn: 'Description',
         DisplayName: 'وصف المنفعة',
-        maxchar: 5000,
+        maxchar: 5000,        
         type: 'multiline',
         // validation: 'required',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
+        descPhraseEn: "max length of letters equal 5000",  
       },
       {
         InternalName: 'Weight',
@@ -1583,7 +1312,7 @@ var Information_Form = [
         InternalName: 'DeliverableID',
         DisplayNameEn: 'Name',
         DisplayName: 'المخرج',
-
+  
         type: 'lookupchildtoparentmultiselect',
         childlist: 'Projects', //child list name
         childinternalparentname: 'RelatedInitiative', // child internal name related to parent
