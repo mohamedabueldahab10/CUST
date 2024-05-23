@@ -278,24 +278,24 @@ var Information_Form = [
           ],
         },
       },
-      {
-        InternalName: 'MoveItToIssueList',
-        DisplayName: 'نقلها للائحة المعوقات',
-        DisplayNameEn: 'Move It To Issue List',
-        type: 'yesnoradio',
-        options: {
-          choices: [
-            {
-              display: 'yes',
-              value: 'yes',
-            },
-            {
-              display: 'no',
-              value: 'no',
-            },
-          ],
-        },
-      },
+      // {
+      //   InternalName: 'MoveItToIssueList',
+      //   DisplayName: 'نقلها للائحة المعوقات',
+      //   DisplayNameEn: 'Move It To Issue List',
+      //   type: 'yesnoradio',
+      //   options: {
+      //     choices: [
+      //       {
+      //         display: 'yes',
+      //         value: 'yes',
+      //       },
+      //       {
+      //         display: 'no',
+      //         value: 'no',
+      //       },
+      //     ],
+      //   },
+      // },
       {
         InternalName: 'InitiativeEscalation',
         DisplayName: 'التصعيد لخطر مبادرة',

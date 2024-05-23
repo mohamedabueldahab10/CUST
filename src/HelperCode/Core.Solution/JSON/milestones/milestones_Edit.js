@@ -143,7 +143,8 @@ var Information_Form = [
         descPhraseAr: "من التكلفة",
         descPhraseEn: " From Budget", 
         targetelement: 'Weight',
-        validation: 'required',
+          "state":"disabled",
+        // validation: 'required',
         security: {
           groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
         },

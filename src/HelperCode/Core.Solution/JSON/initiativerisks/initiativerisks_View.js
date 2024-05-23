@@ -244,24 +244,24 @@ var Information_Form = [
           ],
         },
       },
-      {
-        InternalName: 'MoveItToIssueList',
-        DisplayName: 'نقلها للائحة التحديات',
-        DisplayNameEn: 'Move It To Issue List',
-        type: 'yesnoradio',
-        options: {
-          choices: [
-            {
-              display: 'yes',
-              value: 'yes',
-            },
-            {
-              display: 'no',
-              value: 'no',
-            },
-          ],
-        },
-      },
+      // {
+      //   InternalName: 'MoveItToIssueList',
+      //   DisplayName: 'نقلها للائحة التحديات',
+      //   DisplayNameEn: 'Move It To Issue List',
+      //   type: 'yesnoradio',
+      //   options: {
+      //     choices: [
+      //       {
+      //         display: 'yes',
+      //         value: 'yes',
+      //       },
+      //       {
+      //         display: 'no',
+      //         value: 'no',
+      //       },
+      //     ],
+      //   },
+      // },
     ]
   },
   {

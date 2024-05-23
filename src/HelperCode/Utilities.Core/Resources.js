@@ -266,7 +266,7 @@
     unmersurable: "لا يقاس",
     unspecific: "غير محدد",
     novalue: "لا توجد له قيمة",
-    toissue: "نقل إلى عائق",
+    toissue: "نقل إلى تحدي",
 
     //Resolution Status
     done: "تم",
@@ -551,8 +551,8 @@
     contracts: "العقود",
     communicationplans: "خطط التواصل",
     closureform: "إغلاق المشروع",
-    movetoissue: "هل أنت متأكد أنك تريد نقل هذا الخطر إلى عائق ؟",
-    movedtoissue: "متحول إلى عائق",
+    movetoissue: "هل أنت متأكد أنك تريد نقل هذا الخطر إلى تحدي ؟",
+    movedtoissue: "متحول إلى تحدي",
     viewhistory: "عرض سجل المهام",
     taskdetails: "سجل المهام",
     owneragency: "الجهة المالكة",

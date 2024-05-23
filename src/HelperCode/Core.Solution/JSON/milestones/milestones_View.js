@@ -141,7 +141,7 @@ var Information_Form = [
       },
       {
 				InternalName: "WFStage",
-				DisplayName: " المرحلة",
+				DisplayName: " مرحلة المراجعة والموافقة",
 				DisplayNameEn: "Stage",
 				type: 'lookup',
 				// validation: 'required',
