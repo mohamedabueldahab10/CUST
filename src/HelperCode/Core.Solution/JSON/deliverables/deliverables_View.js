@@ -57,6 +57,14 @@ var Information_Form = [
         type: "number",
         // type: 'float',
       },
+      {
+        InternalName: 'AmountPrice',
+        DisplayNameEn: 'AmountPrice',
+        DisplayName: 'سعر الوحدة',
+        type: "number",        
+        validation: 'required',
+        // type: 'float',
+      },
       // {
       //   InternalName: 'Status',
       //   DisplayName: 'الحالة',

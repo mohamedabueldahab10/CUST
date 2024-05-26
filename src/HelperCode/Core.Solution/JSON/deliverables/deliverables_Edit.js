@@ -132,6 +132,14 @@ var Information_Form = [
         type: "number",    
         validation: 'required',
       },
+      {
+        InternalName: 'AmountPrice',
+        DisplayNameEn: 'AmountPrice',
+        DisplayName: 'سعر الوحدة',
+        type: "number",        
+        validation: 'required',
+        // type: 'float',
+      },
       // {
       //   "InternalName": "Status",
       //   "DisplayName": "الحالة",
