@@ -254,26 +254,73 @@ window.WorkflowTranslate = [
   { wfName: "EPMOCreateInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
   { wfName: "LMSCreateInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
 
-  { wfName: "VROInitiativeMilestone", nameAr: "معلم مبادرة", nameEn: "Initiative Milestone" },
-  { wfName: "EPMOInitiativeMilestone", nameAr: "معلم مبادرة", nameEn: "Initiative Milestone" },
-  { wfName: "LMSInitiativeMilestone", nameAr: "معلم مبادرة", nameEn: "Initiative Milestone" },
+  {
+    wfName: "VROInitiativeMilestone",
+    nameAr: "معلم مبادرة",
+    nameEn: "Initiative Milestone",
+  },
+  {
+    wfName: "EPMOInitiativeMilestone",
+    nameAr: "معلم مبادرة",
+    nameEn: "Initiative Milestone",
+  },
+  {
+    wfName: "LMSInitiativeMilestone",
+    nameAr: "معلم مبادرة",
+    nameEn: "Initiative Milestone",
+  },
 
-  { wfName: "VROInitiativeDeliverable", nameAr: "مخرج مبادرة", nameEn: "Initiative Deliverable" },
-  { wfName: "EPMOInitiativeDeliverable", nameAr: "مخرج مبادرة", nameEn: "Initiative Deliverable" },
-  { wfName: "LMSInitiativeDeliverable", nameAr: "مخرج مبادرة", nameEn: "Initiative Deliverable" },
+  {
+    wfName: "VROInitiativeDeliverable",
+    nameAr: "مخرج مبادرة",
+    nameEn: "Initiative Deliverable",
+  },
+  {
+    wfName: "EPMOInitiativeDeliverable",
+    nameAr: "مخرج مبادرة",
+    nameEn: "Initiative Deliverable",
+  },
+  {
+    wfName: "LMSInitiativeDeliverable",
+    nameAr: "مخرج مبادرة",
+    nameEn: "Initiative Deliverable",
+  },
 
   { wfName: "VROCreateProject", nameAr: "مشروع", nameEn: "Project" },
   { wfName: "EPMOCreateProject", nameAr: "مشروع", nameEn: "Project" },
   { wfName: "LMSCreateProject", nameAr: "مشروع", nameEn: "Project" },
 
-  { wfName: "VROProjDeliverable", nameAr: "مخرج مشروع", nameEn: "Project Deliverable" },
-  { wfName: "EPMOProjDeliverable", nameAr: "مخرج مشروع", nameEn: "Project Deliverable" },
-  { wfName: "LMSProjDeliverable", nameAr: "مخرج مشروع", nameEn: "Project Deliverable" },
+  {
+    wfName: "VROProjDeliverable",
+    nameAr: "مخرج مشروع",
+    nameEn: "Project Deliverable",
+  },
+  {
+    wfName: "EPMOProjDeliverable",
+    nameAr: "مخرج مشروع",
+    nameEn: "Project Deliverable",
+  },
+  {
+    wfName: "LMSProjDeliverable",
+    nameAr: "مخرج مشروع",
+    nameEn: "Project Deliverable",
+  },
 
-  { wfName: "VROProjMilestone", nameAr: "معلم مشروع", nameEn: "Project Milestone" },
-  { wfName: "EPMOProjMilestone", nameAr: "معلم مشروع", nameEn: "Project Milestone" },
-  { wfName: "LMSProjMilestone", nameAr: "معلم مشروع", nameEn: "Project Milestone" },
-
+  {
+    wfName: "VROProjMilestone",
+    nameAr: "معلم مشروع",
+    nameEn: "Project Milestone",
+  },
+  {
+    wfName: "EPMOProjMilestone",
+    nameAr: "معلم مشروع",
+    nameEn: "Project Milestone",
+  },
+  {
+    wfName: "LMSProjMilestone",
+    nameAr: "معلم مشروع",
+    nameEn: "Project Milestone",
+  },
 
   { wfName: "VROActualKPI", nameAr: "مؤشر", nameEn: "KPI" },
   { wfName: "MSActualKPI", nameAr: "مؤشر", nameEn: "KPI" },
@@ -290,7 +337,6 @@ window.WorkflowTranslate = [
   { wfName: "VROCreateObjective", nameAr: "هدف", nameEn: "Objective" },
   { wfName: "LMSCreateObjective", nameAr: "هدف", nameEn: "Objective" },
   { wfName: "MSCreateObjective", nameAr: "هدف", nameEn: "Objective" },
-
 
   { wfName: "VROCRObjective", nameAr: "هدف", nameEn: "Objective" },
   { wfName: "MSCRObjective", nameAr: "هدف", nameEn: "Objective" },
@@ -500,9 +546,8 @@ window.userCalls = {
           //
           if (isNew && pickerValidationDone) {
             New_Data_Submit.init();
-            New_Data_Submit.g.checkNewMasterDetails2()
-          }
-          else if (isEdit && pickerValidationDone) Edit_Data_Submit.init();
+            New_Data_Submit.g.checkNewMasterDetails2();
+          } else if (isEdit && pickerValidationDone) Edit_Data_Submit.init();
           if (USERlistkey == "tasks") {
             addDelegatedTask.init();
           }
@@ -763,12 +808,12 @@ window.userCalls = {
         isAdmin = true;
         //***** */
         ChartHide =
-       ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1), .statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(2), .statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(4), .statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5), .statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1), .statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(2), .statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(4), .statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5), .statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
 
-       ChartHideForInitiatives =
-       ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "مسؤول النظام";
+        ar_UserRole = "مسؤول النظام";
         en_UserRole = "Administrator";
         //CRUD
         Create_Access = AllListKeys;
@@ -795,9 +840,10 @@ window.userCalls = {
         //***** */
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "مكتب المشاريع المؤسسي";
+        ar_UserRole = "مكتب المشاريع المؤسسي";
         en_UserRole = "EPMO";
         //CRUD
         Create_Access = [
@@ -830,6 +876,7 @@ window.userCalls = {
           "changerequest",
           "sos",
           "mainkpi",
+          "achievements",
         ];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
@@ -862,6 +909,7 @@ window.userCalls = {
           // "sos",
           "mainkpi",
           //"changerequest",
+          "achievements",
         ];
         Delete_Access = [
           "benefitmatrix",
@@ -909,9 +957,10 @@ window.userCalls = {
         isMinister = true;
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives =  ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "الصلاحية الشاملة";
+        ar_UserRole = "الصلاحية الشاملة";
         en_UserRole = "Gloabl Access";
 
         Create_Access = [];
@@ -926,7 +975,8 @@ window.userCalls = {
         isSectorHead = true;
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
-          ChartHideForInitiatives=".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
         ar_UserRole = " مدير  ";
         en_UserRole = "Sector Head of ";
 
@@ -947,8 +997,9 @@ window.userCalls = {
         $("div#s4-ribbonrow, div#O365_MainLink_Settings_container").remove();
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-          ar_UserRole = "مدير المشروع";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ar_UserRole = "مدير المشروع";
         en_UserRole = "Project Manager";
 
         //CRUD
@@ -1041,9 +1092,10 @@ window.userCalls = {
         $("div#s4-ribbonrow, div#O365_MainLink_Settings_container").remove();
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "مالك المشروع";
+        ar_UserRole = "مالك المشروع";
         en_UserRole = "Project Owner";
         Create_Access = ["projecthome.aspx"];
         Read_Access = [
@@ -1082,9 +1134,10 @@ window.userCalls = {
         $("div#s4-ribbonrow, div#O365_MainLink_Settings_container").remove();
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "مدير المبادرة";
+        ar_UserRole = "مدير المبادرة";
         en_UserRole = "Initiative Manager";
         //CRUD
         Create_Access = [
@@ -1210,9 +1263,10 @@ window.userCalls = {
         $("div#s4-ribbonrow, div#O365_MainLink_Settings_container").remove();
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives =  ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "مالك المبادرة";
+        ar_UserRole = "مالك المبادرة";
         en_UserRole = "Initiative Owner";
         //CRUD
         Create_Access = [
@@ -1339,9 +1393,10 @@ window.userCalls = {
         //***** */
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "مسؤول الأداء الإستراتيجي";
+        ar_UserRole = "مسؤول الأداء الإستراتيجي";
         en_UserRole = "Strategy Performance Administrator";
         //CRUD
         Create_Access = [
@@ -1422,9 +1477,10 @@ window.userCalls = {
         //***** */
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives =".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "إدارة الأداء الإستراتيجي";
+        ar_UserRole = "إدارة الأداء الإستراتيجي";
         en_UserRole = "Strategy Performance Management";
         //CRUD
         Create_Access = [
@@ -1473,9 +1529,10 @@ window.userCalls = {
         //***** */
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "مكتب التخطيط الإستراتيجي";
+        ar_UserRole = "مكتب التخطيط الإستراتيجي";
         en_UserRole = "Strategic Planning Office";
         //CRUD
         Create_Access = [
@@ -1510,9 +1567,10 @@ window.userCalls = {
         //***** */
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives =  ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "قائد مكتب تحقيق الرؤية";
+        ar_UserRole = "قائد مكتب تحقيق الرؤية";
         en_UserRole = "Leader of the Vision Realization Office";
 
         Create_Access = [
@@ -1546,9 +1604,10 @@ window.userCalls = {
         //***** */
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "مدير ادارة تخطيط اهداف الرؤية";
+        ar_UserRole = "مدير ادارة تخطيط اهداف الرؤية";
         en_UserRole = "Director of the Vision Objectives Department";
 
         Create_Access = [
@@ -1582,9 +1641,10 @@ window.userCalls = {
         //***** */
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "مدير وحدة تخطيط الرؤية";
+        ar_UserRole = "مدير وحدة تخطيط الرؤية";
         en_UserRole = "Vision Planning Unit Head";
 
         Create_Access = [
@@ -1618,9 +1678,10 @@ window.userCalls = {
         //***** */
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "وحدة تخطيط الرؤية";
+        ar_UserRole = "وحدة تخطيط الرؤية";
         en_UserRole = "Vision Planning Unit";
 
         Create_Access = [
@@ -1654,9 +1715,10 @@ window.userCalls = {
         //***** */
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "مكتب تحقيق الرؤية";
+        ar_UserRole = "مكتب تحقيق الرؤية";
         en_UserRole = "Execution Guarantee Office";
         //CRUD
         Create_Access = [
@@ -1774,9 +1836,10 @@ window.userCalls = {
         //***** */
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "مدير ادارة ضمان التنفيذ";
+        ar_UserRole = "مدير ادارة ضمان التنفيذ";
         en_UserRole = "Execution Guarantee Office Head";
         //CRUD
         Create_Access = [
@@ -1875,7 +1938,8 @@ window.userCalls = {
 
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
-          ChartHideForInitiatives=   ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
         ar_UserRole = "مكتب ضمان التنفيذ لسوق العمل";
         en_UserRole = "Execution Guarantee Office";
@@ -1975,7 +2039,8 @@ window.userCalls = {
 
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
-          ChartHideForInitiatives= ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
         ar_UserRole = "وحدة استراتيجية سوق العمل ( إدارة الحوكمة والجودة)";
         en_UserRole = "LMSU Control";
@@ -2088,7 +2153,8 @@ window.userCalls = {
 
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
-          ChartHideForInitiatives= ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
         ar_UserRole = "وحدة استراتيجية سوق العمل (إدارة التنفيذ)";
         en_UserRole = "LMSU Execution";
@@ -2210,7 +2276,8 @@ window.userCalls = {
 
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
-          ChartHideForInitiatives= ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
         ar_UserRole = " وحدة استراتيجية سوق العمل (إدارة الآداء)";
         en_UserRole = "LMSU Performance";
@@ -2324,7 +2391,8 @@ window.userCalls = {
 
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
-          ChartHideForInitiatives= ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
         ar_UserRole = "لجنة طلبات التغيير";
         en_UserRole = "Change Request Committee";
@@ -2350,7 +2418,8 @@ window.userCalls = {
 
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
-          ChartHideForInitiatives=".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
         ar_UserRole = "لجنة طلبات التغيير (الرؤية)";
         en_UserRole = "Change Request Committee (Vision)";
@@ -2376,7 +2445,8 @@ window.userCalls = {
 
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
-          ChartHideForInitiatives=   ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
         ar_UserRole = "مكتب التخطيط الإستراتيجي لسوق العمل";
         en_UserRole = "Strategic Planning Office";
@@ -2410,9 +2480,10 @@ window.userCalls = {
         isSPMO = true;
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives=  ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
 
-          ar_UserRole = "مكتب إدارة المشاريع القطاعي";
+        ar_UserRole = "مكتب إدارة المشاريع القطاعي";
         en_UserRole = "Sectoral Project Management Office";
 
         //CRUD
@@ -2514,7 +2585,8 @@ window.userCalls = {
 
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives=".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
 
         ar_UserRole = " مدير مكتب إدارة المشاريع القطاعي";
         en_UserRole = "Sectoral Project Management Office Head";
@@ -2615,9 +2687,10 @@ window.userCalls = {
 
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
-          ChartHideForInitiatives= ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "معالى مساعد الوزير";
+        ar_UserRole = "معالى مساعد الوزير";
         en_UserRole = "Minister Assistant";
 
         //CRUD
@@ -2632,9 +2705,10 @@ window.userCalls = {
         isViceMinister = true;
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(4),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
-          ChartHideForInitiatives=".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(4),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(4),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "معالى نائب الوزير";
+        ar_UserRole = "معالى نائب الوزير";
         en_UserRole = "Vice Minister";
 
         //CRUD
@@ -2649,7 +2723,8 @@ window.userCalls = {
         USER_HomePage = "InitiativesMain.aspx";
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives=  ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
 
         ar_UserRole = "مدير وحدة الانجاز";
         en_UserRole = "Development Unit";
@@ -2778,9 +2853,10 @@ window.userCalls = {
         //   (SecondLevel_FirstLevel_FieldType = "Text");
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
-          ChartHideForInitiatives=   ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "وكيل ";
+        ar_UserRole = "وكيل ";
         en_UserRole = "SubSector Head of ";
 
         //CRUD
@@ -2793,9 +2869,10 @@ window.userCalls = {
         isGeneralManager = true;
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
-          ChartHideForInitiatives=   ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = " مدير إدارة ";
+        ar_UserRole = " مدير إدارة ";
         en_UserRole = "General Manager of ";
         USER_HomePage = "InitiativesMain.aspx";
         //CRUD
@@ -2814,9 +2891,10 @@ window.userCalls = {
         //***** *
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives= ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "فريق ذكاء الأعمال";
+        ar_UserRole = "فريق ذكاء الأعمال";
         en_UserRole = "BI Team";
         //CRUD
         Create_Access = [];
@@ -2842,9 +2920,10 @@ window.userCalls = {
         //***** */
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives=".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "الفريق الاستراتيجي";
+        ar_UserRole = "الفريق الاستراتيجي";
         en_UserRole = "Strategy Team";
         //CRUD
         Create_Access = [
@@ -2881,9 +2960,10 @@ window.userCalls = {
         //***** *
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives=  ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "مالك المؤشرات";
+        ar_UserRole = "مالك المؤشرات";
         en_UserRole = "KPIs Owner";
         //CRUD
         Create_Access = ["changerequest"];
@@ -2919,7 +2999,8 @@ window.userCalls = {
 
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
-          ChartHideForInitiatives=".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
         ar_UserRole = "مالك الهدف";
         en_UserRole = "Objective Owner";
@@ -2956,9 +3037,10 @@ window.userCalls = {
         //***** */
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives=".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "رائد الأداء";
+        ar_UserRole = "رائد الأداء";
         en_UserRole = "Performance Leader";
         //CRUD
         Create_Access = [
@@ -3013,9 +3095,10 @@ window.userCalls = {
         //***** */
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives= ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "فريق الشراكة الاستراتيجية";
+        ar_UserRole = "فريق الشراكة الاستراتيجية";
         en_UserRole = "Startegic Partnerships Team";
 
         Create_Access = [
@@ -3092,9 +3175,10 @@ window.userCalls = {
 
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives=".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "ممثل الشراكة الاستراتيجية";
+        ar_UserRole = "ممثل الشراكة الاستراتيجية";
         en_UserRole = "Partnership Representative";
 
         //CRUD
@@ -3143,7 +3227,8 @@ window.userCalls = {
 
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives=  ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
         ar_UserRole = "مدير علاقات الشراكة الاستراتيجية";
         en_UserRole = "Relationship Manager";
@@ -3183,7 +3268,8 @@ window.userCalls = {
 
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives= ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
         ar_UserRole = "فريق المنجزات الاستراتيجية";
         en_UserRole = "Startegic Achievement Team";
@@ -3226,7 +3312,8 @@ window.userCalls = {
 
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
-          ChartHideForInitiatives= ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
         ar_UserRole = "مدير الميزانية";
         en_UserRole = "Budget Manager";
@@ -3270,7 +3357,8 @@ window.userCalls = {
 
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
-          ChartHideForInitiatives= ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
         ar_UserRole = "مدير المحفظة";
         en_UserRole = "Portfolio Manager";
@@ -3288,9 +3376,10 @@ window.userCalls = {
       default:
         ChartHide =
           ".ctx-block.row.mx-n2 > div:nth-child(4),.ctx-block.row.mx-n2 > div:nth-child(5),.ctx-block.row.mx-n2 > div:nth-child(6),.ctx-block.row.mx-n2 > div:nth-child(1)";
-          ChartHideForInitiatives=  ".ctx-block.row.mx-n2 > div:nth-child(4),.ctx-block.row.mx-n2 > div:nth-child(5),.ctx-block.row.mx-n2 > div:nth-child(6),.ctx-block.row.mx-n2 > div:nth-child(7)";
+        ChartHideForInitiatives =
+          ".ctx-block.row.mx-n2 > div:nth-child(4),.ctx-block.row.mx-n2 > div:nth-child(5),.ctx-block.row.mx-n2 > div:nth-child(6),.ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          //CRUD
+        //CRUD
         Create_Access = [];
         Read_Access = [];
         Edit_Access = [];
@@ -3442,7 +3531,14 @@ window.userCalls = {
     //       break;
     //   }
     //end CRUD
-
+    if (USERisEdit && USERlistkey == "sos" && !isAdmin) {
+      console.log("hide Attachment edit button for not admin user");
+      $("body").append(
+        "<style>" +
+          ".delete-file{opacity: .6;pointer-events: none;display:none}" +
+          "</style>"
+      );
+    }
     if (isthereICODE) {
       // to get the info of initiatives
       Get_Initiative_Info_Request.preinit();
@@ -6805,7 +6901,11 @@ var Access_Project_Info_Request = {
         USERPName = oListItem.get_item("Name")
           ? oListItem.get_item("Name")
           : UserNo_Data;
-        IsProjectStatusByMilestones = oListItem.get_item("IsProjectStatusByMilestones") ? oListItem.get_item("IsProjectStatusByMilestones") : "no";
+        IsProjectStatusByMilestones = oListItem.get_item(
+          "IsProjectStatusByMilestones"
+        )
+          ? oListItem.get_item("IsProjectStatusByMilestones")
+          : "no";
         USERPID = oListItem.get_id();
         User_isClosureStatus =
           oListItem.get_item("ClosureStatus") == "Failed" ||
@@ -6874,7 +6974,6 @@ var Access_Project_Info_Request = {
           }
         }
       }
-
     }
 
     if (isthereICODE) {
@@ -8718,7 +8817,9 @@ var Tasks_Info_Request_User = {
               "')\">" +
               '<div><i class="fas fa-user-friends"></i></div>' +
               '<div><h3 class="title-13">' +
-              tasktitle + " - " + RelatedItemName +
+              tasktitle +
+              " - " +
+              RelatedItemName +
               '</h3><div class="des-12 text-nowrap"><span data-trans-idea class="Resources ideaLabel"></span><span>: ' +
               taskname +
               "</span></div></div></a>" +
@@ -8752,7 +8853,9 @@ var Tasks_Info_Request_User = {
               puid +
               "')\">" +
               '<div><h3 class="title-13">' +
-              tasktitle +" - " + RelatedItemName +
+              tasktitle +
+              " - " +
+              RelatedItemName +
               '</h3><div class="des-12 text-nowrap"><span data-trans-idea class="Resources ideaLabel"></span><span>: ' +
               taskname +
               "</span></div></div></a>" +
@@ -8791,7 +8894,9 @@ var Tasks_Info_Request_User = {
               "')\">" +
               '<div><i class="fas fa-user-friends"></i></div>' +
               '<div><h3 class="title-13">' +
-              tasktitle + " - " + RelatedItemName +
+              tasktitle +
+              " - " +
+              RelatedItemName +
               '</h3><div class="des-12 text-nowrap">' +
               taskname +
               "</div></div></a>" +
@@ -8866,7 +8971,9 @@ var Tasks_Info_Request_User = {
               "')\">" +
               '<div><i class="fas fa-user-friends"></i></div>' +
               '<div><h3 class="title-13">' +
-              tasktitle + " - " + RelatedItemName +
+              tasktitle +
+              " - " +
+              RelatedItemName +
               '</h3><div class="des-12 text-nowrap">' +
               taskname +
               "</div></div></a>" +
@@ -8895,7 +9002,9 @@ var Tasks_Info_Request_User = {
               puid +
               "')\">" +
               '<div><h3 class="title-13">' +
-              tasktitle + " - " + RelatedItemName +
+              tasktitle +
+              " - " +
+              RelatedItemName +
               '</h3><div class="des-12 text-nowrap">' +
               taskname +
               "</div></div></a>" +
@@ -10370,7 +10479,9 @@ var Get_Milestones = {
           ""; //PlannedClosureDate
       } else if (UserICode) {
         debugger;
-        weight += oListItem.get_item("Weight") ? oListItem.get_item("Weight") : 0;
+        weight += oListItem.get_item("Weight")
+          ? oListItem.get_item("Weight")
+          : 0;
         itemPlannedClosureDate =
           Get_Milestones.g.dateConvert2(
             oListItem.get_item("PlannedCompletedDate")
@@ -10610,7 +10721,8 @@ var Get_Milestones = {
             );
           }
         } else if (weight >= 100) {
-          var tt = '<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;margin-top:10%">' +
+          var tt =
+            '<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;margin-top:10%">' +
             '<label><span  style="font-size:13px">' +
             weightPopupMsg +
             "</span></label>" +
@@ -10619,7 +10731,9 @@ var Get_Milestones = {
             "/SitePages/new.aspx?ListKey=initiativerisks&ICODE=" +
             UserICode +
             '\'"><span data-trans-riskbutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>';
-            USERisNew && USERlistkey == "initiativerisks" ? "" : Initiatives_Risks_Info.init(tt);
+          USERisNew && USERlistkey == "initiativerisks"
+            ? ""
+            : Initiatives_Risks_Info.init(tt);
         }
       } else {
         $(".page-nav").after(
@@ -10675,7 +10789,7 @@ var Initiatives_Risks_Info = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"InitiativeCode\" /><Value Type=\"Text\">" +
-      UserICode +
+        UserICode +
         "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
     Initiatives_Risks_Info.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -10706,7 +10820,6 @@ var Initiatives_Risks_Info = {
       var oListItem = listItemEnum.get_current();
       itemID = oListItem.get_id();
       itemname = oListItem.get_item("Name") || No_Data;
-
     }
     !itemname ? $(".page-nav").after(Initiatives_Risks_Info.g.tt) : "";
 
