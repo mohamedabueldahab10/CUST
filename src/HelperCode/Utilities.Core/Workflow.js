@@ -84,6 +84,7 @@ var workflowname,
   cancelstageid,
   prvstageidarr,
   nxtstageidarr,
+  projecttype,
   globalStateSubmitField,
   taskID = window.location.href.includes("TID=")
     ? window.location.href.split("TID=")[1].split("&")[0]
@@ -225,6 +226,10 @@ var workflowname,
     window.location.href.indexOf("projects&EPMOCreateProject") > -1,
   isLMSCreateProject =
     window.location.href.indexOf("projects&LMSCreateProject") > -1,
+  isDOC_CreateProject =
+    window.location.href.indexOf("projects&DOC_CreateProject") > -1,
+  isFSSBCreateProject =
+    window.location.href.indexOf("projects&FSSBCreateProject") > -1,
   //
   isProjectCancellationRequestWF =
     window.location.href.indexOf("projectcancellationrequest") > -1,
@@ -240,7 +245,19 @@ var workflowname,
   isIssuePage = window.location.href.indexOf("issues") > -1,
   isMomPage = window.location.href.indexOf("mom") > -1,
   // isMainKPIPage = window.location.href.indexOf("mainkpi") > -1,
-  isProjectPage = window.location.href.indexOf("projects") > -1;
+  
+  isProjectPage = window.location.href.indexOf("projects") > -1,
+  isEngineeringProjectPage = window.location.href.indexOf("engineeringprojects") > -1 ,
+
+  isVROProjNDeliverable =
+    window.location.href.indexOf("nesteddeliverables&VROProjNDeliverable") > -1,
+  isEPMOProjNDeliverable =
+    window.location.href.indexOf("nesteddeliverables&EPMOProjNDeliverable") > -1,
+  isLMSProjNDeliverable =
+    window.location.href.indexOf("nesteddeliverables&LMSProjNDeliverable") > -1,
+
+  isProjectComplianceUpdate =
+  window.location.href.indexOf("ProjectCompliance.aspx") > -1;
 
 var fieldtoedit,
   bulkeditlist,
@@ -912,6 +929,49 @@ else if (isSOsWf) {
     '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
     workflowname +
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+
+} else if (isVROProjNDeliverable) {
+    workflowname = "VROProjNDeliverable";
+    bulkeditlist = "NestedDeliverables";
+    IID2 = window.location.href.split("IID=")[1].split("&")[0];
+    bulkeditquery =
+      '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+      IID2 +
+      "</Value> </Eq></Where></Query></View>";
+    taskquery =
+      '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+      taskID +
+      '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+      workflowname +
+      "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+} else if (isEPMOProjNDeliverable) {
+    workflowname = "EPMOProjNDeliverable";
+    bulkeditlist = "NestedDeliverables";
+    IID2 = window.location.href.split("IID=")[1].split("&")[0];
+    bulkeditquery =
+      '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+      IID2 +
+      "</Value> </Eq></Where></Query></View>";
+    taskquery =
+      '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+      taskID +
+      '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+      workflowname +
+      "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+} else if (isLMSProjNDeliverable) {
+    workflowname = "LMSProjNDeliverable";
+    bulkeditlist = "NestedDeliverables";
+    IID2 = window.location.href.split("IID=")[1].split("&")[0];
+    bulkeditquery =
+      '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+      IID2 +
+      "</Value> </Eq></Where></Query></View>";
+    taskquery =
+      '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+      taskID +
+      '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+      workflowname +
+      "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 } else if (isVROCRObjective) {
   workflowname = "VROCRObjective";
   bulkeditlist = "Change Request";
@@ -1235,7 +1295,67 @@ else if (isSOsWf) {
     '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
     workflowname +
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+} else if (isEngineeringProjectPage) {
+  workflowname = "EngineeringProjects";
+  bulkeditlist = "EngineeringProjects";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+} else if (isDOC_CreateProject) {
+  workflowname = "DOC_CreateProject";
+  bulkeditlist = "Projects";
+  // bulkeditlist = "Change Request";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+} else if (isFSSBCreateProject) {
+  workflowname = "FSSBCreateProject";
+  bulkeditlist = "Projects";
+  // bulkeditlist = "Change Request";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+} else if (isProjectComplianceUpdate) {
+  workflowname = "ComplianceUpdate";
+  bulkeditlist = "Projects";
+  // bulkeditlist = "Change Request";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
+
 
 //*****1 */
 if (
@@ -1245,11 +1365,14 @@ if (
   !isEPMOCOC &&
   !isLMSCOC &&
   !isVROProjDeliverable &&
+  !isVROProjNDeliverable &&
   !isVROProjMilestone &&
   !isEPMOProjDeliverable &&
+  !isEPMOProjNDeliverable &&
   !isEPMOProjMilestone &&
   !isLMSProjDeliverable &&
-  !isLMSProjMilestone
+  !isLMSProjNDeliverable &&
+  !isLMSProjMilestone 
 ) {
   // console.log('123');
   peojectC = window.location.href.split("PCODE=")[1].split("&")[0];
@@ -1769,13 +1892,16 @@ var Task_PCODE_Data_Request_WFs = {
           }, 100);
           break;
         case "Approval":
+{
+        if(workflowname == "VROCreateProject" || workflowname == "EPMOCreateProject" || workflowname == "LMSCreateProject" || workflowname == "DOC_CreateProject" || workflowname == "FSSBCreateProject")
+        {
           // console.log('aaaaaaaaaaaaaa');
           $(".navbar.page-nav.px-5").after(
             '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
               taskid +
               '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div></div><div class="apprv"><span class="approveStageName">' +
               actionbuttonTitle +
-              '</span><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-rejection  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button></div></div>'
+              '</span><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button data-trans-cancelrequest  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(3,\'Approval\')" class="btn pop-green cancelbutton Resources"  type="button"></button></div></div>'
           );
           //delegation btn
           $(".btnactionrow > h2.approvalHeader").append(
@@ -1787,13 +1913,43 @@ var Task_PCODE_Data_Request_WFs = {
           $(".btnactionrow .form-btns-wrapper").append(
             '<div class="WF-btn"><div class="apprv"><span class="approveStageName"><p class="Resources task-name" data-trans-taskname></p>' +
               actionbuttonTitle +
-              '</span><div class="wf-btn-wrapper-new d-flex"><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-rejection  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button></div></div>'
+              '</span><div class="wf-btn-wrapper-new d-flex"><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button data-trans-cancelrequest  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(3,\'Approval\')" class="btn pop-green cancelbutton Resources"  type="button"></button></div></div>'
           );
           $("div.Container").fadeIn();
           $("div.cust-loader").fadeOut();
           forFormSubmitHTMLStatus = setInterval(function () {
             Task_PCODE_Data_Request_WFs.g.hidefields();
           }, 100);
+        }
+        else
+        {
+           // console.log('aaaaaaaaaaaaaa');
+           $(".navbar.page-nav.px-5").after(
+            '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+              taskid +
+              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div></div><div class="apprv"><span class="approveStageName">' +
+              actionbuttonTitle +
+              '</span><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button></div></div>'
+          );
+          //delegation btn
+          $(".btnactionrow > h2.approvalHeader").append(
+            '<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+              taskid +
+              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>'
+          );
+          //main action
+          $(".btnactionrow .form-btns-wrapper").append(
+            '<div class="WF-btn"><div class="apprv"><span class="approveStageName"><p class="Resources task-name" data-trans-taskname></p>' +
+              actionbuttonTitle +
+              '</span><div class="wf-btn-wrapper-new d-flex"><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button></div></div>'
+          );
+          $("div.Container").fadeIn();
+          $("div.cust-loader").fadeOut();
+          forFormSubmitHTMLStatus = setInterval(function () {
+            Task_PCODE_Data_Request_WFs.g.hidefields();
+          }, 100);
+        }
+      }
           break;
         case "ApprovedWithAssigned":
           if (
@@ -2171,7 +2327,7 @@ var Task_PCODE_Data_Request_WFs = {
     addcomments: function (state, version, withNote = false) {
       stageState = state; // added to handle WF Notes
       if (workflowname == "Project") {
-        if (version == "Approval" || version == "Submit") {
+        if (version == "Approval" || version == "Submit" || version == "TriApproval") {
           if (
             localStorage.getItem("lng") == null ||
             localStorage.getItem("lng") == "ar"
@@ -2357,7 +2513,7 @@ var Task_PCODE_Data_Request_WFs = {
           );
         }
       }
-    },
+    }, 
   },
 };
 //*****5 */
@@ -2436,7 +2592,7 @@ var ProjectStages_Data_Request_WFs = {
         stage: oListItem.get_item("StageCode"),
         phase: oListItem.get_item("PhaseCode"),
         stageid: oListItem.get_id(),
-        pcode: oListItem.get_item("ProjectCode"),
+        pcode: oListItem.get_item("ProjectCode")
       });
     }
     // console.log('77', ProjectStages_Data_Request_WFs.g.StagesArray[0]);
@@ -2484,7 +2640,7 @@ var Stages_ORG_Data_Request_WFs = {
         phase: oListItem.get_item("RelatedPhase"),
         stage: oListItem.get_item("Title"),
         relatedURL: oListItem.get_item("RelatedURL"),
-        stageid: oListItem.get_id(),
+        stageid: oListItem.get_id()
       });
     }
     // console.log(Stages_ORG_Data_Request_WFs.g.StagesArray + "123");
@@ -2526,6 +2682,7 @@ window.isWfFirst_Upload = true;
 
 var SubmitField_BulkEdit = {
   preinit: function (state, withNote = false) {
+    
     globalStateSubmitField = state;
     if (stageid == "S01" && isWfFirst_Upload) {
       var WF_Fileelements, WF_fileCount;
@@ -2547,7 +2704,7 @@ var SubmitField_BulkEdit = {
       }
     }
 
-    if (!state || state == 2) {
+    if (!state || state == 2 || state == 3) {
       withNote = true;
     }
     var noteBoxVal = "";
@@ -2579,6 +2736,12 @@ var SubmitField_BulkEdit = {
         }
       }
     }
+
+    if(WFisEdit && (workflowname == "EPMOCreateProject" || workflowname == "VROCreateProject" || workflowname == "VROCRProject" || workflowname == "LMSCreateProject" || workflowname == "DOC_CreateProject" || workflowname == "FSSBCreateProject") && tasktype == "Submit")
+    {
+      Edit_Data_Submit.init(state);
+    }
+
     if (
       workflowname == "Project" &&
       tasktype == "SubmitField"
@@ -2851,6 +3014,16 @@ var SubmitField_BulkEdit = {
                   items.set_item($(this).attr("myfield"), myselections);
                 } else items.set_item($(this).attr("id"), $(this).val());
               });
+             
+              if(state == 3)  { 
+                // nothing 
+              }
+              else if (state) items.set_item("WFStage", nxtstageid);
+              else items.set_item("WFStage", prvstageid);
+
+             /* if(state != 2)  items.set_item("WFStage", prvstageid);
+              else items.set_item("WFStage", "rejected");*/
+
             } else if (workflowname == "CR") {
               if (state) items.set_item("Stage", nxtstageid);
               else {
@@ -2863,18 +3036,50 @@ var SubmitField_BulkEdit = {
                 items.set_item("Stage", prvstageid);
                 items.set_item("Delivered", "no");
               }
-            } else {
-              if (state) items.set_item("WFStage", nxtstageid);
+            } else if(workflowname == "VROCreateProject" || workflowname == "EPMOCreateProject" || workflowname == "LMSCreateProject" || workflowname == "DOC_CreateProject" || workflowname == "FSSBCreateProject")
+            {
+              if(state == 3) {items.set_item("WFStage", "rejected"); items.set_item("DeletionStatus", "Deleted"); }
+              else if (state) items.set_item("WFStage", nxtstageid);
               else items.set_item("WFStage", prvstageid);
-            }
 
+            } else {
+              if(state == 3) { 
+                
+                if(workflowname == "MSActualKPI")
+                {
+                items.set_item("WFStage", "");
+                items.set_item("Equation", "0");
+                }
+              }
+              else if (state) items.set_item("WFStage", nxtstageid);
+              else  items.set_item("WFStage", prvstageid);
+            }
+            debugger;
             // to handle workflowSetValues from json will use it for cr wf purpose
             if (state) {
               $(`[data-workflowSetValue]`).each(function (index) {
                 var parsingData = eval($(this).data("workflowsetvalue"));
                 parsingData.forEach((el) => {
                   if (el.stages.includes(stageid)) {
-                    items.set_item(el.fieldName, el.value);
+                   
+                    debugger;
+                   
+                    if(workflowname == "VROCreateProject" || workflowname == "EPMOCreateProject" || workflowname == "LMSCreateProject" || workflowname == "DOC_CreateProject" || workflowname == "FSSBCreateProject")
+                    {
+                       var projecttype = currentItem.get_item("IsStrategicProject");
+                       if(projecttype == undefined){items.set_item(el.fieldName, el.value);}
+                          else
+                             if(el.projecttype != undefined)
+                                {
+                                  if(el.projecttype.includes(projecttype))
+                                    {
+                                       items.set_item(el.fieldName, el.value);
+                                    }
+                                }
+                            else{
+                                 items.set_item(el.fieldName, el.value);}
+                    }
+                    else {items.set_item(el.fieldName, el.value);}
                   }
                 });
               });
@@ -2909,7 +3114,7 @@ var SubmitField_BulkEdit = {
               } else if (isExecuteCR && crUpdateType.includes("automatic")) {
                 executeCR.init(crBody);
               } else if (
-                (isVROCreateKPI || isEPMOCreateKPI || isLMSCreateKPI) &&
+                (isVROCreateKPI || isEPMOCreateKPI || isLMSCreateKPI ) &&
                 nxtstageid == "approved"
               ) {
                 changeOnKpiResultDraft(state);
@@ -2951,7 +3156,24 @@ var SubmitField_BulkEdit = {
                 crUpdateType.includes("automatic")
               ) {
                 executeCR.init(crBody, crBodyMaster);
-              } else {
+              } else if( (isVROInitiativeMilestone ||
+                isEPMOInitiativeMilestone ||
+                isLMSInitiativeMilestone ||
+                isVROInitiativeDeliverable ||
+                isEPMOInitiativeDeliverable ||
+                isLMSInitiativeDeliverable ||
+                isVROProjMilestone ||
+                isEPMOProjMilestone ||
+                isLMSProjMilestone ||
+                isVROProjDeliverable ||
+                isEPMOProjDeliverable ||
+                isLMSProjDeliverable ) && state &&
+                nxtstageid == "approved")
+             {
+              update_actualcompleted_date.init();
+              Task_Edit_Data.init();
+             }else
+              {
                 Task_Edit_Data.init();
               }
             },
@@ -3349,7 +3571,8 @@ function program_BulkEdit(state) {
               // if (prjstage == "S42") {
               // 	items.set_item("Status", "completed1");
               // }
-            } else if (!state) {
+            } else if(state == 3) items.set_item("Stage", cancelstageid) ;
+            else if (!state) {
               items.set_item("Stage", prvstageid);
             }
           } // multiple active stages
@@ -3969,7 +4192,7 @@ var Task_Edit_Data = {
     } else if (tasktype == "Approval" || tasktype == "TriApproval") {
       if (stageState == true) {
         stageAction = "approve";
-      } else if (stageState == 2) {
+      } else if (stageState == 2 || stageState == 3) {
         stageAction = "cancel";
       } else {
         stageAction = "reject";
@@ -3977,12 +4200,15 @@ var Task_Edit_Data = {
     }
     Task_Edit_Data.g.oListItem.set_item("Status", "Closed");
     Task_Edit_Data.g.oListItem.set_item("WFInstanceID", null);
+    
+
     Task_Edit_Data.g.oListItem.set_item(
       "Body",
       $("textarea#commenttext").val()
     );
     Task_Edit_Data.g.oListItem.set_item("TakenAction", stageAction); // check logic
     Task_Edit_Data.g.oListItem.update();
+   
     clientContext.load(Task_Edit_Data.g.oListItem);
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
@@ -4037,6 +4263,10 @@ var Task_Edit_Data = {
             window.location =
               _spPageContextInfo.siteAbsoluteUrl +
               "/SitePages/Listing.aspx?ListKey=ideas";
+          } else  if (isEngineeringProjectPage) {
+            window.location =
+              _spPageContextInfo.siteAbsoluteUrl +
+              "/SitePages/Listing.aspx?ListKey=engineeringprojects";
           } else if (isRelatedProjectPage) {
             window.location =
               _spPageContextInfo.siteAbsoluteUrl +
@@ -4064,10 +4294,13 @@ var Task_Edit_Data = {
             isEPMOCOC ||
             isLMSCOC ||
             isVROProjDeliverable ||
+            isVROProjNDeliverable ||
             isVROProjMilestone ||
             isEPMOProjDeliverable ||
+            isEPMOProjNDeliverable ||
             isEPMOProjMilestone ||
             isLMSProjDeliverable ||
+            isLMSProjNDeliverable ||
             isLMSProjMilestone
           ) {
             window.location =
@@ -5086,10 +5319,13 @@ var reset_Delivered_Value = {
             dfd.resolve();
             if (
               isVROProjDeliverable ||
+              isVROProjNDeliverable ||
               isVROProjMilestone ||
               isEPMOProjDeliverable ||
+              isEPMOProjNDeliverable ||
               isEPMOProjMilestone ||
               isLMSProjDeliverable ||
+              isLMSProjNDeliverable ||
               isLMSProjMilestone
             ) {
               window.location =
@@ -5140,3 +5376,126 @@ var reset_Delivered_Value = {
   },
   g: {},
 };
+
+var update_actualcompleted_date = {
+  init: function () {
+    var context = SP.ClientContext.get_current();
+    var dfd = $.Deferred();
+    //Get list from host web
+    var programList = context.get_web().get_lists().getByTitle(bulkeditlist);
+    var camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(
+      '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Text">' +
+        IID2 +
+        "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
+    );
+    //Get items by Query
+    var progColl = programList.getItems(camlQuery);
+    //Load item collection
+    context.load(progColl);
+    context.executeQueryAsync(function () {
+      var currentItemArray = [];
+      //Check itemcollection count greater than 0
+      if (progColl.get_count() > 0) {
+        var progEnum = progColl.getEnumerator();
+        while (progEnum.moveNext()) {
+          var currentItem = progEnum.get_current();
+          var currentId = currentItem.get_item("ID");
+          //Get Item by current ID
+          var items = programList.getItemById(currentId);
+          items.set_item("Delivered", "yes");
+          var todayDate = new Date();
+debugger;
+         if (isVROInitiativeMilestone ||
+            isEPMOInitiativeMilestone ||
+            isLMSInitiativeMilestone ||
+            isVROInitiativeDeliverable ||
+            isEPMOInitiativeDeliverable ||
+            isLMSInitiativeDeliverable )
+            {
+          items.set_item("ActualCompletedDate", todayDate);
+            }
+
+            if( isVROProjMilestone ||
+              isEPMOProjMilestone ||
+              isLMSProjMilestone)
+              {
+          items.set_item("ActualDate", todayDate);
+              }
+
+              if( isVROProjDeliverable ||
+                isEPMOProjDeliverable ||
+                isLMSProjDeliverable)
+                {
+                  items.set_item("DeliveredDate", todayDate);
+                }
+          //Update the item
+          items.update();
+          //Push item on the array
+          currentItemArray.push(items);
+          //Load the item Array
+          context.load(currentItemArray[currentItemArray.length - 1]);
+        }
+        context.executeQueryAsync(
+          function () {
+            dfd.resolve();
+            if (
+              isVROProjDeliverable ||
+              isVROProjNDeliverable ||
+              isVROProjMilestone ||
+              isEPMOProjDeliverable ||
+              isEPMOProjNDeliverable ||
+              isEPMOProjMilestone ||
+              isLMSProjDeliverable ||
+              isLMSProjNDeliverable ||
+              isLMSProjMilestone
+            ) {
+              window.location =
+                _spPageContextInfo.siteAbsoluteUrl +
+                "/SitePages/Listing.aspx?ListKey=" +
+                listkey +
+                "&PCODE=" +
+                peojectC;
+            } else if (
+              isVROInitiativeDeliverable ||
+              isVROInitiativeMilestone ||
+              isEPMOInitiativeDeliverable ||
+              isEPMOInitiativeMilestone ||
+              isLMSInitiativeDeliverable ||
+              isLMSInitiativeMilestone
+            ) {
+              window.location =
+                _spPageContextInfo.siteAbsoluteUrl +
+                "/SitePages/Listing.aspx?ListKey=" +
+                listkey +
+                "&ICODE=" +
+                peojectC;
+            } else {
+              window.location =
+                _spPageContextInfo.siteAbsoluteUrl +
+                "/SitePages/Listing.aspx?ListKey=" +
+                listkey;
+            }
+
+            // window.location.reload();
+          },
+          function (sender, args) {
+            //Item updated fail
+            console.log(
+              "Request Failed to get projectlist Items :" + args.get_message()
+            );
+          }
+        );
+      } else {
+        dfd.resolve();
+      }
+    }),
+      Function.createDelegate(this, function (sender, args) {
+        console.log(
+          "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+        );
+      });
+  },
+  g: {},
+};
+

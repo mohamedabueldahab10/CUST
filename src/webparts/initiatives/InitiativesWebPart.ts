@@ -4,7 +4,7 @@ require('UserAccess');
 require('../../HelperCode/Utilities.Core/Side_Navigation.js');
 require('../../HelperRessources/css/Styles.css');
 require('../../HelperRessources/css/style-dashboards.css');
-require('../../HelperCode/Core.Solution/Listing/initiativeKPI.js');
+require('../../HelperCode/Core.Solution/Listing/projectcompliance.js');
 import { Version } from '@microsoft/sp-core-library';
 import {
   BaseClientSideWebPart,

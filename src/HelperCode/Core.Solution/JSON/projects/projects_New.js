@@ -230,14 +230,14 @@ var Information_Form = [
       },
       {
         InternalName: "IsStrategicProject",
-        DisplayName: "هل هو مشروع استراتيجي؟",
+        DisplayName: "الرجاء اختيار نوع المشروع",
         DisplayNameEn: "Is Strategic Project?",
         type: "dropdownValues",
         options: {
           choices: [
-            { display: "yes", value: "yes" },
+            { display: "strategy", value: "strategy" },
             {
-              display: "no", value: "no",
+              display: "operationally", value: "operationally",
               roles: ['Administrator', 'EPMO', 'LMSUExecution', 'VROE',],
               otherFields: [
                 { fieldName: 'Phase', value: 'P1' },
@@ -247,7 +247,7 @@ var Information_Form = [
             },
             {//allroles
               // display: "no", value: "no", roles: ['allRoles'],
-              display: "no", value: "no", roles: ['VROHead', 'VROPHead', 'VROP', 'ProjectManager', 'InitiativeOwner', 'InitiativeManager', 'ProjectOwner', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee', 'LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl'],
+              display: "operationally", value: "operationally", roles: ['VROHead', 'VROPHead', 'VROP', 'ProjectManager', 'InitiativeOwner', 'InitiativeManager', 'ProjectOwner', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee', 'LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl'],
 
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'EPMOCreateProject' },
@@ -263,10 +263,10 @@ var Information_Form = [
           ],
         },
         toggleValues: [
-          { value: 'yes', fields: ['InitiativeType', 'RelatedInitiative', 'RelatedInitiativeDeliverable'] }, //we can put more than 1  field
+          { value: 'strategy', fields: ['InitiativeType', 'RelatedInitiative', 'RelatedInitiativeDeliverable'] }, //we can put more than 1  field
         ],
         toggleDisabledValues: [
-          { value: 'yes', fields: ['Sector', 'SubSector'] },
+          { value: 'strategy', fields: ['Sector', 'SubSector'] },
         ],
         validation: "required",
       },
@@ -596,7 +596,7 @@ var Information_Form = [
       // },
       {
         InternalName: "ProjectType",
-        DisplayName: "نوع المشروع",
+        DisplayName: "نوع تطوير المشروع",
         DisplayNameEn: "Project Type",
         validation: "required",
         type: "dropdownValues",
@@ -638,11 +638,11 @@ var Information_Form = [
           choices: [
             // شغيلي- تحولي - استراتيجي
             // { display: 'strategyproject', value: 'strategyproject' },
-            {
+           /* {
               display: "transformativeproject",
               value: "transformativeproject",
             },
-            { display: "operationalproject", value: "operationalproject" },
+            { display: "operationalproject", value: "operationalproject" },*/
             { display: "technical", value: "technical" },
             { display: "others", value: "others" },
             { display: "consulting", value: "consulting" },

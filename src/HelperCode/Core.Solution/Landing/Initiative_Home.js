@@ -16,6 +16,7 @@ var ActualBudget = 0,
   initiativename,
   abrinitiativename,
   initiativetype,
+  isInitiativeZero,
   initiativestatus,
   initiativeportfolio,
   initiativeclassification,
@@ -178,6 +179,10 @@ var initiativeHomeInfo_Request = {
       //Ghufran Calculated duration
       initstartdate = oListItem.get_item("StartDate");
       initfinishdate = oListItem.get_item("FinishDate");
+      isInitiativeZero = oListItem.get_item("IsZeroBudgetInitiative");
+      compliancestatus = oListItem.get_item("OverallComplianceStatus") || No_Data;
+      complaincePercentage = oListItem.get_item("OverallCompliancePercentage") || No_Data;
+      
       if (initfinishdate != null && initstartdate != null) {
         var formatteStartDate =
           initiativeHomeInfo_Request.g.dateConvert2(initstartdate);
@@ -193,56 +198,63 @@ var initiativeHomeInfo_Request = {
           12 *
             (formatteEndDate.getFullYear() - formatteStartDate.getFullYear());
 
-        var months = Math.trunc(diff);
-        ////
 
-        var initiativePeriodInDays = 0;
-        if (initstartdate && initfinishdate) {
-          initiativePeriodInDays =
-            initfinishdate.getTime() - initstartdate.getTime();
-        }
-        ///
-        initiativePeriodInDays = initiativePeriodInDays / (1000 * 3600 * 24);
-
-        if (months > 0 && initiativePeriodInDays >= 30) {
-          if (
-            localStorage.getItem("lng") == null ||
-            localStorage.getItem("lng") == "ar"
-          ) {
-            $(
-              ".card-body.project-delivery-info.border-bottom.pb-4 .mx-3.pt-3 .d-flex.justify-content-between.pb-3.mb-0.lh-125.border-gray span.fnt-14.bold"
-            ).text(months + " " + "شهرا");
-          } else {
-            var monthFormat = "Months";
-            if (months == 1) {
-              monthFormat = "Month";
+            var months = Math.trunc(diff);
+            ////
+          
+            var initiativePeriodInDays = 0;
+            var initiativePeriod = ''
+            if (initstartdate && initfinishdate) {
+              initiativePeriodInDays =
+                initfinishdate.getTime() - initstartdate.getTime();
             }
-            $(
-              ".card-body.project-delivery-info.border-bottom.pb-4 .mx-3.pt-3 .d-flex.justify-content-between.pb-3.mb-0.lh-125.border-gray span.fnt-14.bold"
-            ).text(months + " " + monthFormat);
-          }
-        } else if (months == 0 || initiativePeriodInDays < 30) {
-          var Difference_In_Time =
-            initfinishdate.getTime() - initstartdate.getTime();
-          var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-          if (
-            localStorage.getItem("lng") == null ||
-            localStorage.getItem("lng") == "ar"
-          ) {
-            $(
-              ".card-body.project-delivery-info.border-bottom.pb-4 .mx-3.pt-3 .d-flex.justify-content-between.pb-3.mb-0.lh-125.border-gray span.fnt-14.bold"
-            ).text(Difference_In_Days + " " + "يوما");
+            ///
+            initiativePeriodInDays = initiativePeriodInDays / (1000 * 3600 * 24);
+          
+            if (months > 0 && initiativePeriodInDays >= 30) {
+              if (
+                localStorage.getItem("lng") == null ||
+                localStorage.getItem("lng") == "ar"
+              ) {
+                // $(
+                //   ".card-body.project-delivery-info.border-bottom.pb-4 .mx-3.pt-3 .d-flex.justify-content-between.pb-3.mb-0.lh-125.border-gray span.fnt-14.bold"
+                // ).text(months + " " + "شهرا");
+                initiativePeriod = months + " " + "شهرا"
+              } else {
+                var monthFormat = "Months";
+                if (months == 1) {
+                  monthFormat = "Month";
+                }
+                // $(
+                //   ".card-body.project-delivery-info.border-bottom.pb-4 .mx-3.pt-3 .d-flex.justify-content-between.pb-3.mb-0.lh-125.border-gray span.fnt-14.bold"
+                // ).text(months + " " + monthFormat);
+                initiativePeriod = months + " " + monthFormat
+              }
+            } else if (months == 0 || initiativePeriodInDays < 30) {
+              var Difference_In_Time =
+                initfinishdate.getTime() - initstartdate.getTime();
+              var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+              if (
+                localStorage.getItem("lng") == null ||
+                localStorage.getItem("lng") == "ar"
+              ) {
+                // $(
+                //   ".card-body.project-delivery-info.border-bottom.pb-4 .mx-3.pt-3 .d-flex.justify-content-between.pb-3.mb-0.lh-125.border-gray span.fnt-14.bold"
+                // ).text(Difference_In_Days + " " + "يوما");
+                initiativePeriod = Difference_In_Days + " " + "يوما"
+              } else {
+                // $(
+                //   ".card-body.project-delivery-info.border-bottom.pb-4 .mx-3.pt-3 .d-flex.justify-content-between.pb-3.mb-0.lh-125.border-gray span.fnt-14.bold"
+                // ).text(Difference_In_Days + " " + "Days");
+                initiativePeriod = Difference_In_Days + " " + "Days"
+              }
+            }
           } else {
-            $(
-              ".card-body.project-delivery-info.border-bottom.pb-4 .mx-3.pt-3 .d-flex.justify-content-between.pb-3.mb-0.lh-125.border-gray span.fnt-14.bold"
-            ).text(Difference_In_Days + " " + "Days");
+            // $(
+            //   ".card-body.project-delivery-info.border-bottom.pb-4 .mx-3.pt-3 .d-flex.justify-content-between.pb-3.mb-0.lh-125.border-gray span.fnt-14.bold"
+            // ).text(No_Data);
+            initiativePeriod = No_Data
           }
-        }
-      } else {
-        $(
-          ".card-body.project-delivery-info.border-bottom.pb-4 .mx-3.pt-3 .d-flex.justify-content-between.pb-3.mb-0.lh-125.border-gray span.fnt-14.bold"
-        ).text(No_Data);
-      }
       // var stagenamearr = stagename.replaceAll("__", "").split(";");
       // var stagenamearrwithoutunderscoreten = stagename
       //   .replace(/__S10;| __S22;| __S31;/g, "")
@@ -381,6 +393,7 @@ var initiativeHomeInfo_Request = {
       // }
       // for Portfolio bylangual
       var portfolioarr = [];
+
       if (localStorage.getItem("Dynamo_Portfolio") != null) {
         portfolioarr = JSON.parse(localStorage.getItem("Dynamo_Portfolio"));
         portfolioarr = portfolioarr.filter(function (a) {
@@ -419,7 +432,31 @@ var initiativeHomeInfo_Request = {
         (initiativeprogress =
           oListItem.get_item("InitiativeProgressStatus") || No_Data),
         (listInitiativeProgress =
-          oListItem.get_item("InitiativeProgressStatus") || No_Data),
+          oListItem.get_item("InitiativeProgressStatus") || No_Data);
+
+
+          let startDate = !Pstartdate || isNaN(new Date(Pstartdate).getTime()) ? 'no_data' : new Date(Pstartdate);
+          let finishDate = !Pfinishdate || isNaN(new Date(Pfinishdate).getTime()) ? 'no_data' : new Date(Pfinishdate);
+          
+    let totalMonthsDifference;
+
+    if (isNaN(startDate) || isNaN(finishDate) || startDate.getTime() === 0 || finishDate.getTime() === 0) {
+      totalMonthsDifference = 0;
+  } else {
+      let yearsDifference = finishDate.getFullYear() - startDate.getFullYear();
+      let monthsDifference = finishDate.getMonth() - startDate.getMonth();
+  
+       totalMonthsDifference = yearsDifference * 12 + monthsDifference;
+  
+      if (finishDate.getDate() < startDate.getDate()) {
+          totalMonthsDifference -= 1;
+      }
+  
+      if (finishDate < startDate) {
+          totalMonthsDifference = 0;
+      }
+  }
+
         card1.push(
           '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
             '<div class="d-inline-flex flex-row align-items-center">' +
@@ -452,15 +489,22 @@ var initiativeHomeInfo_Request = {
             '<span class="end-date"><span data-trans-pattr2 class="Resources initiativeProjHomeInfoTitleStyle"></span><span class="px-2 initiativeProjHomeInfoValueStyle">' +
             Pfinishdate +
             "</span></span>" +
+            '<span class="end-date"><span data-trans-inpattr40 class="Resources initiativeProjHomeInfoTitleStyle"></span><span class="px-2 initiativeProjHomeInfoValueStyle">' +
+            initiativePeriod +
+            "</span></span>" +
             "</span>" +
             "</div>" +
             "</div>" +
             '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
-            '<div class="d-inline-flex flex-column mx-2">' +
-            '<span data-trans-inportfolio class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' + //resourcekey="pattr5"
-            '<h4 class="acc-title d-inline-flex black initiativeProjHomeInfoValueStyle">' +
-            initiativeportfolio +
-            "</h4>" +
+            '<div class="d-inline-flex flex-column mx-2 ' +
+            initiativeprogress +
+            '">' +
+            '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+            "<h4 data-trans-" +
+            initiativeprogress +
+            ' class="black Resources myCompletionStatus statuscolor' +
+            initiativeprogress +
+            '"></h4>' + //
             "</div>" +
             '<div class="d-inline-flex flex-column mx-2">' +
             '<span data-trans-instage class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
@@ -480,17 +524,27 @@ var initiativeHomeInfo_Request = {
             // '<span class="des-13"><span data-trans-inclassif class="Resources complition-val"></span> ' +
             // '<h4 class="black actual-complete-val">' + initiativeclassification + '</h4></span>' +
             // '</div>' +
-            '<div class="d-inline-flex flex-column mx-2 ' +
-            initiativeprogress +
-            '">' +
-            '<span class="des-13"><span data-trans-pattr8 class="Resources v-important-val initiativeProjHomeInfoTitleStyle"></span></span>' +
-            "<h4 data-trans-" +
-            initiativeprogress +
-            ' class="black Resources myCompletionStatus statuscolor' +
-            initiativeprogress +
-            '"></h4>' + //
+           
+            '<div class="d-inline-flex flex-column mx-2">' +
+            '<span data-trans-inportfolio class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' + //resourcekey="pattr5"
+            '<h4 class="acc-title d-inline-flex black initiativeProjHomeInfoValueStyle">' +
+            initiativeportfolio +
+            "</h4>" +
             "</div>" +
             "</div>" +
+
+            '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
+            '<div class="d-inline-flex flex-column mx-2">' +
+            '<span data-trans-compliancestatus class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
+            '<h4 class="acc-title d-inline-flex black">' + `<span class='Resources' data-trans-${compliancestatus}  > </span>`  + "</h4>" +
+            '</div>' +
+            '<div class="d-inline-flex flex-column mx-2">' +
+            '<span data-trans-complaincepercentage class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
+            '<h4 class="acc-title d-inline-flex black initiativeProjHomeInfoValueStyle">' + complaincePercentage + '</h4>' +
+            '<span class="initiativeProjHomeInfoValueStyle" id="relatedstage"></span>' +
+            '</div>' +
+            '</div>' +
+
             '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
             '<div class="d-inline-flex flex-column mx-2">' +
             '<span class="des-13"><span data-trans-initiativeplannedperc class="Resources state-val"></span></span>' +
@@ -551,7 +605,7 @@ var initiativeHomeInfo_Request = {
     // hide side nav and project nav in wf
     if (isWF) {
       $(".page-nav").attr("style", "display: none !important");
-      $(".sidebar").attr("style", "display: none !important");
+      // $(".sidebar").attr("style", "display: none !important");
       $(".main-panel").attr("style", "width: 100% !important");
     }
 
@@ -792,6 +846,14 @@ var initiativeHomeInfo_Request = {
     Milestones_Info_Request.init();
     // Tasks_Info_Request.init();
     // Invoices_Info_Request.init();
+
+    const cardBody = document.querySelector('.card-body.project-status-info.border-bottom.pb-4.px-0');
+
+if (cardBody) {
+  if (isInitiativeZero == "yes") {
+    cardBody.innerHTML = '<span data-trans-initiativevalueiszero class="Resources mx-4"></spans>';
+  }
+}
     changeResources();
     $(
       "div#particles-foreground, div#particles-background, .vertical-centered-box"
@@ -967,7 +1029,7 @@ var Risks_Info_Request = {
         : No_Data;
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
-          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
+          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" target="_blank"  href="' +
           _spPageContextInfo.webAbsoluteUrl +
           "/sitepages/View.aspx?ListKey=initiativerisks&IID=" +
           itemID +
@@ -1080,7 +1142,7 @@ var Issues_Info_Request = {
 
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
-          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
+          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" target="_blank" href="' +
           _spPageContextInfo.webAbsoluteUrl +
           "/sitepages/View.aspx?ListKey=issues&IID=" +
           itemID +
@@ -1203,7 +1265,7 @@ var Projects_Info_Request = {
         : No_Data;
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
-          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
+          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" target="_blank" href="' +
           _spPageContextInfo.webAbsoluteUrl +
           "/sitepages/View.aspx?ListKey=projects&IID=" +
           itemID +
@@ -1341,7 +1403,7 @@ var Deliverables_Info_Request = {
       // debugger;
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
-          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
+          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" target="_blank" href="' +
           _spPageContextInfo.webAbsoluteUrl +
           "/sitepages/View.aspx?ListKey=initiativedeliverables&IID=" +
           itemID +
@@ -1699,7 +1761,7 @@ var Milestones_Info_Request = {
       // item4 = oListItem.get_item('Status') || No_Data;
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
-          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
+          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" target="_blank" href="' +
           _spPageContextInfo.webAbsoluteUrl +
           "/sitepages/View.aspx?ListKey=initiativemilestones&IID=" +
           itemID +
@@ -2117,7 +2179,7 @@ var Benefits_Info_Request = {
       // item4 = lessonLearnedSource[item4.replace(/ /g, "")] || No_Data;
       itemhtml.push(
         '<li class="list-group-item link-arrow px-0">' +
-          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" href="' +
+          '<a class="mb-0 py-3 px-2 d-flex justify-content-between" target="_blank" href="' +
           _spPageContextInfo.webAbsoluteUrl +
           "/sitepages/View.aspx?ListKey=benefits&IID=" +
           itemID +

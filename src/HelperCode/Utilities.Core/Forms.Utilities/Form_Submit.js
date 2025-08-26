@@ -124,7 +124,7 @@ window.New_Data_Submit = {
         "Manager"
       );
     }
-    if (
+    /*if (
       (listkey == "mainkpi" ||
         (listkey == "changerequest" && RListKey == "mainkpi")) &&
       $("#Owner").find("span.sp-peoplepicker-userSpan").attr("sid")
@@ -143,7 +143,7 @@ window.New_Data_Submit = {
         userLoginName: kpiownername,
         fieldID: "Owner",
       });
-    }
+    }*/
     if (
       (listkey == "mainkpi" ||
         (listkey == "changerequest" && RListKey == "mainkpi")) &&
@@ -346,7 +346,7 @@ window.New_Data_Submit = {
         }
       });
     }
-
+   
     changeResources();
     if (listkey == "initiatives") {
       var istherRisk = $(`[data-target_list="Risks"] .Details-Item.NewItem`).length > 1;
@@ -818,7 +818,7 @@ window.New_Data_Submit = {
 
       //save value based on parent type
 
-      if (listkey == "deliverables" || listkey == "milestones") {
+      if (listkey == "deliverables" || listkey == "milestones" || listkey == "exchangeschema") {
         New_Data_Submit.g.oListItem.set_item("MasterKey", "projects");
         New_Data_Submit.g.oListItem.set_item("MasterID", relatedProjectId);
       }
@@ -827,7 +827,11 @@ window.New_Data_Submit = {
       if (
         listkey == "initiativedeliverables" ||
         listkey == "initiativemilestones" ||
-        listkey == "benefits"
+        listkey == "benefits" ||
+        listkey == "initiativeobjectives" ||
+        listkey == "initiativestakeholders" ||
+        listkey == "initiativetasks" ||
+        listkey == "initiativelessonslearned"
       ) {
         New_Data_Submit.g.oListItem.set_item("MasterKey", "initiatives");
         New_Data_Submit.g.oListItem.set_item("MasterID", relatedInitiativeId);
@@ -904,6 +908,17 @@ window.New_Data_Submit = {
       New_Data_Submit.g.oListItem.set_item("InitiativeProgressStatus", "stat6");
     }
 
+    /*if(listkey="engineeringprojects")
+    {
+      var prt1 = listkey.substring(0, 2).toUpperCase(),
+      prt2 = String(new Date().getFullYear()).slice(4 - 2),
+      prt3 = IID.toString().padStart(4, "0");
+  
+      var Code = prt1 + "-" + prt2 + "-" + prt3;
+  
+      New_Data_Submit.g.oListItem.set_item("Title", Code);
+    }*/
+  
     New_Data_Submit.g.oListItem.update();
     clientContext.load(New_Data_Submit.g.oListItem);
     clientContext.executeQueryAsync(
@@ -912,6 +927,79 @@ window.New_Data_Submit = {
         if (listkey == "projects") {
           projectManagerPickedToProjectCenter =
             New_Data_Submit.g.oListItem.get_item("ProjectManager");
+        }
+        if(listkey == "risks") {
+          if ($("#IsInitiatiaveEffect").is(":checked") == true) {
+     
+            duplicateRisk.init()
+           }
+        }
+        if( listkey == "engineeringprojects"){
+          var ProjectId = IID;
+          var Title = New_Data_Submit.g.oListItem("#Title");
+          var ProjectName = $("#ProjectName").val();
+          var ProjectManager = $("#ProjectManager").val();
+          var Status = $("#Status").val();
+          var PlannedStartDate = $("#PlannedStartDate").val();
+          var Deadline = $("#Deadline").val();
+          var EstimatedCost = $("#EstimatedCost").val();
+          var CRCost = $("#CRCost").val();
+          var ActualCost = $("#ActualCost").val();
+          var PlanPercentge = $("#PlanPercentge").val();
+          var ActualProgress = $("#ActualProgress").val();
+          var Variance = $("#Variance").val();
+          var ProgressPercentage = $("#ProgressPercentage").val();
+          var FinishTime = $("#FinishTime").val();
+          var EarnedValue = $("#EarnedValue").val();
+          var PaidValue = $("#PaidValue").val();
+          var ProgressCost = $("#ProgressCost").val();
+          var InDirectMP = $("#InDirectMP").val();
+          var DirectMP = $("#DirectMP").val();
+          var ManHours = $("#ManHours").val();
+          var TotalWorkHours = $("#TotalWorkHours").val();
+          var Contractor = $("#Contractor").val();
+          var Consultant = $("#Consultant").val();
+          var UpdateDayNotification = $("#UpdateDayNotification").val();
+          var ProjectType = $("#ProjectType").val();
+          var NCR = $("#NCR").val();
+          var Accidents = $("#Accidents").val();
+          var Injuries = $("#Injuries").val();
+          var Deaths = $("#Deaths").val();
+          var Notes = $("#Notes").val();
+
+          engineeringprojectshistories.init(
+            ProjectId,
+            Title,
+            ProjectName,
+            ProjectManager,
+            Status,
+            PlannedStartDate,
+            Deadline,
+            EstimatedCost,
+            CRCost,
+            ActualCost,
+            PlanPercentge,
+            ActualProgress,
+            Variance,
+            ProgressPercentage,
+            FinishTime,
+            EarnedValue,
+            PaidValue,
+            ProgressCost,
+            InDirectMP,
+            DirectMP,
+            ManHours,
+            TotalWorkHours,
+            Contractor,
+            Consultant,
+            UpdateDayNotification,
+            ProjectType,
+            NCR,
+            Accidents,
+            Injuries,
+            Deaths,
+            Notes
+          );
         }
 
         if (listkey == "mainkpi") {
@@ -1067,6 +1155,13 @@ window.New_Data_Submit = {
         $(".errormsg").hide();
         $(".successmsg").show();
         $(".btn-save").addClass("success");
+        if ( localStorage.getItem("lng") == null ||
+        localStorage.getItem("lng") == "ar") {
+          alert("تم حفظ البيانات بنجاح");
+          console.log('alert success')
+      } else {
+          alert("Data saved successfully");
+      }
         if (USERisWF && workflowname == "Project") {
           BulkEdit(true);
         } else if (USERisWF && workflowname != "Project") {
@@ -1153,7 +1248,7 @@ var Set_Code_Submit = {
       //set code depends on ERP
 
       var isStrategicProject =
-        $("#IsStrategicProject").val() == "yes" ? true : false;
+        $("#IsStrategicProject").val() == "strategy" ? true : false;
 
       var year = String(new Date().getFullYear()),
         year = year.slice(year.length - 2); //get last 2 characters
@@ -1173,7 +1268,8 @@ var Set_Code_Submit = {
       SectorERPID = $("#Sector").find(":selected").data("siblingvalue")
         ? $("#Sector").find(":selected").data("siblingvalue")
         : "XX";
-
+      SectorERPID = SectorERPID != 'undefined' ? SectorERPID : "XX";
+      
       SubSectorERPID = $("#SubSector").find(":selected").data("siblingvalue")
         ? $("#SubSector").find(":selected").data("siblingvalue")
         : "XX";
@@ -1253,6 +1349,13 @@ var Set_Code_Submit = {
               $(".errormsg").hide();
               $(".successmsg").show();
               $(".btn-save").addClass("success");
+              if ( localStorage.getItem("lng") == null ||
+              localStorage.getItem("lng") == "ar") {
+                alert("تم حفظ البيانات بنجاح");
+                console.log('alert success')
+            } else {
+                alert("Data saved successfully");
+            }
               // if (listkey == 'initiatives') {
               //   window.location = _spPageContextInfo.webAbsoluteUrl + "/SitePages/initiativeHome.aspx?ICODE=" + Code
               //   // /SitePages/initiativeHome.aspx?ICODE=IN-22-0090
@@ -1343,7 +1446,9 @@ var Set_Code_Submit = {
 };
 
 window.Edit_Data_Submit = {
+  
   preinit: function (state) {
+    debugger;
     window.wfHotFixState = state;
 
     $(".errormsg").remove();
@@ -1375,7 +1480,7 @@ window.Edit_Data_Submit = {
       );
     }
 
-    if (
+    /*if (
       listkey == "mainkpi" &&
       $("#Owner").find("span.sp-peoplepicker-userSpan").attr("sid")
     ) {
@@ -1393,7 +1498,7 @@ window.Edit_Data_Submit = {
         userLoginName: kpiownername,
         fieldID: "Owner",
       });
-    }
+    }*/
     if (
       listkey == "mainkpi" &&
       $("#PerformanceLeader").find("span.sp-peoplepicker-userSpan").attr("sid")
@@ -1598,6 +1703,7 @@ window.Edit_Data_Submit = {
     changeResources();
 
     if (listkey == "risks") {
+     
       if ($("#MoveItToIssueList").is(":checked") == true) {
         Risk_To_Issue_Submit.preinit();
       }
@@ -1717,6 +1823,7 @@ window.Edit_Data_Submit = {
     }
   },
   init: function () {
+    debugger;
     if (listkey == "projects") {
       checkinProjectEditSubmit.checkin(User_ProjUID);
     }
@@ -1916,6 +2023,7 @@ window.Edit_Data_Submit = {
             Edit_Data_Submit.g.oListItem.set_item($(this).attr("id"), true);
           else Edit_Data_Submit.g.oListItem.set_item($(this).attr("id"), false);
         } else if ($(this).attr("type") == "dropdown") {
+          
           $(this).find(":disabled").removeAttr("disabled"); // avoid remove the data when the dropdown field is disabled
 
           Edit_Data_Submit.g.oListItem.set_item(
@@ -1952,6 +2060,7 @@ window.Edit_Data_Submit = {
             $(this).val() / 100
           );
         } else if ($(this).attr("type") == "multiselect") {
+          
           var myselections = [];
           $(this)
             .find("input:checkbox:checked")
@@ -2331,6 +2440,8 @@ window.Edit_Data_Submit = {
         Edit_Data_Submit.g.oListItem.set_item("ActualBudget", "");
         Edit_Data_Submit.g.oListItem.set_item("Amount", "");
       }
+
+
     } else if (listkey == "mainkpi") {
       // get the data to update the kpi result list
       kpiName = $("#Name").val();
@@ -2374,7 +2485,100 @@ window.Edit_Data_Submit = {
     clientContext.load(Edit_Data_Submit.g.oListItem);
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
+
+        if( listkey == "projects"){
+        if(User_ProjUID == null || User_ProjUID == "لا يوجد" || User_ProjUID == "No Data")
+      {
+        SP.SOD.registerSod(
+          "PS.ProjectContext",
+          SP.Utilities.Utility.getLayoutsPageUrl("ps.js")
+        );
+        SP.SOD.loadMultiple(["PS.ProjectContext"], CreateProject);
+      }
+
+      
+        projectManagerPickedToProjectCenter =
+        Edit_Data_Submit.g.oListItem.get_item("ProjectManager");
+        window.PGUID = Edit_Data_Submit.g.oListItem.get_item("ProjectGUID");
+        window.PNAME = Edit_Data_Submit.g.oListItem.get_item("Title");
+
+      SP.SOD.registerSod(
+        "PS.ProjectContext",
+        SP.Utilities.Utility.getLayoutsPageUrl("ps.js")
+      );
+      SP.SOD.loadMultiple(["PS.ProjectContext"], GetProjectsCreate);
+      }
+
         Edit_Data_Submit.g.afterSuccess();
+
+        if( listkey == "engineeringprojects"){
+        var ProjectId = $("#ProjectId").val();
+        var Title = $("#Title").val();
+        var ProjectName = $("#ProjectName").val();
+        var ProjectManager = $("#ProjectManager").val();
+        var Status = $("#Status").val();
+        var PlannedStartDate = $("#PlannedStartDate").val();
+        var Deadline = $("#Deadline").val();
+        var EstimatedCost = $("#EstimatedCost").val();
+        var CRCost = $("#CRCost").val();
+        var ActualCost = $("#ActualCost").val();
+        var PlanPercentge = $("#PlanPercentge").val();
+        var ActualProgress = $("#ActualProgress").val();
+        var Variance = $("#Variance").val();
+        var ProgressPercentage = $("#ProgressPercentage").val();
+        var FinishTime = $("#FinishTime").val();
+        var EarnedValue = $("#EarnedValue").val();
+        var PaidValue = $("#PaidValue").val();
+        var ProgressCost = $("#ProgressCost").val();
+        var InDirectMP = $("#InDirectMP").val();
+        var DirectMP = $("#DirectMP").val();
+        var ManHours = $("#ManHours").val();
+        var TotalWorkHours = $("#TotalWorkHours").val();
+        var Contractor = $("#Contractor").val();
+        var Consultant = $("#Consultant").val();
+        var UpdateDayNotification = $("#UpdateDayNotification").val();
+        var ProjectType = $("#ProjectType").val();
+        var NCR = $("#NCR").val();
+        var Accidents = $("#Accidents").val();
+        var Injuries = $("#Injuries").val();
+        var Deaths = $("#Deaths").val();
+        var Notes = $("#Notes").val();
+
+        engineeringprojectshistories.init(
+          ProjectId,
+          Title,
+          ProjectName,
+          ProjectManager,
+          Status,
+          PlannedStartDate,
+          Deadline,
+          EstimatedCost,
+          CRCost,
+          ActualCost,
+          PlanPercentge,
+          ActualProgress,
+          Variance,
+          ProgressPercentage,
+          FinishTime,
+          EarnedValue,
+          PaidValue,
+          ProgressCost,
+          InDirectMP,
+          DirectMP,
+          ManHours,
+          TotalWorkHours,
+          Contractor,
+          Consultant,
+          UpdateDayNotification,
+          ProjectType,
+          NCR,
+          Accidents,
+          Injuries,
+          Deaths,
+          Notes
+        );
+    }
+
       }),
       Function.createDelegate(this, function (sender, args) {
         console.log(
@@ -2405,7 +2609,20 @@ window.Edit_Data_Submit = {
   g: {
     clickbait: function () {
       $("button.btn-save").on("click", function () {
-        Edit_Data_Submit.preinit();
+        if ($("#Exchangetype").val() === "partial" && SP_ListName == 'Deliverables' && isEdit == true) {
+          handlePartialDisbursementSave()
+            .then(() => {
+              console.log("Nested deliverable saved, no main deliverable save performed.");
+              // Optionally, redirect or show a success message here
+              window.location =
+              _spPageContextInfo.webAbsoluteUrl +
+              "/SitePages/Listing.aspx?ListKey=" +
+              'nesteddeliverables'+PCODE_STRING ;
+            });
+        } else {
+          // Proceed with the normal save for other cases
+          Edit_Data_Submit.preinit();
+        }
       });
     },
     Cancel: function () {
@@ -2488,8 +2705,9 @@ window.Edit_Data_Submit = {
       if (fileCount) {
         _uploadFile();
       }
+      
       // readFiles();
-      else {
+      //else {
         if ($(".Details-Item.NewItem").length > 0 && !crListKey) {
           //calling new master submit
           New_Data_Submit.g.checkNewMasterDetails();
@@ -2502,6 +2720,13 @@ window.Edit_Data_Submit = {
             Continue_Submit_Field.init();
           } else {
             $(".btn-save").addClass("success");
+            if ( localStorage.getItem("lng") == null ||
+            localStorage.getItem("lng") == "ar") {
+              alert("تم حفظ البيانات بنجاح");
+              console.log('alert success')
+          } else {
+              alert("Data saved successfully");
+          }
             if (listkey == "kpiequations") {
               window.location =
                 _spPageContextInfo.webAbsoluteUrl +
@@ -2536,24 +2761,85 @@ window.Edit_Data_Submit = {
                 kpicurrentYear,
                 kpiTotalActual
               );
+             
             } else if (listkey == "projects" && PCODE) {
               getProjectInfoToUpdateEPM();
             } else {
+              if (fileCount == 0) {
               window.location =
                 _spPageContextInfo.webAbsoluteUrl +
                 "/SitePages/View.aspx?ListKey=" +
                 listkey +
                 "&IID=" +
                 IID +
-                PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+                PCODE_STRING;
+              } //_spPageContextInfo.webServerRelativeUrl+
             }
           }
         }
-      }
+     // }
       // }
     },
   },
 };
+
+
+function handlePartialDisbursementSave() {
+  return new Promise((resolve) => {
+    const clientContext = new SP.ClientContext.get_current();
+    const nestedList = clientContext.get_web().get_lists().getByTitle("NestedDeliverables");
+    
+    // Create a NEW item (will always add, never update)
+    const newItem = nestedList.addItem(new SP.ListItemCreationInformation());
+    if(projectInitiativeType == 'vision'){
+      newItem.set_item("WFModuleCode", "VROProjNDeliverable");
+      newItem.set_item("WFStage", "VROProjNDeliverable01");
+    } else if(projectInitiativeType == 'lms'){
+      newItem.set_item("WFModuleCode", "LMSProjNDeliverable");
+      newItem.set_item("WFStage", "LMSProjNDeliverable01");
+    } else if (projectInitiativeType == 'strategically'){
+      newItem.set_item("WFModuleCode", "EPMOProjNDeliverable");
+      newItem.set_item("WFStage", "EPMOProjNDeliverable01");
+    }
+    // Set field values
+    newItem.set_item("ProjectCode", PCODE);
+    newItem.set_item("MasterID", IID); 
+    newItem.set_item("MasterKey", "Deliverables");
+    newItem.set_item("AmountPrice", $("#AmountPrice").val());
+    newItem.set_item("Quantity", $("#Disbursedquantity").val());
+    newItem.set_item("Name", $("#Name").val());
+    newItem.set_item("Description", $("#Description").val());
+    newItem.set_item("PurchaseRequestNumber", $("#PurchaseRequestNumber").val());
+    newItem.set_item("PurchaseOrderNumber", $("#PurchaseOrderNumber").val());
+    newItem.set_item("PurchaseOrderLineNumber", $("#ProjectLineNumber").val());
+    debugger;
+    var prt1 = "ND",
+    prt2 = String(new Date().getFullYear()).slice(4 - 2),
+    prt3 = IID,
+    ptr4 = String(new Date().getMonth());
+
+    var Code = prt1 + "-" + prt2 + "-" + prt3 + "-" + ptr4;
+
+    newItem.set_item("Title", Code);
+    
+    // Update the item
+    newItem.update();
+
+    // Execute the query to save the item
+    clientContext.executeQueryAsync(
+      () => {
+        console.log("New partial disbursement record added");
+        resolve();
+      },
+      (sender, args) => {
+        console.error("Error adding disbursement:", args.get_message());
+        resolve(); // Continue even if this fails
+      }
+    );
+  });
+}
+
+
 
 //BenefitResults
 
@@ -2699,6 +2985,94 @@ var kpiResults = {
   g: {},
 };
 
+//engineeringprojectshistories
+engineeringprojectshistories = {
+  init:function(
+    ProjectId,
+    Title,
+    ProjectName,
+    ProjectManager,
+    Status,
+    PlannedStartDate,
+    Deadline,
+    EstimatedCost,
+    CRCost,
+    ActualCost,
+    PlanPercentge,
+    ActualProgress,
+    Variance,
+    ProgressPercentage,
+    FinishTime,
+    EarnedValue,
+    PaidValue,
+    ProgressCost,
+    InDirectMP,
+    DirectMP,
+    ManHours,
+    TotalWorkHours,
+    Contractor,
+    Consultant,
+    UpdateDayNotification,
+    ProjectType,
+    NCR,
+    Accidents,
+    Injuries,
+    Deaths,
+    Notes){
+
+      var clientContext = new SP.ClientContext.get_current();
+      var oList = clientContext.get_web().get_lists().getByTitle("EngineeringProjectsHistory");
+      var itemCreateInfo = new SP.ListItemCreationInformation();
+      engineeringprojectshistories.g.oListItem = oList.addItem(itemCreateInfo);
+      engineeringprojectshistories.g.oListItem.set_item("Title", Title);
+      engineeringprojectshistories.g.oListItem.set_item("ProjectId", ProjectId);
+      engineeringprojectshistories.g.oListItem.set_item("ProjectName", ProjectName);
+      engineeringprojectshistories.g.oListItem.set_item("ProjectManager", ProjectManager);
+      engineeringprojectshistories.g.oListItem.set_item("Status", Status);
+      engineeringprojectshistories.g.oListItem.set_item("PlannedStartDate", PlannedStartDate);
+      engineeringprojectshistories.g.oListItem.set_item("Deadline", Deadline);
+      engineeringprojectshistories.g.oListItem.set_item("EstimatedCost", EstimatedCost);
+      engineeringprojectshistories.g.oListItem.set_item("CRCost", CRCost);
+      engineeringprojectshistories.g.oListItem.set_item("ActualCost", ActualCost);
+      engineeringprojectshistories.g.oListItem.set_item("PlanPercentge", PlanPercentge);
+      engineeringprojectshistories.g.oListItem.set_item("ActualProgress", ActualProgress);
+      engineeringprojectshistories.g.oListItem.set_item("Variance", Variance);
+      engineeringprojectshistories.g.oListItem.set_item("ProgressPercentage", ProgressPercentage);
+      engineeringprojectshistories.g.oListItem.set_item("FinishTime", FinishTime);
+      engineeringprojectshistories.g.oListItem.set_item("EarnedValue", EarnedValue);
+      engineeringprojectshistories.g.oListItem.set_item("PaidValue", PaidValue);
+      engineeringprojectshistories.g.oListItem.set_item("ProgressCost", ProgressCost);
+      engineeringprojectshistories.g.oListItem.set_item("InDirectMP", InDirectMP);
+      engineeringprojectshistories.g.oListItem.set_item("DirectMP", DirectMP);
+      engineeringprojectshistories.g.oListItem.set_item("ManHours", ManHours);
+      engineeringprojectshistories.g.oListItem.set_item("TotalWorkHours", TotalWorkHours);
+      engineeringprojectshistories.g.oListItem.set_item("Contractor", Contractor);
+      engineeringprojectshistories.g.oListItem.set_item("Consultant", Consultant);
+      engineeringprojectshistories.g.oListItem.set_item("UpdateDayNotification", UpdateDayNotification);
+      engineeringprojectshistories.g.oListItem.set_item("ProjectType", ProjectType);
+      engineeringprojectshistories.g.oListItem.set_item("NCR", NCR);
+      engineeringprojectshistories.g.oListItem.set_item("Accidents", Accidents);
+      engineeringprojectshistories.g.oListItem.set_item("Injuries", Injuries);
+      engineeringprojectshistories.g.oListItem.set_item("Deaths", Deaths);
+      engineeringprojectshistories.g.oListItem.set_item("Notes", Notes);
+
+      engineeringprojectshistories.g.oListItem.update();
+      clientContext.load(engineeringprojectshistories.g.oListItem);
+  
+      clientContext.executeQueryAsync(
+        Function.createDelegate(this, function () {
+          console.log("Engineering Projects historY Added");
+        }),
+        Function.createDelegate(this, function (sender, args) {
+          console.log(
+            "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+          );
+        })
+      );
+    },
+    g: {},
+  }
+
 // Edit Kpi Results list when edit on main kpi to make the target page updated
 var Edit_KPI_Results = {
   init: function (
@@ -2827,8 +3201,8 @@ var Edit_KPI_Results = {
         }
         context.executeQueryAsync(
           function () {
-            if (!mainKpiIsUpload) {
-              window.location =
+           if (!mainKpiIsUpload) {
+             window.location =
                 _spPageContextInfo.webAbsoluteUrl +
                 "/SitePages/View.aspx?ListKey=" +
                 listkey +
@@ -3054,7 +3428,7 @@ var New_Master_Details_Submit = {
                 $(this).attr("id"),
                 $(this).val() / 100
               );
-            } else if ($(this).attr("type") == "multiselect") {
+            } else if ($(this).attr("type") == "multiselect") { 
               var myselections = [];
               $(this)
                 .find("input:checkbox:checked")
@@ -3227,6 +3601,14 @@ var New_Master_Details_Submit = {
             $(".successmsg").show();
             $(".btn-save").addClass("success");
 
+            if ( localStorage.getItem("lng") == null ||
+            localStorage.getItem("lng") == "ar") {
+              alert("تم حفظ البيانات بنجاح");
+              console.log('alert success')
+          } else {
+              alert("Data saved successfully");
+          }
+
             window.location =
               _spPageContextInfo.webAbsoluteUrl +
               "/SitePages/Listing.aspx?ListKey=" +
@@ -3243,6 +3625,15 @@ var New_Master_Details_Submit = {
             $(".errormsg").hide();
             $(".successmsg").show();
             $(".btn-save").addClass("success");
+
+            if ( localStorage.getItem("lng") == null ||
+            localStorage.getItem("lng") == "ar") {
+              alert("تم حفظ البيانات بنجاح");
+              console.log('alert success')
+          } else {
+              alert("Data saved successfully");
+          }
+
             if (listkey == "projects") {
               getProjectInfoToUpdateEPM();
 
@@ -3263,11 +3654,31 @@ var New_Master_Details_Submit = {
                   IID +
                   PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
               } else {
+                if(listkey == "mainkpi")
+                {
+                  if(!mainKpiIsUpload)
+                  {
+                    window.location =
+                  _spPageContextInfo.webAbsoluteUrl +
+                  "/SitePages/Listing.aspx?ListKey=" +
+                  listkey +
+                  PCODE_STRING;
+                  } else if (isuploaddone ){
+  window.location =
+                  _spPageContextInfo.webAbsoluteUrl +
+                  "/SitePages/Listing.aspx?ListKey=" +
+                  listkey +
+                  PCODE_STRING;
+                  }
+                }
+                else
+                {
                 window.location =
                   _spPageContextInfo.webAbsoluteUrl +
                   "/SitePages/Listing.aspx?ListKey=" +
                   listkey +
                   PCODE_STRING;
+                }
               }
             }
           }
@@ -3461,6 +3872,14 @@ var Edit_Master_Details_Submit = {
           $(".successmsg").show();
           $(".btn-save").addClass("success");
 
+          if ( localStorage.getItem("lng") == null ||
+          localStorage.getItem("lng") == "ar") {
+            alert("تم حفظ البيانات بنجاح");
+            console.log('alert success')
+        } else {
+            alert("Data saved successfully");
+        }
+
           if (listkey == "mainkpi") {
             // to update the kpi result list
             Edit_KPI_Results.init(
@@ -3484,13 +3903,16 @@ var Edit_Master_Details_Submit = {
             if (fieldTargetListLength > 0) {
               Field_MasterDetails_Data.init();
             } else {
-              window.location =
+              setTimeout(() => {
+                
+                window.location =
                 _spPageContextInfo.webAbsoluteUrl +
                 "/SitePages/View.aspx?ListKey=" +
                 listkey +
                 "&IID=" +
                 IID +
                 PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+              }, 1000);
             }
           }
         }
@@ -3763,6 +4185,13 @@ function UploadQuerySuccess() {
       $(".errormsg").hide();
       $(".successmsg").show();
       $(".btn-save").addClass("success");
+      if ( localStorage.getItem("lng") == null ||
+      localStorage.getItem("lng") == "ar") {
+        alert("تم حفظ البيانات بنجاح");
+        console.log('alert success')
+    } else {
+        alert("Data saved successfully");
+    }
       window.location =
         _spPageContextInfo.webAbsoluteUrl +
         "/SitePages/View.aspx?ListKey=" +
@@ -3782,6 +4211,13 @@ function UploadQuerySuccess() {
         $(".errormsg").hide();
         $(".successmsg").show();
         $(".btn-save").addClass("success");
+        if ( localStorage.getItem("lng") == null ||
+        localStorage.getItem("lng") == "ar") {
+          alert("تم حفظ البيانات بنجاح");
+          console.log('alert success')
+      } else {
+          alert("Data saved successfully");
+      }
         if (listkey == "projects") {
           window.location =
             _spPageContextInfo.webAbsoluteUrl +
@@ -3826,7 +4262,7 @@ function _uploadFile() {
 
   // .section-container:not([data-target_list])
 
-  $("input[type=file]").each(function (e) {
+  $("input[type=file]").each(function (e) { 
     var docPurpose = $(this).data("docpurpose")
       ? $(this).data("docpurpose")
       : "";
@@ -3902,7 +4338,7 @@ function _uploadFile() {
         fileReader.readAsArrayBuffer(file);
       });
     })
-  ).then(function (files) {
+  ).then(function (files) { 
     // upload files
     return Promise.all(
       files.map(function (file, index) {
@@ -3936,7 +4372,7 @@ function _uploadFile() {
             customquery,
             ["ID", "Title"],
             function (records, record, listItem, isDone) {
-              if (isDone) {
+              if (isDone) { 
                 records.forEach(function (el, index) {
                   var itemId = el.ID;
 
@@ -3985,7 +4421,7 @@ function _uploadFile() {
                         folderdirectory +
                         "/" +
                         new Date().toLocaleString().replaceAll("/", "-") +
-                        "_-_SystemUploadTime_-_" +
+                        "_-_sut_-_" +
                         file.name.replaceAll("�", ""),
                       fields: fieldsObj,
                       progress: function (perc) {
@@ -4005,6 +4441,13 @@ function _uploadFile() {
                             $(".errormsg").hide();
                             $(".successmsg").show();
                             $(".btn-save").addClass("success");
+                            if ( localStorage.getItem("lng") == null ||
+                            localStorage.getItem("lng") == "ar") {
+                              alert("تم حفظ البيانات بنجاح");
+                              console.log('alert success')
+                          } else {
+                              alert("Data saved successfully");
+                          }
                             window.location =
                               _spPageContextInfo.webAbsoluteUrl +
                               "/SitePages/initiativeHome.aspx?ICODE=" +
@@ -4127,7 +4570,7 @@ function _uploadFile() {
                 folderdirectory +
                 "/" +
                 new Date().toLocaleString().replaceAll("/", "-") +
-                "_-_SystemUploadTime_-_" +
+                "_-_sut_-_" +
                 file.name.replaceAll("�", ""),
               fields: fieldsObj,
               progress: function (perc) {
@@ -4142,10 +4585,18 @@ function _uploadFile() {
                 if (fileCount == isuploaddone) {
 
                   if (isEdit) {
+                 //   debugger;
                     // if on edit page
                     $(".errormsg").hide();
                     $(".successmsg").show();
                     $(".btn-save").addClass("success");
+                    if ( localStorage.getItem("lng") == null ||
+                    localStorage.getItem("lng") == "ar") {
+                      alert("تم حفظ البيانات بنجاح");
+                      console.log('alert success')
+                  } else {
+                      alert("Data saved successfully");
+                  }
                     // window.location = _spPageContextInfo.webAbsoluteUrl + '/SitePages/View.aspx?ListKey=' + listkey + '&IID=' + IID + PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
                     if ($(".Details-Item.NewItem").length > 0) {
                       //calling new master submit
@@ -4157,6 +4608,13 @@ function _uploadFile() {
                       Edit_Data_Submit.g.checkEditMasterDetails();
                     } else {
                       $(".btn-save").addClass("success");
+                      if ( localStorage.getItem("lng") == null ||
+                      localStorage.getItem("lng") == "ar") {
+                        alert("تم حفظ البيانات بنجاح");
+                        console.log('alert success')
+                    } else {
+                        alert("Data saved successfully");
+                    }
                       if (listkey == "projects") {
                         getProjectInfoToUpdateEPM();
                         // window.location =
@@ -4200,6 +4658,13 @@ function _uploadFile() {
                     $(".errormsg").hide();
                     $(".successmsg").show();
                     $(".btn-save").addClass("success");
+                    if ( localStorage.getItem("lng") == null ||
+                    localStorage.getItem("lng") == "ar") {
+                      alert("تم حفظ البيانات بنجاح");
+                      console.log('alert success')
+                  } else {
+                      alert("Data saved successfully");
+                  }
                     window.location =
                       _spPageContextInfo.webAbsoluteUrl +
                       "/SitePages/initiativeHome.aspx?ICODE=" +
@@ -4208,6 +4673,13 @@ function _uploadFile() {
                     $(".errormsg").hide();
                     $(".successmsg").show();
                     $(".btn-save").addClass("success");
+                    if ( localStorage.getItem("lng") == null ||
+                    localStorage.getItem("lng") == "ar") {
+                      alert("تم حفظ البيانات بنجاح");
+                      console.log('alert success')
+                  } else {
+                      alert("Data saved successfully");
+                  }
                     window.location =
                       _spPageContextInfo.webAbsoluteUrl +
                       "/SitePages/Listing.aspx?ListKey=" +
@@ -4223,6 +4695,13 @@ function _uploadFile() {
                       $(".errormsg").hide();
                       $(".successmsg").show();
                       $(".btn-save").addClass("success");
+                      if ( localStorage.getItem("lng") == null ||
+                      localStorage.getItem("lng") == "ar") {
+                        alert("تم حفظ البيانات بنجاح");
+                        console.log('alert success')
+                    } else {
+                        alert("Data saved successfully");
+                    }
                       window.location =
                         _spPageContextInfo.webAbsoluteUrl +
                         "/SitePages/Listing.aspx?ListKey=" +
@@ -4242,7 +4721,7 @@ function _uploadFile() {
         }
       })
     );
-  });
+  }).catch(function (error) {  console.error("Error in file processing:", error); });
 }
 //end file upload
 //file delete
@@ -4577,6 +5056,13 @@ var Edit_PInfo_Submit = {
             $(".errormsg").hide();
             $(".successmsg").show();
             $(".btn-save").addClass("success");
+            if ( localStorage.getItem("lng") == null ||
+  localStorage.getItem("lng") == "ar") {
+              alert("تم حفظ البيانات بنجاح");
+              console.log('alert success')
+          } else {
+              alert("Data saved successfully");
+          }
             newprojectsubmitted = true;
             console.log("inside GUID");
 
@@ -4754,6 +5240,7 @@ function GetProjectsCreate() {
 }
 
 function ChangeProjectOwnerEpmCreateProj() {
+//  debugger;
   // change the owner on project center when create a project
   var project = projects.getById(PGUID);
   var draftProject = project.checkOut();
@@ -4764,11 +5251,22 @@ function ChangeProjectOwnerEpmCreateProj() {
 
   draftProject.set_owner(userPicked);
   var publishJob = draftProject.publish(true);
+  if(isEdit)
+  {
+    projContext.waitForQueueAsync(
+      publishJob,
+      100,
+      QueueJobSent
+    );
+  }
+  else
+  {
   projContext.waitForQueueAsync(
     publishJob,
     100,
     QueueJobSentOwnerEpmCreateProj
   );
+  }
 }
 
 function QueueJobSentOwnerEpmCreateProj(response) {
@@ -4777,6 +5275,8 @@ function QueueJobSentOwnerEpmCreateProj(response) {
     "/SitePages/ProjectHome.aspx?PCODE=" +
     PNAME;
 }
+
+
 //////////////////////////
 
 function QueueJobSent(response) {
@@ -5117,12 +5617,14 @@ function getProjectInfoToUpdateEPM() {
         // var projectResponsible = currentItem.get_item("ProjectResponsible") ? currentItem.get_item("ProjectResponsible") : ''
         // var projectQualityOfficer = currentItem.get_item("QualityOfficer") ? currentItem.get_item("QualityOfficer") : ''
       }
+      
       if (
         projectOwnerPicker &&
         !projectBuildTeamArr.includes(projectOwnerPicker.get_lookupValue())
       ) {
         projectBuildTeamArr.push(projectOwnerPicker.get_lookupValue());
       }
+
       if (
         projectSponsorPicker &&
         !projectBuildTeamArr.includes(projectSponsorPicker.get_lookupValue())
@@ -5348,6 +5850,8 @@ function QueueJobSentOwnerEpm(response) {
     IID +
     PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
 }
+
+
 
 var checkinProjectEditSubmit = {
   // create this function to check in the project on project center before edit on project

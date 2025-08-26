@@ -7174,3 +7174,6 @@ span.statuscolorstat28 {
     height: 3.9rem;
 
 }
+.discrepancy-summary-card .bg-discrepancy{
+    background: linear-gradient(90deg, #5f7499 42%, #3c5175 47%) !important
+}

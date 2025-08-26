@@ -955,6 +955,7 @@ var Information_Form = [
         Errmsgkey: 'todatepattern',
         type: 'datetime',
         // validation: "required",
+        
       },
     ],
   },

@@ -175,6 +175,8 @@ window.Edit_Data_Request = {
             oListItem.get_item("" + $(this).attr("id") + "") == null
               ? "empty"
               : oListItem.get_item("" + $(this).attr("id") + "");
+              var minValue = $(this).attr("min");
+
           if (d != "empty") {
             var local = d.getTime();
             var offset = d.getTimezoneOffset() * (60 * 1000);
@@ -196,9 +198,17 @@ window.Edit_Data_Request = {
               var timehour = hour + ":" + minutes + ":00";
               $("#Time").val("" + timehour);
             }
+            $(this).val(datetouse2);
+
           }
-          $(this).val(datetouse2);
-          break;
+   // Injected condition to handle missing date
+   else if (d == "empty" && minValue) {
+    $(this).val(minValue ? minValue : datetouse2);
+  }      else {
+                $(this).val(datetouse2);
+
+  } 
+    break;
 
         case "datetime-local":
           var d =
@@ -389,11 +399,23 @@ window.Edit_Data_Request = {
     });
 
     $("input.number").each(function (event) {
+      
       // skip for arrow keys
       if (event.which >= 37 && event.which <= 40) return;
       // format number
       $(this).val(function (index, value) {
-        return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        value = value.replace(/[^\d.]/g, '');
+        // Split the value into integer and decimal parts
+        const parts = value.split('.');
+        // Format the integer part with commas
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        // Join the parts with a decimal point if there's a fractional part
+        return parts.join('.');
+        // return value
+        //   .replace(/\D/g, "")
+        //   .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+     
+       // return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       });
     });
 
@@ -1225,6 +1247,8 @@ window.View_Data_Request = {
           oListItem.get_item("" + $(this).attr("id") + "") == null
             ? "empty"
             : oListItem.get_item("" + $(this).attr("id") + "");
+          var minDateAttr = $(this).attr("min");
+
         if (d != "empty") {
           var local = d.getTime();
           var offset = d.getTimezoneOffset() * (60 * 1000);
@@ -1275,6 +1299,8 @@ window.View_Data_Request = {
           }
 
           $(this).text(datetouse2);
+        } else if (d == 'empty' && minDateAttr) {
+          $(this).text(minDateAttr)
         } else {
           $(this).text(No_Data);
         }
@@ -2842,6 +2868,107 @@ var Risk_To_Issue_Code = {
   g: {},
 };
 
+window.duplicateRisk = {
+  init: function () {
+    
+    $(".form-btns-wrapper button, .CFIELD > *").attr("disabled", true);
+
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("Risks"); // Ensure this is the correct list
+    var itemCreateInfo = new SP.ListItemCreationInformation();
+    var newItem = oList.addItem(itemCreateInfo); // Add the new item to the list
+
+    // Copy the fields from the current item to the new item
+    newItem.set_item("Name", $("#Name").val() || null);
+    newItem.set_item("Category", $("#Category").val() || null);
+    newItem.set_item("Description", $("#Description").val() || null);
+    newItem.set_item("Probability", $("#Probability").val() || null);
+    newItem.set_item("AgreedAction", $("#AgreedAction").val() || null);
+    newItem.set_item("Stage", $("#Stage").val() || null);
+    newItem.set_item("Impact", $("#Impact").val() || null);
+    newItem.set_item("ImpactDescription", $("#ImpactDescription").val() || null);
+    newItem.set_item("MitigationPlan", $("#MitigationPlan").val() || null);
+    newItem.set_item("MitigationOwner", $("#MitigationOwner").val() || null);
+    newItem.set_item("MitigationStatus", $("#MitigationStatus").val() || null);
+    newItem.set_item("Status", $("#Status").val() || null);
+    newItem.set_item("MitigationTargetDate", $("#MitigationTargetDate").val() || null);
+    newItem.set_item("MitigationActualCompletionDate", $("#MitigationActualCompletionDate").val() || null);
+    newItem.set_item("RiskClosureDate", $("#RiskClosureDate").val() || null);
+    newItem.set_item("Comments", $("#Comments").val() || null);
+    newItem.set_item("ResolutionPlan", $("#ResolutionPlan").val() || null);
+    newItem.set_item("MoveItToIssueList", $("#MoveItToIssueList").val() || null);
+    newItem.set_item("RiskOwner", $("#RiskOwner").val() || null);
+    newItem.set_item("MasterKey", $("#MasterKey").val() || null);
+    newItem.set_item("WFStage", $("#WFStage").val() || null);
+    
+
+      User_RelatedInitiative ?
+        newItem.set_item("InitiativeCode", User_RelatedInitiative)
+        :
+        newItem.set_item("ProjectCode", PCODE);
+
+    // Now save the new item
+    newItem.update();
+    clientContext.load(newItem);
+
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, function () {
+        debugger;
+        
+        Set_Duplicated_Title_Submit.init(newItem.get_id())
+        console.log("Risk duplicated successfully with ID: " + newItem.get_id());
+        // Continue with the original submission process, if needed
+      }),
+      Function.createDelegate(this, function (sender, args) {
+        debugger;
+        $(".form-btns-wrapper button, .CFIELD > *").attr("disabled", false);
+        var errorMessage = "Request failed. " + args.get_message() + "\n" + args.get_stackTrace();
+        console.error("Error duplicating risk: " + errorMessage);
+
+      
+      })
+    );
+
+    return true; // Proceed with the original submission process
+  }
+};
+
+
+var Set_Duplicated_Title_Submit = {
+  init: function (duplicatedId) {
+    // console.log(PCODE);
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("Risks");
+    Set_Duplicated_Title_Submit.g.oListItem = oList.getItemById(duplicatedId); //declared inside object scope only
+    var Code;
+      var prt1 = listkey.substring(0, 2).toUpperCase(),
+        prt2 = String(new Date().getFullYear()).slice(4 - 2),
+        prt3 = IID.toString().padStart(4, "0");
+      Code = prt1 + "-" + prt2 + "-" + prt3;
+      Set_Duplicated_Title_Submit.g.oListItem.set_item("Title", Code);
+  
+    
+    Set_Duplicated_Title_Submit.g.oListItem.update();
+    clientContext.load(Set_Duplicated_Title_Submit.g.oListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, function () {
+        // determinig folder directory
+        
+      
+      }),
+      Function.createDelegate(this, function (sender, args) {
+        console.log(
+          "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+        );
+      })
+    );
+  },
+  g: {},
+};
+
+
+
+
 //master Data
 // to call the master file when one time and after fill data in array
 var callMasterFile = false;
@@ -3242,55 +3369,65 @@ var Master_Details_Request = {
           switch ($(this).attr("type")) {
             case "date":
               var d =
-                oListItem.get_item("" + $(this).attr("id") + "") == null
-                  ? "empty"
-                  : oListItem.get_item("" + $(this).attr("id") + "");
+              oListItem.get_item("" + $(this).attr("id") + "") == null
+              ? "empty"
+              : oListItem.get_item("" + $(this).attr("id") + "");
+              
               if ($(this).hasClass("withTime")) {
                 console.log("asd", d);
               } else {
                 if (d != "empty") {
-                  var local = d.getTime();
-                  var offset = d.getTimezoneOffset() * (60 * 1000);
-                  var utc = new Date(local + offset);
-                  var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
-                  var datetouse = riyadh
-                    .toLocaleString("en-US")
-                    .split(",")[0]
-                    .split("/");
-                  datetouse[0] =
-                    datetouse[0].length == 1
-                      ? "0" + datetouse[0]
-                      : datetouse[0];
-                  datetouse[1] =
-                    datetouse[1].length == 1
-                      ? "0" + datetouse[1]
-                      : datetouse[1];
-                  var datetouse2 =
-                    datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
+      var local = d.getTime();
+      var offset = d.getTimezoneOffset() * (60 * 1000);
+      var utc = new Date(local + offset);
+      var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+      var datetouse = riyadh
+        .toLocaleString("en-US")
+        .split(",")[0]
+        .split("/");
+      datetouse[0] =
+        datetouse[0].length == 1
+          ? "0" + datetouse[0]
+          : datetouse[0];
+      datetouse[1] =
+        datetouse[1].length == 1
+          ? "0" + datetouse[1]
+          : datetouse[1];
+      var datetouse2 =
+        datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
 
-                  if ($(this).hasClass("withTime")) {
-                    var hour = d.getHours();
-                    var minutes = d.getMinutes();
-                    var meridian;
-                    if (hour > 12) {
-                      meridian = "PM";
-                      hour -= 12;
-                    } else if (hour < 12) {
-                      meridian = "AM";
-                      if (hour == 0) {
-                        hour = 12;
-                      }
-                    } else {
-                      meridian = "PM";
-                    }
-                    var timehour = hour + ":" + minutes + ":" + meridian;
-                    $("#Time").text(timehour);
-                  }
-                }
-              }
+      if ($(this).hasClass("withTime")) {
+        var hour = d.getHours();
+        var minutes = d.getMinutes();
+        var meridian;
+        if (hour > 12) {
+          meridian = "PM";
+          hour -= 12;
+        } else if (hour < 12) {
+          meridian = "AM";
+          if (hour == 0) {
+            hour = 12;
+          }
+        } else {
+          meridian = "PM";
+        }
+        var timehour = hour + ":" + minutes + ":" + meridian;
+        $("#Time").text(timehour);
+      }
+      $(this).val(datetouse2);
 
-              $(this).val(datetouse2);
-              break;
+    }
+    // Injected condition to handle missing date
+    else if (d == "empty") {
+      var minValue = $(this).attr("min");
+      $(this).val(minValue ? minValue : datetouse2);
+    } else {
+                $(this).val(datetouse2);
+
+  } 
+  }
+  break;
+
             case "datetime-local":
               var d =
                 oListItem.get_item("" + $(this).attr("id") + "") == null
@@ -4829,7 +4966,12 @@ window.Delete_Item_Submit = {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(SP_ListName);
     Delete_Item_Submit.g.oListItem = oList.getItemById(IID); //declared inside object scope only
+    Delete_Item_Submit.g.oListItem.set_item("WFStage", "");
     Delete_Item_Submit.g.oListItem.set_item("DeletionStatus", "Deleted");
+    if (listkey == "projects")
+    {
+      Delete_Item_Submit.g.oListItem.set_item("Stage", "");
+    }
     Delete_Item_Submit.g.oListItem.update();
     //clientContext.load(Delete_Item_Submit.g.oListItem);
     clientContext.executeQueryAsync(
@@ -5106,8 +5248,8 @@ window.ViewAllFiles = {
         '<div class="col-lg-9 col-md-8 white-box p-4 fieldset-container"><div class="col-md-6 multiline"><label data-trans-document class="Resources">مرفقات: </label>';
       for (var i = 0; i < filesUrls.length; i++) {
         var filename = filesUrls[i].url.split("/").slice(-1)[0];
-        filename = filename.includes("_-_SystemUploadTime_-_")
-          ? filename.split("_-_SystemUploadTime_-_")[1]
+        filename = filename.includes("_-_sut_-_")
+          ? filename.split("_-_sut_-_")[1]
           : filename;
         if (isEdit) {
           FilesLink +=
@@ -5436,8 +5578,8 @@ window.ViewAllFiles_Main_Strategy = {
       }
       for (var i = 0; i < filesUrls.length; i++) {
         var filename = filesUrls[i].url.split("/").slice(-1)[0];
-        filename = filename.includes("_-_SystemUploadTime_-_")
-          ? filename.split("_-_SystemUploadTime_-_")[1]
+        filename = filename.includes("_-_sut_-_")
+          ? filename.split("_-_sut_-_")[1]
           : filename;
         if (listkey != "mainkpi") {
           if (isEdit) {
@@ -5566,8 +5708,8 @@ window.ViewAllFiles_Main_Strategy = {
                 if (ele.RelatedYear == yearVal && relatedType == type) {
                   if (isEdit) {
                     var filename = ele.url.split("/").slice(-1)[0];
-                    filename = filename.includes("_-_SystemUploadTime_-_")
-                      ? filename.split("_-_SystemUploadTime_-_")[1]
+                    filename = filename.includes("_-_sut_-_")
+                      ? filename.split("_-_sut_-_")[1]
                       : filename;
 
                     attachment +=
@@ -5594,8 +5736,8 @@ window.ViewAllFiles_Main_Strategy = {
                       "</span></i></div>";
                   } else {
                     var filename = ele.url.split("/").slice(-1)[0];
-                    filename = filename.includes("_-_SystemUploadTime_-_")
-                      ? filename.split("_-_SystemUploadTime_-_")[1]
+                    filename = filename.includes("_-_sut_-_")
+                      ? filename.split("_-_sut_-_")[1]
                       : filename;
 
                     attachment +=
@@ -5637,8 +5779,8 @@ window.ViewAllFiles_Main_Strategy = {
               !el.RelatedYear
             ) {
               var filename = el.url.split("/").slice(-1)[0];
-              filename = filename.includes("_-_SystemUploadTime_-_")
-                ? filename.split("_-_SystemUploadTime_-_")[1]
+              filename = filename.includes("_-_sut_-_")
+                ? filename.split("_-_sut_-_")[1]
                 : filename;
 
               if (isEdit) {
@@ -5834,8 +5976,8 @@ window.ViewAll_MasterFiles = {
 
       filesUrls.forEach((el) => {
         var filename = el.url.split("/").slice(-1)[0];
-        filename = filename.includes("_-_SystemUploadTime_-_")
-          ? filename.split("_-_SystemUploadTime_-_")[1]
+        filename = filename.includes("_-_sut_-_")
+          ? filename.split("_-_sut_-_")[1]
           : filename;
 
         generalAttach +=

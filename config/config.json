@@ -233,6 +233,22 @@
           "manifest": "./src/webparts/homePageRedirect/HomePageRedirectWebPart.manifest.json"
         }
       ]
+    },
+    "projectcompliance-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/projectcompliance/ProjectcomplianceWebPart.js",
+          "manifest": "./src/webparts/projectcompliance/ProjectcomplianceWebPart.manifest.json"
+        }
+      ]
+    },
+    "initiativecompliance-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/initiativecompliance/InitiativecomplianceWebPart.js",
+          "manifest": "./src/webparts/initiativecompliance/InitiativecomplianceWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {
@@ -455,6 +471,8 @@
     "AllTasksWebPartStrings": "lib/webparts/allTasks/loc/{locale}.js",
     "BenefitMetricsTargetsWebPartStrings": "lib/webparts/benefitMetricsTargets/loc/{locale}.js",
     "StrategicPartnershipHomeWebPartStrings": "lib/webparts/strategicPartnershipHome/loc/{locale}.js",
-    "HomePageRedirectWebPartStrings": "lib/webparts/homePageRedirect/loc/{locale}.js"
+    "HomePageRedirectWebPartStrings": "lib/webparts/homePageRedirect/loc/{locale}.js",
+    "ProjectcomplianceWebPartStrings": "lib/webparts/projectcompliance/loc/{locale}.js",
+    "InitiativecomplianceWebPartStrings": "lib/webparts/initiativecompliance/loc/{locale}.js"
   }
 }

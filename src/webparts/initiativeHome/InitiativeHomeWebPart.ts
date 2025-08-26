@@ -601,19 +601,7 @@ export default class InitiativeHomeWebPart extends BaseClientSideWebPart<IInitia
 
                                 </div>
                             </div>
-                            <div class="card-body project-delivery-info border-bottom pb-4">
-                                <div class="mx-3 pt-3">
-
-                                    <div class="d-flex justify-content-between pb-3 mb-0 lh-125 border-gray">
-                                        <span data-trans-inpattr40 class="Resources"></span>
-                                        <span class="fnt-14 bold Resources"></span>
-
-                                    </div>
-
-
-
-                                </div>
-                            </div>
+                         
                         </div>
                     </div>
 

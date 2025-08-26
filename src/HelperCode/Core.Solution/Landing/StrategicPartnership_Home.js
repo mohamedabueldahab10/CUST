@@ -263,7 +263,7 @@ var StrategicPS_Home_Info_Request = {
         '<h3 data-trans-relatedinitiative class="Resources black initiativeProjHomeInfoTitleStyle"></h3>' +
         '<span class="des-13 overflow-ellipsis-black" ><span class="initiativeProjHomeInfoValueStyle" id="relatedinit" style="cursor:pointer">' +
         strategicRelatedInitiative +
-        '</span><span class="tooltiptextblack" id="relatedinitchild">' +
+        '</span><span class="textblack" id="relatedinitchild">' +
         strategicRelatedInitiative +
         "</span></span>" +
         "</div>" +
@@ -302,7 +302,7 @@ var StrategicPS_Home_Info_Request = {
     // hide side nav and project nav in wf
     if (isWF) {
       $(".page-nav").attr("style", "display: none !important");
-      $(".sidebar").attr("style", "display: none !important");
+      // $(".sidebar").attr("style", "display: none !important");
       $(".main-panel").attr("style", "width: 100% !important");
     }
 

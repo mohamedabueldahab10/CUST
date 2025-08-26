@@ -101,6 +101,14 @@ var Listing_Info = [
     inlisting: true,
     infilter: true,
   },
+  {
+    InternalName: "IsStrategicProject",
+    DisplayName: "هل المشروع استراتيجي",
+    DisplayNameEn: "Is Strategic Project?",
+    type: "dropdownValues",
+    inlisting: true,
+    infilter: false,
+  },
   //   {
   //     InternalName: 'ProjectOwner',
   //     DisplayName: 'مالك المشروع',

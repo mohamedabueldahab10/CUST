@@ -25,6 +25,7 @@ var Information_Form = [
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
             {group:"Project Managers for Project Web App",form:["origin"]},
+            {group:"ProjectExceptionUpdate",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -50,6 +51,7 @@ var Information_Form = [
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
             {group:"Project Managers for Project Web App",form:["origin"]},
+            
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -575,6 +577,7 @@ var Information_Form = [
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
             {group:"Project Managers for Project Web App",form:["origin"]},
+            {group:"ProjectExceptionUpdate",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -604,6 +607,7 @@ var Information_Form = [
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
             {group:"Project Managers for Project Web App",form:["origin"]},
+            {group:"ProjectExceptionUpdate",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -794,11 +798,13 @@ var Information_Form = [
           'AwardDate',
           'ContractualDate',
         ],
-        targetOn: "min" ,      security: {
+        targetOn: "min" ,     
+         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
             {group:"Project Managers for Project Web App",form:["origin"]},
+            {group:"ProjectExceptionUpdate",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -818,6 +824,7 @@ var Information_Form = [
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
             {group:"Project Managers for Project Web App",form:["origin"]},
+            {group:"ProjectExceptionUpdate",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]

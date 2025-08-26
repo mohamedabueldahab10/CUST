@@ -11,6 +11,9 @@ var ActualBudget = 0,
   RSupport = 0,
   ScheduleProjectPercentageComplete,
   projectRelatedInitiative,
+  WFStage,
+  TaskNameAr,
+  TaskNameEn,
   projectTypes,
   InitiativeType,
   IsStrategicProject,
@@ -188,7 +191,7 @@ var Project_Home_Info_Request = {
       //project card1
       projectname = oListItem.get_item("Name") || No_Data;
       projectstageforinternallinks = oListItem.get_item("Stage") ;
-
+      WFStage = oListItem.get_item("WFStage") || No_Data;
       projectsector = oListItem.get_item("Sector") || No_Data;
       projectSubsector = oListItem.get_item("SubSector") || No_Data;
       projectTypes = oListItem.get_item("ProjectType") || No_Data;
@@ -226,6 +229,9 @@ var Project_Home_Info_Request = {
           projectSubsector = projectSubsectorarr.length ? projectSubsectorarr[0].name : No_Data;
         } else projectSubsector = projectSubsectorarr.length ? projectSubsectorarr[0].nameEn : No_Data;
       }
+
+     
+
       stagename = oListItem.get_item("Stage") || No_Data;
 
       var stagenamearr = stagename.replaceAll("__", "").split(";");
@@ -237,7 +243,8 @@ var Project_Home_Info_Request = {
         stageNamestr = "";
       phasename = oListItem.get_item("Phase") || No_Data;
       phase = oListItem.get_item("Phase") || No_Data;
-
+      compliancestatus = oListItem.get_item("OverallComplianceStatus") || No_Data;
+      complaincePercentage = oListItem.get_item("OverallCompliancePercentage") || No_Data;
       if (localStorage.getItem("Dynamo_Stages") != null) {
         stagearr = JSON.parse(localStorage.getItem("Dynamo_Stages") || "[]");
         stagearr = stagearr.filter((item) => stagenamearr.includes(item.code));
@@ -251,14 +258,19 @@ var Project_Home_Info_Request = {
         if (
           localStorage.getItem("lng") == null ||
           localStorage.getItem("lng") == "ar"
-        ) {
-          stagearrwithoutunderscore.forEach((item) =>
+          ) {
+            stagearrwithoutunderscore.forEach((item) =>
             stageName.push(item.name)
           );
-        } else
-          stagearrwithoutunderscore.forEach((item) =>
+          } else
+            stagearrwithoutunderscore.forEach((item) =>
             stageName.push(item.nameEn)
           );
+
+        //   debugger;
+         if(WFStage && WFStage != No_Data){
+            Get_RelatedWFStage.init();
+            }
       }
 
       if (stageName.toString().split() == "") {
@@ -293,6 +305,7 @@ var Project_Home_Info_Request = {
         Get_RelatedInitiative.init();
       }
 
+      
       // abrprojectname = projectname.match(/(?<!\p{L}\p{M}*)\p{L}\p{M}*/gu).join('.');
       abrprojectname = projectname
         .split(" ")
@@ -478,8 +491,8 @@ var Project_Home_Info_Request = {
         '<div class="d-inline-flex flex-column mx-2">' +
         '<span data-trans-pattr60 class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
         '<h4 class="acc-title d-inline-flex black initiativeProjHomeInfoValueStyle">' +
-        stageNamestr +
-        "</h4>" +
+        stageNamestr + 
+        "</h4>" + '<span class="initiativeProjHomeInfoValueStyle" id="relatedstage"></span> ' +
         "</div>" +
         '<div class="d-inline-flex flex-column mx-2">' +
         '<h3 data-trans-relatedinitiative class="Resources black initiativeProjHomeInfoTitleStyle"></h3>' +
@@ -490,6 +503,18 @@ var Project_Home_Info_Request = {
         "</span></span>" +
         "</div>" +
         "</div>" +
+
+        '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
+'<div class="d-inline-flex flex-column mx-2 ' + phase + '">' +
+'<span data-trans-compliancestatus class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
+'<h4 class="acc-title d-inline-flex black">' + `<span class='Resources' data-trans-${compliancestatus}  > </span>`  + "</h4>" +
+'</div>' +
+'<div class="d-inline-flex flex-column mx-2">' +
+'<span data-trans-complaincepercentage class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
+'<h4 class="acc-title d-inline-flex black initiativeProjHomeInfoValueStyle">' + complaincePercentage + '</h4>' +
+'<span class="initiativeProjHomeInfoValueStyle" id="relatedstage"></span>' +
+'</div>' +
+'</div>' +
         //
         '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
         '<div class="d-inline-flex flex-column mx-2">' +
@@ -589,7 +614,7 @@ var Project_Home_Info_Request = {
     // hide side nav and project nav in wf
     if (isWF) {
       $(".page-nav").attr("style", "display: none !important");
-      $(".sidebar").attr("style", "display: none !important");
+      // $(".sidebar").attr("style", "display: none !important");
       $(".main-panel").attr("style", "width: 100% !important");
     }
 
@@ -903,6 +928,44 @@ var checkHomeStatusHtml = setInterval(function () {
   Project_Home_Info_Request.preinit();
 }, 1000);
 
+var Get_RelatedWFStage = {
+  init: function () {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("Tasks Configuration");
+    var camlQuery = new SP.CamlQuery();
+
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Title\" /><Value Type=\"Text\">" +
+      WFStage +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+    );
+    Get_RelatedWFStage.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(Get_RelatedWFStage.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Get_RelatedWFStage.onSuccess),
+      Function.createDelegate(this, Get_RelatedWFStage.onError)
+    );
+  },
+  onSuccess: function (sender, args) {
+    var collListItem = Get_RelatedWFStage.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      TaskNameAr = oListItem.get_item("TaskNameAr") || No_Data;
+      $("#relatedstage").html(TaskNameAr);
+      
+      //TaskNameEn = oListItem.get_item("TaskNameEn") || No_Data;
+    }
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  g: {},
+};
+
 var Get_RelatedInitiative = {
   init: function () {
     var clientContext = new SP.ClientContext.get_current();
@@ -1078,9 +1141,9 @@ window.ProjectClosure_Submit = {
         $(".clsprjstat").after(
           '<div class="start-finish-dates">\
                     <label data-trans-pattr1 class="Resources"></label>\
-                    <input type="date" placeholder="تاريخ البدء" class="form-control SPIField" id="PlannedStartDate" max="9999-12-31" min="1900-01-01" required>\
+                    <input type="date" placeholder="تاريخ البدء" class="form-control SPIField" id="PlannedStartDate" max="9999-12-31" min="" required>\
                     <label data-trans-pattr2 class="Resources"></label>\
-                    <input type="date" placeholder="تاريخ الإنتهاء" class="form-control SPIField" id="PlannedFinishDate" max="9999-12-31" min="1900-01-01" required>\
+                    <input type="date" placeholder="تاريخ الإنتهاء" class="form-control SPIField" id="PlannedFinishDate" max="9999-12-31" min="" required>\
                 </div>'
         );
       } else {

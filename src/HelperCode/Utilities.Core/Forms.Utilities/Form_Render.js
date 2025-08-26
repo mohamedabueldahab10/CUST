@@ -24,7 +24,10 @@ var RevenuesAmount = 0;
 var RevenuesAmountInit = 0;
 var revenuesAmountInitMiles = 0;
 var parentBudgetValue = 0;
-
+var HolidaysOff = [];
+var EngineeringProjectCode = null;
+var LastProjectHistory = [];
+var ManHoursHistory = [];
 var requiredFieldsSections = []; // return required field when show hide toggle for master like deliv and miles in proj when change on zero proj
 
 if (
@@ -304,6 +307,10 @@ window.ListInfo = {
           sectionType = 'data-section_type="' + item.sectiontype + '"';
         }
 
+      
+        
+        
+        
         htmlBuilder +=
           '<div style="display:' +
           item.display +
@@ -339,6 +346,8 @@ window.ListInfo = {
           item.className +
           '">';
 
+         
+          
         asyncFor.seqProcess(
           item.subFields,
           function (subitemField, indexField, resolveField) {
@@ -772,9 +781,21 @@ window.ListInfo = {
           $("input.autoSetDate").change(function (event) {
             var datePicked = event.target.value;
 
+            var totalDurElement = $(this).data("totaldurelement");
+            var totalWHElement = $(this).data("totalwhelement");
+            var date1 = $(this).data("date1element");
+            var date2 = $(this).data("date2element");
+            var date3 = $(this).data("date3element");
+            var statuschangeElement = $(this).data("statuschangeelement");
+
             var sourceElement = $(this).data("sourceelement");
             var sourceElementValue = $(`#${sourceElement}`).val();
             var targetElement = $(this).data("targetelement");
+
+
+            var durationelement = $(this).data("durationelement");
+            var startdateelement = $(this).data("startdateelement");
+            var enddateelement = $(this).data("enddateelement");
 
             if (sourceElementValue && datePicked) {
               sourceElementValue = Number(sourceElementValue);
@@ -791,6 +812,134 @@ window.ListInfo = {
               console.log(start, "start");
               console.log(end, "end");
             }
+
+            if (
+              totalDurElement &&
+              totalDurElement != "undefined" &&
+              date1 &&
+              date1 != "undefined" &&
+              date2 &&
+              date2 != "undefined"
+            ) {
+              var statusval = "";
+              if(statuschangeElement &&
+                statuschangeElement != "undefined")
+                {
+                   statusval = $(`#${statuschangeElement}`).val();
+                }
+
+              var value1 = $(`#${date1}`).val();
+              var value2 = $(`#${date2}`).val();
+              var start_date =  new Date(value1);
+              if(date3 &&
+                date3 != "undefined")
+                {
+                 value2 =   $(`#${date3}`).val();
+                 if(value2 == "")
+                 {
+                  value2 = $(`#${date2}`).val();
+                 }
+                }
+
+              var end_date =  new Date(value2);
+
+              let todaydate = new Date();
+              todaydate  = end_date > todaydate ? todaydate : end_date;
+              let todayDiff = Math.round( (todaydate.getTime() - start_date.getTime()) / (1000 * 3600 * 24));
+              let dateDiff = Math.round( (end_date.getTime() - start_date.getTime()) / (1000 * 3600 * 24) );
+              
+
+              var total =  parseFloat((todayDiff / dateDiff) * 100).toFixed("2");
+              
+              if(statusval == "" || statusval != "finished")
+              $(`#${totalDurElement}`).val(total);
+            }
+
+            if(totalWHElement &&
+              totalWHElement != undefined &&
+              date1 &&
+              date1 != undefined)
+              {
+                  var value1 = $(`#${date1}`).val();
+                  var start_day = new Date(value1).getDate();
+                  var start_month =  new Date(value1).getMonth();
+                  var start_year =  new Date(value1).getFullYear();
+
+                  let todaydate = new Date();
+                  let day = new Date().getDate();
+                  let month = new Date().getMonth();
+                  let year = new Date().getFullYear();
+
+                  /*
+                  const minute = 1000 * 60;
+                  const hour = minute * 60;
+                  const calc_day = hour * 24;
+                  const calc_month = day * 30;
+                  const calc_year = day * 365;
+                 
+                  let dayDiff = Math.round( (todaydate.getTime() - value1.getTime()) / (1000 * 3600 * 24) );
+                  let monthDiff = Math.round( (todaydate.getTime() - value1.getTime()) / (1000 * 3600 * 24 * 30) );
+                  let yearDiff = Math.round( (todaydate.getTime() - value1.getTime()) / (1000 * 3600 * 24 * 365) );*/
+
+                 var excludedays = 0;
+                  var workdays = 0;
+                  let _month = start_month + 1;
+                  let _localmonth = month + 1;
+
+                  for(var y = start_year; y <= year ; y++){
+                    for(var m = _month; m <= _localmonth ; m++){  
+                        var monthdays = new Date(y, m, 0).getDate();
+                        let newmonth = m - 1 ;
+                        for(var i = 1; i <= monthdays; i++) {
+                          var _date  = new Date(y,newmonth,i);
+                        if(todaydate > _date){
+                         
+                          var weekday = _date.getDay();
+                           if(weekday != undefined)
+                            {
+                              if (weekday != 5)
+                                  workdays++;
+                            }
+                          
+                            HolidaysOff.forEach(oListItem =>{
+                              if(oListItem.getTime() == _date.getTime())
+                                {
+                                  excludedays++;
+                                }
+                            });
+                          }
+                      }
+                    } 
+                  }
+
+                  var total = (workdays  - excludedays) * 8;
+    
+                  $(`#${totalWHElement}`).val(total);
+                
+              }
+
+              if(durationelement &&
+                durationelement != undefined &&
+                startdateelement &&
+                startdateelement != undefined &&
+                enddateelement &&
+                enddateelement != undefined)
+                {
+                //  debugger;
+                    var value1 = $(`#${startdateelement}`).val();
+                    var value2 = $(`#${enddateelement}`).val();
+
+                    if(value2 != "" && value2 != undefined)
+                    {
+                      
+                    var start_date =  new Date(value1);
+                    var end_date =  new Date(value2);
+
+                    let dayDiff = Math.round( (end_date.getTime() - start_date.getTime()) / (1000 * 3600 * 24) );
+                  
+                    $(`#${durationelement}`).val(dayDiff);
+                    }
+                }
           });
 
           //
@@ -1112,7 +1261,7 @@ window.ListInfo = {
             $(".FormContainer").addClass("wf-mode");
             $("#navbarsParent").addClass("wfMode");
             $(".page-nav").attr("style", "display: none !important");
-            $(".sidebar").attr("style", "display: none !important");
+            // $(".sidebar").attr("style", "display: none !important");
             $(".main-panel").attr("style", "width: 100% !important");
             // getTaskHistory.init();
             Get_TaskHistory.init();
@@ -1225,7 +1374,7 @@ window.ListInfo = {
           });
 
           ///
-          $("input.number").keyup(function (event) {
+          $("input.number").keyup(function (event) { 
             // skip for arrow keys
             if (event.which >= 37 && event.which <= 40) return;
             // format number
@@ -1246,11 +1395,35 @@ window.ListInfo = {
             var sum1 = $(this).data("sum1element");
             var sum2 = $(this).data("sum2element");
 
+            var totalSubElement = $(this).data("totalsubelement");
+            var sub1 = $(this).data("sub1element");
+            var sub2 = $(this).data("sub2element");
+            
+            var totalperElement = $(this).data("totalperelement");
+            var per1 = $(this).data("per1element");
+            var per2 = $(this).data("per2element");
+
+            var totalMBElement = $(this).data("totalmbelement");
+            var mb1 = $(this).data("mb1element");
+            var mb2 = $(this).data("mb2element");
+            var fmb = $(this).data("totalwrelement");
+            var date1 = $(this).data("date1element");
+            var date2 = $(this).data("date2element");
+
+            var totalProgressElement = $(this).data("totalprogresselement");
+            var prog1 = $(this).data("prog1element");
+            var prog2 = $(this).data("prog2element");
+
+            var statuschangeElement = $(this).data("statuschangeelement");
+            var status1 = $(this).data("status1element");
+            var status2 = $(this).data("status2element");
+            var status3= $(this).data("status3element");
+
             var max = $(this).data("maxfield");
             var resetElement = $(this).data("resetelement");
             var elementVal = event.target.value;
             // set max value
-            debugger;
+            
             if (max && max != "undefined") {
               var maxValue = 0;
               if (listkey == "projects") {
@@ -1343,6 +1516,261 @@ window.ListInfo = {
                 });
               }
             }
+
+            
+            if (
+              totalSubElement &&
+              totalSubElement != "undefined" &&
+              sub1 &&
+              sub1 != "undefined" &&
+              sub2 &&
+              sub2 != "undefined"
+            ) {
+              var value1 = $(`#${sub1}`).val();
+              value1 = value1.replaceAll(",", "");
+              value1 = Number(value1);
+              var value2 = $(`#${sub2}`).val();
+              value2 = value2.replaceAll(",", "");
+              value2 = Number(value2);
+              var total = value2 - value1;
+              $(`#${totalSubElement}`).val(total);
+            }
+
+            if (
+              totalperElement &&
+              totalperElement != "undefined" &&
+              per1 &&
+              per1 != "undefined" &&
+              per2 &&
+              per2 != "undefined"
+            ) {
+              var value1 = $(`#${per1}`).val();
+              value1 = value1.replaceAll(",", "");
+              value1 = parseFloat(value1);
+              var value2 = $(`#${per2}`).val();
+              value2 = value2.replaceAll(",", "");
+              value2 = parseFloat(value2);
+             
+              if(value1 >= 1)
+              { value1 = value1 / 100; }
+
+              var total = value1 * value2;
+
+              $(`#${totalperElement}`).val(total);
+            }
+
+            if (
+              totalMBElement &&
+              totalMBElement != "undefined" &&
+              mb1 &&
+              mb1 != "undefined" &&
+              mb2 &&
+              mb2 != "undefined" &&
+              date1 &&
+              date1 != "undefined" &&
+              date2 &&
+              date2 != "undefined") 
+              {
+                
+              var value1 = $(`#${mb1}`).val();
+              value1 = value1.replaceAll(",", "");
+              value1 = parseFloat(value1);
+
+              var value2 = $(`#${mb2}`).val();
+              value2 = value2.replaceAll(",", "");
+              value2 = parseFloat(value2);
+            
+              var startdt =  $(`#${date1}`).val();
+              var enddt =  $(`#${date2}`).val();
+
+             
+              /*
+              var value3 = $(`#${date1}`).val();
+              value3 = value3.replaceAll(",", "");
+              value3 = new Date(value3);
+
+
+              let daydate = value3.getDate();
+              let monthdate = value3.getMonth();
+              let yeardate = value3.getFullYear();
+
+              let plandate = new Date(yeardate,monthdate,daydate);
+              plandate >= new Date(year,month,day) ? plan : 
+*/
+
+              let todaydate = new Date(enddt);// new Date();
+              let startdate = new Date(startdt);
+              
+              /*
+              let day = 1;
+              let month = new Date().getMonth();
+              let year = new Date().getFullYear();
+              */
+
+              let day = startdate.getDate();
+              let month = startdate.getMonth();
+              let year = startdate.getFullYear();
+
+              let firstdayinmonth = new Date(year,month,day);
+
+              let Difference_In_Time = todaydate.getTime() - firstdayinmonth.getTime();
+              let Diffdays = Math.round(Difference_In_Time / (1000 * 3600 * 24));
+
+              var excludedays = 0;
+              let finalmonth = month + 1;
+              var monthdays = new Date(year, finalmonth, 0).getDate();
+              for(var i = 1; i <= monthdays; i++) {
+                      var _date = new Date(year,month,i);
+                    if(_date <= todaydate){
+                      HolidaysOff.forEach(oListItem =>{
+                        if(oListItem.getTime() == _date.getTime())
+                          {
+                            excludedays++;
+                          }
+                      });
+                      
+                     };
+              } 
+              
+              var workdays = 0;
+              for(var i=1; i<= Diffdays; i++) {
+               
+                var weekday = new Date(year, month, i).getDay();
+                  if (weekday != 5)
+                     workdays++;
+              }
+              
+              workdays = workdays - excludedays;
+              
+              var total = ((value1 + value2) * 8) * workdays;
+
+              $(`#${totalMBElement}`).val(total);
+            }
+
+            if(fmb &&
+               fmb != "undefined")
+            {
+              var total = $(`#${totalMBElement}`).val();
+              total = parseFloat(total);
+
+              var totalwhk = 0;
+             
+              if( prog2 &&  prog2 != "undefined")
+              {
+                var code = $(`#${prog2}`).val();
+               EngineeringProjectCode = code;
+              
+               var existlist = [];
+               ManHoursHistory.forEach(_project => {
+                
+                if(_project.get_item("Title") == EngineeringProjectCode)
+                    {
+                        existlist.push(_project);
+                    }
+              });
+              var lastProg = 0;
+              if(existlist.length > 0)
+              {
+                  existlist.forEach(_ManHour => {
+                  if(_ManHour.get_item("ManHours") > 0)
+                  {
+                  lastProg = _ManHour.get_item("ManHours") + lastProg;
+                  }
+
+                });
+              }
+
+               totalwhk =  lastProg;
+
+              }
+
+              totalwhk = totalwhk + total;
+              $(`#${fmb}`).val(totalwhk);
+            }
+
+
+            if (
+              totalProgressElement &&
+              totalProgressElement != "undefined" &&
+              prog1 &&
+              prog1 != "undefined" &&
+              prog2 &&
+              prog2 != "undefined")
+              {
+                
+                var lastProg = 0;
+                var value1 = $(`#${prog1}`).val();
+                value1 = value1.replaceAll(",", "");
+                value1 = parseFloat(value1);
+
+                var value2 = $(`#${prog2}`).val();
+
+                EngineeringProjectCode = value2;
+                
+                var existlist = [];
+                LastProjectHistory.forEach(_project => {
+                  
+                  if(_project.get_item("Title") == EngineeringProjectCode)
+                      {
+                          existlist.push(_project);
+                      }
+                });
+
+                if(existlist.length > 0)
+                {
+                  if(existlist.length == 1)
+                  {
+                    lastProg = existlist[0].get_item("ActualProgress");
+                  }
+                }
+
+                var total = value1 - lastProg;
+
+                $(`#${totalProgressElement}`).val(total);
+              }
+              
+              if (
+                statuschangeElement &&
+                statuschangeElement != "undefined" &&
+                status1 &&
+                status1 != "undefined" &&
+                status2 &&
+                status2 != "undefined" &&
+                status3 &&
+                status3 != "undefined")
+              {
+              //  debugger;
+                var value1 = $(`#${status1}`).val(); // PlanPercentge
+                value1 = value1.replaceAll(",", "");
+                value1 = parseFloat(value1);
+                var value2 = $(`#${status2}`).val(); // ActualProgress
+                value2 = value2.replaceAll(",", "");
+                value2 = parseFloat(value2);
+                var value3 = $(`#${status3}`).val(); // FinishTime
+                value3 = value3.replaceAll(",", "");
+                value3 = parseFloat(value3);
+
+                var newstatus = "epending";
+
+                if(value1 >= 100 && value2 >= 100)
+                    newstatus = "finished";
+                else
+                    if(value2 > value1)
+                    newstatus = "regular";
+                else
+                    if(value1 > value2)
+                    newstatus = "elate";
+                else
+                    if(value1 >= 100 && value3 >= 110)
+                    newstatus = "troubled";
+
+                
+
+
+                $(`#${statuschangeElement}`).val(newstatus);
+              }
+
+
           });
 
           //maxOnChild
@@ -1489,6 +1917,13 @@ window.ListInfo = {
                 );
               });
             }
+
+            if (listkey == "engineeringprojects") {
+              GetHolidaysOFF.preinit();
+              GetLastProgressFromHistory.preinit();
+              GetManHoursHistory.preinit();
+              }
+
             // if (USERisWF) {
             //   $(".form-btns-wrapper").hide();
             // }
@@ -1555,6 +1990,10 @@ window.ListInfo = {
             if (listkey == "budgetitems") {
               ListInfo.g.budgetitem();
             }
+
+            if (listkey == "engineeringprojects") {
+              GetHolidaysOFF.preinit();
+              }
 
             // if (listkey == "invoices") {
             //   ListInfo.g.InvoicesTotal();
@@ -1648,7 +2087,7 @@ window.ListInfo = {
             if (listkey == "projects") {
               SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
                 Phases_Data_Request.init();
-                Stages_Data_Request.init();
+                //Stages_Data_Request.init();
                 Sectors_Info.init();
                 if (isNew & USERisWF) {
                   window.Idea_Info.init();
@@ -1673,6 +2112,11 @@ window.ListInfo = {
                 // ProjectInitiativeMilestone.init('InitiativeMilestones', initiativeCode) //to get related initiativeMilestone
               });
               //end of related initiative delevrable
+debugger;
+             $("#IsStrategicProject").on("change", function () {
+                var isStrategicProject = $(this).val();
+                Stages_Data_Request.init(isStrategicProject);
+              });
             }
             // get the strategy type related to strategy choice
             if (listkey == "sos") {
@@ -2015,6 +2459,8 @@ window.ListInfo = {
     );
   },
   RenderForm: async function (element, flag, OnSuccess) {
+   
+ 
     if (listkey == "goalstrategy") {
       ListInfo.g.requiredSpillarsName();
     }
@@ -2210,7 +2656,7 @@ window.ListInfo = {
         .toISOString()
         .split("T")[0];
     } else {
-      min = "1900-01-01";
+      min = "";
     }
     var max;
     if (element.max == "today") {
@@ -2263,7 +2709,6 @@ window.ListInfo = {
 
     // to use it in cr new links
     jsonListKey = element.listkey;
-
     switch (element.type) {
       case "string":
         var letterPattern = "";
@@ -2525,7 +2970,7 @@ window.ListInfo = {
           toggleDisabledName +
           " " +
           RequiredName +
-          ' type="number" data-manipulates="year" min="1900" max="2099" step="1" maxdata="' +
+          ' type="number" data-manipulates="year" min="" max="2099" step="1" maxdata="' +
           element.max +
           '" mindata="' +
           element.min +
@@ -3056,6 +3501,30 @@ window.ListInfo = {
           sum2Element = "",
           reset = "";
 
+          var totalSubElement = "",
+          sub1Element = "",
+          sub2Element = "";
+
+        var totalperElement = "",
+          per1Element = "",
+          per2Element = "";
+
+          var totalMBElement = "",
+          mb1Element = "",
+          mb2Element = "",
+          totalWRElement = "",
+          date1Element = "",
+          date2Element = "";
+
+          var totalProgressElement = "",
+          prog1Element = "",
+          prog2Element = "";
+       
+          var statuschangeElement = "",
+          status1Element = "",
+          status2Element = "",
+          status3Element = "";
+
         if (element.max) {
           max = `data-maxField=${element.max}`;
         }
@@ -3078,6 +3547,68 @@ window.ListInfo = {
           totalElement = `data-totalElement=${element.totalElement}`;
           sum1Element = `data-sum1Element=${element.sum1Element}`;
           sum2Element = `data-sum2Element=${element.sum2Element}`;
+        }
+
+        if (
+          element.totalperElement &&
+          element.per1Element &&
+          element.per2Element
+        ) {
+          totalperElement = `data-totalperElement=${element.totalperElement}`;
+          per1Element = `data-per1Element=${element.per1Element}`;
+          per2Element = `data-per2Element=${element.per2Element}`;
+        }
+
+        if (
+          element.totalSubElement &&
+          element.sub1Element &&
+          element.sub2Element
+        ) {
+          totalSubElement = `data-totalSubElement=${element.totalSubElement}`;
+          sub1Element = `data-sub1Element=${element.sub1Element}`;
+          sub2Element = `data-sub2Element=${element.sub2Element}`;
+        }
+
+        if (
+          element.totalMBElement &&
+          element.mb1Element &&
+          element.mb2Element &&
+          element.date1Element &&
+          element.date2Element ) {
+          totalMBElement = `data-totalMBElement=${element.totalMBElement}`;
+          mb1Element = `data-mb1Element=${element.mb1Element}`;
+          mb2Element = `data-mb2Element=${element.mb2Element}`;
+          date1Element = `data-date1Element=${element.date1Element}`;
+          date2Element = `data-date2Element=${element.date2Element}`;
+        }
+
+        if(element.totalWRElement)
+        {
+          totalWRElement = `data-totalWRElement=${element.totalWRElement}`;
+        }
+
+        if (
+          element.totalProgressElement &&
+          element.prog1Element ) {
+          totalProgressElement = `data-totalProgressElement=${element.totalProgressElement}`;
+          prog1Element = `data-prog1Element=${element.prog1Element}`;
+        }
+       
+        if(element.prog2Element)
+          {
+           prog2Element = `data-prog2Element=${element.prog2Element}`;
+          }
+
+        if (
+          element.statuschangeElement &&
+          element.status1Element  &&
+          element.status2Element &&
+          element.status3Element
+        ) {
+          statuschangeElement = `data-statuschangeElement=${element.statuschangeElement}`;
+          status1Element = `data-status1Element=${element.status1Element}`;
+          status2Element = `data-status2Element=${element.status2Element}`;
+          status3Element = `data-status3Element=${element.status3Element}`;
         }
 
         htmlBody =
@@ -3134,6 +3665,44 @@ window.ListInfo = {
           sum1Element +
           " " +
           sum2Element +
+          " " +
+          totalSubElement +
+          " " +
+          sub1Element +
+          " " +
+          sub2Element +
+          " " +
+          totalperElement +
+          " " +
+          per1Element +
+          " " +
+          per2Element +
+          " " +
+          totalMBElement +
+          " " +
+          mb1Element +
+          " " +
+          mb2Element +
+          " " +
+          date1Element +
+          " " +
+          date2Element +
+          " " +
+          totalWRElement +
+          " " +
+          totalProgressElement +
+          " " +
+          prog1Element + 
+          " " +
+          prog2Element + 
+          " " +
+          statuschangeElement +
+          " " +
+          status1Element + 
+          " " +
+          status2Element +
+          " " +
+          status3Element +
           " " +
           max +
           " " +
@@ -3233,7 +3802,7 @@ window.ListInfo = {
           element.state +
           " " +
           element.validation +
-          ' pattern="(05|5|009665|9665)(5|0|3|6|4|9|1|8|7)([0-9]{7})"/>' +
+          ' pattern="(05|5|009665|9665|01|009661|9661)(5|0|3|6|4|9|1|8|7)([0-9]{7})"/>' +
           "<span data-trans-" +
           Errmsgkey +
           ' class="errMsgField Resources"></span>' +
@@ -3250,6 +3819,21 @@ window.ListInfo = {
         var numberOfDigits = "";
         if (element.numberOfDigits) {
           numberOfDigits = `maxlength=${element.numberOfDigits}`;
+        }
+
+        var totalElement = "",
+        sum1Element = "",
+        sum2Element = "",
+        reset = "";
+
+        if (
+          element.totalElement &&
+          element.sum1Element &&
+          element.sum2Element
+        ) {
+          totalElement = `data-totalElement=${element.totalElement}`;
+          sum1Element = `data-sum1Element=${element.sum1Element}`;
+          sum2Element = `data-sum2Element=${element.sum2Element}`;
         }
 
         htmlBody =
@@ -3301,6 +3885,12 @@ window.ListInfo = {
           displayName +
           "</label>" +
           "<input " +
+          totalElement +
+          " " +
+          sum1Element +
+          " " +
+          sum2Element +
+          " " +
           ToggleName +
           " " +
           toggleDisabledName +
@@ -3437,7 +4027,7 @@ window.ListInfo = {
                 '"' +
                 " " +
                 element.validation +
-                ` onchange="this.value = (this.value && Math.abs(this.value) >= 1) && (this.value && Math.abs(this.value) <= 100) ? Math.abs(this.value) : null">` +
+                ` onchange="this.value = (this.value && Math.abs(this.value) >= 0) && (this.value && Math.abs(this.value) <= 100) ? Math.abs(this.value) : null">` +
                 "<span data-trans-" +
                 Errmsgkey +
                 ' class="errMsgField Resources"></span>' +
@@ -3454,6 +4044,7 @@ window.ListInfo = {
         break;
 
       case "floatpercentage":
+      
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit +
@@ -3529,6 +4120,9 @@ window.ListInfo = {
         break;
 
       case "percentbyrelatedparent":
+
+    
+
         var code = activeCode;
 
         var customQuery =
@@ -3549,7 +4143,7 @@ window.ListInfo = {
               });
 
               parentBudgetValue = parentValue;
-
+            
               htmlBody =
                 '<div class="col-md-6 CFIELD ' +
                 dontSubmit +
@@ -3630,7 +4224,12 @@ window.ListInfo = {
                 descPhrase +
                 "</div>" +
                 "</div>";
-              OnSuccess(flag, htmlBody);
+                if ((listkey == 'initiativedeliverables' || listkey == 'milestones') && IsZeroBudgetProject == true && element.InternalName == "Amount") {
+                  OnSuccess(flag, '');
+                } else {
+
+                  OnSuccess(flag, htmlBody);
+                }
             }
           }
         );
@@ -3793,6 +4392,17 @@ window.ListInfo = {
           sourceelement = "",
           targetelement = "";
 
+          var totalDurElement = "",
+          date1Element = "",
+          date2Element = "",
+          date3Element = "",
+          totalWHElement="",
+          statuschangeElement = "";
+
+          var durationelement = "",
+          startdateelement = "",
+          enddateelement = "";
+
         if (element.maxOnChild) {
           maxOnChild = "maxOnChild";
         }
@@ -3801,6 +4411,33 @@ window.ListInfo = {
           autoSetDate = "autoSetDate";
           sourceelement = `data-sourceelement=${element.sourceelement}`;
           targetelement = `data-targetelement=${element.targetelement}`;
+        }
+
+        if (
+          element.durationelement &&
+          element.startdateelement &&
+          element.enddateelement
+        ) {
+          durationelement = `data-durationelement=${element.durationelement}`;
+          startdateelement = `data-startdateelement=${element.startdateelement}`;
+          enddateelement = `data-enddateelement=${element.enddateelement}`;
+        }
+
+        if (
+          element.totalDurElement &&
+          element.date1Element &&
+          element.date2Element &&
+          element.date3Element
+        ) {
+          totalDurElement = `data-totalDurElement=${element.totalDurElement}`;
+          date1Element = `data-date1Element=${element.date1Element}`;
+          date2Element = `data-date2Element=${element.date2Element}`;
+          date3Element = `data-date3Element=${element.date3Element}`;
+          totalWHElement = `data-totalWHElement=${element.totalWHElement}`;
+          if(element.statuschangeElement)
+          {
+             statuschangeElement = $(this).data("statuschangeelement");
+          }
         }
 
         if (element.targetOn && element.targetOn != "undefined") {
@@ -3873,6 +4510,24 @@ window.ListInfo = {
           childrenIDs +
           " " +
           targetOn +
+          " " +
+          totalDurElement +
+          " " +
+          date1Element +
+          " " +
+          date2Element +
+          " " +
+          date3Element +
+          " " +
+          totalWHElement +
+          " " +
+          statuschangeElement + 
+          " " +
+          startdateelement +
+          " " +
+          enddateelement +
+          " " +
+          durationelement+
           " " +
           sourceelement +
           " " +
@@ -4352,6 +5007,7 @@ window.ListInfo = {
         OnSuccess(flag, htmlBody);
         break;
 
+        
       // case 'datewithtime':
       //     htmlBody =
       //         '<div class="col-md-6 CFIELD dateTime' + element.className + ' " ' + thistip + ' ' + hidestagesIDs + ' '+editableBy+' ' + showstagesIDs + '  ' + disablestagesIDs + '  ' + enablestagesIDs + '   ' + isWfhidestagesIDs + ' '+requireOnWfTaskstagesIDs+' ' + isWfshowstagesIDs + '  ' + isWfdisablestagesIDs + '  ' + isWfenablestagesIDs + '        data-groups="' + groups + '" style="display:' + element.display + '">' +
@@ -4536,6 +5192,21 @@ window.ListInfo = {
         break;
 
       case "dropdown":
+        var statusElement = "",
+        sourceElement = "",
+        targetElement = ""; 
+
+
+        if (
+          element.statusElement &&
+          element.sourceElement &&
+          element.targetElement
+        ) {
+          statusElement = `data-statusElement=${element.statusElement}`;
+          sourceElement = `data-sourceElement=${element.sourceElement}`;
+          targetElement = `data-targetElement=${element.targetElement}`;
+        }
+
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit +
@@ -4604,6 +5275,12 @@ window.ListInfo = {
           element.InternalName +
           '" ' +
           element.state +
+          " " +
+          statusElement +
+          " " +
+          sourceElement +
+          " " +
+          targetElement +
           " " +
           element.validation +
           '><option value="" ' +
@@ -4680,6 +5357,8 @@ window.ListInfo = {
         } else {
           childFieldIdSource = "";
         }
+
+      
 
         if (crListKey && isCrMode && customCr) {
           htmlBody = "";
@@ -7570,6 +8249,8 @@ window.ListInfo = {
     //   );
     // }
     //return htmlBody;
+   
+  
   },
   g: {
     htmlText: "",
@@ -8124,6 +8805,9 @@ window.ListInfo = {
       }
       window.acceptedExtensionsstr = acceptedExtensions.toString();
 
+      // Maximum file size in bytes (5MB = 5 * 1024 * 1024 bytes)
+      const maxFileSize = 5 * 1024 * 1024;
+
       $("input[type=file]").each(function (e) {
         $(this)
           .parent()
@@ -8138,11 +8822,21 @@ window.ListInfo = {
         $(this).parent().find(".AttErrorMsg").hide();
         validattachments = [];
         window.files = document.querySelector("#" + $(this).attr("id")).files;
+        let hasInvalidFiles = false;
+        let oversizedFiles = [];
+
         for (var i = 0; i < files.length; i++) {
           const file = files[i];
           const fileExtension = "" + file.name.split(".").pop();
-          // get attribut
+          
+          // Check file size first (5MB = 5 * 1024 * 1024 bytes)
+          if (file.size > 5 * 1024 * 1024) {
+            oversizedFiles.push(file.name);
+            hasInvalidFiles = true;
+            continue;
+          }
 
+          // Check file extension
           if (acceptedExtensions.indexOf(fileExtension.toLowerCase()) > -1) {
             validattachments.push(file);
             if (
@@ -8151,12 +8845,6 @@ window.ListInfo = {
             ) {
               // to handle integration base64
               getBase64(file);
-              // getBase64(file).then(
-              //   data => {
-              //     console.log(data)
-              //     base64 = data
-              //   }
-              // );
             }
           } else {
             $(this)
@@ -8165,8 +8853,53 @@ window.ListInfo = {
               .append("" + fileExtension + ",");
             $(this).parent().find(".AttErrorMsg").show();
             $(this).parent().find(".attErrorMsg").addClass("redColor");
+            hasInvalidFiles = true;
           }
         }
+
+        // Show alert for oversized files
+        if (oversizedFiles.length > 0) {
+          const fileNames = oversizedFiles.join(', ');
+          const currentLang = localStorage.getItem("lng") || 'ar';
+          let alertMessage = '';
+          
+          if (currentLang === 'ar') {
+            alertMessage = `تم تجاوز حجم الملف! الملفات التالية أكبر من 5 ميجابايت ولا يمكن رفعها:\n${fileNames}`;
+          } else {
+            alertMessage = `File size exceeded! The following files are larger than 5MB and cannot be uploaded:\n${fileNames}`;
+          }
+          
+          alert(alertMessage);
+          
+          // Clear the input value to remove all files
+          $(this).val('');
+          validattachments = [];
+          
+          // Hide the integration save button if applicable
+          if (
+            (listkey == "projectcharter" && PCODE) ||
+            (listkey == "initiativecards" && ICODE)
+          ) {
+            $(".integration-save").css({
+              "pointer-events": "none",
+              opacity: "0.6",
+            });
+          }
+          
+          // Show the "no file" message
+          $(this).parent().find("#nofile").show();
+          fileChosen.html("");
+          return;
+        }
+
+        // If there are invalid files (extension issues), clear input
+        if (hasInvalidFiles && validattachments.length === 0) {
+          $(this).val('');
+          $(this).parent().find("#nofile").show();
+          fileChosen.html("");
+          return;
+        }
+
         if (validattachments.length > 0) {
           if (
             (listkey == "projectcharter" && PCODE) ||
@@ -8181,6 +8914,7 @@ window.ListInfo = {
           $(this).parent().find("#nofile").hide();
           fileChosen.html("");
         }
+        
         for (var i = 0; i < validattachments.length; i++) {
           fileChosen.append(
             "<span class='attachfilename'><i class='fas fa-file'></i><span>" +
@@ -8270,7 +9004,7 @@ window.ListInfo = {
             '<span id="file-chosen"><span data-trans-nofile id="nofile" class="Resources"></span></span>' +
             '<div class="AttErrorMsg attErrorMsg" style="display:none"><span data-trans-file class="Resources"></span><span class="notacceptedext"></span><span data-trans-notallowed class="Resources"></span></div>' +
             '<div class="attErrorMsg"><span data-trans-acceptedfiles class="Resources"></span><span class="acceptedfile"></span></div>' +
-            '<div class="attErrorMsg"><span data-trans-fileSize class="Resources"></span></div>' +
+            '<div class="attErrorMsg"><span data-trans-fileSize class="Resources">Maximum file size: 5MB</span></div>' +
             '<div class="col-md-6 CFIELD" data-groups="" style="visibility:hidden">' +
             '<label for="forattach">Attachments</label>' +
             "</div>" +
@@ -8286,35 +9020,6 @@ window.ListInfo = {
         attachCount = attachCount + 1;
         changeResources();
       });
-
-      // '<div class="col-md-12 CFIELD ' + element.className + ' " ' + thistip + ' ' + hidestagesIDs + ' ' + editableBy + ' ' + showstagesIDs + '  ' + disablestagesIDs + '  ' + enablestagesIDs + '   ' + isWfhidestagesIDs + ' ' + requireOnWfTaskstagesIDs + ' ' + isWfshowstagesIDs + '  ' + isWfdisablestagesIDs + '  ' + isWfenablestagesIDs + '        data-groups="' + groups + '" style="display:' + element.display + '">' +
-      //   '<label  class="attlabel" ' + element.validation + '>' + displayName + '</label>' + //class="custom-file-upload"
-      //   '<input ' + ToggleName + ' type="file" accept="' + acceptedExtensions + '" hidden multiple="multiple" placeholder="' + displayName + '" ' + dynamic + ' class="form-control SPIField" id="' + attachmentId + '" ' + element.state + ' ' + element.validation + '>' +
-      //   '<label data-trans-choosefile id="chooseFile" for="' + attachmentId + '" class="Resources"></label>' +
-      //   '<span id="file-chosen"><span data-trans-nofile id="nofile" class="Resources"></span></span>' +
-      //   '<div class="AttErrorMsg attErrorMsg"><span data-trans-file class="Resources"></span><span class="notacceptedext"></span><span data-trans-notallowed class="Resources"></span></div>' +
-      //   '<div class="attErrorMsg"><span data-trans-acceptedfiles class="Resources"></span><span class="acceptedfile"></span></div>' +
-      //   '<div class="attErrorMsg"><span data-trans-fileSize class="Resources"></span></div>' +
-      //   '<div class="inputInfo ' + isexist + '">' + descPhrase + '</div>' +
-      //   '</div>';
-      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-      // $('.add-New-Attach').click(function () {
-      //   $(
-      //     '<div class="col-md-12 CFIELD ' + element.className + ' " ' + thistip + ' ' + hidestagesIDs + ' ' + showstagesIDs + '  ' + disablestagesIDs + '  ' + enablestagesIDs + '   ' + isWfhidestagesIDs + ' ' + requireOnWfTaskstagesIDs + ' ' + isWfshowstagesIDs + '  ' + isWfdisablestagesIDs + '  ' + isWfenablestagesIDs + '        data-groups="' + groups + '" style="display:' + element.display + '">' +
-      //     '<label  class="attlabel" ' + element.validation + '>' + displayName + '</label>' + //class="custom-file-upload"
-      //     '<input type="file" accept="' + acceptedExtensions + '" hidden multiple="multiple" placeholder="' + displayName + '" ' + dynamic + ' class="form-control SPIField" id="' + attachmentId + '" ' + element.state + ' ' + element.validation + '>' +
-      //     '<label data-trans-choosefile id="chooseFile" for="' + attachmentId + '" class="Resources"></label>' +
-      //     '<span id="file-chosen"><span data-trans-nofile id="nofile" class="Resources"></span></span>' +
-      //     '<div class="AttErrorMsg attErrorMsg"><span data-trans-file class="Resources"></span><span class="notacceptedext"></span><span data-trans-notallowed class="Resources"></span></div>' +
-      //     '<div class="attErrorMsg"><span data-trans-acceptedfiles class="Resources"></span><span class="acceptedfile"></span></div>' +
-      //     '<div class="attErrorMsg"><span data-trans-fileSize class="Resources"></span></div>' +
-      //     '<div class="inputInfo ' + isexist + '">' + descPhrase + '</div>' +
-      //     '</div>'
-      //   ).insertBefore($(this).parent());
-      //   // if( stagename != "بناء طلب تقديم العروض" )
-      //   //   $('.rfpoptions').remove();
-      // });
     },
     budgetitem: function () {
       $("#From, #To").on("change", function () {
@@ -8968,6 +9673,91 @@ window.ListInfo = {
   },
 
 };
+
+setTimeout(() => {
+  const container = document.querySelector('.container-body');
+
+  if (
+    container &&
+    !document.querySelector('.discrepancy-summary-card') &&
+    isNew === true &&
+    listkey === 'closureform'
+  ) {
+    let htmlBuilder =
+      '<div class="card mb-4 border-primary discrepancy-summary-card">' +
+        '<div class="card-header bg-discrepancy text-white font-weight-bold text-center Resources">' +
+          '<p class="Resources m-0" data-trans-discrepancysummary> </p>' +
+        '</div>' +
+        '<div class="card-body">' +
+          '<div class="row">' +
+            '<div class="col-lg-3 col-md-6 mb-3 text-center">' +
+              '<p class="Resources mb-1 font-weight-bold text-center" data-trans-FinancialDiscrepancyValue></p>' +
+              '<div class="text-center">' + (projectDiscrepancyCost || No_Data) + '</div>' +
+            '</div>' +
+            '<div class="col-lg-3 col-md-6 mb-3">' +
+              '<p class="Resources mb-1 font-weight-bold text-center" data-trans-FinancialDiscrepancyPercentage></p>' +
+              '<div class="text-center">' + (projectDiscrepancyCostPercentage || No_Data) + '</div>' +
+            '</div>' +
+            '<div class="col-lg-3 col-md-6 mb-3">' +
+              '<p class="Resources mb-1 font-weight-bold text-center" data-trans-DiscrepancyinDays></p>' +
+              '<div class="text-center">' + (projectDiscrepancyInDays || No_Data) + '</div>' +
+            '</div>' +
+            '<div class="col-lg-3 col-md-6 mb-3">' +
+              '<p class="Resources mb-1 font-weight-bold text-center" data-trans-TimeDiscrepancyPercentage></p>' +
+              '<div class="text-center">' + (projectDiscrepancyPercentage || No_Data) + '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+
+    container.insertAdjacentHTML('afterbegin', htmlBuilder);
+    changeResources()
+  }
+}, 2000); // Adjust delay (ms) as needed, e.g., 500ms, 1500ms, etc.
+
+setTimeout(() => {
+  const container = document.querySelector('.container-body');
+
+  if (
+    container &&
+    !document.querySelector('.discrepancy-summary-card') &&
+    isNew === true &&
+    listkey === 'closureinitiative'
+  ) {
+    let htmlBuilder =
+      '<div class="card mb-4 border-primary discrepancy-summary-card">' +
+        '<div class="card-header bg-discrepancy text-white font-weight-bold text-center Resources">' +
+          '<p class="Resources m-0" data-trans-discrepancysummary> </p>' +
+        '</div>' +
+        '<div class="card-body">' +
+          '<div class="row">' +
+            '<div class="col-lg-3 col-md-6 mb-3 text-center">' +
+              '<p class="Resources mb-1 font-weight-bold text-center" data-trans-FinancialDiscrepancyValue></p>' +
+              '<div class="text-center">' + (initiativeDiscrepancyCost || No_Data) + '</div>' +
+            '</div>' +
+            '<div class="col-lg-3 col-md-6 mb-3">' +
+              '<p class="Resources mb-1 font-weight-bold text-center" data-trans-FinancialDiscrepancyPercentage></p>' +
+              '<div class="text-center">' + (initiativeDiscrepancyCostPercentage || No_Data) + '</div>' +
+            '</div>' +
+            '<div class="col-lg-3 col-md-6 mb-3">' +
+              '<p class="Resources mb-1 font-weight-bold text-center" data-trans-DiscrepancyinDays></p>' +
+              '<div class="text-center">' + (initiativeDiscrepancyInDays || No_Data) + '</div>' +
+            '</div>' +
+            '<div class="col-lg-3 col-md-6 mb-3">' +
+              '<p class="Resources mb-1 font-weight-bold text-center" data-trans-TimeDiscrepancyPercentage></p>' +
+              '<div class="text-center">' + (initiativeDiscrepancyPercentage || No_Data) + '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+
+    container.insertAdjacentHTML('afterbegin', htmlBuilder);
+    changeResources()
+  }
+}, 2000); 
+
+
+
 // for view
 window.View_ListInfo = {
   // Pre-initialization functions ensure scripts, SharePoint dependencies are loaded
@@ -8999,7 +9789,7 @@ window.View_ListInfo = {
   },
   InfoLoop: function () {
     var htmlBuilder = isWF
-      ? '<div class="section1 approvalHeader col-12"><div class="d-flex justify-content-between w-100"><div class=""><span class="bold Resources" data-trans-' +
+      ? '<div class="d-flex justify-content-end mx-o mb-2"> <button data-trans-backbutton class="btn btn-action btn-cancel cancel Resources" type="button"></button> </div> <div class="section1 approvalHeader col-12"><div class="d-flex justify-content-between w-100"><div class=""><span class="bold Resources" data-trans-' +
         USERlistkey +
         "></span>" +
         " " +
@@ -9320,7 +10110,7 @@ window.View_ListInfo = {
             $(".FormContainer").addClass("wf-mode");
             $("#navbarsParent").addClass("wfMode");
             $(".page-nav").attr("style", "display: none !important");
-            $(".sidebar").attr("style", "display: none !important");
+            // $(".sidebar").attr("style", "display: none !important");
             $(".main-panel").attr("style", "width: 100% !important");
             //getTaskHistory.init();
             Get_TaskHistory.init();
@@ -9677,7 +10467,7 @@ window.View_ListInfo = {
             ToggleName +
             " " +
             toggleDisabledName +
-            ' type="number" data-manipulates="year" min="1900" max="2099" step="1" maxdata="' +
+            ' type="number" data-manipulates="year" min="" max="2099" step="1" maxdata="' +
             element.max +
             '" mindata="' +
             element.min +
@@ -10249,6 +11039,9 @@ window.View_ListInfo = {
           break;
 
         case "percentbyrelatedparent":
+
+      
+
           var code = activeCode;
 
           if (code) {
@@ -10323,6 +11116,9 @@ window.View_ListInfo = {
                     toggleDisabledName +
                     "></p>" +
                     "</div>";
+
+             
+
                   OnSuccess(flag, htmlBody);
                 }
               }
@@ -11577,6 +12373,7 @@ window.View_ListInfo = {
     } else {
       OnSuccess(flag, htmlBody);
     }
+   
   },
   g: {
     htmlText: "",
@@ -11666,6 +12463,7 @@ var Dynamic_Data_Request = {
 
         case "dropdown":
           $(this).val(oListItem.get_item("" + $(this).attr("id") + ""));
+
           break;
 
         case "radio":
@@ -12276,6 +13074,7 @@ Phases_Data_Request = {
 };
 window.Stages_Data_Request = {
   onSuccess: function (sender, args) {
+    Stages_Data_Request.g.StagesArray.length = 0;
     var collListItem = Stages_Data_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     while (listItemEnum.moveNext()) {
@@ -12292,13 +13091,23 @@ window.Stages_Data_Request = {
     );
   },
   // The main Initialization function
-  init: function () {
+  init: function (isStrategicProject) {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("Stages");
     var camlQuery = new SP.CamlQuery();
+
+    if(isStrategicProject != undefined)
+    {
     camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And><Eq><FieldRef Name='Enabled' /><Value Type='Integer'>1</Value></Eq><Eq><FieldRef Name='IsStrategicProject' /><Value Type='Choice'>"+isStrategicProject+"</Value></Eq></And></And></Where><OrderBy><FieldRef Name='ListSort' Ascending='True' /></OrderBy></Query></View>"
+    );
+    }
+    else
+    {camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='Enabled'/><Value Type='Integer'>1</Value></Eq></And></Where><OrderBy><FieldRef Name='ListSort' Ascending='True' /></OrderBy></Query></View>"
     );
+    }
+
     Stages_Data_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Stages_Data_Request.g.collListItem);
     clientContext.executeQueryAsync(
@@ -14619,6 +15428,202 @@ let convertToWantedDateFormat = {
 
     return convertedDate;
   }}
+
+  var GetLastProgressFromHistory = {
+    // The main Initialization function
+    preinit: function () {
+      SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
+        GetLastProgressFromHistory.init();
+      });
+    },
+    init: function () {
+      var clientContext = new SP.ClientContext.get_current();
+      var oList = clientContext
+        .get_web()
+        .get_lists()
+        .getByTitle("EngineeringProjects");
+      var camlQuery = new SP.CamlQuery();
+      //var PQuery = "<View><Query><Where><Eq><FieldRef Name = 'Title' /><Value Type='Text'>'"+EngineeringProjectCode+"'</Value></Eq></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>"
+      var PQuery = "<View><Query><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>";
+   
+      camlQuery.set_viewXml(PQuery);
+      GetLastProgressFromHistory.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+      clientContext.load(GetLastProgressFromHistory.g.collListItem);
+      clientContext.executeQueryAsync(
+        Function.createDelegate(this, GetLastProgressFromHistory.onSuccess),
+        Function.createDelegate(this, GetLastProgressFromHistory.onError)
+      );
+    },
+    onSuccess: function (sender, args) {
+      var collListItem = GetLastProgressFromHistory.g.collListItem;
+      var listItemEnum = collListItem.getEnumerator();
+   
+      while(listItemEnum.moveNext()) {
+        var oListItem = listItemEnum.get_current();
+        LastProjectHistory.push(oListItem);
+      }
+
+    },
+    onError: function (sender, args) {
+      console.log(
+        "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+      );
+    },
+    // Global variables
+    g: {},
+  }
+
+  var GetManHoursHistory = {
+    // The main Initialization function
+    preinit: function () {
+      SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
+        GetManHoursHistory.init();
+      });
+    },
+    init: function () {
+      var clientContext = new SP.ClientContext.get_current();
+      var oList = clientContext
+        .get_web()
+        .get_lists()
+        .getByTitle("EngineeringProjectsHistory");
+      var camlQuery = new SP.CamlQuery();
+      //var PQuery = "<View><Query><Where><Eq><FieldRef Name = 'Title' /><Value Type='Text'>'"+EngineeringProjectCode+"'</Value></Eq></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>"
+      var PQuery = "<View><Query><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>";
+   
+      camlQuery.set_viewXml(PQuery);
+      GetManHoursHistory.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+      clientContext.load(GetManHoursHistory.g.collListItem);
+      clientContext.executeQueryAsync(
+        Function.createDelegate(this, GetManHoursHistory.onSuccess),
+        Function.createDelegate(this, GetManHoursHistory.onError)
+      );
+    },
+    onSuccess: function (sender, args) {
+      var collListItem = GetManHoursHistory.g.collListItem;
+      var listItemEnum = collListItem.getEnumerator();
+   
+      while(listItemEnum.moveNext()) {
+        var oListItem = listItemEnum.get_current();
+        ManHoursHistory.push(oListItem);
+      }
+
+    },
+    onError: function (sender, args) {
+      console.log(
+        "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+      );
+    },
+    // Global variables
+    g: {},
+  }
+
+  var GetHolidaysOFF = {
+    // The main Initialization function
+    preinit: function () {
+      SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
+        GetHolidaysOFF.init();
+      });
+    },
+    init: function () {
+      var clientContext = new SP.ClientContext.get_current();
+      var oList = clientContext
+        .get_web()
+        .get_lists()
+        .getByTitle("LocalHolidays");
+      var camlQuery = new SP.CamlQuery();
+      
+      var PQuery = '<View><Query><Where><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>deleted</Value></Neq></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>'
+   
+      camlQuery.set_viewXml(PQuery);
+      GetHolidaysOFF.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+      clientContext.load(GetHolidaysOFF.g.collListItem);
+      clientContext.executeQueryAsync(
+        Function.createDelegate(this, GetHolidaysOFF.onSuccess),
+        Function.createDelegate(this, GetHolidaysOFF.onError)
+      );
+    },
+    onSuccess: function (sender, args) {
+      var collListItem = GetHolidaysOFF.g.collListItem;
+      var listItemEnum = collListItem.getEnumerator();
+   
+      while(listItemEnum.moveNext()) {
+        
+        var oListItem = listItemEnum.get_current();
+        var date = new Date(oListItem.get_item("HolidayDate"));
+        var date2 = new Date(oListItem.get_item("HolidayEndDate"));
+        var duration = oListItem.get_item("HolidayDuration");
+       
+            var firstdate = new Date(oListItem.get_item("HolidayDate"));
+            let day = firstdate.getDate();
+            let month = firstdate.getMonth();
+            let year = firstdate.getFullYear();
+            firstdate = new Date(year,month,day);
+
+            HolidaysOff.push(firstdate);
+
+          while(duration >= 1)
+          {
+
+            if(date <= date2)
+            {
+              let day = date.getDate();
+              let month = date.getMonth();
+              let year = date.getFullYear();
+              date = new Date(year,month,day);
+
+              HolidaysOff.push(date);
+            }
+
+            var date = date.setDate(date.getDate() +  1);
+
+            date = new Date(date);
+
+            duration = duration - 1;
+          }
+
+      }
+    },
+    onError: function (sender, args) {
+      console.log(
+        "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+      );
+    },
+    // Global variables
+    g: {},
+   /* onSuccess: function (sender, args) {
+        var collListItem = GetHolidaysOFF.g.collListItem;
+        var listItemEnum = collListItem.getEnumerator();
+      /*  listItemEnum.forEach(_item=>{
+          HolidaysOff.append(_item)
+        });
+        while (listItemEnum.moveNext()) {
+         HolidaysOff.append(listItemEnum.get_current());
+        }
+    },
+    onError: function (sender, args) {
+        console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+    },
+    // Pre-initialization functions ensure scripts, SharePoint dependencies are loaded
+    preinit: function () {
+        
+    },
+    // The main Initialization function
+    init: function () {
+        var clientContext = new SP.ClientContext.get_current();
+        var oList = clientContext.get_web().get_lists().getByTitle("Holidays");
+        var camlQuery = new SP.CamlQuery();
+         GetHolidaysOFF.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+        clientContext.load(GetHolidaysOFF.g.collListItem);
+        clientContext.executeQueryAsync(
+            Function.createDelegate(this, GetHolidaysOFF.onSuccess),
+            Function.createDelegate(this, GetHolidaysOFF.onError)
+        );
+    },
+    // Global variables
+    g: {
+      
+    }*/
+  };
 
 window.Get_ActualAnnualTotal = {
   onSuccess: function (sender, args) {

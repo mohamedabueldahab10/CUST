@@ -30,6 +30,7 @@
     support: "دعم",
     escalation: "تصعيد",
     rejection: "رفض",
+    needinfo:"طلب معلومات إضافية",
     accept: "الموافقة",
     beencompleted: "تم الانتهاء من:",
     resend: "إعادة إرسال",
@@ -80,9 +81,9 @@
     schedsystem: "المخرجات",
     schedepm: "الجدول الزمني",
     //Priority
-    pr01veryimportant: "مهم جدا",
-    pr02important: "مهم",
-    pr03medium: "متوسط الاهمية",
+    pr01veryimportant: "عالي",
+    pr02important: "متوسط",
+    pr03medium: "منخفض",
     // "pr01veryimportant": "مُلحة",
     // "pr02important": "عالي",
     deleted: "محذوف",
@@ -133,6 +134,7 @@
     crmilestone: "طلب تغيير معلم",
     crdeliverable: "طلب تغيير مخرج",
 
+   
     //Impact On
     budget: "التكلفة",
     scopeofwork: "نطاق العمل",
@@ -173,8 +175,9 @@
     deferred: "مؤجل",
     expectedbud: "الصرف المستحق",
     approve: "إعتماد",
-    reject: "رفض",
+    reject: "طلب معلومات إضافية",
     submit: "موافق",
+    cancel:"إلغاء",
 
     //lesson learned source
     sector: "القطاع",
@@ -206,6 +209,7 @@
     kpivision: "مؤشرات رؤية",
     kpisuscomp: "مؤشرات الاستدامة والتنافسية",
     kpistrategic: "مؤشرات استراتيجية",
+    kpioperational:"مؤشرات تشغيلية",
     //Delivrbles Status
     pending: "قيد الموافقة",
     completed: "مكتملة",
@@ -253,6 +257,21 @@
     newrequest: "طلب جديد",
     //milestones
     onschedule: "وفق الخطة",
+
+     // Engineering Projects Status
+     epending: "تحت الإجراء",
+     finished: "منجز",
+     elate: "متأخر",
+     regular: "منتظم",
+     troubled: "متعثر",
+     stopped: "متوقف",
+     withdrawn: "مسحوب",
+     completedprimary: "منجز استلام ابتدائي",
+     
+     // Engineering Projects Type
+     design:"تصاميم",
+     construction:"إنشائية",
+     restoration:"ترميمات",  
 
     //Closure initative
     initiativecancelled: "الغاء المبادرة",
@@ -310,6 +329,7 @@
     stat18: "لا يقاس",
     stat19: "لا توجد قيمة",
     stat31: "قيد الموافقة",
+    stat33:"لم يحن موعد القياس",
     /////////////////// for Sos
     stat20: "تم تحقيقه جزئيا",
     stat21: "تم تحقيق المستهدف",
@@ -476,6 +496,7 @@
     returned: "تمت إعادته",
     editequation: "المعادلة",
     cancelbutton: "إلغاء",
+    cancelrequest:"إلغاء  الطلب",
     integrationbutton: "الربط مع نظام الأرشفة",
     deletebutton: "حذف البيانات",
     submitsuccessMsg: "تم الإرسال",
@@ -485,6 +506,9 @@
     issues: "التحديات",
     risks: "المخاطر",
     projects: "المشاريع",
+    compliancemajors:"معايير الامتثال",
+    icompliancemajors:"معايير الامتثال",
+    initiativecompliancemajors:"معايير الامتثال",
     strategicobjectives: " هدف وزارة",
     strategicinitiatives: "مبادرة وزارة",
     vroinitiatives: "مبادرة رؤية",
@@ -540,9 +564,12 @@
     acceptedfiles: "الملفات المسموح بها :",
     filesize: "حجم الملف المسموح به هو : 5MB ",
     milestones: "المعالم",
+    exchangeschema: "مخطط الصرف",
     deliverables: "المخرج",
+    nesteddeliverables: "المخرجات المنصرفة",
     issues: "التحديات",
     risks: "المخاطر",
+    developmentrequirements: "مستهدفات التطوير",
     changerequest: "طلب التغيير",
     invoices: "الفواتير",
     stakeholders: "أصحاب المصلحة",
@@ -758,9 +785,26 @@
     p2: "التخطيط",
     p3: "التنفيذ",
     p4: "الاغلاق",
+    monthlyreport : "التقرير الشهري",
     //initiativeMainHome
     instrategy: "استراتيجي",
     initiatives: "المبادرات",
+    initiativeobjectives: "الاهداف",
+    initiativestakeholders:"أصحاب المصلحة",
+    initiativetasks:"المهام",
+    initiativelessonslearned: "الدروس المستفادة",
+    scopemanagement:"إدارة النطاق",
+    schedule:"الجدول الزمني",
+    stakeholders:"المعنيين",
+    procurementplan:"خطة الشراء",
+    communication:"التواصل",
+    change:"التغيير",
+    provenstrength:"نقطة قوة تم اثباتها",
+    improvementopportunity:"فرصة تحسين تم اكتشافها",
+    responsible:"الاختصاص",
+    accountable:"المسؤول",
+    consulted:"الاستشارة",
+    informed:"الاطلاع",
     finance: "ممول",
     degree: "درجة",
     notfinanced: "غير ممول",
@@ -803,6 +847,12 @@
     benefits: "المنافع",
     benefitmetrics: "مقاييس المنافع",
     initiativemom: "محاضر الاجتماع",
+
+
+    // ExternalChannels
+    management :"اللجنة التحضيرية للتنظيم الإداري",
+    supportcomm : "منظومة الدعم والإعانات الاجتماعية",
+
     //view current kpi
     yearkpitype: "السنوي",
     midkpitype: "النصف السنوي",
@@ -943,7 +993,21 @@
     spmteam: "إدارة الأداء الإستراتيجي",
     vrop: "مكتب التخطيط الإستراتيجي",
     spmo: "مكتب إدارة المشاريع القطاعي",
+    projectexceptionupdate:'صلاحيه تعديل مشاريع',
     vroe: "مكتب تحقيق الرؤية",
+    engineerprojectmanagers:"إدارة الإشراف على التنفيذ",
+    engineerdesignmanagers:"إدارة التصاميم",
+    engineerpmo:"مكتب المشاريع الهندسية",
+    saap:"إدارة التخطيط والموائمة الاستراتيجية",
+    cqteam:"إدارة الامتثال والجودة",
+    ipme:"إدارة تميز المبادرات والمشاريع",
+    performancereportsqa:"إدارة الجودة والتقارير",
+    deptorgcommiette:"اللجنة التحضيرية للتنظيم الإداري",
+    deptorgcommietteph1:"اللجنة التحضيرية للتنظيم الإداري مستوى اول",
+    deptorgcommietteph2:"اللجنة التحضيرية للتنظيم الإداري مستوي ثان",
+    fssbcommiette:"منظومة الدعم والإعانات الاجتماعية",
+    fssbcommietteph1:"منظومة الدعم والإعانات الاجتماعية مستوي اول",
+    fssbcommietteph2:"منظومة الدعم والإعانات الاجتماعية مستوي ثان",
     developmentunit: "مدير وحدة الانجاز",
     administrator: "مسؤول النظام",
     minister: "الصلاحية الشاملة",
@@ -964,9 +1028,9 @@
     generalmanager: "مدير إدارة",
     performanceleader: "رائد الأداء",
     performanceleadersec: "رائد الأداء الثاني",
-    strategicpartnershipsteam: "فريق الشراكة الاستراتيجية",
-    partnershiprepresentative: "ممثل الشراكة الاستراتيجية",
-    relationshipmanager: "مدير علاقات الشراكة الاستراتيجية",
+    strategicpartnershipsteam: "إدارة الشراكات الاستراتيجية",
+    partnershiprepresentative: "رائد الشراكة الاستراتيجية",
+    relationshipmanager: "مدير علاقة",
     strategicachievementteam: "فريق المنجزات الاستراتيجية",
     vrohead: "قائد مكتب تحقيق الرؤية",
     vrophead: "مدير ادارة تخطيط اهداف الرؤية",
@@ -1098,6 +1162,14 @@
     delivinitiative: "مبادرة: ",
     delivproject: "مشروع: ",
     relateddeliverables: "المخرجات",
+
+    //Lagging
+    now: "0",
+    three: "3",
+    six: "6",
+    nine: "9",
+    twelve: "12",
+
     //KnowladgeBase
     bookname: "اسم الملف",
 		booktype: "نوع الملف",
@@ -1137,6 +1209,8 @@
     epmocreateproject: "مشروع",
     vrocreateproject: "مشروع",
     lmscreateproject: "مشروع",
+    doc_createproject: "مشروع",
+    fssbcreateproject: "مشروع",
     vroprojdeliverable: "مخرج مشروع",
     epmoprojdeliverable:"مخرج مشروع",
     lmsprojdeliverable:"مخرج مشروع",
@@ -1169,7 +1243,22 @@
     lmscrinitiative:"مبادرة",
     approvals: 'الموافقات',
     feasibilitystudy:'دراسة الجدوى',
-    projectcharter:'ميثاق المشروع'
+    projectcharter:'ميثاق المشروع',
+    duration: "المدة",
+    durationinmonth: "المدة بالشهور",
+    initiativevalueiszero: "المبادرة صفرية",
+    compliance: "ممتثل",
+    noncompliance: "غير ممتثل",
+    general: 'كلى',
+    partial: 'جزئى',
+    financialdiscrepancyvalue: "قيمة التباين المالي",
+    financialdiscrepancypercentage: "نسبة التباين المالي",
+    discrepancyindays: "عدد أيام التباين",
+    timediscrepancypercentage: "نسبة التباين الزمني",
+    discrepancysummary: 'ملخص التباين',
+    compliancestatus: "حالة الامتثال",
+    complaincepercentage: "نسبة الامتثال",
+    transferedproject: "نقل المشروع"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1202,6 +1291,7 @@
     error: "Please fill info above",
     escalation: "Escalation",
     rejection: "Reject",
+    needinfo:"Need More Info",
     accept: "Accept",
     beencompleted: "Been Completed:",
     resend: "Resend",
@@ -1378,7 +1468,9 @@
     visionobjectives: "Vision Objective",
     lmsobjectives: "LMS Objective",
     newrequest: "New Request",
-
+    compliancemajors:"ComplianceMajors",
+    icompliancemajors:"IComplianceMajors",
+    initiativecompliancemajors:"IComplianceMajors",
     strategicinitiatives: "Strategic Initiative",
     vroinitiatives: "VRO initiative",
     lmsobjectives: "LMS Objective",
@@ -1434,6 +1526,21 @@
     //Closure initative
     initiativecancelled: "Initiative cancelled ",
     initiativecompleted: "Initiative completed",
+
+     // Engineering Projects Status
+ epending: "epending",
+ finished: "finished",
+ elate: "elate",
+ regular: "regular",
+ troubled: "troubled",
+ stopped: "stopped",
+ withdrawn: "withdrawn",
+ completedprimary: "completedprimary",
+// Engineering Projects Type
+design:"design",
+construction:"construction",
+restoration:"restoration",
+
     //risks
 
     toissue: "Move to Issue",
@@ -1447,6 +1554,7 @@
     approve: "Approve",
     reject: "Reject",
     submit: "Submit",
+    cancel:"Cancel",
     enternameemail: "Enter a name or an email...",
 
     dateclosure: "Issue Closure Date",
@@ -1485,6 +1593,7 @@
     stat21: "Target achieved",
     stat22: "On Track",
     stat32: "Under Approval",
+    stat33:"Not Measure Now",
     ///////////////////for strategic partnership
     stat23: "Too Late",
     stat24: "Late",
@@ -1673,6 +1782,7 @@
     returned: "returned",
     editequation: "Equation",
     cancelbutton: "Cancel",
+    cancelrequest:"Cancel Request",
     integrationbutton: "Integration With Achive",
     deletebutton: "Delete",
     submitsuccessMsg: "Submitted Successfully",
@@ -1687,6 +1797,7 @@
     strategy: "Is Strategic Project",
     issues: "Issues",
     risks: "Risks",
+    developmentrequirements: "Development Requirements",
     completionpercentage: "Completion Percentage",
     budgetexpenditure: "Expenditure from the Budget",
     portfolio: "Portfolio",
@@ -1942,6 +2053,22 @@
     //initiativeMainHome
     instrategy: "Strategic",
     initiatives: "Initiatives",
+    initiativeobjectives: "InitiativeObjectives",
+    initiativestakeholders:"InitiativeStakeholders",
+    initiativetasks:"InitiativeTasks",
+    provenstrength:"ProvenStrength",
+    improvementopportunity:"ImprovementOpportunity",
+    initiativelessonslearned:"InitiativeLessonsLearned",
+    scopemanagement:"ScopeManagement",
+    schedule:"Schedule",
+    stakeholders:"Stakeholders",
+    procurementplan:"ProcurementPlan",
+    communication:"Communication",
+    change:"Change",
+    responsible:"Responsible",
+    accountable:"Accountable",
+    consulted:"Consulted",
+    informed:"Informed",
     benefscale: "Benefit Scale",
     finance: "Financed",
     notfinanced: "Not Financed",
@@ -1988,6 +2115,9 @@
     benefits: "Benefits",
     benefitmetrics: "Benefit Metrics",
     initiativemom: "MoM",
+     // ExternalChannels
+     management :"Preparatory Committee for the Permanent Committee of the Council of Economic and Development Affairs on Administrative Organization",
+     supportcomm : "Framework for Social Support and Benefits",
     //view current kpi
     yearkpitype: "Years",
     midkpitype: "Midterms",
@@ -2140,6 +2270,20 @@
     vrop: "VRO_P",
     spmo: "SPMO",
     vroe: "VRO_E",
+       // Engineer Projects
+    engineerdesignmanagers:"Engineer DesignManagers",
+    engineerprojectmanagers:"Engineer ProjectManagers",
+    engineerpmo:"Engineer PMO",
+    saap:"SAAP",
+    cqteam:"Compliance & Quality Team",
+    ipme:"Initiatives and Projects Management Excellence",
+    performancereportsqa:"Performance Reports QA",
+    deptorgcommiette:"Preparatory Committee for the Permanent Committee of the Council of Economic and Development Affairs on Administrative Organization",
+    deptorgcommietteph1:"Preparatory Committee for the Permanent Committee of the Council of Economic and Development Affairs on Administrative Organization Phase 1",
+    deptorgcommietteph2:"Preparatory Committee for the Permanent Committee of the Council of Economic and Development Affairs on Administrative Organization Phase 2",
+    fssbcommiette:"Framework for Social Support and Benefits",
+    fssbcommietteph1:"Framework for Social Support and Benefits Phase 1",
+    fssbcommietteph2:"Framework for Social Support and Benefits Phase 2",
     developmentunit: "Development Unit",
     administrator: "Administrator",
     minister: "Gloabl Access",
@@ -2296,6 +2440,7 @@
     delivinitiative: "Initiative: ",
     delivproject: "Project: ",
     relateddeliverables: "Related Deliverables",
+    
     //KnowladgeBase
     bookname: "File Name",
 		booktype: "File Type",
@@ -2323,6 +2468,8 @@
     epmoinitiativedeliverable: "Initiative Deliverable",
     lmsinitiativedeliverable: "Initiative Deliverable",
     epmocreateproject: "Project",
+    doc_createproject: "Project",
+    fssbcreateproject: "Project",
     vrocreateproject: "Project",
     lmscreateproject: "Project",
     vroprojdeliverable: "Project Deliverable",
@@ -2357,7 +2504,22 @@
     lmscrinitiative:"Initiative",
     approvals: 'approvals',
     feasibilitystudy:'Feasibility Study',
-    projectcharter:'Project Charter'
+    projectcharter:'Project Charter',
+    duration: 'Duration',
+    durationinmonth: "Duration In Months",
+    initiativevalueiszero: "Zero Budget",
+    compliance: "Compliance",
+    noncompliance: "Non Compliance",
+    general: 'general',
+    partial: 'partial',
+    financialdiscrepancyvalue: "Financial Discrepancy Value",
+    financialdiscrepancypercentage: "Financial Discrepancy Percentage",
+    discrepancyindays: "Discrepancy in Days",
+    timediscrepancypercentage: "Time Discrepancy Percentage",
+    discrepancysummary: "Discrepancy Summary",
+    compliancestatus: "Compliance Status",
+    complaincepercentage: "Compliance Percentage",
+    transferedproject: "Transfered Project"
   },
 };
 
@@ -2431,6 +2593,12 @@ window.Dynamo_Data = [
   // List Names + Fields Internal Names; Note: all entries need to have same attr names (and same number of attr)
   {
     ListName: "Phases",
+    Name: "Name",
+    NameEn: "PhaseNameEn",
+    Code: "Title",
+  },
+  {
+    ListName: "IPhases",
     Name: "Name",
     NameEn: "PhaseNameEn",
     Code: "Title",

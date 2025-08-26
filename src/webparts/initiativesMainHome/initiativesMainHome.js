@@ -71,6 +71,7 @@ var phasesrevrse = [],
 var BudgetLabels = [];
 var budgetData = [];
 var axeposition;
+var isInitiativeZero;
 var BudgetLabelsAr = [
   // Resources.ar["remaining"],
   Resources.ar["budget"],
@@ -285,8 +286,13 @@ window.initiativeRequest = {
       phases = oListItem.get_item("Phase")
         ? oListItem.get_item("Phase")
         : No_Data;
+
       subsector = oListItem.get_item("SubSector")
         ? oListItem.get_item("SubSector")
+        : No_Data;
+
+        isInitiativeZero = oListItem.get_item("IsZeroBudgetInitiative")
+        ? oListItem.get_item("IsZeroBudgetInitiative")
         : No_Data;
 
       // priority = oListItem.get_item('Priority') || "nodata";
