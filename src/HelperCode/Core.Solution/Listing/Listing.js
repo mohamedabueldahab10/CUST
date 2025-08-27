@@ -39,8 +39,7 @@ window.indexoflistinginternalproject = 0;
 window.indexoflistingexternalproject = 0;
 var taskClicked = 'relatedTasks', allTasksClicked = false, getNewFilterTask = false, isViewMoreClicked = false;
 
-var emptyData = require('../../../HelperRessources/img/empty-data.png');
-var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
+z
 // var emptyData = ''
 // var exportExcel = ''
 //all data filter array
@@ -2107,6 +2106,65 @@ window.ListingData = {
             //   $(".content-list-head")
             // );
             $('.additionalInfo').html(AllinitiativeMilestonesCounterContainer);
+            // console.log('test');
+            // $("div#StatusFilterationHTMLid").append(`
+            //   <div class="dropdown mx-3">
+            //     <a
+            //       href="#"
+            //       data-trans-taskstatus
+            //       class="dropdown-toggle fnt-14 w-1 black Resources"
+            //       data-toggle="dropdown"
+            //       role="button"
+            //       resource-done="true"
+            //       aria-expanded="false"
+            //     ></a>
+            //     <div
+            //       class="dropdown-menu Filter-6"
+            //       style="max-height: 540px; overflow-y: auto"
+            //     >
+            //       <label class="main-action-filter">
+            //         <input class="filterSearch" type="text" placeholder="بحث ..." />
+            //         <button
+            //           data-trans-canselselections=""
+            //           class="clear-filter Resources"
+            //           type="button"
+            //         >
+            //           إلغاء الإختيارات
+            //         </button>
+            //       </label>
+            //       <label class="dropdown-item">
+            //         <span data-trans-notstarted title="notstarted" class="textintofilter Resources"></span>
+            //         <input
+            //           data-type="text"
+            //           data-internal="Status"
+            //           type="checkbox"
+            //           name="Status"
+            //           value="notstarted"
+            //         />
+            //       </label>
+            //       <label class="dropdown-item">
+            //         <span data-trans-completed title="completed" class="textintofilter Resources"></span>
+            //         <input
+            //           data-type="text"
+            //           data-internal="Status"
+            //           type="checkbox"
+            //           name="Status"
+            //           value="completed"
+            //         />
+            //       </label>
+            //       <label class="dropdown-item">
+            //       <span data-trans-late title="late" class="textintofilter Resources"></span>
+            //         <input
+            //           data-type="text"
+            //           data-internal="Status"
+            //           type="checkbox"
+            //           name="Status"
+            //           value="late"
+            //         />
+            //       </label>
+            //     </div>
+            //   </div>
+            //   `);        
           }
           //
           for (var y = 0; y < Listing_Info.length; y++) {

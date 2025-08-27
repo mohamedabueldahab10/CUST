@@ -2785,59 +2785,105 @@ window.Edit_Data_Submit = {
 
 
 function handlePartialDisbursementSave() {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const clientContext = new SP.ClientContext.get_current();
     const nestedList = clientContext.get_web().get_lists().getByTitle("NestedDeliverables");
-    
-    // Create a NEW item (will always add, never update)
-    const newItem = nestedList.addItem(new SP.ListItemCreationInformation());
-    if(projectInitiativeType == 'vision'){
-      newItem.set_item("WFModuleCode", "VROProjNDeliverable");
-      newItem.set_item("WFStage", "VROProjNDeliverable01");
-    } else if(projectInitiativeType == 'lms'){
-      newItem.set_item("WFModuleCode", "LMSProjNDeliverable");
-      newItem.set_item("WFStage", "LMSProjNDeliverable01");
-    } else if (projectInitiativeType == 'strategically'){
-      newItem.set_item("WFModuleCode", "EPMOProjNDeliverable");
-      newItem.set_item("WFStage", "EPMOProjNDeliverable01");
-    }
-    // Set field values
-    newItem.set_item("ProjectCode", PCODE);
-    newItem.set_item("MasterID", IID); 
-    newItem.set_item("MasterKey", "Deliverables");
-    newItem.set_item("AmountPrice", $("#AmountPrice").val());
-    newItem.set_item("Quantity", $("#Disbursedquantity").val());
-    newItem.set_item("Name", $("#Name").val());
-    newItem.set_item("Description", $("#Description").val());
-    newItem.set_item("PurchaseRequestNumber", $("#PurchaseRequestNumber").val());
-    newItem.set_item("PurchaseOrderNumber", $("#PurchaseOrderNumber").val());
-    newItem.set_item("PurchaseOrderLineNumber", $("#ProjectLineNumber").val());
-    debugger;
-    var prt1 = "ND",
-    prt2 = String(new Date().getFullYear()).slice(4 - 2),
-    prt3 = IID,
-    ptr4 = String(new Date().getMonth());
 
-    var Code = prt1 + "-" + prt2 + "-" + prt3 + "-" + ptr4;
+    // === Step 1: check if there are pending disbursements ===
+    const camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(`
+      <View>
+        <Query>
+          <Where>
+            <And>
+              <Eq>
+                <FieldRef Name='MasterID' />
+                <Value Type='Text'>${IID}</Value>
+              </Eq>
+              <And>
+                <Neq>
+                  <FieldRef Name='WFStage' />
+                  <Value Type='Text'>approved</Value>
+                </Neq>
+                <Neq>
+                  <FieldRef Name='DeletionStatus' />
+                  <Value Type='Text'>deleted</Value>
+                </Neq>
+              </And>
+            </And>
+          </Where>
+        </Query>
+      </View>
+    `);
 
-    newItem.set_item("Title", Code);
-    
-    // Update the item
-    newItem.update();
+    const existingItems = nestedList.getItems(camlQuery);
+    clientContext.load(existingItems);
 
-    // Execute the query to save the item
     clientContext.executeQueryAsync(
       () => {
-        console.log("New partial disbursement record added");
-        resolve();
+        const enumerator = existingItems.getEnumerator();
+        if (enumerator.moveNext()) {
+          // يوجد مخرج آخر قيد الموافقات
+          alert("يوجد مخرج آخر منصرف قيد الموافقات");
+          resolve(false); // نوقف الحفظ
+          return;
+        }
+
+        // === Step 2: لا يوجد تعارض، نكمل إضافة الجديد ===
+        const newItem = nestedList.addItem(new SP.ListItemCreationInformation());
+
+        if (projectInitiativeType == 'vision') {
+          newItem.set_item("WFModuleCode", "VROProjNDeliverable");
+          newItem.set_item("WFStage", "VROProjNDeliverable01");
+        } else if (projectInitiativeType == 'lms') {
+          newItem.set_item("WFModuleCode", "LMSProjNDeliverable");
+          newItem.set_item("WFStage", "LMSProjNDeliverable01");
+        } else if (projectInitiativeType == 'strategically') {
+          newItem.set_item("WFModuleCode", "EPMOProjNDeliverable");
+          newItem.set_item("WFStage", "EPMOProjNDeliverable01");
+        }
+
+        // set field values
+        newItem.set_item("ProjectCode", PCODE);
+        newItem.set_item("MasterID", IID);
+        newItem.set_item("MasterKey", "Deliverables");
+        newItem.set_item("AmountPrice", $("#AmountPrice").val());
+        newItem.set_item("Quantity", $("#Disbursedquantity").val());
+        newItem.set_item("Name", $("#Name").val());
+        newItem.set_item("Description", $("#Description").val());
+        newItem.set_item("PurchaseRequestNumber", $("#PurchaseRequestNumber").val());
+        newItem.set_item("PurchaseOrderNumber", $("#PurchaseOrderNumber").val());
+        newItem.set_item("PurchaseOrderLineNumber", $("#ProjectLineNumber").val());
+
+        // build title code
+        const prt1 = "ND",
+          prt2 = String(new Date().getFullYear()).slice(2),
+          prt3 = IID,
+          ptr4 = String(new Date().getMonth() + 1);
+        const Code = `${prt1}-${prt2}-${prt3}-${ptr4}`;
+
+        newItem.set_item("Title", Code);
+        newItem.update();
+
+        clientContext.executeQueryAsync(
+          () => {
+            console.log("New partial disbursement record added");
+            resolve(true);
+          },
+          (sender, args) => {
+            console.error("Error adding disbursement:", args.get_message());
+            resolve(false);
+          }
+        );
       },
       (sender, args) => {
-        console.error("Error adding disbursement:", args.get_message());
-        resolve(); // Continue even if this fails
+        console.error("Error checking nested deliverables:", args.get_message());
+        resolve(false);
       }
     );
   });
 }
+
 
 
 //BenefitResults
