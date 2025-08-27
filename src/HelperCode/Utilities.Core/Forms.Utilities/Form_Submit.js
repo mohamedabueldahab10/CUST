@@ -2807,7 +2807,7 @@ function handlePartialDisbursementSave() {
                 </Neq>
                 <Neq>
                   <FieldRef Name='DeletionStatus' />
-                  <Value Type='Text'>deleted</Value>
+                  <Value Type='Text'>Deleted</Value>
                 </Neq>
               </And>
             </And>
