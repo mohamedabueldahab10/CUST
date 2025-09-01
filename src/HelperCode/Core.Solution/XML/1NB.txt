@@ -1,6 +1,0 @@
-Projects | initiative Documents Library 
-tasks list 
-Navs Lists ,Stage Config, TasksConfig,Portfolio,Sectors ( List Contains Data ) 
-should be Copy As well
-NB:
-1)Header column in Side navigation should be checked after deployment the XML to make sure contains data 
