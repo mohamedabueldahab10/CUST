@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>ic/16/nesbat injaz</title>
+    <defs>
+        <path d="M2.42857143,1.5 L1.5,1.5 L1.5,14.0357143 C1.5,14.2921322 1.70786779,14.5 1.96428571,14.5 L14.5,14.5 L14.5,13.5714286 L2.42857143,13.5714286 L2.42857143,1.5 Z M14.5,4.75 L11.25,4.75 L11.25,5.67857143 L12.9148821,5.67857143 L9.39285714,9.20059643 L7.39967857,7.20741786 C7.21836975,7.02613815 6.92444096,7.02613815 6.74313214,7.20741786 L3.35714286,10.5934536 L4.01368929,11.25 L7.07142857,8.19226071 L9.06460714,10.1854393 C9.24591596,10.366719 9.53984475,10.366719 9.72115357,10.1854393 L13.5714286,6.33511786 L13.5714286,8 L14.5,8 L14.5,4.75 Z" id="path-1"></path>
+    </defs>
+    <g id="option-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.600000024">
+        <g id="02-HRDF-op1-Sector-Head" transform="translate(-811.000000, -642.000000)">
+            <g id="projects" transform="translate(420.000000, 500.000000)">
+                <g id="expanded-projects" transform="translate(75.000000, 138.000000)">
+                    <g id="nesbet-injaz" transform="translate(220.000000, 0.000000)">
+                        <g id="ic/16/nesbat-injaz" transform="translate(95.000000, 3.000000)">
+                            <mask id="mask-2" fill="white">
+                                <use xlink:href="#path-1"></use>
+                            </mask>
+                            <use id="icon-color" fill="#000000" xlink:href="#path-1"></use>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

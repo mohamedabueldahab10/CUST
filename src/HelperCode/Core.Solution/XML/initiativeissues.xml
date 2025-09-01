@@ -1,0 +1,164 @@
+ <!-- done -->
+ <Fields>
+	<Field 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="Issue Code" 
+				StaticName="Title" 
+				Name="Title"/>
+	<Field 
+				Group="SPM Fields"
+				Required="TRUE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Name"
+				StaticName="Name"
+				Name="Name"/>					
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Note"
+				DisplayName="Description"
+				StaticName="Description"
+				Name="Description"/>
+	<Field
+				Group=" Fields"
+				Required="FALSE"
+				Type="Choice"
+				DisplayName="Category"
+				StaticName="Category"
+				Name="Category"
+				>
+				<CHOICES>
+				<CHOICE>financial</CHOICE>
+				<CHOICE>legal</CHOICE>
+				<CHOICE>contractual</CHOICE>
+				<CHOICE>ResultType</CHOICE>
+				</CHOICES>
+	</Field>
+	<Field
+				Group=" Fields"
+				Required="FALSE"
+				Type="Choice"
+				DisplayName="Priority"
+				StaticName="Priority"
+				Name="Priority"
+				>
+				<CHOICES>
+				<CHOICE>critical</CHOICE>
+				<CHOICE>hight</CHOICE>
+				<CHOICE>medium</CHOICE>
+				<CHOICE>low</CHOICE>
+				</CHOICES>
+	</Field>
+	<Field
+				Group=" Fields"
+				Required="FALSE"
+				Type="Choice"
+				DisplayName="Impact"
+				StaticName="Impact"
+				Name="Impact"
+				>
+				<CHOICES>
+				<CHOICE>hight</CHOICE>
+				<CHOICE>medium</CHOICE>
+				<CHOICE>low</CHOICE>
+				</CHOICES>
+	</Field>				
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Note"
+				DisplayName="Impact Description"
+				StaticName="ImpactDescription"
+				Name="ImpactDescription"/>		
+	<Field
+				Group="SPM Fields"
+				Required="FALSE"
+				Type="User"
+				DisplayName="Owner"
+				StaticName="Owner"
+				Name="Owner"/>									
+	<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Date Raised" 
+				StaticName="DateRaised" 
+				Name="DateRaised"/>	
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Resolution Target Date"
+				StaticName="ResolutionTargetDate"
+				Name="ResolutionTargetDate"/>	
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				Type="Note"
+				DisplayName="Resolution"
+				StaticName="Resolution"
+				Name="Resolution"/>				
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Issue Closure Date"
+				StaticName="IssueClosureDate"
+				Name="IssueClosureDate"/>	
+	<Field 
+				Group="SPM Fields" 
+				Required="FALSE"
+				Type="Choice"  
+				DisplayName="Status" 
+				StaticName="Status" 
+				Name="Status"
+				>
+			<CHOICES>
+				<CHOICE>open</CHOICE>
+				<CHOICE>closed</CHOICE>
+			</CHOICES>	
+	</Field>
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				Type="Note"
+				DisplayName="Comments"
+				StaticName="Comments"
+				Name="Comments"/>				
+	<!-- <Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				MaxLength="255"
+				Type="Text"
+				DisplayName="DeletionStatus" 
+				StaticName="DeletionStatus" 
+				Name="DeletionStatus"/>
+
+		
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="MasterKey" 
+			StaticName="MasterKey" 
+			Name="MasterKey"/>
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="MasterID" 
+			StaticName="MasterID" 
+			Name="MasterID"/>	
+
+	 -->
+</Fields>       

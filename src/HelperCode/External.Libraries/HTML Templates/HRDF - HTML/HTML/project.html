@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <title>Human Resources Development Fund</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" sizes="180x180" href="./img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="./img/favicon/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/jquery.fancybox.css">
+    <link rel="stylesheet" href="./css/fontello.css">
+    <link rel="stylesheet" href="./css/jquery-ui.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/jquery-ui.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/jquery.fancybox.js"></script>
+    <script src="./js/circle-progress.js"></script>
+    <script src="./js/ResizeSensor.js"></script>
+    <script src="./js/sticky-sidebar.js"></script>
+    <script src="./js/scripts.js"></script>
+</head>
+
+<body>
+
+    <div class="wrapper d-flex" id="navbarsParent">
+        <nav class="sidebar d-inline-block">
+            <div class="sidebar-sticky">
+                <div class="main-logo">
+                    <a>
+                        <img css="w-100" src="./img/main-logo.png">
+                    </a>
+                </div>
+                <ul class="nav flex-column">
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="../chat.html">
+                            <div class="d-flex align-items-center">
+                                <div class="nav-icon">
+                                    <img src="./img/nav-home.png">
+                                </div>
+
+                                <span class="nav-link-text px-2">Home</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="../chat.html">
+                            <div class="d-flex align-items-center">
+                                <div class="nav-icon">
+                                    <img src="./img/nav-sections.png">
+                                </div>
+                                <span class="nav-link-text px-2">Stratigic Sections</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="../chat.html">
+                            <div class="d-flex align-items-center">
+                                <div class="nav-icon">
+                                    <img src="./img/nav-initiatives.png">
+                                </div>
+                                <span class="nav-link-text px-2">Initiatives</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="../chat.html">
+                            <div class="d-flex align-items-center">
+                                <div class="nav-icon">
+                                    <img src="./img/nav-projects.png">
+                                </div>
+                                <span class="nav-link-text px-2">Projects</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+        </nav>
+
+        <div class="main-panel">
+            <nav class="navbar px-0">
+                <div class="container-fluid">
+                    <div class="navbar-wrapper">
+
+                        <div class="navbar-toggle">
+                            <button class="navbar-toggler js-menu-click d-xl-none" type="button" onClick="handleMainMenu.open()">
+                                <span _ngcontent-c3="" class="navbar-toggler-bar bar1"></span>
+                                <span _ngcontent-c3="" class="navbar-toggler-bar bar2"></span>
+                                <span _ngcontent-c3="" class="navbar-toggler-bar bar3"></span>
+                            </button>
+                        </div>
+                        <h2 class="page-title">Dashboard</h2>
+
+                    </div>
+                    <div class="nav-settings justify-content-end">
+
+                        <div class="btn-toolbar mb-2 mb-md-0">
+
+                            <div class="btn-group mx-3">
+                                <button class="bbtn btn-lg w-5 fnt-14 d-inline-flex align-items-center" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="icon-bell d-inline-flex align-items-center text-center">
+                                        <img src="./img/icon-bell.png" class="mx-3">
+                                        <span class="bell-value">3</span>
+                                    </span>Notifications
+                                </button>
+                                <div class="dropdown-menu border-0 dropdown-menu-center">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <a>
+                                                <h3 class="title-13">Credits</h3>
+                                                <div class="des-12 text-nowrap">A new accreditation has been added</div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="btn-group" id="userGroup">
+                                <button class="btn btn-lg dropdown-toggle w-5 fnt-14" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="icon-user d-inline-flex align-items-center text-center mx-3">
+                                        <span class="user-name w-100">AM</span>
+                                    </span>User Name
+                                </button>
+                                <div class="dropdown-menu border-0 dropdown-menu-right">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <a>
+                                                <h3 class="title-13">Credits</h3>
+                                                <div class="des-12 text-nowrap">A new accreditation has been added</div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container-ctx">
+
+                <div class="navbar page-nav px-5">
+                    <ul class="navbar-nav bd-navbar-nav flex-row">
+                        <li class="nav-item active"><a href="#">Home</a></li>
+                        <li class="nav-item"><a href="#">About</a></li>
+                        <li class="nav-item"><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="container-body">
+                    <div class="row">
+
+                        <div class="col-12 col-lg-8">
+                            <div class="control-ctx project-details-ctx">
+
+                                <div class="ctx-block">
+                                    <div class="card h-100">
+                                        <div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">
+                                            <div class="d-inline-flex flex-row align-items-center">
+                                                <span class="icon-user lg d-inline-flex align-items-center text-center">
+                                                    <span class="user-name lg w-100">AM</span>
+                                                </span>
+                                                <div class="d-inline-flex flex-column mx-3">
+                                                    <h3 class="acc-title d-inline-flex black">Project Name</h3>
+                                                    <span class="des-13 project-date">
+                                                        <span class="start-date">Start Date:<span class="px-2">10/10/2019</span></span>
+                                                    <span class="end-date">End Date:<span class="px-2">10/10/2019</span></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="d-inline-flex flex-column mx-2">
+                                                <h3 class="text-warning">ES-20-01</h3>
+                                                <span class="des-13"><span class="state-val">Project No</span></span>
+                                            </div>
+                                            <div class="d-inline-flex flex-column mx-2">
+                                                <h3 class="text-super-danger">Too late</h3>
+                                                <span class="des-13"><span class="complition-val">Complition Status</span></span>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center" href="#">
+                                            <div class="d-inline-flex flex-column">
+                                                <h4 class="acc-title d-inline-flex black">Initial Stage</h4>
+                                                <span class="des-13">Stage</span>
+                                            </div>
+                                            <div class="d-inline-flex flex-column mx-2">
+                                                <h4 class="text-warning">ES-20-01</h4>
+                                                <span class="des-13"><span class="state-val">Project No</span></span>
+                                            </div>
+                                            <div class="d-inline-flex flex-column mx-2">
+                                                <h4 class="text-super-danger">Too late</h4>
+                                                <span class="des-13"><span class="complition-val">Complition Status</span></span>
+                                            </div>
+                                            <div class="d-inline-flex flex-column mx-2">
+                                                <h4 class="black">V. Important</h4>
+                                                <span class="des-13"><span class="v-important-val">Project Importants</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="control-ctx project-delivery-plan-ctx mt-4">
+                                <div class="card h-100">
+                                    <div class="card-header bg-white d-flex border-bottom px-4 py-4 justify-content-between">
+                                        <h2 class="black">
+                                            Delivery Plan
+                                        </h2>
+
+                                    </div>
+                                    <div class="card-body project-delivery-info border-bottom pb-4 px-0">
+
+                                        <div class="delivery-timeline mx-4 py-3">
+                                            <div class="row">
+                                                <div class="col-lg-3 col-xl-2 mb-3 mb-lg-2">
+                                                    <select id="inputYear" class="input-year form-control">
+                                                        <option selected>2020</option>
+                                                        <option>2021</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-12 col-xl-10">
+                                                    <div class="month-list-ctx">
+                                                        <div class="month-list d-flex">
+                                                            <div class="col px-2 month" id="month-1">Jan
+                                                                <div class="time-box">
+                                                                    <div class="p-date">1/12</div>
+                                                                    <div class="p-title">First Delivery</div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col px-2 month" id="month-2">Feb
+                                                                <div class="time-box">
+                                                                    <div class="p-date">1/12</div>
+                                                                    <div class="p-title">First Delivery</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col px-2 month" id="month-3">Mar</div>
+                                                            <div class="col px-2 month" id="month-4">Apr</div>
+                                                            <div class="col px-2 month" id="month-5">May</div>
+                                                            <div class="col px-2 month" id="month-6">Jun</div>
+                                                            <div class="col px-2 month" id="month-7">Jul</div>
+                                                            <div class="col px-2 month" id="month-8">Aug</div>
+                                                            <div class="col px-2 month" id="month-9">Sep</div>
+                                                            <div class="col px-2 month" id="month-10">Oct</div>
+                                                            <div class="col px-2 month" id="month-11">Nov</div>
+                                                            <div class="col px-2 month" id="month-12">Dec</div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="project-milestone">
+
+                                            <div class="milestone-item mb-3">
+                                                <div class="row mx-0">
+
+                                                    <div class="milestone-label col-auto fnt-13 w-3 mb-1" style="width:130px">First Milestone</div>
+
+                                                    <div class="milestone-duration col-6 col-xl-auto fnt-13 black order-xl-last mb-1">
+                                                        <span class="m-start-date">15/7/2020</span>
+                                                        <i class="fa m-arrow"></i>
+                                                        <span class="m-end-date">15/7/2020</span>
+                                                    </div>
+
+                                                    <div class="col-12 col-xl-5 state-bar align-items-center order-last order-xl-1 mb-1">
+                                                        <div class="position-relative d-flex flex-row-reverse mt-1">
+                                                            <div class="state-progress-line bg-primary">
+                                                            </div>
+                                                            <div class="state-progress-bar bg-primary" style="width:50%">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="milestone-item mb-3">
+                                                <div class="row mx-0">
+
+                                                    <div class="milestone-label col-auto fnt-13 w-3 mb-1" style="width:130px">Second Milestone</div>
+
+                                                    <div class="milestone-duration col-6 col-xl-auto fnt-13 black order-xl-last mb-1">
+                                                        <span class="m-start-date">15/7/2020</span>
+                                                        <i class="fa m-arrow"></i>
+                                                        <span class="m-end-date">15/7/2020</span>
+                                                    </div>
+
+                                                    <div class="col-12 col-xl-5 state-bar align-items-center order-last order-xl-1 mb-1">
+                                                        <div class="position-relative d-flex flex-row-reverse mt-1">
+                                                            <div class="state-progress-line bg-success">
+                                                            </div>
+                                                            <div class="state-progress-bar bg-success" style="width:50%">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="milestone-item mb-3">
+                                                <div class="row mx-0">
+
+                                                    <div class="milestone-label col-auto fnt-13 w-3 mb-1" style="width:130px">Third Milestone</div>
+
+                                                    <div class="milestone-duration col-6 col-xl-auto fnt-13 black order-xl-last mb-1">
+                                                        <span class="m-start-date">15/7/2020</span>
+                                                        <i class="fa m-arrow"></i>
+                                                        <span class="m-end-date">15/7/2020</span>
+                                                    </div>
+
+                                                    <div class="col-12 col-xl-5 state-bar align-items-center order-last order-xl-1 mb-1">
+                                                        <div class="position-relative d-flex flex-row-reverse mt-1">
+                                                            <div class="state-progress-line bg-warning">
+                                                            </div>
+                                                            <div class="state-progress-bar bg-warning" style="width:50%">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="milestone-item mb-3">
+                                                <div class="row mx-0">
+
+                                                    <div class="milestone-label col-auto fnt-13 w-3 mb-1" style="width:130px">Fourth Milestone</div>
+
+                                                    <div class="milestone-duration col-6 col-xl-auto fnt-13 black order-xl-last mb-1">
+                                                        <span class="m-start-date">15/7/2020</span>
+                                                        <i class="fa m-arrow"></i>
+                                                        <span class="m-end-date">15/7/2020</span>
+                                                    </div>
+
+                                                    <div class="col-12 col-xl-5 state-bar align-items-center order-last order-xl-1 mb-1">
+                                                        <div class="position-relative d-flex flex-row-reverse mt-1">
+                                                            <div class="state-progress-line bg-warning">
+                                                            </div>
+                                                            <div class="state-progress-bar bg-warning" style="width:50%">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                            <div class="control-ctx project-requests-ctx mt-4">
+                                <div class="card">
+                                    <ul class="nav mb-1 custom-nav border-bottom" id="pills-tab" role="tablist">
+                                        <li class="nav-item active">
+                                            <a class="nav-link active" id="pills-first-tab" data-toggle="pill" href="#pills-first" role="tab" aria-controls="pills-first" aria-selected="true">Obstacles</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="pills-second-tab" data-toggle="pill" href="#pills-second" role="tab" aria-controls="pills-second" aria-selected="false">Risks</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="pills-third-tab" data-toggle="pill" href="#pills-third" role="tab" aria-controls="pills-third" aria-selected="false">Change Request</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="pills-fourth-tab" data-toggle="pill" href="#pills-fourth" role="tab" aria-controls="pills-fourth" aria-selected="false">Outputs</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content" id="pills-tabContent">
+                                        <div class="tab-pane fade px-4 show active" id="pills-first" role="tabpanel" aria-labelledby="pills-first-tab">
+                                            <ul class="list-group w-100 border-custom">
+                                                <li class="list-group-item link-arrow px-0">
+                                                    <a class="mb-0 py-3 px-2 d-flex justify-content-between" href="#">
+                                                        <div class="d-inline-flex flex-column">
+                                                            <h3 class="acc-title d-inline-flex black">Delivery of medical equipment</h3>
+                                                            <span class="des-13"><span>status: </span>On Plan</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="text-warning">10/2/2021</h4>
+                                                            <span class="des-13">Close Date</span>
+                                                        </div>
+
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="black">Mohamad H</h4>
+                                                            <span class="des-13">Administrator</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2" style="width:20px;">
+
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li class="list-group-item link-arrow px-0">
+                                                    <a class="mb-0 py-3 px-2 d-flex justify-content-between" href="#">
+                                                        <div class="d-inline-flex flex-column">
+                                                            <h3 class="acc-title d-inline-flex black">Delivery of medical equipment</h3>
+                                                            <span class="des-13"><span>status: </span>On Plan</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="text-warning">10/2/2021</h4>
+                                                            <span class="des-13">Close Date</span>
+                                                        </div>
+
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="black">Mohamad H</h4>
+                                                            <span class="des-13">Administrator</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2" style="width:20px;">
+
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li class="list-group-item link-arrow px-0">
+                                                    <a class="mb-0 py-3 px-2 d-flex justify-content-between" href="#">
+                                                        <div class="d-inline-flex flex-column">
+                                                            <h3 class="acc-title d-inline-flex black">Delivery of medical equipment</h3>
+                                                            <span class="des-13"><span>status: </span>On Plan</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="text-warning">10/2/2021</h4>
+                                                            <span class="des-13">Close Date</span>
+                                                        </div>
+
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="black">Mohamad H</h4>
+                                                            <span class="des-13">Administrator</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2" style="width:20px;">
+
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li class="list-group-item link-arrow px-0">
+                                                    <a class="mb-0 py-3 px-2 d-flex justify-content-between" href="#">
+                                                        <div class="d-inline-flex flex-column">
+                                                            <h3 class="acc-title d-inline-flex black">Delivery of medical equipment</h3>
+                                                            <span class="des-13"><span>status: </span>On Plan</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="text-warning">10/2/2021</h4>
+                                                            <span class="des-13">Close Date</span>
+                                                        </div>
+
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="black">Mohamad H</h4>
+                                                            <span class="des-13">Administrator</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2" style="width:20px;">
+
+                                                        </div>
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                        <div class="tab-pane fade px-4" id="pills-second" role="tabpanel" aria-labelledby="pills-second-tab">
+                                            <ul class="list-group w-100 border-custom">
+                                                <li class="list-group-item link-arrow px-0">
+                                                    <a class="mb-0 py-3 px-2 d-flex justify-content-between" href="#">
+                                                        <div class="d-inline-flex flex-column">
+                                                            <h3 class="acc-title d-inline-flex black">Delivery of medical equipment</h3>
+                                                            <span class="des-13"><span>status: </span>On Plan</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="text-warning">10/2/2021</h4>
+                                                            <span class="des-13">Close Date</span>
+                                                        </div>
+
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="black">Mohamad H</h4>
+                                                            <span class="des-13">Administrator</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2" style="width:20px;">
+
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li class="list-group-item link-arrow px-0">
+                                                    <a class="mb-0 py-3 px-2 d-flex justify-content-between" href="#">
+                                                        <div class="d-inline-flex flex-column">
+                                                            <h3 class="acc-title d-inline-flex black">Delivery of medical equipment</h3>
+                                                            <span class="des-13"><span>status: </span>On Plan</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="text-warning">10/2/2021</h4>
+                                                            <span class="des-13">Close Date</span>
+                                                        </div>
+
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="black">Mohamad H</h4>
+                                                            <span class="des-13">Administrator</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2" style="width:20px;">
+
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li class="list-group-item link-arrow px-0">
+                                                    <a class="mb-0 py-3 px-2 d-flex justify-content-between" href="#">
+                                                        <div class="d-inline-flex flex-column">
+                                                            <h3 class="acc-title d-inline-flex black">Delivery of medical equipment</h3>
+                                                            <span class="des-13"><span>status: </span>On Plan</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="text-warning">10/2/2021</h4>
+                                                            <span class="des-13">Close Date</span>
+                                                        </div>
+
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="black">Mohamad H</h4>
+                                                            <span class="des-13">Administrator</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2" style="width:20px;">
+
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li class="list-group-item link-arrow px-0">
+                                                    <a class="mb-0 py-3 px-2 d-flex justify-content-between" href="#">
+                                                        <div class="d-inline-flex flex-column">
+                                                            <h3 class="acc-title d-inline-flex black">Delivery of medical equipment</h3>
+                                                            <span class="des-13"><span>status: </span>On Plan</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="text-warning">10/2/2021</h4>
+                                                            <span class="des-13">Close Date</span>
+                                                        </div>
+
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="black">Mohamad H</h4>
+                                                            <span class="des-13">Administrator</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2" style="width:20px;">
+
+                                                        </div>
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                        <div class="tab-pane fade px-4" id="pills-third" role="tabpanel" aria-labelledby="pills-third-tab">
+                                            <ul class="list-group w-100 border-custom">
+                                                <li class="list-group-item link-arrow px-0">
+                                                    <a class="mb-0 py-3 px-2 d-flex justify-content-between" href="#">
+                                                        <div class="d-inline-flex flex-column">
+                                                            <h3 class="acc-title d-inline-flex black">Delivery of medical equipment</h3>
+                                                            <span class="des-13"><span>status: </span>On Plan</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="text-warning">10/2/2021</h4>
+                                                            <span class="des-13">Close Date</span>
+                                                        </div>
+
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="black">Mohamad H</h4>
+                                                            <span class="des-13">Administrator</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2" style="width:20px;">
+
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li class="list-group-item link-arrow px-0">
+                                                    <a class="mb-0 py-3 px-2 d-flex justify-content-between" href="#">
+                                                        <div class="d-inline-flex flex-column">
+                                                            <h3 class="acc-title d-inline-flex black">Delivery of medical equipment</h3>
+                                                            <span class="des-13"><span>status: </span>On Plan</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="text-warning">10/2/2021</h4>
+                                                            <span class="des-13">Close Date</span>
+                                                        </div>
+
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="black">Mohamad H</h4>
+                                                            <span class="des-13">Administrator</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2" style="width:20px;">
+
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li class="list-group-item link-arrow px-0">
+                                                    <a class="mb-0 py-3 px-2 d-flex justify-content-between" href="#">
+                                                        <div class="d-inline-flex flex-column">
+                                                            <h3 class="acc-title d-inline-flex black">Delivery of medical equipment</h3>
+                                                            <span class="des-13"><span>status: </span>On Plan</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="text-warning">10/2/2021</h4>
+                                                            <span class="des-13">Close Date</span>
+                                                        </div>
+
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="black">Mohamad H</h4>
+                                                            <span class="des-13">Administrator</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2" style="width:20px;">
+
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li class="list-group-item link-arrow px-0">
+                                                    <a class="mb-0 py-3 px-2 d-flex justify-content-between" href="#">
+                                                        <div class="d-inline-flex flex-column">
+                                                            <h3 class="acc-title d-inline-flex black">Delivery of medical equipment</h3>
+                                                            <span class="des-13"><span>status: </span>On Plan</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="text-warning">10/2/2021</h4>
+                                                            <span class="des-13">Close Date</span>
+                                                        </div>
+
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="black">Mohamad H</h4>
+                                                            <span class="des-13">Administrator</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2" style="width:20px;">
+
+                                                        </div>
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                        <div class="tab-pane fade px-4" id="pills-fourth" role="tabpanel" aria-labelledby="pills-fourth-tab">
+                                            <ul class="list-group w-100 border-custom">
+                                                <li class="list-group-item link-arrow px-0">
+                                                    <a class="mb-0 py-3 px-2 d-flex justify-content-between" href="#">
+                                                        <div class="d-inline-flex flex-column">
+                                                            <h3 class="acc-title d-inline-flex black">Delivery of medical equipment</h3>
+                                                            <span class="des-13"><span>status: </span>On Plan</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="text-warning">10/2/2021</h4>
+                                                            <span class="des-13">Close Date</span>
+                                                        </div>
+
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="black">Mohamad H</h4>
+                                                            <span class="des-13">Administrator</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2" style="width:20px;">
+
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li class="list-group-item link-arrow px-0">
+                                                    <a class="mb-0 py-3 px-2 d-flex justify-content-between" href="#">
+                                                        <div class="d-inline-flex flex-column">
+                                                            <h3 class="acc-title d-inline-flex black">Delivery of medical equipment</h3>
+                                                            <span class="des-13"><span>status: </span>On Plan</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="text-warning">10/2/2021</h4>
+                                                            <span class="des-13">Close Date</span>
+                                                        </div>
+
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="black">Mohamad H</h4>
+                                                            <span class="des-13">Administrator</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2" style="width:20px;">
+
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li class="list-group-item link-arrow px-0">
+                                                    <a class="mb-0 py-3 px-2 d-flex justify-content-between" href="#">
+                                                        <div class="d-inline-flex flex-column">
+                                                            <h3 class="acc-title d-inline-flex black">Delivery of medical equipment</h3>
+                                                            <span class="des-13"><span>status: </span>On Plan</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="text-warning">10/2/2021</h4>
+                                                            <span class="des-13">Close Date</span>
+                                                        </div>
+
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="black">Mohamad H</h4>
+                                                            <span class="des-13">Administrator</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2" style="width:20px;">
+
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li class="list-group-item link-arrow px-0">
+                                                    <a class="mb-0 py-3 px-2 d-flex justify-content-between" href="#">
+                                                        <div class="d-inline-flex flex-column">
+                                                            <h3 class="acc-title d-inline-flex black">Delivery of medical equipment</h3>
+                                                            <span class="des-13"><span>status: </span>On Plan</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="text-warning">10/2/2021</h4>
+                                                            <span class="des-13">Close Date</span>
+                                                        </div>
+
+                                                        <div class="d-inline-flex flex-column mx-2">
+                                                            <h4 class="black">Mohamad H</h4>
+                                                            <span class="des-13">Administrator</span>
+                                                        </div>
+                                                        <div class="d-inline-flex flex-column mx-2" style="width:20px;">
+
+                                                        </div>
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="control-ctx project-stages-ctx mt-4">
+                                <div class="card h-100">
+                                    <div class="card-header bg-white d-flex border-bottom px-4 py-4 justify-content-between">
+                                        <h2 class="black">
+                                            Project Stages
+                                        </h2>
+                                        <a><img src="./img/icon-edit.png"></a>
+                                    </div>
+                                    <div class="card-body project-status-info border-bottom pb-0 px-0 py-0">
+
+                                        <div class="row">
+                                            <div class="col-auto border-right pt-3 pb-4">
+                                                <div class="nav flex-column v-pills-tab" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                                    <a class="nav-link fnt-13 bold active show" id="v-pills-first-tab" data-toggle="pill" href="#v-pills-first" role="tab" aria-controls="v-pills-first" aria-selected="true"> <span class="width:50px">100%</span>
+                                                        <span class="px-2">S0 pre-approval</span>
+                                                    </a>
+                                                    <a class="nav-link fnt-13 bold gold" id="v-pills-second-tab" data-toggle="pill" href="#v-pills-second" role="tab" aria-controls="v-pills-second" aria-selected="false">
+                                                        <span class="width:50px">100%</span>
+                                                        <span class="px-2">S1 Design</span>
+                                                    </a>
+                                                    <a class="nav-link fnt-13 bold blue" id="v-pills-third-tab" data-toggle="pill" href="#v-pills-third" role="tab" aria-controls="v-pills-third" aria-selected="false">
+                                                        <span class="width:50px">100%</span>
+                                                        <span class="px-2">Compact S2</span>
+                                                    </a>
+                                                    <a class="nav-link fnt-13 bold light-blue" id="v-pills-fourth-tab" data-toggle="pill" href="#v-pills-fourth" role="tab" aria-controls="v-pills-fourth" aria-selected="false">
+                                                        <span class="width:50px">100%</span>
+                                                        <span class="px-2">Execution S3</span>
+                                                    </a>
+                                                    <a class="nav-link fnt-13 bold green" id="v-pills-fifth-tab" data-toggle="pill" href="#v-pills-fifth" role="tab" aria-controls="v-pills-fifth" aria-selected="false">
+                                                        <span class="width:50px">100%</span>
+                                                        <span class="px-2">Close the S4 project</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col pt-4 pb-3">
+                                                <div class="tab-content" id="v-pills-tabContent">
+                                                    <div class="tab-pane fade active show" id="v-pills-first" role="tabpanel" aria-labelledby="v-pills-first-tab">
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" checked="checked" disabled>
+                                                            <label class="form-check-label" for="defaultCheck1">
+                                                                Defining resources
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" checked="checked" disabled>
+                                                            <label class="form-check-label" for="defaultCheck2">
+                                                                The starting project
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck3" disabled>
+                                                            <label class="form-check-label" for="defaultCheck3">
+                                                                Project plan development
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck4" disabled>
+                                                            <label class="form-check-label" for="defaultCheck4">
+                                                                COC development
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck5" disabled>
+                                                            <label class="form-check-label" for="defaultCheck5">
+                                                                Approved invoices
+                                                            </label>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="tab-pane fade" id="v-pills-second" role="tabpanel" aria-labelledby="v-pills-second-tab">
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" checked="checked" disabled>
+                                                            <label class="form-check-label" for="defaultCheck1">
+                                                                Defining resources
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" checked="checked" disabled>
+                                                            <label class="form-check-label" for="defaultCheck2">
+                                                                The starting project
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck3" disabled>
+                                                            <label class="form-check-label" for="defaultCheck3">
+                                                                Project plan development
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck4" disabled>
+                                                            <label class="form-check-label" for="defaultCheck4">
+                                                                COC development
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck5" disabled>
+                                                            <label class="form-check-label" for="defaultCheck5">
+                                                                Approved invoices
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="v-pills-third" role="tabpanel" aria-labelledby="v-pills-third-tab">
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" checked="checked" disabled>
+                                                            <label class="form-check-label" for="defaultCheck1">
+                                                                Defining resources
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" checked="checked" disabled>
+                                                            <label class="form-check-label" for="defaultCheck2">
+                                                                The starting project
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck3" disabled>
+                                                            <label class="form-check-label" for="defaultCheck3">
+                                                                Project plan development
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck4" disabled>
+                                                            <label class="form-check-label" for="defaultCheck4">
+                                                                COC development
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck5" disabled>
+                                                            <label class="form-check-label" for="defaultCheck5">
+                                                                Approved invoices
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="v-pills-fourth" role="tabpanel" aria-labelledby="v-pills-fourth-tab">
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" checked="checked" disabled>
+                                                            <label class="form-check-label" for="defaultCheck1">
+                                                                Defining resources
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" checked="checked" disabled>
+                                                            <label class="form-check-label" for="defaultCheck2">
+                                                                The starting project
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck3" disabled>
+                                                            <label class="form-check-label" for="defaultCheck3">
+                                                                Project plan development
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck4" disabled>
+                                                            <label class="form-check-label" for="defaultCheck4">
+                                                                COC development
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck5" disabled>
+                                                            <label class="form-check-label" for="defaultCheck5">
+                                                                Approved invoices
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="v-pills-fifth" role="tabpanel" aria-labelledby="v-pills-fifth-tab">
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" checked="checked" disabled>
+                                                            <label class="form-check-label" for="defaultCheck1">
+                                                                Defining resources
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" checked="checked" disabled>
+                                                            <label class="form-check-label" for="defaultCheck2">
+                                                                The starting project
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck3" disabled>
+                                                            <label class="form-check-label" for="defaultCheck3">
+                                                                Project plan development
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck4" disabled>
+                                                            <label class="form-check-label" for="defaultCheck4">
+                                                                COC development
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check custom-check d-flex align-items-center">
+                                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck5" disabled>
+                                                            <label class="form-check-label" for="defaultCheck5">
+                                                                Approved invoices
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <div class="control-ctx project-info-ctx">
+                                <div class="card h-100">
+                                    <div class="card-header bg-white d-flex border-bottom px-4 py-4 justify-content-between">
+                                        <h2 class="black">
+                                            Project Info
+                                        </h2>
+                                        <a><img src="./img/icon-edit.png"></a>
+                                    </div>
+                                    <div class="card-body project-status-info border-bottom pb-4">
+                                        <div class="mx-3">
+                                            <div class="row">
+                                                <div class="col-auto h-100">
+                                                    <div class="d-flex flex-row align-items-center mb-4">
+                                                        <img src="./img/icon-status-time-sm.png" class="">
+                                                        <h3 class="mx-2 m-0 text-nowrap">Status</h3>
+                                                    </div>
+                                                    <span class="badge bg-primary white p-3 font-13 bold">
+                                                        Started
+                                                    </span>
+                                                </div>
+                                                <div class="col h-100">
+                                                    <div class="d-flex flex-row align-items-center mb-4">
+                                                        <img src="./img/icon-important-sm.png" class="">
+                                                        <h3 class="mx-2 m-0 text-nowrap">Importance</h3>
+                                                    </div>
+                                                    <span class="badge bg-success white py-3 px-4 font-13 bold">
+                                                        Very Important
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body project-stakeholders-info border-bottom pb-4">
+                                        <div class="mx-3 pt-3">
+                                            <h3 class="mb-4">Stakeholders</h3>
+                                            <div class="media-body pb-3 mb-0 lh-125 border-gray">
+                                                <h4 class="dark-gray mb-3">Project sponsor</h4>
+                                                <div class="emp-name d-flex flex-row align-items-center">
+                                                    <span class="icon-user d-inline-flex bg-warning align-items-center text-center">
+                                                        <span class="user-name w-100">AM</span>
+                                                    </span>
+                                                    <p class="fnt-14 reg mx-3">Emp 1</p>
+                                                </div>
+                                            </div>
+                                            <div class="media-body pb-3 mb-0 lh-125 border-gray">
+                                                <h4 class="dark-gray mb-3">Project owner</h4>
+                                                <div class="emp-name d-flex flex-row align-items-center">
+                                                    <span class="icon-user d-inline-flex bg-success align-items-center text-center">
+                                                        <span class="user-name w-100">AM</span>
+                                                    </span>
+                                                    <p class="fnt-14 reg mx-3">Emp 1</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="media-body pb-3 mb-0 lh-125 border-gray">
+                                                <h4 class="dark-gray mb-3">Project manager</h4>
+                                                <div class="emp-name d-flex flex-row align-items-center">
+                                                    <span class="icon-user d-inline-flex bg-primary align-items-center text-center">
+                                                        <span class="user-name w-100">AM</span>
+                                                    </span>
+                                                    <p class="fnt-14 reg mx-3">Emp 1</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="media-body pb-3 mb-0 lh-125 border-gray">
+                                                <h4 class="dark-gray mb-3">Project management representative</h4>
+                                                <div class="emp-name d-flex flex-row align-items-center">
+                                                    <span class="icon-user d-inline-flex bg-super-danger align-items-center text-center">
+                                                        <span class="user-name w-100">AM</span>
+                                                    </span>
+                                                    <p class="fnt-14 reg mx-3">Emp 1</p>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="card-body project-delivery-info border-bottom pb-4">
+                                        <div class="mx-3 pt-3">
+
+                                            <div class="d-flex justify-content-between pb-3 mb-0 lh-125 border-gray">
+                                                <span>Project duration</span>
+                                                <span class="fnt-14 bold">12 Month</span>
+
+                                            </div>
+
+                                            <div class="d-flex justify-content-between pb-3 mb-0 lh-125 border-gray">
+                                                <span>Quality improvement</span>
+                                                <span class="fnt-14 bold">12 Month</span>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="control-ctx project-budget-ctx mt-4">
+                                <div class="card h-100">
+                                    <div class="card-header bg-white d-flex border-bottom px-4 py-4 justify-content-between">
+                                        <h2 class="black">
+                                            Project budget
+                                        </h2>
+
+                                    </div>
+                                    <div class="card-body project-status-info border-bottom pb-4 px-0">
+
+                                        <div class="d-flex flex-row align-items-center mx-4 py-3">
+                                            <span class="icon-user md d-inline-flex align-items-center text-center">
+                                                <span class="user-name md w-100">AM</span>
+                                            </span>
+                                            <div class="d-inline-flex flex-column mx-3">
+                                                <div class="d-inline-flex black fnt-14">Project Name</div>
+                                                <div class="project-budget-value h4">35.999 SAR</div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-row align-items-center mx-4 py-3">
+
+                                            <div class="progress-circle" data-value='90' style="width:54px;height:54px;">
+                                                <span class="progress-circle-left">
+                                                    <span class="progress-circle-bar border-primary"></span>
+                                                </span>
+                                                <span class="progress-circle-right">
+                                                    <span class="progress-circle-bar border-primary"></span>
+                                                </span>
+
+                                            </div>
+
+
+                                            <div class="d-inline-flex flex-column mx-3 py-3">
+                                                <div class="d-inline-flex black fnt-14">Expected exchange</div>
+                                                <div class="project-budget-value h4">35.999 SAR</div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-row align-items-center mx-4 py-3">
+
+                                            <div class="progress-circle" data-value='90' style="width:54px;height:54px;">
+                                                <span class="progress-circle-left">
+                                                    <span class="progress-circle-bar border-primary"></span>
+                                                </span>
+                                                <span class="progress-circle-right">
+                                                    <span class="progress-circle-bar border-primary"></span>
+                                                </span>
+
+                                            </div>
+
+
+                                            <div class="d-inline-flex flex-column mx-3">
+                                                <div class="d-inline-flex black fnt-14">• Remaining budget / • Cost</div>
+                                                <div class="project-budget-value h4">35.999 SAR</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="close-layer js-close-layer" onClick="handleMainMenu.close()"></div>
+        </div>
+
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+var Listing_Info = [
+  {
+    InternalName: 'Title',
+    DisplayNameEn: 'Title Code',
+    DisplayName: 'رمز المبادرة',
+    type: 'text',
+    inlisting: true,
+    infilter: true,
+  },
+  {
+    InternalName: 'Name',
+    DisplayNameEn: 'Name',
+    DisplayName: 'اسم المبادرة',
+    type: 'text',
+    inlisting: true,
+    infilter: true,
+  },
+  // {
+  // 	"InternalName": "InitiativePM",
+  // 	"DisplayName": "مدير المبادرة",
+  // 	"DisplayNameEn": "Initiative Manager",
+  // 	"type": "picker",
+  // 	inlisting: false,
+  // 	infilter: true
+  // },
+  // {
+  // 	"InternalName": "InitiativeOwner",
+  // 	"DisplayName": "مالك المبادرة",
+  // 	"DisplayNameEn": "Initiative Owner",
+  // 	"type": "picker",
+  // 	inlisting: false,
+  // 	infilter: true
+  // },
+  // 	"InternalName": "Portfolio",
+  //         "DisplayName": "المحفظة",
+  //         "DisplayNameEn": "Portfolio",
+  // 	"type":"text",
+  // 	inlisting: true,
+  // 	infilter: true
+
+  // },
+  // {
+  {
+    InternalName: 'Types',
+    DisplayNameEn: 'Strategy Type',
+    DisplayName: 'نوع الاستراتيجية',
+    type: 'dropdownValues',
+    inlisting: true,
+    needTrans: true,
+    infilter: true,
+  },
+  {
+    InternalName: 'Sector',
+    DisplayName: 'القطاع',
+    DisplayNameEn: 'Sector',
+    type: 'lookup',
+    localStorageVariable: 'Dynamo_Internal Entities',
+    inlisting: true,
+    infilter: true,
+  },
+  {
+    InternalName: 'SubSector',
+    DisplayName: 'الوكالة',
+    DisplayNameEn: 'Departments',
+    type: 'lookup',
+    localStorageVariable: 'Dynamo_Internal Entities',
+    inlisting: true,
+    infilter: true,
+  },
+  {
+    InternalName: 'StartDate',
+    DisplayName: 'تاريخ بداية المبادرة ',
+    DisplayNameEn: 'Start Date',
+    type: 'date',
+    inlisting: true,
+    infilter: false,
+  },
+  {
+    InternalName: 'FinishDate',
+    DisplayName: 'تاريخ نهاية المبادرة ',
+    DisplayNameEn: 'Finish Date',
+    type: 'date',
+    inlisting: true,
+    infilter: false,
+  },
+  {
+    InternalName: 'InitiativeProgressStatus',
+    DisplayName: 'حالة الإنجاز',
+    DisplayNameEn: 'Initiative Progress Status',
+    type: 'dropdownValues', //formula
+    needTrans: true,
+    inlisting: true,
+    infilter: true,
+  },
+]

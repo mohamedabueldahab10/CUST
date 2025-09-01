@@ -1,0 +1,404 @@
+var Information_Form = [
+  {
+    label: 'بيانات المعلم',
+    labelEn: 'Milestone Data',
+    description: 'التفاصيل',
+    descriptionEn: 'Details',
+    formValuesBasedOnParent: [
+      {
+        parentList: 'Projects',
+        parentFieldName: 'Title',
+        fieldName: 'InitiativeType',
+        basedOnCondition: true,
+        basedOnFieldName: 'Delivered',
+        basedOnFieldValue: 'yes',
+        valueToSet: [
+          {
+            condition: 'vision',
+            values: [
+              {
+                fieldNameInList: 'WFModuleCode',
+                fieldValueInList: 'VROProjMilestone',
+              },
+              {
+                fieldNameInList: 'WFStage',
+                fieldValueInList: 'VROProjMilestone01',
+              },
+              {
+								fieldNameInList: "WFInitiatedBy",
+								fieldValueInList: "LoggedInUser",
+							},
+            ],
+          },
+          {
+            condition: 'lms',
+            values: [
+              {
+                fieldNameInList: 'WFModuleCode',
+                fieldValueInList: 'LMSProjMilestone',
+              },
+              {
+                fieldNameInList: 'WFStage',
+                fieldValueInList: 'LMSProjMilestone01',
+              },
+              {
+								fieldNameInList: "WFInitiatedBy",
+								fieldValueInList: "LoggedInUser",
+							},
+            ],
+          },
+          {
+            condition: 'strategically',
+            values: [
+              {
+                fieldNameInList: 'WFModuleCode',
+                fieldValueInList: 'EPMOProjMilestone',
+              },
+              {
+                fieldNameInList: 'WFStage',
+                fieldValueInList: 'EPMOProjMilestone01',
+              },
+              {
+								fieldNameInList: "WFInitiatedBy",
+								fieldValueInList: "LoggedInUser",
+							},
+            ],
+          },
+        ],
+      },
+    ],
+    subFields: [
+      // {
+      //     "InternalName": "Title",
+      //     "DisplayName":"رمز المعلم",
+      //   "DisplayNameEn": "Milestone Title",
+      //     "type":"string",
+      //     "validation": "required"
+      // },
+      {
+        InternalName: 'Name',
+        DisplayName: 'اسم المعلم',
+        DisplayNameEn: 'Name',
+        type: 'string',
+        maxchar: '255',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
+        withletters: true,
+        Errmsgkey: 'withletterpatteWrn',
+        validation: 'required',
+        security: {
+          groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
+        },
+      },
+      {
+        InternalName: "Phase",
+        DisplayName: "المرحلة",
+        DisplayNameEn: "Phase",
+        // validation: 'required',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'p1', value: 'p1' },
+            { display: 'p2', value: 'p2' },
+            { display: 'p3', value: 'p3' },
+            { display: 'p4', value: 'p4' },
+           
+          ],
+        },
+      },
+      // {
+      //   InternalName: 'Weight',
+      //   DisplayNameEn: 'Weight',
+      //   DisplayName: 'الوزن المكافئ للإنجاز %',
+      //   type: 'floatpercentage',
+      //   // type: 'weightfloatpercentage',
+      //   listname: 'Milestones',
+      //   targetcode: 'ProjectCode',
+      //   targetelement: 'Weight',
+      //   seconedtarget: 'Amount',
+      //   validation: 'required',
+      //   // "state": "disabled",
+      //   // dynamic: "Initiative"
+      // },
+      {
+        InternalName: 'Weight',
+        DisplayName: 'الوزن(%)',
+        DisplayNameEn: 'Weight (%)',
+        type: 'weightfloatpercentage',
+        listname: 'Milestones',
+        targetcode: 'ProjectCode',
+        targetelement: 'Weight',
+        seconedtarget: 'Amount',
+        descPhraseAr: "من التكلفة",
+        descPhraseEn: " From Budget", 
+        // "state":"disabled",
+        validation: 'required',
+        security: {
+          groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
+        },
+      },
+      {
+        InternalName: 'Amount',
+        DisplayName: 'القيمة',
+        DisplayNameEn: 'Amount',
+        dontSubmit: true,
+        type: 'percentbyrelatedparent',
+        listname: 'Projects',
+        parentinternalname: 'ActualBudget',
+        descPhraseAr: "من التكلفة",
+        descPhraseEn: " From Budget", 
+        targetelement: 'Weight',
+          "state":"disabled",
+        // validation: 'required',
+        security: {
+          groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
+        },
+      },
+      {
+        InternalName: 'PlannedDate',
+        DisplayName: 'تاريخ الاكتمال المخطط',
+        DisplayNameEn: 'Planned Finish Date',
+        // type: 'datetime',
+        type: 'datetimetoparent',
+        validation: 'required',
+        listname: 'Projects', // list name
+        startinternalname: 'BaselineStartDate', // internalname of parent start
+        endinternalname: 'BaselineFinishDate',
+        Errmsgkey: 'btwndatepattern',
+        security: {
+          groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
+        },
+      },
+
+      //   {
+      //     InternalName: 'CommittedDate',
+      //     DisplayName: 'تاريخ الالتزام',
+      //     DisplayNameEn: 'Committed Date',
+      //     type: 'datetime',
+      //     validation: 'required',
+      //   },
+      // {
+      //     "InternalName": "ShowInProgramReport",
+      //     "DisplayName": "اظهار في التقرير",
+      //     "DisplayNameEn": "Show In Report",
+      //      "type": "yesnoradio",
+      //     options: {
+      //         choices: [{
+      //             display: 'yes',
+      //             value: 'yes'
+      //         }, {
+      //             display: 'no',
+      //             value: 'no'
+      //         }]
+      //     }
+
+      // },
+      {
+        InternalName: 'Deliverables',
+        DisplayName: 'المخرجات',
+        DisplayNameEn: 'Deliverables',
+        type: 'multiline',
+        maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
+        security: {
+          groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
+        },
+      },
+      {
+        InternalName: 'Description',
+        DisplayName: 'الوصف',
+        DisplayNameEn: 'Description',
+        type: 'multiline',
+        maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
+        security: {
+          groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
+        },
+      },
+      // {
+      //   InternalName: 'Status',
+      //   DisplayName: 'الحالة',
+      //   DisplayNameEn: 'Status',
+      //   type: 'dropdownValues',
+      //   options: {
+      //     choices: [
+      //       { display: 'onschedule', value: 'onschedule' },
+      //       { display: 'completed', value: 'completed' },
+      //       { display: 'late', value: 'late' },
+      //     ],
+      //   },
+      // },
+      {
+        InternalName: 'RelatedInitiativeMilestone',
+        DisplayName: 'معلم المبادرة المرتبط',
+        DisplayNameEn: 'Related Initiative Milestone',
+        // type: 'lookup',
+        // source: 'InitiativeMilestones',
+        type: 'lookuptoparentchild',
+        parentlist: 'Projects', //parent list name
+        parentinternalname: 'RelatedInitiative', // internal name in parent list
+        source: 'Milestones', // target list
+        sourceinternalname: 'InitiativeCode', // column in target list
+        Dispfieldkey: 'Name', //display in dropdown
+        valfieldkey: 'Title', // value in dropdown
+        security: {
+          groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
+        },
+        validation: "required",
+      },
+      {
+        InternalName: 'Delivered',
+        DisplayName: 'مكتمل',
+        DisplayNameEn: 'Completed',
+        targetfieldrequired: 'getFile,ActualDate', // to make the attache required on yes
+        targetfield: 'Status',
+        targetfieldvalue: 'complete',
+        // validation: 'required',
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            { display: 'yes', value: 'yes' },
+            { display: 'no', value: 'no' },
+          ],
+        },
+      },
+      {
+        InternalName: 'ActualDate',
+        DisplayName: 'تاريخ الاكتمال الفعلي',
+        DisplayNameEn: 'Actual Date',
+        // type: 'datetime',
+        type: 'datetimetoparent',
+        max: 'today',
+        Errmsgkey: 'cancelationdatepattern',
+        listname: 'Projects', // list name
+        startinternalname: 'BaselineStartDate', // internalname of parent start
+        endinternalname: 'BaselineFinishDate',
+        Errmsgkey: 'btwndatepattern',
+      },
+      {
+        InternalName: 'ShowInProgramReport',
+        DisplayName: 'اظهار في التقرير',
+        DisplayNameEn: 'Show In Program Report',
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            {
+              display: 'yes',
+              value: 'yes',
+            },
+            {
+              display: 'no',
+              value: 'no',
+            },
+          ],
+        },
+      },
+      {
+        InternalName: "WFStage",
+        DisplayName: " المرحلة",
+        DisplayNameEn: "Stage",
+        type: 'lookup',
+        source: "Tasks Configuration",
+        Dispfieldkey: "TaskNameAr",
+        DispfieldkeyEn: 'TaskNameEn',
+        valfieldkey: "Title",
+        "state": "disabled",
+        display:'none'
+        },
+      // {
+      //     "InternalName": "SupportDocumentsDescription",
+      //     "DisplayNameEn": "Support Documents Description",
+      //     "DisplayName": "وصف الوثائق الداعمة",
+      //     "type": "multiline",
+      //     "maxchar": "500",
+      // }
+    ],
+  },
+  {
+    label: 'الوثائق داعمة',
+    labelEn: 'Supporting Documents',
+    description: '',
+    descriptionEn: '',
+    subFields: [
+      {
+        InternalName: 'getfile',
+        DisplayName: 'الوثائق داعمة',
+        DisplayNameEn: 'Supporting Documents',
+        type: 'file',
+        docPurpose: 'Spporting_Documents',
+        withAddBtn: 'true',
+        descPhraseAr: "ملفات مطلوبة عند الاغلاق",
+        descPhraseEn: "File required after closing",
+        // security: {
+        //   groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
+        // },
+      },
+      {
+        InternalName: 'SupportDocumentsDescription',
+        DisplayNameEn: 'Support Documents Description',
+        DisplayName: 'وصف الوثائق الداعمة',
+        type: 'multiline',
+        maxchar: '5000',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
+        validation: "required",
+        // security: {
+        //   groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
+        // },
+      },
+    ],
+  },
+  {
+    label: 'المرفقات',
+    labelEn: 'Attachments',
+    description: 'التفاصيل',
+    descriptionEn: 'Details',
+    subFields: [
+      {
+        InternalName: 'getfile',
+        DisplayName: 'المرفقات',
+        DisplayNameEn: 'Attachments',
+        type: 'file',
+        docPurpose: 'Attachments',
+        withAddBtn: 'true',
+        descPhraseAr: "ملفات متعلقة بالعنصر",
+        descPhraseEn: "File related to the item",
+        // security: {
+        //   groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
+        // },
+      },
+    ],
+  },
+  // {
+  //   label: 'وثائق داعمة',
+  //   labelEn: 'Supporting Documents',
+  //   description: 'التفاصيل',
+  //   descriptionEn: 'Details',
+  //   subFields: [
+  //     // {
+  //     //   InternalName: 'SupportDocumentsDescription',
+  //     //   DisplayNameEn: 'Support Documents Description',
+  //     //   DisplayName: 'وصف الوثائق الداعمة',
+  //     //   type: 'multiline',
+  //     //   maxchar: '500',
+  //     // },
+  //     // {
+  //     //   InternalName: 'Attachment',
+  //     //   DisplayName: 'المرفقات',
+  //     //   DisplayNameEn: 'Attachment',
+  //     //   type: 'file',
+  //     //   withAddBtn: 'true',
+  //     // },
+  //     {
+  //       InternalName: 'getfile',
+  //       DisplayName: 'مرفقات',
+  //       DisplayNameEn: 'Attachments',
+  //       type: 'file',
+  //       withAddBtn: 'true',
+  //       // validation: 'required',
+  //     },
+  //   ],
+  // },
+]

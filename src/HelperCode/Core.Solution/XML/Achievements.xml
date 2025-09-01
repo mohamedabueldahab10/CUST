@@ -1,0 +1,217 @@
+<!-- done -->
+<Fields>
+		<Field
+		Name="Title"
+		StaticName="Title"
+		DisplayName="Code"
+		Type="Text"
+		MaxLength="255"
+		Required="FALSE"
+		Group="SPM Fields"
+		/>	 
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Text" 
+			DisplayName="Achievement Name" 
+			StaticName="AchievementName" 
+			Name="Name"/>
+		<!-- <Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Text" 
+			DisplayName="MasterKey" 
+			StaticName="MasterKey" 
+			Name="MasterKey"/>
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Text" 
+			DisplayName="MasterID" 
+			StaticName="MasterID" 
+			Name="MasterID"/> 
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Deletion Status"
+			StaticName="DeletionStatus" 
+			Name="DeletionStatus"/> -->
+		<Field
+		Group="SPM Fields"
+		Required="TRUE"
+		Type="Choice"
+		DisplayName="Achievement Type"
+		StaticName="AchievementType"
+		Name="AchievementType"
+  		>
+			<CHOICES>
+				<CHOICE>launchstraightvital</CHOICE>
+				<CHOICE>launchesconferencesworkshopselectronicplatforms</CHOICE>
+				<CHOICE>establishingimportantmeetingpartnershipsprogramlevel</CHOICE>
+				<CHOICE>legalmilestonesgroup</CHOICE>
+				<CHOICE>achievingkeyperformancetargets</CHOICE>
+			</CHOICES>
+		</Field>	
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="DateTime" 
+			Format="DateOnly"
+			DisplayName="Achievement Date"
+			StaticName="AchievementDate" 
+			Name="AchievementDate"/>
+		<Field
+		Group="SPM Fields"
+		Required="TRUE"
+		Type="Choice"
+		DisplayName="Achievement Category"
+		StaticName="AchievementCategory"
+		Name="AchievementCategory"
+  		>
+			<CHOICES>
+				<CHOICE>strategic</CHOICE>
+				<CHOICE>vision</CHOICE>
+				<CHOICE>jobmarket</CHOICE>
+			</CHOICES>
+		</Field>
+		<!-- <Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="InitiativeCode"
+			StaticName="InitiativeCode" 
+			Name="InitiativeCode"/> -->
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Note" 
+			DisplayName="Description"
+			StaticName="Description" 
+			Name="Description"/>
+		<Field
+		Group="SPM Fields"
+		Required="TRUE"
+		Type="Choice"
+		DisplayName="Link Type"
+		StaticName="LinkType"
+		Name="LinkType"
+  		>
+			<CHOICES>
+				<CHOICE>objective</CHOICE>
+				<CHOICE>initiative</CHOICE>
+			</CHOICES>
+		</Field>	
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Related Objective"
+			StaticName="RelatedObjective" 
+			Name="RelatedObjective"/>
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Related KPI"
+			StaticName="RelatedKPI" 
+			Name="RelatedKPI"/>
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Related Initiative"
+			StaticName="RelatedInitiative" 
+			Name="RelatedInitiative"/>
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Related Milestone"
+			StaticName="RelatedMilestone" 
+			Name="RelatedMilestone"/>
+		<Field
+		Group="SPM Fields"
+		Required="TRUE"
+		Type="Choice"
+		DisplayName="Impact Type"
+		StaticName="ImpactType"
+		Name="ImpactType"
+  		>
+			<CHOICES>
+				<CHOICE>direct</CHOICE>
+				<CHOICE>indirect</CHOICE>
+			</CHOICES>
+		</Field>
+		<Field
+		Group="SPM Fields"
+		Required="TRUE"
+		Type="Choice"
+		DisplayName="Impact Category"
+		StaticName="ImpactCategory"
+		Name="ImpactCategory"
+  		>
+			<CHOICES>
+				<CHOICE>economical</CHOICE>
+				<CHOICE>social</CHOICE>
+				<CHOICE>impactonervices</CHOICE>
+				<CHOICE>others</CHOICE>
+			</CHOICES>
+		</Field>
+		<Field 
+			Group="SPM Fields" 
+			Required="TRUE" 
+			Type="Note" 
+			DisplayName="Impact Description"
+			StaticName="ImpactDescription" 
+			Name="ImpactDescription"/>
+			
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Impact Duration"
+			StaticName="ImpactDuration" 
+			Name="ImpactDuration"/>
+			
+		<Field 
+			Group="SPM Fields" 
+			Required="TRUE" 
+			Type="Note" 
+			DisplayName="Comments"
+			StaticName="Comments" 
+			Name="Comments"/>
+		<Field
+		Group="SPM Fields"
+		Required="TRUE"
+		Type="Choice"
+		DefaultValue="no"
+		DisplayName="Submit For Approval"
+		StaticName="SubmitForApproval"
+		Name="SubmitForApproval"
+		Format="RadioButtons"
+		>
+			<CHOICES>    
+			<CHOICE>yes</CHOICE>
+			<CHOICE>no</CHOICE>
+			</CHOICES>
+		</Field>
+
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				Name="Strategic Partnership Code"
+				DisplayName="StrategicPartnershipCode" 
+				StaticName="StrategicPartnershipCode"/>	
+				
+			
+</Fields>

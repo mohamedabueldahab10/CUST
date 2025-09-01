@@ -1,0 +1,478 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "edit-form-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/editForm/EditFormWebPart.js",
+          "manifest": "./src/webparts/editForm/EditFormWebPart.manifest.json"
+        }
+      ]
+    },
+    "files-listing-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/filesListing/FilesListingWebPart.js",
+          "manifest": "./src/webparts/filesListing/FilesListingWebPart.manifest.json"
+        }
+      ]
+    },
+    "listing-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/listing/ListingWebPart.js",
+          "manifest": "./src/webparts/listing/ListingWebPart.manifest.json"
+        }
+      ]
+    },
+    "initiatives-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/initiatives/InitiativesWebPart.js",
+          "manifest": "./src/webparts/initiatives/InitiativesWebPart.manifest.json"
+        }
+      ]
+    },
+    "main-indicators-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/mainIndicators/MainIndicatorsWebPart.js",
+          "manifest": "./src/webparts/mainIndicators/MainIndicatorsWebPart.manifest.json"
+        }
+      ]
+    },
+    "main-page-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/mainPage/MainPageWebPart.js",
+          "manifest": "./src/webparts/mainPage/MainPageWebPart.manifest.json"
+        }
+      ]
+    },
+    "managing-operational-indicators-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/managingOperationalIndicators/ManagingOperationalIndicatorsWebPart.js",
+          "manifest": "./src/webparts/managingOperationalIndicators/ManagingOperationalIndicatorsWebPart.manifest.json"
+        }
+      ]
+    },
+    "new-form-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/newForm/NewFormWebPart.js",
+          "manifest": "./src/webparts/newForm/NewFormWebPart.manifest.json"
+        }
+      ]
+    },
+    "project-details-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/projectDetails/ProjectDetailsWebPart.js",
+          "manifest": "./src/webparts/projectDetails/ProjectDetailsWebPart.manifest.json"
+        }
+      ]
+    },
+    "project-home-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/projectHome/ProjectHomeWebPart.js",
+          "manifest": "./src/webparts/projectHome/ProjectHomeWebPart.manifest.json"
+        }
+      ]
+    },
+    "task-details-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/taskDetails/TaskDetailsWebPart.js",
+          "manifest": "./src/webparts/taskDetails/TaskDetailsWebPart.manifest.json"
+        }
+      ]
+    },
+    "view-form-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/viewForm/ViewFormWebPart.js",
+          "manifest": "./src/webparts/viewForm/ViewFormWebPart.manifest.json"
+        }
+      ]
+    },
+    "main-strategy-webpart-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/mainStrategyWebpart/MainStrategyWebpartWebPart.js",
+          "manifest": "./src/webparts/mainStrategyWebpart/MainStrategyWebpartWebPart.manifest.json"
+        }
+      ]
+    },
+    "operational-indicators-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/operationalIndicators/OperationalIndicatorsWebPart.js",
+          "manifest": "./src/webparts/operationalIndicators/OperationalIndicatorsWebPart.manifest.json"
+        }
+      ]
+    },
+    "operational-kpis-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/operationalKpis/OperationalKpisWebPart.js",
+          "manifest": "./src/webparts/operationalKpis/OperationalKpisWebPart.manifest.json"
+        }
+      ]
+    },
+    "programs-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/programs/ProgramsWebPart.js",
+          "manifest": "./src/webparts/programs/ProgramsWebPart.manifest.json"
+        }
+      ]
+    },
+    "strategic-indicators-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/strategicIndicators/StrategicIndicatorsWebPart.js",
+          "manifest": "./src/webparts/strategicIndicators/StrategicIndicatorsWebPart.manifest.json"
+        }
+      ]
+    },
+    "stratigic-information-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/stratigicInformation/StratigicInformationWebPart.js",
+          "manifest": "./src/webparts/stratigicInformation/StratigicInformationWebPart.manifest.json"
+        }
+      ]
+    },
+    "targets-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/targets/TargetsWebPart.js",
+          "manifest": "./src/webparts/targets/TargetsWebPart.manifest.json"
+        }
+      ]
+    },
+    "system-security-application-customizer": {
+      "components": [
+        {
+          "entrypoint": "./lib/extensions/systemSecurity/SystemSecurityApplicationCustomizer.js",
+          "manifest": "./src/extensions/systemSecurity/SystemSecurityApplicationCustomizer.manifest.json"
+        }
+      ]
+    },
+    "initiative-home-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/initiativeHome/InitiativeHomeWebPart.js",
+          "manifest": "./src/webparts/initiativeHome/InitiativeHomeWebPart.manifest.json"
+        }
+      ]
+    },
+    "initiatives-main-home-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/initiativesMainHome/InitiativesMainHomeWebPart.js",
+          "manifest": "./src/webparts/initiativesMainHome/InitiativesMainHomeWebPart.manifest.json"
+        }
+      ]
+    },
+    "project-center-edit-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/projectCenterEdit/ProjectCenterEditWebPart.js",
+          "manifest": "./src/webparts/projectCenterEdit/ProjectCenterEditWebPart.manifest.json"
+        }
+      ]
+    },
+    "admin-panel-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/adminPanel/AdminPanelWebPart.js",
+          "manifest": "./src/webparts/adminPanel/AdminPanelWebPart.manifest.json"
+        }
+      ]
+    },
+    "knowledge-base-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/knowledgeBase/KnowledgeBaseWebPart.js",
+          "manifest": "./src/webparts/knowledgeBase/KnowledgeBaseWebPart.manifest.json"
+        }
+      ]
+    },
+    "all-tasks-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/allTasks/AllTasksWebPart.js",
+          "manifest": "./src/webparts/allTasks/AllTasksWebPart.manifest.json"
+        }
+      ]
+    },
+    "benefit-metrics-targets-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/benefitMetricsTargets/BenefitMetricsTargetsWebPart.js",
+          "manifest": "./src/webparts/benefitMetricsTargets/BenefitMetricsTargetsWebPart.manifest.json"
+        }
+      ]
+    },
+    "strategic-partnership-home-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/strategicPartnershipHome/StrategicPartnershipHomeWebPart.js",
+          "manifest": "./src/webparts/strategicPartnershipHome/StrategicPartnershipHomeWebPart.manifest.json"
+        }
+      ]
+    },
+    "home-page-redirect-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/homePageRedirect/HomePageRedirectWebPart.js",
+          "manifest": "./src/webparts/homePageRedirect/HomePageRedirectWebPart.manifest.json"
+        }
+      ]
+    },
+    "projectcompliance-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/projectcompliance/ProjectcomplianceWebPart.js",
+          "manifest": "./src/webparts/projectcompliance/ProjectcomplianceWebPart.manifest.json"
+        }
+      ]
+    },
+    "initiativecompliance-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/initiativecompliance/InitiativecomplianceWebPart.js",
+          "manifest": "./src/webparts/initiativecompliance/InitiativecomplianceWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {
+    "Resources": {
+      "path": "./src/HelperCode/Utilities.Core/Resources.js",
+      "globalName": "Resources"
+    },
+    "ListNameConfig": {
+      "path": "./src/HelperCode/Utilities.Core/List_Name_Config.js",
+      "globalName": "ListNameConfig"
+    },
+    "UserAccess": {
+      "path": "./src/HelperCode/Utilities.Core/Forms.Utilities/User_Access.js",
+      "globalName": "UserAccess",
+      "globalDependencies": [
+        "ListNameConfig"
+      ]
+    },
+    "SideNav": {
+      "path": "./src/HelperCode/Utilities.Core/Side_Navigation.js",
+      "globalName": "SideNav",
+      "globalDependencies": [
+        "ListNameConfig"
+      ]
+    },
+    "ProjNav": {
+      "path": "./src/HelperCode/Utilities.Core/Project_Navigation.js",
+      "globalName": "ProjNav",
+      "globalDependencies": [
+        "ListNameConfig"
+      ]
+    },
+    "SectorHome": {
+      "path": "./src/HelperCode/Core.Solution/Landing/Sector_Home.js",
+      "globalName": "SectorHome",
+      "globalDependencies": [
+        "Resources",
+        "ListNameConfig",
+        "UserAccess"
+      ]
+    },
+    "ProjectHome": {
+      "path": "./src/HelperCode/Core.Solution/Landing/Project_Home.js",
+      "globalName": "ProjectHome",
+      "globalDependencies": [
+        "Resources",
+        "ListNameConfig",
+        "UserAccess"
+      ]
+    },
+    "AsyncForJS": {
+      "path": "./src/HelperCode/Utilities.Core/Forms.Utilities/Async_For_JS.js",
+      "globalName": "AsyncForJS"
+    },
+    "SPHTTP": {
+      "path": "./src/HelperCode/Utilities.Core/Forms.Utilities/sphttp.js",
+      "globalName": "SPHTTP"
+    },
+    "Ppicker": {
+      "path": "./src/HelperRessources/js/PPicker.js",
+      "globalName": "Ppicker"
+    },
+    "FormRequest": {
+      "path": "./src/HelperCode/Utilities.Core/Forms.Utilities/Form_Request.js",
+      "globalName": "FormRequest"
+    },
+    "FormRender": {
+      "path": "./src/HelperCode/Utilities.Core/Forms.Utilities/Form_Render.js",
+      "globalName": "FormRender",
+      "globalDependencies": [
+        "Resources",
+        "ListNameConfig",
+        "AsyncForJS",
+        "SPHTTP",
+        "Ppicker",
+        "UserAccess"
+      ]
+    },
+    "FormSubmit": {
+      "path": "./src/HelperCode/Utilities.Core/Forms.Utilities/Form_Submit.js",
+      "globalName": "FormSubmit",
+      "globalDependencies": [
+        "FormRequest"
+      ]
+    },
+    "Listing": {
+      "path": "./src/HelperCode/Core.Solution/Listing/Listing.js",
+      "globalName": "ListingTest",
+      "globalDependencies": [
+        "Resources",
+        "ListNameConfig",
+        "UserAccess"
+      ]
+    },
+    "jquery": {
+      "path": "./src/HelperCode/External.Libraries/js/jquery.js",
+      "globalName": "jquery"
+    },
+    "init": {
+      "path": "./src/HelperCode/External.Libraries/js/init.js",
+      "globalName": "init",
+      "globalDependencies": [
+        "jquery"
+      ]
+    },
+    "MicrosoftAjax": {
+      "path": "./src/HelperCode/External.Libraries/js/MicrosoftAjax.js",
+      "globalName": "MicrosoftAjax",
+      "globalDependencies": [
+        "jquery",
+        "init"
+      ]
+    },
+    "spcore": {
+      "path": "./src/HelperCode/External.Libraries/js/sp.core.js",
+      "globalName": "spcore",
+      "globalDependencies": [
+        "jquery",
+        "MicrosoftAjax"
+      ]
+    },
+    "spruntime": {
+      "path": "./src/HelperCode/External.Libraries/js/sp.runtime.js",
+      "globalName": "spruntime",
+      "globalDependencies": [
+        "jquery",
+        "spcore"
+      ]
+    },
+    "spjs": {
+      "path": "./src/HelperCode/External.Libraries/js/sp.js",
+      "globalName": "spjs",
+      "globalDependencies": [
+        "jquery",
+        "spruntime"
+      ]
+    },
+    "jqueryui": {
+      "path": "./src/HelperCode/External.Libraries/js/jquery-ui.js",
+      "globalName": "jqueryui",
+      "globalDependencies": [
+        "jquery"
+      ]
+    },
+    "Customjs": {
+      "path": "./src/HelperCode/External.Libraries/js/custom.js",
+      "globalName": "Customjs",
+      "globalDependencies": [
+        "jquery"
+      ]
+    },
+    "bootstrap": {
+      "path": "./src/HelperCode/External.Libraries/js/bootstrap.js",
+      "globalName": "bootstrap",
+      "globalDependencies": [
+        "jquery"
+      ]
+    },
+    "jqueryfancybox": {
+      "path": "./src/HelperCode/External.Libraries/js/jquery.fancybox.js",
+      "globalName": "jqueryfancybox",
+      "globalDependencies": [
+        "jquery"
+      ]
+    },
+    "ResizeSensor": {
+      "path": "./src/HelperCode/External.Libraries/js/ResizeSensor.js",
+      "globalName": "ResizeSensor",
+      "globalDependencies": [
+        "jquery"
+      ]
+    },
+    "stickysidebar": {
+      "path": "./src/HelperCode/External.Libraries/js/sticky-sidebar.js",
+      "globalName": "stickysidebar",
+      "globalDependencies": [
+        "jquery"
+      ]
+    },
+    "scripts": {
+      "path": "./src/HelperCode/External.Libraries/js/scripts.js",
+      "globalName": "scripts",
+      "globalDependencies": [
+        "jquery",
+        "jqueryui",
+        "bootstrap",
+        "jqueryfancybox",
+        "ResizeSensor",
+        "stickysidebar"
+      ]
+    }
+  },
+  "localizedResources": {
+    "EditFormWebPartStrings": "lib/webparts/editForm/loc/{locale}.js",
+    "FilesListingWebPartStrings": "lib/webparts/filesListing/loc/{locale}.js",
+    "ListingWebPartStrings": "lib/webparts/listing/loc/{locale}.js",
+    "InitiativesWebPartStrings": "lib/webparts/initiatives/loc/{locale}.js",
+    "MainIndicatorsWebPartStrings": "lib/webparts/mainIndicators/loc/{locale}.js",
+    "MainPageWebPartStrings": "lib/webparts/mainPage/loc/{locale}.js",
+    "ManagingOperationalIndicatorsWebPartStrings": "lib/webparts/managingOperationalIndicators/loc/{locale}.js",
+    "NewFormWebPartStrings": "lib/webparts/newForm/loc/{locale}.js",
+    "ProjectDetailsWebPartStrings": "lib/webparts/projectDetails/loc/{locale}.js",
+    "ProjectHomeWebPartStrings": "lib/webparts/projectHome/loc/{locale}.js",
+    "TaskDetailsWebPartStrings": "lib/webparts/taskDetails/loc/{locale}.js",
+    "ViewFormWebPartStrings": "lib/webparts/viewForm/loc/{locale}.js",
+    "MainStrategyWebpartWebPartStrings": "lib/webparts/mainStrategyWebpart/loc/{locale}.js",
+    "OperationalIndicatorsWebPartStrings": "lib/webparts/operationalIndicators/loc/{locale}.js",
+    "OperationalKpisWebPartStrings": "lib/webparts/operationalKpis/loc/{locale}.js",
+    "ProgramsWebPartStrings": "lib/webparts/programs/loc/{locale}.js",
+    "StrategicIndicatorsWebPartStrings": "lib/webparts/strategicIndicators/loc/{locale}.js",
+    "StratigicInformationWebPartStrings": "lib/webparts/stratigicInformation/loc/{locale}.js",
+    "TargetsWebPartStrings": "lib/webparts/targets/loc/{locale}.js",
+    "SystemSecurityApplicationCustomizerStrings": "lib/extensions/systemSecurity/loc/{locale}.js",
+    "InitiativeHomeWebPartStrings": "lib/webparts/initiativeHome/loc/{locale}.js",
+    "InitiativesMainHomeWebPartStrings": "lib/webparts/initiativesMainHome/loc/{locale}.js",
+    "ProjectCenterEditWebPartStrings": "lib/webparts/projectCenterEdit/loc/{locale}.js",
+    "AdminPanelWebPartStrings": "lib/webparts/adminPanel/loc/{locale}.js",
+    "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js",
+    "KnowledgeBaseWebPartStrings": "lib/webparts/knowledgeBase/loc/{locale}.js",
+    "AllTasksWebPartStrings": "lib/webparts/allTasks/loc/{locale}.js",
+    "BenefitMetricsTargetsWebPartStrings": "lib/webparts/benefitMetricsTargets/loc/{locale}.js",
+    "StrategicPartnershipHomeWebPartStrings": "lib/webparts/strategicPartnershipHome/loc/{locale}.js",
+    "HomePageRedirectWebPartStrings": "lib/webparts/homePageRedirect/loc/{locale}.js",
+    "ProjectcomplianceWebPartStrings": "lib/webparts/projectcompliance/loc/{locale}.js",
+    "InitiativecomplianceWebPartStrings": "lib/webparts/initiativecompliance/loc/{locale}.js"
+  }
+}

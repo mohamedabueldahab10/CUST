@@ -1,0 +1,179 @@
+<Fields> 
+		<Field
+				Group="SPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Milestone Code"
+				StaticName="Title"
+				Name="Title"/>				
+		<Field 
+				Group="SPM Fields" 
+				Required="TRUE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="Name" 
+				StaticName="Name" 
+				Name="Name"/>	
+		<Field 
+				
+				Required="TRUE" 
+				Type="Number" 
+				DisplayName="Weight" 
+				StaticName="Weight" 
+				Name="Weight"/>		
+
+		<Field
+		        Group="EPM Fields"
+		        Required="FALSE"
+		        MaxLength="255"
+		        Type="Number"
+		        DisplayName="Amount"
+		        StaticName="Amount"
+		        Name="Amount"/>	
+
+
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="Note" 
+				DisplayName="Description" 
+				StaticName="Description" 
+				Name="Description"/>				
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="Note" 
+				DisplayName="Deliverables" 
+				StaticName="Deliverables" 
+				Name="Deliverables"/>				
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="Project Code" 
+				StaticName="ProjectCode" 
+				Name="ProjectCode"/>
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="Related Initiative Milestone" 
+				StaticName="RelatedInitiativeMilestone" 
+				Name="RelatedInitiativeMilestone"/>	
+						
+	
+		<Field 
+				Group="SPM Fields" 
+				Required="TRUE" 
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Planned Date" 
+				StaticName="PlannedDate" 
+				Name="PlannedDate"/>		
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Actual Date" 
+				StaticName="ActualDate" 
+				Name="ActualDate"/>		
+
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				Name="Strategic Partnership Code"
+				DisplayName="StrategicPartnershipCode" 
+				StaticName="StrategicPartnershipCode"/>		
+				
+							
+		<!-- <Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Committed Date" 
+				StaticName="CommittedDate" 
+				Name="CommittedDate"/>		 
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="MasterKey" 
+				StaticName="MasterKey" 
+				Name="MasterKey"/>
+		<Field 
+				Group="SPM Fields"
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				DisplayName="MasterID" 
+				StaticName="MasterID" 
+				Name="MasterID"/> -->
+		<Field
+				Group="SPM Fields"
+				Required="FALSE" 
+				Type="Choice"
+				DisplayName="Show In Program Report" 
+				StaticName="ShowInProgramReport" 
+				Name="ShowInProgramReport" 
+				Format="RadioButtons">
+				<CHOICES>    
+				<CHOICE>yes</CHOICE>
+				<CHOICE>no</CHOICE>
+				</CHOICES>
+		</Field>
+		<Field
+				Group="SPM Fields"
+				Required="FALSE" 
+				Type="Choice"
+				DisplayName="Status" 
+				StaticName="Status" 
+				Name="Status">
+			<CHOICES> 
+				<CHOICE>workisunderway</CHOICE> 
+				<CHOICE>late</CHOICE>
+				<CHOICE>completed</CHOICE>
+				<!-- <CHOICE>Complete</CHOICE>
+				<CHOICE>Late</CHOICE>
+				<CHOICE>On Schedule</CHOICE> -->
+			</CHOICES>
+		</Field>
+
+		<Field 
+			Required="FALSE"
+			Type="Choice" 
+			DefaultValue="no"
+			DisplayName="Completed" 
+			StaticName="Completed" 
+			Name="Completed"
+			Format="RadioButtons">
+			<CHOICES>
+				<CHOICE>yes</CHOICE>
+				<CHOICE>no</CHOICE>
+			</CHOICES>
+	</Field>
+	
+<!-- 
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Deletion Status"
+			StaticName="DeletionStatus" 
+			Name="DeletionStatus"/>
+		<Field 
+			Group="Instrument Fields"
+			Required="FALSE" 
+			Type="Text" 
+			DisplayName="InitiativeCode" 
+			StaticName="InitiativeCode" 
+			Name="InitiativeCode"/>	 -->
+</Fields>

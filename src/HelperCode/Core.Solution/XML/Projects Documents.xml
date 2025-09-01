@@ -1,0 +1,45 @@
+<Fields> 
+	<Field 
+            Group="SPM Fields"
+            Required="FALSE"
+            MaxLength="255"
+            Type="Text"
+            DisplayName="Item Id"
+            StaticName="ItemID"
+            Name="ItemID"/>							
+	<Field 
+            Group="SPM Fields"
+            Required="FALSE"
+            MaxLength="255"
+            Type="Text"
+            DisplayName="Related Item Name"
+            StaticName="RelatedItemName"
+            Name="RelatedItemName"/>							
+	<Field 
+            Group="SPM Fields"
+            Required="FALSE"
+            MaxLength="255"
+            Type="Text"
+            DisplayName="Phase Gate Item"
+            StaticName="PhaseGateItem"
+            Name="PhaseGateItem"/>							
+	<Field 
+            Group="SPM Fields"
+            Required="FALSE"
+            MaxLength="255"
+            Type="Text"
+            DisplayName="Related Phase"
+            StaticName="RelatedPhase"
+            Name="RelatedPhase"/>
+	
+    <Field 
+        Group="SPM Fields" 
+        Required="FALSE" 
+        MaxLength="255" 
+        Type="Text" 
+        DisplayName="Deletion Status"
+        StaticName="DeletionStatus" 
+        Name="DeletionStatus"/>	
+
+</Fields> 
+				

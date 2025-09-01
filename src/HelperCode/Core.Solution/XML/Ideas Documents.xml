@@ -1,0 +1,29 @@
+<Fields> 
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Item Id"
+				StaticName="ItemID"
+				Name="ItemID"/>							
+	
+    <Field 
+        Group="SPM Fields" 
+        Required="FALSE" 
+        MaxLength="255" 
+        Type="Text" 
+        DisplayName="Deletion Status"
+        StaticName="DeletionStatus" 
+        Name="DeletionStatus"/>	
+    <Field 
+        Group="SPM Fields" 
+        Required="FALSE" 
+        MaxLength="255" 
+        Type="Text" 
+        DisplayName="InitiativeCode"
+        StaticName="InitiativeCode" 
+        Name="InitiativeCode"/>	
+        
+</Fields> 
+				

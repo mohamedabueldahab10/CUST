@@ -1,0 +1,208 @@
+ <Fields>
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Project Code"
+				StaticName="ProjectCode"
+				Name="ProjectCode"/>					
+						
+	<!-- <Field 
+				Group="SPM Fields"
+				Required="TRUE"
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Modified"
+				StaticName="Modified"
+				Name="Modified"/>	
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="ModifiedBy"
+				StaticName="ModifiedBy"
+				Name="ModifiedBy"/>
+					
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Created"
+				StaticName="Created"
+				Name="Created"/>		
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="CreatedBy"
+				StaticName="CreatedBy"
+				Name="CreatedBy"/>
+	<Field 		
+				
+				Required="FALSE"
+				Type="Number" 
+				DisplayName="Id" 
+				StaticName="Id" 
+				Name="Id"/>		 -->
+	<!-- <Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Title"
+				StaticName="Title"
+				Name="Title"/>					 -->
+	<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				MaxLength="255"
+				Type="Text" 
+				DisplayName="Meeting Code" 
+				StaticName="Ttitle" 
+				Name="Ttitle"/>			
+	<Field 
+				Group="SPM Fields"
+				Required="TRUE"
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Meeting Date"
+				StaticName="Date"
+				Name="Date"/>				
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Time"
+				StaticName="Time"
+				Name="Time"/>				
+	<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				MaxLength="255"
+				Type="Text"  
+				DisplayName="Meeting Location" 
+				StaticName="Location" 
+				Name="Location"/>	
+	<Field 
+				Group="SPM Fields" 
+				Required="TRUE" 
+				MaxLength="255"
+				Type="Text"
+				DisplayName="Subject" 
+				StaticName="Subject" 
+				Name="Subject"/>
+	<Field 
+				Group="SPM Fields" 
+				Required="FALSE"
+				Type="Note"
+				DisplayName="Formal Agenda" 
+				StaticName="FormalAgenda" 
+				Name="FormalAgenda"/>
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				Type="Note"
+				DisplayName="Attendees"
+				StaticName="Attendees"
+				Name="Attendees"/>			
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				Type="Note"
+				DisplayName="Decisions"
+				StaticName="Decisions"
+				Name="Decisions"/>			
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				Type="Note"
+				DisplayName="Meeting Objectives"
+				StaticName="MeetingObjectives"
+				Name="MeetingObjectives"/>
+	<Field 
+			Name="MeetingType"
+			StaticName="MeetingType"
+			DisplayName="MeetingType"
+			Type="Choice"
+			Required="FALSE"
+			Group="SPM Fields">
+			<CHOICES>
+				<CHOICE>technicalmeeting</CHOICE>
+				<CHOICE>Buisnessuser</CHOICE>
+				<CHOICE>Status</CHOICE>
+				<CHOICE>Highermanagement</CHOICE>
+				<CHOICE>Quickofmeeting</CHOICE>
+				<CHOICE>Others</CHOICE>
+			</CHOICES>
+	</Field>
+	<Field 
+			Name="Stage"
+			StaticName="Stage"
+			DisplayName="Stage"
+			Type="Choice"
+			Required="FALSE"
+			Group="SPM Fields">
+			<CHOICES>
+				<CHOICE>momstage01</CHOICE>
+				<CHOICE>momstage02</CHOICE>
+				<CHOICE>momstage03</CHOICE>
+				<CHOICE>momstage04</CHOICE>
+				<CHOICE>momstage05</CHOICE>
+			</CHOICES>
+	</Field>
+	<Field 
+				Group="SPM Fields"
+				Required="FALSE"
+				Type="Note"
+				DisplayName="Comments"
+				StaticName="Comments"
+				Name="Comments"/>			
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="MasterKey" 
+			StaticName="MasterKey" 
+			Name="MasterKey"/>
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="MasterID" 
+			StaticName="MasterID" 
+			Name="MasterID"/>	
+
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Deletion Status"
+			StaticName="DeletionStatus" 
+			Name="DeletionStatus"/>	
+	<Field 
+			Group="Instrument Fields"
+			Required="FALSE" 
+			Type="Text" 
+			DisplayName="InitiativeCode" 
+			StaticName="InitiativeCode" 
+			Name="InitiativeCode"/>	
+
+			<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				MaxLength="255" 
+				Type="Text" 
+				Name="Strategic Partnership Code"
+				DisplayName="StrategicPartnershipCode" 
+				StaticName="StrategicPartnershipCode"/>	
+				
+						  
+ </Fields>       

@@ -1,0 +1,127 @@
+
+<Fields>
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Code" 
+			StaticName="Title" 
+			Name="Title"/>
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Name" 
+			StaticName="Name" 
+			Name="Name"/>
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Deliverable" 
+			StaticName="Deliverable" 
+			Name="Deliverable"/>	
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Invoice" 
+			StaticName="Invoice" 
+			Name="Invoice"/>			
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Note" 
+			DisplayName="Description" 
+			StaticName="Description" 
+			Name="Description"/>
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Note" 
+			DisplayName="Comments" 
+			StaticName="Comments" 
+			Name="Comments"/>
+		<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Note" 
+			DisplayName="Accomplishment Documents" 
+			StaticName="AccomplishmentDocuments" 
+			Name="AccomplishmentDocuments"/>	
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Delivery Date" 
+				StaticName="DeliveryDate" 
+				Name="DeliveryDate"/>	
+		<Field 
+				Group="SPM Fields" 
+				Required="FALSE" 
+				Type="DateTime" 
+				Format="DateOnly"
+				DisplayName="Planned Date" 
+				StaticName="PlannedDate" 
+				Name="PlannedDate"/>				
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Number" 
+			DisplayName="Percentage Of Delivery" 
+			StaticName="PercentageOfDelivery" 
+			Name="PercentageOfDelivery"/>				
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			Type="Number" 
+			DisplayName="Amount" 
+			StaticName="Amount" 
+			Name="Amount"/>
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Project Code" 
+			StaticName="ProjectCode" 
+			Name="ProjectCode"/>
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="MasterKey" 
+			StaticName="MasterKey" 
+			Name="MasterKey"/>
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="MasterID" 
+			StaticName="MasterID" 
+			Name="MasterID"/>	
+
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="Deletion Status"
+			StaticName="DeletionStatus" 
+			Name="DeletionStatus"/>		
+	<Field 
+			Group="SPM Fields" 
+			Required="FALSE" 
+			MaxLength="255" 
+			Type="Text" 
+			DisplayName="InitiativeCode"
+			StaticName="InitiativeCode" 
+			Name="InitiativeCode"/>		
+</Fields>
