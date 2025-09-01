@@ -729,7 +729,7 @@ var initiativeHomeInfo_Request = {
 
       $(".fromDeliverables .tlContainer").html(
         `<p style="text-align:center">${No_Data}</p>`
-      ); // container of data
+      ); // container of data comment
 
       $(".schedule-src").on("change", function () {
         if ($(this).val() == "deliverables") {
