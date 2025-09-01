@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
-    <ClientSideComponentInstance
-        Title="SystemSecurity"
-        Location="ClientSideExtension.ApplicationCustomizer"
-        ComponentId="ac4d74b5-ec17-4520-891d-11a4a28f2288"
-        Properties="{&quot;testMessage&quot;:&quot;Test message&quot;}">
-    </ClientSideComponentInstance>
-</Elements>
