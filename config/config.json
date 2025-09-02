@@ -249,6 +249,14 @@
           "manifest": "./src/webparts/initiativecompliance/InitiativecomplianceWebPart.manifest.json"
         }
       ]
+    },
+    "search-documents-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/searchDocuments/SearchDocumentsWebPart.js",
+          "manifest": "./src/webparts/searchDocuments/SearchDocumentsWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {
@@ -473,6 +481,7 @@
     "StrategicPartnershipHomeWebPartStrings": "lib/webparts/strategicPartnershipHome/loc/{locale}.js",
     "HomePageRedirectWebPartStrings": "lib/webparts/homePageRedirect/loc/{locale}.js",
     "ProjectcomplianceWebPartStrings": "lib/webparts/projectcompliance/loc/{locale}.js",
-    "InitiativecomplianceWebPartStrings": "lib/webparts/initiativecompliance/loc/{locale}.js"
+    "InitiativecomplianceWebPartStrings": "lib/webparts/initiativecompliance/loc/{locale}.js",
+    "SearchDocumentsWebPartStrings": "lib/webparts/searchDocuments/loc/{locale}.js"
   }
 }
