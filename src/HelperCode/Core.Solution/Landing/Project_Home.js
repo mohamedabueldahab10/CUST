@@ -836,8 +836,13 @@ var Project_Home_Info_Request = {
     // DeliveredYesInvoices_Info_Request.init();
     checkEpmProjectHtml = setInterval(function () {
       // call the function on set interval to can get the data from project center and not get the err
-      EPM_Project_Data_Request.preinit();
+     
     }, 2000);
+    setTimeout(function () {
+      // call the function once after 2 seconds
+      EPM_Project_Data_Request.preinit();
+  }, 2000);
+  
     changeResources();
     $(
       "div#particles-foreground, div#particles-background, .vertical-centered-box"
