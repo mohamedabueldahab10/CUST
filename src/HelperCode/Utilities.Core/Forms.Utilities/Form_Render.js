@@ -1254,6 +1254,19 @@ window.ListInfo = {
             }
             //
           });
+          if (listkey == "deliverables" && isEdit){
+            $(document).on("change", "#Exchangetype", function () {
+              var selectedValue = $(this).val();
+          
+              if (selectedValue === "delivery") {
+                  $("#Delivered[value='yes']").prop("checked", true);
+          
+                  $("input#Delivered").prop("disabled", true);
+              } else {
+                  $("input#Delivered").prop("disabled", false);
+              }
+          });
+          }
 
           // add new style for wf
 

@@ -52,10 +52,10 @@ var Information_Form = [
         InternalName: 'Name',
         DisplayName: 'اسم المخرج',
         DisplayNameEn: 'Name',
-        type: 'string',
+        type: 'multiline',
         validation: 'required',
-        maxchar: '255',
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        maxchar: 1000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 1000 حرف",
         descPhraseEn: "max length of letters equal 255",
         // withletters: true,
         Errmsgkey: "withletterpattern",
@@ -125,20 +125,74 @@ var Information_Form = [
           ]
       },
       },
+            {
+        InternalName: 'Exchangetype',
+        DisplayNameEn: 'Exchange type',
+        DisplayName: 'نوع الصرف',
+        validation: 'required',
+        type: 'dropdownValues',
+        dontSubmit: true,
+        options: {
+          choices: [
+            { display: 'general', value: 'general' , selected: 'selected' },
+            { display: 'partial', value: 'partial' },
+            { display: 'delivery', value: 'delivery'}
+          ],
+        },
+        toggleValues: [
+          { value: 'general', fields: ['Quantity'] },
+          { value: 'partial', fields: ['Disbursedquantity'] },
+        ],
+        requiredValues: [{ value: 'delivery', fields: ['Delivered'] }],
+      },
+     
       {
         InternalName: 'Quantity',
         DisplayNameEn: 'Quantity',
         DisplayName: 'الكمية',
         type: "number",    
         validation: 'required',
+        ToggleName:'Quantity',
+        dynamic: 'parent',
       },
-      {
+        {
+        InternalName: 'Disbursedquantity',
+        DisplayNameEn: 'Disbursed quantity',
+        DisplayName: 'الكميه المنصرفه',
+        type: "number",    
+        validation: 'required',
+        ToggleName:'Disbursedquantity',
+        display:'none',
+        dynamic: 'parent',
+      },
+        {
         InternalName: 'AmountPrice',
         DisplayNameEn: 'AmountPrice',
         DisplayName: 'سعر الوحدة',
         type: "number",        
         validation: 'required',
         // type: 'float',
+      },
+         {
+        InternalName: 'PurchaseRequestNumber',
+        DisplayNameEn: 'PurchaseRequestNumber',
+        DisplayName: 'رقم طلب الاحتياج',
+        type: "number",  
+        state:"disabled"
+      },
+       {
+        InternalName: 'PurchaseOrderNumber',
+        DisplayNameEn: 'PurchaseOrderNumber',
+        DisplayName: 'رقم امر التعميد',
+        type: "number",  
+        state:"disabled"
+      },
+          {
+        InternalName: 'ProjectLineNumber',
+        DisplayNameEn: 'ProjectLineNumber',
+        DisplayName: 'رقم السطر فى موارد',
+        type: "string",  
+        state:"disabled"
       },
       // {
       //   "InternalName": "Status",
@@ -181,7 +235,7 @@ var Information_Form = [
         validation: 'required',
         security: {
           groups: [
-            'System Admin Group','EPMO','LMSU-Execution','VRO_E'
+            'System Admin Group','EPMO','LMSU-Execution','VRO_E','Project Managers for Project Web App'
           ]
       },
       },
@@ -235,6 +289,7 @@ var Information_Form = [
         targetfield: 'Status',
         targetfieldvalue: 'completed',
         type: 'yesnoradio',
+        RequiredName: 'Delivered',
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
@@ -308,10 +363,10 @@ var Information_Form = [
         sourceinternalname: 'InitiativeCode', // column in target list
         Dispfieldkey: 'Name', //display in dropdown
         valfieldkey: 'Title', // value in dropdown        
-        validation: "required",
+       // validation: "required",
         security: {
           groups: [
-            'System Admin Group','EPMO','LMSU-Execution','VRO_E'
+            'System Admin Group','EPMO','LMSU-Execution','VRO_E','Project Managers for Project Web App'
           ]
       },
       },
@@ -334,7 +389,7 @@ var Information_Form = [
         },
         security: {
           groups: [
-            'System Admin Group','EPMO','LMSU-Execution','VRO_E'
+            'System Admin Group','EPMO','LMSU-Execution','VRO_E','Project Managers for Project Web App'
           ]
       },
       },
@@ -350,6 +405,23 @@ var Information_Form = [
         "state": "disabled",
         display:'none'
         },
+        {
+          InternalName: 'InvoiceNumber',
+          DisplayName: 'رقم الفاتورة',
+          DisplayNameEn: 'Invoice Number',
+          type: 'string',
+      },
+      {
+        InternalName: 'InvoiceDate',
+        DisplayName: 'تاريخ الفاتورة',
+        DisplayNameEn: 'Invoice Date',
+        type: 'datetimetoparent',
+        listname: 'Projects', // list name
+        startinternalname: 'BaselineStartDate', // internalname of parent start
+        endinternalname: 'BaselineFinishDate',
+        max: 'today',
+        Errmsgkey: 'cancelationdatepattern',
+      },
     ],
   },
   {

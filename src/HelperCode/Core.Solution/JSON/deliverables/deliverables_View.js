@@ -57,13 +57,34 @@ var Information_Form = [
         type: "number",
         // type: 'float',
       },
-      {
+      
+        {
         InternalName: 'AmountPrice',
         DisplayNameEn: 'AmountPrice',
         DisplayName: 'سعر الوحدة',
-        type: "number",        
-        validation: 'required',
+        type: "number",  
+      },
+       {
+        InternalName: 'ExpenseQuantity',
+        DisplayNameEn: 'Expense Quantity',
+        DisplayName: 'الكمية المنصرفه',
+        type: "number",
+        listname:"COC",
+        parentinternalname :"Quantity",
         // type: 'float',
+      },
+         {
+        InternalName: 'PurchaseRequestNumber',
+        DisplayNameEn: 'PurchaseRequestNumber',
+        DisplayName: 'رقم طلب الاحتياج',
+        type: "number",  
+        
+      },
+       {
+        InternalName: 'PurchaseOrderNumber',
+        DisplayNameEn: 'PurchaseOrderNumber',
+        DisplayName: 'رقم امر التعميد',
+        type: "number",  
       },
       // {
       //   InternalName: 'Status',
@@ -214,6 +235,19 @@ var Information_Form = [
 				DispfieldkeyEn: 'TaskNameEn',
 				valfieldkey: "Title",
 				},
+      {
+          InternalName: 'InvoiceNumber',
+          DisplayName: 'رقم الفاتورة',
+          DisplayNameEn: 'Invoice Number',
+          type: 'string',
+      },
+      {
+        InternalName: 'InvoiceDate',
+        DisplayName: 'تاريخ الفاتورة',
+        DisplayNameEn: 'Invoice Date',
+        type: 'datetime',
+      },
+        
     ],
   },
   // {

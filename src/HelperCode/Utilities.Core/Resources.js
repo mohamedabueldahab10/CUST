@@ -1263,7 +1263,8 @@
     discrepancysummary: 'ملخص التباين',
     compliancestatus: "حالة الامتثال",
     complaincepercentage: "نسبة الامتثال",
-    transferedproject: "نقل المشروع"
+    transferedproject: "نقل المشروع",
+    delivery:"تسليم"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -2529,7 +2530,8 @@ restoration:"restoration",
     discrepancysummary: "Discrepancy Summary",
     compliancestatus: "Compliance Status",
     complaincepercentage: "Compliance Percentage",
-    transferedproject: "Transfered Project"
+    transferedproject: "Transfered Project" ,
+    delivery:"Delivery"
   },
 };
 

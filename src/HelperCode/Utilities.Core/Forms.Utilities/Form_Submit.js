@@ -2609,7 +2609,7 @@ window.Edit_Data_Submit = {
   g: {
     clickbait: function () {
       $("button.btn-save").on("click", function () {
-        if ($("#Exchangetype").val() === "partial" && SP_ListName == 'Deliverables' && isEdit == true) {
+        if (($("#Exchangetype").val() === "partial" || $("#Exchangetype").val() === "general" ) && (SP_ListName == 'Deliverables' && isEdit == true) && ($('#PurchaseRequestNumber').val()!=='' && $('#PurchaseRequestNumber').val()!==null && $('#PurchaseRequestNumber').val()!==undefined && $('#PurchaseRequestNumber').val()!== No_Data)&& ($('#PurchaseOrderNumber').val()!==''&& $('#PurchaseOrderNumber').val()!==null && $('#PurchaseOrderNumber').val()!==undefined && $('#PurchaseOrderNumber').val()!== No_Data)) {
           handlePartialDisbursementSave()
             .then(() => {
               console.log("Nested deliverable saved, no main deliverable save performed.");
@@ -2619,7 +2619,12 @@ window.Edit_Data_Submit = {
               "/SitePages/Listing.aspx?ListKey=" +
               'nesteddeliverables'+PCODE_STRING ;
             });
-        } else {
+        } else if (($("#Exchangetype").val() === "partial" || $("#Exchangetype").val() === "general" ) && (SP_ListName == 'Deliverables' && isEdit == true) && ($('#PurchaseRequestNumber').val()=='' || $('#PurchaseRequestNumber').val()==null || $('#PurchaseRequestNumber').val()==undefined || $('#PurchaseRequestNumber').val()== No_Data)|| ($('#PurchaseOrderNumber').val()=='' || $('#PurchaseOrderNumber').val()==null || $('#PurchaseOrderNumber').val() ==undefined || $('#PurchaseOrderNumber').val()== No_Data)) {
+          // alert to not save
+          alert("لا يمكن صرف المخرج لعدم وجود رقم طلب الاحتياج ورقم أمر التعميد");
+          Edit_Data_Submit.preinit();
+        }
+        else {
           // Proceed with the normal save for other cases
           Edit_Data_Submit.preinit();
         }
@@ -2854,6 +2859,8 @@ function handlePartialDisbursementSave() {
         newItem.set_item("PurchaseRequestNumber", $("#PurchaseRequestNumber").val());
         newItem.set_item("PurchaseOrderNumber", $("#PurchaseOrderNumber").val());
         newItem.set_item("PurchaseOrderLineNumber", $("#ProjectLineNumber").val());
+        newItem.set_item("InvoiceNumber", $("#InvoiceNumber").val());
+        newItem.set_item("InvoiceDate", $("#InvoiceDate").val());
 
         // build title code
         const prt1 = "ND",
