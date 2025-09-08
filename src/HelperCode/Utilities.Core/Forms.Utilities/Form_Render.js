@@ -1267,7 +1267,7 @@ window.ListInfo = {
               }
           });
           }
-
+          
           // add new style for wf
 
           if (isWF) {
@@ -8222,6 +8222,51 @@ debugger;
         OnSuccess(flag, htmlBody);
         break;
     }
+    if (listkey == "deliverables" && (isEdit || isNew)) {
+      if (typeof USERPCODE !== "undefined" && USERPCODE) {
+        $.ajax({
+          url: "/_api/web/lists/getbytitle('Projects')/items",
+    
+          type: "GET",
+    
+          data: {
+            $select: "Title,IsStrategicProject",
+            $filter: "Title eq '" + USERPCODE + "'",
+          },
+    
+          headers: {
+            Accept: "application/json;odata=verbose",
+          },
+    
+          success: function (data) {
+            if (data.d.results.length > 0) {
+              var project = data.d.results[0];
+              if (
+                project.IsStrategicProject &&
+                project.IsStrategicProject.toLowerCase() === "strategy"
+              ) {
+                $("#RelatedInitiativeDeliverable").attr("required", true);
+                $("#RelatedInitiativeDeliverable")
+                  .closest(".col-md-6")
+                  .find("label")
+                  .attr("required", true);
+              } else {
+                $("#RelatedInitiativeDeliverable").attr("required", false);
+                $("#RelatedInitiativeDeliverable")
+                  .closest(".col-md-6")
+                  .find("label")
+                  .attr("required", false);
+              }
+            }
+          },
+    
+          error: function (error) {
+            console.log("Error fetching project data: ", error);
+          },
+        });
+      }
+    }
+    
     // if (!isCrMode && crListKey) {
     //   //on new custom cr
     //   handleCustomeCr.init();

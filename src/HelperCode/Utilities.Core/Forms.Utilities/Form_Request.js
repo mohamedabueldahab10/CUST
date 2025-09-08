@@ -960,6 +960,78 @@ window.Edit_Data_Request = {
     if ($(".PPField.SPIField.form-control").attr("disabled") == "disabled") {
       $("input.sp-peoplepicker-editorInput").prop("disabled", true);
     }
+    function getNestedDeliverablesSum() {
+      return new Promise((resolve, reject) => {
+        const clientContext = new SP.ClientContext.get_current();
+        const nestedList = clientContext.get_web().get_lists().getByTitle("NestedDeliverables");
+    
+        const camlQuery = new SP.CamlQuery();
+        camlQuery.set_viewXml(`
+          <View>
+            <Query>
+              <Where>
+                <And>
+                  <Eq>
+                    <FieldRef Name='MasterID' />
+                    <Value Type='Text'>${IID}</Value>
+                  </Eq>
+                  <Neq>
+                    <FieldRef Name='DeletionStatus' />
+                    <Value Type='Text'>Deleted</Value>
+                  </Neq>
+                </And>
+              </Where>
+            </Query>
+          </View>
+        `);
+    
+        const items = nestedList.getItems(camlQuery);
+        clientContext.load(items);
+    
+        clientContext.executeQueryAsync(
+          () => {
+            let sumQuantity = 0;
+            const enumerator = items.getEnumerator();
+            while (enumerator.moveNext()) {
+              const item = enumerator.get_current();
+              const q = item.get_item("Quantity");
+              sumQuantity += q ? parseFloat(q) : 0;
+            }
+    
+            console.log("Total NestedDeliverables Quantity:", sumQuantity);
+    
+            const originalQuantity = parseFloat($("#Quantity").val()) || 0;
+            const newQuantity = originalQuantity - sumQuantity;
+    
+            // update and disable Quantity
+            $("#Quantity").val(newQuantity > 0 ? newQuantity : 0);
+            $("#Quantity").prop("disabled", true);
+    
+            // on Exchangetype change
+            $("#Exchangetype").off("change.nestedQty").on("change.nestedQty", function () {
+              const exchangeType = $(this).val();
+              if (exchangeType === "partial") {
+                if (newQuantity <= 0) {
+                  $("#Disbursedquantity").val(0).attr("max", 0).prop("disabled", true);
+                } else {
+                  $("#Disbursedquantity").val(0).attr("max", newQuantity).prop("disabled", false);
+                }
+              }
+            });
+    
+            resolve(sumQuantity);
+          },
+          (sender, args) => {
+            console.error("Error fetching NestedDeliverables sum:", args.get_message());
+            resolve(0);
+          }
+        );
+      });
+    }
+    
+    if(listkey == "deliverables" && isEdit){
+    getNestedDeliverablesSum();
+    }
     $(".loader-box").fadeOut();
   },
   onError: function (sender, args) {

@@ -86,6 +86,18 @@ var Information_Form = [
         DisplayName: 'رقم امر التعميد',
         type: "number",  
       },
+      {
+        InternalName: 'InvoiceNumber',
+        DisplayName: 'رقم الفاتورة',
+        DisplayNameEn: 'Invoice Number',
+        type: 'string',
+      },
+      {
+        InternalName: 'InvoiceDate',
+        DisplayName: 'تاريخ الفاتورة',
+        DisplayNameEn: 'Invoice Date',
+        type: 'datetime',
+      },
       // {
       //   InternalName: 'Status',
       //   DisplayName: 'الحالة',
@@ -235,18 +247,7 @@ var Information_Form = [
 				DispfieldkeyEn: 'TaskNameEn',
 				valfieldkey: "Title",
 				},
-      {
-          InternalName: 'InvoiceNumber',
-          DisplayName: 'رقم الفاتورة',
-          DisplayNameEn: 'Invoice Number',
-          type: 'string',
-      },
-      {
-        InternalName: 'InvoiceDate',
-        DisplayName: 'تاريخ الفاتورة',
-        DisplayNameEn: 'Invoice Date',
-        type: 'datetime',
-      },
+
         
     ],
   },

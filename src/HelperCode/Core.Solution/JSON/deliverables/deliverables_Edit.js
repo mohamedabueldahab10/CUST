@@ -142,8 +142,13 @@ var Information_Form = [
         toggleValues: [
           { value: 'general', fields: ['Quantity'] },
           { value: 'partial', fields: ['Disbursedquantity'] },
+          { value: 'delivery', fields: [] },
         ],
-        requiredValues: [{ value: 'delivery', fields: ['Delivered'] }],
+        requiredValues: [
+          { value: 'general', fields: ['InvoiceNumber', 'InvoiceDate'] },
+          { value: 'partial', fields:  ['InvoiceNumber', 'InvoiceDate'] },
+          { value: 'delivery', fields: ['Delivered'] },
+      ],
       },
      
       {
@@ -153,7 +158,8 @@ var Information_Form = [
         type: "number",    
         validation: 'required',
         ToggleName:'Quantity',
-        dynamic: 'parent',
+        state:"disabled",
+        // dynamic: 'parent',
       },
         {
         InternalName: 'Disbursedquantity',
@@ -186,6 +192,25 @@ var Information_Form = [
         DisplayName: 'رقم امر التعميد',
         type: "number",  
         state:"disabled"
+      },
+      {
+        InternalName: 'InvoiceNumber',
+        DisplayName: 'رقم الفاتورة',
+        DisplayNameEn: 'Invoice Number',
+        type: 'string',
+        RequiredName: 'InvoiceNumber',
+      },
+      {
+        InternalName: 'InvoiceDate',
+        DisplayName: 'تاريخ الفاتورة',
+        DisplayNameEn: 'Invoice Date',
+        type: 'datetimetoparent',
+        listname: 'Projects', // list name
+        startinternalname: 'BaselineStartDate', // internalname of parent start
+        endinternalname: 'BaselineFinishDate',
+        max: 'today',
+        Errmsgkey: 'cancelationdatepattern',
+        RequiredName: 'InvoiceDate',
       },
           {
         InternalName: 'ProjectLineNumber',
@@ -405,23 +430,6 @@ var Information_Form = [
         "state": "disabled",
         display:'none'
         },
-        {
-          InternalName: 'InvoiceNumber',
-          DisplayName: 'رقم الفاتورة',
-          DisplayNameEn: 'Invoice Number',
-          type: 'string',
-      },
-      {
-        InternalName: 'InvoiceDate',
-        DisplayName: 'تاريخ الفاتورة',
-        DisplayNameEn: 'Invoice Date',
-        type: 'datetimetoparent',
-        listname: 'Projects', // list name
-        startinternalname: 'BaselineStartDate', // internalname of parent start
-        endinternalname: 'BaselineFinishDate',
-        max: 'today',
-        Errmsgkey: 'cancelationdatepattern',
-      },
     ],
   },
   {

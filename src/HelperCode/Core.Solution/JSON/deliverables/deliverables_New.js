@@ -123,6 +123,23 @@ var Information_Form = [
         validation: 'required',
         // type: 'float',
       },
+      {
+        InternalName: 'InvoiceNumber',
+        DisplayName: 'رقم الفاتورة',
+        DisplayNameEn: 'Invoice Number',
+        type: 'string',
+      },
+      {
+        InternalName: 'InvoiceDate',
+        DisplayName: 'تاريخ الفاتورة',
+        DisplayNameEn: 'Invoice Date',
+        type: 'datetimetoparent',
+        listname: 'Projects', // list name
+        startinternalname: 'BaselineStartDate', // internalname of parent start
+        endinternalname: 'BaselineFinishDate',
+        max: 'today',
+        Errmsgkey: 'cancelationdatepattern',
+      },
       // {
       //   InternalName: 'Status',
       //   DisplayName: 'الحالة',
@@ -295,23 +312,6 @@ var Information_Form = [
           ],
         },
       },
-      {
-        InternalName: 'InvoiceNumber',
-        DisplayName: 'رقم الفاتورة',
-        DisplayNameEn: 'Invoice Number',
-        type: 'string',
-    },
-    {
-      InternalName: 'InvoiceDate',
-      DisplayName: 'تاريخ الفاتورة',
-      DisplayNameEn: 'Invoice Date',
-      type: 'datetimetoparent',
-      listname: 'Projects', // list name
-      startinternalname: 'BaselineStartDate', // internalname of parent start
-      endinternalname: 'BaselineFinishDate',
-      max: 'today',
-      Errmsgkey: 'cancelationdatepattern',
-    },
     ],
   },
   {
