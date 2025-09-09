@@ -292,12 +292,12 @@ var MainKPIs_Info_Request = {
       KPIsHTML.join("")
     );
 
-    if (
-      localStorage.getItem("lng") == null ||
-      localStorage.getItem("lng") == "ar"
-    ) {
-      $(".page-title").html(ar_UserRole);
-    } else $(".page-title").html(en_UserRole);
+    // if (
+    //   localStorage.getItem("lng") == null ||
+    //   localStorage.getItem("lng") == "ar"
+    // ) {
+    //   $(".page-title").html(ar_UserRole);
+    // } else $(".page-title").html(en_UserRole);
 
     changeResources();
     

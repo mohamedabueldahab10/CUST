@@ -8604,8 +8604,29 @@ var Access_Project_Info_Request = {
             );
             $(".firsttitle").hide();
           }
+
+
         }
       }
+      var $target = $("#langs");
+      if (!$target.length) return;
+    
+      var $role = $("#UserRole");
+      if (!$role.length) {
+        $role = $('<h2 id="UserRole" class="page-title"></h2>');
+      }
+    
+      if (!localStorage.getItem("lng") || localStorage.getItem("lng") == "ar") {
+        $role.html(ar_UserRole);
+      } else {
+        $role.html(en_UserRole);
+      }
+    
+      // Remove from current position if it exists
+      $role.detach();
+    
+      // Insert before #langs
+      $role.insertBefore($target);
     },
   },
 };

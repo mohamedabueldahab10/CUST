@@ -850,12 +850,12 @@ window.Project_Info_Request = {
       }
     );
 
-    if (
-      localStorage.getItem("lng") == null ||
-      localStorage.getItem("lng") == "ar"
-    ) {
-      $(".page-title").html(ar_UserRole);
-    } else $(".page-title").html(en_UserRole);
+    // if (
+    //   localStorage.getItem("lng") == null ||
+    //   localStorage.getItem("lng") == "ar"
+    // ) {
+    //   $(".page-title").html(ar_UserRole);
+    // } else $(".page-title").html(en_UserRole);
 
     if (originalstate) {
       Project_Info_Request.g.ChartsFilteration();

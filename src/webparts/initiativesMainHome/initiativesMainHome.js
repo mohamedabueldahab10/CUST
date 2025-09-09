@@ -803,12 +803,12 @@ window.initiativeRequest = {
         },
       }
     );
-    if (
-      localStorage.getItem("lng") == null ||
-      localStorage.getItem("lng") == "ar"
-    ) {
-      $(".page-title").html(ar_UserRole);
-    } else $(".page-title").html(en_UserRole);
+    // if (
+    //   localStorage.getItem("lng") == null ||
+    //   localStorage.getItem("lng") == "ar"
+    // ) {
+    //   $(".page-title").html(ar_UserRole);
+    // } else $(".page-title").html(en_UserRole);
     if (originalstate) {
       initiativeRequest.g.ChartsFilteration();
     }

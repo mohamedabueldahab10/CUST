@@ -1263,7 +1263,7 @@
     discrepancysummary: 'ملخص التباين',
     compliancestatus: "حالة الامتثال",
     complaincepercentage: "نسبة الامتثال",
-    transferedproject: "نقل المشروع",
+    transferedproject: "تحول الي مشروع",
     delivery:"تسليم"
   },
   en: {
