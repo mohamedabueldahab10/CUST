@@ -793,6 +793,14 @@ window.userCalls = {
           document.title = "Admin Panel";
         }
         break;
+      case "searchdocuments.aspx":
+          if (isArabic) {
+            document.title = "البحث في المرفقات";
+          } else {
+            document.title = "Documents Search";
+          }
+          break;
+        
       default:
         document.title = USERPageTitle;
     }
@@ -8613,7 +8621,7 @@ var Access_Project_Info_Request = {
     
       var $role = $("#UserRole");
       if (!$role.length) {
-        $role = $('<h2 id="UserRole" class="page-title"></h2>');
+        $role = $('<h2 id="UserRole" class="pageTitleUserRole"></h2>');
       }
     
       if (!localStorage.getItem("lng") || localStorage.getItem("lng") == "ar") {

@@ -4,6 +4,7 @@ require('UserAccess');
 require('../../HelperCode/Utilities.Core/Side_Navigation.js');
 require('../../HelperRessources/css/Styles.css');
 require('../../HelperRessources/css/style-dashboards.css');
+require('../../HelperRessources/css/searchDocuments.css');
 require('../../HelperCode/Core.Solution/Listing/searchDocuments.js');
 import { Version } from '@microsoft/sp-core-library';
 import {

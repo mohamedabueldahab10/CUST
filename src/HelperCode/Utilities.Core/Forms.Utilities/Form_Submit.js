@@ -98,6 +98,7 @@ var kpiResultsArr = [];
 var benefitMetricsArr = [];
 
 window.New_Data_Submit = {
+
   preinit: function () {
     $(".errormsg").remove();
     $(".container-body").addClass("was-validated");
@@ -1701,6 +1702,42 @@ window.Edit_Data_Submit = {
       });
     }
 
+    // var amountValid = true;
+    // var amountScrollId = false;
+
+    // if (listkey == "Deliverables" && isEdit) {
+    //     var $amount = $("#Amount");
+    //     var amountVal = parseFloat($amount.val());
+    //     var parentVal = parseFloat($amount.attr("data-parentval"));
+    //     var $weight = $("#" + $amount.attr("data-targetelem"));
+    //     var weightVal = parseFloat($weight.val());
+
+    //     if (!isNaN(amountVal) && !isNaN(parentVal) && !isNaN(weightVal)) {
+    //         var percent = (parentVal / weightVal) * 100;
+    //         if (percent <= amountVal) {
+    //             $amount[0].setCustomValidity("");
+    //             amountValid = true;
+    //         } else {
+    //             $amount[0].setCustomValidity("Invalid Amount");
+    //             $amount.siblings(".errMsgField").show();
+    //             amountValid = false;
+    //             amountScrollId = $amount.attr("id");
+    //         }
+    //     }
+    // }
+
+    var fileValid = true;
+    var fileScrollId = false;
+    if ($("#getFile[required]").length) {
+      var $file = $("#getFile[required]");
+      if (!$file.val()) {
+        fileValid = false;
+
+        alert(".الوثائق الداعمة حقل إلزامي! يرجى ملأه بما يجب");
+        fileScrollId = $file.attr("id");
+      }
+    }
+
     changeResources();
 
     if (listkey == "risks") {
@@ -1714,8 +1751,11 @@ window.Edit_Data_Submit = {
       pickervalid &&
       !isCheckMember &&
       multiSelectValid &&
-      uniqueStringValid
+      uniqueStringValid &&
+      // amountValid &&
+      fileValid
     ) {
+
       if (listkey == "risks") {
         if (
           showpopup == false ||
@@ -1809,6 +1849,16 @@ window.Edit_Data_Submit = {
         $(`#${internalNameValidate}`)
           .get(0)
           .scrollIntoView({ behavior: "smooth", block: "center" });
+      } 
+      // else if (amountScrollId) {
+      //   $(`#${amountScrollId}`)
+      //     .get(0)
+      //     .scrollIntoView({ behavior: "smooth", block: "center" });
+      // } 
+      else if (fileScrollId) {
+        $(`#${fileScrollId}`)
+          .get(0)
+          .scrollIntoView({ behavior: "smooth", block: "center" });
       } else {
         $container.animate({
           scrollTop:
@@ -1824,7 +1874,6 @@ window.Edit_Data_Submit = {
     }
   },
   init: function () {
-    debugger;
     if (listkey == "projects") {
       checkinProjectEditSubmit.checkin(User_ProjUID);
     }
@@ -2608,103 +2657,160 @@ window.Edit_Data_Submit = {
     );
   },
   g: {
-    clickbait: function () {
-      $("button.btn-save").off("click").on("click", function () {
-    
-        function checkAllNestedDeliverablesHasFiles(items) {
-          return new Promise((resolve, reject) => {
-            const requests = [];
-            const enumerator = items.getEnumerator();
-    
-            while (enumerator.moveNext()) {
-              const item = enumerator.get_current();
-              const nestedId = item.get_id();
-              const url = `${APIURL}/general/checknesteddeliverablehasfiles/${PCODE}/${nestedId}`;
-    
-              requests.push(
-                fetch(url, { method: "GET" })
-                  .then((res) => res.ok ? res.json() : { result: "false" })
-                  .then((data) => data.result === "true")
-                  .catch(() => false)
-              );
-            }
-    
-            Promise.all(requests).then((results) => {
-              const allHaveFiles = results.every((hasFiles) => hasFiles === true);
-              resolve(allHaveFiles);
-            });
-          });
-        }
-    
-        if (($("#Exchangetype").val() === "partial" || $("#Exchangetype").val() === "general") && (SP_ListName == 'Deliverables' && isEdit == true) && ($('#PurchaseRequestNumber').val()!=='' && $('#PurchaseRequestNumber').val()!==null && $('#PurchaseRequestNumber').val()!==undefined && $('#PurchaseRequestNumber').val()!== No_Data)&& ($('#PurchaseOrderNumber').val()!==''&& $('#PurchaseOrderNumber').val()!==null && $('#PurchaseOrderNumber').val()!==undefined && $('#PurchaseOrderNumber').val()!== No_Data)) {
-    
-          const clientContext = new SP.ClientContext.get_current();
-          const nestedList = clientContext.get_web().get_lists().getByTitle("NestedDeliverables");
-          const camlQuery = new SP.CamlQuery();
-          camlQuery.set_viewXml(`
-            <View>
-              <Query>
-                <Where>
-                  <And>
-                    <Eq>
-                      <FieldRef Name='MasterID' />
-                      <Value Type='Text'>${IID}</Value>
-                    </Eq>
-                    <Neq>
-                      <FieldRef Name='DeletionStatus' />
-                      <Value Type='Text'>Deleted</Value>
-                    </Neq>
-                  </And>
-                </Where>
-              </Query>
-            </View>
-          `);
-          const items = nestedList.getItems(camlQuery);
-          clientContext.load(items);
-    
-          clientContext.executeQueryAsync(
-            () => {
+      clickbait: function () {
+        $("button.btn-save").off("click").on("click", function () {
+          
+          function checkAllNestedDeliverablesHasFiles(items) {
+            return new Promise((resolve, reject) => {
+              const requests = [];
               const enumerator = items.getEnumerator();
-              const hasNested = enumerator.moveNext();
     
-              if (!hasNested) {
-                handlePartialDisbursementSave().then(() => {
-                  Edit_Data_Submit.preinit();
-                });
-                return;
+              while (enumerator.moveNext()) {
+                const item = enumerator.get_current();
+                const nestedId = item.get_id();
+                const url = `${APIURL}/general/checknesteddeliverablehasfiles/${PCODE}/${nestedId}`;
+    
+                requests.push(
+                  fetch(url, { method: "GET" })
+                    .then((res) => (res.ok ? res.json() : { result: "false" }))
+                    .then((data) => data.result === "true")
+                    .catch(() => false)
+                );
               }
     
-              checkAllNestedDeliverablesHasFiles(items).then((allGood) => {
-                if (!allGood) {
-                  alert("لا يمكن الحفظ لوجود مخرج جزئي بدون مرفقات");
+              Promise.all(requests).then((results) => {
+                const allHaveFiles = results.every((hasFiles) => hasFiles === true);
+                resolve(allHaveFiles);
+              });
+            });
+          }
+    
+          if (
+            ($("#Exchangetype").val() === "partial" || $("#Exchangetype").val() === "general") &&
+            (SP_ListName == "Deliverables" && isEdit == true) &&
+            ($("#PurchaseRequestNumber").val() !== "" &&
+              $("#PurchaseRequestNumber").val() !== null &&
+              $("#PurchaseRequestNumber").val() !== undefined &&
+              $("#PurchaseRequestNumber").val() !== No_Data) &&
+            ($("#PurchaseOrderNumber").val() !== "" &&
+              $("#PurchaseOrderNumber").val() !== null &&
+              $("#PurchaseOrderNumber").val() !== undefined &&
+              $("#PurchaseOrderNumber").val() !== No_Data)
+          ) {
+            const clientContext = new SP.ClientContext.get_current();
+            const nestedList = clientContext.get_web().get_lists().getByTitle("NestedDeliverables");
+            const camlQuery = new SP.CamlQuery();
+            camlQuery.set_viewXml(
+              `
+              <View>
+                <Query>
+                  <Where>
+                    <And>
+                      <Eq>
+                        <FieldRef Name='MasterID' />
+                        <Value Type='Text'>${IID}</Value>
+                      </Eq>
+                      <Neq>
+                        <FieldRef Name='DeletionStatus' />
+                        <Value Type='Text'>Deleted</Value>
+                      </Neq>
+                    </And>
+                  </Where>
+                </Query>
+              </View>
+              `
+            );
+            const items = nestedList.getItems(camlQuery);
+            clientContext.load(items);
+    
+            clientContext.executeQueryAsync(
+              () => {
+                const enumerator = items.getEnumerator();
+                const hasNested = enumerator.moveNext();
+    
+                var fileValid = true;
+                var fileScrollId = false;
+                if ($("#getFile").length) {
+                  var $file = $("#getFile");
+                  if (!$file.val()) {
+                    fileValid = false;
+                    alert(".الوثائق الداعمة حقل إلزامي! يرجى ملأه بما يجب");
+                    fileScrollId = $file.attr("id");
+                  }
+                }
+    
+                if (!fileValid) {
                   return;
                 }
     
-                handlePartialDisbursementSave()
-                  .then(() => {
-                    console.log("Nested deliverable saved, no main deliverable save performed.");
-                    nesteddeliverabledisCreated = true;
-                    Edit_Data_Submit.preinit();
-                  });
-              });
-            },
-            (sender, args) => {
-              console.error("Error checking NestedDeliverables:", args.get_message());
-              handlePartialDisbursementSave().then(() => {
-                Edit_Data_Submit.preinit();
-              });
-            }
-          );
-        } else if (($("#Exchangetype").val() === "partial" || $("#Exchangetype").val() === "general") && (SP_ListName == 'Deliverables' && isEdit == true) && ($('#PurchaseRequestNumber').val()=='' || $('#PurchaseRequestNumber').val()==null || $('#PurchaseRequestNumber').val()==undefined || $('#PurchaseRequestNumber').val()== No_Data)|| ($('#PurchaseOrderNumber').val()=='' || $('#PurchaseOrderNumber').val()==null || $('#PurchaseOrderNumber').val() ==undefined || $('#PurchaseOrderNumber').val()== No_Data)) {
-          alert("لا يمكن صرف المخرج لعدم وجود رقم طلب الاحتياج ورقم أمر التعميد");
-          Edit_Data_Submit.preinit();
-        }
-        else {
-          Edit_Data_Submit.preinit();
-        }
-      });
-    },
+                if (!hasNested) {
+                  // NO nested: submit the main deliverable first, then create nested AFTER save (handled in afterSuccess)
+                  window.pendingCreateNestedAfterSave = true;
+                  // Ensure the flag used by afterSuccess is reset appropriately
+                  nesteddeliverabledisCreated = false;
+                  Edit_Data_Submit.preinit();
+                  return;
+                }
     
+                // There ARE nested items: check if any pending (WFStage != 'approved')
+                var pendingExists = false;
+                var enum2 = items.getEnumerator();
+                while (enum2.moveNext()) {
+                  var it = enum2.get_current();
+                  var wf = it.get_item("WFStage");
+                  if (!wf || wf.toString().toLowerCase() !== "approved") {
+                    pendingExists = true;
+                    break;
+                  }
+                }
+    
+                if (pendingExists) {
+                  // There's a pending nested deliverable in approvals: do not create a new nested; just complete the update of the deliverable
+                  window.pendingCreateNestedAfterSave = false;
+                  Edit_Data_Submit.preinit();
+                  return;
+                }
+    
+                // No pending nested: ensure all nested have attachments via API before any submission
+                checkAllNestedDeliverablesHasFiles(items).then((allGood) => {
+                  if (!allGood) {
+                    alert("لا يمكن الحفظ لوجود مخرج جزئي بدون مرفقات");
+                    return;
+                  } else {
+                    // All nested have attachments -> submit the deliverable and then create a new nested (post-save)
+                    window.pendingCreateNestedAfterSave = true;
+                    Edit_Data_Submit.preinit();
+                    return;
+                  }
+                });
+              },
+              (sender, args) => {
+                console.error("Error checking NestedDeliverables:", args.get_message());
+                // fallback: proceed with normal save (no nested creation)
+                window.pendingCreateNestedAfterSave = false;
+                Edit_Data_Submit.preinit();
+              }
+            );
+          } else if (
+            ($("#Exchangetype").val() === "partial" || $("#Exchangetype").val() === "general") &&
+            (SP_ListName == "Deliverables" && isEdit == true) &&
+            ($("#PurchaseRequestNumber").val() == "" ||
+              $("#PurchaseRequestNumber").val() == null ||
+              $("#PurchaseRequestNumber").val() == undefined ||
+              $("#PurchaseRequestNumber").val() == No_Data) ||
+            ($("#PurchaseOrderNumber").val() == "" ||
+              $("#PurchaseOrderNumber").val() == null ||
+              $("#PurchaseOrderNumber").val() == undefined ||
+              $("#PurchaseOrderNumber").val() == No_Data)
+          ) {
+            alert("لا يمكن صرف المخرج لعدم وجود رقم طلب الاحتياج ورقم أمر التعميد");
+            Edit_Data_Submit.preinit();
+          } else {
+            Edit_Data_Submit.preinit();
+          }
+        });
+    },    
+
     Cancel: function () {
       $("button.btn-cancel").on("click", function () {
         window.location =
@@ -4776,22 +4882,45 @@ function _uploadFile() {
                             kpiTotalActual
                           );
                         } else {
-                          if(nesteddeliverabledisCreated){
+                          // If we asked to create a nested AFTER save, do it now and redirect to nested listing (or fallback to normal view)
+                            if (window.pendingCreateNestedAfterSave) {
+                              window.pendingCreateNestedAfterSave = false;
+                              handlePartialDisbursementSave().then((created) => {
+                                if (created) {
+                                  nesteddeliverabledisCreated = true;
+                                  window.location =
+                                    _spPageContextInfo.webAbsoluteUrl +
+                                    "/SitePages/Listing.aspx?ListKey=" +
+                                    'nesteddeliverables' + PCODE_STRING;
+                                } else {
+                                  window.location =
+                                    _spPageContextInfo.webAbsoluteUrl +
+                                  "/SitePages/View.aspx?ListKey=" +
+                                  listkey +
+                                  "&IID=" +
+                                  IID +
+                                  PCODE_STRING;
+                              }
+                            });
+
+                          } 
+                          else if (nesteddeliverabledisCreated) {
                             // Optionally, redirect or show a success message here
                             window.location =
-                            _spPageContextInfo.webAbsoluteUrl +
-                            "/SitePages/Listing.aspx?ListKey=" +
-                            'nesteddeliverables'+PCODE_STRING ;
-                          } else{
+                              _spPageContextInfo.webAbsoluteUrl +
+                              "/SitePages/Listing.aspx?ListKey=" +
+                              'nesteddeliverables' + PCODE_STRING;
+                          } else {
                             window.location =
-                            _spPageContextInfo.webAbsoluteUrl +
-                            "/SitePages/View.aspx?ListKey=" +
-                            listkey +
-                            "&IID=" +
-                            IID +
-                            PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+                              _spPageContextInfo.webAbsoluteUrl +
+                              "/SitePages/View.aspx?ListKey=" +
+                              listkey +
+                              "&IID=" +
+                              IID +
+                              PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
                           }
                         }
+                        
                       }
                     }
                   } else if (listkey == "projects") {

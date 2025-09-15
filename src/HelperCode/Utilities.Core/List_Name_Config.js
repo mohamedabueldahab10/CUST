@@ -853,6 +853,11 @@ var PageArray = [
 		listName: "KPIResults"
 	},
 	{
+		pagename: "SearchDocuments.aspx",
+		Title: "البحث في المرفقات",
+		TitleEn: "Documents Search",
+	},
+	{
 		pagename: "BenefitMetrics.aspx",
 		Title: "مقاييس المنفعة",
 		TitleEn: "Benefit Metrics",
