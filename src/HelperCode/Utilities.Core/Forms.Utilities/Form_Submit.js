@@ -2657,37 +2657,36 @@ window.Edit_Data_Submit = {
     );
   },
   g: {
-      clickbait: function () {
-        $("button.btn-save").off("click").on("click", function () {
-          
-          function checkAllNestedDeliverablesHasFiles(items) {
-            return new Promise((resolve, reject) => {
-              const requests = [];
-              const enumerator = items.getEnumerator();
-    
-              while (enumerator.moveNext()) {
-                const item = enumerator.get_current();
-                const nestedId = item.get_id();
-                const url = `${APIURL}/general/checknesteddeliverablehasfiles/${PCODE}/${nestedId}`;
-    
-                requests.push(
-                  fetch(url, { method: "GET" })
-                    .then((res) => (res.ok ? res.json() : { result: "false" }))
-                    .then((data) => data.result === "true")
-                    .catch(() => false)
-                );
-              }
-    
-              Promise.all(requests).then((results) => {
-                const allHaveFiles = results.every((hasFiles) => hasFiles === true);
-                resolve(allHaveFiles);
-              });
+    clickbait: function () {
+      $("button.btn-save").off("click").on("click", function () {
+        
+        function checkAllNestedDeliverablesHasFiles(items) {
+          return new Promise((resolve, reject) => {
+            const requests = [];
+            const enumerator = items.getEnumerator();
+  
+            while (enumerator.moveNext()) {
+              const item = enumerator.get_current();
+              const nestedId = item.get_id();
+              const url = `${APIURL}/general/checknesteddeliverablehasfiles/${PCODE}/${nestedId}`;
+              requests.push(
+                fetch(url, { method: "GET" })
+                  .then((res) => (res.ok ? res.json() : { result: false }))
+                  .then((data) => data.result === true)
+                  .catch(() => false)
+              );
+            }
+  
+            Promise.all(requests).then((results) => {
+              const allHaveFiles = results.every((hasFiles) => hasFiles === true);
+              resolve(allHaveFiles);
             });
-          }
-    
+          });
+        }
+  
+        if (listkey == "deliverables" && isEdit == true) {
           if (
             ($("#Exchangetype").val() === "partial" || $("#Exchangetype").val() === "general") &&
-            (SP_ListName == "Deliverables" && isEdit == true) &&
             ($("#PurchaseRequestNumber").val() !== "" &&
               $("#PurchaseRequestNumber").val() !== null &&
               $("#PurchaseRequestNumber").val() !== undefined &&
@@ -2777,7 +2776,12 @@ window.Edit_Data_Submit = {
                     alert("لا يمكن الحفظ لوجود مخرج جزئي بدون مرفقات");
                     return;
                   } else {
-                    // All nested have attachments -> submit the deliverable and then create a new nested (post-save)
+                    //check quantity
+                    if ($("#Quantity").val() == "0") {
+                      alert("تم صرف جميع الكميه ويجب تعديل نوع الصرف الى تسليم");
+                      return;
+                    }
+                    // All nested have attachments =>  submit the deliverable and then create a new nested (post-save)
                     window.pendingCreateNestedAfterSave = true;
                     Edit_Data_Submit.preinit();
                     return;
@@ -2808,9 +2812,11 @@ window.Edit_Data_Submit = {
           } else {
             Edit_Data_Submit.preinit();
           }
-        });
-    },    
-
+        } else {
+          Edit_Data_Submit.preinit();
+        }
+      });
+    },
     Cancel: function () {
       $("button.btn-cancel").on("click", function () {
         window.location =

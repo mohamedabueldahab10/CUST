@@ -1289,11 +1289,14 @@
     itemid: "رقم العنصر",
     itemtitle: "عنوان العنصر",
     itemname: "اسم العنصر",
-    sectorname: "اسم القطاع",
-    subsectorname: "اسم الوكالة الفرعية",
+    sectorname: "القطاع",
+    subsectorname: "الوكالة",
     searchstrategy: "الاستراتيجية",
     duedate: "تاريخ الاستحقاق",
     records: "عناصر",
+    last:"القيمة الاخيرة في الربع" , 
+    average: "معدل قيم الأشهر الثلاثة في الربع" , 
+    sum:"مجموع قيم الأشهر الثلاثة في الربع"
   },
   en: {
     clearfilter: "Clear Filter",
@@ -2585,11 +2588,14 @@ restoration:"restoration",
     itemid: "Item ID",
     itemtitle: "Item Title",
     itemname: "Item Name",
-    sectorname: "Sector Name",
-    subsectorname: "Sub-Sector Name",
+    sectorname: "Sector",
+    subsectorname: "Sub-Sector",
     searchstrategy: "Strategy",
     duedate: "Due Date",
     records: "Records",
+    last: "Last value in the quarter",
+    average: "Average of the three months' values in the quarter",
+    sum: "Sum of the three months' values in the quarter"
   },
 };
 

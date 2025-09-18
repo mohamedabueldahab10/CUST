@@ -1254,20 +1254,30 @@ window.ListInfo = {
             }
             //
           });
-          if (listkey == "deliverables" && isEdit){
+          if (listkey == "deliverables" && isEdit) {
             $(document).on("change", "#Exchangetype", function () {
               var selectedValue = $(this).val();
           
               if (selectedValue === "delivery") {
-                  $("#Delivered[value='yes']").prop("checked", true);
+                // Case 1: نوع الصرف = delivery
+                $("#Delivered[value='yes']").prop("checked", true);
+                $("input#Delivered").prop("disabled", true);
           
-                  $("input#Delivered").prop("disabled", true);
+                // Enable and make DeliveredDate required
+                $("#DeliveredDate").prop("disabled", false).prop("required", true);
+                $("label[for='DeliveredDate']").attr("required", true);
+          
               } else {
-                  $("input#Delivered").prop("disabled", false);
-              }
-          });
-          }
+                // Case 2: نوع الصرف = anything else (كلي او جزئي)
+                $("#Delivered[value='no']").prop("checked", true);
+                $("input#Delivered").prop("disabled", true);
           
+                // Disable and remove required from DeliveredDate + label
+                $("#DeliveredDate").prop("disabled", true).prop("required", false).val("");
+                $("label[for='DeliveredDate']").removeAttr("required");
+              }
+            });
+          }
           // add new style for wf
 
           if (isWF) {
@@ -10172,6 +10182,8 @@ window.View_ListInfo = {
             $(".main-panel").attr("style", "width: 100% !important");
             //getTaskHistory.init();
             Get_TaskHistory.init();
+          } else {
+            Get_AllTaskHistoryRelatedToForm.init();
           }
           //
 

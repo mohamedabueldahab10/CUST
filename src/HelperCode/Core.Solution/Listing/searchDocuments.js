@@ -105,11 +105,11 @@ window.checkdocumenthtml = setInterval(function () {
                 <span class="sort-icon"></span>
                 </span>
                 </th>
-                <th data-field="downloadUrl"><span class="d-flex align-items-center"><span data-trans-download class="Resources"></span></span></th>
-                <th data-field="itemID">
+                <!-- <th data-field="downloadUrl"><span class="d-flex align-items-center"><span data-trans-download class="Resources"></span></span></th> -->
+                <!-- <th data-field="itemID">
                 <span class="d-flex align-items-center">
                 <span data-trans-itemid class="Resources"></span> <span class="sort-icon"></span>
-                </span></th>
+                </span></th> -->
                 <th data-field="itemTitle">
                 <span class="d-flex align-items-center"><span data-trans-itemtitle class="Resources"></span> <span class="sort-icon"></span></span>
                 </th>
@@ -276,10 +276,20 @@ window.checkdocumenthtml = setInterval(function () {
           const itemLink = getItemLink(r, $("#itemType").val());
           tbody.append(`
             <tr>
-              <td>${getFileIcon(r.fileLeafRef)} ${
-            r.fileName ? r.fileName : ""
-          }</td>
-              <td>
+            
+            <td>
+            ${
+              r.downloadUrl
+                ? `<a download href="${r.downloadUrl}" class="downloadContainer">
+                     ${getFileIcon(r.fileLeafRef)} 
+                     <span>
+                     ${r.fileName}
+                     <span class="download-icon"><i class="fas fa-download"></i></span></span>
+                   </a>`
+                : (r.fileName ? r.fileName : "")
+            }
+          </td>
+             <!-- <td>
                 <span class="download-icon">
                   ${
                     r.downloadUrl
@@ -287,8 +297,8 @@ window.checkdocumenthtml = setInterval(function () {
                       : ""
                   }
                 </span>
-              </td>
-              <td>${r.itemID ? r.itemID : ""}</td>
+              </td> -->
+              <!-- <td>${r.itemID ? r.itemID : ""}</td> -->
               <td>${r.itemTitle ? r.itemTitle : ""}</td>
               <td>${
                 r.itemName

@@ -257,7 +257,9 @@ var workflowname,
     window.location.href.indexOf("nesteddeliverables&LMSProjNDeliverable") > -1,
 
   isProjectComplianceUpdate =
-  window.location.href.indexOf("ProjectCompliance.aspx") > -1;
+  window.location.href.indexOf("ProjectCompliance.aspx") > -1,
+  isInitiativeComplianceUpdate =
+  window.location.href.indexOf("InitiativeCompliance.aspx") > -1;
 
 var fieldtoedit,
   bulkeditlist,
@@ -1354,7 +1356,23 @@ else if (isSOsWf) {
     '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
     workflowname +
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
-}
+} 
+// else if (isInitiativeComplianceUpdate) {
+//   workflowname = "ComplianceUpdate";
+//   bulkeditlist = "Initiatives";
+//   // bulkeditlist = "Change Request";
+//   IID2 = window.location.href.split("IID=")[1].split("&")[0];
+//   bulkeditquery =
+//     '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+//     IID2 +
+//     "</Value> </Eq></Where></Query></View>";
+//   taskquery =
+//     '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+//     taskID +
+//     '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+//     workflowname +
+//     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+// }
 
 
 //*****1 */

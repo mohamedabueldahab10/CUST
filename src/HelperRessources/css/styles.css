@@ -7192,3 +7192,17 @@ span.statuscolorstat28 {
 .discrepancy-summary-card .bg-discrepancy{
     background: linear-gradient(90deg, #5f7499 42%, #3c5175 47%) !important
 }
+.AllTaskHistoryRelatedToForm .approvalHeader {
+    background-color: #11adad !important;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 0 8px 3px hsl(210deg 1% 66% / 8%);
+    border-radius: 3px;
+    color: #fff !important;
+    width: 100%;
+    padding: 20px 28px !important;
+    margin-block:3rem !important
+}
+.AllTaskHistoryRelatedToForm-HistoryLink{
+    color:#212529!important
+}

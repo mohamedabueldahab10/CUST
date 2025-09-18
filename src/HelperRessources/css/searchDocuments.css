@@ -223,17 +223,14 @@ span.no-data-td img{
 
 
 
-a.SearchedItemLink {
+a.SearchedItemLink , a.downloadContainer {
     color: #148282;
     text-decoration: underline !important;
 }
 
-
-span.download-icon a {
-    color: #f7941d;
-    height: 100%;
-    display: flex;
-    align-items: center;
+.downloadContainer {
+    display: inline-flex;
+    column-gap: 4px;
 }
 
 span.download-icon a i {
