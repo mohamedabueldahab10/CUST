@@ -1031,7 +1031,49 @@ window.Edit_Data_Request = {
     
     if(listkey == "deliverables" && isEdit){
     getNestedDeliverablesSum();
-    }
+    }  
+    setTimeout(() => {
+      if (isWF && listkey == "mainkpi") {
+        var mainKpiCode = $("#Title").val();
+        if (!mainKpiCode) { 
+          console.log('no record title to checks in KPIResultsHistory');
+          return;
+        }
+      
+        // Query KPIResultsHistory list
+        $.ajax({
+          url: _spPageContextInfo.webAbsoluteUrl +
+            "/_api/web/lists/getbytitle('KPIResultsHistory')/items?$filter=MainKPICode eq '" + mainKpiCode + "'&$top=1&$orderby=ID desc",
+          method: "GET",
+          headers: { Accept: "application/json;odata=verbose" },
+          success: function (data) {
+            if (!data.d.results || data.d.results.length === 0) {
+              // no record, do nothing
+              console.log('no record to show in KPIResultsHistory');
+              return;
+            }
+      
+            var item = data.d.results[0]; // take latest record
+            console.log("KPIResultsHistory found: ", item);
+      
+            // Fill fields
+            if (item.Year) $("#Year").val(item.Year);
+            if (item.Month) $("#Months").val("ActualM" + item.Month); // adjust to dropdownValues
+            if (item.ComponentA) $("#A").val(item.ComponentA);
+            if (item.ComponentB) $("#B").val(item.ComponentB);
+            if (item.ComponentC) $("#CC").val(item.ComponentC);
+            if (item.ComponentD) $("#D").val(item.ComponentD);
+            if (item.ComponentE) $("#E").val(item.ComponentE);
+            if (item.ComponentF) $("#F").val(item.ComponentF);
+            if (item.ComponentG) $("#G").val(item.ComponentG);
+            if (item.FinalValue) $("#Equation").val(item.FinalValue);
+          },
+          error: function (err) {
+            console.error("Error getting KPIResultsHistory", err);
+          }
+        });
+      }
+    },2000);
     $(".loader-box").fadeOut();
   },
   onError: function (sender, args) {

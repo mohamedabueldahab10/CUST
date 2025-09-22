@@ -46,7 +46,7 @@ var Information_Form = [
             condition: "ministry",
             values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "MSActualKPI" },
             { fieldNameInList: "WFStage", fieldValueInList: "MSActualKPI01" },
-              // { fieldNameInList: "DraftStatus", fieldValueInList: "draft" },
+            //{ fieldNameInList: "DraftStatus", fieldValueInList: "draft" },
               // { fieldNameInList: "RecurrenceChanged", fieldValueInList: "no" },
             ]
           },
@@ -55,14 +55,17 @@ var Information_Form = [
       }
     ],
     subFields: [
-      // {
-      //   "InternalName": "Title",
-      //   "DisplayNameEn": "KPI code",
-      //   "DisplayName": "رمز المؤشر",
-      //   "type": "string",
-      //   "maxchar": "250",
-      //   "validation": "required"
-      // },
+      {
+        "InternalName": "Title",
+        "DisplayNameEn": "KPI code",
+        "DisplayName": "رمز المؤشر",
+        "type": "string",
+        "maxchar": "250",
+        // "validation": "required"
+        display: 'none',
+        state: 'disabled',
+
+      },
       // {
       //   "InternalName": "KPICode",
       //   "DisplayNameEn": "KPI code",
@@ -584,6 +587,7 @@ var Information_Form = [
             { display: 'kpisuscomp', value: 'kpisuscomp' },
             { display: 'kpivision', value: 'kpivision' },
             { display: 'kpistrategic', value: 'kpistrategic' },
+            { display: 'kpioperational', value: 'kpioperational' },
           ],
         },
         security: {
@@ -683,6 +687,48 @@ var Information_Form = [
             'VRO_E',
             'LMSU-Execution',
             'EPMO',
+          ],
+        },
+      },
+      {
+        InternalName: 'CalculationMethod',
+        DisplayNameEn: 'Calculation Method',
+        DisplayName: 'طريقة الاحتساب',
+        //ToggleDisabledName: 'CategoryKPI',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'last', value: 'last' },
+            { display: 'average', value: 'average' },
+             { display: 'sum', value: 'sum' },
+          ],
+        },
+        security: {
+          groups: [
+            'LMS_P',
+            'SPM Admin',
+            'SPM Team',
+            'VRO_P',
+            'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
+          ],
+        },
+      },
+       {
+        InternalName: 'Lagging',
+        DisplayNameEn: 'Lagging',
+        DisplayName: 'تاريخ استحقاق ادخال بيانات المؤشر Lagging',
+        type: 'yesnoradio',
+        validation: 'required',
+        options: {
+          choices: [
+            { display: 'now', value: 'now' },
+            { display: 'three', value: 'three' },
+            { display: 'six', value: 'six' },
+            { display: 'nine', value: 'nine' },
+            { display: 'twelve', value: 'twelve' },
           ],
         },
       },
@@ -1431,6 +1477,23 @@ var Information_Form = [
           ],
         },
       },
+       {
+        InternalName: 'CompletionStatus',
+        DisplayNameEn: 'Completion Status',
+        DisplayName: 'مكتمل',
+        // type: "dropdownValues",
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            { display: 'yes', value: 'yes' },
+            { display: 'no', value: 'no' },
+          ],
+        }, security: {
+          groups: [
+            'SPM Admin',
+          ],
+        },
+      },
       // {
       //   InternalName: 'Performance',
       //   DisplayNameEn: 'Performance',
@@ -1874,6 +1937,7 @@ var Information_Form = [
             'VRO_E',
             'LMSU-Execution',
             'EPMO',
+            'SPM Admin'
           ],
         },
         validation: 'required',
@@ -1903,6 +1967,7 @@ var Information_Form = [
             'VRO_E',
             'LMSU-Execution',
             'EPMO',
+            'SPM Admin'
           ],
         },
       },
@@ -1929,6 +1994,7 @@ var Information_Form = [
             'VRO_E',
             'LMSU-Execution',
             'EPMO',
+            'SPM Admin'
           ],
         },
       },
@@ -1988,6 +2054,7 @@ var Information_Form = [
             'VRO_E',
             'LMSU-Execution',
             'EPMO',
+            'SPM Admin'
           ],
         },
         // display: 'none',
@@ -2047,6 +2114,7 @@ var Information_Form = [
             'VRO_E',
             'LMSU-Execution',
             'EPMO',
+            'SPM Admin'
           ],
         },
       },
@@ -2067,6 +2135,7 @@ var Information_Form = [
             'VRO_E',
             'LMSU-Execution',
             'EPMO',
+            'SPM Admin'
           ],
         },
       },
@@ -2088,6 +2157,7 @@ var Information_Form = [
             'VRO_E',
             'LMSU-Execution',
             'EPMO',
+            'SPM Admin'
           ],
         },
       },
@@ -2109,6 +2179,7 @@ var Information_Form = [
             'VRO_E',
             'LMSU-Execution',
             'EPMO',
+            'SPM Admin'
           ],
         },
       },
@@ -2130,6 +2201,7 @@ var Information_Form = [
             'VRO_E',
             'LMSU-Execution',
             'EPMO',
+            'SPM Admin'
           ],
         },
       },
@@ -2151,6 +2223,7 @@ var Information_Form = [
             'VRO_E',
             'LMSU-Execution',
             'EPMO',
+            'SPM Admin'
           ],
         },
       },
@@ -2172,6 +2245,7 @@ var Information_Form = [
             'VRO_E',
             'LMSU-Execution',
             'EPMO',
+            'SPM Admin'
           ],
         },
       },
@@ -2181,17 +2255,28 @@ var Information_Form = [
         DisplayName: 'القيمة الفعلية',
         // type: 'number',
         type: 'float',
-        state: 'disabled',
+        // state: 'disabled',
         //editableBy: "PerformanceLeader",
-        // security: {
-        //   groups: [
-        //     'LMS_P',
-        //     'VRO_P',
-        //     //'Performance Leaders',
-        //     'System Admin Group',
-        //   ],
-        // },
+        security: {
+          groups: [
+            // 'LMS_P',
+            // 'VRO_P',
+            //'Performance Leaders',
+            // 'System Admin Group',
+            'SPM Admin'
+          ],
+        },
       },
+    {
+      InternalName: "ActualkpiDate",
+      DisplayName: "تاريخ رفع القيمه الفعليه",
+      DisplayNameEn: "ActualkpiDate",
+      type: "datetime",
+      min: 'today',
+      max: 'today',
+      state: 'disabled',
+     },
+      
       {
         InternalName: 'PerformanceAnalysis',
         DisplayNameEn: 'Performance Analysis',
@@ -2215,7 +2300,7 @@ var Information_Form = [
         DisplayName: 'الإجمالي الفعلي السنوي',
         DisplayNameEn: 'Annual Actual Total',
         ToggleName: 'Actual',
-        type: 'number',
+        type: 'float',
         numberOfDigits: "12",
         dontSubmit: true,
         security: {
