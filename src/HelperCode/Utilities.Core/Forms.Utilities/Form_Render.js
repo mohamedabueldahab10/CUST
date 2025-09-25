@@ -2474,6 +2474,49 @@ debugger;
               var yearValue = $(this).val();
               Get_ActualAnnualTotal.init(yearValue);
             });
+            $("#A, #B, #CC, #D, #E, #F, #G").on("input change", function () {
+
+                var kpiTitle = $("#Title").val(); // Current KPI title
+
+                // Get the KPI equation from list
+                $.ajax({
+                    url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle('KPIEquations')/items?$filter=DeletionStatus ne 'Deleted' and KPI eq '" + kpiTitle + "'",
+                    method: "GET",
+                    headers: { "Accept": "application/json;odata=verbose" },
+                    success: function (data) {
+                        if (data.d.results.length > 0) {
+                            var kpiInput = data.d.results[0].KPIInput;
+                            var varsMap = {
+                                A: parseFloat($("#A").val()) || 0,
+                                B: parseFloat($("#B").val()) || 0,
+                                C: parseFloat($("#CC").val()) || 0, 
+                                D: parseFloat($("#D").val()) || 0,
+                                E: parseFloat($("#E").val()) || 0,
+                                F: parseFloat($("#F").val()) || 0,
+                                G: parseFloat($("#G").val()) || 0
+                            };
+
+                            // Replace letters in equation with values
+                            var safeEquation = kpiInput.replace(/\b[A-G]\b/g, function(match){
+                                return varsMap[match];
+                            });
+
+                            try {
+                                // Calculate and set result
+                                var result = Function('"use strict";return (' + safeEquation + ')')();
+                                if (isNaN(result) || !isFinite(result)) result = 0;
+                                $("#Equation").val(result);
+                            } catch (err) {
+                                $("#Equation").val(0);
+                                console.error("Error calculating KPI equation:", err);
+                            }
+                        }
+                    },
+                    error: function (err) {
+                        console.error("Error fetching KPI equation:", err);
+                    }
+                });
+            });
           }
           ListInfo.g.attachmentsExtensions();
 

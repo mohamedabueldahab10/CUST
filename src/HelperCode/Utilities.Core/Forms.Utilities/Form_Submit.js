@@ -1905,6 +1905,11 @@ window.Edit_Data_Submit = {
           .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)>  textarea,
            .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field) > .multiselect-container`).each(
       function () {
+        var fieldIdForUse = $(this).attr("id");
+        if (listkey == "mainkpi" && isEdit &&!isWF &&( (isPerformanceLeader && ($('#WFStage').val() !== "approved")) || isSPMAdmin)) {
+          var skipFieldsForPerfLeader = ["A","B","CC","D","E","F","G","Quarter","Months","Midterms","Year","Equation"];
+          if (skipFieldsForPerfLeader.indexOf(fieldIdForUse) !== -1) return;
+        }
         if ($(this).attr("type") == "picker") {
           if ($(this).find("span.sp-peoplepicker-userSpan").length) {
             var id = $(this).attr("INppicker");
@@ -2530,7 +2535,92 @@ window.Edit_Data_Submit = {
         Edit_Data_Submit.g.oListItem.set_item("RelatedStrategyObjective", "");
       }
     }
+    async function handleKPIResults() {
+        if (listkey == "mainkpi" && isEdit && isPerformanceLeader && !isWF && ($('#WFStage').val() !== "approved")) {
+            await saveKPIResultsHistory("draft");
+        } else if (listkey == "mainkpi" && isEdit && isSPMAdmin && !isWF) {
+            if ($('#WFStage').val() == "approved") {
+                await approveKPIResultsHistory($('#Title').val());
+            } else {
+                await saveKPIResultsHistory("approved");
+            }
+        }
+    }
+    
+    async function approveKPIResultsHistory(KPITitle) {
+        try {
+            const url = `${APIURL}/general/approvekpiresultshistory/${KPITitle}`;
+            const res = await $.ajax({
+                url,
+                method: "GET",
+                contentType: "application/json; charset=utf-8"
+            });
+            console.log("KPIResultsHistory approved:", res);
+        } catch (err) {
+            console.error("Error in approve KPIResultsHistory:", err);
+        }
+    }
+    
+    async function saveKPIResultsHistory(status) {
+        try {
+            const periodType = $("#PeriodType").val();
+            let year = parseInt($("#Year").val() || 0);
+            let month = null;
+    
+            if (periodType === "monthly") {
+                const mVal = $("#Months").val();
+                if (mVal && mVal.indexOf("ActualM") === 0)
+                    month = parseInt(mVal.replace("ActualM", ""));
+            } else if (periodType === "midterm") {
+                const midVal = $("#Midterms").val();
+                month = midVal === "ActualMid1" ? 6 : midVal === "ActualMid2" ? 12 : 0;
+            } else if (periodType === "quarter") {
+                const qVal = $("#Quarter").val();
+                if (qVal === "ActualQ1") month = 3;
+                else if (qVal === "ActualQ2") month = 6;
+                else if (qVal === "ActualQ3") month = 9;
+                else if (qVal === "ActualQ4") month = 12;
+            } else if (periodType === "year") {
+                month = 12;
+            }
+    
+            const payload = {
+                mainKPICode: $("#Title").val(),
+                year,
+                month,
+                a: parseFloat($("#A").val() || 0),
+                b: parseFloat($("#B").val() || 0),
+                c: parseFloat($("#CC").val() || 0),
+                d: parseFloat($("#D").val() || 0),
+                e: parseFloat($("#E").val() || 0),
+                f: parseFloat($("#F").val() || 0),
+                g: parseFloat($("#G").val() || 0),
+                finalValue: parseFloat($("#Equation").val() || 0),
+                createdByUserId: 0,
+            };
+    
+            const userData = await $.ajax({
+                url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/currentuser",
+                method: "GET",
+                headers: { Accept: "application/json;odata=verbose" },
+            });
+            payload.createdByUserId = userData.d.Id;
+    
+            const url = `${APIURL}/general/createorupdatekpiresultshistory/${status}`;
+            const res = await $.ajax({
+                url,
+                method: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(payload),
+            });
+    
+            console.log("KPIResultsHistory saved:", res);
+        } catch (err) {
+            console.error("Error in KPIResultsHistory flow:", err);
+        }
+    }
 
+    handleKPIResults();
     Edit_Data_Submit.g.oListItem.update();
     clientContext.load(Edit_Data_Submit.g.oListItem);
     clientContext.executeQueryAsync(
@@ -2807,7 +2897,8 @@ window.Edit_Data_Submit = {
               $("#PurchaseOrderNumber").val() == undefined ||
               $("#PurchaseOrderNumber").val() == No_Data)
           ) {
-            alert("لا يمكن صرف المخرج لعدم وجود رقم طلب الاحتياج ورقم أمر التعميد");
+            // below comment cause hold deploy to production this time
+         //   alert("لا يمكن صرف المخرج لعدم وجود رقم طلب الاحتياج ورقم أمر التعميد"); 
             Edit_Data_Submit.preinit();
           } else {
             Edit_Data_Submit.preinit();

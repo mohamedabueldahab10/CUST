@@ -2255,17 +2255,17 @@ var Information_Form = [
         DisplayName: 'القيمة الفعلية',
         // type: 'number',
         type: 'float',
-        // state: 'disabled',
+        state: 'disabled',
         //editableBy: "PerformanceLeader",
-        security: {
-          groups: [
-            // 'LMS_P',
-            // 'VRO_P',
-            //'Performance Leaders',
-            // 'System Admin Group',
-            'SPM Admin'
-          ],
-        },
+        // security: {
+        //   groups: [
+        //     // 'LMS_P',
+        //     // 'VRO_P',
+        //     //'Performance Leaders',
+        //     // 'System Admin Group',
+        //     // 'SPM Admin'
+        //   ],
+        // },
       },
     {
       InternalName: "ActualkpiDate",

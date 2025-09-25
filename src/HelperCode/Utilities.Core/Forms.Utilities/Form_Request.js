@@ -1073,6 +1073,20 @@ window.Edit_Data_Request = {
           }
         });
       }
+      if (isPerformanceLeader && $('#WFStage').val() == "approved") {
+        var allZero = ["#A", "#B", "#CC", "#D", "#E", "#F", "#G"].every(function (id) {
+            return parseFloat($(id).val() || 0) === 0;
+        });
+    
+        var fields = "#A, #B, #CC, #D, #E, #F, #G, #Year, #Months, #Midterms, #Quarter";
+    
+        if (allZero) {
+            $(fields).prop("disabled", false);
+        } else {
+            $(fields).prop("disabled", true);
+        }
+      }
+    
     },2000);
     $(".loader-box").fadeOut();
   },

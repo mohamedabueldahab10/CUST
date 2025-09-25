@@ -3072,7 +3072,6 @@ var SubmitField_BulkEdit = {
               else if (state) items.set_item("WFStage", nxtstageid);
               else  items.set_item("WFStage", prvstageid);
             }
-            debugger;
             // to handle workflowSetValues from json will use it for cr wf purpose
             if (state) {
               $(`[data-workflowSetValue]`).each(function (index) {
@@ -3104,8 +3103,77 @@ var SubmitField_BulkEdit = {
             }
             //
 
+            // Code to Create item in KPIResultHistory
+            async function saveKPIResultsHistory() {
+              if (
+                isEdit &&
+                listkey === "mainkpi" &&
+                isWF &&
+                currentstage === "MSActualKPI01" &&
+                currentUserRole === "SPMAdmin"
+              ) {
+                try {
+                  const periodType = $("#PeriodType").val();
+                  let year = parseInt($("#Year").val() || 0);
+                  let month = 0;
+
+                  if (periodType === "monthly") {
+                    const mVal = $("#Months").val();
+                    if (mVal && mVal.indexOf("ActualM") === 0)
+                      month = parseInt(mVal.replace("ActualM", ""));
+                  } else if (periodType === "midterm") {
+                    const midVal = $("#Midterms").val();
+                    month =
+                      midVal === "ActualMid1" ? 6 : midVal === "ActualMid2" ? 12 : 0;
+                  } else if (periodType === "quarter") {
+                    const qVal = $("#Quarter").val();
+                    if (qVal === "ActualQ1") month = 3;
+                    else if (qVal === "ActualQ2") month = 6;
+                    else if (qVal === "ActualQ3") month = 9;
+                    else if (qVal === "ActualQ4") month = 12;
+                  } else if (periodType === "year") {
+                    month = 12;
+                  }
+                  const payload = {
+                    mainKPICode: $("#Title").val(),
+                    year,
+                    month,
+                    a: parseFloat($("#A").val() || 0),
+                    b: parseFloat($("#B").val() || 0),
+                    c: parseFloat($("#CC").val() || 0),
+                    d: parseFloat($("#D").val() || 0),
+                    e: parseFloat($("#E").val() || 0),
+                    f: parseFloat($("#F").val() || 0),
+                    g: parseFloat($("#G").val() || 0),
+                    finalValue: parseFloat($("#Equation").val() || 0),
+                    createdByUserId: 0,
+                  };
+                  const userData = await $.ajax({
+                    url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/currentuser",
+                    method: "GET",
+                    headers: { Accept: "application/json;odata=verbose" },
+                  });
+                  payload.createdByUserId = userData.d.Id;
+
+                  console.log("Payload ready to send:", payload);
+                  const url = `${APIURL}/general/createorupdatekpiresultshistory/draft`;
+                  const res = await $.ajax({
+                    url,
+                    method: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(payload),
+                  });
+
+                  console.log("KPIResultsHistory saved:", res);
+                  console.log("Continuing execution after API call...");
+                } catch (err) {
+                  console.error("Error in KPIResultsHistory flow:", err);
+                }
+              }
+            }
+            saveKPIResultsHistory();
             //Update the item
-            items.update();
+            items.update();           
             //Push item on the array
             currentItemArray.push(items);
             //Load the item Array
