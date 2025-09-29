@@ -1033,7 +1033,7 @@ window.Edit_Data_Request = {
     getNestedDeliverablesSum();
     }  
     setTimeout(() => {
-      if (isWF && listkey == "mainkpi") {
+      if (isWF && listkey == "mainkpi" && workflowname == 'MSActualKPI' ) {
         var mainKpiCode = $("#Title").val();
         if (!mainKpiCode) { 
           console.log('no record title to checks in KPIResultsHistory');
@@ -1055,18 +1055,20 @@ window.Edit_Data_Request = {
       
             var item = data.d.results[0]; // take latest record
             console.log("KPIResultsHistory found: ", item);
+            if(isEdit){
       
-            // Fill fields
-            if (item.Year) $("#Year").val(item.Year);
-            if (item.Month) $("#Months").val("ActualM" + item.Month); // adjust to dropdownValues
-            if (item.ComponentA) $("#A").val(item.ComponentA);
-            if (item.ComponentB) $("#B").val(item.ComponentB);
-            if (item.ComponentC) $("#CC").val(item.ComponentC);
-            if (item.ComponentD) $("#D").val(item.ComponentD);
-            if (item.ComponentE) $("#E").val(item.ComponentE);
-            if (item.ComponentF) $("#F").val(item.ComponentF);
-            if (item.ComponentG) $("#G").val(item.ComponentG);
-            if (item.FinalValue) $("#Equation").val(item.FinalValue);
+              // Fill fields
+              if (item.Year) $("#Year").val(item.Year);
+              if (item.Month) $("#Months").val("ActualM" + item.Month); // adjust to dropdownValues
+              if (item.ComponentA) $("#A").val(item.ComponentA);
+              if (item.ComponentB) $("#B").val(item.ComponentB);
+              if (item.ComponentC) $("#CC").val(item.ComponentC);
+              if (item.ComponentD) $("#D").val(item.ComponentD);
+              if (item.ComponentE) $("#E").val(item.ComponentE);
+              if (item.ComponentF) $("#F").val(item.ComponentF);
+              if (item.ComponentG) $("#G").val(item.ComponentG);
+              if (item.FinalValue) $("#Equation").val(item.FinalValue);
+            }
           },
           error: function (err) {
             console.error("Error getting KPIResultsHistory", err);
@@ -2562,6 +2564,63 @@ window.View_Data_Request = {
       Master_Details_Request.init(MasterDetailsArrayRequest[0]);
       MasterDetailsArrayRequest.shift(); //remove 0 index
     }
+    setTimeout(() => {
+      if (isWF && listkey == "mainkpi" && workflowname == 'MSActualKPI' ) {
+        var mainKpiCode = $("#Title").text();
+        if (!mainKpiCode) { 
+          console.log('no record title to checks in KPIResultsHistory');
+          return;
+        }
+      
+        // Query KPIResultsHistory list
+        $.ajax({
+          url: _spPageContextInfo.webAbsoluteUrl +
+            "/_api/web/lists/getbytitle('KPIResultsHistory')/items?$filter=MainKPICode eq '" + mainKpiCode + "'&$top=1&$orderby=ID desc",
+          method: "GET",
+          headers: { Accept: "application/json;odata=verbose" },
+          success: function (data) {
+            if (!data.d.results || data.d.results.length === 0) {
+              // no record, do nothing
+              console.log('no record to show in KPIResultsHistory');
+              return;
+            }
+      
+            var item = data.d.results[0]; // take latest record
+            console.log("KPIResultsHistory found: ", item);
+            if(isView){
+             // Fill fields
+              if (item.Year) $("#Year").text(item.Year);
+              if (item.Month) $("#Months").text("ActualM" + item.Month); // adjust to dropdownValues
+              if (item.ComponentA) $("#A").text(item.ComponentA);
+              if (item.ComponentB) $("#B").text(item.ComponentB);
+              if (item.ComponentC) $("#CC").text(item.ComponentC);
+              if (item.ComponentD) $("#D").text(item.ComponentD);
+              if (item.ComponentE) $("#E").text(item.ComponentE);
+              if (item.ComponentF) $("#F").text(item.ComponentF);
+              if (item.ComponentG) $("#G").text(item.ComponentG);
+              if (item.FinalValue) $("#Equation").text(item.FinalValue);
+            }
+          },
+          error: function (err) {
+            console.error("Error getting KPIResultsHistory", err);
+          }
+        });
+      }
+      if (isPerformanceLeader && $('#WFStage').val() == "approved") {
+        var allZero = ["#A", "#B", "#CC", "#D", "#E", "#F", "#G"].every(function (id) {
+            return parseFloat($(id).val() || 0) === 0;
+        });
+    
+        var fields = "#A, #B, #CC, #D, #E, #F, #G, #Year, #Months, #Midterms, #Quarter";
+    
+        if (allZero) {
+            $(fields).prop("disabled", false);
+        } else {
+            $(fields).prop("disabled", true);
+        }
+      }
+    
+    },2000);
 
     $(".loader-box").fadeOut();
     currentItemCode = oListItem.get_item("Title");

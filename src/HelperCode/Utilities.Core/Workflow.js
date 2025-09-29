@@ -3105,6 +3105,22 @@ var SubmitField_BulkEdit = {
 
             // Code to Create item in KPIResultHistory
             async function saveKPIResultsHistory() {
+              // approval
+              if (
+                listkey === "mainkpi" &&
+                isWF &&
+                nxtstageid === "approved" &&
+                workflowname === "MSActualKPI"
+              ) {
+                try {
+                  const KPITitle = isEdit ? $("#Title").val() : $("#Title").text();
+                  await approveKPIResultsHistory(KPITitle);
+                } catch (err) {
+                  console.error("Error approving KPIResultsHistory:", err);
+                }
+              }
+
+              // draft creation
               if (
                 isEdit &&
                 listkey === "mainkpi" &&
@@ -3172,6 +3188,21 @@ var SubmitField_BulkEdit = {
               }
             }
             saveKPIResultsHistory();
+
+            // Approve API call
+            async function approveKPIResultsHistory(KPITitle) {
+              try {
+                const url = `${APIURL}/general/approvekpiresultshistory/${KPITitle}`;
+                const res = await $.ajax({
+                  url,
+                  method: "GET",
+                  contentType: "application/json; charset=utf-8"
+                });
+                console.log("KPIResultsHistory approved:", res);
+              } catch (err) {
+                console.error("Error in approve KPIResultsHistory:", err);
+              }
+            }
             //Update the item
             items.update();           
             //Push item on the array
