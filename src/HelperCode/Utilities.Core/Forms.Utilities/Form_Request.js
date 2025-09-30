@@ -960,6 +960,136 @@ window.Edit_Data_Request = {
     if ($(".PPField.SPIField.form-control").attr("disabled") == "disabled") {
       $("input.sp-peoplepicker-editorInput").prop("disabled", true);
     }
+    function getNestedDeliverablesSum() {
+      return new Promise((resolve, reject) => {
+        const clientContext = new SP.ClientContext.get_current();
+        const nestedList = clientContext.get_web().get_lists().getByTitle("NestedDeliverables");
+    
+        const camlQuery = new SP.CamlQuery();
+        camlQuery.set_viewXml(`
+          <View>
+            <Query>
+              <Where>
+                <And>
+                  <Eq>
+                    <FieldRef Name='MasterID' />
+                    <Value Type='Text'>${IID}</Value>
+                  </Eq>
+                  <Neq>
+                    <FieldRef Name='DeletionStatus' />
+                    <Value Type='Text'>Deleted</Value>
+                  </Neq>
+                </And>
+              </Where>
+            </Query>
+          </View>
+        `);
+    
+        const items = nestedList.getItems(camlQuery);
+        clientContext.load(items);
+    
+        clientContext.executeQueryAsync(
+          () => {
+            let sumQuantity = 0;
+            const enumerator = items.getEnumerator();
+            while (enumerator.moveNext()) {
+              const item = enumerator.get_current();
+              const q = item.get_item("Quantity");
+              sumQuantity += q ? parseFloat(q) : 0;
+            }
+    
+            console.log("Total NestedDeliverables Quantity:", sumQuantity);
+    
+            const originalQuantity = parseFloat($("#Quantity").val()) || 0;
+            const newQuantity = originalQuantity - sumQuantity;
+    
+            // update and disable Quantity
+            $("#Quantity").val(newQuantity > 0 ? newQuantity : 0);
+            $("#Quantity").prop("disabled", true);
+    
+            // on Exchangetype change
+            $("#Exchangetype").off("change.nestedQty").on("change.nestedQty", function () {
+              const exchangeType = $(this).val();
+              if (exchangeType === "partial") {
+                if (newQuantity <= 0) {
+                  $("#Disbursedquantity").val(0).attr("max", 0).prop("disabled", true);
+                } else {
+                  $("#Disbursedquantity").val(0).attr("max", newQuantity).prop("disabled", false);
+                }
+              }
+            });
+    
+            resolve(sumQuantity);
+          },
+          (sender, args) => {
+            console.error("Error fetching NestedDeliverables sum:", args.get_message());
+            resolve(0);
+          }
+        );
+      });
+    }
+    
+    if(listkey == "deliverables" && isEdit){
+    getNestedDeliverablesSum();
+    }  
+    setTimeout(() => {
+      if (isWF && listkey == "mainkpi" && workflowname == 'MSActualKPI' ) {
+        var mainKpiCode = $("#Title").val();
+        if (!mainKpiCode) { 
+          console.log('no record title to checks in KPIResultsHistory');
+          return;
+        }
+      
+        // Query KPIResultsHistory list
+        $.ajax({
+          url: _spPageContextInfo.webAbsoluteUrl +
+            "/_api/web/lists/getbytitle('KPIResultsHistory')/items?$filter=MainKPICode eq '" + mainKpiCode + "'&$top=1&$orderby=ID desc",
+          method: "GET",
+          headers: { Accept: "application/json;odata=verbose" },
+          success: function (data) {
+            if (!data.d.results || data.d.results.length === 0) {
+              // no record, do nothing
+              console.log('no record to show in KPIResultsHistory');
+              return;
+            }
+      
+            var item = data.d.results[0]; // take latest record
+            console.log("KPIResultsHistory found: ", item);
+            if(isEdit){
+      
+              // Fill fields
+              if (item.Year) $("#Year").val(item.Year);
+              if (item.Month) $("#Months").val("ActualM" + item.Month); // adjust to dropdownValues
+              if (item.ComponentA) $("#A").val(item.ComponentA);
+              if (item.ComponentB) $("#B").val(item.ComponentB);
+              if (item.ComponentC) $("#CC").val(item.ComponentC);
+              if (item.ComponentD) $("#D").val(item.ComponentD);
+              if (item.ComponentE) $("#E").val(item.ComponentE);
+              if (item.ComponentF) $("#F").val(item.ComponentF);
+              if (item.ComponentG) $("#G").val(item.ComponentG);
+              if (item.FinalValue) $("#Equation").val(item.FinalValue);
+            }
+          },
+          error: function (err) {
+            console.error("Error getting KPIResultsHistory", err);
+          }
+        });
+      }
+      if (isPerformanceLeader && $('#WFStage').val() == "approved") {
+        var allZero = ["#A", "#B", "#CC", "#D", "#E", "#F", "#G"].every(function (id) {
+            return parseFloat($(id).val() || 0) === 0;
+        });
+    
+        var fields = "#A, #B, #CC, #D, #E, #F, #G, #Year, #Months, #Midterms, #Quarter";
+    
+        if (allZero) {
+            $(fields).prop("disabled", false);
+        } else {
+            $(fields).prop("disabled", true);
+        }
+      }
+    
+    },2000);
     $(".loader-box").fadeOut();
   },
   onError: function (sender, args) {
@@ -2434,6 +2564,63 @@ window.View_Data_Request = {
       Master_Details_Request.init(MasterDetailsArrayRequest[0]);
       MasterDetailsArrayRequest.shift(); //remove 0 index
     }
+    setTimeout(() => {
+      if (isWF && listkey == "mainkpi" && workflowname == 'MSActualKPI' ) {
+        var mainKpiCode = $("#Title").text();
+        if (!mainKpiCode) { 
+          console.log('no record title to checks in KPIResultsHistory');
+          return;
+        }
+      
+        // Query KPIResultsHistory list
+        $.ajax({
+          url: _spPageContextInfo.webAbsoluteUrl +
+            "/_api/web/lists/getbytitle('KPIResultsHistory')/items?$filter=MainKPICode eq '" + mainKpiCode + "'&$top=1&$orderby=ID desc",
+          method: "GET",
+          headers: { Accept: "application/json;odata=verbose" },
+          success: function (data) {
+            if (!data.d.results || data.d.results.length === 0) {
+              // no record, do nothing
+              console.log('no record to show in KPIResultsHistory');
+              return;
+            }
+      
+            var item = data.d.results[0]; // take latest record
+            console.log("KPIResultsHistory found: ", item);
+            if(isView){
+             // Fill fields
+              if (item.Year) $("#Year").text(item.Year);
+              if (item.Month) $("#Months").text("ActualM" + item.Month); // adjust to dropdownValues
+              if (item.ComponentA) $("#A").text(item.ComponentA);
+              if (item.ComponentB) $("#B").text(item.ComponentB);
+              if (item.ComponentC) $("#CC").text(item.ComponentC);
+              if (item.ComponentD) $("#D").text(item.ComponentD);
+              if (item.ComponentE) $("#E").text(item.ComponentE);
+              if (item.ComponentF) $("#F").text(item.ComponentF);
+              if (item.ComponentG) $("#G").text(item.ComponentG);
+              if (item.FinalValue) $("#Equation").text(item.FinalValue);
+            }
+          },
+          error: function (err) {
+            console.error("Error getting KPIResultsHistory", err);
+          }
+        });
+      }
+      if (isPerformanceLeader && $('#WFStage').val() == "approved") {
+        var allZero = ["#A", "#B", "#CC", "#D", "#E", "#F", "#G"].every(function (id) {
+            return parseFloat($(id).val() || 0) === 0;
+        });
+    
+        var fields = "#A, #B, #CC, #D, #E, #F, #G, #Year, #Months, #Midterms, #Quarter";
+    
+        if (allZero) {
+            $(fields).prop("disabled", false);
+        } else {
+            $(fields).prop("disabled", true);
+        }
+      }
+    
+    },2000);
 
     $(".loader-box").fadeOut();
     currentItemCode = oListItem.get_item("Title");
@@ -7797,6 +7984,232 @@ window.Get_TaskHistory = {
   // Global variables
   g: {},
 };
+window.Get_AllTaskHistoryRelatedToForm = {
+  init: function () {
+    $("button.loadMore").addClass("disabled");
+
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("Tasks");
+
+    var camlQueryXml = `<View>
+      <Query>
+        <Where>
+          <And>
+            <Eq><FieldRef Name='RelatedItemID'/><Value Type='Text'>${IID}</Value></Eq>
+            <Eq><FieldRef Name='Status'/><Value Type='Choice'>Closed</Value></Eq>
+          </And>
+        </Where>
+        <OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy>
+      </Query>
+      <RowLimit>5</RowLimit>
+    </View>`;
+
+    if (isLoadMore) {
+      camlQueryXml = camlQueryXml.replace(
+        "</Query>",
+        "</Query><RowLimit>5</RowLimit></View>"
+      );
+    } else {
+      Get_AllTaskHistoryRelatedToForm.g.camlQuery = new SP.CamlQuery();
+      Get_AllTaskHistoryRelatedToForm.g.camlQuery.set_viewXml(camlQueryXml);
+    }
+
+    SPHTTPitemsEnumerable = oList.getItems(
+      Get_AllTaskHistoryRelatedToForm.g.camlQuery
+    );
+    clientContext.load(SPHTTPitemsEnumerable);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Get_AllTaskHistoryRelatedToForm.onSuccess),
+      Function.createDelegate(this, Get_AllTaskHistoryRelatedToForm.onError)
+    );
+  },
+
+  onSuccess: function (sender, args) {
+    var listItemEnum = SPHTTPitemsEnumerable.getEnumerator();
+    let historyHTML = ``;
+    let isThereHistory = false;
+
+    if (!$(".task-history-ctx").length) {
+      historyHTML = `
+      <div class="section3 row col-12 px-0 task-history-ctx mx-0 AllTaskHistoryRelatedToForm">
+        <div class="approvalHeader">
+          <h2 class="Resources" data-trans-taskHistory>العمليات السابقة</h2>
+        </div>
+        <div class="taskHistory row mx-0 mt-5 col-12 flex-column">
+      `;
+    }
+
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      isThereHistory = true;
+
+      // Original Title from Tasks list
+      let stageCode = oListItem.get_item("Title");
+
+      // Translate stage using Dynamo_Tasks Configuration from localStorage
+      let stage = stageCode; // fallback to original
+      if (localStorage.getItem("Dynamo_Tasks Configuration") != null) {
+        let taskConfigArr = JSON.parse(
+          localStorage.getItem("Dynamo_Tasks Configuration") || "[]"
+        );
+        let matchedTask = taskConfigArr.find(function (item) {
+          return item.code == stageCode;
+        });
+
+        if (matchedTask) {
+          if (
+            localStorage.getItem("lng") == null ||
+            localStorage.getItem("lng") == "ar"
+          ) {
+            stage = matchedTask.name ? matchedTask.name : stageCode;
+          } else {
+            stage = matchedTask.nameEn ? matchedTask.nameEn : stageCode;
+          }
+        }
+      }
+
+      let taskDescription = oListItem.get_item("Body")
+        ? oListItem.get_item("Body")
+        : No_Data;
+
+      let createdDate = oListItem.get_item("Created") || No_Data;
+      createdDate = createdDate.toLocaleDateString("en-US");
+
+      let modifiedNoteDate = oListItem.get_item("Modified") || No_Data;
+      modifiedNoteDate = modifiedNoteDate.toLocaleDateString("en-US");
+
+      let takenAction = oListItem.get_item("TakenAction");
+
+      if (
+        localStorage.getItem("lng") == null ||
+        localStorage.getItem("lng") == "ar"
+      ) {
+        takenAction = takenAction
+          ? Resources.ar[takenAction.toLowerCase()]
+          : No_Data;
+      } else {
+        takenAction = takenAction
+          ? Resources.en[takenAction.toLowerCase()]
+          : No_Data;
+      }
+
+      var assignedTo = [];
+      if (
+        oListItem.get_item("AssignedTo") &&
+        oListItem.get_item("AssignedTo").length
+      ) {
+        oListItem.get_item("AssignedTo").forEach((el) => {
+          assignedTo.push(el.get_lookupValue());
+        });
+      }
+
+      let workflowName = oListItem.get_item("WorkflowName");
+      let wfHistoryLink = "";
+      if (workflowName == "Project") {
+        wfHistoryLink =
+          _spPageContextInfo.webAbsoluteUrl +
+          "/SitePages/TaskHistory.aspx?TT=" +
+          workflowName +
+          "&PCODE=" +
+          PCODE +
+          "&IID=" +
+          IID;
+      } else {
+        wfHistoryLink =
+          _spPageContextInfo.webAbsoluteUrl +
+          "/SitePages/TaskHistory.aspx?TT=" +
+          workflowName +
+          "&IID=" +
+          IID;
+      }
+
+      historyHTML += `
+        <div class="row mx-0 my-3 history-row-ctx">
+          <div class="col-2">
+            <p>${stage}</p>
+          </div>
+          <div class="col-2">
+            <p class="historyValue">${assignedTo.join(",")}</p>
+            <p class="Resources historyLabel" data-trans-assignedTo>assignedTo</p>
+          </div>
+          <div class="col-2">
+            <p class="historyValue">${createdDate}</p>
+            <p class="Resources historyLabel" data-trans-createddate>createddate</p>
+          </div>
+          <div class="col-2">
+            <p class="historyValue">${modifiedNoteDate}</p>
+            <p class="Resources historyLabel" data-trans-modifieddate>modifieddate</p>
+          </div>
+          <div class="col-2">
+            <p class="historyValue">${taskDescription}</p>
+            <p class="Resources historyLabel" data-trans-taskComment>task comment</p>
+          </div>
+          <div class="col-1">
+            <p class="historyValue">${takenAction}</p>
+            <p class="Resources historyLabel" data-trans-takenaction>taken action</p>
+          </div>
+          <div class="col-1 text-center">
+            <a href="${wfHistoryLink}" target="_blank" class="d-inline-flex align-items-center AllTaskHistoryRelatedToForm-HistoryLink">
+               <i class="fas fa-history"></i> <span data-trans-taskdetails class="Resources px-1"></span>
+            </a>
+          </div>
+        </div>
+      `;
+    }
+
+    let noTaskhistory = isThereHistory ? "" : UserNo_Data;
+    if (!$(".task-history-ctx").length) {
+      historyHTML += `<p style="text-align:center">${noTaskhistory}</p>
+        ${
+          isThereHistory
+            ? `<button type="button" class="loadMore Resources mb-3" data-trans-viewmore>
+                loadmore
+              </button>`
+            : ""
+        }
+        </div>
+      </div>
+      `;
+      $(".btnactionrow").before(historyHTML);
+
+      $("button.loadMore").on("click", () => {
+        Get_AllTaskHistoryRelatedToForm.loadMore();
+      });
+    } else {
+      $(historyHTML).insertBefore(
+        $(".task-history-ctx .taskHistory button.loadMore")
+      );
+    }
+
+    $(".btnactionrow .form-btns-wrapper").show();
+    Get_AllTaskHistoryRelatedToForm.g.position =
+      SPHTTPitemsEnumerable.get_listItemCollectionPosition();
+    $("button.loadMore").removeClass("disabled loader-action");
+    changeResources();
+  },
+
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+
+  loadMore: function () {
+    if (Get_AllTaskHistoryRelatedToForm.g.position != null) {
+      isLoadMore = true;
+      Get_AllTaskHistoryRelatedToForm.g.camlQuery.set_listItemCollectionPosition(
+        Get_AllTaskHistoryRelatedToForm.g.position
+      );
+      Get_AllTaskHistoryRelatedToForm.init();
+      $("button.loadMore").addClass("loader-action");
+    } else if (Get_AllTaskHistoryRelatedToForm.g.position == null) {
+      $("button.loadMore").addClass("disabled");
+    }
+  },
+
+  g: {},
+};
+
 // !in progress
 window.Get_InitiativeDeliverables = {
   preinit: function () {

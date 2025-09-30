@@ -10,13 +10,17 @@ var Information_Form = [
       { fieldName: 'WFModuleCode', value: '',stages:["VROCreateKPI02"] } ,
       { fieldName: 'WFStage', value: '',stages:["VROCreateKPI02"] } ,
       //EPMO
-      { fieldName: 'DraftStatus', value: '', stages:["EPMOCreateKPI03"] },
-      { fieldName: 'WFModuleCode', value: '',stages:["EPMOCreateKPI03"] } ,
-      { fieldName: 'WFStage', value: '',stages:["EPMOCreateKPI03"] } ,
+      { fieldName: 'DraftStatus', value: '', stages:["EPMOCreateKPI02"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["EPMOCreateKPI02"] } ,
+      { fieldName: 'WFStage', value: '',stages:["EPMOCreateKPI02"] } ,
       //LMS
       { fieldName: 'DraftStatus', value: '', stages:["LMSCreateKPI02"] },
       { fieldName: 'WFModuleCode', value: '',stages:["LMSCreateKPI02"] } ,
       { fieldName: 'WFStage', value: '',stages:["LMSCreateKPI02"] } ,
+
+      { fieldName: 'DraftStatus', value: '', stages:["MSActualKPI02"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["MSActualKPI02"] } ,
+      { fieldName: 'WFStage', value: '',stages:["MSActualKPI02"] } ,
     ],
     subFields: [
       {
@@ -288,6 +292,7 @@ var Information_Form = [
         maxchar: '500',
         type: 'multiline',
       },
+       
       {
         InternalName: 'PeriodType',
         DisplayNameEn: 'Period Type',
@@ -308,6 +313,23 @@ var Information_Form = [
           ],
         },
       },
+      {
+        InternalName: 'CalculationMethod',
+        DisplayNameEn: 'Calculation Method',
+        DisplayName: 'طريقة الاحتساب ',
+        type: 'dropdownValues',
+        // "validation": "required",
+    
+        options: {
+          choices: [
+            { display: 'last', value: 'last' },
+            { display: 'average', value: 'average' },
+            { display: 'sum', value: 'sum' },
+          
+          ],
+        },
+      },
+       
       {
         InternalName: 'Issues',
         DisplayNameEn: 'Issues',
@@ -436,6 +458,18 @@ var Information_Form = [
         InternalName: 'NotMeasurableNow',
         DisplayNameEn: 'Measurable Now',
         DisplayName: 'يقاس حاليا',
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            { display: 'yes', value: 'yes' },
+            { display: 'no', value: 'no' },
+          ],
+        },
+      },
+       {
+        InternalName: 'CompletionStatus',
+        DisplayNameEn: 'Completion Status',
+        DisplayName: 'مكتمل',
         type: 'yesnoradio',
         options: {
           choices: [
@@ -733,7 +767,19 @@ var Information_Form = [
 				Dispfieldkey: "TaskNameAr",
 				DispfieldkeyEn: 'TaskNameEn',
 				valfieldkey: "Title",
-				},
+			},
+      {
+        InternalName: "RecordStatus",
+        DisplayNameEn: "RecordStatus",
+        DisplayName: "حالة التوثيق",
+        type: 'dropdownValues'
+      },
+      {
+        InternalName: "ComplianceStatus",
+        DisplayNameEn: "ComplianceStatus",
+        DisplayName: "حالة الامتثال ",
+        type: 'dropdownValues'
+      },
       // {
       //   "InternalName": "Target",
       //   "DisplayNameEn": "Target",
@@ -1199,6 +1245,13 @@ var Information_Form = [
         // state: 'disabled',
         //editableBy: "PerformanceLeader",
       },
+        {
+      "InternalName": "ActualkpiDate",
+      "DisplayName": "تاريخ رفع القيمه الفعليه",
+     "DisplayNameEn": "ActualkpiDate",
+      "type": "datetime"
+     },
+      
       {
         InternalName: 'PerformanceAnalysis',
         DisplayNameEn: 'Performance Analysis',

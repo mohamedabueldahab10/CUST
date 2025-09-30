@@ -55,10 +55,10 @@ var Information_Form = [
         InternalName: 'Name',
         DisplayName: 'اسم المخرج',
         DisplayNameEn: 'Deliverable Name',
-        type: 'string',
+        type: 'multiline',
         validation: 'required',
-        maxchar: '255',
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        maxchar: 1000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 1000 حرف",
         descPhraseEn: "max length of letters equal 255",
         // withletters: true,
         Errmsgkey: "withletterpattern",
@@ -103,9 +103,8 @@ var Information_Form = [
         parentinternalname: 'ActualBudget',
         descPhraseAr: "من التكلفة",
         descPhraseEn: " From Budget", 
-        targetelement: 'Weight',  
-         "state":"disabled",          
-        // validation: 'required',
+        targetelement: 'Weight',            
+        validation: 'required',
         // validation: 'required',
       },
       {
@@ -116,13 +115,30 @@ var Information_Form = [
         validation: 'required',
         // type: 'float',
       },
-      {
+       {
         InternalName: 'AmountPrice',
         DisplayNameEn: 'AmountPrice',
         DisplayName: 'سعر الوحدة',
         type: "number",        
         validation: 'required',
         // type: 'float',
+      },
+      {
+        InternalName: 'InvoiceNumber',
+        DisplayName: 'رقم الفاتورة',
+        DisplayNameEn: 'Invoice Number',
+        type: 'string',
+      },
+      {
+        InternalName: 'InvoiceDate',
+        DisplayName: 'تاريخ الفاتورة',
+        DisplayNameEn: 'Invoice Date',
+        type: 'datetimetoparent',
+        listname: 'Projects', // list name
+        startinternalname: 'BaselineStartDate', // internalname of parent start
+        endinternalname: 'BaselineFinishDate',
+        max: 'today',
+        Errmsgkey: 'cancelationdatepattern',
       },
       // {
       //   InternalName: 'Status',
@@ -266,7 +282,7 @@ var Information_Form = [
         sourceinternalname: 'InitiativeCode', // column in target list
         Dispfieldkey: 'Name', //display in dropdown
         valfieldkey: 'Title', // value in dropdown        
-        validation: "required",
+        //validation: "required",
       },
       // {
       //   InternalName: 'RelatedInitiativeDeliverable',

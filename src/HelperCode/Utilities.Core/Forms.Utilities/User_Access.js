@@ -793,6 +793,14 @@ window.userCalls = {
           document.title = "Admin Panel";
         }
         break;
+      case "searchdocuments.aspx":
+          if (isArabic) {
+            document.title = "البحث في المرفقات";
+          } else {
+            document.title = "Documents Search";
+          }
+          break;
+        
       default:
         document.title = USERPageTitle;
     }
@@ -8604,8 +8612,29 @@ var Access_Project_Info_Request = {
             );
             $(".firsttitle").hide();
           }
+
+
         }
       }
+      var $target = $("#langs");
+      if (!$target.length) return;
+    
+      var $role = $("#UserRole");
+      if (!$role.length) {
+        $role = $('<h2 id="UserRole" class="pageTitleUserRole"></h2>');
+      }
+    
+      if (!localStorage.getItem("lng") || localStorage.getItem("lng") == "ar") {
+        $role.html(ar_UserRole);
+      } else {
+        $role.html(en_UserRole);
+      }
+    
+      // Remove from current position if it exists
+      $role.detach();
+    
+      // Insert before #langs
+      $role.insertBefore($target);
     },
   },
 };

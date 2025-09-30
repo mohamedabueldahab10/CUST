@@ -1,6 +1,6 @@
 var currentYear = new Date().getFullYear();
-// var emptyData = require('../../../HelperRessources/img/empty-data.png');
-var emptyData = ''
+var emptyData = require('../../../HelperRessources/img/empty-data.png');
+// var emptyData = ''
 var Operational_Array = [],
   Instrument_Array = [],
   PQueryFilteration = "",
@@ -56,7 +56,7 @@ var MainKPIs_Info_Request = {
     console.log('in kpi result func')
 
 
-debugger
+
     if (isKpiCode) {
 
       var query = `<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name=\'KPI\' /><Value Type=\'Text\'>` + wfKpiCode + `</Value></Eq><And><Eq><FieldRef Name=\'Year\' /> <Value Type=\'Text\'>` + kpiYear + `</Value ></Eq><Eq><FieldRef Name=\'PeriodType\' /><Value Type=\'Choice\'>` + filteredValue + `</Value></Eq></And></And></And></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>`
@@ -107,7 +107,6 @@ debugger
         );
       }
     }
-    console.log(camlQuery,'target camlQuery')
     MainKPIs_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(MainKPIs_Info_Request.g.collListItem);
     clientContext.executeQueryAsync(

@@ -1,6 +1,6 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
-  "id": "8d005564-f950-4d24-b0e3-608372388edd",
+  "id": "30ad1fad-041a-41f9-b1b7-2b252227407b",
   "alias": "SearchDocumentsWebPart",
   "componentType": "WebPart",
 
@@ -15,7 +15,7 @@
 
   "preconfiguredEntries": [{
     "groupId": "5c03119e-3074-46fd-976b-c60198311f70", // Other
-    "group": { "default": "Other" },
+    "group": { "default": "HRSD Apps - SPFx" },
     "title": { "default": "SearchDocuments" },
     "description": { "default": "SearchDocuments description" },
     "officeFabricIconFontName": "Page",

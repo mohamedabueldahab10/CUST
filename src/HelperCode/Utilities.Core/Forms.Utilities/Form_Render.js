@@ -1254,7 +1254,30 @@ window.ListInfo = {
             }
             //
           });
-
+          if (listkey == "deliverables" && isEdit) {
+            $(document).on("change", "#Exchangetype", function () {
+              var selectedValue = $(this).val();
+          
+              if (selectedValue === "delivery") {
+                // Case 1: نوع الصرف = delivery
+                $("#Delivered[value='yes']").prop("checked", true);
+                $("input#Delivered").prop("disabled", true);
+          
+                // Enable and make DeliveredDate required
+                $("#DeliveredDate").prop("disabled", false).prop("required", true);
+                $("label[for='DeliveredDate']").attr("required", true);
+          
+              } else {
+                // Case 2: نوع الصرف = anything else (كلي او جزئي)
+                $("#Delivered[value='no']").prop("checked", true);
+                $("input#Delivered").prop("disabled", true);
+          
+                // Disable and remove required from DeliveredDate + label
+                $("#DeliveredDate").prop("disabled", true).prop("required", false).val("");
+                $("label[for='DeliveredDate']").removeAttr("required");
+              }
+            });
+          }
           // add new style for wf
 
           if (isWF) {
@@ -2450,6 +2473,57 @@ debugger;
             $("#Year").on("change", function () {
               var yearValue = $(this).val();
               Get_ActualAnnualTotal.init(yearValue);
+            });
+            $("#A, #B, #CC, #D, #E, #F, #G").on("input change", function () {
+              // set date to be today 
+              var today = new Date();
+              var yyyy = today.getFullYear();
+              var mm = String(today.getMonth() + 1).padStart(2, '0'); 
+              var dd = String(today.getDate()).padStart(2, '0'); 
+              var formattedDate = yyyy + '-' + mm + '-' + dd;
+          
+              $("#ActualkpiDate").val(formattedDate);
+
+                var kpiTitle = $("#Title").val(); // Current KPI title
+
+                // Get the KPI equation from list
+                $.ajax({
+                    url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle('KPIEquations')/items?$filter=DeletionStatus ne 'Deleted' and KPI eq '" + kpiTitle + "'",
+                    method: "GET",
+                    headers: { "Accept": "application/json;odata=verbose" },
+                    success: function (data) {
+                        if (data.d.results.length > 0) {
+                            var kpiInput = data.d.results[0].KPIInput;
+                            var varsMap = {
+                                A: parseFloat($("#A").val()) || 0,
+                                B: parseFloat($("#B").val()) || 0,
+                                C: parseFloat($("#CC").val()) || 0, 
+                                D: parseFloat($("#D").val()) || 0,
+                                E: parseFloat($("#E").val()) || 0,
+                                F: parseFloat($("#F").val()) || 0,
+                                G: parseFloat($("#G").val()) || 0
+                            };
+
+                            // Replace letters in equation with values
+                            var safeEquation = kpiInput.replace(/\b[A-G]\b/g, function(match){
+                                return varsMap[match];
+                            });
+
+                            try {
+                                // Calculate and set result
+                                var result = Function('"use strict";return (' + safeEquation + ')')();
+                                if (isNaN(result) || !isFinite(result)) result = 0;
+                                $("#Equation").val(result);
+                            } catch (err) {
+                                $("#Equation").val(0);
+                                console.error("Error calculating KPI equation:", err);
+                            }
+                        }
+                    },
+                    error: function (err) {
+                        console.error("Error fetching KPI equation:", err);
+                    }
+                });
             });
           }
           ListInfo.g.attachmentsExtensions();
@@ -8209,6 +8283,51 @@ debugger;
         OnSuccess(flag, htmlBody);
         break;
     }
+    if (listkey == "deliverables" && (isEdit || isNew)) {
+      if (typeof USERPCODE !== "undefined" && USERPCODE) {
+        $.ajax({
+          url: "/_api/web/lists/getbytitle('Projects')/items",
+    
+          type: "GET",
+    
+          data: {
+            $select: "Title,IsStrategicProject",
+            $filter: "Title eq '" + USERPCODE + "'",
+          },
+    
+          headers: {
+            Accept: "application/json;odata=verbose",
+          },
+    
+          success: function (data) {
+            if (data.d.results.length > 0) {
+              var project = data.d.results[0];
+              if (
+                project.IsStrategicProject &&
+                project.IsStrategicProject.toLowerCase() === "strategy"
+              ) {
+                $("#RelatedInitiativeDeliverable").attr("required", true);
+                $("#RelatedInitiativeDeliverable")
+                  .closest(".col-md-6")
+                  .find("label")
+                  .attr("required", true);
+              } else {
+                $("#RelatedInitiativeDeliverable").attr("required", false);
+                $("#RelatedInitiativeDeliverable")
+                  .closest(".col-md-6")
+                  .find("label")
+                  .attr("required", false);
+              }
+            }
+          },
+    
+          error: function (error) {
+            console.log("Error fetching project data: ", error);
+          },
+        });
+      }
+    }
+    
     // if (!isCrMode && crListKey) {
     //   //on new custom cr
     //   handleCustomeCr.init();
@@ -9231,83 +9350,81 @@ debugger;
 
       if (isShowVal) {
         allToggleFields.forEach((item, i, arr) => {
-          if (listkey == "projects" &&
-              (item == "InitiativeType"
-              || item == "RelatedInitiative"
-              ||item == "RelatedInitiativeDeliverable" )
-            )
-          {
-            if(listkey == 'projects'){
-
-              $('#InitiativeType').parent().show();
-              $('#InitiativeType').parent().css("display","unset");
-              $('#RelatedInitiative').parent().show();
-              $('#RelatedInitiative').parent().css("display","unset");
-              $('#RelatedInitiativeDeliverable').parent().show();
-              $('#RelatedInitiativeDeliverable').parent().css("display","unset");
+          if (
+            listkey == "projects" &&
+            (item == "InitiativeType" ||
+              item == "RelatedInitiative" ||
+              item == "RelatedInitiativeDeliverable")
+          ) {
+            if (listkey == "projects") {
+              $("#InitiativeType").parent().show();
+              $("#InitiativeType").parent().css("display", "unset");
+              $("#RelatedInitiative").parent().show();
+              $("#RelatedInitiative").parent().css("display", "unset");
+              $("#RelatedInitiativeDeliverable").parent().show();
+              $("#RelatedInitiativeDeliverable").closest(".CFIELD").removeClass("hide-field");
+              $("#RelatedInitiativeDeliverable").parent().css("display", "unset");
             }
-            $('[data-togglename="' + item + '"]').prop('disabled', true);
-            $("#IsStrategicProject").on('change', function (){
-              if(listkey == 'projects'){
-                if($(this).val() == 'no'){
-                    $('#InitiativeType').val('');
-                    $('#InitiativeType option:selected').removeAttr('selected');
-                    $('#RelatedInitiative').val('')
-                    $('#RelatedInitiative option:selected').removeAttr('selected');
-                    $('#RelatedInitiativeDeliverable').val('')
-                    $('#RelatedInitiativeDeliverable option:selected').removeAttr('selected');
-
-
-                  }
+            $('[data-togglename="' + item + '"]').prop("disabled", true);
+            $("#IsStrategicProject").on("change", function () {
+              if (listkey == "projects") {
+                if ($(this).val() == "no") {
+                  $("#InitiativeType").val("");
+                  $("#InitiativeType option:selected").removeAttr("selected");
+                  $("#RelatedInitiative").val("");
+                  $("#RelatedInitiative option:selected").removeAttr("selected");
+                  $("#RelatedInitiativeDeliverable").val("");
+                  $("#RelatedInitiativeDeliverable option:selected").removeAttr(
+                    "selected"
+                  );
                 }
-              });
+              }
+            });
           } else {
-            $('[data-togglename="' + item + '"]')
-            .parent()
-            .addClass("hide-field");
+            var $el = $('[data-togglename="' + item + '"]');
+            var $parent = $el.parent();
+            var $cfield = $el.closest(".CFIELD");
 
-            $('[data-togglename="' + item + '"]')
-              .parent()
-              .hide();
-
+            $parent.addClass("hide-field").hide();
+            $cfield.addClass("hide-field").hide();
           }
-
-            // .parent().prop('disabled', true);
-            // .addClass("hide-field");
-
+      
+          // .parent().prop('disabled', true);
+          // .addClass("hide-field");
+      
           // $('[data-togglename="' + item + '"]')
           //   .parent().hide();
-
+      
           // $('[data-togglename="' + item + '"]').val("");
           $('[data-togglename="' + item + '"]')
             .parent()
             .find(">*")
             .attr("required", false);
-
+      
           // remove required for section hide
           $('[data-togglename="' + item + '"] .Details-Item .CFIELD').each(
             function () {
               // var fieldId =$(this).find()
               var isRequired = false,
                 fieldId = "";
-
+      
               isRequired = $(this).find(">*").attr("required") ? true : false;
-
+      
               if (isRequired) {
                 fieldId = $(this).find("input,textarea,select").attr("id");
                 console.log(fieldId, "fieldId");
                 requiredFieldsSections.push(fieldId);
               }
-
+      
               // requiredFieldsSections.push()
-
+      
               $(this).find(">*").attr("required", false);
             }
           );
-
+      
           $('[data-togglename="' + item + '"]').each(function () {
             var isSection = $(this).hasClass("fieldset-container");
-
+      
             if (isSection) {
               $(this).closest(".section-container").addClass("removeborder");
               $(this).find(".CFIELD").addClass("hide-field");
@@ -9315,43 +9432,44 @@ debugger;
           });
         });
         toggleFields.forEach(function (item, i, arr) {
-          if (listkey == "projects" &&
-              (item == "InitiativeType"
-              || item == "RelatedInitiative"
-              ||item == "RelatedInitiativeDeliverable" )
-            )
-          {
-            var isHidden = $('[data-togglename="' + item + '"]')
-              .is(":disabled");
-          } else{
-            var isHidden = $('[data-togglename="' + item + '"]')
-            .is(":hidden");
+          if (
+            listkey == "projects" &&
+            (item == "InitiativeType" ||
+              item == "RelatedInitiative" ||
+              item == "RelatedInitiativeDeliverable")
+          ) {
+            var isHidden = $('[data-togglename="' + item + '"]').is(":disabled");
+          } else {
+            var isHidden = $('[data-togglename="' + item + '"]').is(":hidden");
           }
-           var myFieldParent = $('[data-togglename="' + item + '"]').parent();
-          myFieldParentofParent = $('[data-togglename="' + item + '"]');
+          var myFieldParent = $('[data-togglename="' + item + '"]').parent();
+          myFieldParentofParent = $('[data-togglename="' + item + '"]');         
           if (isHidden) {
-            if (listkey == "projects" &&
-              (item == "InitiativeType"
-              || item == "RelatedInitiative"
-              ||item == "RelatedInitiativeDeliverable" )
-            )
-          {
-              $('[data-togglename="' + item + '"]').prop('disabled', false);
-          }
-            myFieldParent.show();
+            if (listkey == "projects" && (item == "InitiativeType" || item == "RelatedInitiative" || item == "RelatedInitiativeDeliverable")) {
+                var $el = $('[data-togglename="' + item + '"]');
+                var $parent = $el.parent();
+                var $cfield = $el.closest(".CFIELD");
+                $el.prop("disabled", false);
+                $el.show().removeClass("hide-field");
+                $parent.show().removeClass("hide-field"); 
+                $cfield.show().removeClass("hide-field"); 
+            }
+            myFieldParent.show().removeClass("hide-field");
+            myFieldParentofParent.show().removeClass("hide-field");
+            myFieldParent.closest(".CFIELD").removeClass("hide-field");
             myFieldParent.removeClass("hide-field");
-            myFieldParent.parent().addClass('py-5').addClass('border-bottom');
-            myFieldParentofParent.show();
+            myFieldParent.parent().addClass("py-5").addClass("border-bottom");
+            myFieldParentofParent.show().removeClass("hide-field");
+            myFieldParent.closest(".CFIELD").removeClass("hide-field");
+      
             if (!isView) {
               myFieldParent.find(">*").attr("required", true);
-
+      
               $('[data-togglename="' + item + '"] .Details-Item .CFIELD').each(
                 function () {
                   requiredFieldsSections.forEach((el) => {
                     var $this = $(this);
-                    var fieldId = $(this)
-                      .find("input,textarea,select")
-                      .attr("id");
+                    var fieldId = $(this).find("input,textarea,select").attr("id");
                     if (el == fieldId) {
                       $this.find(">*").attr("required", true);
                     }
@@ -9359,17 +9477,17 @@ debugger;
                   // $(this).find(">*")
                   //   .attr("required", true);
                   $(this).removeClass("hide-field");
+                  $(this).closest(".CFIELD").removeClass("hide-field");
                 }
               );
-
+      
               $('[data-togglename="' + item + '"]').each(function () {
                 var isSection = $(this).hasClass("fieldset-container");
                 // to remove the border and hide field from section when toggle
                 if (isSection) {
-                  $(this)
-                    .closest(".section-container")
-                    .removeClass("removeborder");
+                  $(this).closest(".section-container").removeClass("removeborder");
                   $(this).find(".CFIELD").removeClass("hide-field");
+                  $(this).closest(".CFIELD").removeClass("hide-field");
                 }
               });
             } else if (isView) {
@@ -9377,10 +9495,9 @@ debugger;
               $('[data-togglename="' + item + '"]').each(function () {
                 var isSection = $(this).hasClass("fieldset-container");
                 if (isSection) {
-                  $(this)
-                    .closest(".section-container")
-                    .removeClass("removeborder");
+                  $(this).closest(".section-container").removeClass("removeborder");
                   $(this).find(".CFIELD").removeClass("hide-field");
+                  $(this).closest(".CFIELD").removeClass("hide-field");
                 }
               });
             }
@@ -9420,17 +9537,17 @@ debugger;
         });
       } else {
         allToggleFields.forEach((item, i, arr) => {
-
-          $('[data-togglename="' + item + '"]')
-            .parent().parent().removeClass('py-5').removeClass('border-bottom');
           $('[data-togglename="' + item + '"]')
             .parent()
-            .addClass("hide-field");
-
-          $('[data-togglename="' + item + '"]')
             .parent()
-            .hide();
-
+            .removeClass("py-5")
+            .removeClass("border-bottom");
+            var $el = $('[data-togglename="' + item + '"]');
+            var $parent = $el.parent();
+            var $cfield = $el.closest(".CFIELD");
+            $parent.addClass("hide-field").hide();
+            $cfield.addClass("hide-field").hide();            
+      
           $('[data-togglename="' + item + '"]').val("");
           $('[data-togglename="' + item + '"]')
             .parent()
@@ -10114,6 +10231,8 @@ window.View_ListInfo = {
             $(".main-panel").attr("style", "width: 100% !important");
             //getTaskHistory.init();
             Get_TaskHistory.init();
+          } else {
+            Get_AllTaskHistoryRelatedToForm.init();
           }
           //
 
@@ -10545,6 +10664,76 @@ window.View_ListInfo = {
           break;
 
         case "multiselectstring":
+          htmlBody =
+          '<div class="col-md-6 CFIELD ' +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
+          " " +
+          element.className +
+          ' " ' +
+          thistip +
+          " " +
+          hidestagesIDs +
+          " " +
+          showstagesIDs +
+          "  " +
+          disablestagesIDs +
+          "  " +
+          enablestagesIDs +
+          "   " +
+          isWfhidestagesIDs +
+          " " +
+          requireOnWfTaskstagesIDs +
+          " " +
+          isWfshowstagesIDs +
+          "  " +
+          isWfdisablestagesIDs +
+          "  " +
+          isWfenablestagesIDs +
+          '        data-groups="' +
+          groups +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
+          element.display +
+          '">' +
+          '<label for="' +
+          element.InternalName +
+          '" ' +
+          element.validation +
+          ">" +
+          displayName +
+          // " " +
+          // `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>" : ""}` +
+          "</label>" +
+          '<p type="multiselect" class="viewmode-value" data-valfieldkey="' +
+          element.valfieldkey +
+          '" data-dispfieldkey="' +
+          element.Dispfieldkey +
+          '" data-listname="' +
+          element.source +
+          '" id="' +
+          element.InternalName +
+          '" ' +
+          ToggleName +
+          'data-parentrelatedkeylvl1="' +
+          element.fieldsinformlvl1 +
+          '" data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1="' +
+          element.sourcefieldlvl1 +
+          '" data-parentrelatedkeylvl2="' +
+          element.fieldsinformlvl2 +
+          '" data-parentrelatedvaluelvl2="" data-parentrelatedfilterkeylvl2="' +
+          element.sourcefieldlvl2 +
+          '" data-linkedto="' +
+          element.linkedto +
+          '"></p>' +
+          "</div>";
+        OnSuccess(flag, htmlBody);
+        break;
         case "multiselectForFiles":
           htmlBody =
             '<div class="col-md-6 CFIELD" ' +

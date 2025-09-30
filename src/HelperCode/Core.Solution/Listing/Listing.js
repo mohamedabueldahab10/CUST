@@ -691,7 +691,7 @@ window.ListingData = {
 				if (records[i].ProjectType == 'Internal') {
 				  indexoflistinginternalproject = indexoflistinginternalproject + 1;
 				  InternalProjectsHtml += '<li class="list-group-item link-arrow">' +
-					'<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexoflistinginternalproject + '</span>';
+					'<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" target="_blank"s href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexoflistinginternalproject + '</span>';
 				  // InternalProjectsHtml += '<li class="list-group-item link-arrow">' +
 				  //   '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '';
 				} else if (records[i].ProjectType == 'External') {
@@ -1169,11 +1169,11 @@ window.ListingData = {
 			  //   $(".btn-add").css("display", "none");
 			  // }
 			  
-			  if (ICODE && (listkey == 'initiativedeliverables' || listkey == 'initiativemilestones') && !initiativeActualBudget) {
-				var HtmlStartNoInitBudgetMsg = '<div data-trans-addinitiativebudget class="actualBudget d-flex w-100 mx-3 mb-3 ErrorMsg Resources"></div>';
-				$(HtmlStartNoInitBudgetMsg).insertBefore($('.content-list-head > .listing-new-at'));
-				$(".btn-add").css("display", "none");
-			  }              
+			//   if (ICODE && (listkey == 'initiativedeliverables' || listkey == 'initiativemilestones') && !initiativeActualBudget) {
+			// 	var HtmlStartNoInitBudgetMsg = '<div data-trans-addinitiativebudget class="actualBudget d-flex w-100 mx-3 mb-3 ErrorMsg Resources"></div>';
+			// 	$(HtmlStartNoInitBudgetMsg).insertBefore($('.content-list-head > .listing-new-at'));
+			// 	$(".btn-add").css("display", "none");
+			//   }              
 			}
 
 			changeResources();
@@ -1250,7 +1250,6 @@ window.ListingData = {
   g: {
 	filtertrigger: function () {
 	  $('.page-filter .dropdown-menu label input:checkbox').change(function (e) {
-		 // إذا التغيير على StatusMilestoneDeliverable، نخلي الباقي unchecked
 		 if ($(this).data("internal") === "StatusMilestoneDeliverable") {
             $(this).closest('.dropdown-menu')
                 .find('input[name="' + $(this).attr("name") + '"]')
@@ -1490,247 +1489,184 @@ window.ListingData = {
 		for (var i = 0; i < FilterChoices.length; i++) {
 
 
-		  	//only one choice
+		  	// only one choice
 			if (FilterChoices.length == 1) {
 
-			if (FilterChoices[i].internalName == "StatusMilestoneDeliverable" && (listkey == "initiativedeliverables" || listkey == "initiativemilestones" )) {
-				for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-				var statusVal = FilterChoices[i].Values[j];
+				if (
+					FilterChoices[i].internalName == "StatusMilestoneDeliverable" &&
+					(listkey == "initiativedeliverables" ||
+						listkey == "initiativemilestones" ||
+						listkey == "deliverables" ||
+						listkey == "milestones")
+				) {
+					for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+						var statusVal = FilterChoices[i].Values[j];
+						var todayStr = new Date().toISOString();
 
-				if (statusVal == "completed") {
-					Where_Body += `<Eq><FieldRef Name="Delivered" /><Value Type="Text">yes</Value></Eq>`;
-				} else if (statusVal == "notstarted") {
-					var todayStr = new Date().toISOString();
-					Where_Body += `<And>
-									<Gt><FieldRef Name="PlannedCompletedDate" /><Value Type="DateTime" IncludeTimeValue="FALSE">${todayStr}</Value></Gt>
-									<Neq><FieldRef Name="Delivered" /><Value Type="Text">yes</Value></Neq>
-								</And>`;
-				} else if (statusVal == "late") {
-					var todayStr = new Date().toISOString();
-					Where_Body += `<And>
-									<Lt><FieldRef Name="PlannedCompletedDate" /><Value Type="DateTime" IncludeTimeValue="FALSE">${todayStr}</Value></Lt>
-									<Neq><FieldRef Name="Delivered" /><Value Type="Text">yes</Value></Neq>
-								</And>`;
-				}
-				}
-			} else if (FilterChoices[i].targetIsMultiFilter) {
-				for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-				// debugger
-				if (j == FilterChoices[i].Values.length - 1) {
-					Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
-				} else {
-					Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
-				}
-				}
-				var countOr = (Where_Body.match(/<Or>/g) || []).length;
-				var ORC = "</Or>".repeat(countOr);
-				Where_Body += ORC;
+						var plannedField =
+							listkey == "deliverables" ? "PlannedFinishDate" :
+							listkey == "milestones" ? "PlannedDate" :
+							"PlannedCompletedDate";
 
-			} else if (FilterChoices[i].Type == "LoggedInUser") {
-				Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
-			} else {
-				Where_Body += '<In><FieldRef Name="' + FilterChoices[i].internalName + '" /><Values>';
-				for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-				Where_Body += '<Value Type="' + FilterChoices[i].Type + '">' + FilterChoices[i].Values[j] + '</Value>';
-				}
-				Where_Body += '</Values></In>';
-			}
-			}
-			//Two choices
-			else if (FilterChoices.length == 2) {
-			console.log(FilterChoices, "FilterChoices")
-
-			if (i == 0) {
-				if (FilterChoices[i].internalName == "StatusMilestoneDeliverable" && (listkey == "initiativedeliverables" || listkey == "initiativemilestones" )) {
-				for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-					var statusVal = FilterChoices[i].Values[j];
-
-					if (statusVal == "completed") {
-					Where_Body += `<And><Eq><FieldRef Name="Delivered" /><Value Type="Text">yes</Value></Eq>`;
-					} else if (statusVal == "notstarted") {
-					var todayStr = new Date().toISOString();
-					Where_Body += `<And>
-									<Gt><FieldRef Name="PlannedCompletedDate" /><Value Type="DateTime" IncludeTimeValue="FALSE">${todayStr}</Value></Gt>
-									<Neq><FieldRef Name="Delivered" /><Value Type="Text">yes</Value></Neq>
-									</And>`;
-					} else if (statusVal == "late") {
-					var todayStr = new Date().toISOString();
-					Where_Body += `<And>
-									<Lt><FieldRef Name="PlannedCompletedDate" /><Value Type="DateTime" IncludeTimeValue="FALSE">${todayStr}</Value></Lt>
-									<Neq><FieldRef Name="Delivered" /><Value Type="Text">yes</Value></Neq>
-									</And>`;
+						if (statusVal == "completed") {
+							Where_Body += `<Eq><FieldRef Name="Delivered" /><Value Type="Text">yes</Value></Eq>`;
+						} else if (statusVal == "notstarted") {
+							Where_Body += `<And>
+											<Gt><FieldRef Name="${plannedField}" /><Value Type="DateTime" IncludeTimeValue="FALSE">${todayStr}</Value></Gt>
+											<Neq><FieldRef Name="Delivered" /><Value Type="Text">yes</Value></Neq>
+										</And>`;
+						} else if (statusVal == "late") {
+							Where_Body += `<And>
+											<Lt><FieldRef Name="${plannedField}" /><Value Type="DateTime" IncludeTimeValue="FALSE">${todayStr}</Value></Lt>
+											<Neq><FieldRef Name="Delivered" /><Value Type="Text">yes</Value></Neq>
+										</And>`;
+						}
 					}
-				}
 				} else if (FilterChoices[i].targetIsMultiFilter) {
-
-				Where_Body += '<And>'
-				for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-					if (j == FilterChoices[i].Values.length - 1) {
-					Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
-					} else {
-					Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+					for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+						if (j == FilterChoices[i].Values.length - 1) {
+							Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}" /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`;
+						} else {
+							Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}" /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`;
+						}
 					}
-				}
-
-				var countOr = (Where_Body.match(/<Or>/g) || []).length;
-				var ORC = "</Or>".repeat(countOr);
-				Where_Body += ORC;
-				}
-				else if (FilterChoices[i].Type == "LoggedInUser") {
-				Where_Body += `<And><Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
-				} else {
-				Where_Body += '<And><In><FieldRef Name="' + FilterChoices[i].internalName + '" /><Values>';
-				for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-					Where_Body += '<Value Type="' + FilterChoices[i].Type + '">' + FilterChoices[i].Values[j] + '</Value>';
-				}
-				Where_Body += '</Values></In>';
-				}
-			} else {
-				if (FilterChoices[i].internalName == "StatusMilestoneDeliverable" && (listkey == "initiativedeliverables" || listkey == "initiativemilestones" )) {
-				for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-					var statusVal = FilterChoices[i].Values[j];
-
-					if (statusVal == "completed") {
-					Where_Body += `<Eq><FieldRef Name="Delivered" /><Value Type="Text">yes</Value></Eq></And>`;
-					} else if (statusVal == "notstarted") {
-					var todayStr = new Date().toISOString();
-					Where_Body += `<And>
-									<Gt><FieldRef Name="PlannedCompletedDate" /><Value Type="DateTime" IncludeTimeValue="FALSE">${todayStr}</Value></Gt>
-									<Neq><FieldRef Name="Delivered" /><Value Type="Text">yes</Value></Neq>
-									</And></And>`;
-					} else if (statusVal == "late") {
-					var todayStr = new Date().toISOString();
-					Where_Body += `<And>
-									<Lt><FieldRef Name="PlannedCompletedDate" /><Value Type="DateTime" IncludeTimeValue="FALSE">${todayStr}</Value></Lt>
-									<Neq><FieldRef Name="Delivered" /><Value Type="Text">yes</Value></Neq>
-									</And></And>`;
-					}
-				}
-				} else if (FilterChoices[i].targetIsMultiFilter) {
-				Where_Body += ''
-				for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-					if (j == FilterChoices[i].Values.length - 1) {
-					Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
-					} else {
-					Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
-					}
-				}
-
-				var countOr = (Where_Body.match(/<Or>/g) || []).length;
-				var ORC = "</Or>".repeat(countOr);
-				Where_Body += ORC;
-				Where_Body += '</And>'
-
+					var countOr = (Where_Body.match(/<Or>/g) || []).length;
+					Where_Body += "</Or>".repeat(countOr);
 
 				} else if (FilterChoices[i].Type == "LoggedInUser") {
-				Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq></And>`;
+					Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
 				} else {
-				Where_Body += '<In><FieldRef Name="' + FilterChoices[i].internalName + '" /><Values>';
-				for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-					Where_Body += '<Value Type="' + FilterChoices[i].Type + '">' + FilterChoices[i].Values[j] + '</Value>';
-				}
-				Where_Body += '</Values></In></And>';
-				}
-			}
-			}
-			//More than two choices
-			else if (FilterChoices.length > 2) {
-
-			//two Eqs in last And
-			if (i == FilterChoices.length - 1) {
-				if (FilterChoices[i].internalName == "StatusMilestoneDeliverable" && (listkey == "initiativedeliverables" || listkey == "initiativemilestones" )) {
-				for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-					var statusVal = FilterChoices[i].Values[j];
-
-					if (statusVal == "completed") {
-					Where_Body += `<Eq><FieldRef Name="Delivered" /><Value Type="Text">yes</Value></Eq>`;
-					} else if (statusVal == "notstarted") {
-					var todayStr = new Date().toISOString();
-					Where_Body += `<And>
-									<Gt><FieldRef Name="PlannedCompletedDate" /><Value Type="DateTime" IncludeTimeValue="FALSE">${todayStr}</Value></Gt>
-									<Neq><FieldRef Name="Delivered" /><Value Type="Text">yes</Value></Neq>
-									</And>`;
-					} else if (statusVal == "late") {
-					var todayStr = new Date().toISOString();
-					Where_Body += `<And>
-									<Lt><FieldRef Name="PlannedCompletedDate" /><Value Type="DateTime" IncludeTimeValue="FALSE">${todayStr}</Value></Lt>
-									<Neq><FieldRef Name="Delivered" /><Value Type="Text">yes</Value></Neq>
-									</And>`;
+					Where_Body += '<In><FieldRef Name="' + FilterChoices[i].internalName + '" /><Values>';
+					for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+						Where_Body += '<Value Type="' + FilterChoices[i].Type + '">' + FilterChoices[i].Values[j] + '</Value>';
 					}
+					Where_Body += '</Values></In>';
 				}
+			}
+
+			// two choices
+			else if (FilterChoices.length == 2) {
+				if (i == 0) Where_Body += '<And>'; // start And for first filter
+
+				if (
+					FilterChoices[i].internalName == "StatusMilestoneDeliverable" &&
+					(listkey == "initiativedeliverables" ||
+						listkey == "initiativemilestones" ||
+						listkey == "deliverables" ||
+						listkey == "milestones")
+				) {
+					for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+						var statusVal = FilterChoices[i].Values[j];
+						var todayStr = new Date().toISOString();
+
+						var plannedField =
+							listkey == "deliverables" ? "PlannedFinishDate" :
+							listkey == "milestones" ? "PlannedDate" :
+							"PlannedCompletedDate";
+
+						if (statusVal == "completed") {
+							Where_Body += `<Eq><FieldRef Name="Delivered" /><Value Type="Text">yes</Value></Eq>`;
+						} else if (statusVal == "notstarted") {
+							Where_Body += `<And>
+											<Gt><FieldRef Name="${plannedField}" /><Value Type="DateTime" IncludeTimeValue="FALSE">${todayStr}</Value></Gt>
+											<Neq><FieldRef Name="Delivered" /><Value Type="Text">yes</Value></Neq>
+										</And>`;
+						} else if (statusVal == "late") {
+							Where_Body += `<And>
+											<Lt><FieldRef Name="${plannedField}" /><Value Type="DateTime" IncludeTimeValue="FALSE">${todayStr}</Value></Lt>
+											<Neq><FieldRef Name="Delivered" /><Value Type="Text">yes</Value></Neq>
+										</And>`;
+						}
+					}
 				} else if (FilterChoices[i].targetIsMultiFilter) {
-
-				Where_Body += ''
-				for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-					if (j == FilterChoices[i].Values.length - 1) {
-					Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
-					} else {
-					Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
+					Where_Body += '<And>';
+					for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+						if (j == FilterChoices[i].Values.length - 1) {
+							Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}" /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`;
+						} else {
+							Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}" /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`;
+						}
 					}
-				}
-				var countOr = (Where_Body.match(/<Or>/g) || []).length;
-				var ORC = "</Or>".repeat(countOr);
-				Where_Body += ORC;
-				}
-				else if (FilterChoices[i].Type == "LoggedInUser") {
-				Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
+					var countOr = (Where_Body.match(/<Or>/g) || []).length;
+					Where_Body += "</Or>".repeat(countOr);
+					Where_Body += '</And>';
+				} else if (FilterChoices[i].Type == "LoggedInUser") {
+					Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
 				} else {
-				Where_Body += '<In><FieldRef Name="' + FilterChoices[i].internalName + '" /><Values>';
-				for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-					Where_Body += '<Value Type="' + FilterChoices[i].Type + '">' + FilterChoices[i].Values[j] + '</Value>';
+					Where_Body += '<In><FieldRef Name="' + FilterChoices[i].internalName + '" /><Values>';
+					for (var j = 0; j < FilterChoices[i].Values.length; j++) {
+						Where_Body += '<Value Type="' + FilterChoices[i].Type + '">' + FilterChoices[i].Values[j] + '</Value>';
+					}
+					Where_Body += '</Values></In>';
 				}
-				Where_Body += '</Values></In>';
-				}
-				//appending And closure
-				var count = (Where_Body.match(/<And>/g) || []).length;
-				var ANDC = "</And>".repeat(count);
-				Where_Body += ANDC;
-			}
-			//normal And
-			else {
-				if (FilterChoices[i].internalName == "StatusMilestoneDeliverable" && (listkey == "initiativedeliverables" || listkey == "initiativemilestones" )) {
-				for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-					var statusVal = FilterChoices[i].Values[j];
 
-					if (statusVal == "completed") {
-					Where_Body += `<And><Eq><FieldRef Name="Delivered" /><Value Type="Text">yes</Value></Eq>`;
-					} else if (statusVal == "notstarted") {
-					var todayStr = new Date().toISOString();
-					Where_Body += `<And>
-									<Gt><FieldRef Name="PlannedCompletedDate" /><Value Type="DateTime" IncludeTimeValue="FALSE">${todayStr}</Value></Gt>
-									<Neq><FieldRef Name="Delivered" /><Value Type="Text">yes</Value></Neq>
-									</And>`;
-					} else if (statusVal == "late") {
-					var todayStr = new Date().toISOString();
-					Where_Body += `<And>
-									<Lt><FieldRef Name="PlannedCompletedDate" /><Value Type="DateTime" IncludeTimeValue="FALSE">${todayStr}</Value></Lt>
-									<Neq><FieldRef Name="Delivered" /><Value Type="Text">yes</Value></Neq>
-									</And>`;
-					}
-				}
-				} else if (FilterChoices[i].targetIsMultiFilter) {
-				Where_Body += '<And>'
-				for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-					if (j == FilterChoices[i].Values.length - 1) {
-					Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
-					} else {
-					Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
-					}
-				}
-				var countOr = (Where_Body.match(/<Or>/g) || []).length;
-				var ORC = "</Or>".repeat(countOr);
-				Where_Body += ORC;
-				}
-				else if (FilterChoices[i].Type == "LoggedInUser") {
-				Where_Body += `<And><Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
-				} else {
-				Where_Body += '<And><In><FieldRef Name="' + FilterChoices[i].internalName + '" /><Values>';
-				for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-					Where_Body += '<Value Type="' + FilterChoices[i].Type + '">' + FilterChoices[i].Values[j] + '</Value>';
-				}
-				Where_Body += '</Values></In>';
-				}
+				if (i == 1) Where_Body += '</And>'; // close And for second filter
 			}
+
+			// more than two choices
+			else if(FilterChoices.length > 2) {
+				var tempWhere = [];
+
+				for(var j=0; j<FilterChoices.length; j++){
+					var filterXml = "";
+
+					// StatusMilestoneDeliverable
+					if(FilterChoices[j].internalName=="StatusMilestoneDeliverable" &&
+					["initiativedeliverables","initiativemilestones","deliverables","milestones"].includes(listkey)) {
+
+						var subFilters = [];
+						for(var k=0;k<FilterChoices[j].Values.length;k++){
+							var statusVal = FilterChoices[j].Values[k];
+							var todayStr = new Date().toISOString();
+							var plannedField = listkey=="deliverables"?"PlannedFinishDate":listkey=="milestones"?"PlannedDate":"PlannedCompletedDate";
+
+							if(statusVal=="completed") subFilters.push(`<Eq><FieldRef Name="Delivered" /><Value Type="Text">yes</Value></Eq>`);
+							else if(statusVal=="notstarted") subFilters.push(`<And><Gt><FieldRef Name="${plannedField}" /><Value Type="DateTime" IncludeTimeValue="FALSE">${todayStr}</Value></Gt><Neq><FieldRef Name="Delivered" /><Value Type="Text">yes</Value></Neq></And>`);
+							else if(statusVal=="late") subFilters.push(`<And><Lt><FieldRef Name="${plannedField}" /><Value Type="DateTime" IncludeTimeValue="FALSE">${todayStr}</Value></Lt><Neq><FieldRef Name="Delivered" /><Value Type="Text">yes</Value></Neq></And>`);
+						}
+
+						while(subFilters.length>1){
+							var a=subFilters.shift();
+							var b=subFilters.shift();
+							subFilters.unshift(`<Or>${a}${b}</Or>`);
+						}
+						filterXml = subFilters[0];
+					}
+					// MultiFilter
+					else if(FilterChoices[j].targetIsMultiFilter){
+						var subFilters = [];
+						for(var k=0;k<FilterChoices[j].Values.length;k++){
+							subFilters.push(`<Contains><FieldRef Name="${FilterChoices[j].internalName}" /><Value Type="Text">${FilterChoices[j].Values[k]}</Value></Contains>`);
+						}
+						while(subFilters.length>1){
+							var a=subFilters.shift();
+							var b=subFilters.shift();
+							subFilters.unshift(`<Or>${a}${b}</Or>`);
+						}
+						filterXml = subFilters[0];
+					}
+					// LoggedInUser
+					else if(FilterChoices[j].Type=="LoggedInUser"){
+						filterXml = `<Eq><FieldRef Name="${FilterChoices[j].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
+					}
+					// Normal In filter
+					else{
+						var valuesXml = "";
+						for(var k=0;k<FilterChoices[j].Values.length;k++){
+							valuesXml += `<Value Type="${FilterChoices[j].Type}">${FilterChoices[j].Values[k]}</Value>`;
+						}
+						filterXml = `<In><FieldRef Name="${FilterChoices[j].internalName}" /><Values>${valuesXml}</Values></In>`;
+					}
+
+					tempWhere.push(filterXml);
+				}
+
+				var combined = tempWhere[0];
+				for(var k=1;k<tempWhere.length;k++){
+					combined = `<And>${combined}${tempWhere[k]}</And>`;
+				}
+
+				Where_Body = combined;
 			}
 
 		  //Finish Line, make last changes and build query
@@ -2503,6 +2439,28 @@ window.ListingData = {
 		</div>
 		`);  
 	} 
+	if (listkey == "projects" && UserICode) {
+		var hide = [
+		  "Sector",
+		  "SubSector",
+		  "RelatedInitiative",
+		  "WorkingStatus",
+		  "InitiativeType",
+		];
+	  
+		// $("#StatusFilterationHTMLid .dropdown").each(function () {
+		//   var $dropdown = $(this);
+		//   var internal = $dropdown
+		// 	.find("input[data-internal]")
+		// 	.first()
+		// 	.attr("data-internal");
+		//   if ($.inArray(internal, hide) !== -1) {
+		// 	$dropdown.hide();
+		//   }
+		// });
+		$('.filtersSection').hide();
+	  }
+	  
 	  if (originalstate) {
 		// $('div#StatusFilterationHTMLid').html(htmlFilter);
 		if (!isRoleDataLevelAccess) {

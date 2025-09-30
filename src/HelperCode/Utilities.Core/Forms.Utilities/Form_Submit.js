@@ -29,6 +29,7 @@ var kpiName = "",
   kpiMonthPicked = "",
   kpiPeriodTypeUpdate = "",
   kpiRecurrenceChanged = "";
+  window.nesteddeliverabledisCreated = false;
 
 var mainKpiIsUpload = false;
 
@@ -97,6 +98,7 @@ var kpiResultsArr = [];
 var benefitMetricsArr = [];
 
 window.New_Data_Submit = {
+
   preinit: function () {
     $(".errormsg").remove();
     $(".container-body").addClass("was-validated");
@@ -403,6 +405,7 @@ window.New_Data_Submit = {
         '<p class="errormsg">Please check info above</p>'
       );
       // console.log('check form for errors');
+      // check if required field empty or invalid scroll
       var $container = $("#s4-workspace"),
         $scrollTo = $(".was-validated .form-control:invalid");
       if ($scrollTo.length == 0) {
@@ -1448,7 +1451,6 @@ var Set_Code_Submit = {
 window.Edit_Data_Submit = {
   
   preinit: function (state) {
-    debugger;
     window.wfHotFixState = state;
 
     $(".errormsg").remove();
@@ -1700,6 +1702,42 @@ window.Edit_Data_Submit = {
       });
     }
 
+    // var amountValid = true;
+    // var amountScrollId = false;
+
+    // if (listkey == "Deliverables" && isEdit) {
+    //     var $amount = $("#Amount");
+    //     var amountVal = parseFloat($amount.val());
+    //     var parentVal = parseFloat($amount.attr("data-parentval"));
+    //     var $weight = $("#" + $amount.attr("data-targetelem"));
+    //     var weightVal = parseFloat($weight.val());
+
+    //     if (!isNaN(amountVal) && !isNaN(parentVal) && !isNaN(weightVal)) {
+    //         var percent = (parentVal / weightVal) * 100;
+    //         if (percent <= amountVal) {
+    //             $amount[0].setCustomValidity("");
+    //             amountValid = true;
+    //         } else {
+    //             $amount[0].setCustomValidity("Invalid Amount");
+    //             $amount.siblings(".errMsgField").show();
+    //             amountValid = false;
+    //             amountScrollId = $amount.attr("id");
+    //         }
+    //     }
+    // }
+
+    var fileValid = true;
+    var fileScrollId = false;
+    if ($("#getFile[required]").length) {
+      var $file = $("#getFile[required]");
+      if (!$file.val()) {
+        fileValid = false;
+
+        alert(".الوثائق الداعمة حقل إلزامي! يرجى ملأه بما يجب");
+        fileScrollId = $file.attr("id");
+      }
+    }
+
     changeResources();
 
     if (listkey == "risks") {
@@ -1713,8 +1751,11 @@ window.Edit_Data_Submit = {
       pickervalid &&
       !isCheckMember &&
       multiSelectValid &&
-      uniqueStringValid
+      uniqueStringValid &&
+      // amountValid &&
+      fileValid
     ) {
+
       if (listkey == "risks") {
         if (
           showpopup == false ||
@@ -1808,6 +1849,16 @@ window.Edit_Data_Submit = {
         $(`#${internalNameValidate}`)
           .get(0)
           .scrollIntoView({ behavior: "smooth", block: "center" });
+      } 
+      // else if (amountScrollId) {
+      //   $(`#${amountScrollId}`)
+      //     .get(0)
+      //     .scrollIntoView({ behavior: "smooth", block: "center" });
+      // } 
+      else if (fileScrollId) {
+        $(`#${fileScrollId}`)
+          .get(0)
+          .scrollIntoView({ behavior: "smooth", block: "center" });
       } else {
         $container.animate({
           scrollTop:
@@ -1823,7 +1874,6 @@ window.Edit_Data_Submit = {
     }
   },
   init: function () {
-    debugger;
     if (listkey == "projects") {
       checkinProjectEditSubmit.checkin(User_ProjUID);
     }
@@ -1855,6 +1905,11 @@ window.Edit_Data_Submit = {
           .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)>  textarea,
            .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field) > .multiselect-container`).each(
       function () {
+        var fieldIdForUse = $(this).attr("id");
+        if (listkey == "mainkpi" && isEdit &&!isWF &&( (isPerformanceLeader && ($('#WFStage').val() !== "approved")) || isSPMAdmin)) {
+          var skipFieldsForPerfLeader = ["A","B","CC","D","E","F","G","Quarter","Months","Midterms","Year","Equation"];
+          if (skipFieldsForPerfLeader.indexOf(fieldIdForUse) !== -1) return;
+        }
         if ($(this).attr("type") == "picker") {
           if ($(this).find("span.sp-peoplepicker-userSpan").length) {
             var id = $(this).attr("INppicker");
@@ -2480,7 +2535,92 @@ window.Edit_Data_Submit = {
         Edit_Data_Submit.g.oListItem.set_item("RelatedStrategyObjective", "");
       }
     }
+    async function handleKPIResults() {
+        if (listkey == "mainkpi" && isEdit && isPerformanceLeader && !isWF && ($('#WFStage').val() !== "approved")) {
+            await saveKPIResultsHistory("draft");
+        } else if (listkey == "mainkpi" && isEdit && isSPMAdmin && !isWF) {
+            if ($('#WFStage').val() == "approved") {
+                await approveKPIResultsHistory($('#Title').val());
+            } else {
+                await saveKPIResultsHistory("approved");
+            }
+        }
+    }
+    
+    async function approveKPIResultsHistory(KPITitle) {
+        try {
+            const url = `${APIURL}/general/approvekpiresultshistory/${KPITitle}`;
+            const res = await $.ajax({
+                url,
+                method: "GET",
+                contentType: "application/json; charset=utf-8"
+            });
+            console.log("KPIResultsHistory approved:", res);
+        } catch (err) {
+            console.error("Error in approve KPIResultsHistory:", err);
+        }
+    }
+    
+    async function saveKPIResultsHistory(status) {
+        try {
+            const periodType = $("#PeriodType").val();
+            let year = parseInt($("#Year").val() || 0);
+            let month = null;
+    
+            if (periodType === "monthly") {
+                const mVal = $("#Months").val();
+                if (mVal && mVal.indexOf("ActualM") === 0)
+                    month = parseInt(mVal.replace("ActualM", ""));
+            } else if (periodType === "midterm") {
+                const midVal = $("#Midterms").val();
+                month = midVal === "ActualMid1" ? 6 : midVal === "ActualMid2" ? 12 : 0;
+            } else if (periodType === "quarter") {
+                const qVal = $("#Quarter").val();
+                if (qVal === "ActualQ1") month = 3;
+                else if (qVal === "ActualQ2") month = 6;
+                else if (qVal === "ActualQ3") month = 9;
+                else if (qVal === "ActualQ4") month = 12;
+            } else if (periodType === "year") {
+                month = 12;
+            }
+    
+            const payload = {
+                mainKPICode: $("#Title").val(),
+                year,
+                month,
+                a: parseFloat($("#A").val() || 0),
+                b: parseFloat($("#B").val() || 0),
+                c: parseFloat($("#CC").val() || 0),
+                d: parseFloat($("#D").val() || 0),
+                e: parseFloat($("#E").val() || 0),
+                f: parseFloat($("#F").val() || 0),
+                g: parseFloat($("#G").val() || 0),
+                finalValue: parseFloat($("#Equation").val() || 0),
+                createdByUserId: 0,
+            };
+    
+            const userData = await $.ajax({
+                url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/currentuser",
+                method: "GET",
+                headers: { Accept: "application/json;odata=verbose" },
+            });
+            payload.createdByUserId = userData.d.Id;
+    
+            const url = `${APIURL}/general/createorupdatekpiresultshistory/${status}`;
+            const res = await $.ajax({
+                url,
+                method: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(payload),
+            });
+    
+            console.log("KPIResultsHistory saved:", res);
+        } catch (err) {
+            console.error("Error in KPIResultsHistory flow:", err);
+        }
+    }
 
+    handleKPIResults();
     Edit_Data_Submit.g.oListItem.update();
     clientContext.load(Edit_Data_Submit.g.oListItem);
     clientContext.executeQueryAsync(
@@ -2608,19 +2748,162 @@ window.Edit_Data_Submit = {
   },
   g: {
     clickbait: function () {
-      $("button.btn-save").on("click", function () {
-        if ($("#Exchangetype").val() === "partial" && SP_ListName == 'Deliverables' && isEdit == true) {
-          handlePartialDisbursementSave()
-            .then(() => {
-              console.log("Nested deliverable saved, no main deliverable save performed.");
-              // Optionally, redirect or show a success message here
-              window.location =
-              _spPageContextInfo.webAbsoluteUrl +
-              "/SitePages/Listing.aspx?ListKey=" +
-              'nesteddeliverables'+PCODE_STRING ;
+      $("button.btn-save").off("click").on("click", function () {
+        
+        function checkAllNestedDeliverablesHasFiles(items) {
+          return new Promise((resolve, reject) => {
+            const requests = [];
+            const enumerator = items.getEnumerator();
+  
+            while (enumerator.moveNext()) {
+              const item = enumerator.get_current();
+              const nestedId = item.get_id();
+              const url = `${APIURL}/general/checknesteddeliverablehasfiles/${PCODE}/${nestedId}`;
+              requests.push(
+                fetch(url, { method: "GET" })
+                  .then((res) => (res.ok ? res.json() : { result: false }))
+                  .then((data) => data.result === true)
+                  .catch(() => false)
+              );
+            }
+  
+            Promise.all(requests).then((results) => {
+              const allHaveFiles = results.every((hasFiles) => hasFiles === true);
+              resolve(allHaveFiles);
             });
+          });
+        }
+  
+        if (listkey == "deliverables" && isEdit == true) {
+          if (
+            ($("#Exchangetype").val() === "partial" || $("#Exchangetype").val() === "general") &&
+            ($("#PurchaseRequestNumber").val() !== "" &&
+              $("#PurchaseRequestNumber").val() !== null &&
+              $("#PurchaseRequestNumber").val() !== undefined &&
+              $("#PurchaseRequestNumber").val() !== No_Data) &&
+            ($("#PurchaseOrderNumber").val() !== "" &&
+              $("#PurchaseOrderNumber").val() !== null &&
+              $("#PurchaseOrderNumber").val() !== undefined &&
+              $("#PurchaseOrderNumber").val() !== No_Data)
+          ) {
+            const clientContext = new SP.ClientContext.get_current();
+            const nestedList = clientContext.get_web().get_lists().getByTitle("NestedDeliverables");
+            const camlQuery = new SP.CamlQuery();
+            camlQuery.set_viewXml(
+              `
+              <View>
+                <Query>
+                  <Where>
+                    <And>
+                      <Eq>
+                        <FieldRef Name='MasterID' />
+                        <Value Type='Text'>${IID}</Value>
+                      </Eq>
+                      <Neq>
+                        <FieldRef Name='DeletionStatus' />
+                        <Value Type='Text'>Deleted</Value>
+                      </Neq>
+                    </And>
+                  </Where>
+                </Query>
+              </View>
+              `
+            );
+            const items = nestedList.getItems(camlQuery);
+            clientContext.load(items);
+    
+            clientContext.executeQueryAsync(
+              () => {
+                const enumerator = items.getEnumerator();
+                const hasNested = enumerator.moveNext();
+    
+                var fileValid = true;
+                var fileScrollId = false;
+                if ($("#getFile").length) {
+                  var $file = $("#getFile");
+                  if (!$file.val()) {
+                    fileValid = false;
+                    alert(".الوثائق الداعمة حقل إلزامي! يرجى ملأه بما يجب");
+                    fileScrollId = $file.attr("id");
+                  }
+                }
+    
+                if (!fileValid) {
+                  return;
+                }
+    
+                if (!hasNested) {
+                  // NO nested: submit the main deliverable first, then create nested AFTER save (handled in afterSuccess)
+                  window.pendingCreateNestedAfterSave = true;
+                  // Ensure the flag used by afterSuccess is reset appropriately
+                  nesteddeliverabledisCreated = false;
+                  Edit_Data_Submit.preinit();
+                  return;
+                }
+    
+                // There ARE nested items: check if any pending (WFStage != 'approved')
+                var pendingExists = false;
+                var enum2 = items.getEnumerator();
+                while (enum2.moveNext()) {
+                  var it = enum2.get_current();
+                  var wf = it.get_item("WFStage");
+                  if (!wf || wf.toString().toLowerCase() !== "approved") {
+                    pendingExists = true;
+                    break;
+                  }
+                }
+    
+                if (pendingExists) {
+                  // There's a pending nested deliverable in approvals: do not create a new nested; just complete the update of the deliverable
+                  window.pendingCreateNestedAfterSave = false;
+                  Edit_Data_Submit.preinit();
+                  return;
+                }
+    
+                // No pending nested: ensure all nested have attachments via API before any submission
+                checkAllNestedDeliverablesHasFiles(items).then((allGood) => {
+                  if (!allGood) {
+                    alert("لا يمكن الحفظ لوجود مخرج جزئي بدون مرفقات");
+                    return;
+                  } else {
+                    //check quantity
+                    if ($("#Quantity").val() == "0") {
+                      alert("تم صرف جميع الكميه ويجب تعديل نوع الصرف الى تسليم");
+                      return;
+                    }
+                    // All nested have attachments =>  submit the deliverable and then create a new nested (post-save)
+                    window.pendingCreateNestedAfterSave = true;
+                    Edit_Data_Submit.preinit();
+                    return;
+                  }
+                });
+              },
+              (sender, args) => {
+                console.error("Error checking NestedDeliverables:", args.get_message());
+                // fallback: proceed with normal save (no nested creation)
+                window.pendingCreateNestedAfterSave = false;
+                Edit_Data_Submit.preinit();
+              }
+            );
+          } else if (
+            ($("#Exchangetype").val() === "partial" || $("#Exchangetype").val() === "general") &&
+            (SP_ListName == "Deliverables" && isEdit == true) &&
+            ($("#PurchaseRequestNumber").val() == "" ||
+              $("#PurchaseRequestNumber").val() == null ||
+              $("#PurchaseRequestNumber").val() == undefined ||
+              $("#PurchaseRequestNumber").val() == No_Data) ||
+            ($("#PurchaseOrderNumber").val() == "" ||
+              $("#PurchaseOrderNumber").val() == null ||
+              $("#PurchaseOrderNumber").val() == undefined ||
+              $("#PurchaseOrderNumber").val() == No_Data)
+          ) {
+            // below comment cause hold deploy to production this time
+         //   alert("لا يمكن صرف المخرج لعدم وجود رقم طلب الاحتياج ورقم أمر التعميد"); 
+            Edit_Data_Submit.preinit();
+          } else {
+            Edit_Data_Submit.preinit();
+          }
         } else {
-          // Proceed with the normal save for other cases
           Edit_Data_Submit.preinit();
         }
       });
@@ -2848,12 +3131,22 @@ function handlePartialDisbursementSave() {
         newItem.set_item("MasterID", IID);
         newItem.set_item("MasterKey", "Deliverables");
         newItem.set_item("AmountPrice", $("#AmountPrice").val());
-        newItem.set_item("Quantity", $("#Disbursedquantity").val());
+       
+        if($("#Disbursedquantity").val() == undefined || $("#Disbursedquantity").val() == null || $("#Disbursedquantity").val() == '')
+        {
+          newItem.set_item("Quantity", $("#Quantity").val());
+        }
+        else
+        {
+          newItem.set_item("Quantity", $("#Disbursedquantity").val());
+        }
         newItem.set_item("Name", $("#Name").val());
         newItem.set_item("Description", $("#Description").val());
         newItem.set_item("PurchaseRequestNumber", $("#PurchaseRequestNumber").val());
         newItem.set_item("PurchaseOrderNumber", $("#PurchaseOrderNumber").val());
         newItem.set_item("PurchaseOrderLineNumber", $("#ProjectLineNumber").val());
+        newItem.set_item("InvoiceNumber", $("#InvoiceNumber").val());
+        newItem.set_item("InvoiceDate", $("#InvoiceDate").val());
 
         // build title code
         const prt1 = "ND",
@@ -4686,14 +4979,45 @@ function _uploadFile() {
                             kpiTotalActual
                           );
                         } else {
-                          window.location =
-                            _spPageContextInfo.webAbsoluteUrl +
-                            "/SitePages/View.aspx?ListKey=" +
-                            listkey +
-                            "&IID=" +
-                            IID +
-                            PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+                          // If we asked to create a nested AFTER save, do it now and redirect to nested listing (or fallback to normal view)
+                            if (window.pendingCreateNestedAfterSave) {
+                              window.pendingCreateNestedAfterSave = false;
+                              handlePartialDisbursementSave().then((created) => {
+                                if (created) {
+                                  nesteddeliverabledisCreated = true;
+                                  window.location =
+                                    _spPageContextInfo.webAbsoluteUrl +
+                                    "/SitePages/Listing.aspx?ListKey=" +
+                                    'nesteddeliverables' + PCODE_STRING;
+                                } else {
+                                  window.location =
+                                    _spPageContextInfo.webAbsoluteUrl +
+                                  "/SitePages/View.aspx?ListKey=" +
+                                  listkey +
+                                  "&IID=" +
+                                  IID +
+                                  PCODE_STRING;
+                              }
+                            });
+
+                          } 
+                          else if (nesteddeliverabledisCreated) {
+                            // Optionally, redirect or show a success message here
+                            window.location =
+                              _spPageContextInfo.webAbsoluteUrl +
+                              "/SitePages/Listing.aspx?ListKey=" +
+                              'nesteddeliverables' + PCODE_STRING;
+                          } else {
+                            window.location =
+                              _spPageContextInfo.webAbsoluteUrl +
+                              "/SitePages/View.aspx?ListKey=" +
+                              listkey +
+                              "&IID=" +
+                              IID +
+                              PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+                          }
                         }
+                        
                       }
                     }
                   } else if (listkey == "projects") {

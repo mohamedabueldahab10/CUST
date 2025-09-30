@@ -75,6 +75,23 @@ var Listing_Info = [
     inlisting: true,
     infilter: false,
   },
+  {
+    InternalName: 'InvoiceNumber',
+    DisplayName: 'رقم الفاتورة',
+    DisplayNameEn: 'Invoice Number',
+    type: 'text',
+    inlisting: true,
+    infilter: true,
+},
+{
+  InternalName: 'InvoiceDate',
+  DisplayName: 'تاريخ الفاتورة',
+  DisplayNameEn: 'Invoice Date',
+  type: 'date',
+  inlisting: true,
+  infilter: true,
+
+},
   // {
   //     "InternalName": "CommittedDate",
   //     "DisplayName": "تاريخ الالتزام",
